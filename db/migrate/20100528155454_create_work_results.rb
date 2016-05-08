@@ -1,5 +1,5 @@
 class CreateWorkResults < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :work_results do |t|
       t.integer :work_id
       t.integer :worker_id
@@ -9,9 +9,5 @@ class CreateWorkResults < ActiveRecord::Migration
       t.timestamps
     end
     add_index :work_results, [:work_id, :worker_id], {unique: true}
-  end
-
-  def self.down
-    drop_table :work_results
   end
 end

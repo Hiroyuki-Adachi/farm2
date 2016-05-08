@@ -1,5 +1,5 @@
 class CreateSystems < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :systems do |t|
       t.date     :target_from
       t.date     :target_to
@@ -7,9 +7,5 @@ class CreateSystems < ActiveRecord::Migration
 
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :systems
   end
 end

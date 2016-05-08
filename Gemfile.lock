@@ -20,6 +20,8 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
+    active_hash (1.4.1)
+      activesupport (>= 2.2.2)
     activejob (4.2.6)
       activesupport (= 4.2.6)
       globalid (>= 0.3.0)
@@ -81,6 +83,8 @@ GEM
     multi_json (1.12.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    paranoia (2.1.5)
+      activerecord (~> 4.0)
     pg (0.18.4)
     rack (1.6.4)
     rack-test (0.6.3)
@@ -104,6 +108,8 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
+    rails4-autocomplete (1.1.1)
+      rails (>= 3.0)
     railties (4.2.6)
       actionpack (= 4.2.6)
       activesupport (= 4.2.6)
@@ -155,14 +161,17 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_hash
   byebug
   coffee-rails (~> 4.1.0)
   debase
   i18n-js
   jbuilder (~> 2.0)
   jquery-rails
+  paranoia
   pg (~> 0.15)
   rails (= 4.2.6)
+  rails4-autocomplete
   ruby-debug-ide
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

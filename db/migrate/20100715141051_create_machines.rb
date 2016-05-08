@@ -1,5 +1,5 @@
 class CreateMachines < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :machines do |t|
       t.string  :name,              {limit: 40, null: false}
       t.integer :display_order,     {null: false}
@@ -10,9 +10,5 @@ class CreateMachines < ActiveRecord::Migration
 
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :machines
   end
 end

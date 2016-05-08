@@ -1,5 +1,5 @@
 class CreateChemicals < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :chemicals do |t|
       t.string  :name,              {null: false, limit: 20}
       t.integer :display_order,     {null: false, default: 0}
@@ -8,9 +8,6 @@ class CreateChemicals < ActiveRecord::Migration
       t.timestamps
       t.datetime :deleted_at
     end
-  end
-
-  def self.down
-    drop_table :chemicals
+    add_index :chemicals, :deleted_at
   end
 end

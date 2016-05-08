@@ -1,5 +1,5 @@
 class CreateOrganizations < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :organizations do |t|
       t.string  :show_work1,    {null: false, limit: 10}
       t.string  :show_work2,    {null: false, limit: 10}
@@ -8,9 +8,5 @@ class CreateOrganizations < ActiveRecord::Migration
 
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :organizations
   end
 end

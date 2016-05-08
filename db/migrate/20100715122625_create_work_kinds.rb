@@ -1,5 +1,5 @@
 class CreateWorkKinds < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :work_kinds do |t|
       t.string  :name,          {limit: 20, null: false}
       t.integer :display_order, {null: false}
@@ -10,10 +10,6 @@ class CreateWorkKinds < ActiveRecord::Migration
       t.timestamps
       t.datetime :deleted_at
     end
-
-  end
-
-  def self.down
-    drop_table :work_kinds
+    add_index :work_kinds, :deleted_at
   end
 end

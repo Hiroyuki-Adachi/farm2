@@ -1,5 +1,5 @@
 class CreateWorks < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :works do |t|
       t.integer   :year,          {limit: 4, null: false}
       t.date      :worked_at,     {null: false}
@@ -14,9 +14,5 @@ class CreateWorks < ActiveRecord::Migration
 
       t.timestamps
     end
-  end
-
-  def self.down
-    drop_table :works
   end
 end
