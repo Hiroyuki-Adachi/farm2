@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20160507103100) do
     t.string   "address2",      limit: 50
     t.string   "telephone",     limit: 15
     t.string   "fax",           limit: 15
-    t.integer  "group_number",  limit: 2
+    t.integer  "section_id"
     t.integer  "display_order"
     t.boolean  "member_flag",              default: true, null: false
     t.datetime "created_at"
@@ -72,15 +72,6 @@ ActiveRecord::Schema.define(version: 20160507103100) do
   end
 
   add_index "lands", ["deleted_at"], name: "index_lands_on_deleted_at", using: :btree
-
-  create_table "machine_kinds", force: :cascade do |t|
-    t.integer  "machine_id"
-    t.integer  "work_kind_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "machine_kinds", ["machine_id", "work_kind_id"], name: "index_machine_kinds_on_machine_id_and_work_kind_id", unique: true, using: :btree
 
   create_table "machine_results", force: :cascade do |t|
     t.integer  "machine_id"
@@ -161,9 +152,9 @@ ActiveRecord::Schema.define(version: 20160507103100) do
   end
 
   create_table "work_chemicals", force: :cascade do |t|
-    t.integer  "work_id",                 null: false
-    t.integer  "chemical_id",             null: false
-    t.integer  "quantity",    default: 0, null: false
+    t.integer  "work_id",                               null: false
+    t.integer  "chemical_id",                           null: false
+    t.decimal  "quantity",    precision: 3, default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -3,7 +3,7 @@ class CreateWorkChemicals < ActiveRecord::Migration
     create_table :work_chemicals do |t|
       t.integer :work_id,     {null: false}
       t.integer :chemical_id, {null: false}
-      t.integer :quantity,    {null: false, default: 0}
+      t.decimal :quantity,    {scale: 0, precision: 3, null: false, default: 0}
       
       t.timestamps
     end

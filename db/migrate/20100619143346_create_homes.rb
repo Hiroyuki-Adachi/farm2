@@ -9,7 +9,7 @@ class CreateHomes < ActiveRecord::Migration
       t.string   :address2,     {limit: 50}
       t.string   :telephone,    {limit: 15}
       t.string   :fax,          {limit: 15}
-      t.integer  :group_number, {limit: 2}
+      t.integer  :section_id
       t.integer  :display_order
       t.boolean  :member_flag,  {null: false, default: true}
 
