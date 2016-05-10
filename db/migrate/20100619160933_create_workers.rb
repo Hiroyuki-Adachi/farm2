@@ -12,7 +12,7 @@ class CreateWorkers < ActiveRecord::Migration
       t.string   :pc_mail,         {limit: 50}
       t.integer  :display_order
       t.boolean  :work_flag,       {default: true, null: false}
-      t.integer  :gender_type,     {limit: 1, default: 0, null: false}  #0:no set
+      t.integer  :gender_id,       {default: 0, null: false}
 
       t.timestamps
       t.datetime :deleted_at

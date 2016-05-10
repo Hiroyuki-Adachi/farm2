@@ -144,13 +144,6 @@ ActiveRecord::Schema.define(version: 20160507103100) do
     t.datetime "updated_at"
   end
 
-  create_table "tests", force: :cascade do |t|
-    t.string   "name"
-    t.decimal  "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "work_chemicals", force: :cascade do |t|
     t.integer  "work_id",                               null: false
     t.integer  "chemical_id",                           null: false
@@ -217,7 +210,7 @@ ActiveRecord::Schema.define(version: 20160507103100) do
     t.string   "pc_mail",         limit: 50
     t.integer  "display_order"
     t.boolean  "work_flag",                  default: true, null: false
-    t.integer  "gender_type",     limit: 2,  default: 0,    null: false
+    t.integer  "gender_id",                  default: 0,    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
@@ -228,7 +221,7 @@ ActiveRecord::Schema.define(version: 20160507103100) do
   create_table "works", force: :cascade do |t|
     t.integer  "year",                                null: false
     t.date     "worked_at",                           null: false
-    t.integer  "weather",      limit: 2,              null: false
+    t.integer  "weather_id"
     t.integer  "work_type_id"
     t.string   "name",         limit: 40,             null: false
     t.text     "remarks"
