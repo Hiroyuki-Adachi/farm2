@@ -1,0 +1,32 @@
+<h1>作業日報管理システム(平成<%= @system.term - 1988 %>年度)</h1>
+<h2>日報管理</h2>
+<ul>
+  <!-- <li><%#= link_to '日報入力', new_work_path %></li> -->
+  <!-- <li><%#= link_to '日報一覧', works_path %>(<%#= link_to 'Excel出力', works_path(:format => :xml) %>)</li> -->
+  <!-- <li><%#= link_to '作業月報', monthly_reports_path %></li> -->
+</ul>
+<h2>集計表示(<%= @system.target_from.strftime('%Y年%m月') %>から<%= @system.target_to.strftime('%Y年%m月') %>まで)</h2>
+<ul>
+  <!-- <li><%#= link_to '集計対象期間変更', edit_menu_path(@system) %></li> -->
+  <!-- <li><%#= link_to '世帯別作業時間', by_home_lists_path %>(<%#= link_to 'Excel出力', by_home_lists_path(:format => :xml) %>)</li> -->
+  <!-- <li><%#= link_to '機械稼動時間', by_machine_lists_path %></li> -->
+  <!-- <li><%#= link_to '薬剤使用量', by_chemical_lists_path %></li> -->
+</ul>
+<h2>会計処理</h2>
+<ul>
+  <!-- <li><%#= link_to '新規確定', new_fixed_work_path %></li> -->
+  <!-- <li><%#= link_to '確定一覧', fixed_works_path %></li> -->
+</ul>
+<h2>マスタ保守</h2>
+<ul>
+  <!-- <li><%#= link_to '世帯マスタ保守', homes_path %></li> -->
+  <!-- <li><%#= link_to '作業者マスタ保守', workers_path %></li> -->
+  <!-- <li><%#= link_to '土地マスタ保守', lands_path %></li> -->
+  <!-- <li><%#= link_to '作業種別マスタ保守', work_kinds_path %></li> -->
+  <!-- <li><%#= link_to '機械マスタ保守', machines_path %></li> -->
+  <!-- <li><%#= link_to '薬剤マスタ保守', chemicals_path %></li> -->
+</ul>
+<h2>システム管理</h2>
+<ul>
+  <li><%= link_to '対象年度変更', edit_term_menu_path(@system) %></li>
+</ul>

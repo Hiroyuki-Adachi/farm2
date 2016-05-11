@@ -1,9 +1,7 @@
 class System < ActiveRecord::Base
-  validates_presence_of :term
-  validates_presence_of :target_from
-  validates_presence_of :target_to
+  validates :term,        presence: true
+  validates :target_from, presence: true
+  validates :target_to,   presence: true
 
-  validates_numericality_of :term, :only_integer => true,
-      :greater_than_or_equal_to => 2001, :less_than_or_equal_to => 2099
-
+  validates :term, numericality: {only_integer: true, greater_than: 2000, less_than: 2100}
 end

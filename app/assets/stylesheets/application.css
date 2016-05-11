@@ -10,6 +10,203 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
  *= require_self
  */
+
+/** 基本要素 **/
+html,body{
+  height: 100%;
+}
+body {
+  margin: 15px;
+  padding: 0;
+}
+
+a:link {
+  color: #0000aa;
+}
+a:visited {
+  color: #700080;
+}
+a:hover {
+  color: #000099;
+  background-color: #f0f0f0;
+  text-decoration: underline;
+}
+a:active {
+  color: #0000aa;
+  background-color: #f0f0f0;
+}
+p {
+  margin: 0;
+}
+img {
+  border-width: 0;
+}
+
+p.anchor_link {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+}
+
+p.skip_anchor {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+}
+
+h1 {
+  margin: 10px 0 25px;
+  padding: 8px 5px 5px 15px;
+  border-style: solid;
+  border-width: 1px 1px 1px 5px;
+  font-size: 1.5em;
+  color: #306a30;
+  border-color: #1ccf73;
+}
+
+h2 {
+  margin: 10px 0 15px;
+  border-style: solid;
+  border-width: 1px 1px 1px 3px;
+  font-size: 1.3em;
+  padding: 4px 3px 1px 17px;
+  color: #206a20;
+  border-color: #1ccf73;
+  background-repeat: repeat-x;
+}
+h3 {
+  margin: 10px 0 0;
+  font-size: 1.1em;
+  border-left: solid 3px;
+  border-bottom: 1px solid;
+  padding: 2px 3px 0px 17px;
+  padding-bottom: 0.2em;
+  color: #006600;
+  border-color: #1ccf73;
+}
+h4 {
+  margin: 10px 0 0 0;
+  font-size: 1.1em;
+  border-left: solid 5px;
+  padding: 3px 3px 1px 17px;
+  border-color: #1ccf73;
+  color: #003300;
+}
+h5 {
+  margin: 10px 0 0 3px;
+  font-size: 1em;
+}
+
+b {color: darkgreen;}
+
+/** 一覧 **/
+table.list {
+	border-collapse:collapse;
+	border-spacing:0;
+	font-size: 100%;
+	margin-bottom: 1em;
+}
+
+table.list td {
+    padding: 5px;
+    border: 1px solid #999999;
+}
+
+table.list th {
+    padding: 5px;
+    border: 1px solid #999999;
+    background: #EBEBEB;
+    white-space: nowrap;
+}
+
+/** 入力エラー **/
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 14px;
+  margin: -7px;
+  background-color: #c00;
+  border-style: none;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-top: 5px;
+  margin-bottom: 0;
+  padding: 5px;
+  font-size: 14px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+.fieldWithErrors {
+  padding: 3px;
+  border:2px solid red;
+  display: inline;
+}
+
+input[type="number"] {
+  text-align: right;
+  width:75px;
+}
+
+td.numeric  {
+  text-align: right;
+  font-family: monospace;
+}
+
+.checkGroup {
+  display:inline-block;
+  margin-right: 5px;
+}
+
+input[type="button"] input[type="submit"] {
+  position: relative;
+  background-color: #1abc9c;
+  border-radius: 4px;
+  color: #fff;
+  line-height: 52px;
+  -webkit-transition: none;
+  transition: none;
+  box-shadow: 0 3px 0 #0e8c73;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+}
+input[type="button"]:hover input[type="submit"]:hover {
+  background-color: #31c8aa;
+  box-shadow: 0 3px 0 #23a188;
+}
+input[type="button"]:active input[type="submit"]:active {
+  top: 3px;
+  box-shadow: none;
+}
+
+li {
+  list-style: none;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+}
