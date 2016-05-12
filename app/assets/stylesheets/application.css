@@ -22,21 +22,19 @@ body {
   padding: 0;
 }
 
-a:link {
-  color: #0000aa;
+a{
+  color: #03c;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  transition: 0.5s;
 }
-a:visited {
-  color: #700080;
-}
+ 
 a:hover {
-  color: #000099;
-  background-color: #f0f0f0;
-  text-decoration: underline;
+  color: #39f;
 }
-a:active {
-  color: #0000aa;
-  background-color: #f0f0f0;
-}
+
 p {
   margin: 0;
 }
