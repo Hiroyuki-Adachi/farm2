@@ -1,0 +1,47 @@
+current directory: /home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/gems/therubyracer-0.12.2/ext/v8
+/home/hiro/.rbenv/versions/2.3.1/bin/ruby -r ./siteconf20160513-5865-1k6e8zd.rb extconf.rb
+checking for main() in -lpthread... yes
+creating Makefile
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/extensions/x86_64-linux/2.3.0-static/therubyracer-0.12.2/mkmf.log
+
+current directory: /home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/gems/therubyracer-0.12.2/ext/v8
+make "DESTDIR=" clean
+
+current directory: /home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/gems/therubyracer-0.12.2/ext/v8
+make "DESTDIR="
+compiling array.cc
+compiling template.cc
+compiling accessor.cc
+compiling heap.cc
+compiling locker.cc
+compiling external.cc
+compiling exception.cc
+compiling backref.cc
+compiling v8.cc
+compiling script.cc
+compiling stack.cc
+compiling rr.cc
+compiling trycatch.cc
+compiling signature.cc
+compiling primitive.cc
+compiling function.cc
+compiling value.cc
+compiling init.cc
+compiling gc.cc
+compiling object.cc
+compiling string.cc
+compiling constants.cc
+compiling invocation.cc
+compiling constraints.cc
+compiling handles.cc
+compiling context.cc
+compiling message.cc
+compiling date.cc
+linking shared-object v8/init.so
+
+current directory: /home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/gems/therubyracer-0.12.2/ext/v8
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 init.so ./.gem.20160513-5865-10pb1p0/v8

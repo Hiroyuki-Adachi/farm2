@@ -1,14 +1,14 @@
 class Machine < ActiveRecord::Base
   has_many :machine_kinds
-  has_many :work_kinds,    :through => :machine_kinds
+  has_many :work_kinds,    through: :machine_kinds
 
   has_many  :machine_results
-  has_many  :work_results,  :through  => :machine_results
+  has_many  :work_results, through: machine_results
 
-  belongs_to :machine_type, {:order => 'machine_types.display_order'}
+  belongs_to :machine_type, -> {order("machine_types.display_order")}
 
-  validates_presence_of :name
-  validates_presence_of :display_order
+  validates :display_order, presence: true
+  validates :display_order, numericality: {only_integer: true}, :if => Proc.new{|x| x.display_order.present?}
 
   named_scope :by_work, lambda {|work| {
       :include => [:machine_kinds],
@@ -39,7 +39,7 @@ class Machine < ActiveRecord::Base
   end
 
   def hours_format(results)
-    return sprintf("%.1f", MachineResult.sum(:hours, :conditions => ["machine_id = ? and work_result_id in (?)", self.id, results]))
+    return sprintf("%.1f", MachineResult.sum(:hours).where("machine_id = ? and work_result_id in (?)", self.id, results))
   end
 
 end

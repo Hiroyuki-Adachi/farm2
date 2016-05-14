@@ -1,0 +1,9 @@
+- id: 1
+  per: Hour
+  name: "1時間あたり"
+- id: 2
+  per: Area
+  name: "10αあたり"
+- id: 3
+  per: Day
+  name: "1日あたり"

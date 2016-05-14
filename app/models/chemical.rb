@@ -3,5 +3,5 @@ class Chemical < ActiveRecord::Base
 
   belongs_to :chemical_type
 
-  named_scope :usual, lambda {|chemical_kinds| {:include => [:chemical_type], :order => "chemical_types.display_order, chemicals.display_order, chemicals.id", :conditions => chemical_kinds ? ["chemical_type_id IN (?)", chemical_kinds] : []}}
+  scope :usual, -> {includes(:chemical_type).order("chemical_types.display_order, chemicals.display_order, chemicals.id")}
 end

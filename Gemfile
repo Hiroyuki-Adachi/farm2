@@ -47,6 +47,7 @@ group :development, :test do
   gem 'debase'
   gem 'ruby-debug-ide'
   gem 'rspec-rails', '~> 3'
+  gem 'factory_girl_rails'
 end
 
 group :development do

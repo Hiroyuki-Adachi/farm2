@@ -1,35 +1,34 @@
 class Work < ActiveRecord::Base
   extend ActiveHash::Associations::ActiveRecordExtensions
+  
   WDAY = ["日", "月", "火", "水", "木", "金", "土"]
-
-  validates_presence_of :worked_at
-  validates_presence_of :weather
 
   before_create :set_year
 
+  validates :worked_at, presence: true
+  validates :weather,   presence: true
   validates :name, length: {maximum: 40}, :if =>  Proc.new{|x| x.name.present?}
 
   belongs_to :work_type
-  belongs_to :work_kind,    {:with_deleted => true}
+  belongs_to :work_kind, -> {with_deleted}
   belongs_to :weather
 
-  has_many :work_lands,     lambda{order('work_lands.display_order')}, {dependent: :destroy}
-  has_many :work_results,   lambda{order('work_results.display_order')}, {dependent: :destroy}
+  has_many :work_lands,     ->{order('work_lands.display_order')},  {dependent: :destroy}
+  has_many :work_results,   ->{order('work_results.display_order')}, {dependent: :destroy}
   has_many :work_chemicals, {dependent: :destroy}
 
   has_many :workers,    {through: :work_results}
   has_many :lands,      {through: :work_lands}
   has_many :chemicals,  {through: :work_chemicals}
 
-  scope :monthly, lambda {|worked_from, worked_to, worker_id| {
-      :conditions => [<<CONITION , worked_from, worked_to, worker_id] ,
-       (worked_at between ? and ?)
-  and works.id in ( select work_id from work_results group by work_id having count(*) = 1)
-  and works.id in ( select work_id from work_results where worker_id = ?)
-CONITION
-     :order => 'worked_at, id DESC'
-    }
-  }
+  def self.month(worked_from, worked_to, worker_id)
+    sql = []
+    sql << "SELECT * FROM works"
+    sql << "WHERE (worked_at BETWEEN :worked_from AND :worked_to)"
+    sql << "AND (id IN (SELECT work_id FROM work_results GROUP BY work_id HAVING COUNT(*) = 1)"
+    sql << "AND (id IN (SELECT work_id FROM work_results WHERE worker_id = :worker_id))"
+    return Work.find_by_sql([sql.join("\n"), {worked_from: worked_from, worked_to: worked_to, worker_id: worker_id}])
+  end
 
   def self.array_by_worked_at(works, worked_at)
     works.each do |work|
@@ -39,37 +38,35 @@ CONITION
   end
 
   def self.find_fixed
-    sql =<<-SQL
-SELECT
-  payed_at,
-  COUNT(distinct works.id) as work_count,
-  SUM(work_results.hours) as hours,
-  SUM(work_results.hours * work_kinds.price) as amount
-FROM works
-LEFT OUTER JOIN work_results on works.id = work_results.work_id
-LEFT OUTER JOIN work_kinds on works.work_kind_id = work_kinds.id
-WHERE payed_at IS NOT NULL AND year = :year
-GROUP BY payed_at
-ORDER BY payed_at
-SQL
-    return Work.find_by_sql([sql, {:year => System.find(:first).term}])
+    sql = []
+    sql << "SELECT"
+    sql << "payed_at,"
+    sql << "COUNT(distinct works.id) as work_count,"
+    sql << "SUM(work_results.hours) as hours,"
+    sql << "SUM(work_results.hours * work_kinds.price) as amount"
+    sql << "FROM works"
+    sql << "LEFT OUTER JOIN work_results on works.id = work_results.work_id"
+    sql << "LEFT OUTER JOIN work_kinds on works.work_kind_id = work_kinds.id"
+    sql << "WHERE payed_at IS NOT NULL AND year = :year"
+    sql << "GROUP BY payed_at"
+    sql << "ORDER BY payed_at"
+    return Work.find_by_sql([sql.join("\n"), {year: System.first.term}])
   end
 
   def self.months(year)
-    sql =<<-SQL
-   SELECT
-      date_trunc('month', worked_at) AS worked_month,
-      count(DISTINCT works.id) AS work_count,
-      count(*) AS worker_count,
-      sum(hours) AS month_hours
-    FROM works
-      INNER JOIN work_results
-        ON works.id = work_results.work_id
-    WHERE year = :year
-    GROUP BY worked_month
-    ORDER BY worked_month
-SQL
-    return Work.find_by_sql([sql, {:year => year}])
+    sql = []
+    sql << "SELECT"
+    sql << "date_trunc('month', worked_at) AS worked_month,"
+    sql << "COUNT(DISTINCT works.id) AS work_count,"
+    sql << "COUNT(*) AS worker_count,"
+    sql << "SUM(hours) AS month_hours"
+    sql << "FROM works"
+    sql << "INNER JOIN work_results"
+    sql << "ON works.id = work_results.work_id"
+    sql << "WHERE year = :year"
+    sql << "GROUP BY worked_month"
+    sql << "ORDER BY worked_month"
+    return Work.find_by_sql([sql.join("\n"), {year: year}])
   end
 
   def worked_at_format

@@ -1,0 +1,7 @@
+current directory: /home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/gems/ruby-debug-ide-0.6.0/ext
+/home/hiro/.rbenv/versions/2.3.1/bin/ruby mkrf_conf.rb
+Installing base gem
+Building native extensions.  This could take a while...
+
+current directory: /home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/gems/ruby-debug-ide-0.6.0/ext
+/home/hiro/.rbenv/versions/2.3.1/bin/ruby -rubygems /home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/gems/rake-11.1.2/bin/rake RUBYARCHDIR=/home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/extensions/x86_64-linux/2.3.0-static/ruby-debug-ide-0.6.0 RUBYLIBDIR=/home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/extensions/x86_64-linux/2.3.0-static/ruby-debug-ide-0.6.0

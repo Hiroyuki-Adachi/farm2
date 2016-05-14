@@ -6,9 +6,9 @@ class Worker < ActiveRecord::Base
   belongs_to :gender
 
   has_many :work_results
-  has_many :works, lambda{order(:worked_at)}, through: :work_results
+  has_many :works, ->{order(:worked_at)}, through: :work_results
 
-  scope :usual, lambda{includes({home: :section}).order('sections.display_order, homes.display_order, workers.display_order')}
+  scope :usual, ->{includes({home: :section}).order('sections.display_order, homes.display_order, workers.display_order')}
 
   REG_MAIL = /\a([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+\z/
   REG_HIRAGANA = /\a[ぁ-ん]*\z/u
