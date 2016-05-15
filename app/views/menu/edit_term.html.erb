@@ -1,2 +1,17 @@
-<h1>Menu#edit_term</h1>
-<p>Find me in app/views/menu/edit_term.html.erb</p>
+<h1>対象年度変更</h1>
+<% if @system.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @system.errors.count %>件のエラーがあります。</h2>
+ 
+    <ul>
+    <% @system.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_for(@system, url: {controller: :menu, action: :update }, html: {method: :put}) do |f| %>
+  <%= f.select(:term, @terms) %>年度<br />
+  <%= f.submit '設定' %>
+<% end %>
+<%= link_to '戻る', root_path %>

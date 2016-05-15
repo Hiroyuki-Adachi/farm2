@@ -1,5 +1,5 @@
 class MenuController < ApplicationController
-  before_action :set_system, only: [:index, :edit, :edit_term, :update]
+  before_action :set_system
   
   def index
   end
@@ -20,9 +20,11 @@ class MenuController < ApplicationController
   def update
     if system_params[:term]
       @system.term = system_params[:term]
+      @system.target_from = Date.new(@system.term, 1, 1)
+      @system.target_to   = Date.new(@system.term, 12, 31)
     else
-      @system.target_from = Date.new(system_params['target_from(1i)'].to_i, system_params['target_from(2i)'].to_i, 1)
-      @system.target_to   = Date.new(system_params['target_to(1i)'].to_i, system_params['target_to(2i)'].to_i, 1).end_of_month
+      @system.target_from = Date.strptime(system_params['target_from'], "%Y-%m")
+      @system.target_to   = Date.strptime(system_params['target_to'], "%Y-%m").end_of_month
     end
 
     if @system.valid?
@@ -43,6 +45,6 @@ class MenuController < ApplicationController
   end
   
   def system_params
-    return params.require(:system).permit(:term, 'target_from(1i)', 'target_from(2i)', 'target_to(1i)', 'target_to(2i)')
+    return params.require(:system).permit(:term, :target_from, :target_to)
   end
 end

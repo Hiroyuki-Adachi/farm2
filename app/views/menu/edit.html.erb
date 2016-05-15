@@ -1,2 +1,19 @@
-<h1>Menu#edit</h1>
-<p>Find me in app/views/menu/edit.html.erb</p>
+<h1>集計対象期間変更</h1>
+<% if @system.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @system.errors.count %>件のエラーがあります。</h2>
+ 
+    <ul>
+    <% @system.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_for(@system, url: {controller: :menu, action: :update }, html: {method: :put}) do |f| %>
+  <%= f.month_field :target_from %>
+  ～
+  <%= f.month_field :target_to %><br />
+  <%= f.submit '設定' %>
+<% end %>
+<%= link_to '戻る', root_path %>

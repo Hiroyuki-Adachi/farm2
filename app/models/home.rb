@@ -1,7 +1,6 @@
 class Home < ActiveRecord::Base
   acts_as_paranoid
 
-  REG_HIRAGANA = /\a[ぁ-ん]*\z/u
   REG_PHONE = /\d{2,4}-\d{2,4}-\d{4}/
 
   has_many :workers,  ->{order(:display_order)}
@@ -16,7 +15,7 @@ class Home < ActiveRecord::Base
   validates :name,          presence: true
   validates :display_order, presence: true
   
-  validates :phonetic, format: {with: REG_HIRAGANA}, :if => Proc.new{|x| x.phonetic.present?}
+  validates :phonetic, format: {with: /\a[\p{Hiragana}ー－]+\z/}, :if => Proc.new{|x| x.phonetic.present?}
   validates :telephone, format: {with: REG_PHONE}, :if => Proc.new{|x| x.telephone.present?}
   
   validates :display_order, numericality: {only_integer: true}, :if => Proc.new{|x| x.display_order.present?}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507103100) do
+ActiveRecord::Schema.define(version: 20160514130439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,20 @@ ActiveRecord::Schema.define(version: 20160507103100) do
 
   add_index "lands", ["deleted_at"], name: "index_lands_on_deleted_at", using: :btree
 
+  create_table "machine_prices", force: :cascade do |t|
+    t.date     "validity_start_at"
+    t.date     "validity_end_at"
+    t.integer  "adjust_id"
+    t.boolean  "operator_flag",                   default: true, null: false
+    t.integer  "machine_id"
+    t.integer  "machine_type_id"
+    t.integer  "work_kind_id"
+    t.boolean  "machine_flag",                    default: true, null: false
+    t.decimal  "price",             precision: 5, default: 0,    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "machine_results", force: :cascade do |t|
     t.integer  "machine_id"
     t.integer  "work_result_id"
@@ -85,22 +99,10 @@ ActiveRecord::Schema.define(version: 20160507103100) do
 
   add_index "machine_results", ["machine_id", "work_result_id"], name: "index_machine_results_on_machine_id_and_work_result_id", unique: true, using: :btree
 
-  create_table "machine_type_prices", force: :cascade do |t|
-    t.integer "machine_type_id"
-    t.integer "term"
-    t.decimal "price_per_day",   precision: 6, default: 0, null: false
-    t.decimal "price_per_area",  precision: 6, default: 0, null: false
-    t.decimal "price_per_hour",  precision: 6, default: 0, null: false
-  end
-
-  add_index "machine_type_prices", ["machine_type_id", "term"], name: "index_machine_type_prices_on_machine_type_id_and_term", unique: true, using: :btree
-
   create_table "machine_types", force: :cascade do |t|
-    t.string   "name",                limit: 10,                 null: false
-    t.integer  "display_order",                  default: 1,     null: false
-    t.integer  "rental_pay_mode",                default: 0,     null: false
-    t.boolean  "rental_by_work_type",            default: false, null: false
-    t.integer  "lease_pay_mode",                 default: 0,     null: false
+    t.string   "name",          limit: 10,                 null: false
+    t.integer  "display_order",            default: 1,     null: false
+    t.boolean  "owner_flag",               default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

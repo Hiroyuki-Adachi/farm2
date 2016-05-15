@@ -3,51 +3,30 @@ ja:
     models:
       chemical: "薬剤"
       home: "世帯"  #g
-      user: "利用者"  #g
       work_result: "work_result"  #g
-      work_material: "work_material"  #g
-      material: "material"  #g
       land: "土地"  #g
       land_type: "土地種別"
-      work_land: "ワーキング土地"  #g
       work: "作業"  #g
       work_machine: "作業機"  #g
       worker: "作業者"  #g
       machine: "機械"
       work_kind: "作業種別"
-      system: システム管理
+      system: "システム管理"
 
     attributes:
       chemical:
         name: "名称"
         chemical_type_id: "種別"
       home: 
-        phonetic: "屋号(かな)"  #g
-        name: "屋号"  #g
+        phonetic: "世帯名(かな)"  #g
+        name: "世帯名"  #g
         zip_code: "郵便番号"  #g
         address1: "住所1"  #g
         address2: "住所2"  #g
         telephone: "電話番号"  #g
         fax: "FAX番号"  #g
-        group_number: "班"  #g
+        section_id: "班"  #g
         display_order: "表示順"  #g
-
-      user: 
-        login: "ログイン"  #g
-        crypted_password: "暗号化されたパスワード"  #g
-        salt: "ソルト"  #g
-        remember_token: "トークンしています。"  #g
-        remember_token_expires_at: "トークンしています。で有効期限が切れる"  #g
-        name: "名"  #g
-        email: "Eメール"  #g
-        activation_code: "アクティベーションコード"  #g
-        activated_at: "で活性化さ"  #g
-        state: "状態"  #g
-        ahthority: "Ahthority"  #g
-        created_by: "かれ"  #g
-        updated_by: "で更新"  #g
-        deleted_by: "で削除"  #g
-        deleted_at: "で削除"  #g
 
       work_result: 
         hours: "作業時間"  #g

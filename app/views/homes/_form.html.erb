@@ -1,0 +1,44 @@
+<% if @home.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @home.errors.count %>件のエラーがあります。</h2>
+ 
+    <ul>
+    <% @home.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_for(@home) do |f| %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name, {maxlength: 10, size: 15} %>
+  </p>
+  <p>
+    <%= f.label :phonetic %><br />
+    <%= f.text_field :phonetic, {maxlength: 10, size: 15} %>
+  </p>
+  <p>
+    <%= f.label :telephone %><br />
+    <%= f.telephone_field :telephone, {maxlength: 15, size: 15} %>
+  </p>
+  <p>
+    <%= f.label :fax %><br />
+    <%= f.telephone_field :fax, {maxlength: 15, size: 15} %>
+  </p>
+  <p>
+    <%= f.label :section_id %><br />
+    <%= f.select(:section_id, Section.all.order(:display_order).map {|s| [s.name, s.id]}) %>
+  </p>
+  <p>
+    <%= f.label :display_order %><br />
+    <%= f.number_field(:display_order, {maxlength: 4, size: 4}) %>
+  </p>
+   <p>
+    <%= f.radio_button :member_flag, true %>営農組合会員<br />
+    <%= f.radio_button :member_flag, false %>外部委託<br />
+  </p>
+ <p>
+    <%= f.submit '登録' %>
+  </p>
+<% end %>
