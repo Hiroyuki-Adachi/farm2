@@ -10,8 +10,7 @@ class Worker < ActiveRecord::Base
 
   scope :usual, ->{includes({home: :section}).order('sections.display_order, homes.display_order, workers.display_order')}
 
-  REG_MAIL = /\a([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+\z/
-  REG_HIRAGANA = /\a[ぁ-ん]*\z/u
+  REG_MAIL = /\A([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+\z/
 
   validates :family_phonetic, presence: true
   validates :family_name, presence: true
@@ -19,10 +18,10 @@ class Worker < ActiveRecord::Base
   validates :first_name, presence: true
   validates :display_order, presence: true
 
-  validates :family_phonetic, format: {with: REG_HIRAGANA}, :if => Proc.new{|x| x.family_phonetic.present?}
-  validates :first_phonetic,  format: {with: REG_HIRAGANA}, :if => Proc.new{|x| x.first_phonetic.present?}
+  validates :family_phonetic, format: {with: /\A[\p{Hiragana}ー－]+\z/}, :if => Proc.new{|x| x.family_phonetic.present?}
+  validates :first_phonetic,  format: {with: /\A[\p{Hiragana}ー－]+\z/}, :if => Proc.new{|x| x.first_phonetic.present?}
 
-  validates :mobile, format: {with: /(090|080|070)-\d{4}-\d{4}/}, :if => Proc.new{|x| x.mobile.present?}
+  validates :mobile, format: {with: /\A(090|080|070)-\d{4}-\d{4}\z/}, :if => Proc.new{|x| x.mobile.present?}
   validates :pc_mail, format: {with: REG_MAIL},  :if => Proc.new{|x| x.pc_mail.present?}
   validates :mobile_mail, format: {with: REG_MAIL},  :if => Proc.new{|x| x.mobile_mail.present?}
 

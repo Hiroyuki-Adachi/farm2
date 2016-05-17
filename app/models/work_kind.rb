@@ -6,6 +6,9 @@ class WorkKind < ActiveRecord::Base
 
   has_many :chemical_kinds
   has_many :chemical_types, -> {order("chemical_types.display_order")}, through: :chemical_kinds
+  
+  has_many :work_kind_types
+  has_many :work_types, through: :work_kind_types
 
   validates :name, presence: true
   validates :price, presence: true

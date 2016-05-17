@@ -1,8 +1,9 @@
 class HomesController < ApplicationController
   before_action :set_home, only: [:edit, :update, :destroy]
+  before_action :set_sections, only: [:new, :edit]
 
   def index
-    @homes = Home.usual.page(params[:page])
+    @homes = Home.list.page(params[:page])
   end
 
   def new
@@ -37,6 +38,10 @@ class HomesController < ApplicationController
   private
   def set_home
     @home = Home.find(params[:id])
+  end
+  
+  def set_sections
+    @sections = Section.all.order(:display_order)
   end
   
   def home_params

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160514130439) do
+ActiveRecord::Schema.define(version: 20160517133313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,7 +62,8 @@ ActiveRecord::Schema.define(version: 20160514130439) do
 
   create_table "lands", force: :cascade do |t|
     t.string   "place",         limit: 15,                                        null: false
-    t.integer  "home_id"
+    t.integer  "owner_id"
+    t.integer  "manager_id"
     t.decimal  "area",                     precision: 5, scale: 2,                null: false
     t.integer  "display_order"
     t.boolean  "target_flag",                                      default: true, null: false
@@ -156,12 +157,18 @@ ActiveRecord::Schema.define(version: 20160514130439) do
 
   add_index "work_chemicals", ["work_id", "chemical_id"], name: "index_work_chemicals_on_work_id_and_chemical_id", unique: true, using: :btree
 
+  create_table "work_kind_types", force: :cascade do |t|
+    t.integer "work_kind_id"
+    t.integer "work_type_id"
+  end
+
+  add_index "work_kind_types", ["work_kind_id", "work_type_id"], name: "index_work_kind_types_on_work_kind_id_and_work_type_id", unique: true, using: :btree
+
   create_table "work_kinds", force: :cascade do |t|
     t.string   "name",          limit: 20,                               null: false
     t.integer  "display_order",                                          null: false
     t.decimal  "price",                    precision: 4, default: 1000,  null: false
     t.boolean  "other_flag",                             default: false, null: false
-    t.integer  "work_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"

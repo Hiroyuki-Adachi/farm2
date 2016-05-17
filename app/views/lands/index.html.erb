@@ -1,0 +1,26 @@
+<h1>土地マスタ一覧</h1>
+<div style="text-align:right;">
+<%= link_to '土地マスタ新規登録', new_land_path %>
+</div>
+<% if @lands.count > 0 %>
+<table class="list">
+  <tr>
+    <th>地番</th>
+    <th>所有者</th>
+    <th>面積(α)</th>
+    <th colspan="2">&nbsp;</th>
+  </tr>
+<% @lands.each do |land| %>
+  <tr style="<%= 'background-color:darkgray' unless land.target_flag %>">
+    <td><%=h land.place %></td>
+    <td><%=h land.owner_name %></td>
+    <td class="numeric"><%=h land.area_format %></td>
+    <td><%= link_to '修正', edit_land_path(land) %></td>
+    <td><%= link_to '削除', land, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
+  </tr>
+<% end %>
+</table>
+<% end %>
+<br />
+<%= paginate(@lands) %>
+<%= link_to '戻る', root_path %>

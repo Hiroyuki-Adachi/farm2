@@ -43,7 +43,8 @@ ja:
 
       land: 
         place: "番地"  #g
-        home_id: "所有者"  #g
+        owner_id: "所有者"  #g
+        manager_id: "管理者"  #g
         area: "面積"  #g
         display_order: "表示順"  #g
 

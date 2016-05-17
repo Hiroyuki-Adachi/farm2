@@ -1,0 +1,44 @@
+<% if @worker.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @worker.errors.count %>件のエラーがあります。</h2>
+ 
+    <ul>
+    <% @worker.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_for(@worker) do |f| %>
+  <p>
+    <%= f.label :family_phonetic %><br />
+    <%= f.text_field :family_phonetic, {:maxlength => 10, :size => 20} %>
+  </p>
+  <p>
+    <%= f.label :family_name %><br />
+    <%= f.text_field :family_name, {:maxlength => 10, :size => 20} %>
+  </p>
+  <p>
+    <%= f.label :first_phonetic %><br />
+    <%= f.text_field :first_phonetic, {:maxlength => 10, :size => 20} %>
+  </p>
+  <p>
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name, {:maxlength => 10, :size => 20} %>
+  </p>
+  <p>
+    <%= f.label :home_id %><br />
+   <%= f.select(:home_id, @homes.map {|home| [home.name, home.id]}) %><%= check_box_tag :holder, true, @worker.home ? (@worker.id == @worker.home.worker_id) : false %>世帯主<br />
+  </p>
+  <p>
+    <%= f.label :mobile %><br />
+    <%= f.telephone_field :mobile, {:maxlength => 15, :size => 20} %>
+  </p>
+  <p>
+    <%= f.label :display_order %><br />
+    <%= f.number_field :display_order, {maxlength: 4, size: 4} %>
+  </p>
+  <p>
+    <%= f.submit '登録' %>
+  </p>
+<% end %>

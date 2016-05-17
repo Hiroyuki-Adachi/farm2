@@ -1,0 +1,25 @@
+<h1>作業者マスタ一覧</h1>
+<div style="text-align:right;">
+<%= link_to '作業者マスタ新規登録', new_worker_path %>
+</div>
+<% if @workers.count > 0 %>
+<table class="list">
+  <tr>
+    <th>氏名</th>
+    <th>世帯</th>
+    <th>携帯番号</th>
+    <th colspan="2">&nbsp;</th>
+  </tr>
+<% @workers.each do |worker| %>
+  <tr>
+    <td><%=h worker.name %>(<%=h worker.phonetic %>)</td>
+    <td><%=h worker.home.name %></td>
+    <td><%=h worker.mobile %></td>
+    <td><%= link_to '修正', edit_worker_path(worker) %></td>
+    <td><%= link_to '削除', worker, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
+  </tr>
+<% end %>
+</table>
+<% end %>
+<%= paginate(@workers) %>
+<%= link_to '戻る', root_path %>

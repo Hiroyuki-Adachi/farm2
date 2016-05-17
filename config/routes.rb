@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+  resources :lands, except: [:show]
+
   resources :homes, except: [:show]
+  
+  resources :workers, except: [:show]
   
   resources :menu, only: [:index, :edit, :update] do
     member do

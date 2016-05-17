@@ -112,6 +112,7 @@ table.list {
 table.list td {
     padding: 5px;
     border: 1px solid #999999;
+    font-size: 1em;
 }
 
 table.list th {
@@ -119,6 +120,7 @@ table.list th {
     border: 1px solid #999999;
     background: #EBEBEB;
     white-space: nowrap;
+    font-size: 1em;
 }
 
 /** 入力エラー **/
@@ -148,10 +150,12 @@ table.list th {
   list-style: square;
 }
 
-.field_with_errors {
-  padding: 3px;
+.field_with_errors input,.field_with_errors select {
   border:2px solid red;
-  display: inline;
+}
+
+.field_with_errors label {
+  color: red;
 }
 
 /** 入力欄 **/

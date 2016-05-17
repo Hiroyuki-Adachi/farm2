@@ -42,8 +42,8 @@ SELECT SETVAL('homes_id_seq', (SELECT MAX(id) FROM homes));
 ------------------------------------- lands
 TRUNCATE TABLE lands;
 
-INSERT INTO lands (id, place, home_id, area, display_order, target_flag, created_at, updated_at, deleted_at)
-SELECT id, place, home_id, area, display_order, CASE target_flag WHEN 1 THEN true ELSE false END AS target_flag, created_at, updated_at, deleted_at
+INSERT INTO lands (id, place, owner_id, manager_id, area, display_order, target_flag, created_at, updated_at, deleted_at)
+SELECT id, place, home_id, home_id, area, display_order, CASE target_flag WHEN 1 THEN true ELSE false END AS target_flag, created_at, updated_at, deleted_at
 FROM dblink('dbname=farm_production',
 'SELECT id, place, home_id, area, display_order, target_flag, created_at, updated_at, deleted_at FROM lands') AS
 t1(id integer, place varchar, home_id integer, area numeric, display_order integer, target_flag integer, created_at timestamp, updated_at timestamp, deleted_at timestamp);
@@ -79,6 +79,13 @@ FROM dblink('dbname=farm_production',
 t1(id integer, name varchar, display_order integer, price numeric, other_flag boolean, created_at timestamp, updated_at timestamp, deleted_at timestamp);
 
 SELECT SETVAL('work_kinds_id_seq', (SELECT MAX(id) FROM work_kinds));
+------------------------------------- work_kind_types
+TRUNCATE TABLE work_kind_types;
+
+INSERT INTO work_kind_types (work_type_id, work_kind_id)
+SELECT t1.id, t2.id
+FROM dblink('dbname=farm_production', 'SELECT id FROM work_types WHERE category_flag = true AND deleted_at IS NULL') AS t1(id integer),
+dblink('dbname=farm_production', 'SELECT id FROM work_kinds WHERE deleted_at IS NULL') AS t2(id integer);
 ------------------------------------- machines
 TRUNCATE TABLE machines;
 
