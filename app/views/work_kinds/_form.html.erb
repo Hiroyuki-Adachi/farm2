@@ -1,0 +1,59 @@
+<% if @work_kind.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @work_kind.errors.count %>件のエラーがあります。</h2>
+ 
+    <ul>
+    <% @work_kind.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_for(@work_kind) do |f| %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :display_order %><br />
+    <%= f.number_field :display_order, {min: 0, max: 999, step: 1}
+  </p>
+  <p>
+    <%= f.label :price %><br />
+    <%= f.number_field :price, {min: 0, max: 9999, step: 1}
+  </p>
+ <br />
+ <fieldset>
+    <legend>該当作業</legend>
+  <% @work_types.each do |work_type| %>
+    <span class="check_group">
+      <%= check_box_tag "work_types[]", work_type.id, @work_kind.work_types.include?(work_type), {:id => nil} %><!--
+    --><%=h work_type.name %>
+    </span>
+  <% end %>
+  </fieldset>
+ <br />
+ <fieldset>
+    <legend>使用機械種別</legend>
+  <% @machine_types.each do |machine_type| %>
+    <span class="check_group">
+      <%= check_box_tag "machine_types[]", machine_type.id, @work_kind.machine_types.include?(machine_type), {:id => nil} %><!--
+    --><%=h machine_type.name %>
+    </span>
+  <% end %>
+  </fieldset>
+ <br />
+ <fieldset>
+    <legend>使用薬品種別</legend>
+  <% @chemical_types.each do |chemical_type| %>
+    <span class="check_group">
+      <%= check_box_tag "chemical_types[]", chemical_type.id, @work_kind.chemical_types.include?(chemical_type), {:id => nil} %><!--
+    --><%=h chemical_type.name %>
+    </span>
+  <% end %>
+  </fieldset>
+ <br />
+  <p>
+    <%= f.submit '登録' %>
+  </p>
+<% end %>

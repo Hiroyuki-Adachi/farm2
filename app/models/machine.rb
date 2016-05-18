@@ -5,7 +5,7 @@ class Machine < ActiveRecord::Base
   has_many  :machine_results
   has_many  :work_results, through: machine_results
 
-  belongs_to :machine_type, -> {order("machine_types.display_order")}
+  belongs_to :machine_type
 
   validates :display_order, presence: true
   validates :display_order, numericality: {only_integer: true}, :if => Proc.new{|x| x.display_order.present?}

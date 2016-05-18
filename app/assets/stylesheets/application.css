@@ -123,6 +123,11 @@ table.list th {
     font-size: 1em;
 }
 
+fieldset {
+  border: 1px gray solid; 
+  width: 90%;
+}
+
 /** 入力エラー **/
 #error_explanation {
   width: 400px;
@@ -169,7 +174,7 @@ td.numeric  {
   font-family: monospace;
 }
 
-.checkGroup {
+span.check_group {
   display:inline-block;
   margin-right: 5px;
 }

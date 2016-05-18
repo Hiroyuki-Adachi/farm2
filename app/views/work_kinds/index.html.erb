@@ -1,0 +1,21 @@
+<h1>作業種別マスタ一覧</h1>
+<div style="text-align: right;">
+<%= link_to '作業種別マスタ新規登録', new_work_kind_path %>
+</div>
+<table class="list">
+  <tr>
+    <th>名称</th>
+    <th>作業単価</th>
+    <th colspan="2">&nbsp;</th>
+  </tr>
+<% @work_kinds.each do |work_kind| %>
+  <tr>
+    <td><%=h work_kind.name %></td>
+    <td class="numeric"><%=h number_to_currency(work_kind.price, unit: '') %></td>
+    <td><%= link_to '修正', edit_work_kind_path(work_kind) %></td>
+    <td><%= link_to '削除', work_kind, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
+  </tr>
+<% end %>
+</table>
+<br />
+<%= link_to '戻る', root_path %>

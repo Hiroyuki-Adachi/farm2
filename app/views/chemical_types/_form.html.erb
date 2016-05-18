@@ -1,0 +1,35 @@
+<% if @chemical_type.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @chemical_type.errors.count %>件のエラーがあります。</h2>
+ 
+    <ul>
+    <% @chemical_type.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_for(@chemical_type) do |f| %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name, {maxlength: 20, size: 20} %>
+  </p>
+  <p>
+    <%= f.label :display_order %><br />
+    <%= f.number_field(:display_order, {maxlength: 4, size: 4}) %>
+  </p>
+ <br />
+ <fieldset>
+    <legend>対応作業</legend>
+  <% @work_kinds.each do |work_kind| %>
+    <span class="check_group">
+      <%= check_box_tag "work_kinds[]", work_kind.id, @chemical_type.work_kinds.include?(work_kind), {:id => nil} %><!--
+    --><%=h work_kind.name %>
+    </span>
+  <% end %>
+  </fieldset>
+ <br />
+ <p>
+    <%= f.submit '登録' %>
+  </p>
+<% end %>

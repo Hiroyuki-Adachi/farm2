@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :chemical_types, except: [:show]
+
+  resources :work_kinds, except: [:show]
+
   resources :lands, except: [:show]
 
   resources :homes, except: [:show]

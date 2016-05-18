@@ -14,3 +14,15 @@
 //= require jquery_ujs
 //= require i18n
 //= require i18n/translations
+
+$(document).on("change", "span.check_group input[type='checkbox']", function(e) {
+    if($(this).prop('checked')) {
+        $(this).parent().css("color", "red");
+    } else {
+        $(this).parent().css("color", "black");
+    }
+});
+
+$(function() {
+    $("span.check_group input[type='checkbox']").trigger("change");
+});

@@ -2,14 +2,14 @@ ja:
   activerecord: 
     models:
       chemical: "薬剤"
+      chemical_type: "薬剤種別"
       home: "世帯"  #g
       work_result: "work_result"  #g
       land: "土地"  #g
-      land_type: "土地種別"
       work: "作業"  #g
-      work_machine: "作業機"  #g
       worker: "作業者"  #g
       machine: "機械"
+      machine_type: "機械種別"
       work_kind: "作業種別"
       system: "システム管理"
 
@@ -17,6 +17,12 @@ ja:
       chemical:
         name: "名称"
         chemical_type_id: "種別"
+        display_order: "表示順"
+
+      chemical_type:
+        name: "名称"
+        display_order: "表示順"
+
       home: 
         phonetic: "世帯名(かな)"  #g
         name: "世帯名"  #g
@@ -31,28 +37,12 @@ ja:
       work_result: 
         hours: "作業時間"  #g
 
-      work_material: 
-        amount: "量"  #g
-
-      material: 
-        name: "名"  #g
-        display_order: "表示順"  #g
-        delete_flag: "削除標識"  #g
-        created_by: "かれ"  #g
-        updated_by: "で更新"  #g
-
       land: 
         place: "番地"  #g
         owner_id: "所有者"  #g
         manager_id: "管理者"  #g
         area: "面積"  #g
         display_order: "表示順"  #g
-
-      land_type:
-        name: "名"  #g
-        display_order: "表示順"  #g
-        color: "色"
-        short_name: "短縮名"
 
       work_land: 
 
@@ -64,10 +54,6 @@ ja:
         remarks: "備考"  #g
         start_at: "開始時刻"  #g
         end_at: "終了時刻"  #g
-
-      work_machine: 
-        fuel: "燃料"  #g
-        attachment: "添付ファイル"  #g
 
       worker: 
         family_phonetic: "姓(ふりがな)"  #g
@@ -81,13 +67,17 @@ ja:
         display_order: "表示順"  #g
 
       machine:
-        name: 機械名
+        name: 名称
         display_order: 表示順
         validity_start_at: 運用開始日
         validity_end_at: 運用終了日
 
+      machine_type:
+        name: 名称
+        display_order: 表示順
+
       work_kind:
-        name: 作業種別名
+        name: 名称
         display_order: 表示順
         price: 作業単価
 
