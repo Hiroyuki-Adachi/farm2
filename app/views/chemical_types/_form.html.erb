@@ -31,5 +31,6 @@
  <br />
  <p>
     <%= f.submit '登録' %>
+    <%= button_tag "戻る", type: :button, :onclick => raw("javascript:location.href = '" + chemical_types_path + "';") %>
   </p>
 <% end %>

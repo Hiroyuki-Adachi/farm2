@@ -3,7 +3,7 @@ class CreateSystems < ActiveRecord::Migration
     create_table :systems do |t|
       t.date     :target_from
       t.date     :target_to
-      t.integer  :term
+      t.integer  :term,          {limit: 4, null: false}
 
       t.timestamps
     end

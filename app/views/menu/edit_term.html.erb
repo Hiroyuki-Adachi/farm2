@@ -11,7 +11,10 @@
   </div>
 <% end %>
 <%= form_for(@system, url: {controller: :menu, action: :update }, html: {method: :put}) do |f| %>
-  <%= f.select(:term, @terms) %>年度<br />
+  <%= f.select(:term, @terms) %>年度
+  <br />
+  <p>
   <%= f.submit '設定' %>
+  <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
+  </p>
 <% end %>
-<%= link_to '戻る', root_path %>

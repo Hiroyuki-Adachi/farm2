@@ -1,5 +1,5 @@
 <h1>作業種別マスタ一覧</h1>
-<div style="text-align: right;">
+<div class="new_data">
 <%= link_to '作業種別マスタ新規登録', new_work_kind_path %>
 </div>
 <table class="list">
@@ -18,4 +18,4 @@
 <% end %>
 </table>
 <br />
-<%= link_to '戻る', root_path %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

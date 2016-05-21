@@ -38,7 +38,9 @@
     <%= f.radio_button :member_flag, true %>営農組合会員<br />
     <%= f.radio_button :member_flag, false %>外部委託<br />
   </p>
+  <br />
  <p>
     <%= f.submit '登録' %>
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + homes_path + "';") %>
   </p>
 <% end %>

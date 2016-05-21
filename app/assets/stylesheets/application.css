@@ -128,6 +128,10 @@ fieldset {
   width: 90%;
 }
 
+.new_data {
+  text-align: right;
+}
+
 /** 入力エラー **/
 #error_explanation {
   width: 400px;
@@ -186,6 +190,23 @@ li {
   margin-bottom: 5px;
 }
 
+button,input[type="button"],input[type="submit"] {
+	background-color: #333;
+	border: 2px solid #333;
+	color: #fff;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  transition: 0.5s;
+}
+button:hover,input[type="button"]:hover,input[type="submit"]:hover {
+	background-color: #fff;
+	border-color: darkblue;
+	color: darkblue;
+}
+
 /** ページ **/
 .pagination {
   padding: 3px;
@@ -196,11 +217,9 @@ li {
   margin: 2px;
   border: 1px solid #aaaadd;
   text-decoration: none;
-  color: #000099;
 }
 .pagination a:hover, .pagination a:active {
   border: 1px solid #000099;
-  color: #000;
 }
 .pagination span.current {
   padding: 2px 5px 2px 5px;

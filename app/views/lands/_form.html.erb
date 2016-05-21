@@ -34,7 +34,9 @@
     <%= f.label :display_order %><br />
     <%= f.number_field(:display_order, {maxlength: 4, size: 4}) %>
   </p>
+  <br />
   <p>
     <%= f.submit '登録' %>
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + lands_path + "';") %>
   </p>
 <% end %>

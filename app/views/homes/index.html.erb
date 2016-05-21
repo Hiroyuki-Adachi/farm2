@@ -1,5 +1,5 @@
 <h1>世帯マスタ一覧</h1>
-<div style="text-align:right;">
+<div class="new_data">
 <%= link_to '世帯マスタ新規登録', new_home_path %>
 </div>
 <% if @homes.count > 0 %>
@@ -25,4 +25,4 @@
 </table>
 <% end %>
 <%= paginate(@homes) %>
-<%= link_to '戻る', root_path %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

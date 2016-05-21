@@ -9,7 +9,7 @@ class MenuController < ApplicationController
 
   def edit_term
     @terms = []
-    term = Work.minimum(:year)
+    term = Work.minimum(:term)
     term = Time.now.year unless term
     while term <= Time.now.year do
       @terms << [term, term]

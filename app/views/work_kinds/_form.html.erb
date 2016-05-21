@@ -55,5 +55,6 @@
  <br />
   <p>
     <%= f.submit '登録' %>
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + work_kinds_path + "';") %>
   </p>
 <% end %>

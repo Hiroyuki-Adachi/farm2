@@ -1,0 +1,9 @@
+<h1><%= @machine_type.name %>利用料金一覧</h1>
+
+<div class="new_data">
+<%= link_to '利用料金新規登録', new_type_machine_prices_path(machine_type_id: @machine_type) %>
+</div>
+
+<%= render(:partial => "show") %>
+
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + edit_machine_type_path(@machine_type) + "';") %>

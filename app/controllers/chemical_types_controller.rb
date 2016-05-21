@@ -40,7 +40,7 @@ class ChemicalTypesController < ApplicationController
   
   private
   def set_chemical_type
-    @chemical_type = ChemicalType.find(params[:id])
+    @chemical_type = ChemicalType.includes(:work_kinds).find(params[:id])
   end
   
   def set_work_kinds
@@ -54,5 +54,4 @@ class ChemicalTypesController < ApplicationController
   def update_work_kinds
     @chemical_type.work_kinds = params[:work_kinds] ? WorkKind.find(params[:work_kinds]) : []
   end
-
 end

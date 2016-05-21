@@ -1,3 +1,6 @@
+- id: 0
+  per: None
+  name: "設定しない"
 - id: 1
   per: Hour
   name: "1時間あたり"

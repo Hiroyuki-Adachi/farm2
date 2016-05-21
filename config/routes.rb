@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :machine_types, except: [:show]
+
   resources :chemical_types, except: [:show]
 
   resources :work_kinds, except: [:show]
@@ -12,6 +14,15 @@ Rails.application.routes.draw do
   resources :menu, only: [:index, :edit, :update] do
     member do
       get :edit_term
+    end
+  end
+  
+  resources :machine_prices, except: [:show, :new] do
+    collection do
+      get :show_machine
+      get :show_type
+      get :new_machine
+      get :new_type
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
