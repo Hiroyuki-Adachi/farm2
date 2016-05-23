@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160521125139) do
+ActiveRecord::Schema.define(version: 20160523142447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,25 +79,29 @@ ActiveRecord::Schema.define(version: 20160521125139) do
     t.integer "work_kind_id",    null: false
   end
 
-  add_index "machine_kinds", ["machine_type_id", "work_kind_id"], name: "index_machine_kinds_on_machine_type_id_and_work_kind_id", unique: true, using: :btree
+  add_index "machine_kinds", ["machine_type_id", "work_kind_id"], name: "machine_kinds_2nd_key", unique: true, using: :btree
 
-  create_table "machine_prices", force: :cascade do |t|
-    t.date     "validity_at"
-    t.integer  "lease_id",                      default: 1, null: false
-    t.integer  "machine_id",                    default: 0, null: false
-    t.integer  "machine_type_id",               default: 0, null: false
-    t.integer  "work_kind_id",                  default: 0, null: false
-    t.integer  "adjust_id"
-    t.decimal  "price",           precision: 5, default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "machine_price_groups", force: :cascade do |t|
+    t.date     "validated_at",                null: false
+    t.integer  "machine_type_id", default: 0, null: false
+    t.integer  "machine_id",      default: 0, null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
-  add_index "machine_prices", ["machine_id"], name: "index_machine_prices_on_machine_id", using: :btree
-  add_index "machine_prices", ["machine_type_id"], name: "index_machine_prices_on_machine_type_id", using: :btree
-  add_index "machine_prices", ["validity_at", "lease_id", "machine_id", "machine_type_id", "work_kind_id"], name: "machine_prices_unique", unique: true, using: :btree
-  add_index "machine_prices", ["validity_at"], name: "index_machine_prices_on_validity_at", using: :btree
-  add_index "machine_prices", ["work_kind_id"], name: "index_machine_prices_on_work_kind_id", using: :btree
+  add_index "machine_price_groups", ["validated_at", "machine_type_id", "machine_id"], name: "machine_price_groups_2nd_key", unique: true, using: :btree
+
+  create_table "machine_price_values", force: :cascade do |t|
+    t.integer  "machine_price_group_id",                           null: false
+    t.integer  "work_kind_id",                                     null: false
+    t.integer  "lease_id",                                         null: false
+    t.integer  "adjust_id"
+    t.decimal  "price",                  precision: 5, default: 0, null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+  end
+
+  add_index "machine_price_values", ["machine_price_group_id", "work_kind_id", "lease_id"], name: "machine_price_values_2nd_key", unique: true, using: :btree
 
   create_table "machine_results", force: :cascade do |t|
     t.integer  "machine_id"
@@ -185,10 +189,9 @@ ActiveRecord::Schema.define(version: 20160521125139) do
   add_index "work_kind_types", ["work_kind_id", "work_type_id"], name: "index_work_kind_types_on_work_kind_id_and_work_type_id", unique: true, using: :btree
 
   create_table "work_kinds", force: :cascade do |t|
-    t.string   "name",          limit: 20,                               null: false
-    t.integer  "display_order",                                          null: false
-    t.decimal  "price",                    precision: 4, default: 1000,  null: false
-    t.boolean  "other_flag",                             default: false, null: false
+    t.string   "name",          limit: 20,                 null: false
+    t.integer  "display_order",                            null: false
+    t.boolean  "other_flag",               default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
