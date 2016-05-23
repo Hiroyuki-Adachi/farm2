@@ -1,34 +1,21 @@
-<% if @machine_prices.count > 0 %>
-<h2><%= @machine_prices.validity_at.strftime('%Y年%m月%d日') %></h2>
+<% if @machine_price.count > 0 %>
+<h2><%= @machine_price.validated_at.strftime("%Y年%m月%d日") %>以降</h2>
 <table class="list">
   <tr>
-    <th>内容</th>
-    <th colspan="2">全作業共通</th>
+    <th>設定モード</th>
     <% @work_kinds.each do |work_kind| %>
     <th colspan="2"><%=h work_kind.name %></th>
     <% end %>
   </tr>
 
-  <% Lease.all.each do |lease| %>
-    <tr>
-      <th><%=h lease.name %></th>
-      <% machine_price = @machine_prices.where(leace_id: lease, work_kind_id: 0) %>
-      <% if machine_price.exists? %>
-      <td><%= machine_price.adjust.name %></td>
-      <td class="numeric"><%=h machine_price.price %></td>
-      <% else %>
-      <td colspan="2">未設定</td>
-      <% end %>
-      <% @work_kinds.each do |work_kind| %>
-        <% machine_price = @machine_prices.where(leace_id: lease, work_kind_id: work_kind) %>
-        <% if machine_price.exists? %>
-        <td><%= machine_price.adjust.name %></td>
-        <td class="numeric"><%=h machine_price.price %></td>
-        <% else %>
-        <td colspan="2">未設定</td>
-        <% end %>
-      <% end %>
-    </tr>
-   <% end %>
+<% Lease.all.each do |lease| %>
+  <tr>
+    <th><%=h lease.name %></th>
+    <% @work_kinds.each do |work_kind| %>
+    <td><%=h @machine_price.details_form[lease.id][work_kind.id].adjust.name %></td>
+    <td class="numeric"><%=h number_with_delimiter(@machine_price.details_form[lease.id][work_kind.id].price) %></td>
+    <% end %>
+  </tr>
+<% end %>
 </table>
 <% end %>

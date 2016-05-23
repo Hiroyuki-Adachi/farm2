@@ -1,6 +1,6 @@
 class Machine < ActiveRecord::Base
   has_many  :machine_results
-  has_many  :work_results, through: :machine_results
+  has_many  :work_results, through: :machine_results, dependent: :restrict_with_exception
 
   belongs_to :machine_type
   has_many :machine_kinds, through: :machine_type

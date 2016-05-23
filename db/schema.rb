@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523142447) do
+ActiveRecord::Schema.define(version: 20160523212550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,27 +81,27 @@ ActiveRecord::Schema.define(version: 20160523142447) do
 
   add_index "machine_kinds", ["machine_type_id", "work_kind_id"], name: "machine_kinds_2nd_key", unique: true, using: :btree
 
-  create_table "machine_price_groups", force: :cascade do |t|
+  create_table "machine_price_details", force: :cascade do |t|
+    t.integer  "machine_price_header_id",                           null: false
+    t.integer  "lease_id",                                          null: false
+    t.integer  "work_kind_id",                          default: 0, null: false
+    t.integer  "adjust_id"
+    t.decimal  "price",                   precision: 5, default: 0, null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+  end
+
+  add_index "machine_price_details", ["machine_price_header_id", "lease_id", "work_kind_id"], name: "machine_price_details_2nd_key", unique: true, using: :btree
+
+  create_table "machine_price_headers", force: :cascade do |t|
     t.date     "validated_at",                null: false
-    t.integer  "machine_type_id", default: 0, null: false
     t.integer  "machine_id",      default: 0, null: false
+    t.integer  "machine_type_id", default: 0, null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
 
-  add_index "machine_price_groups", ["validated_at", "machine_type_id", "machine_id"], name: "machine_price_groups_2nd_key", unique: true, using: :btree
-
-  create_table "machine_price_values", force: :cascade do |t|
-    t.integer  "machine_price_group_id",                           null: false
-    t.integer  "work_kind_id",                                     null: false
-    t.integer  "lease_id",                                         null: false
-    t.integer  "adjust_id"
-    t.decimal  "price",                  precision: 5, default: 0, null: false
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-  end
-
-  add_index "machine_price_values", ["machine_price_group_id", "work_kind_id", "lease_id"], name: "machine_price_values_2nd_key", unique: true, using: :btree
+  add_index "machine_price_headers", ["validated_at", "machine_id", "machine_type_id"], name: "machine_price_headers_2nd_key", unique: true, using: :btree
 
   create_table "machine_results", force: :cascade do |t|
     t.integer  "machine_id"

@@ -77,5 +77,5 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  root to: "menu#index"
+  root controller: :menu, action: :index
 end
