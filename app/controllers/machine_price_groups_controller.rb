@@ -1,2 +1,0 @@
-class MachinePriceGroupsController < ApplicationController
-end
