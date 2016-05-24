@@ -42,17 +42,18 @@ ActiveRecord::Schema.define(version: 20160523212550) do
   add_index "chemicals", ["deleted_at"], name: "index_chemicals_on_deleted_at", using: :btree
 
   create_table "homes", force: :cascade do |t|
-    t.string   "phonetic",      limit: 15
-    t.string   "name",          limit: 10
+    t.string   "phonetic",            limit: 15
+    t.string   "name",                limit: 10
     t.integer  "worker_id"
-    t.string   "zip_code",      limit: 7
-    t.string   "address1",      limit: 50
-    t.string   "address2",      limit: 50
-    t.string   "telephone",     limit: 15
-    t.string   "fax",           limit: 15
+    t.string   "zip_code",            limit: 7
+    t.string   "address1",            limit: 50
+    t.string   "address2",            limit: 50
+    t.string   "telephone",           limit: 15
+    t.string   "fax",                 limit: 15
     t.integer  "section_id"
     t.integer  "display_order"
-    t.boolean  "member_flag",              default: true, null: false
+    t.boolean  "member_flag",                    default: true,  null: false
+    t.boolean  "worker_payment_flag",            default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"

@@ -75,6 +75,9 @@ ja:
       machine_type:
         name: 名称
         display_order: 表示順
+        
+      machine_price_header:
+        validated_at: 起算日
 
       work_kind:
         name: 名称

@@ -20,7 +20,7 @@
   </tr>
 <% end %>
 </table>
+<%= paginate(@lands) %>
 <% end %>
 <br />
-<%= paginate(@lands) %>
 <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

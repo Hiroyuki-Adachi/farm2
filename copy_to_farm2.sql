@@ -1,4 +1,16 @@
 ﻿CREATE EXTENSION dblink;
+------------------------------------- work_kinds
+TRUNCATE TABLE work_kinds;
+
+INSERT INTO work_kinds (id, name, display_order, other_flag, created_at, updated_at, deleted_at)
+SELECT id, name, display_order, other_flag, created_at, updated_at, deleted_at
+FROM dblink('dbname=farm_production',
+'SELECT id, name, display_order, other_flag, created_at, updated_at, deleted_at FROM work_kinds') AS
+t1(id integer, name varchar, display_order integer, other_flag boolean, created_at timestamp, updated_at timestamp, deleted_at timestamp);
+
+UPDATE work_kinds SET id = (SELECT MAX(id) FROM work_kinds) + 1 WHERE id = 0;
+
+SELECT SETVAL('work_kinds_id_seq', (SELECT MAX(id) FROM work_kinds));
 ------------------------------------- works
 TRUNCATE TABLE works;
 
@@ -7,6 +19,8 @@ SELECT id, year, worked_at, weather, work_type_id, name, remarks, start_at, end_
 FROM dblink('dbname=farm_production',
 'SELECT id, year, worked_at, weather, work_type_id, name, remarks, start_at, end_at, payed_at, work_kind_id, created_at, updated_at FROM works') AS
 t1(id integer, year integer, worked_at date, weather smallint, work_type_id integer, name varchar, remarks text, start_at timestamp, end_at timestamp, payed_at date , work_kind_id integer, created_at timestamp, updated_at timestamp);
+
+UPDATE works SET work_kind_id = (SELECT MAX(id) FROM work_kinds) WHERE work_kind_id = 0;
 
 SELECT SETVAL('works_id_seq', (SELECT MAX(id) FROM works));
 ------------------------------------- work_results
@@ -69,16 +83,6 @@ FROM dblink('dbname=farm_production',
 t1(id integer, genre integer, name varchar, category_flag boolean, display_order integer, deleted_at timestamp);
 
 SELECT SETVAL('work_types_id_seq', (SELECT MAX(id) FROM work_types));
-------------------------------------- work_kinds
-TRUNCATE TABLE work_kinds;
-
-INSERT INTO work_kinds (id, name, display_order, other_flag, created_at, updated_at, deleted_at)
-SELECT id, name, display_order, other_flag, created_at, updated_at, deleted_at
-FROM dblink('dbname=farm_production',
-'SELECT id, name, display_order, other_flag, created_at, updated_at, deleted_at FROM work_kinds') AS
-t1(id integer, name varchar, display_order integer, other_flag boolean, created_at timestamp, updated_at timestamp, deleted_at timestamp);
-
-SELECT SETVAL('work_kinds_id_seq', (SELECT MAX(id) FROM work_kinds));
 ------------------------------------- work_kind_types
 TRUNCATE TABLE work_kind_types;
 SELECT SETVAL('work_kind_types_id_seq', 1);
@@ -87,6 +91,8 @@ INSERT INTO work_kind_types (work_type_id, work_kind_id)
 SELECT t1.id, t2.id
 FROM dblink('dbname=farm_production', 'SELECT id FROM work_types WHERE category_flag = true AND deleted_at IS NULL') AS t1(id integer),
 dblink('dbname=farm_production', 'SELECT id FROM work_kinds WHERE deleted_at IS NULL') AS t2(id integer);
+
+UPDATE work_kind_types SET work_kind_id = (SELECT MAX(id) FROM work_kinds) WHERE work_kind_id = 0;
 ------------------------------------- work_kind_prices
 TRUNCATE TABLE work_kind_prices;
 SELECT SETVAL('work_kind_prices_id_seq', 1);
@@ -95,6 +101,8 @@ INSERT INTO work_kind_prices (term, work_kind_id, price, created_at, updated_at)
 SELECT term, work_kind_id, price, created_at, updated_at
 FROM dblink('dbname=farm_production', 'SELECT W.term, W.work_kind_id, WK.price, WK.created_at, WK.updated_at FROM (SELECT DISTINCT year AS term, work_kind_id FROM works) W INNER JOIN work_kinds WK ON WK.id = W.work_kind_id') 
 AS t1(term integer, work_kind_id integer, price numeric, created_at timestamp, updated_at timestamp);
+
+UPDATE work_kind_prices SET work_kind_id = (SELECT MAX(id) FROM work_kinds) WHERE work_kind_id = 0;
 ------------------------------------- machines
 TRUNCATE TABLE machines;
 

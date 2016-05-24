@@ -1,0 +1,51 @@
+<% if @machine_price.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @machine_price.errors.count %>件のエラーがあります。</h2>
+ 
+    <ul>
+    <% @machine_price.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_for(@machine_price) do |f| %>
+  <p>
+    <%= f.label :validated_at %>
+    <%= f.date_field(:validated_at) %><br />
+  </p>
+<table class="list">
+  <tr>
+    <th>設定モード</th>
+    <th colspan="2">標準</th>
+    <% @work_kinds.each do |work_kind| %>
+    <th colspan="2"><%=h work_kind.name %></th>
+    <% end %>
+  </tr>
+  <tbody>
+<% Lease.all.each do |lease| %>
+  <tr>
+    <th><%=h lease.name %></th>
+    <td><%= select_tag("details_form[#{lease.id}][0][adjust_id]", options_from_collection_for_select(@adjusts, :id, :name, @machine_price.details_form[lease.id][0][:adjust_id])) %></td>
+    <td><%= number_field_tag("details_form[#{lease.id}][0][price]", @machine_price.details_form[lease.id][0][:price]) %></td>
+    <% @work_kinds.each do |work_kind| %>
+    <td><%= select_tag("details_form[#{lease.id}][#{work_kind.id}][adjust_id]", options_from_collection_for_select(@adjusts, :id, :name, @machine_price.details_form[lease.id][work_kind.id][:adjust_id])) %></td>
+    <td><%= number_field_tag("details_form[#{lease.id}][#{work_kind.id}][price]", @machine_price.details_form[lease.id][work_kind.id][:price]) %></td>
+    <% end %>
+  </tr>
+<% end %>
+  </tbody>
+</table>
+<%= f.hidden_field(:machine_id) %>
+<%= f.hidden_field(:machine_type_id) %>
+<%= f.submit '登録' %>
+<% if controller.action_name == "edit" %>
+<%= button_tag "履歴", type: :button, :onclick => raw("javascript:location.href = '" + machine_price_headers_path(id: @machine_price.id) + "';") %>
+<%= f.submit "削除", name: :delete, :confirm => "本当に削除してもよろしいですか?" %>
+<% end %>
+    <% if @machine_price.machine_id == 0 %>
+    <%= button_tag "戻る", type: :button, :onclick => raw("javascript:location.href = '" + edit_machine_type_path(@machine_price.machine_type_id) + "';") %>
+    <% else %>
+    <%= button_tag "戻る", type: :button, :onclick => raw("javascript:location.href = '" + edit_machine_path(@machine_price.machine_id) + "';") %>
+    <% end %>
+<% end %>

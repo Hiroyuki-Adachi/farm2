@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :machine_prices, except: [:show] do
+  resources :machine_price_headers, {controller: :machine_prices, path: "machine_prices", except: [:show]} do
     collection do
       get :show_machine
       get :show_type
