@@ -1,18 +1,74 @@
 class MachinePricesController < ApplicationController
+  before_action :set_machine_price, only: [:edit, :update, :destroy]
+  before_action :set_adjusts, only: [:new, :edit]
+
   def show_type
     @machine_type = MachineType.find(params[:machine_type_id])
     @machine_price = MachinePriceHeader.show_type(@machine_type, Date.today)
-    @work_kinds = @machine_type.work_kinds
   end
 
   def new
-    @adjusts = Adjust.all
     if params[:machine_id]
       @machine_price = MachinePriceHeader.new(machine_id: params[:machine_id], validated_at: Date.today)
-      @work_kinds = Machine.find(params[:machine_id]).machine_type.work_kinds
     else
       @machine_price = MachinePriceHeader.new(machine_type_id: params[:machine_type_id], validated_at: Date.today)
-      @work_kinds = MachineType.find(params[:machine_type_id]).work_kinds
     end
   end
+  
+  def create
+    @machine_price = MachinePriceHeader.new(machine_price_header_params)
+    @machine_price.details_form = params[:details_form]
+    
+    if @machine_price.save
+      if @machine_price.machine?
+        redirect_to show_machine_machine_price_headers_path(machine_id: @machine_price.machine_id)
+      else
+        redirect_to show_type_machine_price_headers_path(machine_type_id: @machine_price.machine_type_id)
+      end
+    else
+      render action: :new
+    end
+  end
+  
+  def edit
+  end
+  
+  def update
+    @machine_price.details_form = params[:details_form]
+    if @machine_price.update_attributes(machine_price_header_params)
+      if @machine_price.machine?
+        redirect_to show_machine_machine_price_headers_path(machine_id: @machine_price.machine_id)
+      else
+        redirect_to show_type_machine_price_headers_path(machine_type_id: @machine_price.machine_type_id)
+      end
+    else
+      render action: :edit
+    end
+  end
+
+  def destroy
+    if @machine_price.machine?
+      machine_id =  @machine_price.machine_id
+      @machine_price.destroy
+      redirect_to show_machine_machine_price_headers_path(machine_id: machine_id)
+    else
+      machine_type_id =  @machine_price.machine_type_id
+      @machine_price.destroy
+      redirect_to show_type_machine_price_headers_path(machine_type_id: machine_type_id)
+    end
+  end
+
+  private
+  def set_machine_price
+    @machine_price = MachinePriceHeader.find(params[:id])
+  end
+  
+  def set_adjusts
+    @adjusts = Adjust.all
+  end
+
+  def machine_price_header_params
+    return params.require(:machine_price_header).permit(:validated_at, :machine_id, :machine_type_id)
+  end
+
 end

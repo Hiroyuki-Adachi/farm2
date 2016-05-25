@@ -190,7 +190,10 @@ li {
   margin-bottom: 5px;
 }
 
-button,input[type="button"],input[type="submit"] {
+button,input[type="button"],input[type="submit"],a.button {
+  padding: 2px 2px 2px 2px;
+  font-size: 1em;
+  text-decoration: none;
 	background-color: #333;
 	border: 2px solid #333;
 	color: #fff;
@@ -201,7 +204,7 @@ button,input[type="button"],input[type="submit"] {
   -ms-transition: 0.5s;
   transition: 0.5s;
 }
-button:hover,input[type="button"]:hover,input[type="submit"]:hover {
+button:hover,input[type="button"]:hover,input[type="submit"]:hover,a.button:hover {
 	background-color: #fff;
 	border-color: darkblue;
 	color: darkblue;
