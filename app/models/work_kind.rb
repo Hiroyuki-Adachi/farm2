@@ -11,6 +11,7 @@ class WorkKind < ActiveRecord::Base
   
   has_many :work_kind_types
   has_many :work_types, through: :work_kind_types
+  has_many :work_kind_prices
 
   validates :name, presence: true
   validates :price, presence: true
@@ -22,7 +23,11 @@ class WorkKind < ActiveRecord::Base
   scope :usual, -> {where(other_flag: false).order(:display_order)}
   
   def price
-    return WorkKindPrice.usual(self).price
+    begin
+      return WorkKindPrice.usual(self).first.price
+    rescue Exception => e
+      return 0
+    end
   end
   
   def price=(val)

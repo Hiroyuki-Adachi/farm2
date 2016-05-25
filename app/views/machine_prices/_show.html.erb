@@ -13,8 +13,12 @@
   <tr>
     <th><%=h lease.name %></th>
     <% work_kinds.each do |work_kind| %>
-    <td><%=h Adjust.find(@machine_price.first.details_form[lease.id][work_kind.id][:adjust_id]).name %></td>
-    <td class="numeric"><%=h number_with_delimiter(@machine_price.first.details_form[lease.id][work_kind.id][:price]) %></td>
+      <% if @machine_price.first.details_form[lease.id][work_kind.id][:adjust_id].to_i == Adjust::NONE.id %>
+        <td colspan="2"><%=h Adjust::NONE.name %></td>
+      <% else %>
+        <td><%=h Adjust.find(@machine_price.first.details_form[lease.id][work_kind.id][:adjust_id]).name %></td>
+        <td class="numeric"><%=h number_with_delimiter(@machine_price.first.details_form[lease.id][work_kind.id][:price]) %></td>
+      <% end %>
     <% end %>
   </tr>
 <% end %>

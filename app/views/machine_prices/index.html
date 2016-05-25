@@ -1,0 +1,17 @@
+<h1><%= @machine_price.name %>料金履歴一覧</h1>
+<% if @machine_prices.count > 0 %>
+<table class="list">
+  <tr>
+    <th>起算日</th>
+    <th>&nbsp;</th>
+  </tr>
+
+<% @machine_prices.each do |machine_price| %>
+  <tr>
+    <td><%=h machine_price.validated_at.strftime("%Y-%m-%d") %></td>
+    <td><%= link_to '修正', edit_machine_price_header_path(machine_price) %></td>
+  </tr>
+<% end %>
+</table>
+<% end %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + edit_machine_price_header_path(@machine_price) + "';") %>

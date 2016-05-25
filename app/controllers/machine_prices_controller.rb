@@ -1,6 +1,10 @@
 class MachinePricesController < ApplicationController
-  before_action :set_machine_price, only: [:edit, :update, :destroy]
+  before_action :set_machine_price, only: [:index, :edit, :update, :destroy]
   before_action :set_adjusts, only: [:new, :edit]
+  
+  def index
+    @machine_prices = MachinePriceHeader.histories(@machine_price)
+  end
 
   def show_type
     @machine_type = MachineType.find(params[:machine_type_id])
