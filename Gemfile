@@ -32,6 +32,8 @@ gem 'paranoia'
 
 gem 'kaminari'
 
+gem 'draper'
+
 gem 'rails4-autocomplete'
 
 # Use ActiveModel has_secure_password

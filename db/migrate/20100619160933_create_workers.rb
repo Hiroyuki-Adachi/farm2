@@ -14,6 +14,11 @@ class CreateWorkers < ActiveRecord::Migration
       t.boolean  :work_flag,       {default: true, null: false}
       t.integer  :gender_id,       {default: 0, null: false}
 
+      t.string  :bank_code,       {null: false, limit: 4, default: "0000"}
+      t.string  :branch_code,     {null: false, limit: 3, default: "000"}
+      t.integer :account_type_id, {null: false, limit: 1, default: 0}
+      t.string :account_number,   {null: false, limit: 7, default: "0000000"}
+
       t.timestamps
       t.datetime :deleted_at
     end

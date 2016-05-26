@@ -7,18 +7,34 @@ class WorkKindsController < ApplicationController
   end
 
   def new
+    @work_kind = WorkKind.new
   end
 
   def edit
   end
 
   def create
+    @work_kind = WorkKind.new(work_kind_params)
+    if @work_kind.save
+      update_others
+      redirect_to work_kinds_path
+    else
+      render action: :new
+    end
   end
 
   def update
+    if @work_kind.update_attributes(work_kind_params)
+      update_others
+      redirect_to work_kinds_path
+    else
+      render action: :edit
+    end
   end
 
   def destroy
+    @work_kind.destroy
+    redirect_to work_kinds_path
   end
   
   private
@@ -34,6 +50,12 @@ class WorkKindsController < ApplicationController
     @work_types = WorkType.categories
     @machine_types = MachineType.order(:display_order, :id)
     @chemical_types = ChemicalType.order(:display_order, :id)
+  end
+  
+  def update_others
+    @work_kind.work_types = params[:work_types] ? WorkType.find(params[:work_types]) : []
+    @work_kind.machine_types = params[:machine_types] ? MachineType.find(params[:machine_types]) : []
+    @work_kind.chemical_types = params[:chemical_types] ? ChemicalType.find(params[:chemical_types]) : []
   end
   
 end

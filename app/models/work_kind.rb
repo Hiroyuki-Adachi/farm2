@@ -4,7 +4,7 @@ class WorkKind < ActiveRecord::Base
   after_save :save_price
   
   has_many :machine_kinds
-  has_many :machines,-> {order("machines.display_order")}, through: :machine_kinds 
+  has_many :machine_types,-> {order("machine_types.display_order")}, through: :machine_kinds 
 
   has_many :chemical_kinds
   has_many :chemical_types, -> {order("chemical_types.display_order")}, through: :chemical_kinds
@@ -23,11 +23,8 @@ class WorkKind < ActiveRecord::Base
   scope :usual, -> {where(other_flag: false).order(:display_order)}
   
   def price
-    begin
-      return WorkKindPrice.usual(self).first.price
-    rescue Exception => e
-      return 0
-    end
+    work_kind_prices = WorkKindPrice.usual(self)
+    return work_kind_prices.exists? ? work_kind_prices.first.price : 0; 
   end
   
   def price=(val)
