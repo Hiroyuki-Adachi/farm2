@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20160523212550) do
     t.integer  "display_order"
     t.boolean  "member_flag",                    default: true,  null: false
     t.boolean  "worker_payment_flag",            default: false, null: false
+    t.boolean  "company_flag",                   default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
@@ -132,13 +133,20 @@ ActiveRecord::Schema.define(version: 20160523212550) do
     t.integer  "home_id",                      default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
   end
 
   create_table "organizations", force: :cascade do |t|
-    t.string   "show_work1",    limit: 10,              null: false
-    t.string   "show_work2",    limit: 10,              null: false
-    t.integer  "workers_count", limit: 2,  default: 12, null: false
-    t.integer  "lands_count",   limit: 2,  default: 12, null: false
+    t.string   "show_work1",      limit: 10,                     null: false
+    t.string   "show_work2",      limit: 10,                     null: false
+    t.integer  "workers_count",   limit: 2,  default: 12,        null: false
+    t.integer  "lands_count",     limit: 2,  default: 12,        null: false
+    t.string   "consignor_code",  limit: 10
+    t.string   "consignor_name",  limit: 40
+    t.string   "bank_code",       limit: 4,  default: "0000",    null: false
+    t.string   "branch_code",     limit: 3,  default: "000",     null: false
+    t.integer  "account_type_id", limit: 2,  default: 0,         null: false
+    t.string   "account_number",  limit: 7,  default: "0000000", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -232,18 +240,22 @@ ActiveRecord::Schema.define(version: 20160523212550) do
   add_index "work_types", ["deleted_at"], name: "index_work_types_on_deleted_at", using: :btree
 
   create_table "workers", force: :cascade do |t|
-    t.string   "family_phonetic", limit: 15,                null: false
-    t.string   "family_name",     limit: 10,                null: false
-    t.string   "first_phonetic",  limit: 15,                null: false
-    t.string   "first_name",      limit: 10,                null: false
+    t.string   "family_phonetic", limit: 15,                     null: false
+    t.string   "family_name",     limit: 10,                     null: false
+    t.string   "first_phonetic",  limit: 15,                     null: false
+    t.string   "first_name",      limit: 10,                     null: false
     t.date     "birthday"
     t.integer  "home_id"
     t.string   "mobile",          limit: 15
     t.string   "mobile_mail",     limit: 50
     t.string   "pc_mail",         limit: 50
     t.integer  "display_order"
-    t.boolean  "work_flag",                  default: true, null: false
-    t.integer  "gender_id",                  default: 0,    null: false
+    t.boolean  "work_flag",                  default: true,      null: false
+    t.integer  "gender_id",                  default: 0,         null: false
+    t.string   "bank_code",       limit: 4,  default: "0000",    null: false
+    t.string   "branch_code",     limit: 3,  default: "000",     null: false
+    t.integer  "account_type_id", limit: 2,  default: 0,         null: false
+    t.string   "account_number",  limit: 7,  default: "0000000", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"

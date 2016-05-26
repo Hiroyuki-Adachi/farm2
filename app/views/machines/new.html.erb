@@ -1,0 +1,25 @@
+<h1>機械マスタ一覧</h1>
+<div style="text-align:right;">
+<%= link_to '機械マスタ新規登録', new_machine_path %>
+</div>
+<% if @machines.count > 0 %>
+<table class="list">
+  <tr>
+    <th>名称</th>
+    <th>運用開始日</th>
+    <th>運用終了(予定)日</th>
+    <th colspan="2">&nbsp;</th>
+  </tr>
+
+<% @machines.each do |machine| %>
+  <tr>
+    <td><%=h machine.name %></td>
+    <td><%=h machine.validity_start_at %></td>
+    <td><%=h machine.validity_end_at %></td>
+    <td><%= link_to '修正', edit_machine_path(machine) %></td>
+    <td><%= link_to '削除', machine, :confirm => '本当に削除してもよろしいですか？', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<% end %>
+<%= button_to '戻る', root_path %>

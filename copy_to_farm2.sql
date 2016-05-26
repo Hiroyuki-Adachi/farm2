@@ -43,6 +43,18 @@ FROM dblink('dbname=farm_production',
 t1(id integer, work_id integer, land_id integer, display_order integer, created_at timestamp, updated_at timestamp);
 
 SELECT SETVAL('work_lands_id_seq', (SELECT MAX(id) FROM work_lands));
+------------------------------------- sections
+TRUNCATE TABLE sections;
+
+INSERT INTO sections (id, name, display_order, work_flag, created_at, updated_at)
+SELECT id, name, display_order, work_flag, created_at, updated_at
+FROM dblink('dbname=farm_production',
+'SELECT id, name, display_order, work_flag, created_at, updated_at FROM sections') AS
+t1(id integer, name varchar, display_order integer, work_flag boolean, created_at timestamp, updated_at timestamp);
+
+SELECT SETVAL('sections_id_seq', (SELECT MAX(id) FROM sections));
+
+INSERT INTO sections (name, display_order, work_flag, created_at, updated_at) VALUES ('特別', 99, 'f', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 ------------------------------------- homes
 TRUNCATE TABLE homes;
 
@@ -53,6 +65,8 @@ FROM dblink('dbname=farm_production',
 t1(id integer, phonetic varchar, name varchar, worker_id integer, zip_code varchar, address1 varchar, address2 varchar, telephone varchar, fax varchar, group_number integer, display_order integer, member_flag smallint, created_at timestamp, updated_at timestamp, deleted_at timestamp);
 
 SELECT SETVAL('homes_id_seq', (SELECT MAX(id) FROM homes));
+
+INSERT INTO homes (phonetic, name, section_id, display_order, member_flag, company_flag, created_at, updated_at) VALUES ('えいのうくみあい', '営農組合', (SELECT MAX(id) FROM sections), 99, 'f', 't', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 ------------------------------------- lands
 TRUNCATE TABLE lands;
 
@@ -163,16 +177,6 @@ FROM dblink('dbname=farm_production',
 t1(id integer, work_id integer, chemical_id integer, quantity integer, created_at timestamp, updated_at timestamp);
 
 SELECT SETVAL('work_chemicals_id_seq', (SELECT MAX(id) FROM work_chemicals));
-------------------------------------- sections
-TRUNCATE TABLE sections;
-
-INSERT INTO sections (id, name, display_order, work_flag, created_at, updated_at)
-SELECT id, name, display_order, work_flag, created_at, updated_at
-FROM dblink('dbname=farm_production',
-'SELECT id, name, display_order, work_flag, created_at, updated_at FROM sections') AS
-t1(id integer, name varchar, display_order integer, work_flag boolean, created_at timestamp, updated_at timestamp);
-
-SELECT SETVAL('sections_id_seq', (SELECT MAX(id) FROM sections));
 ------------------------------------- organizations
 TRUNCATE TABLE organizations;
 

@@ -9,8 +9,8 @@ class Home < ActiveRecord::Base
   belongs_to :holder, {class_name: :Worker, foreign_key: :worker_id}, -> {:with_deleted}
   belongs_to :section
 
-  scope :usual, ->{includes(:section).where(member_flag: true).order("sections.display_order, homes.display_order, homes.id")}
-  scope :list, ->{includes(:section, :holder).order("sections.display_order, homes.display_order, homes.id")}
+  scope :usual, ->{includes(:section).where(member_flag: true, company_flag: false).order("sections.display_order, homes.display_order, homes.id")}
+  scope :list, ->{includes(:section, :holder).where(company_flag: false).order("sections.display_order, homes.display_order, homes.id")}
 
   validates :phonetic,      presence: true
   validates :name,          presence: true

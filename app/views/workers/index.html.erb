@@ -12,7 +12,7 @@
   </tr>
 <% @workers.each do |worker| %>
   <tr>
-    <td><%=h worker.name %>(<%=h worker.phonetic %>)</td>
+    <td><%=h worker.name %>(<%=h worker.first_phonetic %>)</td>
     <td><%=h worker.home.name %></td>
     <td><%=h worker.mobile %></td>
     <td><%= link_to '修正', edit_worker_path(worker) %></td>

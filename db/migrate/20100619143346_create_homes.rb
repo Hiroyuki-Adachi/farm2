@@ -13,6 +13,7 @@ class CreateHomes < ActiveRecord::Migration
       t.integer  :display_order
       t.boolean  :member_flag,  {null: false, default: true}  #組合員か否か
       t.boolean  :worker_payment_flag, {null: false, default: false}  #組合員に支払う(Falseだと世帯に支払う)
+      t.boolean  :company_flag, {null: false, default: false}
 
       t.timestamps
       t.datetime :deleted_at

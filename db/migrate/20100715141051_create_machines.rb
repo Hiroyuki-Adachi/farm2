@@ -9,6 +9,7 @@ class CreateMachines < ActiveRecord::Migration
       t.integer :home_id,           {null: false, default: 0}
 
       t.timestamps
+      t.datetime :deleted_at
     end
   end
 end
