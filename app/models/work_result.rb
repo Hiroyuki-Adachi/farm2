@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: work_results
+#
+#  id            :integer          not null, primary key
+#  work_id       :integer
+#  worker_id     :integer
+#  hours         :decimal(3, 1)    default(0.0), not null
+#  display_order :integer          default(0), not null
+#  created_at    :datetime
+#  updated_at    :datetime
+#
+
 class WorkResult < ActiveRecord::Base
   belongs_to :work
   belongs_to :worker

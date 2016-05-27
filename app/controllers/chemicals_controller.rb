@@ -1,0 +1,2 @@
+class ChemicalsController < ApplicationController
+end

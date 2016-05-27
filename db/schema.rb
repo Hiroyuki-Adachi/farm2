@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523212550) do
+ActiveRecord::Schema.define(version: 20160527135210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "dblink"
 
   create_table "chemical_kinds", force: :cascade do |t|
     t.integer "chemical_type_id", null: false
@@ -22,6 +23,11 @@ ActiveRecord::Schema.define(version: 20160523212550) do
   end
 
   add_index "chemical_kinds", ["chemical_type_id", "work_kind_id"], name: "index_chemical_kinds_on_chemical_type_id_and_work_kind_id", unique: true, using: :btree
+
+  create_table "chemical_terms", force: :cascade do |t|
+    t.integer "chemical_id"
+    t.integer "term"
+  end
 
   create_table "chemical_types", force: :cascade do |t|
     t.string   "name",          limit: 20,             null: false

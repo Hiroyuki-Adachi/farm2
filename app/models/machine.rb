@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: machines
+#
+#  id                :integer          not null, primary key
+#  name              :string(40)       not null
+#  display_order     :integer          not null
+#  validity_start_at :date
+#  validity_end_at   :date
+#  machine_type_id   :integer          default(0), not null
+#  home_id           :integer          default(0), not null
+#  created_at        :datetime
+#  updated_at        :datetime
+#  deleted_at        :datetime
+#
+
 class Machine < ActiveRecord::Base
   acts_as_paranoid
 
@@ -9,6 +25,8 @@ class Machine < ActiveRecord::Base
 
   belongs_to :owner, {class_name: :Home, foreign_key: :home_id}, -> {:with_deleted}
 
+  validates :validity_start_at, presence: true
+  validates :validity_end_at, presence: true
   validates :display_order, presence: true
   validates :display_order, numericality: {only_integer: true}, :if => Proc.new{|x| x.display_order.present?}
 
@@ -23,6 +41,8 @@ class Machine < ActiveRecord::Base
     .where('machine_results.work_result_id in (?)', results)
     .order('machines.display_order')
   }
+  
+  scope :usual, -> {includes(:machine_type).order("machine_types.display_order, machines.display_order, machines.id")}
 
   def operators(work)
     operators = []
@@ -34,6 +54,18 @@ class Machine < ActiveRecord::Base
   end
 
   def hours(results)
-    return sprintf("%.1f", MachineResult.sum(:hours).where("machine_id = ? and work_result_id in (?)", self.id, results))
+    return MachineResult.sum(:hours).where("machine_id = ? and work_result_id in (?)", self.id, results)
+  end
+  
+  def owner_name
+    return self.owner ? self.owner.name : ""
+  end
+  
+  def type_name
+    return self.machine_type ? self.machine_type.name : ""
+  end
+  
+  def usual_name
+    return self.owner.company_flag ? "#{type_name}(#{self.name})" : "#{type_name}(#{owner_name})"
   end
 end

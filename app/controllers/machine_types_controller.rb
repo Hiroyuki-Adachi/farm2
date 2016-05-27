@@ -1,6 +1,6 @@
 class MachineTypesController < ApplicationController
   before_action :set_machine_type, only: [:edit, :update, :destroy]
-  before_action :set_work_kinds, only: [:new, :edit]
+  before_action :set_work_kinds, only: [:new, :create, :edit, :update]
 
   def index
     @machine_types = MachineType.includes(:machines).all.order(:display_order)
@@ -25,7 +25,7 @@ class MachineTypesController < ApplicationController
   end
 
   def update
-    if @machine_type.update_attributes(machine_type_params)
+    if @machine_type.update(machine_type_params)
       update_work_kinds
       redirect_to machine_types_path
     else

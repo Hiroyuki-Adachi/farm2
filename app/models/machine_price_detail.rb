@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: machine_price_details
+#
+#  id                      :integer          not null, primary key
+#  machine_price_header_id :integer          not null
+#  lease_id                :integer          not null
+#  work_kind_id            :integer          default(0), not null
+#  adjust_id               :integer
+#  price                   :decimal(5, )     default(0), not null
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#
+
 class MachinePriceDetail < ActiveRecord::Base
   extend ActiveHash::Associations::ActiveRecordExtensions
 

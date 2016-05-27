@@ -1,6 +1,6 @@
 class HomesController < ApplicationController
   before_action :set_home, only: [:edit, :update, :destroy]
-  before_action :set_sections, only: [:new, :edit]
+  before_action :set_sections, only: [:new, :create, :edit, :update]
 
   def index
     @homes = Home.list.page(params[:page])

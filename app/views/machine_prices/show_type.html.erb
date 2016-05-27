@@ -6,4 +6,4 @@
 <% if @machine_price.exists? %>
 <%= button_tag "変更",  type: :button, :onclick => raw("javascript:location.href = '" + edit_machine_price_header_path(@machine_price.first) + "';") %>
 <% end %>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + edit_machine_type_path(@machine_type) + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + machine_types_path + "';") %>

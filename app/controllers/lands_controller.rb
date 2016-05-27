@@ -1,6 +1,6 @@
 class LandsController < ApplicationController
   before_action :set_land, only: [:edit, :update, :destroy]
-  before_action :set_homes, only: [:new, :edit]
+  before_action :set_homes, only: [:new, :create, :edit, :update]
 
   def index
     @lands = Land.list.page(params[:page])
@@ -23,7 +23,7 @@ class LandsController < ApplicationController
   end
 
   def update
-    if @land.update_attributes(land_params)
+    if @land.update(land_params)
       redirect_to lands_path
     else
       render action: :edit

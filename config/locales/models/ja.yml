@@ -68,6 +68,8 @@ ja:
 
       machine:
         name: 名称
+        machine_type_id: 種別
+        home_id: 所有者
         display_order: 表示順
         validity_start_at: 運用開始日
         validity_end_at: 運用終了日

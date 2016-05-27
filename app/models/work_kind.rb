@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: work_kinds
+#
+#  id            :integer          not null, primary key
+#  name          :string(20)       not null
+#  display_order :integer          not null
+#  other_flag    :boolean          default(FALSE), not null
+#  created_at    :datetime
+#  updated_at    :datetime
+#  deleted_at    :datetime
+#
+
 class WorkKind < ActiveRecord::Base
   acts_as_paranoid
 

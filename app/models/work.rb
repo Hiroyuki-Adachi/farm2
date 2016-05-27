@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: works
+#
+#  id           :integer          not null, primary key
+#  term         :integer          not null
+#  worked_at    :date             not null
+#  weather_id   :integer
+#  work_type_id :integer
+#  name         :string(40)       not null
+#  remarks      :text
+#  start_at     :datetime         not null
+#  end_at       :datetime         not null
+#  payed_at     :date
+#  work_kind_id :integer          default(0), not null
+#  created_at   :datetime
+#  updated_at   :datetime
+#
+
 class Work < ActiveRecord::Base
   extend ActiveHash::Associations::ActiveRecordExtensions
   

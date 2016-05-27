@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: work_chemicals
+#
+#  id          :integer          not null, primary key
+#  work_id     :integer          not null
+#  chemical_id :integer          not null
+#  quantity    :decimal(3, )     default(0), not null
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 class WorkChemical < ActiveRecord::Base
   belongs_to :chemical
   belongs_to :work

@@ -5,22 +5,27 @@
 <% if @machines.count > 0 %>
 <table class="list">
   <tr>
+    <th>種別</th>
     <th>名称</th>
     <th>所有者</th>
     <th>運用開始日</th>
     <th>運用終了(予定)日</th>
-    <th colspan="2">&nbsp;</th>
+    <th colspan="3">&nbsp;</th>
   </tr>
 
 <% @machines.each do |machine| %>
   <tr>
+    <td><%=h machine.type_name %></td>
     <td><%=h machine.name %></td>
+    <td><%=h machine.owner.name %></td>
     <td><%=h machine.validity_start_at %></td>
     <td><%=h machine.validity_end_at %></td>
     <td><%= link_to '修正', edit_machine_path(machine) %></td>
-    <td><%= link_to '削除', machine, :confirm => '本当に削除してもよろしいですか？', :method => :delete %></td>
+    <td><%=h machine.price_tag %></td>
+    <td><%= link_to '削除', machine, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
   </tr>
 <% end %>
 </table>
+<%= paginate(@machines) %>
 <% end %>
-<%= button_to '戻る', root_path %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

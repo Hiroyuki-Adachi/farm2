@@ -31,9 +31,6 @@
  <br />
  <p>
     <%= f.submit '登録' %>
-    <% if controller.action_name == "edit" %>
-    <%= button_tag "料金設定", type: :button, :onclick => raw("javascript:location.href = '" + show_type_machine_price_headers_path(machine_type_id: @machine_type) + "';") %>
-    <% end %>
     <%= button_tag "戻る", type: :button, :onclick => raw("javascript:location.href = '" + machine_types_path + "';") %>
   </p>
 <% end %>

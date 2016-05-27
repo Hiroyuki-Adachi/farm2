@@ -1,6 +1,6 @@
 class WorkersController < ApplicationController
   before_action :set_worker, only: [:edit, :update, :destroy]
-  before_action :set_homes, only: [:new, :edit]
+  before_action :set_homes, only: [:new, :create, :edit, :update]
 
   def index
     @workers = Worker.usual.page(params[:page])
@@ -31,7 +31,7 @@ class WorkersController < ApplicationController
       @worker.home.holder = @worker
       @worker.home.save!
     end
-    if @worker.update_attributes(worker_params)
+    if @worker.update(worker_params)
       redirect_to workers_path
     else
       render action: :edit

@@ -1,6 +1,6 @@
 class WorkKindsController < ApplicationController
   before_action :set_work_kind, only: [:edit, :update, :destroy]
-  before_action :set_others, only: [:new, :edit]
+  before_action :set_others, only: [:new, :create, :edit, :update]
 
   def index
     @work_kinds = WorkKind.usual
@@ -24,7 +24,7 @@ class WorkKindsController < ApplicationController
   end
 
   def update
-    if @work_kind.update_attributes(work_kind_params)
+    if @work_kind.update(work_kind_params)
       update_others
       redirect_to work_kinds_path
     else

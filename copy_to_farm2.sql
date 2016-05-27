@@ -127,6 +127,8 @@ FROM dblink('dbname=farm_production',
 t1(id integer, name varchar, display_order integer, validity_start_at date, validity_end_at date, created_at timestamp, updated_at timestamp);
 
 SELECT SETVAL('machines_id_seq', (SELECT MAX(id) FROM machines));
+
+UPDATE machines SET home_id = (SELECT MAX(id) FROM homes);
 ------------------------------------- machine_results
 TRUNCATE TABLE machine_results;
 
@@ -167,6 +169,14 @@ FROM dblink('dbname=farm_production',
 t1(id integer, name varchar, display_order integer, created_at timestamp, updated_at timestamp);
 
 SELECT SETVAL('chemical_types_id_seq', (SELECT MAX(id) FROM chemical_types));
+------------------------------------- chemical_terms
+TRUNCATE TABLE chemical_terms;
+SELECT SETVAL('chemical_terms_id_seq', 1);
+
+INSERT INTO chemical_terms (chemical_id, term)
+SELECT t1.id, t2.term
+FROM dblink('dbname=farm_production', 'SELECT id FROM chemicals') AS t1(id integer),
+dblink('dbname=farm_production', 'SELECT DISTINCT year AS term FROM works') AS t2(term integer);
 ------------------------------------- work_chemicals
 TRUNCATE TABLE work_chemicals;
 

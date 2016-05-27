@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: machine_results
+#
+#  id             :integer          not null, primary key
+#  machine_id     :integer
+#  work_result_id :integer
+#  display_order  :integer          default(1), not null
+#  hours          :decimal(3, 1)    default(0.0), not null
+#  areas          :decimal(6, 2)    default(0.0), not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
 class MachineResult < ActiveRecord::Base
   belongs_to  :machine
   belongs_to  :work_result

@@ -25,7 +25,7 @@ class ChemicalTypesController < ApplicationController
   end
 
   def update
-    if @chemical_type.update_attributes(chemical_type_params)
+    if @chemical_type.update(chemical_type_params)
       update_work_kinds
       redirect_to chemical_types_path
     else

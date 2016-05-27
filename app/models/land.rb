@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: lands
+#
+#  id            :integer          not null, primary key
+#  place         :string(15)       not null
+#  owner_id      :integer
+#  manager_id    :integer
+#  area          :decimal(5, 2)    not null
+#  display_order :integer
+#  target_flag   :boolean          default(TRUE), not null
+#  created_at    :datetime
+#  updated_at    :datetime
+#  deleted_at    :datetime
+#
+
 class Land < ActiveRecord::Base
   acts_as_paranoid
 

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: work_types
+#
+#  id            :integer          not null, primary key
+#  genre         :integer          not null
+#  name          :string(10)       not null
+#  category_flag :boolean          default(FALSE)
+#  display_order :integer          default(0), not null
+#  deleted_at    :datetime
+#
+
 class WorkType < ActiveRecord::Base
   acts_as_paranoid
 

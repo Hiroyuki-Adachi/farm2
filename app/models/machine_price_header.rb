@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: machine_price_headers
+#
+#  id              :integer          not null, primary key
+#  validated_at    :date             not null
+#  machine_id      :integer          default(0), not null
+#  machine_type_id :integer          default(0), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 class MachinePriceHeader < ActiveRecord::Base
   require "ostruct"
 
@@ -52,7 +64,7 @@ class MachinePriceHeader < ActiveRecord::Base
   end
   
   def name
-    return self.machine_id == 0 ? self.machine_type.name : self.machine.name
+    return self.machine_id == 0 ? self.machine_type.name : self.machine.usual_name
   end
   
   def save_details

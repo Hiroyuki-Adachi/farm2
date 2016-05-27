@@ -6,13 +6,14 @@
 <table class="list">
   <tr>
     <th>機械種別名</th>
-    <th colspan="2">&nbsp;</th>
+    <th colspan="3">&nbsp;</th>
   </tr>
 
 <% @machine_types.each do |machine_type| %>
   <tr>
     <td><%=h machine_type.name %></td>
     <td><%= link_to '修正', edit_machine_type_path(machine_type) %></td>
+    <td><%= link_to '料金設定', show_type_machine_price_headers_path(machine_type_id: machine_type) %></td>
     <% if machine_type.machines.count == 0 %>
     <td><%= link_to '削除', machine_type, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
     <% else %>

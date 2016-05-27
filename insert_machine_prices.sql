@@ -2,6 +2,8 @@
 -- PostgreSQL database dump
 --
 
+TRUNCATE TABLE machine_price_headers;
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -37,6 +39,7 @@ COPY machine_price_headers (id, validated_at, machine_id, machine_type_id, creat
 SELECT pg_catalog.setval('machine_price_headers_id_seq', 8, true);
 
 
+TRUNCATE TABLE machine_price_details;
 --
 --
 
@@ -64,4 +67,11 @@ COPY machine_price_details (id, machine_price_header_id, lease_id, work_kind_id,
 
 SELECT pg_catalog.setval('machine_price_details_id_seq', 12, true);
 
+TRUNCATE TABLE machine_types;
+
+INSERT INTO machine_types (id, name, display_order) VALUES (1, 'トラクター', 1);
+INSERT INTO machine_types (id, name, display_order) VALUES (2, '田植機', 2);
+INSERT INTO machine_types (id, name, display_order) VALUES (3, 'コンバイン', 3);
+
+SELECT pg_catalog.setval('machine_types_id_seq', 3, true);
 

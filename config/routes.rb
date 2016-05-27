@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :homes, except: [:show]
   
   resources :workers, except: [:show]
+
+  resources :machines, except: [:show]
   
   resources :menu, only: [:index, :edit, :update] do
     member do
