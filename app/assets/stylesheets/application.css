@@ -178,6 +178,10 @@ td.numeric  {
   font-family: monospace;
 }
 
+td.center {
+  text-align: center;
+}
+
 span.check_group {
   display:inline-block;
   margin-right: 5px;

@@ -44,6 +44,7 @@ class WorkKind < ActiveRecord::Base
     @price = val
   end
   
+  private
   def save_price
     term = System.first.term
     work_kind_price = WorkKindPrice.where(work_kind_id: self.id, term: term).order(:id)

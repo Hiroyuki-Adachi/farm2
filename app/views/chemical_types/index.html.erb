@@ -13,11 +13,7 @@
   <tr>
     <td><%=h chemical_type.name %></td>
     <td><%= link_to '修正', edit_chemical_type_path(chemical_type) %></td>
-    <% if chemical_type.chemicals.count == 0 %>
-    <td><%= link_to '削除', chemical_type, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
-    <% else %>
-    <td>&nbsp;</td>
-    <% end %>
+    <td><%= chemical_type.delete_link %></td>
   </tr>
 <% end %>
 </table>

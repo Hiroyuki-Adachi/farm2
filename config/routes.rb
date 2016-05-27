@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :workers, except: [:show]
 
   resources :machines, except: [:show]
+
+  resources :chemicals, except: [:show]
   
   resources :menu, only: [:index, :edit, :update] do
     member do

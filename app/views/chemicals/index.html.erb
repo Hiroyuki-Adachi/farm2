@@ -1,0 +1,25 @@
+<h1>薬剤マスタ一覧</h1>
+<div class="new_data">
+<%= link_to '薬剤マスタ新規登録', new_chemical_path %>
+</div>
+<% if @chemicals.count > 0 %>
+<table class="list">
+  <tr>
+    <th>種別</th>
+    <th>名称</th>
+    <th>使用</th>
+    <th colspan="2">&nbsp;</th>
+  </tr>
+
+<% @chemicals.each do |chemical| %>
+  <tr>
+    <td><%=h chemical.name %></td>
+    <td><%=h chemical.chemical_type.name %></td>
+    <td class="center"><%=h chemical.this_term_flag %></td>
+    <td><%= link_to '修正', edit_chemical_path(chemical) %></td>
+    <td><%= link_to '削除', chemical, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
+  </tr>
+<% end %>
+</table>
+<% end %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

@@ -67,6 +67,7 @@ class MachinePriceHeader < ActiveRecord::Base
     return self.machine_id == 0 ? self.machine_type.name : self.machine.usual_name
   end
   
+  private
   def save_details
     @details_form.each do |lease_id, v1|
       v1.each do |work_kind_id, v2|

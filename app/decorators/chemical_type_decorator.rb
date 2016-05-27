@@ -1,4 +1,4 @@
-class ChemicalDecorator < Draper::Decorator
+class ChemicalTypeDecorator < Draper::Decorator
   delegate_all
 
   # Define presentation-specific methods here. Helpers are accessed through
@@ -10,7 +10,11 @@ class ChemicalDecorator < Draper::Decorator
   #     end
   #   end
 
-  def this_term_flag
-    return model.this_term_flag ? "●" : h.raw("&nbsp;")
+  def delete_link
+    if model.chemicals.count == 0
+      return h.link_to('削除', model, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"})
+    else
+      return h.raw("&nbsp;")
+    end
   end
 end

@@ -18,6 +18,7 @@ ja:
         name: "名称"
         chemical_type_id: "種別"
         display_order: "表示順"
+        this_term_flag: "本年度使用する"
 
       chemical_type:
         name: "名称"
