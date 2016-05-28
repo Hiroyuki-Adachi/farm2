@@ -17,4 +17,8 @@
 
 class BankBranch < ActiveRecord::Base
   belongs_to :bank, {foreign_key: :bank_code}
+
+  def to_param
+    return self.code
+  end
 end

@@ -13,13 +13,13 @@
 
 class WorkResult < ActiveRecord::Base
   belongs_to :work
-  belongs_to :worker
+  belongs_to :worker, -> {with_deleted}
 
-  has_many  :machine_results, :dependent => :destroy
-  has_many  :machines,  :through  => :machine_results
+  has_many  :machine_results, {dependent: :destroy}
+  has_many  :machines,  {through: :machine_results}
 
-  validates_presence_of :hours
-  validates_numericality_of :hours,  :if => Proc.new{|x| x.hours.present?}
+  validates :hours, presence: true
+  validates :hours, numericality: true, :if => Proc.new{|x| x.hours.present?}
 =begin
   scope :by_home, {
     :joins => <<JOIN , :conditions => <<CONDITIONS, :order => <<ORDER

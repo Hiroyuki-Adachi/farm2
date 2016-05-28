@@ -1,0 +1,99 @@
+@media print {
+    input{display:none;}
+    a:link,
+    a:visited {
+        font-family: "ヒラギノ明朝 Pro W3", "細明朝体", "ＭＳ Ｐ明朝", serif;
+        text-decoration: underline;
+        color: #000000;
+    }
+    body {
+        margin: 0px 0px 0px 0px;
+    }
+    div.title {
+        margin-top:0px;
+    }
+}
+body {
+    line-height: 1.5;
+    letter-spacing: 1px;
+    width: 720px;
+}
+
+div#show {
+    font-family: "ヒラギノ明朝 Pro W3", "細明朝体", "ＭＳ Ｐ明朝", serif;
+    font-size: 16pt;
+    text-align: center;
+    margin: 0px;
+    color: #000000;
+    background-color: #FFFFFF;
+}
+
+div.title {
+    font-size:24px;
+    text-decoration: underline;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+img {
+	border: 0;
+}
+
+table,
+th,
+td {
+    font-family: "ヒラギノ明朝 Pro W3", "細明朝体", "ＭＳ Ｐ明朝", serif;
+    font-size: 11pt;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #000000;
+    background-color: #FFFFFF;
+    height: 20px;
+}
+th {
+    text-align: center;
+    font-weight: normal;
+    padding: 1px;
+}
+td {
+    text-align: left;
+    padding: 1px;
+}
+
+span.genre {
+    margin-left: 10px;
+    white-space: nowrap;
+}
+
+div.sub_title {
+    font-family: "ヒラギノ明朝 Pro W3", "細明朝体", "ＭＳ Ｐ明朝", serif;
+    font-size: 18pt;
+    margin-left: 30px;
+    text-decoration: underline;
+}
+
+th.land,td.land {
+     padding-top: 0; padding-bottom: 0;
+     font-size: 11pt;
+}
+td.machine {
+     padding-top: 0; padding-bottom: 0;
+     font-size: 10pt;
+}
+
+div.cover {
+  cursor:pointer;
+  z-index: 10;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+div.cover:hover {
+  cursor:hand;
+  background-color: green;
+  opacity: 0.4;
+}
+div.content {
+  position: relative;
+  margin-bottom: 16px;
+}

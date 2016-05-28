@@ -32,7 +32,7 @@ class Work < ActiveRecord::Base
 
   has_many :work_lands,     ->{order('work_lands.display_order')},  {dependent: :destroy}
   has_many :work_results,   ->{order('work_results.display_order')}, {dependent: :destroy}
-  has_many :work_chemicals, {dependent: :destroy}
+  has_many :work_chemicals, ->{order('work_chemicals.id')}, {dependent: :destroy}
 
   has_many :workers,    {through: :work_results}
   has_many :lands,      {through: :work_lands}
@@ -79,9 +79,7 @@ class Work < ActiveRecord::Base
   end
 
   def sum_hours
-    sum = 0
-    self.work_results.map { |wr| sum += wr.hours}
-    return sum
+    return self.work_results.sum(:hours)
   end
 
   def self.get_terms

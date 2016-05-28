@@ -10,10 +10,6 @@
 #
 
 class Bank < ActiveRecord::Base
-  has_many :branches, {}
-  
-  
-  
   def to_param
     return self.code
   end

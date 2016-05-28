@@ -10,18 +10,20 @@
   </div>
 <% end %>
 <%= form_for(@chemical) do |f| %>
-  <p>
+  <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name, {:maxlength => 30, :size => 40} %>
-  </p>
-  <p>
+  </div>
+  <div class="field">
     <%= f.label :chemical_type_id %><br />
     <%= f.select(:chemical_type_id, @chemical_types.map {|chemical_type| [chemical_type.name, chemical_type.id]}) %><br />
-  </p>
-  <p><span class="check_group"><%= f.check_box :this_term_flag, {}, true, false %><%= f.label :this_term_flag %></span></p>
+  </div>
+  <div class="field">
+   <span class="check_group"><%= f.check_box :this_term_flag, {}, true, false %><%= f.label :this_term_flag %></span>
+  </div>
   <br />
- <p>
+  <div class="actions">
     <%= f.submit '登録' %>
     <%= button_tag "戻る", type: :button, :onclick => raw("javascript:location.href = '" + chemicals_path + "';") %>
-  </p>
+  </div>
 <% end %>

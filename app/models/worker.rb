@@ -28,7 +28,7 @@ class Worker < ActiveRecord::Base
   extend ActiveHash::Associations::ActiveRecordExtensions
   acts_as_paranoid
   
-  belongs_to :home
+  belongs_to :home, -> {with_deleted}
   belongs_to :gender
 
   has_many :work_results

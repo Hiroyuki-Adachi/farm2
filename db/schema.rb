@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20160527222306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "dblink"
 
   create_table "bank_branches", id: false, force: :cascade do |t|
     t.string   "bank_code",  limit: 4,  null: false
@@ -45,9 +44,9 @@ ActiveRecord::Schema.define(version: 20160527222306) do
 
   add_index "chemical_kinds", ["chemical_type_id", "work_kind_id"], name: "index_chemical_kinds_on_chemical_type_id_and_work_kind_id", unique: true, using: :btree
 
-  create_table "chemical_terms", force: :cascade do |t|
-    t.integer "chemical_id"
-    t.integer "term"
+  create_table "chemical_terms", id: false, force: :cascade do |t|
+    t.integer "chemical_id", null: false
+    t.integer "term",        null: false
   end
 
   create_table "chemical_types", force: :cascade do |t|
@@ -166,8 +165,10 @@ ActiveRecord::Schema.define(version: 20160527222306) do
   create_table "organizations", force: :cascade do |t|
     t.string   "show_work1",      limit: 10,                     null: false
     t.string   "show_work2",      limit: 10,                     null: false
-    t.integer  "workers_count",   limit: 2,  default: 12,        null: false
-    t.integer  "lands_count",     limit: 2,  default: 12,        null: false
+    t.integer  "workers_count",              default: 12,        null: false
+    t.integer  "lands_count",                default: 17,        null: false
+    t.integer  "machines_count",             default: 8,         null: false
+    t.integer  "daily_worker",    limit: 2,  default: 0,         null: false
     t.string   "consignor_code",  limit: 10
     t.string   "consignor_name",  limit: 40
     t.string   "bank_code",       limit: 4,  default: "0000",    null: false

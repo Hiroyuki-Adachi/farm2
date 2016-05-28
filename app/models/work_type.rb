@@ -16,10 +16,10 @@ class WorkType < ActiveRecord::Base
   enum genre: {rice: 1, change: 2, sub: 3, common: 4}
 
   scope :categories, -> {where(category_flag: true).order(:display_order, :id)}
-  scope :rices,      -> {where(genre: rice, category_flag: false).order(:display_order, :id)}
-  scope :changes,    -> {where(genre: change, category_flag: false).order(:display_order, :id)}
-  scope :subs,       -> {where(genre: sub, category_flag: false).order(:display_order, :id)}
-  scope :commons,    -> {where(genre: common, category_flag: false).order(:display_order, :id)}
+  scope :rices,      -> {where(genre: WorkType.genres[:rice], category_flag: false).order(:display_order, :id)}
+  scope :changes,    -> {where(genre: WorkType.genres[:change], category_flag: false).order(:display_order, :id)}
+  scope :subs,       -> {where(genre: WorkType.genres[:sub], category_flag: false).order(:display_order, :id)}
+  scope :commons,    -> {where(genre: WorkType.genres[:common], category_flag: false).order(:display_order, :id)}
 
   def genre_name
     return WorkType.with_deleted.where(genre: self[:genre], category_flag: true).first.name
@@ -29,19 +29,19 @@ class WorkType < ActiveRecord::Base
     return genre_name + "(#{self.name})"
   end
 
-  def self.rice_id
-    return WorkType.where(genre: rice, category_flag: true).first.id
+  def self.category_rice
+    return WorkType.rice.where(category_flag: true).first
   end
 
-  def self.change_id
-    return WorkType.where(genre: change, category_flag: true).first.id
+  def self.category_change
+    return WorkType.change.where(category_flag: true).first
   end
 
-  def self.sub_id
-    return WorkType.where(genre: sub, category_flag: true).first.id
+  def self.category_sub
+    return WorkType.sub.where(category_flag: true).first
   end
 
-  def self.common_id
-    return WorkType.where(genre: common, category_flag: true).first.id
+  def self.category_common
+    return WorkType.common.where(category_flag: true).first
   end
 end

@@ -2,9 +2,8 @@
 #
 # Table name: chemical_terms
 #
-#  id          :integer          not null, primary key
-#  chemical_id :integer
-#  term        :integer
+#  chemical_id :integer          not null
+#  term        :integer          not null
 #
 
 require 'test_helper'

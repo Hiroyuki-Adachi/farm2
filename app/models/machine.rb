@@ -23,7 +23,7 @@ class Machine < ActiveRecord::Base
   belongs_to :machine_type
   has_many :machine_kinds, through: :machine_type
 
-  belongs_to :owner, {class_name: :Home, foreign_key: :home_id}, -> {:with_deleted}
+  belongs_to :owner, {class_name: :Home, foreign_key: :home_id}, -> {with_deleted}
 
   validates :validity_start_at, presence: true
   validates :validity_end_at, presence: true
@@ -37,9 +37,9 @@ class Machine < ActiveRecord::Base
   }
 
   scope :by_results, -> (results) {
-    includes(:machine_results)
-    .where('machine_results.work_result_id in (?)', results)
-    .order('machines.display_order')
+    joins(:machine_results)
+    .where('machine_results.work_result_id in (?)', results.pluck(:id))
+    .order('machines.display_order').uniq
   }
   
   scope :usual, -> {includes(:machine_type).order("machine_types.display_order, machines.display_order, machines.id")}
@@ -47,14 +47,14 @@ class Machine < ActiveRecord::Base
   def operators(work)
     operators = []
     work.work_results.each do |result|
-      operators << result.worker.name if self.work_results.include?(result)
+      operators << result.worker.home.name if self.work_results.include?(result)
     end
 
     return operators.join(',')
   end
-
+  
   def hours(results)
-    return MachineResult.sum(:hours).where("machine_id = ? and work_result_id in (?)", self.id, results)
+    return MachineResult.where("machine_id = ? and work_result_id in (?)", self.id, results.pluck(:id)).sum(:hours)
   end
   
   def owner_name

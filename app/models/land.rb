@@ -37,10 +37,6 @@ class Land < ActiveRecord::Base
   validates :area, numericality: true, :if => Proc.new{|x| x.area.present?}
   validates :display_order, numericality: {only_integer: true}, :if => Proc.new{|x| x.display_order.present?}
 
-  def area_format
-    return sprintf("%.2f", self.area)
-  end
-
   def owner_name
     return self.owner.member_flag ? self.owner.holder.name : self.owner.name
   end

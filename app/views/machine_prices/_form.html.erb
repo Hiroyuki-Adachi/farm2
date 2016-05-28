@@ -11,10 +11,10 @@
 <% end %>
 <% work_kinds = @machine_price.work_kinds %>
 <%= form_for(@machine_price) do |f| %>
-  <p>
+ <div class="field">
     <%= f.label :validated_at %>
     <%= f.date_field(:validated_at) %><br />
-  </p>
+ </div>
 <table class="list">
   <tr>
     <th>設定モード</th>
@@ -36,6 +36,7 @@
 </table>
 <%= f.hidden_field(:machine_id) %>
 <%= f.hidden_field(:machine_type_id) %>
+<div class="actions">
 <%= f.submit '登録' %>
 <% if controller.action_name == "edit" %>
 <%= button_tag "履歴", type: :button, :onclick => raw("location.href = '" + machine_price_headers_path(id: @machine_price.id) + "';") %>
@@ -47,3 +48,4 @@
     <%= button_tag "戻る", type: :button, :onclick => raw("location.href = '" + edit_machine_path(@machine_price.machine_id) + "';") %>
     <% end %>
 <% end %>
+</div>

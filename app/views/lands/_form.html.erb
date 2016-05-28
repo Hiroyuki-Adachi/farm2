@@ -10,33 +10,33 @@
   </div>
 <% end %>
 <%= form_for(@land) do |f| %>
-  <p>
+ <div class="field">
     <%= f.label :place %><br />
     <%= f.text_field :place, {maxlength: 15, size: 20} %>
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.label :owner_id %><br />
     <%= f.select(:owner_id, @homes.map {|h| [h.holder ? h.holder.name + '(' + h.name + ')' : h.name, h.id]}) %>
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.label :manager_id %><br />
     <%= f.select(:manager_id, @homes.map {|h| [h.holder ? h.holder.name + '(' + h.name + ')' : h.name, h.id]}) %>
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.label :area %><br />
     <%= f.number_field(:area, {step: 0.01, max: 999.99, min: 0.01, size: 6 }) %>
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.radio_button :target_flag, true %>営農組合管理<br />
     <%= f.radio_button :target_flag, false %>個人管理<br />
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.label :display_order %><br />
     <%= f.number_field(:display_order, {maxlength: 4, size: 4}) %>
-  </p>
+ </div>
   <br />
-  <p>
+ <div class="actions">
     <%= f.submit '登録' %>
     <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + lands_path + "';") %>
-  </p>
+ </div>
 <% end %>

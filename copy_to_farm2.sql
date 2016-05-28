@@ -171,7 +171,6 @@ t1(id integer, name varchar, display_order integer, created_at timestamp, update
 SELECT SETVAL('chemical_types_id_seq', (SELECT MAX(id) FROM chemical_types));
 ------------------------------------- chemical_terms
 TRUNCATE TABLE chemical_terms;
-SELECT SETVAL('chemical_terms_id_seq', 1);
 
 INSERT INTO chemical_terms (chemical_id, term)
 SELECT t1.id, t2.term

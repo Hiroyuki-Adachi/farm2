@@ -10,19 +10,20 @@
   </div>
 <% end %>
 <%= form_for(@work_kind) do |f| %>
-  <p>
+ <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.label :display_order %><br />
     <%= f.number_field :display_order, {min: 0, max: 999, step: 1} %>
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.label :price %><br />
     <%= f.number_field :price, {min: 0, max: 9999, step: 1} %>
-  </p>
+ </div>
  <br />
+ <div class="field">
  <fieldset>
     <legend>該当作業</legend>
   <% @work_types.each do |work_type| %>
@@ -32,7 +33,8 @@
     </span>
   <% end %>
   </fieldset>
- <br />
+ </div>
+ <div class="field">
  <fieldset>
     <legend>使用機械種別</legend>
   <% @machine_types.each do |machine_type| %>
@@ -42,7 +44,8 @@
     </span>
   <% end %>
   </fieldset>
- <br />
+ </div>
+ <div class="field">
  <fieldset>
     <legend>使用薬品種別</legend>
   <% @chemical_types.each do |chemical_type| %>
@@ -52,9 +55,10 @@
     </span>
   <% end %>
   </fieldset>
+ </div>
  <br />
-  <p>
+ <div class="actions">
     <%= f.submit '登録' %>
     <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + work_kinds_path + "';") %>
-  </p>
+ </div>
 <% end %>

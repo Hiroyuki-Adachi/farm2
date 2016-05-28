@@ -1,0 +1,180 @@
+<%= stylesheet_link_tag 'work-show', :media => 'all' %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("location.href = '" + works_path(page: params[:page], month: params[:month]) + "';") %>
+<div id="show">
+  <div class="title">作 業 日 報</div>
+  <div class="title"><%= @work.worked_at %>&nbsp;天候(<%= @work.weather.name %>)</div>
+  <div class="title">作業開始<%= @work.start_at %>&nbsp;作業終了<%= @work.end_at %></div>
+</div>
+<div id="content_work" class="content">
+  <table id="detail_work">
+    <tr>
+        <th rowspan="4" style="vertical-align:middle;width:40px;">分<br /><br /><br />類</th>
+        <th style="width:120px;letter-spacing:12px;"><%= @work.select_work_type(WorkType.category_rice) %></th>
+        <td style="width:440px;">
+        <% WorkType.rices.each do |work_type| %>
+        <span class="genre"><%= @work.select_work_type(work_type) %></span>
+        <% end %>
+        </td>
+        <th style="width:40px;"><%= @organization.show_work1 %></th>
+        <th style="width:80px;font-size:10pt;"><%= @organization.show_work2 %></th>
+    </tr>
+    <tr>
+        <th style="letter-spacing:12px;"><%= @work.select_work_type(WorkType.category_change) %></th>
+        <td>
+        <% WorkType.changes.each do |work_type| %>
+        <span class="genre"><%= @work.select_work_type(work_type) %></span>
+        <% end %>
+        </td>
+        <td rowspan="3">&nbsp;</td>
+        <td rowspan="3">&nbsp;</td>
+    </tr>
+    <tr>
+        <th style="letter-spacing:12px;"><%=@work.select_work_type(WorkType.category_sub) %></th>
+        <td>
+        <% WorkType.subs.each do |work_type| %>
+        <span class="genre"><%= @work.select_work_type(work_type) %></span>
+        <% end %>
+        </td>
+    </tr>
+    <tr>
+        <th style="letter-spacing:12px;"><%= @work.select_work_type(WorkType.category_common) %></th>
+        <td>
+        <% WorkType.commons.each do |work_type| %>
+        <span class="genre"><%= @work.select_work_type(work_type) %></span>
+        <% end %>
+        </td>
+    </tr>
+  </table>
+  <table id="detail_remark">
+    <tr style="height:80px;">
+        <th style="width:40px;">内<br />容</th>
+        <td style="width:320px;"><%=h @work.name %></td>
+        <th style="width:40px;">記<br />事</th>
+        <td style="width:320px; overflow:hidden;"><%=h @work.remarks %></td>
+    </tr>
+  </table>
+  <div id="cover_work" class="cover" onclick="location.href='<%= edit_work_path(@work) %>'"></div>
+</div>
+<% xx = 2; yy = (([@organization.workers_count, @results.count].max - 1) / xx + 1) %>
+<div id="content_workers" class="content">
+  <table id="detail_workers">
+    <thead>
+    <tr>
+      <% xx.times do %>
+      <th style="width:50px;">&nbsp;</th>
+      <th style="width:230px;">作業者名</th>
+      <th style="width:80px;">時間</th>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+      <% yy.times do |i| %>
+      <tr>
+        <% xx.times do |x| %>
+          <% j = i + yy * x %>
+          <td style="text-align: right;"><%= j + 1 %></td>
+          <td><%=raw @results[j] ? @results[j].worker_name(@organization) : "&nbsp;" %></td>
+          <td style="text-align: right;"><%=raw @results[j] ? @results[j].hours : "&nbsp;" %></td>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div id="cover_workers" class="cover" onclick="location.href='<%= edit_workers_work_path(@work) %>'"></div>
+</div>
+<div id="content_lands" class="content">
+  <table id="detail_lands">
+    <thead>
+    <tr>
+      <% xx = 3; yy = ([@organization.lands_count, @work_lands.count].max / xx + 1) %>
+      <% xx.times do %>
+      <th class="land" style="width:30px;">&nbsp;</th>
+      <th class="land" style="width:150px;">地番</th>
+      <th class="land" style="width:60px;">面積</th>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+      <% total_area = 0 %>
+      <% yy.times do |i| %>
+      <tr>
+        <% xx.times do |x| %>
+        <% j = i + yy * x %>
+          <% if j == (yy * xx - 1) %>
+            <th class="land" colspan="2">合　計</th>
+            <td class="land" style="text-align: right;"><%= sprintf("%.2f", total_area) %></td>
+          <% else %>
+            <td class="land" style="text-align: right;"><%= j + 1 %></td>
+            <td class="land"><%=raw @work_lands[j] ? @work_lands[j].place : "&nbsp;" %></td>
+            <td class="land" style="text-align: right;"><%=raw @work_lands[j] ? @work_lands[j].area : "&nbsp;" %></td>
+            <% total_area += @work_lands[j].land.area if @work_lands[j]  %>
+          <% end %>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div id="cover_lands" class="cover" onclick="location.href='<%= edit_lands_work_path(@work) %>'"></div>
+</div>
+<% if @machines.count > 0 or @work.work_kind.machine_kinds.count > 0 %>
+<div id="content_machines" class="content">
+  <table id="detail_machines">
+    <thead>
+    <tr>
+      <% xx = 2; yy = (([@organization.machines_count, @machines.count].max - 1) / xx + 1) %>
+      <% xx.times do %>
+      <th style="width:175px;">機械名</th>
+      <th style="width:35px;">稼働</th>
+      <th style="width:150px;">オペレーター</th>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+      <% yy.times do |i| %>
+      <tr>
+        <% xx.times do |x| %>
+          <% j = i + yy * x %>
+          <% if @machines[j] %>
+            <td class="machine"><%=h @machines[j].name %></td>
+            <td class="machine" style="text-align: right;"><%=h @machines[j].hours(@results.object) %></td>
+            <td class="machine"><%=h @machines[j].operators(@work) %></td>
+          <%  else %>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          <% end %>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div id="cover_machines" class="cover" onclick="location.href='<%= edit_machines_work_path(@work) %>'"></div>
+</div>
+<% end %>
+<% if @work.work_chemicals.count > 0 or @work.work_kind.chemical_kinds.count > 0 %>
+<div id="content_machines" class="content">
+  <table id="detail_chemicals" style="width:720px;">
+    <tbody>
+      <tr>
+        <td><%= @work.chemicals_format %></td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="cover_chemicals" class="cover" onclick="location.href='<%= edit_chemicals_work_path(@work) %>'"></div>
+</div>
+<% end %>
+<% unless @work.payed_at %>
+<%= link_to '削除', @work, method: :delete, class: :button, data: {confirm: "本当に削除してもよろしいですか?"} %>
+<% end %>
+<%= button_tag "新規登録",  type: :button, :onclick => raw("location.href = '" + new_work_path + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("location.href = '" + works_path(page: params[:page], month: params[:month]) + "';") %>
+
+<script type="text/javascript">
+$(function() {
+  $("#cover_work").height($("#content_work").height()).width($("#content_work").width());
+  $("#cover_workers").height($("#content_workers").height()).width($("#content_workers").width());
+  $("#cover_lands").height($("#content_lands").height()).width($("#content_lands").width());
+  $("#cover_machines").height($("#content_machines").height()).width($("#content_machines").width());
+  $("#cover_chemicals").height($("#content_chemicals").height()).width($("#content_chemicals").width());
+});
+</script>

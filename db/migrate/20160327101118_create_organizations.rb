@@ -3,8 +3,11 @@ class CreateOrganizations < ActiveRecord::Migration
     create_table :organizations do |t|
       t.string  :show_work1,    {null: false, limit: 10}
       t.string  :show_work2,    {null: false, limit: 10}
-      t.integer :workers_count, {null: false, limit: 2, default: 12}
-      t.integer :lands_count,   {null: false, limit: 2, default: 12}
+      
+      t.integer :workers_count,   {null: false, limit: 3, default: 12}
+      t.integer :lands_count,     {null: false, limit: 3, default: 17}
+      t.integer :machines_count,  {null: false, limit: 3, default: 8}
+      t.integer :daily_worker,    {null: false, limit: 1, default: 0}
 
       t.string  :consignor_code,  {null: true, limit: 10}
       t.string  :consignor_name,  {null: true, limit: 40}

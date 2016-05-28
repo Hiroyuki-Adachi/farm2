@@ -1,29 +1,30 @@
+<% if @bank.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @bank.errors.count %>件のエラーがあります。</h2>
+ 
+    <ul>
+    <% @bank.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
 <%= form_for(@bank) do |f| %>
-  <% if @bank.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@bank.errors.count, "error") %> prohibited this bank from being saved:</h2>
-
-      <ul>
-      <% @bank.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="field">
     <%= f.label :code %><br>
-    <%= f.text_field :code %>
+    <%= f.text_field :code, {size: 5, maxlength: 4} %>
   </div>
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, {size: 20, maxlength: 40}  %>
   </div>
   <div class="field">
     <%= f.label :phonetic %><br>
-    <%= f.text_field :phonetic %>
+    <%= f.text_field :phonetic, {size: 20, maxlength: 40}  %>
   </div>
+  <br />
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit '登録' %>
+    <%= button_tag "戻る", type: :button, :onclick => raw("javascript:location.href = '" + banks_path + "';") %>
   </div>
 <% end %>

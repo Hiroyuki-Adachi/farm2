@@ -11,7 +11,7 @@
   <tr style="<%= 'background-color:darkgray' unless land.target_flag %>">
     <td><%=h land.place %></td>
     <td><%=h land.owner_name %></td>
-    <td class="numeric"><%=h land.area_format %></td>
+    <td class="numeric"><%= land.area %></td>
     <td><%= link_to '修正', edit_land_path(land) %></td>
     <td><%= link_to '削除', land, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
   </tr>

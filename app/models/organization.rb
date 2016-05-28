@@ -7,6 +7,7 @@
 #  show_work2      :string(10)       not null
 #  workers_count   :integer          default(12), not null
 #  lands_count     :integer          default(12), not null
+#  daily_worker    :integer          default(0), not null
 #  consignor_code  :string(10)
 #  consignor_name  :string(40)
 #  bank_code       :string(4)        default("0000"), not null
@@ -18,4 +19,6 @@
 #
 
 class Organization < ActiveRecord::Base
+  enum daily_worker: {no_print: 0, print_home: 1, print_section: 2}
+
 end

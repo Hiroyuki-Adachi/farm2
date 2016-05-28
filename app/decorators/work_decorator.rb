@@ -27,7 +27,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def payed_at
-    return model.payed_at.strftime('%Y年 %m月')
+    return model.payed_at.strftime('%Y年 %m月') if model.payed_at
   end
 
   def name
@@ -56,6 +56,10 @@ class WorkDecorator < Draper::Decorator
   
   def genre_name
     return model.work_type.genre_name + "(#{model.work_type.name})"
+  end
+  
+  def select_work_type(work_type)
+    return h.raw((work_type.id == model.work_type_id ? "●" : "&nbsp;") + work_type.name)
   end
 
 end

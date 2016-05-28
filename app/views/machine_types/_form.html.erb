@@ -10,15 +10,16 @@
   </div>
 <% end %>
 <%= form_for(@machine_type) do |f| %>
-  <p>
+ <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name, {maxlength: 20, size: 20} %>
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.label :display_order %><br />
     <%= f.number_field(:display_order, {maxlength: 4, size: 4}) %>
-  </p>
+ </div>
  <br />
+ <div class="field">
  <fieldset>
     <legend>対応作業</legend>
   <% @work_kinds.each do |work_kind| %>
@@ -28,9 +29,10 @@
     </span>
   <% end %>
   </fieldset>
+ </div>
  <br />
- <p>
+ <div class="actions">
     <%= f.submit '登録' %>
     <%= button_tag "戻る", type: :button, :onclick => raw("javascript:location.href = '" + machine_types_path + "';") %>
-  </p>
+ </div>
 <% end %>

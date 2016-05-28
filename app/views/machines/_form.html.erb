@@ -10,36 +10,36 @@
   </div>
 <% end %>
 <%= form_for(@machine) do |f| %>
-  <p>
+ <div class="field">
     <%= f.label :machine_type_id %><br />
    <%= f.select(:machine_type_id, @machine_types.map {|machine_type| [machine_type.name, machine_type.id]}) %><br />
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name, {:maxlength => 30, :size => 30} %>
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.label :home_id %><br />
    <%= f.select(:home_id, @homes.map {|home| [home.name, home.id]}) %><br />
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.label :display_order %><br />
     <%= f.number_field :display_order, {maxlength: 3, size: 3} %>
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.label :validity_start_at %><br />
     <%= f.date_field :validity_start_at %>
-  </p>
-  <p>
+ </div>
+ <div class="field">
     <%= f.label :validity_end_at %><br />
     <%= f.date_field :validity_end_at %>
-  </p>
+ </div>
  <br />
-  <p>
+ <div class="actions">
     <%= f.submit '登録' %>
     <% if controller.action_name == "edit" %>
     <%= button_tag "料金設定", type: :button, :onclick => raw("javascript:location.href = '" + show_machine_machine_price_headers_path(machine_id: @machine) + "';") %>
     <% end %>
     <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + machines_path + "';") %>
-  </p>
+ </div>
 <% end %>

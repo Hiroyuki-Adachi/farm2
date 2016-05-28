@@ -3,7 +3,7 @@ class LandsController < ApplicationController
   before_action :set_homes, only: [:new, :create, :edit, :update]
 
   def index
-    @lands = Land.list.page(params[:page])
+    @lands = LandDecorator.decorate_collection(Land.list.page(params[:page]))
   end
 
   def new

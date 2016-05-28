@@ -12,5 +12,5 @@
 
 class WorkLand < ActiveRecord::Base
   belongs_to :work
-  belongs_to :land
+  belongs_to :land, -> {with_deleted}
 end

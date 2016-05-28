@@ -167,6 +167,10 @@ fieldset {
   color: red;
 }
 
+select {
+  font-size: 16px;
+}
+
 /** 入力欄 **/
 input[type="number"] {
   text-align: right;
