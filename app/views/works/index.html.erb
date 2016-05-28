@@ -1,0 +1,39 @@
+<h1>作業一覧</h1>
+
+<%= select_tag(:month, options_for_select(@months, @month), :onChange => "change_month(this);") %>
+<script type="text/javascript">
+  function change_month(sender)
+  {
+    if(sender.value == "") {
+      document.location.href = "<%= works_path %>";
+    } else {
+      document.location.href = "<%= works_path %>?month=" + sender.value;
+    }
+  }
+</script>
+<% if @works.count > 0 %>
+<table class="list">
+  <tr>
+    <th>作業日</th>
+    <th>時刻</th>
+    <th>分類</th>
+    <th>内容</th>
+    <th>人数</th>
+    <th>工数</th>
+  </tr>
+
+<% @works.each do |work| %>
+  <tr>
+    <td><%=h work.worked_at %></td>
+    <td><%=h work.work_time %></td>
+    <td><%=h work.genre_name %></td>
+    <td><%=h link_to(work.name, {action: :show, id: work, page: @page, month: @month}) %></td>
+    <td class="numeric"><%=h work.workers.count %></td>
+    <td class="numeric"><%=h work.sum_hours %></td>
+  </tr>
+<% end %>
+</table>
+<%= paginate(@works) %>
+<% end %>
+<br />
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

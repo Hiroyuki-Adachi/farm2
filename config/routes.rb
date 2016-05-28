@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :banks, param: :code, except: [:show]
+  
   resources :machine_types, except: [:show]
 
   resources :chemical_types, except: [:show]
@@ -14,7 +16,7 @@ Rails.application.routes.draw do
   resources :machines, except: [:show]
 
   resources :chemicals, except: [:show]
-  
+
   resources :menu, only: [:index, :edit, :update] do
     member do
       get :edit_term
@@ -27,6 +29,16 @@ Rails.application.routes.draw do
       get :show_type
     end
   end
+
+  resources :works do
+    member do
+      get :edit_workers
+      get :edit_lands
+      get :edit_machines
+      get :edit_chemicals
+    end
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

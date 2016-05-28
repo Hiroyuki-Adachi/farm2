@@ -20,8 +20,8 @@ class WorkResult < ActiveRecord::Base
 
   validates_presence_of :hours
   validates_numericality_of :hours,  :if => Proc.new{|x| x.hours.present?}
-
-  named_scope :by_home, {
+=begin
+  scope :by_home, {
     :joins => <<JOIN , :conditions => <<CONDITIONS, :order => <<ORDER
       inner join works on works.id = work_results.work_id
       inner join workers on work_results.worker_id = workers.id
@@ -35,7 +35,7 @@ CONDITIONS
 ORDER
   }
 
-  named_scope :by_home_for_fix, lambda{|fixed_at| {
+  scope :by_home_for_fix, lambda{|fixed_at| {
     :joins => <<JOIN , :conditions =>[ <<CONDITIONS, fixed_at], :order => <<ORDER
       inner join works on works.id = work_results.work_id
       inner join workers on work_results.worker_id = workers.id
@@ -48,15 +48,9 @@ CONDITIONS
 ORDER
   }}
 
-  named_scope :by_worker, lambda {|worker| {
-    :conditions => ["work_id = ?", worker],
-    :order => 'worked_at'
-    }
-  }
+  scope :by_worker, -> (worker) {where(work_id:  worker).order(:worked_at, :id)}
 
-  named_scope :by_worker_and_work, lambda {|worker, work| {
-      :conditions => ["worker_id = ? and work_id = ?", worker, work]}
-  }
+  scope :by_worker_and_work, -> (worker, work) {where(worker_id: worker, work_id: work)}
 
   def hours_format
     return sprintf("%.1f", self.hours)
@@ -108,4 +102,5 @@ SQL
 SQL
     return Work.find_by_sql(sql)
   end
+=end
 end

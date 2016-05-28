@@ -1,7 +1,4 @@
 <h1>薬剤マスタ一覧</h1>
-<div class="new_data">
-<%= link_to '薬剤マスタ新規登録', new_chemical_path %>
-</div>
 <% if @chemicals.count > 0 %>
 <table class="list">
   <tr>
@@ -22,4 +19,5 @@
 <% end %>
 </table>
 <% end %>
+<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_chemical_path + "';") %>
 <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

@@ -1,7 +1,4 @@
 <h1>土地マスタ一覧</h1>
-<div class="new_data">
-<%= link_to '土地マスタ新規登録', new_land_path %>
-</div>
 <% if @lands.count > 0 %>
 <table class="list">
   <tr>
@@ -23,4 +20,5 @@
 <%= paginate(@lands) %>
 <% end %>
 <br />
+<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_land_path + "';") %>
 <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

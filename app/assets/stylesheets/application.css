@@ -61,7 +61,7 @@ h1 {
   padding: 8px 5px 5px 15px;
   border-style: solid;
   border-width: 1px 1px 1px 5px;
-  font-size: 1.5em;
+  font-size: 24px;
   color: #306a30;
   border-color: #1ccf73;
 }
@@ -70,7 +70,7 @@ h2 {
   margin: 10px 0 15px;
   border-style: solid;
   border-width: 1px 1px 1px 3px;
-  font-size: 1.3em;
+  font-size: 21px;
   padding: 4px 3px 1px 17px;
   color: #206a20;
   border-color: #1ccf73;
@@ -78,7 +78,7 @@ h2 {
 }
 h3 {
   margin: 10px 0 0;
-  font-size: 1.1em;
+  font-size: 18px;
   border-left: solid 3px;
   border-bottom: 1px solid;
   padding: 2px 3px 0px 17px;
@@ -88,7 +88,7 @@ h3 {
 }
 h4 {
   margin: 10px 0 0 0;
-  font-size: 1.1em;
+  font-size: 18px;
   border-left: solid 5px;
   padding: 3px 3px 1px 17px;
   border-color: #1ccf73;
@@ -96,7 +96,7 @@ h4 {
 }
 h5 {
   margin: 10px 0 0 3px;
-  font-size: 1em;
+  font-size: 16px;
 }
 
 b {color: darkgreen;}
@@ -106,13 +106,13 @@ table.list {
 	border-collapse:collapse;
 	border-spacing:0;
 	font-size: 100%;
-	margin-bottom: 1em;
+	margin-bottom: 16px;
 }
 
 table.list td {
     padding: 5px;
     border: 1px solid #999999;
-    font-size: 1em;
+    font-size: 16px;
 }
 
 table.list th {
@@ -120,7 +120,7 @@ table.list th {
     border: 1px solid #999999;
     background: #EBEBEB;
     white-space: nowrap;
-    font-size: 1em;
+    font-size: 16px;
 }
 
 fieldset {
@@ -190,13 +190,13 @@ span.check_group {
 /** ボタン **/
 li {
   list-style: none;
-  font-size: 1.1em;
+  font-size: 18px;
   margin-bottom: 5px;
 }
 
 button,input[type="button"],input[type="submit"],a.button {
   padding: 2px 2px 2px 2px;
-  font-size: 1em;
+  font-size: 16px;
   text-decoration: none;
 	background-color: #333;
 	border: 2px solid #333;

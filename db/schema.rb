@@ -11,11 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160527135210) do
+ActiveRecord::Schema.define(version: 20160527222306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "dblink"
+
+  create_table "bank_branches", id: false, force: :cascade do |t|
+    t.string   "bank_code",  limit: 4,  null: false
+    t.string   "code",       limit: 3,  null: false
+    t.string   "name",       limit: 40, null: false
+    t.string   "phonetic",   limit: 40, null: false
+    t.string   "zip_code",   limit: 7
+    t.string   "address1",   limit: 50
+    t.string   "address2",   limit: 50
+    t.string   "telephone",  limit: 15
+    t.string   "fax",        limit: 15
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  create_table "banks", primary_key: "code", force: :cascade do |t|
+    t.string   "name",       limit: 40, null: false
+    t.string   "phonetic",   limit: 40, null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
 
   create_table "chemical_kinds", force: :cascade do |t|
     t.integer "chemical_type_id", null: false

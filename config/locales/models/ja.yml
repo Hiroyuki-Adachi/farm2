@@ -4,14 +4,17 @@ ja:
       chemical: "薬剤"
       chemical_type: "薬剤種別"
       home: "世帯"  #g
-      work_result: "work_result"  #g
+      work_result: "作業結果"  #g
       land: "土地"  #g
       work: "作業"  #g
+      work_type: "作業種別"  #g
+      work_kind: "作業種類"  #g
       worker: "作業者"  #g
       machine: "機械"
       machine_type: "機械種別"
       work_kind: "作業種別"
       system: "システム管理"
+      bank: "金融機関"
 
     attributes:
       chemical:
@@ -66,6 +69,10 @@ ja:
         mobile_mail: "携帯アドレス"  #g
         pc_mail: PCメールアドレス
         display_order: "表示順"  #g
+        bank_code: "金融機関"
+        branch_code: "支店"
+        account_type_id: "預金種別"
+        account_number: "口座番号"
 
       machine:
         name: 名称
@@ -86,6 +93,11 @@ ja:
         name: 名称
         display_order: 表示順
         price: 作業単価
+        
+      bank:
+        code: "コード"
+        name: "名称"
+        phonetic: "ﾌﾘｶﾞﾅ"
 
       system:
         term: 年度

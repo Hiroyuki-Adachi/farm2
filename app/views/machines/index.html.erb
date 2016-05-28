@@ -1,7 +1,4 @@
 <h1>機械マスタ一覧</h1>
-<div class="new_data">
-<%= link_to '機械マスタ新規登録', new_machine_path %>
-</div>
 <% if @machines.count > 0 %>
 <table class="list">
   <tr>
@@ -28,4 +25,5 @@
 </table>
 <%= paginate(@machines) %>
 <% end %>
+<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_machine_path + "';") %>
 <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

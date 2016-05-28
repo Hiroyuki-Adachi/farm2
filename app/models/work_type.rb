@@ -22,7 +22,7 @@ class WorkType < ActiveRecord::Base
   scope :commons,    -> {where(genre: common, category_flag: false).order(:display_order, :id)}
 
   def genre_name
-    return WorkType.where(genre: self.genre, category_flag: true).first.name
+    return WorkType.with_deleted.where(genre: self[:genre], category_flag: true).first.name
   end
 
   def name_format

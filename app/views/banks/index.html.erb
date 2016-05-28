@@ -1,0 +1,25 @@
+<h1>金融機関マスタ一覧</h1>
+<% if @banks.count > 0 %>
+<table class="list">
+  <thead>
+    <tr>
+      <th>コード</th>
+      <th>名称</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @banks.each do |bank| %>
+      <tr>
+        <td><%= bank.code %></td>
+        <td><%= bank.name %></td>
+        <td><%= link_to '修正', edit_bank_path(bank) %></td>
+        <td><%= link_to '削除', bank, method: :delete, data: { confirm: '本当に削除してもよろしいですか?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_bank_path + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
