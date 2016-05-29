@@ -57,6 +57,7 @@
 </div>
 <% xx = 2; yy = (([@organization.workers_count, @results.count].max - 1) / xx + 1) %>
 <div id="content_workers" class="content">
+  <div class="sub_title">※作業者</div>
   <table id="detail_workers">
     <thead>
     <tr>
@@ -83,6 +84,7 @@
   <div id="cover_workers" class="cover" onclick="location.href='<%= edit_workers_work_path(@work) %>'"></div>
 </div>
 <div id="content_lands" class="content">
+  <div class="sub_title">※作業田</div>
   <table id="detail_lands">
     <thead>
     <tr>
@@ -118,6 +120,7 @@
 </div>
 <% if @machines.count > 0 or @work.work_kind.machine_kinds.count > 0 %>
 <div id="content_machines" class="content">
+  <div class="sub_title">※機械・軽トラ・オペレーター</div>
   <table id="detail_machines">
     <thead>
     <tr>
@@ -152,7 +155,8 @@
 </div>
 <% end %>
 <% if @work.work_chemicals.count > 0 or @work.work_kind.chemical_kinds.count > 0 %>
-<div id="content_machines" class="content">
+<div id="content_chemicals" class="content">
+  <div class="sub_title">※使用薬剤</div>
   <table id="detail_chemicals" style="width:720px;">
     <tbody>
       <tr>

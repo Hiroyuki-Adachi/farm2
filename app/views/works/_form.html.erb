@@ -1,0 +1,25 @@
+<b>作業日：</b><%= f.date_field :worked_at %>
+<b>天候：</b><%= f.select(:weather_id, @weathers.map {|weather| [weather.name, weather.id]}) %>
+<br />
+<b>作業開始：</b><%= f.time_field :start_at %>
+<b>作業終了：</b><%= f.time_field :end_at %>
+
+<h2>内容</h2>
+<div>
+  <b>分類：</b><%= f.collection_select(:work_type_id, @work_types, :id, :name) %><br />
+</div>
+<div>
+<b>作業内容：</b><%= f.collection_select(:work_kind_id, @work_kinds, :id, :name) %>
+  <%= f.text_field :name, {:maxlength => 40, :size => 40} %>
+</div>
+<div>
+<b>記事：</b><%= f.text_area :remarks, {:rows => 3, :cols => 40} %>
+</div>
+<script type="text/javascript">
+$(function() {
+  $('#work_work_type_id').change(function(){
+    var work_type_id = $("#work_work_type_id").val();
+    $.get("work_type_select.js?work_type_id=" + work_type_id);
+  });
+});
+</script>

@@ -1,11 +1,5 @@
 @media print {
-    input{display:none;}
-    a:link,
-    a:visited {
-        font-family: "ヒラギノ明朝 Pro W3", "細明朝体", "ＭＳ Ｐ明朝", serif;
-        text-decoration: underline;
-        color: #000000;
-    }
+    input,a.button,button {display:none;}
     body {
         margin: 0px 0px 0px 0px;
     }
@@ -67,9 +61,8 @@ span.genre {
 
 div.sub_title {
     font-family: "ヒラギノ明朝 Pro W3", "細明朝体", "ＭＳ Ｐ明朝", serif;
-    font-size: 18pt;
-    margin-left: 30px;
-    text-decoration: underline;
+    font-size: 14pt;
+    margin-left: 12px;
 }
 
 th.land,td.land {

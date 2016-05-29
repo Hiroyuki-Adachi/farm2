@@ -34,6 +34,7 @@ class WorkKind < ActiveRecord::Base
   validates :display_order, numericality: {only_integer: true}, if: Proc.new{|x| x.display_order.present?}
 
   scope :usual, -> {where(other_flag: false).order(:display_order)}
+  scope :by_type, -> (work_type){joins(:work_kind_types).where("work_kind_types.work_type_id = ?", work_type.genre_id).order("work_kinds.other_flag, work_kinds.display_order, work_kinds.id")}
   
   def price
     work_kind_prices = WorkKindPrice.usual(self)

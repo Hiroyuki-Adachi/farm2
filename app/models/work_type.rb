@@ -15,11 +15,17 @@ class WorkType < ActiveRecord::Base
 
   enum genre: {rice: 1, change: 2, sub: 3, common: 4}
 
-  scope :categories, -> {where(category_flag: true).order(:display_order, :id)}
-  scope :rices,      -> {where(genre: WorkType.genres[:rice], category_flag: false).order(:display_order, :id)}
-  scope :changes,    -> {where(genre: WorkType.genres[:change], category_flag: false).order(:display_order, :id)}
-  scope :subs,       -> {where(genre: WorkType.genres[:sub], category_flag: false).order(:display_order, :id)}
-  scope :commons,    -> {where(genre: WorkType.genres[:common], category_flag: false).order(:display_order, :id)}
+  scope :categories,  -> {where(category_flag: true).order(:display_order, :id)}
+  scope :rices,       -> {where(genre: WorkType.genres[:rice], category_flag: false).order(:display_order, :id)}
+  scope :changes,     -> {where(genre: WorkType.genres[:change], category_flag: false).order(:display_order, :id)}
+  scope :subs,        -> {where(genre: WorkType.genres[:sub], category_flag: false).order(:display_order, :id)}
+  scope :commons,     -> {where(genre: WorkType.genres[:common], category_flag: false).order(:display_order, :id)}
+  scope :usual,       -> {order(:category_flag, :display_order, :id)}
+
+
+  def genre_id
+    return WorkType.with_deleted.where(genre: self[:genre], category_flag: true).first.id
+  end
 
   def genre_name
     return WorkType.with_deleted.where(genre: self[:genre], category_flag: true).first.name

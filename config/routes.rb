@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   end
 
   resources :works do
+    collection do
+      get :work_type_select
+    end
     member do
       get :edit_workers
       get :edit_lands

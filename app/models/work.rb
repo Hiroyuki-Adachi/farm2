@@ -20,7 +20,7 @@
 class Work < ActiveRecord::Base
   extend ActiveHash::Associations::ActiveRecordExtensions
   
-  before_create :set_year
+  before_create :set_term
 
   validates :worked_at, presence: true
   validates :weather,   presence: true

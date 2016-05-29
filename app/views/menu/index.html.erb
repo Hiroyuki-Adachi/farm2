@@ -1,7 +1,7 @@
 <h1>作業日報管理システム(<%= @system.term %>年度)</h1>
 <h2>日報管理</h2>
 <ul>
-  <!-- <li><%#= link_to '日報入力', new_work_path %></li> -->
+  <li><%= link_to '日報入力', new_work_path %></li>
   <li><%= link_to '日報一覧', works_path %>(<%= link_to 'Excel出力', works_path(:format => :xml) %>)</li>
   <!-- <li><%#= link_to '作業月報', monthly_reports_path %></li> -->
 </ul>

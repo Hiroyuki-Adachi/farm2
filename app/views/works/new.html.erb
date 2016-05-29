@@ -1,0 +1,9 @@
+<h1>作業日報入力</h1>
+<%= render(:partial => "error") %>
+
+<%= form_for(@work, :url => {:action => :create }, :html => {:method => :post}) do |f| %>
+  <%= render(:partial => 'form', locals: {:f => f}) %>
+  <br />
+  <%= f.submit '登録', :name => 'regist' %>
+  <%= f.submit '戻る', :name => 'cancel' %>
+<% end %>
