@@ -12,4 +12,5 @@
 #
 
 class Section < ActiveRecord::Base
+  scope :usual, ->{where(work_flag: true).order(display_order: :asc)}
 end

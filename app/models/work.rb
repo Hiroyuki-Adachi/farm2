@@ -19,6 +19,8 @@
 
 class Work < ActiveRecord::Base
   extend ActiveHash::Associations::ActiveRecordExtensions
+
+  require 'ostruct'
   
   before_create :set_term
 
@@ -106,5 +108,58 @@ class Work < ActiveRecord::Base
     end
     return result.join(", ")
   end
+  
+  def regist_work_results(results)
+    workers = []
+    results.each do |result|
+      result = OpenStruct.new(result)
+      workers << result.worker_id.to_i
+      work_result = self.work_results.where(worker_id: result.worker_id)
+      if work_result.exists?
+        work_result = work_result.first
+        work_result.update(display_order: result.display_order, hours: result.hours) if work_result.display_order != result.display_order.to_i or work_result.hours != result.hours.to_f 
+      else
+        WorkResult.create(work_id: self.id, worker_id: result.worker_id, display_order: result.display_order, hours: result.hours)
+      end
+    end
+    
+    self.work_results.where.not(worker_id: workers).each {|work_result| work_result.destroy}    
+  end
+  
+  def regist_machine_results(machine_results)
+    machine_results.each do |machine_id, work_result|
+      work_result.each do |work_result_id, hour|
+        hour = hour.to_f
+        machine_result = MachineResult.where(work_result_id: work_result_id, machine_id: machine_id)
+        if machine_result.exists?
+          machine_result = machine_result.first
+          if hour > 0
+            machine_result.update(hours: hour) unless machine_result.hours == hour 
+          else
+            machine_result.destroy
+          end
+        else
+          MachineResult.create(work_result_id: work_result_id, machine_id: machine_id, hours: hour) if hour > 0
+        end
+      end
+    end
+  end 
 
+  def regist_work_chemicals(work_chemicals)
+    work_chemicals.each do |chemical_id, quantity|
+      chemical_id = chemical_id.to_i
+      quantity = quantity.to_i
+      work_chemical = self.work_chemicals.where(chemical_id: chemical_id)
+      if work_chemical.exists?
+        work_chemical = work_chemical.first
+        if quantity > 0
+          work_chemical.update(quantity: quantity) unless work_chemical.quantity == quantity
+        else
+          work_chemical.destroy
+        end
+      else
+        WorkChemical.create(work_id: self.id, chemical_id: chemical_id, quantity: quantity) if quantity > 0
+      end
+    end
+  end
 end

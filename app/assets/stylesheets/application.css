@@ -101,6 +101,13 @@ h5 {
 
 b {color: darkgreen;}
 
+/** その他 **/
+div.remarks {
+  width: 320px;
+  height: 80px;
+  border: 1px solid #006600;
+}
+
 /** 一覧 **/
 table.list {
 	border-collapse:collapse;
@@ -216,6 +223,20 @@ button:hover,input[type="button"]:hover,input[type="submit"]:hover,a.button:hove
 	background-color: #fff;
 	border-color: darkblue;
 	color: darkblue;
+}
+button:disabled,input[type="button"]:disabled,input[type="submit"]:disabled,a.button:disabled {
+  padding: 2px 2px 2px 2px;
+  font-size: 16px;
+  text-decoration: none;
+  background-color: #ccc;
+  border-color: #ccc;
+  color: black;
+  cursor: default;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
 }
 
 /** ページ **/

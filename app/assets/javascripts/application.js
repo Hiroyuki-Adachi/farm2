@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require i18n
 //= require i18n/translations
+//= require dateformat
 
 $(document).on("change", "span.check_group input[type='checkbox']", function(e) {
     if($(this).prop('checked')) {

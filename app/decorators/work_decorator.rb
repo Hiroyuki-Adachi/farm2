@@ -61,5 +61,8 @@ class WorkDecorator < Draper::Decorator
   def select_work_type(work_type)
     return h.raw((work_type.id == model.work_type_id ? "●" : "&nbsp;") + work_type.name)
   end
-
+  
+  def weather_name
+    return model.weather.name
+  end
 end
