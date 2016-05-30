@@ -1,0 +1,9 @@
+<h1>作業日報修正</h1>
+<%= render(:partial => "error") %>
+
+<%= form_for(@work.model, :url => {action: :update }, html: {method: :put}) do |f| %>
+  <%= render(:partial => 'form', :locals => {:f => f}) %>
+  <br />
+  <%= f.submit '登録', :name => 'regist' %>
+  <%= f.submit '戻る', :name => 'cancel' %>
+<% end %>

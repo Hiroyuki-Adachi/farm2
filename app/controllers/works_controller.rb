@@ -37,6 +37,7 @@ class WorksController < ApplicationController
     @organization = Organization.first
     @machines = Machine.by_results(@results)
     @results = WorkResultDecorator.decorate_collection(@results)
+    render layout: false
   end
 
   def create
@@ -60,6 +61,7 @@ class WorksController < ApplicationController
   end
 
   def edit
+    @work_kinds = WorkKind.by_type(@work.work_type)
   end
 
   def edit_workers
@@ -94,22 +96,22 @@ class WorksController < ApplicationController
     end
 
     if params[:regist_workers]
-      @work.regist_work_results(params[:results])
+      @work.regist_results(params[:results])
       redirect_to(work_path(@work.id))
     end
 
     if params[:regist_lands]
-      @work.work_lands = get_params_work_lands
+      @work.regist_lands(params[:work_lands])
       redirect_to(work_path(@work.id))
     end
 
     if params[:regist_machines]
-      @work.regist_machine_results(params[:machine_hours])
+      @work.regist_machines(params[:machine_hours])
       redirect_to(work_path(@work.id))
     end
 
     if params[:regist_chemicals]
-      @work.regist_work_chemicals(params[:chemicals])
+      @work.regist_chemicals(params[:chemicals])
       redirect_to(work_path(@work.id))
     end
   end
@@ -126,17 +128,5 @@ class WorksController < ApplicationController
   
   def work_params
     return params.require(:work).permit(:worked_at, :weather_id, :start_at, :end_at, :work_type_id, :work_kind_id, :name, :remarks)
-  end
-
-  def get_params_work_lands
-    work_lands = []
-
-    if params[:work_lands]
-      params[:work_lands].each do |param|
-        work_lands << WorkLand.new(param)
-      end
-    end
-
-    return work_lands
   end
 end

@@ -33,10 +33,10 @@ class Work < ActiveRecord::Base
   belongs_to :weather
 
   has_many :work_lands,     ->{order('work_lands.display_order')},  {dependent: :destroy}
-  has_many :work_results,   ->{order('work_results.display_order')}, {dependent: :destroy}
+  has_many :work_params,   ->{order('work_params.display_order')}, {dependent: :destroy}
   has_many :work_chemicals, ->{order('work_chemicals.id')}, {dependent: :destroy}
 
-  has_many :workers,    {through: :work_results}
+  has_many :workers,    {through: :work_params}
   has_many :lands,      {through: :work_lands}
   has_many :chemicals,  {through: :work_chemicals}
 
@@ -44,8 +44,8 @@ class Work < ActiveRecord::Base
     sql = []
     sql << "SELECT * FROM works"
     sql << "WHERE (worked_at BETWEEN :worked_from AND :worked_to)"
-    sql << "AND (id IN (SELECT work_id FROM work_results GROUP BY work_id HAVING COUNT(*) = 1)"
-    sql << "AND (id IN (SELECT work_id FROM work_results WHERE worker_id = :worker_id))"
+    sql << "AND (id IN (SELECT work_id FROM work_params GROUP BY work_id HAVING COUNT(*) = 1)"
+    sql << "AND (id IN (SELECT work_id FROM work_params WHERE worker_id = :worker_id))"
     return Work.find_by_sql([sql.join("\n"), {worked_from: worked_from, worked_to: worked_to, worker_id: worker_id}])
   end
 
@@ -54,10 +54,10 @@ class Work < ActiveRecord::Base
     sql << "SELECT"
     sql << "payed_at,"
     sql << "COUNT(distinct works.id) as work_count,"
-    sql << "SUM(work_results.hours) as hours,"
-    sql << "SUM(work_results.hours * work_kinds.price) as amount"
+    sql << "SUM(work_params.hours) as hours,"
+    sql << "SUM(work_params.hours * work_kinds.price) as amount"
     sql << "FROM works"
-    sql << "LEFT OUTER JOIN work_results on works.id = work_results.work_id"
+    sql << "LEFT OUTER JOIN work_params on works.id = work_params.work_id"
     sql << "LEFT OUTER JOIN work_kinds on works.work_kind_id = work_kinds.id"
     sql << "WHERE payed_at IS NOT NULL AND term = :term"
     sql << "GROUP BY payed_at"
@@ -81,20 +81,20 @@ class Work < ActiveRecord::Base
   end
 
   def sum_hours
-    return self.work_results.sum(:hours)
+    return self.work_params.sum(:hours)
   end
 
   def self.get_terms
-    results = []
+    params = []
     term = System.first.term
     result = Work.maximum(:payed_at).where(term: term)
     result = result ? result.to_date : Date.new(term, 1, 1)
     result = result.next.end_of_month.to_date
     while(result < Time.now.to_date) do
-      results << result
+      params << result
       result = result.next_month.end_of_month.to_date
     end
-    return results
+    return params
   end
 
   def self.clear_fix(fixed_at)
@@ -109,32 +109,51 @@ class Work < ActiveRecord::Base
     return result.join(", ")
   end
   
-  def regist_work_results(results)
+  def regist_params(params)
     workers = []
-    results.each do |result|
-      result = OpenStruct.new(result)
-      workers << result.worker_id.to_i
-      work_result = self.work_results.where(worker_id: result.worker_id)
+    params.each do |param|
+      param = OpenStruct.new(param)
+      workers << param.worker_id.to_i
+      work_result = self.work_params.where(worker_id: param.worker_id)
       if work_result.exists?
         work_result = work_result.first
-        work_result.update(display_order: result.display_order, hours: result.hours) if work_result.display_order != result.display_order.to_i or work_result.hours != result.hours.to_f 
+        work_result.update(display_order: param.display_order, hours: param.hours) if work_result.display_order != param.display_order.to_i or work_result.hours != param.hours.to_f 
       else
-        WorkResult.create(work_id: self.id, worker_id: result.worker_id, display_order: result.display_order, hours: result.hours)
+        WorkResult.create(work_id: self.id, worker_id: param.worker_id, display_order: param.display_order, hours: param.hours)
       end
     end
     
-    self.work_results.where.not(worker_id: workers).each {|work_result| work_result.destroy}    
+    self.work_params.where.not(worker_id: workers).each {|work_result| work_result.destroy}    
   end
   
-  def regist_machine_results(machine_results)
-    machine_results.each do |machine_id, work_result|
+  def regist_lands(params)
+    lands = []
+    if work_lands
+      params.each do |param|
+        param = OpenStruct.new(param)
+        lands << param.land_id
+        work_land = self.work_lands.where(land_id: param.land_id)
+        if work_land.exists?
+          work_land = work_land.first
+          work_land.update(display_order: param.display_order) if work_land.display_order != param.display_order.to_i 
+        else
+          WorkLand.create(work_id: self.id, land_id: param.land_id)
+        end
+      end
+    end
+
+    self.work_lands.where.not(land_id: lands).each {|land| land.destroy}
+  end
+  
+  def regist_machines(params)
+    params.each do |machine_id, work_result|
       work_result.each do |work_result_id, hour|
         hour = hour.to_f
         machine_result = MachineResult.where(work_result_id: work_result_id, machine_id: machine_id)
         if machine_result.exists?
           machine_result = machine_result.first
           if hour > 0
-            machine_result.update(hours: hour) unless machine_result.hours == hour 
+            machine_result.update(hours: hour) if machine_result.hours != hour 
           else
             machine_result.destroy
           end
@@ -145,8 +164,8 @@ class Work < ActiveRecord::Base
     end
   end 
 
-  def regist_work_chemicals(work_chemicals)
-    work_chemicals.each do |chemical_id, quantity|
+  def regist_chemicals(params)
+    params.each do |chemical_id, quantity|
       chemical_id = chemical_id.to_i
       quantity = quantity.to_i
       work_chemical = self.work_chemicals.where(chemical_id: chemical_id)

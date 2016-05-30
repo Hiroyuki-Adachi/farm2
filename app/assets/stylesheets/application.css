@@ -182,11 +182,14 @@ select {
 input[type="number"] {
   text-align: right;
   width:75px;
+  font-family: monospace;
+  font-size: 16px;
 }
 
 td.numeric  {
   text-align: right;
   font-family: monospace;
+  font-size: 16px;
 }
 
 td.center {

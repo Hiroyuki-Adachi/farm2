@@ -8,9 +8,11 @@
     }
 }
 body {
-    line-height: 1.5;
-    letter-spacing: 1px;
-    width: 720px;
+  line-height: 1.5;
+  letter-spacing: 1px;
+  width: 720px;
+  margin: 15px;
+  padding: 0;
 }
 
 div#show {
@@ -89,4 +91,38 @@ div.cover:hover {
 div.content {
   position: relative;
   margin-bottom: 16px;
+}
+
+button,input[type="button"],input[type="submit"],a.button {
+  padding: 2px 2px 2px 2px;
+  font-size: 16px;
+  text-decoration: none;
+	background-color: #333;
+	border: 2px solid #333;
+	color: #fff;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  -ms-transition: 0.5s;
+  transition: 0.5s;
+}
+button:hover,input[type="button"]:hover,input[type="submit"]:hover,a.button:hover {
+	background-color: #fff;
+	border-color: darkblue;
+	color: darkblue;
+}
+button:disabled,input[type="button"]:disabled,input[type="submit"]:disabled,a.button:disabled {
+  padding: 2px 2px 2px 2px;
+  font-size: 16px;
+  text-decoration: none;
+  background-color: #ccc;
+  border-color: #ccc;
+  color: black;
+  cursor: default;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  -ms-transition: none;
+  transition: none;
 }
