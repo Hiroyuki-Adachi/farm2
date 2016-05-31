@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 20160527222306) do
     t.integer  "workers_count",              default: 12,        null: false
     t.integer  "lands_count",                default: 17,        null: false
     t.integer  "machines_count",             default: 8,         null: false
+    t.integer  "chemicals_count",            default: 4,         null: false
     t.integer  "daily_worker",    limit: 2,  default: 0,         null: false
     t.string   "consignor_code",  limit: 10
     t.string   "consignor_name",  limit: 40

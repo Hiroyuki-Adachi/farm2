@@ -36,6 +36,7 @@ class WorksController < ApplicationController
     @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands || [])
     @organization = Organization.first
     @machines = Machine.by_results(@results)
+    @chemicals = @work.work_chemicals
     @results = WorkResultDecorator.decorate_collection(@results)
     render layout: false
   end

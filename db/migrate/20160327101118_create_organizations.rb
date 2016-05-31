@@ -7,6 +7,7 @@ class CreateOrganizations < ActiveRecord::Migration
       t.integer :workers_count,   {null: false, limit: 3, default: 12}
       t.integer :lands_count,     {null: false, limit: 3, default: 17}
       t.integer :machines_count,  {null: false, limit: 3, default: 8}
+      t.integer :chemicals_count, {null: false, limit: 3, default: 4}
       t.integer :daily_worker,    {null: false, limit: 1, default: 0}
 
       t.string  :consignor_code,  {null: true, limit: 10}
