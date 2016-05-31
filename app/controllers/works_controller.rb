@@ -71,8 +71,7 @@ class WorksController < ApplicationController
   end
 
   def edit_lands
-    @work_lands = @work.work_lands || []
-    @land_types = LandType.find_lands
+    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands) || []
   end
 
   def edit_machines
@@ -115,6 +114,11 @@ class WorksController < ApplicationController
       @work.regist_chemicals(params[:chemicals])
       redirect_to(work_path(@work.id))
     end
+  end
+  
+  def autocomplete_for_land_place
+    lands = Land.autocomplete(params[:term])
+    render json: lands.pluck(:place).to_json
   end
 
   private

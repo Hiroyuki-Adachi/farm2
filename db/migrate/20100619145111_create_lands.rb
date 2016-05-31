@@ -12,5 +12,6 @@ class CreateLands < ActiveRecord::Migration
       t.datetime :deleted_at
     end
     add_index :lands, :deleted_at
+    add_index :lands, :place, {unique: true}
   end
 end

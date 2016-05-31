@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   resources :works do
     collection do
       get :work_type_select
+      get :autocomplete_for_land_place
     end
     member do
       get :edit_workers

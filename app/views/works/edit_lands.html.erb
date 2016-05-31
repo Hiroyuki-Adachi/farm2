@@ -1,5 +1,4 @@
 <h1>作業日報／作業田登録</h1>
-
 <script type="text/javascript">
 <!--
 window.onload = function() {
@@ -7,175 +6,52 @@ window.onload = function() {
 }
   // -->
 </script>
-<%= render(:partial => "error") %>
+<%= javascript_include_tag 'work-lands.js' %>
+<%= render(partial: "error") %>
 
-<% form_for(@work, :url => {:action => :update }, :html => {:method => :put}) do |f| %>
-  <%= render(:partial => 'show_work', :locals => {:f => f}) %>
+<%= form_for(@work.model, url: {action: :update }, html: {method: :put}) do |f| %>
+  <%= render(partial: 'show_work', :locals => {:f => f}) %>
 
-  <h2>作業田</h2>
-  <div style="float:left;">
-  <table id="tbl_lands" style="">
-    <thead>
+<h2>作業田</h2>
+ <div style="float:left;">
+  <table id="tbl_lands">
+    <thead style="display:block;">
     <tr>
       <th style="width:20px;">No.</th>
-      <th style="width:80px;">地番</th>
-      <th style="width:50px;">面積</th>
-      <th style="width:40px;">&nbsp;</th>
+      <th style="width:150px;">地番</th>
+      <th style="width:60px;">面積</th>
+      <th style="width:50px;">&nbsp;</th>
     </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td colspan="4" style="">
-          <div style="overflow:auto;height:400px;">
-          <table>
-            <tbody id="tbody_lands">
-            <% @work_lands.each_with_index do |work_land, i| %>
-              <tr id="land_<%= work_land.land_id %>">
-                <td style="text-align: right;width:20px;"><%= i+1 %></td>
-                <td style="width:80px;"><%= work_land.land.place %></td>
-                <td style="text-align: right;width:50px;"><%= work_land.land.area %></td>
-                <td style="width:40px;">
-                    <input type="button" value="削除" onclick="remove_land(<%= work_land.land_id %>)" />
-                    <%= hidden_field_tag "work_lands[][land_id]", work_land.land_id, {:id => nil} %>
-                    <%= hidden_field_tag "work_lands[][display_order]", i + 1, {:id => nil} %>
-                </td>
-                </tr>
-              <% end %>
-                </tbody>
-            </table>
-        </div>
-      </td>
-    </tr>
+    <tbody id="tbody_lands" style="display:block; height: 400px; overflow-y:scroll;">
+    <% @work_lands.each_with_index do |work_land, i| %>
+      <tr id="land_<%= work_land.land_id %>">
+        <td class="numeric" style="width:20px;"><%= i+1 %></td>
+        <td style="width:150px;"><%= work_land.place_name %></td>
+        <td class="numeric" style="width:60px;"><%= work_land.area %></td>
+        <td style="width:50px;">
+            <input type="button" value="削除" onclick="remove_land(<%= work_land.land_id %>)" />
+            <%= hidden_field_tag "work_lands[][land_id]", work_land.land_id, {:id => nil} %>
+            <%= hidden_field_tag "work_lands[][display_order]", i + 1, {:id => nil} %>
+        </td>
+      </tr>
+     <% end %>
     </tbody>
-    <tfoot>
+    <tfoot style="display:block;">
       <tr style="background-color:lightcyan;">
-        <td colspan="2" style="text-align: center;">合計</td>
-        <td id="total_area" style="text-align: right;"></td>
-        <td>&nbsp;</td>
+        <td style="width:20px;">&nbsp;</td>
+        <td style="text-align: center;width:150px;">合計</td>
+        <td id="total_area" class="numeric" style="width:60px;"></td>
+        <td style="width:50px;">&nbsp;</td>
       </tr>
     </tfoot>
   </table>
-    </div>
-  <div class="float:left;">
-  <%= text_field_with_auto_complete :land, :place, {}, :after_update_element=>"function(element, selectedItem){add_land(selectedItem.id.split(','));}" %>
+ </div>
+<div class="lands_search" style="float:right;">
+  <%= autocomplete_field_tag :land, '', autocomplete_for_land_place_works_path, {placeholder: "地番または面積(α)を入力してください。", size: 30}  %>
 </div>
-  <div class="clear:left;"></div>
-<% @land_types.each do |land_type| %>
-<%   if land_type.area.to_i > 0 %>
-  <input type="button" value="≪<%= land_type.name %>" onclick="add_land_type(<%= land_type.id %>)" /><br />
-<%   end %>
-<% end %>
+<div style="clear:both; margin-top:20px;">
   <%= f.submit '登録', :name => 'regist_lands' %>
   <%= f.submit '戻る', :name => 'cancel' %>
+</div<
 <% end %>
-
-<script type="text/javascript">
-function remove_land(land_id)
-{
-    document.getElementById("tbody_lands").deleteRow(document.getElementById("land_" + land_id.toString()).rowIndex);
-
-    renumber_land();
-    calc_total_area();
-}
-
-function renumber_land()
-{
-    var tbody_lands = document.getElementById("tbody_lands");
-    var row_land;
-    for(var i = 0; i < tbody_lands.rows.length; i++)
-    {
-        row_land = tbody_lands.rows[i];
-        row_land.cells[0].innerHTML = i + 1;
-        row_land.cells[3].children[2].value = i + 1;
-    }
-}
-
-function calc_total_area()
-{
-    var tbody_lands = document.getElementById("tbody_lands");
-    var total_area = 0.0;
-
-    for(var i = 0; i < tbody_lands.rows.length; i++)
-    {
-        total_area += parseFloat(tbody_lands.rows[i].cells[2].innerHTML);
-    }
-
-    document.getElementById("total_area").innerHTML = total_area.toFixed(1);
-}
-
-function add_land(args)
-{
-    var land_id     = args[0];
-    var land_place  = args[1];
-    var land_area   = args[2];
-
-    if(document.getElementById("land_" + land_id))
-    {
-        alert("既に存在しています(" + land_place + ")");
-        document.getElementById("land_place").value = "";
-        return;
-    }
-
-    var tbody_lands = document.getElementById("tbody_lands");
-    var row = tbody_lands.insertRow(tbody_lands.rows.length);
-
-    row.id = "land_" + land_id.toString();
-
-    var cell_no     = row.insertCell(0);
-    var cell_place  = row.insertCell(1);
-    var cell_area   = row.insertCell(2);
-    var cell_del    = row.insertCell(3);
-
-    var display_order = tbody_lands.rows.length;
-
-    cell_no.style.textAlign = "right";
-    cell_no.innerHTML = display_order;
-
-    cell_place.innerHTML = land_place;
-
-    cell_area.style.textAlign = "right";
-    cell_area.innerHTML = parseFloat(land_area).toFixed(1);
-
-    var elem_button = document.createElement("input")
-    elem_button.type = "button";
-    elem_button.value = "削除";
-    elem_button.onclick = new Function("remove_land(" + land_id + ");");
-    cell_del.appendChild(elem_button);
-
-    var elem_land = document.createElement("input");
-    elem_land.type = "hidden";
-    elem_land.name = "work_lands[][land_id]";
-    elem_land.value = land_id;
-    cell_del.appendChild(elem_land);
-
-    var elem_order = document.createElement("input");
-    elem_order.type = "hidden";
-    elem_order.name = "work_lands[][display_order]";
-    elem_order.value = display_order;
-    cell_del.appendChild(elem_order);
-
-    calc_total_area();
-
-    document.getElementById("land_place").value = "";
-}
-
-function add_land_type(land_type)
-{
-    if(!window.confirm("設定してもよろしいですか?")) {
-        return;
-    }
-    var myAjax = new Ajax.Request(
-                    "/lands/" + land_type + "/find",
-                    {
-                        method: 'get',
-                        asynchronous: false
-                    }
-                );
-    var results = myAjax.transport.responseText.evalJSON();
-    for(var i = 0; i < results.length;i++) {
-        if(!document.getElementById("land_" + results[i][0])) {
-            add_land(results[i]);
-        }
-    }
-}
-</script>

@@ -26,7 +26,7 @@ class Land < ActiveRecord::Base
   has_many :land_uses
   has_many :work_types,  {through: :land_uses}
 
-  scope :auto_complete, -> (place) {where("place like ? or area = ?", "%#{place}%", place.to_f)}
+  scope :autocomplete, -> (place) {where("target_flag = ? AND (place like ? OR area = ?)", true, "%#{place}%", place.to_f).order(:place, :display_order).limit(15)}
   scope :usual, -> {where(target_flag: true).order("place, display_order")}
   scope :list, -> {includes(:owner).order("place, lands.display_order, lands.id")}
 
