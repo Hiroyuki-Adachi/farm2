@@ -128,17 +128,15 @@ class Work < ActiveRecord::Base
   
   def regist_lands(params)
     lands = []
-    if work_lands
-      params.each do |param|
-        param = OpenStruct.new(param)
-        lands << param.land_id
-        work_land = self.work_lands.where(land_id: param.land_id)
-        if work_land.exists?
-          work_land = work_land.first
-          work_land.update(display_order: param.display_order) if work_land.display_order != param.display_order.to_i 
-        else
-          WorkLand.create(work_id: self.id, land_id: param.land_id)
-        end
+    params.each do |param|
+      param = OpenStruct.new(param)
+      lands << param.land_id
+      work_land = self.work_lands.where(land_id: param.land_id)
+      if work_land.exists?
+        work_land = work_land.first
+        work_land.update(display_order: param.display_order) if work_land.display_order != param.display_order.to_i 
+      else
+        WorkLand.create(work_id: self.id, land_id: param.land_id, display_order: param.display_order)
       end
     end
 

@@ -16,7 +16,6 @@
 //= require i18n
 //= require i18n/translations
 //= require dateformat
-//= require autocomplete-rails
 
 $(document).on("change", "span.check_group input[type='checkbox']", function(e) {
     if($(this).prop('checked')) {

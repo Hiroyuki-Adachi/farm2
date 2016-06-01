@@ -26,7 +26,6 @@ class Land < ActiveRecord::Base
   has_many :land_uses
   has_many :work_types,  {through: :land_uses}
 
-  scope :autocomplete, -> (place) {where("target_flag = ? AND (place like ? OR area = ?)", true, "%#{place}%", place.to_f).order(:place, :display_order).limit(15)}
   scope :usual, -> {where(target_flag: true).order("place, display_order")}
   scope :list, -> {includes(:owner).order("place, lands.display_order, lands.id")}
 
@@ -43,5 +42,13 @@ class Land < ActiveRecord::Base
 
   def manager_name
     return self.manager.member_flag ? self.manager.holder.name : self.manager.name
+  end
+  
+  def self.autocomplete(place)
+    results = []
+    Land.where("target_flag = ? AND (place like ? OR area = ?)", true, "%#{place}%", place.to_f).order(:place, :display_order).limit(15).each do |land|
+      results << {label: land.place + "(#{land.area})", value: land.id, details: {place: land.place, id: land.id, owner: land.owner.name, area: land.area}}
+    end
+    return results.to_json
   end
 end

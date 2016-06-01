@@ -34,7 +34,7 @@ gem 'kaminari'
 
 gem 'draper'
 
-gem 'rails4-autocomplete'
+# gem 'rails4-autocomplete'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

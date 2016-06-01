@@ -1,6 +1,6 @@
 function remove_land(land_id)
 {
-    document.getElementById("tbody_lands").deleteRow(document.getElementById("land_" + land_id.toString()).rowIndex);
+    document.getElementById("tbody_lands").deleteRow(document.getElementById("land_" + land_id.toString()).rowIndex - 1);
 
     renumber_land();
     calc_total_area();
@@ -31,12 +31,8 @@ function calc_total_area()
     document.getElementById("total_area").innerHTML = total_area.toFixed(2);
 }
 
-function add_land(args)
+function add_land(land_id, land_place, land_area)
 {
-    var land_id     = args[0];
-    var land_place  = args[1];
-    var land_area   = args[2];
-
     if(document.getElementById("land_" + land_id))
     {
         alert("既に存在しています(" + land_place + ")");
@@ -56,12 +52,12 @@ function add_land(args)
 
     var display_order = tbody_lands.rows.length;
 
-    cell_no.style.textAlign = "right";
+    cell_no.className = "numeric";
     cell_no.innerHTML = display_order;
 
     cell_place.innerHTML = land_place;
 
-    cell_area.style.textAlign = "right";
+    cell_area.className = "numeric";
     cell_area.innerHTML = parseFloat(land_area).toFixed(1);
 
     var elem_button = document.createElement("input")
@@ -84,5 +80,5 @@ function add_land(args)
 
     calc_total_area();
 
-    document.getElementById("land_place").value = "";
+    $("#land").val("");
 }

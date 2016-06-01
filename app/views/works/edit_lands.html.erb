@@ -1,16 +1,9 @@
 <h1>作業日報／作業田登録</h1>
-<script type="text/javascript">
-<!--
-window.onload = function() {
-    calc_total_area();
-}
-  // -->
-</script>
 <%= javascript_include_tag 'work-lands.js' %>
 <%= render(partial: "error") %>
 
 <%= form_for(@work.model, url: {action: :update }, html: {method: :put}) do |f| %>
-  <%= render(partial: 'show_work', :locals => {:f => f}) %>
+<%= render(partial: 'show_work', :locals => {:f => f}) %>
 
 <h2>作業田</h2>
  <div style="float:left;">
@@ -47,11 +40,27 @@ window.onload = function() {
     </tfoot>
   </table>
  </div>
-<div class="lands_search" style="float:right;">
-  <%= autocomplete_field_tag :land, '', autocomplete_for_land_place_works_path, {placeholder: "地番または面積(α)を入力してください。", size: 30}  %>
+<div class="lands_search" style="float:left;magin-left:40px;">
+  <%= text_field_tag :land, '', {placeholder: "地番または面積(α)を入力してください。", size: 30}  %>
 </div>
 <div style="clear:both; margin-top:20px;">
   <%= f.submit '登録', :name => 'regist_lands' %>
   <%= f.submit '戻る', :name => 'cancel' %>
-</div<
+</div>
 <% end %>
+
+<script type="text/javascript">
+$(function() {
+  calc_total_area();
+
+  $("#land").autocomplete({
+    source : "<%= autocomplete_for_land_place_works_path %>",
+    select: function(e, ui) {
+      if(ui.item) {
+        add_land(ui.item.details.id, ui.item.details.place + "(" + ui.item.details.owner + ")", ui.item.details.area);
+      }
+      return false;
+    }
+  });
+});
+</script>

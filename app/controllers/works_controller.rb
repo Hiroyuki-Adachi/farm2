@@ -117,8 +117,7 @@ class WorksController < ApplicationController
   end
   
   def autocomplete_for_land_place
-    lands = Land.autocomplete(params[:term])
-    render json: lands.pluck(:place).to_json
+    render json: Land.autocomplete(params[:term])
   end
 
   private
