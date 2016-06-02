@@ -1,14 +1,4 @@
-<% if @worker.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= @worker.errors.count %>件のエラーがあります。</h2>
- 
-    <ul>
-    <% @worker.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= error_print(@worker) %>
 <%= form_for(@worker) do |f| %>
  <div class="field">
     <%= f.label :family_phonetic %><br />

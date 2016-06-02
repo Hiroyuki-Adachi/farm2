@@ -116,3 +116,20 @@ function change_section(section) {
         }
     }
 }
+
+$(function() {
+  $("#tbody_workers tr").hover(function() {
+    $(this).css("cursor", "crosshair");
+  }, function() {
+    $(this).css("cursor", "default");
+  });
+    
+  $("#tbody_workers").sortable({
+    cursor: "move",
+    update: function(e, ui) {
+      renumber_worker();
+    }
+  });
+
+  $("#tbody_workers").disableSelection();
+});

@@ -1,14 +1,4 @@
-<% if @chemical.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= @chemical.errors.count %>件のエラーがあります。</h2>
- 
-    <ul>
-    <% @chemical.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= error_print(@chemical) %>
 <%= form_for(@chemical) do |f| %>
   <div class="field">
     <%= f.label :name %><br />

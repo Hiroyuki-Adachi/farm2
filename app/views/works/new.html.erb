@@ -1,5 +1,5 @@
 <h1>作業日報入力</h1>
-<%= render(:partial => "error") %>
+<%= error_print(@work) %>
 
 <%= form_for(@work, :url => {:action => :create }, :html => {:method => :post}) do |f| %>
   <%= render(:partial => 'form', locals: {:f => f}) %>

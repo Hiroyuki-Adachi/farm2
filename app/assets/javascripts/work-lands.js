@@ -82,3 +82,20 @@ function add_land(land_id, land_place, land_area)
 
     $("#land").val("");
 }
+
+$(function() {
+  $("#tbody_lands tr").hover(function() {
+    $(this).css("cursor", "crosshair");
+  }, function() {
+    $(this).css("cursor", "default");
+  });
+    
+  $("#tbody_lands").sortable({
+    cursor: "move",
+    update: function(e, ui) {
+      renumber_land();
+    }
+  });
+
+  $("#tbody_lands").disableSelection();
+});

@@ -1,0 +1,8 @@
+<div id="error_explanation">
+  <h2><%= ar.errors.count %>件のエラーがあります。</h2>
+  <ul>
+    <% ar.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>

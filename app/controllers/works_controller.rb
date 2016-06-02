@@ -76,6 +76,7 @@ class WorksController < ApplicationController
 
   def edit_machines
     @results = @work.work_results || []
+    @machines = Machine.by_work(@work.model)
   end
 
   def edit_chemicals

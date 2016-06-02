@@ -32,8 +32,8 @@ class Machine < ActiveRecord::Base
 
   scope :by_work, -> (work) { 
      includes(:machine_type, :machine_kinds)
-    .where("machine_kinds.work_kind_id = ? and validity_start_at < ? and ? < validity_end_at", work.work_kind_id, work.worked_at, work.worked_at)
-    .order("machines.display_order")
+    .where("(machine_kinds.work_kind_id = ? and validity_start_at <= ? and ? <= validity_end_at) OR (machines.id in (?))", work.work_kind_id, work.worked_at, work.worked_at, work.machine_results.pluck(:machine_id))
+    .order("machine_types.display_order, machines.display_order")
   }
 
   scope :by_results, -> (results) {

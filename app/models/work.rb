@@ -39,6 +39,8 @@ class Work < ActiveRecord::Base
   has_many :workers,    {through: :work_results}
   has_many :lands,      {through: :work_lands}
   has_many :chemicals,  {through: :work_chemicals}
+  
+  has_many :machine_results, {through: :work_results}
 
   def self.month(worked_from, worked_to, worker_id)
     sql = []
@@ -109,7 +111,7 @@ class Work < ActiveRecord::Base
     return result.join(", ")
   end
   
-  def regist_params(params)
+  def regist_results(params)
     workers = []
     params.each do |param|
       param = OpenStruct.new(param)

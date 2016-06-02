@@ -1,14 +1,4 @@
-<% if @work_kind.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= @work_kind.errors.count %>件のエラーがあります。</h2>
- 
-    <ul>
-    <% @work_kind.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= error_print(@work_kind) %>
 <%= form_for(@work_kind) do |f| %>
  <div class="field">
     <%= f.label :name %><br />

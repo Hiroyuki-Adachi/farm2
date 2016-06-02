@@ -1,11 +1,11 @@
-<h1>作業日報／作業者登録</h1>
+<h1>作業日報(作業者)登録</h1>
 <%= javascript_include_tag 'work-workers.js' %>
 <script type="text/javascript">
 window.onload = function() {
     set_add_buttons();
 }
 </script>
-<%= render(:partial => "error") %>
+<%= error_print(@work) %>
 
 <%= form_for(@work.model, url: {action: :update }, html: {method: :put}) do |f| %>
   <%= render(:partial => 'show_work', :locals => {:f => f}) %>

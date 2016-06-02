@@ -1,14 +1,4 @@
-<% if @machine_type.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= @machine_type.errors.count %>件のエラーがあります。</h2>
- 
-    <ul>
-    <% @machine_type.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= error_print(@machine_type) %>
 <%= form_for(@machine_type) do |f| %>
  <div class="field">
     <%= f.label :name %><br />
