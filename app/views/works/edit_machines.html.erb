@@ -7,10 +7,16 @@
   <% else %>
     <% if @company_machines.count > 0 %>
       <h2>機械・オペレーター(組合管理)</h2>
-      <table>
+      <table class="list">
         <thead>
           <tr>
-            <th>作業者</th>
+            <% machine_type_ids = @company_machines.pluck(:machine_type_id).uniq %>
+            <th rowspan="2">作業者</th>
+            <% machine_type_ids.each do |machine_type_id| %>
+              <th colspan="<%= @company_machines.where(machine_type_id: machine_type_id).count %>"><%= MachineType.find(machine_type_id).name %></th>
+            <% end %>
+          </tr>
+          <tr>
             <% @company_machines.each do |machine| %>
               <th><%= machine.name %></th>
             <% end %>
@@ -19,7 +25,7 @@
         <tbody>
           <% @results.each do |result| %>
             <tr>
-              <td><%= result.worker.name + "(#{result.worker.home.name})" %></td>
+              <td><%= result.worker.name %></td>
                 <% @company_machines.each do |machine| %>
                   <% machine_result = result.machine_results.where(machine_id: machine).first %>
                   <td><%= number_field_tag "machine_hours[#{machine.id.to_s}][#{result.id}]", machine_result ? machine_result.hours : 0, {step:0.5, min: 0, max: 99} %></td>
@@ -29,6 +35,8 @@
         </tbody>
       </table>
     <% end %>
+  <% end %>
+  <% if @owner_machines.count > 0 %>
   <% end %>
   <br />
   <%= f.submit '登録', :name => 'regist_machines' %>

@@ -154,7 +154,7 @@
         <% xx.times do |x| %>
           <% j = i + yy * x %>
           <% if @machines[j] %>
-            <td class="machine"><%=h @machines[j].name %></td>
+            <td class="machine"><%=h @machines[j].usual_name %></td>
             <td class="machine" style="text-align: right;"><%=h @machines[j].hours(@results.object) %></td>
             <td class="machine"><%=h @machines[j].operators(@work) %></td>
           <%  else %>
