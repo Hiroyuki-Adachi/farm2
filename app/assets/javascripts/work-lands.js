@@ -58,7 +58,7 @@ function add_land(land_id, land_place, land_area)
     cell_place.innerHTML = land_place;
 
     cell_area.className = "numeric";
-    cell_area.innerHTML = parseFloat(land_area).toFixed(1);
+    cell_area.innerHTML = parseFloat(land_area).toFixed(2);
 
     var elem_button = document.createElement("input")
     elem_button.type = "button";

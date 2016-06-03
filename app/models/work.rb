@@ -64,7 +64,7 @@ class Work < ActiveRecord::Base
     sql << "WHERE payed_at IS NOT NULL AND term = :term"
     sql << "GROUP BY payed_at"
     sql << "ORDER BY payed_at"
-    return Work.find_by_sql([sql.join("\n"), {term: System.first.term}])
+    return Work.find_by_sql([sql.join("\n"), {term: Organization.first.term}])
   end
 
   def self.months(term)
@@ -79,16 +79,15 @@ class Work < ActiveRecord::Base
   end
 
   def set_term
-    self.term = System.first.term
+    self.term = Organization.first.term
   end
 
   def sum_hours
     return self.work_results.sum(:hours)
   end
 
-  def self.get_terms
+  def self.get_terms(term)
     params = []
-    term = System.first.term
     result = Work.maximum(:payed_at).where(term: term)
     result = result ? result.to_date : Date.new(term, 1, 1)
     result = result.next.end_of_month.to_date

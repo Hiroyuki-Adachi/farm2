@@ -3,9 +3,8 @@ class WorksController < ApplicationController
   before_action :set_masters, only: [:new, :create, :edit, :update]
 
  def index
-    term = System.first.term
-    @months = WorkDecorator.months(term)
-    @works = Work.where(term: term).order(worked_at: :DESC, id: :DESC)
+    @months = WorkDecorator.months(@term)
+    @works = Work.where(term: @term).order(worked_at: :DESC, id: :DESC)
     if params[:month].blank?
       @month = ""
     else

@@ -22,7 +22,7 @@ class WorkChemical < ActiveRecord::Base
     SELECT DISTINCT chemicals.id, chemicals.name, chemical_types.display_order FROM chemicals
       INNER JOIN work_chemicals ON work_chemicals.chemical_id = chemicals.id AND work_chemicals.quantity > 0
       INNER JOIN works ON work_chemicals.work_id = works.id
-      INNER JOIN systems ON works.year = systems.term AND works.worked_at >= systems.target_from AND works.worked_at <= systems.target_to
+      INNER JOIN organizations ON works.term = organizations.term AND works.worked_at >= systems.target_from AND works.worked_at <= systems.target_to
       INNER JOIN chemical_types ON chemical_types.id = chemicals.chemical_type_id
       ORDER BY chemical_types.display_order, chemicals.id
 SQL

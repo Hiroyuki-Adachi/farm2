@@ -142,11 +142,13 @@ SELECT SETVAL('machine_results_id_seq', (SELECT MAX(id) FROM machine_results));
 ------------------------------------- systems
 TRUNCATE TABLE systems;
 
-INSERT INTO systems (id, target_from, target_to, term, created_at, updated_at)
-SELECT id, target_from, target_to, term, created_at, updated_at
+SELECT SETVAL('systems_id_seq', 1);
+
+INSERT INTO systems (term, target_from, target_to, created_at, updated_at)
+SELECT term, to_date(to_char(term * 10000 + 101, '99999999'), 'YYYYMMDD') AS target_from, to_date(to_char(term * 10000 + 1201, '99999999'), 'YYYYMMDD') AS target_from, created_at, updated_at
 FROM dblink('dbname=farm_production',
-'SELECT id, target_from, target_to, term, created_at, updated_at FROM systems') AS
-t1(id integer,target_from date, target_to date, term integer, created_at timestamp, updated_at timestamp);
+'SELECT year AS term, MIN(created_at) AS created_at, MIN(updated_at) AS updated_at FROM works GROUP BY year') AS
+t1(term integer, created_at timestamp, updated_at timestamp);
 
 SELECT SETVAL('systems_id_seq', (SELECT MAX(id) FROM systems));
 ------------------------------------- chemicals
@@ -196,3 +198,5 @@ FROM dblink('dbname=farm_production',
 t1(id integer, show_work1 varchar, show_work2 varchar, created_at timestamp, updated_at timestamp);
 
 SELECT SETVAL('organizations_id_seq', (SELECT MAX(id) FROM organizations));
+
+UPDATE organizations SET term = 2015;

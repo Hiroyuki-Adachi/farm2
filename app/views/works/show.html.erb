@@ -134,7 +134,7 @@
   <div id="cover_lands" class="cover" onclick="location.href='<%= edit_lands_work_path(@work) %>'"></div>
 </div>
 <% end %>
-<% if @machines.count > 0 or @work.work_kind.machine_kinds.count > 0 or @organization.machines_count > 0 %>
+<% if (@machines.count > 0 or @work.work_kind.machine_kinds.count > 0) and @organization.machines_count > 0 %>
 <div id="content_machines" class="content">
   <div class="sub_title">※機械・軽トラ・オペレーター</div>
   <table id="detail_machines">
@@ -170,7 +170,7 @@
   <div id="cover_machines" class="cover" onclick="location.href='<%= edit_machines_work_path(@work) %>'"></div>
 </div>
 <% end %>
-<% if @chemicals.count > 0 or @work.work_kind.chemical_kinds.count > 0 %>
+<% if (@chemicals.count > 0 or @work.work_kind.chemical_kinds.count > 0) and @organization.chemicals_count > 0 %>
 <div id="content_chemicals" class="content">
   <div class="sub_title">※使用薬剤</div>
   <table id="detail_chemicals" style="width:720px;">

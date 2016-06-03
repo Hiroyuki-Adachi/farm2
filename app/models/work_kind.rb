@@ -47,7 +47,7 @@ class WorkKind < ActiveRecord::Base
   
   private
   def save_price
-    term = System.first.term
+    term = Organization.first.term
     work_kind_price = WorkKindPrice.where(work_kind_id: self.id, term: term).order(:id)
     if work_kind_price.exists?
       work_kind_price.first.update_attributes(price: @price)

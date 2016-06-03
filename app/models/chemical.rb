@@ -23,11 +23,11 @@ class Chemical < ActiveRecord::Base
   validates :display_order, presence: true
   validates :display_order, numericality: {only_integer: true}, :if => Proc.new{|x| x.display_order.present?}
 
-  scope :usual, -> {includes(:chemical_type, :chemical_terms).where("chemical_terms.term = ?", System.first.term).order("chemical_types.display_order, chemicals.display_order, chemicals.id")}
+  scope :usual, -> (term){includes(:chemical_type, :chemical_terms).where("chemical_terms.term = ?", term).order("chemical_types.display_order, chemicals.display_order, chemicals.id")}
   scope :list, ->{includes(:chemical_type).order("chemical_types.display_order, chemicals.display_order, chemicals.id")}
   
   def this_term_flag
-    return self.chemical_terms.where(term: System.first.term).exists?
+    return self.chemical_terms.where(term: Organization.first.term).exists?
   end
   
   def this_term_flag=(val)
@@ -36,7 +36,7 @@ class Chemical < ActiveRecord::Base
   
   private
   def save_term
-    term = System.first.term
+    term = Organization.first.term
     if @this_term_flag
       ChemicalTerm.create(term: term, chemical_id: self.id) unless self.chemical_terms.where(term: term).exists?
     else

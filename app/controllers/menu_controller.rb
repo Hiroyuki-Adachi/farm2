@@ -1,5 +1,5 @@
 class MenuController < ApplicationController
-  before_action :set_system
+  before_action :set_system, only: [:edit_term, :index, :edit]
   
   def index
   end
@@ -19,16 +19,25 @@ class MenuController < ApplicationController
 
   def update
     if system_params[:term]
-      @system.term = system_params[:term]
-      @system.target_from = Date.new(@system.term, 1, 1)
-      @system.target_to   = Date.new(@system.term, 12, 31)
+      @term = system_params[:term].to_i
+      systems = System.where(term: @term)
+      if systems.exists?
+        @system = systems.first
+      else
+        @system = System.new(term: @term)
+      end
+      @system.target_from = Date.new(@term, 1, 1)
+      @system.target_to   = Date.new(@term, 12, 31)
     else
+      @system = System.where(term: @term).first
       @system.target_from = Date.strptime(system_params['target_from'], "%Y-%m")
       @system.target_to   = Date.strptime(system_params['target_to'], "%Y-%m").end_of_month
     end
 
     if @system.valid?
       @system.save!
+      Organization.first.update(term: @term)
+      session[:term] = @term
       redirect_to(root_path, :notice => '設定を変更しました。')
     else
       if system_params[:term]
@@ -41,7 +50,8 @@ class MenuController < ApplicationController
   
   private
   def set_system
-    @system = System.first
+    @term = Organization.first.term unless @term
+    @system = System.where(term: @term).first
   end
   
   def system_params

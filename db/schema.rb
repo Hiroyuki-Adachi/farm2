@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 20160527222306) do
   end
 
   add_index "lands", ["deleted_at"], name: "index_lands_on_deleted_at", using: :btree
+  add_index "lands", ["place"], name: "index_lands_on_place", using: :btree
 
   create_table "machine_kinds", force: :cascade do |t|
     t.integer "machine_type_id", null: false
@@ -176,6 +177,7 @@ ActiveRecord::Schema.define(version: 20160527222306) do
     t.string   "branch_code",     limit: 3,  default: "000",     null: false
     t.integer  "account_type_id", limit: 2,  default: 0,         null: false
     t.string   "account_number",  limit: 7,  default: "0000000", null: false
+    t.integer  "term",                       default: 0,         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -192,12 +194,14 @@ ActiveRecord::Schema.define(version: 20160527222306) do
   add_index "sections", ["deleted_at"], name: "index_sections_on_deleted_at", using: :btree
 
   create_table "systems", force: :cascade do |t|
+    t.integer  "term",        null: false
     t.date     "target_from"
     t.date     "target_to"
-    t.integer  "term",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "systems", ["term"], name: "index_systems_on_term", unique: true, using: :btree
 
   create_table "work_chemicals", force: :cascade do |t|
     t.integer  "work_id",                               null: false
