@@ -6,6 +6,7 @@ class CreateMachineResults < ActiveRecord::Migration
       t.integer :display_order, {null: false, default: 1}
       t.decimal :hours,         {null: false, default: 0, precision: 3, scale: 1}
       t.decimal :areas,         {null: false, default: 0, precision: 6, scale: 2}
+      t.integer :lease_id,      {null: false, default: 0}
 
       t.timestamps
     end

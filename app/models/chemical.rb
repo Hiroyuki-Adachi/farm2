@@ -17,17 +17,19 @@ class Chemical < ActiveRecord::Base
   after_save :save_term
 
   belongs_to :chemical_type
-  has_many :chemical_terms
+  has_many :chemical_terms, {dependent: :delete_all}
 
   validates :name,          presence: true
   validates :display_order, presence: true
   validates :display_order, numericality: {only_integer: true}, :if => Proc.new{|x| x.display_order.present?}
+  
+  attr_accessor :term
 
   scope :usual, -> (term){includes(:chemical_type, :chemical_terms).where("chemical_terms.term = ?", term).order("chemical_types.display_order, chemicals.display_order, chemicals.id")}
   scope :list, ->{includes(:chemical_type).order("chemical_types.display_order, chemicals.display_order, chemicals.id")}
   
   def this_term_flag
-    return self.chemical_terms.where(term: Organization.first.term).exists?
+    return self.chemical_terms.where(term: @term).exists?
   end
   
   def this_term_flag=(val)
@@ -36,11 +38,11 @@ class Chemical < ActiveRecord::Base
   
   private
   def save_term
-    term = Organization.first.term
+    @term = Organization.first.term unless @term
     if @this_term_flag
-      ChemicalTerm.create(term: term, chemical_id: self.id) unless self.chemical_terms.where(term: term).exists?
+      ChemicalTerm.create(term: @term, chemical_id: self.id) unless self.chemical_terms.where(term: @term).exists?
     else
-      self.chemical_terms.where(term: term).destroy_all
+      self.chemical_terms.where(term: @term).delete_all
     end
   end
 end

@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20160527222306) do
     t.integer  "display_order",                          default: 1,   null: false
     t.decimal  "hours",          precision: 3, scale: 1, default: 0.0, null: false
     t.decimal  "areas",          precision: 6, scale: 2, default: 0.0, null: false
+    t.integer  "lease_id",                               default: 0,   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

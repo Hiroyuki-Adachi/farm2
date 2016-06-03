@@ -12,7 +12,7 @@
   <tr>
     <td><%=h chemical.name %></td>
     <td><%=h chemical.chemical_type.name %></td>
-    <td class="center"><%=h chemical.this_term_flag %></td>
+    <td class="center"><%=h chemical.this_term_flag(@term) %></td>
     <td><%= link_to '修正', edit_chemical_path(chemical) %></td>
     <td><%= link_to '削除', chemical, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
   </tr>

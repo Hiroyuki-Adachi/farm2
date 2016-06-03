@@ -8,6 +8,7 @@
 #  display_order  :integer          default(1), not null
 #  hours          :decimal(3, 1)    default(0.0), not null
 #  areas          :decimal(6, 2)    default(0.0), not null
+#  lease_id       :integer          default(0), not null
 #  created_at     :datetime
 #  updated_at     :datetime
 #

@@ -38,6 +38,7 @@ class ChemicalsController < ApplicationController
   private
   def set_chemical
     @chemical = Chemical.find(params[:id])
+    @chemical.term = @term
   end
   
   def set_chemical_types
@@ -45,6 +46,6 @@ class ChemicalsController < ApplicationController
   end
   
   def chemical_params
-    return params.require(:chemical).permit(:name, :display_order, :chemical_type_id, :this_term_flag)
+    return params.require(:chemical).permit(:name, :display_order, :chemical_type_id, :this_term_flag).merge(term: @term)
   end
 end
