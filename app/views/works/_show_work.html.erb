@@ -16,3 +16,5 @@
 <b style="float:left;">記事：</b><div class="remarks" style="float:left;"><%=hbr @work.remarks %></div>
 <%= f.hidden_field :remarks %>
 <div style="clear:both;"></div>
+<%= hidden_field_tag :page, params[:page] %>
+<%= hidden_field_tag :month, params[:month] %>

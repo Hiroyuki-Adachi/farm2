@@ -75,7 +75,8 @@ class WorksController < ApplicationController
 
   def edit_machines
     @results = @work.work_results || []
-    @machines = Machine.by_work(@work.model)
+    @company_machines = Machine.by_work(@work.model).of_company
+    @owner_machines = Machine.by_work(@work.model).of_owner(@work)
   end
 
   def edit_chemicals
@@ -84,12 +85,12 @@ class WorksController < ApplicationController
 
   def update
     if params[:cancel]
-      redirect_to(work_path(params[:id]))
+      redirect_to(work_path(id: params[:id], page: params[:page], month: params[:month]))
     end
 
     if params[:regist]
       if @work.update(work_params)
-        redirect_to(work_path(@work.id))
+        redirect_to(work_path(page_params))
       else
         render action: :edit
       end
@@ -97,22 +98,22 @@ class WorksController < ApplicationController
 
     if params[:regist_workers]
       @work.regist_results(params[:results])
-      redirect_to(work_path(@work.id))
+      redirect_to(work_path(page_params))
     end
 
     if params[:regist_lands]
       @work.regist_lands(params[:work_lands])
-      redirect_to(work_path(@work.id))
+      redirect_to(work_path(page_params))
     end
 
     if params[:regist_machines]
       @work.regist_machines(params[:machine_hours])
-      redirect_to(work_path(@work.id))
+      redirect_to(work_path(page_params))
     end
 
     if params[:regist_chemicals]
       @work.regist_chemicals(params[:chemicals])
-      redirect_to(work_path(@work.id))
+      redirect_to(work_path(page_params))
     end
   end
   
@@ -132,5 +133,9 @@ class WorksController < ApplicationController
   
   def work_params
     return params.require(:work).permit(:worked_at, :weather_id, :start_at, :end_at, :work_type_id, :work_kind_id, :name, :remarks)
+  end
+  
+  def page_params
+    return params.permit(:page, :month).merge({id: @work.id})
   end
 end

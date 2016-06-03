@@ -37,8 +37,7 @@ class Machine < ActiveRecord::Base
   }
   
   scope :of_company, ->{where(home_id: Home.where(company_flag: true))}
-  scope :of_owner, ->(work){where(home_id: work.wokers.pluck(:home_id).uniq)}
-  scope :of_lease, ->
+  scope :of_owner, ->(work){where(home_id: work.workers.pluck(:home_id).uniq)}
 
   scope :by_results, -> (results) {
     joins(:machine_results)
