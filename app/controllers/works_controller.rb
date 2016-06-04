@@ -3,22 +3,22 @@ class WorksController < ApplicationController
   before_action :set_masters, only: [:new, :create, :edit, :update]
 
  def index
-    @months = WorkDecorator.months(@term)
-    @works = Work.where(term: @term).order(worked_at: :DESC, id: :DESC)
-    if params[:month].blank?
-      @month = ""
-    else
-      @month = params[:month]
-      @works = @works.where("date_trunc('month', worked_at) = ?", @month)
-    end
-
     respond_to do |format|
       format.html do
+        @months = WorkDecorator.months(@term)
+        @works = Work.where(term: @term).order(worked_at: :DESC, id: :DESC)
+        if params[:month].blank?
+          @month = ""
+        else
+          @month = params[:month]
+          @works = @works.where("date_trunc('month', worked_at) = ?", @month)
+        end
         @page = params[:page] || 1
         @works = WorkDecorator.decorate_collection(@works.page(@page))
       end
-      format.xml do
-        response.headers['Content-type'] = 'application/octet-stream'
+      format.csv do
+        @works = Work.where(term: @term).order(worked_at: :ASC, id: :ASC)
+        render :content_type => 'text/csv; charset=cp943'
       end
     end
   end

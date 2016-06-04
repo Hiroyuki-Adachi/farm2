@@ -2,8 +2,7 @@
 <h2>日報管理</h2>
 <ul>
   <li><%= link_to '日報入力', new_work_path %></li>
-  <li><%= link_to '日報一覧', works_path %>(<%= link_to 'Excel出力', works_path(:format => :xml) %>)</li>
-  <!-- <li><%#= link_to '作業月報', monthly_reports_path %></li> -->
+  <li><%= link_to '日報一覧', works_path %>(<%= link_to 'CSV出力', works_path(format: :csv) %>)</li>
 </ul>
 <h2>集計表示(<%= @system.target_from.strftime('%Y年%m月') %>から<%= @system.target_to.strftime('%Y年%m月') %>まで)</h2>
 <ul>
