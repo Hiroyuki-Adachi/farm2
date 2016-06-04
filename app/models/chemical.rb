@@ -25,7 +25,11 @@ class Chemical < ActiveRecord::Base
   
   attr_accessor :term
 
-  scope :usual, -> (term){includes(:chemical_type, :chemical_terms).where("chemical_terms.term = ?", term).order("chemical_types.display_order, chemicals.display_order, chemicals.id")}
+  scope :usual, -> (term, work){
+     joins(:chemical_type, :chemical_terms)
+    .where("(chemical_terms.term = ? AND chemicals.chemical_type_id IN (?)) OR chemicals.id IN (?)", term, work.work_kind.chemical_kinds.pluck(:chemical_type_id), work.chemicals.pluck(:chemical_id))
+    .order("chemical_types.display_order, chemicals.display_order, chemicals.id")
+  }
   scope :list, ->{includes(:chemical_type).order("chemical_types.display_order, chemicals.display_order, chemicals.id")}
   
   def this_term_flag

@@ -1,0 +1,28 @@
+<h1>作業日報(薬剤)登録</h1>
+<%= error_print(@work) %>
+
+<%= form_for(@work.model, url: {action: :update }, html: {method: :put}) do |f| %>
+  <%= render(:partial => 'show_work', :locals => {:f => f}) %>
+
+  <h2>薬剤</h2>
+  <table class="list">
+    <tr>
+      <th>種別</th>
+      <th>名称</th>
+      <th>数量</th>
+    </tr>
+    <% @chemicals.each do |chemical| %>
+    <tr>
+      <td><%=h chemical.name %></td>
+      <td><%=h chemical.chemical_type.name %></td>
+      <td>
+        <% work_chemicals = @work.work_chemicals.where(chemical_id: chemical.id) %>
+        <%= number_field_tag "chemicals[#{chemical.id}]", work_chemicals.exists? ? work_chemicals.first.quantity : 0, {min: 0, max: 99, step: 1} %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+  <br />
+  <%= f.submit '登録', :name => 'regist_chemicals' %>
+  <%= f.submit '戻る', :name => 'cancel' %>
+<% end %>

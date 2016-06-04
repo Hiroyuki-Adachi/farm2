@@ -81,7 +81,7 @@ class WorksController < ApplicationController
   end
 
   def edit_chemicals
-    @chemicals = Chemical.usual(@work.work_kind.chemical_kinds)
+    @chemicals = Chemical.usual(@term, @work.model)
   end
 
   def update
