@@ -117,6 +117,11 @@ class WorksController < ApplicationController
       redirect_to(work_path(page_params))
     end
   end
+
+  def destroy
+    @work.destroy
+    redirect_to(works_path(page: params[:page], month: params[:month]))
+  end
   
   def autocomplete_for_land_place
     render json: Land.autocomplete(params[:term])
