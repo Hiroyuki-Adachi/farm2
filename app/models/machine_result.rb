@@ -14,7 +14,7 @@
 #
 
 class MachineResult < ActiveRecord::Base
-  belongs_to  :machine
+  belongs_to  :machine, -> {with_deleted}
   belongs_to  :work_result
 
   def self.list_machine

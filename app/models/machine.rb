@@ -22,6 +22,7 @@ class Machine < ActiveRecord::Base
 
   belongs_to :machine_type
   has_many :machine_kinds, through: :machine_type
+  has_many :price_headers, {class_name: :MachinePriceHeader, dependent: :destroy}, -> {order("machine_price_headers.validated_at DESC")}
 
   belongs_to :owner, {class_name: :Home, foreign_key: :home_id}, -> {with_deleted}
 
@@ -37,7 +38,8 @@ class Machine < ActiveRecord::Base
   }
   
   scope :of_company, ->{where(home_id: Home.where(company_flag: true))}
-  scope :of_owner, ->(work){where(home_id: work.workers.pluck(:home_id).uniq)}
+  scope :of_owners, ->(work){where(home_id: work.workers.pluck(:home_id).uniq)}
+  scope :of_no_owners, ->(work){where.not(home_id: work.workers.pluck(:home_id).uniq)}
 
   scope :by_results, -> (results) {
     joins(:machine_results)
@@ -56,6 +58,19 @@ class Machine < ActiveRecord::Base
     return operators.join(',')
   end
   
+  def company?
+    return self.owner.company_flag?
+  end
+  
+  def leasable?(worked_at)
+    return false if self.company?
+    headers = self.price_headers.where("validated_at <= ?", worked_at)
+    return headers.order(validated_at: :DESC).first.details.where(lease_id: Lease::LEASE).exists? if headers.exists? 
+    headers = self.machine_type.price_headers.where("validated_at <= ?", worked_at)
+    return headers.order(validated_at: :DESC).first.details.where(lease_id: Lease::LEASE).exists? if headers.exists?
+    return false
+  end
+  
   def hours(results)
     return MachineResult.where("machine_id = ? and work_result_id in (?)", self.id, results.pluck(:id)).sum(:hours)
   end
@@ -69,6 +84,6 @@ class Machine < ActiveRecord::Base
   end
   
   def usual_name
-    return self.owner.company_flag ? "#{type_name}(#{self.name})" : "#{type_name}(#{owner_name})"
+    return self.company? ? "#{type_name}(#{self.name})" : "#{type_name}(#{owner_name})"
   end
 end

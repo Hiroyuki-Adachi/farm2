@@ -76,7 +76,8 @@ class WorksController < ApplicationController
   def edit_machines
     @results = @work.work_results || []
     @company_machines = Machine.by_work(@work.model).of_company
-    @owner_machines = Machine.by_work(@work.model).of_owner(@work)
+    @owner_machines = Machine.by_work(@work.model).of_owners(@work.model)
+    @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select {|m| m.leasable?(@work.model.worked_at) }
   end
 
   def edit_chemicals
