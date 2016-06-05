@@ -14,27 +14,24 @@
 class WorkResult < ActiveRecord::Base
   belongs_to :work
   belongs_to :worker, -> {with_deleted}
+  has_one    :home, {through: :worker}
 
   has_many  :machine_results, {dependent: :destroy}
   has_many  :machines,  {through: :machine_results}
 
   validates :hours, presence: true
   validates :hours, numericality: true, :if => Proc.new{|x| x.hours.present?}
-=begin
-  scope :by_home, {
-    :joins => <<JOIN , :conditions => <<CONDITIONS, :order => <<ORDER
-      inner join works on works.id = work_results.work_id
-      inner join workers on work_results.worker_id = workers.id
-      inner join homes on workers.home_id = homes.id
-      inner join systems on systems.id = 1
-JOIN
-      systems.target_from <= works.worked_at and works.worked_at <= systems.target_to
-      and systems.term = works.year
-CONDITIONS
-    homes.display_order, workers.display_order, works.worked_at, works.id
-ORDER
+
+  scope :by_home, ->(term){
+      joins(:work, :worker)
+     .joins("INNER JOIN homes ON homes.id = workers.home_id")
+     .joins("INNER JOIN systems ON systems.term = works.term")
+     .where("systems.target_from <= works.worked_at and works.worked_at <= systems.target_to")
+     .where("systems.term = ?", term)
+     .order("homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }
 
+=begin
   scope :by_home_for_fix, lambda{|fixed_at| {
     :joins => <<JOIN , :conditions =>[ <<CONDITIONS, fixed_at], :order => <<ORDER
       inner join works on works.id = work_results.work_id

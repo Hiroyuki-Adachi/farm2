@@ -1,0 +1,36 @@
+@media print {
+    input{display:none;}
+    h1{display:none;}
+
+  table,
+  th,
+  td {
+      font-family: "ヒラギノ明朝 Pro W3", "細明朝体", "ＭＳ Ｐ明朝", serif;
+      border-collapse: collapse;
+      border-spacing: 0;
+      border: 1px solid #000000;
+      background-color: #FFFFFF;
+      height: 20px;
+  }
+  th {
+      text-align: center;
+      font-weight: normal;
+      padding: 2px;
+  }
+  td {
+      text-align: left;
+      padding: 2px;
+  }
+  .middle_header {page-break-before:always;}
+}
+@media screen {
+  .middle_header {display: none; height: 0px;}
+  .even_color {background-color:powderblue;}
+  .odd_color  {background-color:white;}
+}
+div.title {
+    font-size:24px;
+    text-decoration: underline;
+    text-align: center;
+    margin-bottom: 5px;
+}

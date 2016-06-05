@@ -42,6 +42,12 @@ Rails.application.routes.draw do
       get :edit_chemicals
     end
   end
+  
+  resources :lists, only: [] do
+    collection do
+      get :by_home
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
