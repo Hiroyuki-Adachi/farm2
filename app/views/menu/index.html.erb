@@ -7,7 +7,7 @@
 <h2>集計処理(<%= @system.target_from.strftime('%Y年%m月') %>から<%= @system.target_to.strftime('%Y年%m月') %>まで)</h2>
 <ul>
   <li><%= link_to '集計対象期間変更', edit_menu_path(@system) %></li>
-  <li><%= link_to '世帯別作業時間', work_results_path %>(<%#= link_to 'Excel出力', by_home_lists_path(:format => :xml) %>)</li>
+  <li><%= link_to '世帯別作業時間', work_results_path %>(<%= link_to 'CSV出力', work_results_path(:format => :csv) %>)</li>
   <!-- <li><%#= link_to '機械稼動時間', by_machine_lists_path %></li> -->
   <!-- <li><%#= link_to '薬剤使用量', by_chemical_lists_path %></li> -->
 </ul>

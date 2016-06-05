@@ -6,8 +6,8 @@ class WorkResultsController < ApplicationController
       format.html do
         @results = WorkResultDecorator.decorate_collection(@results)
       end
-      format.xml do
-        response.headers['Content-type'] = 'application/octet-stream'
+      format.csv do
+        render :content_type => 'text/csv; charset=cp943'
       end
     end
   end

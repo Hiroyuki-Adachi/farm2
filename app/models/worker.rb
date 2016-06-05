@@ -60,4 +60,8 @@ class Worker < ActiveRecord::Base
   def phonetic
     return self.family_phonetic + ' ' + self.first_phonetic
   end
+  
+  def payment
+    return self.home.worker_payment_flag ? self : self.home.holder
+  end
 end

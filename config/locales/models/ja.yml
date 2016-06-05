@@ -39,7 +39,15 @@ ja:
         display_order: "表示順"  #g
 
       work_result: 
+        home_name: "世帯"
+        worker_name: "作業者"
+        payment_name: "支払先"
+        worked_at: "作業日"  #g
+        work_type_name: "作業種別"  #g
+        work_name: "作業内容"  #g
         hours: "作業時間"  #g
+        price: "単価"  #g
+        amount: "日当"  #g
 
       land: 
         place: "番地"  #g

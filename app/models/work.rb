@@ -85,6 +85,10 @@ class Work < ActiveRecord::Base
   def sum_hours
     return self.work_results.sum(:hours)
   end
+  
+  def price
+    return work_kind.term_price(self.term)
+  end
 
   def self.get_terms(term)
     params = []
