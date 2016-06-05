@@ -45,6 +45,11 @@ class WorkKind < ActiveRecord::Base
     @price = val
   end
   
+  def term_price(term)
+    prices = WorkKindPrice.by_term(self, term)
+    return prices.exists? ? prices.first.price : 0
+  end
+  
   private
   def save_price
     term = Organization.first.term

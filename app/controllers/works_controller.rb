@@ -33,7 +33,6 @@ class WorksController < ApplicationController
   def show
     @results = @work.work_results || []
     @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands || [])
-    @organization = Organization.first
     @machines = Machine.by_results(@results)
     @chemicals = @work.work_chemicals
     @results = WorkResultDecorator.decorate_collection(@results)

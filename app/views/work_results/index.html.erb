@@ -19,7 +19,7 @@
 <% home_amount = 0 %>
 <% even = false %>
 <% @results.each_with_index do |result, i| %>
-<%   amount = result.model.work.work_kind.price * result.model.hours %>
+<%   amount = result.model.work.work_kind.term_price(@term) * result.model.hours %>
     <tr class="<%= even ? 'even_color' : 'odd_color' %>">
       <td><%= result.home_name %></td>
       <td><%= result.worker.name %></td>
@@ -27,8 +27,8 @@
       <td><%= result.work_type_name %></td>
       <td style="overflow:hidden;"><%= result.work_name %></td>
       <td class="numeric"><%= result.hours %></td>
-      <td class="numeric"><%= result.price %></td>
-      <td class="numeric"><%= result.amount %></td>
+      <td class="numeric"><%= result.price(@term) %></td>
+      <td class="numeric"><%= number_to_currency(amount, {precision: 0, unit: ""}) %></td>
     </tr>
 <% worker_hours += result.model.hours %>
 <% home_hours   += result.model.hours %>

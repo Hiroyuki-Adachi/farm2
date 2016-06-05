@@ -15,6 +15,7 @@ class WorkResult < ActiveRecord::Base
   belongs_to :work
   belongs_to :worker, -> {with_deleted}
   has_one    :home, {through: :worker}
+  has_one    :work_type, {through: :work}
 
   has_many  :machine_results, {dependent: :destroy}
   has_many  :machines,  {through: :machine_results}
@@ -23,8 +24,10 @@ class WorkResult < ActiveRecord::Base
   validates :hours, numericality: true, :if => Proc.new{|x| x.hours.present?}
 
   scope :by_home, ->(term){
-      joins(:work, :worker)
-     .joins("INNER JOIN homes ON homes.id = workers.home_id")
+      joins(:work).eager_load(:work)
+     .joins(:worker).eager_load(:worker)
+     .joins(:work_type).eager_load(:work_type)
+     .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
      .joins("INNER JOIN systems ON systems.term = works.term")
      .where("systems.target_from <= works.worked_at and works.worked_at <= systems.target_to")
      .where("systems.term = ?", term)

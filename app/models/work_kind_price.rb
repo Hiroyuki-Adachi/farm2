@@ -17,4 +17,5 @@ class WorkKindPrice < ActiveRecord::Base
   validates :price, numericality: true, if: Proc.new{|x| x.price.present?}
   
   scope :usual, ->(work_kind) {where("work_kind_id = ? and term <= ?", work_kind.id, Organization.first.term).order("term DESC")}
+  scope :by_term, ->(work_kind, term) {where("work_kind_id = ? and term <= ?", work_kind.id, term).order("term DESC")}
 end

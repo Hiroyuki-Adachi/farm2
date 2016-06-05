@@ -1,5 +1,5 @@
-class ListsController < ApplicationController
-  def by_home
+class WorkResultsController < ApplicationController
+  def index
     @results = WorkResult.by_home(@term)
 
     respond_to do |format|

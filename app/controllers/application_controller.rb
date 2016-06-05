@@ -7,11 +7,11 @@ class ApplicationController < ActionController::Base
   
   private
   def set_term
-    if session[:term]
-      @term = session[:term]
+    if session[:organization]
+      @organization = session[:organization]
     else
-      @term = Organization.first.term
-      session[:term] = @term
+      @organization = Organization.first
     end
+    @term = @organization.term
   end
 end

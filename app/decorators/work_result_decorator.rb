@@ -41,11 +41,7 @@ class WorkResultDecorator < Draper::Decorator
     return sprintf("%.1f", model.hours)
   end
   
-  def price
-    return h.number_to_currency(model.work.work_kind.price, {precision: 0, unit: ""})
-  end
-  
-  def amount
-    return h.number_to_currency(model.hours * model.work.work_kind.price, {precision: 0, unit: ""})
+  def price(term)
+    return h.number_to_currency(model.work.work_kind.term_price(term), {precision: 0, unit: ""})
   end
 end
