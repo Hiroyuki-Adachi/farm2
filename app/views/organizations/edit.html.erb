@@ -20,15 +20,11 @@
  </div>
  <div class="field">
     <%= f.label :daily_worker %><br />
-    <%= f.number_field :daily_worker, {min: 0, max: 2, step: 1} %>
- </div>
- <div class="field">
-    <%= f.label :daily_worker %><br />
     <%= f.select :daily_worker, @organization.localed_daily_workers, {} %>
  </div>
  <br />
  <div class="actions">
     <%= f.submit '登録' %>
-    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + work_kinds_path + "';") %>
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
  </div>
 <% end %>
