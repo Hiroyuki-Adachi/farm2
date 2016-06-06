@@ -1,0 +1,19 @@
+current directory: /home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/gems/byebug-9.0.5/ext/byebug
+/home/hiro/.rbenv/versions/2.3.1/bin/ruby -r ./siteconf20160606-3056-17b3sju.rb extconf.rb
+creating Makefile
+
+current directory: /home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/gems/byebug-9.0.5/ext/byebug
+make "DESTDIR=" clean
+
+current directory: /home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/gems/byebug-9.0.5/ext/byebug
+make "DESTDIR="
+compiling locker.c
+compiling breakpoint.c
+compiling context.c
+compiling byebug.c
+compiling threads.c
+linking shared-object byebug/byebug.so
+
+current directory: /home/hiro/work/farm2/vendor/bundler/ruby/2.3.0/gems/byebug-9.0.5/ext/byebug
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 byebug.so ./.gem.20160606-3056-17c7k6n/byebug

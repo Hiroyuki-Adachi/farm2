@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :organizations, param: nil, only: [:edit, :update]
+
   resources :banks, param: :code, except: [:show]
   
   resources :machine_types, except: [:show]

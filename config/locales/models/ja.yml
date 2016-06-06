@@ -15,6 +15,7 @@ ja:
       work_kind: "作業種別"
       system: "システム管理"
       bank: "金融機関"
+      organization: "営農組合"
 
     attributes:
       chemical:
@@ -116,3 +117,17 @@ ja:
         term: 年度
         target_from: 期間(自)
         target_to: 期間(至)
+
+      organization:
+        workers_count: "日報に表示する作業者の人数"
+        lands_count: "日報に表示する土地の数"
+        machines_count: "日報に表示する機械の数"
+        chemicals_count: "日報に表示する薬品の数"
+        daily_worker: "作業者への付加情報"
+
+  status:
+    organization:
+      daily_worker:
+        no_print: "出力しない"
+        print_home: "屋号を出力"
+        print_section: "班／町内を出力"

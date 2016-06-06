@@ -1,0 +1,34 @@
+<h1>管理マスタ修正</h1>
+
+<%= error_print(@organization) %>
+<%= form_for(@organization) do |f| %>
+ <div class="field">
+    <%= f.label :workers_count %><br />
+    <%= f.number_field :workers_count, {min: 2, max: 50, step: 1} %>
+ </div>
+ <div class="field">
+    <%= f.label :lands_count %><br />
+    <%= f.number_field :lands_count, {min: 0, max: 99, step: 1} %>
+ </div>
+ <div class="field">
+    <%= f.label :machines_count %><br />
+    <%= f.number_field :machines_count, {min: 0, max: 50, step: 1} %>
+ </div>
+ <div class="field">
+    <%= f.label :chemicals_count %><br />
+    <%= f.number_field :chemicals_count, {min: 0, max: 50, step: 1} %>
+ </div>
+ <div class="field">
+    <%= f.label :daily_worker %><br />
+    <%= f.number_field :daily_worker, {min: 0, max: 2, step: 1} %>
+ </div>
+ <div class="field">
+    <%= f.label :daily_worker %><br />
+    <%= f.select :daily_worker, @organization.localed_daily_workers, {} %>
+ </div>
+ <br />
+ <div class="actions">
+    <%= f.submit '登録' %>
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + work_kinds_path + "';") %>
+ </div>
+<% end %>
