@@ -28,6 +28,8 @@ gem 'i18n-js'
 
 gem 'active_hash'
 
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
+
 gem 'paranoia'
 
 gem 'kaminari'
