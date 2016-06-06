@@ -1,12 +1,16 @@
 - id: 0
   per: None
   name: "設定しない"
+  unit: ""
 - id: 1
   per: Hour
   name: "1時間あたり"
+  unit: "時間"
 - id: 2
   per: Area
   name: "10αあたり"
+  unit: "×10α"
 - id: 3
   per: Day
   name: "1日あたり"
+  unit: "日"

@@ -206,13 +206,13 @@
   <div id="cover_chemicals" class="cover" onclick="location.href='<%=raw edit_chemicals_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
 </div>
 <% end %>
-<% unless @work.payed_at %>
+<% unless @work.fixed_at %>
 <%= link_to '削除',raw(work_path(id: @work, page: params[:page], month: params[:month])), method: :delete, class: :button, data: {confirm: "本当に削除してもよろしいですか?"} %>
 <% end %>
 <%= button_tag "新規登録",  type: :button, :onclick => raw("location.href = '" + new_work_path + "';") %>
 <%= button_tag "戻る",  type: :button, :onclick => raw("location.href = '" + works_path(page: params[:page], month: params[:month]) + "';") %>
 
-<% unless @work.payed_at %>
+<% unless @work.fixed_at %>
 <script type="text/javascript">
 $(function() {
   $("#cover_work").height($("#content_work").height()).width($("#content_work").width());

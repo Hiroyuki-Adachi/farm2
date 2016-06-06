@@ -14,7 +14,7 @@ SELECT SETVAL('work_kinds_id_seq', (SELECT MAX(id) FROM work_kinds));
 ------------------------------------- works
 TRUNCATE TABLE works;
 
-INSERT INTO works (id, term, worked_at, weather_id, work_type_id, name, remarks, start_at, end_at, payed_at, work_kind_id, created_at, updated_at)
+INSERT INTO works (id, term, worked_at, weather_id, work_type_id, name, remarks, start_at, end_at, fixed_at, work_kind_id, created_at, updated_at)
 SELECT id, year, worked_at, weather, work_type_id, name, remarks, start_at, end_at, payed_at, work_kind_id, created_at, updated_at
 FROM dblink('dbname=farm_production',
 'SELECT id, year, worked_at, weather, work_type_id, name, remarks, start_at, end_at, payed_at, work_kind_id, created_at, updated_at FROM works') AS

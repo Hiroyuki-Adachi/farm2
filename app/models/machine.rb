@@ -62,6 +62,10 @@ class Machine < ActiveRecord::Base
     return self.owner.company_flag?
   end
   
+  def price_header_by_work(work)
+  
+  end
+  
   def leasable?(worked_at)
     return false if self.company?
     headers = self.price_headers.where("validated_at <= ?", worked_at)

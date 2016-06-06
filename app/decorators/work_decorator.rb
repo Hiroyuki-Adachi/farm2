@@ -26,8 +26,8 @@ class WorkDecorator < Draper::Decorator
     return model.worked_at.strftime('%Y-%m-%d') + "(#{WDAY[model.worked_at.wday]})"
   end
 
-  def payed_at
-    return model.payed_at.strftime('%Y年 %m月') if model.payed_at
+  def fixed_at
+    return model.fixed_at.strftime('%Y年 %m月') if model.fixed_at
   end
 
   def name

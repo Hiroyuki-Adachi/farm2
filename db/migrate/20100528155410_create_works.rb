@@ -9,7 +9,7 @@ class CreateWorks < ActiveRecord::Migration
       t.text      :remarks
       t.datetime  :start_at,      {null: false}
       t.datetime  :end_at,        {null: false}
-      t.date      :payed_at,      {null: true}
+      t.date      :fixed_at,      {null: true}
       t.integer   :work_kind_id,  {null: false, default: 0}
 
       t.timestamps

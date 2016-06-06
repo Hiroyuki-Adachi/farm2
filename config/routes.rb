@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   
   resources :work_results, only: [:index]
 
+  resources :machine_results, only: [:index]
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -11,7 +11,7 @@
 #  remarks      :text
 #  start_at     :datetime         not null
 #  end_at       :datetime         not null
-#  payed_at     :date
+#  fixed_at     :date
 #  work_kind_id :integer          default(0), not null
 #  created_at   :datetime
 #  updated_at   :datetime
@@ -54,16 +54,16 @@ class Work < ActiveRecord::Base
   def self.find_fixed
     sql = []
     sql << "SELECT"
-    sql << "payed_at,"
+    sql << "fixed_at,"
     sql << "COUNT(distinct works.id) as work_count,"
     sql << "SUM(work_results.hours) as hours,"
     sql << "SUM(work_results.hours * work_kinds.price) as amount"
     sql << "FROM works"
     sql << "LEFT OUTER JOIN work_results on works.id = work_results.work_id"
     sql << "LEFT OUTER JOIN work_kinds on works.work_kind_id = work_kinds.id"
-    sql << "WHERE payed_at IS NOT NULL AND term = :term"
-    sql << "GROUP BY payed_at"
-    sql << "ORDER BY payed_at"
+    sql << "WHERE fixed_at IS NOT NULL AND term = :term"
+    sql << "GROUP BY fixed_at"
+    sql << "ORDER BY fixed_at"
     return Work.find_by_sql([sql.join("\n"), {term: Organization.first.term}])
   end
 
@@ -86,13 +86,17 @@ class Work < ActiveRecord::Base
     return self.work_results.sum(:hours)
   end
   
+  def sum_areas
+    return self.lands.sum(:area)
+  end
+  
   def price
     return work_kind.term_price(self.term)
   end
 
   def self.get_terms(term)
     params = []
-    result = Work.maximum(:payed_at).where(term: term)
+    result = Work.maximum(:fixed_at).where(term: term)
     result = result ? result.to_date : Date.new(term, 1, 1)
     result = result.next.end_of_month.to_date
     while(result < Time.now.to_date) do
@@ -103,7 +107,7 @@ class Work < ActiveRecord::Base
   end
 
   def self.clear_fix(fixed_at)
-    Work.where(payed_at: fixed_at).update_all("payed_at = null")
+    Work.where(fixed_at: fixed_at).update_all("fixed_at = null")
   end
 
   def chemicals_format

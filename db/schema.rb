@@ -306,7 +306,7 @@ ActiveRecord::Schema.define(version: 20160527222306) do
     t.text     "remarks"
     t.datetime "start_at",                            null: false
     t.datetime "end_at",                              null: false
-    t.date     "payed_at"
+    t.date     "fixed_at"
     t.integer  "work_kind_id",            default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
