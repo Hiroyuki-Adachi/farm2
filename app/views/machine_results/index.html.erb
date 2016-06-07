@@ -2,7 +2,7 @@
 <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
 <%= stylesheet_link_tag 'work-lists', :media => 'all' %>
 <table class="list">
-  <tbody>
+  <thead>
     <tr>
       <th>所有世帯</th>
       <th>機械種別</th>
@@ -11,6 +11,23 @@
       <th>作業内容</th>
       <th>単価</th>
       <th>作業量</th>
-      <th>作業単位</th>
+      <th>単位</th>
       <th>使用料</th>
     </tr>
+  </thead>
+  <tbody>
+    <% @results.each do |result| %>
+      <tr>
+        <td><%= result.owner.name %></td>
+        <td><%= result.machine.machine_type.name %></td>
+        <td><%= result.worked_at %></td>
+        <td><%= result.work_type_name %></td>
+        <td><%= result.work_name %></td>
+        <td class="numeric"><%= result.price %></td>
+        <td class="numeric"><%= result.quantity %></td>
+        <td><%= result.adjust.unit %></td>
+        <td class="numeric"><%= result.amount %></td>
+      </tr>
+    <% end %>
+  <tbody>
+</table>

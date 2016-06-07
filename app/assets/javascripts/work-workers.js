@@ -118,6 +118,8 @@ function change_section(section) {
 }
 
 $(function() {
+  set_add_buttons();
+
   $("#tbody_workers tr").hover(function() {
     $(this).css("cursor", "crosshair");
   }, function() {

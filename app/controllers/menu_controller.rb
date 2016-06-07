@@ -36,7 +36,7 @@ class MenuController < ApplicationController
 
     if @system.valid?
       @system.save!
-      Organization.first.update(term: @term)
+      @organization.update(term: @term)
       session[:term] = @term
       redirect_to(root_path, :notice => '設定を変更しました。')
     else
@@ -50,7 +50,6 @@ class MenuController < ApplicationController
   
   private
   def set_system
-    @term = Organization.first.term unless @term
     @system = System.where(term: @term).first
   end
   

@@ -3,8 +3,7 @@
 # Table name: organizations
 #
 #  id              :integer          not null, primary key
-#  show_work1      :string(10)       not null
-#  show_work2      :string(10)       not null
+#  name            :string(20)       not null
 #  workers_count   :integer          default(12), not null
 #  lands_count     :integer          default(17), not null
 #  machines_count  :integer          default(8), not null

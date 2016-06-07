@@ -18,6 +18,6 @@ class OrganizationsController < ApplicationController
   end
   
   def organization_params
-    return params.require(:organization).permit(:workers_count, :lands_count, :machines_count, :chemicals_count, :daily_worker)
+    return params.require(:organization).permit(:name, :workers_count, :lands_count, :machines_count, :chemicals_count, :daily_worker)
   end
 end

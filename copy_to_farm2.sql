@@ -151,6 +151,8 @@ FROM dblink('dbname=farm_production',
 t1(term integer, created_at timestamp, updated_at timestamp);
 
 SELECT SETVAL('systems_id_seq', (SELECT MAX(id) FROM systems));
+
+DELETE FROM systems WHERE term = 2016;
 ------------------------------------- chemicals
 TRUNCATE TABLE chemicals;
 
@@ -188,15 +190,3 @@ FROM dblink('dbname=farm_production',
 t1(id integer, work_id integer, chemical_id integer, quantity integer, created_at timestamp, updated_at timestamp);
 
 SELECT SETVAL('work_chemicals_id_seq', (SELECT MAX(id) FROM work_chemicals));
-------------------------------------- organizations
-TRUNCATE TABLE organizations;
-
-INSERT INTO organizations (id, show_work1, show_work2, created_at, updated_at)
-SELECT id, show_work1, show_work2, created_at, updated_at
-FROM dblink('dbname=farm_production',
-'SELECT id, show_work1, show_work2, created_at, updated_at FROM organizations') AS
-t1(id integer, show_work1 varchar, show_work2 varchar, created_at timestamp, updated_at timestamp);
-
-SELECT SETVAL('organizations_id_seq', (SELECT MAX(id) FROM organizations));
-
-UPDATE organizations SET term = 2015;

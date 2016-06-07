@@ -5,9 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+require 'date'
+
 Organization.create(
-    show_work1: "No.",
-    show_work2: "Check",
+    name: "◯◯営農組合",
     workers_count: 12,
     lands_count: 17,
     machines_count: 8,
@@ -19,11 +20,11 @@ Organization.create(
     branch_code: '000',
     account_type_id: 0,
     account_number: '0000000',
-    term: 2016
+    term: Date.today.year
 )
 
 System.create(
     term: 2016,
-    target_from: Date::new(2016, 1, 1),
-    target_to: Date::new(2016, 12, 31)
+    target_from: Date::new(Date.today.year, 1, 1),
+    target_to: Date::new(Date.today.year, 12, 31)
 )

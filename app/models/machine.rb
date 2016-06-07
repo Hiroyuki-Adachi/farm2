@@ -43,7 +43,7 @@ class Machine < ActiveRecord::Base
 
   scope :by_results, -> (results) {
     joins(:machine_results)
-    .where('machine_results.work_result_id in (?)', results.pluck(:id))
+    .where('machine_results.work_result_id in (?)', results.ids)
     .order('machines.display_order').uniq
   }
   
@@ -62,8 +62,9 @@ class Machine < ActiveRecord::Base
     return self.owner.company_flag?
   end
   
-  def price_header_by_work(work)
-  
+  def price_details(work)
+    headers = price_headers.where("validated_at <= ?", work.worked_at).order("validated_at")
+    return headers.exists? ? headers.first.details : machine_type.price_details(work)
   end
   
   def leasable?(worked_at)
@@ -76,7 +77,7 @@ class Machine < ActiveRecord::Base
   end
   
   def hours(results)
-    return MachineResult.where("machine_id = ? and work_result_id in (?)", self.id, results.pluck(:id)).sum(:hours)
+    return MachineResult.where("machine_id = ? and work_result_id in (?)", self.id, results.ids).sum(:hours)
   end
   
   def owner_name
