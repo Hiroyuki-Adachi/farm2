@@ -64,7 +64,7 @@ class Machine < ActiveRecord::Base
   
   def price_details(work)
     headers = price_headers.where("validated_at <= ?", work.worked_at).order("validated_at")
-    return headers.exists? ? headers.first.details : machine_type.price_details(work)
+    return headers.exists? ? headers.first.details : (machine_type ? machine_type.price_details(work) : nil)
   end
   
   def leasable?(worked_at)

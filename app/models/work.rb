@@ -96,6 +96,10 @@ class Work < ActiveRecord::Base
     return work_kind.term_price(self.term)
   end
 
+  def sum_machine_amounts
+    return machine_results.to_a.uniq{|result| result.machine_id}.inject(0){|sum, result| sum += result.amount} || 0
+  end
+
   def self.get_terms(term)
     params = []
     result = Work.where(term: term).maximum(:fixed_at)
