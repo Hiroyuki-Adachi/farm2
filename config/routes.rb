@@ -44,6 +44,8 @@ Rails.application.routes.draw do
       get :edit_chemicals
     end
   end
+
+  resources :fixes, only: [:index, :new, :create, :show, :destroy]
   
   resources :work_results, only: [:index]
 

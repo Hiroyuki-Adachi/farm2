@@ -65,4 +65,10 @@ class WorkDecorator < Draper::Decorator
   def weather_name
     return model.weather.name
   end
+
+  def self.get_terms(term)
+    terms = []
+    Work.get_terms(term).each {|t| terms << [t.strftime('%Y年 %m月'), t.strftime('%Y-%m-%d')] }
+    return terms
+  end  
 end

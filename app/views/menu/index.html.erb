@@ -7,13 +7,12 @@
 <h2>集計処理(<%= @system.target_from.strftime('%Y年%m月') %>から<%= @system.target_to.strftime('%Y年%m月') %>まで)</h2>
 <ul>
   <li><%= link_to '集計対象期間変更', edit_menu_path(@system) %></li>
-  <li><%= link_to '世帯別作業時間', work_results_path %>(<%= link_to 'CSV出力', work_results_path(:format => :csv) %>)</li>
-  <li><%= link_to '機械稼動時間', machine_results_path %></li>
-  <!-- <li><%#= link_to '薬剤使用量', by_chemical_lists_path %></li> -->
+  <li><%= link_to '世帯別作業日当', work_results_path %>(<%= link_to 'CSV出力', work_results_path(:format => :csv) %>)</li>
+  <li><%= link_to '世帯別機械利用料', machine_results_path %>(<%= link_to 'CSV出力', machine_results_path(:format => :csv) %>)</li>
 </ul>
 <h2>会計処理</h2>
 <ul>
-  <!-- <li><%#= link_to '新規確定', new_fixed_work_path %></li> -->
+  <li><%= link_to '新規確定', new_fix_path %></li>
   <!-- <li><%#= link_to '確定一覧', fixed_works_path %></li> -->
 </ul>
 <h2>マスタ保守</h2>

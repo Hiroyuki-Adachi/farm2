@@ -42,6 +42,8 @@ class Work < ActiveRecord::Base
   
   has_many :machine_results, {through: :work_results}
 
+  scope :no_fixed, ->(term){where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)}
+
   def self.month(worked_from, worked_to, worker_id)
     sql = []
     sql << "SELECT * FROM works"
@@ -96,7 +98,7 @@ class Work < ActiveRecord::Base
 
   def self.get_terms(term)
     params = []
-    result = Work.maximum(:fixed_at).where(term: term)
+    result = Work.where(term: term).maximum(:fixed_at)
     result = result ? result.to_date : Date.new(term, 1, 1)
     result = result.next.end_of_month.to_date
     while(result < Time.now.to_date) do
