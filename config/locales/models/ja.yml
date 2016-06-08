@@ -119,6 +119,7 @@ ja:
         target_to: 期間(至)
 
       organization:
+        name: "組織名称"
         workers_count: "日報に表示する作業者の人数"
         lands_count: "日報に表示する土地の数"
         machines_count: "日報に表示する機械の数"

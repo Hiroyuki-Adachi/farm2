@@ -23,4 +23,12 @@
 class Organization < ActiveRecord::Base
   enum daily_worker: {no_print: 0, print_home: 1, print_section: 2}
 
+  validates :name, presence: true
+  validates :workers_count, presence: true
+  validates :lands_count, presence: true
+  validates :machines_count, presence: true
+  validates :chemicals_count, presence: true
+  validates :daily_worker, presence: true
+
+  validates :name, length: {maximum: 20}, :if =>  Proc.new{|x| x.name.present?}
 end
