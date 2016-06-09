@@ -2,7 +2,7 @@
 <%= form_for(@chemical) do |f| %>
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name, {:maxlength => 30, :size => 40} %>
+    <%= f.text_field :name, {:maxlength => 30, :size => 40, required: true} %>
   </div>
   <div class="field">
     <%= f.label :chemical_type_id %><br />

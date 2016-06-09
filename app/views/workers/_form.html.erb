@@ -2,19 +2,19 @@
 <%= form_for(@worker) do |f| %>
  <div class="field">
     <%= f.label :family_phonetic %><br />
-    <%= f.text_field :family_phonetic, {:maxlength => 10, :size => 20} %>
+    <%= f.text_field :family_phonetic, {:maxlength => 10, :size => 20, required: true} %>
  </div>
  <div class="field">
     <%= f.label :family_name %><br />
-    <%= f.text_field :family_name, {:maxlength => 10, :size => 20} %>
+    <%= f.text_field :family_name, {:maxlength => 10, :size => 20, required: true} %>
  </div>
  <div class="field">
     <%= f.label :first_phonetic %><br />
-    <%= f.text_field :first_phonetic, {:maxlength => 10, :size => 20} %>
+    <%= f.text_field :first_phonetic, {:maxlength => 10, :size => 20, required: true} %>
  </div>
  <div class="field">
     <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, {:maxlength => 10, :size => 20} %>
+    <%= f.text_field :first_name, {:maxlength => 10, :size => 20, required: true} %>
  </div>
  <div class="field">
     <%= f.label :home_id %><br />
@@ -26,7 +26,7 @@
  </div>
  <div class="field">
     <%= f.label :display_order %><br />
-    <%= f.number_field :display_order, {maxlength: 4, size: 4} %>
+    <%= f.number_field :display_order, {maxlength: 4, size: 4, min: 0, max: 9999, step: 1, required: true} %>
  </div>
   <br />
  <div class="actions">

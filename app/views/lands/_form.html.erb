@@ -2,7 +2,7 @@
 <%= form_for(@land) do |f| %>
  <div class="field">
     <%= f.label :place %><br />
-    <%= f.text_field :place, {maxlength: 15, size: 20} %>
+    <%= f.text_field :place, {maxlength: 15, size: 20, required: true} %>
  </div>
  <div class="field">
     <%= f.label :owner_id %><br />
@@ -14,7 +14,7 @@
  </div>
  <div class="field">
     <%= f.label :area %><br />
-    <%= f.number_field(:area, {step: 0.01, max: 999.99, min: 0.01, size: 6 }) %>
+    <%= f.number_field(:area, {step: 0.01, max: 999.99, min: 0.01, size: 6, required: true}) %>
  </div>
  <div class="field">
     <%= f.radio_button :target_flag, true %>営農組合管理<br />
@@ -22,7 +22,7 @@
  </div>
  <div class="field">
     <%= f.label :display_order %><br />
-    <%= f.number_field(:display_order, {maxlength: 4, size: 4}) %>
+    <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true}) %>
  </div>
   <br />
  <div class="actions">

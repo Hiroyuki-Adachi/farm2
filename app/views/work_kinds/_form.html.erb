@@ -2,15 +2,15 @@
 <%= form_for(@work_kind) do |f| %>
  <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.text_field :name, {maxlength: 40, size: 20, required: true} %>
  </div>
  <div class="field">
     <%= f.label :display_order %><br />
-    <%= f.number_field :display_order, {min: 0, max: 999, step: 1} %>
+    <%= f.number_field :display_order, {min: 0, max: 9999, step: 1, required: true} %>
  </div>
  <div class="field">
     <%= f.label :price %><br />
-    <%= f.number_field :price, {min: 0, max: 9999, step: 1} %>
+    <%= f.number_field :price, {min: 0, max: 9999, step: 1, required: true} %>
  </div>
  <br />
  <div class="field">

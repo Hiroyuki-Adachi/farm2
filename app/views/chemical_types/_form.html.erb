@@ -2,11 +2,11 @@
 <%= form_for(@chemical_type) do |f| %>
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name, {maxlength: 20, size: 20} %>
+    <%= f.text_field :name, {maxlength: 20, size: 20, required: true} %>
   </div>
   <div class="field">
     <%= f.label :display_order %><br />
-    <%= f.number_field(:display_order, {maxlength: 4, size: 4}) %>
+    <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true}) %>
   </div>
  <br />
  <div class="field">

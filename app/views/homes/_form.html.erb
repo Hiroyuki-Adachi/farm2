@@ -2,11 +2,11 @@
 <%= form_for(@home) do |f| %>
  <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name, {maxlength: 10, size: 15} %>
+    <%= f.text_field :name, {maxlength: 10, size: 15, required: true} %>
   </div>
  <div class="field">
     <%= f.label :phonetic %><br />
-    <%= f.text_field :phonetic, {maxlength: 10, size: 15} %>
+    <%= f.text_field :phonetic, {maxlength: 10, size: 15, required: true} %>
   </div>
  <div class="field">
     <%= f.label :telephone %><br />
@@ -22,7 +22,7 @@
   </div>
  <div class="field">
     <%= f.label :display_order %><br />
-    <%= f.number_field(:display_order, {maxlength: 4, size: 4}) %>
+    <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true}) %>
   </div>
  <div class="field">
     <%= f.radio_button :member_flag, true %>営農組合会員<br />
