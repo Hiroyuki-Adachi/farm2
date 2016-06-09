@@ -43,42 +43,7 @@ class Work < ActiveRecord::Base
   has_many :machine_results, {through: :work_results}
 
   scope :no_fixed, ->(term){where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)}
-
-  def self.month(worked_from, worked_to, worker_id)
-    sql = []
-    sql << "SELECT * FROM works"
-    sql << "WHERE (worked_at BETWEEN :worked_from AND :worked_to)"
-    sql << "AND (id IN (SELECT work_id FROM work_results GROUP BY work_id HAVING COUNT(*) = 1)"
-    sql << "AND (id IN (SELECT work_id FROM work_results WHERE worker_id = :worker_id))"
-    return Work.find_by_sql([sql.join("\n"), {worked_from: worked_from, worked_to: worked_to, worker_id: worker_id}])
-  end
-
-  def self.find_fixed
-    sql = []
-    sql << "SELECT"
-    sql << "fixed_at,"
-    sql << "COUNT(distinct works.id) as work_count,"
-    sql << "SUM(work_results.hours) as hours,"
-    sql << "SUM(work_results.hours * work_kinds.price) as amount"
-    sql << "FROM works"
-    sql << "LEFT OUTER JOIN work_results on works.id = work_results.work_id"
-    sql << "LEFT OUTER JOIN work_kinds on works.work_kind_id = work_kinds.id"
-    sql << "WHERE fixed_at IS NOT NULL AND term = :term"
-    sql << "GROUP BY fixed_at"
-    sql << "ORDER BY fixed_at"
-    return Work.find_by_sql([sql.join("\n"), {term: Organization.first.term}])
-  end
-
-  def self.months(term)
-    sql = []
-    sql << "SELECT"
-    sql << "date_trunc('month', worked_at) AS worked_month"
-    sql << "FROM works"
-    sql << "WHERE term = :term"
-    sql << "GROUP BY worked_month"
-    sql << "ORDER BY worked_month"
-    return Work.find_by_sql([sql.join("\n"), {term: term}])
-  end
+  scope :months, ->(term){select()}
 
   def set_term
     self.term = Organization.first.term

@@ -3,19 +3,10 @@ class WorkDecorator < Draper::Decorator
 
   WDAY = ["日", "月", "火", "水", "木", "金", "土"]
 
-  # Define presentation-specific methods here. Helpers are accessed through
-  # `helpers` (aka `h`). You can override attributes, for example:
-  #
-  #   def created_at
-  #     helpers.content_tag :span, class: 'time' do
-  #       object.created_at.strftime("%a %m/%d/%y")
-  #     end
-  #   end
-
   def self.months(term)
     months = []
     months << ["全て", ""]
-    Work.months(term).each {|w|
+    Work.select("date_trunc('month', worked_at) AS worked_month").where(term: term).order("date_trunc('month', worked_at)").uniq.each {|w|
       worked_month = DateTime.parse(w.worked_month.to_s)
       months << [worked_month.strftime("%Y年%m月"), worked_month.strftime("%Y-%m-01")]
     }

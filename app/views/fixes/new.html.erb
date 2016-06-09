@@ -50,8 +50,8 @@
     </tr>
   </tfoot>
 </table>
+<input type="button" value="全選択" onclick="checkAll(true);" />&nbsp;<input type="button" value="全解除" onclick="checkAll(false);" /><br />
 <% end %>
-<%= submit_tag "確定" %>
+<%= submit_tag "確定" %>&nbsp;<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
 <% end %>
-<br />
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
+
