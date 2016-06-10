@@ -22,7 +22,6 @@ class WorkType < ActiveRecord::Base
   scope :commons,     -> {where(genre: WorkType.genres[:common], category_flag: false).order(:display_order, :id)}
   scope :usual,       -> {order(:category_flag, :display_order, :id)}
 
-
   def genre_id
     return WorkType.with_deleted.where(genre: self[:genre], category_flag: true).first.id
   end
@@ -32,7 +31,11 @@ class WorkType < ActiveRecord::Base
   end
 
   def name_format
-    return genre_name + "(#{self.name})"
+    return genre_name + "(#{name})"
+  end
+
+  def self.select_category(category)
+    return WorkType.where(category_flag: false, genre: category[:genre]).order(:display_order, :id)
   end
 
   def self.category_rice

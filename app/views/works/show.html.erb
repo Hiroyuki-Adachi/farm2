@@ -21,39 +21,20 @@
 </div>
 <div id="content_work" class="content">
   <table id="detail_work">
+    <% categories = WorkType.categories %>
+    <% categories.each_with_index do |category, i| %>
     <tr>
-        <th rowspan="4" style="vertical-align:middle;width:40px;">分<br /><br /><br />類</th>
-        <th style="width:120px;letter-spacing:12px;"><%= @work.select_work_type(WorkType.category_rice) %></th>
+        <% if i == 0 %>
+        <th rowspan="<%= categories.count %>" style="vertical-align:middle;width:40px;">分<br /><br /><br />類</th>
+        <% end %>
+        <th style="width:120px;letter-spacing:12px;"><%= @work.select_work_type(category) %></th>
         <td style="width:560px;">
-        <% WorkType.rices.each do |work_type| %>
+        <% WorkType.select_category(category).each do |work_type| %>
         <span class="genre"><%= @work.select_work_type(work_type) %></span>
         <% end %>
         </td>
     </tr>
-    <tr>
-        <th style="letter-spacing:12px;"><%= @work.select_work_type(WorkType.category_change) %></th>
-        <td>
-        <% WorkType.changes.each do |work_type| %>
-        <span class="genre"><%= @work.select_work_type(work_type) %></span>
-        <% end %>
-        </td>
-    </tr>
-    <tr>
-        <th style="letter-spacing:12px;"><%=@work.select_work_type(WorkType.category_sub) %></th>
-        <td>
-        <% WorkType.subs.each do |work_type| %>
-        <span class="genre"><%= @work.select_work_type(work_type) %></span>
-        <% end %>
-        </td>
-    </tr>
-    <tr>
-        <th style="letter-spacing:12px;"><%= @work.select_work_type(WorkType.category_common) %></th>
-        <td>
-        <% WorkType.commons.each do |work_type| %>
-        <span class="genre"><%= @work.select_work_type(work_type) %></span>
-        <% end %>
-        </td>
-    </tr>
+    <% end %>
   </table>
   <table id="detail_remark">
     <tr style="height:80px;">
