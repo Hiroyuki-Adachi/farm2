@@ -63,32 +63,32 @@ class Machine < ActiveRecord::Base
   end
   
   def price_details(work)
-    headers = price_headers.where("validated_at <= ?", work.worked_at).order("validated_at")
-    return headers.exists? ? headers.first.details : (machine_type ? machine_type.price_details(work) : nil)
+    header = price_headers.where("validated_at <= ?", work.worked_at).order("validated_at").first
+    return header ? headers.details : (machine_type ? machine_type.price_details(work) : nil)
   end
   
   def leasable?(worked_at)
-    return false if self.company?
-    headers = self.price_headers.where("validated_at <= ?", worked_at)
-    return headers.order(validated_at: :DESC).first.details.where(lease_id: Lease::LEASE).exists? if headers.exists? 
-    headers = self.machine_type.price_headers.where("validated_at <= ?", worked_at)
-    return headers.order(validated_at: :DESC).first.details.where(lease_id: Lease::LEASE).exists? if headers.exists?
+    return false if company?
+    header = price_headers.where("validated_at <= ?", worked_at).order(validated_at: :DESC).first
+    return header.details.where(lease_id: Lease::LEASE).exists? if header
+    header = machine_type.price_headers.where("validated_at <= ?", worked_at).order(validated_at: :DESC).first
+    return header.details.where(lease_id: Lease::LEASE).exists? if header
     return false
   end
   
   def hours(results)
-    return MachineResult.where("machine_id = ? and work_result_id in (?)", self.id, results.ids).sum(:hours)
+    return MachineResult.where("machine_id = ? and work_result_id in (?)", id, results.ids).sum(:hours)
   end
   
   def owner_name
-    return self.owner ? self.owner.name : ""
+    return owner ? owner.name : ""
   end
   
   def type_name
-    return self.machine_type ? self.machine_type.name : ""
+    return machine_type ? machine_type.name : ""
   end
   
   def usual_name
-    return self.company? ? "#{type_name}(#{self.name})" : "#{type_name}(#{owner_name})"
+    return company? ? "#{type_name}(#{name})" : "#{type_name}(#{owner_name})"
   end
 end

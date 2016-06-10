@@ -8,12 +8,12 @@ class MachinePricesController < ApplicationController
 
   def show_type
     @machine_type = MachineType.find(params[:machine_type_id])
-    @machine_price = MachinePriceHeader.show_type(@machine_type, Date.today)
+    @machine_price = MachinePriceHeader.show_type(@machine_type, Date.today).first
   end
 
   def show_machine
     @machine = Machine.find(params[:machine_id])
-    @machine_price = MachinePriceHeader.show_machine(@machine, Date.today)
+    @machine_price = MachinePriceHeader.show_machine(@machine, Date.today).first
   end
 
   def new

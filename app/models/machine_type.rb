@@ -23,11 +23,6 @@ class MachineType < ActiveRecord::Base
   validates :display_order, numericality: {only_integer: true}, :if => Proc.new{|x| x.display_order.present?}
 
   def price_details(work)
-    headers = price_headers.where("validated_at <= ?", work.worked_at).order("validated_at")
-    if headers.exists?
-      return headers.first.details
-    else
-      return nil
-    end
+    return price_headers.where("validated_at <= ?", work.worked_at).order("validated_at").first
   end
 end

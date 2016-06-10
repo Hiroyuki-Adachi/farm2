@@ -20,12 +20,8 @@ class MenuController < ApplicationController
   def update
     if system_params[:term]
       @term = system_params[:term].to_i
-      systems = System.where(term: @term)
-      if systems.exists?
-        @system = systems.first
-      else
-        @system = System.new(term: @term)
-      end
+      @system = System.where(term: @term).first
+      @system = System.new(term: @term) unless @system
       @system.target_from = Date.new(@term, 1, 1)
       @system.target_to   = Date.new(@term, 12, 31)
     else

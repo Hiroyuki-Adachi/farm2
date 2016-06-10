@@ -1,6 +1,6 @@
-<% if @machine_price.exists? %>
-<% work_kinds = @machine_price.first.work_kinds %>
-<h2><%= @machine_price.first.validated_at.strftime("%Y年%m月%d日") %>以降</h2>
+<% if @machine_price %>
+<% work_kinds = @machine_price.work_kinds %>
+<h2><%= @machine_price.validated_at.strftime("%Y年%m月%d日") %>以降</h2>
 <table class="list">
   <tr>
     <th>設定モード</th>
@@ -13,11 +13,11 @@
   <tr>
     <th><%=h lease.name %></th>
     <% work_kinds.each do |work_kind| %>
-      <% if @machine_price.first.details_form[lease.id][work_kind.id][:adjust_id].to_i == Adjust::NONE.id %>
+      <% if @machine_price.details_form[lease.id][work_kind.id][:adjust_id].to_i == Adjust::NONE.id %>
         <td colspan="2"><%=h Adjust::NONE.name %></td>
       <% else %>
-        <td><%=h Adjust.find(@machine_price.first.details_form[lease.id][work_kind.id][:adjust_id]).name %></td>
-        <td class="numeric"><%=h number_with_delimiter(@machine_price.first.details_form[lease.id][work_kind.id][:price]) %></td>
+        <td><%=h Adjust.find(@machine_price.details_form[lease.id][work_kind.id][:adjust_id]).name %></td>
+        <td class="numeric"><%=h number_with_delimiter(@machine_price.details_form[lease.id][work_kind.id][:price]) %></td>
       <% end %>
     <% end %>
   </tr>

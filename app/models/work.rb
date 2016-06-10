@@ -94,16 +94,15 @@ class Work < ActiveRecord::Base
     params.each do |param|
       param = OpenStruct.new(param)
       workers << param.worker_id.to_i
-      work_result = self.work_results.where(worker_id: param.worker_id)
-      if work_result.exists?
-        work_result = work_result.first
+      work_result = work_results.where(worker_id: param.worker_id).first
+      if work_result
         work_result.update(display_order: param.display_order, hours: param.hours) if work_result.display_order != param.display_order.to_i or work_result.hours != param.hours.to_f 
       else
-        WorkResult.create(work_id: self.id, worker_id: param.worker_id, display_order: param.display_order, hours: param.hours)
+        WorkResult.create(work_id: id, worker_id: param.worker_id, display_order: param.display_order, hours: param.hours)
       end
     end
     
-    self.work_results.where.not(worker_id: workers).each {|work_result| work_result.destroy}    
+    work_results.where.not(worker_id: workers).each {|work_result| work_result.destroy}    
   end
   
   def regist_lands(params)
@@ -111,25 +110,23 @@ class Work < ActiveRecord::Base
     params.each do |param|
       param = OpenStruct.new(param)
       lands << param.land_id
-      work_land = self.work_lands.where(land_id: param.land_id)
-      if work_land.exists?
-        work_land = work_land.first
+      work_land = work_lands.where(land_id: param.land_id).first
+      if work_land
         work_land.update(display_order: param.display_order) if work_land.display_order != param.display_order.to_i 
       else
         WorkLand.create(work_id: self.id, land_id: param.land_id, display_order: param.display_order)
       end
     end
 
-    self.work_lands.where.not(land_id: lands).each {|land| land.destroy}
+    work_lands.where.not(land_id: lands).each {|land| land.destroy}
   end
   
   def regist_machines(params)
     params.each do |machine_id, work_result|
       work_result.each do |work_result_id, hour|
         hour = hour.to_f
-        machine_result = MachineResult.where(work_result_id: work_result_id, machine_id: machine_id)
-        if machine_result.exists?
-          machine_result = machine_result.first
+        machine_result = MachineResult.where(work_result_id: work_result_id, machine_id: machine_id).first
+        if machine_result
           if hour > 0
             machine_result.update(hours: hour) if machine_result.hours != hour 
           else
@@ -146,16 +143,15 @@ class Work < ActiveRecord::Base
     params.each do |chemical_id, quantity|
       chemical_id = chemical_id.to_i
       quantity = quantity.to_i
-      work_chemical = self.work_chemicals.where(chemical_id: chemical_id)
-      if work_chemical.exists?
-        work_chemical = work_chemical.first
+      work_chemical = work_chemicals.where(chemical_id: chemical_id).first
+      if work_chemical
         if quantity > 0
           work_chemical.update(quantity: quantity) unless work_chemical.quantity == quantity
         else
           work_chemical.destroy
         end
       else
-        WorkChemical.create(work_id: self.id, chemical_id: chemical_id, quantity: quantity) if quantity > 0
+        WorkChemical.create(work_id: id, chemical_id: chemical_id, quantity: quantity) if quantity > 0
       end
     end
   end

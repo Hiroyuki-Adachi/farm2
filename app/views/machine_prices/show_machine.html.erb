@@ -3,7 +3,7 @@
 <%= link_to '料金新規登録', new_machine_price_header_path(machine_id: @machine) %>
 </div>
 <%= render(:partial => "show") %>
-<% if @machine_price.exists? %>
-<%= button_tag "変更",  type: :button, :onclick => raw("javascript:location.href = '" + edit_machine_price_header_path(@machine_price.first) + "';") %>
+<% if @machine_price %>
+<%= button_tag "変更",  type: :button, :onclick => raw("javascript:location.href = '" + edit_machine_price_header_path(@machine_price) + "';") %>
 <% end %>
 <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + machines_path + "';") %>

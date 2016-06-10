@@ -37,8 +37,8 @@ class WorkKind < ActiveRecord::Base
   scope :by_type, -> (work_type){joins(:work_kind_types).where("work_kind_types.work_type_id = ?", work_type.genre_id).order("work_kinds.other_flag, work_kinds.display_order, work_kinds.id")}
   
   def price
-    work_kind_prices = WorkKindPrice.usual(self)
-    return work_kind_prices.exists? ? work_kind_prices.first.price : 0; 
+    work_kind_price = WorkKindPrice.usual(self).first
+    return work_kind_price ? work_kind_price.price : 0
   end
   
   def price=(val)
@@ -46,18 +46,18 @@ class WorkKind < ActiveRecord::Base
   end
   
   def term_price(term)
-    prices = WorkKindPrice.by_term(self, term)
-    return prices.exists? ? prices.first.price : 0
+    term_price = WorkKindPrice.by_term(self, term).first
+    return term_price ? term_price.price : 0
   end
   
   private
   def save_price
     term = Organization.first.term
-    work_kind_price = WorkKindPrice.where(work_kind_id: self.id, term: term).order(:id)
-    if work_kind_price.exists?
-      work_kind_price.first.update_attributes(price: @price)
+    work_kind_price = WorkKindPrice.where(work_kind_id: id, term: term).order(:id).first
+    if work_kind_price
+      work_kind_price.update_attributes(price: @price)
     else
-      WorkKindPrice.create(work_kind_id: self.id, term: term, price: @price)
+      WorkKindPrice.create(work_kind_id: id, term: term, price: @price)
     end
   end
 end
