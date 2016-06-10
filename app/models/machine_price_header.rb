@@ -74,7 +74,7 @@ class MachinePriceHeader < ActiveRecord::Base
           if v2[:adjust_id].to_i == Adjust::NONE.id
             detail.destroy
           else
-            detail.update_attributes(adjust_id: v2[:adjust_id], price: v2[:price])
+            detail.update(adjust_id: v2[:adjust_id], price: v2[:price])
           end
         else
           if v2[:adjust_id].to_i != Adjust::NONE.id
