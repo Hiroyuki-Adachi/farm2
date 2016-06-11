@@ -29,7 +29,7 @@ class Home < ActiveRecord::Base
   has_many :workers,  ->{order(:display_order)}
   has_many :lands,    ->{order(:place)}
   
-  belongs_to :holder, {class_name: :Worker, foreign_key: :worker_id}, -> {with_deleted}
+  belongs_to :holder, -> {with_deleted}, {class_name: :Worker, foreign_key: :worker_id}
   belongs_to :section
 
   scope :usual, ->{includes(:section).where(member_flag: true, company_flag: false).order("sections.display_order, homes.display_order, homes.id")}

@@ -1,21 +1,41 @@
 <h1>土地マスタ一覧</h1>
+<%= select_tag(:month, options_for_select(@homes, @home), :onChange => "change_home(this);") %>
+<script type="text/javascript">
+  function change_home(sender)
+  {
+    if(sender.value == "") {
+      document.location.href = "<%= lands_path %>";
+    } else {
+      document.location.href = "<%= lands_path %>?home_id=" + sender.value;
+    }
+  }
+</script>
 <% if @lands.count > 0 %>
 <table class="list">
-  <tr>
-    <th>地番</th>
-    <th>所有者</th>
-    <th>面積(α)</th>
-    <th colspan="2">&nbsp;</th>
-  </tr>
-<% @lands.each do |land| %>
-  <tr style="<%= 'background-color:darkgray' unless land.target_flag %>">
-    <td><%=h land.place %></td>
-    <td><%=h land.owner_name %></td>
-    <td class="numeric"><%= land.area %></td>
-    <td><%= link_to '修正', edit_land_path(land) %></td>
-    <td><%= link_to '削除', land, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
-  </tr>
-<% end %>
+  <thead>
+    <tr>
+      <th>地番</th>
+      <th>所有者</th>
+      <th>面積(α)</th>
+      <th colspan="2">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @lands.each do |land| %>
+    <tr style="<%= 'background-color:darkgray' unless land.target_flag %>">
+      <td><%=h land.place %></td>
+      <td><%=h land.owner_name %></td>
+      <td class="numeric"><%= land.area %></td>
+      <td><%= link_to '修正', edit_land_path(land) %></td>
+      <td><%= link_to '削除', land, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
+    </tr>
+  <% end %>
+  </tbody>
+  <tfoot>
+    <th colspan="2">合計</th>
+    <td class="numeric"><%= sprintf("%.2f", @sum_areas) %></td>
+    <td colspan="2">&nbsp;</td>
+  </tfoot>
 </table>
 <%= paginate(@lands) %>
 <% end %>

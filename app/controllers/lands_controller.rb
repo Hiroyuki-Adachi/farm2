@@ -3,7 +3,11 @@ class LandsController < ApplicationController
   before_action :set_homes, only: [:new, :create, :edit, :update]
 
   def index
-    @lands = LandDecorator.decorate_collection(Land.list.page(params[:page]))
+    @homes = LandDecorator.homes
+    @home = params[:home_id]
+    @sum_areas = @home.present? ? Land.usual.where(owner_id: params[:home_id]).sum(:area) : Land.usual.sum(:area)
+    @lands = @home.present? ? Land.list.where(owner_id: params[:home_id]) : Land.list
+    @lands = LandDecorator.decorate_collection(@lands.page(params[:page]))
   end
 
   def new

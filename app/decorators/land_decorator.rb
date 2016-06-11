@@ -13,5 +13,13 @@ class LandDecorator < Draper::Decorator
   def area
     return h.h(sprintf("%.2f", model.area))
   end
-  
+
+  def self.homes
+    hs = []
+    hs << ["全て", ""]
+    Home.includes(:holder).where(company_flag: false).order(:display_order).each do |h|
+      hs << [h.member_flag && h.holder.present? ? h.holder.name : h.name, h.id]
+    end
+    return hs
+  end
 end
