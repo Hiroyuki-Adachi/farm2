@@ -125,6 +125,16 @@ ja:
         name: "名称"
         phonetic: "ﾌﾘｶﾞﾅ"
 
+      bank_branch:
+        code: "コード"
+        name: "名称"
+        phonetic: "ﾌﾘｶﾞﾅ"
+        zip_code: "郵便番号"
+        address1: "住所1"
+        address2: "住所2"
+        telephone: "電話番号"
+        fax: "FAX番号"
+
       system:
         term: 年度
         target_from: 期間(自)

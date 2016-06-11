@@ -1,0 +1,40 @@
+<%= error_print(@branch) %>
+<%= form_for(@branch) do |f| %>
+  <div class="field">
+    <%= f.label :code %><br>
+    <%= f.text_field :code, {size: 4, maxlength: 3, pattern: "^[0-9]{3}$", required: true} %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, {size: 20, maxlength: 40, required: true}  %>
+  </div>
+  <div class="field">
+    <%= f.label :phonetic %><br>
+    <%= f.text_field :phonetic, {size: 20, maxlength: 40, required: true}  %>
+  </div>
+  <div class="field">
+    <%= f.label :zip_code %><br>
+    <%= f.text_field :zip_code, {size: 8, maxlength: 7, pattern: "^[0-9]{7}$"} %>(間のハイフンは入力しない)
+  </div>
+  <div class="field">
+    <%= f.label :address1 %><br>
+    <%= f.text_field :address1, {size: 20, maxlength: 40}  %>
+  </div>
+  <div class="field">
+    <%= f.label :address2 %><br>
+    <%= f.text_field :address2, {size: 20, maxlength: 40}  %>
+  </div>
+  <div class="field">
+    <%= f.label :telephone %><br>
+    <%= f.telephone_field :telephone, {size: 12, maxlength: 12}  %>
+  </div>
+  <div class="field">
+    <%= f.label :fax %><br>
+    <%= f.telephone_field :fax, {size: 12, maxlength: 12}  %>
+  </div>
+  <br />
+  <div class="actions">
+    <%= f.submit '登録' %>
+    <%= button_tag "戻る", type: :button, :onclick => raw("javascript:location.href = '" + bank_branches_path(bank_code: @bank.code) + "';") %>
+  </div>
+<% end %>

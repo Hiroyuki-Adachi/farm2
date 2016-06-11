@@ -1,0 +1,24 @@
+<h1><%= @bank.name %>支店マスタ一覧</h1>
+<% if @branches.count > 0 %>
+<table class="list">
+  <thead>
+    <tr>
+      <th>コード</th>
+      <th>名称</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @branches.each do |branch| %>
+      <tr>
+        <td><%= branch.code %></td>
+        <td><%= branch.name %></td>
+        <td><%= link_to '修正', edit_bank_branch_path(bank_code: @bank.code, code: branch) %></td>
+        <td><%= link_to '削除', bank_branch_path(bank_code: @bank.code, code: branch), method: :delete, data: { confirm: '本当に削除してもよろしいですか?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_bank_branch_path(bank_code: @bank.code) + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + banks_path + "';") %>

@@ -8,9 +8,10 @@ class ApplicationController < ActionController::Base
   private
   def set_term
     if session[:organization]
-      @organization = session[:organization]
+      @organization = Organization.new(session[:organization])
     else
       @organization = Organization.first
+      session[:organization] = @organization.attributes
     end
     @term = @organization.term
   end

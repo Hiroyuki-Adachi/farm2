@@ -10,7 +10,7 @@
   </div>
   <div class="field">
     <%= f.label :phonetic %><br>
-    <%= f.text_field :phonetic, {size: 20, maxlength: 40, pattern: "^[ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝﾞﾟ｢｣\-\(\)\\\.\s]+$", required: true}  %>
+    <%= f.text_field :phonetic, {size: 20, maxlength: 40, required: true}  %>
   </div>
   <br />
   <div class="actions">
