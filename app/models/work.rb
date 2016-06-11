@@ -31,6 +31,7 @@ class Work < ActiveRecord::Base
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
   belongs_to :weather
+  belongs_to :fix, {foreign_key: :fixed_at}
 
   has_many :work_lands,     ->{order('work_lands.display_order')},  {dependent: :destroy}
   has_many :work_results,   ->{order('work_results.display_order')}, {dependent: :destroy}
@@ -88,7 +89,17 @@ class Work < ActiveRecord::Base
     end
     return result.join(", ")
   end
-  
+
+  def do_fix(fixed_at)
+    work_results.each do |result|
+      result.update(fixed_hours: result.hours, fixed_price: work_kind.price, fixed_amount: result.hours * work_kind.price)
+    end
+    machine_results.each do |result|
+      result.update(fixed_quantity: result.quantity, fixed_adjust_id: result.adjust.id, fixed_price: result.price, fixed_amount: result.amount)
+    end
+    update(fixed_at: fixed_at)
+  end
+
   def regist_results(params)
     workers = []
     params.each do |param|

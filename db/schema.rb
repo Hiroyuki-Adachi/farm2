@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160527222306) do
+ActiveRecord::Schema.define(version: 20160611101353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,15 @@ ActiveRecord::Schema.define(version: 20160527222306) do
   end
 
   add_index "chemicals", ["deleted_at"], name: "index_chemicals_on_deleted_at", using: :btree
+
+  create_table "fixes", primary_key: "fixed_at", force: :cascade do |t|
+    t.integer  "works_count",                  null: false
+    t.integer  "hours",                        null: false
+    t.decimal  "works_amount",   precision: 8, null: false
+    t.decimal  "machines_count", precision: 8, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
 
   create_table "homes", force: :cascade do |t|
     t.string   "phonetic",            limit: 15
@@ -135,10 +144,12 @@ ActiveRecord::Schema.define(version: 20160527222306) do
   create_table "machine_results", force: :cascade do |t|
     t.integer  "machine_id"
     t.integer  "work_result_id"
-    t.integer  "display_order",                          default: 1,   null: false
-    t.decimal  "hours",          precision: 3, scale: 1, default: 0.0, null: false
-    t.decimal  "areas",          precision: 6, scale: 2, default: 0.0, null: false
-    t.integer  "lease_id",                               default: 0,   null: false
+    t.integer  "display_order",                           default: 1,   null: false
+    t.decimal  "hours",           precision: 3, scale: 1, default: 0.0, null: false
+    t.decimal  "fixed_quantity",  precision: 5, scale: 2
+    t.integer  "fixed_adjust_id"
+    t.decimal  "fixed_price",     precision: 5
+    t.decimal  "fixed_amount",    precision: 7
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -256,6 +267,9 @@ ActiveRecord::Schema.define(version: 20160527222306) do
     t.integer  "worker_id"
     t.decimal  "hours",         precision: 3, scale: 1, default: 0.0, null: false
     t.integer  "display_order",                         default: 0,   null: false
+    t.decimal  "fixed_hours",   precision: 3, scale: 1
+    t.decimal  "fixed_price",   precision: 4
+    t.decimal  "fixed_amount",  precision: 6
     t.datetime "created_at"
     t.datetime "updated_at"
   end

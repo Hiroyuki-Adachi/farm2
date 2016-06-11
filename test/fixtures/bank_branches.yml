@@ -2,8 +2,8 @@
 #
 # Table name: bank_branches
 #
-#  bank_code  :string(4)        not null
-#  code       :string(3)        not null
+#  bank_code  :string(4)        not null, primary key
+#  code       :string(3)        not null, primary key
 #  name       :string(40)       not null
 #  phonetic   :string(40)       not null
 #  zip_code   :string(7)

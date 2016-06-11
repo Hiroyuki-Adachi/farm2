@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   resources :chemicals, except: [:show]
 
+  resources :fixes, {param: :fixed_at, except: [:edit, :update]}
+
   resources :menu, only: [:index, :edit, :update] do
     member do
       get :edit_term

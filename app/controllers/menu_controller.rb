@@ -32,8 +32,8 @@ class MenuController < ApplicationController
 
     if @system.valid?
       @system.save!
+      @organization = Organization.first
       @organization.update(term: @term)
-      session[:term] = @term
       redirect_to(root_path, :notice => '設定を変更しました。')
     else
       if system_params[:term]

@@ -2,15 +2,17 @@
 #
 # Table name: machine_results
 #
-#  id             :integer          not null, primary key
-#  machine_id     :integer
-#  work_result_id :integer
-#  display_order  :integer          default(1), not null
-#  hours          :decimal(3, 1)    default(0.0), not null
-#  areas          :decimal(6, 2)    default(0.0), not null
-#  lease_id       :integer          default(0), not null
-#  created_at     :datetime
-#  updated_at     :datetime
+#  id              :integer          not null, primary key
+#  machine_id      :integer
+#  work_result_id  :integer
+#  display_order   :integer          default(1), not null
+#  hours           :decimal(3, 1)    default(0.0), not null
+#  fixed_quantity  :decimal(5, 2)
+#  fixed_adjust_id :integer
+#  fixed_price     :decimal(5, )
+#  fixed_amount    :decimal(7, )
+#  created_at      :datetime
+#  updated_at      :datetime
 #
 
 class MachineResult < ActiveRecord::Base

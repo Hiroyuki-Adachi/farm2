@@ -43,10 +43,10 @@
       </tr>
       <% home_amount += result.model.amount %>
       <% total_amount += result.model.amount %>
-      <% old_owner = result.owner %>
+      <% old_owner = result.model.owner %>
     <% end %>
     <tr class="<%= even ? 'even_color' : 'odd_color' %>">
-      <td><%= old_owner.name %></td>
+      <td><%= old_owner.name if old_owner %></td>
       <td colspan="7">合計</td>
       <td class="numeric"><%= number_to_currency(home_amount, {precision: 0, unit: ""}) %></td>
     </tr>

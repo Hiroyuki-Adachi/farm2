@@ -7,6 +7,9 @@
 #  worker_id     :integer
 #  hours         :decimal(3, 1)    default(0.0), not null
 #  display_order :integer          default(0), not null
+#  fixed_hours   :decimal(3, 1)
+#  fixed_price   :decimal(4, )
+#  fixed_amount  :decimal(6, )
 #  created_at    :datetime
 #  updated_at    :datetime
 #
