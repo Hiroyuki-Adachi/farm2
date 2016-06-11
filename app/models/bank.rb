@@ -10,13 +10,11 @@
 #
 
 class Bank < ActiveRecord::Base
+  self.primary_key = :code
+
   validates :code,     presence: true
   validates :name,     presence: true
   validates :phonetic, presence: true
   
   validates :phonetic, format: {with: /\A[ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝﾞﾟ｢｣\-\(\)\\\.\s]+\z/}, :if => Proc.new{|x| x.phonetic.present?}
-
-  def to_param
-    return self.code
-  end
 end

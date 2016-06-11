@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :organizations, param: nil, only: [:edit, :update]
 
   resources :banks, {param: :code, except: [:show]} do
-    resources :branches, {param: :code, controller: :bank_branches, except: [:show]}
+    resources :branches, {param: :code, controller: "banks/branches", except: [:show]}
   end
   
   resources :machine_types, except: [:show]

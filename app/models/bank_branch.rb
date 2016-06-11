@@ -16,6 +16,8 @@
 #
 
 class BankBranch < ActiveRecord::Base
+  self.primary_keys = :bank_code, :code
+
   belongs_to :bank, {foreign_key: :bank_code}
 
   validates :bank_code, presence: true
@@ -25,8 +27,4 @@ class BankBranch < ActiveRecord::Base
 
   validates :zip_code, format: {with: /\A[\d{7}]+\z/}, :if => Proc.new{|x| x.zip_code.present?}
   validates :phonetic, format: {with: /\A[ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝﾞﾟ｢｣\-\(\)\\\.\s]+\z/}, :if => Proc.new{|x| x.phonetic.present?}
-
-  def to_param
-    return self.code
-  end
 end

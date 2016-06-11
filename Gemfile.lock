@@ -46,6 +46,8 @@ GEM
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
     byebug (9.0.5)
+    composite_primary_keys (8.1.3)
+      activerecord (~> 4.2.0)
     concurrent-ruby (1.0.2)
     debase (0.2.1)
       debase-ruby_core_source
@@ -179,6 +181,7 @@ DEPENDENCIES
   active_hash
   annotate
   byebug
+  composite_primary_keys
   debase
   draper
   i18n-js
