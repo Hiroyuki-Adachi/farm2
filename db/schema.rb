@@ -67,13 +67,15 @@ ActiveRecord::Schema.define(version: 20160611101353) do
 
   add_index "chemicals", ["deleted_at"], name: "index_chemicals_on_deleted_at", using: :btree
 
-  create_table "fixes", primary_key: "fixed_at", force: :cascade do |t|
-    t.integer  "works_count",                  null: false
-    t.integer  "hours",                        null: false
-    t.decimal  "works_amount",   precision: 8, null: false
-    t.decimal  "machines_count", precision: 8, null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+  create_table "fixes", id: false, force: :cascade do |t|
+    t.integer  "term",                          default: 0, null: false
+    t.date     "fixed_at",                                  null: false
+    t.integer  "works_count",                               null: false
+    t.integer  "hours",                                     null: false
+    t.decimal  "works_amount",    precision: 8,             null: false
+    t.decimal  "machines_amount", precision: 8,             null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   create_table "homes", force: :cascade do |t|

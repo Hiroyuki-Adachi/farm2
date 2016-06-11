@@ -78,26 +78,12 @@ class Work < ActiveRecord::Base
     return params
   end
 
-  def self.clear_fix(fixed_at)
-    Work.where(fixed_at: fixed_at).update_all("fixed_at = null")
-  end
-
   def chemicals_format
     result = []
     self.work_chemicals.each do |work_chemical|
       result << work_chemical.chemical.name + "(" + work_chemical.chemical.chemical_type.name + "):" + work_chemical.quantity.to_s
     end
     return result.join(", ")
-  end
-
-  def do_fix(fixed_at)
-    work_results.each do |result|
-      result.update(fixed_hours: result.hours, fixed_price: work_kind.price, fixed_amount: result.hours * work_kind.price)
-    end
-    machine_results.each do |result|
-      result.update(fixed_quantity: result.quantity, fixed_adjust_id: result.adjust.id, fixed_price: result.price, fixed_amount: result.amount)
-    end
-    update(fixed_at: fixed_at)
   end
 
   def regist_results(params)

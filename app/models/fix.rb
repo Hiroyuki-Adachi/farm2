@@ -2,19 +2,43 @@
 #
 # Table name: fixes
 #
-#  fixed_at       :date             not null, primary key
-#  works_count    :integer          not null
-#  hours          :integer          not null
-#  works_amount   :decimal(8, )     not null
-#  machines_count :decimal(8, )     not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  term            :integer          default(0), not null
+#  fixed_at        :date             not null, primary key
+#  works_count     :integer          not null
+#  hours           :integer          not null
+#  works_amount    :decimal(8, )     not null
+#  machines_amount :decimal(8, )     not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 class Fix < ActiveRecord::Base
-  self.primary_key = :fixed_at
+  self.primary_keys = [:term, :fixed_at]
 
   def to_param
     return fixed_at.strftime("%Y-%m-%d")
+  end
+
+  def self.do_fix(term, fixed_at, works_ids)
+    hours = 0
+    works_amount = 0
+    works_count = 0
+    machines_amount = 0
+    Work.find(works_ids).each do |work|
+      work.work_results.each do |result|
+        amount = result.hours * work.work_kind.price
+        result.update(fixed_hours: result.hours, fixed_price: work.work_kind.price, fixed_amount: amount)
+        works_amount += amount
+        hours += result.hours
+      end
+      work.machine_results.to_a.uniq {|mr| mr.machine_id }.each do |result|
+        result.update(fixed_quantity: result.quantity, fixed_adjust_id: result.adjust.id, fixed_price: result.price, fixed_amount: result.amount)
+        machines_amount += result.amount
+      end
+      work.update(fixed_at: fixed_at)
+      works_count += 1
+    end
+
+    Fix.create({term: term, fixed_at: fixed_at, works_count: works_count, hours: hours, works_amount: works_amount, machines_amount: machines_amount})
   end
 end

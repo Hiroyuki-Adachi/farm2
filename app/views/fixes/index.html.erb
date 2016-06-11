@@ -1,0 +1,45 @@
+<h1>確定一覧</h1>
+
+<% if @fixes.count > 0 %>
+<table class="list">
+  <thead>
+    <tr>
+      <th>締め日</th>
+      <th>作業件数</th>
+      <th>工数計</th>
+      <th>作業日当計</th>
+      <th>機械利用料計</th>
+    </tr>
+  </thead>
+<% sum_works_count = 0 %>
+<% sum_hours = 0 %>
+<% sum_works_amount = 0 %>
+<% sum_machines_amount = 0 %>
+  <tbody>
+<% @fixes.each do |fix| %>
+    <tr>
+      <td><%= fix.fixed_at %></td>
+      <td class="numeric"><%= fix.works_count %></td>
+      <td class="numeric"><%= fix.hours %></td>
+      <td class="numeric"><%= fix.works_amount %></td>
+      <td class="numeric"><%= fix.machines_amount %></td>
+    </tr>
+<% sum_works_count += fix.model.works_count.to_i %>
+<% sum_hours += fix.hours.to_f %>
+<% sum_works_amount += fix.model.works_amount.to_i %>
+<% sum_machines_amount += fix.model.machines_amount.to_i %>
+<% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>合計</th>
+      <td class="numeric"><%=h sum_works_count %></td>
+      <td class="numeric"><%=h sprintf("%.1f", sum_hours) %></td>
+      <td class="numeric"><%=h number_with_delimiter(sum_works_amount, {:precision => 0}) %></td>
+      <td class="numeric"><%=h number_with_delimiter(sum_machines_amount, {:precision => 0}) %></td>
+    </tr>
+  </tfoot>
+</table>
+<% end %>
+<br />
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

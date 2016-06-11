@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   resources :chemicals, except: [:show]
 
-  resources :fixes, {param: :fixed_at, except: [:edit, :update]}
+  resources :fixes, {param: "fixed_at", except: [:edit, :update]}
 
   resources :menu, only: [:index, :edit, :update] do
     member do
@@ -49,8 +49,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :fixes, only: [:index, :new, :create, :show, :destroy]
-  
   resources :work_results, only: [:index]
 
   resources :machine_results, only: [:index]
