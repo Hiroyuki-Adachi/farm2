@@ -22,7 +22,7 @@ class BanksController < ApplicationController
     @bank = Bank.new(bank_params)
 
     if @bank.save
-      redirect_to @bank
+      redirect_to banks_path
     else
       render :new
     end
@@ -30,7 +30,7 @@ class BanksController < ApplicationController
 
   def update
     if @bank.update(bank_params)
-      redirect_to @bank
+      redirect_to banks_path
     else
       render :edit
     end

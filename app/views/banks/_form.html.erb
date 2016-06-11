@@ -1,26 +1,16 @@
-<% if @bank.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= @bank.errors.count %>件のエラーがあります。</h2>
- 
-    <ul>
-    <% @bank.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= error_print(@bank) %>
 <%= form_for(@bank) do |f| %>
   <div class="field">
     <%= f.label :code %><br>
-    <%= f.text_field :code, {size: 5, maxlength: 4} %>
+    <%= f.text_field :code, {size: 5, maxlength: 4, pattern: "^[0-9]{4}$", required: true} %>
   </div>
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name, {size: 20, maxlength: 40}  %>
+    <%= f.text_field :name, {size: 20, maxlength: 40, required: true}  %>
   </div>
   <div class="field">
     <%= f.label :phonetic %><br>
-    <%= f.text_field :phonetic, {size: 20, maxlength: 40}  %>
+    <%= f.text_field :phonetic, {size: 20, maxlength: 40, pattern: "^[ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝﾞﾟ｢｣\-\(\)\\\.\s]+$", required: true}  %>
   </div>
   <br />
   <div class="actions">

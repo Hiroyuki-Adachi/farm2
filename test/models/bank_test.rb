@@ -2,7 +2,7 @@
 #
 # Table name: banks
 #
-#  bank_code  :string(4)        not null, primary key
+#  code       :string(4)        not null, primary key
 #  name       :string(40)       not null
 #  phonetic   :string(40)       not null
 #  created_at :datetime         not null

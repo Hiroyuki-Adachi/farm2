@@ -17,20 +17,20 @@ ActiveRecord::Schema.define(version: 20160527222306) do
   enable_extension "plpgsql"
 
   create_table "bank_branches", id: false, force: :cascade do |t|
-    t.string   "bank_code",   limit: 4,  null: false
-    t.string   "branch_code", limit: 3,  null: false
-    t.string   "name",        limit: 40, null: false
-    t.string   "phonetic",    limit: 40, null: false
-    t.string   "zip_code",    limit: 7
-    t.string   "address1",    limit: 50
-    t.string   "address2",    limit: 50
-    t.string   "telephone",   limit: 15
-    t.string   "fax",         limit: 15
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "bank_code",  limit: 4,  null: false
+    t.string   "code",       limit: 3,  null: false
+    t.string   "name",       limit: 40, null: false
+    t.string   "phonetic",   limit: 40, null: false
+    t.string   "zip_code",   limit: 7
+    t.string   "address1",   limit: 50
+    t.string   "address2",   limit: 50
+    t.string   "telephone",  limit: 15
+    t.string   "fax",        limit: 15
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
-  create_table "banks", primary_key: "bank_code", force: :cascade do |t|
+  create_table "banks", primary_key: "code", force: :cascade do |t|
     t.string   "name",       limit: 40, null: false
     t.string   "phonetic",   limit: 40, null: false
     t.datetime "created_at",            null: false
