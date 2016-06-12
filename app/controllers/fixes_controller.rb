@@ -1,6 +1,9 @@
 class FixesController < ApplicationController
+  before_action :set_fixed_at, only: [:create]
+  before_action :set_fix, only: [:destroy]
+
   def index
-    @fixes = FixDecorator.decorate_collection(Fix.where(term: @term).order(fixed_at: :ASC))
+    @fixes = FixDecorator.decorate_collection(Fix.usual(@term))
   end
 
   def new
@@ -9,7 +12,21 @@ class FixesController < ApplicationController
   end
 
   def create
-    Fix.do_fix(@term, Date.strptime(params[:fixed_at], '%Y-%m-%d'), params[:fixed_works])
+    Fix.do_fix(@term, @fixed_at, params[:fixed_works])
     redirect_to fixes_path
   end
+
+  def destroy
+    @fix.destroy
+    redirect_to fixes_path
+  end
+
+  private
+    def set_fixed_at
+      @fixed_at = Date.strptime(params[:fixed_at], '%Y-%m-%d')
+    end
+
+    def set_fix
+      @fix = Fix.find([@term, params[:fixed_at]])
+    end
 end

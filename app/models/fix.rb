@@ -14,6 +14,9 @@
 
 class Fix < ActiveRecord::Base
   self.primary_keys = [:term, :fixed_at]
+  before_destroy :clear_fix
+
+  scope :usual, ->(term){where(term: term).order(fixed_at: :ASC)}
 
   def to_param
     return fixed_at.strftime("%Y-%m-%d")
@@ -24,21 +27,36 @@ class Fix < ActiveRecord::Base
     works_amount = 0
     works_count = 0
     machines_amount = 0
-    Work.find(works_ids).each do |work|
-      work.work_results.each do |result|
-        amount = result.hours * work.work_kind.price
-        result.update(fixed_hours: result.hours, fixed_price: work.work_kind.price, fixed_amount: amount)
-        works_amount += amount
-        hours += result.hours
+    Fix.transaction do
+      Work.find(works_ids).each do |work|
+        work.work_results.each do |result|
+          amount = result.hours * work.work_kind.price
+          result.update(fixed_hours: result.hours, fixed_price: work.work_kind.price, fixed_amount: amount)
+          works_amount += amount
+          hours += result.hours
+        end
+        work.machine_results.to_a.uniq {|mr| mr.machine_id }.each do |result|
+          result.update(fixed_quantity: result.quantity, fixed_adjust_id: result.adjust.id, fixed_price: result.price, fixed_amount: result.amount)
+          machines_amount += result.amount
+        end
+        work.update(fixed_at: fixed_at)
+        works_count += 1
       end
-      work.machine_results.to_a.uniq {|mr| mr.machine_id }.each do |result|
-        result.update(fixed_quantity: result.quantity, fixed_adjust_id: result.adjust.id, fixed_price: result.price, fixed_amount: result.amount)
-        machines_amount += result.amount
-      end
-      work.update(fixed_at: fixed_at)
-      works_count += 1
-    end
 
-    Fix.create({term: term, fixed_at: fixed_at, works_count: works_count, hours: hours, works_amount: works_amount, machines_amount: machines_amount})
+      Fix.create({term: term, fixed_at: fixed_at, works_count: works_count, hours: hours, works_amount: works_amount, machines_amount: machines_amount})
+    end
   end
+
+  private
+    def clear_fix
+      Work.where(term: term, fixed_at: fixed_at).each do |work|
+        work.work_results.each do |result|
+          result.update(fixed_hours: nil, fixed_price: nil, fixed_amount: nil)
+        end
+        work.machine_results.each do |result|
+          result.update(fixed_quantity: nil, fixed_adjust_id: nil, fixed_price: nil, fixed_amount: nil)
+        end
+        work.update(fixed_at: nil)
+      end
+    end
 end

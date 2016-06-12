@@ -9,6 +9,7 @@
       <th>工数計</th>
       <th>作業日当計</th>
       <th>機械利用料計</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 <% sum_works_count = 0 %>
@@ -23,6 +24,7 @@
       <td class="numeric"><%= fix.hours %></td>
       <td class="numeric"><%= fix.works_amount %></td>
       <td class="numeric"><%= fix.machines_amount %></td>
+      <td><%= link_to '取消', fix, method: :delete, data: {confirm: "確定を取り消してもよろしいですか?"} %></td>
     </tr>
 <% sum_works_count += fix.model.works_count.to_i %>
 <% sum_hours += fix.hours.to_f %>
@@ -37,6 +39,7 @@
       <td class="numeric"><%=h sprintf("%.1f", sum_hours) %></td>
       <td class="numeric"><%=h number_with_delimiter(sum_works_amount, {:precision => 0}) %></td>
       <td class="numeric"><%=h number_with_delimiter(sum_machines_amount, {:precision => 0}) %></td>
+      <td>&nbsp;</td>
     </tr>
   </tfoot>
 </table>
