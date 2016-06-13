@@ -4,9 +4,9 @@ class LandsController < ApplicationController
 
   def index
     @homes = LandDecorator.homes
-    @home = params[:home_id]
-    @sum_areas = @home.present? ? Land.usual.where(owner_id: params[:home_id]).sum(:area) : Land.usual.sum(:area)
-    @lands = @home.present? ? Land.list.where(owner_id: params[:home_id]) : Land.list
+    @home_id = params[:home_id]
+    @sum_areas = @home_id.present? ? Land.usual.where(owner_id: @home_id).sum(:area) : Land.usual.sum(:area)
+    @lands = @home_id.present? ? Land.list.where(owner_id: @home_id) : Land.list
     @lands = LandDecorator.decorate_collection(@lands.page(params[:page]))
   end
 

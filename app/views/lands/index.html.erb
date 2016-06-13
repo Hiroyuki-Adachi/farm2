@@ -1,5 +1,5 @@
 <h1>土地マスタ一覧</h1>
-<%= select_tag(:month, options_for_select(@homes, @home), :onChange => "change_home(this);") %>
+<%= select_tag(:month, options_for_select(@homes, @home_id), :onChange => "change_home(this);") %>
 <script type="text/javascript">
   function change_home(sender)
   {
