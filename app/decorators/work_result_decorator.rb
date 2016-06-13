@@ -42,6 +42,10 @@ class WorkResultDecorator < Draper::Decorator
   end
   
   def price(term)
-    return h.number_to_currency(model.work.work_kind.term_price(term), {precision: 0, unit: ""})
+    return h.number_to_currency(model.price(term), {precision: 0, unit: ""})
+  end
+
+  def amount(term)
+    return h.number_to_currency(model.amount(term), {precision: 0, unit: ""})
   end
 end

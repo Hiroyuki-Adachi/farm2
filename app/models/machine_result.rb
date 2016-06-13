@@ -16,8 +16,11 @@
 #
 
 class MachineResult < ActiveRecord::Base
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
   belongs_to  :machine, -> {with_deleted}
   belongs_to  :work_result
+  belongs_to  :fixed_adjust
 
   has_one     :work, {through: :work_result}, -> {with_deleted}
   has_one     :owner, {through: :machine}, -> {with_deleted}
@@ -37,76 +40,80 @@ class MachineResult < ActiveRecord::Base
   }
   
   def price
+    @price = fixed_price if work.fixed_at
     calc_amount unless @price
     return @price
   end
   
   def adjust
+    @adjust = fixed_adjust if work.fixed_at
     calc_amount unless @adjust
     return @adjust
   end
   
   def quantity
+    @quantity = fixed_quantity if work.fixed_at
     calc_amount unless @quantity
     return @quantity
   end
   
   def amount
+    @amount = fixed_amount if work.fixed_at
     calc_amount unless @amount
     return @amount
   end
   
   private
-  def calc_amount
-    price_details = machine.price_details(work)
-    unless price_details
-      clear_amount
-      return
-    end
-
-    if owner.id == work_result.worker_id
-      price_details = price_details.where(lease_id: Lease::NORMAL)
-    else
-      price_details = price_details.where(lease_id: Lease::LEASE)
-    end
-    unless price_details.exists?
-      clear_amount
-      return
-    end
-
-    if price_details.where(work_kind_id: work.work_kind.id).exists?
-      price_details = price_details.where(work_kind_id: work.work_kind.id)
-    else
-      price_details = price_details.where(work_kind_id: 0)
-    end
-    unless price_details.exists?
-      clear_amount
-      return
-    end
-
-    price_detail = price_details.first
-    @adjust = price_detail.adjust
-    if @adjust == Adjust::NONE
-      clear_amount
-      return
-    end
-
-    @price = price_detail.price
-    @quantity = case @adjust 
-      when Adjust::HOUR
-        work.sum_hours
-      when Adjust::AREA
-        work.sum_areas / 10
-      when Adjust::DAY
-        1
+    def calc_amount
+      price_details = machine.price_details(work)
+      unless price_details
+        clear_amount
+        return
       end
-    @amount = @price * @quantity 
-  end
 
-  def clear_amount
-    @price = 0
-    @adjust = Adjust::NONE
-    @quantity = 0
-    @amount = 0
-  end
+      if owner.id == work_result.worker_id
+        price_details = price_details.where(lease_id: Lease::NORMAL)
+      else
+        price_details = price_details.where(lease_id: Lease::LEASE)
+      end
+      unless price_details.exists?
+        clear_amount
+        return
+      end
+
+      if price_details.where(work_kind_id: work.work_kind.id).exists?
+        price_details = price_details.where(work_kind_id: work.work_kind.id)
+      else
+        price_details = price_details.where(work_kind_id: 0)
+      end
+      unless price_details.exists?
+        clear_amount
+        return
+      end
+
+      price_detail = price_details.first
+      @adjust = price_detail.adjust
+      if @adjust == Adjust::NONE
+        clear_amount
+        return
+      end
+
+      @price = price_detail.price
+      @quantity = case @adjust 
+        when Adjust::HOUR
+          work.sum_hours
+        when Adjust::AREA
+          work.sum_areas / 10
+        when Adjust::DAY
+          1
+      end
+      @amount = @price * @quantity 
+    end
+
+    def clear_amount
+      @price = 0
+      @adjust = Adjust::NONE
+      @quantity = 0
+      @amount = 0
+    end
 end
