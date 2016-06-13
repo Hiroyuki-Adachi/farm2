@@ -1,15 +1,5 @@
 <h1>対象年度変更</h1>
-<% if @system.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= @system.errors.count %>件のエラーがあります。</h2>
- 
-    <ul>
-    <% @system.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= error_print(@system) %>
 <%= form_for(@system, url: {controller: :menu, action: :update }, html: {method: :put}) do |f| %>
   <%= f.select(:term, @terms) %>年度
   <br />

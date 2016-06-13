@@ -18,11 +18,11 @@
  </div>
  <div class="field">
     <%= f.label :validity_start_at %><br />
-    <%= f.date_field :validity_start_at %>
+    <%= f.date_field :validity_start_at, {required: true} %>
  </div>
  <div class="field">
     <%= f.label :validity_end_at %><br />
-    <%= f.date_field :validity_end_at %>
+    <%= f.date_field :validity_end_at, {required: true} %>
  </div>
  <br />
  <div class="actions">

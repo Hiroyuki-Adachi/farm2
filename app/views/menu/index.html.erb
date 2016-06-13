@@ -7,8 +7,8 @@
 <h2>集計処理(<%= @system.target_from.strftime('%Y年%m月') %>から<%= @system.target_to.strftime('%Y年%m月') %>まで)</h2>
 <ul>
   <li><%= link_to '集計対象期間変更', edit_menu_path(@system) %></li>
-  <li><%= link_to '世帯別作業日当', work_results_path %>(<%= link_to 'CSV出力', work_results_path(:format => :csv) %>)</li>
-  <li><%= link_to '世帯別機械利用料', machine_results_path %>(<%= link_to 'CSV出力', machine_results_path(:format => :csv) %>)</li>
+  <li><%= link_to '世帯別作業日当', work_results_path %>(<%= link_to 'CSV出力', work_results_path(format: :csv) %>)</li>
+  <li><%= link_to '世帯別機械利用料', machine_results_path %>(<%= link_to 'CSV出力', machine_results_path(format: :csv) %>)</li>
 </ul>
 <h2>会計処理</h2>
 <ul>

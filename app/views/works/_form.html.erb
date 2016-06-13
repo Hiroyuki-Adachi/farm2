@@ -1,8 +1,8 @@
-<b>作業日：</b><%= f.date_field :worked_at %>
+<b>作業日：</b><%= f.date_field :worked_at, {required: true} %>
 <b>天候：</b><%= f.select(:weather_id, @weathers.map {|weather| [weather.name, weather.id]}) %>
 <br />
-<b>作業開始：</b><%= f.time_field :start_at %>
-<b>作業終了：</b><%= f.time_field :end_at %>
+<b>作業開始：</b><%= f.time_field :start_at, {step: 1800, required: true} %>
+<b>作業終了：</b><%= f.time_field :end_at, {step: 1800, required: true} %>
 
 <h2>内容</h2>
 <div>

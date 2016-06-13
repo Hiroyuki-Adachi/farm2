@@ -11,9 +11,9 @@
   </div>
 <% end %>
 <%= form_for(@system, url: {controller: :menu, action: :update }, html: {method: :put}) do |f| %>
-  <%= f.month_field :target_from %>
+  <%= f.month_field :target_from, {required: true} %>
   ～
-  <%= f.month_field :target_to %>
+  <%= f.month_field :target_to, {required: true} %>
   <br />
   <%= f.submit '設定' %>
   <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

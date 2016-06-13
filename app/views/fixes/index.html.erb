@@ -24,8 +24,8 @@
       <td class="numeric"><%= fix.hours %></td>
       <td class="numeric"><%= fix.works_amount %></td>
       <td class="numeric"><%= fix.machines_amount %></td>
-      <td><%= link_to '世帯別作業日当', work_results_path(fixed_at: fix) %></td>
-      <td><%= link_to '世帯別機械利用料', machine_results_path(fixed_at: fix) %></td>
+      <td><%= link_to '世帯別作業日当', work_results_path(fixed_at: fix) %>(<%= link_to 'CSV出力', work_results_path(fixed_at: fix, format: :csv) %>)</td>
+      <td><%= link_to '世帯別機械利用料', machine_results_path(fixed_at: fix) %>(<%= link_to 'CSV出力', machine_results_path(fixed_at: fix, format: :csv) %>)</td>
       <td><%= link_to '確定取消', fix, method: :delete, data: {confirm: "確定を取り消してもよろしいですか?"} %></td>
     </tr>
 <% sum_works_count += fix.model.works_count.to_i %>
