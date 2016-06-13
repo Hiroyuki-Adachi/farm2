@@ -1,6 +1,10 @@
 class WorkResultsController < ApplicationController
   def index
-    @results = WorkResult.by_home(@term)
+    if params[:fixed_at]
+      @results = WorkResult.by_home_for_fix(@term, Date.strptime(params[:fixed_at], '%Y-%m-%d'))
+    else
+      @results = WorkResult.by_home(@term)
+    end
 
     respond_to do |format|
       format.html do

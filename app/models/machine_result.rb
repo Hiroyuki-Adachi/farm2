@@ -20,7 +20,7 @@ class MachineResult < ActiveRecord::Base
 
   belongs_to  :machine, -> {with_deleted}
   belongs_to  :work_result
-  belongs_to  :fixed_adjust
+  belongs_to  :fixed_adjust, {class_name: "Adjust"}
 
   has_one     :work, {through: :work_result}, -> {with_deleted}
   has_one     :owner, {through: :machine}, -> {with_deleted}
@@ -34,8 +34,20 @@ class MachineResult < ActiveRecord::Base
     .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
     .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
     .joins("INNER JOIN systems ON systems.term = works.term")
-    .where("systems.target_from <= works.worked_at and works.worked_at <= systems.target_to")
-    .where("homes.company_flag = FALSE AND systems.term = ?", term)
+    .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
+    .where("homes.company_flag = FALSE")
+    .where("systems.term = ?", term)
+    .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
+  }
+
+  scope :by_home_for_fix, ->(term, fixed_at) {
+     joins(:machine).eager_load(:machine)
+    .joins(:work_result).eager_load(:work_result)
+    .joins(:work_type).eager_load(:work_type)
+    .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
+    .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
+    .where("homes.company_flag = FALSE AND works.term = ?", term)
+    .where("works.fixed_at = ? AND machine_results.fixed_price IS NOT NULL", fixed_at)
     .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
   }
   

@@ -32,7 +32,7 @@ class WorkResult < ActiveRecord::Base
      .joins(:work_type).eager_load(:work_type)
      .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
      .joins("INNER JOIN systems ON systems.term = works.term")
-     .where("systems.target_from <= works.worked_at and works.worked_at <= systems.target_to")
+     .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
      .where("systems.term = ?", term)
      .order("homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }

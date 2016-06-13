@@ -83,4 +83,4 @@
 <% end %>
   </tbody>
 </table>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + (params[:fixed_at] ? fixes_path : root_path) + "';") %>
