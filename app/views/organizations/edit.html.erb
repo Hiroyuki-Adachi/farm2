@@ -8,19 +8,19 @@
  </div>
  <div class="field">
     <%= f.label :workers_count %><br />
-    <%= f.number_field :workers_count, {min: 2, max: 50, step: 1} %>
+    <%= f.number_field :workers_count, {min: 2, max: 50, step: 1, required: true} %>
  </div>
  <div class="field">
     <%= f.label :lands_count %><br />
-    <%= f.number_field :lands_count, {min: 0, max: 99, step: 1} %>
+    <%= f.number_field :lands_count, {min: 0, max: 99, step: 1, required: true} %>
  </div>
  <div class="field">
     <%= f.label :machines_count %><br />
-    <%= f.number_field :machines_count, {min: 0, max: 50, step: 1} %>
+    <%= f.number_field :machines_count, {min: 0, max: 50, step: 1, required: true} %>
  </div>
  <div class="field">
     <%= f.label :chemicals_count %><br />
-    <%= f.number_field :chemicals_count, {min: 0, max: 50, step: 1} %>
+    <%= f.number_field :chemicals_count, {min: 0, max: 50, step: 1, required: true} %>
  </div>
  <div class="field">
     <%= f.label :daily_worker %><br />
