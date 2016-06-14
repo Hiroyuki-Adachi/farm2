@@ -44,26 +44,34 @@ class Work < ActiveRecord::Base
   has_many :machine_results, {through: :work_results}
 
   scope :no_fixed, ->(term){where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)}
-  scope :months, ->(term){select()}
+  scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}
 
   def set_term
     self.term = Organization.first.term
   end
 
+  def workers_count
+    work_results.count
+  end
+
   def sum_hours
-    return self.work_results.sum(:hours)
+    work_results.sum(:hours)
   end
   
   def sum_areas
-    return self.lands.sum(:area)
+    lands.sum(:area)
   end
   
   def price
-    return work_kind.term_price(self.term)
+    work_kind.term_price(term)
   end
 
-  def sum_machine_amounts
-    return machine_results.to_a.uniq{|result| result.machine_id}.inject(0){|sum, result| sum += result.amount} || 0
+  def sum_workers_amount
+    work_results.inject(0){|sum, result| sum += result.amount} || 0
+  end
+
+  def sum_machines_amount
+    machine_results.to_a.uniq{|result| result.machine_id}.inject(0){|sum, result| sum += result.amount} || 0
   end
 
   def self.get_terms(term)

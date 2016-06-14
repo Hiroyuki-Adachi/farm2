@@ -26,13 +26,13 @@
       <td><%= result.work_type_name %></td>
       <td style="overflow:hidden;"><%= result.work_name %></td>
       <td class="numeric"><%= result.hours %></td>
-      <td class="numeric"><%= result.price(@term) %></td>
-      <td class="numeric"><%= result.amount(@term) %></td>
+      <td class="numeric"><%= result.price %></td>
+      <td class="numeric"><%= result.amount %></td>
     </tr>
 <% worker_hours += result.model.hours %>
 <% home_hours   += result.model.hours %>
-<% worker_amount += result.model.amount(@term) %>
-<% home_amount   += result.model.amount(@term) %>
+<% worker_amount += result.model.amount %>
+<% home_amount   += result.model.amount %>
 <%  if i  < @results.count - 1 %>
 <%    unless @results[i + 1].worker_id == result.worker_id %>
         <tr class="<%= even ? 'even_color' : 'odd_color' %>">

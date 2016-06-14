@@ -46,11 +46,11 @@ class WorkResult < ActiveRecord::Base
      .order("homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }
 
-  def price(term)
-    (work.fixed_at ? self.fixed_price : work.work_kind.term_price(term)) || 0
+  def price
+    (work.fixed_at ? self.fixed_price : work.work_kind.term_price(work.term)) || 0
   end
 
-  def amount(term)
-    (work.fixed_at ? self.fixed_amount : hours * work.work_kind.term_price(term)) || 0
+  def amount
+    (work.fixed_at ? self.fixed_amount : hours * work.work_kind.term_price(work.term)) || 0
   end
 end

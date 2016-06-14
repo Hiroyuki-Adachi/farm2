@@ -61,5 +61,17 @@ class WorkDecorator < Draper::Decorator
     terms = []
     Work.get_terms(term).each {|t| terms << [t.strftime('%Y年 %m月'), t.strftime('%Y-%m-%d')] }
     return terms
-  end  
+  end
+  
+  def sum_hours
+    "%.1f"%[model.sum_hours]
+  end
+
+  def sum_workers_amount
+    h.number_to_currency(model.sum_workers_amount, {precision: 0, unit: ""})
+  end
+
+  def sum_machines_amount
+    h.number_to_currency(model.sum_machines_amount, {precision: 0, unit: ""})
+  end
 end

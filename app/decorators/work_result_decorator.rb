@@ -38,14 +38,14 @@ class WorkResultDecorator < Draper::Decorator
   end
   
   def hours
-    return sprintf("%.1f", model.hours)
+    return "%.1f"%model.hours
   end
   
-  def price(term)
-    return h.number_to_currency(model.price(term), {precision: 0, unit: ""})
+  def price
+    return h.number_to_currency(model.price, {precision: 0, unit: ""})
   end
 
-  def amount(term)
-    return h.number_to_currency(model.amount(term), {precision: 0, unit: ""})
+  def amount
+    return h.number_to_currency(model.amount, {precision: 0, unit: ""})
   end
 end

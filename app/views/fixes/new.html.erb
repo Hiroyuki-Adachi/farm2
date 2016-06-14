@@ -37,7 +37,7 @@
       <% price = work.work_kind.price.to_i %>
       <td class="numeric"><%=h number_with_delimiter(price, {:precision => 0}) %></td>
       <td id="amount_<%= work.id %>" class="numeric"><%=h number_with_delimiter((hours * price).to_i, {:precision => 0}) %></td>
-      <td id="machine_<%= work.id %>" class="numeric"><%=h number_with_delimiter(work.sum_machine_amounts.to_i, {:precision => 0}) %></td>
+      <td id="machine_<%= work.id %>" class="numeric"><%=h number_with_delimiter(work.sum_machines_amount.to_i, {:precision => 0}) %></td>
     </tr>
 <% end %>
   </tbody>

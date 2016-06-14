@@ -1,9 +1,13 @@
 class FixesController < ApplicationController
-  before_action :set_fixed_at, only: [:create]
+  before_action :set_fixed_at, only: [:create, :show]
   before_action :set_fix, only: [:destroy]
 
   def index
     @fixes = FixDecorator.decorate_collection(Fix.usual(@term))
+  end
+
+  def show
+    @works = WorkDecorator.decorate_collection(Work.fixed(@term, @fixed_at))
   end
 
   def new
