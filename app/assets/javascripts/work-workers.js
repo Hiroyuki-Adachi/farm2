@@ -21,6 +21,8 @@ function add_worker(worker_id, worker_name)
     elem_time.value = get_hours();
     elem_time.name = "results[][hours]";
     elem_time.max = 99;
+    elem_time.min = 0;
+    elem_time.required = true;
     elem_time.step = 0.5;
     cell_time.appendChild(elem_time);
 

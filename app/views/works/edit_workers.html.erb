@@ -21,7 +21,7 @@
       <tr id="worker_<%= result.worker_id %>">
         <td class="numeric"><%= i + 1 %></td>
         <td><%= result.worker.name %></td>
-        <td><%= number_field_tag "results[][hours]", result.hours, {id: nil, max: 99, step: 0.5} %></td>
+        <td><%= number_field_tag "results[][hours]", result.hours, {id: nil, max: 99, min: 0, step: 0.5, required: true} %></td>
         <td>
             <input type="button" value="削除" onclick="remove_worker(<%= result.worker_id %>)" />
             <%= hidden_field_tag "results[][worker_id]", result.worker_id, {:id => nil} %>
