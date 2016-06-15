@@ -1,0 +1,646 @@
+home1:
+  id: 1
+  phonetic: なかまえ
+  name: 中前
+  worker_id: 1
+  zip_code: 6910003
+  address1: 出雲市灘分町2383
+  address2: 
+  telephone: 0853-62-0066
+  fax: 
+  section_id: 1
+  display_order: 1
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2016-03-19 10:14:35.174495
+  deleted_at: 
+
+home2:
+  id: 2
+  phonetic: にしはら
+  name: 西原
+  worker_id: 2
+  zip_code: 6910003
+  address1: 出雲市灘分町2414
+  address2: 
+  telephone: 0853-62-3999
+  fax: 
+  section_id: 1
+  display_order: 2
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2010-07-11 12:42:48
+  deleted_at: 
+
+home3:
+  id: 3
+  phonetic: さかいじま
+  name: 境島
+  worker_id: 3
+  zip_code: 6910003
+  address1: 出雲市灘分町2404
+  address2: 
+  telephone: 0853-62-5300
+  fax: 
+  section_id: 1
+  display_order: 3
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2010-07-11 12:42:48
+  deleted_at: 
+
+home4:
+  id: 4
+  phonetic: なかばら
+  name: 中原
+  worker_id: 4
+  zip_code: 6910003
+  address1: 出雲市灘分町2420
+  address2: 
+  telephone: 0853-62-4508
+  fax: 
+  section_id: 1
+  display_order: 4
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2010-07-11 12:42:48
+  deleted_at: 
+
+home5:
+  id: 5
+  phonetic: おおまえ
+  name: 大前
+  worker_id: 5
+  zip_code: 6910003
+  address1: 出雲市灘分町2430
+  address2: 
+  telephone: 0853-62-3978
+  fax: 
+  section_id: 1
+  display_order: 5
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2010-07-11 12:42:48
+  deleted_at: 
+
+home6:
+  id: 6
+  phonetic: にしまえ
+  name: 西前
+  worker_id: 6
+  zip_code: 6910003
+  address1: 出雲市灘分町2571
+  address2: 
+  telephone: 0853-62-3979
+  fax: 
+  section_id: 2
+  display_order: 6
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:22:41.108239
+  deleted_at: 
+
+home7:
+  id: 7
+  phonetic: すみおか
+  name: 住岡
+  worker_id: 7
+  zip_code: 6910003
+  address1: 出雲市灘分町2585
+  address2: 
+  telephone: 0853-62-3987
+  fax: 
+  section_id: 3
+  display_order: 7
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:25:08.10974
+  deleted_at: 
+
+home8:
+  id: 8
+  phonetic: あたらしや
+  name: 新屋
+  worker_id: 8
+  zip_code: 6910003
+  address1: 出雲市灘分町2590
+  address2: 
+  telephone: 0853-63-2901
+  fax: 
+  section_id: 3
+  display_order: 8
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:25:21.106871
+  deleted_at: 
+
+home9:
+  id: 9
+  phonetic: かわひがし
+  name: 川東
+  worker_id: 9
+  zip_code: 6910003
+  address1: 出雲市灘分町2591
+  address2: 
+  telephone: 0853-62-5311
+  fax: 
+  section_id: 4
+  display_order: 9
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:25:40.638722
+  deleted_at: 
+
+home10:
+  id: 10
+  phonetic: ひがしまえ
+  name: 東前
+  worker_id: 10
+  zip_code: 6910003
+  address1: 出雲市灘分町2600
+  address2: 
+  telephone: 0853-62-3985
+  fax: 
+  section_id: 4
+  display_order: 10
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:25:52.006322
+  deleted_at: 
+
+home11:
+  id: 11
+  phonetic: おかや
+  name: 岡屋
+  worker_id: 11
+  zip_code: 6910003
+  address1: 出雲市灘分町2606
+  address2: 
+  telephone: 0853-62-5305
+  fax: 
+  section_id: 4
+  display_order: 11
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:26:01.87718
+  deleted_at: 
+
+home12:
+  id: 12
+  phonetic: おおなだ
+  name: 大灘
+  worker_id: 12
+  zip_code: 6910003
+  address1: 出雲市灘分町2616
+  address2: 
+  telephone: 0853-62-3973
+  fax: 
+  section_id: 5
+  display_order: 12
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:26:18.539551
+  deleted_at: 
+
+home13:
+  id: 13
+  phonetic: にしなだ
+  name: 西灘
+  worker_id: 13
+  zip_code: 6910003
+  address1: 出雲市灘分町2617
+  address2: 
+  telephone: 0853-62-3972
+  fax: 
+  section_id: 5
+  display_order: 13
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:26:30.232926
+  deleted_at: 
+
+home14:
+  id: 14
+  phonetic: なかなだ
+  name: 中灘
+  worker_id: 14
+  zip_code: 6910003
+  address1: 出雲市灘分町2620
+  address2: 
+  telephone: 0853-62-3983
+  fax: 
+  section_id: 5
+  display_order: 14
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:26:44.034591
+  deleted_at: 
+
+home15:
+  id: 15
+  phonetic: おおひがし
+  name: 大東
+  worker_id: 15
+  zip_code: 6910003
+  address1: 出雲市灘分町2630
+  address2: 
+  telephone: 0853-62-3982
+  fax: 
+  section_id: 5
+  display_order: 15
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:26:58.570884
+  deleted_at: 
+
+home16:
+  id: 16
+  phonetic: しもはら
+  name: 下原
+  worker_id: 37
+  zip_code: 6910003
+  address1: 出雲市灘分町2626
+  address2: 
+  telephone: 0853-62-3996
+  fax: 
+  section_id: 5
+  display_order: 16
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2016-03-19 10:15:22.288612
+  deleted_at: 
+
+home17:
+  id: 17
+  phonetic: おおがみ
+  name: 大上
+  worker_id: 17
+  zip_code: 6910003
+  address1: 出雲市灘分町2388
+  address2: 
+  telephone: 0853-62-5303
+  fax: 
+  section_id: 2
+  display_order: 17
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:23:01.385857
+  deleted_at: 
+
+home18:
+  id: 18
+  phonetic: にしがみ
+  name: 西上
+  worker_id: 18
+  zip_code: 6910003
+  address1: 出雲市灘分町2400
+  address2: 
+  telephone: 0853-62-5301
+  fax: 
+  section_id: 2
+  display_order: 18
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:23:19.571431
+  deleted_at: 
+
+home19:
+  id: 19
+  phonetic: はしまえ
+  name: 橋前
+  worker_id: 19
+  zip_code: 6910003
+  address1: 出雲市灘分町2481
+  address2: 
+  telephone: 0853-62-5319
+  fax: 
+  section_id: 2
+  display_order: 19
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:23:34.623072
+  deleted_at: 
+
+home20:
+  id: 20
+  phonetic: おおにし
+  name: 大西
+  worker_id: 20
+  zip_code: 6910003
+  address1: 出雲市灘分町2488
+  address2: 
+  telephone: 0853-62-3977
+  fax: 
+  section_id: 2
+  display_order: 20
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:23:55.63099
+  deleted_at: 
+
+home21:
+  id: 21
+  phonetic: なかにし
+  name: 中西
+  worker_id: 21
+  zip_code: 6910003
+  address1: 出雲市灘分町2489
+  address2: 
+  telephone: 0853-62-3976
+  fax: 
+  section_id: 2
+  display_order: 21
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:24:34.510657
+  deleted_at: 
+
+home22:
+  id: 22
+  phonetic: まつもと
+  name: 松本
+  worker_id: 22
+  zip_code: 6910003
+  address1: 出雲市灘分町2500
+  address2: 
+  telephone: 0853-62-5316
+  fax: 
+  section_id: 1
+  display_order: 22
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2010-07-11 12:42:48
+  deleted_at: 
+
+home23:
+  id: 23
+  phonetic: なかにしや
+  name: 中西屋
+  worker_id: 23
+  zip_code: 6910003
+  address1: 出雲市灘分町2501
+  address2: 
+  telephone: 0853-62-5317
+  fax: 
+  section_id: 1
+  display_order: 23
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2010-07-11 12:42:48
+  deleted_at: 
+
+home24:
+  id: 24
+  phonetic: なかきた
+  name: 中北
+  worker_id: 24
+  zip_code: 6910003
+  address1: 出雲市灘分町2505
+  address2: 
+  telephone: 0853-62-2860
+  fax: 
+  section_id: 1
+  display_order: 24
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2010-07-11 12:42:48
+  deleted_at: 
+
+home25:
+  id: 25
+  phonetic: なかわき
+  name: 中脇
+  worker_id: 25
+  zip_code: 6910003
+  address1: 出雲市灘分町2506
+  address2: 
+  telephone: 0853-62-5310
+  fax: 
+  section_id: 1
+  display_order: 25
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2010-07-11 12:42:48
+  deleted_at: 
+
+home26:
+  id: 26
+  phonetic: なかえ
+  name: 中家
+  worker_id: 26
+  zip_code: 6910003
+  address1: 出雲市灘分町2515
+  address2: 
+  telephone: 0853-62-3984
+  fax: 
+  section_id: 1
+  display_order: 26
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2010-07-13 14:27:43.23003
+  deleted_at: 
+
+home27:
+  id: 27
+  phonetic: なかやま
+  name: 中山
+  worker_id: 27
+  zip_code: 6910003
+  address1: 出雲市灘分町2516
+  address2: 
+  telephone: 0853-63-0390
+  fax: 
+  section_id: 1
+  display_order: 27
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2010-07-11 12:42:48
+  deleted_at: 
+
+home28:
+  id: 28
+  phonetic: まつのや
+  name: 松の家
+  worker_id: 28
+  zip_code: 6910003
+  address1: 出雲市灘分町2522
+  address2: 
+  telephone: 0853-62-3974
+  fax: 0853-62-3871
+  section_id: 6
+  display_order: 28
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:27:45.209744
+  deleted_at: 
+
+home29:
+  id: 29
+  phonetic: たかにし
+  name: 高西
+  worker_id: 29
+  zip_code: 6910003
+  address1: 出雲市灘分町2525
+  address2: 
+  telephone: 0853-62-3975
+  fax: 
+  section_id: 6
+  display_order: 29
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:28:13.530099
+  deleted_at: 
+
+home30:
+  id: 30
+  phonetic: はしもと
+  name: 橋本
+  worker_id: 30
+  zip_code: 6910003
+  address1: 出雲市灘分町2533
+  address2: 
+  telephone: 0853-62-3997
+  fax: 
+  section_id: 6
+  display_order: 30
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:28:55.232448
+  deleted_at: 
+
+home31:
+  id: 31
+  phonetic: そのや
+  name: 園家
+  worker_id: 31
+  zip_code: 6910003
+  address1: 出雲市灘分町2535
+  address2: 
+  telephone: 0853-62-5306
+  fax: 
+  section_id: 6
+  display_order: 31
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:29:12.53829
+  deleted_at: 
+
+home32:
+  id: 32
+  phonetic: しものえ
+  name: 資茂家
+  worker_id: 32
+  zip_code: 6910003
+  address1: 出雲市灘分町2550
+  address2: 
+  telephone: 0853-62-5308
+  fax: 
+  section_id: 6
+  display_order: 32
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:29:25.204253
+  deleted_at: 
+
+home33:
+  id: 33
+  phonetic: おおしも
+  name: 大資茂
+  worker_id: 33
+  zip_code: 6910003
+  address1: 出雲市灘分町2555
+  address2: 
+  telephone: 0853-62-5309
+  fax: 
+  section_id: 6
+  display_order: 33
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:29:46.964267
+  deleted_at: 
+
+home_kumiai:
+  id: 37
+  phonetic: えいのうくみあい
+  name: 営農組合
+  worker_id: 
+  zip_code: 
+  address1: 
+  address2: 
+  telephone: 
+  fax: 
+  section_id: 10
+  display_order: 99
+  member_flag: f
+  worker_payment_flag: f
+  company_flag: t
+  created_at: 2016-06-07 05:13:13.62213
+  updated_at: 2016-06-07 05:13:13.62213
+  deleted_at: 
+

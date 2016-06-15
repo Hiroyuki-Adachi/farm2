@@ -54,7 +54,6 @@ group :development, :test do
   gem 'byebug'
   gem 'debase'
   gem 'ruby-debug-ide'
-  gem 'yaml_db'
 end
 
 group :development do
