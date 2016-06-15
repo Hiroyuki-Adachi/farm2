@@ -11,12 +11,12 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  code: 
-  name: 
-  phonetic: MyString
+bank1:
+  code: "0001"
+  name: ○○銀行
+  phonetic: ﾏﾙﾏﾙｷﾞﾝｺｳ
 
-two:
-  code: 
-  name: 
-  phonetic: MyString
+bank2:
+  code: "0002"
+  name: △△信金
+  phonetic: ｻﾝｶｸｼﾝｷﾝ

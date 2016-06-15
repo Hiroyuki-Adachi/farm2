@@ -2,7 +2,7 @@
 #
 # Table name: fixes
 #
-#  term            :integer          default(0), not null
+#  term            :integer          default(0), not null, primary key
 #  fixed_at        :date             not null, primary key
 #  works_count     :integer          not null
 #  hours           :integer          not null

@@ -1,8 +1,10 @@
 require 'test_helper'
 
 class BanksControllerTest < ActionController::TestCase
+  fixtures :banks
+
   setup do
-    @bank = banks(:one)
+    @bank = Bank.new(code: "0003", name: "JA□□", phonetic: "ｼｶｸﾉｳｷﾞﾖｳｷﾖｳﾄﾞｳｸﾐｱｲ")
   end
 
   test "should get index" do
@@ -21,27 +23,22 @@ class BanksControllerTest < ActionController::TestCase
       post :create, bank: { code: @bank.code, name: @bank.name, phonetic: @bank.phonetic }
     end
 
-    assert_redirected_to bank_path(assigns(:bank))
-  end
-
-  test "should show bank" do
-    get :show, id: @bank
-    assert_response :success
+    assert_redirected_to banks_path
   end
 
   test "should get edit" do
-    get :edit, id: @bank
+    get :edit, code: "0002"
     assert_response :success
   end
 
   test "should update bank" do
-    patch :update, id: @bank, bank: { code: @bank.code, name: @bank.name, phonetic: @bank.phonetic }
-    assert_redirected_to bank_path(assigns(:bank))
+    patch :update, code: "0002", bank: { code: "0002", name: @bank.name, phonetic: @bank.phonetic }
+    assert_redirected_to banks_path
   end
 
   test "should destroy bank" do
     assert_difference('Bank.count', -1) do
-      delete :destroy, id: @bank
+      delete :destroy, code: "0001"
     end
 
     assert_redirected_to banks_path
