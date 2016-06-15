@@ -1,20 +1,12 @@
-def fixture_entry(table_name, obj)
-  res = []
-  klass = table_name.singularize.camelize.constantize
-  res << "#{table_name.singularize}#{obj['id']}:"
-  klass.columns.each do |column|
-    res << "  #{column.name}: #{obj[column.name]}"
-  end
-  res.join("\n")
-end
-   
+
+# -*- coding: utf-8 -*-
+# DBからデータを取り出してYAMLにする。生成したYAMLはtmp/fixturesに保存される
 namespace :db do
-  fixtures_dir = "#{Rails.root}/tmp/fixtures/"
   namespace :fixtures do
-    desc "Extract database data to the tmp/fixtures/ directory. Use FIXTURES=table_name[,table_name...] to specify table names to extract. Otherwise, all the table data will be extracted."
-    task extract: :environment do
-      sql = "SELECT * FROM %s ORDER BY id"
-      skip_tables = ["schema_migrations"]
+    desc "Extract database data to tmp/fixtures directory."
+    task :extract => :environment do
+      fixtures_dir = "#{Rails.root}/tmp/fixtures/"
+      skip_tables = ["schema_info", "schema_migrations", "sessions"]
       ActiveRecord::Base.establish_connection
       FileUtils.mkdir_p(fixtures_dir)
 
@@ -25,12 +17,31 @@ namespace :db do
       end
 
       table_names.each do |table_name|
+        begin
+          model = table_name.classify.constantize # check class existing
+        rescue NameError
+          Object.const_set table_name.classify, Class.new(ApplicationModel)
+          retry
+        end
+        if model.columns.any?{|c| c.name == 'id'}
+          sql = "SELECT * FROM #{table_name} ORDER BY id ASC"
+        else
+          sql = "SELECT * FROM #{table_name}"
+        end
         File.open("#{fixtures_dir}#{table_name}.yml", "w") do |file|
-          objects = ActiveRecord::Base.connection.select_all(sql % table_name)
-          objects.each do |obj|
-            file.write fixture_entry(table_name, obj) + "\n\n"
+          objects = ActiveRecord::Base.connection.select_all(sql)
+          objects.each_with_index do |obj, i|
+            # not nullのカラムがnullになっていることがあるので、その場合は空文字列を入れておく
+            model.columns.each do |col|
+              if !col.null && obj[col.name].nil?
+                obj[col.name] = ''
+              end
+            end
+            file.write({"#{table_name}#{i}" => obj}.to_yaml.sub('---', ''))
+            file.write "\n"
           end
         end
+        puts "extracted #{table_name}"
       end
     end
   end
