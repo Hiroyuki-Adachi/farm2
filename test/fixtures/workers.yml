@@ -6,7 +6,7 @@ worker1:
   first_name: 晴美
   birthday: 
   home_id: 1
-  mobile: 090-4893-7748
+  mobile: 080-4893-4448
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -22,13 +22,13 @@ worker1:
 
 worker2:
   id: 2
-  family_phonetic: はら
-  family_name: 原
+  family_phonetic: やまもと
+  family_name: 山本
   first_phonetic: けんぞう
   first_name: 健蔵
   birthday: 
   home_id: 2
-  mobile: 090-9069-2473
+  mobile: 080-9069-2473
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -50,7 +50,7 @@ worker3:
   first_name: 大助
   birthday: 
   home_id: 3
-  mobile: 090-4658-8972
+  mobile: 080-4658-8972
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -66,13 +66,13 @@ worker3:
 
 worker4:
   id: 4
-  family_phonetic: はら
-  family_name: 原
+  family_phonetic: やまもと
+  family_name: 山本
   first_phonetic: きんいち
   first_name: 勤一
   birthday: 
   home_id: 4
-  mobile: 090-4149-7743
+  mobile: 080-4149-4443
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -110,13 +110,13 @@ worker5:
 
 worker6:
   id: 6
-  family_phonetic: にしお
-  family_name: 西尾
+  family_phonetic: すずき
+  family_name: 鈴木
   first_phonetic: ようじ
   first_name: 洋治
   birthday: 
   home_id: 6
-  mobile: 090-4694-3411
+  mobile: 080-4694-3411
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -132,13 +132,13 @@ worker6:
 
 worker7:
   id: 7
-  family_phonetic: いまおか
-  family_name: 今岡
+  family_phonetic: さとう
+  family_name: 佐藤
   first_phonetic: たけよし
   first_name: 武義
   birthday: 
   home_id: 7
-  mobile: 090-8363-9131
+  mobile: 080-8363-9131
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -160,7 +160,7 @@ worker8:
   first_name: 三津男
   birthday: 
   home_id: 8
-  mobile: 090-8248-8352
+  mobile: 080-8248-8352
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -182,7 +182,7 @@ worker9:
   first_name: 重雄
   birthday: 
   home_id: 9
-  mobile: 090-7377-3855
+  mobile: 080-7377-3844
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -204,7 +204,7 @@ worker10:
   first_name: 範保
   birthday: 
   home_id: 10
-  mobile: 090-9463-4419
+  mobile: 080-9463-4419
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -220,13 +220,13 @@ worker10:
 
 worker11:
   id: 11
-  family_phonetic: いまおか
-  family_name: 今岡
+  family_phonetic: さとう
+  family_name: 佐藤
   first_phonetic: ゆたか
   first_name: 豊
   birthday: 
   home_id: 11
-  mobile: 090-1335-7580
+  mobile: 080-1225-7580
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -242,13 +242,13 @@ worker11:
 
 worker12:
   id: 12
-  family_phonetic: いしはら
-  family_name: 石原
+  family_phonetic: いしもと
+  family_name: 石本
   first_phonetic: ゆうじ
   first_name: 裕治
   birthday: 
   home_id: 12
-  mobile: 090-4694-5000
+  mobile: 080-4694-5000
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -264,13 +264,13 @@ worker12:
 
 worker13:
   id: 13
-  family_phonetic: いまおか
-  family_name: 今岡
+  family_phonetic: さとう
+  family_name: 佐藤
   first_phonetic: みよこ
   first_name: 美代子
   birthday: 
   home_id: 13
-  mobile: 090-5690-6465
+  mobile: 080-5690-6465
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -286,13 +286,13 @@ worker13:
 
 worker14:
   id: 14
-  family_phonetic: いしはら
-  family_name: 石原
+  family_phonetic: いしもと
+  family_name: 石本
   first_phonetic: よしゆき
   first_name: 芳之
   birthday: 
   home_id: 14
-  mobile: 090-4577-3945
+  mobile: 080-4577-3945
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -314,7 +314,7 @@ worker15:
   first_name: 勇
   birthday: 
   home_id: 15
-  mobile: 090-1016-3982
+  mobile: 080-1016-3982
   mobile_mail: 
   pc_mail: 
   display_order: 3
@@ -330,13 +330,13 @@ worker15:
 
 worker17:
   id: 17
-  family_phonetic: わたなべ
-  family_name: 渡部
+  family_phonetic: たなか
+  family_name: 田中
   first_phonetic: みつお
   first_name: 満男
   birthday: 
   home_id: 17
-  mobile: 090-6842-6353
+  mobile: 080-6842-6353
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -352,8 +352,8 @@ worker17:
 
 worker18:
   id: 18
-  family_phonetic: にしお
-  family_name: 西尾
+  family_phonetic: すずき
+  family_name: 鈴木
   first_phonetic: まさとし
   first_name: 允利
   birthday: 
@@ -380,7 +380,7 @@ worker19:
   first_name: 寛幸
   birthday: 
   home_id: 19
-  mobile: 090-4145-0895
+  mobile: 080-4145-0895
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -391,18 +391,18 @@ worker19:
   account_type_id: 0
   account_number: 0000000
   created_at: 2010-07-11 12:42:48
-  updated_at: 2010-07-19 10:55:26.528643
+  updated_at: 2010-07-19 10:44:26.528643
   deleted_at: 
 
 worker20:
   id: 20
-  family_phonetic: わたなべ
-  family_name: 渡部
+  family_phonetic: たなか
+  family_name: 田中
   first_phonetic: よしゆき
   first_name: 良幸
   birthday: 
   home_id: 20
-  mobile: 090-7125-0102
+  mobile: 080-7125-0102
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -418,13 +418,13 @@ worker20:
 
 worker21:
   id: 21
-  family_phonetic: にしお
-  family_name: 西尾
+  family_phonetic: すずき
+  family_name: 鈴木
   first_phonetic: せいじ
   first_name: 誠治
   birthday: 
   home_id: 21
-  mobile: 090-4691-9244
+  mobile: 080-4691-9244
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -440,13 +440,13 @@ worker21:
 
 worker22:
   id: 22
-  family_phonetic: にしお
-  family_name: 西尾
+  family_phonetic: すずき
+  family_name: 鈴木
   first_phonetic: えいじ
   first_name: 栄治
   birthday: 
   home_id: 22
-  mobile: 090-8244-6400
+  mobile: 080-8244-6400
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -462,13 +462,13 @@ worker22:
 
 worker23:
   id: 23
-  family_phonetic: にしお
-  family_name: 西尾
+  family_phonetic: すずき
+  family_name: 鈴木
   first_phonetic: けんじ
   first_name: 健二
   birthday: 
   home_id: 23
-  mobile: 090-3638-8140
+  mobile: 080-3638-8140
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -490,7 +490,7 @@ worker24:
   first_name: 達文
   birthday: 
   home_id: 24
-  mobile: 090-3638-1752
+  mobile: 080-3638-1752
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -512,7 +512,7 @@ worker25:
   first_name: 直行
   birthday: 
   home_id: 25
-  mobile: 090-3370-2171
+  mobile: 080-2270-2171
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -534,7 +534,7 @@ worker26:
   first_name: 輝夫
   birthday: 
   home_id: 26
-  mobile: 090-1189-6576
+  mobile: 080-1189-6576
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -556,7 +556,7 @@ worker27:
   first_name: 善治
   birthday: 
   home_id: 27
-  mobile: 090-3178-6709
+  mobile: 080-3178-6709
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -578,7 +578,7 @@ worker28:
   first_name: 一吉
   birthday: 
   home_id: 28
-  mobile: 090-8245-7156
+  mobile: 080-8245-7156
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -594,13 +594,13 @@ worker28:
 
 worker29:
   id: 29
-  family_phonetic: わたなべ
-  family_name: 渡部
+  family_phonetic: たなか
+  family_name: 田中
   first_phonetic: たかし
   first_name: 孝
   birthday: 
   home_id: 29
-  mobile: 090-5378-5813
+  mobile: 080-5378-5813
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -616,13 +616,13 @@ worker29:
 
 worker30:
   id: 30
-  family_phonetic: いまおか
-  family_name: 今岡
+  family_phonetic: さとう
+  family_name: 佐藤
   first_phonetic: まさる
   first_name: 勝
   birthday: 
   home_id: 30
-  mobile: 090-5378-5813
+  mobile: 080-5378-5813
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -644,7 +644,7 @@ worker31:
   first_name: 徹也
   birthday: 
   home_id: 31
-  mobile: 090-3743-7169
+  mobile: 080-3743-7169
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -660,8 +660,8 @@ worker31:
 
 worker32:
   id: 32
-  family_phonetic: にしお
-  family_name: 西尾
+  family_phonetic: すずき
+  family_name: 鈴木
   first_phonetic: ふみお
   first_name: 文男
   birthday: 
@@ -680,15 +680,15 @@ worker32:
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
 
-worker33:
-  id: 33
+worker22:
+  id: 22
   family_phonetic: たくわ
   family_name: 多久和
   first_phonetic: しんいち
   first_name: 新一
   birthday: 
-  home_id: 33
-  mobile: 090-3377-9397
+  home_id: 22
+  mobile: 080-2277-9397
   mobile_mail: 
   pc_mail: 
   display_order: 1
@@ -699,18 +699,18 @@ worker33:
   account_type_id: 0
   account_number: 0000000
   created_at: 2010-07-11 12:42:48
-  updated_at: 2010-07-19 10:55:03.814998
+  updated_at: 2010-07-19 10:44:03.814998
   deleted_at: 
 
 worker34:
   id: 34
-  family_phonetic: はら
-  family_name: 原
+  family_phonetic: やまもと
+  family_name: 山本
   first_phonetic: よしなり
   first_name: 宣成
   birthday: 
   home_id: 4
-  mobile: 090-2292-5257
+  mobile: 080-2292-5257
   mobile_mail: 
   pc_mail: 
   display_order: 2
@@ -726,13 +726,13 @@ worker34:
 
 worker35:
   id: 35
-  family_phonetic: いまおか
-  family_name: 今岡
+  family_phonetic: さとう
+  family_name: 佐藤
   first_phonetic: けんいち
   first_name: 健一
   birthday: 
   home_id: 7
-  mobile: 090-8363-9113
+  mobile: 080-8363-9113
   mobile_mail: 
   pc_mail: 
   display_order: 2
@@ -748,13 +748,13 @@ worker35:
 
 worker36:
   id: 36
-  family_phonetic: いまおか
-  family_name: 今岡
+  family_phonetic: さとう
+  family_name: 佐藤
   first_phonetic: とおる
   first_name: 徹
   birthday: 
   home_id: 13
-  mobile: 090-8361-3850
+  mobile: 080-8361-3850
   mobile_mail: 
   pc_mail: 
   display_order: 2
@@ -770,13 +770,13 @@ worker36:
 
 worker37:
   id: 37
-  family_phonetic: はら
-  family_name: 原
+  family_phonetic: やまもと
+  family_name: 山本
   first_phonetic: しんじ
   first_name: 真治
   birthday: 
   home_id: 16
-  mobile: 090-3372-5534
+  mobile: 080-2272-4434
   mobile_mail: 
   pc_mail: 
   display_order: 2
@@ -792,13 +792,13 @@ worker37:
 
 worker38:
   id: 38
-  family_phonetic: わたなべ
-  family_name: 渡部
+  family_phonetic: たなか
+  family_name: 田中
   first_phonetic: ちとし
   first_name: 智登志
   birthday: 
   home_id: 17
-  mobile: 090-6842-6353
+  mobile: 080-6842-6353
   mobile_mail: 
   pc_mail: 
   display_order: 2
@@ -814,13 +814,13 @@ worker38:
 
 worker39:
   id: 39
-  family_phonetic: にしお
-  family_name: 西尾
+  family_phonetic: すずき
+  family_name: 鈴木
   first_phonetic: ともひで
   first_name: 朋秀
   birthday: 
   home_id: 18
-  mobile: 090-7127-7910
+  mobile: 080-7127-7910
   mobile_mail: 
   pc_mail: 
   display_order: 2
@@ -842,7 +842,7 @@ worker40:
   first_name: 貴彦
   birthday: 
   home_id: 24
-  mobile: 090-2860-0105
+  mobile: 080-2860-0105
   mobile_mail: 
   pc_mail: 
   display_order: 2
@@ -864,7 +864,7 @@ worker41:
   first_name: 博之
   birthday: 
   home_id: 28
-  mobile: 090-4890-4229
+  mobile: 080-4890-4229
   mobile_mail: 
   pc_mail: 
   display_order: 2
@@ -880,8 +880,8 @@ worker41:
 
 worker42:
   id: 42
-  family_phonetic: にしお
-  family_name: 西尾
+  family_phonetic: すずき
+  family_name: 鈴木
   first_phonetic: ともこ
   first_name: 智子
   birthday: 
@@ -902,8 +902,8 @@ worker42:
 
 worker43:
   id: 43
-  family_phonetic: いしはら
-  family_name: 石原
+  family_phonetic: いしもと
+  family_name: 石本
   first_phonetic: まゆみ
   first_name: 真由美
   birthday: 
@@ -924,8 +924,8 @@ worker43:
 
 worker44:
   id: 44
-  family_phonetic: わたなべ
-  family_name: 渡部
+  family_phonetic: たなか
+  family_name: 田中
   first_phonetic: みどり
   first_name: みどり
   birthday: 
@@ -968,8 +968,8 @@ worker45:
 
 worker46:
   id: 46
-  family_phonetic: にしお
-  family_name: 西尾
+  family_phonetic: すずき
+  family_name: 鈴木
   first_phonetic: きよこ
   first_name: きよ子
   birthday: 
@@ -990,8 +990,8 @@ worker46:
 
 worker47:
   id: 47
-  family_phonetic: いまおか
-  family_name: 今岡
+  family_phonetic: さとう
+  family_name: 佐藤
   first_phonetic: ゆきの
   first_name: 雪乃
   birthday: 
@@ -1028,8 +1028,8 @@ worker48:
   branch_code: 000
   account_type_id: 0
   account_number: 0000000
-  created_at: 2011-05-08 09:09:55.094912
-  updated_at: 2011-05-08 09:09:55.094912
+  created_at: 2011-05-08 09:09:44.094912
+  updated_at: 2011-05-08 09:09:44.094912
   deleted_at: 
 
 worker49:
@@ -1122,8 +1122,8 @@ worker52:
 
 worker54:
   id: 54
-  family_phonetic: わたなべ
-  family_name: 渡部
+  family_phonetic: たなか
+  family_name: 田中
   first_phonetic: あけみ
   first_name: 明美
   birthday: 
@@ -1142,10 +1142,10 @@ worker54:
   updated_at: 2011-12-26 09:49:22.436485
   deleted_at: 
 
-worker55:
-  id: 55
-  family_phonetic: にしお
-  family_name: 西尾
+worker44:
+  id: 44
+  family_phonetic: すずき
+  family_name: 鈴木
   first_phonetic: さよこ
   first_name: 小夜子
   birthday: 
@@ -1188,8 +1188,8 @@ worker56:
 
 worker57:
   id: 57
-  family_phonetic: いまおか
-  family_name: 今岡
+  family_phonetic: さとう
+  family_name: 佐藤
   first_phonetic: なおと
   first_name: 直人
   birthday: 
@@ -1210,8 +1210,8 @@ worker57:
 
 worker58:
   id: 58
-  family_phonetic: いまおか
-  family_name: 今岡
+  family_phonetic: さとう
+  family_name: 佐藤
   first_phonetic: ひでと
   first_name: 秀人
   birthday: 
@@ -1298,8 +1298,8 @@ worker62:
 
 worker63:
   id: 63
-  family_phonetic: にしお
-  family_name: 西尾
+  family_phonetic: すずき
+  family_name: 鈴木
   first_phonetic: たくや
   first_name: 拓哉
   birthday: 
@@ -1336,8 +1336,8 @@ worker64:
   branch_code: 000
   account_type_id: 0
   account_number: 0000000
-  created_at: 2015-01-12 06:49:33.583886
-  updated_at: 2015-01-12 06:49:33.583886
+  created_at: 2015-01-12 06:49:22.583886
+  updated_at: 2015-01-12 06:49:22.583886
   deleted_at: 
 
 worker65:
@@ -1364,8 +1364,8 @@ worker65:
 
 worker66:
   id: 66
-  family_phonetic: いまおか
-  family_name: 今岡
+  family_phonetic: さとう
+  family_name: 佐藤
   first_phonetic: ひろみ
   first_name: 博美
   birthday: 
@@ -1386,8 +1386,8 @@ worker66:
 
 worker67:
   id: 67
-  family_phonetic: にしお
-  family_name: 西尾
+  family_phonetic: すずき
+  family_name: 鈴木
   first_phonetic: あけみ
   first_name: あけみ
   birthday: 

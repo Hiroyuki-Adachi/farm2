@@ -1,0 +1,90 @@
+
+sections0:
+  id: '1'
+  name: 1班
+  display_order: '10'
+  work_flag: t
+  created_at: 
+  updated_at: 
+  deleted_at: 
+
+
+sections1:
+  id: '2'
+  name: 2班
+  display_order: '20'
+  work_flag: t
+  created_at: 
+  updated_at: 
+  deleted_at: 
+
+
+sections2:
+  id: '3'
+  name: 3班
+  display_order: '30'
+  work_flag: t
+  created_at: 
+  updated_at: 
+  deleted_at: 
+
+
+sections3:
+  id: '4'
+  name: 4班
+  display_order: '40'
+  work_flag: t
+  created_at: 
+  updated_at: 
+  deleted_at: 
+
+
+sections4:
+  id: '5'
+  name: 5班
+  display_order: '50'
+  work_flag: t
+  created_at: 
+  updated_at: 
+  deleted_at: 
+
+
+sections5:
+  id: '6'
+  name: 6班
+  display_order: '60'
+  work_flag: t
+  created_at: 
+  updated_at: 
+  deleted_at: 
+
+
+sections6:
+  id: '7'
+  name: "委託"
+  display_order: '70'
+  work_flag: f
+  created_at: 
+  updated_at: 
+  deleted_at: 
+
+
+sections7:
+  id: '9'
+  name: "理事"
+  display_order: '90'
+  work_flag: f
+  created_at: 
+  updated_at: 
+  deleted_at: 
+
+
+sections8:
+  id: '10'
+  name: "特別"
+  display_order: '99'
+  work_flag: f
+  created_at: '2016-06-07 05:13:13.61343'
+  updated_at: '2016-06-07 05:13:13.61343'
+  deleted_at: 
+
