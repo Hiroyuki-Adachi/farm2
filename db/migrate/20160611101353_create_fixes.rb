@@ -1,12 +1,12 @@
 class CreateFixes < ActiveRecord::Migration
   def change
-    create_table :fixes, id: false do |t|
-      t.integer :term, {null: false, default: 0}
-      t.date :fixed_at, {null: false}
-      t.integer :works_count, {null: false}
-      t.integer :hours, {null: false}
-      t.decimal :works_amount,    {scale: 0, precision: 8, null: false}
-      t.decimal :machines_amount,  {scale: 0, precision: 8, null: false}
+    create_table :fixes, {id: false, comment: "確定データ"} do |t|
+      t.integer :term, {null: false, default: 0, comment: "年度(期)"}
+      t.date :fixed_at, {null: false, comment: "確定日"}
+      t.integer :works_count, {null: false, comment: "合計作業数"}
+      t.integer :hours, {null: false, comment: "合計作業工数"}
+      t.decimal :works_amount,    {scale: 0, precision: 8, null: false, comment: "合計作業日当"}
+      t.decimal :machines_amount, {scale: 0, precision: 8, null: false, comment: "合計機械利用料"}
 
       t.timestamps null: false
     end

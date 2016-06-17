@@ -38,6 +38,8 @@ gem 'draper'
 
 gem 'composite_primary_keys'
 
+gem 'migration_comments'
+
 # gem 'rails4-autocomplete'
 
 # Use ActiveModel has_secure_password

@@ -83,6 +83,8 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    migration_comments (0.4.1)
+      activerecord (>= 4.2.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
@@ -160,7 +162,7 @@ GEM
     tilt (2.0.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2016.4)
+    tzinfo-data (1.2016.5)
       tzinfo (>= 1.0.0)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
@@ -186,6 +188,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   kaminari
+  migration_comments
   paranoia
   pg (~> 0.15)
   rails (= 4.2.6)

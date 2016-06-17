@@ -1,12 +1,12 @@
 class CreateLands < ActiveRecord::Migration
   def change
-    create_table :lands do |t|
-      t.string   :place,        {limit: 15, null: false}
-      t.integer  :owner_id
-      t.integer  :manager_id
-      t.decimal  :area,         {scale: 2, precision: 5, null: false}
-      t.integer  :display_order
-      t.boolean  :target_flag,  {null: false, default: true}
+    create_table :lands, {comment: "土地マスタ"} do |t|
+      t.string   :place,          {limit: 15, null: false, comment: "番地"}
+      t.integer  :owner_id,       {comment: "所有者"}
+      t.integer  :manager_id,     {comment: "管理者"}
+      t.decimal  :area,           {scale: 2, precision: 5, null: false, comment: "面積(α)"}
+      t.integer  :display_order,  {comment: "表示順"}
+      t.boolean  :target_flag,    {null: false, default: true, comment: "管理対象フラグ"}
       
       t.timestamps
       t.datetime :deleted_at

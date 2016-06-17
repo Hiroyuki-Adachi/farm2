@@ -1,12 +1,12 @@
 class CreateMachinePriceDetails < ActiveRecord::Migration
   def change
-    create_table :machine_price_details do |t|
-      t.integer :machine_price_header_id, {null: false}
-      t.integer :lease_id, {null: false}
-      t.integer :work_kind_id, {null: false, default: 0}
+    create_table :machine_price_details, {comment: "機械利用単価マスタ(明細)"} do |t|
+      t.integer :machine_price_header_id, {null: false, comment: "単価ヘッダ"}
+      t.integer :lease_id, {null: false, comment: "リース"}
+      t.integer :work_kind_id, {null: false, default: 0, comment: "作業種別"}
       
-      t.integer :adjust_id
-      t.decimal :price, {scale: 0, precision: 5, null: false, default: 0}
+      t.integer :adjust_id, {comment: "単位"}
+      t.decimal :price, {scale: 0, precision: 5, null: false, default: 0, comment: "単価"}
 
       t.timestamps null: false
     end
