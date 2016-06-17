@@ -3,7 +3,7 @@
 <%= form_for(@machine_price) do |f| %>
  <div class="field">
     <%= f.label :validated_at %>
-    <%= f.date_field(:validated_at) %><br />
+    <%= f.date_field(:validated_at, {required: true}) %><br />
  </div>
 <table class="list">
   <tr>

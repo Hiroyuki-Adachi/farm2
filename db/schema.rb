@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(version: 20160611101353) do
     t.integer  "work_result_id",                                                     comment: "作業結果データ"
     t.integer  "display_order",                           default: 1,   null: false, comment: "表示順"
     t.decimal  "hours",           precision: 3, scale: 1, default: 0.0, null: false, comment: "稼動時間"
-    t.decimal  "fixed_quantity",  precision: 5, scale: 2,                            comment: "確定稼動量"
+    t.decimal  "fixed_quantity",  precision: 6, scale: 2,                            comment: "確定稼動量"
     t.integer  "fixed_adjust_id",                                                    comment: "確定稼動単位"
     t.decimal  "fixed_price",     precision: 5,                                      comment: "確定稼動単価"
     t.decimal  "fixed_amount",    precision: 7,                                      comment: "確定使用料"
@@ -229,7 +229,7 @@ ActiveRecord::Schema.define(version: 20160611101353) do
   create_table "work_kind_prices", force: :cascade, comment: "作業単価マスタ" do |t|
     t.integer  "term",                                      null: false, comment: "年度(期)"
     t.integer  "work_kind_id",                              null: false, comment: "作業種別"
-    t.decimal  "price",        precision: 4, default: 1000, null: false, comment: "単価"
+    t.decimal  "price",        precision: 5, default: 1000, null: false, comment: "単価"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
   end
@@ -267,11 +267,11 @@ ActiveRecord::Schema.define(version: 20160611101353) do
   create_table "work_results", force: :cascade, comment: "作業結果データ" do |t|
     t.integer  "work_id",                                                          comment: "作業"
     t.integer  "worker_id",                                                        comment: "作業者"
-    t.decimal  "hours",         precision: 3, scale: 1, default: 0.0, null: false, comment: "作業時間"
+    t.decimal  "hours",         precision: 5, scale: 1, default: 0.0, null: false, comment: "作業時間"
     t.integer  "display_order",                         default: 0,   null: false, comment: "表示順"
-    t.decimal  "fixed_hours",   precision: 3, scale: 1,                            comment: "確定作業時間"
-    t.decimal  "fixed_price",   precision: 4,                                      comment: "確定作業単価"
-    t.decimal  "fixed_amount",  precision: 6,                                      comment: "確定作業日当"
+    t.decimal  "fixed_hours",   precision: 5, scale: 1,                            comment: "確定作業時間"
+    t.decimal  "fixed_price",   precision: 5,                                      comment: "確定作業単価"
+    t.decimal  "fixed_amount",  precision: 7,                                      comment: "確定作業日当"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

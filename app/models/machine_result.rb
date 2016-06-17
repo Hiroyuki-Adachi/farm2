@@ -7,7 +7,7 @@
 #  work_result_id  :integer                                 # 作業結果データ
 #  display_order   :integer          default(1), not null   # 表示順
 #  hours           :decimal(3, 1)    default(0.0), not null # 稼動時間
-#  fixed_quantity  :decimal(5, 2)                           # 確定稼動量
+#  fixed_quantity  :decimal(6, 2)                           # 確定稼動量
 #  fixed_adjust_id :integer                                 # 確定稼動単位
 #  fixed_price     :decimal(5, )                            # 確定稼動単価
 #  fixed_amount    :decimal(7, )                            # 確定使用料

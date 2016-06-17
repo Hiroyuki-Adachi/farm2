@@ -5,7 +5,7 @@
 #  id           :integer          not null, primary key   # 作業単価マスタ
 #  term         :integer          not null                # 年度(期)
 #  work_kind_id :integer          not null                # 作業種別
-#  price        :decimal(4, )     default(1000), not null # 単価
+#  price        :decimal(5, )     default(1000), not null # 単価
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
