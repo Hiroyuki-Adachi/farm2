@@ -1,14 +1,14 @@
 # == Schema Information
 #
-# Table name: lands
+# Table name: lands # 土地マスタ
 #
-#  id            :integer          not null, primary key
-#  place         :string(15)       not null
-#  owner_id      :integer
-#  manager_id    :integer
-#  area          :decimal(5, 2)    not null
-#  display_order :integer
-#  target_flag   :boolean          default(TRUE), not null
+#  id            :integer          not null, primary key   # 土地マスタ
+#  place         :string(15)       not null                # 番地
+#  owner_id      :integer                                  # 所有者
+#  manager_id    :integer                                  # 管理者
+#  area          :decimal(5, 2)    not null                # 面積(α)
+#  display_order :integer                                  # 表示順
+#  target_flag   :boolean          default(TRUE), not null # 管理対象フラグ
 #  created_at    :datetime
 #  updated_at    :datetime
 #  deleted_at    :datetime

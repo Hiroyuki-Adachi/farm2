@@ -1,11 +1,11 @@
 # == Schema Information
 #
-# Table name: chemicals
+# Table name: chemicals # 薬剤マスタ
 #
-#  id               :integer          not null, primary key
-#  name             :string(20)       not null
-#  display_order    :integer          default(0), not null
-#  chemical_type_id :integer          not null
+#  id               :integer          not null, primary key # 薬剤マスタ
+#  name             :string(20)       not null              # 薬剤名称
+#  display_order    :integer          default(0), not null  # 表示順
+#  chemical_type_id :integer          not null              # 薬剤種別
 #  created_at       :datetime
 #  updated_at       :datetime
 #  deleted_at       :datetime

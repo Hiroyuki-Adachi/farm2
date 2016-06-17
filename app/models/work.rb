@@ -1,18 +1,18 @@
 # == Schema Information
 #
-# Table name: works
+# Table name: works # 作業データ
 #
-#  id           :integer          not null, primary key
-#  term         :integer          not null
-#  worked_at    :date             not null
-#  weather_id   :integer
-#  work_type_id :integer
-#  name         :string(40)       not null
-#  remarks      :text
-#  start_at     :datetime         not null
-#  end_at       :datetime         not null
-#  fixed_at     :date
-#  work_kind_id :integer          default(0), not null
+#  id           :integer          not null, primary key # 作業データ
+#  term         :integer          not null              # 年度(期)
+#  worked_at    :date             not null              # 作業日
+#  weather_id   :integer                                # 天気
+#  work_type_id :integer                                # 作業分類
+#  name         :string(40)       not null              # 作業名称
+#  remarks      :text                                   # 備考
+#  start_at     :datetime         not null              # 開始時刻
+#  end_at       :datetime         not null              # 終了時刻
+#  fixed_at     :date                                   # 確定日
+#  work_kind_id :integer          default(0), not null  # 作業種別
 #  created_at   :datetime
 #  updated_at   :datetime
 #

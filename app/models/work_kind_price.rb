@@ -1,11 +1,11 @@
 # == Schema Information
 #
-# Table name: work_kind_prices
+# Table name: work_kind_prices # 作業単価マスタ
 #
-#  id           :integer          not null, primary key
-#  term         :integer          not null
-#  work_kind_id :integer          not null
-#  price        :decimal(4, )     default(1000), not null
+#  id           :integer          not null, primary key   # 作業単価マスタ
+#  term         :integer          not null                # 年度(期)
+#  work_kind_id :integer          not null                # 作業種別
+#  price        :decimal(4, )     default(1000), not null # 単価
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #

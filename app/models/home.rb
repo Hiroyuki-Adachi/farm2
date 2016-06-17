@@ -1,21 +1,21 @@
 # == Schema Information
 #
-# Table name: homes
+# Table name: homes # 世帯マスタ
 #
-#  id                  :integer          not null, primary key
-#  phonetic            :string(15)
-#  name                :string(10)
-#  worker_id           :integer
-#  zip_code            :string(7)
-#  address1            :string(50)
-#  address2            :string(50)
-#  telephone           :string(15)
-#  fax                 :string(15)
-#  section_id          :integer
-#  display_order       :integer
-#  member_flag         :boolean          default(TRUE), not null
-#  worker_payment_flag :boolean          default(FALSE), not null
-#  company_flag        :boolean          default(FALSE), not null
+#  id                  :integer          not null, primary key    # 世帯マスタ
+#  phonetic            :string(15)                                # 世帯名(よみ)
+#  name                :string(10)                                # 世帯名
+#  worker_id           :integer                                   # 世帯主(代表者)
+#  zip_code            :string(7)                                 # 郵便番号
+#  address1            :string(50)                                # 住所1
+#  address2            :string(50)                                # 住所2
+#  telephone           :string(15)                                # 電話番号
+#  fax                 :string(15)                                # FAX番号
+#  section_id          :integer                                   # 班／町内
+#  display_order       :integer                                   # 表示順
+#  member_flag         :boolean          default(TRUE), not null  # 組合員フラグ
+#  worker_payment_flag :boolean          default(FALSE), not null # 個人支払フラグ
+#  company_flag        :boolean          default(FALSE), not null # 営農組合フラグ
 #  created_at          :datetime
 #  updated_at          :datetime
 #  deleted_at          :datetime

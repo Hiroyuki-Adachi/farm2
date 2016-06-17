@@ -1,8 +1,8 @@
 # == Schema Information
 #
-# Table name: workers
+# Table name: workers # 作業者マスタ
 #
-#  id              :integer          not null, primary key
+#  id              :integer          not null, primary key        # 作業者マスタ
 #  family_phonetic :string(15)       not null
 #  family_name     :string(10)       not null
 #  first_phonetic  :string(15)       not null

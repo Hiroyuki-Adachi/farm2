@@ -1,11 +1,11 @@
 # == Schema Information
 #
-# Table name: sections
+# Table name: sections # 班／町内マスタ
 #
-#  id            :integer          not null, primary key
-#  name          :string(40)       not null
-#  display_order :integer          default(1), not null
-#  work_flag     :boolean          default(TRUE), not null
+#  id            :integer          not null, primary key   # 班／町内マスタ
+#  name          :string(40)       not null                # 班名称
+#  display_order :integer          default(1), not null    # 表示順
+#  work_flag     :boolean          default(TRUE), not null # 作業班フラグ
 #  created_at    :datetime
 #  updated_at    :datetime
 #  deleted_at    :datetime

@@ -102,12 +102,12 @@ class WorksController < ApplicationController
     end
 
     if params[:regist_lands]
-      @work.regist_lands(params[:work_lands])
+      @work.regist_lands(params[:work_lands] || [])
       redirect_to(work_path(page_params))
     end
 
     if params[:regist_machines]
-      @work.regist_machines(params[:machine_hours])
+      @work.regist_machines(params[:machine_hours] || [])
       redirect_to(work_path(page_params))
     end
 
@@ -137,7 +137,7 @@ class WorksController < ApplicationController
   end
   
   def work_params
-    return params.require(:work).permit(:worked_at, :weather_id, :start_at, :end_at, :work_type_id, :work_kind_id, :name, :remarks)
+    return params.require(:work).permit(:worked_at, :weather_id, :start_at, :end_at, :work_type_id, :work_kind_id, :name, :remarks) 
   end
   
   def page_params

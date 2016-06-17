@@ -1,11 +1,11 @@
 # == Schema Information
 #
-# Table name: systems
+# Table name: systems # システムマスタ
 #
-#  id          :integer          not null, primary key
-#  term        :integer          not null
-#  target_from :date
-#  target_to   :date
+#  id          :integer          not null, primary key # システムマスタ
+#  term        :integer          not null              # 年度(期)
+#  target_from :date                                   # 開始年月
+#  target_to   :date                                   # 終了年月
 #  created_at  :datetime
 #  updated_at  :datetime
 #

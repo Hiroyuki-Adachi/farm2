@@ -1,3 +1,29 @@
+# == Schema Information
+#
+# Table name: workers # 作業者マスタ
+#
+#  id              :integer          not null, primary key        # 作業者マスタ
+#  family_phonetic :string(15)       not null
+#  family_name     :string(10)       not null
+#  first_phonetic  :string(15)       not null
+#  first_name      :string(10)       not null
+#  birthday        :date
+#  home_id         :integer
+#  mobile          :string(15)
+#  mobile_mail     :string(50)
+#  pc_mail         :string(50)
+#  display_order   :integer
+#  work_flag       :boolean          default(TRUE), not null
+#  gender_id       :integer          default(0), not null
+#  bank_code       :string(4)        default("0000"), not null
+#  branch_code     :string(3)        default("000"), not null
+#  account_type_id :integer          default(0), not null
+#  account_number  :string(7)        default("0000000"), not null
+#  created_at      :datetime
+#  updated_at      :datetime
+#  deleted_at      :datetime
+#
+
 worker1:
   id: 1
   family_phonetic: かわなか

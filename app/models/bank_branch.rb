@@ -1,16 +1,16 @@
 # == Schema Information
 #
-# Table name: bank_branches
+# Table name: bank_branches # 支店マスタ
 #
-#  bank_code  :string(4)        not null, primary key
-#  code       :string(3)        not null, primary key
-#  name       :string(40)       not null
-#  phonetic   :string(40)       not null
-#  zip_code   :string(7)
-#  address1   :string(50)
-#  address2   :string(50)
-#  telephone  :string(15)
-#  fax        :string(15)
+#  bank_code  :string(4)        not null, primary key # 金融機関コード
+#  code       :string(3)        not null, primary key # 支店コード
+#  name       :string(40)       not null              # 支店名称
+#  phonetic   :string(40)       not null              # 支店名称(ﾌﾘｶﾞﾅ)
+#  zip_code   :string(7)                              # 郵便番号
+#  address1   :string(50)                             # 住所1
+#  address2   :string(50)                             # 住所2
+#  telephone  :string(15)                             # 電話番号
+#  fax        :string(15)                             # FAX番号
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

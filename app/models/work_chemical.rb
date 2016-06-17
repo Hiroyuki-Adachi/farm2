@@ -1,11 +1,11 @@
 # == Schema Information
 #
-# Table name: work_chemicals
+# Table name: work_chemicals # 薬剤使用データ
 #
-#  id          :integer          not null, primary key
-#  work_id     :integer          not null
-#  chemical_id :integer          not null
-#  quantity    :decimal(3, )     default(0), not null
+#  id          :integer          not null, primary key # 薬剤使用データ
+#  work_id     :integer          not null              # 作業
+#  chemical_id :integer          not null              # 薬剤
+#  quantity    :decimal(3, )     default(0), not null  # 使用料
 #  created_at  :datetime
 #  updated_at  :datetime
 #

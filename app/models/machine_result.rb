@@ -1,16 +1,16 @@
 # == Schema Information
 #
-# Table name: machine_results
+# Table name: machine_results # 機械稼動データ
 #
-#  id              :integer          not null, primary key
-#  machine_id      :integer
-#  work_result_id  :integer
-#  display_order   :integer          default(1), not null
-#  hours           :decimal(3, 1)    default(0.0), not null
-#  fixed_quantity  :decimal(5, 2)
-#  fixed_adjust_id :integer
-#  fixed_price     :decimal(5, )
-#  fixed_amount    :decimal(7, )
+#  id              :integer          not null, primary key  # 機械稼動データ
+#  machine_id      :integer                                 # 機械
+#  work_result_id  :integer                                 # 作業結果データ
+#  display_order   :integer          default(1), not null   # 表示順
+#  hours           :decimal(3, 1)    default(0.0), not null # 稼動時間
+#  fixed_quantity  :decimal(5, 2)                           # 確定稼動量
+#  fixed_adjust_id :integer                                 # 確定稼動単位
+#  fixed_price     :decimal(5, )                            # 確定稼動単価
+#  fixed_amount    :decimal(7, )                            # 確定使用料
 #  created_at      :datetime
 #  updated_at      :datetime
 #
@@ -83,7 +83,7 @@ class MachineResult < ActiveRecord::Base
         return
       end
 
-      if owner.id == work_result.worker_id
+      if owner.id == work_result.worker.home_id
         price_details = price_details.where(lease_id: Lease::NORMAL)
       else
         price_details = price_details.where(lease_id: Lease::LEASE)

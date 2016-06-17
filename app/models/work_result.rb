@@ -1,15 +1,15 @@
 # == Schema Information
 #
-# Table name: work_results
+# Table name: work_results # 作業結果データ
 #
-#  id            :integer          not null, primary key
-#  work_id       :integer
-#  worker_id     :integer
-#  hours         :decimal(3, 1)    default(0.0), not null
-#  display_order :integer          default(0), not null
-#  fixed_hours   :decimal(3, 1)
-#  fixed_price   :decimal(4, )
-#  fixed_amount  :decimal(6, )
+#  id            :integer          not null, primary key  # 作業結果データ
+#  work_id       :integer                                 # 作業
+#  worker_id     :integer                                 # 作業者
+#  hours         :decimal(3, 1)    default(0.0), not null # 作業時間
+#  display_order :integer          default(0), not null   # 表示順
+#  fixed_hours   :decimal(3, 1)                           # 確定作業時間
+#  fixed_price   :decimal(4, )                            # 確定作業単価
+#  fixed_amount  :decimal(6, )                            # 確定作業日当
 #  created_at    :datetime
 #  updated_at    :datetime
 #

@@ -1,3 +1,11 @@
+# == Schema Information
+#
+# Table name: chemical_terms # 薬剤年度別利用マスタ
+#
+#  chemical_id :integer          not null # 薬剤
+#  term        :integer          not null # 年度(期)
+#
+
 
 chemical_terms0:
   chemical_id: '3'

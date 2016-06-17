@@ -1,11 +1,11 @@
 # == Schema Information
 #
-# Table name: work_kinds
+# Table name: work_kinds # 作業種別マスタ
 #
-#  id            :integer          not null, primary key
-#  name          :string(20)       not null
-#  display_order :integer          not null
-#  other_flag    :boolean          default(FALSE), not null
+#  id            :integer          not null, primary key    # 作業種別マスタ
+#  name          :string(20)       not null                 # 作業種別名称
+#  display_order :integer          not null                 # 表示順
+#  other_flag    :boolean          default(FALSE), not null # その他フラグ
 #  created_at    :datetime
 #  updated_at    :datetime
 #  deleted_at    :datetime

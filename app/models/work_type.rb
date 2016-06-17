@@ -1,12 +1,12 @@
 # == Schema Information
 #
-# Table name: work_types
+# Table name: work_types # 作業分類マスタ
 #
-#  id            :integer          not null, primary key
-#  genre         :integer          not null
-#  name          :string(10)       not null
-#  category_flag :boolean          default(FALSE)
-#  display_order :integer          default(0), not null
+#  id            :integer          not null, primary key # 作業分類マスタ
+#  genre         :integer          not null              # 作業ジャンル
+#  name          :string(10)       not null              # 作業分類名称
+#  category_flag :boolean          default(FALSE)        # カテゴリーフラグ
+#  display_order :integer          default(0), not null  # 表示順
 #  deleted_at    :datetime
 #
 

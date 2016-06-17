@@ -1,9 +1,9 @@
 # == Schema Information
 #
-# Table name: chemical_terms
+# Table name: chemical_terms # 薬剤年度別利用マスタ
 #
-#  chemical_id :integer          not null
-#  term        :integer          not null
+#  chemical_id :integer          not null # 薬剤
+#  term        :integer          not null # 年度(期)
 #
 
 class ChemicalTerm < ActiveRecord::Base
