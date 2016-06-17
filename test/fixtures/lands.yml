@@ -1,0 +1,3223 @@
+
+lands0:
+  id: '1'
+  place: 5386-ﾛ
+  owner_id: '17'
+  manager_id: '17'
+  area: '35.30'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands1:
+  id: '2'
+  place: 5386-ｲ
+  owner_id: '17'
+  manager_id: '17'
+  area: '31.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands2:
+  id: '3'
+  place: 5382-ﾊ
+  owner_id: '1'
+  manager_id: '1'
+  area: '27.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands3:
+  id: '4'
+  place: 5382-ﾛ
+  owner_id: '1'
+  manager_id: '1'
+  area: '17.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands4:
+  id: '5'
+  place: 5382-ﾆ
+  owner_id: '1'
+  manager_id: '1'
+  area: '17.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-20 08:01:28.877914'
+  deleted_at: 
+
+
+lands5:
+  id: '6'
+  place: 5382-ｲ
+  owner_id: '1'
+  manager_id: '1'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands6:
+  id: '7'
+  place: '6381'
+  owner_id: '17'
+  manager_id: '17'
+  area: '21.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands7:
+  id: '8'
+  place: '6394'
+  owner_id: '18'
+  manager_id: '18'
+  area: '24.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands8:
+  id: '9'
+  place: 5395-ﾛ
+  owner_id: '17'
+  manager_id: '17'
+  area: '25.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands9:
+  id: '10'
+  place: 5395-ｲ
+  owner_id: '17'
+  manager_id: '17'
+  area: '24.80'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands10:
+  id: '11'
+  place: 5396-ｲ
+  owner_id: '18'
+  manager_id: '18'
+  area: '24.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands11:
+  id: '12'
+  place: 5396-ﾛ
+  owner_id: '18'
+  manager_id: '18'
+  area: '20.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands12:
+  id: '13'
+  place: 5396-ﾊ
+  owner_id: '18'
+  manager_id: '18'
+  area: '27.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands13:
+  id: '14'
+  place: 5396-ﾆ
+  owner_id: '18'
+  manager_id: '18'
+  area: '14.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands14:
+  id: '15'
+  place: 5402-1-ｲ
+  owner_id: '18'
+  manager_id: '18'
+  area: '22.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands15:
+  id: '16'
+  place: 5405-1-ﾆ
+  owner_id: '3'
+  manager_id: '3'
+  area: '17.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands16:
+  id: '17'
+  place: 5405-1-ﾊ
+  owner_id: '3'
+  manager_id: '3'
+  area: '16.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands17:
+  id: '18'
+  place: 5405-1-ｲ
+  owner_id: '3'
+  manager_id: '3'
+  area: '42.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands18:
+  id: '19'
+  place: 5446-ﾊ
+  owner_id: '2'
+  manager_id: '2'
+  area: '24.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands19:
+  id: '20'
+  place: 5446-ﾛ
+  owner_id: '2'
+  manager_id: '2'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands20:
+  id: '21'
+  place: 5446-ｲ
+  owner_id: '2'
+  manager_id: '2'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands21:
+  id: '22'
+  place: 5460-ｲ
+  owner_id: '2'
+  manager_id: '2'
+  area: '34.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands22:
+  id: '23'
+  place: 5460-ﾛ
+  owner_id: '2'
+  manager_id: '2'
+  area: '30.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands23:
+  id: '24'
+  place: '6459'
+  owner_id: '18'
+  manager_id: '18'
+  area: '23.60'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands24:
+  id: '25'
+  place: '6458'
+  owner_id: '3'
+  manager_id: '3'
+  area: '26.30'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands25:
+  id: '26'
+  place: 5292-1
+  owner_id: '19'
+  manager_id: '19'
+  area: '24.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-20 12:54:45.714941'
+  deleted_at: 
+
+
+lands26:
+  id: '27'
+  place: 5291-ﾛ
+  owner_id: '20'
+  manager_id: '20'
+  area: '30.80'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands27:
+  id: '28'
+  place: 5291-ｲ
+  owner_id: '20'
+  manager_id: '20'
+  area: '39.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands28:
+  id: '29'
+  place: 5422-ﾊ
+  owner_id: '4'
+  manager_id: '4'
+  area: '12.90'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands29:
+  id: '30'
+  place: 5422-ﾛ
+  owner_id: '4'
+  manager_id: '4'
+  area: '34.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands30:
+  id: '31'
+  place: 5422-ｲ
+  owner_id: '4'
+  manager_id: '4'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands31:
+  id: '32'
+  place: 5423-1
+  owner_id: '5'
+  manager_id: '5'
+  area: '34.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands32:
+  id: '33'
+  place: 5295-1
+  owner_id: '19'
+  manager_id: '19'
+  area: '8.30'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands33:
+  id: '34'
+  place: 5295-2
+  owner_id: '21'
+  manager_id: '21'
+  area: '18.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands34:
+  id: '35'
+  place: 5431-1
+  owner_id: '5'
+  manager_id: '5'
+  area: '23.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands35:
+  id: '36'
+  place: 5427-1-ｲ
+  owner_id: '5'
+  manager_id: '5'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands36:
+  id: '37'
+  place: 5478-1
+  owner_id: '5'
+  manager_id: '5'
+  area: '15.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands37:
+  id: '38'
+  place: 5477-1
+  owner_id: '20'
+  manager_id: '20'
+  area: '7.90'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands38:
+  id: '39'
+  place: 5493-1
+  owner_id: '22'
+  manager_id: '22'
+  area: '17.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands39:
+  id: '40'
+  place: 5492-1-ｲ
+  owner_id: '21'
+  manager_id: '21'
+  area: '30.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands40:
+  id: '41'
+  place: 5492-1-ﾛ
+  owner_id: '21'
+  manager_id: '21'
+  area: '30.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands41:
+  id: '42'
+  place: 5492-1-ﾊ
+  owner_id: '21'
+  manager_id: '21'
+  area: '30.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands42:
+  id: '43'
+  place: 5492-1-ﾆ
+  owner_id: '21'
+  manager_id: '21'
+  area: '15.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands43:
+  id: '44'
+  place: 5484-1
+  owner_id: '19'
+  manager_id: '19'
+  area: '24.80'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands44:
+  id: '45'
+  place: 5486-1
+  owner_id: '20'
+  manager_id: '20'
+  area: '6.80'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands45:
+  id: '46'
+  place: 5573-1-ﾛ
+  owner_id: '6'
+  manager_id: '6'
+  area: '27.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands46:
+  id: '47'
+  place: 5573-1-ｲ
+  owner_id: '6'
+  manager_id: '6'
+  area: '51.90'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands47:
+  id: '48'
+  place: '6575'
+  owner_id: '7'
+  manager_id: '7'
+  area: '17.90'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands48:
+  id: '49'
+  place: '6576'
+  owner_id: '22'
+  manager_id: '22'
+  area: '73.90'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands49:
+  id: '50'
+  place: 5577-1
+  owner_id: '20'
+  manager_id: '20'
+  area: '30.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands50:
+  id: '51'
+  place: '6676'
+  owner_id: '20'
+  manager_id: '20'
+  area: '32.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-20 07:58:44.089369'
+  deleted_at: 
+
+
+lands51:
+  id: '52'
+  place: 5496-1-ﾊ
+  owner_id: '23'
+  manager_id: '23'
+  area: '19.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands52:
+  id: '53'
+  place: 5496-1-ﾛ
+  owner_id: '23'
+  manager_id: '23'
+  area: '24.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands53:
+  id: '54'
+  place: 5496-1-ｲ
+  owner_id: '23'
+  manager_id: '23'
+  area: '24.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands54:
+  id: '55'
+  place: 5582-ﾊ
+  owner_id: '7'
+  manager_id: '7'
+  area: '13.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands55:
+  id: '56'
+  place: 5582-ﾛ
+  owner_id: '7'
+  manager_id: '7'
+  area: '19.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands56:
+  id: '57'
+  place: 5582-ｲ
+  owner_id: '7'
+  manager_id: '7'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands57:
+  id: '58'
+  place: 5580-1-ﾊ
+  owner_id: '7'
+  manager_id: '7'
+  area: '29.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands58:
+  id: '59'
+  place: 5580-1-ﾛ
+  owner_id: '7'
+  manager_id: '7'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands59:
+  id: '60'
+  place: 5580-1-ｲ
+  owner_id: '7'
+  manager_id: '7'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands60:
+  id: '61'
+  place: '6685'
+  owner_id: '5'
+  manager_id: '5'
+  area: '9.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands61:
+  id: '62'
+  place: 5684-ｲ
+  owner_id: '6'
+  manager_id: '6'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands62:
+  id: '63'
+  place: 5684-ﾛ
+  owner_id: '6'
+  manager_id: '6'
+  area: '29.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands63:
+  id: '64'
+  place: 5510-1
+  owner_id: '23'
+  manager_id: '23'
+  area: '25.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands64:
+  id: '65'
+  place: 5509-1-ﾛ
+  owner_id: '24'
+  manager_id: '24'
+  area: '24.30'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2011-11-03 09:57:57.355828'
+  deleted_at: 
+
+
+lands65:
+  id: '66'
+  place: 5509-1-ｲ
+  owner_id: '24'
+  manager_id: '24'
+  area: '25.80'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2011-11-03 09:56:55.475867'
+  deleted_at: 
+
+
+lands66:
+  id: '67'
+  place: 5509-1-ﾆ
+  owner_id: '24'
+  manager_id: '24'
+  area: '11.00'
+  display_order: '1'
+  target_flag: f
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands67:
+  id: '68'
+  place: 5509-1-ﾊ
+  owner_id: '24'
+  manager_id: '24'
+  area: '12.09'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2011-11-03 09:57:35.965945'
+  deleted_at: 
+
+
+lands68:
+  id: '69'
+  place: 5594-1-ﾛ
+  owner_id: '8'
+  manager_id: '8'
+  area: '10.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands69:
+  id: '70'
+  place: 5594-1-ｲ
+  owner_id: '8'
+  manager_id: '8'
+  area: '30.00'
+  display_order: '1'
+  target_flag: f
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands70:
+  id: '71'
+  place: '6596'
+  owner_id: '9'
+  manager_id: '9'
+  area: '25.70'
+  display_order: '1'
+  target_flag: f
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands71:
+  id: '73'
+  place: '6687'
+  owner_id: '23'
+  manager_id: '23'
+  area: '34.80'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands72:
+  id: '74'
+  place: '6688'
+  owner_id: '24'
+  manager_id: '24'
+  area: '45.30'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands73:
+  id: '75'
+  place: '6689'
+  owner_id: '8'
+  manager_id: '8'
+  area: '34.60'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands74:
+  id: '76'
+  place: 5512-ｲ
+  owner_id: '24'
+  manager_id: '24'
+  area: '51.00'
+  display_order: '1'
+  target_flag: f
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands75:
+  id: '77'
+  place: 5513-1-ﾆ
+  owner_id: '26'
+  manager_id: '26'
+  area: '21.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands76:
+  id: '78'
+  place: 5513-1-ﾊ
+  owner_id: '26'
+  manager_id: '26'
+  area: '25.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands77:
+  id: '79'
+  place: 5513-1-ﾛ
+  owner_id: '26'
+  manager_id: '26'
+  area: '19.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands78:
+  id: '80'
+  place: 5513-1-ｲ
+  owner_id: '26'
+  manager_id: '26'
+  area: '19.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands79:
+  id: '81'
+  place: 5601-ｲ
+  owner_id: '10'
+  manager_id: '10'
+  area: '40.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands80:
+  id: '82'
+  place: 5601-ﾊ
+  owner_id: '10'
+  manager_id: '10'
+  area: '12.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands81:
+  id: '83'
+  place: 5601-ﾆ
+  owner_id: '10'
+  manager_id: '10'
+  area: '27.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands82:
+  id: '84'
+  place: '6599'
+  owner_id: '9'
+  manager_id: '9'
+  area: '15.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands83:
+  id: '85'
+  place: 5598-1-ﾊ
+  owner_id: '10'
+  manager_id: '10'
+  area: '29.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands84:
+  id: '86'
+  place: 5598-1-ﾛ
+  owner_id: '10'
+  manager_id: '10'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands85:
+  id: '87'
+  place: 5598-1-ｲ
+  owner_id: '10'
+  manager_id: '10'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands86:
+  id: '88'
+  place: 5692-ｲ
+  owner_id: '9'
+  manager_id: '9'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands87:
+  id: '89'
+  place: 5692-ﾛ
+  owner_id: '9'
+  manager_id: '9'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands88:
+  id: '90'
+  place: 5692-ﾊ
+  owner_id: '9'
+  manager_id: '9'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands89:
+  id: '91'
+  place: 5692-ﾆ
+  owner_id: '9'
+  manager_id: '9'
+  area: '41.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands90:
+  id: '92'
+  place: 5693-1
+  owner_id: '25'
+  manager_id: '25'
+  area: '17.60'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands91:
+  id: '93'
+  place: 5519-1-ﾍ
+  owner_id: '27'
+  manager_id: '27'
+  area: '28.90'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-25 03:50:22.474558'
+  deleted_at: 
+
+
+lands92:
+  id: '94'
+  place: 5519-1-ﾎ
+  owner_id: '27'
+  manager_id: '27'
+  area: '30.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-25 03:50:29.089539'
+  deleted_at: 
+
+
+lands93:
+  id: '95'
+  place: 5519-1-ﾆ
+  owner_id: '27'
+  manager_id: '27'
+  area: '30.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-25 03:50:09.133971'
+  deleted_at: 
+
+
+lands94:
+  id: '96'
+  place: 5519-1-ﾊ
+  owner_id: '27'
+  manager_id: '27'
+  area: '30.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-25 03:50:16.185599'
+  deleted_at: 
+
+
+lands95:
+  id: '97'
+  place: 5519-1-ﾛ
+  owner_id: '27'
+  manager_id: '27'
+  area: '22.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-25 03:50:36.219282'
+  deleted_at: 
+
+
+lands96:
+  id: '98'
+  place: 5519-1-ｲ
+  owner_id: '27'
+  manager_id: '27'
+  area: '7.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-25 03:50:01.396849'
+  deleted_at: 
+
+
+lands97:
+  id: '99'
+  place: 5607-ｲ
+  owner_id: '11'
+  manager_id: '11'
+  area: '9.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands98:
+  id: '100'
+  place: 5607-ﾛ
+  owner_id: '11'
+  manager_id: '11'
+  area: '19.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands99:
+  id: '101'
+  place: 5607-ﾊ
+  owner_id: '11'
+  manager_id: '11'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands100:
+  id: '102'
+  place: 5607-ﾆ
+  owner_id: '11'
+  manager_id: '11'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands101:
+  id: '103'
+  place: '6608'
+  owner_id: '10'
+  manager_id: '10'
+  area: '10.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands102:
+  id: '104'
+  place: 5609-1-ﾛ
+  owner_id: '26'
+  manager_id: '26'
+  area: '19.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands103:
+  id: '105'
+  place: 5609-1-ｲ
+  owner_id: '26'
+  manager_id: '26'
+  area: '59.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands104:
+  id: '106'
+  place: '6714'
+  owner_id: '6'
+  manager_id: '6'
+  area: '15.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands105:
+  id: '107'
+  place: 5713-ｲ
+  owner_id: '27'
+  manager_id: '27'
+  area: '34.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands106:
+  id: '108'
+  place: 5713-ﾛ
+  owner_id: '27'
+  manager_id: '27'
+  area: '34.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands107:
+  id: '109'
+  place: '6712'
+  owner_id: '24'
+  manager_id: '24'
+  area: '10.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands108:
+  id: '110'
+  place: 5711-ﾛ
+  owner_id: '11'
+  manager_id: '11'
+  area: '22.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands109:
+  id: '111'
+  place: 5711-ｲ
+  owner_id: '11'
+  manager_id: '11'
+  area: '19.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands110:
+  id: '112'
+  place: 5527-1
+  owner_id: '28'
+  manager_id: '28'
+  area: '37.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands111:
+  id: '113'
+  place: 5526-1-ﾆ
+  owner_id: '29'
+  manager_id: '29'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands112:
+  id: '114'
+  place: 5526-1-ﾊ
+  owner_id: '29'
+  manager_id: '29'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands113:
+  id: '115'
+  place: 5526-1-ﾛ
+  owner_id: '29'
+  manager_id: '29'
+  area: '22.90'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands114:
+  id: '116'
+  place: 5526-1-ｲ
+  owner_id: '29'
+  manager_id: '29'
+  area: '10.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands115:
+  id: '117'
+  place: 5613-ﾛ
+  owner_id: '12'
+  manager_id: '12'
+  area: '26.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands116:
+  id: '118'
+  place: 5613-ﾊ
+  owner_id: '12'
+  manager_id: '12'
+  area: '34.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands117:
+  id: '119'
+  place: 5613-ﾆ
+  owner_id: '12'
+  manager_id: '12'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands118:
+  id: '120'
+  place: '6612'
+  owner_id: '13'
+  manager_id: '13'
+  area: '29.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands119:
+  id: '121'
+  place: '6611'
+  owner_id: '12'
+  manager_id: '12'
+  area: '24.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands120:
+  id: '122'
+  place: '6716'
+  owner_id: '12'
+  manager_id: '12'
+  area: '28.90'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands121:
+  id: '123'
+  place: '6717'
+  owner_id: '14'
+  manager_id: '14'
+  area: '19.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands122:
+  id: '124'
+  place: '6718'
+  owner_id: '29'
+  manager_id: '29'
+  area: '38.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands123:
+  id: '125'
+  place: 5719-ｲ
+  owner_id: '28'
+  manager_id: '28'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands124:
+  id: '126'
+  place: 5719-ﾛ
+  owner_id: '28'
+  manager_id: '28'
+  area: '19.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands125:
+  id: '127'
+  place: 5719-ﾊ
+  owner_id: '28'
+  manager_id: '28'
+  area: '23.90'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands126:
+  id: '128'
+  place: 5530-1
+  owner_id: '24'
+  manager_id: '24'
+  area: '25.10'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands127:
+  id: '129'
+  place: 5530-2
+  owner_id: '30'
+  manager_id: '30'
+  area: '24.60'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands128:
+  id: '130'
+  place: 5531-1
+  owner_id: '29'
+  manager_id: '29'
+  area: '40.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands129:
+  id: '131'
+  place: 5532-1-ｲ
+  owner_id: '30'
+  manager_id: '30'
+  area: '26.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands130:
+  id: '132'
+  place: 5532-1-ﾛ
+  owner_id: '30'
+  manager_id: '30'
+  area: '10.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands131:
+  id: '133'
+  place: 5520-1
+  owner_id: '28'
+  manager_id: '28'
+  area: '13.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands132:
+  id: '134'
+  place: '6623'
+  owner_id: '13'
+  manager_id: '13'
+  area: '15.10'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands133:
+  id: '135'
+  place: '6628'
+  owner_id: '14'
+  manager_id: '14'
+  area: '43.10'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands134:
+  id: '136'
+  place: 5629-1
+  owner_id: '15'
+  manager_id: '15'
+  area: '32.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands135:
+  id: '137'
+  place: 5632-1
+  owner_id: '15'
+  manager_id: '15'
+  area: '32.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands136:
+  id: '138'
+  place: '6733'
+  owner_id: '15'
+  manager_id: '15'
+  area: '21.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands137:
+  id: '139'
+  place: 5732-ｲ
+  owner_id: '14'
+  manager_id: '14'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands138:
+  id: '140'
+  place: 5732-ﾛ
+  owner_id: '14'
+  manager_id: '14'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands139:
+  id: '141'
+  place: 5732-ﾊ
+  owner_id: '14'
+  manager_id: '14'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands140:
+  id: '142'
+  place: 5542-1
+  owner_id: '31'
+  manager_id: '31'
+  area: '24.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands141:
+  id: '143'
+  place: '6541'
+  owner_id: '25'
+  manager_id: '25'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands142:
+  id: '144'
+  place: '6540'
+  owner_id: '30'
+  manager_id: '30'
+  area: '30.60'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands143:
+  id: '145'
+  place: 5539-1-ﾊ
+  owner_id: '31'
+  manager_id: '31'
+  area: '31.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands144:
+  id: '146'
+  place: 5539-1-ﾛ
+  owner_id: '31'
+  manager_id: '31'
+  area: '30.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands145:
+  id: '147'
+  place: 5539-1-ｲ
+  owner_id: '31'
+  manager_id: '31'
+  area: '20.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands146:
+  id: '148'
+  place: '6637'
+  owner_id: '13'
+  manager_id: '13'
+  area: '24.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands147:
+  id: '149'
+  place: 5636-ｲ
+  owner_id: '16'
+  manager_id: '16'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands148:
+  id: '150'
+  place: 5636-ﾛ
+  owner_id: '16'
+  manager_id: '16'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands149:
+  id: '151'
+  place: 5636-ﾊ
+  owner_id: '16'
+  manager_id: '16'
+  area: '24.90'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands150:
+  id: '152'
+  place: 5636-ﾆ
+  owner_id: '16'
+  manager_id: '16'
+  area: '24.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands151:
+  id: '153'
+  place: 5635-1-ｲ
+  owner_id: '15'
+  manager_id: '15'
+  area: '32.90'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-25 03:53:48.762137'
+  deleted_at: 
+
+
+lands152:
+  id: '154'
+  place: 5635-1-ﾛ
+  owner_id: '15'
+  manager_id: '15'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-25 03:54:00.792348'
+  deleted_at: 
+
+
+lands153:
+  id: '155'
+  place: '6734'
+  owner_id: '23'
+  manager_id: '23'
+  area: '29.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands154:
+  id: '156'
+  place: '6735'
+  owner_id: '15'
+  manager_id: '15'
+  area: '15.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands155:
+  id: '157'
+  place: 5544-1-ｲ
+  owner_id: '30'
+  manager_id: '30'
+  area: '27.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands156:
+  id: '158'
+  place: 5544-1-ﾛ
+  owner_id: '30'
+  manager_id: '30'
+  area: '34.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands157:
+  id: '159'
+  place: '6545'
+  owner_id: '20'
+  manager_id: '20'
+  area: '23.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands158:
+  id: '160'
+  place: '6546'
+  owner_id: '32'
+  manager_id: '32'
+  area: '14.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands159:
+  id: '161'
+  place: 5547-ｲ
+  owner_id: '31'
+  manager_id: '31'
+  area: '22.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands160:
+  id: '162'
+  place: 5547-ﾛ
+  owner_id: '31'
+  manager_id: '31'
+  area: '22.80'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands161:
+  id: '163'
+  place: '6642'
+  owner_id: '16'
+  manager_id: '16'
+  area: '28.30'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands162:
+  id: '164'
+  place: 5643-ｲ
+  owner_id: '13'
+  manager_id: '13'
+  area: '30.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands163:
+  id: '165'
+  place: 5643-ﾛ
+  owner_id: '13'
+  manager_id: '13'
+  area: '30.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands164:
+  id: '166'
+  place: 5644-1
+  owner_id: '15'
+  manager_id: '15'
+  area: '12.60'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands165:
+  id: '167'
+  place: '6745'
+  owner_id: '11'
+  manager_id: '11'
+  area: '27.10'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands166:
+  id: '168'
+  place: 5553-1-ｲ
+  owner_id: '32'
+  manager_id: '32'
+  area: '19.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands167:
+  id: '169'
+  place: 5553-1-ﾛ
+  owner_id: '32'
+  manager_id: '32'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands168:
+  id: '170'
+  place: 5553-1-ﾊ
+  owner_id: '32'
+  manager_id: '32'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands169:
+  id: '171'
+  place: 5553-1-ﾆ
+  owner_id: '32'
+  manager_id: '32'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands170:
+  id: '172'
+  place: 5553-1-ﾎ
+  owner_id: '32'
+  manager_id: '32'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands171:
+  id: '173'
+  place: '6650'
+  owner_id: '16'
+  manager_id: '16'
+  area: '20.30'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands172:
+  id: '174'
+  place: '6648'
+  owner_id: '32'
+  manager_id: '32'
+  area: '18.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands173:
+  id: '175'
+  place: '6557'
+  owner_id: '33'
+  manager_id: '33'
+  area: '29.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands174:
+  id: '176'
+  place: 5556-1-ｲ
+  owner_id: '33'
+  manager_id: '33'
+  area: '30.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands175:
+  id: '177'
+  place: 5556-1-ﾛ
+  owner_id: '33'
+  manager_id: '33'
+  area: '14.60'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands176:
+  id: '178'
+  place: 5654-ﾛ
+  owner_id: '33'
+  manager_id: '33'
+  area: '21.80'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands177:
+  id: '179'
+  place: 5654-ｲ
+  owner_id: '33'
+  manager_id: '33'
+  area: '24.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands178:
+  id: '180'
+  place: '6655'
+  owner_id: '19'
+  manager_id: '19'
+  area: '43.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands179:
+  id: '181'
+  place: '6657'
+  owner_id: '21'
+  manager_id: '21'
+  area: '8.60'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands180:
+  id: '182'
+  place: '6671'
+  owner_id: '31'
+  manager_id: '31'
+  area: '29.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands181:
+  id: '185'
+  place: '6670'
+  owner_id: '33'
+  manager_id: '33'
+  area: '13.30'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands182:
+  id: '186'
+  place: '6570'
+  owner_id: '4'
+  manager_id: '4'
+  area: '15.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands183:
+  id: '187'
+  place: 5405-1-ﾛ
+  owner_id: '3'
+  manager_id: '3'
+  area: '12.60'
+  display_order: '1'
+  target_flag: f
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands184:
+  id: '188'
+  place: 5492-1-ﾎ
+  owner_id: '21'
+  manager_id: '21'
+  area: '6.10'
+  display_order: '1'
+  target_flag: f
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands185:
+  id: '189'
+  place: '6497'
+  owner_id: '22'
+  manager_id: '22'
+  area: '24.30'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands186:
+  id: '190'
+  place: 5498-ｲ
+  owner_id: '23'
+  manager_id: '23'
+  area: '21.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands187:
+  id: '191'
+  place: 5498-ﾛ
+  owner_id: '23'
+  manager_id: '23'
+  area: '3.90'
+  display_order: '1'
+  target_flag: f
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands188:
+  id: '192'
+  place: 5507-1
+  owner_id: '25'
+  manager_id: '25'
+  area: '12.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands189:
+  id: '193'
+  place: 5607-ﾎ
+  owner_id: '11'
+  manager_id: '11'
+  area: '13.70'
+  display_order: '1'
+  target_flag: f
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands190:
+  id: '194'
+  place: 5415-1-ｲ
+  owner_id: '2'
+  manager_id: '2'
+  area: '23.10'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands191:
+  id: '195'
+  place: '6421'
+  owner_id: '4'
+  manager_id: '4'
+  area: '6.70'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
+
+
+lands192:
+  id: '196'
+  place: "ﾃﾞｼﾞﾏ63"
+  owner_id: '33'
+  manager_id: '33'
+  area: '31.60'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:27:33.571142'
+  updated_at: '2010-07-17 01:27:33.571142'
+  deleted_at: 
+
+
+lands193:
+  id: '197'
+  place: "ﾃﾞｼﾞﾏ64"
+  owner_id: '9'
+  manager_id: '9'
+  area: '32.10'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:28:10.571305'
+  updated_at: '2010-07-17 01:28:10.571305'
+  deleted_at: 
+
+
+lands194:
+  id: '198'
+  place: "ﾃﾞｼﾞﾏ65"
+  owner_id: '32'
+  manager_id: '32'
+  area: '32.00'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:28:33.928556'
+  updated_at: '2010-07-17 01:28:33.928556'
+  deleted_at: 
+
+
+lands195:
+  id: '199'
+  place: "ﾃﾞｼﾞﾏ66-1"
+  owner_id: '25'
+  manager_id: '25'
+  area: '31.90'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:28:56.530147'
+  updated_at: '2010-07-17 01:28:56.530147'
+  deleted_at: 
+
+
+lands196:
+  id: '200'
+  place: "ﾃﾞｼﾞﾏ70"
+  owner_id: '4'
+  manager_id: '4'
+  area: '32.50'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:29:36.93869'
+  updated_at: '2010-07-17 01:29:36.93869'
+  deleted_at: 
+
+
+lands197:
+  id: '201'
+  place: "ﾃﾞｼﾞﾏ71"
+  owner_id: '6'
+  manager_id: '6'
+  area: '31.90'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:30:14.67127'
+  updated_at: '2010-07-17 01:30:14.67127'
+  deleted_at: 
+
+
+lands198:
+  id: '202'
+  place: "ﾃﾞｼﾞﾏ72"
+  owner_id: '28'
+  manager_id: '28'
+  area: '32.00'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:30:28.659168'
+  updated_at: '2010-07-17 01:30:28.659168'
+  deleted_at: 
+
+
+lands199:
+  id: '203'
+  place: "ﾃﾞｼﾞﾏ59"
+  owner_id: '24'
+  manager_id: '24'
+  area: '38.00'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:30:45.752164'
+  updated_at: '2010-07-17 01:30:45.752164'
+  deleted_at: 
+
+
+lands200:
+  id: '204'
+  place: "ﾃﾞｼﾞﾏ58-1"
+  owner_id: '19'
+  manager_id: '19'
+  area: '33.00'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:31:12.325953'
+  updated_at: '2010-07-17 01:31:12.325953'
+  deleted_at: 
+
+
+lands201:
+  id: '205'
+  place: "ﾃﾞｼﾞﾏ56-1"
+  owner_id: '27'
+  manager_id: '27'
+  area: '32.00'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:32:05.437011'
+  updated_at: '2010-07-17 01:32:05.437011'
+  deleted_at: 
+
+
+lands202:
+  id: '206'
+  place: "ﾃﾞｼﾞﾏ53"
+  owner_id: '30'
+  manager_id: '30'
+  area: '32.00'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:32:22.980306'
+  updated_at: '2010-07-17 01:32:22.980306'
+  deleted_at: 
+
+
+lands203:
+  id: '207'
+  place: "ﾃﾞｼﾞﾏ52"
+  owner_id: '15'
+  manager_id: '15'
+  area: '31.80'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:32:42.63969'
+  updated_at: '2010-07-17 01:32:42.63969'
+  deleted_at: 
+
+
+lands204:
+  id: '208'
+  place: "ﾃﾞｼﾞﾏ51"
+  owner_id: '10'
+  manager_id: '10'
+  area: '32.10'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:33:23.451508'
+  updated_at: '2010-07-17 01:33:23.451508'
+  deleted_at: 
+
+
+lands205:
+  id: '209'
+  place: "ﾃﾞｼﾞﾏ50-1"
+  owner_id: '29'
+  manager_id: '29'
+  area: '31.90'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:33:49.354291'
+  updated_at: '2010-07-17 01:33:49.354291'
+  deleted_at: 
+
+
+lands206:
+  id: '210'
+  place: "ﾃﾞｼﾞﾏ33-1"
+  owner_id: '21'
+  manager_id: '21'
+  area: '40.00'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:34:09.790537'
+  updated_at: '2010-07-17 01:34:09.790537'
+  deleted_at: 
+
+
+lands207:
+  id: '211'
+  place: "ﾃﾞｼﾞﾏ34-1"
+  owner_id: '3'
+  manager_id: '3'
+  area: '31.90'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:34:53.162814'
+  updated_at: '2010-07-17 01:34:53.162814'
+  deleted_at: 
+
+
+lands208:
+  id: '212'
+  place: "ﾃﾞｼﾞﾏ36-1"
+  owner_id: '26'
+  manager_id: '26'
+  area: '31.90'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:35:16.73863'
+  updated_at: '2010-07-17 01:35:16.73863'
+  deleted_at: '2010-07-25 04:10:02.466734'
+
+
+lands209:
+  id: '213'
+  place: "ﾃﾞｼﾞﾏ36-1"
+  owner_id: '22'
+  manager_id: '22'
+  area: '31.90'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:35:35.657474'
+  updated_at: '2010-07-17 01:35:35.657474'
+  deleted_at: 
+
+
+lands210:
+  id: '214'
+  place: "ﾃﾞｼﾞﾏ37-1"
+  owner_id: '8'
+  manager_id: '8'
+  area: '31.80'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:35:54.777141'
+  updated_at: '2010-07-17 01:35:54.777141'
+  deleted_at: 
+
+
+lands211:
+  id: '215'
+  place: "ﾃﾞｼﾞﾏ39-1"
+  owner_id: '30'
+  manager_id: '30'
+  area: '32.00'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:36:12.053809'
+  updated_at: '2010-07-17 01:36:12.053809'
+  deleted_at: 
+
+
+lands212:
+  id: '216'
+  place: "ﾃﾞｼﾞﾏ40-1"
+  owner_id: '20'
+  manager_id: '20'
+  area: '31.70'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:36:28.608997'
+  updated_at: '2010-07-17 01:36:28.608997'
+  deleted_at: 
+
+
+lands213:
+  id: '217'
+  place: "ﾃﾞｼﾞﾏ42-1"
+  owner_id: '13'
+  manager_id: '13'
+  area: '33.50'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:36:55.559914'
+  updated_at: '2010-07-17 01:36:55.559914'
+  deleted_at: 
+
+
+lands214:
+  id: '218'
+  place: "ﾃﾞｼﾞﾏ44"
+  owner_id: '19'
+  manager_id: '19'
+  area: '23.90'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:37:11.519249'
+  updated_at: '2010-07-17 01:37:11.519249'
+  deleted_at: 
+
+
+lands215:
+  id: '219'
+  place: "ﾃﾞｼﾞﾏ22"
+  owner_id: '16'
+  manager_id: '16'
+  area: '32.60'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:37:39.598956'
+  updated_at: '2010-07-17 01:37:39.598956'
+  deleted_at: 
+
+
+lands216:
+  id: '220'
+  place: "ﾃﾞｼﾞﾏ21-1"
+  owner_id: '11'
+  manager_id: '11'
+  area: '13.60'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 01:38:01.01652'
+  updated_at: '2010-07-17 01:38:01.01652'
+  deleted_at: 
+
+
+lands217:
+  id: '221'
+  place: "ﾃﾞｼﾞﾏ95-1"
+  owner_id: '35'
+  manager_id: '35'
+  area: '52.50'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 02:16:55.138427'
+  updated_at: '2010-07-17 02:16:55.138427'
+  deleted_at: 
+
+
+lands218:
+  id: '222'
+  place: "ﾃﾞｼﾞﾏ93-1"
+  owner_id: '35'
+  manager_id: '35'
+  area: '52.60'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 02:17:13.81332'
+  updated_at: '2010-07-17 02:19:33.615836'
+  deleted_at: 
+
+
+lands219:
+  id: '223'
+  place: "ﾃﾞｼﾞﾏ61-1"
+  owner_id: '35'
+  manager_id: '35'
+  area: '34.80'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 02:17:42.942715'
+  updated_at: '2010-07-18 15:54:58.477916'
+  deleted_at: 
+
+
+lands220:
+  id: '224'
+  place: "ﾃﾞｼﾞﾏ62"
+  owner_id: '35'
+  manager_id: '35'
+  area: '23.70'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 02:18:00.526577'
+  updated_at: '2010-07-18 15:55:07.088627'
+  deleted_at: 
+
+
+lands221:
+  id: '225'
+  place: "ﾃﾞｼﾞﾏ73"
+  owner_id: '35'
+  manager_id: '35'
+  area: '28.90'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 02:18:23.015241'
+  updated_at: '2010-07-17 02:19:26.712981'
+  deleted_at: 
+
+
+lands222:
+  id: '228'
+  place: "ﾃﾞｼﾞﾏ47"
+  owner_id: '35'
+  manager_id: '35'
+  area: '24.60'
+  display_order: '200'
+  target_flag: t
+  created_at: '2010-07-17 02:19:09.855768'
+  updated_at: '2010-07-18 15:54:50.806216'
+  deleted_at: 
+
+
+lands223:
+  id: '229'
+  place: "岡保香・1851-1・5"
+  owner_id: '34'
+  manager_id: '34'
+  area: '40.00'
+  display_order: '901'
+  target_flag: t
+  created_at: '2010-07-20 07:55:38.511785'
+  updated_at: '2011-05-15 00:48:31.965348'
+  deleted_at: 
+
+
+lands224:
+  id: '230'
+  place: "土江"
+  owner_id: '34'
+  manager_id: '34'
+  area: '86.70'
+  display_order: '902'
+  target_flag: t
+  created_at: '2010-07-20 07:56:04.873465'
+  updated_at: '2011-05-04 08:31:08.343291'
+  deleted_at: '2011-05-04 08:54:40.506018'
+
+
+lands225:
+  id: '231'
+  place: "福田政夫・ヒラタ5838-1"
+  owner_id: '34'
+  manager_id: '34'
+  area: '53.44'
+  display_order: '903'
+  target_flag: t
+  created_at: '2010-07-20 07:56:22.766164'
+  updated_at: '2011-05-15 01:05:15.637757'
+  deleted_at: '2011-05-15 01:18:44.631608'
+
+
+lands226:
+  id: '232'
+  place: "橋本満穂・園　54-15"
+  owner_id: '34'
+  manager_id: '34'
+  area: '23.54'
+  display_order: '904'
+  target_flag: t
+  created_at: '2010-07-20 07:56:42.595793'
+  updated_at: '2011-05-15 01:39:43.242699'
+  deleted_at: 
+
+
+lands227:
+  id: '233'
+  place: "立石住義"
+  owner_id: '34'
+  manager_id: '34'
+  area: '15.80'
+  display_order: '905'
+  target_flag: t
+  created_at: '2010-07-20 07:57:07.732489'
+  updated_at: '2011-05-15 04:46:23.287148'
+  deleted_at: 
+
+
+lands228:
+  id: '234'
+  place: "吾郷教悦・2559"
+  owner_id: '34'
+  manager_id: '34'
+  area: '13.50'
+  display_order: '906'
+  target_flag: t
+  created_at: '2010-07-20 07:57:32.118854'
+  updated_at: '2011-05-15 00:52:59.914862'
+  deleted_at: 
+
+
+lands229:
+  id: '235'
+  place: '6649'
+  owner_id: '31'
+  manager_id: '31'
+  area: '23.80'
+  display_order: '100'
+  target_flag: t
+  created_at: '2010-07-20 07:59:35.812391'
+  updated_at: '2010-07-20 07:59:35.812391'
+  deleted_at: 
+
+
+lands230:
+  id: '237'
+  place: '1431'
+  owner_id: '3'
+  manager_id: '3'
+  area: '30.30'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-20 12:53:16.286477'
+  updated_at: '2010-07-20 12:53:16.286477'
+  deleted_at: '2012-04-03 14:29:36.933898'
+
+
+lands231:
+  id: '238'
+  place: 5461-ｲ
+  owner_id: '5'
+  manager_id: '5'
+  area: '31.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-25 03:45:07.81524'
+  updated_at: '2010-07-25 03:45:07.81524'
+  deleted_at: 
+
+
+lands232:
+  id: '239'
+  place: 5461-ﾛ
+  owner_id: '5'
+  manager_id: '5'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-25 03:45:40.933709'
+  updated_at: '2010-07-25 03:45:40.933709'
+  deleted_at: 
+
+
+lands233:
+  id: '240'
+  place: 5461-ﾊ
+  owner_id: '5'
+  manager_id: '5'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-25 03:46:37.501499'
+  updated_at: '2010-07-25 03:46:37.501499'
+  deleted_at: 
+
+
+lands234:
+  id: '241'
+  place: 5461-ﾆ
+  owner_id: '5'
+  manager_id: '5'
+  area: '29.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-25 03:47:08.121628'
+  updated_at: '2010-07-25 03:47:08.121628'
+  deleted_at: 
+
+
+lands235:
+  id: '242'
+  place: 5484-2
+  owner_id: '21'
+  manager_id: '21'
+  area: '10.50'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-25 03:48:10.772897'
+  updated_at: '2010-07-25 03:48:10.772897'
+  deleted_at: 
+
+
+lands236:
+  id: '243'
+  place: 5484-3
+  owner_id: '20'
+  manager_id: '20'
+  area: '10.20'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-25 03:48:49.479282'
+  updated_at: '2010-07-25 03:48:49.479282'
+  deleted_at: 
+
+
+lands237:
+  id: '244'
+  place: 5536-1
+  owner_id: '31'
+  manager_id: '31'
+  area: '11.40'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-25 03:51:26.676759'
+  updated_at: '2010-07-25 03:51:26.676759'
+  deleted_at: 
+
+
+lands238:
+  id: '245'
+  place: 5618-4
+  owner_id: '12'
+  manager_id: '12'
+  area: '3.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-25 03:53:21.366061'
+  updated_at: '2010-07-25 03:53:21.366061'
+  deleted_at: 
+
+
+lands239:
+  id: '246'
+  place: '6411'
+  owner_id: '2'
+  manager_id: '2'
+  area: '7.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-25 04:00:16.488829'
+  updated_at: '2010-07-25 04:00:16.488829'
+  deleted_at: 
+
+
+lands240:
+  id: '247'
+  place: "ﾋﾗﾀ5838-1"
+  owner_id: '20'
+  manager_id: '20'
+  area: '52.80'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-25 04:01:18.154277'
+  updated_at: '2010-07-25 04:01:18.154277'
+  deleted_at: 
+
+
+lands241:
+  id: '248'
+  place: "ﾋﾗﾀ5818-1-ｲ"
+  owner_id: '20'
+  manager_id: '20'
+  area: '28.90'
+  display_order: '2'
+  target_flag: t
+  created_at: '2010-07-25 04:04:42.760407'
+  updated_at: '2010-07-25 04:04:42.760407'
+  deleted_at: 
+
+
+lands242:
+  id: '249'
+  place: "ﾋﾗﾀ5818-1-ﾛ"
+  owner_id: '20'
+  manager_id: '20'
+  area: '28.90'
+  display_order: '2'
+  target_flag: t
+  created_at: '2010-07-25 04:05:10.807155'
+  updated_at: '2010-07-25 04:05:10.807155'
+  deleted_at: 
+
+
+lands243:
+  id: '250'
+  place: "ﾋﾗﾀ5818-1-ﾊ"
+  owner_id: '20'
+  manager_id: '20'
+  area: '17.30'
+  display_order: '2'
+  target_flag: t
+  created_at: '2010-07-25 04:05:28.247461'
+  updated_at: '2010-07-25 04:05:28.247461'
+  deleted_at: 
+
+
+lands244:
+  id: '251'
+  place: "ﾋﾗﾀ5818-2"
+  owner_id: '20'
+  manager_id: '20'
+  area: '11.60'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-07-25 04:05:54.530166'
+  updated_at: '2010-07-25 04:05:54.530166'
+  deleted_at: 
+
+
+lands245:
+  id: '252'
+  place: "ﾃﾞｼﾞﾏ35-1"
+  owner_id: '26'
+  manager_id: '26'
+  area: '31.60'
+  display_order: '5'
+  target_flag: t
+  created_at: '2010-07-25 04:09:29.711885'
+  updated_at: '2010-07-25 04:09:29.711885'
+  deleted_at: 
+
+
+lands246:
+  id: '253'
+  place: "ﾃﾞｼﾞﾏ49"
+  owner_id: '35'
+  manager_id: '35'
+  area: '38.00'
+  display_order: '2'
+  target_flag: t
+  created_at: '2010-07-25 04:10:52.0762'
+  updated_at: '2010-07-25 04:10:52.0762'
+  deleted_at: 
+
+
+lands247:
+  id: '254'
+  place: 5427-1-ﾛ
+  owner_id: '5'
+  manager_id: '5'
+  area: '16.00'
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-08-20 23:40:01.492837'
+  updated_at: '2010-08-20 23:40:01.492837'
+  deleted_at: 
