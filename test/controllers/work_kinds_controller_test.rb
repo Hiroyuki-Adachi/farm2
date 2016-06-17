@@ -32,7 +32,9 @@ class WorkKindsControllerTest < ActionController::TestCase
   end
 
   test "作業種別マスタ変更(実行)" do
-    patch :update, id: @work_kind, work_kind: @update
+    assert_no_difference('WorkKind.count') do
+      patch :update, id: @work_kind, work_kind: @update
+    end
     assert_equal @update[:price], WorkKindPrice.find_by(term: @term, work_kind_id: @work_kind).price
     assert_equal 1, WorkKindPrice.where(work_kind_id: @work_kind, price: @update[:price]).count
     assert_redirected_to work_kinds_path

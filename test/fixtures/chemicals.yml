@@ -1,0 +1,170 @@
+
+chemicals0:
+  id: '1'
+  name: キチット（1㎏）
+  display_order: '0'
+  chemical_type_id: '1'
+  created_at: '2012-03-12 13:11:32.31246'
+  updated_at: '2014-04-27 00:54:23.0082'
+  deleted_at: 
+
+
+chemicals1:
+  id: '2'
+  name: Gオンコル(1kg)
+  display_order: '0'
+  chemical_type_id: '2'
+  created_at: '2012-03-12 13:11:53.807702'
+  updated_at: '2014-04-27 01:24:51.705756'
+  deleted_at: 
+
+
+chemicals2:
+  id: '3'
+  name: セラコートRワン
+  display_order: '0'
+  chemical_type_id: '3'
+  created_at: '2012-03-12 13:12:06.115492'
+  updated_at: '2012-03-12 13:12:06.115492'
+  deleted_at: 
+
+
+chemicals3:
+  id: '4'
+  name: 米育ち一発024号
+  display_order: '0'
+  chemical_type_id: '3'
+  created_at: '2012-03-12 13:12:22.070992'
+  updated_at: '2012-03-12 13:12:22.070992'
+  deleted_at: 
+
+
+chemicals4:
+  id: '5'
+  name: いずも稲作名人
+  display_order: '0'
+  chemical_type_id: '3'
+  created_at: '2012-03-12 13:12:34.018633'
+  updated_at: '2014-04-27 01:25:29.11066'
+  deleted_at: 
+
+
+chemicals5:
+  id: '6'
+  name: オンコル5(3kg)
+  display_order: '0'
+  chemical_type_id: '2'
+  created_at: '2012-03-12 13:12:54.344329'
+  updated_at: '2012-03-12 13:12:54.344329'
+  deleted_at: 
+
+
+chemicals6:
+  id: '7'
+  name: バッチリ
+  display_order: '0'
+  chemical_type_id: '1'
+  created_at: '2012-07-14 07:47:00.516233'
+  updated_at: '2012-07-22 01:43:06.510583'
+  deleted_at: 
+
+
+chemicals7:
+  id: '8'
+  name: 硫安
+  display_order: '0'
+  chemical_type_id: '3'
+  created_at: '2012-07-14 08:21:46.652279'
+  updated_at: '2012-07-14 08:21:46.652279'
+  deleted_at: 
+
+
+chemicals8:
+  id: '9'
+  name: いーね463
+  display_order: '0'
+  chemical_type_id: '3'
+  created_at: '2012-07-14 08:22:33.336458'
+  updated_at: '2012-07-14 08:22:33.336458'
+  deleted_at: 
+
+
+chemicals9:
+  id: '10'
+  name: V550
+  display_order: '0'
+  chemical_type_id: '1'
+  created_at: '2012-07-22 01:44:36.194534'
+  updated_at: '2012-07-22 01:44:36.194534'
+  deleted_at: '2012-07-22 01:45:21.34088'
+
+
+chemicals10:
+  id: '11'
+  name: V550
+  display_order: '0'
+  chemical_type_id: '3'
+  created_at: '2012-07-22 01:47:15.346027'
+  updated_at: '2012-07-22 01:47:15.346027'
+  deleted_at: '2012-07-22 01:47:29.54799'
+
+
+chemicals11:
+  id: '12'
+  name: 苗（コシヒカリ）
+  display_order: '0'
+  chemical_type_id: '7'
+  created_at: '2014-04-27 00:57:04.89384'
+  updated_at: '2014-05-06 06:06:54.425886'
+  deleted_at: '2015-01-01 00:00:00'
+
+
+chemicals12:
+  id: '13'
+  name: サラブレッド（1㎏）
+  display_order: '0'
+  chemical_type_id: '1'
+  created_at: '2014-04-27 01:04:07.871168'
+  updated_at: '2014-04-27 01:04:07.871168'
+  deleted_at: 
+
+
+chemicals13:
+  id: '14'
+  name: グランドオリゼメート
+  display_order: '0'
+  chemical_type_id: '2'
+  created_at: '2014-05-06 06:07:21.412255'
+  updated_at: '2014-05-06 06:07:21.412255'
+  deleted_at: 
+
+
+chemicals14:
+  id: '15'
+  name: フルターボ
+  display_order: '0'
+  chemical_type_id: '2'
+  created_at: '2014-05-06 06:07:42.918094'
+  updated_at: '2014-05-06 06:07:42.918094'
+  deleted_at: 
+
+
+chemicals15:
+  id: '16'
+  name: オサキニ
+  display_order: '0'
+  chemical_type_id: '1'
+  created_at: '2014-05-18 06:58:44.740219'
+  updated_at: '2014-05-18 06:58:44.740219'
+  deleted_at: 
+
+
+chemicals16:
+  id: '17'
+  name: ユーコート844
+  display_order: '0'
+  chemical_type_id: '3'
+  created_at: '2014-05-18 06:58:59.997245'
+  updated_at: '2014-05-18 06:58:59.997245'
+  deleted_at: 
+

@@ -33,7 +33,9 @@ class WorkersControllerTest < ActionController::TestCase
   end
 
   test "作業者マスタ変更(実行)" do
-    patch :update, id: @worker, worker: @update
+    assert_no_difference('Worker.count') do
+      patch :update, id: @worker, worker: @update
+    end
     assert_redirected_to workers_path
   end
 

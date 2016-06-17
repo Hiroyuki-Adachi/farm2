@@ -30,7 +30,9 @@ class HomesControllerTest < ActionController::TestCase
   end
 
   test "世帯マスタ変更(実行)" do
-    patch :update, id: @home, home: @update
+    assert_no_difference('Home.count') do
+      patch :update, id: @home, home: @update
+    end
     assert_redirected_to homes_path
   end
 

@@ -30,13 +30,18 @@ class ChemicalTypesControllerTest < ActionController::TestCase
   end
 
   test "薬剤種別マスタ変更(実行)" do
-    patch :update, id: @chemical_type, chemical_type: @update
+    assert_no_difference('ChemicalType.count') do
+      patch :update, id: @chemical_type, chemical_type: @update
+    end
     assert_redirected_to chemical_types_path
   end
 
   test "薬剤種別マスタ削除" do
-    assert_difference('ChemicalType.count', -1) do
+    assert_raise(ActiveRecord::DeleteRestrictionError) do
       delete :destroy, id: @chemical_type
+    end
+    assert_difference('ChemicalType.count', -1) do
+      delete :destroy, id: chemical_types(:chemical_type_empty)
     end
     assert_redirected_to chemical_types_path
   end

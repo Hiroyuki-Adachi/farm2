@@ -30,7 +30,9 @@ class LandsControllerTest < ActionController::TestCase
   end
 
   test "土地マスタ変更(実行)" do
-    patch :update, id: @land, land: @update
+    assert_no_difference('Land.count') do
+      patch :update, id: @land, land: @update
+    end
     assert_redirected_to lands_path
   end
 
