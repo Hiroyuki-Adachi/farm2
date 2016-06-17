@@ -1,0 +1,189 @@
+
+work_types0:
+  id: '1'
+  genre: '1'
+  name: "コシヒカリ"
+  category_flag: f
+  display_order: '10'
+  deleted_at: 
+
+
+work_types1:
+  id: '2'
+  genre: '1'
+  name: "きぬむすめ"
+  category_flag: f
+  display_order: '20'
+  deleted_at: '2014-05-01 00:00:00'
+
+
+work_types2:
+  id: '4'
+  genre: '1'
+  name: "直播"
+  category_flag: f
+  display_order: '50'
+  deleted_at: 
+
+
+work_types3:
+  id: '5'
+  genre: '2'
+  name: "麦"
+  category_flag: f
+  display_order: '0'
+  deleted_at: '2014-05-01 00:00:00'
+
+
+work_types4:
+  id: '6'
+  genre: '2'
+  name: "牧草"
+  category_flag: f
+  display_order: '70'
+  deleted_at: 
+
+
+work_types5:
+  id: '7'
+  genre: '2'
+  name: "飼料米"
+  category_flag: f
+  display_order: '0'
+  deleted_at: '2014-05-01 00:00:00'
+
+
+work_types6:
+  id: '8'
+  genre: '2'
+  name: "飼料稲"
+  category_flag: f
+  display_order: '90'
+  deleted_at: 
+
+
+work_types7:
+  id: '9'
+  genre: '3'
+  name: "祖飼料"
+  category_flag: f
+  display_order: '100'
+  deleted_at: 
+
+
+work_types8:
+  id: '10'
+  genre: '3'
+  name: "サイレージ"
+  category_flag: f
+  display_order: '110'
+  deleted_at: 
+
+
+work_types9:
+  id: '11'
+  genre: '4'
+  name: "総務"
+  category_flag: f
+  display_order: '200'
+  deleted_at: 
+
+
+work_types10:
+  id: '12'
+  genre: '4'
+  name: "営農部"
+  category_flag: f
+  display_order: '210'
+  deleted_at: 
+
+
+work_types11:
+  id: '13'
+  genre: '4'
+  name: "機械部"
+  category_flag: f
+  display_order: '220'
+  deleted_at: 
+
+
+work_types12:
+  id: '14'
+  genre: '4'
+  name: "その他"
+  category_flag: f
+  display_order: '299'
+  deleted_at: 
+
+
+work_types13:
+  id: '15'
+  genre: '1'
+  name: "稲作"
+  category_flag: t
+  display_order: '1000'
+  deleted_at: 
+
+
+work_types14:
+  id: '16'
+  genre: '2'
+  name: "転作"
+  category_flag: t
+  display_order: '1100'
+  deleted_at: 
+
+
+work_types15:
+  id: '17'
+  genre: '3'
+  name: "副産物"
+  category_flag: t
+  display_order: '1200'
+  deleted_at: 
+
+
+work_types16:
+  id: '18'
+  genre: '4'
+  name: "共通"
+  category_flag: t
+  display_order: '1300'
+  deleted_at: 
+
+
+work_types17:
+  id: '23'
+  genre: '1'
+  name: "きぬ早"
+  category_flag: f
+  display_order: '30'
+  deleted_at: 
+
+
+work_types18:
+  id: '24'
+  genre: '1'
+  name: "きぬ遅"
+  category_flag: f
+  display_order: '40'
+  deleted_at: 
+
+
+work_types19:
+  id: '25'
+  genre: '4'
+  name: "企画部"
+  category_flag: f
+  display_order: '230'
+  deleted_at: 
+
+
+work_types20:
+  id: '26'
+  genre: '4'
+  name: "管理部"
+  category_flag: f
+  display_order: '240'
+  deleted_at: 
+

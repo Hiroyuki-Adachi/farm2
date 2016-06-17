@@ -1,0 +1,390 @@
+
+work_kinds0:
+  id: '1'
+  name: "田植"
+  display_order: '15'
+  other_flag: f
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:54:12.853248'
+  deleted_at: 
+
+
+work_kinds1:
+  id: '2'
+  name: "代掻"
+  display_order: '14'
+  other_flag: f
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:53:25.416569'
+  deleted_at: 
+
+
+work_kinds2:
+  id: '3'
+  name: "荒耕"
+  display_order: '13'
+  other_flag: f
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:53:04.370872'
+  deleted_at: 
+
+
+work_kinds3:
+  id: '4'
+  name: "稲刈り"
+  display_order: '18'
+  other_flag: f
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:57:28.815801'
+  deleted_at: 
+
+
+work_kinds4:
+  id: '5'
+  name: "役員会"
+  display_order: '100'
+  other_flag: f
+  created_at: '2010-07-19 10:01:04.245501'
+  updated_at: '2010-07-19 10:30:48.062089'
+  deleted_at: '2013-11-20 08:48:41.761563'
+
+
+work_kinds5:
+  id: '6'
+  name: "追肥"
+  display_order: '17'
+  other_flag: f
+  created_at: '2010-07-19 10:03:59.748838'
+  updated_at: '2013-11-20 08:56:04.773669'
+  deleted_at: 
+
+
+work_kinds6:
+  id: '7'
+  name: "鶏ふん運搬"
+  display_order: '5'
+  other_flag: f
+  created_at: '2010-07-19 10:19:58.078141'
+  updated_at: '2010-07-19 10:19:58.078141'
+  deleted_at: '2013-11-20 09:01:19.390481'
+
+
+work_kinds7:
+  id: '8'
+  name: "改良剤散布"
+  display_order: '11'
+  other_flag: f
+  created_at: '2010-07-19 10:30:39.907171'
+  updated_at: '2013-11-20 08:52:22.665416'
+  deleted_at: 
+
+
+work_kinds8:
+  id: '9'
+  name: "鶏ふん振り"
+  display_order: '5'
+  other_flag: f
+  created_at: '2010-07-19 11:03:31.828554'
+  updated_at: '2010-07-19 11:03:31.828554'
+  deleted_at: '2013-11-20 09:01:23.116154'
+
+
+work_kinds9:
+  id: '10'
+  name: "草刈"
+  display_order: '17'
+  other_flag: f
+  created_at: '2010-07-19 12:10:18.771079'
+  updated_at: '2013-11-20 08:56:20.342028'
+  deleted_at: 
+
+
+work_kinds10:
+  id: '11'
+  name: "保守"
+  display_order: '20'
+  other_flag: f
+  created_at: '2010-07-19 12:30:25.718941'
+  updated_at: '2013-11-20 09:03:48.048074'
+  deleted_at: 
+
+
+work_kinds11:
+  id: '12'
+  name: PC
+  display_order: '4'
+  other_flag: f
+  created_at: '2010-07-19 12:33:38.767993'
+  updated_at: '2016-02-09 02:05:28.475356'
+  deleted_at: 
+
+
+work_kinds12:
+  id: '13'
+  name: "直播"
+  display_order: '16'
+  other_flag: f
+  created_at: '2010-07-19 12:44:04.061495'
+  updated_at: '2013-11-20 08:54:47.691667'
+  deleted_at: 
+
+
+work_kinds13:
+  id: '14'
+  name: "麦刈り"
+  display_order: '4'
+  other_flag: f
+  created_at: '2010-07-19 13:14:49.531161'
+  updated_at: '2010-07-19 13:14:49.531161'
+  deleted_at: '2013-07-09 02:28:46.996486'
+
+
+work_kinds14:
+  id: '15'
+  name: WCS
+  display_order: '19'
+  other_flag: f
+  created_at: '2010-09-19 23:29:32.395154'
+  updated_at: '2013-11-20 08:58:05.215694'
+  deleted_at: 
+
+
+work_kinds15:
+  id: '16'
+  name: "除草剤散布"
+  display_order: '17'
+  other_flag: f
+  created_at: '2011-06-25 00:21:43.323872'
+  updated_at: '2013-11-20 08:55:31.975041'
+  deleted_at: 
+
+
+work_kinds16:
+  id: '17'
+  name: "溝掘り"
+  display_order: '30'
+  other_flag: f
+  created_at: '2011-07-20 09:03:37.969283'
+  updated_at: '2011-07-20 09:03:37.969283'
+  deleted_at: '2013-11-20 08:56:40.534748'
+
+
+work_kinds17:
+  id: '18'
+  name: "稲わら"
+  display_order: '20'
+  other_flag: f
+  created_at: '2011-10-15 00:12:57.603634'
+  updated_at: '2013-11-20 08:59:27.443118'
+  deleted_at: 
+
+
+work_kinds18:
+  id: '19'
+  name: "議事録作成"
+  display_order: '999'
+  other_flag: f
+  created_at: '2012-03-11 04:47:45.040099'
+  updated_at: '2012-03-11 04:47:45.040099'
+  deleted_at: '2013-11-20 09:02:58.670779'
+
+
+work_kinds19:
+  id: '20'
+  name: "畦塗"
+  display_order: '21'
+  other_flag: f
+  created_at: '2012-04-22 00:27:18.278707'
+  updated_at: '2013-11-20 09:00:31.495688'
+  deleted_at: 
+
+
+work_kinds20:
+  id: '21'
+  name: "格納庫大掃除"
+  display_order: '0'
+  other_flag: f
+  created_at: '2012-12-24 10:18:40.050517'
+  updated_at: '2012-12-24 10:18:40.050517'
+  deleted_at: '2013-11-19 09:17:02.208816'
+
+
+work_kinds21:
+  id: '22'
+  name: "改良剤散布"
+  display_order: '10'
+  other_flag: f
+  created_at: '2013-11-19 09:19:11.056484'
+  updated_at: '2013-11-20 08:47:33.798402'
+  deleted_at: '2013-11-20 08:52:49.635892'
+
+
+work_kinds22:
+  id: '23'
+  name: "堆肥散布"
+  display_order: '12'
+  other_flag: f
+  created_at: '2013-11-19 09:19:43.796183'
+  updated_at: '2013-11-20 08:48:21.809704'
+  deleted_at: 
+
+
+work_kinds23:
+  id: '24'
+  name: "理事会"
+  display_order: '1'
+  other_flag: f
+  created_at: '2013-11-20 08:50:16.189633'
+  updated_at: '2016-02-09 02:04:43.455684'
+  deleted_at: 
+
+
+work_kinds24:
+  id: '25'
+  name: "役員会"
+  display_order: '3'
+  other_flag: f
+  created_at: '2013-11-20 08:50:51.864188'
+  updated_at: '2016-02-09 02:05:14.59751'
+  deleted_at: 
+
+
+work_kinds25:
+  id: '26'
+  name: "議事録作成"
+  display_order: '4'
+  other_flag: f
+  created_at: '2013-11-20 09:04:30.017103'
+  updated_at: '2013-11-20 09:04:30.017103'
+  deleted_at: 
+
+
+work_kinds26:
+  id: '27'
+  name: "免税軽油申請書作成"
+  display_order: '5'
+  other_flag: f
+  created_at: '2014-04-02 09:31:26.87329'
+  updated_at: '2014-04-09 08:21:53.413395'
+  deleted_at: 
+
+
+work_kinds27:
+  id: '28'
+  name: "種籾分配"
+  display_order: '22'
+  other_flag: f
+  created_at: '2014-04-09 08:36:02.534004'
+  updated_at: '2014-04-09 08:36:02.534004'
+  deleted_at: 
+
+
+work_kinds28:
+  id: '29'
+  name: "請求書作成"
+  display_order: '6'
+  other_flag: f
+  created_at: '2014-06-13 08:03:40.06117'
+  updated_at: '2014-06-13 08:03:40.06117'
+  deleted_at: 
+
+
+work_kinds29:
+  id: '30'
+  name: "その他"
+  display_order: '48'
+  other_flag: f
+  created_at: '2014-07-20 07:38:41.358746'
+  updated_at: '2014-07-20 07:38:41.358746'
+  deleted_at: '2016-03-01 08:36:32.161925'
+
+
+work_kinds30:
+  id: '31'
+  name: "地ならし"
+  display_order: '10'
+  other_flag: f
+  created_at: '2015-03-21 00:57:53.234839'
+  updated_at: '2015-03-21 00:57:53.234839'
+  deleted_at: 
+
+
+work_kinds31:
+  id: '32'
+  name: "支払明細書作成"
+  display_order: '7'
+  other_flag: f
+  created_at: '2015-03-21 10:01:44.429361'
+  updated_at: '2015-03-21 10:04:34.739942'
+  deleted_at: 
+
+
+work_kinds32:
+  id: '33'
+  name: "出荷"
+  display_order: '40'
+  other_flag: f
+  created_at: '2015-09-13 03:03:19.96282'
+  updated_at: '2015-09-13 03:03:34.168314'
+  deleted_at: 
+
+
+work_kinds33:
+  id: '34'
+  name: "野菜"
+  display_order: '42'
+  other_flag: f
+  created_at: '2015-12-17 09:02:27.79936'
+  updated_at: '2016-02-09 02:02:18.237947'
+  deleted_at: 
+
+
+work_kinds34:
+  id: '35'
+  name: "野菜"
+  display_order: '1'
+  other_flag: f
+  created_at: '2015-12-17 09:02:29.315946'
+  updated_at: '2015-12-17 09:02:29.315946'
+  deleted_at: '2016-02-09 02:03:52.531221'
+
+
+work_kinds35:
+  id: '36'
+  name: "監査会"
+  display_order: '2'
+  other_flag: f
+  created_at: '2015-12-17 09:03:37.881127'
+  updated_at: '2016-02-09 02:04:55.071446'
+  deleted_at: 
+
+
+work_kinds36:
+  id: '37'
+  name: "米検査（みずほ倉庫）"
+  display_order: '41'
+  other_flag: f
+  created_at: '2015-12-19 06:49:54.784257'
+  updated_at: '2015-12-19 06:49:54.784257'
+  deleted_at: 
+
+
+work_kinds37:
+  id: '38'
+  name: "収支内訳書作成"
+  display_order: '8'
+  other_flag: f
+  created_at: '2016-02-09 02:07:33.833683'
+  updated_at: '2016-02-09 02:07:33.833683'
+  deleted_at: 
+
+
+work_kinds38:
+  id: '39'
+  name: "その他"
+  display_order: '999'
+  other_flag: t
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2010-07-15 14:03:52'
+  deleted_at: 
+

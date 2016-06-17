@@ -1,0 +1,747 @@
+
+work_kind_prices0:
+  id: '2'
+  term: '2012'
+  work_kind_id: '39'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2010-07-15 14:03:52'
+
+
+work_kind_prices1:
+  id: '3'
+  term: '2015'
+  work_kind_id: '31'
+  price: '1000'
+  created_at: '2015-03-21 00:57:53.234839'
+  updated_at: '2015-03-21 00:57:53.234839'
+
+
+work_kind_prices3:
+  id: '5'
+  term: '2015'
+  work_kind_id: '37'
+  price: '1000'
+  created_at: '2015-12-19 06:49:54.784257'
+  updated_at: '2015-12-19 06:49:54.784257'
+
+
+work_kind_prices5:
+  id: '7'
+  term: '2012'
+  work_kind_id: '14'
+  price: '1000'
+  created_at: '2010-07-19 13:14:49.531161'
+  updated_at: '2010-07-19 13:14:49.531161'
+
+
+work_kind_prices8:
+  id: '10'
+  term: '2015'
+  work_kind_id: '39'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2010-07-15 14:03:52'
+
+
+work_kind_prices9:
+  id: '11'
+  term: '2015'
+  work_kind_id: '33'
+  price: '1000'
+  created_at: '2015-09-13 03:03:19.96282'
+  updated_at: '2015-09-13 03:03:34.168314'
+
+
+work_kind_prices10:
+  id: '12'
+  term: '2014'
+  work_kind_id: '27'
+  price: '1000'
+  created_at: '2014-04-02 09:31:26.87329'
+  updated_at: '2014-04-09 08:21:53.413395'
+
+
+work_kind_prices11:
+  id: '13'
+  term: '2012'
+  work_kind_id: '19'
+  price: '1000'
+  created_at: '2012-03-11 04:47:45.040099'
+  updated_at: '2012-03-11 04:47:45.040099'
+
+
+work_kind_prices12:
+  id: '14'
+  term: '2013'
+  work_kind_id: '8'
+  price: '1000'
+  created_at: '2010-07-19 10:30:39.907171'
+  updated_at: '2013-11-20 08:52:22.665416'
+
+
+work_kind_prices15:
+  id: '17'
+  term: '2013'
+  work_kind_id: '23'
+  price: '1000'
+  created_at: '2013-11-19 09:19:43.796183'
+  updated_at: '2013-11-20 08:48:21.809704'
+
+
+work_kind_prices17:
+  id: '19'
+  term: '2012'
+  work_kind_id: '11'
+  price: '1000'
+  created_at: '2010-07-19 12:30:25.718941'
+  updated_at: '2013-11-20 09:03:48.048074'
+
+
+work_kind_prices18:
+  id: '20'
+  term: '2014'
+  work_kind_id: '13'
+  price: '1000'
+  created_at: '2010-07-19 12:44:04.061495'
+  updated_at: '2013-11-20 08:54:47.691667'
+
+
+work_kind_prices19:
+  id: '21'
+  term: '2015'
+  work_kind_id: '3'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:53:04.370872'
+
+
+work_kind_prices21:
+  id: '23'
+  term: '2013'
+  work_kind_id: '4'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:57:28.815801'
+
+
+work_kind_prices22:
+  id: '24'
+  term: '2014'
+  work_kind_id: '1'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:54:12.853248'
+
+
+work_kind_prices23:
+  id: '25'
+  term: '2015'
+  work_kind_id: '11'
+  price: '1000'
+  created_at: '2010-07-19 12:30:25.718941'
+  updated_at: '2013-11-20 09:03:48.048074'
+
+
+work_kind_prices25:
+  id: '27'
+  term: '2014'
+  work_kind_id: '25'
+  price: '1000'
+  created_at: '2013-11-20 08:50:51.864188'
+  updated_at: '2016-02-09 02:05:14.59751'
+
+
+work_kind_prices27:
+  id: '29'
+  term: '2012'
+  work_kind_id: '3'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:53:04.370872'
+
+
+work_kind_prices28:
+  id: '30'
+  term: '2016'
+  work_kind_id: '25'
+  price: '1000'
+  created_at: '2013-11-20 08:50:51.864188'
+  updated_at: '2016-02-09 02:05:14.59751'
+
+
+work_kind_prices29:
+  id: '31'
+  term: '2013'
+  work_kind_id: '15'
+  price: '1000'
+  created_at: '2010-09-19 23:29:32.395154'
+  updated_at: '2013-11-20 08:58:05.215694'
+
+
+work_kind_prices34:
+  id: '36'
+  term: '2015'
+  work_kind_id: '6'
+  price: '1000'
+  created_at: '2010-07-19 10:03:59.748838'
+  updated_at: '2013-11-20 08:56:04.773669'
+
+
+work_kind_prices35:
+  id: '37'
+  term: '2015'
+  work_kind_id: '2'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:53:25.416569'
+
+
+work_kind_prices36:
+  id: '38'
+  term: '2014'
+  work_kind_id: '23'
+  price: '1000'
+  created_at: '2013-11-19 09:19:43.796183'
+  updated_at: '2013-11-20 08:48:21.809704'
+
+
+work_kind_prices37:
+  id: '39'
+  term: '2014'
+  work_kind_id: '20'
+  price: '1000'
+  created_at: '2012-04-22 00:27:18.278707'
+  updated_at: '2013-11-20 09:00:31.495688'
+
+
+work_kind_prices38:
+  id: '40'
+  term: '2015'
+  work_kind_id: '29'
+  price: '1000'
+  created_at: '2014-06-13 08:03:40.06117'
+  updated_at: '2014-06-13 08:03:40.06117'
+
+
+work_kind_prices39:
+  id: '41'
+  term: '2014'
+  work_kind_id: '28'
+  price: '1000'
+  created_at: '2014-04-09 08:36:02.534004'
+  updated_at: '2014-04-09 08:36:02.534004'
+
+
+work_kind_prices40:
+  id: '42'
+  term: '2014'
+  work_kind_id: '15'
+  price: '1000'
+  created_at: '2010-09-19 23:29:32.395154'
+  updated_at: '2013-11-20 08:58:05.215694'
+
+
+work_kind_prices42:
+  id: '44'
+  term: '2012'
+  work_kind_id: '2'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:53:25.416569'
+
+
+work_kind_prices43:
+  id: '45'
+  term: '2016'
+  work_kind_id: '36'
+  price: '0'
+  created_at: '2015-12-17 09:03:37.881127'
+  updated_at: '2016-02-09 02:04:55.071446'
+
+
+work_kind_prices44:
+  id: '46'
+  term: '2013'
+  work_kind_id: '1'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:54:12.853248'
+
+
+work_kind_prices45:
+  id: '47'
+  term: '2014'
+  work_kind_id: '30'
+  price: '1000'
+  created_at: '2014-07-20 07:38:41.358746'
+  updated_at: '2014-07-20 07:38:41.358746'
+
+
+work_kind_prices46:
+  id: '48'
+  term: '2014'
+  work_kind_id: '4'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:57:28.815801'
+
+
+work_kind_prices47:
+  id: '49'
+  term: '2012'
+  work_kind_id: '6'
+  price: '1000'
+  created_at: '2010-07-19 10:03:59.748838'
+  updated_at: '2013-11-20 08:56:04.773669'
+
+
+work_kind_prices49:
+  id: '51'
+  term: '2012'
+  work_kind_id: '18'
+  price: '1000'
+  created_at: '2011-10-15 00:12:57.603634'
+  updated_at: '2013-11-20 08:59:27.443118'
+
+
+work_kind_prices50:
+  id: '52'
+  term: '2015'
+  work_kind_id: '24'
+  price: '0'
+  created_at: '2013-11-20 08:50:16.189633'
+  updated_at: '2016-02-09 02:04:43.455684'
+
+
+work_kind_prices51:
+  id: '53'
+  term: '2012'
+  work_kind_id: '10'
+  price: '1000'
+  created_at: '2010-07-19 12:10:18.771079'
+  updated_at: '2013-11-20 08:56:20.342028'
+
+
+work_kind_prices52:
+  id: '54'
+  term: '2012'
+  work_kind_id: '12'
+  price: '1000'
+  created_at: '2010-07-19 12:33:38.767993'
+  updated_at: '2016-02-09 02:05:28.475356'
+
+
+work_kind_prices55:
+  id: '57'
+  term: '2014'
+  work_kind_id: '8'
+  price: '1000'
+  created_at: '2010-07-19 10:30:39.907171'
+  updated_at: '2013-11-20 08:52:22.665416'
+
+
+work_kind_prices56:
+  id: '58'
+  term: '2015'
+  work_kind_id: '18'
+  price: '1000'
+  created_at: '2011-10-15 00:12:57.603634'
+  updated_at: '2013-11-20 08:59:27.443118'
+
+
+work_kind_prices59:
+  id: '61'
+  term: '2015'
+  work_kind_id: '32'
+  price: '1000'
+  created_at: '2015-03-21 10:01:44.429361'
+  updated_at: '2015-03-21 10:04:34.739942'
+
+
+work_kind_prices61:
+  id: '63'
+  term: '2014'
+  work_kind_id: '16'
+  price: '1000'
+  created_at: '2011-06-25 00:21:43.323872'
+  updated_at: '2013-11-20 08:55:31.975041'
+
+
+work_kind_prices62:
+  id: '64'
+  term: '2015'
+  work_kind_id: '10'
+  price: '1000'
+  created_at: '2010-07-19 12:10:18.771079'
+  updated_at: '2013-11-20 08:56:20.342028'
+
+
+work_kind_prices63:
+  id: '65'
+  term: '2015'
+  work_kind_id: '12'
+  price: '1000'
+  created_at: '2010-07-19 12:33:38.767993'
+  updated_at: '2016-02-09 02:05:28.475356'
+
+
+work_kind_prices64:
+  id: '66'
+  term: '2014'
+  work_kind_id: '29'
+  price: '1000'
+  created_at: '2014-06-13 08:03:40.06117'
+  updated_at: '2014-06-13 08:03:40.06117'
+
+
+work_kind_prices65:
+  id: '67'
+  term: '2015'
+  work_kind_id: '20'
+  price: '1000'
+  created_at: '2012-04-22 00:27:18.278707'
+  updated_at: '2013-11-20 09:00:31.495688'
+
+
+work_kind_prices66:
+  id: '68'
+  term: '2015'
+  work_kind_id: '23'
+  price: '1000'
+  created_at: '2013-11-19 09:19:43.796183'
+  updated_at: '2013-11-20 08:48:21.809704'
+
+
+work_kind_prices67:
+  id: '69'
+  term: '2014'
+  work_kind_id: '2'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:53:25.416569'
+
+
+work_kind_prices68:
+  id: '70'
+  term: '2012'
+  work_kind_id: '4'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:57:28.815801'
+
+
+work_kind_prices69:
+  id: '71'
+  term: '2014'
+  work_kind_id: '6'
+  price: '1000'
+  created_at: '2010-07-19 10:03:59.748838'
+  updated_at: '2013-11-20 08:56:04.773669'
+
+
+work_kind_prices71:
+  id: '73'
+  term: '2012'
+  work_kind_id: '15'
+  price: '1000'
+  created_at: '2010-09-19 23:29:32.395154'
+  updated_at: '2013-11-20 08:58:05.215694'
+
+
+work_kind_prices72:
+  id: '74'
+  term: '2013'
+  work_kind_id: '3'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:53:04.370872'
+
+
+work_kind_prices73:
+  id: '75'
+  term: '2013'
+  work_kind_id: '11'
+  price: '1000'
+  created_at: '2010-07-19 12:30:25.718941'
+  updated_at: '2013-11-20 09:03:48.048074'
+
+
+work_kind_prices74:
+  id: '76'
+  term: '2015'
+  work_kind_id: '30'
+  price: '1000'
+  created_at: '2014-07-20 07:38:41.358746'
+  updated_at: '2014-07-20 07:38:41.358746'
+
+
+work_kind_prices75:
+  id: '77'
+  term: '2015'
+  work_kind_id: '4'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:57:28.815801'
+
+
+work_kind_prices76:
+  id: '78'
+  term: '2012'
+  work_kind_id: '20'
+  price: '1000'
+  created_at: '2012-04-22 00:27:18.278707'
+  updated_at: '2013-11-20 09:00:31.495688'
+
+
+work_kind_prices77:
+  id: '79'
+  term: '2016'
+  work_kind_id: '38'
+  price: '1000'
+  created_at: '2016-02-09 02:07:33.833683'
+  updated_at: '2016-02-09 02:07:33.833683'
+
+
+work_kind_prices81:
+  id: '83'
+  term: '2015'
+  work_kind_id: '15'
+  price: '1000'
+  created_at: '2010-09-19 23:29:32.395154'
+  updated_at: '2013-11-20 08:58:05.215694'
+
+
+work_kind_prices82:
+  id: '84'
+  term: '2015'
+  work_kind_id: '28'
+  price: '1000'
+  created_at: '2014-04-09 08:36:02.534004'
+  updated_at: '2014-04-09 08:36:02.534004'
+
+
+work_kind_prices83:
+  id: '85'
+  term: '2012'
+  work_kind_id: '16'
+  price: '1000'
+  created_at: '2011-06-25 00:21:43.323872'
+  updated_at: '2013-11-20 08:55:31.975041'
+
+
+work_kind_prices84:
+  id: '86'
+  term: '2012'
+  work_kind_id: '8'
+  price: '1000'
+  created_at: '2010-07-19 10:30:39.907171'
+  updated_at: '2013-11-20 08:52:22.665416'
+
+
+work_kind_prices85:
+  id: '87'
+  term: '2014'
+  work_kind_id: '12'
+  price: '1000'
+  created_at: '2010-07-19 12:33:38.767993'
+  updated_at: '2016-02-09 02:05:28.475356'
+
+
+work_kind_prices86:
+  id: '88'
+  term: '2014'
+  work_kind_id: '10'
+  price: '1000'
+  created_at: '2010-07-19 12:10:18.771079'
+  updated_at: '2013-11-20 08:56:20.342028'
+
+
+work_kind_prices88:
+  id: '90'
+  term: '2015'
+  work_kind_id: '16'
+  price: '1000'
+  created_at: '2011-06-25 00:21:43.323872'
+  updated_at: '2013-11-20 08:55:31.975041'
+
+
+work_kind_prices89:
+  id: '91'
+  term: '2013'
+  work_kind_id: '39'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2010-07-15 14:03:52'
+
+
+work_kind_prices92:
+  id: '94'
+  term: '2014'
+  work_kind_id: '18'
+  price: '1000'
+  created_at: '2011-10-15 00:12:57.603634'
+  updated_at: '2013-11-20 08:59:27.443118'
+
+
+work_kind_prices93:
+  id: '95'
+  term: '2015'
+  work_kind_id: '8'
+  price: '1000'
+  created_at: '2010-07-19 10:30:39.907171'
+  updated_at: '2013-11-20 08:52:22.665416'
+
+
+work_kind_prices96:
+  id: '98'
+  term: '2016'
+  work_kind_id: '39'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2010-07-15 14:03:52'
+
+
+work_kind_prices97:
+  id: '99'
+  term: '2012'
+  work_kind_id: '5'
+  price: '1000'
+  created_at: '2010-07-19 10:01:04.245501'
+  updated_at: '2010-07-19 10:30:48.062089'
+
+
+work_kind_prices98:
+  id: '100'
+  term: '2013'
+  work_kind_id: '18'
+  price: '1000'
+  created_at: '2011-10-15 00:12:57.603634'
+  updated_at: '2013-11-20 08:59:27.443118'
+
+
+work_kind_prices99:
+  id: '101'
+  term: '2012'
+  work_kind_id: '21'
+  price: '1000'
+  created_at: '2012-12-24 10:18:40.050517'
+  updated_at: '2012-12-24 10:18:40.050517'
+
+
+work_kind_prices100:
+  id: '102'
+  term: '2015'
+  work_kind_id: '27'
+  price: '1000'
+  created_at: '2014-04-02 09:31:26.87329'
+  updated_at: '2014-04-09 08:21:53.413395'
+
+
+work_kind_prices101:
+  id: '103'
+  term: '2014'
+  work_kind_id: '39'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2010-07-15 14:03:52'
+
+
+work_kind_prices102:
+  id: '104'
+  term: '2013'
+  work_kind_id: '12'
+  price: '1000'
+  created_at: '2010-07-19 12:33:38.767993'
+  updated_at: '2016-02-09 02:05:28.475356'
+
+
+work_kind_prices103:
+  id: '105'
+  term: '2013'
+  work_kind_id: '10'
+  price: '1000'
+  created_at: '2010-07-19 12:10:18.771079'
+  updated_at: '2013-11-20 08:56:20.342028'
+
+
+work_kind_prices104:
+  id: '106'
+  term: '2014'
+  work_kind_id: '3'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:53:04.370872'
+
+
+work_kind_prices106:
+  id: '108'
+  term: '2015'
+  work_kind_id: '13'
+  price: '1000'
+  created_at: '2010-07-19 12:44:04.061495'
+  updated_at: '2013-11-20 08:54:47.691667'
+
+
+work_kind_prices107:
+  id: '109'
+  term: '2013'
+  work_kind_id: '6'
+  price: '1000'
+  created_at: '2010-07-19 10:03:59.748838'
+  updated_at: '2013-11-20 08:56:04.773669'
+
+
+work_kind_prices108:
+  id: '110'
+  term: '2012'
+  work_kind_id: '1'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:54:12.853248'
+
+
+work_kind_prices110:
+  id: '112'
+  term: '2013'
+  work_kind_id: '2'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:53:25.416569'
+
+
+work_kind_prices111:
+  id: '113'
+  term: '2012'
+  work_kind_id: '13'
+  price: '1000'
+  created_at: '2010-07-19 12:44:04.061495'
+  updated_at: '2013-11-20 08:54:47.691667'
+
+
+work_kind_prices113:
+  id: '115'
+  term: '2015'
+  work_kind_id: '25'
+  price: '1000'
+  created_at: '2013-11-20 08:50:51.864188'
+  updated_at: '2016-02-09 02:05:14.59751'
+
+
+work_kind_prices114:
+  id: '116'
+  term: '2014'
+  work_kind_id: '11'
+  price: '1000'
+  created_at: '2010-07-19 12:30:25.718941'
+  updated_at: '2013-11-20 09:03:48.048074'
+
+
+work_kind_prices115:
+  id: '117'
+  term: '2015'
+  work_kind_id: '1'
+  price: '1000'
+  created_at: '2010-07-15 14:03:52'
+  updated_at: '2013-11-20 08:54:12.853248'
+
