@@ -2,7 +2,7 @@ require 'test_helper'
 
 class WorkersControllerTest < ActionController::TestCase
   setup do
-    @worker = Worker.first
+    @worker = workers(:worker1)
     @update = { 
         family_name: "試験", first_name: "太郎", family_phonetic: "しけん", first_phonetic: "たろう",
         home_id: Home.first, display_order: 99 

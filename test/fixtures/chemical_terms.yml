@@ -1,0 +1,595 @@
+
+chemical_terms0:
+  chemical_id: '3'
+  term: '2010'
+
+
+chemical_terms1:
+  chemical_id: '3'
+  term: '2011'
+
+
+chemical_terms2:
+  chemical_id: '3'
+  term: '2014'
+
+
+chemical_terms3:
+  chemical_id: '3'
+  term: '2013'
+
+
+chemical_terms4:
+  chemical_id: '3'
+  term: '2015'
+
+
+chemical_terms5:
+  chemical_id: '3'
+  term: '2012'
+
+
+chemical_terms6:
+  chemical_id: '3'
+  term: '2016'
+
+
+chemical_terms7:
+  chemical_id: '4'
+  term: '2010'
+
+
+chemical_terms8:
+  chemical_id: '4'
+  term: '2011'
+
+
+chemical_terms9:
+  chemical_id: '4'
+  term: '2014'
+
+
+chemical_terms10:
+  chemical_id: '4'
+  term: '2013'
+
+
+chemical_terms11:
+  chemical_id: '4'
+  term: '2015'
+
+
+chemical_terms12:
+  chemical_id: '4'
+  term: '2012'
+
+
+chemical_terms13:
+  chemical_id: '4'
+  term: '2016'
+
+
+chemical_terms14:
+  chemical_id: '6'
+  term: '2010'
+
+
+chemical_terms15:
+  chemical_id: '6'
+  term: '2011'
+
+
+chemical_terms16:
+  chemical_id: '6'
+  term: '2014'
+
+
+chemical_terms17:
+  chemical_id: '6'
+  term: '2013'
+
+
+chemical_terms18:
+  chemical_id: '6'
+  term: '2015'
+
+
+chemical_terms19:
+  chemical_id: '6'
+  term: '2012'
+
+
+chemical_terms20:
+  chemical_id: '6'
+  term: '2016'
+
+
+chemical_terms21:
+  chemical_id: '8'
+  term: '2010'
+
+
+chemical_terms22:
+  chemical_id: '8'
+  term: '2011'
+
+
+chemical_terms23:
+  chemical_id: '8'
+  term: '2014'
+
+
+chemical_terms24:
+  chemical_id: '8'
+  term: '2013'
+
+
+chemical_terms25:
+  chemical_id: '8'
+  term: '2015'
+
+
+chemical_terms26:
+  chemical_id: '8'
+  term: '2012'
+
+
+chemical_terms27:
+  chemical_id: '8'
+  term: '2016'
+
+
+chemical_terms28:
+  chemical_id: '9'
+  term: '2010'
+
+
+chemical_terms29:
+  chemical_id: '9'
+  term: '2011'
+
+
+chemical_terms30:
+  chemical_id: '9'
+  term: '2014'
+
+
+chemical_terms31:
+  chemical_id: '9'
+  term: '2013'
+
+
+chemical_terms32:
+  chemical_id: '9'
+  term: '2015'
+
+
+chemical_terms33:
+  chemical_id: '9'
+  term: '2012'
+
+
+chemical_terms34:
+  chemical_id: '9'
+  term: '2016'
+
+
+chemical_terms35:
+  chemical_id: '7'
+  term: '2010'
+
+
+chemical_terms36:
+  chemical_id: '7'
+  term: '2011'
+
+
+chemical_terms37:
+  chemical_id: '7'
+  term: '2014'
+
+
+chemical_terms38:
+  chemical_id: '7'
+  term: '2013'
+
+
+chemical_terms39:
+  chemical_id: '7'
+  term: '2015'
+
+
+chemical_terms40:
+  chemical_id: '7'
+  term: '2012'
+
+
+chemical_terms41:
+  chemical_id: '7'
+  term: '2016'
+
+
+chemical_terms42:
+  chemical_id: '10'
+  term: '2010'
+
+
+chemical_terms43:
+  chemical_id: '10'
+  term: '2011'
+
+
+chemical_terms44:
+  chemical_id: '10'
+  term: '2014'
+
+
+chemical_terms45:
+  chemical_id: '10'
+  term: '2013'
+
+
+chemical_terms46:
+  chemical_id: '10'
+  term: '2015'
+
+
+chemical_terms47:
+  chemical_id: '10'
+  term: '2012'
+
+
+chemical_terms48:
+  chemical_id: '10'
+  term: '2016'
+
+
+chemical_terms49:
+  chemical_id: '11'
+  term: '2010'
+
+
+chemical_terms50:
+  chemical_id: '11'
+  term: '2011'
+
+
+chemical_terms51:
+  chemical_id: '11'
+  term: '2014'
+
+
+chemical_terms52:
+  chemical_id: '11'
+  term: '2013'
+
+
+chemical_terms53:
+  chemical_id: '11'
+  term: '2015'
+
+
+chemical_terms54:
+  chemical_id: '11'
+  term: '2012'
+
+
+chemical_terms55:
+  chemical_id: '11'
+  term: '2016'
+
+
+chemical_terms56:
+  chemical_id: '1'
+  term: '2010'
+
+
+chemical_terms57:
+  chemical_id: '1'
+  term: '2011'
+
+
+chemical_terms58:
+  chemical_id: '1'
+  term: '2014'
+
+
+chemical_terms59:
+  chemical_id: '1'
+  term: '2013'
+
+
+chemical_terms60:
+  chemical_id: '1'
+  term: '2015'
+
+
+chemical_terms61:
+  chemical_id: '1'
+  term: '2012'
+
+
+chemical_terms62:
+  chemical_id: '1'
+  term: '2016'
+
+
+chemical_terms63:
+  chemical_id: '13'
+  term: '2010'
+
+
+chemical_terms64:
+  chemical_id: '13'
+  term: '2011'
+
+
+chemical_terms65:
+  chemical_id: '13'
+  term: '2014'
+
+
+chemical_terms66:
+  chemical_id: '13'
+  term: '2013'
+
+
+chemical_terms67:
+  chemical_id: '13'
+  term: '2015'
+
+
+chemical_terms68:
+  chemical_id: '13'
+  term: '2012'
+
+
+chemical_terms69:
+  chemical_id: '13'
+  term: '2016'
+
+
+chemical_terms70:
+  chemical_id: '2'
+  term: '2010'
+
+
+chemical_terms71:
+  chemical_id: '2'
+  term: '2011'
+
+
+chemical_terms72:
+  chemical_id: '2'
+  term: '2014'
+
+
+chemical_terms73:
+  chemical_id: '2'
+  term: '2013'
+
+
+chemical_terms74:
+  chemical_id: '2'
+  term: '2015'
+
+
+chemical_terms75:
+  chemical_id: '2'
+  term: '2012'
+
+
+chemical_terms76:
+  chemical_id: '2'
+  term: '2016'
+
+
+chemical_terms77:
+  chemical_id: '5'
+  term: '2010'
+
+
+chemical_terms78:
+  chemical_id: '5'
+  term: '2011'
+
+
+chemical_terms79:
+  chemical_id: '5'
+  term: '2014'
+
+
+chemical_terms80:
+  chemical_id: '5'
+  term: '2013'
+
+
+chemical_terms81:
+  chemical_id: '5'
+  term: '2015'
+
+
+chemical_terms82:
+  chemical_id: '5'
+  term: '2012'
+
+
+chemical_terms83:
+  chemical_id: '5'
+  term: '2016'
+
+
+chemical_terms84:
+  chemical_id: '14'
+  term: '2010'
+
+
+chemical_terms85:
+  chemical_id: '14'
+  term: '2011'
+
+
+chemical_terms86:
+  chemical_id: '14'
+  term: '2014'
+
+
+chemical_terms87:
+  chemical_id: '14'
+  term: '2013'
+
+
+chemical_terms88:
+  chemical_id: '14'
+  term: '2015'
+
+
+chemical_terms89:
+  chemical_id: '14'
+  term: '2012'
+
+
+chemical_terms90:
+  chemical_id: '14'
+  term: '2016'
+
+
+chemical_terms91:
+  chemical_id: '15'
+  term: '2010'
+
+
+chemical_terms92:
+  chemical_id: '15'
+  term: '2011'
+
+
+chemical_terms93:
+  chemical_id: '15'
+  term: '2014'
+
+
+chemical_terms94:
+  chemical_id: '15'
+  term: '2013'
+
+
+chemical_terms95:
+  chemical_id: '15'
+  term: '2015'
+
+
+chemical_terms96:
+  chemical_id: '15'
+  term: '2012'
+
+
+chemical_terms97:
+  chemical_id: '15'
+  term: '2016'
+
+
+chemical_terms98:
+  chemical_id: '16'
+  term: '2010'
+
+
+chemical_terms99:
+  chemical_id: '16'
+  term: '2011'
+
+
+chemical_terms100:
+  chemical_id: '16'
+  term: '2014'
+
+
+chemical_terms101:
+  chemical_id: '16'
+  term: '2013'
+
+
+chemical_terms102:
+  chemical_id: '16'
+  term: '2015'
+
+
+chemical_terms103:
+  chemical_id: '16'
+  term: '2012'
+
+
+chemical_terms104:
+  chemical_id: '16'
+  term: '2016'
+
+
+chemical_terms105:
+  chemical_id: '17'
+  term: '2010'
+
+
+chemical_terms106:
+  chemical_id: '17'
+  term: '2011'
+
+
+chemical_terms107:
+  chemical_id: '17'
+  term: '2014'
+
+
+chemical_terms108:
+  chemical_id: '17'
+  term: '2013'
+
+
+chemical_terms109:
+  chemical_id: '17'
+  term: '2015'
+
+
+chemical_terms110:
+  chemical_id: '17'
+  term: '2012'
+
+
+chemical_terms111:
+  chemical_id: '17'
+  term: '2016'
+
+
+chemical_terms112:
+  chemical_id: '12'
+  term: '2010'
+
+
+chemical_terms113:
+  chemical_id: '12'
+  term: '2011'
+
+
+chemical_terms114:
+  chemical_id: '12'
+  term: '2014'
+
+
+chemical_terms115:
+  chemical_id: '12'
+  term: '2013'
+
+
+chemical_terms116:
+  chemical_id: '12'
+  term: '2015'
+
+
+chemical_terms117:
+  chemical_id: '12'
+  term: '2012'
+
+
+chemical_terms118:
+  chemical_id: '12'
+  term: '2016'
+

@@ -1,0 +1,24 @@
+
+chemical_types0:
+  id: '1'
+  name: 除草剤
+  display_order: '10'
+  created_at: '2016-03-19 06:36:20.372125'
+  updated_at: '2016-03-19 06:36:20.372125'
+
+
+chemical_types1:
+  id: '2'
+  name: 箱処理剤
+  display_order: '20'
+  created_at: '2016-03-19 06:36:20.374793'
+  updated_at: '2016-03-19 06:36:20.374793'
+
+
+chemical_types2:
+  id: '3'
+  name: 基肥
+  display_order: '30'
+  created_at: '2016-03-19 06:36:20.375905'
+  updated_at: '2016-03-19 06:36:20.375905'
+

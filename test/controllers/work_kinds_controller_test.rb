@@ -2,7 +2,7 @@ require 'test_helper'
 
 class WorkKindsControllerTest < ActionController::TestCase
   setup do
-    @work_kind = WorkKind.first
+    @work_kind = work_kinds(:work_kinds1)
     @term = Organization.first.term
     @update = { name: "試験", display_order: 99, price: 1500 }
   end

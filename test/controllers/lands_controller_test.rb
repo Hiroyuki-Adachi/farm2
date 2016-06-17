@@ -2,7 +2,7 @@ require 'test_helper'
 
 class LandsControllerTest < ActionController::TestCase
   setup do
-    @land = Land.first
+    @land = lands(:lands1)
     @update = { place: "9999", owner_id: Home.first, manager_id: Home.first, area: 55.5, display_order: 99, target_flag: true }
   end
 
