@@ -401,3 +401,18 @@ work_kinds38:
   updated_at: '2010-07-15 14:03:52'
   deleted_at: 
 
+work_kind_every_term:
+  name: "年度ごと作業単価"
+  display_order: 100
+  other_flag: f
+  created_at: '2016-02-09 02:07:33.833683'
+  updated_at: '2016-02-09 02:07:33.833683'
+  deleted_at: 
+
+work_kind_first_term:
+  name: "初年度のみ作業単価"
+  display_order: 101
+  other_flag: f
+  created_at: '2016-02-09 02:07:33.833683'
+  updated_at: '2016-02-09 02:07:33.833683'
+  deleted_at: 

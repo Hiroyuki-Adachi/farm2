@@ -756,3 +756,57 @@ work_kind_prices115:
   created_at: '2010-07-15 14:03:52'
   updated_at: '2013-11-20 08:54:12.853248'
 
+work_kind_prices_every_0:
+  term: 2010
+  work_kind: work_kind_every_term
+  price: 2010
+
+work_kind_prices_every_1:
+  term: 2011
+  work_kind: work_kind_every_term
+  price: 2011
+
+work_kind_prices_every_2:
+  term: 2012
+  work_kind: work_kind_every_term
+  price: 2012
+
+work_kind_prices_every_3:
+  term: 2013
+  work_kind: work_kind_every_term
+  price: 2013
+
+work_kind_prices_every_4:
+  term: 2014
+  work_kind: work_kind_every_term
+  price: 2014
+
+work_kind_prices_every_5:
+  term: 2015
+  work_kind: work_kind_every_term
+  price: 2015
+
+work_kind_prices_every_6:
+  term: 2016
+  work_kind: work_kind_every_term
+  price: 2016
+
+work_kind_prices_every_7:
+  term: 2017
+  work_kind: work_kind_every_term
+  price: 2017
+
+work_kind_prices_every_8:
+  term: 2018
+  work_kind: work_kind_every_term
+  price: 2018
+
+work_kind_prices_every_9:
+  term: 2019
+  work_kind: work_kind_every_term
+  price: 2019
+
+work_kind_prices_first_0:
+  term: 2010
+  work_kind: work_kind_first_term
+  price: 3000
