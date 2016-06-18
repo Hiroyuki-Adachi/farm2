@@ -1,0 +1,38 @@
+
+machine_types0:
+  id: '1'
+  name: トラクター
+  display_order: '1'
+  created_at: 
+  updated_at: 
+
+
+machine_types1:
+  id: '2'
+  name: 田植機
+  display_order: '2'
+  created_at: 
+  updated_at: 
+
+
+machine_types2:
+  id: '3'
+  name: コンバイン
+  display_order: '3'
+  created_at: 
+  updated_at: 
+
+
+machine_types3:
+  id: '4'
+  name: バックホー
+  display_order: '4'
+  created_at: '2016-06-07 12:28:47.874986'
+  updated_at: '2016-06-07 12:28:47.874986'
+
+machine_types_removable:
+  id: '5'
+  name: "消せるよ!!"
+  display_order: '5'
+  created_at: '2016-06-07 12:28:47.874986'
+  updated_at: '2016-06-07 12:28:47.874986'
