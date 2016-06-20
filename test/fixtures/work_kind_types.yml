@@ -7,7 +7,6 @@
 #  work_type_id :integer                                # 作業分類
 #
 
-
 work_kind_types0:
   id: '2'
   work_kind_id: '39'

@@ -10,7 +10,6 @@
 #  deleted_at    :datetime
 #
 
-
 work_types0:
   id: '1'
   genre: '1'

@@ -1,8 +1,9 @@
 class WorksController < ApplicationController
   before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :show, :update, :destroy]
   before_action :set_masters, only: [:new, :create, :edit, :update]
+  before_action :check_fixed, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
 
- def index
+  def index
     respond_to do |format|
       format.html do
         @months = WorkDecorator.months(@term)
@@ -40,9 +41,7 @@ class WorksController < ApplicationController
   end
 
   def create
-    if params[:cancel]
-      redirect_to(root_path)
-    end
+    redirect_to(root_path) if params[:cancel]
 
     if params[:regist]
       @work = Work.new(work_params)
@@ -53,7 +52,7 @@ class WorksController < ApplicationController
       end
     end
   end
-  
+
   def work_type_select
     @work_kinds = WorkKind.by_type(WorkType.find(params[:work_type_id]))
     render action: :work_type_select
@@ -76,7 +75,7 @@ class WorksController < ApplicationController
     @results = @work.work_results || []
     @company_machines = Machine.by_work(@work.model).of_company
     @owner_machines = Machine.by_work(@work.model).of_owners(@work.model)
-    @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select {|m| m.leasable?(@work.model.worked_at) }
+    @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select { |m| m.leasable?(@work.model.worked_at) }
   end
 
   def edit_chemicals
@@ -121,26 +120,31 @@ class WorksController < ApplicationController
     @work.destroy
     redirect_to(works_path(page: params[:page], month: params[:month]))
   end
-  
+
   def autocomplete_for_land_place
     render json: Land.autocomplete(params[:term])
   end
 
   private
+
   def set_work
     @work = Work.find(params[:id]).decorate
   end
-  
+
   def set_masters
     @weathers = Weather.all
     @work_types = WorkType.usual
   end
-  
+
   def work_params
-    return params.require(:work).permit(:worked_at, :weather_id, :start_at, :end_at, :work_type_id, :work_kind_id, :name, :remarks) 
+    params.require(:work).permit(:worked_at, :weather_id, :start_at, :end_at, :work_type_id, :work_kind_id, :name, :remarks) 
   end
-  
+
   def page_params
-    return params.permit(:page, :month).merge({id: @work.id})
+    params.permit(:page, :month).merge(id: @work.id)
+  end
+
+  def check_fixed
+    redirect_to(works_path(page: params[:page], month: params[:month])) if @work.fixed_at
   end
 end

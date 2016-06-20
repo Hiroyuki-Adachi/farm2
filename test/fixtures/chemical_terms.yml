@@ -6,7 +6,6 @@
 #  term        :integer          not null # 年度(期)
 #
 
-
 chemical_terms0:
   chemical_id: '3'
   term: '2010'
