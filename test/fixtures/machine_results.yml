@@ -1,0 +1,3892 @@
+
+machine_results0:
+  id: '1024'
+  machine_id: '4'
+  work_result_id: '5210'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: '0.00'
+  fixed_adjust_id: '0'
+  fixed_price: '0'
+  fixed_amount: '0'
+  created_at: '2015-03-21 00:40:31.081077'
+  updated_at: '2016-06-13 05:42:42.425741'
+
+
+machine_results1:
+  id: '1025'
+  machine_id: '4'
+  work_result_id: '5212'
+  display_order: '1'
+  hours: '2.5'
+  fixed_quantity: '0.00'
+  fixed_adjust_id: '0'
+  fixed_price: '0'
+  fixed_amount: '0'
+  created_at: '2015-03-21 00:42:49.790541'
+  updated_at: '2016-06-13 05:42:42.456941'
+
+
+machine_results2:
+  id: '1027'
+  machine_id: '12'
+  work_result_id: '5215'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: '14.00'
+  fixed_adjust_id: '1'
+  fixed_price: '1000'
+  fixed_amount: '14000'
+  created_at: '2015-03-21 00:48:03.533993'
+  updated_at: '2016-06-13 05:42:42.503741'
+
+
+machine_results3:
+  id: '1028'
+  machine_id: '5'
+  work_result_id: '5214'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: '0.00'
+  fixed_adjust_id: '0'
+  fixed_price: '0'
+  fixed_amount: '0'
+  created_at: '2015-03-21 00:48:03.541313'
+  updated_at: '2016-06-13 05:42:42.488141'
+
+
+machine_results4:
+  id: '1029'
+  machine_id: '12'
+  work_result_id: '5216'
+  display_order: '1'
+  hours: '6.0'
+  fixed_quantity: '6.00'
+  fixed_adjust_id: '1'
+  fixed_price: '1000'
+  fixed_amount: '6000'
+  created_at: '2015-03-21 00:50:10.796356'
+  updated_at: '2016-06-13 05:42:42.550541'
+
+
+machine_results5:
+  id: '1030'
+  machine_id: '18'
+  work_result_id: '5225'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-21 00:55:09.315975'
+  updated_at: '2015-03-21 00:55:09.315975'
+
+
+machine_results6:
+  id: '1031'
+  machine_id: '18'
+  work_result_id: '5226'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-21 00:58:35.658765'
+  updated_at: '2015-03-21 00:58:35.658765'
+
+
+machine_results7:
+  id: '1032'
+  machine_id: '12'
+  work_result_id: '5234'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-22 01:12:31.298527'
+  updated_at: '2015-03-22 01:12:31.298527'
+
+
+machine_results8:
+  id: '1033'
+  machine_id: '14'
+  work_result_id: '5233'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-22 01:12:31.373253'
+  updated_at: '2015-03-22 01:12:31.373253'
+
+
+machine_results9:
+  id: '1034'
+  machine_id: '12'
+  work_result_id: '5236'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-22 01:14:02.660029'
+  updated_at: '2015-03-22 01:14:02.660029'
+
+
+machine_results10:
+  id: '1035'
+  machine_id: '14'
+  work_result_id: '5235'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-22 01:14:02.667366'
+  updated_at: '2015-03-22 01:14:02.667366'
+
+
+machine_results11:
+  id: '1036'
+  machine_id: '5'
+  work_result_id: '5237'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-22 01:16:27.752712'
+  updated_at: '2015-03-22 01:16:27.752712'
+
+
+machine_results12:
+  id: '1037'
+  machine_id: '12'
+  work_result_id: '5239'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-22 01:18:35.079534'
+  updated_at: '2015-03-22 01:18:35.079534'
+
+
+machine_results13:
+  id: '1038'
+  machine_id: '14'
+  work_result_id: '5238'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-22 01:18:35.225538'
+  updated_at: '2015-03-22 01:18:35.225538'
+
+
+machine_results14:
+  id: '1039'
+  machine_id: '12'
+  work_result_id: '5241'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-22 01:27:32.586397'
+  updated_at: '2015-03-22 01:27:32.586397'
+
+
+machine_results15:
+  id: '1040'
+  machine_id: '14'
+  work_result_id: '5240'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-22 01:27:32.593802'
+  updated_at: '2015-03-22 01:27:32.593802'
+
+
+machine_results16:
+  id: '1041'
+  machine_id: '12'
+  work_result_id: '5243'
+  display_order: '1'
+  hours: '6.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-22 01:31:02.74519'
+  updated_at: '2015-03-22 01:31:02.74519'
+
+
+machine_results17:
+  id: '1042'
+  machine_id: '14'
+  work_result_id: '5242'
+  display_order: '1'
+  hours: '6.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-03-22 01:31:02.752961'
+  updated_at: '2015-03-22 01:31:02.752961'
+
+
+machine_results18:
+  id: '1043'
+  machine_id: '12'
+  work_result_id: '5303'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-05-04 05:52:09.66653'
+  updated_at: '2015-05-04 05:52:09.66653'
+
+
+machine_results19:
+  id: '1044'
+  machine_id: '14'
+  work_result_id: '5302'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-05-04 05:52:09.683542'
+  updated_at: '2015-05-04 05:52:09.683542'
+
+
+machine_results20:
+  id: '1045'
+  machine_id: '12'
+  work_result_id: '5305'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-05-04 05:58:40.814845'
+  updated_at: '2015-05-04 05:58:40.814845'
+
+
+machine_results21:
+  id: '1046'
+  machine_id: '14'
+  work_result_id: '5304'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-05-04 05:58:40.834027'
+  updated_at: '2015-05-04 05:58:40.834027'
+
+
+machine_results22:
+  id: '1047'
+  machine_id: '18'
+  work_result_id: '5314'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-05-04 06:25:06.088675'
+  updated_at: '2015-05-04 06:25:06.088675'
+
+
+machine_results23:
+  id: '1048'
+  machine_id: '4'
+  work_result_id: '5313'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-05-04 06:25:08.358081'
+  updated_at: '2015-05-04 06:25:08.358081'
+
+
+machine_results24:
+  id: '1057'
+  machine_id: '18'
+  work_result_id: '5317'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-05-04 06:43:49.038535'
+  updated_at: '2015-05-04 06:43:49.038535'
+
+
+machine_results25:
+  id: '1058'
+  machine_id: '4'
+  work_result_id: '5316'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-05-04 06:43:49.046083'
+  updated_at: '2015-05-04 06:43:49.046083'
+
+
+machine_results26:
+  id: '1059'
+  machine_id: '5'
+  work_result_id: '5315'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-05-04 06:43:49.053365'
+  updated_at: '2015-05-04 06:43:49.053365'
+
+
+machine_results27:
+  id: '1060'
+  machine_id: '4'
+  work_result_id: '5323'
+  display_order: '1'
+  hours: '6.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 06:15:21.995987'
+  updated_at: '2015-06-14 06:15:21.995987'
+
+
+machine_results28:
+  id: '1061'
+  machine_id: '18'
+  work_result_id: '5324'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 06:21:54.779927'
+  updated_at: '2015-06-14 06:21:54.779927'
+
+
+machine_results29:
+  id: '1062'
+  machine_id: '4'
+  work_result_id: '5325'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 06:21:54.912147'
+  updated_at: '2015-06-14 06:21:54.912147'
+
+
+machine_results30:
+  id: '1063'
+  machine_id: '4'
+  work_result_id: '5326'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 06:29:43.456534'
+  updated_at: '2015-06-14 06:29:43.456534'
+
+
+machine_results31:
+  id: '1064'
+  machine_id: '5'
+  work_result_id: '5327'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 06:29:43.567567'
+  updated_at: '2015-06-14 06:29:43.567567'
+
+
+machine_results32:
+  id: '1065'
+  machine_id: '4'
+  work_result_id: '5328'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 06:32:39.617271'
+  updated_at: '2015-06-14 06:32:39.617271'
+
+
+machine_results33:
+  id: '1066'
+  machine_id: '4'
+  work_result_id: '5329'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 06:35:42.934407'
+  updated_at: '2015-06-14 06:35:42.934407'
+
+
+machine_results34:
+  id: '1067'
+  machine_id: '18'
+  work_result_id: '5330'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 06:40:59.813426'
+  updated_at: '2015-06-14 06:40:59.813426'
+
+
+machine_results35:
+  id: '1068'
+  machine_id: '4'
+  work_result_id: '5331'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 06:40:59.912437'
+  updated_at: '2015-06-14 06:40:59.912437'
+
+
+machine_results36:
+  id: '1069'
+  machine_id: '4'
+  work_result_id: '5332'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 06:46:08.802221'
+  updated_at: '2015-06-14 06:46:08.802221'
+
+
+machine_results37:
+  id: '1070'
+  machine_id: '18'
+  work_result_id: '5333'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 06:51:05.037248'
+  updated_at: '2015-06-14 06:51:05.037248'
+
+
+machine_results38:
+  id: '1071'
+  machine_id: '4'
+  work_result_id: '5334'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 06:51:05.169315'
+  updated_at: '2015-06-14 06:51:05.169315'
+
+
+machine_results39:
+  id: '1072'
+  machine_id: '18'
+  work_result_id: '5335'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 07:11:26.762131'
+  updated_at: '2015-06-14 07:11:26.762131'
+
+
+machine_results40:
+  id: '1073'
+  machine_id: '4'
+  work_result_id: '5337'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 07:11:26.781413'
+  updated_at: '2015-06-14 07:11:26.781413'
+
+
+machine_results41:
+  id: '1074'
+  machine_id: '5'
+  work_result_id: '5336'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 07:11:26.788783'
+  updated_at: '2015-06-14 07:11:26.788783'
+
+
+machine_results42:
+  id: '1075'
+  machine_id: '18'
+  work_result_id: '5338'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 07:17:54.052851'
+  updated_at: '2015-06-14 07:17:54.052851'
+
+
+machine_results43:
+  id: '1076'
+  machine_id: '4'
+  work_result_id: '5339'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-06-14 07:17:54.060195'
+  updated_at: '2015-06-14 07:17:54.060195'
+
+
+machine_results44:
+  id: '1080'
+  machine_id: '18'
+  work_result_id: '5359'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:23:01.60898'
+  updated_at: '2015-07-05 06:23:01.60898'
+
+
+machine_results45:
+  id: '1081'
+  machine_id: '4'
+  work_result_id: '5361'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:23:01.763992'
+  updated_at: '2015-07-05 06:23:01.763992'
+
+
+machine_results46:
+  id: '1082'
+  machine_id: '5'
+  work_result_id: '5360'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:23:01.771256'
+  updated_at: '2015-07-05 06:23:01.771256'
+
+
+machine_results47:
+  id: '1083'
+  machine_id: '18'
+  work_result_id: '5363'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:30:07.918339'
+  updated_at: '2015-07-05 06:30:07.918339'
+
+
+machine_results48:
+  id: '1084'
+  machine_id: '4'
+  work_result_id: '5362'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:30:07.925779'
+  updated_at: '2015-07-05 06:30:07.925779'
+
+
+machine_results49:
+  id: '1085'
+  machine_id: '5'
+  work_result_id: '5364'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:30:07.932955'
+  updated_at: '2015-07-05 06:30:07.932955'
+
+
+machine_results50:
+  id: '1086'
+  machine_id: '18'
+  work_result_id: '5372'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:38:58.528285'
+  updated_at: '2015-07-05 06:38:58.528285'
+
+
+machine_results51:
+  id: '1087'
+  machine_id: '4'
+  work_result_id: '5371'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:38:58.5363'
+  updated_at: '2015-07-05 06:38:58.5363'
+
+
+machine_results52:
+  id: '1088'
+  machine_id: '5'
+  work_result_id: '5373'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:38:58.544088'
+  updated_at: '2015-07-05 06:38:58.544088'
+
+
+machine_results53:
+  id: '1089'
+  machine_id: '18'
+  work_result_id: '5382'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:45:35.354856'
+  updated_at: '2015-07-05 06:45:35.354856'
+
+
+machine_results54:
+  id: '1090'
+  machine_id: '4'
+  work_result_id: '5380'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:45:35.539163'
+  updated_at: '2015-07-05 06:45:35.539163'
+
+
+machine_results55:
+  id: '1091'
+  machine_id: '5'
+  work_result_id: '5381'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:45:35.604583'
+  updated_at: '2015-07-05 06:45:35.604583'
+
+
+machine_results56:
+  id: '1092'
+  machine_id: '18'
+  work_result_id: '5385'
+  display_order: '1'
+  hours: '7.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:52:43.9604'
+  updated_at: '2015-07-05 06:52:43.9604'
+
+
+machine_results57:
+  id: '1093'
+  machine_id: '4'
+  work_result_id: '5383'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:52:43.967816'
+  updated_at: '2015-07-05 06:52:43.967816'
+
+
+machine_results58:
+  id: '1094'
+  machine_id: '5'
+  work_result_id: '5384'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 06:52:43.97501'
+  updated_at: '2015-07-05 06:52:43.97501'
+
+
+machine_results59:
+  id: '1099'
+  machine_id: '2'
+  work_result_id: '5410'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 07:40:19.427635'
+  updated_at: '2015-07-05 07:40:19.427635'
+
+
+machine_results60:
+  id: '1100'
+  machine_id: '19'
+  work_result_id: '5411'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 07:40:19.447296'
+  updated_at: '2015-07-05 07:40:19.447296'
+
+
+machine_results61:
+  id: '1101'
+  machine_id: '19'
+  work_result_id: '5427'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 07:57:05.33956'
+  updated_at: '2015-07-05 07:57:05.33956'
+
+
+machine_results62:
+  id: '1102'
+  machine_id: '4'
+  work_result_id: '5432'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 07:59:10.90004'
+  updated_at: '2015-07-05 07:59:10.90004'
+
+
+machine_results63:
+  id: '1103'
+  machine_id: '18'
+  work_result_id: '5433'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 08:01:26.744423'
+  updated_at: '2015-07-05 08:01:26.744423'
+
+
+machine_results64:
+  id: '1104'
+  machine_id: '2'
+  work_result_id: '5438'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 08:08:44.387675'
+  updated_at: '2015-07-05 08:08:44.387675'
+
+
+machine_results65:
+  id: '1105'
+  machine_id: '19'
+  work_result_id: '5442'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 08:08:44.410931'
+  updated_at: '2015-07-05 08:08:44.410931'
+
+
+machine_results66:
+  id: '1106'
+  machine_id: '19'
+  work_result_id: '5455'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-05 08:22:23.548364'
+  updated_at: '2015-07-05 08:22:23.548364'
+
+
+machine_results67:
+  id: '1107'
+  machine_id: '19'
+  work_result_id: '5458'
+  display_order: '1'
+  hours: '2.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 09:55:31.298666'
+  updated_at: '2015-07-19 09:55:31.298666'
+
+
+machine_results68:
+  id: '1108'
+  machine_id: '18'
+  work_result_id: '5462'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 10:05:56.330978'
+  updated_at: '2015-07-19 10:05:56.330978'
+
+
+machine_results69:
+  id: '1109'
+  machine_id: '19'
+  work_result_id: '5470'
+  display_order: '1'
+  hours: '2.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 10:12:00.971899'
+  updated_at: '2015-07-19 10:12:00.971899'
+
+
+machine_results70:
+  id: '1110'
+  machine_id: '18'
+  work_result_id: '5473'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 10:15:58.94409'
+  updated_at: '2015-07-19 10:15:58.94409'
+
+
+machine_results71:
+  id: '1111'
+  machine_id: '4'
+  work_result_id: '5472'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 10:15:59.081218'
+  updated_at: '2015-07-19 10:15:59.081218'
+
+
+machine_results72:
+  id: '1112'
+  machine_id: '18'
+  work_result_id: '5475'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 10:17:27.60601'
+  updated_at: '2015-07-19 10:17:27.60601'
+
+
+machine_results73:
+  id: '1113'
+  machine_id: '4'
+  work_result_id: '5474'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 10:17:27.759915'
+  updated_at: '2015-07-19 10:17:27.759915'
+
+
+machine_results74:
+  id: '1114'
+  machine_id: '18'
+  work_result_id: '5478'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 10:20:07.033013'
+  updated_at: '2015-07-19 10:20:07.033013'
+
+
+machine_results75:
+  id: '1115'
+  machine_id: '4'
+  work_result_id: '5476'
+  display_order: '1'
+  hours: '6.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 10:20:07.040229'
+  updated_at: '2015-07-19 10:20:07.040229'
+
+
+machine_results76:
+  id: '1116'
+  machine_id: '5'
+  work_result_id: '5477'
+  display_order: '1'
+  hours: '6.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 10:20:07.047414'
+  updated_at: '2015-07-19 10:20:07.047414'
+
+
+machine_results77:
+  id: '1117'
+  machine_id: '18'
+  work_result_id: '5480'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 10:22:09.622136'
+  updated_at: '2015-07-19 10:22:09.622136'
+
+
+machine_results78:
+  id: '1118'
+  machine_id: '4'
+  work_result_id: '5479'
+  display_order: '1'
+  hours: '6.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 10:22:09.629456'
+  updated_at: '2015-07-19 10:22:09.629456'
+
+
+machine_results79:
+  id: '1119'
+  machine_id: '19'
+  work_result_id: '5482'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-19 10:23:32.691314'
+  updated_at: '2015-07-19 10:23:32.691314'
+
+
+machine_results80:
+  id: '1120'
+  machine_id: '19'
+  work_result_id: '5495'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:07:30.724706'
+  updated_at: '2015-07-20 02:07:30.724706'
+
+
+machine_results81:
+  id: '1121'
+  machine_id: '19'
+  work_result_id: '5500'
+  display_order: '1'
+  hours: '7.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:08:58.936205'
+  updated_at: '2015-07-20 02:08:58.936205'
+
+
+machine_results82:
+  id: '1122'
+  machine_id: '18'
+  work_result_id: '5507'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:10:48.15217'
+  updated_at: '2015-07-20 02:10:48.15217'
+
+
+machine_results83:
+  id: '1123'
+  machine_id: '4'
+  work_result_id: '5508'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:10:48.299774'
+  updated_at: '2015-07-20 02:10:48.299774'
+
+
+machine_results84:
+  id: '1124'
+  machine_id: '5'
+  work_result_id: '5509'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:10:48.424476'
+  updated_at: '2015-07-20 02:10:48.424476'
+
+
+machine_results85:
+  id: '1125'
+  machine_id: '18'
+  work_result_id: '5513'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:12:37.531451'
+  updated_at: '2015-07-20 02:12:37.531451'
+
+
+machine_results86:
+  id: '1126'
+  machine_id: '4'
+  work_result_id: '5512'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:12:37.699047'
+  updated_at: '2015-07-20 02:12:37.699047'
+
+
+machine_results87:
+  id: '1127'
+  machine_id: '5'
+  work_result_id: '5514'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:12:37.906246'
+  updated_at: '2015-07-20 02:12:37.906246'
+
+
+machine_results88:
+  id: '1128'
+  machine_id: '18'
+  work_result_id: '5516'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:14:15.074096'
+  updated_at: '2015-07-20 02:14:15.074096'
+
+
+machine_results89:
+  id: '1129'
+  machine_id: '4'
+  work_result_id: '5515'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:14:15.081587'
+  updated_at: '2015-07-20 02:14:15.081587'
+
+
+machine_results90:
+  id: '1130'
+  machine_id: '5'
+  work_result_id: '5517'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:14:15.088927'
+  updated_at: '2015-07-20 02:14:15.088927'
+
+
+machine_results91:
+  id: '1131'
+  machine_id: '18'
+  work_result_id: '5518'
+  display_order: '1'
+  hours: '10.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:17:23.078996'
+  updated_at: '2015-07-20 02:17:23.078996'
+
+
+machine_results92:
+  id: '1132'
+  machine_id: '4'
+  work_result_id: '5519'
+  display_order: '1'
+  hours: '10.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:17:23.271579'
+  updated_at: '2015-07-20 02:17:23.271579'
+
+
+machine_results93:
+  id: '1133'
+  machine_id: '5'
+  work_result_id: '5520'
+  display_order: '1'
+  hours: '10.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:17:23.35949'
+  updated_at: '2015-07-20 02:17:23.35949'
+
+
+machine_results94:
+  id: '1134'
+  machine_id: '18'
+  work_result_id: '5522'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:19:35.702093'
+  updated_at: '2015-07-20 02:19:35.702093'
+
+
+machine_results95:
+  id: '1135'
+  machine_id: '4'
+  work_result_id: '5523'
+  display_order: '1'
+  hours: '10.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:19:35.709952'
+  updated_at: '2015-07-20 02:19:35.709952'
+
+
+machine_results96:
+  id: '1136'
+  machine_id: '5'
+  work_result_id: '5524'
+  display_order: '1'
+  hours: '10.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:19:35.717353'
+  updated_at: '2015-07-20 02:19:35.717353'
+
+
+machine_results97:
+  id: '1137'
+  machine_id: '2'
+  work_result_id: '5535'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:23:49.069527'
+  updated_at: '2015-07-20 02:23:49.069527'
+
+
+machine_results98:
+  id: '1138'
+  machine_id: '2'
+  work_result_id: '5525'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:23:49.077054'
+  updated_at: '2015-07-20 02:23:49.077054'
+
+
+machine_results99:
+  id: '1139'
+  machine_id: '19'
+  work_result_id: '5532'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:23:49.084297'
+  updated_at: '2015-07-20 02:23:49.084297'
+
+
+machine_results100:
+  id: '1140'
+  machine_id: '19'
+  work_result_id: '5531'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:23:49.091645'
+  updated_at: '2015-07-20 02:23:49.091645'
+
+
+machine_results101:
+  id: '1141'
+  machine_id: '2'
+  work_result_id: '5544'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:28:22.911145'
+  updated_at: '2015-07-20 02:28:22.911145'
+
+
+machine_results102:
+  id: '1142'
+  machine_id: '19'
+  work_result_id: '5539'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:28:23.054369'
+  updated_at: '2015-07-20 02:28:23.054369'
+
+
+machine_results103:
+  id: '1143'
+  machine_id: '18'
+  work_result_id: '5549'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:30:23.986186'
+  updated_at: '2015-07-20 02:30:23.986186'
+
+
+machine_results104:
+  id: '1144'
+  machine_id: '4'
+  work_result_id: '5548'
+  display_order: '1'
+  hours: '10.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:30:24.060023'
+  updated_at: '2015-07-20 02:30:24.060023'
+
+
+machine_results105:
+  id: '1145'
+  machine_id: '5'
+  work_result_id: '5550'
+  display_order: '1'
+  hours: '10.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:30:24.067413'
+  updated_at: '2015-07-20 02:30:24.067413'
+
+
+machine_results106:
+  id: '1146'
+  machine_id: '18'
+  work_result_id: '5551'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:32:02.350729'
+  updated_at: '2015-07-20 02:32:02.350729'
+
+
+machine_results107:
+  id: '1147'
+  machine_id: '4'
+  work_result_id: '5552'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:32:02.478556'
+  updated_at: '2015-07-20 02:32:02.478556'
+
+
+machine_results108:
+  id: '1148'
+  machine_id: '2'
+  work_result_id: '5559'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:35:19.885502'
+  updated_at: '2015-07-20 02:35:19.885502'
+
+
+machine_results109:
+  id: '1149'
+  machine_id: '19'
+  work_result_id: '5557'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:35:19.893276'
+  updated_at: '2015-07-20 02:35:19.893276'
+
+
+machine_results110:
+  id: '1150'
+  machine_id: '2'
+  work_result_id: '5569'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:38:39.123901'
+  updated_at: '2015-07-20 02:38:39.123901'
+
+
+machine_results111:
+  id: '1151'
+  machine_id: '19'
+  work_result_id: '5567'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:38:39.131799'
+  updated_at: '2015-07-20 02:38:39.131799'
+
+
+machine_results112:
+  id: '1152'
+  machine_id: '19'
+  work_result_id: '5578'
+  display_order: '1'
+  hours: '6.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:40:56.361304'
+  updated_at: '2015-07-20 02:40:56.361304'
+
+
+machine_results113:
+  id: '1153'
+  machine_id: '2'
+  work_result_id: '5587'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:45:29.616808'
+  updated_at: '2015-07-20 02:45:29.616808'
+
+
+machine_results114:
+  id: '1154'
+  machine_id: '2'
+  work_result_id: '5589'
+  display_order: '1'
+  hours: '5.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:45:29.624781'
+  updated_at: '2015-07-20 02:45:29.624781'
+
+
+machine_results115:
+  id: '1155'
+  machine_id: '19'
+  work_result_id: '5585'
+  display_order: '1'
+  hours: '9.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-20 02:45:29.632545'
+  updated_at: '2015-07-20 02:45:29.632545'
+
+
+machine_results116:
+  id: '1156'
+  machine_id: '12'
+  work_result_id: '5306'
+  display_order: '1'
+  hours: '5.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-24 09:18:38.702064'
+  updated_at: '2015-07-24 09:18:38.702064'
+
+
+machine_results117:
+  id: '1157'
+  machine_id: '24'
+  work_result_id: '5492'
+  display_order: '1'
+  hours: '1.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-07-24 09:39:36.729836'
+  updated_at: '2015-07-24 09:39:36.729836'
+
+
+machine_results118:
+  id: '1158'
+  machine_id: '8'
+  work_result_id: '5722'
+  display_order: '1'
+  hours: '2.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-08-23 07:42:07.13736'
+  updated_at: '2015-08-23 07:42:07.13736'
+
+
+machine_results119:
+  id: '1159'
+  machine_id: '8'
+  work_result_id: '5724'
+  display_order: '1'
+  hours: '2.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-08-23 07:42:07.153663'
+  updated_at: '2015-08-23 07:42:07.153663'
+
+
+machine_results120:
+  id: '1160'
+  machine_id: '16'
+  work_result_id: '5723'
+  display_order: '1'
+  hours: '2.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-08-23 07:42:07.160891'
+  updated_at: '2015-08-23 07:42:07.160891'
+
+
+machine_results121:
+  id: '1161'
+  machine_id: '16'
+  work_result_id: '5725'
+  display_order: '1'
+  hours: '2.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-08-23 07:42:07.168081'
+  updated_at: '2015-08-23 07:42:07.168081'
+
+
+machine_results122:
+  id: '1162'
+  machine_id: '17'
+  work_result_id: '5721'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-08-23 07:42:07.17528'
+  updated_at: '2015-08-23 07:42:07.17528'
+
+
+machine_results123:
+  id: '1163'
+  machine_id: '8'
+  work_result_id: '5729'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-08-23 07:45:12.090043'
+  updated_at: '2015-08-23 07:45:12.090043'
+
+
+machine_results124:
+  id: '1164'
+  machine_id: '8'
+  work_result_id: '5728'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-08-23 07:45:12.107075'
+  updated_at: '2015-08-23 07:45:12.107075'
+
+
+machine_results125:
+  id: '1165'
+  machine_id: '16'
+  work_result_id: '5730'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-08-23 07:45:12.114901'
+  updated_at: '2015-08-23 07:45:12.114901'
+
+
+machine_results126:
+  id: '1166'
+  machine_id: '16'
+  work_result_id: '5726'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-08-23 07:45:12.122627'
+  updated_at: '2015-08-23 07:45:12.122627'
+
+
+machine_results127:
+  id: '1167'
+  machine_id: '8'
+  work_result_id: '5738'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:32:50.237402'
+  updated_at: '2015-09-06 01:32:50.237402'
+
+
+machine_results128:
+  id: '1168'
+  machine_id: '8'
+  work_result_id: '5740'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:32:50.254764'
+  updated_at: '2015-09-06 01:32:50.254764'
+
+
+machine_results129:
+  id: '1169'
+  machine_id: '16'
+  work_result_id: '5741'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:32:50.262477'
+  updated_at: '2015-09-06 01:32:50.262477'
+
+
+machine_results130:
+  id: '1170'
+  machine_id: '16'
+  work_result_id: '5737'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:32:50.270124'
+  updated_at: '2015-09-06 01:32:50.270124'
+
+
+machine_results131:
+  id: '1171'
+  machine_id: '4'
+  work_result_id: '5739'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:32:50.278033'
+  updated_at: '2015-09-06 01:32:50.278033'
+
+
+machine_results132:
+  id: '1172'
+  machine_id: '23'
+  work_result_id: '5743'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:45:00.459932'
+  updated_at: '2015-09-06 01:45:00.459932'
+
+
+machine_results133:
+  id: '1173'
+  machine_id: '8'
+  work_result_id: '5745'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:45:00.467591'
+  updated_at: '2015-09-06 01:45:00.467591'
+
+
+machine_results134:
+  id: '1174'
+  machine_id: '8'
+  work_result_id: '5747'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:45:00.474737'
+  updated_at: '2015-09-06 01:45:00.474737'
+
+
+machine_results135:
+  id: '1175'
+  machine_id: '16'
+  work_result_id: '5744'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:45:00.481903'
+  updated_at: '2015-09-06 01:45:00.481903'
+
+
+machine_results136:
+  id: '1176'
+  machine_id: '16'
+  work_result_id: '5746'
+  display_order: '1'
+  hours: '9.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:45:00.489014'
+  updated_at: '2015-09-06 01:45:00.489014'
+
+
+machine_results137:
+  id: '1177'
+  machine_id: '23'
+  work_result_id: '5749'
+  display_order: '1'
+  hours: '5.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:50:43.631908'
+  updated_at: '2015-09-06 01:50:43.631908'
+
+
+machine_results138:
+  id: '1178'
+  machine_id: '8'
+  work_result_id: '5753'
+  display_order: '1'
+  hours: '5.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:50:43.892568'
+  updated_at: '2015-09-06 01:50:43.892568'
+
+
+machine_results139:
+  id: '1179'
+  machine_id: '8'
+  work_result_id: '5751'
+  display_order: '1'
+  hours: '5.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:50:44.048741'
+  updated_at: '2015-09-06 01:50:44.048741'
+
+
+machine_results140:
+  id: '1180'
+  machine_id: '16'
+  work_result_id: '5752'
+  display_order: '1'
+  hours: '5.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:50:44.170233'
+  updated_at: '2015-09-06 01:50:44.170233'
+
+
+machine_results141:
+  id: '1181'
+  machine_id: '16'
+  work_result_id: '5750'
+  display_order: '1'
+  hours: '5.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:50:44.243465'
+  updated_at: '2015-09-06 01:50:44.243465'
+
+
+machine_results142:
+  id: '1182'
+  machine_id: '7'
+  work_result_id: '5756'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 01:57:58.580665'
+  updated_at: '2015-09-06 01:57:58.580665'
+
+
+machine_results143:
+  id: '1183'
+  machine_id: '6'
+  work_result_id: '5761'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 02:01:17.159805'
+  updated_at: '2015-09-06 02:01:17.159805'
+
+
+machine_results144:
+  id: '1184'
+  machine_id: '6'
+  work_result_id: '5764'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-09-06 02:05:36.2457'
+  updated_at: '2015-09-06 02:05:36.2457'
+
+
+machine_results145:
+  id: '1185'
+  machine_id: '6'
+  work_result_id: '5799'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-10-11 05:33:15.608301'
+  updated_at: '2015-10-11 05:33:15.608301'
+
+
+machine_results146:
+  id: '1186'
+  machine_id: '7'
+  work_result_id: '5800'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-10-11 05:33:15.74071'
+  updated_at: '2015-10-11 05:33:15.74071'
+
+
+machine_results147:
+  id: '1187'
+  machine_id: '7'
+  work_result_id: '5805'
+  display_order: '1'
+  hours: '7.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-10-11 05:38:55.739652'
+  updated_at: '2015-10-11 05:38:55.739652'
+
+
+machine_results148:
+  id: '1188'
+  machine_id: '17'
+  work_result_id: '5814'
+  display_order: '1'
+  hours: '3.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-10-11 05:45:10.160889'
+  updated_at: '2015-10-11 05:45:10.160889'
+
+
+machine_results149:
+  id: '1189'
+  machine_id: '6'
+  work_result_id: '5827'
+  display_order: '1'
+  hours: '3.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-10-11 05:51:53.548418'
+  updated_at: '2015-10-11 05:51:53.548418'
+
+
+machine_results150:
+  id: '1190'
+  machine_id: '17'
+  work_result_id: '5830'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-10-11 05:55:54.377698'
+  updated_at: '2015-10-11 05:55:54.377698'
+
+
+machine_results151:
+  id: '1191'
+  machine_id: '17'
+  work_result_id: '5831'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-10-11 05:55:54.52476'
+  updated_at: '2015-10-11 05:55:54.52476'
+
+
+machine_results152:
+  id: '1192'
+  machine_id: '6'
+  work_result_id: '5843'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-10-11 06:04:48.044682'
+  updated_at: '2015-10-11 06:04:48.044682'
+
+
+machine_results153:
+  id: '1193'
+  machine_id: '7'
+  work_result_id: '5841'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-10-11 06:04:48.052267'
+  updated_at: '2015-10-11 06:04:48.052267'
+
+
+machine_results154:
+  id: '1194'
+  machine_id: '7'
+  work_result_id: '5868'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 06:00:02.393854'
+  updated_at: '2015-11-29 06:00:02.393854'
+
+
+machine_results155:
+  id: '1195'
+  machine_id: '7'
+  work_result_id: '5871'
+  display_order: '1'
+  hours: '5.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 06:03:10.706458'
+  updated_at: '2015-11-29 06:03:10.706458'
+
+
+machine_results156:
+  id: '1196'
+  machine_id: '7'
+  work_result_id: '5874'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 06:09:16.806974'
+  updated_at: '2015-11-29 06:09:16.806974'
+
+
+machine_results157:
+  id: '1197'
+  machine_id: '8'
+  work_result_id: '5882'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 06:28:33.434966'
+  updated_at: '2015-11-29 06:28:33.434966'
+
+
+machine_results158:
+  id: '1198'
+  machine_id: '16'
+  work_result_id: '5884'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 06:28:33.65502'
+  updated_at: '2015-11-29 06:28:33.65502'
+
+
+machine_results159:
+  id: '1199'
+  machine_id: '17'
+  work_result_id: '5883'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 06:28:33.742593'
+  updated_at: '2015-11-29 06:28:33.742593'
+
+
+machine_results160:
+  id: '1200'
+  machine_id: '6'
+  work_result_id: '5894'
+  display_order: '1'
+  hours: '7.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 06:50:00.524707'
+  updated_at: '2015-11-29 06:50:00.524707'
+
+
+machine_results161:
+  id: '1201'
+  machine_id: '7'
+  work_result_id: '5896'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 06:50:00.541239'
+  updated_at: '2015-11-29 06:50:00.541239'
+
+
+machine_results162:
+  id: '1202'
+  machine_id: '8'
+  work_result_id: '5902'
+  display_order: '1'
+  hours: '7.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 06:59:58.264422'
+  updated_at: '2015-11-29 06:59:58.264422'
+
+
+machine_results163:
+  id: '1203'
+  machine_id: '16'
+  work_result_id: '5903'
+  display_order: '1'
+  hours: '7.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 06:59:58.412807'
+  updated_at: '2015-11-29 06:59:58.412807'
+
+
+machine_results164:
+  id: '1204'
+  machine_id: '17'
+  work_result_id: '5901'
+  display_order: '1'
+  hours: '7.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 06:59:58.555705'
+  updated_at: '2015-11-29 06:59:58.555705'
+
+
+machine_results165:
+  id: '1209'
+  machine_id: '8'
+  work_result_id: '5906'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 07:05:40.793396'
+  updated_at: '2015-11-29 07:05:40.793396'
+
+
+machine_results166:
+  id: '1210'
+  machine_id: '8'
+  work_result_id: '5907'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 07:05:40.801028'
+  updated_at: '2015-11-29 07:05:40.801028'
+
+
+machine_results167:
+  id: '1211'
+  machine_id: '16'
+  work_result_id: '5905'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 07:05:40.808473'
+  updated_at: '2015-11-29 07:05:40.808473'
+
+
+machine_results168:
+  id: '1212'
+  machine_id: '16'
+  work_result_id: '5904'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 07:05:40.816026'
+  updated_at: '2015-11-29 07:05:40.816026'
+
+
+machine_results169:
+  id: '1213'
+  machine_id: '17'
+  work_result_id: '5908'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 07:05:40.823493'
+  updated_at: '2015-11-29 07:05:40.823493'
+
+
+machine_results170:
+  id: '1214'
+  machine_id: '6'
+  work_result_id: '5909'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 07:08:40.165441'
+  updated_at: '2015-11-29 07:08:40.165441'
+
+
+machine_results171:
+  id: '1215'
+  machine_id: '7'
+  work_result_id: '5909'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 07:08:40.182385'
+  updated_at: '2015-11-29 07:08:40.182385'
+
+
+machine_results172:
+  id: '1216'
+  machine_id: '8'
+  work_result_id: '5917'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 07:18:08.350956'
+  updated_at: '2015-11-29 07:18:08.350956'
+
+
+machine_results173:
+  id: '1217'
+  machine_id: '8'
+  work_result_id: '5919'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 07:18:08.358598'
+  updated_at: '2015-11-29 07:18:08.358598'
+
+
+machine_results174:
+  id: '1218'
+  machine_id: '16'
+  work_result_id: '5918'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 07:18:08.36582'
+  updated_at: '2015-11-29 07:18:08.36582'
+
+
+machine_results175:
+  id: '1219'
+  machine_id: '16'
+  work_result_id: '5921'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 07:18:08.373072'
+  updated_at: '2015-11-29 07:18:08.373072'
+
+
+machine_results176:
+  id: '1220'
+  machine_id: '17'
+  work_result_id: '5920'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-11-29 07:18:08.380207'
+  updated_at: '2015-11-29 07:18:08.380207'
+
+
+machine_results177:
+  id: '1221'
+  machine_id: '22'
+  work_result_id: '5927'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:26:54.369949'
+  updated_at: '2015-12-06 02:26:54.369949'
+
+
+machine_results178:
+  id: '1222'
+  machine_id: '23'
+  work_result_id: '5927'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:26:54.605443'
+  updated_at: '2015-12-06 02:26:54.605443'
+
+
+machine_results179:
+  id: '1223'
+  machine_id: '8'
+  work_result_id: '5931'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:32:01.716145'
+  updated_at: '2015-12-06 02:32:01.716145'
+
+
+machine_results180:
+  id: '1224'
+  machine_id: '8'
+  work_result_id: '5933'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:32:01.72372'
+  updated_at: '2015-12-06 02:32:01.72372'
+
+
+machine_results181:
+  id: '1225'
+  machine_id: '16'
+  work_result_id: '5930'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:32:01.730977'
+  updated_at: '2015-12-06 02:32:01.730977'
+
+
+machine_results182:
+  id: '1226'
+  machine_id: '16'
+  work_result_id: '5932'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:32:01.738164'
+  updated_at: '2015-12-06 02:32:01.738164'
+
+
+machine_results183:
+  id: '1227'
+  machine_id: '17'
+  work_result_id: '5929'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:32:01.745334'
+  updated_at: '2015-12-06 02:32:01.745334'
+
+
+machine_results184:
+  id: '1228'
+  machine_id: '8'
+  work_result_id: '5935'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:37:21.397517'
+  updated_at: '2015-12-06 02:37:21.397517'
+
+
+machine_results185:
+  id: '1229'
+  machine_id: '8'
+  work_result_id: '5936'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:37:21.588633'
+  updated_at: '2015-12-06 02:37:21.588633'
+
+
+machine_results186:
+  id: '1230'
+  machine_id: '8'
+  work_result_id: '5937'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:37:21.688796'
+  updated_at: '2015-12-06 02:37:21.688796'
+
+
+machine_results187:
+  id: '1231'
+  machine_id: '16'
+  work_result_id: '5938'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:37:21.695793'
+  updated_at: '2015-12-06 02:37:21.695793'
+
+
+machine_results188:
+  id: '1232'
+  machine_id: '16'
+  work_result_id: '5939'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:37:21.914596'
+  updated_at: '2015-12-06 02:37:21.914596'
+
+
+machine_results189:
+  id: '1233'
+  machine_id: '17'
+  work_result_id: '5934'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:37:21.925571'
+  updated_at: '2015-12-06 02:37:21.925571'
+
+
+machine_results190:
+  id: '1234'
+  machine_id: '7'
+  work_result_id: '5941'
+  display_order: '1'
+  hours: '2.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:39:05.344106'
+  updated_at: '2015-12-06 02:39:05.344106'
+
+
+machine_results191:
+  id: '1235'
+  machine_id: '22'
+  work_result_id: '5942'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:43:08.649702'
+  updated_at: '2015-12-06 02:43:08.649702'
+
+
+machine_results192:
+  id: '1236'
+  machine_id: '23'
+  work_result_id: '5944'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:43:08.657466'
+  updated_at: '2015-12-06 02:43:08.657466'
+
+
+machine_results193:
+  id: '1237'
+  machine_id: '17'
+  work_result_id: '5946'
+  display_order: '1'
+  hours: '3.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:46:36.486616'
+  updated_at: '2015-12-06 02:46:36.486616'
+
+
+machine_results194:
+  id: '1238'
+  machine_id: '8'
+  work_result_id: '5962'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:58:11.850508'
+  updated_at: '2015-12-06 02:58:11.850508'
+
+
+machine_results195:
+  id: '1239'
+  machine_id: '8'
+  work_result_id: '5959'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:58:11.857987'
+  updated_at: '2015-12-06 02:58:11.857987'
+
+
+machine_results196:
+  id: '1240'
+  machine_id: '16'
+  work_result_id: '5958'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:58:11.865213'
+  updated_at: '2015-12-06 02:58:11.865213'
+
+
+machine_results197:
+  id: '1241'
+  machine_id: '16'
+  work_result_id: '5960'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:58:11.872425'
+  updated_at: '2015-12-06 02:58:11.872425'
+
+
+machine_results198:
+  id: '1242'
+  machine_id: '17'
+  work_result_id: '5961'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 02:58:11.879635'
+  updated_at: '2015-12-06 02:58:11.879635'
+
+
+machine_results199:
+  id: '1243'
+  machine_id: '8'
+  work_result_id: '5965'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:35:51.676888'
+  updated_at: '2015-12-06 07:35:51.676888'
+
+
+machine_results200:
+  id: '1244'
+  machine_id: '8'
+  work_result_id: '5966'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:35:51.779462'
+  updated_at: '2015-12-06 07:35:51.779462'
+
+
+machine_results201:
+  id: '1245'
+  machine_id: '16'
+  work_result_id: '5964'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:35:51.888982'
+  updated_at: '2015-12-06 07:35:51.888982'
+
+
+machine_results202:
+  id: '1246'
+  machine_id: '16'
+  work_result_id: '5967'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:35:51.999612'
+  updated_at: '2015-12-06 07:35:51.999612'
+
+
+machine_results203:
+  id: '1247'
+  machine_id: '17'
+  work_result_id: '5963'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:35:52.139719'
+  updated_at: '2015-12-06 07:35:52.139719'
+
+
+machine_results204:
+  id: '1248'
+  machine_id: '8'
+  work_result_id: '5972'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:45:59.988216'
+  updated_at: '2015-12-06 07:45:59.988216'
+
+
+machine_results205:
+  id: '1249'
+  machine_id: '8'
+  work_result_id: '5973'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:45:59.995629'
+  updated_at: '2015-12-06 07:45:59.995629'
+
+
+machine_results206:
+  id: '1250'
+  machine_id: '8'
+  work_result_id: '5974'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:46:00.002649'
+  updated_at: '2015-12-06 07:46:00.002649'
+
+
+machine_results207:
+  id: '1251'
+  machine_id: '16'
+  work_result_id: '5973'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:46:00.00974'
+  updated_at: '2015-12-06 07:46:00.00974'
+
+
+machine_results208:
+  id: '1252'
+  machine_id: '16'
+  work_result_id: '5975'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:46:00.016829'
+  updated_at: '2015-12-06 07:46:00.016829'
+
+
+machine_results209:
+  id: '1253'
+  machine_id: '16'
+  work_result_id: '5971'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:46:00.023868'
+  updated_at: '2015-12-06 07:46:00.023868'
+
+
+machine_results210:
+  id: '1254'
+  machine_id: '17'
+  work_result_id: '5971'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:46:00.030971'
+  updated_at: '2015-12-06 07:46:00.030971'
+
+
+machine_results211:
+  id: '1255'
+  machine_id: '6'
+  work_result_id: '5979'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:54:16.961335'
+  updated_at: '2015-12-06 07:54:16.961335'
+
+
+machine_results212:
+  id: '1256'
+  machine_id: '7'
+  work_result_id: '5982'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:54:17.130511'
+  updated_at: '2015-12-06 07:54:17.130511'
+
+
+machine_results213:
+  id: '1257'
+  machine_id: '7'
+  work_result_id: '5985'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 07:56:39.635227'
+  updated_at: '2015-12-06 07:56:39.635227'
+
+
+machine_results214:
+  id: '1258'
+  machine_id: '8'
+  work_result_id: '5990'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:05:58.018077'
+  updated_at: '2015-12-06 08:05:58.018077'
+
+
+machine_results215:
+  id: '1259'
+  machine_id: '8'
+  work_result_id: '5991'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:05:58.148072'
+  updated_at: '2015-12-06 08:05:58.148072'
+
+
+machine_results216:
+  id: '1260'
+  machine_id: '8'
+  work_result_id: '5992'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:05:58.278512'
+  updated_at: '2015-12-06 08:05:58.278512'
+
+
+machine_results217:
+  id: '1261'
+  machine_id: '16'
+  work_result_id: '5988'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:05:58.455718'
+  updated_at: '2015-12-06 08:05:58.455718'
+
+
+machine_results218:
+  id: '1262'
+  machine_id: '16'
+  work_result_id: '5989'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:05:58.555403'
+  updated_at: '2015-12-06 08:05:58.555403'
+
+
+machine_results219:
+  id: '1263'
+  machine_id: '16'
+  work_result_id: '5992'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:05:58.562717'
+  updated_at: '2015-12-06 08:05:58.562717'
+
+
+machine_results220:
+  id: '1264'
+  machine_id: '17'
+  work_result_id: '5988'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:05:58.569922'
+  updated_at: '2015-12-06 08:05:58.569922'
+
+
+machine_results221:
+  id: '1268'
+  machine_id: '8'
+  work_result_id: '5995'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:09:05.077056'
+  updated_at: '2015-12-06 08:09:05.077056'
+
+
+machine_results222:
+  id: '1269'
+  machine_id: '8'
+  work_result_id: '5996'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:09:05.084609'
+  updated_at: '2015-12-06 08:09:05.084609'
+
+
+machine_results223:
+  id: '1270'
+  machine_id: '16'
+  work_result_id: '5996'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:09:05.092084'
+  updated_at: '2015-12-06 08:09:05.092084'
+
+
+machine_results224:
+  id: '1271'
+  machine_id: '16'
+  work_result_id: '5993'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:09:05.099549'
+  updated_at: '2015-12-06 08:09:05.099549'
+
+
+machine_results225:
+  id: '1272'
+  machine_id: '17'
+  work_result_id: '5994'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:09:05.107004'
+  updated_at: '2015-12-06 08:09:05.107004'
+
+
+machine_results226:
+  id: '1273'
+  machine_id: '8'
+  work_result_id: '6001'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:17:29.489275'
+  updated_at: '2015-12-06 08:17:29.489275'
+
+
+machine_results227:
+  id: '1274'
+  machine_id: '8'
+  work_result_id: '6002'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:17:29.496851'
+  updated_at: '2015-12-06 08:17:29.496851'
+
+
+machine_results228:
+  id: '1275'
+  machine_id: '16'
+  work_result_id: '5999'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:17:29.504'
+  updated_at: '2015-12-06 08:17:29.504'
+
+
+machine_results229:
+  id: '1276'
+  machine_id: '16'
+  work_result_id: '6000'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:17:29.511177'
+  updated_at: '2015-12-06 08:17:29.511177'
+
+
+machine_results230:
+  id: '1277'
+  machine_id: '8'
+  work_result_id: '6020'
+  display_order: '1'
+  hours: '6.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:35:14.645934'
+  updated_at: '2015-12-06 08:35:14.645934'
+
+
+machine_results231:
+  id: '1278'
+  machine_id: '8'
+  work_result_id: '6021'
+  display_order: '1'
+  hours: '6.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:35:14.653483'
+  updated_at: '2015-12-06 08:35:14.653483'
+
+
+machine_results232:
+  id: '1279'
+  machine_id: '16'
+  work_result_id: '6018'
+  display_order: '1'
+  hours: '6.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:35:14.660827'
+  updated_at: '2015-12-06 08:35:14.660827'
+
+
+machine_results233:
+  id: '1280'
+  machine_id: '16'
+  work_result_id: '6019'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:35:14.668074'
+  updated_at: '2015-12-06 08:35:14.668074'
+
+
+machine_results234:
+  id: '1281'
+  machine_id: '17'
+  work_result_id: '6022'
+  display_order: '1'
+  hours: '8.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:37:58.060313'
+  updated_at: '2015-12-06 08:37:58.060313'
+
+
+machine_results235:
+  id: '1282'
+  machine_id: '17'
+  work_result_id: '6023'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:39:10.407475'
+  updated_at: '2015-12-06 08:39:10.407475'
+
+
+machine_results236:
+  id: '1283'
+  machine_id: '6'
+  work_result_id: '6028'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:45:54.798161'
+  updated_at: '2015-12-06 08:45:54.798161'
+
+
+machine_results237:
+  id: '1284'
+  machine_id: '7'
+  work_result_id: '6025'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:45:54.816001'
+  updated_at: '2015-12-06 08:45:54.816001'
+
+
+machine_results238:
+  id: '1285'
+  machine_id: '7'
+  work_result_id: '6030'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-06 08:45:54.985647'
+  updated_at: '2015-12-06 08:45:54.985647'
+
+
+machine_results239:
+  id: '1286'
+  machine_id: '6'
+  work_result_id: '6042'
+  display_order: '1'
+  hours: '7.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-11 23:51:44.343814'
+  updated_at: '2015-12-11 23:51:44.343814'
+
+
+machine_results240:
+  id: '1287'
+  machine_id: '7'
+  work_result_id: '6045'
+  display_order: '1'
+  hours: '8.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-11 23:55:23.073476'
+  updated_at: '2015-12-11 23:55:23.073476'
+
+
+machine_results241:
+  id: '1288'
+  machine_id: '7'
+  work_result_id: '6047'
+  display_order: '1'
+  hours: '3.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-11 23:58:15.765256'
+  updated_at: '2015-12-11 23:58:15.765256'
+
+
+machine_results242:
+  id: '1289'
+  machine_id: '22'
+  work_result_id: '6056'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:15:05.753446'
+  updated_at: '2015-12-12 00:15:05.753446'
+
+
+machine_results243:
+  id: '1290'
+  machine_id: '15'
+  work_result_id: '6057'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:15:05.760894'
+  updated_at: '2015-12-12 00:15:05.760894'
+
+
+machine_results244:
+  id: '1291'
+  machine_id: '17'
+  work_result_id: '6054'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:15:05.768058'
+  updated_at: '2015-12-12 00:15:05.768058'
+
+
+machine_results245:
+  id: '1292'
+  machine_id: '22'
+  work_result_id: '6061'
+  display_order: '1'
+  hours: '2.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:22:53.961052'
+  updated_at: '2015-12-12 00:22:53.961052'
+
+
+machine_results246:
+  id: '1293'
+  machine_id: '17'
+  work_result_id: '6059'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:22:54.071801'
+  updated_at: '2015-12-12 00:22:54.071801'
+
+
+machine_results247:
+  id: '1294'
+  machine_id: '22'
+  work_result_id: '6068'
+  display_order: '1'
+  hours: '2.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:34:23.016107'
+  updated_at: '2015-12-12 00:34:23.016107'
+
+
+machine_results248:
+  id: '1295'
+  machine_id: '17'
+  work_result_id: '6066'
+  display_order: '1'
+  hours: '2.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:34:23.158465'
+  updated_at: '2015-12-12 00:34:23.158465'
+
+
+machine_results249:
+  id: '1296'
+  machine_id: '6'
+  work_result_id: '6071'
+  display_order: '1'
+  hours: '6.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:38:38.755182'
+  updated_at: '2015-12-12 00:38:38.755182'
+
+
+machine_results250:
+  id: '1297'
+  machine_id: '7'
+  work_result_id: '6073'
+  display_order: '1'
+  hours: '6.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:38:38.900712'
+  updated_at: '2015-12-12 00:38:38.900712'
+
+
+machine_results251:
+  id: '1298'
+  machine_id: '22'
+  work_result_id: '6079'
+  display_order: '1'
+  hours: '5.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:46:48.261199'
+  updated_at: '2015-12-12 00:46:48.261199'
+
+
+machine_results252:
+  id: '1299'
+  machine_id: '12'
+  work_result_id: '6081'
+  display_order: '1'
+  hours: '6.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:49:58.5378'
+  updated_at: '2015-12-12 00:49:58.5378'
+
+
+machine_results253:
+  id: '1300'
+  machine_id: '14'
+  work_result_id: '6080'
+  display_order: '1'
+  hours: '6.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:49:58.5451'
+  updated_at: '2015-12-12 00:49:58.5451'
+
+
+machine_results254:
+  id: '1301'
+  machine_id: '12'
+  work_result_id: '6088'
+  display_order: '1'
+  hours: '7.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:54:13.672479'
+  updated_at: '2015-12-12 00:54:13.672479'
+
+
+machine_results255:
+  id: '1302'
+  machine_id: '14'
+  work_result_id: '6087'
+  display_order: '1'
+  hours: '7.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:54:13.792206'
+  updated_at: '2015-12-12 00:54:13.792206'
+
+
+machine_results256:
+  id: '1303'
+  machine_id: '18'
+  work_result_id: '6089'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:55:22.412595'
+  updated_at: '2015-12-12 00:55:22.412595'
+
+
+machine_results257:
+  id: '1304'
+  machine_id: '17'
+  work_result_id: '6090'
+  display_order: '1'
+  hours: '1.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 00:56:52.958482'
+  updated_at: '2015-12-12 00:56:52.958482'
+
+
+machine_results258:
+  id: '1305'
+  machine_id: '18'
+  work_result_id: '6094'
+  display_order: '1'
+  hours: '6.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 01:00:13.595028'
+  updated_at: '2015-12-12 01:00:13.595028'
+
+
+machine_results259:
+  id: '1306'
+  machine_id: '4'
+  work_result_id: '6093'
+  display_order: '1'
+  hours: '2.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 01:00:13.780997'
+  updated_at: '2015-12-12 01:00:13.780997'
+
+
+machine_results260:
+  id: '1307'
+  machine_id: '17'
+  work_result_id: '6095'
+  display_order: '1'
+  hours: '0.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 01:01:50.822331'
+  updated_at: '2015-12-12 01:01:50.822331'
+
+
+machine_results261:
+  id: '1308'
+  machine_id: '17'
+  work_result_id: '6110'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 04:08:50.461193'
+  updated_at: '2015-12-12 04:08:50.461193'
+
+
+machine_results262:
+  id: '1309'
+  machine_id: '17'
+  work_result_id: '6111'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 04:10:11.728752'
+  updated_at: '2015-12-12 04:10:11.728752'
+
+
+machine_results263:
+  id: '1310'
+  machine_id: '5'
+  work_result_id: '6115'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 04:18:10.278273'
+  updated_at: '2015-12-12 04:18:10.278273'
+
+
+machine_results264:
+  id: '1311'
+  machine_id: '17'
+  work_result_id: '6119'
+  display_order: '1'
+  hours: '1.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 04:25:30.0382'
+  updated_at: '2015-12-12 04:25:30.0382'
+
+
+machine_results265:
+  id: '1312'
+  machine_id: '18'
+  work_result_id: '6128'
+  display_order: '1'
+  hours: '3.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-12 04:40:48.371993'
+  updated_at: '2015-12-12 04:40:48.371993'
+
+
+machine_results266:
+  id: '1313'
+  machine_id: '11'
+  work_result_id: '6302'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-23 05:22:45.688615'
+  updated_at: '2015-12-23 05:22:45.688615'
+
+
+machine_results267:
+  id: '1314'
+  machine_id: '17'
+  work_result_id: '6303'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-23 05:22:45.901139'
+  updated_at: '2015-12-23 05:22:45.901139'
+
+
+machine_results268:
+  id: '1315'
+  machine_id: '10'
+  work_result_id: '6304'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-23 05:22:45.964983'
+  updated_at: '2015-12-23 05:22:45.964983'
+
+
+machine_results269:
+  id: '1316'
+  machine_id: '5'
+  work_result_id: '6302'
+  display_order: '1'
+  hours: '7.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-23 05:22:45.972284'
+  updated_at: '2015-12-23 05:22:45.972284'
+
+
+machine_results270:
+  id: '1317'
+  machine_id: '11'
+  work_result_id: '6311'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-23 05:30:44.600351'
+  updated_at: '2015-12-23 05:30:44.600351'
+
+
+machine_results271:
+  id: '1318'
+  machine_id: '17'
+  work_result_id: '6312'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-23 05:30:44.766391'
+  updated_at: '2015-12-23 05:30:44.766391'
+
+
+machine_results272:
+  id: '1319'
+  machine_id: '10'
+  work_result_id: '6313'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-23 05:30:44.874245'
+  updated_at: '2015-12-23 05:30:44.874245'
+
+
+machine_results273:
+  id: '1320'
+  machine_id: '5'
+  work_result_id: '6311'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2015-12-23 05:30:45.007229'
+  updated_at: '2015-12-23 05:30:45.007229'
+
+
+machine_results274:
+  id: '1321'
+  machine_id: '2'
+  work_result_id: '5387'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2016-02-23 08:53:39.121946'
+  updated_at: '2016-02-23 08:53:39.121946'
+
+
+machine_results275:
+  id: '1322'
+  machine_id: '2'
+  work_result_id: '5388'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2016-02-23 08:53:39.141217'
+  updated_at: '2016-02-23 08:53:39.141217'
+
+
+machine_results276:
+  id: '1323'
+  machine_id: '19'
+  work_result_id: '5392'
+  display_order: '1'
+  hours: '4.0'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2016-02-23 08:53:39.148609'
+  updated_at: '2016-02-23 08:53:39.148609'
+
+
+machine_results277:
+  id: '1324'
+  machine_id: '19'
+  work_result_id: '5395'
+  display_order: '1'
+  hours: '4.5'
+  fixed_quantity: 
+  fixed_adjust_id: 
+  fixed_price: 
+  fixed_amount: 
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+

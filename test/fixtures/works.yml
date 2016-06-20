@@ -1,0 +1,5280 @@
+
+works0:
+  id: '1477'
+  term: '2015'
+  worked_at: '2015-01-18'
+  weather_id: '1'
+  work_type_id: '12'
+  name: H27 作付け計画、その他
+  remarks: ''
+  start_at: '2015-01-24 09:00:00'
+  end_at: '2015-01-24 11:00:00'
+  fixed_at: '2015-02-28'
+  work_kind_id: '39'
+  created_at: '2015-01-24 08:52:59.655687'
+  updated_at: '2016-06-13 05:42:42.566141'
+
+
+works1:
+  id: '1478'
+  term: '2015'
+  worked_at: '2015-03-21'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: "サーバ再起動、データバックアップ、プリンタトナー発注。"
+  start_at: '2015-03-21 09:00:00'
+  end_at: '2015-03-21 10:00:00'
+  fixed_at: 
+  work_kind_id: '12'
+  created_at: '2015-03-21 00:36:44.851955'
+  updated_at: '2015-03-21 00:36:44.851955'
+
+
+works2:
+  id: '1479'
+  term: '2015'
+  worked_at: '2015-01-05'
+  weather_id: '1'
+  work_type_id: '23'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-21 08:00:00'
+  end_at: '2015-03-21 17:00:00'
+  fixed_at: '2015-02-28'
+  work_kind_id: '3'
+  created_at: '2015-03-21 00:39:18.019382'
+  updated_at: '2016-06-13 05:42:42.425741'
+
+
+works3:
+  id: '1480'
+  term: '2015'
+  worked_at: '2015-01-06'
+  weather_id: '1'
+  work_type_id: '23'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-21 08:30:00'
+  end_at: '2015-03-21 11:00:00'
+  fixed_at: '2015-02-28'
+  work_kind_id: '3'
+  created_at: '2015-03-21 00:41:33.537807'
+  updated_at: '2016-06-13 05:42:42.456941'
+
+
+works4:
+  id: '1481'
+  term: '2015'
+  worked_at: '2015-03-07'
+  weather_id: '1'
+  work_type_id: '23'
+  name: "真砂運搬、整地"
+  remarks: "大前の田"
+  start_at: '2015-03-21 09:00:00'
+  end_at: '2015-03-21 11:00:00'
+  fixed_at: '2015-02-28'
+  work_kind_id: '39'
+  created_at: '2015-03-21 00:44:25.320748'
+  updated_at: '2016-06-13 05:42:42.581741'
+
+
+works5:
+  id: '1482'
+  term: '2015'
+  worked_at: '2015-03-13'
+  weather_id: '2'
+  work_type_id: '23'
+  name: "あぜ構築、地ならし"
+  remarks: ''
+  start_at: '2015-03-21 09:00:00'
+  end_at: '2015-03-21 17:00:00'
+  fixed_at: '2015-02-28'
+  work_kind_id: '20'
+  created_at: '2015-03-21 00:45:39.363417'
+  updated_at: '2016-06-13 05:42:42.519341'
+
+
+works6:
+  id: '1483'
+  term: '2015'
+  worked_at: '2015-03-14'
+  weather_id: '1'
+  work_type_id: '23'
+  name: ''
+  remarks: "出島"
+  start_at: '2015-03-21 09:00:00'
+  end_at: '2015-03-21 16:00:00'
+  fixed_at: '2015-02-28'
+  work_kind_id: '20'
+  created_at: '2015-03-21 00:49:33.517497'
+  updated_at: '2016-06-13 05:42:42.550541'
+
+
+works7:
+  id: '1484'
+  term: '2015'
+  worked_at: '2015-03-15'
+  weather_id: '1'
+  work_type_id: '12'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-21 09:00:00'
+  end_at: '2015-03-21 11:00:00'
+  fixed_at: 
+  work_kind_id: '28'
+  created_at: '2015-03-21 00:50:45.279125'
+  updated_at: '2015-03-21 00:50:45.279125'
+
+
+works8:
+  id: '1485'
+  term: '2015'
+  worked_at: '2015-03-16'
+  weather_id: '1'
+  work_type_id: '12'
+  name: "干拓草刈り、畦作成"
+  remarks: ''
+  start_at: '2015-03-21 13:00:00'
+  end_at: '2015-03-21 17:30:00'
+  fixed_at: 
+  work_kind_id: '20'
+  created_at: '2015-03-21 00:54:27.229832'
+  updated_at: '2015-03-21 00:54:27.229832'
+
+
+works9:
+  id: '1486'
+  term: '2015'
+  worked_at: '2015-03-16'
+  weather_id: '1'
+  work_type_id: '23'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-21 08:00:00'
+  end_at: '2015-03-21 17:00:00'
+  fixed_at: 
+  work_kind_id: '31'
+  created_at: '2015-03-21 00:55:41.156517'
+  updated_at: '2015-03-21 00:58:10.865125'
+
+
+works10:
+  id: '1487'
+  term: '2015'
+  worked_at: '2015-03-21'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-23 09:00:00'
+  end_at: '2015-03-23 18:30:00'
+  fixed_at: 
+  work_kind_id: '27'
+  created_at: '2015-03-21 09:54:28.539742'
+  updated_at: '2015-03-23 08:43:44.105428'
+
+
+works11:
+  id: '1488'
+  term: '2015'
+  worked_at: '2015-03-20'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-21 15:00:00'
+  end_at: '2015-03-21 19:00:00'
+  fixed_at: 
+  work_kind_id: '27'
+  created_at: '2015-03-21 09:57:00.342072'
+  updated_at: '2015-03-21 09:57:16.999286'
+
+
+works12:
+  id: '1489'
+  term: '2015'
+  worked_at: '2015-03-19'
+  weather_id: '1'
+  work_type_id: '11'
+  name: "(配当）"
+  remarks: ''
+  start_at: '2015-03-21 14:00:00'
+  end_at: '2015-03-21 18:00:00'
+  fixed_at: 
+  work_kind_id: '32'
+  created_at: '2015-03-21 09:59:40.712834'
+  updated_at: '2015-03-21 10:03:40.990475'
+
+
+works13:
+  id: '1490'
+  term: '2015'
+  worked_at: '2015-03-18'
+  weather_id: '1'
+  work_type_id: '11'
+  name: "(配当）"
+  remarks: ''
+  start_at: '2015-03-21 09:00:00'
+  end_at: '2015-03-21 18:00:00'
+  fixed_at: 
+  work_kind_id: '32'
+  created_at: '2015-03-21 10:05:59.317172'
+  updated_at: '2015-03-21 10:05:59.317172'
+
+
+works14:
+  id: '1491'
+  term: '2015'
+  worked_at: '2015-03-16'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-22 09:00:00'
+  end_at: '2015-03-22 17:00:00'
+  fixed_at: 
+  work_kind_id: '23'
+  created_at: '2015-03-22 01:07:17.450489'
+  updated_at: '2015-03-22 01:07:17.450489'
+
+
+works15:
+  id: '1492'
+  term: '2015'
+  worked_at: '2015-03-17'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-22 08:00:00'
+  end_at: '2015-03-22 17:00:00'
+  fixed_at: 
+  work_kind_id: '23'
+  created_at: '2015-03-22 01:13:18.464424'
+  updated_at: '2015-03-22 01:13:18.464424'
+
+
+works16:
+  id: '1493'
+  term: '2015'
+  worked_at: '2015-03-18'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: 3/17・3/18　大灘の田
+  start_at: '2015-03-22 09:00:00'
+  end_at: '2015-03-22 17:00:00'
+  fixed_at: 
+  work_kind_id: '31'
+  created_at: '2015-03-22 01:15:45.28871'
+  updated_at: '2015-03-22 01:16:55.91993'
+
+
+works17:
+  id: '1494'
+  term: '2015'
+  worked_at: '2015-03-18'
+  weather_id: '2'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-22 08:00:00'
+  end_at: '2015-03-22 12:00:00'
+  fixed_at: 
+  work_kind_id: '23'
+  created_at: '2015-03-22 01:18:03.449109'
+  updated_at: '2015-03-22 01:18:03.449109'
+
+
+works18:
+  id: '1495'
+  term: '2015'
+  worked_at: '2015-03-20'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-22 08:00:00'
+  end_at: '2015-03-22 17:00:00'
+  fixed_at: 
+  work_kind_id: '23'
+  created_at: '2015-03-22 01:19:23.891545'
+  updated_at: '2015-03-22 01:19:23.891545'
+
+
+works19:
+  id: '1496'
+  term: '2015'
+  worked_at: '2015-03-21'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-22 08:00:00'
+  end_at: '2015-03-22 15:00:00'
+  fixed_at: 
+  work_kind_id: '23'
+  created_at: '2015-03-22 01:28:30.611389'
+  updated_at: '2015-03-22 01:28:30.611389'
+
+
+works20:
+  id: '1497'
+  term: '2015'
+  worked_at: '2015-03-21'
+  weather_id: '1'
+  work_type_id: '13'
+  name: ''
+  remarks: "トラクタ作業機交換"
+  start_at: '2015-03-22 13:30:00'
+  end_at: '2015-03-22 15:00:00'
+  fixed_at: 
+  work_kind_id: '11'
+  created_at: '2015-03-22 01:32:28.20475'
+  updated_at: '2015-03-22 01:32:28.20475'
+
+
+works21:
+  id: '1498'
+  term: '2015'
+  worked_at: '2015-03-14'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: H26保有米売買契約書作成
+  start_at: '2015-03-22 13:30:00'
+  end_at: '2015-03-22 17:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-03-22 01:37:07.78393'
+  updated_at: '2015-03-22 01:37:07.78393'
+
+
+works22:
+  id: '1499'
+  term: '2015'
+  worked_at: '2015-03-15'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: H26保有米売買契約書作成
+  start_at: '2015-03-22 13:00:00'
+  end_at: '2015-03-22 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-03-22 01:38:49.511853'
+  updated_at: '2015-03-22 01:38:49.511853'
+
+
+works23:
+  id: '1500'
+  term: '2015'
+  worked_at: '2015-03-22'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: H26保有米契約書作成・日報整理
+  start_at: '2015-03-22 09:00:00'
+  end_at: '2015-03-22 10:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-03-22 01:40:39.369189'
+  updated_at: '2015-03-22 01:40:39.369189'
+
+
+works24:
+  id: '1501'
+  term: '2015'
+  worked_at: '2015-03-23'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-23 15:00:00'
+  end_at: '2015-03-23 17:00:00'
+  fixed_at: 
+  work_kind_id: '27'
+  created_at: '2015-03-23 08:45:23.888939'
+  updated_at: '2015-03-23 08:45:23.888939'
+
+
+works25:
+  id: '1502'
+  term: '2015'
+  worked_at: '2015-03-22'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-03-23 15:00:00'
+  end_at: '2015-03-23 18:00:00'
+  fixed_at: 
+  work_kind_id: '32'
+  created_at: '2015-03-23 08:50:01.830289'
+  updated_at: '2015-03-23 08:50:01.830289'
+
+
+works26:
+  id: '1503'
+  term: '2015'
+  worked_at: '2015-03-24'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-04-20 14:00:00'
+  end_at: '2015-04-20 17:00:00'
+  fixed_at: 
+  work_kind_id: '27'
+  created_at: '2015-04-20 09:28:35.137269'
+  updated_at: '2015-04-20 09:28:35.137269'
+
+
+works27:
+  id: '1504'
+  term: '2015'
+  worked_at: '2015-04-18'
+  weather_id: '1'
+  work_type_id: '13'
+  name: "田植機保守、格納庫掃除"
+  remarks: ''
+  start_at: '2015-04-20 09:00:00'
+  end_at: '2015-04-20 12:00:00'
+  fixed_at: 
+  work_kind_id: '24'
+  created_at: '2015-04-20 09:31:56.324898'
+  updated_at: '2015-04-20 09:31:56.324898'
+
+
+works28:
+  id: '1505'
+  term: '2015'
+  worked_at: '2015-04-11'
+  weather_id: '1'
+  work_type_id: '11'
+  name: "春作業について"
+  remarks: ''
+  start_at: '2015-04-20 18:30:00'
+  end_at: '2015-04-20 19:30:00'
+  fixed_at: 
+  work_kind_id: '25'
+  created_at: '2015-04-20 09:34:30.200174'
+  updated_at: '2015-04-20 09:34:30.200174'
+
+
+works29:
+  id: '1506'
+  term: '2015'
+  worked_at: '2015-03-22'
+  weather_id: '1'
+  work_type_id: '13'
+  name: "トラクター・オイル交換他"
+  remarks: ''
+  start_at: '2015-05-04 08:00:00'
+  end_at: '2015-05-04 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-05-04 05:49:12.033176'
+  updated_at: '2015-05-04 05:49:12.033176'
+
+
+works30:
+  id: '1507'
+  term: '2015'
+  worked_at: '2015-03-23'
+  weather_id: '2'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-05-04 08:00:00'
+  end_at: '2015-05-04 17:00:00'
+  fixed_at: 
+  work_kind_id: '23'
+  created_at: '2015-05-04 05:51:07.359809'
+  updated_at: '2015-05-04 05:51:07.359809'
+
+
+works31:
+  id: '1508'
+  term: '2015'
+  worked_at: '2015-03-25'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-05-04 08:00:00'
+  end_at: '2015-05-04 18:00:00'
+  fixed_at: 
+  work_kind_id: '23'
+  created_at: '2015-05-04 05:53:53.069891'
+  updated_at: '2015-05-04 05:53:53.069891'
+
+
+works32:
+  id: '1509'
+  term: '2015'
+  worked_at: '2015-03-26'
+  weather_id: '1'
+  work_type_id: '16'
+  name: ''
+  remarks: "干拓畦補修・ミニＢＦ洗車・園屋へ返却"
+  start_at: '2015-07-24 09:00:00'
+  end_at: '2015-07-24 15:30:00'
+  fixed_at: 
+  work_kind_id: '23'
+  created_at: '2015-05-04 06:00:53.415752'
+  updated_at: '2015-07-24 09:18:13.977617'
+
+
+works33:
+  id: '1510'
+  term: '2015'
+  worked_at: '2015-03-26'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "出島・草刈り"
+  remarks: "トラクタ-・ＭＺ655"
+  start_at: '2015-05-04 13:00:00'
+  end_at: '2015-05-04 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-05-04 06:03:11.390683'
+  updated_at: '2015-05-04 06:03:44.174247'
+
+
+works34:
+  id: '1511'
+  term: '2015'
+  worked_at: '2015-03-26'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "堆肥散布機・掃除"
+  remarks: ''
+  start_at: '2015-07-24 09:00:00'
+  end_at: '2015-07-24 11:30:00'
+  fixed_at: 
+  work_kind_id: '23'
+  created_at: '2015-05-04 06:06:29.810967'
+  updated_at: '2015-07-24 09:15:05.695384'
+
+
+works35:
+  id: '1512'
+  term: '2015'
+  worked_at: '2015-03-27'
+  weather_id: '1'
+  work_type_id: '13'
+  name: "トラクタ-作業機交換・干拓草刈り・米ぬか片付"
+  remarks: ''
+  start_at: '2015-05-04 09:00:00'
+  end_at: '2015-05-04 16:00:00'
+  fixed_at: 
+  work_kind_id: '30'
+  created_at: '2015-05-04 06:09:41.560756'
+  updated_at: '2015-05-04 06:09:41.560756'
+
+
+works36:
+  id: '1513'
+  term: '2015'
+  worked_at: '2015-03-28'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: 2585・9.7　2584-イ・29.4　2584-ロ・29.5　　ＭＺ65・70.05ℓ　№3・54.5ℓ
+  start_at: '2015-05-04 08:00:00'
+  end_at: '2015-05-04 18:30:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-05-04 06:11:37.037158'
+  updated_at: '2015-05-04 06:27:56.65335'
+
+
+works37:
+  id: '1514'
+  term: '2015'
+  worked_at: '2015-03-29'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: 2669・34.6
+  start_at: '2015-05-04 08:00:00'
+  end_at: '2015-05-04 18:00:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-05-04 06:29:05.265184'
+  updated_at: '2015-05-04 06:36:19.692654'
+
+
+works38:
+  id: '1515'
+  term: '2015'
+  worked_at: '2015-03-03'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: "第3回総会　　議事の整理・原文作成・入力印刷"
+  start_at: '2015-05-04 08:00:00'
+  end_at: '2015-05-04 11:00:00'
+  fixed_at: '2015-02-28'
+  work_kind_id: '30'
+  created_at: '2015-05-04 06:46:28.608372'
+  updated_at: '2016-06-13 05:42:42.566141'
+
+
+works39:
+  id: '1516'
+  term: '2015'
+  worked_at: '2015-05-03'
+  weather_id: '2'
+  work_type_id: '15'
+  name: "除草剤個別配分"
+  remarks: ''
+  start_at: '2015-05-04 10:00:00'
+  end_at: '2015-05-04 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-05-04 06:47:51.971824'
+  updated_at: '2015-05-04 06:47:51.971824'
+
+
+works40:
+  id: '1517'
+  term: '2015'
+  worked_at: '2015-05-04'
+  weather_id: '1'
+  work_type_id: '15'
+  name: "除草剤個別配分・日報整理"
+  remarks: ''
+  start_at: '2015-05-04 09:00:00'
+  end_at: '2015-05-04 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-05-04 06:49:29.765003'
+  updated_at: '2015-05-04 06:49:29.765003'
+
+
+works41:
+  id: '1518'
+  term: '2015'
+  worked_at: '2015-04-30'
+  weather_id: '1'
+  work_type_id: '11'
+  name: "農業委員会書類作成"
+  remarks: ''
+  start_at: '2015-05-05 17:00:00'
+  end_at: '2015-05-05 18:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-05-05 02:01:24.577902'
+  updated_at: '2015-05-05 02:01:24.577902'
+
+
+works42:
+  id: '1519'
+  term: '2015'
+  worked_at: '2015-04-02'
+  weather_id: '1'
+  work_type_id: '1'
+  name: "ＭＺ655"
+  remarks: "新田前・40ａ"
+  start_at: '2015-06-14 08:00:00'
+  end_at: '2015-06-14 17:30:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-06-14 06:09:06.294639'
+  updated_at: '2015-06-14 06:15:43.830483'
+
+
+works43:
+  id: '1520'
+  term: '2015'
+  worked_at: '2015-04-04'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: "ＭＺ65：松本\r\nＭＺ655：中西屋"
+  start_at: '2015-06-14 08:00:00'
+  end_at: '2015-06-14 17:30:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-06-14 06:17:50.392248'
+  updated_at: '2015-06-14 06:17:50.392248'
+
+
+works44:
+  id: '1521'
+  term: '2015'
+  worked_at: '2015-04-05'
+  weather_id: '3'
+  work_type_id: '15'
+  name: ''
+  remarks: "ＭＺ65：ハンクロ：岡屋\r\nＭＺ65orMZ655?：東前"
+  start_at: '2015-06-14 08:00:00'
+  end_at: '2015-06-14 17:30:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-06-14 06:25:52.786182'
+  updated_at: '2015-06-14 06:25:52.786182'
+
+
+works45:
+  id: '1522'
+  term: '2015'
+  worked_at: '2015-04-06'
+  weather_id: '3'
+  work_type_id: '15'
+  name: ''
+  remarks: MZ655
+  start_at: '2015-06-14 08:00:00'
+  end_at: '2015-06-14 17:00:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-06-14 06:30:43.265367'
+  updated_at: '2015-06-14 06:30:43.265367'
+
+
+works46:
+  id: '1523'
+  term: '2015'
+  worked_at: '2015-04-07'
+  weather_id: '2'
+  work_type_id: '15'
+  name: ''
+  remarks: MZ655
+  start_at: '2015-06-14 08:00:00'
+  end_at: '2015-06-14 17:30:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-06-14 06:33:40.334306'
+  updated_at: '2015-06-14 06:33:40.334306'
+
+
+works47:
+  id: '1524'
+  term: '2015'
+  worked_at: '2015-04-08'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: "MZ65:中家\r\nMZ655orMZ65ハンクロ？：中北\r\n"
+  start_at: '2015-06-14 08:00:00'
+  end_at: '2015-06-14 19:30:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-06-14 06:36:48.954135'
+  updated_at: '2015-06-14 06:37:56.450599'
+
+
+works48:
+  id: '1525'
+  term: '2015'
+  worked_at: '2015-04-09'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: "MZ??\r\n2023・・23.6a"
+  start_at: '2015-06-14 08:00:00'
+  end_at: '2015-06-14 17:30:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-06-14 06:42:08.161638'
+  updated_at: '2015-06-14 06:45:48.744495'
+
+
+works49:
+  id: '1526'
+  term: '2015'
+  worked_at: '2015-04-10'
+  weather_id: '3'
+  work_type_id: '15'
+  name: ''
+  remarks: "トラクター使用機械：不明"
+  start_at: '2015-06-14 08:00:00'
+  end_at: '2015-06-14 18:00:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-06-14 06:47:41.622553'
+  updated_at: '2015-06-14 06:47:41.622553'
+
+
+works50:
+  id: '1527'
+  term: '2015'
+  worked_at: '2015-04-11'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: "トラクタ－使用者：不明"
+  start_at: '2015-06-14 08:00:00'
+  end_at: '2015-06-14 17:30:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-06-14 06:52:07.392452'
+  updated_at: '2015-06-14 06:52:07.392452'
+
+
+works51:
+  id: '1528'
+  term: '2015'
+  worked_at: '2015-04-12'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: "トラクター使用：不明"
+  start_at: '2015-06-14 08:00:00'
+  end_at: '2015-06-14 18:00:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-06-14 07:13:35.107557'
+  updated_at: '2015-06-14 07:13:35.107557'
+
+
+works52:
+  id: '1529'
+  term: '2015'
+  worked_at: '2015-04-12'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "干拓・除草剤散布\r\nポンプ架装含む\r\nデジマ-95-1・93-1・66-1・65・64・63　Σ232.7a"
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 18:30:00'
+  fixed_at: 
+  work_kind_id: '16'
+  created_at: '2015-07-05 05:59:09.991282'
+  updated_at: '2015-07-05 06:05:38.038569'
+
+
+works53:
+  id: '1530'
+  term: '2015'
+  worked_at: '2015-04-13'
+  weather_id: '3'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 17:30:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-07-05 06:06:35.497824'
+  updated_at: '2015-07-05 06:06:35.497824'
+
+
+works54:
+  id: '1531'
+  term: '2015'
+  worked_at: '2015-04-15'
+  weather_id: '1'
+  work_type_id: '13'
+  name: "作業機交換・メンテナンス"
+  remarks: ''
+  start_at: '2015-07-05 09:00:00'
+  end_at: '2015-07-05 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-05 06:15:02.649768'
+  updated_at: '2015-07-05 06:15:02.649768'
+
+
+works55:
+  id: '1532'
+  term: '2015'
+  worked_at: '2015-04-21'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 18:30:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-05 06:16:22.367333'
+  updated_at: '2015-07-05 06:16:22.367333'
+
+
+works56:
+  id: '1533'
+  term: '2015'
+  worked_at: '2015-04-22'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: "新田前・40a\r\n"
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 18:30:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-05 06:24:20.71537'
+  updated_at: '2015-07-05 06:28:35.336579'
+
+
+works57:
+  id: '1534'
+  term: '2015'
+  worked_at: '2015-04-23'
+  weather_id: '1'
+  work_type_id: '23'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 18:00:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-05 06:31:10.718135'
+  updated_at: '2015-07-05 06:31:10.718135'
+
+
+works58:
+  id: '1535'
+  term: '2015'
+  worked_at: '2015-04-24'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 18:00:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-05 06:39:49.252411'
+  updated_at: '2015-07-05 06:40:43.873517'
+
+
+works59:
+  id: '1536'
+  term: '2015'
+  worked_at: '2015-04-25'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 17:00:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-05 06:46:22.842351'
+  updated_at: '2015-07-05 06:46:22.842351'
+
+
+works60:
+  id: '1537'
+  term: '2015'
+  worked_at: '2015-04-25'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: "フルターボ・16㎏・サラブレッドKAI・23㎏　イセキみどり・29袋：：：苗191+301箱"
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 17:30:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-05 06:53:24.496317'
+  updated_at: '2015-07-05 07:03:03.591332'
+
+
+works61:
+  id: '1538'
+  term: '2015'
+  worked_at: '2015-04-26'
+  weather_id: '1'
+  work_type_id: '15'
+  name: "デジマ干拓"
+  remarks: "デジマ・95-1・93-1・63・64・65　Σ200.8a\r\n"
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 17:30:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-07-05 07:04:31.223292'
+  updated_at: '2015-07-05 07:06:29.331073'
+
+
+works62:
+  id: '1539'
+  term: '2015'
+  worked_at: '2015-04-26'
+  weather_id: '1'
+  work_type_id: '1'
+  name: 2639・34.6a+新田前・40a
+  remarks: "フル・24＋19.8㎏：KAI・29.3＋26.5㎏：いずも28+37袋・米育ち9袋・キヌ一発15袋：ミルキー130箱：コシ46+309箱：キヌ306箱"
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 18:00:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-05 07:07:22.131518'
+  updated_at: '2015-07-05 07:39:06.554029'
+
+
+works63:
+  id: '1540'
+  term: '2015'
+  worked_at: '2015-04-27'
+  weather_id: '1'
+  work_type_id: '23'
+  name: ''
+  remarks: "フル39.7㎏：KAI34.2㎏：イセキみどり40袋：米育ち34袋：キヌ一発4袋：きぬ350＋222箱"
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 18:00:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-05 07:44:13.754171'
+  updated_at: '2015-07-05 07:44:13.754171'
+
+
+works64:
+  id: '1541'
+  term: '2015'
+  worked_at: '2015-04-28'
+  weather_id: '1'
+  work_type_id: '15'
+  name: "こし・きぬ・たちあやか"
+  remarks: "フル11.3㎏：オンコル12㎏：KAI12㎏：バッチリ12㎏：いずも7袋：ヰセキみどり14袋：硫安21袋：たちあやか192箱：キヌ80箱：こし80箱"
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 17:00:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-05 07:54:26.322552'
+  updated_at: '2015-07-05 07:54:26.322552'
+
+
+works65:
+  id: '1542'
+  term: '2015'
+  worked_at: '2015-04-27'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: "干拓：勝田・105.1a"
+  start_at: '2015-07-05 13:00:00'
+  end_at: '2015-07-05 18:00:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-05 07:58:11.508996'
+  updated_at: '2015-07-05 07:59:43.65002'
+
+
+works66:
+  id: '1543'
+  term: '2015'
+  worked_at: '2015-04-29'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: "勝田：線路脇：23a"
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 11:00:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-05 08:01:01.98649'
+  updated_at: '2015-07-05 08:01:01.98649'
+
+
+works67:
+  id: '1544'
+  term: '2015'
+  worked_at: '2015-04-29'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "たちあやか***2488-1:6.1a"
+  remarks: "オンコル12+18㎏：バッチリ19+24㎏：硫安32+45袋：たちあやか256+64+346+26箱\r\n"
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 18:30:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-05 08:03:24.522124'
+  updated_at: '2015-07-05 08:15:58.841781'
+
+
+works68:
+  id: '1545'
+  term: '2015'
+  worked_at: '2015-04-30'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "出島：95-1・93-1"
+  remarks: "オンコル10㎏：バッチリ17㎏：硫安27袋：たちあやか214箱"
+  start_at: '2015-07-05 08:00:00'
+  end_at: '2015-07-05 16:00:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-05 08:19:44.554206'
+  updated_at: '2015-07-05 08:24:31.831321'
+
+
+works69:
+  id: '1546'
+  term: '2015'
+  worked_at: '2015-07-05'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "日報整理・入力"
+  start_at: '2015-07-05 15:00:00'
+  end_at: '2015-07-05 17:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-05 08:26:58.720793'
+  updated_at: '2015-07-05 08:26:58.720793'
+
+
+works70:
+  id: '1547'
+  term: '2015'
+  worked_at: '2015-05-02'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: "コシ早：フル2.0㎏・KAI2.5㎏・\r\n稲作名人4袋\r\n中北・（松の家）40箱"
+  start_at: '2015-07-19 08:00:00'
+  end_at: '2015-07-19 10:30:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-19 09:54:00.853905'
+  updated_at: '2015-07-19 09:58:19.890151'
+
+
+works71:
+  id: '1548'
+  term: '2015'
+  worked_at: '2015-05-03'
+  weather_id: '2'
+  work_type_id: '14'
+  name: "出島：勝田95-1・93-1　52.5+52.6a"
+  remarks: ''
+  start_at: '2015-07-19 08:00:00'
+  end_at: '2015-07-19 10:00:00'
+  fixed_at: 
+  work_kind_id: '10'
+  created_at: '2015-07-19 10:00:24.068146'
+  updated_at: '2015-07-19 10:00:24.068146'
+
+
+works72:
+  id: '1549'
+  term: '2015'
+  worked_at: '2015-05-03'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "出島：排水側畦畔作り"
+  remarks: "出島：63・64・65・66"
+  start_at: '2015-07-19 07:30:00'
+  end_at: '2015-07-19 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-19 10:02:53.358823'
+  updated_at: '2015-07-19 10:03:58.894723'
+
+
+works73:
+  id: '1550'
+  term: '2015'
+  worked_at: '2015-05-06'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: "竹内水田代掻き；50a"
+  start_at: '2015-07-19 08:30:00'
+  end_at: '2015-07-19 11:30:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-19 10:05:23.749538'
+  updated_at: '2015-07-19 10:05:23.749538'
+
+
+works74:
+  id: '1551'
+  term: '2015'
+  worked_at: '2015-05-06'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "出島：荒起こし+トラクターアタッチメント交換\r\n67-1：31.9a"
+  start_at: '2015-07-19 13:00:00'
+  end_at: '2015-07-19 16:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-19 10:07:26.629135'
+  updated_at: '2015-07-19 10:08:18.092844'
+
+
+works75:
+  id: '1552'
+  term: '2015'
+  worked_at: '2015-05-09'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "作業機交換"
+  remarks: ''
+  start_at: '2015-07-19 09:00:00'
+  end_at: '2015-07-19 10:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-19 10:09:14.790254'
+  updated_at: '2015-07-19 10:09:14.790254'
+
+
+works76:
+  id: '1553'
+  term: '2015'
+  worked_at: '2015-05-10'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: "竹内田植：50a"
+  start_at: '2015-07-19 08:00:00'
+  end_at: '2015-07-19 10:30:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-19 10:10:52.876728'
+  updated_at: '2015-07-19 10:11:35.536696'
+
+
+works77:
+  id: '1554'
+  term: '2015'
+  worked_at: '2015-05-11'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-19 08:00:00'
+  end_at: '2015-07-19 18:00:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-19 10:13:18.568705'
+  updated_at: '2015-07-19 10:13:18.568705'
+
+
+works78:
+  id: '1555'
+  term: '2015'
+  worked_at: '2015-05-12'
+  weather_id: '3'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-19 08:00:00'
+  end_at: '2015-07-19 17:30:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-19 10:16:47.084486'
+  updated_at: '2015-07-19 10:16:47.084486'
+
+
+works79:
+  id: '1556'
+  term: '2015'
+  worked_at: '2015-05-13'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: 4607-イ・ホ：整地
+  start_at: '2015-07-19 08:00:00'
+  end_at: '2015-07-19 17:00:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-19 10:18:47.639743'
+  updated_at: '2015-07-19 10:18:47.639743'
+
+
+works80:
+  id: '1557'
+  term: '2015'
+  worked_at: '2015-05-14'
+  weather_id: '2'
+  work_type_id: '4'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-19 08:00:00'
+  end_at: '2015-07-19 15:30:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-19 10:21:12.997116'
+  updated_at: '2015-07-19 10:21:12.997116'
+
+
+works81:
+  id: '1558'
+  term: '2015'
+  worked_at: '2015-05-16'
+  weather_id: '1'
+  work_type_id: '4'
+  name: "きぬむすめ"
+  remarks: ''
+  start_at: '2015-07-19 08:00:00'
+  end_at: '2015-07-19 17:30:00'
+  fixed_at: 
+  work_kind_id: '13'
+  created_at: '2015-07-19 10:23:01.902995'
+  updated_at: '2015-07-19 10:23:01.902995'
+
+
+works82:
+  id: '1559'
+  term: '2015'
+  worked_at: '2015-05-17'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "出島草刈り"
+  start_at: '2015-07-19 06:00:00'
+  end_at: '2015-07-19 08:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-19 10:24:56.891408'
+  updated_at: '2015-07-19 10:24:56.891408'
+
+
+works83:
+  id: '1560'
+  term: '2015'
+  worked_at: '2015-05-17'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "出島草刈り"
+  start_at: '2015-07-19 08:00:00'
+  end_at: '2015-07-19 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-19 10:26:04.316506'
+  updated_at: '2015-07-19 10:26:04.316506'
+
+
+works84:
+  id: '1561'
+  term: '2015'
+  worked_at: '2015-05-17'
+  weather_id: '1'
+  work_type_id: '13'
+  name: ''
+  remarks: "洗車場：泥採り\r\n新屋ミニBF：1.5hr"
+  start_at: '2015-07-24 13:00:00'
+  end_at: '2015-07-24 14:30:00'
+  fixed_at: 
+  work_kind_id: '11'
+  created_at: '2015-07-19 10:29:08.480638'
+  updated_at: '2015-07-24 09:39:11.931912'
+
+
+works85:
+  id: '1562'
+  term: '2015'
+  worked_at: '2015-07-19'
+  weather_id: '2'
+  work_type_id: '14'
+  name: ''
+  remarks: "保有米予定表作成：日報整理"
+  start_at: '2015-07-19 10:00:00'
+  end_at: '2015-07-19 16:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-19 10:33:23.563944'
+  updated_at: '2015-07-19 10:33:23.563944'
+
+
+works86:
+  id: '1563'
+  term: '2015'
+  worked_at: '2015-05-17'
+  weather_id: '1'
+  work_type_id: '4'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 18:30:00'
+  fixed_at: 
+  work_kind_id: '13'
+  created_at: '2015-07-20 02:07:02.373573'
+  updated_at: '2015-07-20 02:07:02.373573'
+
+
+works87:
+  id: '1564'
+  term: '2015'
+  worked_at: '2015-05-18'
+  weather_id: '1'
+  work_type_id: '4'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 17:00:00'
+  fixed_at: 
+  work_kind_id: '13'
+  created_at: '2015-07-20 02:08:12.34923'
+  updated_at: '2015-07-20 02:08:24.027804'
+
+
+works88:
+  id: '1565'
+  term: '2015'
+  worked_at: '2015-05-19'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 18:30:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-20 02:09:36.223941'
+  updated_at: '2015-07-20 02:09:36.223941'
+
+
+works89:
+  id: '1566'
+  term: '2015'
+  worked_at: '2015-05-20'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 18:00:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-20 02:11:21.990999'
+  updated_at: '2015-07-20 02:11:21.990999'
+
+
+works90:
+  id: '1567'
+  term: '2015'
+  worked_at: '2015-05-21'
+  weather_id: '1'
+  work_type_id: '24'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 18:30:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-20 02:13:09.026439'
+  updated_at: '2015-07-20 02:14:51.172987'
+
+
+works91:
+  id: '1568'
+  term: '2015'
+  worked_at: '2015-05-22'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: "田植機：作業機交換"
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 19:00:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-20 02:15:32.425145'
+  updated_at: '2015-07-20 02:16:15.497541'
+
+
+works92:
+  id: '1569'
+  term: '2015'
+  worked_at: '2015-05-23'
+  weather_id: '2'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 19:00:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-20 02:18:11.163623'
+  updated_at: '2015-07-20 02:18:11.163623'
+
+
+works93:
+  id: '1570'
+  term: '2015'
+  worked_at: '2015-05-23'
+  weather_id: '1'
+  work_type_id: '1'
+  name: "コシ：遅"
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 18:00:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-20 02:20:34.720276'
+  updated_at: '2015-07-20 02:20:34.720276'
+
+
+works94:
+  id: '1571'
+  term: '2015'
+  worked_at: '2015-05-24'
+  weather_id: '1'
+  work_type_id: '24'
+  name: "きぬ：遅＊＊＊＊飼料稲WCS・・・たちすずか"
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 18:00:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-20 02:26:30.244921'
+  updated_at: '2015-07-20 02:26:30.244921'
+
+
+works95:
+  id: '1572'
+  term: '2015'
+  worked_at: '2015-05-24'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 18:00:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-20 02:29:05.06696'
+  updated_at: '2015-07-20 02:29:05.06696'
+
+
+works96:
+  id: '1573'
+  term: '2015'
+  worked_at: '2015-05-25'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 17:00:00'
+  fixed_at: 
+  work_kind_id: '2'
+  created_at: '2015-07-20 02:31:08.344079'
+  updated_at: '2015-07-20 02:31:08.344079'
+
+
+works97:
+  id: '1574'
+  term: '2015'
+  worked_at: '2015-05-25'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "たちすずか"
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 17:30:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-20 02:33:08.740039'
+  updated_at: '2015-07-20 02:33:08.740039'
+
+
+works98:
+  id: '1575'
+  term: '2015'
+  worked_at: '2015-05-26'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "たちすずか"
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 17:30:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-20 02:36:24.392564'
+  updated_at: '2015-07-20 02:36:24.392564'
+
+
+works99:
+  id: '1576'
+  term: '2015'
+  worked_at: '2015-05-27'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "たちすずか"
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 15:00:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-20 02:39:30.782475'
+  updated_at: '2015-07-20 02:39:30.782475'
+
+
+works100:
+  id: '1577'
+  term: '2015'
+  worked_at: '2015-05-28'
+  weather_id: '2'
+  work_type_id: '8'
+  name: "みほひかり"
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 18:30:00'
+  fixed_at: 
+  work_kind_id: '1'
+  created_at: '2015-07-20 02:42:22.810794'
+  updated_at: '2015-07-20 02:42:22.810794'
+
+
+works101:
+  id: '1578'
+  term: '2015'
+  worked_at: '2015-05-30'
+  weather_id: '2'
+  work_type_id: '13'
+  name: "田植機・トラクター掃除"
+  remarks: ''
+  start_at: '2015-07-20 09:00:00'
+  end_at: '2015-07-20 12:00:00'
+  fixed_at: 
+  work_kind_id: '11'
+  created_at: '2015-07-20 02:46:42.146287'
+  updated_at: '2015-07-20 02:46:42.146287'
+
+
+works102:
+  id: '1579'
+  term: '2015'
+  worked_at: '2015-05-31'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: "出島：畦波設置\r\nデジマ*63-1・64－1・65－1・66-1"
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 09:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-20 02:48:13.821423'
+  updated_at: '2015-07-20 02:51:05.452911'
+
+
+works103:
+  id: '1580'
+  term: '2015'
+  worked_at: '2015-06-06'
+  weather_id: '1'
+  work_type_id: '13'
+  name: ''
+  remarks: "ハロー・田植機***さび止め吹付"
+  start_at: '2015-07-20 10:00:00'
+  end_at: '2015-07-20 14:00:00'
+  fixed_at: 
+  work_kind_id: '11'
+  created_at: '2015-07-20 02:53:06.710281'
+  updated_at: '2015-07-20 02:53:06.710281'
+
+
+works104:
+  id: '1581'
+  term: '2015'
+  worked_at: '2015-06-07'
+  weather_id: '1'
+  work_type_id: '13'
+  name: ''
+  remarks: "トラクター作業機交換（草刈り機）"
+  start_at: '2015-07-20 16:30:00'
+  end_at: '2015-07-20 17:30:00'
+  fixed_at: 
+  work_kind_id: '11'
+  created_at: '2015-07-20 02:54:32.870876'
+  updated_at: '2015-07-20 02:54:32.870876'
+
+
+works105:
+  id: '1582'
+  term: '2015'
+  worked_at: '2015-06-10'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "体質強化緊急対策事業の粗食・直播の写真撮り"
+  start_at: '2015-07-20 15:00:00'
+  end_at: '2015-07-20 16:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-20 02:56:59.826918'
+  updated_at: '2015-07-20 02:56:59.826918'
+
+
+works106:
+  id: '1583'
+  term: '2015'
+  worked_at: '2015-06-14'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "干拓草刈り"
+  start_at: '2015-07-20 10:00:00'
+  end_at: '2015-07-20 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-20 02:58:08.563108'
+  updated_at: '2015-07-20 02:58:08.563108'
+
+
+works107:
+  id: '1584'
+  term: '2015'
+  worked_at: '2015-06-14'
+  weather_id: '1'
+  work_type_id: '12'
+  name: "干拓"
+  remarks: "干拓草刈り"
+  start_at: '2015-07-20 07:00:00'
+  end_at: '2015-07-20 09:00:00'
+  fixed_at: 
+  work_kind_id: '10'
+  created_at: '2015-07-20 02:59:18.542655'
+  updated_at: '2015-07-20 07:17:47.281876'
+
+
+works108:
+  id: '1585'
+  term: '2015'
+  worked_at: '2015-07-12'
+  weather_id: '2'
+  work_type_id: '14'
+  name: ''
+  remarks: "格納庫掃除"
+  start_at: '2015-07-20 14:00:00'
+  end_at: '2015-07-20 17:00:00'
+  fixed_at: 
+  work_kind_id: '30'
+  created_at: '2015-07-20 03:01:26.804301'
+  updated_at: '2015-07-20 03:01:26.804301'
+
+
+works109:
+  id: '1586'
+  term: '2015'
+  worked_at: '2015-07-04'
+  weather_id: '2'
+  work_type_id: '15'
+  name: ''
+  remarks: "ミルキークイン追肥＊みのりアップ1袋/10a"
+  start_at: '2015-07-20 15:00:00'
+  end_at: '2015-07-20 16:00:00'
+  fixed_at: 
+  work_kind_id: '6'
+  created_at: '2015-07-20 03:05:12.222321'
+  updated_at: '2015-07-20 03:05:12.222321'
+
+
+works110:
+  id: '1587'
+  term: '2015'
+  worked_at: '2015-07-16'
+  weather_id: '3'
+  work_type_id: '14'
+  name: ''
+  remarks: "台風対策"
+  start_at: '2015-07-20 18:00:00'
+  end_at: '2015-07-20 19:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-20 03:07:27.707438'
+  updated_at: '2015-07-20 03:07:27.707438'
+
+
+works111:
+  id: '1588'
+  term: '2015'
+  worked_at: '2015-07-19'
+  weather_id: '2'
+  work_type_id: '14'
+  name: ''
+  remarks: "台風対策"
+  start_at: '2015-12-19 18:00:00'
+  end_at: '2015-12-19 19:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-20 03:09:26.207832'
+  updated_at: '2015-12-19 07:29:38.076676'
+
+
+works112:
+  id: '1589'
+  term: '2015'
+  worked_at: '2015-07-20'
+  weather_id: '1'
+  work_type_id: '23'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 09:00:00'
+  fixed_at: 
+  work_kind_id: '6'
+  created_at: '2015-07-20 03:10:59.743621'
+  updated_at: '2015-07-20 03:10:59.743621'
+
+
+works113:
+  id: '1590'
+  term: '2015'
+  worked_at: '2015-07-20'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: "出島：勝田"
+  start_at: '2015-07-20 08:00:00'
+  end_at: '2015-07-20 09:30:00'
+  fixed_at: 
+  work_kind_id: '10'
+  created_at: '2015-07-20 03:13:25.021982'
+  updated_at: '2015-07-20 03:13:25.021982'
+
+
+works114:
+  id: '1591'
+  term: '2015'
+  worked_at: '2015-07-20'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "日報入力：整理"
+  start_at: '2015-07-20 11:00:00'
+  end_at: '2015-07-20 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-07-20 03:14:45.969914'
+  updated_at: '2015-07-20 03:14:45.969914'
+
+
+works115:
+  id: '1592'
+  term: '2015'
+  worked_at: '2015-07-22'
+  weather_id: '1'
+  work_type_id: '12'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-23 13:00:00'
+  end_at: '2015-07-23 15:00:00'
+  fixed_at: 
+  work_kind_id: '16'
+  created_at: '2015-07-23 08:42:46.913742'
+  updated_at: '2015-07-23 08:42:46.913742'
+
+
+works116:
+  id: '1593'
+  term: '2015'
+  worked_at: '2015-07-23'
+  weather_id: '1'
+  work_type_id: '12'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-23 15:00:00'
+  end_at: '2015-07-23 18:30:00'
+  fixed_at: 
+  work_kind_id: '32'
+  created_at: '2015-07-23 09:18:05.677221'
+  updated_at: '2015-07-23 09:18:35.390062'
+
+
+works117:
+  id: '1594'
+  term: '2015'
+  worked_at: '2015-07-24'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-25 14:00:00'
+  end_at: '2015-07-25 19:00:00'
+  fixed_at: 
+  work_kind_id: '32'
+  created_at: '2015-07-25 02:10:29.51824'
+  updated_at: '2015-07-25 02:10:29.51824'
+
+
+works118:
+  id: '1595'
+  term: '2015'
+  worked_at: '2015-07-25'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-25 10:00:00'
+  end_at: '2015-07-25 19:00:00'
+  fixed_at: 
+  work_kind_id: '32'
+  created_at: '2015-07-25 08:31:44.256102'
+  updated_at: '2015-07-25 08:31:44.256102'
+
+
+works119:
+  id: '1596'
+  term: '2015'
+  worked_at: '2015-07-26'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-07-26 10:00:00'
+  end_at: '2015-07-26 17:30:00'
+  fixed_at: 
+  work_kind_id: '32'
+  created_at: '2015-07-26 07:56:33.228248'
+  updated_at: '2015-07-26 07:56:33.228248'
+
+
+works120:
+  id: '1598'
+  term: '2015'
+  worked_at: '2015-07-22'
+  weather_id: '2'
+  work_type_id: '14'
+  name: "廃棄ビニール処理"
+  remarks: ''
+  start_at: '2015-08-23 08:30:00'
+  end_at: '2015-08-23 09:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-08-23 06:50:10.41727'
+  updated_at: '2015-08-23 06:50:44.980634'
+
+
+works121:
+  id: '1599'
+  term: '2015'
+  worked_at: '2015-07-25'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "出島・除草剤散布"
+  remarks: "ﾃﾞｼﾞﾏ41-1･32.5"
+  start_at: '2015-08-23 09:00:00'
+  end_at: '2015-08-23 16:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-08-23 06:52:22.715824'
+  updated_at: '2015-08-23 06:56:25.790446'
+
+
+works122:
+  id: '1600'
+  term: '2015'
+  worked_at: '2015-07-26'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "出島・草刈り"
+  remarks: ''
+  start_at: '2015-08-23 11:30:00'
+  end_at: '2015-08-23 14:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-08-23 06:57:43.075213'
+  updated_at: '2015-08-23 06:57:43.075213'
+
+
+works123:
+  id: '1601'
+  term: '2015'
+  worked_at: '2015-08-01'
+  weather_id: '1'
+  work_type_id: '23'
+  name: ''
+  remarks: 2639-1・17.6
+  start_at: '2015-08-23 08:00:00'
+  end_at: '2015-08-23 09:30:00'
+  fixed_at: 
+  work_kind_id: '6'
+  created_at: '2015-08-23 06:59:13.51082'
+  updated_at: '2015-08-23 07:07:31.44603'
+
+
+works124:
+  id: '1602'
+  term: '2015'
+  worked_at: '2015-08-01'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "蕎麦田・除草　　　改良剤散布\r\nクロ-ラ-・ブロ－ドキャスター：トラクタ・除草機：ローダー"
+  start_at: '2015-08-23 09:00:00'
+  end_at: '2015-08-23 16:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-08-23 07:09:00.020119'
+  updated_at: '2015-08-23 07:12:14.710828'
+
+
+works125:
+  id: '1603'
+  term: '2015'
+  worked_at: '2015-08-01'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "出島・溝掘り…蕎麦"
+  start_at: '2015-08-23 17:00:00'
+  end_at: '2015-08-23 18:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-08-23 07:13:23.725375'
+  updated_at: '2015-08-23 07:13:23.725375'
+
+
+works126:
+  id: '1604'
+  term: '2015'
+  worked_at: '2015-08-02'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "出島・溝掘り　　　園家ミニBF・4.0hr使用　　トラクタ－＋ミニBF\r\n"
+  start_at: '2015-08-23 08:00:00'
+  end_at: '2015-08-23 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-08-23 07:15:08.762212'
+  updated_at: '2015-08-23 07:16:56.938221'
+
+
+works127:
+  id: '1605'
+  term: '2015'
+  worked_at: '2015-08-02'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "出島・草刈り"
+  remarks: ''
+  start_at: '2015-08-23 09:30:00'
+  end_at: '2015-08-23 17:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-08-23 07:17:50.234175'
+  updated_at: '2015-08-23 07:17:50.234175'
+
+
+works128:
+  id: '1606'
+  term: '2015'
+  worked_at: '2015-08-03'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "そば削溝／種まき"
+  remarks: "削溝・荒起こし　　種まき機取付け　MZ65"
+  start_at: '2015-08-23 08:00:00'
+  end_at: '2015-08-23 18:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-08-23 07:18:58.66104'
+  updated_at: '2015-08-23 07:21:31.023002'
+
+
+works129:
+  id: '1607'
+  term: '2015'
+  worked_at: '2015-08-04'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "そば削溝／種まき"
+  remarks: "蕎麦種まき　　MZ65　播種機"
+  start_at: '2015-08-23 08:00:00'
+  end_at: '2015-08-23 18:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-08-23 07:22:39.794326'
+  updated_at: '2015-08-23 07:22:39.794326'
+
+
+works130:
+  id: '1608'
+  term: '2015'
+  worked_at: '2015-08-05'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: MZ65+播種機：洗車
+  start_at: '2015-08-23 08:30:00'
+  end_at: '2015-08-23 11:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-08-23 07:24:19.323703'
+  updated_at: '2015-08-23 07:24:19.323703'
+
+
+works131:
+  id: '1609'
+  term: '2015'
+  worked_at: '2015-08-09'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: "出島：除草剤散布"
+  start_at: '2015-08-23 06:00:00'
+  end_at: '2015-08-23 07:00:00'
+  fixed_at: 
+  work_kind_id: '30'
+  created_at: '2015-08-23 07:25:57.434895'
+  updated_at: '2015-08-23 07:25:57.434895'
+
+
+works132:
+  id: '1610'
+  term: '2015'
+  worked_at: '2015-08-09'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "出島：草刈り…勝田"
+  start_at: '2015-08-23 08:00:00'
+  end_at: '2015-08-23 09:00:00'
+  fixed_at: 
+  work_kind_id: '10'
+  created_at: '2015-08-23 07:27:35.584541'
+  updated_at: '2015-08-23 07:27:35.584541'
+
+
+works133:
+  id: '1611'
+  term: '2015'
+  worked_at: '2015-08-10'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "出島：草刈り・クボタ"
+  start_at: '2015-08-23 14:00:00'
+  end_at: '2015-08-23 17:00:00'
+  fixed_at: 
+  work_kind_id: '10'
+  created_at: '2015-08-23 07:29:13.033534'
+  updated_at: '2015-08-23 07:29:13.033534'
+
+
+works134:
+  id: '1612'
+  term: '2015'
+  worked_at: '2015-08-17'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: "第1回・穂肥　（N2.7kg）　　　　　　　　　　ミノルアップ15kg/10a"
+  start_at: '2015-08-23 08:00:00'
+  end_at: '2015-08-23 09:00:00'
+  fixed_at: 
+  work_kind_id: '6'
+  created_at: '2015-08-23 07:31:56.493251'
+  updated_at: '2015-08-23 07:31:56.493251'
+
+
+works135:
+  id: '1613'
+  term: '2015'
+  worked_at: '2015-08-19'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: ''
+  start_at: '2015-08-23 11:00:00'
+  end_at: '2015-08-23 11:30:00'
+  fixed_at: 
+  work_kind_id: '10'
+  created_at: '2015-08-23 07:33:36.789248'
+  updated_at: '2015-08-23 07:33:36.789248'
+
+
+works136:
+  id: '1614'
+  term: '2015'
+  worked_at: '2015-08-19'
+  weather_id: '1'
+  work_type_id: '13'
+  name: ''
+  remarks: WCS・コンバイン・ロールベイラー　：点検整備
+  start_at: '2015-08-23 16:00:00'
+  end_at: '2015-08-23 18:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-08-23 07:35:39.89861'
+  updated_at: '2015-08-23 07:36:51.888625'
+
+
+works137:
+  id: '1615'
+  term: '2015'
+  worked_at: '2015-08-20'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: WCS:59本    2510-1…15.2/25.2：10a残
+  start_at: '2015-08-23 13:00:00'
+  end_at: '2015-08-23 17:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-08-23 07:38:01.468733'
+  updated_at: '2015-08-23 07:40:40.352486'
+
+
+works138:
+  id: '1616'
+  term: '2015'
+  worked_at: '2015-08-22'
+  weather_id: '2'
+  work_type_id: '8'
+  name: ''
+  remarks: WCS：ホールクロップ・2台　　ラップマシン2台
+  start_at: '2015-08-23 09:00:00'
+  end_at: '2015-08-23 12:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-08-23 07:43:21.955739'
+  updated_at: '2015-08-23 07:46:58.504765'
+
+
+works139:
+  id: '1617'
+  term: '2015'
+  worked_at: '2015-08-23'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "トラクター・草刈り→ブロキャス・草刈り→ロータリー：交換\r\n"
+  start_at: '2015-09-06 09:00:00'
+  end_at: '2015-09-06 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-09-06 01:24:11.665296'
+  updated_at: '2015-09-06 01:24:11.665296'
+
+
+works140:
+  id: '1618'
+  term: '2015'
+  worked_at: '2015-08-23'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "たちあやか"
+  remarks: "刈取り"
+  start_at: '2015-09-06 09:00:00'
+  end_at: '2015-09-06 18:30:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-09-06 01:27:37.422796'
+  updated_at: '2015-09-06 01:33:14.608472'
+
+
+works141:
+  id: '1619'
+  term: '2015'
+  worked_at: '2015-08-24'
+  weather_id: '2'
+  work_type_id: '8'
+  name: ''
+  remarks: "溝切り　MZ655"
+  start_at: '2015-09-06 11:00:00'
+  end_at: '2015-09-06 17:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-09-06 01:34:29.704878'
+  updated_at: '2015-09-06 01:35:17.502372'
+
+
+works142:
+  id: '1620'
+  term: '2015'
+  worked_at: '2015-08-24'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: 188本
+  start_at: '2015-09-06 09:00:00'
+  end_at: '2015-09-06 19:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-09-06 01:40:17.720098'
+  updated_at: '2015-09-06 01:40:17.720098'
+
+
+works143:
+  id: '1621'
+  term: '2015'
+  worked_at: '2015-08-27'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: "たちすずか　採種田"
+  start_at: '2015-09-06 10:00:00'
+  end_at: '2015-09-06 11:00:00'
+  fixed_at: 
+  work_kind_id: '6'
+  created_at: '2015-09-06 01:46:52.119129'
+  updated_at: '2015-09-06 01:46:52.119129'
+
+
+works144:
+  id: '1622'
+  term: '2015'
+  worked_at: '2015-08-28'
+  weather_id: '2'
+  work_type_id: '8'
+  name: ''
+  remarks: "刈取り　　94本+187㎏*1本　　　　出島95-1：52.5a  出島93-1：52.6a"
+  start_at: '2015-09-06 13:00:00'
+  end_at: '2015-09-06 18:30:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-09-06 01:48:36.343849'
+  updated_at: '2015-09-06 01:52:03.911883'
+
+
+works145:
+  id: '1623'
+  term: '2015'
+  worked_at: '2015-08-29'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "キャベツ・ブロッコリー　　ハンクロトラクタ：松本・ローダー：中原"
+  start_at: '2015-09-06 08:00:00'
+  end_at: '2015-09-06 12:00:00'
+  fixed_at: 
+  work_kind_id: '8'
+  created_at: '2015-09-06 01:53:33.439506'
+  updated_at: '2015-09-06 01:56:06.468953'
+
+
+works146:
+  id: '1624'
+  term: '2015'
+  worked_at: '2015-08-29'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: ''
+  start_at: '2015-09-06 09:30:00'
+  end_at: '2015-09-06 15:30:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-09-06 01:57:00.617803'
+  updated_at: '2015-09-06 01:57:00.617803'
+
+
+works147:
+  id: '1625'
+  term: '2015'
+  worked_at: '2015-08-29'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: ''
+  start_at: '2015-09-06 09:00:00'
+  end_at: '2015-09-06 17:00:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-09-06 01:58:51.075637'
+  updated_at: '2015-09-06 01:58:51.075637'
+
+
+works148:
+  id: '1626'
+  term: '2015'
+  worked_at: '2015-08-29'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "洗い場整備　ミニBF：園屋"
+  start_at: '2015-09-06 09:00:00'
+  end_at: '2015-09-06 10:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-09-06 02:02:36.300919'
+  updated_at: '2015-09-06 02:02:36.300919'
+
+
+works149:
+  id: '1627'
+  term: '2015'
+  worked_at: '2015-08-30'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: ''
+  start_at: '2015-09-06 09:00:00'
+  end_at: '2015-09-06 18:30:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-09-06 02:03:26.467133'
+  updated_at: '2015-09-06 02:05:50.253217'
+
+
+works150:
+  id: '1628'
+  term: '2015'
+  worked_at: '2015-08-31'
+  weather_id: '3'
+  work_type_id: '14'
+  name: ''
+  remarks: "格納庫片付"
+  start_at: '2015-09-06 16:00:00'
+  end_at: '2015-09-06 17:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-09-06 02:06:44.26548'
+  updated_at: '2015-09-06 02:06:44.26548'
+
+
+works151:
+  id: '1629'
+  term: '2015'
+  worked_at: '2015-09-10'
+  weather_id: '1'
+  work_type_id: '11'
+  name: "山本工務店"
+  remarks: ''
+  start_at: '2015-09-10 17:00:00'
+  end_at: '2015-09-10 19:00:00'
+  fixed_at: 
+  work_kind_id: '29'
+  created_at: '2015-09-10 10:00:19.836928'
+  updated_at: '2015-09-10 10:00:19.836928'
+
+
+works152:
+  id: '1630'
+  term: '2015'
+  worked_at: '2015-09-13'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: ''
+  start_at: '2015-09-13 10:30:00'
+  end_at: '2015-09-13 11:30:00'
+  fixed_at: 
+  work_kind_id: '33'
+  created_at: '2015-09-13 03:04:02.730212'
+  updated_at: '2015-09-13 03:04:02.730212'
+
+
+works153:
+  id: '1631'
+  term: '2015'
+  worked_at: '2015-09-13'
+  weather_id: '1'
+  work_type_id: '11'
+  name: "プリンタ調整、セキュリティソフト設定"
+  remarks: ''
+  start_at: '2015-09-13 13:00:00'
+  end_at: '2015-09-13 15:30:00'
+  fixed_at: 
+  work_kind_id: '12'
+  created_at: '2015-09-13 06:07:22.467898'
+  updated_at: '2015-09-13 06:07:22.467898'
+
+
+works154:
+  id: '1632'
+  term: '2015'
+  worked_at: '2015-09-16'
+  weather_id: '1'
+  work_type_id: '11'
+  name: WCSたちあやか
+  remarks: ''
+  start_at: '2015-09-16 16:30:00'
+  end_at: '2015-09-16 18:30:00'
+  fixed_at: 
+  work_kind_id: '29'
+  created_at: '2015-09-16 09:39:39.130562'
+  updated_at: '2015-09-16 09:39:39.130562'
+
+
+works155:
+  id: '1633'
+  term: '2015'
+  worked_at: '2015-09-02'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: ''
+  start_at: '2015-10-11 09:00:00'
+  end_at: '2015-10-11 18:30:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-10-11 05:25:40.773873'
+  updated_at: '2015-10-11 05:25:40.773873'
+
+
+works156:
+  id: '1634'
+  term: '2015'
+  worked_at: '2015-09-04'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: "外島藤江分家：70a・中家：30a分　　　　新田：多久和10a・合ケ谷：63a\r\n\r\n"
+  start_at: '2015-10-11 09:00:00'
+  end_at: '2015-10-11 17:30:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-10-11 05:34:13.558247'
+  updated_at: '2015-10-11 05:38:31.428824'
+
+
+works157:
+  id: '1635'
+  term: '2015'
+  worked_at: '2015-09-06'
+  weather_id: '3'
+  work_type_id: '16'
+  name: "そば田の溝掘り：出島"
+  remarks: ''
+  start_at: '2015-10-11 08:00:00'
+  end_at: '2015-10-11 10:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-10-11 05:40:27.360739'
+  updated_at: '2015-10-11 05:41:23.81445'
+
+
+works158:
+  id: '1636'
+  term: '2015'
+  worked_at: '2015-09-06'
+  weather_id: '3'
+  work_type_id: '1'
+  name: "出荷米配置替え"
+  remarks: ''
+  start_at: '2015-10-11 13:00:00'
+  end_at: '2015-10-11 15:00:00'
+  fixed_at: 
+  work_kind_id: '33'
+  created_at: '2015-10-11 05:43:01.154708'
+  updated_at: '2015-10-11 05:43:01.154708'
+
+
+works159:
+  id: '1637'
+  term: '2015'
+  worked_at: '2015-09-11'
+  weather_id: '1'
+  work_type_id: '9'
+  name: ''
+  remarks: "積込\r\n"
+  start_at: '2015-10-11 10:00:00'
+  end_at: '2015-10-11 18:30:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-10-11 05:44:36.081453'
+  updated_at: '2015-10-11 05:44:36.081453'
+
+
+works160:
+  id: '1638'
+  term: '2015'
+  worked_at: '2015-09-05'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "キャベツ　植え"
+  remarks: "植付け機・トラクター：各1ｈｒ・中家\r\n"
+  start_at: '2015-10-11 08:00:00'
+  end_at: '2015-10-11 15:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-10-11 05:46:06.484088'
+  updated_at: '2015-10-11 05:49:32.406815'
+
+
+works161:
+  id: '1639'
+  term: '2015'
+  worked_at: '2015-09-11'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: "新田：竹内・吾郷　　???"
+  start_at: '2015-10-11 13:00:00'
+  end_at: '2015-10-11 16:30:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-10-11 05:51:09.191869'
+  updated_at: '2015-10-11 05:51:09.191869'
+
+
+works162:
+  id: '1640'
+  term: '2015'
+  worked_at: '2015-09-12'
+  weather_id: '1'
+  work_type_id: '13'
+  name: ''
+  remarks: "トラクター：ブロードキャスター⇒草刈り機"
+  start_at: '2015-10-11 09:00:00'
+  end_at: '2015-10-11 10:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-10-11 05:53:29.097414'
+  updated_at: '2015-10-11 05:53:29.097414'
+
+
+works163:
+  id: '1641'
+  term: '2015'
+  worked_at: '2015-09-12'
+  weather_id: '1'
+  work_type_id: '9'
+  name: ''
+  remarks: WCS積込
+  start_at: '2015-10-11 07:00:00'
+  end_at: '2015-10-11 14:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-10-11 05:54:46.544604'
+  updated_at: '2015-10-11 05:54:46.544604'
+
+
+works164:
+  id: '1642'
+  term: '2015'
+  worked_at: '2015-09-12'
+  weather_id: '2'
+  work_type_id: '1'
+  name: ''
+  remarks: "２４０５－ロ：12.5a"
+  start_at: '2015-10-11 09:00:00'
+  end_at: '2015-10-11 18:30:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-10-11 05:56:21.685734'
+  updated_at: '2015-10-11 06:04:07.197924'
+
+
+works165:
+  id: '1643'
+  term: '2015'
+  worked_at: '2015-10-22'
+  weather_id: '1'
+  work_type_id: '26'
+  name: ''
+  remarks: ''
+  start_at: '2015-10-22 10:00:00'
+  end_at: '2015-10-22 17:30:00'
+  fixed_at: 
+  work_kind_id: '33'
+  created_at: '2015-10-22 08:22:18.538761'
+  updated_at: '2015-10-22 08:22:18.538761'
+
+
+works166:
+  id: '1644'
+  term: '2015'
+  worked_at: '2015-10-24'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-10-24 16:00:00'
+  end_at: '2015-10-24 18:30:00'
+  fixed_at: 
+  work_kind_id: '29'
+  created_at: '2015-10-24 08:50:47.219676'
+  updated_at: '2015-10-24 08:50:47.219676'
+
+
+works167:
+  id: '1645'
+  term: '2015'
+  worked_at: '2015-10-23'
+  weather_id: '1'
+  work_type_id: '25'
+  name: "(パレット回収）"
+  remarks: ''
+  start_at: '2015-10-24 14:00:00'
+  end_at: '2015-10-24 17:30:00'
+  fixed_at: 
+  work_kind_id: '33'
+  created_at: '2015-10-24 08:52:35.929821'
+  updated_at: '2015-10-24 08:52:35.929821'
+
+
+works168:
+  id: '1646'
+  term: '2015'
+  worked_at: '2015-11-02'
+  weather_id: '2'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-11-02 16:00:00'
+  end_at: '2015-11-02 18:00:00'
+  fixed_at: 
+  work_kind_id: '29'
+  created_at: '2015-11-02 08:35:17.158668'
+  updated_at: '2015-11-02 08:35:17.158668'
+
+
+works169:
+  id: '1647'
+  term: '2015'
+  worked_at: '2015-11-01'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-11-02 11:00:00'
+  end_at: '2015-11-02 12:00:00'
+  fixed_at: 
+  work_kind_id: '29'
+  created_at: '2015-11-02 08:36:58.513679'
+  updated_at: '2015-11-02 08:36:58.513679'
+
+
+works170:
+  id: '1648'
+  term: '2015'
+  worked_at: '2015-11-03'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-11-03 15:00:00'
+  end_at: '2015-11-03 17:30:00'
+  fixed_at: 
+  work_kind_id: '29'
+  created_at: '2015-11-03 08:00:48.824377'
+  updated_at: '2015-11-03 08:00:48.824377'
+
+
+works171:
+  id: '1649'
+  term: '2015'
+  worked_at: '2015-11-04'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: ''
+  start_at: '2015-11-05 14:00:00'
+  end_at: '2015-11-05 17:00:00'
+  fixed_at: 
+  work_kind_id: '29'
+  created_at: '2015-11-05 07:11:56.662142'
+  updated_at: '2015-11-05 07:11:56.662142'
+
+
+works172:
+  id: '1650'
+  term: '2015'
+  worked_at: '2015-11-05'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-11-05 15:30:00'
+  end_at: '2015-11-05 17:00:00'
+  fixed_at: 
+  work_kind_id: '29'
+  created_at: '2015-11-05 07:13:05.924527'
+  updated_at: '2015-11-05 07:13:05.924527'
+
+
+works173:
+  id: '1651'
+  term: '2015'
+  worked_at: '2015-11-08'
+  weather_id: '3'
+  work_type_id: '13'
+  name: "格納庫掃除"
+  remarks: ''
+  start_at: '2015-11-09 14:00:00'
+  end_at: '2015-11-09 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-11-09 07:33:28.518224'
+  updated_at: '2015-11-09 07:33:28.518224'
+
+
+works174:
+  id: '1652'
+  term: '2015'
+  worked_at: '2015-11-18'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2015-11-21 10:00:00'
+  end_at: '2015-11-21 11:00:00'
+  fixed_at: 
+  work_kind_id: '29'
+  created_at: '2015-11-21 09:14:34.162371'
+  updated_at: '2015-11-21 09:14:57.103887'
+
+
+works175:
+  id: '1653'
+  term: '2015'
+  worked_at: '2015-09-13'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: "布崎：周藤約40a…大灘へ"
+  start_at: '2015-11-29 13:00:00'
+  end_at: '2015-11-29 18:00:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-11-29 05:58:29.24137'
+  updated_at: '2015-11-29 05:58:29.24137'
+
+
+works176:
+  id: '1654'
+  term: '2015'
+  worked_at: '2015-09-14'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "たちあやか：種とり　　　午前：コンバイン掃除"
+  remarks: ''
+  start_at: '2015-11-29 09:30:00'
+  end_at: '2015-11-29 17:00:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-11-29 06:01:56.953859'
+  updated_at: '2015-11-29 06:01:56.953859'
+
+
+works177:
+  id: '1655'
+  term: '2015'
+  worked_at: '2015-09-14'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー苗取り：75枚"
+  remarks: "キャベツ：バリダシン5：300ℓ散布　中北・橋前：ラウンドアップ散布300ℓ*2"
+  start_at: '2015-11-29 10:00:00'
+  end_at: '2015-11-29 17:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-11-29 06:06:22.31119'
+  updated_at: '2015-11-29 06:06:22.31119'
+
+
+works178:
+  id: '1656'
+  term: '2015'
+  worked_at: '2015-09-15'
+  weather_id: '1'
+  work_type_id: '1'
+  name: ''
+  remarks: "布崎：坂本・約50a 大森土建：約10a"
+  start_at: '2015-11-29 13:00:00'
+  end_at: '2015-11-29 18:00:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-11-29 06:07:15.121771'
+  updated_at: '2015-11-29 06:08:57.969467'
+
+
+works179:
+  id: '1657'
+  term: '2015'
+  worked_at: '2015-09-15'
+  weather_id: '1'
+  work_type_id: '14'
+  name: ''
+  remarks: "西尾自動車より2ｔDTをリース"
+  start_at: '2015-11-29 08:30:00'
+  end_at: '2015-11-29 09:30:00'
+  fixed_at: 
+  work_kind_id: '33'
+  created_at: '2015-11-29 06:10:51.38223'
+  updated_at: '2015-11-29 06:10:51.38223'
+
+
+works180:
+  id: '1658'
+  term: '2015'
+  worked_at: '2015-09-15'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー植え"
+  remarks: "植付け機OP\r\n：原勤一"
+  start_at: '2015-11-29 08:00:00'
+  end_at: '2015-11-29 18:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-11-29 06:12:11.582833'
+  updated_at: '2015-11-29 06:14:53.473655'
+
+
+works181:
+  id: '1659'
+  term: '2015'
+  worked_at: '2015-09-18'
+  weather_id: '1'
+  work_type_id: '8'
+  name: 109本
+  remarks: ''
+  start_at: '2015-11-29 09:00:00'
+  end_at: '2015-11-29 18:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-11-29 06:26:08.874903'
+  updated_at: '2015-11-29 06:26:08.874903'
+
+
+works182:
+  id: '1660'
+  term: '2015'
+  worked_at: '2015-11-18'
+  weather_id: '1'
+  work_type_id: '13'
+  name: ''
+  remarks: "コンバイン掃除"
+  start_at: '2015-11-29 11:00:00'
+  end_at: '2015-11-29 15:30:00'
+  fixed_at: 
+  work_kind_id: '30'
+  created_at: '2015-11-29 06:29:37.004025'
+  updated_at: '2015-11-29 06:29:37.004025'
+
+
+works183:
+  id: '1661'
+  term: '2015'
+  worked_at: '2015-11-18'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー苗受取り"
+  remarks: "ブロッコリー畝たて：植付け　2ｔトラック使用\r\nトラクター成形機：3hr・トラクターブロードキャスタ：3hr…【中家】"
+  start_at: '2015-11-29 08:30:00'
+  end_at: '2015-11-29 17:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-11-29 06:31:55.659267'
+  updated_at: '2015-11-29 06:35:38.791493'
+
+
+works184:
+  id: '1662'
+  term: '2015'
+  worked_at: '2015-09-19'
+  weather_id: '1'
+  work_type_id: '1'
+  name: "出荷：検査米引取・米袋のラべリング等"
+  remarks: ''
+  start_at: '2015-11-29 09:00:00'
+  end_at: '2015-11-29 16:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-11-29 06:37:33.622688'
+  updated_at: '2015-11-29 06:37:33.622688'
+
+
+works185:
+  id: '1663'
+  term: '2015'
+  worked_at: '2015-09-19'
+  weather_id: '1'
+  work_type_id: '23'
+  name: ''
+  remarks: ''
+  start_at: '2015-11-29 09:00:00'
+  end_at: '2015-11-29 18:00:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-11-29 06:40:23.95616'
+  updated_at: '2015-11-29 06:40:23.95616'
+
+
+works186:
+  id: '1664'
+  term: '2015'
+  worked_at: '2015-09-19'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー植付け"
+  remarks: ''
+  start_at: '2015-11-29 08:00:00'
+  end_at: '2015-11-29 15:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-11-29 06:50:50.757641'
+  updated_at: '2015-11-29 06:50:50.757641'
+
+
+works187:
+  id: '1665'
+  term: '2015'
+  worked_at: '2015-09-19'
+  weather_id: '1'
+  work_type_id: '8'
+  name: 118本
+  remarks: ''
+  start_at: '2015-11-29 08:00:00'
+  end_at: '2015-11-29 17:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-11-29 06:52:24.425775'
+  updated_at: '2015-11-29 06:52:24.425775'
+
+
+works188:
+  id: '1666'
+  term: '2015'
+  worked_at: '2015-09-20'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "稲刈り：115本"
+  remarks: ''
+  start_at: '2015-11-29 09:00:00'
+  end_at: '2015-11-29 18:30:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-11-29 07:01:00.269741'
+  updated_at: '2015-11-29 07:01:41.907445'
+
+
+works189:
+  id: '1667'
+  term: '2015'
+  worked_at: '2015-09-20'
+  weather_id: '1'
+  work_type_id: '23'
+  name: ''
+  remarks: "コンバイン：№1…センサー異常有り\r\n"
+  start_at: '2015-11-29 09:00:00'
+  end_at: '2015-11-29 18:30:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-11-29 07:06:43.47695'
+  updated_at: '2015-11-29 07:09:28.198846'
+
+
+works190:
+  id: '1668'
+  term: '2015'
+  worked_at: '2015-09-20'
+  weather_id: '1'
+  work_type_id: '15'
+  name: "＆整理　：保有米受付　ラべリング等"
+  remarks: ''
+  start_at: '2015-11-29 07:30:00'
+  end_at: '2015-11-29 16:30:00'
+  fixed_at: 
+  work_kind_id: '33'
+  created_at: '2015-11-29 07:11:25.382616'
+  updated_at: '2015-11-29 07:11:25.382616'
+
+
+works191:
+  id: '1669'
+  term: '2015'
+  worked_at: '2015-09-20'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "集草機取付け他"
+  remarks: ''
+  start_at: '2015-11-29 13:00:00'
+  end_at: '2015-11-29 14:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-11-29 07:13:20.543756'
+  updated_at: '2015-11-29 07:13:20.543756'
+
+
+works192:
+  id: '1670'
+  term: '2015'
+  worked_at: '2015-09-21'
+  weather_id: '1'
+  work_type_id: '8'
+  name: 193本
+  remarks: ''
+  start_at: '2015-11-29 09:00:00'
+  end_at: '2015-11-29 18:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-11-29 07:14:37.490567'
+  updated_at: '2015-11-29 07:14:37.490567'
+
+
+works193:
+  id: '1671'
+  term: '2015'
+  worked_at: '2015-09-21'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "わら寄せ：格納庫掃除"
+  remarks: ''
+  start_at: '2015-11-29 13:00:00'
+  end_at: '2015-11-29 17:30:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-11-29 07:19:55.988872'
+  updated_at: '2015-11-29 07:19:55.988872'
+
+
+works194:
+  id: '1672'
+  term: '2015'
+  worked_at: '2015-09-22'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "キャベツ薬剤散布"
+  remarks: "動噴：中家\r\n"
+  start_at: '2015-12-06 10:00:00'
+  end_at: '2015-12-06 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-06 02:19:19.386698'
+  updated_at: '2015-12-06 02:20:17.08019'
+
+
+works195:
+  id: '1673'
+  term: '2015'
+  worked_at: '2015-09-22'
+  weather_id: '1'
+  work_type_id: '15'
+  name: "出荷"
+  remarks: ''
+  start_at: '2015-12-06 10:00:00'
+  end_at: '2015-12-06 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-06 02:22:04.602968'
+  updated_at: '2015-12-06 02:22:04.602968'
+
+
+works196:
+  id: '1674'
+  term: '2015'
+  worked_at: '2015-09-22'
+  weather_id: '1'
+  work_type_id: '6'
+  name: 8本
+  remarks: ''
+  start_at: '2015-12-06 10:00:00'
+  end_at: '2015-12-06 15:00:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-06 02:23:38.98208'
+  updated_at: '2015-12-06 02:23:38.98208'
+
+
+works197:
+  id: '1675'
+  term: '2015'
+  worked_at: '2015-09-22'
+  weather_id: '1'
+  work_type_id: '8'
+  name: 150本
+  remarks: ''
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 18:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-06 02:28:32.379094'
+  updated_at: '2015-12-06 02:28:32.379094'
+
+
+works198:
+  id: '1676'
+  term: '2015'
+  worked_at: '2015-09-23'
+  weather_id: '1'
+  work_type_id: '8'
+  name: 196本
+  remarks: ''
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 18:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-06 02:33:02.124624'
+  updated_at: '2015-12-06 02:33:02.124624'
+
+
+works199:
+  id: '1677'
+  term: '2015'
+  worked_at: '2015-09-23'
+  weather_id: '1'
+  work_type_id: '1'
+  name: "田中幸夫さん"
+  remarks: ''
+  start_at: '2015-12-06 09:30:00'
+  end_at: '2015-12-06 12:00:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-12-06 02:38:29.360649'
+  updated_at: '2015-12-06 02:38:29.360649'
+
+
+works200:
+  id: '1678'
+  term: '2015'
+  worked_at: '2015-09-23'
+  weather_id: '1'
+  work_type_id: '6'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-06 13:00:00'
+  end_at: '2015-12-06 18:00:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-06 02:40:14.944517'
+  updated_at: '2015-12-06 02:40:14.944517'
+
+
+works201:
+  id: '1679'
+  term: '2015'
+  worked_at: '2015-09-23'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "ワラ寄せ"
+  remarks: ''
+  start_at: '2015-12-06 08:30:00'
+  end_at: '2015-12-06 12:00:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-06 02:44:29.610215'
+  updated_at: '2015-12-06 02:45:05.170562'
+
+
+works202:
+  id: '1680'
+  term: '2015'
+  worked_at: '2015-09-24'
+  weather_id: '2'
+  work_type_id: '9'
+  name: "積込"
+  remarks: ''
+  start_at: '2015-12-06 13:00:00'
+  end_at: '2015-12-06 16:30:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-06 02:46:14.674479'
+  updated_at: '2015-12-06 02:46:14.674479'
+
+
+works203:
+  id: '1681'
+  term: '2015'
+  worked_at: '2015-09-24'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー：うね立て直し"
+  remarks: "トラクター：中家"
+  start_at: '2015-12-06 14:00:00'
+  end_at: '2015-12-06 18:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-06 02:47:56.302363'
+  updated_at: '2015-12-06 02:48:43.16424'
+
+
+works204:
+  id: '1682'
+  term: '2015'
+  worked_at: '2015-09-25'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー：苗取り・植付け"
+  remarks: ''
+  start_at: '2015-12-06 08:00:00'
+  end_at: '2015-12-06 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-06 02:49:50.175324'
+  updated_at: '2015-12-06 02:49:50.175324'
+
+
+works205:
+  id: '1683'
+  term: '2015'
+  worked_at: '2015-09-26'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー：植付け"
+  remarks: ''
+  start_at: '2015-12-06 08:00:00'
+  end_at: '2015-12-06 13:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-06 02:51:48.81446'
+  updated_at: '2015-12-06 02:51:48.81446'
+
+
+works206:
+  id: '1684'
+  term: '2015'
+  worked_at: '2015-09-26'
+  weather_id: '1'
+  work_type_id: '23'
+  name: "米運搬"
+  remarks: ''
+  start_at: '2015-12-06 10:00:00'
+  end_at: '2015-12-06 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-06 02:53:45.761797'
+  updated_at: '2015-12-06 02:53:45.761797'
+
+
+works207:
+  id: '1685'
+  term: '2015'
+  worked_at: '2015-09-26'
+  weather_id: '1'
+  work_type_id: '8'
+  name: 144本
+  remarks: ''
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 18:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-06 02:54:42.907642'
+  updated_at: '2015-12-06 02:58:29.983612'
+
+
+works208:
+  id: '1686'
+  term: '2015'
+  worked_at: '2015-09-28'
+  weather_id: '1'
+  work_type_id: '8'
+  name: 170本
+  remarks: ''
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 18:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-06 07:32:44.198587'
+  updated_at: '2015-12-06 07:32:44.198587'
+
+
+works209:
+  id: '1687'
+  term: '2015'
+  worked_at: '2015-09-29'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "下出来洲26本：小島東80本"
+  remarks: 2261-1：20.5a.・23本　2259-1・2258：31.4a・36本　2259-2：21本
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 18:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-06 07:37:52.846803'
+  updated_at: '2015-12-06 07:41:13.062447'
+
+
+works210:
+  id: '1688'
+  term: '2015'
+  worked_at: '2015-09-30'
+  weather_id: '2'
+  work_type_id: '8'
+  name: "小島東：216本"
+  remarks: ''
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 18:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-06 07:42:34.923705'
+  updated_at: '2015-12-06 07:42:34.923705'
+
+
+works211:
+  id: '1689'
+  term: '2015'
+  worked_at: '2015-10-03'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "干拓草刈り"
+  remarks: "クローラートラクター：モア"
+  start_at: '2015-12-06 10:00:00'
+  end_at: '2015-12-06 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-06 07:47:06.438519'
+  updated_at: '2015-12-06 07:48:07.574919'
+
+
+works212:
+  id: '1690'
+  term: '2015'
+  worked_at: '2015-10-04'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "干拓草刈り"
+  remarks: "クローラートラクター：モア"
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 15:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-06 07:49:08.270406'
+  updated_at: '2015-12-06 07:49:33.318815'
+
+
+works213:
+  id: '1691'
+  term: '2015'
+  worked_at: '2015-10-05'
+  weather_id: '1'
+  work_type_id: '24'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 18:30:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-12-06 07:50:36.800811'
+  updated_at: '2015-12-06 07:50:36.800811'
+
+
+works214:
+  id: '1692'
+  term: '2015'
+  worked_at: '2015-10-06'
+  weather_id: '1'
+  work_type_id: '24'
+  name: ''
+  remarks: "田中幸夫：40a"
+  start_at: '2015-12-06 13:00:00'
+  end_at: '2015-12-06 17:30:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-12-06 07:55:02.025562'
+  updated_at: '2015-12-06 07:56:11.250105'
+
+
+works215:
+  id: '1693'
+  term: '2015'
+  worked_at: '2015-10-06'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "キャベツ・ブロッコリー：薬剤散布・追肥"
+  remarks: "動噴：中家"
+  start_at: '2015-12-06 09:30:00'
+  end_at: '2015-12-06 15:00:00'
+  fixed_at: 
+  work_kind_id: '6'
+  created_at: '2015-12-06 07:58:24.550098'
+  updated_at: '2015-12-06 07:59:47.485361'
+
+
+works216:
+  id: '1694'
+  term: '2015'
+  worked_at: '2015-10-06'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "小島東：小島西：112本"
+  remarks: ''
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 18:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-06 08:02:25.200332'
+  updated_at: '2015-12-06 08:02:25.200332'
+
+
+works217:
+  id: '1695'
+  term: '2015'
+  worked_at: '2015-10-07'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "小島西"
+  remarks: ''
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 18:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-06 08:06:54.249587'
+  updated_at: '2015-12-06 08:06:54.249587'
+
+
+works218:
+  id: '1696'
+  term: '2015'
+  worked_at: '2015-10-07'
+  weather_id: '1'
+  work_type_id: '23'
+  name: "米出荷：8P"
+  remarks: ''
+  start_at: '2015-12-06 13:00:00'
+  end_at: '2015-12-06 17:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-06 08:10:16.048077'
+  updated_at: '2015-12-06 08:11:06.416352'
+
+
+works219:
+  id: '1697'
+  term: '2015'
+  worked_at: '2015-10-07'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "稲わら寄せ"
+  remarks: ''
+  start_at: '2015-12-06 13:30:00'
+  end_at: '2015-12-06 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-06 08:11:53.245348'
+  updated_at: '2015-12-06 08:12:25.006252'
+
+
+works220:
+  id: '1698'
+  term: '2015'
+  worked_at: '2015-10-08'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "小島西：75本"
+  remarks: 2513-ハ・ロ：44.8a  2519-1-ニ：30.0a
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 18:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-06 08:16:23.990407'
+  updated_at: '2015-12-06 08:36:37.783817'
+
+
+works221:
+  id: '1699'
+  term: '2015'
+  worked_at: '2015-10-08'
+  weather_id: '1'
+  work_type_id: '9'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-06 11:30:00'
+  end_at: '2015-12-06 18:30:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-06 08:19:49.806996'
+  updated_at: '2015-12-06 08:19:49.806996'
+
+
+works222:
+  id: '1700'
+  term: '2015'
+  worked_at: '2015-10-08'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー：追肥・中耕"
+  remarks: "管理機：中家"
+  start_at: '2015-12-06 13:30:00'
+  end_at: '2015-12-06 16:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-06 08:24:13.982984'
+  updated_at: '2015-12-06 08:24:13.982984'
+
+
+works223:
+  id: '1701'
+  term: '2015'
+  worked_at: '2015-10-09'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "２０本"
+  remarks: ''
+  start_at: '2015-12-06 11:00:00'
+  end_at: '2015-12-06 16:00:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-06 08:27:01.29712'
+  updated_at: '2015-12-06 08:29:53.820301'
+
+
+works224:
+  id: '1702'
+  term: '2015'
+  worked_at: '2015-10-09'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "積込"
+  remarks: "伊藤：12　藤増：24　西尾：12"
+  start_at: '2015-12-06 08:00:00'
+  end_at: '2015-12-06 09:30:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-06 08:31:39.211767'
+  updated_at: '2015-12-06 08:31:39.211767'
+
+
+works225:
+  id: '1703'
+  term: '2015'
+  worked_at: '2015-10-09'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "１２３本"
+  remarks: ''
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 16:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-06 08:32:56.87502'
+  updated_at: '2015-12-06 08:35:50.424344'
+
+
+works226:
+  id: '1704'
+  term: '2015'
+  worked_at: '2015-10-10'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "積込　４１６本"
+  remarks: ''
+  start_at: '2015-12-06 07:30:00'
+  end_at: '2015-12-06 17:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-06 08:37:36.623741'
+  updated_at: '2015-12-06 08:37:36.623741'
+
+
+works227:
+  id: '1705'
+  term: '2015'
+  worked_at: '2015-10-11'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "ロール移動"
+  remarks: ''
+  start_at: '2015-12-06 09:30:00'
+  end_at: '2015-12-06 15:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-06 08:38:52.285371'
+  updated_at: '2015-12-06 08:38:52.285371'
+
+
+works228:
+  id: '1706'
+  term: '2015'
+  worked_at: '2015-10-15'
+  weather_id: '1'
+  work_type_id: '24'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-06 09:00:00'
+  end_at: '2015-12-06 18:00:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-12-06 08:39:53.930533'
+  updated_at: '2015-12-06 08:39:53.930533'
+
+
+works229:
+  id: '1707'
+  term: '2015'
+  worked_at: '2015-10-16'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "稲わら寄せ"
+  remarks: ''
+  start_at: '2015-12-06 13:00:00'
+  end_at: '2015-12-06 15:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-06 08:46:55.211031'
+  updated_at: '2015-12-06 08:46:55.211031'
+
+
+works230:
+  id: '1708'
+  term: '2015'
+  worked_at: '2015-10-16'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "わら積込"
+  remarks: "渡部畜産：２０本"
+  start_at: '2015-12-11 09:30:00'
+  end_at: '2015-12-11 10:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-11 23:41:38.910919'
+  updated_at: '2015-12-11 23:42:05.756383'
+
+
+works231:
+  id: '1709'
+  term: '2015'
+  worked_at: '2015-10-16'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー"
+  remarks: "トレー返却・追肥・中耕　　管理機：中家"
+  start_at: '2015-12-11 10:00:00'
+  end_at: '2015-12-11 17:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-11 23:43:47.389418'
+  updated_at: '2015-12-11 23:45:08.293858'
+
+
+works232:
+  id: '1710'
+  term: '2015'
+  worked_at: '2015-10-17'
+  weather_id: '1'
+  work_type_id: '13'
+  name: WCS・ラップマシン：掃除
+  remarks: ''
+  start_at: '2015-12-11 09:00:00'
+  end_at: '2015-12-11 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-11 23:46:19.00594'
+  updated_at: '2015-12-11 23:46:19.00594'
+
+
+works233:
+  id: '1711'
+  term: '2015'
+  worked_at: '2015-10-17'
+  weather_id: '1'
+  work_type_id: '24'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-11 09:00:00'
+  end_at: '2015-12-11 17:30:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-12-11 23:49:27.433771'
+  updated_at: '2015-12-11 23:49:27.433771'
+
+
+works234:
+  id: '1712'
+  term: '2015'
+  worked_at: '2015-10-17'
+  weather_id: '1'
+  work_type_id: '24'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-11 09:00:00'
+  end_at: '2015-12-11 18:00:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-12-11 23:52:34.49473'
+  updated_at: '2015-12-11 23:52:34.49473'
+
+
+works235:
+  id: '1713'
+  term: '2015'
+  worked_at: '2015-10-18'
+  weather_id: '1'
+  work_type_id: '4'
+  name: "稲刈り"
+  remarks: ''
+  start_at: '2015-12-11 09:00:00'
+  end_at: '2015-12-11 12:30:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-12-11 23:56:20.324577'
+  updated_at: '2015-12-11 23:57:55.742365'
+
+
+works236:
+  id: '1714'
+  term: '2015'
+  worked_at: '2015-10-18'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "わら寄せ"
+  remarks: ''
+  start_at: '2015-12-11 13:00:00'
+  end_at: '2015-12-11 15:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-11 23:59:02.746071'
+  updated_at: '2015-12-11 23:59:02.746071'
+
+
+works237:
+  id: '1715'
+  term: '2015'
+  worked_at: '2015-10-19'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "わら寄せ"
+  remarks: ''
+  start_at: '2015-12-12 13:00:00'
+  end_at: '2015-12-12 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 00:02:28.274737'
+  updated_at: '2015-12-12 00:02:28.274737'
+
+
+works238:
+  id: '1716'
+  term: '2015'
+  worked_at: '2015-10-20'
+  weather_id: '1'
+  work_type_id: '13'
+  name: WCS・ラップマシン：メンテナンス：格納
+  remarks: ''
+  start_at: '2015-12-12 10:00:00'
+  end_at: '2015-12-12 11:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 00:10:12.754176'
+  updated_at: '2015-12-12 00:10:12.754176'
+
+
+works239:
+  id: '1717'
+  term: '2015'
+  worked_at: '2015-10-20'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "７２本"
+  remarks: 2ｔDT:4ｈｒ
+  start_at: '2015-12-12 13:00:00'
+  end_at: '2015-12-12 17:00:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-12 00:11:46.784987'
+  updated_at: '2015-12-12 00:15:33.166364'
+
+
+works240:
+  id: '1718'
+  term: '2015'
+  worked_at: '2015-10-21'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "わら積込"
+  remarks: "伊藤牧場：２６本・藤増牧場：２０本・西尾牧場：２０本"
+  start_at: '2015-12-12 08:00:00'
+  end_at: '2015-12-12 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 00:17:17.272183'
+  updated_at: '2015-12-12 00:17:17.272183'
+
+
+works241:
+  id: '1719'
+  term: '2015'
+  worked_at: '2015-10-21'
+  weather_id: '1'
+  work_type_id: '9'
+  name: 2ｔDT:4ｈｒ
+  remarks: ''
+  start_at: '2015-12-12 13:00:00'
+  end_at: '2015-12-12 17:30:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-12 00:18:57.498442'
+  updated_at: '2015-12-12 00:23:14.130428'
+
+
+works242:
+  id: '1720'
+  term: '2015'
+  worked_at: '2015-10-24'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "わら寄せ"
+  remarks: "協和町内"
+  start_at: '2015-12-12 15:00:00'
+  end_at: '2015-12-12 16:30:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-12 00:24:25.150609'
+  updated_at: '2015-12-12 00:24:57.015404'
+
+
+works243:
+  id: '1721'
+  term: '2015'
+  worked_at: '2015-10-23'
+  weather_id: '1'
+  work_type_id: '13'
+  name: "コンバイン掃除：種取用"
+  remarks: ''
+  start_at: '2015-12-12 09:00:00'
+  end_at: '2015-12-12 11:00:00'
+  fixed_at: 
+  work_kind_id: '11'
+  created_at: '2015-12-12 00:31:56.238392'
+  updated_at: '2015-12-12 00:31:56.238392'
+
+
+works244:
+  id: '1722'
+  term: '2015'
+  worked_at: '2015-10-24'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "１２本"
+  remarks: 2ｔDT:2ｈｒ
+  start_at: '2015-12-12 13:00:00'
+  end_at: '2015-12-12 15:00:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-12 00:33:03.938156'
+  updated_at: '2015-12-12 00:34:39.28661'
+
+
+works245:
+  id: '1723'
+  term: '2015'
+  worked_at: '2015-10-24'
+  weather_id: '1'
+  work_type_id: '8'
+  name: ''
+  remarks: "デ63．デ64・デ65・デ66-1：ミホヒカリ：1,444+600+1,504+1,522+742+1,368㎏水分：23.6-26.4％\r\n"
+  start_at: '2015-12-12 09:00:00'
+  end_at: '2015-12-12 16:00:00'
+  fixed_at: 
+  work_kind_id: '4'
+  created_at: '2015-12-12 00:35:31.489824'
+  updated_at: '2015-12-12 00:42:10.998447'
+
+
+works246:
+  id: '1724'
+  term: '2015'
+  worked_at: '2015-10-25'
+  weather_id: '1'
+  work_type_id: '13'
+  name: "トラクター：ロータリー爪交換"
+  remarks: ''
+  start_at: '2015-12-12 09:00:00'
+  end_at: '2015-12-12 17:30:00'
+  fixed_at: 
+  work_kind_id: '11'
+  created_at: '2015-12-12 00:43:54.307646'
+  updated_at: '2015-12-12 00:43:54.307646'
+
+
+works247:
+  id: '1725'
+  term: '2015'
+  worked_at: '2015-10-26'
+  weather_id: '1'
+  work_type_id: '9'
+  name: ''
+  remarks: "協和：28本・出島：42本"
+  start_at: '2015-12-12 13:00:00'
+  end_at: '2015-12-12 18:00:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-12 00:45:35.788879'
+  updated_at: '2015-12-12 00:45:35.788879'
+
+
+works248:
+  id: '1726'
+  term: '2015'
+  worked_at: '2015-10-27'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "出島：堆肥散布"
+  remarks: ''
+  start_at: '2015-12-12 08:00:00'
+  end_at: '2015-12-12 15:00:00'
+  fixed_at: 
+  work_kind_id: '23'
+  created_at: '2015-12-12 00:48:01.89053'
+  updated_at: '2015-12-12 00:49:19.044417'
+
+
+works249:
+  id: '1727'
+  term: '2015'
+  worked_at: '2015-10-28'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー・キャベツ"
+  remarks: "殺虫：殺菌剤の散布・中家・動噴"
+  start_at: '2015-12-12 14:30:00'
+  end_at: '2015-12-12 16:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 00:51:27.716047'
+  updated_at: '2015-12-12 00:51:53.675136'
+
+
+works250:
+  id: '1728'
+  term: '2015'
+  worked_at: '2015-10-28'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "出島"
+  remarks: ''
+  start_at: '2015-12-12 08:00:00'
+  end_at: '2015-12-12 17:00:00'
+  fixed_at: 
+  work_kind_id: '23'
+  created_at: '2015-12-12 00:53:15.509199'
+  updated_at: '2015-12-12 00:53:15.509199'
+
+
+works251:
+  id: '1729'
+  term: '2015'
+  worked_at: '2015-10-28'
+  weather_id: '1'
+  work_type_id: '6'
+  name: "出島"
+  remarks: ''
+  start_at: '2015-12-12 13:00:00'
+  end_at: '2015-12-12 17:00:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-12-12 00:54:59.953028'
+  updated_at: '2015-12-12 00:54:59.953028'
+
+
+works252:
+  id: '1730'
+  term: '2015'
+  worked_at: '2015-10-29'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "積込：大型車：26本"
+  remarks: ''
+  start_at: '2015-12-12 08:30:00'
+  end_at: '2015-12-12 09:30:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-12 00:56:34.250652'
+  updated_at: '2015-12-12 00:56:34.250652'
+
+
+works253:
+  id: '1731'
+  term: '2015'
+  worked_at: '2015-10-29'
+  weather_id: '1'
+  work_type_id: '13'
+  name: "集草機⇒ロータリー交換"
+  remarks: ''
+  start_at: '2015-12-12 11:00:00'
+  end_at: '2015-12-12 12:00:00'
+  fixed_at: 
+  work_kind_id: '30'
+  created_at: '2015-12-12 00:58:18.847441'
+  updated_at: '2015-12-12 00:58:18.847441'
+
+
+works254:
+  id: '1732'
+  term: '2015'
+  worked_at: '2015-10-29'
+  weather_id: '1'
+  work_type_id: '6'
+  name: "出島"
+  remarks: ''
+  start_at: '2015-12-12 08:00:00'
+  end_at: '2015-12-12 15:30:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-12-12 00:59:17.241739'
+  updated_at: '2015-12-12 00:59:17.241739'
+
+
+works255:
+  id: '1733'
+  term: '2015'
+  worked_at: '2015-10-31'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "積込：藤増牧場26本"
+  remarks: ''
+  start_at: '2015-12-12 08:30:00'
+  end_at: '2015-12-12 09:00:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-12 01:01:26.384678'
+  updated_at: '2015-12-12 01:01:26.384678'
+
+
+works256:
+  id: '1734'
+  term: '2015'
+  worked_at: '2015-10-31'
+  weather_id: '1'
+  work_type_id: '6'
+  name: "イタリアン種子散布"
+  remarks: "出島"
+  start_at: '2015-12-12 09:00:00'
+  end_at: '2015-12-12 15:00:00'
+  fixed_at: 
+  work_kind_id: '30'
+  created_at: '2015-12-12 01:03:00.235626'
+  updated_at: '2015-12-12 01:03:36.21809'
+
+
+works257:
+  id: '1735'
+  term: '2015'
+  worked_at: '2015-11-01'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "ブロッコリー・キャベツ：草刈り・除草"
+  remarks: ''
+  start_at: '2015-12-12 08:00:00'
+  end_at: '2015-12-12 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 04:03:10.792327'
+  updated_at: '2015-12-12 04:03:10.792327'
+
+
+works258:
+  id: '1736'
+  term: '2015'
+  worked_at: '2015-11-01'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "積込：渡部畜産：56本"
+  remarks: "西原の西"
+  start_at: '2015-12-12 09:00:00'
+  end_at: '2015-12-12 12:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-12 04:08:24.338986'
+  updated_at: '2015-12-12 04:08:24.338986'
+
+
+works259:
+  id: '1737'
+  term: '2015'
+  worked_at: '2015-11-01'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "積込：44本"
+  remarks: ''
+  start_at: '2015-12-12 14:00:00'
+  end_at: '2015-12-12 17:00:00'
+  fixed_at: 
+  work_kind_id: '15'
+  created_at: '2015-12-12 04:09:39.694667'
+  updated_at: '2015-12-12 04:09:39.694667'
+
+
+works260:
+  id: '1738'
+  term: '2015'
+  worked_at: '2015-11-01'
+  weather_id: '1'
+  work_type_id: '13'
+  name: "コンバイン掃除"
+  remarks: ''
+  start_at: '2015-12-12 09:00:00'
+  end_at: '2015-12-12 17:00:00'
+  fixed_at: 
+  work_kind_id: '30'
+  created_at: '2015-12-12 04:11:07.657924'
+  updated_at: '2015-12-12 04:11:07.657924'
+
+
+works261:
+  id: '1739'
+  term: '2015'
+  worked_at: '2015-11-04'
+  weather_id: '1'
+  work_type_id: '8'
+  name: "試験田"
+  remarks: "アクア7・アクア＋プリブロックス・プリブロックス"
+  start_at: '2015-12-12 09:00:00'
+  end_at: '2015-12-12 17:00:00'
+  fixed_at: 
+  work_kind_id: '16'
+  created_at: '2015-12-12 04:12:26.785792'
+  updated_at: '2015-12-12 04:14:59.961086'
+
+
+works262:
+  id: '1740'
+  term: '2015'
+  worked_at: '2015-11-05'
+  weather_id: '1'
+  work_type_id: '13'
+  name: "粉霧機掃除"
+  remarks: ''
+  start_at: '2015-12-12 14:00:00'
+  end_at: '2015-12-12 15:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 04:19:30.500667'
+  updated_at: '2015-12-12 04:19:30.500667'
+
+
+works263:
+  id: '1741'
+  term: '2015'
+  worked_at: '2015-11-05'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "除草剤：ラウンドアップ：散布"
+  remarks: "出島21-1・13a:出島22・32.6a:出島23・33a\r\n"
+  start_at: '2015-12-12 09:00:00'
+  end_at: '2015-12-12 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 04:23:00.175598'
+  updated_at: '2015-12-12 04:23:22.490653'
+
+
+works264:
+  id: '1742'
+  term: '2015'
+  worked_at: '2015-11-06'
+  weather_id: '1'
+  work_type_id: '9'
+  name: "積込"
+  remarks: ''
+  start_at: '2015-12-12 13:00:00'
+  end_at: '2015-12-12 14:00:00'
+  fixed_at: 
+  work_kind_id: '18'
+  created_at: '2015-12-12 04:25:13.805108'
+  updated_at: '2015-12-12 04:25:13.805108'
+
+
+works265:
+  id: '1743'
+  term: '2015'
+  worked_at: '2015-11-07'
+  weather_id: '2'
+  work_type_id: '12'
+  name: "バクヤーゼ散布"
+  remarks: 80㎏/10a 散布
+  start_at: '2015-12-12 08:00:00'
+  end_at: '2015-12-12 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 04:27:01.489875'
+  updated_at: '2015-12-12 04:31:17.070592'
+
+
+works266:
+  id: '1744'
+  term: '2015'
+  worked_at: '2015-11-07'
+  weather_id: '1'
+  work_type_id: '12'
+  name: "改良剤あと荒耕"
+  remarks: ''
+  start_at: '2015-12-12 14:00:00'
+  end_at: '2015-12-12 15:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 04:33:47.271441'
+  updated_at: '2015-12-12 04:33:47.271441'
+
+
+works267:
+  id: '1745'
+  term: '2015'
+  worked_at: '2015-11-11'
+  weather_id: '1'
+  work_type_id: '13'
+  name: "ロータリー交換"
+  remarks: ''
+  start_at: '2015-12-12 09:30:00'
+  end_at: '2015-12-12 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 04:37:03.232943'
+  updated_at: '2015-12-12 04:37:03.232943'
+
+
+works268:
+  id: '1746'
+  term: '2015'
+  worked_at: '2015-11-11'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー：殺菌剤散布：動噴・中家"
+  remarks: ''
+  start_at: '2015-12-12 09:30:00'
+  end_at: '2015-12-12 11:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 04:38:34.46852'
+  updated_at: '2015-12-12 04:38:34.46852'
+
+
+works269:
+  id: '1747'
+  term: '2015'
+  worked_at: '2015-11-12'
+  weather_id: '1'
+  work_type_id: '15'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-12 13:00:00'
+  end_at: '2015-12-12 16:00:00'
+  fixed_at: 
+  work_kind_id: '3'
+  created_at: '2015-12-12 04:39:51.295464'
+  updated_at: '2015-12-12 04:39:51.295464'
+
+
+works270:
+  id: '1748'
+  term: '2015'
+  worked_at: '2015-11-17'
+  weather_id: '3'
+  work_type_id: '16'
+  name: "キャベツ：収穫準備"
+  remarks: ''
+  start_at: '2015-12-12 07:30:00'
+  end_at: '2015-12-12 09:00:00'
+  fixed_at: 
+  work_kind_id: '30'
+  created_at: '2015-12-12 04:41:54.665353'
+  updated_at: '2015-12-12 04:41:54.665353'
+
+
+works271:
+  id: '1749'
+  term: '2015'
+  worked_at: '2015-11-19'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "ブロッコリー・キャベツ：収穫"
+  remarks: "キャベツ：2L*33・L*13：キャベツ代金酔心2,250-　ブロッコリー：赤2L*6・赤L*7・青2L*15・青L*23・青M*3・良L*1:計55箱\r\n"
+  start_at: '2015-12-12 07:30:00'
+  end_at: '2015-12-12 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 04:43:27.541045'
+  updated_at: '2015-12-12 04:49:48.058415'
+
+
+works272:
+  id: '1750'
+  term: '2015'
+  worked_at: '2015-11-20'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー：薬剤散布"
+  remarks: "動噴：中家"
+  start_at: '2015-12-12 10:00:00'
+  end_at: '2015-12-12 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 04:52:41.536245'
+  updated_at: '2015-12-12 04:52:41.536245'
+
+
+works273:
+  id: '1751'
+  term: '2015'
+  worked_at: '2015-11-21'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー：収穫"
+  remarks: "コンテナ36：青2L*6・青M*6・良L*2…コンテナ赤L*5・青L*42"
+  start_at: '2015-12-12 07:30:00'
+  end_at: '2015-12-12 11:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 04:53:42.021751'
+  updated_at: '2015-12-12 05:20:43.552805'
+
+
+works274:
+  id: '1752'
+  term: '2015'
+  worked_at: '2015-11-22'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー・キャベツ：収穫"
+  remarks: "コンテナ赤L*6・青L*34・…赤2L*1・青2L*4・良L*2・青L*4…キャベツ赤2L*13・赤L8*17"
+  start_at: '2015-12-12 07:00:00'
+  end_at: '2015-12-12 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 05:02:06.04454'
+  updated_at: '2015-12-12 05:19:05.39847'
+
+
+works275:
+  id: '1753'
+  term: '2015'
+  worked_at: '2015-11-22'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "キャベツ出荷：コンテナ回収29"
+  remarks: ''
+  start_at: '2015-12-12 13:30:00'
+  end_at: '2015-12-12 14:30:00'
+  fixed_at: 
+  work_kind_id: '33'
+  created_at: '2015-12-12 05:09:38.561069'
+  updated_at: '2015-12-12 05:09:38.561069'
+
+
+works276:
+  id: '1754'
+  term: '2015'
+  worked_at: '2015-11-24'
+  weather_id: '3'
+  work_type_id: '16'
+  name: "ブロッコリー：収穫"
+  remarks: "コンテナ49：赤2L*1・青2L*6・青L*54・良L*6・青M*11…コンテナ赤L*8・青L*10"
+  start_at: '2015-12-12 07:00:00'
+  end_at: '2015-12-12 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 05:11:15.578583'
+  updated_at: '2015-12-12 05:16:16.250593'
+
+
+works277:
+  id: '1755'
+  term: '2015'
+  worked_at: '2015-11-25'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー・キャベツ：収穫"
+  remarks: "キャベツ・赤120：ブロッコリー赤2L*8・赤L*5・青2L*20・青L*2・青M*2・良L*1:コンテナ赤L*6・青L*30"
+  start_at: '2015-12-12 07:00:00'
+  end_at: '2015-12-12 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-12 23:55:05.887251'
+  updated_at: '2015-12-12 23:55:05.887251'
+
+
+works278:
+  id: '1756'
+  term: '2015'
+  worked_at: '2015-11-26'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "ブロッコリー：収穫"
+  remarks: "赤2L*1・赤L*12・青2L*3・青L*46・青M*8・良L*3…コンテナ36"
+  start_at: '2015-12-13 07:00:00'
+  end_at: '2015-12-13 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 00:01:47.069751'
+  updated_at: '2015-12-13 00:01:47.069751'
+
+
+works279:
+  id: '1757'
+  term: '2015'
+  worked_at: '2015-11-27'
+  weather_id: '3'
+  work_type_id: '16'
+  name: "ブロッコリー：収穫"
+  remarks: "赤2L*1*赤L*8・青2L*2・青L*1…コンテナ青L*10…コンテナ13"
+  start_at: '2015-12-13 07:00:00'
+  end_at: '2015-12-13 10:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 00:06:39.730542'
+  updated_at: '2015-12-13 00:07:49.322406'
+
+
+works280:
+  id: '1758'
+  term: '2015'
+  worked_at: '2015-11-29'
+  weather_id: '3'
+  work_type_id: '16'
+  name: "ブロッコリー：収穫"
+  remarks: "青2L*1・青L*16・良L*1…コンテナ赤L*13"
+  start_at: '2015-12-13 07:00:00'
+  end_at: '2015-12-13 09:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 00:10:16.716367'
+  updated_at: '2015-12-13 00:10:16.716367'
+
+
+works281:
+  id: '1759'
+  term: '2015'
+  worked_at: '2015-11-30'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "キャベツ：収穫"
+  remarks: "赤2L*22・赤L*12"
+  start_at: '2015-12-13 13:00:00'
+  end_at: '2015-12-13 16:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 00:14:34.243455'
+  updated_at: '2015-12-13 00:14:54.557668'
+
+
+works282:
+  id: '1760'
+  term: '2015'
+  worked_at: '2015-12-01'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "ブロッコリー：収穫"
+  remarks: "コンテナ赤L*8：赤2L*4・青2L*14・青L*48・良L*2"
+  start_at: '2015-12-13 07:00:00'
+  end_at: '2015-12-13 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 00:18:31.809553'
+  updated_at: '2015-12-13 00:18:31.809553'
+
+
+works283:
+  id: '1761'
+  term: '2015'
+  worked_at: '2015-12-02'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー・キャベツ：収穫"
+  remarks: "キャベツ・赤2L*29・赤L*5:ブロッコリー・赤2L*2・青2L*11・青L*37・青M*4・良L*10……ブロコンテナ＊３７：キャコンテナ*34"
+  start_at: '2015-12-13 07:00:00'
+  end_at: '2015-12-13 14:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 00:22:50.387106'
+  updated_at: '2015-12-13 00:24:37.301275'
+
+
+works284:
+  id: '1762'
+  term: '2015'
+  worked_at: '2015-12-03'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "ブロッコリー：収穫"
+  remarks: "コンテナ*25…青２L*７・青L*３・良L*3コンテナ赤L*3・青L*28"
+  start_at: '2015-12-13 07:00:00'
+  end_at: '2015-12-13 10:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 00:29:43.388302'
+  updated_at: '2015-12-13 00:29:43.388302'
+
+
+works285:
+  id: '1763'
+  term: '2015'
+  worked_at: '2015-12-12'
+  weather_id: '2'
+  work_type_id: '14'
+  name: "日報入力、チェック等"
+  remarks: ''
+  start_at: '2015-12-13 08:30:00'
+  end_at: '2015-12-13 15:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 00:33:07.752924'
+  updated_at: '2015-12-13 00:33:07.752924'
+
+
+works286:
+  id: '1764'
+  term: '2015'
+  worked_at: '2015-12-06'
+  weather_id: '2'
+  work_type_id: '14'
+  name: "日報入力"
+  remarks: ''
+  start_at: '2015-12-13 08:00:00'
+  end_at: '2015-12-13 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 00:34:26.479856'
+  updated_at: '2015-12-13 00:34:26.479856'
+
+
+works287:
+  id: '1765'
+  term: '2015'
+  worked_at: '2015-11-29'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "日報入力、チェック等"
+  remarks: ''
+  start_at: '2015-12-13 08:00:00'
+  end_at: '2015-12-13 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 00:35:44.5193'
+  updated_at: '2015-12-13 00:35:44.5193'
+
+
+works288:
+  id: '1766'
+  term: '2015'
+  worked_at: '2015-11-22'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "日報入力、チェック等"
+  remarks: ''
+  start_at: '2015-12-13 08:00:00'
+  end_at: '2015-12-13 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 00:36:50.291373'
+  updated_at: '2015-12-13 00:36:50.291373'
+
+
+works289:
+  id: '1767'
+  term: '2015'
+  worked_at: '2015-08-23'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "保有米伝票整理"
+  remarks: ''
+  start_at: '2015-12-13 08:00:00'
+  end_at: '2015-12-13 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 01:11:26.060817'
+  updated_at: '2015-12-13 01:11:26.060817'
+
+
+works290:
+  id: '1768'
+  term: '2015'
+  worked_at: '2015-10-20'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "出荷米確認：チェック等"
+  remarks: 9/4,6,8,14,15,16,19,20,22,27・10/4,11,18,19,20
+  start_at: '2015-12-13 08:00:00'
+  end_at: '2015-12-13 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 01:14:30.632872'
+  updated_at: '2015-12-13 01:14:30.632872'
+
+
+works291:
+  id: '1769'
+  term: '2015'
+  worked_at: '2015-09-27'
+  weather_id: '1'
+  work_type_id: '14'
+  name: "保有米配布"
+  remarks: ''
+  start_at: '2015-12-13 08:00:00'
+  end_at: '2015-12-13 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-13 01:21:27.274117'
+  updated_at: '2015-12-13 01:21:27.274117'
+
+
+works292:
+  id: '1770'
+  term: '2015'
+  worked_at: '2015-09-16'
+  weather_id: '1'
+  work_type_id: '26'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-19 08:30:00'
+  end_at: '2015-12-19 09:30:00'
+  fixed_at: 
+  work_kind_id: '37'
+  created_at: '2015-12-19 06:58:38.169457'
+  updated_at: '2015-12-19 06:58:38.169457'
+
+
+works293:
+  id: '1771'
+  term: '2015'
+  worked_at: '2015-09-16'
+  weather_id: '1'
+  work_type_id: '26'
+  name: "パレット回収"
+  remarks: ''
+  start_at: '2015-12-19 10:00:00'
+  end_at: '2015-12-19 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-19 07:10:51.018988'
+  updated_at: '2015-12-19 07:10:51.018988'
+
+
+works294:
+  id: '1772'
+  term: '2015'
+  worked_at: '2015-09-23'
+  weather_id: '1'
+  work_type_id: '26'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-19 08:30:00'
+  end_at: '2015-12-19 09:30:00'
+  fixed_at: 
+  work_kind_id: '37'
+  created_at: '2015-12-19 07:11:39.509018'
+  updated_at: '2015-12-19 07:12:39.652647'
+
+
+works295:
+  id: '1773'
+  term: '2015'
+  worked_at: '2015-10-08'
+  weather_id: '1'
+  work_type_id: '26'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-19 08:30:00'
+  end_at: '2015-12-19 09:30:00'
+  fixed_at: 
+  work_kind_id: '37'
+  created_at: '2015-12-19 07:14:01.408871'
+  updated_at: '2015-12-19 07:14:01.408871'
+
+
+works296:
+  id: '1774'
+  term: '2015'
+  worked_at: '2015-10-08'
+  weather_id: '1'
+  work_type_id: '26'
+  name: "パレット回収"
+  remarks: ''
+  start_at: '2015-12-19 10:00:00'
+  end_at: '2015-12-19 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-19 07:16:00.621655'
+  updated_at: '2015-12-19 07:16:00.621655'
+
+
+works297:
+  id: '1775'
+  term: '2015'
+  worked_at: '2015-10-23'
+  weather_id: '1'
+  work_type_id: '26'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-19 08:30:00'
+  end_at: '2015-12-19 09:30:00'
+  fixed_at: 
+  work_kind_id: '37'
+  created_at: '2015-12-19 07:17:04.464213'
+  updated_at: '2015-12-19 07:17:45.775884'
+
+
+works298:
+  id: '1776'
+  term: '2015'
+  worked_at: '2015-10-23'
+  weather_id: '1'
+  work_type_id: '26'
+  name: "パレット回収"
+  remarks: ''
+  start_at: '2015-12-19 14:00:00'
+  end_at: '2015-12-19 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-19 07:19:37.440198'
+  updated_at: '2015-12-19 07:19:37.440198'
+
+
+works299:
+  id: '1777'
+  term: '2015'
+  worked_at: '2015-12-05'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "ブロッコリー収穫"
+  remarks: "赤L*1・青M*6・良L*6・コンテナ6ｋ*22・キャベツ赤2L*17・赤L9*1・赤L*5\r\n"
+  start_at: '2015-12-23 07:00:00'
+  end_at: '2015-12-23 11:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-23 05:13:56.984056'
+  updated_at: '2015-12-23 05:13:56.984056'
+
+
+works300:
+  id: '1778'
+  term: '2015'
+  worked_at: '2015-12-06'
+  weather_id: '2'
+  work_type_id: '12'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-23 09:00:00'
+  end_at: '2015-12-23 17:00:00'
+  fixed_at: 
+  work_kind_id: '8'
+  created_at: '2015-12-23 05:17:31.628815'
+  updated_at: '2015-12-23 05:17:31.628815'
+
+
+works301:
+  id: '1779'
+  term: '2015'
+  worked_at: '2015-12-07'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー収穫"
+  remarks: "青2L*3・青L*28・青M*3・良L*5・コンテナ6K赤L*2"
+  start_at: '2015-12-23 07:00:00'
+  end_at: '2015-12-23 09:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-23 05:26:08.33655'
+  updated_at: '2015-12-23 05:26:08.33655'
+
+
+works302:
+  id: '1780'
+  term: '2015'
+  worked_at: '2015-12-09'
+  weather_id: '1'
+  work_type_id: '12'
+  name: ''
+  remarks: ''
+  start_at: '2015-12-23 13:00:00'
+  end_at: '2015-12-23 17:30:00'
+  fixed_at: 
+  work_kind_id: '8'
+  created_at: '2015-12-23 05:27:31.945572'
+  updated_at: '2015-12-23 05:27:31.945572'
+
+
+works303:
+  id: '1781'
+  term: '2015'
+  worked_at: '2015-12-09'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー収穫"
+  remarks: "赤L*1・青L*17・青M*3・良L*2・残14…キャベツ10玉*6C/T"
+  start_at: '2015-12-23 07:00:00'
+  end_at: '2015-12-23 09:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-23 05:33:58.347479'
+  updated_at: '2015-12-23 05:33:58.347479'
+
+
+works304:
+  id: '1782'
+  term: '2015'
+  worked_at: '2015-12-10'
+  weather_id: '3'
+  work_type_id: '16'
+  name: "ブロッコリー収穫"
+  remarks: "赤2K*4・赤L*7・青2L*6・青L*19・青M*1…残2"
+  start_at: '2015-12-23 07:00:00'
+  end_at: '2015-12-23 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-23 05:38:07.095541'
+  updated_at: '2015-12-23 05:38:07.095541'
+
+
+works305:
+  id: '1783'
+  term: '2015'
+  worked_at: '2015-12-11'
+  weather_id: '9'
+  work_type_id: '16'
+  name: "ブロッコリー収穫・・・・大嵐"
+  remarks: "赤L*1・青L*8・良L*1…残6…キャベツ赤L*30……収穫ブロ*6ケース・キャベ*60個"
+  start_at: '2015-12-23 07:00:00'
+  end_at: '2015-12-23 09:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-23 05:43:32.896173'
+  updated_at: '2015-12-23 05:45:02.952673'
+
+
+works306:
+  id: '1784'
+  term: '2015'
+  worked_at: '2015-12-15'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "ブロッコリー収穫"
+  remarks: "桃源村出荷*100個・袋詰め*20・コンテナ*1（2,000）\r\n"
+  start_at: '2015-12-23 07:00:00'
+  end_at: '2015-12-23 08:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-23 05:47:06.348221'
+  updated_at: '2015-12-23 05:47:06.348221'
+
+
+works307:
+  id: '1785'
+  term: '2015'
+  worked_at: '2015-12-18'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "ブロッコリー収穫"
+  remarks: "赤2L*5・青2L*71・青L*1・良2L*9・良L*2…残1…コンテナ6K*16"
+  start_at: '2015-12-23 08:00:00'
+  end_at: '2015-12-23 17:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-23 05:51:12.621663'
+  updated_at: '2015-12-23 05:51:12.621663'
+
+
+works308:
+  id: '1786'
+  term: '2015'
+  worked_at: '2015-12-20'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "ブロッコリー収穫"
+  remarks: "コンテナ*47"
+  start_at: '2015-12-23 08:00:00'
+  end_at: '2015-12-23 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-23 05:53:48.938293'
+  updated_at: '2015-12-23 05:53:48.938293'
+
+
+works309:
+  id: '1787'
+  term: '2015'
+  worked_at: '2015-12-21'
+  weather_id: '3'
+  work_type_id: '16'
+  name: "ブロッコリー収穫"
+  remarks: "赤2L*7・赤L*1・青2L*44・青L*19・良2L*2・良L*1…残14\r\n"
+  start_at: '2015-12-23 07:00:00'
+  end_at: '2015-12-23 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-23 05:57:07.032008'
+  updated_at: '2015-12-23 05:57:07.032008'
+
+
+works310:
+  id: '1788'
+  term: '2015'
+  worked_at: '2015-12-23'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "ブロッコリー収穫"
+  remarks: "コンテナ*48"
+  start_at: '2015-12-23 07:00:00'
+  end_at: '2015-12-23 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2015-12-23 05:58:57.947289'
+  updated_at: '2015-12-23 06:01:35.054672'
+
+
+works311:
+  id: '1789'
+  term: '2015'
+  worked_at: '2015-12-24'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "ブロッコリー収穫"
+  remarks: ''
+  start_at: '2016-01-11 08:00:00'
+  end_at: '2016-01-11 11:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2016-01-11 07:47:54.129726'
+  updated_at: '2016-01-11 07:47:54.129726'
+
+
+works312:
+  id: '1790'
+  term: '2015'
+  worked_at: '2015-12-24'
+  weather_id: '1'
+  work_type_id: '16'
+  name: "キャベツ収穫"
+  remarks: ''
+  start_at: '2016-01-11 13:30:00'
+  end_at: '2016-01-11 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2016-01-11 07:51:12.42445'
+  updated_at: '2016-01-11 07:51:12.42445'
+
+
+works313:
+  id: '1791'
+  term: '2015'
+  worked_at: '2015-12-25'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "ブロッコリー収穫"
+  remarks: ''
+  start_at: '2016-01-11 08:00:00'
+  end_at: '2016-01-11 11:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2016-01-11 07:53:53.23991'
+  updated_at: '2016-01-11 07:53:53.23991'
+
+
+works314:
+  id: '1792'
+  term: '2015'
+  worked_at: '2015-12-27'
+  weather_id: '2'
+  work_type_id: '16'
+  name: "ブロっこりー、キャベツ収穫"
+  remarks: ''
+  start_at: '2016-01-11 08:00:00'
+  end_at: '2016-01-11 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2016-01-11 07:56:00.148055'
+  updated_at: '2016-01-11 07:57:28.77735'
+
+
+works315:
+  id: '1793'
+  term: '2015'
+  worked_at: '2015-12-28'
+  weather_id: '2'
+  work_type_id: '15'
+  name: "ブロッコリー、キャベツ収穫"
+  remarks: ''
+  start_at: '2016-01-11 08:00:00'
+  end_at: '2016-01-11 12:00:00'
+  fixed_at: '2015-01-31'
+  work_kind_id: '39'
+  created_at: '2016-01-11 08:00:09.313004'
+  updated_at: '2016-01-11 08:00:09.313004'
+
+
+works316:
+  id: '1794'
+  term: '2015'
+  worked_at: '2015-12-20'
+  weather_id: '3'
+  work_type_id: '13'
+  name: "格納庫大掃除"
+  remarks: ''
+  start_at: '2016-01-11 14:00:00'
+  end_at: '2016-01-11 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2016-01-11 08:30:58.484714'
+  updated_at: '2016-01-11 08:30:58.484714'
+
+
+works317:
+  id: '1795'
+  term: '2015'
+  worked_at: '2015-12-19'
+  weather_id: '1'
+  work_type_id: '13'
+  name: "買い出し"
+  remarks: ''
+  start_at: '2016-01-11 09:00:00'
+  end_at: '2016-01-11 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2016-01-11 08:35:49.413891'
+  updated_at: '2016-01-11 08:35:49.413891'
+
+
+works318:
+  id: '1796'
+  term: '2015'
+  worked_at: '2015-12-20'
+  weather_id: '1'
+  work_type_id: '13'
+  name: "格納庫大掃除"
+  remarks: ''
+  start_at: '2016-01-11 14:00:00'
+  end_at: '2016-01-11 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2016-01-11 08:37:31.076414'
+  updated_at: '2016-01-11 08:37:31.076414'
+
+
+works319:
+  id: '1797'
+  term: '2015'
+  worked_at: '2015-12-20'
+  weather_id: '3'
+  work_type_id: '13'
+  name: "格納庫大掃除"
+  remarks: ''
+  start_at: '2016-01-11 14:00:00'
+  end_at: '2016-01-11 17:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2016-01-11 08:41:28.672258'
+  updated_at: '2016-01-11 08:41:28.672258'
+
+
+works320:
+  id: '1798'
+  term: '2015'
+  worked_at: '2015-12-20'
+  weather_id: '3'
+  work_type_id: '11'
+  name: "買い出し"
+  remarks: ''
+  start_at: '2016-01-11 10:00:00'
+  end_at: '2016-01-11 12:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2016-01-11 08:43:45.247989'
+  updated_at: '2016-01-11 08:43:45.247989'
+
+
+works321:
+  id: '1799'
+  term: '2016'
+  worked_at: '2016-01-30'
+  weather_id: '2'
+  work_type_id: '11'
+  name: "源泉表作成"
+  remarks: ''
+  start_at: '2016-01-30 09:00:00'
+  end_at: '2016-01-30 18:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2016-01-30 08:43:34.1742'
+  updated_at: '2016-01-30 08:43:34.1742'
+
+
+works322:
+  id: '1800'
+  term: '2016'
+  worked_at: '2016-01-31'
+  weather_id: '1'
+  work_type_id: '11'
+  name: "理事会（総会について）"
+  remarks: ''
+  start_at: '2016-02-01 09:00:00'
+  end_at: '2016-02-01 11:00:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2016-02-01 08:32:03.583672'
+  updated_at: '2016-02-01 08:33:02.230692'
+
+
+works323:
+  id: '1801'
+  term: '2016'
+  worked_at: '2016-02-01'
+  weather_id: '1'
+  work_type_id: '11'
+  name: "源泉表提出"
+  remarks: ''
+  start_at: '2016-02-02 15:00:00'
+  end_at: '2016-02-02 17:30:00'
+  fixed_at: 
+  work_kind_id: '39'
+  created_at: '2016-02-01 08:35:00.042576'
+  updated_at: '2016-02-02 08:59:53.056212'
+
+
+works324:
+  id: '1802'
+  term: '2016'
+  worked_at: '2016-02-09'
+  weather_id: '2'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2016-02-09 09:00:00'
+  end_at: '2016-02-09 12:00:00'
+  fixed_at: 
+  work_kind_id: '38'
+  created_at: '2016-02-09 02:08:54.497716'
+  updated_at: '2016-02-09 02:08:54.497716'
+
+
+works325:
+  id: '1803'
+  term: '2016'
+  worked_at: '2016-02-07'
+  weather_id: '2'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2016-02-09 15:00:00'
+  end_at: '2016-02-09 18:00:00'
+  fixed_at: 
+  work_kind_id: '38'
+  created_at: '2016-02-09 02:10:21.877568'
+  updated_at: '2016-02-09 02:10:21.877568'
+
+
+works326:
+  id: '1804'
+  term: '2016'
+  worked_at: '2016-02-05'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2016-02-09 16:00:00'
+  end_at: '2016-02-09 18:30:00'
+  fixed_at: 
+  work_kind_id: '38'
+  created_at: '2016-02-09 02:11:26.362171'
+  updated_at: '2016-02-09 02:11:26.362171'
+
+
+works327:
+  id: '1805'
+  term: '2016'
+  worked_at: '2016-02-03'
+  weather_id: '1'
+  work_type_id: '11'
+  name: ''
+  remarks: ''
+  start_at: '2016-02-09 10:00:00'
+  end_at: '2016-02-09 18:00:00'
+  fixed_at: 
+  work_kind_id: '38'
+  created_at: '2016-02-09 02:12:54.297356'
+  updated_at: '2016-02-09 02:12:54.297356'
+
+
+works328:
+  id: '1810'
+  term: '2016'
+  worked_at: '2016-02-28'
+  weather_id: '1'
+  work_type_id: '12'
+  name: "春作業について"
+  remarks: ''
+  start_at: '2016-03-01 17:00:00'
+  end_at: '2016-03-01 19:00:00'
+  fixed_at: 
+  work_kind_id: '25'
+  created_at: '2016-03-01 08:29:46.287334'
+  updated_at: '2016-03-01 08:29:46.287334'
+
+
+works329:
+  id: '1811'
+  term: '2016'
+  worked_at: '2016-02-16'
+  weather_id: '1'
+  work_type_id: '11'
+  name: H27年監査
+  remarks: ''
+  start_at: '2016-03-01 14:00:00'
+  end_at: '2016-03-01 16:00:00'
+  fixed_at: 
+  work_kind_id: '36'
+  created_at: '2016-03-01 08:34:35.513224'
+  updated_at: '2016-03-01 08:34:35.513224'
+
