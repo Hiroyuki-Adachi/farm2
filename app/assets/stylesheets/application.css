@@ -113,22 +113,58 @@ div.remarks {
 table.list {
 	border-collapse:collapse;
 	border-spacing:0;
-	font-size: 100%;
 	margin-bottom: 16px;
 }
 
 table.list td {
-    padding: 5px;
-    border: 1px solid #999999;
-    font-size: 16px;
+  border-bottom: 1px solid #84b2e0;
+  border-left: 1px solid #84b2e0;
+  padding: 4px 8px;
+  font-size: 16px;
+}
+
+table.list td:last-child {
+  border-right: 1px solid #84b2e0;
+  box-shadow: 2px 2px 1px rgba(0,0,0,0.1);
+}
+
+table.list tr:last-child td {
+  box-shadow: 2px 2px 1px rgba(0,0,0,0.1);
+}
+
+table.list tr:last-child td:first-child {
+  border-radius: 0 0 0 5px;
+}
+
+table.list tr:last-child td:last-child {
+  border-radius: 0 0 5px 0;
 }
 
 table.list th {
-    padding: 5px;
-    border: 1px solid #999999;
-    background: #EBEBEB;
-    white-space: nowrap;
-    font-size: 16px;
+  color: white;
+  padding: 4px 8px;
+  background: #258;
+  background:-moz-linear-gradient(rgba(34,85,136,0.7), rgba(34,85,136,0.9) 50%);
+  background:-webkit-gradient(linear, 100% 0%, 100% 50%, from(rgba(34,85,136,0.7)), to(rgba(34,85,136,0.9)));
+  font-weight: bold;
+  border-left:1px solid #258;
+  border-top:1px solid #258;
+  border-bottom:1px solid #258;
+  line-height: 120%;
+  text-shadow:0 -1px 0 rgba(34,85,136,0.9);
+  box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
+  white-space: nowrap;
+  font-size: 16px;
+}
+
+table.list th:first-child {
+  border-radius: 5px 0 0 0; 
+}
+
+table.list th:last-child {
+  border-radius:0 5px 0 0;
+  border-right:1px solid #258;
+  box-shadow: 2px 2px 1px rgba(0,0,0,0.1),0px 1px 1px rgba(255,255,255,0.3) inset;
 }
 
 fieldset {
