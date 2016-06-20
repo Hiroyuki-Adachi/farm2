@@ -30,7 +30,9 @@ class BanksControllerTest < ActionController::TestCase
   end
 
   test "銀行マスタ変更(実行)" do
-    patch :update, code: "0002", bank: { code: "0002", name: @bank.name, phonetic: @bank.phonetic }
+    assert_no_difference('Bank.count') do
+      patch :update, code: "0002", bank: { code: "0002", name: @bank.name, phonetic: @bank.phonetic }
+    end
     assert_redirected_to banks_path
   end
 

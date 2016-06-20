@@ -21,13 +21,13 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-branch1-1:
+branch1_1:
   bank_code: "0001"
   code: "001"
   name: 本店
   phonetic: ﾎﾝﾃﾝ
 
-branch1-2:
+branch1_2:
   bank_code: "0001"
   code: "002"
   name: 東支店
