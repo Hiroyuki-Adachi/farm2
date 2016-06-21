@@ -23,7 +23,7 @@
   </tr>
 
 <% @works.each do |work| %>
-  <tr>
+  <tr style="<%= work.tr_style %>">
     <td><%=h work.worked_at %></td>
     <td><%=h work.work_time %></td>
     <td><%=h work.genre_name %></td>

@@ -74,4 +74,8 @@ class WorkDecorator < Draper::Decorator
   def sum_machines_amount
     h.number_to_currency(model.sum_machines_amount, {precision: 0, unit: ""})
   end
+
+  def tr_style
+    return model.fixed_at ? "background-color: lightGray;" : "";
+  end
 end

@@ -7,7 +7,7 @@ class WorksController < ApplicationController
     respond_to do |format|
       format.html do
         @months = WorkDecorator.months(@term)
-        @works = Work.where(term: @term).order(worked_at: :DESC, id: :DESC)
+        @works = Work.usual(@term)
         if params[:month].blank?
           @month = ""
         else
@@ -18,7 +18,7 @@ class WorksController < ApplicationController
         @works = WorkDecorator.decorate_collection(@works.page(@page))
       end
       format.csv do
-        @works = Work.where(term: @term).order(worked_at: :ASC, id: :ASC)
+        @works = Work.usual(@term)
         render :content_type => 'text/csv; charset=cp943'
       end
     end
