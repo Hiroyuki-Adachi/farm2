@@ -1,5 +1,5 @@
 
-works0:
+work_fixed:
   id: '1477'
   term: '2015'
   worked_at: '2015-01-18'
@@ -287,18 +287,18 @@ works17:
   updated_at: '2015-03-22 01:18:03.449109'
 
 
-works18:
+work_not_fixed:
   id: '1495'
   term: '2015'
   worked_at: '2015-03-20'
   weather_id: '1'
-  work_type_id: '8'
+  work_type_id: 1
   name: ''
   remarks: ''
   start_at: '2015-03-22 08:00:00'
   end_at: '2015-03-22 17:00:00'
   fixed_at: 
-  work_kind_id: '23'
+  work_kind_id: 1
   created_at: '2015-03-22 01:19:23.891545'
   updated_at: '2015-03-22 01:19:23.891545'
 

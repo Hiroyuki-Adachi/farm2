@@ -350,32 +350,6 @@ work_results26:
   updated_at: '2015-03-22 01:18:18.644835'
 
 
-work_results27:
-  id: '5240'
-  work_id: '1495'
-  worker_id: '4'
-  hours: '8.0'
-  display_order: '1'
-  fixed_hours: 
-  fixed_price: 
-  fixed_amount: 
-  created_at: '2015-03-22 01:19:41.702188'
-  updated_at: '2015-03-22 01:19:41.702188'
-
-
-work_results28:
-  id: '5241'
-  work_id: '1495'
-  worker_id: '20'
-  hours: '8.0'
-  display_order: '2'
-  fixed_hours: 
-  fixed_price: 
-  fixed_amount: 
-  created_at: '2015-03-22 01:19:41.70979'
-  updated_at: '2015-03-22 01:19:41.70979'
-
-
 work_results29:
   id: '5242'
   work_id: '1496'

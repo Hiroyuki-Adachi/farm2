@@ -83,9 +83,7 @@ class WorksController < ApplicationController
   end
 
   def update
-    if params[:cancel]
-      redirect_to(work_path(id: params[:id], page: params[:page], month: params[:month]))
-    end
+    redirect_to(work_path(page_params)) if params[:cancel]
 
     if params[:regist]
       if @work.update(work_params)
@@ -141,7 +139,7 @@ class WorksController < ApplicationController
   end
 
   def page_params
-    params.permit(:page, :month).merge(id: @work.id)
+    params.permit(:page, :month)
   end
 
   def check_fixed

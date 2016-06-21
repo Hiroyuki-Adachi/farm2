@@ -10,7 +10,7 @@
 #  deleted_at    :datetime
 #
 
-work_types0:
+work_type_koshi:
   id: '1'
   genre: '1'
   name: "コシヒカリ"

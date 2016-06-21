@@ -11,7 +11,7 @@
 #  deleted_at    :datetime
 #
 
-work_kinds0:
+work_kind_taue:
   id: '1'
   name: "田植"
   display_order: '15'

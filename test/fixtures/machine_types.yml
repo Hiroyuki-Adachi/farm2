@@ -46,3 +46,10 @@ machine_types_removable:
   display_order: '5'
   created_at: '2016-06-07 12:28:47.874986'
   updated_at: '2016-06-07 12:28:47.874986'
+
+machine_types4:
+  id: 6
+  name: "鶏ふん振り機"
+  display_order: '5'
+  created_at: '2016-06-07 12:28:47.874986'
+  updated_at: '2016-06-07 12:28:47.874986'
