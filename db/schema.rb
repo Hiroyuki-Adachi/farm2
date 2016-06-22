@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611101353) do
+ActiveRecord::Schema.define(version: 20160622115619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -250,6 +250,7 @@ ActiveRecord::Schema.define(version: 20160611101353) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.boolean  "land_flag",                default: true,  null: false, comment: "土地利用フラグ"
   end
 
   add_index "work_kinds", ["deleted_at"], name: "index_work_kinds_on_deleted_at", using: :btree

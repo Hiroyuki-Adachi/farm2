@@ -119,6 +119,7 @@ ja:
         name: 名称
         display_order: 表示順
         price: 作業単価
+        land_flag: "土地利用"
         
       bank:
         code: "コード"

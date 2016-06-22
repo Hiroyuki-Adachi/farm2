@@ -14,6 +14,14 @@
  </div>
  <br />
  <div class="field">
+ <% if @organization.lands_count > 0 %>
+    <%= f.label :land_flag %>
+    <%= f.check_box :land_flag %>
+ <% else %>
+   <%= f.hidden_field land_flag, false %>
+ <% end %>
+ </div>
+ <div class="field">
  <fieldset>
     <legend>該当作業</legend>
   <% @work_types.each do |work_type| %>
@@ -23,29 +31,33 @@
     </span>
   <% end %>
   </fieldset>
- </div>
- <div class="field">
- <fieldset>
-    <legend>使用機械種別</legend>
-  <% @machine_types.each do |machine_type| %>
-    <span class="check_group">
-      <%= check_box_tag "machine_types[]", machine_type.id, @work_kind.machine_types.include?(machine_type), {:id => nil} %><!--
-    --><%=h machine_type.name %>
-    </span>
+  </div>
+  <% if @organization.machines_count > 0 %>
+    <div class="field">
+    <fieldset>
+        <legend>使用機械種別</legend>
+      <% @machine_types.each do |machine_type| %>
+        <span class="check_group">
+          <%= check_box_tag "machine_types[]", machine_type.id, @work_kind.machine_types.include?(machine_type), {:id => nil} %><!--
+        --><%=h machine_type.name %>
+        </span>
+      <% end %>
+      </fieldset>
+    </div>
   <% end %>
-  </fieldset>
- </div>
- <div class="field">
- <fieldset>
-    <legend>使用薬品種別</legend>
-  <% @chemical_types.each do |chemical_type| %>
-    <span class="check_group">
-      <%= check_box_tag "chemical_types[]", chemical_type.id, @work_kind.chemical_types.include?(chemical_type), {:id => nil} %><!--
-    --><%=h chemical_type.name %>
-    </span>
-  <% end %>
-  </fieldset>
- </div>
+  <% if @organization.chemicals_count > 0 %>
+  <div class="field">
+  <fieldset>
+      <legend>使用薬品種別</legend>
+      <% @chemical_types.each do |chemical_type| %>
+        <span class="check_group">
+          <%= check_box_tag "chemical_types[]", chemical_type.id, @work_kind.chemical_types.include?(chemical_type), {:id => nil} %><!--
+        --><%=h chemical_type.name %>
+        </span>
+      <% end %>
+    </fieldset>
+    </div>
+ <% end %>
  <br />
  <div class="actions">
     <%= f.submit '登録' %>

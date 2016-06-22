@@ -74,7 +74,7 @@
   </table>
   <div id="cover_workers" class="cover" onclick="location.href='<%=raw edit_workers_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
 </div>
-<% if @organization.lands_count > 0 %>
+<% if (@work_lands.count > 0 or @work.work_kind.land_flag) and @organization.lands_count > 0 %>
 <div id="content_lands" class="content">
   <div class="sub_title">※作業田</div>
   <table id="detail_lands">

@@ -9,6 +9,7 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #  deleted_at    :datetime
+#  land_flag     :boolean          default(TRUE), not null  # 土地利用フラグ
 #
 
 require 'test_helper'
