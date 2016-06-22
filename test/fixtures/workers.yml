@@ -3,22 +3,22 @@
 # Table name: workers # 作業者マスタ
 #
 #  id              :integer          not null, primary key        # 作業者マスタ
-#  family_phonetic :string(15)       not null
-#  family_name     :string(10)       not null
-#  first_phonetic  :string(15)       not null
-#  first_name      :string(10)       not null
-#  birthday        :date
-#  home_id         :integer
-#  mobile          :string(15)
-#  mobile_mail     :string(50)
-#  pc_mail         :string(50)
-#  display_order   :integer
-#  work_flag       :boolean          default(TRUE), not null
-#  gender_id       :integer          default(0), not null
-#  bank_code       :string(4)        default("0000"), not null
-#  branch_code     :string(3)        default("000"), not null
-#  account_type_id :integer          default(0), not null
-#  account_number  :string(7)        default("0000000"), not null
+#  family_phonetic :string(15)       not null                     # 姓(ﾌﾘｶﾞﾅ)
+#  family_name     :string(10)       not null                     # 姓
+#  first_phonetic  :string(15)       not null                     # 名(ﾌﾘｶﾞﾅ)
+#  first_name      :string(10)       not null                     # 名
+#  birthday        :date                                          # 誕生日
+#  home_id         :integer                                       # 世帯
+#  mobile          :string(15)                                    # 携帯番号
+#  mobile_mail     :string(50)                                    # メールアドレス(携帯)
+#  pc_mail         :string(50)                                    # メールアドレス(PC)
+#  display_order   :integer                                       # 表示順
+#  work_flag       :boolean          default(TRUE), not null      # 作業フラグ
+#  gender_id       :integer          default(0), not null         # 性別
+#  bank_code       :string(4)        default("0000"), not null    # 口座(金融機関)
+#  branch_code     :string(3)        default("000"), not null     # 口座(支店)
+#  account_type_id :integer          default(0), not null         # 口座種別
+#  account_number  :string(7)        default("0000000"), not null # 口座番号
 #  created_at      :datetime
 #  updated_at      :datetime
 #  deleted_at      :datetime
