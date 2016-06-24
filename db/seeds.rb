@@ -24,7 +24,7 @@ Organization.create(
 )
 
 System.create(
-    term: 2016,
+    term: Date.today.year,
     target_from: Date::new(Date.today.year, 1, 1),
     target_to: Date::new(Date.today.year, 12, 31)
 )
