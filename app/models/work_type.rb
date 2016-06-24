@@ -23,11 +23,15 @@ class WorkType < ActiveRecord::Base
   scope :usual,       -> {order(:category_flag, :display_order, :id)}
 
   def genre_id
-    return WorkType.with_deleted.where(genre: self[:genre], category_flag: true).first.id
+    Rails.cache.fetch("genre_id_#{self[:genre]}") do
+      WorkType.with_deleted.where(genre: self[:genre], category_flag: true).first.id
+    end
   end
 
   def genre_name
-    return WorkType.with_deleted.where(genre: self[:genre], category_flag: true).first.name
+    Rails.cache.fetch("genre_name_#{self[:genre]}") do
+      WorkType.with_deleted.where(genre: self[:genre], category_flag: true).first.name
+    end
   end
 
   def name_format
