@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'date'
 
-Organization.create(
+organization = Organization.create(
     name: "◯◯営農組合",
     workers_count: 12,
     lands_count: 17,
