@@ -100,3 +100,11 @@ sections8:
   updated_at: '2016-06-07 05:13:13.61343'
   deleted_at: 
 
+section_removale:
+  id: 11
+  name: "削除可能"
+  display_order: '100'
+  work_flag: f
+  created_at: '2016-06-07 05:13:13.61343'
+  updated_at: '2016-06-07 05:13:13.61343'
+  deleted_at: 

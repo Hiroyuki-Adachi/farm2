@@ -17,6 +17,7 @@ ja:
       system: "システム管理"
       bank: "金融機関"
       organization: "営農組合"
+      section: "班"
 
     attributes:
       chemical:
@@ -73,6 +74,11 @@ ja:
         kind_name: "内容"
         workers_count: "人数"
         sum_hours: "工数"
+
+      work_type:
+        name: "名称"
+        genre: "カテゴリー"
+        display_order: "表示順"
 
       worker: 
         family_phonetic: "姓(ふりがな)"  #g
@@ -148,6 +154,11 @@ ja:
         machines_count: "日報に表示する機械の数"
         chemicals_count: "日報に表示する薬品の数"
         daily_worker: "作業者への付加情報"
+
+      section:
+        name: 名称
+        display_order: 表示順
+        work_flag: "作業"
 
   status:
     organization:

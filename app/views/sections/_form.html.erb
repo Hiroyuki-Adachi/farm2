@@ -1,0 +1,21 @@
+<%= error_print(@section) %>
+<%= form_for(@section) do |f| %>
+<div class="field">
+  <%= f.label :name %><br />
+  <%= f.text_field :name, {maxlength: 40, size: 45, required: true} %>
+</div>
+<div class="field">
+  <%= f.label :display_order %><br />
+  <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true}) %>
+</div>
+<div class="field">
+  <%= f.label :work_flag %><br />
+  <%= f.radio_button :work_flag, true %>作業班<br />
+  <%= f.radio_button :work_flag, false %>作業班以外<br />
+</div>
+<br />
+<div class="actions">
+  <%= f.submit '登録' %>
+  <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + sections_path + "';") %>
+</div>
+<% end %>

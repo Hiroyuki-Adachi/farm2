@@ -1,0 +1,19 @@
+<h1>班マスタ一覧</h1>
+<table class="list">
+  <tr>
+    <th>名称</th>
+    <th>作業</th>
+    <th colspan="2">&nbsp;</th>
+  </tr>
+<% @sections.each do |section| %>
+  <tr>
+    <td><%=h section.name %></td>
+    <td style="text-align:center;"><%=h section.work_flag ? "●" : "" %></td>
+    <td><%= link_to '修正', edit_section_path(section) %></td>
+    <td><%= link_to '削除', section, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
+  </tr>
+<% end %>
+</table>
+<br />
+<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_section_path + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

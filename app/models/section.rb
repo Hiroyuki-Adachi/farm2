@@ -12,5 +12,9 @@
 #
 
 class Section < ActiveRecord::Base
+  acts_as_paranoid
+
+  has_many :homes, -> {order("homes.display_order, homes.id")}
+
   scope :usual, ->{where(work_flag: true).order(display_order: :asc)}
 end
