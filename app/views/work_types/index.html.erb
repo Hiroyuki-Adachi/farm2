@@ -1,0 +1,20 @@
+<h1>作業分類マスタ一覧</h1>
+<% if @work_types.count > 0 %>
+<table class="list">
+  <tr>
+    <th>カテゴリー</th>
+    <th>名称</th>
+    <th colspan="2">&nbsp;</th>
+  </tr>
+<% @work_types.each do |work_type| %>
+  <tr>
+    <td><%=h work_type.genre_name %></td>
+    <td><%=h work_type.name %></td>
+    <td><%= link_to '修正', edit_work_type_path(work_type) %></td>
+    <td><%= link_to '削除', work_type, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
+  </tr>
+<% end %>
+</table>
+<% end %>
+<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_work_type_path + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>

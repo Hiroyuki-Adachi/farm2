@@ -6,19 +6,13 @@ Rails.application.routes.draw do
   end
   
   resources :machine_types, except: [:show]
-
   resources :chemical_types, except: [:show]
-
   resources :work_kinds, except: [:show]
-
+  resources :work_types, except: [:show]
   resources :lands, except: [:show]
-
   resources :homes, except: [:show]
-  
   resources :workers, except: [:show]
-
   resources :machines, except: [:show]
-
   resources :chemicals, except: [:show]
 
   resources :fixes, {param: "fixed_at", except: [:edit, :update]}
@@ -50,7 +44,6 @@ Rails.application.routes.draw do
   end
 
   resources :work_results, only: [:index]
-
   resources :machine_results, only: [:index]
 
   root controller: :menu, action: :index
