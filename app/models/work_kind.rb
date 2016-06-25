@@ -38,27 +38,29 @@ class WorkKind < ActiveRecord::Base
   scope :by_type, -> (work_type){joins(:work_kind_types).where("work_kind_types.work_type_id = ?", work_type.genre_id).order("work_kinds.other_flag, work_kinds.display_order, work_kinds.id")}
   
   def price
-    work_kind_price = WorkKindPrice.usual(self).first
-    return work_kind_price ? work_kind_price.price : 0
+    return term_price(Organization.term)
   end
   
   def price=(val)
-    @price = val
+    @p_price = val.to_i
   end
   
   def term_price(term)
-    term_price = WorkKindPrice.by_term(self, term).first
-    return term_price ? term_price.price : 0
+    Rails.cache.fetch("work_kind_price_#{self.id}_#{term}", expires_in: 1.hour) do
+      work_kind_price = WorkKindPrice.by_term(self, term).first
+      return work_kind_price ? work_kind_price.price : 0
+    end
   end
   
   private
   def save_price
-    term = Organization.first.term
-    work_kind_price = WorkKindPrice.where(work_kind_id: id, term: term).order(:id).first
+    term = Organization.term
+    work_kind_price = WorkKindPrice.where(work_kind_id: self.id, term: term).order(:id).first
     if work_kind_price
-      work_kind_price.update_attributes(price: @price)
+      work_kind_price.update_attributes(price: @p_price)
     else
-      WorkKindPrice.create(work_kind_id: id, term: term, price: @price)
+      WorkKindPrice.create(work_kind_id: self.id, term: term, price: @p_price)
     end
+    Rails.cache.write("work_kind_price_#{self.id}_#{term}", @p_price, expires_in: 1.hour)
   end
 end

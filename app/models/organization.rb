@@ -23,6 +23,8 @@
 class Organization < ActiveRecord::Base
   enum daily_worker: {no_print: 0, print_home: 1, print_section: 2}
 
+  after_save :save_term
+
   validates :name, presence: true
   validates :workers_count, presence: true
   validates :lands_count, presence: true
@@ -31,4 +33,14 @@ class Organization < ActiveRecord::Base
   validates :daily_worker, presence: true
 
   validates :name, length: {maximum: 20}, :if =>  Proc.new{|x| x.name.present?}
+
+  def self.term
+    Rails.cache.fetch(:organization_term, expires_in: 1.hour) do
+      Organization.first.term
+    end
+  end
+
+  def save_term
+    Rails.cache.write(:organization_term, term, expires_in: 1.hour)
+  end
 end

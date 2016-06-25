@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class WorkResultsControllerTest < ActionController::TestCase
-  test "作業結果一覧" do
+  test "世帯別日当一覧" do
     get :index
     assert_response :success
 

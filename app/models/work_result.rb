@@ -19,6 +19,7 @@ class WorkResult < ActiveRecord::Base
   belongs_to :worker, -> {with_deleted}
   has_one    :home, {through: :worker}, -> {with_deleted}
   has_one    :work_type, {through: :work}, -> {with_deleted}
+  has_one    :work_kind, {through: :work}, -> {with_deleted}
 
   has_many  :machine_results, {dependent: :destroy}
   has_many  :machines,  {through: :machine_results}
@@ -29,7 +30,8 @@ class WorkResult < ActiveRecord::Base
   scope :by_home, ->(term){
       joins(:work).eager_load(:work)
      .joins(:worker).eager_load(:worker)
-     .joins(:work_type).eager_load(:work_type)
+     .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
+     .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
      .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
      .joins("INNER JOIN systems ON systems.term = works.term")
      .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
@@ -47,10 +49,10 @@ class WorkResult < ActiveRecord::Base
   }
 
   def price
-    (work.fixed_at ? self.fixed_price : work.work_kind.term_price(work.term)) || 0
+    (self.work.fixed_at ? self.fixed_price : self.work.work_kind.term_price(self.work.term)) || 0
   end
 
   def amount
-    (work.fixed_at ? self.fixed_amount : hours * work.work_kind.term_price(work.term)) || 0
+    (self.work.fixed_at ? self.fixed_amount : self.hours * price) || 0
   end
 end

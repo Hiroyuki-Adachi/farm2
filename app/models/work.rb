@@ -48,7 +48,7 @@ class Work < ActiveRecord::Base
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, id: :DESC)}
 
   def set_term
-    self.term = Organization.first.term
+    self.term = Organization.term
   end
 
   def workers_count
