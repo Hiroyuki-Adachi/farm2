@@ -28,3 +28,26 @@ System.create(
     target_from: Date::new(Date.today.year, 1, 1),
     target_to: Date::new(Date.today.year, 12, 31)
 )
+
+WorkType.create(
+[{
+  genre: 1,
+  name: "稲作",
+  category_flag: true,
+  display_order: 1
+},{
+  genre: 2,
+  name: "転作",
+  category_flag: true,
+  display_order: 2
+},{
+  genre: 3,
+  name: "副産物",
+  category_flag: true,
+  display_order: 3
+},{
+  genre: 4,
+  name: "共通",
+  category_flag: true,
+  display_order: 4
+}])
