@@ -87,14 +87,6 @@ class Work < ActiveRecord::Base
     return params
   end
 
-  def chemicals_format
-    result = []
-    self.work_chemicals.each do |work_chemical|
-      result << work_chemical.chemical.name + "(" + work_chemical.chemical.chemical_type.name + "):" + work_chemical.quantity.to_s
-    end
-    return result.join(", ")
-  end
-
   def regist_results(params)
     workers = []
     params.each do |param|
