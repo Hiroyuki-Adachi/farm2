@@ -130,7 +130,7 @@ works6:
   updated_at: '2016-06-13 05:42:42.550541'
 
 
-works7:
+work_no_fix1:
   id: '1484'
   term: '2015'
   worked_at: '2015-03-15'
@@ -146,7 +146,7 @@ works7:
   updated_at: '2015-03-21 00:50:45.279125'
 
 
-works8:
+work_no_fix2:
   id: '1485'
   term: '2015'
   worked_at: '2015-03-16'

@@ -39,10 +39,10 @@ class WorkKindTest < ActiveSupport::TestCase
   end
 
   test "作業単価" do
-    assert_equal 2015, @work.price
+    assert_equal @work.term, @work.price
   end
 
   test "作業金額合計" do
-    assert_equal 2015 * @sum_hours, @work.sum_workers_amount
+    assert_equal @work.term * @sum_hours, @work.sum_workers_amount
   end
 end
