@@ -45,7 +45,7 @@ class MachinePriceHeader < ActiveRecord::Base
     Lease.all.each do |lease|
       result = {}
       work_kinds.each do |work_kind|
-        detail = details.where(lease_id: lease.id, work_kind_id: work_kind.id).first
+        detail = details.find_by(lease_id: lease.id, work_kind_id: work_kind.id)
         if detail
           result[work_kind.id] = {adjust_id: detail.adjust_id, price: detail.price}
         else
@@ -69,7 +69,7 @@ class MachinePriceHeader < ActiveRecord::Base
   def save_details
     @details_form.each do |lease_id, v1|
       v1.each do |work_kind_id, v2|
-        detail = MachinePriceDetail.where(machine_price_header_id: id, lease_id: lease_id, work_kind_id: work_kind_id).first
+        detail = MachinePriceDetail.find_by(machine_price_header_id: id, lease_id: lease_id, work_kind_id: work_kind_id)
         if detail.present?
           if v2[:adjust_id].to_i == Adjust::NONE.id
             detail.destroy

@@ -19,21 +19,21 @@ class WorkType < ActiveRecord::Base
 
   def genre_id
     Rails.cache.fetch("genre_id_#{self[:genre]}", expires_in: 1.hour) do
-      WorkType.with_deleted.where(genre: self[:genre], category_flag: true).first.id
+      WorkType.with_deleted.find_by(genre: self[:genre], category_flag: true).id
     end
   end
 
   def genre_name
     Rails.cache.fetch("genre_name_#{self[:genre]}", expires_in: 1.hour) do
-      WorkType.with_deleted.where(genre: self[:genre], category_flag: true).first.name
+      WorkType.with_deleted.find_by(genre: self[:genre], category_flag: true).name
     end
   end
 
   def name_format
-    return genre_name + "(#{name})"
+    genre_name + "(#{name})"
   end
 
   def self.select_category(category)
-    return WorkType.where(category_flag: false, genre: category[:genre]).order(display_order: :ASC, id: :ASC)
+    WorkType.where(category_flag: false, genre: category[:genre]).order(display_order: :ASC, id: :ASC)
   end
 end
