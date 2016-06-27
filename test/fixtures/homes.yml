@@ -27,9 +27,9 @@ home1:
   name: 中前
   worker_id: 1
   zip_code: 6910003
-  address1: 出雲市灘分町2383
+  address1: ○○市△△町1-2383
   address2: 
-  telephone: 0853-62-0066
+  telephone: 072-762-0066
   fax: 
   section_id: 1
   display_order: 1
@@ -46,9 +46,9 @@ home2:
   name: 西原
   worker_id: 2
   zip_code: 6910003
-  address1: 出雲市灘分町2414
+  address1: ○○市△△町1-2414
   address2: 
-  telephone: 0853-62-3999
+  telephone: 072-762-3999
   fax: 
   section_id: 1
   display_order: 2
@@ -65,9 +65,9 @@ home3:
   name: 境島
   worker_id: 3
   zip_code: 6910003
-  address1: 出雲市灘分町2404
+  address1: ○○市△△町1-2404
   address2: 
-  telephone: 0853-62-5300
+  telephone: 072-762-5300
   fax: 
   section_id: 1
   display_order: 3
@@ -84,9 +84,9 @@ home4:
   name: 中原
   worker_id: 4
   zip_code: 6910003
-  address1: 出雲市灘分町2420
+  address1: ○○市△△町1-2420
   address2: 
-  telephone: 0853-62-4508
+  telephone: 072-762-4508
   fax: 
   section_id: 1
   display_order: 4
@@ -103,9 +103,9 @@ home5:
   name: 大前
   worker_id: 5
   zip_code: 6910003
-  address1: 出雲市灘分町2430
+  address1: ○○市△△町1-2430
   address2: 
-  telephone: 0853-62-3978
+  telephone: 072-762-3978
   fax: 
   section_id: 1
   display_order: 5
@@ -122,9 +122,9 @@ home6:
   name: 西前
   worker_id: 6
   zip_code: 6910003
-  address1: 出雲市灘分町2571
+  address1: ○○市△△町1-2571
   address2: 
-  telephone: 0853-62-3979
+  telephone: 072-762-3979
   fax: 
   section_id: 2
   display_order: 6
@@ -141,9 +141,9 @@ home7:
   name: 住岡
   worker_id: 7
   zip_code: 6910003
-  address1: 出雲市灘分町2585
+  address1: ○○市△△町1-2585
   address2: 
-  telephone: 0853-62-3987
+  telephone: 072-762-3987
   fax: 
   section_id: 3
   display_order: 7
@@ -160,9 +160,9 @@ home8:
   name: 新屋
   worker_id: 8
   zip_code: 6910003
-  address1: 出雲市灘分町2590
+  address1: ○○市△△町1-2590
   address2: 
-  telephone: 0853-63-2901
+  telephone: 072-763-2901
   fax: 
   section_id: 3
   display_order: 8
@@ -179,9 +179,9 @@ home9:
   name: 川東
   worker_id: 9
   zip_code: 6910003
-  address1: 出雲市灘分町2591
+  address1: ○○市△△町1-2591
   address2: 
-  telephone: 0853-62-5311
+  telephone: 072-762-5311
   fax: 
   section_id: 4
   display_order: 9
@@ -198,9 +198,9 @@ home10:
   name: 東前
   worker_id: 10
   zip_code: 6910003
-  address1: 出雲市灘分町2600
+  address1: ○○市△△町1-2600
   address2: 
-  telephone: 0853-62-3985
+  telephone: 072-762-3985
   fax: 
   section_id: 4
   display_order: 10
@@ -217,9 +217,9 @@ home11:
   name: 岡屋
   worker_id: 11
   zip_code: 6910003
-  address1: 出雲市灘分町2606
+  address1: ○○市△△町1-2606
   address2: 
-  telephone: 0853-62-5305
+  telephone: 072-762-5305
   fax: 
   section_id: 4
   display_order: 11
@@ -236,9 +236,9 @@ home12:
   name: 大灘
   worker_id: 12
   zip_code: 6910003
-  address1: 出雲市灘分町2616
+  address1: ○○市△△町1-2616
   address2: 
-  telephone: 0853-62-3973
+  telephone: 072-762-3973
   fax: 
   section_id: 5
   display_order: 12
@@ -255,9 +255,9 @@ home13:
   name: 西灘
   worker_id: 13
   zip_code: 6910003
-  address1: 出雲市灘分町2617
+  address1: ○○市△△町1-2617
   address2: 
-  telephone: 0853-62-3972
+  telephone: 072-762-3972
   fax: 
   section_id: 5
   display_order: 13
@@ -274,9 +274,9 @@ home14:
   name: 中灘
   worker_id: 14
   zip_code: 6910003
-  address1: 出雲市灘分町2620
+  address1: ○○市△△町1-2620
   address2: 
-  telephone: 0853-62-3983
+  telephone: 072-762-3983
   fax: 
   section_id: 5
   display_order: 14
@@ -293,9 +293,9 @@ home15:
   name: 大東
   worker_id: 15
   zip_code: 6910003
-  address1: 出雲市灘分町2630
+  address1: ○○市△△町1-2630
   address2: 
-  telephone: 0853-62-3982
+  telephone: 072-762-3982
   fax: 
   section_id: 5
   display_order: 15
@@ -312,9 +312,9 @@ home16:
   name: 下原
   worker_id: 37
   zip_code: 6910003
-  address1: 出雲市灘分町2626
+  address1: ○○市△△町1-2626
   address2: 
-  telephone: 0853-62-3996
+  telephone: 072-762-3996
   fax: 
   section_id: 5
   display_order: 16
@@ -331,9 +331,9 @@ home17:
   name: 大上
   worker_id: 17
   zip_code: 6910003
-  address1: 出雲市灘分町2388
+  address1: ○○市△△町1-2388
   address2: 
-  telephone: 0853-62-5303
+  telephone: 072-762-5303
   fax: 
   section_id: 2
   display_order: 17
@@ -350,9 +350,9 @@ home18:
   name: 西上
   worker_id: 18
   zip_code: 6910003
-  address1: 出雲市灘分町2400
+  address1: ○○市△△町1-2400
   address2: 
-  telephone: 0853-62-5301
+  telephone: 072-762-5301
   fax: 
   section_id: 2
   display_order: 18
@@ -369,9 +369,9 @@ home19:
   name: 橋前
   worker_id: 19
   zip_code: 6910003
-  address1: 出雲市灘分町2481
+  address1: ○○市△△町1-2481
   address2: 
-  telephone: 0853-62-5319
+  telephone: 072-762-5319
   fax: 
   section_id: 2
   display_order: 19
@@ -388,9 +388,9 @@ home20:
   name: 大西
   worker_id: 20
   zip_code: 6910003
-  address1: 出雲市灘分町2488
+  address1: ○○市△△町1-2488
   address2: 
-  telephone: 0853-62-3977
+  telephone: 072-762-3977
   fax: 
   section_id: 2
   display_order: 20
@@ -407,9 +407,9 @@ home21:
   name: 中西
   worker_id: 21
   zip_code: 6910003
-  address1: 出雲市灘分町2489
+  address1: ○○市△△町1-2489
   address2: 
-  telephone: 0853-62-3976
+  telephone: 072-762-3976
   fax: 
   section_id: 2
   display_order: 21
@@ -426,9 +426,9 @@ home22:
   name: 松本
   worker_id: 22
   zip_code: 6910003
-  address1: 出雲市灘分町2500
+  address1: ○○市△△町1-2500
   address2: 
-  telephone: 0853-62-5316
+  telephone: 072-762-5316
   fax: 
   section_id: 1
   display_order: 22
@@ -445,9 +445,9 @@ home23:
   name: 中西屋
   worker_id: 23
   zip_code: 6910003
-  address1: 出雲市灘分町2501
+  address1: ○○市△△町1-2501
   address2: 
-  telephone: 0853-62-5317
+  telephone: 072-762-5317
   fax: 
   section_id: 1
   display_order: 23
@@ -464,9 +464,9 @@ home24:
   name: 中北
   worker_id: 24
   zip_code: 6910003
-  address1: 出雲市灘分町2505
+  address1: ○○市△△町1-2505
   address2: 
-  telephone: 0853-62-2860
+  telephone: 072-762-2860
   fax: 
   section_id: 1
   display_order: 24
@@ -483,9 +483,9 @@ home25:
   name: 中脇
   worker_id: 25
   zip_code: 6910003
-  address1: 出雲市灘分町2506
+  address1: ○○市△△町1-2506
   address2: 
-  telephone: 0853-62-5310
+  telephone: 072-762-5310
   fax: 
   section_id: 1
   display_order: 25
@@ -502,9 +502,9 @@ home26:
   name: 中家
   worker_id: 26
   zip_code: 6910003
-  address1: 出雲市灘分町2515
+  address1: ○○市△△町1-2515
   address2: 
-  telephone: 0853-62-3984
+  telephone: 072-762-3984
   fax: 
   section_id: 1
   display_order: 26
@@ -521,9 +521,9 @@ home27:
   name: 中山
   worker_id: 27
   zip_code: 6910003
-  address1: 出雲市灘分町2516
+  address1: ○○市△△町1-2516
   address2: 
-  telephone: 0853-63-0390
+  telephone: 072-763-0390
   fax: 
   section_id: 1
   display_order: 27
@@ -540,10 +540,10 @@ home28:
   name: 松の家
   worker_id: 28
   zip_code: 6910003
-  address1: 出雲市灘分町2522
+  address1: ○○市△△町1-2522
   address2: 
-  telephone: 0853-62-3974
-  fax: 0853-62-3871
+  telephone: 072-762-3974
+  fax: 072-762-3871
   section_id: 6
   display_order: 28
   member_flag: t
@@ -559,9 +559,9 @@ home29:
   name: 高西
   worker_id: 29
   zip_code: 6910003
-  address1: 出雲市灘分町2525
+  address1: ○○市△△町1-2525
   address2: 
-  telephone: 0853-62-3975
+  telephone: 072-762-3975
   fax: 
   section_id: 6
   display_order: 29
@@ -578,9 +578,9 @@ home30:
   name: 橋本
   worker_id: 30
   zip_code: 6910003
-  address1: 出雲市灘分町2533
+  address1: ○○市△△町1-2533
   address2: 
-  telephone: 0853-62-3997
+  telephone: 072-762-3997
   fax: 
   section_id: 6
   display_order: 30
@@ -597,9 +597,9 @@ home31:
   name: 園家
   worker_id: 31
   zip_code: 6910003
-  address1: 出雲市灘分町2535
+  address1: ○○市△△町1-2535
   address2: 
-  telephone: 0853-62-5306
+  telephone: 072-762-5306
   fax: 
   section_id: 6
   display_order: 31
@@ -616,9 +616,9 @@ home32:
   name: 資茂家
   worker_id: 32
   zip_code: 6910003
-  address1: 出雲市灘分町2550
+  address1: ○○市△△町1-2550
   address2: 
-  telephone: 0853-62-5308
+  telephone: 072-762-5308
   fax: 
   section_id: 6
   display_order: 32
@@ -635,9 +635,9 @@ home33:
   name: 大資茂
   worker_id: 33
   zip_code: 6910003
-  address1: 出雲市灘分町2555
+  address1: ○○市△△町1-2555
   address2: 
-  telephone: 0853-62-5309
+  telephone: 072-762-5309
   fax: 
   section_id: 6
   display_order: 33
