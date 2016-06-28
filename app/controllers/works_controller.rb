@@ -4,10 +4,12 @@ class WorksController < ApplicationController
   before_action :check_fixed, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
 
   def index
+    @works = Work.usual(@term)
+    @sum_hours = WorkResult.where(work_id: @works.ids).group(:work_id).sum(:hours)
+    @count_workers = WorkResult.where(work_id: @works.ids).group(:work_id).count(:worker_id)
     respond_to do |format|
       format.html do
         @months = WorkDecorator.months(@term)
-        @works = Work.usual(@term)
         if params[:month].blank?
           @month = ""
         else
@@ -18,7 +20,6 @@ class WorksController < ApplicationController
         @works = WorkDecorator.decorate_collection(@works.page(@page))
       end
       format.csv do
-        @works = Work.usual(@term)
         render :content_type => 'text/csv; charset=cp943'
       end
     end
