@@ -9,8 +9,8 @@ csv_str = CSV.generate do |csv|
     Work.human_attribute_name(:genre_name)    => ->(w){ w.work_type.genre_name },
     Work.human_attribute_name(:type_name)     => ->(w){ w.work_type.name },
     Work.human_attribute_name(:kind_name)     => ->(w){ w.work_kind.name + "(#{w.name})" },
-    Work.human_attribute_name(:workers_count) => ->(w){ @count_workers[w.id] },
-    Work.human_attribute_name(:sum_hours)     => ->(w){ @sum_hours[w.id] }
+    Work.human_attribute_name(:workers_count) => ->(w){ @count_workers[w.id] || 0 },
+    Work.human_attribute_name(:sum_hours)     => ->(w){ @sum_hours[w.id] || 0 }
   }
   csv << cols.keys
   @works.each do |work|

@@ -2,11 +2,16 @@ class WorksController < ApplicationController
   before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :show, :update, :destroy]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :check_fixed, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
+  before_action :clear_cache, only: [:update, :create, :destroy]
 
   def index
     @works = Work.usual(@term)
-    @sum_hours = WorkResult.where(work_id: @works.ids).group(:work_id).sum(:hours)
-    @count_workers = WorkResult.where(work_id: @works.ids).group(:work_id).count(:worker_id)
+    @sum_hours = Rails.cache.fetch(sum_hours_key) do
+      WorkResult.where(work_id: @works.ids).group(:work_id).sum(:hours).to_h
+    end
+    @count_workers = Rails.cache.fetch(count_workers_key) do
+      WorkResult.where(work_id: @works.ids).group(:work_id).count(:worker_id).to_h
+    end
     respond_to do |format|
       format.html do
         @months = WorkDecorator.months(@term)
@@ -145,5 +150,18 @@ class WorksController < ApplicationController
 
   def check_fixed
     redirect_to(works_path(page: params[:page], month: params[:month])) if @work.fixed_at
+  end
+
+  def clear_cache
+    Rails.cache.delete(sum_hours_key)
+    Rails.cache.delete(count_workers_key)
+  end
+
+  def sum_hours_key
+    "sum_hours#{@term}"
+  end
+
+  def count_workers_key
+    "count_workers#{@term}"
   end
 end
