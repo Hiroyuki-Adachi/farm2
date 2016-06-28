@@ -15,7 +15,6 @@
 =======
 *.rbc
 capybara-*.html
-.rspec
 /log
 /tmp
 /db/*.sqlite3
@@ -27,6 +26,7 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 *.sql
+/.vscode
 
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
