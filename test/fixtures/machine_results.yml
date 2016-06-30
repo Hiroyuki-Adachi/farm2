@@ -3907,3 +3907,51 @@ machine_results277:
   created_at: '2016-02-23 08:53:39.156026'
   updated_at: '2016-02-23 08:53:39.156026'
 
+machine_result_march_hour:
+  machine: machine_hour
+  work_result: work_result_march_1st
+  display_order: 1
+  hours: 1
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_march_area:
+  machine: machine_area
+  work_result: work_result_march_1st
+  display_order: 2
+  hours: 2
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_march_day:
+  machine: machine_day
+  work_result: work_result_march_1st
+  display_order: 3
+  hours: 3
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_feb_hour:
+  machine: machine_hour
+  work_result: work_result_feb_last
+  display_order: 1
+  hours: 1
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_feb_area:
+  machine: machine_area
+  work_result: work_result_feb_last
+  display_order: 2
+  hours: 2
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_feb_day:
+  machine: machine_day
+  work_result: work_result_feb_last
+  display_order: 3
+  hours: 3
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
