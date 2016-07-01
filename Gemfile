@@ -27,20 +27,18 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'i18n-js'
 # ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource for an ActiveRecord-like model.
 gem 'active_hash'
-
+# TZInfo::Data is the public domain IANA Time Zone Database packaged as a set of Ruby modules for use with TZInfo.
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
-
+# Paranoia is a re-implementation of acts_as_paranoid for Rails 3/4/5.
 gem 'paranoia'
-
+# A paginator for modern web app frameworks and ORMs
 gem 'kaminari'
-
+# Draper adds an object-oriented layer of presentation logic to your Rails application.
 gem 'draper'
-
+# ActiveRecords infamously doesn't support composite primary keys.
 gem 'composite_primary_keys'
-
+# Comments for migrations
 gem 'migration_comments'
-
-# gem 'rails4-autocomplete'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -54,7 +52,9 @@ gem 'migration_comments'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  # debase is a fast implementation of the standard Ruby debugger debug.rb for Ruby 2.0
   gem 'debase'
+  # An interface which glues ruby-debug to IDEs
   gem 'ruby-debug-ide'
 
   gem 'pry-rails'
@@ -66,6 +66,7 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+  # Add a comment summarizing the current schema to the top or bottom of each informations.
   gem 'annotate'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

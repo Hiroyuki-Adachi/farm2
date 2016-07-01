@@ -37,25 +37,17 @@ machine_types3:
   id: '4'
   name: バックホー
   display_order: '4'
-  created_at: '2016-06-07 12:28:47.874986'
-  updated_at: '2016-06-07 12:28:47.874986'
 
 machine_types_removable:
   id: '5'
   name: "消せるよ!!"
   display_order: '5'
-  created_at: '2016-06-07 12:28:47.874986'
-  updated_at: '2016-06-07 12:28:47.874986'
 
 machine_types4:
   id: 6
   name: "鶏ふん振り機"
   display_order: '5'
-  created_at: '2016-06-07 12:28:47.874986'
-  updated_at: '2016-06-07 12:28:47.874986'
 
 machine_type_test:
   name: "テスト"
   display_order: '5'
-  created_at: '2016-06-07 12:28:47.874986'
-  updated_at: '2016-06-07 12:28:47.874986'
