@@ -21,7 +21,7 @@ class Work < ActiveRecord::Base
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   require 'ostruct'
-  
+
   before_create :set_term
 
   validates :worked_at, presence: true
@@ -58,21 +58,21 @@ class Work < ActiveRecord::Base
   def sum_hours
     work_results.sum(:hours)
   end
-  
+
   def sum_areas
     lands.sum(:area)
   end
-  
+
   def price
     work_kind.term_price(term)
   end
 
   def sum_workers_amount
-    work_results.inject(0){|sum, result| sum += result.amount} || 0
+    work_results.inject(0) { |a, e| a + e.amount } || 0
   end
 
   def sum_machines_amount
-    machine_results.to_a.uniq{|result| result.machine_id}.inject(0){|sum, result| sum += result.amount} || 0
+    machine_results.to_a.uniq(&:machine_id).inject(0) { |a, e| a + e.amount} || 0
   end
 
   def self.get_terms(term)
@@ -80,7 +80,7 @@ class Work < ActiveRecord::Base
     result = Work.where(term: term).maximum(:fixed_at)
     result = result ? result.to_date : Date.new(term, 1, 1)
     result = result.next.end_of_month.to_date
-    while(result < Time.now.to_date) do
+    while result < Time.now.to_date do
       params << result
       result = result.next_month.end_of_month.to_date
     end
@@ -99,10 +99,9 @@ class Work < ActiveRecord::Base
         WorkResult.create(work_id: id, worker_id: param.worker_id, display_order: param.display_order, hours: param.hours)
       end
     end
-    
     work_results.where.not(worker_id: workers).each {|work_result| work_result.destroy}    
   end
-  
+
   def regist_lands(params)
     lands = []
     params.each do |param|
@@ -116,9 +115,9 @@ class Work < ActiveRecord::Base
       end
     end
 
-    work_lands.where.not(land_id: lands).each {|land| land.destroy}
+    work_lands.where.not(land_id: lands).each { |land| land.destroy}
   end
-  
+
   def regist_machines(params)
     params.each do |machine_id, work_result|
       work_result.each do |work_result_id, hour|
@@ -135,7 +134,7 @@ class Work < ActiveRecord::Base
         end
       end
     end
-  end 
+  end
 
   def regist_chemicals(params)
     params.each do |chemical_id, quantity|

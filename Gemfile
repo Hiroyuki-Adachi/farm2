@@ -23,9 +23,9 @@ gem 'jquery-ui-rails'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
-
+# Internationalization and localization solution
 gem 'i18n-js'
-
+# ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource for an ActiveRecord-like model.
 gem 'active_hash'
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
@@ -51,15 +51,16 @@ gem 'migration_comments'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-group :test do
-  gem 'minitest-doc_reporter'
-end
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'debase'
   gem 'ruby-debug-ide'
+
+  gem 'pry-rails'
+  gem 'pry-doc'
+  gem 'pry-byebug'
+  gem 'pry-stack_explorer'
 end
 
 group :development do
