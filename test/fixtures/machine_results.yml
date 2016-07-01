@@ -3955,3 +3955,51 @@ machine_result_feb_day:
   created_at: '2016-02-23 08:53:39.156026'
   updated_at: '2016-02-23 08:53:39.156026'
 
+machine_result_march_hour_t:
+  machine: machine_hour_t
+  work_result: work_result_march_1st
+  display_order: 1
+  hours: 1
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_march_area_t:
+  machine: machine_area_t
+  work_result: work_result_march_1st
+  display_order: 2
+  hours: 2
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_march_day_t:
+  machine: machine_day_t
+  work_result: work_result_march_1st
+  display_order: 3
+  hours: 3
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_feb_hour_t:
+  machine: machine_hour_t
+  work_result: work_result_feb_last
+  display_order: 1
+  hours: 1
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_feb_area_t:
+  machine: machine_area_t
+  work_result: work_result_feb_last
+  display_order: 2
+  hours: 2
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_feb_day_t:
+  machine: machine_day_t
+  work_result: work_result_feb_last
+  display_order: 3
+  hours: 3
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+

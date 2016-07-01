@@ -92,3 +92,51 @@ machine_price_header_march_day:
   machine_type_id: 0
   created_at: '2016-06-07 12:29:01.560381'
   updated_at: '2016-06-07 12:29:01.560381'
+
+machine_type_price_header_1_hour:
+  id: 31
+  validated_at: '2001-01-01'
+  machine_id: 0
+  machine_type: machine_type_hour 
+  created_at: '2016-06-07 12:29:01.560381'
+  updated_at: '2016-06-07 12:29:01.560381'
+
+machine_type_price_header_1_area:
+  id: 32
+  validated_at: '2001-01-01'
+  machine_id: 0
+  machine_type: machine_type_area
+  created_at: '2016-06-07 12:29:01.560381'
+  updated_at: '2016-06-07 12:29:01.560381'
+
+machine_type_price_header_1_day:
+  id: 33
+  validated_at: '2001-01-01'
+  machine_id: 0
+  machine_type: machine_type_day
+  created_at: '2016-06-07 12:29:01.560381'
+  updated_at: '2016-06-07 12:29:01.560381'
+
+machine_type_price_header_march_hour:
+  id: 41
+  validated_at: '2015-03-01'
+  machine_id: 0
+  machine_type: machine_type_hour
+  created_at: '2016-06-07 12:29:01.560381'
+  updated_at: '2016-06-07 12:29:01.560381'
+
+machine_type_price_header_march_area:
+  id: 42
+  validated_at: '2015-03-01'
+  machine_id: 0
+  machine_type: machine_type_area
+  created_at: '2016-06-07 12:29:01.560381'
+  updated_at: '2016-06-07 12:29:01.560381'
+
+machine_type_price_header_march_day:
+  id: 43
+  validated_at: '2015-03-01'
+  machine_id: 0
+  machine_type: machine_type_day
+  created_at: '2016-06-07 12:29:01.560381'
+  updated_at: '2016-06-07 12:29:01.560381'

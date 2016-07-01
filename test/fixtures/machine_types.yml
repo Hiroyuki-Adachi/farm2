@@ -51,3 +51,15 @@ machine_types4:
 machine_type_test:
   name: "テスト"
   display_order: '5'
+
+machine_type_hour:
+  name: "時間"
+  display_order: 5
+
+machine_type_area:
+  name: "面積"
+  display_order: 5
+
+machine_type_day:
+  name: "日数"
+  display_order: 5
