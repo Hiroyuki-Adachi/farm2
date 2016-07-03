@@ -68,6 +68,8 @@ group :development do
   gem 'web-console', '~> 2.0'
   # Add a comment summarizing the current schema to the top or bottom of each informations.
   gem 'annotate'
+  # RuboCop is a Ruby static code analyzer.
+  gem 'rubocop', require: false
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
