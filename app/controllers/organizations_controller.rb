@@ -6,6 +6,7 @@ class OrganizationsController < ApplicationController
 
   def update
     if @organization.update(organization_params)
+      session[:organization] = @organization.attributes
       redirect_to(root_path)
     else
       render action: :edit

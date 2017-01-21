@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20160622115619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "dblink"
 
   create_table "bank_branches", id: false, force: :cascade, comment: "支店マスタ" do |t|
     t.string   "bank_code",  limit: 4,  null: false, comment: "金融機関コード"
@@ -290,22 +291,22 @@ ActiveRecord::Schema.define(version: 20160622115619) do
   add_index "work_types", ["deleted_at"], name: "index_work_types_on_deleted_at", using: :btree
 
   create_table "workers", force: :cascade, comment: "作業者マスタ" do |t|
-    t.string   "family_phonetic", limit: 15,                     null: false, comment: "姓(ﾌﾘｶﾞﾅ)"
-    t.string   "family_name",     limit: 10,                     null: false, comment: "姓"
-    t.string   "first_phonetic",  limit: 15,                     null: false, comment: "名(ﾌﾘｶﾞﾅ)"
-    t.string   "first_name",      limit: 10,                     null: false, comment: "名"
-    t.date     "birthday",                                                    comment: "誕生日"
-    t.integer  "home_id",                                                     comment: "世帯"
-    t.string   "mobile",          limit: 15,                                  comment: "携帯番号"
-    t.string   "mobile_mail",     limit: 50,                                  comment: "メールアドレス(携帯)"
-    t.string   "pc_mail",         limit: 50,                                  comment: "メールアドレス(PC)"
-    t.integer  "display_order",                                               comment: "表示順"
-    t.boolean  "work_flag",                  default: true,      null: false, comment: "作業フラグ"
-    t.integer  "gender_id",                  default: 0,         null: false, comment: "性別"
-    t.string   "bank_code",       limit: 4,  default: "0000",    null: false, comment: "口座(金融機関)"
-    t.string   "branch_code",     limit: 3,  default: "000",     null: false, comment: "口座(支店)"
-    t.integer  "account_type_id", limit: 2,  default: 0,         null: false, comment: "口座種別"
-    t.string   "account_number",  limit: 7,  default: "0000000", null: false, comment: "口座番号"
+    t.string   "family_phonetic", limit: 15,                     null: false
+    t.string   "family_name",     limit: 10,                     null: false
+    t.string   "first_phonetic",  limit: 15,                     null: false
+    t.string   "first_name",      limit: 10,                     null: false
+    t.date     "birthday"
+    t.integer  "home_id"
+    t.string   "mobile",          limit: 15
+    t.string   "mobile_mail",     limit: 50
+    t.string   "pc_mail",         limit: 50
+    t.integer  "display_order"
+    t.boolean  "work_flag",                  default: true,      null: false
+    t.integer  "gender_id",                  default: 0,         null: false
+    t.string   "bank_code",       limit: 4,  default: "0000",    null: false
+    t.string   "branch_code",     limit: 3,  default: "000",     null: false
+    t.integer  "account_type_id", limit: 2,  default: 0,         null: false
+    t.string   "account_number",  limit: 7,  default: "0000000", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
