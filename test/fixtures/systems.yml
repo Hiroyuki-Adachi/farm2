@@ -10,13 +10,12 @@
 #  updated_at  :datetime
 #
 
+s2014:
+  term: 2014
+  target_from: 2014-01-01
+  target_to: 2014-12-31
+
 s2015:
   term: 2015
   target_from: 2015-01-01
   target_to: 2015-12-31
-
-s2016:
-  term: 2016
-  target_from: 2016-01-01
-  target_to: 2016-12-31
- 

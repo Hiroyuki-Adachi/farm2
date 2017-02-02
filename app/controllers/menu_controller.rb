@@ -34,6 +34,7 @@ class MenuController < ApplicationController
       @system.save!
       @organization = Organization.first
       @organization.update(term: @term)
+      session[:organization] = @organization.attributes
       Rails.cache.write(get_cache_key, @system.attributes)
       redirect_to(root_path, :notice => '設定を変更しました。')
     else
