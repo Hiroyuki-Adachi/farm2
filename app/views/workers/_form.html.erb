@@ -17,8 +17,16 @@
     <%= f.text_field :first_name, {:maxlength => 10, :size => 20, required: true} %>
  </div>
  <div class="field">
-    <%= f.label :home_id %><br />
+   <%= f.label :home_id %><br />
    <%= f.select(:home_id, @homes.map {|home| [home.name, home.id]}) %><%= check_box_tag :holder, true, @worker.home ? (@worker.id == @worker.home.worker_id) : false %>世帯主<br />
+ </div>
+ <div class="field">
+   <%= f.label :gender_id %><br />
+   <%= f.select(:gender_id, @genders.map {|gender| [gender.name, gender.id]}) %>
+ </div>
+ <div class="field">
+   <%= f.label :birthday %><br />
+   <%= f.date_field :birthday %>
  </div>
  <div class="field">
     <%= f.label :mobile %><br />

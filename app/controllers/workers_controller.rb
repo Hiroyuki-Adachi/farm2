@@ -1,6 +1,7 @@
 class WorkersController < ApplicationController
   before_action :set_worker, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
+  before_action :set_genders, only: [:new, :create, :edit, :update]
 
   def index
     @workers = Worker.usual.page(params[:page])
@@ -52,7 +53,11 @@ class WorkersController < ApplicationController
     @homes = Home.usual
   end
 
+  def set_genders
+    @genders = Gender.all
+  end
+
   def worker_params
-    return params.require(:worker).permit(:family_phonetic, :family_name, :first_phonetic, :first_name, :home_id, :mobile, :display_order)
+    return params.require(:worker).permit(:family_phonetic, :family_name, :first_phonetic, :first_name, :home_id, :mobile, :display_order, :gender_id, :birthday)
   end
 end

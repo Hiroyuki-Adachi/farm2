@@ -94,6 +94,7 @@ ja:
         branch_code: "支店"
         account_type_id: "預金種別"
         account_number: "口座番号"
+        gender_id: "性別"
 
       machine:
         name: 名称
