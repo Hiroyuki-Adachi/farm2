@@ -10,12 +10,12 @@
   <li><%= link_to '世帯別日当一覧', work_results_path %>(<%= link_to 'CSV出力', work_results_path(format: :csv) %>)</li>
   <li><%= link_to '世帯別機械利用料', machine_results_path %>(<%= link_to 'CSV出力', machine_results_path(format: :csv) %>)</li>
 </ul>
-<h2>会計処理</h2>
+<h2 class="hide_menu">会計処理</h2>
 <ul>
   <li><%= link_to '新規確定', new_fix_path %></li>
   <li><%= link_to '確定一覧', fixes_path %></li>
 </ul>
-<h2>マスタ保守</h2>
+<h2 class="hide_menu">マスタ保守</h2>
 <ul>
   <li><%= link_to '世帯マスタ保守', homes_path %></li>
   <li><%= link_to '作業者マスタ保守', workers_path %></li>
@@ -27,10 +27,17 @@
   <li><%= link_to '薬剤マスタ保守', chemicals_path %></li>
   <li><%= link_to '金融機関マスタ保守', banks_path %></li>
 </ul>
-<h2>システム管理</h2>
+<h2 class="hide_menu">システム管理</h2>
 <ul>
   <li><%= link_to '対象年度変更', edit_term_menu_path(@system) %></li>
   <li><%= link_to '管理マスタ変更', edit_organization_path(@organization) %></li>
   <li><%= link_to '作業分類マスタ保守', work_types_path %></li>
   <li><%= link_to '班マスタ保守', sections_path %></li>
 </ul>
+<script>
+$(function() {
+  $(".hide_menu").on("click", function() {
+    $(this).next("ul").slideToggle();
+  });
+});
+</script>
