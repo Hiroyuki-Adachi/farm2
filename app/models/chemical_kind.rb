@@ -7,7 +7,7 @@
 #  work_kind_id     :integer          not null              # 作業種別
 #
 
-class ChemicalKind < ActiveRecord::Base
+class ChemicalKind < ApplicationRecord
   belongs_to :chemical_type
   belongs_to :work_kind
 end

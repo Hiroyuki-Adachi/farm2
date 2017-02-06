@@ -6,6 +6,6 @@
 #  term        :integer          not null # 年度(期)
 #
 
-class ChemicalTerm < ActiveRecord::Base
+class ChemicalTerm < ApplicationRecord
   belongs_to :chemical
 end

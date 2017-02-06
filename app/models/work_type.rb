@@ -10,7 +10,7 @@
 #  deleted_at    :datetime
 #
 
-class WorkType < ActiveRecord::Base
+class WorkType < ApplicationRecord
   acts_as_paranoid
 
   scope :categories,  -> {where(category_flag: true).order(display_order: :ASC, id: :ASC)}

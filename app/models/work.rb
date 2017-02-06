@@ -17,7 +17,7 @@
 #  updated_at   :datetime
 #
 
-class Work < ActiveRecord::Base
+class Work < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   require 'ostruct'

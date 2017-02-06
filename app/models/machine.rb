@@ -14,7 +14,7 @@
 #  deleted_at        :datetime
 #
 
-class Machine < ActiveRecord::Base
+class Machine < ApplicationRecord
   acts_as_paranoid
 
   has_many  :machine_results

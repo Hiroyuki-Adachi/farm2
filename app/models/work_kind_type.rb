@@ -7,7 +7,7 @@
 #  work_type_id :integer                                # 作業分類
 #
 
-class WorkKindType < ActiveRecord::Base
+class WorkKindType < ApplicationRecord
   belongs_to :work_kind
   belongs_to :work_type
 end

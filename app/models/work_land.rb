@@ -10,7 +10,7 @@
 #  updated_at    :datetime
 #
 
-class WorkLand < ActiveRecord::Base
+class WorkLand < ApplicationRecord
   belongs_to :work
   belongs_to :land, -> {with_deleted}
 end

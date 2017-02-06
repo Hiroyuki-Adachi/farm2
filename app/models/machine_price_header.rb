@@ -10,7 +10,7 @@
 #  updated_at      :datetime         not null
 #
 
-class MachinePriceHeader < ActiveRecord::Base
+class MachinePriceHeader < ApplicationRecord
   require "ostruct"
 
   belongs_to :machine

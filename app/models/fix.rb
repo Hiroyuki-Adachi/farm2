@@ -12,7 +12,7 @@
 #  updated_at      :datetime         not null
 #
 
-class Fix < ActiveRecord::Base
+class Fix < ApplicationRecord
   self.primary_keys = [:term, :fixed_at]
   before_destroy :clear_fix
 

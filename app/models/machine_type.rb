@@ -9,7 +9,7 @@
 #  updated_at    :datetime
 #
 
-class MachineType < ActiveRecord::Base
+class MachineType < ApplicationRecord
   has_many :machines, -> {order("machines.display_order, machines.id")}, dependent: :restrict_with_exception 
 
   has_many :machine_kinds

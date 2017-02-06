@@ -14,7 +14,7 @@
 #  deleted_at    :datetime
 #
 
-class Land < ActiveRecord::Base
+class Land < ApplicationRecord
   acts_as_paranoid
 
   belongs_to :owner, ->{with_deleted}, {class_name: :Home, foreign_key: :owner_id}

@@ -14,7 +14,7 @@
 #  updated_at    :datetime
 #
 
-class WorkResult < ActiveRecord::Base
+class WorkResult < ApplicationRecord
   belongs_to :work
   belongs_to :worker, -> {with_deleted}
   has_one    :home, {through: :worker}, -> {with_deleted}

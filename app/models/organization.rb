@@ -20,7 +20,7 @@
 #  updated_at      :datetime
 #
 
-class Organization < ActiveRecord::Base
+class Organization < ApplicationRecord
   enum daily_worker: {no_print: 0, print_home: 1, print_section: 2}
 
   after_save :save_term

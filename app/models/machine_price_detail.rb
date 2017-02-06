@@ -12,7 +12,7 @@
 #  updated_at              :datetime         not null
 #
 
-class MachinePriceDetail < ActiveRecord::Base
+class MachinePriceDetail < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   belongs_to :header, {class_name: :MachinePriceHeader}

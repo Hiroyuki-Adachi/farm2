@@ -24,7 +24,7 @@
 #  deleted_at      :datetime
 #
 
-class Worker < ActiveRecord::Base
+class Worker < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   acts_as_paranoid
   

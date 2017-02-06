@@ -10,7 +10,7 @@
 #  updated_at  :datetime
 #
 
-class WorkChemical < ActiveRecord::Base
+class WorkChemical < ApplicationRecord
   belongs_to :chemical
   belongs_to :work
 

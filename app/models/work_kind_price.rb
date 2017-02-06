@@ -10,7 +10,7 @@
 #  updated_at   :datetime         not null
 #
 
-class WorkKindPrice < ActiveRecord::Base
+class WorkKindPrice < ApplicationRecord
   belongs_to :work_kind
 
   validates :price, presence: true

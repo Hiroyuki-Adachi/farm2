@@ -15,7 +15,7 @@
 #  updated_at :datetime         not null
 #
 
-class BankBranch < ActiveRecord::Base
+class BankBranch < ApplicationRecord
   self.primary_keys = :bank_code, :code
 
   belongs_to :bank, {foreign_key: :bank_code}

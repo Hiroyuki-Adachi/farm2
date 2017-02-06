@@ -7,7 +7,7 @@
 #  work_kind_id    :integer          not null              # 作業種別
 #
 
-class MachineKind < ActiveRecord::Base
+class MachineKind < ApplicationRecord
   belongs_to :machine_type
   belongs_to :work_kind
 end

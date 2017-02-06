@@ -11,7 +11,7 @@
 #  deleted_at    :datetime
 #
 
-class Section < ActiveRecord::Base
+class Section < ApplicationRecord
   acts_as_paranoid
 
   has_many :homes, -> {order("homes.display_order, homes.id")}

@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 
-class Bank < ActiveRecord::Base
+class Bank < ApplicationRecord
   self.primary_key = :code
 
   validates :code,     presence: true

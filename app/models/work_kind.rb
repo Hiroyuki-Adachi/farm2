@@ -12,7 +12,7 @@
 #  land_flag     :boolean          default(TRUE), not null  # 土地利用フラグ
 #
 
-class WorkKind < ActiveRecord::Base
+class WorkKind < ApplicationRecord
   acts_as_paranoid
 
   after_save :save_price

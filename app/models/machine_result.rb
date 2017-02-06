@@ -15,7 +15,7 @@
 #  updated_at      :datetime
 #
 
-class MachineResult < ActiveRecord::Base
+class MachineResult < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   belongs_to  :machine, -> {with_deleted}

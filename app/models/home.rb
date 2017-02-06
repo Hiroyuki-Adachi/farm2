@@ -21,7 +21,7 @@
 #  deleted_at          :datetime
 #
 
-class Home < ActiveRecord::Base
+class Home < ApplicationRecord
   acts_as_paranoid
 
   REG_PHONE = /\A\d{2,4}-\d{2,4}-\d{4}\z/

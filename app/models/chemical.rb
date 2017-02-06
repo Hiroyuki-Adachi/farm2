@@ -11,7 +11,7 @@
 #  deleted_at       :datetime
 #
 
-class Chemical < ActiveRecord::Base
+class Chemical < ApplicationRecord
   acts_as_paranoid
 
   after_save :save_term

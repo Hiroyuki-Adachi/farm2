@@ -10,7 +10,7 @@
 #  updated_at  :datetime
 #
 
-class System < ActiveRecord::Base
+class System < ApplicationRecord
   validates :term,        presence: true
   validates :target_from, presence: true
   validates :target_to,   presence: true
