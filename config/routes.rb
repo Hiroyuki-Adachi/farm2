@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :machines, except: [:show]
   resources :chemicals, except: [:show]
   resources :sections, except: [:show]
+  resources :statistics, only: [:index]
 
   resources :fixes, {param: "fixed_at", except: [:edit, :update]}
 

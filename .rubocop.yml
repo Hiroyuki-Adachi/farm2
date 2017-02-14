@@ -1,7 +1,7 @@
 Documentation:
   Enabled: false
 
-EmptyLinesAroundBody:
+EmptyLinesAroundClassBody:
   Enabled: false
 
 HashSyntax:
@@ -11,4 +11,8 @@ MethodName:
   Enabled: false
 
 StringLiterals:
+  Enabled: false
+
+# Use only ascii symbols in comments.
+AsciiComments:
   Enabled: false

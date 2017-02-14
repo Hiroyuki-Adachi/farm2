@@ -33,14 +33,13 @@ class Work < ApplicationRecord
   belongs_to :weather
   belongs_to :fix, {foreign_key: :fixed_at}
 
-  has_many :work_lands,     ->{order('work_lands.display_order')},  {dependent: :destroy}
-  has_many :work_results,   ->{order('work_results.display_order')}, {dependent: :destroy}
-  has_many :work_chemicals, ->{order('work_chemicals.id')}, {dependent: :destroy}
+  has_many :work_lands,     -> {order('work_lands.display_order')},  {dependent: :destroy}
+  has_many :work_results,   -> {order('work_results.display_order')}, {dependent: :destroy}
+  has_many :work_chemicals, -> {order('work_chemicals.id')}, {dependent: :destroy}
 
   has_many :workers,    {through: :work_results}, -> {with_deleted}
   has_many :lands,      {through: :work_lands}, -> {with_deleted}
   has_many :chemicals,  {through: :work_chemicals}, -> {with_deleted}
-  
   has_many :machine_results, {through: :work_results}
 
   scope :no_fixed, ->(term){where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)}

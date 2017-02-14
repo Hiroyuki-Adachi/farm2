@@ -10,6 +10,10 @@
   <li><%= link_to '世帯別日当一覧', work_results_path %>(<%= link_to 'CSV出力', work_results_path(format: :csv) %>)</li>
   <li><%= link_to '世帯別機械利用料', machine_results_path %>(<%= link_to 'CSV出力', machine_results_path(format: :csv) %>)</li>
 </ul>
+<h2 class="hide_menu">統計処理</h2>
+<ul>
+  <li><%= link_to '統計照会', statistics_path %></li>
+</ul>
 <h2 class="hide_menu">会計処理</h2>
 <ul>
   <li><%= link_to '新規確定', new_fix_path %></li>
