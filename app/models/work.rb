@@ -151,4 +151,42 @@ class Work < ApplicationRecord
       end
     end
   end
+
+  def self.total_all
+    Work.joins(:work_results).group(:term).order(:term).sum("work_results.hours")
+  end
+
+  def self.total_genre
+    Work.joins(:work_results)
+        .joins("INNER JOIN work_types ON works.work_type_id = work_types.id")
+        .group(:genre, :term)
+        .order("work_types.genre", :term)
+        .sum("work_results.hours")
+  end
+
+  def self.total_age
+    sql = []
+    sql << "SELECT"
+    sql << "   SUM(work_results.hours) AS hours"
+    sql << " , CASE WHEN workers.gender_id = 2 THEN 5"
+    sql << "        ELSE CASE WHEN (term - date_part('year', workers.birthday)) < 40 THEN 0"
+    sql << "                  WHEN (term - date_part('year', workers.birthday)) BETWEEN 40 AND 49 THEN 1"
+    sql << "                  WHEN (term - date_part('year', workers.birthday)) BETWEEN 50 AND 59 THEN 2"
+    sql << "                  WHEN (term - date_part('year', workers.birthday)) BETWEEN 60 AND 69 THEN 3"
+    sql << "             ELSE 4"
+    sql << "   END END AS age_group"
+    sql << ", works.term"
+    sql << " FROM works"
+    sql << " INNER JOIN work_results ON work_results.work_id = works.id"
+    sql << " INNER JOIN workers ON work_results.worker_id = workers.id"
+    sql << " GROUP BY works.term, age_group"
+    sql << " ORDER BY works.term, age_group"
+
+    results = {}
+    Work.find_by_sql(sql.join("\n")).each do |r|
+      results[[r.term, r.age_group]] = r.hours
+    end
+
+    return results
+  end
 end

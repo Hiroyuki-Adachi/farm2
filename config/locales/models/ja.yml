@@ -167,3 +167,12 @@ ja:
         no_print: "出力しない"
         print_home: "屋号を出力"
         print_section: "班／町内を出力"
+
+  statistics:
+    age:
+      - "～30代"
+      - "40代"
+      - "50代"
+      - "60代"
+      - "70歳～"
+      - "女性"

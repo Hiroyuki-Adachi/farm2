@@ -33,5 +33,23 @@
   </tr>
   <% end %>
 </table>
+<br />
+<h2>世代別時間</h2>
+<table class="list">
+  <tr>
+    <th style="width: 100px;">年度</th>
+    <% @total_all.each do |ta| %>
+      <th style="width: 80px;"><%= ta[0] %></th>
+    <% end %>
+  </tr>
+  <% t("statistics.age").each_with_index do |age, i| %>
+  <tr>
+    <th><%= age %></th>
+    <% @total_all.each do |ta| %>
+      <td class="numeric"><%= sprintf("%.1f", @total_age[[ta[0], i]] || 0) %></td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
 
 <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
