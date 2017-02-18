@@ -15,4 +15,8 @@ class ChangeTermTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal new_term, assigns(:system).term
   end
+
+  def teardown
+    @organization.save
+  end
 end
