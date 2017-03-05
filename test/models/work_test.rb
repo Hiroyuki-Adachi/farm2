@@ -45,4 +45,30 @@ class WorkKindTest < ActiveSupport::TestCase
   test "作業金額合計" do
     assert_equal @work.term * @sum_hours, @work.sum_workers_amount
   end
+
+  test "工数統計_総合計" do
+    total_hours = Work.joins(:work_results).where(term: 2015).sum("work_results.hours")
+    assert_equal total_hours, Work.total_all[2015]
+  end
+
+  test "工数統計_ジャンル別" do
+    total_hours = Work.joins(:work_results)
+        .joins("INNER JOIN work_types ON works.work_type_id = work_types.id")
+        .where(term: 2015, "work_types.genre" => 1).sum("work_results.hours")
+    assert_equal total_hours, Work.total_genre[[1, 2015]]
+  end
+
+  test "工数統計_年齢別" do
+    total_hours = Work.joins(:work_results)
+        .where(term: 2015, "work_results.worker_id" => workers(:worker1).id).sum("work_results.hours")
+    assert_equal total_hours, Work.total_age[[2015, 0]]
+
+    total_hours = Work.joins(:work_results)
+        .where(term: 2015, "work_results.worker_id" => workers(:worker2).id).sum("work_results.hours")
+    assert_equal total_hours, Work.total_age[[2015, 2]]
+
+    total_hours = Work.joins(:work_results)
+        .where(term: 2015, "work_results.worker_id" => workers(:worker3).id).sum("work_results.hours")
+    assert_equal total_hours, Work.total_age[[2015, 5]]
+  end
 end

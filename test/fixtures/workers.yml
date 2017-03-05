@@ -45,6 +45,8 @@ worker1:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1980-01-01'
+  gender_id: 1
 
 worker2:
   id: 2
@@ -67,13 +69,15 @@ worker2:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1960-01-01'
+  gender_id: 1
 
 worker3:
   id: 3
   family_phonetic: たかはし
   family_name: 高橋
-  first_phonetic: だいすけ
-  first_name: 大助
+  first_phonetic: まゆみ
+  first_name: 真由美
   birthday: 
   home_id: 3
   mobile: 080-4668-7772
@@ -89,6 +93,8 @@ worker3:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1990-01-01'
+  gender_id: 2
 
 worker4:
   id: 4
