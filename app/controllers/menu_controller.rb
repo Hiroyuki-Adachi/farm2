@@ -36,13 +36,12 @@ class MenuController < ApplicationController
       @organization.update(term: @term)
       session[:organization] = @organization.attributes
       Rails.cache.write(get_cache_key, @system.attributes)
+      clear_caches(@term)
       redirect_to(root_path, :notice => '設定を変更しました。')
+    elsif system_params[:term]
+      render :action => :edit_term
     else
-      if system_params[:term]
-        render :action => :edit_term
-      else
-        render :action => :edit
-      end
+      render :action => :edit
     end
   end
 

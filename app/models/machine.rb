@@ -36,7 +36,7 @@ class Machine < ApplicationRecord
     .where("(machine_kinds.work_kind_id = ? and validity_start_at <= ? and ? <= validity_end_at) OR (machines.id in (?))", work.work_kind_id, work.worked_at, work.worked_at, work.machine_results.pluck(:machine_id))
     .order("machine_types.display_order, machines.display_order")
   }
-  
+
   scope :of_company, ->{where(home_id: Home.where(company_flag: true))}
   scope :of_owners, ->(work){where(home_id: work.workers.pluck(:home_id).uniq)}
   scope :of_no_owners, ->(work){where.not(home_id: work.workers.pluck(:home_id).uniq)}
@@ -46,7 +46,7 @@ class Machine < ApplicationRecord
     .where('machine_results.work_result_id in (?)', results.ids)
     .order('machines.display_order').uniq
   }
-  
+
   scope :usual, -> {includes(:machine_type).order("machine_types.display_order, machines.display_order, machines.id")}
 
   def operators(work)
@@ -57,16 +57,16 @@ class Machine < ApplicationRecord
 
     return operators.join(',')
   end
-  
+
   def company?
-    return self.owner.company_flag?
+    owner.company_flag?
   end
-  
+
   def price_details(work)
     header = price_headers.where("validated_at <= ?", work.worked_at).order(validated_at: :DESC).first
     return header ? header.details : (machine_type ? machine_type.price_details(work) : nil)
   end
-  
+
   def leasable?(worked_at)
     return false if company?
     header = price_headers.where("validated_at <= ?", worked_at).order(validated_at: :DESC).first
@@ -75,20 +75,20 @@ class Machine < ApplicationRecord
     return header.details.where(lease_id: Lease::LEASE).exists? if header
     return false
   end
-  
+
   def hours(results)
-    return MachineResult.where("machine_id = ? and work_result_id in (?)", id, results.ids).sum(:hours)
+    MachineResult.where("machine_id = ? and work_result_id in (?)", id, results.ids).sum(:hours)
   end
-  
+
   def owner_name
-    return owner ? owner.name : ""
+    owner ? owner.name : ""
   end
-  
+
   def type_name
-    return machine_type ? machine_type.name : ""
+    machine_type ? machine_type.name : ""
   end
-  
+
   def usual_name
-    return company? ? "#{type_name}(#{name})" : "#{type_name}(#{owner_name})"
+    company? ? "#{type_name}(#{name})" : "#{type_name}(#{owner_name})"
   end
 end

@@ -6,10 +6,10 @@ class WorksController < ApplicationController
 
   def index
     @works = Work.usual(@term)
-    @sum_hours = Rails.cache.fetch(sum_hours_key) do
+    @sum_hours = Rails.cache.fetch(sum_hours_key(@term)) do
       WorkResult.where(work_id: @works.ids).group(:work_id).sum(:hours).to_h
     end
-    @count_workers = Rails.cache.fetch(count_workers_key) do
+    @count_workers = Rails.cache.fetch(count_workers_key(@term)) do
       WorkResult.where(work_id: @works.ids).group(:work_id).count(:worker_id).to_h
     end
     respond_to do |format|
@@ -81,7 +81,7 @@ class WorksController < ApplicationController
     @results = @work.work_results || []
     @company_machines = Machine.by_work(@work.model).of_company
     @owner_machines = Machine.by_work(@work.model).of_owners(@work.model)
-    @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select { |m| m.leasable?(@work.model.worked_at) }
+    @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select {|m| m.leasable?(@work.model.worked_at) }
   end
 
   def edit_chemicals
@@ -153,15 +153,6 @@ class WorksController < ApplicationController
   end
 
   def clear_cache
-    Rails.cache.delete(sum_hours_key)
-    Rails.cache.delete(count_workers_key)
-  end
-
-  def sum_hours_key
-    "sum_hours#{@term}"
-  end
-
-  def count_workers_key
-    "count_workers#{@term}"
+    clear_caches(@term)
   end
 end
