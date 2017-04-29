@@ -33,7 +33,7 @@ class Home < ApplicationRecord
   belongs_to :holder,  -> {with_deleted}, {class_name: :Worker, foreign_key: :worker_id}
   belongs_to :section, -> {with_deleted}
 
-  scope :usual, ->{includes(:section).where(member_flag: true, company_flag: false).order("sections.display_order, homes.display_order, homes.id")}
+  scope :usual, ->{includes(:section).where(["sections.work_flag = ?", true]).order("sections.display_order, homes.display_order, homes.id")}
   scope :list, ->{includes(:section, :holder).where(company_flag: false).order("sections.display_order, homes.display_order, homes.id")}
   scope :machine_owners, ->{where("member_flag = ? OR company_flag = ?", true, true).order("company_flag DESC, display_order, id")}
 
