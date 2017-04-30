@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622115619) do
+ActiveRecord::Schema.define(version: 20170430023245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,12 +57,13 @@ ActiveRecord::Schema.define(version: 20160622115619) do
   end
 
   create_table "chemicals", force: :cascade, comment: "薬剤マスタ" do |t|
-    t.string   "name",             limit: 20,             null: false, comment: "薬剤名称"
-    t.integer  "display_order",               default: 0, null: false, comment: "表示順"
-    t.integer  "chemical_type_id",                        null: false, comment: "薬剤種別"
+    t.string   "name",             limit: 20,               null: false, comment: "薬剤名称"
+    t.integer  "display_order",               default: 0,   null: false, comment: "表示順"
+    t.integer  "chemical_type_id",                          null: false, comment: "薬剤種別"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.string   "unit",             limit: 2,  default: "袋", null: false, comment: "単位"
   end
 
   add_index "chemicals", ["deleted_at"], name: "index_chemicals_on_deleted_at", using: :btree

@@ -11,6 +11,10 @@
   <div class="field">
    <span class="check_group"><%= f.check_box :this_term_flag, {}, true, false %><%= f.label :this_term_flag %></span>
   </div>
+  <div class="field">
+    <%= f.label :unit %><br />
+    <%= f.text_field :unit, {:maxlength => 2, :size => 4, required: true} %>
+  </div>
   <br />
   <div class="actions">
     <%= f.submit '登録' %>
