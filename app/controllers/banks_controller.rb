@@ -44,13 +44,14 @@ class BanksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bank
-      @bank = Bank.find_by(code: params[:code])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def bank_params
-      params.require(:bank).permit(:code, :name, :phonetic)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_bank
+    @bank = Bank.find_by(code: params[:code])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def bank_params
+    params.require(:bank).permit(:code, :name, :phonetic)
+  end
 end

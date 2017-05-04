@@ -15,7 +15,7 @@ class ChemicalTypesController < ApplicationController
 
   def create
     @chemical_type = ChemicalType.new(chemical_type_params)
-    
+
     if @chemical_type.save
       update_work_kinds
       redirect_to chemical_types_path
@@ -37,12 +37,13 @@ class ChemicalTypesController < ApplicationController
     @chemical_type.destroy
     redirect_to chemical_types_path
   end
-  
+
   private
+
   def set_chemical_type
     @chemical_type = ChemicalType.includes(:work_kinds).find(params[:id])
   end
-  
+
   def set_work_kinds
     @work_kinds = WorkKind.all.order(:display_order)
   end
@@ -50,7 +51,7 @@ class ChemicalTypesController < ApplicationController
   def chemical_type_params
     return params.require(:chemical_type).permit(:name, :display_order)
   end
-  
+
   def update_work_kinds
     @chemical_type.work_kinds = params[:work_kinds] ? WorkKind.find(params[:work_kinds]) : []
   end

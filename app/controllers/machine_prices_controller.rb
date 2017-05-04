@@ -1,7 +1,7 @@
 class MachinePricesController < ApplicationController
   before_action :set_machine_price, only: [:index, :edit, :update, :destroy]
   before_action :set_adjusts, only: [:new, :create, :edit, :update]
-  
+
   def index
     @machine_prices = MachinePriceHeader.histories(@machine_price)
   end
@@ -23,11 +23,11 @@ class MachinePricesController < ApplicationController
       @machine_price = MachinePriceHeader.new(machine_type_id: params[:machine_type_id], machine_id: 0, validated_at: Date.today)
     end
   end
-  
+
   def create
     @machine_price = MachinePriceHeader.new(machine_price_header_params)
     @machine_price.details_form = params[:details_form]
-    
+
     if @machine_price.save
       if @machine_price.machine?
         redirect_to show_machine_machine_price_headers_path(machine_id: @machine_price.machine_id)
@@ -38,10 +38,10 @@ class MachinePricesController < ApplicationController
       render action: :new
     end
   end
-  
+
   def edit
   end
-  
+
   def update
     @machine_price.details_form = params[:details_form]
     if @machine_price.update(machine_price_header_params)
@@ -68,10 +68,11 @@ class MachinePricesController < ApplicationController
   end
 
   private
+
   def set_machine_price
     @machine_price = MachinePriceHeader.find(params[:id])
   end
-  
+
   def set_adjusts
     @adjusts = Adjust.all
   end
