@@ -35,6 +35,10 @@ class WorkDecorator < Draper::Decorator
     start_at + '～' + end_at
   end
 
+  def work_type_name
+    return model.work_type.genre_name + "(#{model.work_type.name})"
+  end
+
   def start_at
     model.start_at.strftime("%H:%M")
   end

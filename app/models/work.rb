@@ -46,6 +46,11 @@ class Work < ApplicationRecord
   scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, id: :DESC)}
 
+  scope :by_chemical, -> (term) {
+      where("id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.work_id").uniq)
+     .order("worked_at, id")
+  }
+
   def set_term
     self.term = Organization.term
   end

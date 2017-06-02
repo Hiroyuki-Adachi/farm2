@@ -34,8 +34,9 @@ class WorkTypesController < ApplicationController
     @work_type.destroy
     redirect_to work_types_path
   end
-  
+
   private
+
   def set_work_type
     @work_type = WorkType.find(params[:id])
   end
@@ -43,7 +44,7 @@ class WorkTypesController < ApplicationController
   def set_category
     @categories = WorkType.categories
   end
-  
+
   def work_type_params
     return params.require(:work_type).permit(:name, :display_order, :genre)
   end

@@ -1,0 +1,2 @@
+module WorkChemicalsHelper
+end

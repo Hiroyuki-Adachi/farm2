@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :banks, {param: :code, except: [:show]} do
     resources :branches, {param: :code, controller: "banks/branches", except: [:show]}
   end
-  
+
   resources :machine_types, except: [:show]
   resources :chemical_types, except: [:show]
   resources :work_kinds, except: [:show]
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       get :edit_term
     end
   end
-  
+
   resources :machine_price_headers, {controller: :machine_prices, path: "machine_prices", except: [:show]} do
     collection do
       get :show_machine
@@ -47,6 +47,7 @@ Rails.application.routes.draw do
 
   resources :work_results, only: [:index]
   resources :machine_results, only: [:index]
+  resources :work_chemicals, only: [:index]
 
   root controller: :menu, action: :index
 end
