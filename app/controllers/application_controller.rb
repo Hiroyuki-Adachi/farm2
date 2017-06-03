@@ -5,19 +5,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_term
 
-  def clear_caches(term)
-    Rails.cache.delete(sum_hours_key(term))
-    Rails.cache.delete(count_workers_key(term))
-  end
-
-  def sum_hours_key(term)
-    "sum_hours#{term}"
-  end
-
-  def count_workers_key(term)
-    "count_workers#{term}"
-  end
-
   private
 
   def set_term

@@ -16,13 +16,13 @@ class WorkKind < ApplicationRecord
   acts_as_paranoid
 
   after_save :save_price
-  
+
   has_many :machine_kinds
   has_many :machine_types,-> {order("machine_types.display_order")}, through: :machine_kinds 
 
   has_many :chemical_kinds
   has_many :chemical_types, -> {order("chemical_types.display_order")}, through: :chemical_kinds
-  
+
   has_many :work_kind_types
   has_many :work_types, through: :work_kind_types
   has_many :work_kind_prices
@@ -31,11 +31,15 @@ class WorkKind < ApplicationRecord
   validates :price, presence: true
   validates :display_order, presence: true
 
-  validates :price, numericality: true, if: Proc.new{|x| x.price.present?}
-  validates :display_order, numericality: {only_integer: true}, if: Proc.new{|x| x.display_order.present?}
+  validates :price, numericality: true, if: proc { |x| x.price.present? }
+  validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present? }
 
-  scope :usual, -> {where(other_flag: false).order(:display_order)}
-  scope :by_type, -> (work_type){joins(:work_kind_types).where("work_kind_types.work_type_id = ?", work_type.genre_id).order("work_kinds.other_flag, work_kinds.display_order, work_kinds.id")}
+  scope :usual, -> { where(other_flag: false).order(:display_order) }
+  scope :by_type, -> (work_type) { 
+     joins(:work_kind_types)
+    .where("work_kind_types.work_type_id = ?", 
+     work_type.genre_id).order("work_kinds.other_flag, work_kinds.display_order, work_kinds.id")
+  }
 
   def price
     term_price(Organization.term)
@@ -46,14 +50,14 @@ class WorkKind < ApplicationRecord
   end
 
   def term_price(term)
-    cache_key = get_cache_key(term)
+    cache_key = price_cache_key(term)
     price_value = 0
     if Rails.cache.exist?(cache_key)
       price_value = Rails.cache.read(cache_key)
     else
       work_kind_price = WorkKindPrice.by_term(self, term).first
       price_value = work_kind_price ? work_kind_price.price : 0
-      Rails.cache.write(cache_key, price_value)
+      Rails.cache.write(cache_key, price_value, expires_in: 1.hour)
     end
     return price_value
   end
@@ -68,10 +72,10 @@ class WorkKind < ApplicationRecord
     else
       WorkKindPrice.create(work_kind_id: id, term: term, price: @p_price)
     end
-    Rails.cache.write(get_cache_key(term), @p_price, expires_in: 1.hour)
+    Rails.cache.write(price_cache_key(term), @p_price, expires_in: 1.hour)
   end
 
-  def get_cache_key(term)
+  def price_cache_key(term)
     "work_kind_price_#{id}_#{term}"
   end
 end

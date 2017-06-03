@@ -14,7 +14,7 @@ class WorkDecorator < Draper::Decorator
         worked_month = DateTime.parse(w.worked_month.to_s)
         months << [worked_month.strftime("%Y年%m月"), worked_month.strftime("%Y-%m-01")]
       }
-      Rails.cache.write(cache_key, months)
+      Rails.cache.write(cache_key, months, expires_in: 1.hour)
     end
     return months
   end

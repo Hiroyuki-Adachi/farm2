@@ -4,9 +4,9 @@ class WorkChemicalsController < ApplicationController
     @chemicals = Chemical.by_work(@term)
     @work_chemicals = {}
     @total_chemicals = {}
-    WorkChemical.by_work(@term).each do |work_chemical|
-      @work_chemicals["#{work_chemical.work_id},#{work_chemical.chemical_id}"] = work_chemical.quantity
-      @total_chemicals[work_chemical.chemical_id] = @total_chemicals[work_chemical.chemical_id].to_i + work_chemical.quantity
+    WorkChemical.by_work(@term).each do |wc|
+      @work_chemicals["#{wc.work_id},#{wc.chemical_id}"] = wc.quantity
+      @total_chemicals[wc.chemical_id] = @total_chemicals[wc.chemical_id].to_i + wc.quantity
     end
   end
 end

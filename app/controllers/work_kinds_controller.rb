@@ -36,26 +36,26 @@ class WorkKindsController < ApplicationController
     @work_kind.destroy
     redirect_to work_kinds_path
   end
-  
+
   private
+
   def set_work_kind
     @work_kind = WorkKind.find(params[:id])
   end
-  
+
   def work_kind_params
     return params.require(:work_kind).permit(:name, :display_order, :price, :land_flag)
   end
-  
+
   def set_others
     @work_types = WorkType.categories
     @machine_types = MachineType.order(:display_order, :id)
     @chemical_types = ChemicalType.order(:display_order, :id)
   end
-  
+
   def update_others
     @work_kind.work_types = params[:work_types] ? WorkType.find(params[:work_types]) : []
     @work_kind.machine_types = params[:machine_types] ? MachineType.find(params[:machine_types]) : []
     @work_kind.chemical_types = params[:chemical_types] ? ChemicalType.find(params[:chemical_types]) : []
   end
-  
 end

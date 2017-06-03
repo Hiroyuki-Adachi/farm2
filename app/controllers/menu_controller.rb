@@ -11,7 +11,7 @@ class MenuController < ApplicationController
     @terms = []
     term = Work.minimum(:term)
     term = Time.now.year unless term
-    while term <= Time.now.year do
+    while term <= Time.now.year
       @terms << [term, term]
       term += 1
     end
@@ -35,8 +35,8 @@ class MenuController < ApplicationController
       @organization = Organization.first
       @organization.update(term: @term)
       session[:organization] = @organization.attributes
-      Rails.cache.write(get_cache_key, @system.attributes)
-      clear_caches(@term)
+      Rails.cache.clear
+      Rails.cache.write(term_cache_key, @system.attributes, expires_in: 1.hour)
       redirect_to(root_path, :notice => '設定を変更しました。')
     elsif system_params[:term]
       render :action => :edit_term
@@ -48,12 +48,12 @@ class MenuController < ApplicationController
   private
 
   def set_system
-    cache_key = get_cache_key
+    cache_key = term_cache_key
     if Rails.cache.exist?(cache_key)
       @system = System.new(Rails.cache.read(cache_key))
     else
       @system = System.find_by(term: @term)
-      Rails.cache.write(cache_key, @system.attributes)
+      Rails.cache.write(cache_key, @system.attributes, expires_in: 1.hour)
     end
   end
 
@@ -61,7 +61,7 @@ class MenuController < ApplicationController
     params.require(:system).permit(:term, :target_from, :target_to)
   end
 
-  def get_cache_key
+  def term_cache_key
     "system#{@term}"
   end
 end

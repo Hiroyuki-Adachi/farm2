@@ -45,10 +45,11 @@ class WorkersController < ApplicationController
   end
 
   private
+
   def set_worker
     @worker = Worker.find(params[:id])
   end
-  
+
   def set_homes
     @homes = Home.usual
   end

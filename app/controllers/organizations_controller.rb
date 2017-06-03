@@ -14,10 +14,11 @@ class OrganizationsController < ApplicationController
   end
 
   private
+
   def set_organization
     @organization = Organization.first.decorate
   end
-  
+
   def organization_params
     return params.require(:organization).permit(:name, :workers_count, :lands_count, :machines_count, :chemicals_count, :daily_worker)
   end

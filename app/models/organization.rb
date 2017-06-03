@@ -21,7 +21,7 @@
 #
 
 class Organization < ApplicationRecord
-  enum daily_worker: {no_print: 0, print_home: 1, print_section: 2}
+  enum daily_worker: { no_print: 0, print_home: 1, print_section: 2 }
 
   after_save :save_term
 
@@ -32,7 +32,7 @@ class Organization < ApplicationRecord
   validates :chemicals_count, presence: true
   validates :daily_worker, presence: true
 
-  validates :name, length: {maximum: 20}, :if =>  Proc.new{|x| x.name.present?}
+  validates :name, length: { maximum: 20 }, :if => proc { |x| x.name.present? }
 
   def self.term
     Rails.cache.fetch(:organization_term, expires_in: 1.hour) do

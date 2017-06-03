@@ -10,6 +10,7 @@ ja:
       work_type: "作業種別"  #g
       work_kind: "作業種類"  #g
       worker: "作業者"  #g
+      work_chemical: "薬剤使用量"
       machine: "機械"
       machine_type: "機械種別"
       machine_result: "機械利用結果"
@@ -161,6 +162,12 @@ ja:
         name: 名称
         display_order: 表示順
         work_flag: "作業"
+
+      work_chemical:
+        worked_at: "作業日"  #g
+        work_type_name: "作業種別"  #g
+        work_name: "作業内容"  #g
+        quantity: "使用量"
 
   status:
     organization:

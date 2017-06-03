@@ -9,7 +9,7 @@
   <li><%= link_to '集計対象期間変更', edit_menu_path(@system) %></li>
   <li><%= link_to '世帯別日当一覧', work_results_path %>(<%= link_to 'CSV出力', work_results_path(format: :csv) %>)</li>
   <li><%= link_to '世帯別機械利用料', machine_results_path %>(<%= link_to 'CSV出力', machine_results_path(format: :csv) %>)</li>
-  <li><%= link_to '作業別薬剤使用料一覧', work_chemicals_path %></li>
+  <li><%= link_to '作業別薬剤使用量一覧', work_chemicals_path %>(<%= link_to 'CSV出力', work_chemicals_path(format: :csv) %>)</li>
 </ul>
 <h2 class="hide_menu">統計処理</h2>
 <ul>
