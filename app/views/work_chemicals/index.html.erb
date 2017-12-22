@@ -4,6 +4,13 @@
 <% even = false %>
 <% chemical_type_id = 0 %>
 <table class="list">
+<colgroup span="3" />
+<% even = false %>
+<% @chemicals.each do |chemical| %>
+  <% even = !even if chemical.chemical_type_id != chemical_type_id %>
+  <% chemical_type_id = chemical.chemical_type_id %>
+  <colgroup class="<%= even ? 'even_color' : 'odd_color' %>" /> 
+<% end %>
   <thead>
     <tr>
     <th rowspan="3">作業日</th>
@@ -30,11 +37,8 @@
       <td><%= work.worked_at %></td>
       <td><%= work.work_type_name %></td>
       <td style="word-break:break-all;white-space:nowrap;" title="<%= work.name %>"><div style="overflow:hidden;width:100px;"><%= work.name %></div></td>
-      <% even = false %>
       <% @chemicals.each do |chemical| %>
-        <% even = !even if chemical.chemical_type_id != chemical_type_id %>
-        <% chemical_type_id = chemical.chemical_type_id %>
-        <td class="numeric <%= even ? 'even_color' : 'odd_color' %>"><%= @work_chemicals["#{work.id},#{chemical.id}"] %></td>
+        <td class="numeric"><%= @work_chemicals["#{work.id},#{chemical.id}"] %></td>
       <% end %>
     </tr>
     <% end %>
@@ -44,9 +48,7 @@
       <th colspan="3">合計</th>
       <% even = false %>
       <% @chemicals.each do |chemical| %>
-        <% even = !even if chemical.chemical_type_id != chemical_type_id %>
-        <% chemical_type_id = chemical.chemical_type_id %>
-        <td class="numeric <%= even ? 'even_color' : 'odd_color' %>"><%= @total_chemicals[chemical.id] %></td>
+        <td class="numeric"><%= @total_chemicals[chemical.id] %></td>
       <% end %>
     </tr>
   </tbody>
