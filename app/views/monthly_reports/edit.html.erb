@@ -1,0 +1,151 @@
+<script type="text/javascript">
+$(function() {
+    set_disabled();
+    calc_total_hours();
+});
+
+function $$(id) {
+    return document.getElementById(id);
+}
+
+function set_disabled() {
+    for(var d = 0; d < 31; d++) {
+        var cb = $$("data_" + d + "_check");
+        if(cb != null) {
+            if(cb.checked) {
+                $$("row_" + d).style.backgroundColor = "palegreen";
+                $$("data_" + d + "_weather").disabled        = false;
+                $$("data_" + d + "_start_at_hour").disabled  = false;
+                $$("data_" + d + "_start_at_minute").disabled  = false;
+                $$("data_" + d + "_end_at_hour").disabled    = false;
+                $$("data_" + d + "_end_at_minute").disabled  = false;
+                $$("data_" + d + "_hours").disabled          = false;
+                $$("data_" + d + "_work_type_id").disabled   = false;
+                $$("data_" + d + "_name").disabled           = false;
+            } else {
+                $$("row_" + d).style.backgroundColor = "white";
+                $$("data_" + d + "_weather").disabled          = true;
+                $$("data_" + d + "_start_at_hour").disabled    = true;
+                $$("data_" + d + "_start_at_minute").disabled  = true;
+                $$("data_" + d + "_end_at_hour").disabled      = true;
+                $$("data_" + d + "_end_at_minute").disabled    = true;
+                $$("data_" + d + "_hours").disabled            = true;
+                $$("data_" + d + "_work_type_id").disabled     = true;
+                $$("data_" + d + "_name").disabled             = true;
+
+                $$("data_" + d + "_start_at_hour").options[8].selected = true;
+                $$("data_" + d + "_start_at_minute").options[0].selected = true;
+                $$("data_" + d + "_end_at_hour").options[8].selected  = true;
+                $$("data_" + d + "_end_at_minute").options[0].selected   = true;
+                $$("data_" + d + "_hours").value = "0.0";
+                var o = $$("data_" + d + "_work_type_id").options;
+                o[o.length - 1].selected = true;
+                $$("data_" + d + "_name").value = "";
+            }
+        }
+    }
+}
+
+function calc_hours(d)
+{
+    var select_element;
+    select_element = $$("data_" + d + "_start_at_hour");
+    var start_hour = parseFloat(select_element.options[select_element.selectedIndex].value);
+    select_element = $$("data_" + d + "_start_at_minute");
+    start_hour += parseFloat(select_element.options[select_element.selectedIndex].value) / 60.0;
+
+    select_element = $$("data_" + d + "_end_at_hour");
+    var end_hour = parseFloat(select_element.options[select_element.selectedIndex].value);
+    select_element = $$("data_" + d + "_end_at_minute");
+    end_hour += parseFloat(select_element.options[select_element.selectedIndex].value) / 60.0;
+
+    if((start_hour < 12) && (end_hour > 13)) end_hour-= 1.0;
+
+    $$("data_" + d + "_hours").value = (end_hour - start_hour).toFixed(1);
+
+    calc_total_hours();
+}
+
+function calc_total_hours()
+{
+    var total_hours = 0.0;
+    for(var d = 0; d < 31; d++) {
+        var hour_text = $$("data_" + d + "_hours");
+        if(hour_text != null) {
+            if(!isNaN(hour_text.value)) total_hours += parseFloat(hour_text.value);
+        }
+    }
+    $$("total_hours").innerHTML = total_hours.toFixed(1);
+}
+</script>
+
+<h1>作業月報修正</h1>
+<h2><%= @target_from.strftime('%Y年%m月') %>：<%= @worker.name + "(#{@worker.home.name})" %></h2>
+<%= form_tag({:action => :update, :id => @worker}, {:method => :put}) do %>
+<table>
+  <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th>日付</th>
+      <th>曜日</th>
+      <th>天候</th>
+      <th colspan="3">時刻</th>
+      <th>時間</th>
+      <th colspan="2">作業内容</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% 31.times do |d| %>
+      <% target_at = @target_from + d if (@target_from + d).month == @target_from.month%>
+    <tr id="row_<%= d %>">
+      <% if target_at %>
+        <% work = Work.array_by_worked_at(@works, target_at)  %>
+        <% result = WorkResult.by_worker_and_work(@worker, work)[0] %>
+        <td style="text-align: center;">
+          <%= check_box_tag "data[#{d}][check]", d, work.present?, {onchange: "set_disabled()"}  %>
+          <%= hidden_field_tag "data[#{d}][id]", work ? work.id : 0 %>
+          <%= hidden_field_tag "data[#{d}][worked_at]", Date::new(@target_from.year, @target_from.month, d + 1) %>
+        </td>
+        <td style="text-align: right;"><%=h d + 1 %></td>
+        <td style="text-align: center;"><%=h WorkDecorator::WDAY[target_at.wday] %></td>
+        <td><%= select_tag("data[#{d}][weather]", 
+            options_for_select(Weather.all.map {|weather| [weather.name, weather.id]}, work ? work.weather : Weather.first)) %></td>
+        <td><%= select_time(work ? work.start_at : Time.parse("8:00") , {:minute_step => 30, :prefix => "data[#{d}][start_at]"}, {:onchange => "calc_hours(" + d.to_s + ")"}) %></td>
+        <td style="text-align: center;">～</td>
+        <td><%= select_time(work ? work.end_at : Time.parse("8:00"), {:minute_step => 30, :prefix => "data[#{d}][end_at]"}, {:onchange => "calc_hours(" + d.to_s + ")"}) %></td>
+        <td><%= number_field_tag "data[#{d}][hours]", result ? sprintf("%.1f", result.hours) : "0.0", 
+          {max: 24, min: 0, step: 0.5, onchange: "calc_total_hours()"} %></td>
+        <td><%= select_tag("data[#{d}][work_type_id]",
+            options_from_collection_for_select(WorkType.index, :id, :name, work ? work.work_type_id : 1)) %></td>
+        <td><%= text_field_tag "data[#{d}][name]", work ? work.name : "", {:maxlength => 40, :size => 30} %></td>
+      <% else %>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>～</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      <% end %>
+    </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td colspan="3" style="text-align:right;">合 計</td>
+      <td id="total_hours" style="text-align: right;">0.0</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  </tfoot>
+</table>
+<%= submit_tag "登録"  %>
+<% end %>
+<%= link_to '戻る', monthly_report_path(target_from: @target_from, worker_id: @worker.id), {class: :button} %>
