@@ -195,4 +195,15 @@ class Work < ApplicationRecord
 
     return results
   end
+
+  def self.monthly(term, worked_from, worked_to, worker_id)
+    results = Work.where(worked_at: worked_from..worked_to).where(term: term)
+    results = results.where(id: WorkResult.select(:work_id).group(:work_id).having("count(*) = 1"))
+    results = results.where(id: WorkResult.select(:work_id).where(worker_id: worker_id))
+    results.order(:worked_at, id: :desc)
+  end
+
+  def self.array_by_worked_at(works, worked_at)
+    works.find { |work| work.worked_at == worked_at }
+  end
 end

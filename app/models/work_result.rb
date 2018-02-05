@@ -27,6 +27,8 @@ class WorkResult < ApplicationRecord
   validates :hours, presence: true
   validates :hours, numericality: true, :if => Proc.new{|x| x.hours.present?}
 
+  scope :by_worker_and_work, ->(worker, work) { where(worker_id: worker, work_id: work) }
+
   scope :by_home, ->(term){
       joins(:work).eager_load(:work)
      .joins(:worker).eager_load(:worker)

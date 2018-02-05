@@ -1,0 +1,69 @@
+<%= stylesheet_link_tag 'work-lists', :media => 'all' %>
+<div style="float:left;">
+<%= link_to '前月', monthly_report_path(:worker_id => @worker.id, :target_from => @target_from.last_month), class: :button %>
+</div>
+<div style="float:right;">
+<%= link_to '翌月', monthly_report_path(:worker_id => @worker.id, :target_from => @target_from.next_month), class: :button %>
+</div>
+<div style="clear:both;" />
+<div id="show">
+  <div class="title">作 業 月 報</div>
+  <div style="float:left;"><%= @target_from.strftime('%Y年%m月') %></div>
+  <div style="float:right;"><%= @worker.name + "(#{@worker.home.name})" %></div>
+  <div style="clear:left;"></div>
+
+  <table class="list">
+    <thead>
+      <tr>
+        <th>日付</th>
+        <th>曜日</th>
+        <th>天候</th>
+        <th colspan="3">時刻</th>
+        <th>時間</th>
+        <th colspan="2">作業内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% hours = 0.0 %>
+      <% 31.times do |d| %>
+        <% target_at = @target_from + d if (@target_from + d).month == @target_from.month%>
+      <tr>
+        <td style="width:40px; text-align: right;"><%=h target_at ? d + 1 : " " %></td>
+        <td style="width:40px; text-align: center;"><%=h target_at ? WorkDecorator::WDAY[target_at.wday] : " " %></td>
+        <% work = WorkDecorator.decorate(Work.array_by_worked_at(@works, target_at))  %>
+        <% result = WorkResult.by_worker_and_work(@worker, work.model)[0] %>
+        <% if work.model  %>
+          <% hours += result.hours if result %>
+          <td style="width:40px; text-align: center;"><%=h work.weather_name %></td>
+          <td style="width:45px; text-align: right;"><%=h work.start_at %></td>
+          <td style="width:25px; text-align: center;">～</td>
+          <td style="width:45px; text-align: right;"><%=h work.end_at %></td>
+          <td style="width:45px; text-align: right;"><%=h result.hours %></td>
+          <td style="width:80px;"><%=h work.work_type.genre_name %></td>
+          <td style="width:350px;"><%=h work.name %></td>
+        <% else %>
+          <td style="width:40px; text-align: center;">&nbsp;</td>
+          <td style="width:45px; text-align: right;">&nbsp;</td>
+          <td style="width:25px; text-align: center;">～</td>
+          <td style="width:45px; text-align: right;">&nbsp;</td>
+          <td style="width:45px; text-align: right;">&nbsp;</td>
+          <td style="width:80px;">&nbsp;</td>
+          <td style="width:350px;">&nbsp;</td>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th colspan="3" style="text-align:right;">計</th>
+        <td style="text-align: right;"><%= sprintf("%.1f", hours) %></td>
+        <th colspan="2">&nbsp;</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<%= link_to '変更', edit_monthly_report_path(@worker, :target_from => @target_from), {class: :button} %>
+<%= button_to '戻る', monthly_reports_path, {:method => :get} %>

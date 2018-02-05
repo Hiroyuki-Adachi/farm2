@@ -64,7 +64,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def weather_name
-    model.weather.name
+    model.weather ? model.weather.name : ""
   end
 
   def self.get_terms(term)
