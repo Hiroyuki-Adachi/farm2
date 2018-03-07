@@ -4,7 +4,7 @@ source 'http://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 4.2.7'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 0.15'
+gem 'pg', '0.19'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -55,7 +55,7 @@ group :development, :test do
   # debase is a fast implementation of the standard Ruby debugger debug.rb for Ruby 2.0
   gem 'debase'
   # An interface which glues ruby-debug to IDEs
-  gem 'ruby-debug-ide'
+  gem 'ruby-debug-ide', '0.6.0'
 
   gem 'pry-rails'
   gem 'pry-doc'

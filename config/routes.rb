@@ -17,8 +17,8 @@ Rails.application.routes.draw do
   resources :sections, except: [:show]
   resources :statistics, only: [:index]
   resources :monthly_reports, only: [:index, :show, :edit, :update]
-
   resources :fixes, {param: "fixed_at", except: [:edit, :update]}
+  resources :personal_informations, {param: "token", only: [:show]}
 
   resources :menu, only: [:index, :edit, :update] do
     member do
