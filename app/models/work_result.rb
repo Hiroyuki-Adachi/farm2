@@ -1,3 +1,4 @@
+require 'date'
 # == Schema Information
 #
 # Table name: work_results # 作業結果データ
@@ -52,11 +53,30 @@ class WorkResult < ApplicationRecord
      .order("sections.display_order, homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }
 
+  scope :for_personal, ->(worker, worked_at) {
+     joins(:work).eager_load(:work)
+    .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+    .where("works.worked_at >= ?", worked_at)
+    .where(worker_id: worker)
+    .order("works.worked_at, work_results.id")
+  }
+
   def price
     (self.work.fixed_at ? self.fixed_price : self.work.work_kind.term_price(self.work.term)) || 0
   end
 
   def amount
     (self.work.fixed_at ? self.fixed_amount : self.hours * price) || 0
+  end
+
+  def self.worked_from
+    case Date.today.month
+    when 1..3
+      Date.new(Date.today.year - 1, 12, 1)
+    when 4..7
+      Date.new(Date.today.year, 1, 1)
+    else
+      Date.new(Date.today.year, 7, 1)
+    end
   end
 end

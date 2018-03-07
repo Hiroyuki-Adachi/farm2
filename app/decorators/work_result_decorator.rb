@@ -29,6 +29,10 @@ class WorkResultDecorator < Draper::Decorator
     return model.work.worked_at.strftime('%Y-%m-%d') + "(#{WDAY[model.work.worked_at.wday]})"
   end
 
+  def worked_at_short
+    model.work.worked_at.strftime('%m/%d')
+  end
+
   def work_type_name
     return model.work.work_type.genre_name + "(#{model.work.work_type.name})"
   end
