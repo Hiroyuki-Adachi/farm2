@@ -3,7 +3,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  PERMIT_ADDRESSES = ['127.0.0.1', '192.168.', '10.8.0.'].freeze
+
   before_action :set_term
+  before_action :restrict_remote_ip
 
   private
 
@@ -15,5 +18,11 @@ class ApplicationController < ActionController::Base
       session[:organization] = @organization.attributes
     end
     @term = @organization.term
+  end
+
+  def restrict_remote_ip
+    unless PERMIT_ADDRESSES.any? { |pa| request.remote_ip.start_with?(pa)}
+      render text: 'Service Unavailable', status: 503
+    end
   end
 end

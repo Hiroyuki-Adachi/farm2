@@ -68,15 +68,4 @@ class WorkResult < ApplicationRecord
   def amount
     (self.work.fixed_at ? self.fixed_amount : self.hours * price) || 0
   end
-
-  def self.worked_from
-    case Date.today.month
-    when 1..3
-      Date.new(Date.today.year - 1, 12, 1)
-    when 4..7
-      Date.new(Date.today.year, 1, 1)
-    else
-      Date.new(Date.today.year, 7, 1)
-    end
-  end
 end
