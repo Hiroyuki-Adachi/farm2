@@ -37,7 +37,7 @@ table.type06 td {
 <% @results.each do |result| %>
 <tr>
   <td><%= result.worked_at_short %></td>
-  <td><%= result.work.work_kind.name %></td>
+  <td><%= result.work_name_short %></td>
   <td style="text-align:right;"><%= result.hours %></td>
   <% total_hours += result.model.hours %>
 </tr>
