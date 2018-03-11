@@ -41,6 +41,10 @@ class WorkResultDecorator < Draper::Decorator
     return model.work.name.present? ? (model.work.work_kind.other_flag ? model.work.name : model.work.work_kind.name + "(#{model.work.name})") : model.work.work_kind.name
   end
 
+  def work_name_short
+    model.work.work_type.name + "(" + model.work.work_kind.name + ")"
+  end
+
   def hours
     return "%.1f"%model.hours
   end
