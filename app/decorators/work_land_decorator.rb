@@ -11,14 +11,22 @@ class WorkLandDecorator < Draper::Decorator
   #   end
 
   def area
-    return sprintf("%.2f", model.land.area)
+    return format("%.2f", model.land.area)
   end
-  
+
   def place
     return model.land.place
   end
-  
+
   def place_name
     return model.land.place + "(#{model.land.owner.name})"
+  end
+
+  def worked_at_short
+    model.work.worked_at.strftime('%m/%d')
+  end
+
+  def work_kind_name
+    model.work.work_kind.name
   end
 end

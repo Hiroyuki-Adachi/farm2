@@ -2,16 +2,38 @@
 <html>
 <head>
 <title>作業一覧</title>
+<style type="text/css">
+table, th, td {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  line-height: 1.5;
+}
+
+table.type06 th {
+  padding: 5px;
+  font-weight: bold;
+  vertical-align: top;
+  background: #3f3f3f;
+  color: #ffffff;
+}
+table.type06 td {
+  padding: 5px;
+  vertical-align: top;
+}
+</style>
 </head>
 <body>
-<h1><%= @worker.name %>さんの作業</h1>
+<h1>作業</h1>
 <% total_hours = 0 %>
-<table>
+<table class="type06">
+<thead>
 <tr>
   <th>日付</th>
   <th>内容</th>
   <th>時間</th>
 </tr>
+</thead>
+<tbody>
 <% @results.each do |result| %>
 <tr>
   <td><%= result.worked_at_short %></td>
@@ -20,9 +42,39 @@
   <% total_hours += result.model.hours %>
 </tr>
 <% end %>
+</tbody>
+<tfoot>
 <tr>
   <th colspan="2">合計</th>
   <td style="text-align:right;"><%= "%.1f"%total_hours %></td>
 </tr>
+</tfoot>
+</table>
+<% if @lands.count > 0 %>
+  <h1>管理</h1>
+  <table class="type06">
+  <thead>
+  <tr>
+    <th>地番</th>
+    <th>内容</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% land_id = 0 %>
+  <% @lands.each do |land, results| %>
+  <tr>
+    <td><%= land.place %></td>
+    <td><% results.each_with_index do |result, i| %>
+    <%= result.worked_at_short%>(<%= result.work_kind_name %>)
+      <% if i < results.size - 1 %>
+        →
+      <% end%>
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
+  </tbody>
+  </table>
+<% end %>
 </body>
 </html>

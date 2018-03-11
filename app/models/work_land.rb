@@ -13,4 +13,14 @@
 class WorkLand < ApplicationRecord
   belongs_to :work
   belongs_to :land, -> {with_deleted}
+  has_one    :work_kind, {through: :work}, -> {with_deleted}
+
+  scope :for_personal, ->(home, worked_at) {
+    joins(:work).eager_load(:work)
+   .joins(:land).eager_load(:land)
+   .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+   .where("works.worked_at >= ?", worked_at)
+   .where("lands.owner_id = ?", home.id)
+   .order("lands.display_order, lands.id, works.worked_at")
+ }
 end
