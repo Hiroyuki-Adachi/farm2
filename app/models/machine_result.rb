@@ -26,7 +26,8 @@ class MachineResult < ApplicationRecord
   has_one     :owner, {through: :machine}, -> {with_deleted}
   has_one     :work_type, {through: :work}, -> {with_deleted}
   has_one     :machine_type, {through: :machine}, -> {with_deleted}
-  
+  has_one     :work_kind, {through: :work}, -> {with_deleted}
+
   scope :by_home, ->(term) {
      joins(:machine).eager_load(:machine)
     .joins(:work_result).eager_load(:work_result)
@@ -49,6 +50,15 @@ class MachineResult < ApplicationRecord
     .where("homes.company_flag = FALSE AND works.term = ?", term)
     .where("works.fixed_at = ? AND machine_results.fixed_price IS NOT NULL", fixed_at)
     .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
+  }
+
+  scope :for_personal, -> (home, worked_at) {
+    joins(:work).eager_load(:work)
+   .joins(:machine).eager_load(:machine)
+   .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+   .where("works.worked_at >= ?", worked_at)
+   .where("machines.home_id = ?", home.id)
+   .order("works.worked_at, machines.display_order, machines.id")
   }
 
   def sum_hours

@@ -15,7 +15,7 @@ class MachinePriceHeader < ApplicationRecord
 
   belongs_to :machine
   belongs_to :machine_type
-  
+
   after_save :save_details
 
   has_many :details, {class_name: "MachinePriceDetail", dependent: :destroy}
@@ -23,15 +23,15 @@ class MachinePriceHeader < ApplicationRecord
   scope :show_type, -> (machine_type, base_date){where("machine_type_id = ? AND validated_at <= ?" , machine_type, base_date).order("validated_at DESC")}
   scope :show_machine, -> (machine, base_date){where("machine_id = ? AND validated_at <= ?" , machine, base_date).order("validated_at DESC")}
   scope :histories, -> (machine_price){where("(machine_id = ? AND machine_id <> 0) OR (machine_type_id = ? AND machine_type_id <> 0)", machine_price.machine_id, machine_price.machine_type_id).order("validated_at ASC")}
-  
+
   def machine?
     return machine_id != 0
   end
-  
+
   def machine_type?
     return machine_id == 0
   end
-  
+
   def work_kinds
     results = [OpenStruct.new(id: 0, name: "標準")]
     (machine? ? machine.machine_type.work_kinds : machine_type.work_kinds).each do |work_kind|
@@ -39,7 +39,7 @@ class MachinePriceHeader < ApplicationRecord
     end
     return results
   end
-  
+
   def details_form
     results = {}
     Lease.all.each do |lease|
@@ -56,16 +56,17 @@ class MachinePriceHeader < ApplicationRecord
     end
     return results
   end
-  
+
   def details_form=(val)
     @details_form = val
   end
-  
+
   def name
     return machine_id == 0 ? machine_type.name : machine.usual_name
   end
-  
+
   private
+
   def save_details
     @details_form.each do |lease_id, v1|
       v1.each do |work_kind_id, v2|
