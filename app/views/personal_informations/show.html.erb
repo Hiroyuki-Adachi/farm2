@@ -23,33 +23,56 @@ table.type06 td {
 </style>
 </head>
 <body>
-<h1>作業</h1>
-<% total_hours = 0 %>
-<table class="type06">
-<thead>
-<tr>
-  <th>日付</th>
-  <th>内容</th>
-  <th>時間</th>
-</tr>
-</thead>
-<tbody>
-<% @results.each do |result| %>
-<tr>
-  <td><%= result.worked_at_short %></td>
-  <td><%= result.work_name_short %></td>
-  <td style="text-align:right;"><%= result.hours %></td>
-  <% total_hours += result.model.hours %>
-</tr>
+<% if @results.count > 0 %>
+  <h1>作業</h1>
+  <% total_hours = 0 %>
+  <table class="type06">
+    <thead>
+      <tr>
+        <th>日付</th>
+        <th>内容</th>
+        <th>時間</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @results.each do |result| %>
+        <tr>
+          <td><%= result.worked_at_short %></td>
+          <td><%= result.work_name_short %></td>
+          <td style="text-align:right;"><%= result.hours %></td>
+          <% total_hours += result.model.hours %>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="2">合計</th>
+        <td style="text-align:right;"><%= "%.1f"%total_hours %></td>
+      </tr>
+    </tfoot>
+  </table>
 <% end %>
-</tbody>
-<tfoot>
-<tr>
-  <th colspan="2">合計</th>
-  <td style="text-align:right;"><%= "%.1f"%total_hours %></td>
-</tr>
-</tfoot>
-</table>
+<% if @machines.count > 0 %>
+  <h1>機械</h1>
+  <table class="type06">
+    <thead>
+      <tr>
+        <th>日付</th>
+        <th>機械</th>
+        <th>使用量</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @machines.each do |machine| %>
+        <tr>
+          <td><%= machine.worked_at_short %></td>
+          <td><%= machine.type_name %></td>
+          <td style="text-align:right;"><%= machine.quantity %>(<%= machine.unit %>)</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 <% if @lands.count > 0 %>
   <h1>管理</h1>
   <table class="type06">
@@ -62,16 +85,16 @@ table.type06 td {
   <tbody>
   <% land_id = 0 %>
   <% @lands.each do |land, results| %>
-  <tr>
-    <td><%= land.place %></td>
-    <td><% results.each_with_index do |result, i| %>
-    <%= result.worked_at_short%>(<%= result.work_kind_name %>)
-      <% if i < results.size - 1 %>
-        →
-      <% end%>
-    <% end %>
-    </td>
-  </tr>
+    <tr>
+      <td><%= land.place %></td>
+      <td><% results.each_with_index do |result, i| %>
+      <%= result.worked_at_short%>(<%= result.work_kind_name %>)
+        <% if i < results.size - 1 %>
+          →
+        <% end%>
+      <% end %>
+      </td>
+    </tr>
   <% end %>
   </tbody>
   </table>
