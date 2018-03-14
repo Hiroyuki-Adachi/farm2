@@ -99,5 +99,7 @@ table.type06 td {
   </tbody>
   </table>
 <% end %>
+<hr />
+<%= mail_to @company.pc_mail, @company.home.name + " " + @company.first_name %>
 </body>
 </html>

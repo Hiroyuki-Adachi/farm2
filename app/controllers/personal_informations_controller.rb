@@ -7,6 +7,7 @@ class PersonalInformationsController < ApplicationController
       @results = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
       @lands = WorkLandDecorator.decorate_collection(WorkLand.for_personal(@worker.home, worked_from)).group_by(&:land)
       @machines = MachineResultDecorator.decorate_collection(MachineResult.for_personal(@worker.home, worked_from))
+      @company = Worker.company.first
       render layout: false
     else
       render nothing: true
