@@ -29,7 +29,7 @@ class Home < ApplicationRecord
   has_many :workers,  ->{order(:display_order)}
   has_many :owned_lands,    ->{order(:place)}, {class_name: :Land, foreign_key: :owner_id}
   has_many :managed_lands,  ->{order(:place)}, {class_name: :Land, foreign_key: :manager_id}
-  
+
   belongs_to :holder,  -> {with_deleted}, {class_name: :Worker, foreign_key: :worker_id}
   belongs_to :section, -> {with_deleted}
 
