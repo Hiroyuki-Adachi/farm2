@@ -2,6 +2,12 @@ require 'test_helper'
 
 class MachinesControllerTest < ActionController::TestCase
   setup do
+    @request = ActionController::TestRequest.new
+    @request.instance_eval do
+      def remote_ip
+        "127.0.0.1"
+      end
+    end
     @machine = machines(:machines1)
     @update = { 
         name: "試験", display_order: 99, 

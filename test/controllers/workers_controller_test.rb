@@ -2,6 +2,12 @@ require 'test_helper'
 
 class WorkersControllerTest < ActionController::TestCase
   setup do
+    @request = ActionController::TestRequest.new
+    @request.instance_eval do
+      def remote_ip
+        "127.0.0.1"
+      end
+    end
     @worker = workers(:worker1)
     @update = { 
         family_name: "試験", first_name: "太郎", family_phonetic: "しけん", first_phonetic: "たろう",

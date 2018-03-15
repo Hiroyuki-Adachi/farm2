@@ -4,6 +4,12 @@ class ChemicalTypesControllerTest < ActionController::TestCase
   setup do
     @chemical_type = chemical_types(:chemical_types0)
     @update = { name: "試験", display_order: 99 }
+    @request = ActionController::TestRequest.new
+    @request.instance_eval do
+      def remote_ip
+        "127.0.0.1"
+      end
+    end
   end
 
   test "薬剤種別マスタ一覧" do
