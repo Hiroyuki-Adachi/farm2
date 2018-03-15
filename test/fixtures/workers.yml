@@ -22,6 +22,7 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  deleted_at      :datetime
+#  token           :string(36)       default(""), not null        # アクセストークン
 #
 
 worker1:
@@ -47,6 +48,7 @@ worker1:
   deleted_at: 
   birthday: '1980-01-01'
   gender_id: 1
+  token: 2e51d555-9cc2-4588-8326-a4dedddd5349
 
 worker2:
   id: 2
@@ -71,6 +73,7 @@ worker2:
   deleted_at: 
   birthday: '1960-01-01'
   gender_id: 1
+  token: e71d3ea1-05b0-4127-b701-631923f53a2f
 
 worker3:
   id: 3
@@ -95,6 +98,7 @@ worker3:
   deleted_at: 
   birthday: '1990-01-01'
   gender_id: 2
+  token: 749a06f5-30da-45b9-b3b1-90d5767ac72f
 
 worker4:
   id: 4
@@ -117,6 +121,7 @@ worker4:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 4baa7151-e9ab-45fa-9cbe-626df92c18ed
 
 worker5:
   id: 5
@@ -139,6 +144,7 @@ worker5:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 04daf6ea-ab96-4f15-9185-65dbd648c5a7
 
 worker6:
   id: 6
@@ -161,6 +167,7 @@ worker6:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 6d5067c3-a47b-4fa9-9ece-bcd881391c3e
 
 worker7:
   id: 7
@@ -183,6 +190,7 @@ worker7:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: f29a3fc4-1024-4a3f-bc3f-a0a4825256fc
 
 worker8:
   id: 8
@@ -205,6 +213,7 @@ worker8:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: e75f3b8f-0d34-4477-a095-85db23cc5ed9
 
 worker9:
   id: 9
@@ -227,6 +236,7 @@ worker9:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 97378139-c48e-44d8-977d-166ca15e35f3
 
 worker10:
   id: 10
@@ -249,6 +259,7 @@ worker10:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: b25b742c-fbd5-4cb2-b234-1c5ec2d6b0bc
 
 worker11:
   id: 11
@@ -271,6 +282,7 @@ worker11:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 95ef9961-1b70-45d0-8f50-18ffbf8df6d7
 
 worker12:
   id: 12
@@ -293,6 +305,7 @@ worker12:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 99411b8d-ba55-47cb-97a7-bff16327a516
 
 worker13:
   id: 13
@@ -315,6 +328,7 @@ worker13:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 64b2bb48-4ffd-4358-aaba-f0caa68bc956
 
 worker14:
   id: 14
@@ -337,6 +351,7 @@ worker14:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: e8099891-8f8d-4acc-b1b8-afd17fe21abf
 
 worker15:
   id: 15
@@ -359,6 +374,7 @@ worker15:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-07-16 09:01:38.623449
   deleted_at: 
+  token: 8d171996-8d90-4f0e-b8d6-194dad141ad8
 
 worker17:
   id: 17
@@ -381,6 +397,7 @@ worker17:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 0ed810f3-0027-45f9-9eca-f161504fff8e
 
 worker18:
   id: 18
@@ -403,6 +420,7 @@ worker18:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 518cd380-d0b3-4a20-8f61-86f9e3c45283
 
 worker19:
   id: 19
@@ -425,6 +443,7 @@ worker19:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-19 10:44:26.528643
   deleted_at: 
+  token: eb00367e-27de-469a-b32b-3b7ee59bd60e
 
 worker20:
   id: 20
@@ -447,6 +466,7 @@ worker20:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: e13daa50-24c0-4ef9-80b7-2c4e5b727725
 
 worker21:
   id: 21
@@ -469,6 +489,7 @@ worker21:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 446f9209-04ad-416a-aee1-1e9f683a8768
 
 worker22:
   id: 22
@@ -491,6 +512,7 @@ worker22:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 0a66cfd8-b4fb-4fe8-9b0c-c60e50d62af5
 
 worker23:
   id: 23
@@ -513,6 +535,7 @@ worker23:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 8ae888f8-c6da-4e42-92f7-1d4d9b7d037f
 
 worker24:
   id: 24
@@ -535,6 +558,7 @@ worker24:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: ab352c5d-eb17-4073-9056-95376d3b7427
 
 worker25:
   id: 25
@@ -557,6 +581,7 @@ worker25:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 21c9d82c-ff60-45d0-bd56-ac4263534d5c
 
 worker26:
   id: 26
@@ -579,6 +604,7 @@ worker26:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 29a41945-cf71-4c27-8900-28a205a51bb6
 
 worker27:
   id: 27
@@ -601,6 +627,7 @@ worker27:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 26b39c4f-b93c-4440-86d0-85351375113a
 
 worker28:
   id: 28
@@ -623,6 +650,7 @@ worker28:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 004c5632-f3d4-4b8d-9827-b244bfee95a0
 
 worker29:
   id: 29
@@ -645,6 +673,7 @@ worker29:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: a735b51b-5b8a-4fe2-afa9-83da369eb8bc
 
 worker30:
   id: 30
@@ -667,6 +696,7 @@ worker30:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: b9aa1ea0-7260-422f-bba6-095ba4e95847
 
 worker31:
   id: 31
@@ -689,6 +719,7 @@ worker31:
   created_at: 2010-07-11 12:42:48
   updated_at: 2015-12-17 08:50:10.460973
   deleted_at: 
+  token: d8d76740-4a70-4e98-ba9f-f49eb5739b1c
 
 worker32:
   id: 32
@@ -711,6 +742,7 @@ worker32:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 2d10d73d-7c1b-4205-8fe9-5b6348fcc5ae
 
 worker22:
   id: 22
@@ -733,6 +765,7 @@ worker22:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-19 10:44:03.814998
   deleted_at: 
+  token: f5479b4e-cfde-48b4-aeb9-9ccc025a5770
 
 worker34:
   id: 34
@@ -755,6 +788,7 @@ worker34:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: b218af8e-7dc9-429b-97c8-c9108b56e71a
 
 worker35:
   id: 35
@@ -777,6 +811,7 @@ worker35:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: a8ad0a57-80d4-4fd7-b672-76f0cbdc1f5d
 
 worker36:
   id: 36
@@ -799,6 +834,7 @@ worker36:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 4ab33eaf-d259-410e-a600-3be46126c9f1
 
 worker37:
   id: 37
@@ -821,6 +857,7 @@ worker37:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: dd3a4e81-4883-460e-b161-e04ad6329ed2
 
 worker38:
   id: 38
@@ -843,6 +880,7 @@ worker38:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 17ad38d8-f5ef-4fa6-bb0a-278914433b14
 
 worker39:
   id: 39
@@ -865,6 +903,7 @@ worker39:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: 2013970b-227d-4f45-8a51-1ff361242e22
 
 worker40:
   id: 40
@@ -887,6 +926,7 @@ worker40:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: d642832b-5f58-4c50-a975-a344653db793
 
 worker41:
   id: 41
@@ -909,6 +949,7 @@ worker41:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: e3ab1c51-9342-46bb-8d3a-86d9ce2869a0
 
 worker42:
   id: 42
@@ -931,6 +972,7 @@ worker42:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  token: e9715d1f-07e9-4745-a082-6804e904135d
 
 worker43:
   id: 43
@@ -953,6 +995,7 @@ worker43:
   created_at: 2010-07-19 11:38:12.229411
   updated_at: 2010-07-19 11:38:12.229411
   deleted_at: 
+  token: 73b2e2ef-ddec-4af4-ab1c-b5e1ca5c4eb6
 
 worker44:
   id: 44
@@ -975,6 +1018,7 @@ worker44:
   created_at: 2010-07-19 11:38:39.100383
   updated_at: 2010-07-19 11:38:39.100383
   deleted_at: 
+  token: 4fc58439-3d24-4087-b1a4-6c0dc0af7aca
 
 worker45:
   id: 45
@@ -997,6 +1041,7 @@ worker45:
   created_at: 2010-07-19 11:45:48.770313
   updated_at: 2010-07-19 11:45:48.770313
   deleted_at: 
+  token: 8c6a3023-e62f-4d7d-a851-648991c7c322
 
 worker46:
   id: 46
@@ -1019,6 +1064,7 @@ worker46:
   created_at: 2010-07-19 11:46:46.324567
   updated_at: 2010-07-19 11:46:46.324567
   deleted_at: 
+  token: f929100c-4993-478e-838e-3f9bb66f9597
 
 worker47:
   id: 47
@@ -1041,6 +1087,7 @@ worker47:
   created_at: 2010-07-19 12:16:06.937903
   updated_at: 2010-07-19 13:35:37.890246
   deleted_at: 
+  token: 590001cb-53f6-47c2-aee7-cd28f8899102
 
 worker48:
   id: 48
@@ -1063,6 +1110,7 @@ worker48:
   created_at: 2011-05-08 09:09:44.094912
   updated_at: 2011-05-08 09:09:44.094912
   deleted_at: 
+  token: 1c24d5f0-24d7-4f6e-b26e-4265e15c2928
 
 worker49:
   id: 49
@@ -1085,6 +1133,7 @@ worker49:
   created_at: 2011-05-09 23:35:00.892503
   updated_at: 2011-05-09 23:35:00.892503
   deleted_at: 
+  token: 07347295-8eda-44a2-aaaa-44dacb18ae2b
 
 worker50:
   id: 50
@@ -1107,6 +1156,7 @@ worker50:
   created_at: 2011-06-25 00:23:45.882427
   updated_at: 2011-06-25 00:23:45.882427
   deleted_at: 
+  token: 098ef005-5857-403a-a5c5-dec24a121550
 
 worker51:
   id: 51
@@ -1129,6 +1179,7 @@ worker51:
   created_at: 2011-12-04 07:20:52.590354
   updated_at: 2011-12-04 07:20:52.590354
   deleted_at: 
+  token: d8c212c7-e7d1-4d33-b319-1989e6122ee9
 
 worker52:
   id: 52
@@ -1151,6 +1202,7 @@ worker52:
   created_at: 2011-12-26 09:46:27.221566
   updated_at: 2013-07-16 09:02:07.485254
   deleted_at: 
+  token: 847e2997-6486-41c0-9e4b-4dc6a7fd706e
 
 worker54:
   id: 54
@@ -1173,6 +1225,7 @@ worker54:
   created_at: 2011-12-26 09:49:22.436485
   updated_at: 2011-12-26 09:49:22.436485
   deleted_at: 
+  token: d42fdd99-b24a-49e8-8302-cab3813f92e6
 
 worker44:
   id: 44
@@ -1195,6 +1248,7 @@ worker44:
   created_at: 2012-07-14 07:34:29.890144
   updated_at: 2012-07-14 07:34:29.890144
   deleted_at: 
+  token: 6556d139-8bd1-4656-82f2-95e84316c6bc
 
 worker56:
   id: 56
@@ -1217,12 +1271,13 @@ worker56:
   created_at: 2012-07-15 05:05:23.435815
   updated_at: 2012-07-15 05:05:23.435815
   deleted_at: 
+  token: 4ae84d95-7d34-4607-80e6-5e091901a17b
 
 worker57:
   id: 57
   family_phonetic: さとう
   family_name: 佐藤
-  first_phonetic: なおと
+  first_phonetic: なおひと
   first_name: 直人
   birthday: 
   home_id: 30
@@ -1239,12 +1294,13 @@ worker57:
   created_at: 2012-10-02 07:24:30.738494
   updated_at: 2012-10-02 07:24:30.738494
   deleted_at: 
+  token: b8efc118-c959-4c65-b843-e08f5abe6686
 
 worker58:
   id: 58
   family_phonetic: さとう
   family_name: 佐藤
-  first_phonetic: ひでと
+  first_phonetic: ひでひと
   first_name: 秀人
   birthday: 
   home_id: 30
@@ -1261,6 +1317,7 @@ worker58:
   created_at: 2012-10-02 07:26:54.472357
   updated_at: 2012-10-02 07:26:54.472357
   deleted_at: 
+  token: 55af8ae5-e8f1-4b15-b23d-bf412894ec07
 
 worker60:
   id: 60
@@ -1283,6 +1340,7 @@ worker60:
   created_at: 2013-07-09 01:05:02.902932
   updated_at: 2013-07-09 01:05:02.902932
   deleted_at: 
+  token: d2dbea16-6071-4dab-a2ad-2328da072f4f
 
 worker61:
   id: 61
@@ -1305,6 +1363,7 @@ worker61:
   created_at: 2013-07-16 09:00:48.638123
   updated_at: 2013-07-16 09:02:32.862635
   deleted_at: 
+  token: d6e8072a-8d28-4911-bc31-a42e240b9cf8
 
 worker62:
   id: 62
@@ -1327,6 +1386,7 @@ worker62:
   created_at: 2014-01-20 08:24:18.408287
   updated_at: 2015-03-21 09:53:17.563115
   deleted_at: 
+  token: 3f2332a3-5484-4640-ab43-7b9c4cd68a07
 
 worker63:
   id: 63
@@ -1349,6 +1409,7 @@ worker63:
   created_at: 2014-05-06 06:42:47.698017
   updated_at: 2014-05-06 06:42:47.698017
   deleted_at: 
+  token: 52c43080-84e2-4ce1-8e77-7e7f31acbc86
 
 worker64:
   id: 64
@@ -1371,6 +1432,7 @@ worker64:
   created_at: 2015-01-12 06:49:22.583886
   updated_at: 2015-01-12 06:49:22.583886
   deleted_at: 
+  token: 3a43a67b-3a94-4b7b-b80a-02831a196f66
 
 worker65:
   id: 65
@@ -1393,6 +1455,7 @@ worker65:
   created_at: 2015-03-21 09:52:02.423872
   updated_at: 2015-03-21 09:52:02.423872
   deleted_at: 
+  token: fa07ec7c-e0d6-45a8-9a78-9c6edc8bc973
 
 worker66:
   id: 66
@@ -1415,6 +1478,7 @@ worker66:
   created_at: 2015-12-19 07:01:07.68698
   updated_at: 2015-12-19 07:01:07.68698
   deleted_at: 
+  token: d0548c3e-b5a0-4a0a-bf30-5d8fa89c573e
 
 worker67:
   id: 67
@@ -1437,4 +1501,27 @@ worker67:
   created_at: 2016-01-11 08:40:04.804056
   updated_at: 2016-01-11 08:40:04.804056
   deleted_at: 
+  token: 083a9fa0-67e2-4478-adcf-e286d8ba6370
 
+worker_farm:
+  id: 68
+  family_phonetic: じむきょく
+  family_name: 事務局
+  first_phonetic: じむきょく
+  first_name: 事務局
+  birthday: 
+  home_id: 37
+  mobile: 
+  mobile_mail: 
+  pc_mail: test@example.com
+  display_order: 1
+  work_flag: t
+  gender_id: 0
+  bank_code: 0000
+  branch_code: 000
+  account_type_id: 0
+  account_number: 0000000
+  created_at: 2016-01-11 08:40:04.804056
+  updated_at: 2016-01-11 08:40:04.804056
+  deleted_at: 
+  token: b9afe89c-54b6-4b5e-97bf-cbbb62fb7f27

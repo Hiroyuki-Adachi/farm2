@@ -22,7 +22,9 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  deleted_at      :datetime
+#  token           :string(36)       default(""), not null        # アクセストークン
 #
+
 require 'securerandom'
 
 class Worker < ApplicationRecord

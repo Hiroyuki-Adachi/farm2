@@ -2,6 +2,12 @@ require 'test_helper'
 
 class BanksControllerTest < ActionController::TestCase
   setup do
+    @request = ActionController::TestRequest.new
+    @request.instance_eval do
+      def remote_ip
+        "127.0.0.1"
+      end
+    end
     @bank = Bank.new(code: "0003", name: "JA□□", phonetic: "ｼｶｸﾉｳｷﾞﾖｳｷﾖｳﾄﾞｳｸﾐｱｲ")
   end
 

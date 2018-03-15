@@ -2,6 +2,12 @@ require 'test_helper'
 
 class MachinePricesControllerTest < ActionController::TestCase
   setup do
+    @request = ActionController::TestRequest.new
+    @request.instance_eval do
+      def remote_ip
+        "127.0.0.1"
+      end
+    end
     @machine_price_t = machine_price_headers(:machine_price_header_t)
     @machine_price_m = machine_price_headers(:machine_price_header_m)
     @price_detail = {1 => {0 => {adjust_id: 1, price: 500}}}
