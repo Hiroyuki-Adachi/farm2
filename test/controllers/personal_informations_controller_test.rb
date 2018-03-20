@@ -9,5 +9,4 @@ class PersonalInformationsControllerTest < ActionController::TestCase
     get :show, token: @worker.token
     assert_response :success
   end
-
 end
