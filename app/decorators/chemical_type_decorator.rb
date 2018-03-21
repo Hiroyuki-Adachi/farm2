@@ -12,7 +12,7 @@ class ChemicalTypeDecorator < Draper::Decorator
 
   def delete_link
     if model.chemicals.count == 0
-      return h.link_to('削除', model, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"})
+      return h.link_to('削除', model, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"})
     else
       return h.raw("&nbsp;")
     end

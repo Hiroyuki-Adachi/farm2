@@ -41,7 +41,7 @@
   <%= f.number_field :display_order, {maxlength: 4, size: 4, min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
 </div>
 <div class="actions">
-  <%= f.submit '登録', class: "btn btn-danger" %>
+  <%= f.submit '登録', class: "btn btn-warning" %>
   <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + workers_path + "';"), class: "btn btn-default" %>
 </div>
 <% end %>

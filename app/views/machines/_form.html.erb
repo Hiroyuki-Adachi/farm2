@@ -25,7 +25,7 @@
     <%= f.date_field :validity_end_at, {required: true, class: "form-control"} %>
  </div>
  <div class="actions">
-    <%= f.submit '登録', class: "btn btn-danger" %>
+    <%= f.submit '登録', class: "btn btn-warning" %>
     <% if controller.action_name == "edit" %>
     <%= button_tag "料金設定", type: :button, :onclick => raw("javascript:location.href = '" + show_machine_machine_price_headers_path(machine_id: @machine) + "';"), class: "btn btn-success" %>
     <% end %>

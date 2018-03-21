@@ -29,7 +29,7 @@
   <%= f.hidden_field(:machine_id) %>
   <%= f.hidden_field(:machine_type_id) %>
   <div class="actions">
-    <%= f.submit '登録', class: "btn btn-danger" %>
+    <%= f.submit '登録', class: "btn btn-warning" %>
     <% if controller.action_name == "edit" %>
       <%= button_tag "履歴", type: :button, :onclick => raw("location.href = '" + machine_price_headers_path(id: @machine_price.id) + "';"), class: "btn btn-success" %>
       <%= link_to '削除', @machine_price, {method: :delete, class: :button, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
