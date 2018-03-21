@@ -14,6 +14,9 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
+# Use bootstrap4
+gem 'bootstrap', '>= 4.0'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.1'
 gem 'jquery-ui-rails', '~> 5.0'

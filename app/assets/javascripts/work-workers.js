@@ -29,6 +29,7 @@ function add_worker(worker_id, worker_name)
     var elem_button = document.createElement("input")
     elem_button.type = "button";
     elem_button.value = "\u524a\u9664"; // 削除
+    elem_button.className = "btn btn-outline-dark btn-sm";
     elem_button.onclick = new Function("remove_worker(" + worker_id + ");");
     cell_del.appendChild(elem_button);
 

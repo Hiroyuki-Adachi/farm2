@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_term
   before_action :restrict_remote_ip
+  before_action :set_system
 
   private
 
@@ -24,5 +25,19 @@ class ApplicationController < ActionController::Base
     unless PERMIT_ADDRESSES.any? { |pa| request.remote_ip.start_with?(pa)}
       render text: 'Service Unavailable', status: 503
     end
+  end
+
+  def set_system
+    cache_key = term_cache_key
+    if Rails.cache.exist?(cache_key)
+      @system = System.new(Rails.cache.read(cache_key))
+    else
+      @system = System.find_by(term: @term)
+      Rails.cache.write(cache_key, @system.attributes, expires_in: 1.hour)
+    end
+  end
+
+  def term_cache_key
+    "system#{@term}"
   end
 end

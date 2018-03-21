@@ -5,25 +5,29 @@
   <%= render(:partial => 'show_work', :locals => {:f => f}) %>
 
   <h2>薬剤</h2>
-  <table class="list">
-    <tr>
-      <th>種別</th>
-      <th>名称</th>
-      <th>数量</th>
-    </tr>
-    <% @chemicals.each do |chemical| %>
-    <tr>
-      <td><%=h chemical.name %></td>
-      <td><%=h chemical.chemical_type.name %></td>
-      <td>
-        <% work_chemicals = @work.work_chemicals.where(chemical_id: chemical.id) %>
-        <%= number_field_tag "chemicals[#{chemical.id}]", work_chemicals.exists? ? work_chemicals.first.quantity : 0, {min: 0, max: 999, step: 1} %>
-        <%=h chemical.unit %>
-      </td>
-    </tr>
-    <% end %>
-  </table>
-  <br />
-  <%= f.submit '登録', :name => 'regist_chemicals' %>
-  <%= f.submit '戻る', :name => 'cancel' %>
+  <div class="row">
+    <div class="col-md-8">
+      <table class="table table-sm">
+        <tr>
+          <th>種別</th>
+          <th>名称</th>
+          <th>数量</th>
+          <th>&nbsp;</th>
+        </tr>
+        <% @chemicals.each do |chemical| %>
+        <tr>
+          <td><%=h chemical.name %></td>
+          <td><%=h chemical.chemical_type.name %></td>
+          <td>
+            <% work_chemicals = @work.work_chemicals.where(chemical_id: chemical.id) %>
+            <%= number_field_tag "chemicals[#{chemical.id}]", work_chemicals.exists? ? work_chemicals.first.quantity : 0, {min: 0, max: 999, step: 1, class: "form-control form-control-sm"} %>
+          </td>
+          <td><%=h chemical.unit %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+  <%= f.submit '登録', :name => 'regist_chemicals', class: "btn btn-danger" %>
+  <%= f.submit '戻る', :name => 'cancel', class: "btn btn-default" %>
 <% end %>

@@ -1,46 +1,47 @@
 <%= error_print(@worker) %>
 <%= form_for(@worker) do |f| %>
- <div class="field">
-    <%= f.label :family_phonetic %><br />
-    <%= f.text_field :family_phonetic, {:maxlength => 10, :size => 20, required: true} %>
- </div>
- <div class="field">
-    <%= f.label :family_name %><br />
-    <%= f.text_field :family_name, {:maxlength => 10, :size => 20, required: true} %>
- </div>
- <div class="field">
-    <%= f.label :first_phonetic %><br />
-    <%= f.text_field :first_phonetic, {:maxlength => 10, :size => 20, required: true} %>
- </div>
- <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, {:maxlength => 10, :size => 20, required: true} %>
- </div>
- <div class="field">
-   <%= f.label :home_id %><br />
-   <%= f.select(:home_id, @homes.map {|home| [home.name, home.id]}) %>
-   <%= check_box_tag :holder, true, @worker.home ? (@worker.id == @worker.home.worker_id) : false %>
-   <%= label_tag :holder, '代表'%><br />
- </div>
- <div class="field">
-   <%= f.label :gender_id %><br />
-   <%= f.select(:gender_id, @genders.map {|gender| [gender.name, gender.id]}) %>
- </div>
- <div class="field">
-   <%= f.label :birthday %><br />
-   <%= f.date_field :birthday %>
- </div>
- <div class="field">
-    <%= f.label :mobile %><br />
-    <%= f.telephone_field :mobile, {:maxlength => 15, :size => 20} %>
- </div>
- <div class="field">
-    <%= f.label :display_order %><br />
-    <%= f.number_field :display_order, {maxlength: 4, size: 4, min: 0, max: 9999, step: 1, required: true} %>
- </div>
-  <br />
- <div class="actions">
-    <%= f.submit '登録' %>
-    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + workers_path + "';") %>
- </div>
+<div class="field form-group">
+  <%= f.label :family_phonetic, class: "col-form-label-lg" %>
+  <%= f.text_field :family_phonetic, {:maxlength => 10, :size => 20, required: true, class: "form-control"} %>
+</div>
+<div class="field form-group">
+  <%= f.label :family_name, class: "col-form-label-lg" %>
+  <%= f.text_field :family_name, {:maxlength => 10, :size => 20, required: true, class: "form-control"} %>
+</div>
+<div class="field form-group">
+  <%= f.label :first_phonetic, class: "col-form-label-lg" %>
+  <%= f.text_field :first_phonetic, {:maxlength => 10, :size => 20, required: true, class: "form-control"} %>
+</div>
+<div class="field form-group">
+  <%= f.label :first_name, class: "col-form-label-lg" %>
+  <%= f.text_field :first_name, {:maxlength => 10, :size => 20, required: true, class: "form-control"} %>
+</div>
+<div class="field form-group">
+  <%= f.label :home_id, class: "col-form-label-lg" %>
+  <%= f.select(:home_id, @homes.map {|home| [home.name, home.id]}, {}, class: "form-control") %>
+  <div class="form-check">
+    <%= check_box_tag :holder, true, @worker.home ? (@worker.id == @worker.home.worker_id) : false, {class: "form-check-input"} %>
+    <%= label_tag :holder, '代表', class: "form-check-label"%>
+  </div>
+</div>
+<div class="field form-group">
+  <%= f.label :gender_id, class: "col-form-label-lg" %>
+  <%= f.select(:gender_id, @genders.map {|gender| [gender.name, gender.id]}, {}, class: "form-control") %>
+</div>
+<div class="field form-group">
+  <%= f.label :birthday, class: "col-form-label-lg" %>
+  <%= f.date_field :birthday, class: "form-control" %>
+</div>
+<div class="field form-group">
+  <%= f.label :mobile, class: "col-form-label-lg" %>
+  <%= f.telephone_field :mobile, {:maxlength => 15, :size => 20, class: "form-control"} %>
+</div>
+<div class="field form-group">
+  <%= f.label :display_order, class: "col-form-label-lg" %>
+  <%= f.number_field :display_order, {maxlength: 4, size: 4, min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
+</div>
+<div class="actions">
+  <%= f.submit '登録', class: "btn btn-danger" %>
+  <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + workers_path + "';"), class: "btn btn-default" %>
+</div>
 <% end %>

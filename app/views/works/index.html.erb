@@ -1,6 +1,6 @@
 <h1>作業一覧</h1>
 
-<%= select_tag(:month, options_for_select(@months, @month), :onChange => "change_month(this);") %>
+<%= select_tag(:month, options_for_select(@months, @month), {:onChange => "change_month(this);", class: "form-control"}) %>
 <script type="text/javascript">
   function change_month(sender)
   {
@@ -12,7 +12,7 @@
   }
 </script>
 <% if @works.count > 0 %>
-<table class="list">
+<table class="table table-sm">
   <tr>
     <th>作業日</th>
     <th>時刻</th>
@@ -21,7 +21,6 @@
     <th>人数</th>
     <th>工数</th>
   </tr>
-
 <% @works.each do |work| %>
   <tr style="<%= work.tr_style %>">
     <td><%=h work.worked_at %></td>
@@ -36,4 +35,4 @@
 <%= paginate(@works) %>
 <% end %>
 <br />
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
