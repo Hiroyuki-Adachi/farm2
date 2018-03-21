@@ -7,7 +7,7 @@
 
 <h2>作業田</h2>
  <div style="float:left;">
-  <table id="tbl_lands">
+  <table id="tbl_lands" class="table table-sm">
     <thead style="display:block;">
     <tr>
       <th style="width:20px;">No.</th>
@@ -23,7 +23,7 @@
         <td style="width:150px;"><%= work_land.place_name %></td>
         <td class="numeric" style="width:60px;"><%= work_land.area %></td>
         <td style="width:50px;">
-            <input type="button" value="削除" onclick="remove_land(<%= work_land.land_id %>)" />
+            <input type="button" value="削除" onclick="remove_land(<%= work_land.land_id %>)" class="btn btn-outline-dark btn-sm"/>
             <%= hidden_field_tag "work_lands[][land_id]", work_land.land_id, {:id => nil} %>
             <%= hidden_field_tag "work_lands[][display_order]", i + 1, {:id => nil} %>
         </td>
@@ -40,12 +40,14 @@
     </tfoot>
   </table>
  </div>
-<div class="lands_search" style="float:left;magin-left:40px;">
-  <%= text_field_tag :land, '', {placeholder: "地番または面積(α)を入力してください。", size: 30}  %>
+<div id="land_pos" class="lands_search" style="float:left;">
+  <div id="land_base" class="form-group" style="magin-left:40px !important;">
+    <%= text_field_tag :land, '', {placeholder: "地番または面積(α)を入力してください。", size: 30, class: "form-control"}  %>
+  </div>
 </div>
-<div style="clear:both; margin-top:20px;">
-  <%= f.submit '登録', :name => 'regist_lands' %>
-  <%= f.submit '戻る', :name => 'cancel' %>
+<div style="clear:both; margin-top:40px;">
+  <%= f.submit '登録', :name => 'regist_lands', class: "btn btn-danger" %>
+  <%= f.submit '戻る', :name => 'cancel', class: "btn btn-default" %>
 </div>
 <% end %>
 
@@ -55,6 +57,7 @@ $(function() {
 
   $("#land").autocomplete({
     source : "<%= autocomplete_for_land_place_works_path %>",
+    minLength: 2,
     select: function(e, ui) {
       if(ui.item) {
         add_land(ui.item.details.id, ui.item.details.place + "(" + ui.item.details.owner + ")", ui.item.details.area);
@@ -62,5 +65,8 @@ $(function() {
       return false;
     }
   });
+
+  var land_base = jQuery("#land_base");
+  $(".ui-autocomplete").offset({top: land_base.offset().top + land_base.height(), left: land_base.offset().left})
 });
 </script>

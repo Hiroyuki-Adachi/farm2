@@ -1,36 +1,41 @@
 <%= error_print(@home) %>
 <%= form_for(@home) do |f| %>
- <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, {maxlength: 10, size: 15, required: true} %>
+ <div class="field form-group">
+    <%= f.label :name, class: "col-form-label-lg" %>
+    <%= f.text_field :name, {maxlength: 10, size: 15, required: true, class: "form-control"} %>
   </div>
- <div class="field">
-    <%= f.label :phonetic %><br />
-    <%= f.text_field :phonetic, {maxlength: 10, size: 15, required: true} %>
+ <div class="field form-group">
+    <%= f.label :phonetic, class: "col-form-label-lg" %>
+    <%= f.text_field :phonetic, {maxlength: 10, size: 15, required: true, class: "form-control"} %>
   </div>
- <div class="field">
-    <%= f.label :telephone %><br />
-    <%= f.telephone_field :telephone, {maxlength: 15, size: 15} %>
+ <div class="field form-group">
+    <%= f.label :telephone, class: "col-form-label-lg" %>
+    <%= f.telephone_field :telephone, {maxlength: 15, size: 15, class: "form-control"} %>
   </div>
- <div class="field">
-    <%= f.label :fax %><br />
-    <%= f.telephone_field :fax, {maxlength: 15, size: 15} %>
+ <div class="field form-group">
+    <%= f.label :fax, class: "col-form-label-lg" %>
+    <%= f.telephone_field :fax, {maxlength: 15, size: 15, class: "form-control"} %>
   </div>
- <div class="field">
-    <%= f.label :section_id %><br />
-    <%= f.select(:section_id, @sections.map {|section| [section.name, section.id]}) %>
+ <div class="field form-group">
+    <%= f.label :section_id, class: "col-form-label-lg" %>
+    <%= f.select(:section_id, @sections.map {|section| [section.name, section.id]}, {}, {class: "form-control"}) %>
   </div>
- <div class="field">
-    <%= f.label :display_order %><br />
-    <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true}) %>
+ <div class="field form-group">
+    <%= f.label :display_order, class: "col-form-label-lg" %>
+    <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
   </div>
- <div class="field">
-    <%= f.radio_button :member_flag, true %>営農組合会員<br />
-    <%= f.radio_button :member_flag, false %>外部委託<br />
+ <div class="field form-group">
+    <div class="form-check">
+      <%= f.radio_button :member_flag, true, {class: "form-check-input"} %>
+      <label for="home_member_flag_true" class="form-check-label">営農組合会員</label>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :member_flag, false, {class: "form-check-input"} %>
+      <label for="home_member_flag_false" class="form-check-label">外部委託</label>
+    </div>
   </div>
-  <br />
  <div class="actions">
-    <%= f.submit '登録' %>
-    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + homes_path + "';") %>
+    <%= f.submit '登録', class: "btn btn-danger" %>
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + homes_path + "';"), class: "btn btn-default" %>
   </div>
 <% end %>

@@ -1,5 +1,5 @@
 class MenuController < ApplicationController
-  before_action :set_system, only: [:edit_term, :index, :edit]
+  layout 'menu'
 
   def index
   end
@@ -47,21 +47,7 @@ class MenuController < ApplicationController
 
   private
 
-  def set_system
-    cache_key = term_cache_key
-    if Rails.cache.exist?(cache_key)
-      @system = System.new(Rails.cache.read(cache_key))
-    else
-      @system = System.find_by(term: @term)
-      Rails.cache.write(cache_key, @system.attributes, expires_in: 1.hour)
-    end
-  end
-
   def system_params
     params.require(:system).permit(:term, :target_from, :target_to)
-  end
-
-  def term_cache_key
-    "system#{@term}"
   end
 end

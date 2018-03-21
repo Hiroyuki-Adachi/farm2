@@ -1,20 +1,25 @@
 <%= f.hidden_field :term %>
 
 <h2>内容</h2>
-<b>作業日：</b><span><%=h @work.worked_at %><%= f.hidden_field :worked_at %></span>
-<b>天候：</b><span><%=h @work.weather_name %><%= f.hidden_field :weather_id %></span>
-<br />
-<b>作業時間：</b><span><%=h @work.work_time %></span>
+<div class="row">
+  <div class="col-md-3 h3"><%=h @work.worked_at %></div>
+  <div class="col-md-3 h3"><%=h @work.work_time %></div>
+  <div class="col-md-2 h3"><%=h @work.weather_name %></div>
+</div>
+<div class="row">
+  <div class="col-md-4 h3"><%=h @work.genre_name %></div>
+  <div class="col-md-4 h3"><%=h @work.name %></div>
+</div>
+<div class="row">
+  <div class="col-md-8 h5 border border-dark" style="height:100px; overflow:auto"><%=hbr @work.remarks %></div>
+</div>
+
+<%= f.hidden_field :weather_id %>
+<%= f.hidden_field :worked_at %>
 <%= f.hidden_field :start_at %>
 <%= f.hidden_field :end_at %>
-
-<b>分類：</b><span><%=h @work.genre_name %></span>
-<%= f.hidden_field :work_type_id %><br />
-<b>作業内容：</b><span><%=h @work.name %></span>
+<%= f.hidden_field :work_type_id %>
 <%= f.hidden_field :name %>
-<br />
-<b style="float:left;">記事：</b><div class="remarks" style="float:left;"><%=hbr @work.remarks %></div>
 <%= f.hidden_field :remarks %>
-<div style="clear:both;"></div>
 <%= hidden_field_tag :page, params[:page] %>
 <%= hidden_field_tag :month, params[:month] %>
