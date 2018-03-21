@@ -21,7 +21,7 @@
 //= require popper
 //= require bootstrap-sprockets
 
-$(document).on("change", "span.check_group input[type='checkbox']", function(e) {
+$(document).on("change", "div.form-check-inline input[type='checkbox']", function(e) {
     if($(this).prop('checked')) {
         $(this).parent().css("color", "red");
     } else {
@@ -30,5 +30,5 @@ $(document).on("change", "span.check_group input[type='checkbox']", function(e) 
 });
 
 $(function() {
-    $("span.check_group input[type='checkbox']").trigger("change");
+    $("div.form-check-inline input[type='checkbox']").trigger("change");
 });
