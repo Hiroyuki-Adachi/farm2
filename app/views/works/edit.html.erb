@@ -4,6 +4,6 @@
 <%= form_for(@work.model, :url => {action: :update }, html: {method: :put}) do |f| %>
   <%= render(:partial => 'form', :locals => {:f => f}) %>
   <br />
-  <%= f.submit '登録', :name => 'regist', class: "btn btn-danger" %>
+  <%= f.submit '登録', :name => 'regist', class: "btn btn-warning" %>
   <%= f.submit '戻る', :name => 'cancel', class: "btn btn-default" %>
 <% end %>
