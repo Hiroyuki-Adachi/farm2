@@ -1,19 +1,23 @@
 <h1>班マスタ一覧</h1>
-<table class="list">
-  <tr>
-    <th>名称</th>
-    <th>作業</th>
-    <th colspan="2">&nbsp;</th>
-  </tr>
-<% @sections.each do |section| %>
-  <tr>
-    <td><%=h section.name %></td>
-    <td style="text-align:center;"><%=h section.work_flag ? "●" : "" %></td>
-    <td><%= link_to '修正', edit_section_path(section) %></td>
-    <td><%= link_to '削除', section, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
-  </tr>
-<% end %>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th>作業</th>
+      <th colspan="2">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sections.each do |section| %>
+      <tr>
+        <td><%=h section.name %></td>
+        <td style="text-align:center;"><%=h section.work_flag ? "●" : "" %></td>
+        <td><%= link_to '修正', edit_section_path(section), {class: "btn btn-success btn-sm"} %></td>
+        <td><%= link_to '削除', section, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 <br />
-<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_section_path + "';") %>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
+<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_section_path + "';"), class: "btn btn-success" %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
