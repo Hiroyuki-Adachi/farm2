@@ -12,66 +12,9 @@
   </script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg" role="navigation">
-    <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">日報管理<span class="caret"></span></a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to '日報入力', new_work_path, {class: "dropdown-item"} %>
-              <%= link_to '日報一覧', works_path, {class: "dropdown-item"} %>
-              <%= link_to '月報入力', monthly_reports_path, {class: "dropdown-item"} %>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">集計処理<span class="caret"></span></a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to '集計対象期間変更', edit_menu_path(@system), {class: "dropdown-item"} %>
-              <%= link_to '世帯別日当一覧', work_results_path, {class: "dropdown-item"} %>
-              <%= link_to '世帯別機械利用料', machine_results_path, {class: "dropdown-item"} %>
-              <%= link_to '作業別薬剤使用量一覧', work_chemicals_path, {class: "dropdown-item"} %>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">統計処理<span class="caret"></span></a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to '統計照会', statistics_path, {class: "dropdown-item"} %>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">会計処理<span class="caret"></span></a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to '新規確定', new_fix_path, {class: "dropdown-item"} %>
-              <%= link_to '確定一覧', fixes_path, {class: "dropdown-item"} %>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">マスタ保守<span class="caret"></span></a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to '世帯マスタ保守', homes_path, {class: "dropdown-item"} %>
-              <%= link_to '作業者マスタ保守', workers_path, {class: "dropdown-item"} %>
-              <%= link_to '土地マスタ保守', lands_path, {class: "dropdown-item"} %>
-              <%= link_to '作業種別マスタ保守', work_kinds_path, {class: "dropdown-item"} %>
-              <%= link_to '機械種別マスタ保守', machine_types_path, {class: "dropdown-item"} %>
-              <%= link_to '機械マスタ保守', machines_path, {class: "dropdown-item"} %>
-              <%= link_to '薬剤種別マスタ保守', chemical_types_path, {class: "dropdown-item"} %>
-              <%= link_to '薬剤マスタ保守', chemicals_path, {class: "dropdown-item"} %>
-              <%= link_to '作業分類マスタ保守', work_types_path, {class: "dropdown-item"} %>
-              <%= link_to '班マスタ保守', sections_path, {class: "dropdown-item"} %>
-            </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">システム管理<span class="caret"></span></a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to '対象年度変更', edit_term_menu_path(@system), {class: "dropdown-item"} %>
-              <%= link_to '管理マスタ変更', edit_organization_path(@organization), {class: "dropdown-item"} %>
-            </div>
-          </li>
-        </ul>
-    </div>
-</nav>
 
 <div class="container">
+<%= render 'navbar' %>
 <%= yield %>
 </div>
 
