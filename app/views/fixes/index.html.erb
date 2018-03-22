@@ -1,7 +1,6 @@
 <h1>確定一覧</h1>
-
 <% if @fixes.count > 0 %>
-<table class="list">
+<table class="table table-sm">
   <thead>
     <tr>
       <th>締め日</th>
@@ -17,23 +16,23 @@
 <% sum_works_amount = 0 %>
 <% sum_machines_amount = 0 %>
   <tbody>
-<% @fixes.each do |fix| %>
-    <tr>
-      <td><%= fix.fixed_at %></td>
-      <td class="numeric"><%= fix.works_count %></td>
-      <td class="numeric"><%= fix.hours %></td>
-      <td class="numeric"><%= fix.works_amount %></td>
-      <td class="numeric"><%= fix.machines_amount %></td>
-      <td><%= link_to '作業一覧', fix_path(fixed_at: fix) %></td>
-      <td><%= link_to '世帯別作業日当', work_results_path(fixed_at: fix) %>(<%= link_to 'CSV出力', work_results_path(fixed_at: fix, format: :csv) %>)</td>
-      <td><%= link_to '世帯別機械利用料', machine_results_path(fixed_at: fix) %>(<%= link_to 'CSV出力', machine_results_path(fixed_at: fix, format: :csv) %>)</td>
-      <td><%= link_to '確定取消', fix, method: :delete, data: {confirm: "確定を取り消してもよろしいですか?"} %></td>
-    </tr>
-<% sum_works_count += fix.model.works_count.to_i %>
-<% sum_hours += fix.hours.to_f %>
-<% sum_works_amount += fix.model.works_amount.to_i %>
-<% sum_machines_amount += fix.model.machines_amount.to_i %>
-<% end %>
+  <% @fixes.each do |fix| %>
+      <tr>
+        <td><%= fix.fixed_at %></td>
+        <td class="numeric"><%= fix.works_count %></td>
+        <td class="numeric"><%= fix.hours %></td>
+        <td class="numeric"><%= fix.works_amount %></td>
+        <td class="numeric"><%= fix.machines_amount %></td>
+        <td><%= link_to '作業一覧', fix_path(fixed_at: fix), {class: "btn btn-success"} %></td>
+        <td><%= link_to '世帯別作業日当', work_results_path(fixed_at: fix), {class: "btn btn-success"} %><%= link_to 'CSV出力', work_results_path(fixed_at: fix, format: :csv), {class: "btn btn-outline-success"} %></td>
+        <td><%= link_to '世帯別機械利用料', machine_results_path(fixed_at: fix), {class: "btn btn-success"} %><%= link_to 'CSV出力', machine_results_path(fixed_at: fix, format: :csv), {class: "btn btn-outline-success"} %></td>
+        <td><%= link_to '確定取消', fix, {method: :delete, data: {confirm: "確定を取り消してもよろしいですか?"}, class: "btn btn-danger"} %></td>
+      </tr>
+    <% sum_works_count += fix.model.works_count.to_i %>
+    <% sum_hours += fix.hours.to_f %>
+    <% sum_works_amount += fix.model.works_amount.to_i %>
+    <% sum_machines_amount += fix.model.machines_amount.to_i %>
+  <% end %>
   </tbody>
   <tfoot>
     <tr>
@@ -47,5 +46,4 @@
   </tfoot>
 </table>
 <% end %>
-<br />
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
+<%= button_tag "戻る",  type: :button, onclick: raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
