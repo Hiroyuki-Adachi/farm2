@@ -3,7 +3,13 @@
 <%= link_to '料金新規登録', new_machine_price_header_path(machine_type_id: @machine_type), class: "btn btn-success" %>
 </div>
 <%= render(:partial => "show") %>
-<% if @machine_price %>
-<%= button_tag "変更",  type: :button, :onclick => raw("javascript:location.href = '" + edit_machine_price_header_path(@machine_price) + "';"), class: "btn btn-success" %>
-<% end %>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + machine_types_path + "';"), class: "btn btn-default" %>
+<div class="btn-toolbar">
+  <% if @machine_price %>
+    <div class="btn-group mr-2">
+      <%= button_tag "変更",  type: :button, :onclick => raw("javascript:location.href = '" + edit_machine_price_header_path(@machine_price) + "';"), class: "btn btn-success" %>
+    </div>
+  <% end %>
+  <div class="btn-group mr-2">
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + machine_types_path + "';"), class: "btn btn-default" %>
+  </div>
+</div>

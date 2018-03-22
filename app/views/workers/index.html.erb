@@ -1,4 +1,3 @@
-<div class="starter-template">
 <h1>作業者マスタ一覧</h1>
 <% if @workers.count > 0 %>
 <table class="table table-sm">
@@ -24,6 +23,11 @@
 </table>
 <%= paginate(@workers) %>
 <% end %>
-<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_worker_path + "';"), class: "btn btn-success" %>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_worker_path + "';"), class: "btn btn-success" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
+  </div>
 </div>

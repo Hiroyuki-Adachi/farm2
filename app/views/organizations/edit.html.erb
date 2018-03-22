@@ -26,8 +26,12 @@
     <%= f.label :daily_worker, class: "col-form-label-lg" %>
     <%= f.select :daily_worker, @organization.localed_daily_workers, {}, {class: "form-control"} %>
  </div>
- <div class="actions">
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
     <%= f.submit '登録', class: "btn btn-danger" %>
+  </div>
+  <div class="btn-group mr-2">
     <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
+  </div>
  </div>
 <% end %>

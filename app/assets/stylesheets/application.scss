@@ -26,6 +26,11 @@ td.numeric {
   text-align: right;
 }
 
+.bootstrap-date {
+  display: inline-block;
+  width: auto;
+}
+
 /** 入力エラー **/
 #error_explanation {
   width: 400px;

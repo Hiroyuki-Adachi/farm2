@@ -25,5 +25,11 @@
 </table>
 <%= paginate(@homes) %>
 <% end %>
-<%= button_tag "新規登録",  type: :button, onclick: raw("javascript:location.href = '" + new_home_path + "';"), class: "btn btn-success" %>
-<%= button_tag "戻る",  type: :button, onclick: raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= button_tag "新規登録",  type: :button, onclick: raw("javascript:location.href = '" + new_home_path + "';"), class: "btn btn-success" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= button_tag "戻る",  type: :button, onclick: raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
+  </div>
+</div>

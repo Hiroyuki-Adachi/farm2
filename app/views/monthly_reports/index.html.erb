@@ -1,10 +1,23 @@
 <h1>作業月報選択</h1>
 <%= form_tag({:action => 'show', :id => 0}, {:method => :get}) do %>
-<b>対象月：</b><%= date_select :report, :target_at, {:order => [:year, :month, :day], :discard_day => true, :use_month_numbers => true} %><br />
-<b>対象者：</b><%= select :report, :worker_id, Worker.usual.map{|w| [w.home.name + ':' + w.name, w.id]} %><br />
-<%= submit_tag "月報表示" %>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label>対象月</label>
+      <%= date_select :report, :target_at, {:order => [:year, :month, :day], :discard_day => true, :use_month_numbers => true}, class: "form-control bootstrap-date" %>
+    </div>
+    <div class="form-group col-md-4">
+      <%= select :report, :worker_id, Worker.usual.map{|w| [w.home.name + ':' + w.name, w.id]}, {}, {class: "form-control"} %>
+    </div>
+  </div>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag "月報表示", class: "btn btn-success" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
+    </div>
+  </div>
 <% end %>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
 <!--
 月報書式にて操作可能な日報はその作業に従事した作業員が1名のみである場合に限ります。
 月報は自動的に日報に転記されますが、日報側から同一日に複数の単独作業は入力しないようにしてください。

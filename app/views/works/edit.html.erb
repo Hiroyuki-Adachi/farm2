@@ -3,7 +3,12 @@
 
 <%= form_for(@work.model, :url => {action: :update }, html: {method: :put}) do |f| %>
   <%= render(:partial => 'form', :locals => {:f => f}) %>
-  <br />
-  <%= f.submit '登録', :name => 'regist', class: "btn btn-warning" %>
-  <%= f.submit '戻る', :name => 'cancel', class: "btn btn-default" %>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= f.submit '登録', :name => 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= f.submit '戻る', :name => 'cancel', class: "btn btn-default" %>
+    </div>
+  </div>
 <% end %>
