@@ -82,7 +82,7 @@ function calc_total_hours()
 <h1>作業月報修正</h1>
 <h2><%= @target_from.strftime('%Y年%m月') %>：<%= @worker.name + "(#{@worker.home.name})" %></h2>
 <%= form_tag({:action => :update, :id => @worker}, {:method => :put}) do %>
-<table>
+<table class="table table-sm">
   <thead>
     <tr>
       <th>&nbsp;</th>
@@ -102,22 +102,22 @@ function calc_total_hours()
         <% work = Work.array_by_worked_at(@works, target_at)  %>
         <% result = WorkResult.by_worker_and_work(@worker, work)[0] %>
         <td style="text-align: center;">
-          <%= check_box_tag "data[#{d}][check]", d, work.present?, {onchange: "set_disabled()"}  %>
+          <%= check_box_tag "data[#{d}][check]", d, work.present?, {onchange: "set_disabled()", class: "form-check-label"}  %>
           <%= hidden_field_tag "data[#{d}][id]", work ? work.id : 0 %>
           <%= hidden_field_tag "data[#{d}][worked_at]", Date::new(@target_from.year, @target_from.month, d + 1) %>
         </td>
         <td style="text-align: right;"><%=h d + 1 %></td>
         <td style="text-align: center;"><%=h WorkDecorator::WDAY[target_at.wday] %></td>
         <td><%= select_tag("data[#{d}][weather]", 
-            options_for_select(Weather.all.map {|weather| [weather.name, weather.id]}, work ? work.weather : Weather.first)) %></td>
-        <td><%= select_time(work ? work.start_at : Time.parse("8:00") , {:minute_step => 30, :prefix => "data[#{d}][start_at]"}, {:onchange => "calc_hours(" + d.to_s + ")"}) %></td>
+            options_for_select(Weather.all.map {|weather| [weather.name, weather.id]}, work ? work.weather : Weather.first), {class: "form-control"}) %></td>
+        <td><%= select_time(work ? work.start_at : Time.parse("8:00") , {:minute_step => 30, :prefix => "data[#{d}][start_at]"}, {onchange: "calc_hours(" + d.to_s + ")", class: "form-control bootstrap-date"}) %></td>
         <td style="text-align: center;">～</td>
-        <td><%= select_time(work ? work.end_at : Time.parse("8:00"), {:minute_step => 30, :prefix => "data[#{d}][end_at]"}, {:onchange => "calc_hours(" + d.to_s + ")"}) %></td>
+        <td><%= select_time(work ? work.end_at : Time.parse("8:00"), {:minute_step => 30, :prefix => "data[#{d}][end_at]"}, {onchange: "calc_hours(" + d.to_s + ")", class: "form-control bootstrap-date"}) %></td>
         <td><%= number_field_tag "data[#{d}][hours]", result ? sprintf("%.1f", result.hours) : "0.0", 
-          {max: 24, min: 0, step: 0.5, onchange: "calc_total_hours()"} %></td>
+          {max: 24, min: 0, step: 0.5, onchange: "calc_total_hours()", class: "form-control"} %></td>
         <td><%= select_tag("data[#{d}][work_type_id]",
-            options_from_collection_for_select(WorkType.index, :id, :name, work ? work.work_type_id : 1)) %></td>
-        <td><%= text_field_tag "data[#{d}][name]", work ? work.name : "", {:maxlength => 40, :size => 30} %></td>
+            options_from_collection_for_select(WorkType.index, :id, :name, work ? work.work_type_id : 1), {class: "form-control"}) %></td>
+        <td><%= text_field_tag "data[#{d}][name]", work ? work.name : "", {:maxlength => 40, :size => 30, class: "form-control"} %></td>
       <% else %>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
@@ -146,6 +146,12 @@ function calc_total_hours()
     </tr>
   </tfoot>
 </table>
-<%= submit_tag "登録"  %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= submit_tag "登録", class: "btn btn-warning"  %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', monthly_report_path(target_from: @target_from, worker_id: @worker.id), class: "btn btn-default" %>
+  </div>
+</div>
 <% end %>
-<%= link_to '戻る', monthly_report_path(target_from: @target_from, worker_id: @worker.id), {class: :button} %>

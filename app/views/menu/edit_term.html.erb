@@ -2,8 +2,12 @@
 <%= error_print(@system) %>
 <%= form_for(@system, url: {controller: :menu, action: :update }, html: {method: :put}) do |f| %>
   <%= f.select(:term, @terms, {}, {class: "form-control"}) %>
-  <div class="actions">
-    <%= f.submit '設定', class: "btn btn-danger" %>
-    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= f.submit '設定', class: "btn btn-danger" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
+    </div>
   </div>
 <% end %>

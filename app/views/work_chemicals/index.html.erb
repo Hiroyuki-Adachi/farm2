@@ -1,9 +1,9 @@
 <h1>作業別薬剤使用量一覧</h1>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
 <%= stylesheet_link_tag 'work-lists', :media => 'all' %>
 <% even = false %>
 <% chemical_type_id = 0 %>
-<table class="list">
+<table class="table table-sm">
 <colgroup span="3" />
 <% even = false %>
 <% @chemicals.each do |chemical| %>
@@ -53,4 +53,4 @@
     </tr>
   </tbody>
 </table>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
