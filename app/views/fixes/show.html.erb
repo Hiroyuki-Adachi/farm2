@@ -3,16 +3,16 @@
 <h2><%= @fixed_at.strftime('%Y年 %m月')%>確定分</h2>
 
 <% if @works.count > 0 %>
-  <table class="list">
+  <table class="table table-sm">
     <thead>
       <tr>
         <th>作業日</th>
         <th>分類</th>
         <th>内容</th>
-        <th>人数</th>
-        <th>工数</th>
-        <th>日当</th>
-        <th>機械使用料</th>
+        <th style="text-align:right;">人数</th>
+        <th style="text-align:right;">工数</th>
+        <th style="text-align:right;">日当</th>
+        <th style="text-align:right;">機械使用料</th>
       </tr>
     </thead>
     <tbody id="tbody_works">
@@ -48,6 +48,4 @@
   </table>
 <% end %>
 <br />
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + fixes_path + "';") %>
-
-
+<%= button_tag "戻る",  type: :button, onclick: raw("javascript:location.href = '" + fixes_path + "';"), class: "btn btn-default" %>
