@@ -1,19 +1,28 @@
 <h1>作業種別マスタ一覧</h1>
-<table class="list">
-  <tr>
-    <th>名称</th>
-    <th>作業単価</th>
-    <th colspan="2">&nbsp;</th>
-  </tr>
-<% @work_kinds.each do |work_kind| %>
-  <tr>
-    <td><%=h work_kind.name %></td>
-    <td class="numeric"><%=h number_to_currency(work_kind.price, unit: '') %></td>
-    <td><%= link_to '修正', edit_work_kind_path(work_kind) %></td>
-    <td><%= link_to '削除', work_kind, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
-  </tr>
-<% end %>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th style="text-align:right;">作業単価</th>
+      <th colspan="2">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @work_kinds.each do |work_kind| %>
+      <tr>
+        <td><%=h work_kind.name %></td>
+        <td class="numeric"><%=h number_to_currency(work_kind.price, unit: '') %></td>
+        <td><%= link_to '修正', edit_work_kind_path(work_kind), {class: "btn btn-success btn-sm"} %></td>
+        <td><%= link_to '削除', work_kind, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
-<br />
-<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_work_kind_path + "';") %>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_work_kind_path + "';"), class: "btn btn-success" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
+  </div>
+</div>

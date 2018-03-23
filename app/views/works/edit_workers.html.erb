@@ -7,7 +7,7 @@
 
   <h2>作業者</h2>
   <div style="float:left;">
-  <table id="tbl_workers">
+  <table id="tbl_workers" class="table table-sm">
     <thead>
     <tr>
       <th style="width:20px;">No.</th>
@@ -23,7 +23,7 @@
         <td><%= result.worker.name %></td>
         <td><%= number_field_tag "results[][hours]", result.hours, {id: nil, max: 99, min: 0, step: 0.5, required: true} %></td>
         <td>
-            <input type="button" value="削除" onclick="remove_worker(<%= result.worker_id %>)" />
+            <input type="button" value="削除" class="btn btn-outline-dark btn-sm" onclick="remove_worker(<%= result.worker_id %>)" />
             <%= hidden_field_tag "results[][worker_id]", result.worker_id, {:id => nil} %>
             <%= hidden_field_tag "results[][display_order]", i + 1, {:id => nil} %>
         </td>
@@ -33,13 +33,13 @@
   </table>
   </div>
   <div style="float:left;margin-left: 40px; margin-top: 25px;">
-    <%= select_tag(:section, options_for_select(@sections), :onChange => "change_section(this);") %>
+    <%= select_tag(:section, options_for_select(@sections), {:onChange => "change_section(this);", class: "form-control"}) %>
     <div style="height:300px; overflow:auto; border-style:double;overflow-x:hidden;">
     <table id="master_workers">
       <tbody>
         <% Worker.usual.each do |worker| %>
         <tr id="master_worker_<%= worker.id %>">
-          <td><input id="add_button_<%= worker.id %>" type="button" value="←追加" onclick="add_worker(<%= worker.id %>, '<%= worker.name %>')" /></td>
+          <td><input id="add_button_<%= worker.id %>" type="button" class="btn btn-outline-dark btn-sm" value="←追加" onclick="add_worker(<%= worker.id %>, '<%= worker.name %>')" /></td>
           <td style="width:80px;"><%= worker.home.name %></td>
           <td style="width:120px;"><%= worker.name %></td>
           <td style="display: none;"><%= worker.home.section_id %></td>
@@ -49,9 +49,12 @@
     </table>
     </div>
   </div>
-  <div style="clear:left;"></div>
-
-  <br />
-  <%= f.submit '登録', :name => 'regist_workers' %>
-  <%= f.submit '戻る', :name => 'cancel' %>
+  <div class="btn-toolbar" style="clear:left;">
+    <div class="btn-group mr-2">
+      <%= f.submit '登録', :name => 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= f.submit '戻る', :name => 'cancel', class: "btn btn-default" %>
+    </div>
+  </div>
 <% end %>

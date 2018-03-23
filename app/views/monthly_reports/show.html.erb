@@ -1,18 +1,19 @@
 <%= stylesheet_link_tag 'work-lists', :media => 'all' %>
-<div style="float:left;">
-<%= link_to '前月', monthly_report_path(:worker_id => @worker.id, :target_from => @target_from.last_month), class: :button %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to '前月', monthly_report_path(:worker_id => @worker.id, :target_from => @target_from.last_month), class: "btn btn-primary" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '翌月', monthly_report_path(:worker_id => @worker.id, :target_from => @target_from.next_month), class: "btn btn-primary" %>
+  </div>
 </div>
-<div style="float:right;">
-<%= link_to '翌月', monthly_report_path(:worker_id => @worker.id, :target_from => @target_from.next_month), class: :button %>
-</div>
-<div style="clear:both;" />
 <div id="show">
   <div class="title">作 業 月 報</div>
   <div style="float:left;"><%= @target_from.strftime('%Y年%m月') %></div>
   <div style="float:right;"><%= @worker.name + "(#{@worker.home.name})" %></div>
   <div style="clear:left;"></div>
 
-  <table class="list">
+  <table class="table table-sm">
     <thead>
       <tr>
         <th>日付</th>
@@ -65,5 +66,11 @@
     </tfoot>
   </table>
 </div>
-<%= link_to '変更', edit_monthly_report_path(@worker, :target_from => @target_from), {class: :button} %>
-<%= button_to '戻る', monthly_reports_path, {:method => :get} %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to '変更', edit_monthly_report_path(@worker, :target_from => @target_from), {class: "btn btn-success"} %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= button_to '戻る', monthly_reports_path, {:method => :get, class: "btn btn-default"} %>
+  </div>
+</div>

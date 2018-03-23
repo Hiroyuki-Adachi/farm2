@@ -7,8 +7,7 @@ ja:
       work_result: "作業結果"  #g
       land: "土地"  #g
       work: "作業"  #g
-      work_type: "作業種別"  #g
-      work_kind: "作業種類"  #g
+      work_type: "作業分類"  #g
       worker: "作業者"  #g
       work_chemical: "薬剤使用量"
       machine: "機械"
@@ -67,8 +66,9 @@ ja:
         year: "年度"  #g
         worked_at: "作業日"  #g
         weather: "天気"  #g
-        name: "作業名"  #g
-        remarks: "備考"  #g
+        weather_id: "天気"  #g
+        name: "内容"  #g
+        remarks: "記事"  #g
         start_at: "開始時刻"  #g
         end_at: "終了時刻"  #g
         genre_name: "大分類"
@@ -76,6 +76,8 @@ ja:
         kind_name: "内容"
         workers_count: "人数"
         sum_hours: "工数"
+        work_type_id: "作業分類"
+        work_kind_id: "作業種別"
 
       work_type:
         name: "名称"
@@ -97,6 +99,7 @@ ja:
         account_type_id: "預金種別"
         account_number: "口座番号"
         gender_id: "性別"
+        home_id: "世帯"
 
       machine:
         name: 名称

@@ -1,0 +1,76 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require jquery-ui/autocomplete
+ *= require_self
+ */
+
+// Custom bootstrap variables must be set or imported *before* bootstrap.
+@import "bootstrap";
+
+/** 基本要素 **/
+input[type=number] {
+  text-align: right;
+}
+
+td.numeric {
+  text-align: right;
+}
+
+.bootstrap-date {
+  display: inline-block;
+  width: auto;
+}
+
+table.table-sm tr {
+  line-height: normal;
+}
+
+table.table-sm tr td, th {
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+
+/** 入力エラー **/
+#error_explanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 14px;
+  margin: -7px;
+  background-color: #c00;
+  border-style: none;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+.field_with_errors input,.field_with_errors select {
+  border:2px solid red;
+}
+
+.field_with_errors label {
+  color: red;
+}

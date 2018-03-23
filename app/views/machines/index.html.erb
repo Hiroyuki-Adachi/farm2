@@ -1,29 +1,38 @@
 <h1>機械マスタ一覧</h1>
 <% if @machines.count > 0 %>
-<table class="list">
-  <tr>
-    <th>種別</th>
-    <th>名称</th>
-    <th>所有者</th>
-    <th>運用開始日</th>
-    <th>運用終了(予定)日</th>
-    <th colspan="3">&nbsp;</th>
-  </tr>
-
-<% @machines.each do |machine| %>
-  <tr>
-    <td><%=h machine.type_name %></td>
-    <td><%=h machine.name %></td>
-    <td><%=h machine.owner.name %></td>
-    <td><%=h machine.validity_start_at %></td>
-    <td><%=h machine.validity_end_at %></td>
-    <td><%= link_to '修正', edit_machine_path(machine) %></td>
-    <td><%=h machine.price_tag %></td>
-    <td><%= link_to '削除', machine, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
-  </tr>
-<% end %>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>種別</th>
+      <th>名称</th>
+      <th>所有者</th>
+      <th>運用開始日</th>
+      <th>運用終了(予定)日</th>
+      <th colspan="3">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @machines.each do |machine| %>
+      <tr>
+        <td><%=h machine.type_name %></td>
+        <td><%=h machine.name %></td>
+        <td><%=h machine.owner.name %></td>
+        <td><%=h machine.validity_start_at %></td>
+        <td><%=h machine.validity_end_at %></td>
+        <td><%= link_to '修正', edit_machine_path(machine), {class: "btn btn-success btn-sm"} %></td>
+        <td><%=h machine.price_tag %></td>
+        <td><%= link_to '削除', machine, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 <%= paginate(@machines) %>
 <% end %>
-<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_machine_path + "';") %>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_machine_path + "';"), class: "btn btn-success" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
+  </div>
+</div>

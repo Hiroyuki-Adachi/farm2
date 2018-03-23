@@ -2,33 +2,36 @@
 
 <%= error_print(@organization) %>
 <%= form_for(@organization) do |f| %>
- <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, {maxlength: 20, size: 20, required: true} %>
+ <div class="field form-group">
+    <%= f.label :name, class: "col-form-label-lg" %>
+    <%= f.text_field :name, {maxlength: 20, size: 20, required: true, class: "form-control"} %>
  </div>
- <div class="field">
-    <%= f.label :workers_count %><br />
-    <%= f.number_field :workers_count, {min: 2, max: 50, step: 1, required: true} %>
+ <div class="field form-group">
+    <%= f.label :workers_count, class: "col-form-label-lg" %>
+    <%= f.number_field :workers_count, {min: 2, max: 50, step: 1, required: true, class: "form-control"} %>
  </div>
- <div class="field">
-    <%= f.label :lands_count %><br />
-    <%= f.number_field :lands_count, {min: 0, max: 99, step: 1, required: true} %>
+ <div class="field form-group">
+    <%= f.label :lands_count, class: "col-form-label-lg" %>
+    <%= f.number_field :lands_count, {min: 0, max: 99, step: 1, required: true, class: "form-control"} %>
  </div>
- <div class="field">
-    <%= f.label :machines_count %><br />
-    <%= f.number_field :machines_count, {min: 0, max: 50, step: 1, required: true} %>
+ <div class="field form-group">
+    <%= f.label :machines_count, class: "col-form-label-lg" %>
+    <%= f.number_field :machines_count, {min: 0, max: 50, step: 1, required: true, class: "form-control"} %>
  </div>
- <div class="field">
-    <%= f.label :chemicals_count %><br />
-    <%= f.number_field :chemicals_count, {min: 0, max: 50, step: 1, required: true} %>
+ <div class="field form-group">
+    <%= f.label :chemicals_count, class: "col-form-label-lg" %>
+    <%= f.number_field :chemicals_count, {min: 0, max: 50, step: 1, required: true, class: "form-control"} %>
  </div>
- <div class="field">
-    <%= f.label :daily_worker %><br />
-    <%= f.select :daily_worker, @organization.localed_daily_workers, {} %>
+ <div class="field form-group">
+    <%= f.label :daily_worker, class: "col-form-label-lg" %>
+    <%= f.select :daily_worker, @organization.localed_daily_workers, {}, {class: "form-control"} %>
  </div>
- <br />
- <div class="actions">
-    <%= f.submit '登録' %>
-    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= f.submit '登録', class: "btn btn-danger" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
+  </div>
  </div>
 <% end %>

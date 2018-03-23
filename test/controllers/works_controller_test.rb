@@ -29,11 +29,6 @@ class WorksControllerTest < ActionController::TestCase
     assert_difference('Work.count') do
       post :create, work: @update, regist: true
     end
-
-    assert_no_difference('Work.count') do
-      post :create, work: @update, cancel: true
-    end
-    assert_redirected_to root_path
   end
 
   test "作業照会" do
