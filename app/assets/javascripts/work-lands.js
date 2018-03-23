@@ -62,6 +62,7 @@ function add_land(land_id, land_place, land_area)
 
     var elem_button = document.createElement("input")
     elem_button.type = "button";
+    elem_button.className = "btn btn-outline-dark btn-sm";
     elem_button.value = "削除";
     elem_button.onclick = new Function("remove_land(" + land_id + ");");
     cell_del.appendChild(elem_button);

@@ -1,23 +1,33 @@
 <h1>作業者マスタ一覧</h1>
 <% if @workers.count > 0 %>
-<table class="list">
-  <tr>
-    <th>氏名</th>
-    <th>世帯</th>
-    <th>携帯番号</th>
-    <th colspan="2">&nbsp;</th>
-  </tr>
-<% @workers.each do |worker| %>
-  <tr>
-    <td><%=h worker.name %>(<%=h worker.first_phonetic %>)</td>
-    <td><%=h worker.home.name %></td>
-    <td><%=h worker.mobile %></td>
-    <td><%= link_to '修正', edit_worker_path(worker) %></td>
-    <td><%= link_to '削除', worker, method: :delete, data: {confirm: "本当に削除してもよろしいですか?"} %></td>
-  </tr>
-<% end %>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>氏名</th>
+      <th>世帯</th>
+      <th>携帯番号</th>
+      <th colspan="2">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @workers.each do |worker| %>
+      <tr>
+        <td><%=h worker.name %>(<%=h worker.first_phonetic %>)</td>
+        <td><%=h worker.home.name %></td>
+        <td><%=h worker.mobile %></td>
+        <td><%= link_to '修正', edit_worker_path(worker), {class: "btn btn-success btn-sm"} %></td>
+        <td><%= link_to '削除', worker, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 <%= paginate(@workers) %>
 <% end %>
-<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_worker_path + "';") %>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';") %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_worker_path + "';"), class: "btn btn-success" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + root_path + "';"), class: "btn btn-default" %>
+  </div>
+</div>

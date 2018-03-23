@@ -1,19 +1,42 @@
-<b>作業日：</b><%= f.date_field :worked_at, {required: true} %>
-<b>天候：</b><%= f.select(:weather_id, @weathers.map {|weather| [weather.name, weather.id]}) %>
-<br />
-<b>作業開始：</b><%= f.time_field :start_at, {step: 1800, required: true} %>
-<b>作業終了：</b><%= f.time_field :end_at, {step: 1800, required: true} %>
-
-<h2>内容</h2>
-<div>
-  <b>分類：</b><%= f.collection_select(:work_type_id, @work_types, :id, :name) %><br />
+<div class="form-row">
+  <div class="form-group col-md-4">
+    <%= f.label :worked_at, '', class: "col-form-label-lg" %>
+    <%= f.date_field :worked_at, {required: true, class: "form-control"} %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.label :weather_id, '', class: "col-form-label-lg" %>
+    <%= f.select(:weather_id, @weathers.map {|weather| [weather.name, weather.id]}, {}, {class: "form-control"}) %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.label :start_at, '', class: "col-form-label-lg" %>
+    <%= f.time_field :start_at, {step: 1800, required: true, class: "form-control"} %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.label :end_at, '', class: "col-form-label-lg" %>
+    <%= f.time_field :end_at, {step: 1800, required: true, class: "form-control"} %>
+  </div>
 </div>
-<div>
-<b>作業内容：</b><%= f.collection_select(:work_kind_id, @work_kinds, :id, :name) %>
-  <%= f.text_field :name, {:maxlength => 40, :size => 40} %>
+<div class="form-row">
+  <div class="form-group col-md-4">
+    <%= f.label :work_type_id, '', class: "col-form-label-lg" %>
+    <%= f.collection_select(:work_type_id, @work_types, :id, :name, {}, {class: "form-control"}) %><br />
+  </div>
 </div>
-<div>
-<b>記事：</b><%= f.text_area :remarks, {:rows => 3, :cols => 40} %>
+<div class="form-row">
+  <div class="form-group col-md-4">
+    <%= f.label :work_kind_id, '', class: "col-form-label-lg" %>
+    <%= f.collection_select(:work_kind_id, @work_kinds, :id, :name, {}, {class: "form-control"}) %>
+  </div>
+  <div class="form-group col-md-4">
+    <%= f.label :name, '', class: "col-form-label-lg" %>
+    <%= f.text_field :name, {:maxlength => 40, :size => 40, class: "form-control"} %>
+  </div>
+</div>
+<div class="form-row">
+  <div class="form-group col-md-8">
+    <%= f.label :remarks, '', class: "col-form-label-lg" %>
+    <%= f.text_area :remarks, {:rows => 3, :cols => 40, class: "form-control"} %>
+  </div>
 </div>
 <script type="text/javascript">
 $(function() {

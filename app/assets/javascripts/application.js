@@ -10,7 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require jquery3
 //= require jquery_ujs
 //= require jquery-ui/autocomplete
 //= require jquery-ui/sortable
@@ -18,8 +18,10 @@
 //= require i18n
 //= require i18n/translations
 //= require dateformat
+//= require popper
+//= require bootstrap-sprockets
 
-$(document).on("change", "span.check_group input[type='checkbox']", function(e) {
+$(document).on("change", "div.form-check-inline input[type='checkbox']", function(e) {
     if($(this).prop('checked')) {
         $(this).parent().css("color", "red");
     } else {
@@ -28,5 +30,5 @@ $(document).on("change", "span.check_group input[type='checkbox']", function(e) 
 });
 
 $(function() {
-    $("span.check_group input[type='checkbox']").trigger("change");
+    $("div.form-check-inline input[type='checkbox']").trigger("change");
 });

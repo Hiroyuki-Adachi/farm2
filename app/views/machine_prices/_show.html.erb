@@ -1,26 +1,29 @@
 <% if @machine_price %>
 <% work_kinds = @machine_price.work_kinds %>
 <h2><%= @machine_price.validated_at.strftime("%Y年%m月%d日") %>以降</h2>
-<table class="list">
-  <tr>
-    <th>設定モード</th>
-    <% work_kinds.each do |work_kind| %>
-    <th colspan="2"><%=h work_kind.name %></th>
-    <% end %>
-  </tr>
-
-<% Lease.all.each do |lease| %>
-  <tr>
-    <th><%=h lease.name %></th>
-    <% work_kinds.each do |work_kind| %>
-      <% if @machine_price.details_form[lease.id][work_kind.id][:adjust_id].to_i == Adjust::NONE.id %>
-        <td colspan="2"><%=h Adjust::NONE.name %></td>
-      <% else %>
-        <td><%=h Adjust.find(@machine_price.details_form[lease.id][work_kind.id][:adjust_id]).name %></td>
-        <td class="numeric"><%=h number_with_delimiter(@machine_price.details_form[lease.id][work_kind.id][:price]) %></td>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>設定モード</th>
+      <% work_kinds.each do |work_kind| %>
+      <th colspan="2"><%=h work_kind.name %></th>
       <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% Lease.all.each do |lease| %>
+      <tr>
+        <th><%=h lease.name %></th>
+        <% work_kinds.each do |work_kind| %>
+          <% if @machine_price.details_form[lease.id][work_kind.id][:adjust_id].to_i == Adjust::NONE.id %>
+            <td colspan="2"><%=h Adjust::NONE.name %></td>
+          <% else %>
+            <td><%=h Adjust.find(@machine_price.details_form[lease.id][work_kind.id][:adjust_id]).name %></td>
+            <td class="numeric"><%=h number_with_delimiter(@machine_price.details_form[lease.id][work_kind.id][:price]) %></td>
+          <% end %>
+        <% end %>
+      </tr>
     <% end %>
-  </tr>
-<% end %>
+  </tbody>
 </table>
 <% end %>

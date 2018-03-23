@@ -47,8 +47,6 @@ class WorksController < ApplicationController
   end
 
   def create
-    redirect_to(root_path) if params[:cancel]
-
     if params[:regist]
       @work = Work.new(work_params)
       if @work.save

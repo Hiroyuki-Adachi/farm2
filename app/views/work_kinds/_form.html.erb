@@ -1,66 +1,68 @@
 <%= error_print(@work_kind) %>
 <%= form_for(@work_kind) do |f| %>
- <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, {maxlength: 40, size: 20, required: true} %>
+ <div class="field form-group">
+    <%= f.label :name, class: "col-form-label-lg" %>
+    <%= f.text_field :name, {maxlength: 40, size: 20, required: true, class: "form-control"} %>
  </div>
- <div class="field">
-    <%= f.label :display_order %><br />
-    <%= f.number_field :display_order, {min: 0, max: 9999, step: 1, required: true} %>
+ <div class="field form-group">
+    <%= f.label :display_order, class: "col-form-label-lg" %>
+    <%= f.number_field :display_order, {min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
  </div>
- <div class="field">
-    <%= f.label :price %><br />
-    <%= f.number_field :price, {min: 0, max: 9999, step: 1, required: true} %>
+ <div class="field form-group">
+    <%= f.label :price, class: "col-form-label-lg" %>
+    <%= f.number_field :price, {min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
  </div>
- <br />
- <div class="field">
+ <div class="field form-group">
  <% if @organization.lands_count > 0 %>
-    <%= f.label :land_flag %>
+    <%= f.label :land_flag, class: "col-form-label-lg" %>
     <%= f.check_box :land_flag %>
  <% else %>
    <%= f.hidden_field land_flag, false %>
  <% end %>
  </div>
- <div class="field">
+ <div class="field form-group">
  <fieldset>
     <legend>該当作業</legend>
   <% @work_types.each do |work_type| %>
-    <span class="check_group">
-      <%= check_box_tag "work_types[]", work_type.id, @work_kind.work_types.include?(work_type), {:id => nil} %><!--
-    --><%=h work_type.name %>
-    </span>
+    <div class="form-check form-check-inline">
+      <%= check_box_tag "work_types[]", work_type.id, @work_kind.work_types.include?(work_type), {id: "work_type_#{work_type.id}", class: "form-check-input"} %>
+      <%= label_tag "work_type_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+    </div>
   <% end %>
   </fieldset>
   </div>
   <% if @organization.machines_count > 0 %>
     <div class="field">
-    <fieldset>
+      <fieldset class="form-group">
         <legend>使用機械種別</legend>
       <% @machine_types.each do |machine_type| %>
-        <span class="check_group">
-          <%= check_box_tag "machine_types[]", machine_type.id, @work_kind.machine_types.include?(machine_type), {:id => nil} %><!--
-        --><%=h machine_type.name %>
-        </span>
+        <div class="form-check form-check-inline">
+          <%= check_box_tag "machine_types[]", machine_type.id, @work_kind.machine_types.include?(machine_type), {id: "machine_type_#{machine_type.id}", class: "form-check-input"} %>
+          <%= label_tag "machine_type_#{machine_type.id}", machine_type.name, {class: "form-check-label"} %>
+        </div>
       <% end %>
       </fieldset>
     </div>
   <% end %>
   <% if @organization.chemicals_count > 0 %>
   <div class="field">
-  <fieldset>
+    <fieldset class="form-group">
       <legend>使用薬品種別</legend>
       <% @chemical_types.each do |chemical_type| %>
-        <span class="check_group">
-          <%= check_box_tag "chemical_types[]", chemical_type.id, @work_kind.chemical_types.include?(chemical_type), {:id => nil} %><!--
-        --><%=h chemical_type.name %>
-        </span>
+        <div class="form-check form-check-inline">
+          <%= check_box_tag "chemical_types[]", chemical_type.id, @work_kind.chemical_types.include?(chemical_type), {id: "chemical_type_#{chemical_type.id}", class: "form-check-input"} %>
+          <%= label_tag "chemical_type_#{chemical_type.id}", chemical_type.name, {class: "form-check-label"} %>
+        </div>
       <% end %>
     </fieldset>
     </div>
  <% end %>
- <br />
- <div class="actions">
-    <%= f.submit '登録' %>
-    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + work_kinds_path + "';") %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= f.submit '登録', class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + work_kinds_path + "';"), class: "btn btn-default" %>
+  </div>
  </div>
 <% end %>
