@@ -31,6 +31,15 @@ td.numeric {
   width: auto;
 }
 
+table.table-sm tr {
+  line-height: normal;
+}
+
+table.table-sm tr td, th {
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+
 /** 入力エラー **/
 #error_explanation {
   width: 400px;
