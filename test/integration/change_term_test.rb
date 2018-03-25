@@ -11,7 +11,7 @@ class ChangeTermTest < ActionDispatch::IntegrationTest
     patch_via_redirect(menu_path(@system), {system: {term: new_term}})
     assert_response :success
 
-    get_via_redirect(root_path)
+    get_via_redirect(menu_index_path)
     assert_response :success
     assert_equal new_term, assigns(:system).term
   end

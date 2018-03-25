@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180217131758) do
+ActiveRecord::Schema.define(version: 20180323172955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -216,6 +216,17 @@ ActiveRecord::Schema.define(version: 20180217131758) do
   end
 
   add_index "systems", ["term"], name: "index_systems_on_term", unique: true, using: :btree
+
+  create_table "users", force: :cascade, comment: "利用者マスタ" do |t|
+    t.string   "login_name",      limit: 12,  null: false, comment: "ログイン名"
+    t.string   "password_digest", limit: 128, null: false, comment: "パスワード"
+    t.integer  "worker_id",                                comment: "作業者"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "users", ["login_name"], name: "index_users_on_login_name", unique: true, using: :btree
+  add_index "users", ["worker_id"], name: "index_users_on_worker_id", unique: true, using: :btree
 
   create_table "work_chemicals", force: :cascade, comment: "薬剤使用データ" do |t|
     t.integer  "work_id",                               null: false, comment: "作業"

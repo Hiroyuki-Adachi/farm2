@@ -2,12 +2,7 @@ require 'test_helper'
 
 class WorksControllerTest < ActionController::TestCase
   setup do
-    @request = ActionController::TestRequest.new
-    @request.instance_eval do
-      def remote_ip
-        "127.0.0.1"
-      end
-    end
+    setup_ip
     @update = { 
       worked_at: "2015-05-05", weather_id: 1, start_at: "08:00:00", end_at: "17:00:00",
       work_type_id: work_types(:work_type_koshi).id, work_kind_id: work_kinds(:work_kind_taue).id,

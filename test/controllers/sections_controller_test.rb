@@ -2,12 +2,7 @@ require 'test_helper'
 
 class SectionsControllerTest < ActionController::TestCase
   setup do
-    @request = ActionController::TestRequest.new
-    @request.instance_eval do
-      def remote_ip
-        "127.0.0.1"
-      end
-    end
+    setup_ip
     @section = sections(:sections1)
     @update = { name: "試験", display_order: 99, work_flag: true }
   end

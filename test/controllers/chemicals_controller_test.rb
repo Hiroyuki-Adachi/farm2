@@ -2,12 +2,7 @@ require 'test_helper'
 
 class ChemicalsControllerTest < ActionController::TestCase
   setup do
-    @request = ActionController::TestRequest.new
-    @request.instance_eval do
-      def remote_ip
-        "127.0.0.1"
-      end
-    end
+    setup_ip
     @chemical = chemicals(:chemicals1)
     @update = { name: "試験", display_order: 99, chemical_type_id: chemical_types(:chemical_types1), this_term_flag: false }
     @term = Organization.first.term

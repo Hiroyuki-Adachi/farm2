@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  include SessionsHelper
 
   PERMIT_ADDRESSES = ['127.0.0.1', '192.168.', '10.8.0.'].freeze
 
@@ -22,8 +23,10 @@ class ApplicationController < ActionController::Base
   end
 
   def restrict_remote_ip
-    unless PERMIT_ADDRESSES.any? { |pa| request.remote_ip.start_with?(pa)}
+    if PERMIT_ADDRESSES.none? { |pa| request.remote_ip.start_with?(pa) }
       render text: 'Service Unavailable', status: 503
+    elsif session[:user_id].nil? && controller_name != "sessions"
+      redirect_to root_path
     end
   end
 

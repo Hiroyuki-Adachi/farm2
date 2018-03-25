@@ -1,12 +1,7 @@
 require 'test_helper'
 class MenuControllerTest < ActionController::TestCase
   def setup
-    @request = ActionController::TestRequest.new
-    @request.instance_eval do
-      def remote_ip
-        "127.0.0.1"
-      end
-    end
+    setup_ip
     @organization = Organization.first
     @system = System.find_by(term: @organization.term)
   end

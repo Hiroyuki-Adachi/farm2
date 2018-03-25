@@ -37,7 +37,7 @@ class MenuController < ApplicationController
       session[:organization] = @organization.attributes
       Rails.cache.clear
       Rails.cache.write(term_cache_key, @system.attributes, expires_in: 1.hour)
-      redirect_to(root_path, :notice => '設定を変更しました。')
+      redirect_to(menu_index_path, :notice => '設定を変更しました。')
     elsif system_params[:term]
       render :action => :edit_term
     else
