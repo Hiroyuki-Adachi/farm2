@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323172955) do
+ActiveRecord::Schema.define(version: 20180325123502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -340,6 +340,7 @@ ActiveRecord::Schema.define(version: 20180323172955) do
     t.integer  "work_kind_id",            default: 0, null: false, comment: "作業種別"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "created_by",                                       comment: "作成者"
   end
 
 end

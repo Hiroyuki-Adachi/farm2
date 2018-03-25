@@ -24,6 +24,11 @@ class WorksControllerTest < ActionController::TestCase
     assert_difference('Work.count') do
       post :create, work: @update, regist: true
     end
+
+    work = Work.where(name: "試験").first
+    user = User.find(session[:user_id])
+    assert_not_nil work
+    assert_equal work.created_by, user.worker.id
   end
 
   test "作業照会" do

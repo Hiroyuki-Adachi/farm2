@@ -15,6 +15,7 @@
 #  work_kind_id :integer          default(0), not null  # 作業種別
 #  created_at   :datetime
 #  updated_at   :datetime
+#  created_by   :integer                                # 作成者
 #
 
 class Work < ApplicationRecord
@@ -32,6 +33,7 @@ class Work < ApplicationRecord
   belongs_to :work_kind, -> {with_deleted}
   belongs_to :weather
   belongs_to :fix, {foreign_key: :fixed_at}
+  belongs_to :created_worker, { class_name: "Worker", foreign_key: "created_by" }, -> { with_deleted }
 
   has_many :work_lands,     -> {order('work_lands.display_order')},  {dependent: :destroy}
   has_many :work_results,   -> {order('work_results.display_order')}, {dependent: :destroy}

@@ -15,6 +15,7 @@
 #  work_kind_id :integer          default(0), not null  # 作業種別
 #  created_at   :datetime
 #  updated_at   :datetime
+#  created_by   :integer                                # 作成者
 #
 
 require 'test_helper'
