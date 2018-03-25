@@ -51,6 +51,8 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown6">
               <%= link_to '対象年度変更', edit_term_menu_path(@system), {class: "dropdown-item"} %>
               <%= link_to '管理情報変更', edit_organization_path(@organization), {class: "dropdown-item"} %>
+              <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item"} %>
+              <%= link_to 'ログアウト', session_path(current_user.id), {method: :delete, class: "dropdown-item"} %>
             </div>
           </li>
         </ul>

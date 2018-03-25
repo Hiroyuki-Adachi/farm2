@@ -1,0 +1,25 @@
+<h1>アカウント(パスワード)変更</h1>
+
+<%= error_print(@user) %>
+<%= form_for(@user) do |f| %>
+<div class="field form-group">
+  <%= f.label :login_name, class: "col-form-label-lg" %>
+  <%= f.text_field :login_name, {maxlength: 12, required: true, class: "form-control"} %>
+</div>
+<div class="field form-group">
+  <%= f.label :password, class: "col-form-label-lg" %>
+  <%= f.password_field(:password, {maxlength: 20, required: true, class: "form-control"}) %>
+</div>
+<div class="field form-group">
+  <%= f.label :password_confirmation, class: "col-form-label-lg" %>
+  <%= f.password_field(:password_confirmation, {maxlength: 20, required: true, class: "form-control"}) %>
+</div>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= f.submit '登録', class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-default" %>
+  </div>
+</div>
+<% end %>

@@ -1,5 +1,5 @@
-<div id="error_explanation" class="alert alert-danger">
-  <h2 class="text-danger"><%= ar.errors.count %>件のエラーがあります。</h2>
+<div class="alert alert-danger" role="alert">
+  <div class="text-danger h4"><%= ar.errors.count %>件のエラーがあります。</div>
   <ul>
     <% ar.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>

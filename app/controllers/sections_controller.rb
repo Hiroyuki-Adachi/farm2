@@ -33,8 +33,9 @@ class SectionsController < ApplicationController
     @section.destroy
     redirect_to sections_path
   end
-  
+
   private
+
   def set_section
     @section = Section.find(params[:id])
   end
