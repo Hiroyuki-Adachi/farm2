@@ -40,9 +40,9 @@ class Home < ApplicationRecord
   validates :phonetic,      presence: true
   validates :name,          presence: true
   validates :display_order, presence: true
-  validates :phonetic, format: {with: /\A[\p{Hiragana}ー－]+\z/}, :if => Proc.new{|x| x.phonetic.present?}
-  validates :telephone, format: {with: REG_PHONE}, :if => Proc.new{|x| x.telephone.present?}
-  validates :display_order, numericality: {only_integer: true}, :if => Proc.new{|x| x.display_order.present?}
+  validates :phonetic, format: { with: /\A[\p{Hiragana}ー－]+\z/ }, if: proc { |x| x.phonetic.present? }
+  validates :telephone, format: { with: REG_PHONE }, if: proc { |x| x.telephone.present? }
+  validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
 
   def holder_name
     return self.holder ? self.holder.name : ''

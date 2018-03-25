@@ -18,7 +18,7 @@ class WorkChemical < ApplicationRecord
   has_one    :work_kind, { through: :work }, -> { with_deleted }
 
   validates_presence_of :quantity
-  validates_numericality_of :quantity, :if => proc { |x| x.quantity.present? }
+  validates_numericality_of :quantity, if: proc { |x| x.quantity.present? }
 
   scope :by_work, ->(term){
       joins(:work).eager_load(:work)

@@ -27,7 +27,7 @@ class Work < ApplicationRecord
 
   validates :worked_at, presence: true
   validates :weather,   presence: true
-  validates :name, length: {maximum: 40}, :if =>  Proc.new{|x| x.name.present?}
+  validates :name, length: { maximum: 40 }, if: proc { |x| x.name.present? }
 
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}

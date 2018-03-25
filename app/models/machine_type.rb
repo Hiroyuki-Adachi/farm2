@@ -20,7 +20,7 @@ class MachineType < ApplicationRecord
 
   validates :name, presence: true
   validates :display_order, presence: true
-  validates :display_order, numericality: {only_integer: true}, :if => Proc.new{|x| x.display_order.present?}
+  validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
 
   def price_details(work)
     header = price_headers.where("validated_at <= ?", work.worked_at).order(validated_at: :DESC).first
