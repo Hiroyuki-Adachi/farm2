@@ -14,6 +14,6 @@ class ActiveSupport::TestCase
         "127.0.0.1"
       end
     end
-    session[:user_id] = 1
+    session[:user_id] = User.first.id
   end
 end
