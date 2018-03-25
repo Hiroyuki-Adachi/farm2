@@ -24,12 +24,12 @@ class Machine < ApplicationRecord
   has_many :machine_kinds, through: :machine_type
   has_many :price_headers, {class_name: :MachinePriceHeader, dependent: :destroy}, -> {order("machine_price_headers.validated_at DESC")}
 
-  belongs_to :owner, {class_name: :Home, foreign_key: :home_id}, -> {with_deleted}
+  belongs_to :owner, { class_name: :Home, foreign_key: :home_id }, -> { with_deleted }
 
   validates :validity_start_at, presence: true
   validates :validity_end_at, presence: true
   validates :display_order, presence: true
-  validates :display_order, numericality: {only_integer: true}, :if => Proc.new{|x| x.display_order.present?}
+  validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
 
   scope :by_work, -> (work) { 
      includes(:machine_type, :machine_kinds)

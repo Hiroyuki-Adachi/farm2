@@ -32,7 +32,7 @@ class Organization < ApplicationRecord
   validates :chemicals_count, presence: true
   validates :daily_worker, presence: true
 
-  validates :name, length: { maximum: 20 }, :if => proc { |x| x.name.present? }
+  validates :name, length: { maximum: 20 }, if: proc { |x| x.name.present? }
 
   def self.term
     Rails.cache.fetch(:organization_term, expires_in: 1.hour) do

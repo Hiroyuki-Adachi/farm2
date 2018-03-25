@@ -36,8 +36,8 @@ class Land < ApplicationRecord
   validates :area, presence: true
   validates :display_order, presence: true
 
-  validates :area, numericality: true, :if => Proc.new{|x| x.area.present?}
-  validates :display_order, numericality: {only_integer: true}, :if => Proc.new{|x| x.display_order.present?}
+  validates :area, numericality: true, if: proc { |x| x.area.present? }
+  validates :display_order, numericality: { only_integer: true }, if: proc{ |x| x.display_order.present? }
 
   def owner_name
     return self.owner.member_flag ? self.owner_holder.name : self.owner.name
@@ -46,7 +46,7 @@ class Land < ApplicationRecord
   def manager_name
     return self.manager.member_flag ? self.manager_holder.name : self.manager.name
   end
-  
+
   def self.autocomplete(place)
     results = []
     Land.where("target_flag = ? AND (place like ? OR area = ?)", true, "%#{place}%", place.to_f).order(:place, :display_order).limit(15).each do |land|
