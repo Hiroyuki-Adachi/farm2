@@ -2,12 +2,7 @@ require 'test_helper'
 
 class FixesControllerTest < ActionController::TestCase
   setup do
-    @request = ActionController::TestRequest.new
-    @request.instance_eval do
-      def remote_ip
-        "127.0.0.1"
-      end
-    end
+    setup_ip
     @fix = fixes(:fix1)
     @no_fix_works = [works(:work_no_fix1).id, works(:work_no_fix2).id]
   end

@@ -1,5 +1,6 @@
 class OrganizationsController < ApplicationController
   before_action :set_organization
+  layout 'menu'
 
   def edit
   end
@@ -7,7 +8,7 @@ class OrganizationsController < ApplicationController
   def update
     if @organization.update(organization_params)
       session[:organization] = @organization.attributes
-      redirect_to(root_path)
+      redirect_to(menu_index_path)
     else
       render action: :edit
     end

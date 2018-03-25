@@ -2,12 +2,7 @@ require 'test_helper'
 
 class WorkKindsControllerTest < ActionController::TestCase
   setup do
-    @request = ActionController::TestRequest.new
-    @request.instance_eval do
-      def remote_ip
-        "127.0.0.1"
-      end
-    end
+    setup_ip
     @work_kind = work_kinds(:work_kinds1)
     @term = Organization.first.term
     @update = { name: "試験", display_order: 99, price: 1500, land_flag: true }

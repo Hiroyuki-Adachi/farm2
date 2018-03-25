@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :branches, {param: :code, controller: "banks/branches", except: [:show]}
   end
 
+  resources :sessions, only: [:new, :create, :destroy]
   resources :machine_types, except: [:show]
   resources :chemical_types, except: [:show]
   resources :work_kinds, except: [:show]
@@ -50,5 +51,5 @@ Rails.application.routes.draw do
   resources :machine_results, only: [:index]
   resources :work_chemicals, only: [:index]
 
-  root controller: :menu, action: :index
+  root controller: :sessions, action: :new
 end

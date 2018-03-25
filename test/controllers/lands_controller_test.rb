@@ -2,12 +2,7 @@ require 'test_helper'
 
 class LandsControllerTest < ActionController::TestCase
   setup do
-    @request = ActionController::TestRequest.new
-    @request.instance_eval do
-      def remote_ip
-        "127.0.0.1"
-      end
-    end
+    setup_ip
     @land = lands(:lands1)
     @update = { place: "9999", owner_id: Home.first, manager_id: Home.first, area: 55.5, display_order: 99, target_flag: true }
   end
