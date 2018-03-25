@@ -49,6 +49,7 @@ class WorksController < ApplicationController
   def create
     if params[:regist]
       @work = Work.new(work_params)
+      @work.created_by = current_user.worker.id
       if @work.save
         redirect_to(work_path(@work.id))
       else
