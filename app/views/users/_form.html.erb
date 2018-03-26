@@ -1,0 +1,29 @@
+<%= error_print(@user) %>
+<%= form_for(@user) do |f| %>
+<div class="field form-group">
+  <%= f.label :login_name, class: "col-form-label-lg" %>
+  <%= f.text_field :login_name, {maxlength: 12, pattern: "^([a-zA-Z0-9]{6,})$", required: true, class: "form-control", autocomplete: false} %>
+</div>
+<div class="field form-group">
+  <%= f.label :password, class: "col-form-label-lg" %>
+  <%= f.password_field(:password, {maxlength: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED, pattern: "^([a-zA-Z0-9]{4,})$", required: true, class: "form-control", autocomplete: false}) %>
+</div>
+<div class="field form-group">
+  <%= f.label :password_confirmation, class: "col-form-label-lg" %>
+  <%= f.password_field(:password_confirmation, {maxlength: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED, required: true, class: "form-control", autocomplete: false}) %>
+</div>
+<%= f.hidden_field :worker_id %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= f.submit '登録', class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
+    <% if action_name == "new" ||  action_name == "create" %>
+      <%= link_to '戻る', edit_worker_path(@user.worker_id), {class: "btn btn-outline-dark"} %>
+    <% end %>
+    <% if action_name == "edit" || action_name == "update" %>
+      <%= link_to "戻る", :onclick => raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
+    <% end %>
+  </div>
+</div>
+<% end %>

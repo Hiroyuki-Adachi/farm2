@@ -42,11 +42,11 @@
     <% end %>
     <% if @machine_price.machine_id == 0 %>
       <div class="btn-group mr-2">
-        <%= button_tag "戻る", type: :button, :onclick => raw("location.href = '" + edit_machine_type_path(@machine_price.machine_type_id) + "';"), class: "btn btn-default" %>
+        <%= button_tag "戻る", type: :button, :onclick => raw("location.href = '" + edit_machine_type_path(@machine_price.machine_type_id) + "';"), class: "btn btn-outline-dark" %>
       </div>
     <% else %>
       <div class="btn-group mr-2">
-        <%= button_tag "戻る", type: :button, :onclick => raw("location.href = '" + edit_machine_path(@machine_price.machine_id) + "';"), class: "btn btn-default" %>
+        <%= button_tag "戻る", type: :button, :onclick => raw("location.href = '" + edit_machine_path(@machine_price.machine_id) + "';"), class: "btn btn-outline-dark" %>
       </div>
     <% end %>
   </div>

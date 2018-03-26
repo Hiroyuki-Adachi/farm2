@@ -151,7 +151,7 @@ function calc_total_hours()
     <%= submit_tag "登録", class: "btn btn-warning"  %>
   </div>
   <div class="btn-group mr-2">
-    <%= link_to '戻る', monthly_report_path(target_from: @target_from, worker_id: @worker.id), class: "btn btn-default" %>
+    <%= link_to '戻る', monthly_report_path(target_from: @target_from, worker_id: @worker.id), class: "btn btn-outline-dark" %>
   </div>
 </div>
 <% end %>

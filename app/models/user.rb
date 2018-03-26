@@ -13,5 +13,12 @@
 class User < ActiveRecord::Base
   belongs_to :worker
 
+  validates :login_name, uniqueness: true
+  validates_length_of :password, maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED
+
+  def login_name=(value)
+    super(value.downcase)
+  end
+
   has_secure_password
 end
