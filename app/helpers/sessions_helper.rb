@@ -11,6 +11,10 @@ module SessionsHelper
     @current_user ||= User.find_by(id: session[:user_id])
   end
 
+  def current_name
+    current_user.worker.family_name + " " + current_user.worker.first_name
+  end
+
   def log_out
     session.delete(:user_id)
     @current_user = nil
