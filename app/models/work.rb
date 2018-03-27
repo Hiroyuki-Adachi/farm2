@@ -29,20 +29,22 @@ class Work < ApplicationRecord
   validates :weather,   presence: true
   validates :name, length: { maximum: 40 }, if: proc { |x| x.name.present? }
 
-  belongs_to :work_type, -> {with_deleted}
-  belongs_to :work_kind, -> {with_deleted}
+  belongs_to :work_type, -> { with_deleted }
+  belongs_to :work_kind, -> { with_deleted }
   belongs_to :weather
   belongs_to :fix, {foreign_key: :fixed_at}
-  belongs_to :created_worker, { class_name: "Worker", foreign_key: "created_by" }, -> { with_deleted }
+  belongs_to :creator, { class_name: "Worker", foreign_key: "created_by" }, -> { with_deleted }
 
-  has_many :work_lands,     -> {order('work_lands.display_order')},  {dependent: :destroy}
-  has_many :work_results,   -> {order('work_results.display_order')}, {dependent: :destroy}
-  has_many :work_chemicals, -> {order('work_chemicals.id')}, {dependent: :destroy}
+  has_many :work_lands,     -> { order('work_lands.display_order') }, { dependent: :destroy }
+  has_many :work_results,   -> { order('work_results.display_order') }, { dependent: :destroy }
+  has_many :work_chemicals, -> { order('work_chemicals.id') }, { dependent: :destroy }
+  has_many :work_verifications, -> { order('work_verifications.id') }, { dependent: :destroy }
 
-  has_many :workers,    {through: :work_results}, -> {with_deleted}
-  has_many :lands,      {through: :work_lands}, -> {with_deleted}
-  has_many :chemicals,  {through: :work_chemicals}, -> {with_deleted}
-  has_many :machine_results, {through: :work_results}
+  has_many :workers, { through: :work_results }, -> { with_deleted }
+  has_many :lands, { through: :work_lands }, -> { with_deleted }
+  has_many :chemicals, { through: :work_chemicals }, -> { with_deleted }
+  has_many :machine_results, { through: :work_results }
+  has_many :checkers, { through: :work_verifications }, -> { with_deleted }
 
   scope :no_fixed, ->(term){where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)}
   scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327132927) do
+ActiveRecord::Schema.define(version: 20180327140505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -302,6 +302,15 @@ ActiveRecord::Schema.define(version: 20180327132927) do
   end
 
   add_index "work_types", ["deleted_at"], name: "index_work_types_on_deleted_at", using: :btree
+
+  create_table "work_verifications", force: :cascade, comment: "日報検証" do |t|
+    t.integer  "work_id",                 comment: "作業"
+    t.integer  "worker_id",               comment: "作業者"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "work_verifications", ["work_id", "worker_id"], name: "index_work_verifications_on_work_id_and_worker_id", unique: true, using: :btree
 
   create_table "workers", force: :cascade, comment: "作業者マスタ" do |t|
     t.string   "family_phonetic", limit: 15,                     null: false, comment: "姓(ﾌﾘｶﾞﾅ)"
