@@ -16,8 +16,12 @@ s2014:
   term: 2014
   target_from: 2014-01-01
   target_to: 2014-12-31
+  start_date: 2014-01-01
+  end_date: 2014-12-31
 
 s2015:
   term: 2015
   target_from: 2015-01-01
   target_to: 2015-12-31
+  start_date: 2015-01-01
+  end_date: 2015-12-31

@@ -24,6 +24,8 @@ class MenuController < ApplicationController
       @system = System.new(term: @term) unless @system
       @system.target_from = Date.new(@term, 1, 1)
       @system.target_to   = Date.new(@term, 12, 31)
+      @system.start_date  = Date.new(@term, 1, 1)
+      @system.end_date    = Date.new(@term, 12, 31)
     else
       @system = System.where(term: @term).first
       @system.target_from = Date.strptime(system_params['target_from'], "%Y-%m")
