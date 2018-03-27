@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180325123502) do
+ActiveRecord::Schema.define(version: 20180327132927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -213,6 +213,8 @@ ActiveRecord::Schema.define(version: 20180325123502) do
     t.date     "target_to",                comment: "終了年月"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "start_date",  null: false, comment: "期首日"
+    t.date     "end_date",    null: false, comment: "期末日"
   end
 
   add_index "systems", ["term"], name: "index_systems_on_term", unique: true, using: :btree
