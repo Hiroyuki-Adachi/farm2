@@ -8,6 +8,8 @@
 #  target_to   :date                                   # 終了年月
 #  created_at  :datetime
 #  updated_at  :datetime
+#  start_date  :date             not null              # 期首日
+#  end_date    :date             not null              # 期末日
 #
 
 class System < ApplicationRecord
