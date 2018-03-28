@@ -15,5 +15,6 @@ class SessionsControllerTest < ActionController::TestCase
   test "ログイン実行" do
     post :create, login_name: @user.login_name, password: "password"
     assert_redirected_to menu_index_path
+    assert_equal session[:user_id], @user.id
   end
 end
