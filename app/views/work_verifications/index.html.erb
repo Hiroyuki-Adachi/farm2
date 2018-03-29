@@ -1,10 +1,29 @@
+<script type="text/javascript">
+$(function() {
+    $("#tbl_list").floatThead({
+        position: 'absolute',
+        scrollContainer:true
+    });
+    $(window).resize(function() {
+        setTableWrapperHeight();
+    });
+
+    setTableWrapperHeight();
+});
+
+function setTableWrapperHeight() {
+    if($("#list")[0]) {
+        $("#list").height($(window).height() - $("#list").offset().top - $("#btn_toolbar").height() - 15);
+    }
+}
+</script>
 <h1>作業日報検証</h1>
 <% if @works.count > 0 %>
-<div id="list">
+<div id="list" class="wrapper small" style="overflow-y: scroll; width: 100%;">
 <%= render(partial: 'list') %>
 </div>
 <% end %>
-<div class="btn-toolbar">
+<div id="btn_toolbar" class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
   </div>

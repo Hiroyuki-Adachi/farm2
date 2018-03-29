@@ -1,6 +1,6 @@
 class WorkVerificationsController < ApplicationController
   def index
-    @works = WorkDecorator.decorate_collection(Work.no_fixed(@term).by_creator(current_user.worker))
+    @works = WorkDecorator.decorate_collection(Work.for_verifications(@term, current_user.worker))
     respond_to do |format|
       format.html
     end

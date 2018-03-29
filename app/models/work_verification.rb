@@ -13,9 +13,15 @@ class WorkVerification < ActiveRecord::Base
   belongs_to :work
   belongs_to :worker, -> { with_deleted }
 
-  before_create :destroy_for_create
+  ENOUGH = 3
 
-  def destroy_for_create
-    WorkVerification.destroy_all(work_id: work_id, worker_id: worker_id)
+  def self.regist(work, worker)
+    wv = WorkVerification.where(work_id: work.id, worker_id: worker.id)
+    if wv.exists?
+      wv.first.touch
+      wv.first.save!
+    else
+      WorkVerification.create(work_id: work.id, worker_id: worker.id)
+    end
   end
 end
