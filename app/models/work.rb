@@ -44,11 +44,12 @@ class Work < ApplicationRecord
   has_many :lands, { through: :work_lands }, -> { with_deleted }
   has_many :chemicals, { through: :work_chemicals }, -> { with_deleted }
   has_many :machine_results, { through: :work_results }
-  has_many :checkers, { through: :work_verifications }, -> { with_deleted }
+  has_many :checkers, { through: :work_verifications, source: :worker }, -> { with_deleted }
 
   scope :no_fixed, ->(term){where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)}
   scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, id: :DESC)}
+  scope :by_creator, ->(worker) { where(["(works.created_by IS NULL OR works.created_by <> ?)", worker.id]) }
 
   scope :by_chemical, -> (term) {
       where("id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.work_id").uniq)

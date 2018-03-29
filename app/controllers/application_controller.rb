@@ -10,6 +10,16 @@ class ApplicationController < ActionController::Base
   before_action :restrict_remote_ip
   before_action :set_system
 
+  protected
+
+  def sum_hours_key(term)
+    "sum_hours#{term}"
+  end
+
+  def count_workers_key(term)
+    "count_workers#{term}"
+  end
+
   private
 
   def set_term
