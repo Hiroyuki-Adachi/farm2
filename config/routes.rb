@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :fixes, {param: "fixed_at", except: [:edit, :update]}
   resources :personal_informations, {param: "token", only: [:show]}
   resources :users, only: [:new, :create, :edit, :update]
+  resources :work_verifications, only: [:index, :create, :destroy]
 
   resources :menu, only: [:index, :edit, :update] do
     member do

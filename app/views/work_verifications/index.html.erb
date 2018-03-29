@@ -1,0 +1,11 @@
+<h1>作業日報検証</h1>
+<% if @works.count > 0 %>
+<div id="list">
+<%= render(partial: 'list') %>
+</div>
+<% end %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
+  </div>
+</div>

@@ -12,4 +12,10 @@
 class WorkVerification < ActiveRecord::Base
   belongs_to :work
   belongs_to :worker, -> { with_deleted }
+
+  before_create :destroy_for_create
+
+  def destroy_for_create
+    WorkVerification.destroy_all(work_id: work_id, worker_id: worker_id)
+  end
 end

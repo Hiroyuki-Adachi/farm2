@@ -1,0 +1,28 @@
+<table class="table table-sm">
+  <tr>
+    <th>作業日</th>
+    <th>時刻</th>
+    <th>分類</th>
+    <th>作業</th>
+    <th>土地</th>
+    <th>機械</th>
+    <th>薬剤</th>
+    <th>記入者</th>
+    <th>検証者</th>
+    <th colspan="2">&nbsp;</th>
+  </tr>
+<% @works.each do |work| %>
+  <tr style="<%= work.tr_style %>">
+    <td><%=h work.worked_at %></td>
+    <td><%=h work.work_time %></td>
+    <td><%=h work.genre_name %></td>
+    <td><%=h work.exists_workers %></td>
+    <td><%=h work.exists_lands %></td>
+    <td><%=h work.exists_machines %></td>
+    <td><%=h work.exists_chemicals %></td>
+    <td><%=h work.creator_short_name %></td>
+    <td><%=h work.checker_short_names %></td>
+    <td></td>
+  </tr>
+<% end %>
+</table>

@@ -154,12 +154,4 @@ class WorksController < ApplicationController
   def clear_cache
     Rails.cache.clear
   end
-
-  def sum_hours_key(term)
-    "sum_hours#{term}"
-  end
-
-  def count_workers_key(term)
-    "count_workers#{term}"
-  end
 end

@@ -3,6 +3,7 @@
 <ul class="list-unstyled">
   <li><%= link_to '日報入力', new_work_path %></li>
   <li><%= link_to '日報一覧', works_path %>(<%= link_to 'CSV出力', works_path(format: :csv) %>)</li>
+  <li><%= link_to '日報検証', work_verifications_path %></li>
   <li><%= link_to '月報入力', monthly_reports_path %></li>
 </ul>
 <h2>集計処理(<%= @system.target_from.strftime('%Y年%m月') %>から<%= @system.target_to.strftime('%Y年%m月') %>まで)</h2>
