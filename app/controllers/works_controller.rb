@@ -90,6 +90,7 @@ class WorksController < ApplicationController
   def update
     redirect_to(work_path(page_params)) if params[:cancel]
 
+    WorkVerification.regist(@work, current_user.worker)
     if params[:regist]
       if @work.update(work_params)
         redirect_to(work_path(page_params))

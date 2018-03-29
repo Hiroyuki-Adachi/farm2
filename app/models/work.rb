@@ -49,7 +49,10 @@ class Work < ApplicationRecord
   scope :no_fixed, ->(term){where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)}
   scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, id: :DESC)}
-  scope :by_creator, ->(worker) { where(["(works.created_by IS NULL OR works.created_by <> ?)", worker.id]) }
+  scope :by_creator, ->(worker) { where(["works.created_by IS NULL OR works.created_by <> ?", worker.id]) }
+  scope :enough_check, ->(worker) {
+    where(["NOT EXISTS (SELECT work_verifications.work_id FROM work_verifications WHERE work_verifications.work_id = works.id AND work_verifications.worker_id <> ? GROUP BY work_verifications.work_id HAVING COUNT(*) >= ?)", worker.id, WorkVerification::ENOUGH])
+  }
 
   scope :by_chemical, -> (term) {
       where("id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.work_id").uniq)
@@ -82,6 +85,10 @@ class Work < ApplicationRecord
 
   def sum_machines_amount
     machine_results.to_a.uniq(&:machine_id).inject(0) { |a, e| a + e.amount} || 0
+  end
+
+  def self.for_verifications(term, worker)
+    Work.no_fixed(term).by_creator(worker).enough_check(worker)
   end
 
   def self.get_terms(term)
