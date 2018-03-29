@@ -93,6 +93,10 @@ class WorkDecorator < Draper::Decorator
     model.creator ? model.creator.family_name + "(" + model.creator.first_name[0] + ")" : ""
   end
 
+  def created_at
+    model.created_at.strftime('%Y-%m-%d')
+  end
+
   def checker_short_names
     results = []
     model.checkers.each do |checker|

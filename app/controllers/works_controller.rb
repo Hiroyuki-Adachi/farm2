@@ -43,6 +43,7 @@ class WorksController < ApplicationController
     @machines = Machine.by_results(@results)
     @chemicals = @work.work_chemicals
     @results = WorkResultDecorator.decorate_collection(@results)
+    @checkers = WorkerDecorator.decorate_collection(@work.checkers)
     render layout: false
   end
 

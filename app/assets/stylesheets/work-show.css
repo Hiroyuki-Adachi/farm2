@@ -126,3 +126,59 @@ button:disabled,input[type="button"]:disabled,input[type="submit"]:disabled,a.bu
   -ms-transition: none;
   transition: none;
 }
+
+/* --- 印章対応 ---- */
+.stamp{ 
+    position: relative;
+    font-size: 20px; 
+   
+    width: 4.26em; 
+    height: 4.26em;
+  
+    border: .15em double; 
+    border-radius: 50%; 
+    
+    color: #f00;
+    font-family: normal;
+    text-align: center;
+  }
+  
+  .stamp-input:before{
+    content:"入力";
+    display: block;
+  
+    line-height: 1.45;
+  }
+
+  .stamp-check:before{
+    content:"検証";
+    display: block;
+  
+    line-height: 1.45;
+  }
+
+  .stamp span{
+    position: relative;
+    display: block;
+    font-size: .75em;
+  }
+  
+  /* 日付 */
+  .stamp .date{
+    margin: 0 auto;
+    letter-spacing: -.06em;
+    line-height: 1.5;
+  }
+  
+  /* 区切り線 */
+  .stamp .date:before,
+  .stamp .name:before{
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 80%;
+  
+    border-top: .0625em solid #f00;
+    box-sizing: border-box;
+    transform: translateX(-50%);
+  }
