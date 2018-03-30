@@ -4,18 +4,15 @@
       <th>作業日</th>
       <th>時刻</th>
       <th>分類</th>
-      <th>作業</th>
-      <th>土地</th>
-      <th>機械</th>
-      <th>薬剤</th>
+      <th colspan="4">データ表示</th>
+      <th colspan="2">&nbsp;</th>
       <th>記入者</th>
       <th>検証者</th>
-      <th colspan="2">&nbsp;</th>
     </tr>
   </thead>
   <tbody>
     <% @works.each do |work| %>
-      <tr style="<%= work.tr_style %>">
+      <tr>
         <td><%=h work.worked_at %></td>
         <td><%=h work.work_time %></td>
         <td><%=h work.genre_name %></td>
@@ -23,9 +20,16 @@
         <td><%=h work.exists_lands %></td>
         <td><%=h work.exists_machines %></td>
         <td><%=h work.exists_chemicals %></td>
+        <td><%= link_to "修正", work_path(work), {class: "btn btn-outline-success btn-sm"} %></td>
+        <td>
+        <% if work.checkers.include?(current_user.worker) %>
+        <%= link_to "取消", nil, {onclick: "return execDestroy(" + work.id.to_s + ")", class: "btn btn-danger btn-sm"} %>
+        <% else %>
+        <%= link_to "検証", nil, {onclick: "return execCreate(" + work.id.to_s + ")", class: "btn btn-outline-danger btn-sm"} %>
+        <% end %>
+        </td>
         <td><%=h work.creator_short_name %></td>
         <td><%=h work.checker_short_names %></td>
-        <td></td>
       </tr>
     <% end %>
   </tbody>

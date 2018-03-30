@@ -16,6 +16,32 @@ function setTableWrapperHeight() {
         $("#list").height($(window).height() - $("#list").offset().top - $("#btn_toolbar").height() - 15);
     }
 }
+
+function execCreate(work_id) {
+    $.ajax({
+        url: "<%= work_verifications_path %>",
+        type: "POST",
+        data: {work_id: work_id},
+        dataType: "html",
+        success: function(html) {
+            $("#list").html(html);
+        }
+    });
+    return false;
+}
+
+function execDestroy(work_id) {
+    $.ajax({
+        url: "<%= work_verification_path(0) %>",
+        type: "DELETE",
+        data: {work_id: work_id},
+        dataType: "html",
+        success: function(html) {
+            $("#list").html(html);
+        }
+    });
+    return false;
+}
 </script>
 <h1>作業日報検証</h1>
 <% if @works.count > 0 %>

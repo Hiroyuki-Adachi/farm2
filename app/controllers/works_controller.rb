@@ -44,6 +44,7 @@ class WorksController < ApplicationController
     @chemicals = @work.work_chemicals
     @results = WorkResultDecorator.decorate_collection(@results)
     @checkers = WorkerDecorator.decorate_collection(@work.checkers)
+    session[:work_referer] = request.referer
     render layout: false
   end
 
@@ -93,7 +94,7 @@ class WorksController < ApplicationController
   def update
     redirect_to(work_path(page_params)) if params[:cancel]
 
-    WorkVerification.regist(@work, current_user.worker) 
+    WorkVerification.regist(@work, current_user.worker)
     if params[:regist]
       if @work.update(work_params)
         redirect_to(work_path(page_params))
