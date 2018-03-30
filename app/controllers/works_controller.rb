@@ -44,7 +44,7 @@ class WorksController < ApplicationController
     @chemicals = @work.work_chemicals
     @results = WorkResultDecorator.decorate_collection(@results)
     @checkers = WorkerDecorator.decorate_collection(@work.checkers)
-    session[:work_referer] = request.referer
+    session[:work_referer] = request.referer if Rails.application.routes.recognize_path(request.referer)[:action] == "index"
     render layout: false
   end
 
