@@ -43,7 +43,7 @@ class WorksController < ApplicationController
     @machines = Machine.by_results(@results)
     @chemicals = @work.work_chemicals
     @results = WorkResultDecorator.decorate_collection(@results)
-    @checkers = WorkerDecorator.decorate_collection(@work.checkers)
+    @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
     session[:work_referer] = request.referer if Rails.application.routes.recognize_path(request.referer)[:action] == "index"
     render layout: false
   end
