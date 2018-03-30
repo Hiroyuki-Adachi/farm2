@@ -31,7 +31,7 @@ class WorksController < ApplicationController
   end
 
   def new
-    @work = Work.new(worked_at: Date.today, start_at: '8:00', end_at: '17:00')
+    @work = Work.new(worked_at: Date.today, work_type_id: @work_types.first.id, start_at: '8:00', end_at: '17:00')
     @results = []
     @work_lands = []
     @work_kinds = WorkKind.by_type(@work_types.first)
@@ -61,11 +61,13 @@ class WorksController < ApplicationController
 
   def work_type_select
     @work_kinds = WorkKind.by_type(WorkType.find(params[:work_type_id]))
-    render action: :work_type_select
+    respond_to do |format|
+      format.js { render action: :work_type_select }
+    end
   end
 
   def edit
-    @work_kinds = WorkKind.by_type(@work.work_type)
+    @work_kinds = WorkKind.by_type(@work.work_type) || []
   end
 
   def edit_workers
@@ -91,7 +93,7 @@ class WorksController < ApplicationController
   def update
     redirect_to(work_path(page_params)) if params[:cancel]
 
-    WorkVerification.regist(@work, current_user.worker)
+    WorkVerification.regist(@work, current_user.worker) 
     if params[:regist]
       if @work.update(work_params)
         redirect_to(work_path(page_params))

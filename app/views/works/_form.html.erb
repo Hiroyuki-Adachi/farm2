@@ -56,9 +56,8 @@
 </div>
 <script type="text/javascript">
 $(function() {
-  $('#work_work_type_id').change(function(){
-    var work_type_id = $("#work_work_type_id").val();
-    $.get("work_type_select.js?work_type_id=" + work_type_id);
+  $('input[name="work[work_type_id]"]:radio').change(function(){
+    $.get("<%= work_type_select_works_path %>", {work_type_id: $(this).val()});
   });
 });
 </script>

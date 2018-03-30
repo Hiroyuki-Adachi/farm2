@@ -16,6 +16,8 @@ class WorkVerification < ActiveRecord::Base
   ENOUGH = 3
 
   def self.regist(work, worker)
+    return if work.created_by == worker.id
+
     wv = WorkVerification.where(work_id: work.id, worker_id: worker.id)
     if wv.exists?
       wv.first.touch
