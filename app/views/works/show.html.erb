@@ -188,7 +188,7 @@
 <% end %>
 <%= button_tag "新規登録",  type: :button, :onclick => raw("location.href = '" + new_work_path + "';") %>
 <input type="button" value="印刷" onclick="window.print();" />
-<%= button_tag "戻る",  type: :button, :onclick => raw("location.href = '" + works_path(page: params[:page], month: params[:month]) + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("location.href = '" + (session[:work_referer] ? session[:work_referer] : works_path(page: params[:page], month: params[:month])) + "';") %>
 <% if @work.created_by %>
 <div class="stamp stamp-input" style="position:absolute; top:20px;left:50px">
   <span class="date"><%= @work.created_at %></span>
