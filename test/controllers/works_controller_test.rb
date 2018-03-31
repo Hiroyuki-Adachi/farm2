@@ -101,6 +101,7 @@ class WorksControllerTest < ActionController::TestCase
       get :update, id: works(:work_not_fixed), work_lands: [{land_id: 1, display_order: 3}], regist_lands: true
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
+    assert_not_empty WorkVerification.where(work_id: works(:work_not_fixed), worker_id: User.find(session[:user_id]).worker_id)
   end
 
   test "作業削除" do
