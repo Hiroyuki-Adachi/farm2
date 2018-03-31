@@ -90,7 +90,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def creator_short_name
-    model.creator ? model.creator.family_name + "(" + model.creator.first_name[0] + ")" : ""
+    model.creator ? WorkerDecorator.decorate(model.creator).short_name : ""
   end
 
   def created_at
@@ -100,7 +100,7 @@ class WorkDecorator < Draper::Decorator
   def checker_short_names
     results = []
     model.checkers.each do |checker|
-      results << checker.family_name + "(" + checker.first_name[0] + ")"
+      results << WorkerDecorator.decorate(checker).short_name
     end
     results.join(", ")
   end

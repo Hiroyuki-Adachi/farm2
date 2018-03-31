@@ -30,11 +30,10 @@ function execCreate(work_id) {
     return false;
 }
 
-function execDestroy(work_id) {
+function execDestroy(url) {
     $.ajax({
-        url: "<%= work_verification_path(0) %>",
+        url: url,
         type: "DELETE",
-        data: {work_id: work_id},
         dataType: "html",
         success: function(html) {
             $("#list").html(html);
@@ -42,6 +41,21 @@ function execDestroy(work_id) {
     });
     return false;
 }
+
+$(function() {
+    $('span.hover').hover(function() {
+        var e = $(this);
+        e.off('hover');
+        $.get(e.data('url'), function(data) {
+            e.popover({content: data, html: true});
+            e.popover('show');
+        });
+    },
+    function() {
+        var e = $(this);
+        e.popover('hide');
+    });
+});
 </script>
 <h1>作業日報検証</h1>
 <% if @works.count > 0 %>

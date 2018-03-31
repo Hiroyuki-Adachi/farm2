@@ -2,7 +2,7 @@ class WorkVerificationDecorator < Draper::Decorator
   delegate_all
 
   def short_name
-    model.worker.family_name + "(" + model.worker.first_name[0] + ")"
+    WorkerDecorator.decorate(model.worker).short_name
   end
 
   def updated_at

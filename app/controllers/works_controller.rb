@@ -40,7 +40,7 @@ class WorksController < ApplicationController
   def show
     @results = @work.work_results || []
     @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands || [])
-    @machines = Machine.by_results(@results)
+    @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results))
     @chemicals = @work.work_chemicals
     @results = WorkResultDecorator.decorate_collection(@results)
     @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)

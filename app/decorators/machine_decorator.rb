@@ -17,4 +17,13 @@ class MachineDecorator < Draper::Decorator
       return h.link_to('料金設定', h.show_machine_machine_price_headers_path(machine_id: model), {class: "btn btn-success btn-sm"}) 
     end
   end
+
+  def operators(work)
+    operators = []
+    work.work_results.each do |result|
+      operators << WorkerDecorator.decorate(result.worker).short_name if model.work_results.include?(result)
+    end
+
+    return operators.join(',')
+  end
 end
