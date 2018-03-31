@@ -1,4 +1,6 @@
 class WorkVerificationsController < ApplicationController
+  before_action :set_work, only: [:show_workers]
+
   def index
     @works = WorkDecorator.decorate_collection(Work.for_verifications(@term, current_user.worker))
     respond_to do |format|
@@ -16,6 +18,13 @@ class WorkVerificationsController < ApplicationController
     reload
   end
 
+  def show_workers
+    @results = WorkResultDecorator.decorate_collection(@work.work_results || [])
+    respond_to do |format|
+      format.html { render partial: "show_workers" }
+    end
+  end
+
   private
 
   def reload
@@ -23,5 +32,9 @@ class WorkVerificationsController < ApplicationController
     respond_to do |format|
       format.html { render partial: "list" }
     end
+  end
+
+  def set_work
+    @work = Work.find(params[:work_id]).decorate
   end
 end

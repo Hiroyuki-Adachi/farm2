@@ -7,11 +7,11 @@ module ApplicationHelper
     render(partial: "error_templete", :locals => { :ar => ar }) if ar.errors.any?
   end
 
-  def data_print(data, kind)
+  def data_print(data, kind, url)
     if data.count == 0
       kind
     else
-      content_tag(:span, class: "border border-info text-info h5", style: "cursor: default") do
+      content_tag(:span, class: "border border-info text-info h5 hover", style: "cursor: default", "data-url" => url) do
         kind
       end
     end

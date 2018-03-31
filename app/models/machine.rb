@@ -49,15 +49,6 @@ class Machine < ApplicationRecord
 
   scope :usual, -> {includes(:machine_type).order("machine_types.display_order, machines.display_order, machines.id")}
 
-  def operators(work)
-    operators = []
-    work.work_results.each do |result|
-      operators << result.worker.home.name if self.work_results.include?(result)
-    end
-
-    return operators.join(',')
-  end
-
   def company?
     owner.company_flag?
   end

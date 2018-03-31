@@ -1,8 +1,7 @@
 <table id="tbl_list" class="table table-sm" style="width:calc(100% - 16px);">
   <thead style="background-color: white;">
     <tr>
-      <th>作業日</th>
-      <th>時刻</th>
+      <th>作業日時</th>
       <th>分類</th>
       <th colspan="4">データ表示</th>
       <th colspan="2">処理ボタン</th>
@@ -13,16 +12,15 @@
   <tbody>
     <% @works.each do |work| %>
       <tr>
-        <td><%=h work.worked_at %></td>
-        <td><%=h work.work_time %></td>
+        <td><%=h work.worked_at %>&nbsp;<%=h work.work_time %></td>
         <td><%=h work.genre_name %></td>
-        <td><%=h data_print(work.work_results, "作業") %></td>
-        <td><%=h data_print(work.work_lands, "土地") %></td>
-        <td><%=h data_print(work.machine_results, "機械") %></td>
-        <td><%=h data_print(work.work_chemicals, "薬剤") %></td>
+        <td><%=h data_print(work.work_results, "作業", show_workers_work_verification_path(work)) %></td>
+        <td><%=h data_print(work.work_lands, "土地", show_lands_work_verification_path(work)) %></td>
+        <td><%=h data_print(work.machine_results, "機械", show_machines_work_verification_path(work)) %></td>
+        <td><%=h data_print(work.work_chemicals, "薬剤", show_chemicals_work_verification_path(work)) %></td>
         <td>
         <% if work.checkers.include?(current_user.worker) %>
-        <%= link_to "取消", nil, {onclick: "return execDestroy(" + work.id.to_s + ")", class: "btn btn-danger btn-sm"} %>
+        <%= link_to "取消", nil, {onclick: "return execDestroy('" + work_verification_path(work)+ "')", class: "btn btn-danger btn-sm"} %>
         <% else %>
         <%= link_to "検証", nil, {onclick: "return execCreate(" + work.id.to_s + ")", class: "btn btn-outline-danger btn-sm"} %>
         <% end %>
