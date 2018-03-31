@@ -1,0 +1,11 @@
+<table>
+  <tbody>
+      <% @chemicals.each do |chemical| %>
+        <tr>
+          <td><%= chemical.chemical.chemical_type.name %></td>
+          <td><%= chemical.chemical.name %></td>
+          <td class="numeric"><%= chemical.quantity %><%= chemical.chemical.unit %></td>
+        </tr>
+      <% end%>
+  </tbody>
+</table>
