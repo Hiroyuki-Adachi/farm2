@@ -1,0 +1,17 @@
+<table>
+  <tbody>
+    <% total_area = 0 %>
+    <% @work_lands.each_with_index do |work_land, i| %>
+      <tr>
+        <td class="numeric"><%= i + 1 %></td>
+        <td class="land"><%=work_land.place %></td>
+        <td class="numeric"><%= work_land.area %></td>
+        <% total_area += work_land.land.area %>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+      <th colspan="2">合　計</th>
+      <td class="numeric"><%= sprintf("%.2f", total_area) %></td>
+  </tfoot>
+</table>

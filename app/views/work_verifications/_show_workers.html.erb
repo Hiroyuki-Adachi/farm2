@@ -1,14 +1,10 @@
-<% xx = 2; yy = (([@organization.workers_count, @results.count].max - 1) / xx + 1) %>
 <table>
   <tbody>
-    <% yy.times do |i| %>
+    <% @results.each_with_index do |result, i| %>
       <tr>
-        <% xx.times do |x| %>
-          <% j = i + yy * x %>
-          <td class="numeric"><%= j + 1 %></td>
-          <td><%= @results[j] ? @results[j].worker_name(@organization) : "" %></td>
-          <td class="numeric"><%= @results[j] ? @results[j].hours : "" %></td>
-        <% end %>
+        <td class="numeric"><%= i + 1 %></td>
+        <td><%= result.worker_name(@organization) %></td>
+        <td class="numeric"><%= result.hours  %></td>
       </tr>
     <% end %>
   </tbody>
