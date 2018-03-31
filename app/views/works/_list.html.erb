@@ -1,0 +1,21 @@
+<table class="table table-sm">
+  <tr>
+    <th>作業日</th>
+    <th>時刻</th>
+    <th>分類</th>
+    <th>内容</th>
+    <th>人数</th>
+    <th>工数</th>
+  </tr>
+<% @works.each do |work| %>
+  <tr>
+    <td><%=h work.worked_at %></td>
+    <td><%=h work.work_time %></td>
+    <td><%=h work.genre_name %></td>
+    <td><%=h link_to(work.name, {action: :show, id: work, page: @page, month: @month}) %></td>
+    <td class="numeric"><%=h @count_workers[work.id] || 0 %></td>
+    <td class="numeric"><%=h @sum_hours[work.id] || 0 %></td>
+  </tr>
+<% end %>
+</table>
+<%= paginate @works, remote: true %>

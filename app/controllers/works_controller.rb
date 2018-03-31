@@ -12,20 +12,20 @@ class WorksController < ApplicationController
     @count_workers = Rails.cache.fetch(count_workers_key(@term), expires_in: 1.hour) do
       WorkResult.where(work_id: @works.ids).group(:work_id).count(:worker_id).to_h
     end
-    respond_to do |format|
-      format.html do
-        @months = WorkDecorator.months(@term)
-        if params[:month].blank?
-          @month = ""
-        else
-          @month = params[:month]
-          @works = @works.where("date_trunc('month', worked_at) = ?", @month)
-        end
-        @page = params[:page] || 1
-        @works = WorkDecorator.decorate_collection(@works.page(@page))
+    if request.xhr?
+      set_pager
+      respond_to do |format|
+        format.js
       end
-      format.csv do
-        render :content_type => 'text/csv; charset=cp943'
+    else
+      respond_to do |format|
+        format.html do
+          @months = WorkDecorator.months(@term)
+          set_pager
+        end
+        format.csv do
+          render :content_type => 'text/csv; charset=cp943'
+        end
       end
     end
   end
@@ -157,5 +157,16 @@ class WorksController < ApplicationController
 
   def clear_cache
     Rails.cache.clear
+  end
+
+  def set_pager
+    if params[:month].blank?
+      @month = ""
+    else
+      @month = params[:month]
+      @works = @works.where("date_trunc('month', worked_at) = ?", @month)
+    end
+    @page = params[:page] || 1
+    @works = WorkDecorator.decorate_collection(@works.page(@page))
   end
 end
