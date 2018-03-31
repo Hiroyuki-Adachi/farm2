@@ -1,5 +1,5 @@
 class WorkVerificationsController < ApplicationController
-  before_action :set_work, only: [:show_workers]
+  before_action :set_work, only: [:show_workers, :show_lands]
 
   def index
     @works = WorkDecorator.decorate_collection(Work.for_verifications(@term, current_user.worker))
@@ -22,6 +22,13 @@ class WorkVerificationsController < ApplicationController
     @results = WorkResultDecorator.decorate_collection(@work.work_results || [])
     respond_to do |format|
       format.html { render partial: "show_workers" }
+    end
+  end
+
+  def show_lands
+    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands || [])
+    respond_to do |format|
+      format.html { render partial: "show_lands" }
     end
   end
 
