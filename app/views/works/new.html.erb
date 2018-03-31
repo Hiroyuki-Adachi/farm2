@@ -1,11 +1,11 @@
 <h1 class="page-header">作業日報入力</h1>
 <%= error_print(@work) %>
 
-<%= form_for(@work, :url => {:action => :create }, :html => {:method => :post}) do |f| %>
-  <%= render(:partial => 'form', locals: {:f => f}) %>
+<%= form_for(@work, url: {action: :create }, html: {method: :post}) do |f| %>
+  <%= render(partial: 'form', locals: {:f => f}) %>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
-      <%= f.submit '登録', :name => 'regist', class: "btn btn-warning" %>
+      <%= f.submit '登録', name: 'regist', class: "btn btn-warning" %>
     </div>
     <div class="btn-group mr-2">
       <%= button_tag "戻る",  type: :button, onclick: raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
