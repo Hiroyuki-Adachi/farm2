@@ -94,7 +94,15 @@ class WorkDecorator < Draper::Decorator
   end
 
   def created_at
-    model.created_at.strftime('%Y-%m-%d')
+    model.created_at ? model.created_at.strftime('%Y-%m-%d') : nil
+  end
+
+  def printer_short_name
+    model.printer ? WorkerDecorator.decorate(model.printer).short_name : ""
+  end
+
+  def printed_at
+    model.printed_at ? model.printed_at.strftime('%Y-%m-%d') : nil
   end
 
   def checker_short_names

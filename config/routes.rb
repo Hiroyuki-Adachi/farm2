@@ -53,6 +53,7 @@ Rails.application.routes.draw do
       get :edit_lands
       get :edit_machines
       get :edit_chemicals
+      patch :print
     end
   end
 

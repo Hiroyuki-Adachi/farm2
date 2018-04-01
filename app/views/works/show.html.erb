@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<%= button_tag "戻る",  type: :button, :onclick => raw("location.href = '" + works_path(page: params[:page], month: params[:month]) + "';") %>
+<%= button_tag "戻る",  type: :button, onclick: raw("location.href = '" + works_path(page: params[:page], month: params[:month]) + "';") %>
 <%= render partial: "show_base" %>
 <%= render partial: "show_workers" %>
 <% if (@work_lands.count > 0 or @work.work_kind.land_flag) and @organization.lands_count > 0 %>
@@ -28,8 +28,8 @@
 <% unless @work.fixed_at %>
 <%= link_to '削除',raw(work_path(id: @work, page: params[:page], month: params[:month])), method: :delete, class: :button, data: {confirm: "本当に削除してもよろしいですか?"} %>
 <% end %>
-<%= button_tag "新規登録",  type: :button, :onclick => raw("location.href = '" + new_work_path + "';") %>
-<input type="button" value="印刷" onclick="window.print();" />
+<%= button_tag "新規登録",  type: :button, onclick: raw("location.href = '" + new_work_path + "';") %>
+<%= button_tag "印刷", type: :button, onclick: raw("execPrint('" + print_work_path(@work.id) + "');") %>
 <%= button_tag "戻る",  type: :button, :onclick => raw("location.href = '" + (session[:work_referer] ? session[:work_referer] : works_path(page: params[:page], month: params[:month])) + "';") %>
 <%= render partial: "show_stamp"%>
 <% unless @work.fixed_at %>
@@ -41,6 +41,17 @@ $(function() {
   $("#cover_machines").height($("#content_machines").height()).width($("#content_machines").width());
   $("#cover_chemicals").height($("#content_chemicals").height()).width($("#content_chemicals").width());
 });
+
+function execPrint(url) {
+    $.ajax({
+        url: url,
+        type: "PATCH",
+        dataType: "html"
+    }).done(function(html) {
+        $("#print_stamp").html(html);
+        window.print();
+    });
+}
 </script>
 <% end %>
 </body>

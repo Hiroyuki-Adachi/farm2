@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327140505) do
+ActiveRecord::Schema.define(version: 20180401043745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -352,6 +352,8 @@ ActiveRecord::Schema.define(version: 20180327140505) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "created_by",                                       comment: "作成者"
+    t.datetime "printed_at",                                       comment: "印刷日時"
+    t.integer  "printed_by",                                       comment: "印刷者"
   end
 
 end

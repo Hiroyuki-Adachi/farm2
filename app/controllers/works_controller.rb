@@ -1,5 +1,7 @@
+require 'date'
+
 class WorksController < ApplicationController
-  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :show, :update, :destroy]
+  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :show, :update, :destroy, :print]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :check_fixed, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
   before_action :clear_cache, only: [:update, :create, :destroy]
@@ -130,6 +132,11 @@ class WorksController < ApplicationController
 
   def autocomplete_for_land_place
     render json: Land.autocomplete(params[:term])
+  end
+
+  def print
+    @work.update(printed_at: Time.now, printed_by: current_user.worker.id)
+    render partial: "show_stamp_print"
   end
 
   private
