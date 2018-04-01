@@ -4,6 +4,9 @@
   <span class="name"><%= @work.creator_short_name %></span>
 </div>
 <% end %>
+<div id="print_stamp">
+<%= render partial: "show_stamp_print" %>
+</div>
 <% @checkers.last(WorkVerification::ENOUGH).each_with_index do |checker, index| %>
 <div class="stamp stamp-check" style="position:absolute; top:20px;left:<%= index * 90 + 470 %>px">
   <span class="date"><%= checker.updated_at %></span>

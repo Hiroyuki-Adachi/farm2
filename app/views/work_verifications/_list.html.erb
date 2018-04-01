@@ -22,7 +22,7 @@
         <% if work.checkers.include?(current_user.worker) %>
         <%= link_to "取消", nil, {onclick: "return execDestroy('" + work_verification_path(work)+ "')", class: "btn btn-danger btn-sm"} %>
         <% else %>
-        <%= link_to "検証", nil, {onclick: "return execCreate(" + work.id.to_s + ")", class: "btn btn-outline-danger btn-sm"} %>
+        <%= link_to "検証", nil, {onclick: "return execCreate('" + work_verifications_path + "', " + work.id.to_s + ")", class: "btn btn-outline-danger btn-sm"} %>
         <% end %>
         </td>
         <td><%= link_to "修正", work_path(work), {class: "btn btn-outline-success btn-sm"} %></td>

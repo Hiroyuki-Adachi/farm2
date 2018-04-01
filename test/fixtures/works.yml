@@ -16,6 +16,8 @@
 #  created_at   :datetime
 #  updated_at   :datetime
 #  created_by   :integer                                # 作成者
+#  printed_at   :datetime                               # 印刷日時
+#  printed_by   :integer                                # 印刷者
 #
 
 work_fixed:

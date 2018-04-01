@@ -1,0 +1,6 @@
+<% if @work.printed_at %>
+<div class="stamp stamp-print" style="position:absolute; top:20px;left:140px">
+  <span class="date"><%= @work.printed_at %></span>
+  <span class="name"><%= @work.printer_short_name %></span>
+</div>
+<% end %>

@@ -16,6 +16,8 @@
 #  created_at   :datetime
 #  updated_at   :datetime
 #  created_by   :integer                                # 作成者
+#  printed_at   :datetime                               # 印刷日時
+#  printed_by   :integer                                # 印刷者
 #
 
 class Work < ApplicationRecord
@@ -36,6 +38,7 @@ class Work < ApplicationRecord
   belongs_to :weather
   belongs_to :fix, {foreign_key: :fixed_at}
   belongs_to :creator, { class_name: "Worker", foreign_key: "created_by" }, -> { with_deleted }
+  belongs_to :printer, { class_name: "Worker", foreign_key: "printed_by" }, -> { with_deleted }
 
   has_many :work_lands,     -> { order('work_lands.display_order') }, { dependent: :destroy }
   has_many :work_results,   -> { order('work_results.display_order') }, { dependent: :destroy }
@@ -55,6 +58,7 @@ class Work < ApplicationRecord
   scope :enough_check, ->(worker) {
     where(["NOT EXISTS (SELECT work_verifications.work_id FROM work_verifications WHERE work_verifications.work_id = works.id AND work_verifications.worker_id <> ? GROUP BY work_verifications.work_id HAVING COUNT(*) >= ?)", worker.id, WorkVerification::ENOUGH])
   }
+  scope :not_printed, -> { where(["works.printed_at IS NULL OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)"]) }
 
   scope :by_chemical, -> (term) {
       where("id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.work_id").uniq)
@@ -90,7 +94,7 @@ class Work < ApplicationRecord
   end
 
   def self.for_verifications(term, worker)
-    Work.no_fixed(term).by_creator(worker).enough_check(worker)
+    Work.no_fixed(term).by_creator(worker).enough_check(worker).not_printed
   end
 
   def self.get_terms(term)
