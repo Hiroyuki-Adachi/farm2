@@ -1,0 +1,35 @@
+<div id="content_lands" class="content">
+  <div class="sub_title">※作業田</div>
+  <table id="detail_lands">
+    <thead>
+    <tr>
+      <% xx = 3; yy = ([@organization.lands_count, @work_lands.count].max / xx + 1) %>
+      <% xx.times do %>
+      <th class="land" style="width:30px;">&nbsp;</th>
+      <th class="land" style="width:150px;">地番</th>
+      <th class="land" style="width:60px;">面積</th>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+      <% total_area = 0 %>
+      <% yy.times do |i| %>
+      <tr>
+        <% xx.times do |x| %>
+        <% j = i + yy * x %>
+          <% if j == (yy * xx - 1) %>
+            <th class="land" colspan="2">合　計</th>
+            <td class="land" style="text-align: right;"><%= sprintf("%.2f", total_area) %></td>
+          <% else %>
+            <td class="land" style="text-align: right;"><%= j + 1 %></td>
+            <td class="land"><%=raw @work_lands[j] ? @work_lands[j].place : "&nbsp;" %></td>
+            <td class="land" style="text-align: right;"><%=raw @work_lands[j] ? @work_lands[j].area : "&nbsp;" %></td>
+            <% total_area += @work_lands[j].land.area if @work_lands[j]  %>
+          <% end %>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div id="cover_lands" class="cover" onclick="location.href='<%=raw edit_lands_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
+</div>

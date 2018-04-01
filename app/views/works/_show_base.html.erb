@@ -1,0 +1,32 @@
+<div id="show">
+  <div class="title">作 業 日 報</div>
+  <div class="title"><%= @work.worked_at %>&nbsp;天候(<%= @work.weather.name %>)</div>
+  <div class="title">作業開始<%= @work.start_at %>&nbsp;作業終了<%= @work.end_at %></div>
+</div>
+<div id="content_work" class="content">
+  <table id="detail_work">
+    <% categories = WorkType.categories %>
+    <% categories.each_with_index do |category, i| %>
+    <tr>
+        <% if i == 0 %>
+        <th rowspan="<%= categories.count %>" style="vertical-align:middle;width:40px;">分<br /><br /><br />類</th>
+        <% end %>
+        <th style="width:120px;letter-spacing:12px;"><%= @work.select_work_type(category) %></th>
+        <td style="width:560px;">
+        <% WorkType.select_category(category).each do |work_type| %>
+        <span class="genre"><%= @work.select_work_type(work_type) %></span>
+        <% end %>
+        </td>
+    </tr>
+    <% end %>
+  </table>
+  <table id="detail_remark">
+    <tr style="height:80px;">
+        <th style="width:40px;">内<br />容</th>
+        <td style="width:320px;"><%=h @work.name %></td>
+        <th style="width:40px;">記<br />事</th>
+        <td style="width:320px; overflow:hidden;"><%=hbr @work.remarks %></td>
+    </tr>
+  </table>
+  <div id="cover_work" class="cover" onclick="location.href='<%=raw edit_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
+</div>
