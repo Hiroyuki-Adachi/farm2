@@ -1,0 +1,34 @@
+<div id="content_chemicals" class="content">
+  <div class="sub_title">※使用薬剤</div>
+  <table id="detail_chemicals" style="width:720px;">
+    <thead>
+    <tr>
+      <% xx = 2; yy = (([@organization.chemicals_count, @chemicals.count].max - 1) / xx + 1) %>
+      <% xx.times do %>
+      <th style="width:100px;">種別</th>
+      <th style="width:200px;">名称</th>
+      <th style="width:60px;">使用量</th>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+      <% yy.times do |i| %>
+      <tr>
+        <% xx.times do |x| %>
+          <% j = i + yy * x %>
+          <% if @chemicals[j] %>
+            <td class="machine"><%=h @chemicals[j].chemical.chemical_type.name %></td>
+            <td class="machine"><%=h @chemicals[j].chemical.name %></td>
+            <td class="machine" style="text-align: right;"><%=h @chemicals[j].quantity %><%= @chemicals[j].chemical.unit %></td>
+          <%  else %>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          <% end %>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div id="cover_chemicals" class="cover" onclick="location.href='<%=raw edit_chemicals_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
+</div>

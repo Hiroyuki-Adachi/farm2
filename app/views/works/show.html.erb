@@ -14,174 +14,16 @@
 <body>
 
 <%= button_tag "戻る",  type: :button, :onclick => raw("location.href = '" + works_path(page: params[:page], month: params[:month]) + "';") %>
-<div id="show">
-  <div class="title">作 業 日 報</div>
-  <div class="title"><%= @work.worked_at %>&nbsp;天候(<%= @work.weather.name %>)</div>
-  <div class="title">作業開始<%= @work.start_at %>&nbsp;作業終了<%= @work.end_at %></div>
-</div>
-<div id="content_work" class="content">
-  <table id="detail_work">
-    <% categories = WorkType.categories %>
-    <% categories.each_with_index do |category, i| %>
-    <tr>
-        <% if i == 0 %>
-        <th rowspan="<%= categories.count %>" style="vertical-align:middle;width:40px;">分<br /><br /><br />類</th>
-        <% end %>
-        <th style="width:120px;letter-spacing:12px;"><%= @work.select_work_type(category) %></th>
-        <td style="width:560px;">
-        <% WorkType.select_category(category).each do |work_type| %>
-        <span class="genre"><%= @work.select_work_type(work_type) %></span>
-        <% end %>
-        </td>
-    </tr>
-    <% end %>
-  </table>
-  <table id="detail_remark">
-    <tr style="height:80px;">
-        <th style="width:40px;">内<br />容</th>
-        <td style="width:320px;"><%=h @work.name %></td>
-        <th style="width:40px;">記<br />事</th>
-        <td style="width:320px; overflow:hidden;"><%=hbr @work.remarks %></td>
-    </tr>
-  </table>
-  <div id="cover_work" class="cover" onclick="location.href='<%=raw edit_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
-</div>
-<% xx = 2; yy = (([@organization.workers_count, @results.count].max - 1) / xx + 1) %>
-<div id="content_workers" class="content">
-  <div class="sub_title">※作業者</div>
-  <table id="detail_workers">
-    <thead>
-    <tr>
-      <% xx.times do %>
-      <th style="width:50px;">&nbsp;</th>
-      <th style="width:230px;">作業者名</th>
-      <th style="width:80px;">時間</th>
-      <% end %>
-    </tr>
-    </thead>
-    <tbody>
-      <% yy.times do |i| %>
-      <tr>
-        <% xx.times do |x| %>
-          <% j = i + yy * x %>
-          <td style="text-align: right;"><%= j + 1 %></td>
-          <td><%=raw @results[j] ? @results[j].worker_name(@organization) : "&nbsp;" %></td>
-          <td style="text-align: right;"><%=raw @results[j] ? @results[j].hours : "&nbsp;" %></td>
-        <% end %>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <div id="cover_workers" class="cover" onclick="location.href='<%=raw edit_workers_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
-</div>
+<%= render partial: "show_base" %>
+<%= render partial: "show_workers" %>
 <% if (@work_lands.count > 0 or @work.work_kind.land_flag) and @organization.lands_count > 0 %>
-<div id="content_lands" class="content">
-  <div class="sub_title">※作業田</div>
-  <table id="detail_lands">
-    <thead>
-    <tr>
-      <% xx = 3; yy = ([@organization.lands_count, @work_lands.count].max / xx + 1) %>
-      <% xx.times do %>
-      <th class="land" style="width:30px;">&nbsp;</th>
-      <th class="land" style="width:150px;">地番</th>
-      <th class="land" style="width:60px;">面積</th>
-      <% end %>
-    </tr>
-    </thead>
-    <tbody>
-      <% total_area = 0 %>
-      <% yy.times do |i| %>
-      <tr>
-        <% xx.times do |x| %>
-        <% j = i + yy * x %>
-          <% if j == (yy * xx - 1) %>
-            <th class="land" colspan="2">合　計</th>
-            <td class="land" style="text-align: right;"><%= sprintf("%.2f", total_area) %></td>
-          <% else %>
-            <td class="land" style="text-align: right;"><%= j + 1 %></td>
-            <td class="land"><%=raw @work_lands[j] ? @work_lands[j].place : "&nbsp;" %></td>
-            <td class="land" style="text-align: right;"><%=raw @work_lands[j] ? @work_lands[j].area : "&nbsp;" %></td>
-            <% total_area += @work_lands[j].land.area if @work_lands[j]  %>
-          <% end %>
-        <% end %>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <div id="cover_lands" class="cover" onclick="location.href='<%=raw edit_lands_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
-</div>
+  <%= render partial: "show_lands" %>
 <% end %>
 <% if (@machines.count > 0 or @work.work_kind.machine_kinds.count > 0) and @organization.machines_count > 0 %>
-<div id="content_machines" class="content">
-  <div class="sub_title">※機械・オペレーター</div>
-  <table id="detail_machines">
-    <thead>
-    <tr>
-      <% xx = 2; yy = (([@organization.machines_count, @machines.count].max - 1) / xx + 1) %>
-      <% xx.times do %>
-      <th style="width:175px;">機械名</th>
-      <th style="width:35px;">稼働</th>
-      <th style="width:150px;">オペレーター</th>
-      <% end %>
-    </tr>
-    </thead>
-    <tbody>
-      <% yy.times do |i| %>
-      <tr>
-        <% xx.times do |x| %>
-          <% j = i + yy * x %>
-          <% if @machines[j] %>
-            <td class="machine"><%=h @machines[j].usual_name %></td>
-            <td class="machine" style="text-align: right;"><%=h @machines[j].hours(@results.object) %></td>
-            <td class="machine"><%=h @machines[j].operators(@work) %></td>
-          <%  else %>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          <% end %>
-        <% end %>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <div id="cover_machines" class="cover" onclick="location.href='<%=raw edit_machines_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
-</div>
+  <%= render partial: "show_machines" %>
 <% end %>
 <% if (@chemicals.count > 0 or @work.work_kind.chemical_kinds.count > 0) and @organization.chemicals_count > 0 %>
-<div id="content_chemicals" class="content">
-  <div class="sub_title">※使用薬剤</div>
-  <table id="detail_chemicals" style="width:720px;">
-    <thead>
-    <tr>
-      <% xx = 2; yy = (([@organization.chemicals_count, @chemicals.count].max - 1) / xx + 1) %>
-      <% xx.times do %>
-      <th style="width:100px;">種別</th>
-      <th style="width:200px;">名称</th>
-      <th style="width:60px;">使用量</th>
-      <% end %>
-    </tr>
-    </thead>
-    <tbody>
-      <% yy.times do |i| %>
-      <tr>
-        <% xx.times do |x| %>
-          <% j = i + yy * x %>
-          <% if @chemicals[j] %>
-            <td class="machine"><%=h @chemicals[j].chemical.chemical_type.name %></td>
-            <td class="machine"><%=h @chemicals[j].chemical.name %></td>
-            <td class="machine" style="text-align: right;"><%=h @chemicals[j].quantity %><%= @chemicals[j].chemical.unit %></td>
-          <%  else %>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          <% end %>
-        <% end %>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <div id="cover_chemicals" class="cover" onclick="location.href='<%=raw edit_chemicals_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
-</div>
+  <%= render partial: "show_chemicals" %>
 <% end %>
 <% unless @work.fixed_at %>
 <%= link_to '削除',raw(work_path(id: @work, page: params[:page], month: params[:month])), method: :delete, class: :button, data: {confirm: "本当に削除してもよろしいですか?"} %>
@@ -189,19 +31,7 @@
 <%= button_tag "新規登録",  type: :button, :onclick => raw("location.href = '" + new_work_path + "';") %>
 <input type="button" value="印刷" onclick="window.print();" />
 <%= button_tag "戻る",  type: :button, :onclick => raw("location.href = '" + (session[:work_referer] ? session[:work_referer] : works_path(page: params[:page], month: params[:month])) + "';") %>
-<% if @work.created_by %>
-<div class="stamp stamp-input" style="position:absolute; top:20px;left:50px">
-  <span class="date"><%= @work.created_at %></span>
-  <span class="name"><%= @work.creator_short_name %></span>
-</div>
-<% end %>
-<% @checkers.last(WorkVerification::ENOUGH).each_with_index do |checker, index| %>
-<div class="stamp stamp-check" style="position:absolute; top:20px;left:<%= index * 90 + 470 %>px">
-  <span class="date"><%= checker.updated_at %></span>
-  <span class="name"><%= checker.short_name %></span>
-</div>
-<% end %>
-
+<%= render partial: "show_stamp"%>
 <% unless @work.fixed_at %>
 <script type="text/javascript">
 $(function() {

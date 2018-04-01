@@ -1,0 +1,34 @@
+<div id="content_machines" class="content">
+  <div class="sub_title">※機械・オペレーター</div>
+  <table id="detail_machines">
+    <thead>
+    <tr>
+      <% xx = 2; yy = (([@organization.machines_count, @machines.count].max - 1) / xx + 1) %>
+      <% xx.times do %>
+      <th style="width:175px;">機械名</th>
+      <th style="width:35px;">稼働</th>
+      <th style="width:150px;">オペレーター</th>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+      <% yy.times do |i| %>
+      <tr>
+        <% xx.times do |x| %>
+          <% j = i + yy * x %>
+          <% if @machines[j] %>
+            <td class="machine"><%=h @machines[j].usual_name %></td>
+            <td class="machine" style="text-align: right;"><%=h @machines[j].hours(@results.object) %></td>
+            <td class="machine"><%=h @machines[j].operators(@work) %></td>
+          <%  else %>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          <% end %>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div id="cover_machines" class="cover" onclick="location.href='<%=raw edit_machines_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
+</div>

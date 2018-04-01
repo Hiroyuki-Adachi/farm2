@@ -1,0 +1,28 @@
+<% xx = 2; yy = (([@organization.workers_count, @results.count].max - 1) / xx + 1) %>
+<div id="content_workers" class="content">
+  <div class="sub_title">※作業者</div>
+  <table id="detail_workers">
+    <thead>
+    <tr>
+      <% xx.times do %>
+      <th style="width:50px;">&nbsp;</th>
+      <th style="width:230px;">作業者名</th>
+      <th style="width:80px;">時間</th>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+      <% yy.times do |i| %>
+      <tr>
+        <% xx.times do |x| %>
+          <% j = i + yy * x %>
+          <td style="text-align: right;"><%= j + 1 %></td>
+          <td><%=raw @results[j] ? @results[j].worker_name(@organization) : "&nbsp;" %></td>
+          <td style="text-align: right;"><%=raw @results[j] ? @results[j].hours : "&nbsp;" %></td>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div id="cover_workers" class="cover" onclick="location.href='<%=raw edit_workers_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
+</div>

@@ -1,0 +1,12 @@
+<% if @work.created_by %>
+<div class="stamp stamp-input" style="position:absolute; top:20px;left:50px">
+  <span class="date"><%= @work.created_at %></span>
+  <span class="name"><%= @work.creator_short_name %></span>
+</div>
+<% end %>
+<% @checkers.last(WorkVerification::ENOUGH).each_with_index do |checker, index| %>
+<div class="stamp stamp-check" style="position:absolute; top:20px;left:<%= index * 90 + 470 %>px">
+  <span class="date"><%= checker.updated_at %></span>
+  <span class="name"><%= checker.short_name %></span>
+</div>
+<% end %>
