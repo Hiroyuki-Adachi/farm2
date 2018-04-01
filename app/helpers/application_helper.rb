@@ -8,12 +8,12 @@ module ApplicationHelper
   end
 
   def data_print(data, kind, url)
-    if data.count == 0
-      kind
-    else
+    if data.exists?
       content_tag(:span, class: "border border-info text-info h5 hover", style: "cursor: default", "data-url" => url) do
         kind
       end
+    else
+      kind
     end
   end
 end
