@@ -20,9 +20,10 @@
         <td><%=h data_print(work.work_chemicals, "薬剤", show_chemicals_work_verification_path(work)) %></td>
         <td>
         <% if work.checkers.include?(current_user.worker) %>
-        <%= link_to "取消", nil, {onclick: "return execDestroy('" + work_verification_path(work)+ "')", class: "btn btn-danger btn-sm"} %>
+        <%= link_to "取消", "#", {onclick: "return execDestroy('" + work_verification_path(work)+ "')", class: "btn btn-danger btn-sm"} %>
+        <%= hidden_field_tag :self_flag, work.id, {id: nil} %>
         <% else %>
-        <%= link_to "検証", nil, {onclick: "return execCreate('" + work_verifications_path + "', " + work.id.to_s + ")", class: "btn btn-outline-danger btn-sm"} %>
+        <%= link_to "検証", "#", {onclick: "return execCreate('" + work_verifications_path + "', " + work.id.to_s + ")", class: "btn btn-outline-danger btn-sm"} %>
         <% end %>
         </td>
         <td><%= link_to "修正", work_path(work), {class: "btn btn-outline-success btn-sm"} %></td>

@@ -94,7 +94,7 @@ class Work < ApplicationRecord
   end
 
   def self.for_verifications(term, worker)
-    Work.no_fixed(term).by_creator(worker).enough_check(worker).not_printed
+    Work.includes(:work_results).no_fixed(term).by_creator(worker).enough_check(worker).not_printed
   end
 
   def self.get_terms(term)

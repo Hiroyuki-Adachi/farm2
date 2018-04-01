@@ -43,6 +43,7 @@ function execCreate(url, work_id) {
         $("#list").html(html);
     }).always(function() {
         removeLoading();
+        changePrint($("#print_self")[0]);
     });
     return false;
 }
@@ -57,6 +58,15 @@ function execDestroy(url) {
         $("#list").html(html);
     }).always(function() {
         removeLoading();
+        changePrint($("#print_self")[0]);
     });
     return false;
+}
+
+function changePrint(checkbox) {
+    if(checkbox.checked) {
+        $("[name='self_flag']").closest("tr").hide();
+    } else {
+        $("#tbl_list").find("tr").show();
+    }
 }
