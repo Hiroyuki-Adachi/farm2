@@ -36,7 +36,7 @@ class Work < ApplicationRecord
   belongs_to :work_type, -> { with_deleted }
   belongs_to :work_kind, -> { with_deleted }
   belongs_to :weather
-  belongs_to :fix, {foreign_key: :fixed_at}
+  belongs_to :fix, { class_name: "Fix", foreign_key: [:term, :fixed_at], primary_key: [:term, :fixed_at] }
   belongs_to :creator, { class_name: "Worker", foreign_key: "created_by" }, -> { with_deleted }
   belongs_to :printer, { class_name: "Worker", foreign_key: "printed_by" }, -> { with_deleted }
 
@@ -102,7 +102,7 @@ class Work < ApplicationRecord
     result = Work.where(term: term).maximum(:fixed_at)
     result = result ? result.to_date : Date.new(term, 1, 1)
     result = result.next.end_of_month.to_date
-    while result < Time.now.to_date do
+    while result < Time.now.to_date
       params << result
       result = result.next_month.end_of_month.to_date
     end

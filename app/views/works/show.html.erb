@@ -13,7 +13,6 @@
 </head>
 <body>
 
-<%= button_tag "戻る",  type: :button, onclick: raw("location.href = '" + works_path(page: params[:page], month: params[:month]) + "';") %>
 <%= render partial: "show_base" %>
 <%= render partial: "show_workers" %>
 <% if (@work_lands.count > 0 or @work.work_kind.land_flag) and @organization.lands_count > 0 %>
@@ -32,8 +31,8 @@
 <%= button_tag "印刷", type: :button, onclick: raw("execPrint('" + print_work_path(@work.id) + "');") %>
 <%= button_tag "戻る",  type: :button, :onclick => raw("location.href = '" + (session[:work_referer] ? session[:work_referer] : works_path(page: params[:page], month: params[:month])) + "';") %>
 <%= render partial: "show_stamp"%>
-<% unless @work.fixed_at %>
 <script type="text/javascript">
+<% unless @work.fixed_at %>
 $(function() {
   $("#cover_work").height($("#content_work").height()).width($("#content_work").width());
   $("#cover_workers").height($("#content_workers").height()).width($("#content_workers").width());
@@ -41,7 +40,7 @@ $(function() {
   $("#cover_machines").height($("#content_machines").height()).width($("#content_machines").width());
   $("#cover_chemicals").height($("#content_chemicals").height()).width($("#content_chemicals").width());
 });
-
+<% end %>
 function execPrint(url) {
     $.ajax({
         url: url,
@@ -53,6 +52,5 @@ function execPrint(url) {
     });
 }
 </script>
-<% end %>
 </body>
 </html>

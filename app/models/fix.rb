@@ -2,7 +2,6 @@
 #
 # Table name: fixes # 確定データ
 #
-#  term            :integer          default(0), not null, primary key # 年度(期)
 #  fixed_at        :date             not null, primary key             # 確定日
 #  works_count     :integer          not null                          # 合計作業数
 #  hours           :integer          not null                          # 合計作業工数
@@ -10,11 +9,15 @@
 #  machines_amount :decimal(8, )     not null                          # 合計機械利用料
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  term            :integer          default(0), not null, primary key # 年度(期)
+#  fixed_by        :integer                                            # 確定者
 #
 
 class Fix < ApplicationRecord
   self.primary_keys = [:term, :fixed_at]
   before_destroy :clear_fix
+
+  belongs_to :fixer, { class_name: "Worker", foreign_key: "fixed_by" }, -> { with_deleted }
 
   scope :usual, ->(term){where(term: term).order(fixed_at: :ASC)}
 
@@ -22,7 +25,7 @@ class Fix < ApplicationRecord
     return fixed_at.strftime("%Y-%m-%d")
   end
 
-  def self.do_fix(term, fixed_at, works_ids)
+  def self.do_fix(term, fixed_at, fixed_by, works_ids)
     hours = 0
     works_amount = 0
     works_count = 0
@@ -43,7 +46,7 @@ class Fix < ApplicationRecord
         works_count += 1
       end
 
-      Fix.create({term: term, fixed_at: fixed_at, works_count: works_count, hours: hours, works_amount: works_amount, machines_amount: machines_amount})
+      Fix.create({term: term, fixed_at: fixed_at, works_count: works_count, hours: hours, works_amount: works_amount, machines_amount: machines_amount, fixed_by: fixed_by})
     end
   end
 
