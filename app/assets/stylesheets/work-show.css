@@ -164,6 +164,13 @@ button:disabled,input[type="button"]:disabled,input[type="submit"]:disabled,a.bu
     line-height: 1.45;
   }
 
+  .stamp-fix:before{
+    content:"確定";
+    display: block;
+  
+    line-height: 1.45;
+  }
+
   .stamp span{
     position: relative;
     display: block;

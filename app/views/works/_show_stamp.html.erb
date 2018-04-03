@@ -1,5 +1,5 @@
 <% if @work.created_by %>
-<div class="stamp stamp-input" style="position:absolute; top:20px;left:50px">
+<div class="stamp stamp-input" style="position:absolute; top:20px;left:20px">
   <span class="date"><%= @work.created_at %></span>
   <span class="name"><%= @work.creator_short_name %></span>
 </div>
@@ -7,8 +7,15 @@
 <div id="print_stamp">
 <%= render partial: "show_stamp_print" %>
 </div>
+<% if @work.fixed_at %>
+<div class="stamp stamp-fix" style="position:absolute; top:20px;left:210px">
+  <% fix = FixDecorator.decorate(@work.fix) %>
+  <span class="date"><%= fix.fixed_at %></span>
+  <span class="name"><%= fix.fixer_short_name %></span>
+</div>
+<% end %>
 <% @checkers.last(WorkVerification::ENOUGH).each_with_index do |checker, index| %>
-<div class="stamp stamp-check" style="position:absolute; top:20px;left:<%= index * 90 + 470 %>px">
+<div class="stamp stamp-check" style="position:absolute; top:20px;left:<%= index * 95 + 460 %>px">
   <span class="date"><%= checker.updated_at %></span>
   <span class="name"><%= checker.short_name %></span>
 </div>

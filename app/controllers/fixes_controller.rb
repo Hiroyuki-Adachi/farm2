@@ -16,7 +16,7 @@ class FixesController < ApplicationController
   end
 
   def create
-    Fix.do_fix(@term, @fixed_at, params[:fixed_works])
+    Fix.do_fix(@term, @fixed_at, current_user.worker_id, params[:fixed_works])
     redirect_to fixes_path
   end
 
