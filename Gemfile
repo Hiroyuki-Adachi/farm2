@@ -43,17 +43,19 @@ gem 'composite_primary_keys'
 # Comments for migrations
 gem 'migration_comments'
 
+# Library for encoding QR Codes in Ruby.
+gem 'rqrcode'
+# Read and write PNG files.
+gem 'chunky_png'
+
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-# An easy way to keep your users' passwords secure.
-gem 'bcrypt'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

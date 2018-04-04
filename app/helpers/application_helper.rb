@@ -1,4 +1,6 @@
 module ApplicationHelper
+  GLOBAL_URL = "http://shimodekisu-farm.mydns.jp/"
+
   def hbr(text)
     return simple_format(h(text))
   end
@@ -15,5 +17,10 @@ module ApplicationHelper
         kind
       end
     end
+  end
+
+  def qrcode_tag(text)
+    qr = ::RQRCode::QRCode.new(GLOBAL_URL + text)
+    ChunkyPNG::Image.from_datastream(qr.as_png.resize(300, 300).to_datastream).to_data_url
   end
 end

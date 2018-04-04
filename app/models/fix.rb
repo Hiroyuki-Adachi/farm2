@@ -19,7 +19,7 @@ class Fix < ApplicationRecord
 
   belongs_to :fixer, { class_name: "Worker", foreign_key: "fixed_by" }, -> { with_deleted }
 
-  scope :usual, ->(term){where(term: term).order(fixed_at: :ASC)}
+  scope :usual, ->(term) { where(term: term).order(fixed_at: :ASC) }
 
   def to_param
     return fixed_at.strftime("%Y-%m-%d")
@@ -46,20 +46,21 @@ class Fix < ApplicationRecord
         works_count += 1
       end
 
-      Fix.create({term: term, fixed_at: fixed_at, works_count: works_count, hours: hours, works_amount: works_amount, machines_amount: machines_amount, fixed_by: fixed_by})
+      Fix.create(term: term, fixed_at: fixed_at, works_count: works_count, hours: hours, works_amount: works_amount, machines_amount: machines_amount, fixed_by: fixed_by)
     end
   end
 
   private
-    def clear_fix
-      Work.where(term: term, fixed_at: fixed_at).each do |work|
-        work.work_results.each do |result|
-          result.update(fixed_hours: nil, fixed_price: nil, fixed_amount: nil)
-        end
-        work.machine_results.each do |result|
-          result.update(fixed_quantity: nil, fixed_adjust_id: nil, fixed_price: nil, fixed_amount: nil)
-        end
-        work.update(fixed_at: nil)
+
+  def clear_fix
+    Work.where(term: term, fixed_at: fixed_at).each do |work|
+      work.work_results.each do |result|
+        result.update(fixed_hours: nil, fixed_price: nil, fixed_amount: nil)
       end
+      work.machine_results.each do |result|
+        result.update(fixed_quantity: nil, fixed_adjust_id: nil, fixed_price: nil, fixed_amount: nil)
+      end
+      work.update(fixed_at: nil)
     end
+  end
 end

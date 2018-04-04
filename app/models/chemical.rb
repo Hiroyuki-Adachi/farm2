@@ -49,6 +49,7 @@ class Chemical < ApplicationRecord
   end
 
   private
+
   def save_term
     @term = Organization.first.term unless @term
     if @this_term_flag
