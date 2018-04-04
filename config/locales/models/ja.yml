@@ -101,6 +101,7 @@ ja:
         account_number: "口座番号"
         gender_id: "性別"
         home_id: "世帯"
+        token: "アクセストークン"
 
       machine:
         name: 名称

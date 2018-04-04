@@ -26,16 +26,16 @@ class Home < ApplicationRecord
 
   REG_PHONE = /\A\d{2,4}-\d{2,4}-\d{4}\z/
 
-  has_many :workers,  ->{order(:display_order)}
-  has_many :owned_lands,    ->{order(:place)}, {class_name: :Land, foreign_key: :owner_id}
-  has_many :managed_lands,  ->{order(:place)}, {class_name: :Land, foreign_key: :manager_id}
+  has_many :workers, -> { order(:display_order) }
+  has_many :owned_lands,    -> { order(:place) }, {class_name: :Land, foreign_key: :owner_id}
+  has_many :managed_lands,  -> { order(:place) }, {class_name: :Land, foreign_key: :manager_id}
 
-  belongs_to :holder,  -> {with_deleted}, {class_name: :Worker, foreign_key: :worker_id}
-  belongs_to :section, -> {with_deleted}
+  belongs_to :holder,  -> { with_deleted }, {class_name: :Worker, foreign_key: :worker_id}
+  belongs_to :section, -> { with_deleted }
 
-  scope :usual, ->{includes(:section).where(["sections.work_flag = ?", true]).order("sections.display_order, homes.display_order, homes.id")}
-  scope :list, ->{includes(:section, :holder).where(company_flag: false).order("sections.display_order, homes.display_order, homes.id")}
-  scope :machine_owners, ->{where("member_flag = ? OR company_flag = ?", true, true).order("company_flag DESC, display_order, id")}
+  scope :usual, -> { includes(:section).where(["sections.work_flag = ?", true]).order("sections.display_order, homes.display_order, homes.id") }
+  scope :list, -> { includes(:section, :holder).where(company_flag: false).order("sections.display_order, homes.display_order, homes.id") }
+  scope :machine_owners, -> { where("member_flag = ? OR company_flag = ?", true, true).order("company_flag DESC, display_order, id") }
 
   validates :phonetic,      presence: true
   validates :name,          presence: true
@@ -45,6 +45,6 @@ class Home < ApplicationRecord
   validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
 
   def holder_name
-    return self.holder ? self.holder.name : ''
+    @holder ? @holder.name : ''
   end
 end

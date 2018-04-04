@@ -53,6 +53,7 @@ GEM
       sass (>= 3.5.2)
     builder (3.2.3)
     byebug (10.0.2)
+    chunky_png (1.3.10)
     coderay (1.1.2)
     composite_primary_keys (8.1.6)
       activerecord (~> 4.2.0)
@@ -171,6 +172,8 @@ GEM
     ref (2.0.0)
     request_store (1.4.1)
       rack (>= 1.4)
+    rqrcode (0.10.1)
+      chunky_png (~> 1.0)
     rubocop (0.54.0)
       parallel (~> 1.10)
       parser (>= 2.5)
@@ -231,6 +234,7 @@ DEPENDENCIES
   bcrypt
   bootstrap (>= 4.0)
   byebug
+  chunky_png
   composite_primary_keys
   debase
   draper
@@ -247,6 +251,7 @@ DEPENDENCIES
   pry-rails
   pry-stack_explorer
   rails (~> 4.2.7)
+  rqrcode
   rubocop
   ruby-debug-ide (= 0.6.0)
   sass-rails (~> 5.0)
