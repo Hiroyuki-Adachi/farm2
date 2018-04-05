@@ -231,7 +231,7 @@ PLATFORMS
 DEPENDENCIES
   active_hash
   annotate
-  bcrypt
+  bcrypt (~> 3.1.7)
   bootstrap (>= 4.0)
   byebug
   chunky_png

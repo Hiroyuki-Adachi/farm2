@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180402142615) do
+ActiveRecord::Schema.define(version: 20180405141542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -195,6 +195,7 @@ ActiveRecord::Schema.define(version: 20180402142615) do
     t.integer  "term",                       default: 0,         null: false, comment: "現在の年度(期)"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "url",                                                         comment: "URL"
   end
 
   create_table "sections", force: :cascade, comment: "班／町内マスタ" do |t|
@@ -221,11 +222,15 @@ ActiveRecord::Schema.define(version: 20180402142615) do
   add_index "systems", ["term"], name: "index_systems_on_term", unique: true, using: :btree
 
   create_table "users", force: :cascade, comment: "利用者マスタ" do |t|
-    t.string   "login_name",      limit: 12,  null: false, comment: "ログイン名"
-    t.string   "password_digest", limit: 128, null: false, comment: "パスワード"
-    t.integer  "worker_id",                                comment: "作業者"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.string   "login_name",      limit: 12,                         null: false, comment: "ログイン名"
+    t.string   "password_digest", limit: 128,                        null: false, comment: "パスワード"
+    t.integer  "worker_id",                                                       comment: "作業者"
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.integer  "term",                        default: 0,            null: false, comment: "期"
+    t.date     "target_from",                 default: '2010-01-01', null: false, comment: "開始年月"
+    t.date     "target_to",                   default: '2010-12-31', null: false, comment: "終了年月"
+    t.integer  "organization_id",             default: 0,            null: false, comment: "組織"
   end
 
   add_index "users", ["login_name"], name: "index_users_on_login_name", unique: true, using: :btree

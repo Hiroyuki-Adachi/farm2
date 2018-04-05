@@ -65,7 +65,7 @@ $(function() {
       <%= link_to 'アカウント登録', new_user_path(worker_id: @worker), {class: "btn btn-success"} %>
     </div>
   <% end %>
-  <% if @worker.token.present? %>
+  <% if @worker.token.present? && current_organization.try(:url).present? %>
   <div class="btn-group mr-2">
     <input type="button" class="btn btn-success" value="トークンを見る" onclick="$('#token_info').slideToggle();">
   </div>
