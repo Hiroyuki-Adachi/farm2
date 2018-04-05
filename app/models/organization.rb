@@ -18,6 +18,7 @@
 #  term            :integer          default(0), not null         # 現在の年度(期)
 #  created_at      :datetime
 #  updated_at      :datetime
+#  url             :string                                        # URL
 #
 
 class Organization < ApplicationRecord
@@ -33,6 +34,7 @@ class Organization < ApplicationRecord
   validates :daily_worker, presence: true
 
   validates :name, length: { maximum: 20 }, if: proc { |x| x.name.present? }
+  validates :url, length: { maximum: 255 }, if: proc { |x| x.name.present? }
 
   def self.term
     Rails.cache.fetch(:organization_term, expires_in: 1.hour) do

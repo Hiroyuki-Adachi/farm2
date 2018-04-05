@@ -11,6 +11,14 @@ module SessionsHelper
     @current_user ||= User.find_by(id: session[:user_id])
   end
 
+  def current_organization
+    @current_organization ||= Organization.find_by(id: current_user.organization_id)
+  end
+
+  def current_term
+    current_user.term
+  end
+
   def current_name
     current_user.worker.family_name + " " + current_user.worker.first_name
   end

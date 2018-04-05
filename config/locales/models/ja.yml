@@ -154,6 +154,8 @@ ja:
         term: 年度
         target_from: 期間(自)
         target_to: 期間(至)
+        start_date: "期首"
+        end_date: "期末"
 
       organization:
         name: "組織名称"
@@ -162,6 +164,7 @@ ja:
         machines_count: "日報に表示する機械の数"
         chemicals_count: "日報に表示する薬品の数"
         daily_worker: "作業者への付加情報"
+        url: "URL"
 
       section:
         name: 名称
@@ -178,6 +181,10 @@ ja:
         login_name: "アカウント名"
         password: "パスワード"
         password_confirmation: "パスワード(確認)"
+        term: "年度"
+        target_from: "期間(自)"
+        target_to: "期間(至)"
+        organization_id: "組織"
 
   status:
     organization:

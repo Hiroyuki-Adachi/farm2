@@ -26,6 +26,10 @@
     <%= f.label :daily_worker, class: "col-form-label-lg" %>
     <%= f.select :daily_worker, @organization.localed_daily_workers, {}, {class: "form-control"} %>
  </div>
+ <div class="field form-group">
+    <%= f.label :url, class: "col-form-label-lg" %>
+    <%= f.url_field :url, {maxlength: 255, class: "form-control"} %>
+ </div>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= f.submit '登録', class: "btn btn-danger" %>
