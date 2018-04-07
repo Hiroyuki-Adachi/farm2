@@ -23,6 +23,13 @@ div#show {
     color: #000000;
     background-color: #FFFFFF;
 }
+#work_id {
+  position:absolute; 
+  top:120px; 
+  left:15px; 
+  font-family: 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', 'Meiryo', 'メイリオ', 'Osaka', 'MS PGothic', arial, helvetica, sans-serif; 
+  font-size: 9pt;
+}
 
 div.title {
     font-size:24px;
