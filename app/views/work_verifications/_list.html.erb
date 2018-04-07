@@ -3,6 +3,7 @@
     <tr>
       <th>作業日時</th>
       <th>分類</th>
+      <th class="numeric">No.</th>
       <th colspan="4">データ表示</th>
       <th colspan="2">処理ボタン</th>
       <th>記入者</th>
@@ -14,6 +15,7 @@
       <tr>
         <td><%=h work.worked_at %>&nbsp;<%=h work.work_time %></td>
         <td><%=h work.genre_name %></td>
+        <td class="numeric"><%= work.id %></td>
         <td><%=h data_print(work.work_results, "作業", show_workers_work_verification_path(work)) %></td>
         <td><%=h data_print(work.work_lands, "土地", show_lands_work_verification_path(work)) %></td>
         <td><%=h data_print(work.machine_results, "機械", show_machines_work_verification_path(work)) %></td>
