@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params.merge(organization_id: current_organization.id))
     if @user.save
       redirect_to edit_worker_path(@user.worker_id)
     else
