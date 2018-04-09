@@ -1,7 +1,8 @@
 $(function() {
     $("#tbl_list").floatThead({
         position: 'absolute',
-        scrollContainer:true
+        scrollContainer:true,
+        zIndex: 999
     });
     $(window).resize(function() {
         setTableWrapperHeight();
