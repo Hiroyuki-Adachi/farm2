@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180405141542) do
+ActiveRecord::Schema.define(version: 20180411130706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,39 @@ ActiveRecord::Schema.define(version: 20180405141542) do
     t.string   "phonetic",   limit: 40, null: false, comment: "金融機関名称(ﾌﾘｶﾞﾅ)"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+  end
+
+  create_table "broccoli_boxes", force: :cascade, comment: "ブロッコリ箱マスタ" do |t|
+    t.decimal  "weight",                   precision: 3, scale: 1, default: 0.0, null: false, comment: "重さ(kg)"
+    t.string   "display_name",  limit: 10,                         default: "",  null: false, comment: "表示名"
+    t.integer  "display_order",                                    default: 0,   null: false, comment: "表示順"
+    t.datetime "created_at",                                                     null: false
+    t.datetime "updated_at",                                                     null: false
+  end
+
+  create_table "broccoli_harvests", force: :cascade, comment: "ブロッコリー収穫" do |t|
+    t.integer  "work_broccoli_id",                           null: false, comment: "ブロッコリー作業"
+    t.integer  "broccoli_rank_id",                           null: false, comment: "ブロッコリー等級"
+    t.integer  "broccoli_size_id",                           null: false, comment: "ブロッコリー階級"
+    t.decimal  "inspection",       precision: 3, default: 0, null: false, comment: "検査後数量"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "broccoli_harvests", ["work_broccoli_id", "broccoli_rank_id", "broccoli_size_id"], name: "broccoli_harvest_sheet", unique: true, using: :btree
+
+  create_table "broccoli_ranks", force: :cascade, comment: "ブロッコリ等級マスタ" do |t|
+    t.string   "display_name",  limit: 10, default: "", null: false, comment: "表示名"
+    t.integer  "display_order",            default: 0,  null: false, comment: "表示順"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  create_table "broccoli_sizes", force: :cascade, comment: "ブロッコリ階級マスタ" do |t|
+    t.string   "display_name",  limit: 10, default: "", null: false, comment: "表示名"
+    t.integer  "display_order",            default: 0,  null: false, comment: "表示順"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   create_table "chemical_kinds", force: :cascade, comment: "作業種別薬剤種別利用マスタ" do |t|
@@ -69,7 +102,6 @@ ActiveRecord::Schema.define(version: 20180405141542) do
   add_index "chemicals", ["deleted_at"], name: "index_chemicals_on_deleted_at", using: :btree
 
   create_table "fixes", id: false, force: :cascade, comment: "確定データ" do |t|
-    t.integer  "term",                          default: 0, null: false, comment: "年度(期)"
     t.date     "fixed_at",                                  null: false, comment: "確定日"
     t.integer  "works_count",                               null: false, comment: "合計作業数"
     t.integer  "hours",                                     null: false, comment: "合計作業工数"
@@ -77,6 +109,7 @@ ActiveRecord::Schema.define(version: 20180405141542) do
     t.decimal  "machines_amount", precision: 8,             null: false, comment: "合計機械利用料"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+    t.integer  "term",                          default: 0, null: false, comment: "年度(期)"
     t.integer  "fixed_by",                                               comment: "確定者"
   end
 
@@ -180,22 +213,24 @@ ActiveRecord::Schema.define(version: 20180405141542) do
   end
 
   create_table "organizations", force: :cascade, comment: "組織(体系)マスタ" do |t|
-    t.string   "name",            limit: 20,                     null: false, comment: "組織名称"
-    t.integer  "workers_count",              default: 12,        null: false, comment: "作業日報の作業者数"
-    t.integer  "lands_count",                default: 17,        null: false, comment: "作業日報の土地数"
-    t.integer  "machines_count",             default: 8,         null: false, comment: "作業日報の機械数"
-    t.integer  "chemicals_count",            default: 4,         null: false, comment: "作業日報の薬剤数"
-    t.integer  "daily_worker",    limit: 2,  default: 0,         null: false, comment: "作業日報の作業者名付加情報"
-    t.string   "consignor_code",  limit: 10,                                  comment: "委託者コード"
-    t.string   "consignor_name",  limit: 40,                                  comment: "委託者コード"
-    t.string   "bank_code",       limit: 4,  default: "0000",    null: false, comment: "口座の金融機関コード"
-    t.string   "branch_code",     limit: 3,  default: "000",     null: false, comment: "口座の支店コード"
-    t.integer  "account_type_id", limit: 2,  default: 0,         null: false, comment: "口座種別"
-    t.string   "account_number",  limit: 7,  default: "0000000", null: false, comment: "口座番号"
-    t.integer  "term",                       default: 0,         null: false, comment: "現在の年度(期)"
+    t.string   "name",                  limit: 20,                     null: false, comment: "組織名称"
+    t.integer  "workers_count",                    default: 12,        null: false, comment: "作業日報の作業者数"
+    t.integer  "lands_count",                      default: 17,        null: false, comment: "作業日報の土地数"
+    t.integer  "machines_count",                   default: 8,         null: false, comment: "作業日報の機械数"
+    t.integer  "chemicals_count",                  default: 4,         null: false, comment: "作業日報の薬剤数"
+    t.integer  "daily_worker",          limit: 2,  default: 0,         null: false, comment: "作業日報の作業者名付加情報"
+    t.string   "consignor_code",        limit: 10,                                  comment: "委託者コード"
+    t.string   "consignor_name",        limit: 40,                                  comment: "委託者コード"
+    t.string   "bank_code",             limit: 4,  default: "0000",    null: false, comment: "口座の金融機関コード"
+    t.string   "branch_code",           limit: 3,  default: "000",     null: false, comment: "口座の支店コード"
+    t.integer  "account_type_id",       limit: 2,  default: 0,         null: false, comment: "口座種別"
+    t.string   "account_number",        limit: 7,  default: "0000000", null: false, comment: "口座番号"
+    t.integer  "term",                             default: 0,         null: false, comment: "現在の年度(期)"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "url",                                                         comment: "URL"
+    t.string   "url",                                                               comment: "URL"
+    t.integer  "broccoli_work_type_id",                                             comment: "ブロッコリ作業分類"
+    t.integer  "broccoli_work_kind_id",                                             comment: "ブロッコリ種別分類"
   end
 
   create_table "sections", force: :cascade, comment: "班／町内マスタ" do |t|
@@ -235,6 +270,17 @@ ActiveRecord::Schema.define(version: 20180405141542) do
 
   add_index "users", ["login_name"], name: "index_users_on_login_name", unique: true, using: :btree
   add_index "users", ["worker_id"], name: "index_users_on_worker_id", unique: true, using: :btree
+
+  create_table "work_broccolis", force: :cascade, comment: "ブロッコリー作業" do |t|
+    t.integer  "work_id",                                   null: false, comment: "作業"
+    t.integer  "broccoli_box_id",                           null: false, comment: "箱"
+    t.date     "shipped_on",                                null: false, comment: "出荷日"
+    t.decimal  "rest",            precision: 3, default: 0, null: false, comment: "残数"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+  end
+
+  add_index "work_broccolis", ["work_id"], name: "index_work_broccolis_on_work_id", unique: true, using: :btree
 
   create_table "work_chemicals", force: :cascade, comment: "薬剤使用データ" do |t|
     t.integer  "work_id",                               null: false, comment: "作業"
