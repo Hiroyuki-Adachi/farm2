@@ -1,5 +1,5 @@
 class CreateBroccoliHarvests < ActiveRecord::Migration
-  def change
+  def up
     create_table :broccoli_harvests, {comment: "ブロッコリー収穫"} do |t|
       t.integer :work_broccoli_id, {null: false, comment: "ブロッコリー作業"}
       t.integer :broccoli_rank_id, {null: false, comment: "ブロッコリー等級"}
@@ -8,5 +8,10 @@ class CreateBroccoliHarvests < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_index :broccoli_harvests, [:work_broccoli_id, :broccoli_rank_id, :broccoli_size_id], {unique: true, name: "broccoli_harvest_sheet"}
+  end
+
+  def down
+    drop_table :broccoli_harvests
   end
 end

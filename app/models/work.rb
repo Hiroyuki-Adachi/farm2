@@ -44,6 +44,7 @@ class Work < ApplicationRecord
   has_many :work_results,   -> { order('work_results.display_order') }, { dependent: :destroy }
   has_many :work_chemicals, -> { order('work_chemicals.id') }, { dependent: :destroy }
   has_many :work_verifications, -> { order('work_verifications.id') }, { dependent: :destroy }
+  has_one :broccoli, { dependent: :destroy }
 
   has_many :workers, { through: :work_results }, -> { with_deleted }
   has_many :lands, { through: :work_lands }, -> { with_deleted }
