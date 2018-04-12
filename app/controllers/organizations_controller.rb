@@ -3,6 +3,8 @@ class OrganizationsController < ApplicationController
   layout 'menu'
 
   def edit
+    @work_kinds = WorkKind.usual
+    @work_types = WorkType.usual
   end
 
   def update
@@ -21,6 +23,6 @@ class OrganizationsController < ApplicationController
   end
 
   def organization_params
-    return params.require(:organization).permit(:name, :workers_count, :lands_count, :machines_count, :chemicals_count, :daily_worker, :url)
+    return params.require(:organization).permit(:name, :workers_count, :lands_count, :machines_count, :chemicals_count, :daily_worker, :url, :broccoli_work_type_id, :broccoli_work_kind_id)
   end
 end
