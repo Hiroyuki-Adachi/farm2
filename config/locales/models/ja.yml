@@ -165,6 +165,8 @@ ja:
         chemicals_count: "日報に表示する薬品の数"
         daily_worker: "作業者への付加情報"
         url: "URL"
+        broccoli_work_type_id: "ブロッコリーを選択"
+        broccoli_work_kind_id: "収穫を選択"
 
       section:
         name: 名称
