@@ -16,6 +16,5 @@
 # below each fixture, per the syntax in the comments below
 #
 rank1:
-  id: 1
   display_name: "優秀"
   display_order: 1

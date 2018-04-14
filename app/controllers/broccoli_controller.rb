@@ -1,4 +1,5 @@
 class BroccoliController < ApplicationController
+  before_action :check_work
   before_action :set_broccoli
 
   def edit
@@ -22,9 +23,13 @@ class BroccoliController < ApplicationController
 
   private
 
+  def check_work
+    @work = Work.find(params[:work_id])
+    redirect_to work_path(@work) unless broccoli?(@work)
+  end
+
   def set_broccoli
-    work = Work.find(params[:work_id])
-    @broccoli = work.broccoli ? work.broccoli : WorkBroccoli.new(work_id: work.id, shipped_on: work.worked_at)
+    @broccoli = (@work.broccoli ? @work.broccoli : WorkBroccoli.new(work_id: @work.id, shipped_on: @work.worked_at)).decorate
     @boxes = BroccoliBox.usual
     @sizes = BroccoliSize.usual
     @ranks = BroccoliRank.usual

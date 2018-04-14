@@ -198,3 +198,10 @@ work_types20:
   display_order: '240'
   deleted_at: 
 
+work_type_broccoli:
+  id: 27
+  genre: 2
+  name: "ブロッコリー"
+  category_flag: f
+  display_order: 300
+  deleted_at: 

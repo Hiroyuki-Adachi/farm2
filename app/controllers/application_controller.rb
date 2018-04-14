@@ -20,6 +20,13 @@ class ApplicationController < ActionController::Base
     "count_workers#{term}"
   end
 
+  def broccoli?(work)
+    return current_organization.broccoli_work_type_id \
+        && current_organization.broccoli_work_kind_id \
+        && current_organization.broccoli_work_type_id == work.work_type_id \
+        && current_organization.broccoli_work_kind_id == work.work_kind_id
+  end
+
   private
 
   def set_term

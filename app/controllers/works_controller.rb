@@ -180,11 +180,7 @@ class WorksController < ApplicationController
   end
 
   def set_broccoli
-    if current_organization.broccoli_work_type_id \
-      && current_organization.broccoli_work_kind_id \
-      && current_organization.broccoli_work_type_id == @work.work_type_id \
-      && current_organization.broccoli_work_kind_id == @work.work_kind_id
-
+    if broccoli?(@work)
       @sizes = BroccoliSize.usual
       @ranks = BroccoliRank.usual
       @broccoli = @work.broccoli || WorkBroccoli.new

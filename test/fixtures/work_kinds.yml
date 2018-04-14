@@ -416,3 +416,11 @@ work_kind_first_term:
   created_at: '2016-02-09 02:07:33.833683'
   updated_at: '2016-02-09 02:07:33.833683'
   deleted_at: 
+
+work_kind_broccoli:
+  name: "収穫"
+  display_order: 10
+  other_flag: f
+  created_at: '2018-02-09 02:07:33.833683'
+  updated_at: '2018-02-09 02:07:33.833683'
+  deleted_at: 
