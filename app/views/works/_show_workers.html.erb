@@ -16,9 +16,9 @@
       <tr>
         <% xx.times do |x| %>
           <% j = i + yy * x %>
-          <td style="text-align: right;"><%= j + 1 %></td>
+          <td class="numeric"><%= j + 1 %></td>
           <td><%=raw @results[j] ? @results[j].worker_name(@organization) : "&nbsp;" %></td>
-          <td style="text-align: right;"><%=raw @results[j] ? @results[j].hours : "&nbsp;" %></td>
+          <td class="numeric"><%=raw @results[j] ? @results[j].hours : "&nbsp;" %></td>
         <% end %>
       </tr>
       <% end %>

@@ -12,6 +12,8 @@
 #
 
 class WorkBroccoli < ActiveRecord::Base
+  require 'ostruct'
+
   validates :work_id, presence: true
   validates :broccoli_box_id, presence: true
   validates :shipped_on, presence: true
@@ -21,4 +23,23 @@ class WorkBroccoli < ActiveRecord::Base
   belongs_to :box, class_name: "BroccoliBox", foreign_key: :broccoli_box_id
 
   has_many :harvests, class_name: "BroccoliHarvest", foreign_key: :work_broccoli_id, dependent: :destroy
+
+  def harvest(rank, size)
+    return nil unless harvests
+    harvests.find_by(broccoli_rank_id: rank, broccoli_size_id: size)
+  end
+
+  def regist_harvests(params)
+    params.each do |rank_id, sizes|
+      sizes.each do |size_id, inspection|
+        harvest = BroccoliHarvest.find_or_initialize_by(broccoli_rank_id: rank_id, broccoli_size_id: size_id, work_broccoli_id: self.id)
+        if inspection.to_i > 0
+          harvest.inspection = inspection
+          harvest.save!
+        else
+          harvest.destroy
+        end
+      end
+    end
+  end
 end

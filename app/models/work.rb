@@ -44,7 +44,7 @@ class Work < ApplicationRecord
   has_many :work_results,   -> { order('work_results.display_order') }, { dependent: :destroy }
   has_many :work_chemicals, -> { order('work_chemicals.id') }, { dependent: :destroy }
   has_many :work_verifications, -> { order('work_verifications.id') }, { dependent: :destroy }
-  has_one :broccoli, { dependent: :destroy }
+  has_one :broccoli, {class_name: "WorkBroccoli", dependent: :destroy }
 
   has_many :workers, { through: :work_results }, -> { with_deleted }
   has_many :lands, { through: :work_lands }, -> { with_deleted }
@@ -173,6 +173,12 @@ class Work < ApplicationRecord
       else
         WorkChemical.create(work_id: id, chemical_id: chemical_id, quantity: quantity) if quantity > 0
       end
+    end
+  end
+
+  def refresh_broccoli(organization)
+    if work_type_id == organization.borrocoli_work_type_id && work_kind_id == organization.broccoli_work_kind_id
+      broccoli.destroy if broccoli.present?
     end
   end
 

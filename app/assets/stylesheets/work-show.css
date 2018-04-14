@@ -13,6 +13,7 @@ body {
   width: 720px;
   margin: 15px;
   padding: 0;
+  box-sizing: border-box;
 }
 
 div#show {
@@ -45,7 +46,6 @@ img {
 table,
 th,
 td {
-    font-family: "ヒラギノ明朝 Pro W3", "細明朝体", "ＭＳ Ｐ明朝", serif;
     font-size: 11pt;
     border-collapse: collapse;
     border-spacing: 0;
@@ -57,19 +57,24 @@ th {
     text-align: center;
     font-weight: normal;
     padding: 1px;
-}
+    font-family: 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', 'Meiryo', 'メイリオ', 'Osaka', 'MS PGothic', arial, helvetica, sans-serif; 
+  }
 td {
     text-align: left;
     padding: 1px;
+    font-family: "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
 }
 
+td.numeric {
+  text-align: right;
+}
 span.genre {
     margin-left: 10px;
     white-space: nowrap;
 }
 
 div.sub_title {
-    font-family: "ヒラギノ明朝 Pro W3", "細明朝体", "ＭＳ Ｐ明朝", serif;
+    font-family: "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
     font-size: 14pt;
     margin-left: 12px;
 }

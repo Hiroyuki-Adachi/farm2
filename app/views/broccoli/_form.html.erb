@@ -1,0 +1,39 @@
+<div class="form-row">
+  <div class="form-group col-md-3">
+    <%= f.label :shipped_on, '', class: "col-form-label-lg" %>
+    <%= f.date_field :shipped_on, {required: true, class: "form-control", max: @system.end_date} %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.label :broccoli_box_id, '', class: "col-form-label-lg" %>
+    <%= f.select(:broccoli_box_id, @boxes.map {|box| [box.display_name, box.id]}, {}, {class: "form-control"}) %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.label :rest, '', class: "col-form-label-lg" %>
+    <%= f.number_field :rest, {required: true, class: "form-control", max: 999, min: 0 } %>
+  </div>
+</div>
+<div class="form-row">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <% @ranks.each do |rank| %>
+        <th style="text-align:center;"><%= rank.display_name %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+     <% @sizes.each do |size| %>
+       <tr>
+          <th><%= size.display_name %></th>
+          <% @ranks.each do |rank| %>
+            <td><%= number_field_tag("harvests[#{rank.id}][#{size.id}]", @broccoli.harvest(rank, size).try(:inspection), {class: "form-control", min: 0, max: 999, step: 1})%></td>
+          <% end %>
+        </tr>
+        <% end %>
+    </tbody>
+  </table>
+</div>
+<%= f.hidden_field :work_id %>
+<%= hidden_field_tag :page, params[:page] %>
+<%= hidden_field_tag :month, params[:month] %>

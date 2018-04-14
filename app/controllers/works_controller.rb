@@ -2,6 +2,7 @@ require 'date'
 
 class WorksController < ApplicationController
   before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :show, :update, :destroy, :print]
+  before_action :set_broccoli, only: [:show]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :check_fixed, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
   before_action :clear_cache, only: [:update, :create, :destroy]
@@ -98,6 +99,7 @@ class WorksController < ApplicationController
     WorkVerification.regist(@work, current_user.worker)
     if params[:regist]
       if @work.update(work_params)
+        @work.refresh_broccoli(current_user.organization)
         redirect_to(work_path(page_params))
       else
         render action: :edit
@@ -175,5 +177,13 @@ class WorksController < ApplicationController
     end
     @page = params[:page] || 1
     @works = WorkDecorator.decorate_collection(@works.page(@page))
+  end
+
+  def set_broccoli
+    if current_organization.broccoli_work_type_id == @work.work_type_id && current_organization.broccoli_work_kind_id == @work.work_kind_id
+      @sizes = BroccoliSize.usual
+      @ranks = BroccoliRank.usual
+      @broccoli = @work.broccoli || WorkBroccoli.new
+    end
   end
 end
