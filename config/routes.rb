@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   resources :organizations, param: nil, only: [:edit, :update]
 
-  resources :banks, {param: :code, except: [:show]} do
-    resources :branches, {param: :code, controller: "banks/branches", except: [:show]}
+  resources :banks, param: :code, except: [:show] do
+    resources :branches, param: :code, controller: "banks/branches", except: [:show]
   end
 
+  resources :broccoli, param: "work_id", only: [:edit, :update, :destroy]
   resources :sessions, only: [:new, :create, :destroy]
   resources :machine_types, except: [:show]
   resources :chemical_types, except: [:show]
@@ -18,8 +19,8 @@ Rails.application.routes.draw do
   resources :sections, except: [:show]
   resources :statistics, only: [:index]
   resources :monthly_reports, only: [:index, :show, :edit, :update]
-  resources :fixes, {param: "fixed_at", except: [:edit, :update]}
-  resources :personal_informations, {param: "token", only: [:show]}
+  resources :fixes, param: "fixed_at", except: [:edit, :update]
+  resources :personal_informations, param: "token", only: [:show]
   resources :users, only: [:new, :create, :edit, :update]
   resources :work_verifications, param: "work_id", only: [:index, :create, :destroy] do
     member do
@@ -36,7 +37,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :machine_price_headers, {controller: :machine_prices, path: "machine_prices", except: [:show]} do
+  resources :machine_price_headers, controller: :machine_prices, path: "machine_prices", except: [:show] do
     collection do
       get :show_machine
       get :show_type

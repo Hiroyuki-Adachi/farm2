@@ -19,6 +19,7 @@ ja:
       organization: "営農組合"
       section: "班"
       user: "利用者"
+      work_broccoli: "ブロッコリー"
 
     attributes:
       chemical:
@@ -187,6 +188,11 @@ ja:
         target_from: "期間(自)"
         target_to: "期間(至)"
         organization_id: "組織"
+    
+      work_broccoli:
+        shipped_on: "出荷日"
+        broccoli_box_id: "出荷用の箱"
+        rest: "残数"
 
   status:
     organization:

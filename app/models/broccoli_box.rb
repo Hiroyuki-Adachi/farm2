@@ -11,4 +11,5 @@
 #
 
 class BroccoliBox < ActiveRecord::Base
+  scope :usual, -> { order("display_order") }
 end

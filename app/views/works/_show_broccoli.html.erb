@@ -1,0 +1,61 @@
+<div id="content_broccoli" class="content" style="page-break-before:always;">
+  <div class="sub_title">※ブロッコリ</div>
+  <% col_width = (720 / (@ranks.count * 2 + 1)).floor %>
+  <% tit_width = 720 - col_width * @ranks.count * 2 %>
+  <% total_ranks = {} %>
+  <table id="detail_broccoli" rules="all">
+    <thead>
+      <tr>
+        <th>出荷日</th>
+        <td colspan="2" style="text-align:center;"><%= @broccoli.shipped_on.strftime('%Y-%m-%d') %></td>
+        <th>ケース</th>
+        <td class="numeric"><%= @broccoli.box.display_name %></td>
+        <td colspan="<%= @ranks.count * 2 - 4 %>">&nbsp;</td>
+      </tr>
+      <tr>
+        <th rowspan="2" style="width: <%= tit_width %>px;">&nbsp;</th>
+        <% @ranks.each do |rank| %>
+        <% total_ranks[rank.id] = 0 %>
+        <th colspan="2"><%= rank.display_name %></th>
+        <% end %>
+      </tr>
+      <tr>
+        <% @ranks.count.times do %>
+        <th style="width:<%= col_width %>px;">持込<br />数量</th>
+        <th style="width:<%= col_width %>px;">検査後<br />数量</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+     <% @sizes.each do |size| %>
+       <tr>
+          <th><%= size.display_name %></th>
+          <% @ranks.each do |rank| %>
+            <td>&nbsp;</td>
+            <% harvest = @broccoli.harvest(rank, size) %>
+            <td class="numeric"><%= harvest ? harvest.inspection : "" %></td>
+            <% total_ranks[rank.id] += harvest.inspection if harvest.present? %>
+          <% end %>
+        </tr>
+        <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>小計</th>
+        <% @ranks.each do |rank| %>
+          <td>&nbsp;</td>
+          <td class="numeric"><%= total_ranks[rank.id] %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <th>合計</th>
+        <td>&nbsp;</td>
+        <td class="numeric"><%= total_ranks.values.inject(:+) %></td>
+        <td colspan="<%= @ranks.count * 2 - 4%>">&nbsp;</td>
+        <th>残数</th>
+        <td class="numeric"><%= @broccoli.rest %></td>
+      </tr>
+    <tfoot>
+  </table>
+  <div id="cover_broccoli" class="cover" onclick="location.href='<%=raw edit_broccoli_path(work_id: @work, page: params[:page], month: params[:month]) %>'"></div>
+</div>

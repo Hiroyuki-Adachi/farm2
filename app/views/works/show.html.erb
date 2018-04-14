@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
@@ -24,6 +24,9 @@
 <% if (@chemicals.count > 0 or @work.work_kind.chemical_kinds.count > 0) and @organization.chemicals_count > 0 %>
   <%= render partial: "show_chemicals" %>
 <% end %>
+<% if @broccoli %>
+  <%= render partial: "show_broccoli" %>
+<% end %>
 <% unless @work.fixed_at %>
 <%= link_to '削除',raw(work_path(id: @work, page: params[:page], month: params[:month])), method: :delete, class: "btn btn-danger", data: {confirm: "本当に削除してもよろしいですか?"} %>
 <% end %>
@@ -31,8 +34,8 @@
 <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: raw("execPrint('" + print_work_path(@work.id) + "');") %>
 <%= button_tag "戻る",  type: :button, class: "btn btn-default", :onclick => raw("location.href = '" + (session[:work_referer] ? session[:work_referer] : works_path(page: params[:page], month: params[:month])) + "';") %>
 <%= render partial: "show_stamp"%>
-<script type="text/javascript">
 <% unless @work.fixed_at %>
+<script type="text/javascript">
 $(function() {
   $("#cover_work").height($("#content_work").height()).width($("#content_work").width());
   $("#cover_workers").height($("#content_workers").height()).width($("#content_workers").width());
@@ -40,8 +43,13 @@ $(function() {
   $("#cover_machines").height($("#content_machines").height()).width($("#content_machines").width());
   $("#cover_chemicals").height($("#content_chemicals").height()).width($("#content_chemicals").width());
 });
+</script>
 <% end %>
+<script type="text/javascript">
 function execPrint(url) {
+    if(!confirm("印刷を実行した場合、印刷した日報が原紙となります。印刷しますか？")) {
+        return;
+    }
     $.ajax({
         url: url,
         type: "PATCH",
@@ -49,8 +57,12 @@ function execPrint(url) {
     }).done(function(html) {
         $("#print_stamp").html(html);
         window.print();
+        alert("印刷した日報を原紙として保管してください。");
     });
 }
+$(function() {
+  $("#cover_broccoli").height($("#content_broccoli").height()).width($("#content_broccoli").width());
+});
 </script>
 </body>
 </html>
