@@ -7,9 +7,9 @@
     <thead>
       <tr>
         <th>出荷日</th>
-        <td colspan="2" style="text-align:center;"><%= @broccoli.shipped_on.strftime('%Y-%m-%d') %></td>
+        <td colspan="2" style="text-align:center;"><%= @broccoli.shipped_on %></td>
         <th>ケース</th>
-        <td class="numeric"><%= @broccoli.box.display_name %></td>
+        <td class="numeric"><%= @broccoli.box ? @broccoli.box.display_name : "" %></td>
         <td colspan="<%= @ranks.count * 2 - 4 %>">&nbsp;</td>
       </tr>
       <tr>

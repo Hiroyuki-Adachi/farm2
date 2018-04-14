@@ -38,6 +38,9 @@ class Organization < ApplicationRecord
   validates :name, length: { maximum: 20 }, if: proc { |x| x.name.present? }
   validates :url, length: { maximum: 255 }, if: proc { |x| x.name.present? }
 
+  belongs_to :broccoli_work_type, class_name: "WorkType"
+  belongs_to :broccoli_work_kind, class_name: "WorkKind"
+
   def self.term
     Rails.cache.fetch(:organization_term, expires_in: 1.hour) do
       Organization.first.term

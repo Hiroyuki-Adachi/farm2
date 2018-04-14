@@ -702,3 +702,7 @@ work_kind_types115:
   work_kind_id: '38'
   work_type_id: '18'
 
+work_kind_types118:
+  id: 118
+  work_kind_id: 42
+  work_type_id: 27

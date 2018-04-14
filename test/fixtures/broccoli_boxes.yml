@@ -17,7 +17,6 @@
 # below each fixture, per the syntax in the comments below
 #
 box1: 
-  id: 1
   weight: 1
   display_name: "1kg"
   display_order: 1
