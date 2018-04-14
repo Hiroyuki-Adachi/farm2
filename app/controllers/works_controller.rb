@@ -99,7 +99,7 @@ class WorksController < ApplicationController
     WorkVerification.regist(@work, current_user.worker)
     if params[:regist]
       if @work.update(work_params)
-        @work.refresh_broccoli(current_user.organization)
+        @work.refresh_broccoli(current_organization)
         redirect_to(work_path(page_params))
       else
         render action: :edit
@@ -180,7 +180,11 @@ class WorksController < ApplicationController
   end
 
   def set_broccoli
-    if current_organization.broccoli_work_type_id == @work.work_type_id && current_organization.broccoli_work_kind_id == @work.work_kind_id
+    if current_organization.broccoli_work_type_id \
+      && current_organization.broccoli_work_kind_id \
+      && current_organization.broccoli_work_type_id == @work.work_type_id \
+      && current_organization.broccoli_work_kind_id == @work.work_kind_id
+
       @sizes = BroccoliSize.usual
       @ranks = BroccoliRank.usual
       @broccoli = @work.broccoli || WorkBroccoli.new

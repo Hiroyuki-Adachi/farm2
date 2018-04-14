@@ -19,3 +19,4 @@ users1:
   worker_id: 1
   login_name: '1234567890'
   password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
