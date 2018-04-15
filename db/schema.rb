@@ -102,7 +102,6 @@ ActiveRecord::Schema.define(version: 20180411130706) do
   add_index "chemicals", ["deleted_at"], name: "index_chemicals_on_deleted_at", using: :btree
 
   create_table "fixes", id: false, force: :cascade, comment: "確定データ" do |t|
-    t.integer  "term",                          default: 0, null: false, comment: "年度(期)"
     t.date     "fixed_at",                                  null: false, comment: "確定日"
     t.integer  "works_count",                               null: false, comment: "合計作業数"
     t.integer  "hours",                                     null: false, comment: "合計作業工数"
@@ -110,6 +109,7 @@ ActiveRecord::Schema.define(version: 20180411130706) do
     t.decimal  "machines_amount", precision: 8,             null: false, comment: "合計機械利用料"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+    t.integer  "term",                          default: 0, null: false, comment: "年度(期)"
     t.integer  "fixed_by",                                               comment: "確定者"
   end
 

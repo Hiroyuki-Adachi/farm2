@@ -7,7 +7,7 @@
     <div class="btn-group mr-2">
       <%= f.submit '登録', :name => 'regist', class: "btn btn-warning" %>
     </div>
-    <% if @broccoli.id %>
+    <% unless @broccoli.new_record? %>
     <div class="btn-group mr-2">
       <%= link_to '削除',raw(broccoli_path(work_id: @broccoli.work_id, page: params[:page], month: params[:month])), method: :delete, class: "btn btn-danger", data: {confirm: "本当に削除してもよろしいですか?"} %>
     </div>
