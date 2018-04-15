@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180411130706) do
+ActiveRecord::Schema.define(version: 20180415014606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -283,9 +283,9 @@ ActiveRecord::Schema.define(version: 20180411130706) do
   add_index "work_broccolis", ["work_id"], name: "index_work_broccolis_on_work_id", unique: true, using: :btree
 
   create_table "work_chemicals", force: :cascade, comment: "薬剤使用データ" do |t|
-    t.integer  "work_id",                               null: false, comment: "作業"
-    t.integer  "chemical_id",                           null: false, comment: "薬剤"
-    t.decimal  "quantity",    precision: 3, default: 0, null: false, comment: "使用料"
+    t.integer  "work_id",                                           null: false, comment: "作業"
+    t.integer  "chemical_id",                                       null: false, comment: "薬剤"
+    t.decimal  "quantity",    precision: 5, scale: 1, default: 0.0, null: false, comment: "使用量"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

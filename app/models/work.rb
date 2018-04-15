@@ -162,7 +162,7 @@ class Work < ApplicationRecord
   def regist_chemicals(params)
     params.each do |chemical_id, quantity|
       chemical_id = chemical_id.to_i
-      quantity = quantity.to_i
+      quantity = quantity.to_f
       work_chemical = work_chemicals.find_by(chemical_id: chemical_id)
       if work_chemical
         if quantity > 0
