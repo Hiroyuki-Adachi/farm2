@@ -20,7 +20,7 @@
           <td><%=h chemical.chemical_type.name %></td>
           <td>
             <% work_chemicals = @work.work_chemicals.where(chemical_id: chemical.id) %>
-            <%= number_field_tag "chemicals[#{chemical.id}]", work_chemicals.exists? ? work_chemicals.first.quantity : 0, {min: 0, max: 999, step: 1, class: "form-control form-control-sm"} %>
+            <%= number_field_tag "chemicals[#{chemical.id}]", work_chemicals.exists? ? work_chemicals.first.quantity : 0, {min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm"} %>
           </td>
           <td><%=h chemical.unit %></td>
         </tr>

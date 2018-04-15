@@ -2,10 +2,10 @@
 #
 # Table name: work_chemicals # 薬剤使用データ
 #
-#  id          :integer          not null, primary key # 薬剤使用データ
-#  work_id     :integer          not null              # 作業
-#  chemical_id :integer          not null              # 薬剤
-#  quantity    :decimal(3, )     default(0), not null  # 使用料
+#  id          :integer          not null, primary key  # 薬剤使用データ
+#  work_id     :integer          not null               # 作業
+#  chemical_id :integer          not null               # 薬剤
+#  quantity    :decimal(5, 1)    default(0.0), not null # 使用量
 #  created_at  :datetime
 #  updated_at  :datetime
 #
