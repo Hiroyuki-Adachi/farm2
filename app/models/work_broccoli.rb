@@ -26,7 +26,7 @@ class WorkBroccoli < ActiveRecord::Base
 
   def harvest(rank, size)
     return nil unless harvests
-    harvests.find_by(broccoli_rank_id: rank, broccoli_size_id: size)
+    harvests.find { |h| h.broccoli_rank_id == rank.id && h.broccoli_size_id == size.id }
   end
 
   def regist_harvests(params)
