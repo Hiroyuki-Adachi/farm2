@@ -1,8 +1,6 @@
 class MachineResultDecorator < Draper::Decorator
   delegate_all
 
-  WDAY = ["日", "月", "火", "水", "木", "金", "土"]
-
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #
@@ -12,7 +10,7 @@ class MachineResultDecorator < Draper::Decorator
   #     end
   #   end
   def worked_at
-    model.work.worked_at.strftime('%Y-%m-%d') + "(#{WDAY[model.work.worked_at.wday]})"
+    model.work.worked_at.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.work.worked_at.wday]})"
   end
 
   def worked_at_short

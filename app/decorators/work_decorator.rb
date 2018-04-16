@@ -1,8 +1,6 @@
 class WorkDecorator < Draper::Decorator
   delegate_all
 
-  WDAY = ["日", "月", "火", "水", "木", "金", "土"]
-
   def self.months(term)
     cache_key = "months#{term}"
     months = []
@@ -20,7 +18,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def worked_at
-    model.worked_at.strftime('%Y-%m-%d') + "(#{WDAY[model.worked_at.wday]})"
+    model.worked_at.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})"
   end
 
   def fixed_at
