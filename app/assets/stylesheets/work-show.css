@@ -1,5 +1,5 @@
 @media print {
-    input,a.button,button {display:none;}
+    input[type="button"].btn,a.btn,button[type="button"].btn {display:none;}
     body {
         margin: 0px 0px 0px 0px;
     }
