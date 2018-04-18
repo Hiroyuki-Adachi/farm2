@@ -2,9 +2,10 @@ class WorkersController < ApplicationController
   before_action :set_worker, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
   before_action :set_genders, only: [:new, :create, :edit, :update]
+  before_action :set_positions, only: [:new, :create, :edit, :update]
 
   def index
-    @workers = Worker.usual.page(params[:page])
+    @workers = WorkerDecorator.decorate_collection(Worker.usual.page(params[:page]))
   end
 
   def new
@@ -58,7 +59,11 @@ class WorkersController < ApplicationController
     @genders = Gender.all
   end
 
+  def set_positions
+    @positions = Position.all
+  end
+
   def worker_params
-    return params.require(:worker).permit(:family_phonetic, :family_name, :first_phonetic, :first_name, :home_id, :mobile, :display_order, :gender_id, :birthday)
+    return params.require(:worker).permit(:family_phonetic, :family_name, :first_phonetic, :first_name, :home_id, :mobile, :display_order, :gender_id, :birthday, :position_id)
   end
 end

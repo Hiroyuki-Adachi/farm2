@@ -103,6 +103,7 @@ ja:
         gender_id: "性別"
         home_id: "世帯"
         token: "アクセストークン"
+        position_id: "役職"
 
       machine:
         name: 名称

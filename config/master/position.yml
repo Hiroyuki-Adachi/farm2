@@ -1,0 +1,12 @@
+- id: 0
+  code: None
+  name: ""
+- id: 1
+  code: Member
+  name: "組合員"
+- id: 2
+  code: Leader
+  name: "作業班長"
+- id: 3
+  code: Director
+  name: "理事"

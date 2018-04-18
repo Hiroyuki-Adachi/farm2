@@ -23,6 +23,7 @@
 #  updated_at      :datetime
 #  deleted_at      :datetime
 #  token           :string(36)       default(""), not null        # アクセストークン
+#  position_id     :integer          default(0), not null         # 役職
 #
 
 require 'securerandom'
@@ -35,6 +36,7 @@ class Worker < ApplicationRecord
 
   belongs_to :home, -> { with_deleted }
   belongs_to :gender
+  belongs_to :position
 
   has_many :work_results
   has_many :works, -> { order(:worked_at) }, through: :work_results
