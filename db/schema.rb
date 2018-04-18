@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180415014606) do
+ActiveRecord::Schema.define(version: 20180418122057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -385,6 +385,7 @@ ActiveRecord::Schema.define(version: 20180415014606) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "token",           limit: 36, default: "",        null: false, comment: "アクセストークン"
+    t.integer  "position_id",                default: 0,         null: false, comment: "役職"
   end
 
   add_index "workers", ["deleted_at"], name: "index_workers_on_deleted_at", using: :btree

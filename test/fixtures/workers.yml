@@ -23,6 +23,7 @@
 #  updated_at      :datetime
 #  deleted_at      :datetime
 #  token           :string(36)       default(""), not null        # アクセストークン
+#  position_id     :integer          default(0), not null         # 役職
 #
 
 worker1:
