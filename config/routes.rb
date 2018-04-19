@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :monthly_reports, only: [:index, :show, :edit, :update]
   resources :fixes, param: "fixed_at", except: [:edit, :update]
   resources :personal_informations, param: "token", only: [:show]
-  resources :users, only: [:new, :create, :edit, :update]
+  resources :users, except: [:show]
   resources :work_verifications, param: "work_id", only: [:index, :create, :destroy] do
     member do
       get :show_workers

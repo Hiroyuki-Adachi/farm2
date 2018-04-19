@@ -8,4 +8,12 @@ class WorkerDecorator < Draper::Decorator
   def disp_name
     model.name + "(" + model.first_phonetic + ")"
   end
+
+  def permission_name
+    model.user ? model.user.permission.name : ""
+  end
+
+  def login_name
+    model.user ? model.user.login_name : ""
+  end
 end
