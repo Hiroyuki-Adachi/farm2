@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update]
 
+  def index
+    @workers = WorkerDecorator.decorate_collection(Worker.usual.page(params[:page]))
+  end
+
   def new
     @user = User.new
     @user.worker_id = params[:worker_id]

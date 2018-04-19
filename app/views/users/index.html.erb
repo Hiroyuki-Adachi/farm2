@@ -1,0 +1,42 @@
+<h1>利用者マスタ一覧</h1>
+<% if @workers.count > 0 %>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>氏名</th>
+      <th>世帯</th>
+      <th>権限</th>
+      <th>アカウント</th>
+      <th colspan="2">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @workers.each do |worker| %>
+      <tr>
+        <td><%= worker.disp_name %></td>
+        <td><%= worker.home.name %></td>
+        <td><%= worker.permission_name %></td>
+        <td><%= worker.login_name %></td>
+        <td>
+          <% if worker.user %>
+          <%= link_to '修正', edit_user_path(worker.user), {class: "btn btn-success btn-sm"} %>
+          <% else %>
+          <%= link_to '作成', new_user_path(worker_id: worker), {class: "btn btn-success btn-sm"} %>
+          <% end %>
+        </td>
+        <td>
+          <% if worker.user %>
+            <%= link_to '削除', worker.user, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate(@workers) %>
+<% end %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
+  </div>
+</div>

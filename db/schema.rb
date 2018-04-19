@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180418122057) do
+ActiveRecord::Schema.define(version: 20180419123028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20180418122057) do
   add_index "chemicals", ["deleted_at"], name: "index_chemicals_on_deleted_at", using: :btree
 
   create_table "fixes", id: false, force: :cascade, comment: "確定データ" do |t|
+    t.integer  "term",                          default: 0, null: false, comment: "年度(期)"
     t.date     "fixed_at",                                  null: false, comment: "確定日"
     t.integer  "works_count",                               null: false, comment: "合計作業数"
     t.integer  "hours",                                     null: false, comment: "合計作業工数"
@@ -109,7 +110,6 @@ ActiveRecord::Schema.define(version: 20180418122057) do
     t.decimal  "machines_amount", precision: 8,             null: false, comment: "合計機械利用料"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
-    t.integer  "term",                          default: 0, null: false, comment: "年度(期)"
     t.integer  "fixed_by",                                               comment: "確定者"
   end
 
@@ -266,6 +266,7 @@ ActiveRecord::Schema.define(version: 20180418122057) do
     t.date     "target_from",                 default: '2010-01-01', null: false, comment: "開始年月"
     t.date     "target_to",                   default: '2010-12-31', null: false, comment: "終了年月"
     t.integer  "organization_id",             default: 0,            null: false, comment: "組織"
+    t.integer  "permission_id",               default: 0,            null: false, comment: "権限"
   end
 
   add_index "users", ["login_name"], name: "index_users_on_login_name", unique: true, using: :btree

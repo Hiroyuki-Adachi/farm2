@@ -12,6 +12,7 @@
 #  target_from     :date             default(Fri, 01 Jan 2010), not null # 開始年月
 #  target_to       :date             default(Fri, 31 Dec 2010), not null # 終了年月
 #  organization_id :integer          default(0), not null                # 組織
+#  permission_id   :integer          default(0), not null                # 権限
 #
 
 users1:

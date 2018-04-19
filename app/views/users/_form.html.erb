@@ -22,7 +22,7 @@
       <%= link_to '戻る', edit_worker_path(@user.worker_id), {class: "btn btn-outline-dark"} %>
     <% end %>
     <% if action_name == "edit" || action_name == "update" %>
-      <%= link_to "戻る", :onclick => raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
+      <%= link_to "戻る", "#", :onclick => raw("javascript:location.href = '" + menu_index_path + "';return false;"), class: "btn btn-outline-dark" %>
     <% end %>
   </div>
 </div>

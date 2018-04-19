@@ -12,10 +12,13 @@
 #  target_from     :date             default(Fri, 01 Jan 2010), not null # 開始年月
 #  target_to       :date             default(Fri, 31 Dec 2010), not null # 終了年月
 #  organization_id :integer          default(0), not null                # 組織
+#  permission_id   :integer          default(0), not null                # 権限
 #
 
 class User < ActiveRecord::Base
   belongs_to :worker
+  belongs_to :permission
+  belongs_to :organization
 
   validates :login_name, uniqueness: true
   validates_length_of :password, maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED
