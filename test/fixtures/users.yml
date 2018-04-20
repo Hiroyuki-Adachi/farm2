@@ -30,3 +30,27 @@ user_manager:
   password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
   organization_id: 1
   permission_id: 3
+
+user_checker:
+  id: 3
+  worker_id: 3
+  login_name: '34567'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 2
+
+user_user:
+  id: 4
+  worker_id: 4
+  login_name: '45678'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 1
+
+user_visitor:
+  id: 5
+  worker_id: 5
+  login_name: '56787'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 0

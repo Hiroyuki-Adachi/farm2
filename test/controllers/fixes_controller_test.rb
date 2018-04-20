@@ -12,6 +12,12 @@ class FixesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "確定一覧(管理者以外)" do
+    session[:user_id] = users(:user_checker).id
+    get :index
+    assert_response :error
+  end
+
   test "確定照会" do
     get :show, fixed_at: @fix
     assert_response :success

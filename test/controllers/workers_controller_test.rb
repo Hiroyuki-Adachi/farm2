@@ -15,6 +15,12 @@ class WorkersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "作業者マスタ一覧(検証者以外)" do
+    session[:user_id] = users(:user_user).id
+    get :index
+    assert_response :error
+  end
+
   test "作業者マスタ新規作成(表示)" do
     get :new
     assert_response :success
@@ -24,7 +30,6 @@ class WorkersControllerTest < ActionController::TestCase
     assert_difference('Worker.count') do
       post :create, worker: @update
     end
-
     assert_redirected_to workers_path
   end
 
