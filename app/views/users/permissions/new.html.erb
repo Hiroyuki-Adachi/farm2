@@ -1,0 +1,21 @@
+<h1>権限登録</h1>
+<%= error_print(@user) %>
+<h2><%= @user.worker.family_name %><%= @user.worker.first_name %></h2>
+<%= form_for(@user, url: user_permissions_path(user_id: @user.id), method: :post) do |f| %>
+<div class="row">
+  <div class="col-md-3">
+    <div class="field form-group">
+      <%= f.label :permission_id, class: "col-form-label-lg" %>
+      <%= f.select(:permission_id, @permissions.map {|permission| [permission.name, permission.id]}, {}, class: "form-control") %>
+    </div>
+  </div>
+</div>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= f.submit '登録', class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', users_path(), {class: "btn btn-outline-dark"} %>
+  </div>
+</div>
+<% end %>
