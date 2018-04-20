@@ -1,4 +1,5 @@
 class WorkKindsController < ApplicationController
+  include PermitChecker
   before_action :set_work_kind, only: [:edit, :update, :destroy]
   before_action :set_others, only: [:new, :create, :edit, :update]
 

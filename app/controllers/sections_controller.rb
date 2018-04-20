@@ -1,4 +1,5 @@
 class SectionsController < ApplicationController
+  include PermitManager
   before_action :set_section, only: [:edit, :update, :destroy]
 
   def index

@@ -1,6 +1,7 @@
 class FixesController < ApplicationController
   before_action :set_fixed_at, only: [:create, :show]
   before_action :set_fix, only: [:destroy]
+  include PermitManager
 
   def index
     @fixes = FixDecorator.decorate_collection(Fix.usual(@term))

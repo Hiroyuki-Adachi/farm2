@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
 
   def restrict_remote_ip
     if PERMIT_ADDRESSES.none? { |pa| request.remote_ip.start_with?(pa) }
-      render text: 'Service Unavailable', status: 503
+      to_error_path
     elsif session[:user_id].nil? && controller_name != "sessions"
       redirect_to root_path
     end
@@ -59,5 +59,9 @@ class ApplicationController < ActionController::Base
 
   def term_cache_key
     "system#{@term}"
+  end
+
+  def to_error_path
+    render text: 'Service Unavailable', status: 503
   end
 end

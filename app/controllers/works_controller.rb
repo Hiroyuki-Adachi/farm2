@@ -1,14 +1,19 @@
 require 'date'
 
 class WorksController < ApplicationController
+  include WorksHelper
   before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :show, :update, :destroy, :print]
   before_action :set_broccoli, only: [:show]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :check_fixed, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
   before_action :clear_cache, only: [:update, :create, :destroy]
+  before_action :permit_not_visitor, except: [:index, :show]
+  before_action :permit_checkable_or_self, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy, :print]
+  before_action :permit_visitor, only: :show
 
   def index
     @works = Work.usual(@term)
+    @works = @works.by_worker(current_user.worker) if current_user.visitor?
     @sum_hours = Rails.cache.fetch(sum_hours_key(@term), expires_in: 1.hour) do
       WorkResult.where(work_id: @works.ids).group(:work_id).sum(:hours).to_h
     end
@@ -185,5 +190,17 @@ class WorksController < ApplicationController
       @ranks = BroccoliRank.usual
       @broccoli = @work.broccoli || WorkBroccoli.new
     end
+  end
+
+  def permit_not_visitor
+    to_error_path if current_user.visitor?
+  end
+
+  def permit_checkable_or_self
+    to_error_path unless updatable_work(current_user, @work)
+  end
+
+  def permit_visitor
+    to_error_path if current_user.visitor? && !@work.work_results.exists?(worker_id: current_user.worker.id)
   end
 end

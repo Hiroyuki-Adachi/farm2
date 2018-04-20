@@ -1,4 +1,5 @@
 class BanksController < ApplicationController
+  include PermitChecker
   before_action :set_bank, only: [:edit, :update, :destroy]
 
   # GET /banks

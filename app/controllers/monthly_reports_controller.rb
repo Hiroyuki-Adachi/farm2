@@ -1,4 +1,6 @@
 class MonthlyReportsController < ApplicationController
+  include PermitManager
+
   def index
   end
 

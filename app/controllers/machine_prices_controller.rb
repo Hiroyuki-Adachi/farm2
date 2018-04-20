@@ -1,4 +1,5 @@
 class MachinePricesController < ApplicationController
+  include PermitChecker
   before_action :set_machine_price, only: [:index, :edit, :update, :destroy]
   before_action :set_adjusts, only: [:new, :create, :edit, :update]
 

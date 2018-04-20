@@ -1,6 +1,7 @@
 class BroccoliController < ApplicationController
   before_action :check_work
   before_action :set_broccoli
+  before_action :permit_not_visitor
 
   def edit
   end
@@ -41,5 +42,9 @@ class BroccoliController < ApplicationController
 
   def broccoli_work_path
     work_path(id: params[:work_id], page: params[:page], month: params[:month])
+  end
+
+  def permit_not_visitor
+    to_error_path if current_user.visitor?
   end
 end

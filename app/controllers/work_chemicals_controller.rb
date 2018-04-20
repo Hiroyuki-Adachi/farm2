@@ -1,4 +1,6 @@
 class WorkChemicalsController < ApplicationController
+  include PermitManager
+
   def index
     @works = WorkDecorator.decorate_collection(Work.by_chemical(@term)) 
     @chemicals = Chemical.by_work(@term)

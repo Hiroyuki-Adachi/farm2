@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :permit_admin, only: [:index, :new, :create, :destroy]
+  before_action :permit_self, only: [:edit, :update]
 
   def index
     @workers = WorkerDecorator.decorate_collection(Worker.includes(:user).usual.page(params[:page]))
@@ -43,5 +45,13 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:login_name, :password, :password_confirmation, :worker_id)
+  end
+
+  def permit_admin
+    to_error_path unless current_user.admin?
+  end
+
+  def permit_self
+    to_error_path unless current_user.admin? || current_user.id == @user.id
   end
 end
