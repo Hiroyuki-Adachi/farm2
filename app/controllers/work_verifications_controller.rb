@@ -1,4 +1,5 @@
 class WorkVerificationsController < ApplicationController
+  include PermitChecker
   before_action :set_work, only: [:show_workers, :show_lands, :show_machines, :show_chemicals]
 
   def index

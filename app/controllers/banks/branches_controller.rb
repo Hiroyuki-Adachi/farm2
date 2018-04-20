@@ -1,4 +1,5 @@
 class Banks::BranchesController < ApplicationController
+  include PermitChecker
   before_action :set_branch, only: [:edit, :update, :destroy]
   before_action :set_bank
 

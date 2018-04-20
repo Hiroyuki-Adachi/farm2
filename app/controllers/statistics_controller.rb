@@ -1,4 +1,6 @@
 class StatisticsController < ApplicationController
+  include PermitManager
+
   def index
     @total_all = Work.total_all
     @total_genre = Work.total_genre

@@ -1,4 +1,5 @@
 class ChemicalTypesController < ApplicationController
+  include PermitChecker
   before_action :set_chemical_type, only: [:edit, :update, :destroy]
   before_action :set_work_kinds, only: [:new, :create, :edit, :update]
 

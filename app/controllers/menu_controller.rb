@@ -1,5 +1,6 @@
 class MenuController < ApplicationController
   layout 'menu'
+  before_action :permit_manager, except: :index
 
   def index
   end
@@ -51,5 +52,9 @@ class MenuController < ApplicationController
 
   def system_params
     params.require(:system).permit(:term, :target_from, :target_to)
+  end
+
+  def permit_manager
+    to_error_path unless current_user.manageable?
   end
 end

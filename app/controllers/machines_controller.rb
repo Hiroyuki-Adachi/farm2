@@ -1,4 +1,5 @@
 class MachinesController < ApplicationController
+  include PermitChecker
   before_action :set_machine, only: [:edit, :update, :destroy]
   before_action :set_masters, only: [:new, :create, :edit, :update]
 

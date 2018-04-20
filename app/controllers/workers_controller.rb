@@ -1,4 +1,5 @@
 class WorkersController < ApplicationController
+  include PermitChecker
   before_action :set_worker, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
   before_action :set_genders, only: [:new, :create, :edit, :update]

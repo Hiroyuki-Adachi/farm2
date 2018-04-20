@@ -59,6 +59,9 @@ class Work < ApplicationRecord
   scope :enough_check, ->(worker) {
     where(["NOT EXISTS (SELECT work_verifications.work_id FROM work_verifications WHERE work_verifications.work_id = works.id AND work_verifications.worker_id <> ? GROUP BY work_verifications.work_id HAVING COUNT(*) >= ?)", worker.id, WorkVerification::ENOUGH])
   }
+  scope :by_worker, ->(worker) {
+    where(["EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND work_results.worker_id = ?)", worker.id])
+  }
   scope :not_printed, -> { where(["works.printed_at IS NULL OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)"]) }
 
   scope :by_chemical, -> (term) {

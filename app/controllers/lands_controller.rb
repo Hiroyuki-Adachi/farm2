@@ -1,4 +1,5 @@
 class LandsController < ApplicationController
+  include PermitChecker
   before_action :set_land, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
 

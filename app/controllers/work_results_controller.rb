@@ -1,4 +1,6 @@
 class WorkResultsController < ApplicationController
+  include PermitManager
+
   def index
     if params[:fixed_at]
       @results = WorkResult.by_home_for_fix(@term, Date.strptime(params[:fixed_at], '%Y-%m-%d'))

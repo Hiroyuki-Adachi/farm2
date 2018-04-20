@@ -4,12 +4,13 @@
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">日報管理<span class="caret"></span></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-              <%= link_to '日報入力', new_work_path, {class: "dropdown-item"} %>
+              <% unless current_user.visitor? %><%= link_to '日報入力', new_work_path, {class: "dropdown-item"} %><% end %>
               <%= link_to '日報一覧', works_path, {class: "dropdown-item"} %>
-              <%= link_to '日報検証', work_verifications_path, {class: "dropdown-item"} %>
-              <%= link_to '月報入力', monthly_reports_path, {class: "dropdown-item"} %>
+              <% if current_user.checkable? %><%= link_to '日報検証', work_verifications_path, {class: "dropdown-item"} %><% end %>
+              <% if current_user.manageable? %><%= link_to '月報入力', monthly_reports_path, {class: "dropdown-item"} %><% end %>
             </div>
           </li>
+          <% if current_user.manageable? %>
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">集計処理<span class="caret"></span></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
@@ -32,6 +33,8 @@
               <%= link_to '確定一覧', fixes_path, {class: "dropdown-item"} %>
             </div>
           </li>
+          <% end %>
+          <% if current_user.checkable? %>
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">マスタ保守<span class="caret"></span></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown5">
@@ -43,16 +46,21 @@
               <%= link_to '機械マスタ保守', machines_path, {class: "dropdown-item"} %>
               <%= link_to '薬剤種別マスタ保守', chemical_types_path, {class: "dropdown-item"} %>
               <%= link_to '薬剤マスタ保守', chemicals_path, {class: "dropdown-item"} %>
+              <% if current_user.manageable? %>
               <%= link_to '作業分類マスタ保守', work_types_path, {class: "dropdown-item"} %>
               <%= link_to '班マスタ保守', sections_path, {class: "dropdown-item"} %>
+              <% end %>
             </div>
           </li>
+          <% end %>
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown6" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">管理<span class="caret"></span></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown6">
               <% if current_user.admin? %><%= link_to '利用者マスタ保守', users_path %><% end %>
+              <% if current_user.manageable? %>
               <%= link_to '対象年度変更', edit_term_menu_path(@system), {class: "dropdown-item"} %>
               <%= link_to '管理情報変更', edit_organization_path(@organization), {class: "dropdown-item"} %>
+              <% end %>
               <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item"} %>
               <%= link_to 'ログアウト', session_path(current_user.id), {method: :delete, class: "dropdown-item"} %>
             </div>
