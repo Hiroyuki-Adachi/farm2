@@ -37,7 +37,7 @@
 </ul>
 <h2 class="hide_menu">管理</h2>
 <ul class="list-unstyled">
-  <li><%= link_to '利用者マスタ保守', users_path %></li>
+  <% if current_user.admin? %><li><%= link_to '利用者マスタ保守', users_path %></li><% end %>
   <li><%= link_to '対象年度変更', edit_term_menu_path(@system) %></li>
   <li><%= link_to '管理情報変更', edit_organization_path(@organization) %></li>
   <li><%= link_to 'パスワード変更', edit_user_path(current_user) %></li>

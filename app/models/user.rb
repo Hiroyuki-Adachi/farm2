@@ -29,5 +29,33 @@ class User < ApplicationRecord
     super(value.downcase)
   end
 
+  def admin?
+    permission == Permission::ADMIN
+  end
+
+  def manager?
+    permission == Permission::MANAGER
+  end
+
+  def checker?
+    permission == Permission::CHECKER
+  end
+
+  def user?
+    permission == Permission::USER
+  end
+
+  def visitor?
+    permission == Permission::VISITOR
+  end
+
+  def manageable?
+    admin? || manager?
+  end
+
+  def checkable?
+    admin? || manager? || checker?
+  end
+
   has_secure_password
 end

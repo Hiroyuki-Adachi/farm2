@@ -10,7 +10,7 @@ class PersonalInformationsController < ApplicationController
       @company = Worker.company.first
       render layout: false
     else
-      render nothing: true
+      render text: 'Service Unavailable', status: 503
     end
   end
 
