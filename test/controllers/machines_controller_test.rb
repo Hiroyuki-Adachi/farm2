@@ -16,6 +16,12 @@ class MachinesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "機械マスタ一覧(検証者以外)" do
+    session[:user_id] = users(:user_user).id
+    get :index
+    assert_response :error
+  end
+
   test "機械マスタ新規作成(表示)" do
     get :new
     assert_response :success

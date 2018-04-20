@@ -20,6 +20,12 @@ class WorksControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "作業登録(閲覧者)" do
+    session[:user_id] = users(:user_visitor).id
+    get :new
+    assert_response :error
+  end
+
   test "作業登録(実行)" do
     assert_difference('Work.count') do
       post :create, work: @update, regist: true

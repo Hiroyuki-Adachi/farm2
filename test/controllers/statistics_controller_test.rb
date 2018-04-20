@@ -9,4 +9,10 @@ class StatisticsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
   end
+
+  test "統計情報一覧(管理者以外)" do
+    session[:user_id] = users(:user_checker).id
+    get :index
+    assert_response :error
+  end
 end

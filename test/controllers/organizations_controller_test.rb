@@ -11,6 +11,12 @@ class OrganizationsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "管理マスタ変更(管理者以外)" do
+    session[:user_id] = users(:user_checker).id
+    get :edit, id: @organization
+    assert_response :error
+  end
+
   test "管理マスタ変更実行" do
     assert_no_difference('Organization.count') do
       patch :update, id: @organization, organization: { name: "テスト営農組合" }

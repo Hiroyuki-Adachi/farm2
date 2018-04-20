@@ -12,6 +12,12 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "ユーザ一覧(システム管理者以外)" do
+    session[:user_id] = users(:user_manager).id
+    get :index
+    assert_response :error
+  end
+
   test "ユーザ新規作成(表示)" do
     get :new, worker_id: workers(:worker5).id
     assert_response :success
