@@ -6,7 +6,7 @@
       <th>氏名</th>
       <th>世帯</th>
       <th>権限</th>
-      <th>アカウント</th>
+      <th>アカウントID</th>
       <th colspan="2">&nbsp;</th>
     </tr>
   </thead>
@@ -21,7 +21,7 @@
           <% if worker.user %>
           <%= link_to '修正', edit_user_path(worker.user), {class: "btn btn-success btn-sm"} %>
           <% else %>
-          <%= link_to '作成', new_user_path(worker_id: worker), {class: "btn btn-success btn-sm"} %>
+          <%= link_to '作成', new_user_path(worker_id: worker), {class: "btn btn-primary btn-sm"} %>
           <% end %>
         </td>
         <td>

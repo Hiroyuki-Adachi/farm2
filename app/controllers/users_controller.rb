@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params.merge(organization_id: current_organization.id))
     if @user.save
-      redirect_to edit_worker_path(@user.worker_id)
+      redirect_to users_path
     else
       render action: :new
     end
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to menu_index_path
+      redirect_to current_user.id == @user.id ? menu_index_path : users_path
     else
       render action: :edit
     end

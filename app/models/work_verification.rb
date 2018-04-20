@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 
-class WorkVerification < ActiveRecord::Base
+class WorkVerification < ApplicationRecord
   belongs_to :work
   belongs_to :worker, -> { with_deleted }
 

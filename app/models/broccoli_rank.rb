@@ -9,6 +9,6 @@
 #  updated_at    :datetime         not null
 #
 
-class BroccoliRank < ActiveRecord::Base
+class BroccoliRank < ApplicationRecord
   scope :usual, -> { order("display_order") }
 end

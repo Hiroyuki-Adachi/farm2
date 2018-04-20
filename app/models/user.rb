@@ -15,10 +15,12 @@
 #  permission_id   :integer          default(0), not null                # 権限
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
   belongs_to :worker
-  belongs_to :permission
   belongs_to :organization
+  belongs_to :permission
 
   validates :login_name, uniqueness: true
   validates_length_of :password, maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED
