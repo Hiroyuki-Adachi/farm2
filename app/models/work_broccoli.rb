@@ -11,7 +11,7 @@
 #  updated_at      :datetime         not null
 #
 
-class WorkBroccoli < ActiveRecord::Base
+class WorkBroccoli < ApplicationRecord
   require 'ostruct'
 
   validates :work_id, presence: true

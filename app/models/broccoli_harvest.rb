@@ -11,7 +11,7 @@
 #  updated_at       :datetime         not null
 #
 
-class BroccoliHarvest < ActiveRecord::Base
+class BroccoliHarvest < ApplicationRecord
   validates :work_broccoli_id, presence: true
   validates :broccoli_rank_id, presence: true
   validates :broccoli_size_id, presence: true
