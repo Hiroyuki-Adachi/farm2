@@ -24,6 +24,14 @@
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-3">
+    <div class="field form-group">
+      <%= f.label :permission_id, class: "col-form-label-lg" %>
+      <%= f.select(:permission_id, @permissions.map {|permission| [permission.name, permission.id]}, {}, class: "form-control") %>
+    </div>
+  </div>
+</div>
 <%= f.hidden_field :worker_id %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
