@@ -22,3 +22,11 @@ users1:
   password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
   organization_id: 1
   permission_id: 9
+
+user_manager:
+  id: 2
+  worker_id: 2
+  login_name: '23456'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 3
