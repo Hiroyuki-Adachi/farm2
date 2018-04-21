@@ -1,4 +1,4 @@
-<table class="table table-sm">
+<table id="work_list" class="table table-sm table-hover">
   <thead>
   <tr>
     <th>作業日</th>
@@ -11,11 +11,11 @@
   </thead>
   <tbody>
     <% @works.each do |work| %>
-      <tr>
+      <tr style="cursor:pointer;" data-url="<%= work_path(work) %>">
         <td><%= work.worked_at %></td>
         <td><%= work.work_time %></td>
         <td><%= work.genre_name %></td>
-        <td><%= link_to(work.name, {action: :show, id: work}) %></td>
+        <td><%= work.name %></td>
         <td class="numeric"><%= @count_workers[work.id] || 0 %></td>
         <td class="numeric"><%= @sum_hours[work.id] || 0 %></td>
       </tr>
@@ -31,3 +31,10 @@
   </tfoot>
 </table>
 <%= paginate @works, remote: true %>
+<script type="text/javascript">
+$(function () {
+  $("#list table tbody tr").click(function() {
+    location.href = $(this).data("url");
+  });
+});
+</script>
