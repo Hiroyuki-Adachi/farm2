@@ -28,13 +28,13 @@
   <%= render partial: "show_broccoli" %>
 <% end %>
 <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
-<%= link_to '削除',raw(work_path(id: @work, page: params[:page], month: params[:month])), method: :delete, class: "btn btn-danger", data: {confirm: "本当に削除してもよろしいですか?"} %>
+<%= link_to '削除',raw(work_path(id: @work)), method: :delete, class: "btn btn-danger", data: {confirm: "本当に削除してもよろしいですか?"} %>
 <% end %>
 <% unless current_user.visitor? %><%= button_tag "新規登録",  type: :button, class: "btn btn-success", onclick: raw("location.href = '" + new_work_path + "';") %><% end %>
 <% if updatable_work(current_user, @work) %>
 <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: raw("execPrint('" + print_work_path(@work.id) + "');") %>
 <% end %>
-<%= button_tag "戻る",  type: :button, class: "btn btn-default", :onclick => raw("location.href = '" + (session[:work_referer] ? session[:work_referer] : works_path(page: params[:page], month: params[:month])) + "';") %>
+<%= button_tag "戻る",  type: :button, class: "btn btn-default", :onclick => raw("location.href = '" + (session[:work_referer] ? session[:work_referer] : works_path) + "';") %>
 <%= render partial: "show_stamp"%>
 <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
 <script type="text/javascript">
