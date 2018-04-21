@@ -44,6 +44,7 @@ $(function() {
   $('#work_type_id').change(function(){
     $.get("<%= work_type_select_works_path %>", {work_type_id: $(this).val()}, function() {
       $("#work_work_kind_id").prepend("<option value='' />")
+      $("#work_work_kind_id").val("");
     });
   });
 });
