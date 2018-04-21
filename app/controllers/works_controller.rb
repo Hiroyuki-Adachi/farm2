@@ -175,18 +175,19 @@ class WorksController < ApplicationController
 
   def set_pager
     path = Rails.application.routes.recognize_path(request.referer)
-    if path[:controller] == "menu"
+    if path[:controller] == "menu" || session[:work_search].nil?
       session.delete(:work_search)
       @month = ""
       @page = 1
     elsif path[:controller] == "works" && path[:action] == "index"
-      @month = params[:month]
+      @month = params[:month] || ""
       @page = params[:page].blank? ? 1 : params[:page]
     else
       @month = session[:work_search]["month"]
       @page = session[:work_search]["page"] || 1
     end
     @works = @works.where("date_trunc('month', worked_at) = ?", @month) unless @month.blank?
+    @works_count = @works.count
     @works = WorkDecorator.decorate_collection(@works.page(@page))
     session[:work_search] = { month: @month, page: @page }
   end
