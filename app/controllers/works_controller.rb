@@ -51,7 +51,7 @@ class WorksController < ApplicationController
     @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
     @chemicals = @work.work_chemicals
     @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
-    session[:work_referer] = request.referer if Rails.application.routes.recognize_path(request.referer)[:action] == "index"
+    session[:work_referer] = Rails.application.routes.recognize_path(request.referer)[:controller] == "works" ? nil : request.referer
     render layout: false
   end
 
@@ -174,14 +174,21 @@ class WorksController < ApplicationController
   end
 
   def set_pager
-    if params[:month].blank?
+    path = Rails.application.routes.recognize_path(request.referer)
+    if path[:controller] == "menu"
+      session.delete(:work_search)
       @month = ""
-    else
+      @page = 1
+    elsif path[:controller] == "works" && path[:action] == "index"
       @month = params[:month]
-      @works = @works.where("date_trunc('month', worked_at) = ?", @month)
+      @page = params[:page].blank? ? 1 : params[:page]
+    else
+      @month = session[:work_search]["month"]
+      @page = session[:work_search]["page"] || 1
     end
-    @page = params[:page] || 1
+    @works = @works.where("date_trunc('month', worked_at) = ?", @month) unless @month.blank?
     @works = WorkDecorator.decorate_collection(@works.page(@page))
+    session[:work_search] = { month: @month, page: @page }
   end
 
   def set_broccoli

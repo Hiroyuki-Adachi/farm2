@@ -56,7 +56,7 @@
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown6" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">管理<span class="caret"></span></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown6">
-              <% if current_user.admin? %><%= link_to '利用者マスタ保守', users_path %><% end %>
+              <% if current_user.admin? %><%= link_to '利用者マスタ保守', users_path, {class: "dropdown-item"} %><% end %>
               <% if current_user.manageable? %>
               <%= link_to '対象年度変更', edit_term_menu_path(@system), {class: "dropdown-item"} %>
               <%= link_to '管理情報変更', edit_organization_path(@organization), {class: "dropdown-item"} %>

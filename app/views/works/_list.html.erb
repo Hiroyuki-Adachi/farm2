@@ -12,7 +12,7 @@
     <td><%=h work.worked_at %></td>
     <td><%=h work.work_time %></td>
     <td><%=h work.genre_name %></td>
-    <td><%=h link_to(work.name, {action: :show, id: work, page: @page, month: @month}) %></td>
+    <td><%=h link_to(work.name, {action: :show, id: work}) %></td>
     <td class="numeric"><%=h @count_workers[work.id] || 0 %></td>
     <td class="numeric"><%=h @sum_hours[work.id] || 0 %></td>
   </tr>

@@ -1,16 +1,19 @@
 <h1>作業一覧</h1>
-
-<%= select_tag(:month, options_for_select(@months, @month), {:onChange => "change_month(this);", class: "form-control"}) %>
-<script type="text/javascript">
-  function change_month(sender)
-  {
-    if(sender.value == "") {
-      document.location.href = "<%= works_path %>";
-    } else {
-      document.location.href = "<%= works_path %>?month=" + sender.value;
-    }
-  }
-</script>
+<%= form_tag works_path, {method: :get} do %>
+<div class="row">
+  <div class="col-md-3">
+    <div class="form-inline">
+      <label for="month" class="h5">年月</label>
+      <%= select_tag(:month, options_for_select(@months, @month), {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <%= button_tag "検索", type: :submit, name: "search", class: "btn btn-primary" %>
+  </div>
+</div>
+<input type="hidden" name="page" value="1" />
+<% end %>
+<hr />
 <% if @works.count > 0 %>
 <div id="list">
   <%= render partial: "list" %>
