@@ -10,6 +10,7 @@ class WorksController < ApplicationController
   before_action :permit_not_visitor, except: [:index, :show]
   before_action :permit_checkable_or_self, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy, :print]
   before_action :permit_visitor, only: :show
+  before_action :set_work_types, only: :index
 
   def index
     @works = Work.usual(@term)
@@ -68,7 +69,7 @@ class WorksController < ApplicationController
   end
 
   def work_type_select
-    @work_kinds = WorkKind.by_type(WorkType.find(params[:work_type_id]))
+    @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
     respond_to do |format|
       format.js { render action: :work_type_select }
     end
@@ -178,18 +179,28 @@ class WorksController < ApplicationController
     if path[:controller] == "menu" || session[:work_search].nil?
       session.delete(:work_search)
       @month = ""
+      @work_type_id = ""
+      @work_kind_id = ""
       @page = 1
     elsif path[:controller] == "works" && path[:action] == "index"
       @month = params[:month] || ""
+      @work_type_id = params[:work_type_id] || ""
+      @work_kind_id = params[:work_kind_id] || ""
       @page = params[:page].blank? ? 1 : params[:page]
     else
       @month = session[:work_search]["month"]
+      @work_type_id = session[:work_search]["work_type_id"]
+      @work_kind_id = session[:work_search]["work_kind_id"]
       @page = session[:work_search]["page"] || 1
     end
     @works = @works.where("date_trunc('month', worked_at) = ?", @month) unless @month.blank?
+    @works = @works.where(work_type_id: @work_type_id) unless @work_type_id.blank?
+    @works = @works.where(work_kind_id: @work_kind_id) unless @work_kind_id.blank?
     @works_count = @works.count
+    @total_hours = @works.inject(0) { |a, e| a + (@sum_hours[e.id] || 0) }
+    @total_workers = @works.inject(0) { |a, e| a + (@count_workers[e.id] || 0) }
     @works = WorkDecorator.decorate_collection(@works.page(@page))
-    session[:work_search] = { month: @month, page: @page }
+    session[:work_search] = { month: @month, page: @page, work_type_id: @work_type_id, work_kind_id: @work_kind_id }
   end
 
   def set_broccoli
@@ -198,6 +209,11 @@ class WorksController < ApplicationController
       @ranks = BroccoliRank.usual
       @broccoli = @work.broccoli || WorkBroccoli.new
     end
+  end
+
+  def set_work_types
+    @work_types = WorkType.index
+    @work_kinds = WorkKind.usual
   end
 
   def permit_not_visitor
