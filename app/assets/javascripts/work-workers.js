@@ -24,6 +24,8 @@ function add_worker(worker_id, worker_name)
     elem_time.min = 0;
     elem_time.required = true;
     elem_time.step = 0.5;
+    elem_time.className = "form-control form-control-sm";
+    elem_time.style = "width: 75px;";
     cell_time.appendChild(elem_time);
 
     var elem_button = document.createElement("input")
