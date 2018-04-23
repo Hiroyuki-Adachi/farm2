@@ -4,6 +4,7 @@ class WorksController < ApplicationController
   include WorksHelper
   before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :show, :update, :destroy, :print]
   before_action :set_results, only: [:show, :edit_workers, :edit_machines]
+  before_action :set_lands, only: [:show, :edit_lands]
   before_action :set_broccoli, only: [:show]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :check_fixed, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
@@ -48,7 +49,6 @@ class WorksController < ApplicationController
   end
 
   def show
-    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land) || [])
     @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
     @chemicals = @work.work_chemicals
     @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
@@ -84,7 +84,6 @@ class WorksController < ApplicationController
   end
 
   def edit_lands
-    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land)) || []
   end
 
   def edit_machines
@@ -98,13 +97,13 @@ class WorksController < ApplicationController
   end
 
   def update
-    redirect_to(work_path(page_params)) if params[:cancel]
+    redirect_to(work_path(@work)) if params[:cancel]
 
     WorkVerification.regist(@work, current_user.worker)
     if params[:regist]
       if @work.update(work_params)
         @work.refresh_broccoli(current_organization)
-        redirect_to(work_path(page_params))
+        redirect_to(work_path(@work))
       else
         render action: :edit
       end
@@ -112,22 +111,22 @@ class WorksController < ApplicationController
 
     if params[:regist_workers]
       @work.regist_results(params[:results])
-      redirect_to(work_path(page_params))
+      redirect_to(work_path(@work))
     end
 
     if params[:regist_lands]
       @work.regist_lands(params[:work_lands] || [])
-      redirect_to(work_path(page_params))
+      redirect_to(work_path(@work))
     end
 
     if params[:regist_machines]
       @work.regist_machines(params[:machine_hours] || [])
-      redirect_to(work_path(page_params))
+      redirect_to(work_path(@work))
     end
 
     if params[:regist_chemicals]
       @work.regist_chemicals(params[:chemicals])
-      redirect_to(work_path(page_params))
+      redirect_to(work_path(@work))
     end
   end
 
@@ -155,6 +154,10 @@ class WorksController < ApplicationController
     @results = WorkResultDecorator.decorate_collection(@work.work_results.includes(:worker) || [])
   end
 
+  def set_lands
+    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land) || [])
+  end
+
   def set_masters
     @weathers = Weather.all
     @work_types = WorkType.usual
@@ -162,10 +165,6 @@ class WorksController < ApplicationController
 
   def work_params
     params.require(:work).permit(:worked_at, :weather_id, :start_at, :end_at, :work_type_id, :work_kind_id, :name, :remarks) 
-  end
-
-  def page_params
-    params.permit(:page, :month)
   end
 
   def check_fixed
