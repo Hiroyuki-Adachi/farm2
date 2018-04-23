@@ -3,6 +3,7 @@ require 'date'
 class WorksController < ApplicationController
   include WorksHelper
   before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :show, :update, :destroy, :print]
+  before_action :set_results, only: [:show, :edit_workers, :edit_machines]
   before_action :set_broccoli, only: [:show]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :check_fixed, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
@@ -47,8 +48,7 @@ class WorksController < ApplicationController
   end
 
   def show
-    @results = WorkResultDecorator.decorate_collection(@work.work_results.includes(:worker) || [])
-    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands || [])
+    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land) || [])
     @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
     @chemicals = @work.work_chemicals
     @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
@@ -80,16 +80,14 @@ class WorksController < ApplicationController
   end
 
   def edit_workers
-    @results = @work.work_results || []
     @sections = Section.usual.pluck(:name, :id).unshift(['すべて', 0])
   end
 
   def edit_lands
-    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands) || []
+    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land)) || []
   end
 
   def edit_machines
-    @results = @work.work_results || []
     @company_machines = Machine.by_work(@work.model).of_company
     @owner_machines = Machine.by_work(@work.model).of_owners(@work.model)
     @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select {|m| m.leasable?(@work.model.worked_at) }
@@ -151,6 +149,10 @@ class WorksController < ApplicationController
 
   def set_work
     @work = Work.find(params[:id]).decorate
+  end
+
+  def set_results
+    @results = WorkResultDecorator.decorate_collection(@work.work_results.includes(:worker) || [])
   end
 
   def set_masters
