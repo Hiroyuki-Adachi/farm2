@@ -6,8 +6,10 @@ class AddTermToUsers < ActiveRecord::Migration
     add_column :users, :organization_id, :integer, {null: false, default: 0, comment: "組織"}
 
     system = System.find_by(term: System.maximum(:term))
-    organization = Organization.all.first
-    User.update_all(term: system.term, target_from: system.start_date, target_to: system.end_date, organization_id: organization.id)
+    if system
+      organization = Organization.all.first
+      User.update_all(term: system.term, target_from: system.start_date, target_to: system.end_date, organization_id: organization.id)
+    end
   end
 
   def down
