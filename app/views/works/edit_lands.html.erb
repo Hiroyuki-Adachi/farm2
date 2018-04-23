@@ -6,46 +6,48 @@
 <%= render(partial: 'show_work', :locals => {:f => f}) %>
 
 <h2>作業田</h2>
- <div style="float:left;">
-  <table id="tbl_lands" class="table table-sm">
-    <thead style="display:block;">
-    <tr>
-      <th style="width:20px;">No.</th>
-      <th style="width:150px;">地番</th>
-      <th style="width:60px;">面積</th>
-      <th style="width:50px;">&nbsp;</th>
-    </tr>
-    </thead>
-    <tbody id="tbody_lands" style="display:block; height: 400px; overflow-y:scroll;">
-    <% @work_lands.each_with_index do |work_land, i| %>
-      <tr id="land_<%= work_land.land_id %>">
-        <td class="numeric" style="width:20px;"><%= i+1 %></td>
-        <td style="width:150px;"><%= work_land.place_name %></td>
-        <td class="numeric" style="width:60px;"><%= work_land.area %></td>
-        <td style="width:50px;">
-            <input type="button" value="削除" onclick="remove_land(<%= work_land.land_id %>)" class="btn btn-outline-dark btn-sm"/>
-            <%= hidden_field_tag "work_lands[][land_id]", work_land.land_id, {:id => nil} %>
-            <%= hidden_field_tag "work_lands[][display_order]", i + 1, {:id => nil} %>
-        </td>
+<div class="clearfix">
+  <div class="float-left">
+    <table id="tbl_lands" class="table table-sm">
+      <thead style="display:block;">
+      <tr>
+        <th style="width:20px;">No.</th>
+        <th style="width:150px;">地番</th>
+        <th style="width:60px;">面積</th>
+        <th style="width:50px;">&nbsp;</th>
       </tr>
-     <% end %>
-    </tbody>
-    <tfoot style="display:block;">
-      <tr style="background-color:lightcyan;">
-        <td style="width:20px;">&nbsp;</td>
-        <td style="text-align: center;width:150px;">合計</td>
-        <td id="total_area" class="numeric" style="width:60px;"></td>
-        <td style="width:50px;">&nbsp;</td>
-      </tr>
-    </tfoot>
-  </table>
- </div>
-<div id="land_pos" class="lands_search" style="float:left;">
-  <div id="land_base" class="form-group" style="magin-left:40px !important;">
-    <%= text_field_tag :land, '', {placeholder: "地番または面積(α)を入力してください。", size: 30, class: "form-control"}  %>
+      </thead>
+      <tbody id="tbody_lands" style="display:block; height: 400px; overflow-y:scroll;">
+      <% @work_lands.each_with_index do |work_land, i| %>
+        <tr id="land_<%= work_land.land_id %>">
+          <td class="numeric" style="width:20px;"><%= i+1 %></td>
+          <td style="width:150px;"><%= work_land.place_name %></td>
+          <td class="numeric" style="width:60px;"><%= work_land.area %></td>
+          <td style="width:50px;">
+              <input type="button" value="削除" onclick="remove_land(<%= work_land.land_id %>)" class="btn btn-outline-dark btn-sm"/>
+              <%= hidden_field_tag "work_lands[][land_id]", work_land.land_id, {:id => nil} %>
+              <%= hidden_field_tag "work_lands[][display_order]", i + 1, {:id => nil} %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+      <tfoot style="display:block;">
+        <tr style="background-color:lightcyan;">
+          <td style="width:20px;">&nbsp;</td>
+          <td style="text-align: center;width:150px;">合計</td>
+          <td id="total_area" class="numeric" style="width:60px;"></td>
+          <td style="width:50px;">&nbsp;</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div id="land_pos" class="lands_search float-left">
+    <div id="land_base" class="form-group" style="magin-left:40px !important;">
+      <%= text_field_tag :land, '', {placeholder: "地番または面積(α)を入力してください。", size: 30, class: "form-control"}  %>
+    </div>
   </div>
 </div>
-<div class="btn-toolbar" style="clear:both;">
+<div class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= f.submit '登録', :name => 'regist_lands', class: "btn btn-warning" %>
   </div>
