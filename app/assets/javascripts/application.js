@@ -21,6 +21,7 @@
 //= require dateformat
 //= require popper
 //= require bootstrap-sprockets
+//= require bootbox.min
 
 $(document).on("change", "div.form-check-inline input[type='checkbox']", function(e) {
     if($(this).prop('checked')) {
