@@ -33,21 +33,28 @@
       </tbody>
     </table>
     </div>
-    <div class="float-left" style="margin-left: 40px; margin-top: 25px;">
-      <%= select_tag(:section, options_for_select(@sections), {:onChange => "change_section(this);", class: "form-control"}) %>
-      <div style="height:300px; overflow:auto; border-style:double;overflow-x:hidden;">
-      <table id="master_workers" class="table table-sm">
-        <tbody>
-          <% Worker.usual.each do |worker| %>
-          <tr id="master_worker_<%= worker.id %>">
-            <td><input id="add_button_<%= worker.id %>" type="button" class="btn btn-outline-dark btn-sm" value="←追加" onclick="add_worker(<%= worker.id %>, '<%= worker.name %>')" /></td>
-            <td style="width:80px;"><%= worker.home.name %></td>
-            <td style="width:120px;"><%= worker.name %></td>
-            <td style="display: none;"><%= worker.home.section_id %></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
+    <div class="float-left" style="margin-left: 40px; ">
+      <div class="row">
+        <% @sections.each do |section| %>
+          <div class="form-check">
+            <%= radio_button_tag :section, section[1] %>
+            <%= label_tag "section_#{section[1]}", section[0] %>
+          </div>
+        <% end %>
+      </div>
+      <div class="row" style="width: 350px; height:300px; overflow:auto; border-style:double;overflow-x:hidden;">
+        <table id="master_workers" class="table table-sm">
+          <tbody>
+            <% Worker.usual.each do |worker| %>
+            <tr id="master_worker_<%= worker.id %>">
+              <td><input id="add_button_<%= worker.id %>" type="button" class="btn btn-outline-dark btn-sm" value="←追加" onclick="add_worker(<%= worker.id %>, '<%= worker.name %>')" /></td>
+              <td style="width:80px;"><%= worker.home.name %></td>
+              <td style="width:120px;"><%= worker.name %></td>
+              <td style="display: none;"><%= worker.home.section_id %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -139,4 +139,8 @@ $(function() {
   });
 
   $("#tbody_workers").disableSelection();
+
+  $("input[type='radio'][name='section']").change(function() {
+    change_section($(this)[0])
+  });
 });
