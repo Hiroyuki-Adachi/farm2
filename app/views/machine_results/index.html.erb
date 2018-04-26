@@ -1,7 +1,5 @@
 <h1>世帯別機械一覧</h1>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';") %>
-<%= stylesheet_link_tag 'work-lists', :media => 'all' %>
-<table class="list">
+<table class="table table-sm table-bordered">
   <thead>
     <tr>
       <th>所有世帯</th>
@@ -16,22 +14,19 @@
     </tr>
   </thead>
   <tbody>
-    <% old_owner = nil %>
-    <% home_amount = 0 %>
-    <% total_amount = 0 %>
-    <% even = false %>
+    <% old_owner_id = 0 %>
     <% @results.each do |result| %>
-      <% if old_owner && (old_owner.id != result.owner.id) %>
-        <tr class="<%= even ? 'even_color' : 'odd_color' %>">
-          <td><%= old_owner.name %></td>
-          <td colspan="7">合計</td>
-          <td class="numeric"><%= number_to_currency(home_amount, {precision: 0, unit: ""}) %></td>
+      <% if old_owner_id != result.owner.id %>
+        <% old_owner_id = result.owner.id %>
+        <tr class="owner-total table-primary" data-owner="<%= old_owner_id %>" style="cursor: pointer;">
+          <td><%= result.owner.name %></td>
+          <td colspan="6"></td>
+          <td class="numeric"><%= @owner_totals[old_owner_id][:count] %></td>
+          <td class="numeric"><%= number_to_currency(@owner_totals[old_owner_id][:amount], {precision: 0, unit: ""}) %></td>
         </tr>
-        <% home_amount = 0 %>
-        <% even = !even %>
       <% end %>
-      <tr class="<%= even ? 'even_color' : 'odd_color' %>">
-        <td><%= result.owner.name %></td>
+      <tr class="detail" data-owner="<%= old_owner_id %>">
+        <td></td>
         <td><%= result.machine.machine_type.name %></td>
         <td><%= result.worked_at %></td>
         <td><%= result.work_type_name %></td>
@@ -41,19 +36,21 @@
         <td><%= result.adjust.unit %></td>
         <td class="numeric"><%= result.amount %></td>
       </tr>
-      <% home_amount += result.model.amount %>
-      <% total_amount += result.model.amount %>
-      <% old_owner = result.model.owner %>
     <% end %>
-    <tr class="<%= even ? 'even_color' : 'odd_color' %>">
-      <td><%= old_owner.name if old_owner %></td>
-      <td colspan="7">合計</td>
-      <td class="numeric"><%= number_to_currency(home_amount, {precision: 0, unit: ""}) %></td>
-    </tr>
   <tbody>
-  <tfoot>
-    <td colspan="8">総合計</td>
-    <td class="numeric"><%= number_to_currency(total_amount, {precision: 0, unit: ""}) %></td>
-  </tfoot>
 </table>
-<%= button_tag "戻る",  type: :button, :onclick => raw("location.href = '" + (params[:fixed_at] ? fixes_path : menu_index_path) + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("location.href = '" + (params[:fixed_at] ? fixes_path : menu_index_path) + "';"), class: "btn btn-outline-dark" %>
+<script>
+$(function() {
+    $(".owner-total").click(function() {
+        var s = $(".detail[data-owner='" + $(this).data("owner") + "']");
+        if(s.is(":visible")) {
+            s.hide();
+        } else {
+            s.show();
+        }
+    });
+  
+    $(".detail").hide();
+});
+</script>
