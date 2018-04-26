@@ -1,8 +1,8 @@
 <h1>世帯別日当一覧</h1>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';") %>
-<%= stylesheet_link_tag 'work-lists', :media => 'all' %>
-<table class="list">
-  <tbody>
+<% old_worker_id = 0 %>
+<% old_home_id = 0 %>
+<table class="table table-sm table-bordered">
+  <thead class="thead-dark">
     <tr>
       <th>世帯</th>
       <th>作業者</th>
@@ -13,15 +13,35 @@
       <th>単価</th>
       <th>日当</th>
     </tr>
-<% worker_hours = 0.0 %>
-<% home_hours = 0.0 %>
-<% worker_amount = 0 %>
-<% home_amount = 0 %>
-<% even = false %>
-<% @results.each_with_index do |result, i| %>
-    <tr class="<%= even ? 'even_color' : 'odd_color' %>">
-      <td><%= result.home_name %></td>
-      <td><%= result.worker.name %></td>
+  </thead>
+  <tbody>
+  <% @results.each do |result| %>
+    <% if result.worker.home_id != old_home_id %>
+      <% old_home_id = result.worker.home_id %>
+      <tr class="home-total table-primary" data-home="<%= old_home_id %>" style="cursor: pointer;">
+        <td><%= result.home_name %></td>
+        <td colspan="3"></td>
+        <td class="numeric"><%= @home_totals[old_home_id][:count] %></td>
+        <td class="numeric"><%= @home_totals[old_home_id][:hours] %></td>
+        <td></td>
+        <td class="numeric"><%= number_to_currency(@home_totals[old_home_id][:amount], {precision: 0, unit: ""}) %></td>
+      </tr>
+    <% end %>
+    <% if result.worker.id != old_worker_id %>
+      <% old_worker_id = result.worker.id %>
+      <tr class="worker-total table-secondary" data-home="<%= old_home_id %>" data-worker="<%= old_worker_id %>" style="cursor: pointer;">
+        <td></td>
+        <td><%= result.worker_name(current_organization) %></td>
+        <td colspan="2"></td>
+        <td class="numeric"><%= @worker_totals[old_worker_id][:count] %></td>
+        <td class="numeric"><%= @worker_totals[old_worker_id][:hours] %></td>
+        <td></td>
+        <td class="numeric"><%= number_to_currency(@worker_totals[old_worker_id][:amount], {precision: 0, unit: ""}) %></td>
+      </tr>
+    <% end %>
+    <tr class="detail" data-home="<%= old_home_id %>" data-worker="<%= old_worker_id %>">
+      <td></td>
+      <td></td>
       <td><%= result.worked_at %></td>
       <td><%= result.work_type_name %></td>
       <td style="overflow:hidden;"><%= result.work_name %></td>
@@ -29,58 +49,30 @@
       <td class="numeric"><%= result.price %></td>
       <td class="numeric"><%= result.amount %></td>
     </tr>
-<% worker_hours += result.model.hours %>
-<% home_hours   += result.model.hours %>
-<% worker_amount += result.model.amount %>
-<% home_amount   += result.model.amount %>
-<%  if i  < @results.count - 1 %>
-<%    unless @results[i + 1].worker_id == result.worker_id %>
-        <tr class="<%= even ? 'even_color' : 'odd_color' %>">
-          <td><%= result.home_name %></td>
-          <td><%= result.worker.name %></td>
-          <td colspan="3">合計</td>
-          <td class="numeric"><%=h sprintf("%.1f", worker_hours) %></td>
-          <td colspan="2" class="numeric"><%=h number_with_delimiter(worker_amount.to_i, {:precision => 0}) %></td>
-        </tr>
-<%      worker_hours = 0.0 %>
-<%      worker_amount = 0 %>
-<%    end %>
-<%    unless @results[i + 1].worker.home_id == result.worker.home_id %>
-        <tr class="<%= even ? 'even_color' : 'odd_color' %>">
-          <td><%= result.home_name %></td>
-          <td colspan="4">合計</td>
-          <td class="numeric"><%=h sprintf("%.1f", home_hours) %></td>
-          <td colspan="2" class="numeric"><%=h number_with_delimiter(home_amount.to_i, {:precision => 0}) %></td>
-        </tr>
-        <tr class="middle_header">
-          <th>世帯</th>
-          <th>作業者</th>
-          <th>作業日</th>
-          <th>作業種別</th>
-          <th>作業内容</th>
-          <th>作業時間</th>
-        </tr>
-<%      home_hours = 0.0 %>
-<%      home_amount = 0 %>
-<%      even = !even%>
-<%    end %>
-<%  end %>
-<% end %>
-<% if @results.count > 0 %>
-    <tr class="<%= even ? 'even_color' : 'odd_color' %>">
-      <td><%=h @results.last.home_name %></td>
-      <td><%=h @results.last.worker.name %></td>
-      <td colspan="3">合計</td>
-      <td class="numeric"><%=h sprintf("%.1f", worker_hours) %></td>
-      <td colspan="2" class="numeric"><%=h number_with_delimiter(worker_amount.to_i, {:precision => 0}) %></td>
-    </tr>
-    <tr class="<%= even ? 'even_color' : 'odd_color' %>">
-      <td><%=h @results.last.home_name %></td>
-      <td colspan="4">合計</td>
-      <td class="numeric"><%=h sprintf("%.1f", home_hours) %></td>
-      <td colspan="2" class="numeric"><%=h number_with_delimiter(home_amount.to_i, {:precision => 0}) %></td>
-    </tr>
-<% end %>
+  <% end %>
   </tbody>
 </table>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + (params[:fixed_at] ? fixes_path : menu_index_path) + "';") %>
+<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + (params[:fixed_at] ? fixes_path : menu_index_path) + "';"), class: "btn btn-outline-dark" %>
+<script>
+$(function() {
+    $(".home-total").click(function() {
+        var s = $(".worker-total[data-home='" + $(this).data("home") + "']");
+        if(s.is(":visible")) {
+            s.hide();
+            $(".detail[data-home='" + $(this).data("home") + "']").hide();
+        } else {
+            s.show();
+        }
+    });
+    $(".worker-total").click(function() {
+        var s = $(".detail[data-worker='" + $(this).data("worker") + "']");
+        if(s.is(":visible")) {
+            s.hide();
+        } else {
+            s.show();
+        }
+    });
+  
+    $(".worker-total, .detail").hide();
+});
+</script>
