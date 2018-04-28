@@ -21,6 +21,7 @@
 #  url                   :string                                        # URL
 #  broccoli_work_type_id :integer                                       # ブロッコリ作業分類
 #  broccoli_work_kind_id :integer                                       # ブロッコリ種別分類
+#  chemical_group_count  :integer          default(1)                   # 薬剤グループ数
 #
 
 org:
@@ -30,6 +31,7 @@ org:
   lands_count: 17
   machines_count: 6
   chemicals_count: 4
+  chemical_group_count: 2
   daily_worker: 0
   term: 2015
   broccoli_work_type_id: work_type_broccoli

@@ -99,14 +99,25 @@ class WorksControllerTest < ActionController::TestCase
     assert_equal Work.find(works(:work_fixed).id).name, works(:work_fixed).name
 
     assert_difference('WorkResult.count') do
-      get :update, id: works(:work_not_fixed), results: [{worker_id: 1, hours: 1, display_order: 1}], regist_workers: true
+      get :update, id: works(:work_not_fixed), results: [worker_id: 1, hours: 1, display_order: 1], regist_workers: true
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
 
     assert_difference('WorkLand.count') do
-      get :update, id: works(:work_not_fixed), work_lands: [{land_id: 1, display_order: 3}], regist_lands: true
+      get :update, id: works(:work_not_fixed), work_lands: [land_id: 1, display_order: 3], regist_lands: true
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
+
+    assert_difference('MachineResult.count') do
+      get :update, id: works(:work_not_fixed), machine_hours: { 4 => { WorkResult.last.id => 5 }}, regist_machines: true
+    end
+    assert_redirected_to work_path(id: works(:work_not_fixed))
+
+    assert_difference('WorkChemical.count') do
+      get :update, id: works(:work_not_fixed), chemicals: { 4 => { 1 => 10 }}, regist_chemicals: true
+    end
+    assert_redirected_to work_path(id: works(:work_not_fixed))
+
     assert_not_empty WorkVerification.where(work_id: works(:work_not_fixed), worker_id: User.find(session[:user_id]).worker_id)
   end
 

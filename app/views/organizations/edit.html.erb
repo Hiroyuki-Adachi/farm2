@@ -7,27 +7,31 @@
     <%= f.text_field :name, {maxlength: 20, size: 20, required: true, class: "form-control"} %>
  </div>
  <div class="row">
-   <div class="field form-group col-md-3">
+    <div class="field form-group col-md-3">
       <%= f.label :workers_count, class: "col-form-label-lg" %>
       <%= f.number_field :workers_count, {min: 2, max: 50, step: 1, required: true, class: "form-control"} %>
-  </div>
-  <div class="field form-group col-md-3">
+    </div>
+    <div class="field form-group col-md-3">
       <%= f.label :lands_count, class: "col-form-label-lg" %>
       <%= f.number_field :lands_count, {min: 0, max: 99, step: 1, required: true, class: "form-control"} %>
-  </div>
-  <div class="field form-group col-md-3">
+    </div>
+    <div class="field form-group col-md-3">
       <%= f.label :machines_count, class: "col-form-label-lg" %>
       <%= f.number_field :machines_count, {min: 0, max: 50, step: 1, required: true, class: "form-control"} %>
-  </div>
-  <div class="field form-group col-md-3">
+    </div>
+    <div class="field form-group col-md-3">
       <%= f.label :chemicals_count, class: "col-form-label-lg" %>
       <%= f.number_field :chemicals_count, {min: 0, max: 50, step: 1, required: true, class: "form-control"} %>
+    </div>
   </div>
- </div>
  <div class="row">
-    <div class="field form-group col-md-6">
+    <div class="field form-group col-md-3">
         <%= f.label :daily_worker, class: "col-form-label-lg" %>
         <%= f.select :daily_worker, @organization.localed_daily_workers, {}, {class: "form-control"} %>
+    </div>
+    <div class="field form-group col-md-3">
+      <%= f.label :chemical_group_count, class: "col-form-label-lg" %>
+      <%= f.number_field :chemical_group_count, {min: 0, max: 5, step: 1, required: true, class: "form-control"} %>
     </div>
   </div>
  <div class="row">
