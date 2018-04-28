@@ -50,7 +50,7 @@ class WorksController < ApplicationController
 
   def show
     @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
-    @chemicals = @work.work_chemicals
+    @chemicals = @work.work_chemicals.group(:chemical_id).sum(:quantity).to_a
     @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
     session[:work_referer] = Rails.application.routes.recognize_path(request.referer)[:controller] == "works" ? nil : request.referer
     render layout: false

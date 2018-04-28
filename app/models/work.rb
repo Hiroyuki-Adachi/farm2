@@ -42,7 +42,7 @@ class Work < ApplicationRecord
 
   has_many :work_lands,     -> { order('work_lands.display_order') }, { dependent: :destroy }
   has_many :work_results,   -> { order('work_results.display_order') }, { dependent: :destroy }
-  has_many :work_chemicals, -> { order('work_chemicals.id') }, { dependent: :destroy }
+  has_many :work_chemicals, dependent: :destroy
   has_many :work_verifications, -> { order('work_verifications.id') }, { dependent: :destroy }
   has_one :broccoli, {class_name: "WorkBroccoli", dependent: :destroy }
 
@@ -163,18 +163,21 @@ class Work < ApplicationRecord
   end
 
   def regist_chemicals(params)
-    params.each do |chemical_id, quantity|
+    params.each do |chemical_id, chemicals|
       chemical_id = chemical_id.to_i
-      quantity = quantity.to_f
-      work_chemical = work_chemicals.find_by(chemical_id: chemical_id)
-      if work_chemical
-        if quantity > 0
-          work_chemical.update(quantity: quantity) unless work_chemical.quantity == quantity
+      chemicals.each do |chemical_group_no, quantity|
+        chemical_group_no = chemical_group_no.to_i
+        quantity = quantity.to_f
+        work_chemical = work_chemicals.find_by(chemical_id: chemical_id, chemical_group_no: chemical_group_no)
+        if work_chemical
+          if quantity > 0
+            work_chemical.update(quantity: quantity) unless work_chemical.quantity == quantity
+          else
+            work_chemical.destroy
+          end
         else
-          work_chemical.destroy
+          WorkChemical.create(work_id: id, chemical_id: chemical_id, chemical_group_no: chemical_group_no, quantity: quantity) if quantity > 0
         end
-      else
-        WorkChemical.create(work_id: id, chemical_id: chemical_id, quantity: quantity) if quantity > 0
       end
     end
   end

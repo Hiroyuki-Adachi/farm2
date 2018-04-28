@@ -7,3 +7,6 @@
 #  chemical_type_id :integer          not null              # 薬剤種別
 #  work_kind_id     :integer          not null              # 作業種別
 #
+chemical_kind_hiryo:
+  chemical_type_id: 3
+  work_kind_id: 6

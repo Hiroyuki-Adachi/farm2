@@ -161,10 +161,11 @@ ja:
 
       organization:
         name: "組織名称"
-        workers_count: "日報に表示する作業者の人数"
-        lands_count: "日報に表示する土地の数"
-        machines_count: "日報に表示する機械の数"
-        chemicals_count: "日報に表示する薬品の数"
+        workers_count: "日報表示する作業者の人数"
+        lands_count: "日報表示する土地の数"
+        machines_count: "日報表示する機械の数"
+        chemicals_count: "日報表示する薬品の数"
+        chemical_group_count: "入力する時の薬品の列数"
         daily_worker: "作業者への付加情報"
         url: "URL"
         broccoli_work_type_id: "ブロッコリーを選択"

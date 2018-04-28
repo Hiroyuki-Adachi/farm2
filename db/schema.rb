@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180419123028) do
+ActiveRecord::Schema.define(version: 20180428114035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -231,6 +231,7 @@ ActiveRecord::Schema.define(version: 20180419123028) do
     t.string   "url",                                                               comment: "URL"
     t.integer  "broccoli_work_type_id",                                             comment: "ブロッコリ作業分類"
     t.integer  "broccoli_work_kind_id",                                             comment: "ブロッコリ種別分類"
+    t.integer  "chemical_group_count",             default: 1,                      comment: "薬剤グループ数"
   end
 
   create_table "sections", force: :cascade, comment: "班／町内マスタ" do |t|
@@ -284,14 +285,15 @@ ActiveRecord::Schema.define(version: 20180419123028) do
   add_index "work_broccolis", ["work_id"], name: "index_work_broccolis_on_work_id", unique: true, using: :btree
 
   create_table "work_chemicals", force: :cascade, comment: "薬剤使用データ" do |t|
-    t.integer  "work_id",                                           null: false, comment: "作業"
-    t.integer  "chemical_id",                                       null: false, comment: "薬剤"
-    t.decimal  "quantity",    precision: 5, scale: 1, default: 0.0, null: false, comment: "使用量"
+    t.integer  "work_id",                                                 null: false, comment: "作業"
+    t.integer  "chemical_id",                                             null: false, comment: "薬剤"
+    t.decimal  "quantity",          precision: 5, scale: 1, default: 0.0, null: false, comment: "使用量"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "chemical_group_no",                         default: 1,   null: false, comment: "薬剤グループ番号"
   end
 
-  add_index "work_chemicals", ["work_id", "chemical_id"], name: "index_work_chemicals_on_work_id_and_chemical_id", unique: true, using: :btree
+  add_index "work_chemicals", ["work_id", "chemical_id", "chemical_group_no"], name: "work_chemicals_2nd_key", unique: true, using: :btree
 
   create_table "work_kind_prices", force: :cascade, comment: "作業単価マスタ" do |t|
     t.integer  "term",                                      null: false, comment: "年度(期)"

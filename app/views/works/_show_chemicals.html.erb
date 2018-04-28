@@ -17,9 +17,10 @@
         <% xx.times do |x| %>
           <% j = i + yy * x %>
           <% if @chemicals[j] %>
-            <td class="machine"><%=h @chemicals[j].chemical.chemical_type.name %></td>
-            <td class="machine"><%=h @chemicals[j].chemical.name %></td>
-            <td class="machine numeric"><%=h @chemicals[j].quantity %><%= @chemicals[j].chemical.unit %></td>
+            <% chemical = Chemical.find(@chemicals[j][0]) %>
+            <td class="chemical"><%= chemical.chemical_type.name %></td>
+            <td class="chemical"><%= chemical.name %></td>
+            <td class="chemical numeric"><%= @chemicals[j][1] %><%= chemical.unit %></td>
           <%  else %>
             <td>&nbsp;</td>
             <td>&nbsp;</td>

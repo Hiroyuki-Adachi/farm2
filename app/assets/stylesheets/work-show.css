@@ -84,7 +84,7 @@ th.land,td.land {
      padding-top: 0; padding-bottom: 0;
      font-size: 11pt;
 }
-td.machine {
+td.machine,td.chemical {
      padding-top: 0; padding-bottom: 0;
      font-size: 10pt;
 }

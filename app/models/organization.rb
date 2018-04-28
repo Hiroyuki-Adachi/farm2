@@ -21,6 +21,7 @@
 #  url                   :string                                        # URL
 #  broccoli_work_type_id :integer                                       # ブロッコリ作業分類
 #  broccoli_work_kind_id :integer                                       # ブロッコリ種別分類
+#  chemical_group_count  :integer          default(1)                   # 薬剤グループ数
 #
 
 class Organization < ApplicationRecord
