@@ -1,10 +1,11 @@
 <table>
   <tbody>
-      <% @chemicals.each do |chemical| %>
+      <% @chemicals.each do |chemical_id, quantity| %>
+      <% chemical = Chemical.find(chemical_id) %>
         <tr>
-          <td><%= chemical.chemical.chemical_type.name %></td>
-          <td><%= chemical.chemical.name %></td>
-          <td class="numeric"><%= chemical.quantity %><%= chemical.chemical.unit %></td>
+          <td><%= chemical.chemical_type.name %></td>
+          <td><%= chemical.name %></td>
+          <td class="numeric"><%= quantity %><%= chemical.unit %></td>
         </tr>
       <% end%>
   </tbody>

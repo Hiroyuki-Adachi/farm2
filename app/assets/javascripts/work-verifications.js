@@ -25,6 +25,7 @@ $(function() {
     );
 
     setTableWrapperHeight();
+    removeLoading();
 });
 
 function setTableWrapperHeight() {

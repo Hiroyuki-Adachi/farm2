@@ -42,7 +42,7 @@ class WorkVerificationsController < ApplicationController
   end
 
   def show_chemicals
-    @chemicals = @work.work_chemicals
+    @chemicals = @work.work_chemicals.group(:chemical_id).sum(:quantity)
     respond_to do |format|
       format.html { render partial: "show_chemicals" }
     end
