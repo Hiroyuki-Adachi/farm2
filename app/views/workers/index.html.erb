@@ -7,7 +7,7 @@
       <th>世帯</th>
       <th>役職</th>
       <th>携帯番号</th>
-      <th colspan="2">&nbsp;</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -18,7 +18,6 @@
         <td><%= worker.position.name %></td>
         <td><%= worker.mobile %></td>
         <td><%= link_to '修正', edit_worker_path(worker), {class: "btn btn-success btn-sm"} %></td>
-        <td><%= link_to '削除', worker, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
       </tr>
     <% end %>
   </tbody>

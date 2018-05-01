@@ -4,7 +4,7 @@
     <tr>
       <th>名称</th>
       <th style="text-align:right;">作業単価</th>
-      <th colspan="2">&nbsp;</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -13,11 +13,11 @@
         <td><%=h work_kind.name %></td>
         <td class="numeric"><%=h number_to_currency(work_kind.price, unit: '') %></td>
         <td><%= link_to '修正', edit_work_kind_path(work_kind), {class: "btn btn-success btn-sm"} %></td>
-        <td><%= link_to '削除', work_kind, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<%= paginate(@work_kinds) %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_work_kind_path + "';"), class: "btn btn-success" %>

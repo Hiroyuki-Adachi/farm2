@@ -4,7 +4,7 @@ class WorkKindsController < ApplicationController
   before_action :set_others, only: [:new, :create, :edit, :update]
 
   def index
-    @work_kinds = WorkKind.usual
+    @work_kinds = WorkKind.usual.page(params[:page])
   end
 
   def new
