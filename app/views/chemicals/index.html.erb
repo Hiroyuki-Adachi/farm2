@@ -6,7 +6,7 @@
       <th>種別</th>
       <th>名称</th>
       <th>使用</th>
-      <th colspan="2">&nbsp;</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -16,7 +16,6 @@
         <td><%=h chemical.chemical_type.name %></td>
         <td class="center"><%=h chemical.this_term_flag(@term) %></td>
         <td><%= link_to '修正', edit_chemical_path(chemical), {class: "btn btn-success btn-sm"} %></td>
-        <td><%= link_to '削除', chemical, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
       </tr>
     <% end %>
   </tbody>

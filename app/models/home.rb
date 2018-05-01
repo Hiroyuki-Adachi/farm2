@@ -45,6 +45,6 @@ class Home < ApplicationRecord
   validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
 
   def holder_name
-    @holder ? @holder.name : ''
+    self.holder ? self.holder.name : ''
   end
 end

@@ -4,21 +4,20 @@
   <thead>
     <tr>
       <th>世帯名</th>
-      <th>世帯主</th>
+      <th>代表</th>
       <th>電話番号</th>
       <th>班</th>
-      <th colspan="2">&nbsp;</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <% @homes.each do |home| %>
       <tr>
-        <td><%=h home.name %></td>
-        <td><%=h home.holder_name %></td>
-        <td><%=h home.telephone %></td>
-        <td><%=h home.section.name %></td>
+        <td><%= home.name %></td>
+        <td><%= home.holder_name %></td>
+        <td><%= home.telephone %></td>
+        <td><%= home.section.name %></td>
         <td><%= link_to '修正', edit_home_path(home), {class: "btn btn-success btn-sm"} %></td>
-        <td><%= link_to '削除', home, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
       </tr>
     <% end %>
   </tbody>
