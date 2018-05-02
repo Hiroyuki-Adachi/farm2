@@ -20,7 +20,7 @@ class WorkVerificationsController < ApplicationController
   end
 
   def show_workers
-    @results = WorkResultDecorator.decorate_collection(@work.work_results || [])
+    @results = WorkResultDecorator.decorate_collection(@work.work_results.includes(:worker) || [])
     respond_to do |format|
       format.html { render partial: "show_workers" }
     end
