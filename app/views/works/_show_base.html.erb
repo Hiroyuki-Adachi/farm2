@@ -28,6 +28,6 @@
         <td style="width:320px; overflow:hidden;"><%=hbr @work.remarks %></td>
     </tr>
   </table>
-  <div id="cover_work" class="cover" onclick="location.href='<%=raw edit_work_path(id: @work, page: params[:page], month: params[:month]) %>'"></div>
+  <div id="cover_work" class="cover" onclick="location.href='<%=raw edit_work_path(@work) %>'"></div>
 </div>
 <span style="position:absolute; top:120px; left:15px; font-family:sans-serif; font-size: 9pt;">No.<%= @work.id%></span>
