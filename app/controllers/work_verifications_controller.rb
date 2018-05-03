@@ -27,7 +27,7 @@ class WorkVerificationsController < ApplicationController
   end
 
   def show_lands
-    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands || [])
+    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land) || [])
     respond_to do |format|
       format.html { render partial: "show_lands" }
     end
