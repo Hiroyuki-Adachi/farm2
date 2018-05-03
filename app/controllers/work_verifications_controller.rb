@@ -27,7 +27,7 @@ class WorkVerificationsController < ApplicationController
   end
 
   def show_lands
-    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands || [])
+    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land) || [])
     respond_to do |format|
       format.html { render partial: "show_lands" }
     end
@@ -35,7 +35,7 @@ class WorkVerificationsController < ApplicationController
 
   def show_machines
     @results = @work.work_results || []
-    @machines = MachineDecorator.decorate_collection(Machine.by_results(@results))
+    @machines = MachineDecorator.decorate_collection(Machine.by_results(@results).includes(:work_results))
     respond_to do |format|
       format.html { render partial: "show_machines" }
     end
