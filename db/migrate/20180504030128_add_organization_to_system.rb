@@ -5,9 +5,12 @@ class AddOrganizationToSystem < ActiveRecord::Migration
       system.organization_id = Organization.first.id
       system.save!
     end
+    change_column :systems, :organization_id, :integer, {null: false, default: 0}
+    add_index :systems, [:term, :organization_id], {unique: true}
   end
 
   def down
     remove_column :systems, :organization_id
+    remove_index :systems, [:term, :organization_id]
   end
 end
