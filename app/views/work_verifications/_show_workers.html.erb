@@ -3,7 +3,7 @@
     <% @results.each_with_index do |result, i| %>
       <tr>
         <td class="numeric"><%= i + 1 %></td>
-        <td><%= result.worker_name(@organization) %></td>
+        <td><%= result.worker_name(current_organization) %></td>
         <td class="numeric"><%= result.hours  %></td>
       </tr>
     <% end %>

@@ -14,7 +14,7 @@
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">集計処理<span class="caret"></span></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-              <%= link_to '集計対象期間変更', edit_menu_path(@system), {class: "dropdown-item"} %>
+              <%= link_to '集計対象期間変更', edit_menu_path(current_system), {class: "dropdown-item"} %>
               <%= link_to '世帯別日当一覧', work_results_path, {class: "dropdown-item"} %>
               <%= link_to '世帯別機械利用料', machine_results_path, {class: "dropdown-item"} %>
               <%= link_to '作業別薬剤使用量一覧', work_chemicals_path, {class: "dropdown-item"} %>
@@ -58,8 +58,8 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown6">
               <% if current_user.admin? %><%= link_to '利用者マスタ保守', users_path, {class: "dropdown-item"} %><% end %>
               <% if current_user.manageable? %>
-              <%= link_to '対象年度変更', edit_term_menu_path(@system), {class: "dropdown-item"} %>
-              <%= link_to '管理情報変更', edit_organization_path(@organization), {class: "dropdown-item"} %>
+              <%= link_to '対象年度変更', edit_term_menu_path(current_system), {class: "dropdown-item"} %>
+              <%= link_to '管理情報変更', edit_organization_path(current_organization), {class: "dropdown-item"} %>
               <% end %>
               <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item"} %>
               <%= link_to 'ログアウト', session_path(current_user.id), {method: :delete, class: "dropdown-item"} %>

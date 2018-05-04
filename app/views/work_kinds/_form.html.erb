@@ -13,7 +13,7 @@
     <%= f.number_field :price, {min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
  </div>
  <div class="field form-group">
- <% if @organization.lands_count > 0 %>
+ <% if current_organization.lands_count > 0 %>
     <%= f.label :land_flag, class: "col-form-label-lg" %>
     <%= f.check_box :land_flag %>
  <% else %>
@@ -31,7 +31,7 @@
   <% end %>
   </fieldset>
   </div>
-  <% if @organization.machines_count > 0 %>
+  <% if current_organization.machines_count > 0 %>
     <div class="field">
       <fieldset class="form-group">
         <legend>使用機械種別</legend>
@@ -44,7 +44,7 @@
       </fieldset>
     </div>
   <% end %>
-  <% if @organization.chemicals_count > 0 %>
+  <% if current_organization.chemicals_count > 0 %>
   <div class="field">
     <fieldset class="form-group">
       <legend>使用薬品種別</legend>

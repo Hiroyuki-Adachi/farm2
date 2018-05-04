@@ -2,8 +2,8 @@ require 'test_helper'
 
 class ChangeTermTest < ActionDispatch::IntegrationTest
   setup do
-    @organization = Organization.first
-    @system = System.find_by(term: @organization.term)
+    @organization = Organization.find_by(id: 1)
+    @system = System.find_by(term: @organization.term, organization_id: @organization.id)
   end
 
   test "対象年度変更(実行:新規)" do
@@ -16,7 +16,7 @@ class ChangeTermTest < ActionDispatch::IntegrationTest
 
     get_via_redirect(menu_index_path)
     assert_response :success
-    assert_equal new_term, assigns(:system).term
+    assert_equal new_term, assigns(:term)
   end
 
   def teardown

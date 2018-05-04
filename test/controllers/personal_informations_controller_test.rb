@@ -6,6 +6,7 @@ class PersonalInformationsControllerTest < ActionController::TestCase
   end
 
   test "個人情報" do
+    session[:user_id] = nil
     get :show, token: @worker.token
     assert_response :success
   end

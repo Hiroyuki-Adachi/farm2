@@ -12,7 +12,13 @@ class SessionsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "ログイン実行" do
+  test "ログイン実行(認証エラー)" do
+    post :create, login_name: @user.login_name, password: "hogehoge"
+    assert_template :new
+    assert_nil session[:user_id]
+  end
+
+  test "ログイン実行(成功)" do
     post :create, login_name: @user.login_name, password: "password"
     assert_redirected_to menu_index_path
     assert_equal session[:user_id], @user.id

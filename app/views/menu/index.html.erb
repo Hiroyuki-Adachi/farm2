@@ -1,4 +1,4 @@
-<h1>作業日報管理システム(<%= @system.term %>年度)</h1>
+<h1>作業日報管理システム(<%= current_system.term %>年度)</h1>
 <h2>日報管理</h2>
 <ul class="list-unstyled">
   <% unless current_user.visitor? %><li><%= link_to '日報入力', new_work_path %></li><% end %>
@@ -7,9 +7,9 @@
   <% if current_user.manageable? %><li><%= link_to '月報入力', monthly_reports_path %></li><% end %>
 </ul>
 <% if current_user.manageable? %>
-<h2>集計処理(<%= @system.target_from.strftime('%Y年%m月') %>から<%= @system.target_to.strftime('%Y年%m月') %>まで)</h2>
+<h2>集計処理(<%= current_system.target_from.strftime('%Y年%m月') %>から<%= current_system.target_to.strftime('%Y年%m月') %>まで)</h2>
 <ul class="list-unstyled">
-  <li><%= link_to '集計対象期間変更', edit_menu_path(@system) %></li>
+  <li><%= link_to '集計対象期間変更', edit_menu_path(current_system) %></li>
   <li><%= link_to '世帯別日当一覧', work_results_path %>(<%= link_to 'CSV出力', work_results_path(format: :csv) %>)</li>
   <li><%= link_to '世帯別機械利用料', machine_results_path %>(<%= link_to 'CSV出力', machine_results_path(format: :csv) %>)</li>
   <li><%= link_to '作業別薬剤使用量一覧', work_chemicals_path %>(<%= link_to 'CSV出力', work_chemicals_path(format: :csv) %>)</li>
@@ -45,8 +45,8 @@
 <ul class="list-unstyled">
   <% if current_user.admin? %><li><%= link_to '利用者マスタ保守', users_path %></li><% end %>
   <% if current_user.manageable? %>
-  <li><%= link_to '対象年度変更', edit_term_menu_path(@system) %></li>
-  <li><%= link_to '管理情報変更', edit_organization_path(@organization) %></li>
+  <li><%= link_to '対象年度変更', edit_term_menu_path(current_system) %></li>
+  <li><%= link_to '管理情報変更', edit_organization_path(current_organization) %></li>
   <% end %>
   <li><%= link_to 'パスワード変更', edit_user_path(current_user) %></li>
   <li><%= link_to 'ログアウト', session_path(current_user.id), method: :delete %></li>

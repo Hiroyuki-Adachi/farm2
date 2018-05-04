@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180428114035) do
+ActiveRecord::Schema.define(version: 20180504030128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,13 +246,14 @@ ActiveRecord::Schema.define(version: 20180428114035) do
   add_index "sections", ["deleted_at"], name: "index_sections_on_deleted_at", using: :btree
 
   create_table "systems", force: :cascade, comment: "システムマスタ" do |t|
-    t.integer  "term",        null: false, comment: "年度(期)"
-    t.date     "target_from",              comment: "開始年月"
-    t.date     "target_to",                comment: "終了年月"
+    t.integer  "term",            null: false, comment: "年度(期)"
+    t.date     "target_from",                  comment: "開始年月"
+    t.date     "target_to",                    comment: "終了年月"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.date     "start_date",  null: false, comment: "期首日"
-    t.date     "end_date",    null: false, comment: "期末日"
+    t.date     "start_date",      null: false, comment: "期首日"
+    t.date     "end_date",        null: false, comment: "期末日"
+    t.integer  "organization_id",              comment: "組織"
   end
 
   add_index "systems", ["term"], name: "index_systems_on_term", unique: true, using: :btree
