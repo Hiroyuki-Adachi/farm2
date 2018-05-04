@@ -3,7 +3,7 @@
   <table id="detail_chemicals" style="width:720px;">
     <thead>
     <tr>
-      <% xx = 2; yy = (([@organization.chemicals_count, @chemicals.count].max - 1) / xx + 1) %>
+      <% xx = 2; yy = (([current_organization.chemicals_count, @chemicals.count].max - 1) / xx + 1) %>
       <% xx.times do %>
       <th style="width:100px;">種別</th>
       <th style="width:190px;">名称</th>

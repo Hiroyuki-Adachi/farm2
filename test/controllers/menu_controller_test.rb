@@ -2,8 +2,8 @@ require 'test_helper'
 class MenuControllerTest < ActionController::TestCase
   def setup
     setup_ip
-    @organization = Organization.first
-    @system = System.find_by(term: @organization.term)
+    @organization = Organization.find(1)
+    @system = System.find_by(term: @organization.term, organization_id: @organization.id)
   end
 
   test "メニュー表示" do
