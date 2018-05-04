@@ -6,11 +6,11 @@
 </div>
 <div class="field form-group">
   <%= f.label :owner_id, class: "col-form-label-lg" %>
-  <%= f.select(:owner_id, @homes.map {|h| [h.holder ? h.holder.name + '(' + h.name + ')' : h.name, h.id]}, {}, {class: "form-control"}) %>
+  <%= f.select(:owner_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-control"}) %>
 </div>
 <div class="field form-group">
   <%= f.label :manager_id, class: "col-form-label-lg" %>
-  <%= f.select(:manager_id, @homes.map {|h| [h.holder ? h.holder.name + '(' + h.name + ')' : h.name, h.id]}, {}, {class: "form-control"}) %>
+  <%= f.select(:manager_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-control"}) %>
 </div>
 <div class="field form-group">
   <%= f.label :area, class: "col-form-label-lg" %>

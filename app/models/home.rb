@@ -35,6 +35,7 @@ class Home < ApplicationRecord
 
   scope :usual, -> { includes(:section).where(["sections.work_flag = ?", true]).order("sections.display_order, homes.display_order, homes.id") }
   scope :list, -> { includes(:section, :holder).where(company_flag: false).order("sections.display_order, homes.display_order, homes.id") }
+  scope :landable, -> { joins(:section).order("homes.company_flag, sections.display_order, homes.display_order, homes.id") }
   scope :machine_owners, -> { where("member_flag = ? OR company_flag = ?", true, true).order("company_flag DESC, display_order, id") }
 
   validates :phonetic,      presence: true
@@ -46,5 +47,9 @@ class Home < ApplicationRecord
 
   def holder_name
     self.holder ? self.holder.name : ''
+  end
+
+  def owner_name
+    self.holder && !self.company_flag ? self.holder.name + '(' + self.name + ')' : self.name
   end
 end
