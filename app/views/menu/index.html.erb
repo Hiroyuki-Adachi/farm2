@@ -1,4 +1,7 @@
 <h1>作業日報管理システム(<%= current_system.term %>年度)</h1>
+<style>
+.hide_menu {cursor: pointer;}
+</style>
 <h2>日報管理</h2>
 <ul class="list-unstyled">
   <% unless current_user.visitor? %><li><%= link_to '日報入力', new_work_path %></li><% end %>
@@ -56,5 +59,6 @@ $(function() {
   $(".hide_menu").on("click", function() {
     $(this).next("ul").slideToggle();
   });
+  $(".hide_menu").next("ul").hide();
 });
 </script>

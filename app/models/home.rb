@@ -19,6 +19,7 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #  deleted_at          :datetime
+#  owner_flag          :boolean          default(FALSE), not null # 所有者フラグ
 #
 
 class Home < ApplicationRecord
@@ -36,7 +37,7 @@ class Home < ApplicationRecord
   scope :usual, -> { includes(:section).where(["sections.work_flag = ?", true]).order("sections.display_order, homes.display_order, homes.id") }
   scope :list, -> { includes(:section, :holder).where(company_flag: false).order("sections.display_order, homes.display_order, homes.id") }
   scope :landable, -> { joins(:section).order("homes.company_flag, sections.display_order, homes.display_order, homes.id") }
-  scope :machine_owners, -> { where("member_flag = ? OR company_flag = ?", true, true).order("company_flag DESC, display_order, id") }
+  scope :machine_owners, -> { where(owner_flag: true).order("company_flag DESC, display_order, id") }
 
   validates :phonetic,      presence: true
   validates :name,          presence: true

@@ -13,7 +13,7 @@ class HomesController < ApplicationController
 
   def edit
   end
-  
+
   def create
     @home = Home.new(home_params)
     if @home.save
@@ -22,7 +22,7 @@ class HomesController < ApplicationController
       render action: :new
     end
   end
-  
+
   def update
     if @home.update(home_params)
       redirect_to homes_path
@@ -30,22 +30,23 @@ class HomesController < ApplicationController
       render action: :edit
     end
   end
-  
+
   def destroy
     @home.destroy
     redirect_to homes_path
   end
-  
+
   private
+
   def set_home
     @home = Home.find(params[:id])
   end
-  
+
   def set_sections
     @sections = Section.all.order(:display_order)
   end
-  
+
   def home_params
-    return params.require(:home).permit(:name, :phonetic, :telephone, :fax, :section_id, :display_order, :member_flag)
+    return params.require(:home).permit(:name, :phonetic, :telephone, :fax, :section_id, :display_order, :member_flag, :owner_flag)
   end
 end
