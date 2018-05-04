@@ -18,7 +18,7 @@ class LandDecorator < Draper::Decorator
     hs = []
     hs << ["全て", ""]
     Home.landable.each do |h|
-      hs << [h.member_flag && h.holder.present? ? h.holder.name : h.name, h.id]
+      hs << [h.owner_name, h.id]
     end
     return hs
   end
