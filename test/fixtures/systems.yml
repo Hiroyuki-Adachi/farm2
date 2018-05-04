@@ -10,7 +10,7 @@
 #  updated_at      :datetime
 #  start_date      :date             not null              # 期首日
 #  end_date        :date             not null              # 期末日
-#  organization_id :integer                                # 組織
+#  organization_id :integer          default(0), not null  # 組織
 #
 
 s2014:

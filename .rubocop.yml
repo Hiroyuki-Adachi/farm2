@@ -37,3 +37,10 @@ Metrics/PerceivedComplexity:
 
 Style/RedundantReturn:
   Enabled: false
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+  MinSize: 0
+  SupportedStyles:
+    - percent
+    - brackets
