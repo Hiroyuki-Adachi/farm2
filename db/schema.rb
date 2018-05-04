@@ -246,16 +246,17 @@ ActiveRecord::Schema.define(version: 20180504030128) do
   add_index "sections", ["deleted_at"], name: "index_sections_on_deleted_at", using: :btree
 
   create_table "systems", force: :cascade, comment: "システムマスタ" do |t|
-    t.integer  "term",            null: false, comment: "年度(期)"
-    t.date     "target_from",                  comment: "開始年月"
-    t.date     "target_to",                    comment: "終了年月"
+    t.integer  "term",                        null: false, comment: "年度(期)"
+    t.date     "target_from",                              comment: "開始年月"
+    t.date     "target_to",                                comment: "終了年月"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.date     "start_date",      null: false, comment: "期首日"
-    t.date     "end_date",        null: false, comment: "期末日"
-    t.integer  "organization_id",              comment: "組織"
+    t.date     "start_date",                  null: false, comment: "期首日"
+    t.date     "end_date",                    null: false, comment: "期末日"
+    t.integer  "organization_id", default: 0, null: false, comment: "組織"
   end
 
+  add_index "systems", ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true, using: :btree
   add_index "systems", ["term"], name: "index_systems_on_term", unique: true, using: :btree
 
   create_table "users", force: :cascade, comment: "利用者マスタ" do |t|
