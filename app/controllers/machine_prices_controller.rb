@@ -58,11 +58,11 @@ class MachinePricesController < ApplicationController
 
   def destroy
     if @machine_price.machine?
-      machine_id =  @machine_price.machine_id
+      machine_id = @machine_price.machine_id
       @machine_price.destroy
       redirect_to show_machine_machine_price_headers_path(machine_id: machine_id)
     else
-      machine_type_id =  @machine_price.machine_type_id
+      machine_type_id = @machine_price.machine_type_id
       @machine_price.destroy
       redirect_to show_type_machine_price_headers_path(machine_type_id: machine_type_id)
     end

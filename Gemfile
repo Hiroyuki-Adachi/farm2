@@ -65,9 +65,9 @@ group :development, :test do
   # An interface which glues ruby-debug to IDEs
   gem 'ruby-debug-ide', '0.6.0'
 
-  gem 'pry-rails'
-  gem 'pry-doc'
   gem 'pry-byebug'
+  gem 'pry-doc'
+  gem 'pry-rails'
   gem 'pry-stack_explorer'
 end
 
@@ -82,4 +82,3 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-

@@ -44,3 +44,12 @@ Style/SymbolArray:
   SupportedStyles:
     - percent
     - brackets
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Layout/EndOfLine:
+  EnforcedStyle: lf
