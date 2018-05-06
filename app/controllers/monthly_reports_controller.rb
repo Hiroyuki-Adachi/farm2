@@ -34,8 +34,8 @@ class MonthlyReportsController < ApplicationController
           work.work_type_id = w[:work_type_id]
           work.name         = w[:name]
           work.work_kind_id = work_kind.id
-          work.start_at     = DateTime.parse(w[:start_at][:hour]  + ":" + w[:start_at][:minute])
-          work.end_at       = DateTime.parse(w[:end_at][:hour]    + ":" + w[:end_at][:minute])
+          work.start_at     = Time.parse(w[:start_at][:hour] + ":" + w[:start_at][:minute])
+          work.end_at       = Time.parse(w[:end_at][:hour] + ":" + w[:end_at][:minute])
           work.save!
 
           result = WorkResult.where(work_id: w[:id], worker_id: params[:id]).first || WorkResult.new
@@ -44,7 +44,7 @@ class MonthlyReportsController < ApplicationController
           result.hours      = w[:hours]
           result.save!
         else
-          Work.destroy_all(w[:id]) unless w[:id].to_i == 0
+          Work.destroy_all(w[:id]) unless w[:id].to_i.zero?
         end
       end
     end

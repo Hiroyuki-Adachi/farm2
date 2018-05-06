@@ -3,9 +3,11 @@ class MenuController < ApplicationController
   before_action :permit_manager, except: :index
   before_action :set_system, only: [:edit, :edit_term]
 
-  def index; end
+  def index
+  end
 
-  def edit; end
+  def edit
+  end
 
   def edit_term
     @terms = []
