@@ -27,11 +27,12 @@ class FixesController < ApplicationController
   end
 
   private
-    def set_fixed_at
-      @fixed_at = Date.strptime(params[:fixed_at], '%Y-%m-%d')
-    end
 
-    def set_fix
-      @fix = Fix.find([@term, params[:fixed_at]])
-    end
+  def set_fixed_at
+    @fixed_at = Date.strptime(params[:fixed_at], '%Y-%m-%d')
+  end
+
+  def set_fix
+    @fix = Fix.find([@term, params[:fixed_at]])
+  end
 end
