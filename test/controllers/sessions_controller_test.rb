@@ -23,4 +23,11 @@ class SessionsControllerTest < ActionController::TestCase
     assert_redirected_to menu_index_path
     assert_equal session[:user_id], @user.id
   end
+
+  test "ログアウト" do
+    session[:user_id] = @user.id
+    post :destroy, id: @user
+    assert_redirected_to root_path
+    assert_nil session[:user_id]
+  end
 end
