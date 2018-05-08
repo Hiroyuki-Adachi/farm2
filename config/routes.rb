@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :branches, param: :code, controller: "banks/branches", except: [:show]
   end
 
+  resources :schedules, except: [:show]
   resources :broccoli, param: "work_id", only: [:edit, :update, :destroy]
   resources :sessions, only: [:new, :create, :destroy]
   resources :machine_types, except: [:show]

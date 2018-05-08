@@ -1,0 +1,27 @@
+# == Schema Information
+#
+# Table name: schedule_workers # 作業予定作業者
+#
+#  id            :integer          not null, primary key # 作業予定作業者
+#  schedule_id   :integer                                # 作業予定
+#  worker_id     :integer                                # 作業者
+#  display_order :integer          default(0), not null  # 表示順
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+schedule_worker1:
+  schedule_id: 1
+  worker_id: 1
+  display_order: 1
+
+schedule_worker2:
+  schedule_id: 1
+  worker_id: 2
+  display_order: 2

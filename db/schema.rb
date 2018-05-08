@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180504100821) do
+ActiveRecord::Schema.define(version: 20180508125439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -233,6 +233,26 @@ ActiveRecord::Schema.define(version: 20180504100821) do
     t.integer  "broccoli_work_type_id",                                             comment: "ブロッコリ作業分類"
     t.integer  "broccoli_work_kind_id",                                             comment: "ブロッコリ種別分類"
     t.integer  "chemical_group_count",             default: 1,                      comment: "薬剤グループ数"
+  end
+
+  create_table "schedule_workers", force: :cascade, comment: "作業予定作業者" do |t|
+    t.integer  "schedule_id",                            comment: "作業予定"
+    t.integer  "worker_id",                              comment: "作業者"
+    t.integer  "display_order", default: 0, null: false, comment: "表示順"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "schedule_workers", ["schedule_id", "worker_id"], name: "index_schedule_workers_on_schedule_id_and_worker_id", unique: true, using: :btree
+
+  create_table "schedules", force: :cascade, comment: "作業予定" do |t|
+    t.integer  "term",                                null: false, comment: "年度(期)"
+    t.date     "worked_at",                           null: false, comment: "作業予定日"
+    t.integer  "work_type_id",                                     comment: "作業分類"
+    t.integer  "work_kind_id",            default: 0, null: false, comment: "作業種別"
+    t.string   "name",         limit: 40,             null: false, comment: "作業名称"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "sections", force: :cascade, comment: "班／町内マスタ" do |t|
