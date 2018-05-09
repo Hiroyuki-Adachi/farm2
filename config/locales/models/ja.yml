@@ -20,6 +20,7 @@ ja:
       section: "班"
       user: "利用者"
       work_broccoli: "ブロッコリー"
+      schedule: "作業計画"
 
     attributes:
       chemical:
@@ -198,6 +199,14 @@ ja:
         shipped_on: "出荷日"
         broccoli_box_id: "出荷用の箱"
         rest: "残数"
+
+      schedule:
+        worked_at: "作業予定日"
+        name: "内容"
+        kind_name: "内容"
+        workers_count: "人数"
+        work_type_id: "作業分類"
+        work_kind_id: "作業種別"
 
   status:
     organization:
