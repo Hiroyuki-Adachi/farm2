@@ -26,7 +26,11 @@ class WorkDecorator < Draper::Decorator
   end
 
   def name
-    model.name.present? ? (model.work_kind.other_flag ? model.name : model.work_kind.name + "(#{model.name})") : model.work_kind.name
+    if model.name.present?
+      model.work_kind.other_flag ? model.name : model.work_kind.name + "(#{model.name})"
+    else
+      model.work_kind.name
+    end
   end
 
   def work_time

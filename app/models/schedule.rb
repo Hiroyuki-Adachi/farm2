@@ -25,5 +25,8 @@ class Schedule < ActiveRecord::Base
   has_many :workers, { through: :schedule_workers }, -> { with_deleted }
 
   scope :usual, ->(term) { where(term: term).includes(:work_type, :work_kind).order(worked_at: :ASC, id: :ASC)}
+  scope :by_worker, ->(worker) {
+    where(["EXISTS (SELECT * FROM schedule_workers WHERE schedule_workers.work_id = works.id AND schedule_workers.worker_id = ?)", worker.id])
+  }
 
 end

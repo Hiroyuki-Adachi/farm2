@@ -1,20 +1,22 @@
 <h1>作業予定一覧</h1>
-<table id="schedule_list" class="table table-sm table-hover">
+<table id="schedule_list" class="table table-sm">
   <thead>
   <tr>
     <th>作業予定日</th>
     <th>分類</th>
     <th>内容</th>
     <th>作業予定者</th>
+    <th>&nbsp;</th>
   </tr>
   </thead>
   <tbody>
     <% @schedules.each do |schedule| %>
-      <tr style="cursor:pointer;" data-url="<%= schedule_path(schedule) %>">
+      <tr>
         <td><%= schedule.worked_at %></td>
         <td><%= schedule.genre_name %></td>
         <td><%= schedule.name %></td>
         <td><%= schedule.worker_names %></td>
+        <td><%= link_to '修正', edit_schedule_path(schedule), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>
   </tbody>

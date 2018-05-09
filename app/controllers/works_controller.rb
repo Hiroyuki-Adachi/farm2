@@ -130,7 +130,7 @@ class WorksController < ApplicationController
 
   def destroy
     @work.destroy
-    redirect_to(works_path(page: params[:page], month: params[:month]))
+    redirect_to(works_path)
   end
 
   def autocomplete_for_land_place

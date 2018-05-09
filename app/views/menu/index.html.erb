@@ -8,6 +8,7 @@
   <li><%= link_to '日報一覧', works_path %>(<%= link_to 'CSV出力', works_path(format: :csv) %>)</li>
   <% if current_user.checkable? %><li><%= link_to '日報検証', work_verifications_path %></li><% end %>
   <% if current_user.manageable? %><li><%= link_to '月報入力', monthly_reports_path %></li><% end %>
+  <li><%= link_to '作業計画', schedules_path %></li>
 </ul>
 <% if current_user.manageable? %>
 <h2>集計処理(<%= current_system.target_from.strftime('%Y年%m月') %>から<%= current_system.target_to.strftime('%Y年%m月') %>まで)</h2>
