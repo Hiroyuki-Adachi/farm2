@@ -6,7 +6,7 @@
     <th>分類</th>
     <th>内容</th>
     <th>作業予定者</th>
-    <th>&nbsp;</th>
+    <th colspan="2">&nbsp;</th>
   </tr>
   </thead>
   <tbody>
@@ -17,6 +17,7 @@
         <td><%= schedule.name %></td>
         <td><%= schedule.worker_names %></td>
         <td><%= link_to '修正', edit_schedule_path(schedule), {class: "btn btn-success btn-sm"} %></td>
+        <td><%= link_to '予定者', new_schedule_worker_path(schedule_id: schedule), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>
   </tbody>

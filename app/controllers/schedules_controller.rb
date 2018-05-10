@@ -16,7 +16,7 @@ class SchedulesController < ApplicationController
   def create
     @schedule = Schedule.new(schedule_params)
     if @schedule.save
-      redirect_to(schedules_path)
+      redirect_to(new_schedule_worker_path(schedule_id: @schedule))
     else
       render action: :new
     end
