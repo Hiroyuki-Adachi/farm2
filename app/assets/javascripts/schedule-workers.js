@@ -1,5 +1,7 @@
-function add_worker(worker_id, worker_name)
+function add_worker(worker_id)
 {
+    if(document.getElementById("worker_" + worker_id) != null) return;  // 既に存在する場合、追加は無効
+
     var tbody_workers = document.getElementById("tbody_workers");
     var row = tbody_workers.insertRow(tbody_workers.rows.length);
 
@@ -13,7 +15,7 @@ function add_worker(worker_id, worker_name)
 
     cell_no.className = "numeric";
     cell_no.innerHTML = display_order;
-    cell_name.innerHTML = worker_name;
+    cell_name.innerHTML = document.getElementById("master_worker_" + worker_id).cells[2].innerText;
 
     var elem_button = document.createElement("input")
     elem_button.type = "button";
@@ -88,6 +90,30 @@ function change_section(section) {
         worker_tr.style.display = "";
         if(parseInt(section.value) != 0 && parseInt(worker_tr.cells[3].innerText) != parseInt(section.value)) {
             worker_tr.style.display = "none";
+        }
+    }
+}
+
+function add_section(section_id) {
+    var workers = document.getElementById("master_workers");
+    var worker_tr;
+
+    for(var i = 0; i < workers.rows.length; i++) {
+        worker_tr = master_workers.rows[i];
+        if((parseInt(worker_tr.cells[3].innerText) == section_id) && (worker_tr.cells[4].innerText != "None")) {
+            add_worker(worker_tr.id.replace("master_worker_", ""));
+        }
+    }
+}
+
+function add_positions(positions) {
+    var workers = document.getElementById("master_workers");
+    var worker_tr;
+
+    for(var i = 0; i < workers.rows.length; i++) {
+        worker_tr = master_workers.rows[i];
+        if(positions.indexOf(worker_tr.cells[4].innerText) >= 0) {
+            add_worker(worker_tr.id.replace("master_worker_", ""));
         }
     }
 }
