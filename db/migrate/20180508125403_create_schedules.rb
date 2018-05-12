@@ -6,6 +6,7 @@ class CreateSchedules < ActiveRecord::Migration
       t.integer   :work_type_id,  {comment: "作業分類"}
       t.integer   :work_kind_id,  {null: false, default: 0, comment: "作業種別"}
       t.string    :name,          {limit: 40, null: false, comment: "作業名称"}
+      t.boolean   :work_flag,     {null: false, default: true, comment: "作業フラグ"}
 
       t.timestamps null: false
     end

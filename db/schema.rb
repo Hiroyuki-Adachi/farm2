@@ -246,13 +246,14 @@ ActiveRecord::Schema.define(version: 20180508125439) do
   add_index "schedule_workers", ["schedule_id", "worker_id"], name: "index_schedule_workers_on_schedule_id_and_worker_id", unique: true, using: :btree
 
   create_table "schedules", force: :cascade, comment: "作業予定" do |t|
-    t.integer  "term",                                null: false, comment: "年度(期)"
-    t.date     "worked_at",                           null: false, comment: "作業予定日"
-    t.integer  "work_type_id",                                     comment: "作業分類"
-    t.integer  "work_kind_id",            default: 0, null: false, comment: "作業種別"
-    t.string   "name",         limit: 40,             null: false, comment: "作業名称"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.integer  "term",                                   null: false, comment: "年度(期)"
+    t.date     "worked_at",                              null: false, comment: "作業予定日"
+    t.integer  "work_type_id",                                        comment: "作業分類"
+    t.integer  "work_kind_id",            default: 0,    null: false, comment: "作業種別"
+    t.string   "name",         limit: 40,                null: false, comment: "作業名称"
+    t.boolean  "work_flag",               default: true, null: false, comment: "作業フラグ"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   create_table "sections", force: :cascade, comment: "班／町内マスタ" do |t|
