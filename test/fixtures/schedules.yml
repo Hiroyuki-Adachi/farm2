@@ -2,12 +2,13 @@
 #
 # Table name: schedules # 作業予定
 #
-#  id           :integer          not null, primary key # 作業予定
-#  term         :integer          not null              # 年度(期)
-#  worked_at    :date             not null              # 作業予定日
-#  work_type_id :integer                                # 作業分類
-#  work_kind_id :integer          default(0), not null  # 作業種別
-#  name         :string(40)       not null              # 作業名称
+#  id           :integer          not null, primary key   # 作業予定
+#  term         :integer          not null                # 年度(期)
+#  worked_at    :date             not null                # 作業予定日
+#  work_type_id :integer                                  # 作業分類
+#  work_kind_id :integer          default(0), not null    # 作業種別
+#  name         :string(40)       not null                # 作業名称
+#  work_flag    :boolean          default(TRUE), not null # 作業フラグ
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #

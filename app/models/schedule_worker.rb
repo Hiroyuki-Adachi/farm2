@@ -9,11 +9,20 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
-
+require 'date'
 class ScheduleWorker < ActiveRecord::Base
   belongs_to :schedule
   belongs_to :worker, -> { with_deleted }
   has_one    :home, { through: :worker }, -> { with_deleted }
   has_one    :work_type, { through: :schedule }, -> { with_deleted }
   has_one    :work_kind, { through: :schedule }, -> { with_deleted }
+
+  scope :for_personal, ->(worker, day) {
+    joins(:schedule)
+      .eager_load(:schedule)
+      .joins("INNER JOIN work_kinds ON schedules.work_kind_id = work_kinds.id").preload(:work_kind)
+      .where(["schedules.worked_at BETWEEN ? AND ?", Date.today, Date.today + day])
+      .where(worker_id: worker)
+      .order("schedules.worked_at, schedule_workers.id")
+  }
 end
