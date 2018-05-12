@@ -25,4 +25,13 @@ class ScheduleWorker < ActiveRecord::Base
       .where(worker_id: worker)
       .order("schedules.worked_at, schedule_workers.id")
   }
+
+  scope :for_calendar, ->(worker) {
+    joins(:schedule)
+      .eager_load(:schedule)
+      .joins("INNER JOIN work_kinds ON schedules.work_kind_id = work_kinds.id").preload(:work_kind)
+      .where(["schedules.worked_at >= ? OR schedules.work_flag = ?", Date.today, false])
+      .where(worker_id: worker)
+      .order("schedules.worked_at, schedule_workers.id")
+  }
 end
