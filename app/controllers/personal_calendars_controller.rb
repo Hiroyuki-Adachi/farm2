@@ -1,6 +1,4 @@
 class PersonalCalendarsController < ApplicationController
-  SCHEDULE_DAY = 365
-
   def show
     @worker = Worker.find_by(token: params[:token])
     if @worker
@@ -26,17 +24,7 @@ class PersonalCalendarsController < ApplicationController
   end
 
   def make_calendar
-    calendar = ::Icalendar::Calendar.new
-    calendar.append_custom_property("X-WR-CALNAME;VALUE=TEXT", t("calendar.title"))
-    calendar.timezone do |t|
-      t.tzid = 'Asia/Tokyo'
-      t.standard do |s|
-        s.tzoffsetfrom = '+0900'
-        s.tzoffsetto   = '+0900'
-        s.tzname       = 'JST'
-        s.dtstart      = '19700101T000000'
-      end
-    end
+    calendar = create_calendar
     @results.each do |result|
       work = result.work
       event = ::Icalendar::Event.new
@@ -51,6 +39,21 @@ class PersonalCalendarsController < ApplicationController
       event.summary = schedule.name
       event.dtstart = ::Icalendar::Values::Date.new(schedule.schedule.model.worked_at)
       calendar.add_event(event)
+    end
+    return calendar
+  end
+
+  def create_calendar
+    calendar = ::Icalendar::Calendar.new
+    calendar.append_custom_property("X-WR-CALNAME;VALUE=TEXT", t("calendar.title"))
+    calendar.timezone do |t|
+      t.tzid = 'Asia/Tokyo'
+      t.standard do |s|
+        s.tzoffsetfrom = '+0900'
+        s.tzoffsetto   = '+0900'
+        s.tzname       = 'JST'
+        s.dtstart      = '19700101T000000'
+      end
     end
     return calendar
   end
