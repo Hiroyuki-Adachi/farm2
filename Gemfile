@@ -51,6 +51,9 @@ gem 'chunky_png'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+# Ruby library for dealing with iCalendar files
+gem 'icalendar'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
