@@ -207,6 +207,7 @@ ja:
         workers_count: "人数"
         work_type_id: "作業分類"
         work_kind_id: "作業種別"
+        work_flag: "作業フラグ"
 
   status:
     organization:

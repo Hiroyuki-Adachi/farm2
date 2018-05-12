@@ -2,14 +2,14 @@
 <%= javascript_include_tag 'schedule-workers.js' %>
 <%= error_print(@schedule) %>
 
-<%= form_for(@schedule.model, action: schedule_workers_path(@schedule.model), html: {method: :post}) do |f| %>
-  <%= render(:partial => 'schedule', :locals => {:f => f}) %>
+<%= form_tag(schedule_workers_path(schedule_id: @schedule.model), method: :post) do %>
+  <%= render(:partial => 'schedule') %>
   <hr />
-  <%= render(:partial => 'form', :locals => {:f => f}) %>
+  <%= render(:partial => 'form') %>
 
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
-      <%= f.submit '登録', :name => 'regist', class: "btn btn-warning" %>
+      <%= submit_tag '登録', :name => 'regist', class: "btn btn-warning" %>
     </div>
     <div class="btn-group mr-2">
       <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + schedules_path + "';"), class: "btn btn-outline-dark" %>

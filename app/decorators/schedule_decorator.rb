@@ -20,8 +20,12 @@ class ScheduleDecorator < Draper::Decorator
   def worker_names
     results = []
     model.workers.each do |worker|
-      results << WorkerDecorator.decorate(worker).short_name
+      results << WorkerDecorator.decorate(worker).home_name
     end
     return results.join(", ")
+  end
+
+  def work_flag
+    return model.work_flag ? "作業" : "作業以外"
   end
 end

@@ -6,7 +6,9 @@
     <th>分類</th>
     <th>内容</th>
     <th>作業予定者</th>
+    <% if current_user.checkable? %>
     <th colspan="2">&nbsp;</th>
+    <% end %>
   </tr>
   </thead>
   <tbody>
@@ -16,17 +18,21 @@
         <td><%= schedule.genre_name %></td>
         <td><%= schedule.name %></td>
         <td><%= schedule.worker_names %></td>
+        <% if current_user.checkable? %>
         <td><%= link_to '修正', edit_schedule_path(schedule), {class: "btn btn-success btn-sm"} %></td>
         <td><%= link_to '予定者', new_schedule_worker_path(schedule_id: schedule), {class: "btn btn-success btn-sm"} %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 <%= paginate(@schedules) %>
 <div class="btn-toolbar">
-  <div class="btn-group mr-2">
-    <%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_schedule_path + "';"), class: "btn btn-success" %>
-  </div>
+  <% if current_user.checkable? %>
+    <div class="btn-group mr-2">
+      <%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_schedule_path + "';"), class: "btn btn-success" %>
+    </div>
+  <% end %>
   <div class="btn-group mr-2">
     <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
   </div>

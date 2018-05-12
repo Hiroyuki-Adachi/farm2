@@ -125,7 +125,7 @@ class Work < ApplicationRecord
         WorkResult.create(work_id: id, worker_id: param.worker_id, display_order: param.display_order, hours: param.hours)
       end
     end
-    work_results.where.not(worker_id: workers).each {|work_result| work_result.destroy}    
+    work_results.where.not(worker_id: workers).each(&:destroy)
   end
 
   def regist_lands(params)
@@ -137,11 +137,10 @@ class Work < ApplicationRecord
       if work_land
         work_land.update(display_order: param.display_order) if work_land.display_order != param.display_order.to_i 
       else
-        WorkLand.create(work_id: self.id, land_id: param.land_id, display_order: param.display_order)
+        WorkLand.create(work_id: id, land_id: param.land_id, display_order: param.display_order)
       end
     end
-
-    work_lands.where.not(land_id: lands).each { |land| land.destroy}
+    work_lands.where.not(land_id: lands).each(&:destroy)
   end
 
   def regist_machines(params)
@@ -151,7 +150,7 @@ class Work < ApplicationRecord
         machine_result = MachineResult.find_by(work_result_id: work_result_id, machine_id: machine_id)
         if machine_result
           if hour > 0
-            machine_result.update(hours: hour) if machine_result.hours != hour 
+            machine_result.update(hours: hour) if machine_result.hours != hour
           else
             machine_result.destroy
           end

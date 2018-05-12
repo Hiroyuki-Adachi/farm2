@@ -10,7 +10,7 @@ class SchedulesController < ApplicationController
   end
 
   def new
-    @schedule = Schedule.new(worked_at: Date.today, work_type_id: @work_types.first.id, term: @term).decorate
+    @schedule = Schedule.new(worked_at: Date.today, work_type_id: @work_types.first.id, term: @term, work_flag: true).decorate
   end
 
   def create
@@ -45,7 +45,7 @@ class SchedulesController < ApplicationController
   end
 
   def schedule_params
-    params.require(:schedule).permit(:worked_at, :work_type_id, :work_kind_id, :name, :term)
+    params.require(:schedule).permit(:worked_at, :work_type_id, :work_kind_id, :name, :term, :work_flag)
   end
 
   def set_masters
