@@ -3,14 +3,16 @@ class PersonalInformationsController < ApplicationController
 
   def show
     @worker = Worker.find_by(token: params[:token])
-    to_error_path unless @worker
-
-    @schedules = ScheduleWorkerDecorator.decorate_collection(ScheduleWorker.for_personal(@worker, 3))
-    @results = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
-    @lands = WorkLandDecorator.decorate_collection(WorkLand.for_personal(@worker.home, worked_from)).group_by(&:land)
-    @machines = MachineResultDecorator.decorate_collection(MachineResult.for_personal(@worker.home, worked_from))
-    @company = Worker.company.first
-    render layout: false
+    if @worker
+      @schedules = ScheduleWorkerDecorator.decorate_collection(ScheduleWorker.for_personal(@worker, 3))
+      @results = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
+      @lands = WorkLandDecorator.decorate_collection(WorkLand.for_personal(@worker.home, worked_from)).group_by(&:land)
+      @machines = MachineResultDecorator.decorate_collection(MachineResult.for_personal(@worker.home, worked_from))
+      @company = Worker.company.first
+      render layout: false
+    else
+      to_error_path
+    end
   end
 
   private
