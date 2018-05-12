@@ -1,0 +1,26 @@
+<% if @lands.count > 0 %>
+  <h1>管理</h1>
+  <table class="type06">
+  <thead>
+  <tr>
+    <th>地番</th>
+    <th>内容</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% land_id = 0 %>
+  <% @lands.each do |land, results| %>
+    <tr>
+      <td><%= land.place %></td>
+      <td><% results.each_with_index do |result, i| %>
+      <%= result.worked_at_short%>(<%= result.work_kind_name %>)
+        <% if i < results.size - 1 %>
+          →
+        <% end%>
+      <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+  </table>
+<% end %>

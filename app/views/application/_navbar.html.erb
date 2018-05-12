@@ -8,7 +8,7 @@
               <%= link_to '日報一覧', works_path, {class: "dropdown-item"} %>
               <% if current_user.checkable? %><%= link_to '日報検証', work_verifications_path, {class: "dropdown-item"} %><% end %>
               <% if current_user.manageable? %><%= link_to '月報入力', monthly_reports_path, {class: "dropdown-item"} %><% end %>
-              <%= link_to '作業計画', schedules_path, {class: "dropdown-item"} %>
+              <%= link_to '作業予定', schedules_path, {class: "dropdown-item"} %>
             </div>
           </li>
           <% if current_user.manageable? %>

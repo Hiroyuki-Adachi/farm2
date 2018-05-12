@@ -1,0 +1,29 @@
+<% if @results.count > 0 %>
+  <h1>実績</h1>
+  <% total_hours = 0 %>
+  <table class="type06">
+    <thead>
+      <tr>
+        <th>日付</th>
+        <th>内容</th>
+        <th>時間</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @results.each do |result| %>
+        <tr>
+          <td><%= result.worked_at_short %></td>
+          <td><%= result.work_name_short %></td>
+          <td style="text-align:right;"><%= result.hours %></td>
+          <% total_hours += result.model.hours %>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="2">合計</th>
+        <td style="text-align:right;"><%= "%.1f"%total_hours %></td>
+      </tr>
+    </tfoot>
+  </table>
+<% end %>

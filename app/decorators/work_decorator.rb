@@ -1,5 +1,8 @@
 class WorkDecorator < Draper::Decorator
   delegate_all
+  decorates_association :creator
+  decorates_association :printer
+  decorates_association :checker
 
   def self.months(term)
     cache_key = "months#{term}"
@@ -92,7 +95,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def creator_short_name
-    model.creator ? WorkerDecorator.decorate(model.creator).short_name : ""
+    model.creator ? creator.short_name : ""
   end
 
   def created_at
@@ -100,7 +103,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def printer_short_name
-    model.printer ? WorkerDecorator.decorate(model.printer).short_name : ""
+    model.printer ? printer.short_name : ""
   end
 
   def printed_at
@@ -110,7 +113,7 @@ class WorkDecorator < Draper::Decorator
   def checker_short_names
     results = []
     model.checkers.each do |checker|
-      results << WorkerDecorator.decorate(checker).short_name
+      results << checker.short_name
     end
     results.join(", ")
   end
