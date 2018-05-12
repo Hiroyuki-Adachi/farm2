@@ -27,7 +27,7 @@ class SchedulesControllerTest < ActionController::TestCase
     assert_difference('Schedule.count') do
       post :create, schedule: @update
     end
-    assert_redirected_to schedules_path
+    assert_redirected_to new_schedule_worker_path(schedule_id: Schedule.maximum(:id))
   end
 
   test "作業予定変更(表示)" do
