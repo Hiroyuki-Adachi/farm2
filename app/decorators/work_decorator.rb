@@ -2,7 +2,6 @@ class WorkDecorator < Draper::Decorator
   delegate_all
   decorates_association :creator
   decorates_association :printer
-  decorates_association :checker
 
   def self.months(term)
     cache_key = "months#{term}"
@@ -113,7 +112,7 @@ class WorkDecorator < Draper::Decorator
   def checker_short_names
     results = []
     model.checkers.each do |checker|
-      results << checker.short_name
+      results << checker.decorate.short_name
     end
     results.join(", ")
   end
