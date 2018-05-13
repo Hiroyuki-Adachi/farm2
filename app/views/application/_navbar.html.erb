@@ -8,6 +8,11 @@
               <%= link_to '日報一覧', works_path, {class: "dropdown-item"} %>
               <% if current_user.checkable? %><%= link_to '日報検証', work_verifications_path, {class: "dropdown-item"} %><% end %>
               <% if current_user.manageable? %><%= link_to '月報入力', monthly_reports_path, {class: "dropdown-item"} %><% end %>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown7" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">予定管理<span class="caret"></span></a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
               <%= link_to '作業予定', schedules_path, {class: "dropdown-item"} %>
             </div>
           </li>

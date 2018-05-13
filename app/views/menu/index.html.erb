@@ -8,6 +8,9 @@
   <li><%= link_to '日報一覧', works_path %>(<%= link_to 'CSV出力', works_path(format: :csv) %>)</li>
   <% if current_user.checkable? %><li><%= link_to '日報検証', work_verifications_path %></li><% end %>
   <% if current_user.manageable? %><li><%= link_to '月報入力', monthly_reports_path %></li><% end %>
+</ul>
+<h2>予定管理</h2>
+<ul class="list-unstyled">
   <li><%= link_to '作業予定', schedules_path %></li>
 </ul>
 <% if current_user.manageable? %>

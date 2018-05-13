@@ -28,4 +28,16 @@ class ScheduleDecorator < Draper::Decorator
   def work_flag
     return model.work_flag ? "作業" : "作業以外"
   end
+
+  def work_time
+    start_at + '～' + end_at
+  end
+
+  def start_at
+    model.start_at.strftime("%H:%M")
+  end
+
+  def end_at
+    model.end_at.strftime("%H:%M")
+  end
 end

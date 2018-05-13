@@ -1,7 +1,7 @@
 class SchedulesController < ApplicationController
   before_action :set_schedule, only: [:edit, :update, :destroy]
   before_action :set_masters, only: [:new, :create, :edit, :update]
-  before_action :permit_not_checker, except: [:index]
+  before_action :permit_not_manager, except: [:index]
 
   def index
     @schedules = Schedule.usual(@term)
@@ -53,7 +53,7 @@ class SchedulesController < ApplicationController
     @work_kinds = WorkKind.by_type(@schedule ? @schedule.work_type : @work_types.first) || []
   end
 
-  def permit_not_checker
-    to_error_path unless current_user.checkable?
+  def permit_not_manager
+    to_error_path unless current_user.manageable?
   end
 end
