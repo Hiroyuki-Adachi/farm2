@@ -45,7 +45,7 @@ class SchedulesController < ApplicationController
   end
 
   def schedule_params
-    params.require(:schedule).permit(:worked_at, :work_type_id, :work_kind_id, :name, :term, :work_flag)
+    params.require(:schedule).permit(:worked_at, :work_type_id, :work_kind_id, :name, :term, :work_flag, :start_at, :end_at)
   end
 
   def set_masters

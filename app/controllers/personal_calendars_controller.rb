@@ -31,13 +31,15 @@ class PersonalCalendarsController < ApplicationController
       event.summary = result.work_name
       event.dtstart = ::Icalendar::Values::DateTime.new(to_datetime(work.worked_at, work.start_at))
       event.dtend = ::Icalendar::Values::DateTime.new(to_datetime(work.worked_at, work.end_at))
-      event.description = result.work.remarks
+      event.description = work.remarks
       calendar.add_event(event)
     end
     @schedules.each do |schedule|
+      schedule_model = schedule.schedule.model
       event = ::Icalendar::Event.new
       event.summary = schedule.name
-      event.dtstart = ::Icalendar::Values::Date.new(schedule.schedule.model.worked_at)
+      event.dtstart = ::Icalendar::Values::DateTime.new(to_datetime(schedule_model.worked_at, schedule_model.start_at))
+      event.dtend = ::Icalendar::Values::DateTime.new(to_datetime(schedule_model.worked_at, schedule_model.end_at))
       calendar.add_event(event)
     end
     return calendar
