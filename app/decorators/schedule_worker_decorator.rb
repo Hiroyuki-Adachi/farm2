@@ -14,6 +14,7 @@ class ScheduleWorkerDecorator < Draper::Decorator
                 (model.schedule.worked_at - Date.today).to_s + "日後"
               end
     result += "(#{model.schedule.worked_at.strftime('%m月%d日')})"
+    result += " #{schedule.start_at}"
     return result
   end
 

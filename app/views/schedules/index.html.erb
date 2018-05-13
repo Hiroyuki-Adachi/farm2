@@ -6,8 +6,11 @@
     <th>分類</th>
     <th>内容</th>
     <th>作業予定者</th>
+    <% if current_user.manageable? %>
+    <th>&nbsp;</th>
+    <% end %>
     <% if current_user.checkable? %>
-    <th colspan="2">&nbsp;</th>
+    <th>&nbsp;</th>
     <% end %>
   </tr>
   </thead>
@@ -18,8 +21,10 @@
         <td><%= schedule.genre_name %></td>
         <td><%= schedule.name %></td>
         <td><%= schedule.worker_names %></td>
-        <% if current_user.checkable? %>
+        <% if current_user.manageable? %>
         <td><%= link_to '修正', edit_schedule_path(schedule), {class: "btn btn-success btn-sm"} %></td>
+        <% end %>
+        <% if current_user.checkable? %>
         <td><%= link_to '予定者', new_schedule_worker_path(schedule_id: schedule), {class: "btn btn-success btn-sm"} %></td>
         <% end %>
       </tr>
@@ -28,7 +33,7 @@
 </table>
 <%= paginate(@schedules) %>
 <div class="btn-toolbar">
-  <% if current_user.checkable? %>
+  <% if current_user.manageable? %>
     <div class="btn-group mr-2">
       <%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_schedule_path + "';"), class: "btn btn-success" %>
     </div>

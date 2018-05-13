@@ -2,7 +2,7 @@
 <h1>予定</h1>
 <ul>
   <% @schedules.each do |schedule| %>
-  <li><%= schedule.worked_at %>に<%= schedule.name %>の予定です。</li>
+  <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
   <% end %>
 </ul>
 <% end %>
