@@ -2,15 +2,17 @@
 #
 # Table name: schedules # 作業予定
 #
-#  id           :integer          not null, primary key   # 作業予定
-#  term         :integer          not null                # 年度(期)
-#  worked_at    :date             not null                # 作業予定日
-#  work_type_id :integer                                  # 作業分類
-#  work_kind_id :integer          default(0), not null    # 作業種別
-#  name         :string(40)       not null                # 作業名称
-#  work_flag    :boolean          default(TRUE), not null # 作業フラグ
+#  id           :integer          not null, primary key                                   # 作業予定
+#  term         :integer          not null                                                # 年度(期)
+#  worked_at    :date             not null                                                # 作業予定日
+#  work_type_id :integer                                                                  # 作業分類
+#  work_kind_id :integer          default(0), not null                                    # 作業種別
+#  name         :string(40)       not null                                                # 作業名称
+#  work_flag    :boolean          default(TRUE), not null                                 # 作業フラグ
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  start_at     :datetime         default(Thu, 01 Jan 1970 08:00:00 UTC +00:00), not null # 開始予定時刻
+#  end_at       :datetime         default(Thu, 01 Jan 1970 17:00:00 UTC +00:00), not null # 終了予定時刻
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
@@ -26,3 +28,5 @@ schedule1:
   work_type_id: 12
   work_kind_id: 31
   name: "H27 作付け計画、その他"
+  start_at: '2015-04-01 09:00'
+  end_at: '2015-04-01 17:00'

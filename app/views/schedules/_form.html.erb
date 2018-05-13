@@ -15,6 +15,14 @@
       <%= label_tag "schedule_work_flag_false", "作業以外(総会、理事会、監査など)", {class: "form-check-label"} %>
     </div>
   </div>
+  <div class="form-group col-md-2">
+    <%= f.label :start_at, '', class: "col-form-label-lg" %>
+    <%= f.time_field :start_at, {step: 1800, required: true, class: "form-control"} %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.label :end_at, '', class: "col-form-label-lg" %>
+    <%= f.time_field :end_at, {step: 1800, required: true, class: "form-control"} %>
+  </div>
 </div>
 <div class="form-row">
   <div class="form-group col-md-12">
