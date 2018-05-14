@@ -1,3 +1,5 @@
+require 'date'
+require 'securerandom'
 # == Schema Information
 #
 # Table name: schedule_workers # 作業予定作業者
@@ -8,14 +10,17 @@
 #  display_order :integer          default(0), not null  # 表示順
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  uuid          :string(36)                             # UUID(カレンダー用)
 #
-require 'date'
+
 class ScheduleWorker < ActiveRecord::Base
   belongs_to :schedule
   belongs_to :worker, -> { with_deleted }
   has_one    :home, { through: :worker }, -> { with_deleted }
   has_one    :work_type, { through: :schedule }, -> { with_deleted }
   has_one    :work_kind, { through: :schedule }, -> { with_deleted }
+
+  before_create :set_uuid
 
   scope :for_personal, ->(worker, day) {
     joins(:schedule)
@@ -34,4 +39,8 @@ class ScheduleWorker < ActiveRecord::Base
       .where(worker_id: worker)
       .order("schedules.worked_at, schedule_workers.id")
   }
+
+  def set_uuid
+    self.uuid = SecureRandom.uuid
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180513032021) do
+ActiveRecord::Schema.define(version: 20180514143343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -236,11 +236,12 @@ ActiveRecord::Schema.define(version: 20180513032021) do
   end
 
   create_table "schedule_workers", force: :cascade, comment: "作業予定作業者" do |t|
-    t.integer  "schedule_id",                            comment: "作業予定"
-    t.integer  "worker_id",                              comment: "作業者"
-    t.integer  "display_order", default: 0, null: false, comment: "表示順"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.integer  "schedule_id",                                       comment: "作業予定"
+    t.integer  "worker_id",                                         comment: "作業者"
+    t.integer  "display_order",            default: 0, null: false, comment: "表示順"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.string   "uuid",          limit: 36,                          comment: "UUID(カレンダー用)"
   end
 
   add_index "schedule_workers", ["schedule_id", "worker_id"], name: "index_schedule_workers_on_schedule_id_and_worker_id", unique: true, using: :btree
@@ -361,15 +362,16 @@ ActiveRecord::Schema.define(version: 20180513032021) do
   add_index "work_lands", ["work_id", "land_id"], name: "index_work_lands_on_work_id_and_land_id", unique: true, using: :btree
 
   create_table "work_results", force: :cascade, comment: "作業結果データ" do |t|
-    t.integer  "work_id",                                                          comment: "作業"
-    t.integer  "worker_id",                                                        comment: "作業者"
-    t.decimal  "hours",         precision: 5, scale: 1, default: 0.0, null: false, comment: "作業時間"
-    t.integer  "display_order",                         default: 0,   null: false, comment: "表示順"
-    t.decimal  "fixed_hours",   precision: 5, scale: 1,                            comment: "確定作業時間"
-    t.decimal  "fixed_price",   precision: 5,                                      comment: "確定作業単価"
-    t.decimal  "fixed_amount",  precision: 7,                                      comment: "確定作業日当"
+    t.integer  "work_id",                                                                     comment: "作業"
+    t.integer  "worker_id",                                                                   comment: "作業者"
+    t.decimal  "hours",                    precision: 5, scale: 1, default: 0.0, null: false, comment: "作業時間"
+    t.integer  "display_order",                                    default: 0,   null: false, comment: "表示順"
+    t.decimal  "fixed_hours",              precision: 5, scale: 1,                            comment: "確定作業時間"
+    t.decimal  "fixed_price",              precision: 5,                                      comment: "確定作業単価"
+    t.decimal  "fixed_amount",             precision: 7,                                      comment: "確定作業日当"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "uuid",          limit: 36,                                                    comment: "UUID(カレンダー用)"
   end
 
   add_index "work_results", ["work_id", "worker_id"], name: "index_work_results_on_work_id_and_worker_id", unique: true, using: :btree
