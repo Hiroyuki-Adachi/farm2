@@ -10,8 +10,10 @@ class ScheduleWorkerDecorator < Draper::Decorator
                 "今日"
               when 1
                 "明日"
+              when 2
+                "明後日"
               else
-                (model.schedule.worked_at - Date.today).to_s + "日後"
+                (model.schedule.worked_at - Date.today).to_i.to_s + "日後"
               end
     result += "(#{model.schedule.worked_at.strftime('%m月%d日')})"
     result += " #{schedule.start_at}"
