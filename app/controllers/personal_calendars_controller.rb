@@ -26,29 +26,37 @@ class PersonalCalendarsController < ApplicationController
   def make_calendar
     calendar = create_calendar
     @results.each do |result|
-      work = result.work.model
-      event = ::Icalendar::Event.new
-      event.summary = result.name
-      event.dtstart = ::Icalendar::Values::DateTime.new(to_datetime(work.worked_at, work.start_at))
-      event.dtend = ::Icalendar::Values::DateTime.new(to_datetime(work.worked_at, work.end_at))
-      event.description = work.remarks
-      event.uid = result.uuid.upcase
-      event.created = work.created_at
-      event.last_modified = work.updated_at
-      calendar.add_event(event)
+      calendar.add_event(make_event_for_work(result))
     end
     @schedules.each do |schedule|
-      schedule_model = schedule.schedule.model
-      event = ::Icalendar::Event.new
-      event.summary = schedule.name
-      event.dtstart = ::Icalendar::Values::DateTime.new(to_datetime(schedule_model.worked_at, schedule_model.start_at))
-      event.dtend = ::Icalendar::Values::DateTime.new(to_datetime(schedule_model.worked_at, schedule_model.end_at))
-      event.uid = schedule.uuid.upcase
-      event.created = schedule_model.created_at
-      event.last_modified = schedule_model.updated_at
-      calendar.add_event(event)
+      calendar.add_event(make_event_for_schedule(schedule))
     end
     return calendar
+  end
+
+  def make_event_for_work(result)
+    work = result.work.model
+    event = ::Icalendar::Event.new
+    event.summary = result.work_name
+    event.dtstart = ::Icalendar::Values::DateTime.new(to_datetime(work.worked_at, work.start_at))
+    event.dtend = ::Icalendar::Values::DateTime.new(to_datetime(work.worked_at, work.end_at))
+    event.description = work.remarks
+    event.uid = result.uuid.upcase
+    event.created = work.created_at
+    event.last_modified = work.updated_at
+    return event
+  end
+
+  def make_event_for_schedule(schedule)
+    schedule_model = schedule.schedule.model
+    event = ::Icalendar::Event.new
+    event.summary = schedule.schedule_name
+    event.dtstart = ::Icalendar::Values::DateTime.new(to_datetime(schedule_model.worked_at, schedule_model.start_at))
+    event.dtend = ::Icalendar::Values::DateTime.new(to_datetime(schedule_model.worked_at, schedule_model.end_at))
+    event.uid = schedule.uuid.upcase
+    event.created = schedule_model.created_at
+    event.last_modified = schedule_model.updated_at
+    return event
   end
 
   def create_calendar

@@ -29,7 +29,7 @@ class Schedule < ActiveRecord::Base
 
   scope :usual, ->(term) {
       where(term: term)
-        .includes(:work_type, :work_kind, workers: :home)
+        .includes(:work_type, :work_kind, schedule_workers: [worker: :home])
         .order(worked_at: :ASC, id: :ASC)
     }
 
