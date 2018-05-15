@@ -60,6 +60,7 @@ class WorkResult < ApplicationRecord
   scope :for_personal, ->(worker, worked_at) {
      joins(:work).eager_load(:work)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
       .where("works.worked_at >= ?", worked_at)
       .where(worker_id: worker)
       .order("works.worked_at, work_results.id")

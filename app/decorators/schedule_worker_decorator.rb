@@ -21,6 +21,10 @@ class ScheduleWorkerDecorator < Draper::Decorator
   end
 
   def name
-    schedule.work_type.name + "(" + schedule.name + ")"
+    schedule.work_type.name + "(" + schedule_name + ")"
+  end
+
+  def schedule_name
+    schedule.name
   end
 end

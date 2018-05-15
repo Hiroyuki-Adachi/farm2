@@ -1,5 +1,6 @@
 class ScheduleDecorator < Draper::Decorator
   delegate_all
+  decorates_association :workers
 
   def worked_at
     model.worked_at.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})"
@@ -19,8 +20,8 @@ class ScheduleDecorator < Draper::Decorator
 
   def worker_names
     results = []
-    model.workers.each do |worker|
-      results << WorkerDecorator.decorate(worker).home_name
+    workers.each do |worker|
+      results << worker.home_name
     end
     return results.join(", ")
   end
