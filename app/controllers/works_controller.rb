@@ -49,10 +49,15 @@ class WorksController < ApplicationController
   end
 
   def show
+    url_hash = Rails.application.routes.recognize_path(request.referer)
+
     @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
     @chemicals = @work.work_chemicals.group(:chemical_id).sum(:quantity).to_a
     @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
-    session[:work_referer] = Rails.application.routes.recognize_path(request.referer)[:controller] == "works" ? nil : request.referer
+
+    if url_hash[:action] == "index"
+      session[:work_referer] = url_hash[:controller] == "works" ? nil : request.referer
+    end
     render layout: false
   end
 
