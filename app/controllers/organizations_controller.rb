@@ -10,7 +10,6 @@ class OrganizationsController < ApplicationController
 
   def update
     if @organization.update(organization_params)
-      session[:organization] = @organization.attributes
       redirect_to(menu_index_path)
     else
       render action: :edit
@@ -20,7 +19,7 @@ class OrganizationsController < ApplicationController
   private
 
   def set_organization
-    @organization = Organization.first.decorate
+    @organization = Organization.find_by(id: current_user.organization_id).decorate
   end
 
   def organization_params

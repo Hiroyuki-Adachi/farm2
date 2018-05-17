@@ -15,13 +15,13 @@
 
 <%= render partial: "show_base" %>
 <%= render partial: "show_workers" %>
-<% if (@work_lands.count > 0 or @work.work_kind.land_flag) and @organization.lands_count > 0 %>
+<% if (@work_lands.count > 0 or @work.work_kind.land_flag) and current_organization.lands_count > 0 %>
   <%= render partial: "show_lands" %>
 <% end %>
-<% if (@machines.count > 0 or @work.work_kind.machine_kinds.count > 0) and @organization.machines_count > 0 %>
+<% if (@machines.count > 0 or @work.work_kind.machine_kinds.count > 0) and current_organization.machines_count > 0 %>
   <%= render partial: "show_machines" %>
 <% end %>
-<% if (@chemicals.count > 0 or @work.work_kind.chemical_kinds.count > 0) and @organization.chemicals_count > 0 %>
+<% if (@chemicals.count > 0 or @work.work_kind.chemical_kinds.count > 0) and current_organization.chemicals_count > 0 %>
   <%= render partial: "show_chemicals" %>
 <% end %>
 <% if @broccoli %>

@@ -1,16 +1,19 @@
 class PersonalInformationsController < ApplicationController
   after_action :to_sjis, only: [:show]
 
+  SCHEDULE_DAY = 3
+
   def show
-    @worker = Worker.where(token: params[:token]).first
+    @worker = Worker.find_by(token: params[:token])
     if @worker
+      @schedules = ScheduleWorkerDecorator.decorate_collection(ScheduleWorker.for_personal(@worker, SCHEDULE_DAY))
       @results = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
       @lands = WorkLandDecorator.decorate_collection(WorkLand.for_personal(@worker.home, worked_from)).group_by(&:land)
       @machines = MachineResultDecorator.decorate_collection(MachineResult.for_personal(@worker.home, worked_from))
       @company = Worker.company.first
       render layout: false
     else
-      render text: 'Service Unavailable', status: 503
+      to_error_path
     end
   end
 
@@ -34,5 +37,4 @@ class PersonalInformationsController < ApplicationController
       Date.new(Date.today.year, 7, 1)
     end
   end
-
 end

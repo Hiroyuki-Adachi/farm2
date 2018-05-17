@@ -12,7 +12,7 @@
   <div class="col-md-3">
     <div class="field form-group">
       <%= f.label :password, class: "col-form-label-lg" %>
-      <%= f.password_field(:password, {maxlength: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED, pattern: "^([a-zA-Z0-9]{4,})$", required: true, class: "form-control", autocomplete: false}) %>
+      <%= f.password_field(:password, {maxlength: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED, pattern: "^([a-zA-Z0-9!-/:-@\\[-`{-~]{4,})$", required: true, class: "form-control", autocomplete: false}) %>
     </div>
   </div>
 </div>

@@ -1,5 +1,6 @@
 class WorkResultDecorator < Draper::Decorator
   delegate_all
+  decorates_association :work
 
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
@@ -23,6 +24,10 @@ class WorkResultDecorator < Draper::Decorator
     return model.worker.home.name
   end
 
+  def name
+    work.work_type.name + "(" + work_name + ")"
+  end
+
   def worked_at
     return model.work.worked_at.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.work.worked_at.wday]})"
   end
@@ -36,7 +41,7 @@ class WorkResultDecorator < Draper::Decorator
   end
 
   def work_name
-    return model.work.name.present? ? (model.work.work_kind.other_flag ? model.work.name : model.work.work_kind.name + "(#{model.work.name})") : model.work.work_kind.name
+    return work.name
   end
 
   def work_name_short

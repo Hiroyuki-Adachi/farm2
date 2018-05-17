@@ -49,22 +49,25 @@ class WorksController < ApplicationController
   end
 
   def show
+    url_hash = Rails.application.routes.recognize_path(request.referer)
+
     @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
     @chemicals = @work.work_chemicals.group(:chemical_id).sum(:quantity).to_a
     @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
-    session[:work_referer] = Rails.application.routes.recognize_path(request.referer)[:controller] == "works" ? nil : request.referer
+
+    if url_hash[:action] == "index"
+      session[:work_referer] = url_hash[:controller] == "works" ? nil : request.referer
+    end
     render layout: false
   end
 
   def create
-    if params[:regist]
-      @work = Work.new(work_params)
-      @work.created_by = current_user.worker.id
-      if @work.save
-        redirect_to(work_path(@work.id))
-      else
-        render action: :new
-      end
+    @work = Work.new(work_params)
+    @work.created_by = current_user.worker.id
+    if @work.save
+      redirect_to(work_path(@work.id))
+    else
+      render action: :new
     end
   end
 
@@ -132,7 +135,7 @@ class WorksController < ApplicationController
 
   def destroy
     @work.destroy
-    redirect_to(works_path(page: params[:page], month: params[:month]))
+    redirect_to(works_path)
   end
 
   def autocomplete_for_land_place

@@ -44,17 +44,18 @@ class Banks::BranchesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_branch
-      @branch = BankBranch.find_by(bank_code: params[:bank_code], code: params[:code])
-    end
 
-    def set_bank
-      @bank = Bank.find_by(code: params[:bank_code])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_branch
+    @branch = BankBranch.find_by(bank_code: params[:bank_code], code: params[:code])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def branch_params
-      params.require(:bank_branch).permit(:code, :name, :phonetic, :zip_code, :address1, :address2, :telephone, :fax).merge(bank_code: params[:bank_code])
-    end
+  def set_bank
+    @bank = Bank.find_by(code: params[:bank_code])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def branch_params
+    params.require(:bank_branch).permit(:code, :name, :phonetic, :zip_code, :address1, :address2, :telephone, :fax).merge(bank_code: params[:bank_code])
+  end
 end

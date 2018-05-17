@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180428114035) do
+ActiveRecord::Schema.define(version: 20180514143343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(version: 20180428114035) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.boolean  "owner_flag",                     default: false, null: false, comment: "所有者フラグ"
   end
 
   add_index "homes", ["deleted_at"], name: "index_homes_on_deleted_at", using: :btree
@@ -234,6 +235,30 @@ ActiveRecord::Schema.define(version: 20180428114035) do
     t.integer  "chemical_group_count",             default: 1,                      comment: "薬剤グループ数"
   end
 
+  create_table "schedule_workers", force: :cascade, comment: "作業予定作業者" do |t|
+    t.integer  "schedule_id",                                       comment: "作業予定"
+    t.integer  "worker_id",                                         comment: "作業者"
+    t.integer  "display_order",            default: 0, null: false, comment: "表示順"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.string   "uuid",          limit: 36,                          comment: "UUID(カレンダー用)"
+  end
+
+  add_index "schedule_workers", ["schedule_id", "worker_id"], name: "index_schedule_workers_on_schedule_id_and_worker_id", unique: true, using: :btree
+
+  create_table "schedules", force: :cascade, comment: "作業予定" do |t|
+    t.integer  "term",                                                    null: false, comment: "年度(期)"
+    t.date     "worked_at",                                               null: false, comment: "作業予定日"
+    t.integer  "work_type_id",                                                         comment: "作業分類"
+    t.integer  "work_kind_id",            default: 0,                     null: false, comment: "作業種別"
+    t.string   "name",         limit: 40,                                 null: false, comment: "作業名称"
+    t.boolean  "work_flag",               default: true,                  null: false, comment: "作業フラグ"
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.datetime "start_at",                default: '1970-01-01 08:00:00', null: false, comment: "開始予定時刻"
+    t.datetime "end_at",                  default: '1970-01-01 17:00:00', null: false, comment: "終了予定時刻"
+  end
+
   create_table "sections", force: :cascade, comment: "班／町内マスタ" do |t|
     t.string   "name",          limit: 40,                null: false, comment: "班名称"
     t.integer  "display_order",            default: 1,    null: false, comment: "表示順"
@@ -246,15 +271,17 @@ ActiveRecord::Schema.define(version: 20180428114035) do
   add_index "sections", ["deleted_at"], name: "index_sections_on_deleted_at", using: :btree
 
   create_table "systems", force: :cascade, comment: "システムマスタ" do |t|
-    t.integer  "term",        null: false, comment: "年度(期)"
-    t.date     "target_from",              comment: "開始年月"
-    t.date     "target_to",                comment: "終了年月"
+    t.integer  "term",                        null: false, comment: "年度(期)"
+    t.date     "target_from",                              comment: "開始年月"
+    t.date     "target_to",                                comment: "終了年月"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.date     "start_date",  null: false, comment: "期首日"
-    t.date     "end_date",    null: false, comment: "期末日"
+    t.date     "start_date",                  null: false, comment: "期首日"
+    t.date     "end_date",                    null: false, comment: "期末日"
+    t.integer  "organization_id", default: 0, null: false, comment: "組織"
   end
 
+  add_index "systems", ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true, using: :btree
   add_index "systems", ["term"], name: "index_systems_on_term", unique: true, using: :btree
 
   create_table "users", force: :cascade, comment: "利用者マスタ" do |t|
@@ -335,15 +362,16 @@ ActiveRecord::Schema.define(version: 20180428114035) do
   add_index "work_lands", ["work_id", "land_id"], name: "index_work_lands_on_work_id_and_land_id", unique: true, using: :btree
 
   create_table "work_results", force: :cascade, comment: "作業結果データ" do |t|
-    t.integer  "work_id",                                                          comment: "作業"
-    t.integer  "worker_id",                                                        comment: "作業者"
-    t.decimal  "hours",         precision: 5, scale: 1, default: 0.0, null: false, comment: "作業時間"
-    t.integer  "display_order",                         default: 0,   null: false, comment: "表示順"
-    t.decimal  "fixed_hours",   precision: 5, scale: 1,                            comment: "確定作業時間"
-    t.decimal  "fixed_price",   precision: 5,                                      comment: "確定作業単価"
-    t.decimal  "fixed_amount",  precision: 7,                                      comment: "確定作業日当"
+    t.integer  "work_id",                                                                     comment: "作業"
+    t.integer  "worker_id",                                                                   comment: "作業者"
+    t.decimal  "hours",                    precision: 5, scale: 1, default: 0.0, null: false, comment: "作業時間"
+    t.integer  "display_order",                                    default: 0,   null: false, comment: "表示順"
+    t.decimal  "fixed_hours",              precision: 5, scale: 1,                            comment: "確定作業時間"
+    t.decimal  "fixed_price",              precision: 5,                                      comment: "確定作業単価"
+    t.decimal  "fixed_amount",             precision: 7,                                      comment: "確定作業日当"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "uuid",          limit: 36,                                                    comment: "UUID(カレンダー用)"
   end
 
   add_index "work_results", ["work_id", "worker_id"], name: "index_work_results_on_work_id_and_worker_id", unique: true, using: :btree

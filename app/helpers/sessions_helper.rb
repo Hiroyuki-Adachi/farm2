@@ -8,11 +8,15 @@ module SessionsHelper
   end
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
+    @current_user ||= User.find(session[:user_id])
   end
 
   def current_organization
     @current_organization ||= Organization.find_by(id: current_user.organization_id)
+  end
+
+  def current_system
+    @current_system ||= System.find_by(term: current_organization.term, organization_id: current_user.organization_id)
   end
 
   def current_term

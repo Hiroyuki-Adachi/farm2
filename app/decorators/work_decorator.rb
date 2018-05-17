@@ -1,5 +1,7 @@
 class WorkDecorator < Draper::Decorator
   delegate_all
+  decorates_association :creator
+  decorates_association :printer
 
   def self.months(term)
     cache_key = "months#{term}"
@@ -9,7 +11,7 @@ class WorkDecorator < Draper::Decorator
     else
       months << ["全て", ""]
       Work.select("date_trunc('month', worked_at) AS worked_month").where(term: term).order("date_trunc('month', worked_at)").uniq.each {|w|
-        worked_month = DateTime.parse(w.worked_month.to_s)
+        worked_month = Time.parse(w.worked_month.to_s)
         months << [worked_month.strftime("%Y年%m月"), worked_month.strftime("%Y-%m-01")]
       }
       Rails.cache.write(cache_key, months, expires_in: 1.hour)
@@ -26,7 +28,11 @@ class WorkDecorator < Draper::Decorator
   end
 
   def name
-    model.name.present? ? (model.work_kind.other_flag ? model.name : model.work_kind.name + "(#{model.name})") : model.work_kind.name
+    if model.name.present?
+      model.work_kind.other_flag ? model.name : model.work_kind.name + "(#{model.name})"
+    else
+      model.work_kind.name
+    end
   end
 
   def work_time
@@ -76,11 +82,11 @@ class WorkDecorator < Draper::Decorator
   end
 
   def sum_workers_amount
-    h.number_to_currency(model.sum_workers_amount, {precision: 0, unit: ""})
+    h.number_to_currency(model.sum_workers_amount, precision: 0, unit: "")
   end
 
   def sum_machines_amount
-    h.number_to_currency(model.sum_machines_amount, {precision: 0, unit: ""})
+    h.number_to_currency(model.sum_machines_amount, precision: 0, unit: "")
   end
 
   def tr_style
@@ -88,7 +94,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def creator_short_name
-    model.creator ? WorkerDecorator.decorate(model.creator).short_name : ""
+    model.creator ? creator.short_name : ""
   end
 
   def created_at
@@ -96,7 +102,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def printer_short_name
-    model.printer ? WorkerDecorator.decorate(model.printer).short_name : ""
+    model.printer ? printer.short_name : ""
   end
 
   def printed_at
@@ -106,24 +112,24 @@ class WorkDecorator < Draper::Decorator
   def checker_short_names
     results = []
     model.checkers.each do |checker|
-      results << WorkerDecorator.decorate(checker).short_name
+      results << checker.decorate.short_name
     end
     results.join(", ")
   end
 
   def exists_workers
-    model.work_results.count == 0 ? "" : "作業"
+    model.work_results.count.zero? ? "" : "作業"
   end
 
   def exists_lands
-    model.work_lands.count == 0 ? "" : "土地"
+    model.work_lands.count.zero? ? "" : "土地"
   end
 
   def exists_machines
-    model.machine_results.count == 0 ? "" : "機械"
+    model.machine_results.count.zero? ? "" : "機械"
   end
 
   def exists_chemicals
-    model.work_chemicals.count == 0 ? "" : "薬品"
+    model.work_chemicals.count.zero? ? "" : "薬品"
   end
 end

@@ -1,7 +1,7 @@
 <div class="form-row">
   <div class="form-group col-md-3">
     <%= f.label :shipped_on, '', class: "col-form-label-lg" %>
-    <%= f.date_field :shipped_on, {required: true, class: "form-control", max: @system.end_date} %>
+    <%= f.date_field :shipped_on, {required: true, class: "form-control", max: current_system.end_date} %>
   </div>
   <div class="form-group col-md-2">
     <%= f.label :broccoli_box_id, '', class: "col-form-label-lg" %>

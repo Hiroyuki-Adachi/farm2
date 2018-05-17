@@ -19,6 +19,7 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #  deleted_at          :datetime
+#  owner_flag          :boolean          default(FALSE), not null # 所有者フラグ
 #
 
 home1:
@@ -39,6 +40,7 @@ home1:
   created_at: 2010-07-11 12:42:48
   updated_at: 2016-03-19 10:14:35.174495
   deleted_at: 
+  owner_flag: t
 
 home2:
   id: 2
@@ -58,6 +60,7 @@ home2:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  owner_flag: t
 
 home3:
   id: 3
@@ -77,6 +80,7 @@ home3:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  owner_flag: t
 
 home4:
   id: 4
@@ -96,6 +100,7 @@ home4:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  owner_flag: t
 
 home5:
   id: 5
@@ -115,6 +120,7 @@ home5:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  owner_flag: t
 
 home6:
   id: 6
@@ -134,6 +140,7 @@ home6:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:22:41.108239
   deleted_at: 
+  owner_flag: t
 
 home7:
   id: 7
@@ -153,6 +160,7 @@ home7:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:25:08.10974
   deleted_at: 
+  owner_flag: t
 
 home8:
   id: 8
@@ -172,6 +180,7 @@ home8:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:25:21.106871
   deleted_at: 
+  owner_flag: t
 
 home9:
   id: 9
@@ -191,6 +200,7 @@ home9:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:25:40.638722
   deleted_at: 
+  owner_flag: t
 
 home10:
   id: 10
@@ -210,6 +220,7 @@ home10:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:25:52.006322
   deleted_at: 
+  owner_flag: t
 
 home11:
   id: 11
@@ -229,6 +240,7 @@ home11:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:26:01.87718
   deleted_at: 
+  owner_flag: t
 
 home12:
   id: 12
@@ -248,6 +260,7 @@ home12:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:26:18.539551
   deleted_at: 
+  owner_flag: t
 
 home13:
   id: 13
@@ -267,6 +280,7 @@ home13:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:26:30.232926
   deleted_at: 
+  owner_flag: t
 
 home14:
   id: 14
@@ -286,6 +300,7 @@ home14:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:26:44.034591
   deleted_at: 
+  owner_flag: t
 
 home15:
   id: 15
@@ -305,6 +320,7 @@ home15:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:26:58.570884
   deleted_at: 
+  owner_flag: t
 
 home16:
   id: 16
@@ -324,6 +340,7 @@ home16:
   created_at: 2010-07-11 12:42:48
   updated_at: 2016-03-19 10:15:22.288612
   deleted_at: 
+  owner_flag: t
 
 home17:
   id: 17
@@ -343,6 +360,7 @@ home17:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:23:01.385857
   deleted_at: 
+  owner_flag: t
 
 home18:
   id: 18
@@ -362,6 +380,7 @@ home18:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:23:19.571431
   deleted_at: 
+  owner_flag: t
 
 home19:
   id: 19
@@ -381,6 +400,7 @@ home19:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:23:34.623072
   deleted_at: 
+  owner_flag: t
 
 home20:
   id: 20
@@ -400,6 +420,7 @@ home20:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:23:55.63099
   deleted_at: 
+  owner_flag: t
 
 home21:
   id: 21
@@ -419,6 +440,7 @@ home21:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:24:34.510657
   deleted_at: 
+  owner_flag: t
 
 home22:
   id: 22
@@ -438,6 +460,7 @@ home22:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  owner_flag: t
 
 home23:
   id: 23
@@ -457,6 +480,7 @@ home23:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  owner_flag: t
 
 home24:
   id: 24
@@ -476,6 +500,7 @@ home24:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  owner_flag: t
 
 home25:
   id: 25
@@ -495,6 +520,7 @@ home25:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  owner_flag: t
 
 home26:
   id: 26
@@ -514,6 +540,7 @@ home26:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-13 14:27:43.23003
   deleted_at: 
+  owner_flag: t
 
 home27:
   id: 27
@@ -533,6 +560,7 @@ home27:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  owner_flag: t
 
 home28:
   id: 28
@@ -552,6 +580,7 @@ home28:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:27:45.209744
   deleted_at: 
+  owner_flag: t
 
 home29:
   id: 29
@@ -571,6 +600,7 @@ home29:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:28:13.530099
   deleted_at: 
+  owner_flag: t
 
 home30:
   id: 30
@@ -590,6 +620,7 @@ home30:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:28:55.232448
   deleted_at: 
+  owner_flag: t
 
 home31:
   id: 31
@@ -609,6 +640,7 @@ home31:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:29:12.53829
   deleted_at: 
+  owner_flag: t
 
 home32:
   id: 32
@@ -628,6 +660,7 @@ home32:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:29:25.204253
   deleted_at: 
+  owner_flag: t
 
 home33:
   id: 33
@@ -647,6 +680,7 @@ home33:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:29:46.964267
   deleted_at: 
+  owner_flag: t
 
 home_kumiai:
   id: 37
@@ -666,4 +700,5 @@ home_kumiai:
   created_at: 2016-06-07 05:13:13.62213
   updated_at: 2016-06-07 05:13:13.62213
   deleted_at: 
+  owner_flag: t
 

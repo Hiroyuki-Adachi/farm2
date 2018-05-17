@@ -37,3 +37,19 @@ Metrics/PerceivedComplexity:
 
 Style/RedundantReturn:
   Enabled: false
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+  MinSize: 0
+  SupportedStyles:
+    - percent
+    - brackets
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Layout/EndOfLine:
+  EnforcedStyle: lf
