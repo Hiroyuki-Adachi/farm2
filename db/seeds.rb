@@ -28,7 +28,8 @@ system = System.create!(
   target_from: Date.new(Date.today.year, 1, 1),
   target_to: Date.new(Date.today.year, 12, 31),
   start_date: Date.new(Date.today.year, 1, 1),
-  end_date: Date.new(Date.today.year, 12, 31)
+  end_date: Date.new(Date.today.year, 12, 31),
+  organization_id: organization.id
 )
 
 WorkType.create!(

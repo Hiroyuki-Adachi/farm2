@@ -86,10 +86,6 @@ class WorksControllerTest < ActionController::TestCase
   end
 
   test "作業変更(実行)" do
-    get :update, id: works(:work_not_fixed), work: @update, cancel: true
-    assert_redirected_to work_path(id: works(:work_not_fixed))
-    assert_equal Work.find(works(:work_not_fixed).id).name, works(:work_not_fixed).name
-
     get :update, id: works(:work_not_fixed), work: @update, regist: true
     assert_redirected_to work_path(id: works(:work_not_fixed))
     assert_equal Work.find(works(:work_not_fixed).id).name, @update[:name]

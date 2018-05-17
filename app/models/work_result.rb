@@ -1,4 +1,5 @@
 require 'date'
+require 'securerandom'
 # == Schema Information
 #
 # Table name: work_results # 作業結果データ
@@ -13,6 +14,7 @@ require 'date'
 #  fixed_amount  :decimal(7, )                            # 確定作業日当
 #  created_at    :datetime
 #  updated_at    :datetime
+#  uuid          :string(36)                              # UUID(カレンダー用)
 #
 
 class WorkResult < ApplicationRecord
@@ -21,6 +23,8 @@ class WorkResult < ApplicationRecord
   has_one    :home, {through: :worker}, -> {with_deleted}
   has_one    :work_type, {through: :work}, -> {with_deleted}
   has_one    :work_kind, {through: :work}, -> {with_deleted}
+
+  before_create :set_uuid
 
   has_many  :machine_results, {dependent: :destroy}
   has_many  :machines,  {through: :machine_results}
@@ -55,10 +59,11 @@ class WorkResult < ApplicationRecord
 
   scope :for_personal, ->(worker, worked_at) {
      joins(:work).eager_load(:work)
-    .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
-    .where("works.worked_at >= ?", worked_at)
-    .where(worker_id: worker)
-    .order("works.worked_at, work_results.id")
+      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
+      .where("works.worked_at >= ?", worked_at)
+      .where(worker_id: worker)
+      .order("works.worked_at, work_results.id")
   }
 
   def price
@@ -67,5 +72,9 @@ class WorkResult < ApplicationRecord
 
   def amount
     (self.work.fixed_at ? self.fixed_amount : self.hours * price) || 0
+  end
+
+  def set_uuid
+    self.uuid = SecureRandom.uuid
   end
 end

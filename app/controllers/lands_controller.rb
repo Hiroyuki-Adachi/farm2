@@ -47,7 +47,7 @@ class LandsController < ApplicationController
   end
 
   def set_homes
-    @homes = Home.list
+    @homes = Home.landable.includes(:holder)
   end
 
   def land_params

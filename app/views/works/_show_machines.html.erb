@@ -3,7 +3,7 @@
   <table id="detail_machines">
     <thead>
     <tr>
-      <% xx = 2; yy = (([@organization.machines_count, @machines.count].max - 1) / xx + 1) %>
+      <% xx = 2; yy = (([current_organization.machines_count, @machines.count].max - 1) / xx + 1) %>
       <% xx.times do %>
       <th style="width:175px;">機械名</th>
       <th style="width:35px;">稼働</th>

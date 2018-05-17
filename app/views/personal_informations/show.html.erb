@@ -9,6 +9,9 @@ table, th, td {
   line-height: 1.5;
   font-size: large;
 }
+ul li {
+  font-size: large;
+}
 
 table.type06 th {
   padding: 5px;
@@ -33,82 +36,10 @@ label {
 </head>
 <body>
 <label>作業者:</label><span><%= @worker.name %></span>
-<% if @results.count > 0 %>
-  <h1>作業</h1>
-  <% total_hours = 0 %>
-  <table class="type06">
-    <thead>
-      <tr>
-        <th>日付</th>
-        <th>内容</th>
-        <th>時間</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @results.each do |result| %>
-        <tr>
-          <td><%= result.worked_at_short %></td>
-          <td><%= result.work_name_short %></td>
-          <td style="text-align:right;"><%= result.hours %></td>
-          <% total_hours += result.model.hours %>
-        </tr>
-      <% end %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <th colspan="2">合計</th>
-        <td style="text-align:right;"><%= "%.1f"%total_hours %></td>
-      </tr>
-    </tfoot>
-  </table>
-<% end %>
-<% if @machines.count > 0 %>
-  <h1>機械</h1>
-  <table class="type06">
-    <thead>
-      <tr>
-        <th>日付</th>
-        <th>機械</th>
-        <th>使用量</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @machines.each do |machine| %>
-        <tr>
-          <td><%= machine.worked_at_short %></td>
-          <td><%= machine.type_name %></td>
-          <td style="text-align:right;"><%= machine.quantity %>(<%= machine.unit %>)</td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% end %>
-<% if @lands.count > 0 %>
-  <h1>管理</h1>
-  <table class="type06">
-  <thead>
-  <tr>
-    <th>地番</th>
-    <th>内容</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% land_id = 0 %>
-  <% @lands.each do |land, results| %>
-    <tr>
-      <td><%= land.place %></td>
-      <td><% results.each_with_index do |result, i| %>
-      <%= result.worked_at_short%>(<%= result.work_kind_name %>)
-        <% if i < results.size - 1 %>
-          →
-        <% end%>
-      <% end %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-  </table>
-<% end %>
+<%= render(:partial => 'show_schedules') %>
+<%= render(:partial => 'show_results') %>
+<%= render(:partial => 'show_machines') %>
+<%= render(:partial => 'show_lands') %>
 <hr />
 <%= mail_to @company.pc_mail, @company.home.name + " " + @company.first_name %>
 </body>

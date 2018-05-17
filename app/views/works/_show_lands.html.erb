@@ -3,7 +3,7 @@
   <table id="detail_lands">
     <thead>
     <tr>
-      <% xx = 3; yy = ([@organization.lands_count, @work_lands.count].max / xx + 1) %>
+      <% xx = 3; yy = ([current_organization.lands_count, @work_lands.count].max / xx + 1) %>
       <% xx.times do %>
       <th class="land" style="width:30px;">&nbsp;</th>
       <th class="land" style="width:150px;">地番</th>

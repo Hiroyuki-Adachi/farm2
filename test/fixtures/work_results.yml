@@ -12,8 +12,8 @@
 #  fixed_amount  :decimal(7, )                            # 確定作業日当
 #  created_at    :datetime
 #  updated_at    :datetime
+#  uuid          :string(36)                              # UUID(カレンダー用)
 #
-
 
 work_results0:
   id: '5209'

@@ -20,6 +20,7 @@ ja:
       section: "班"
       user: "利用者"
       work_broccoli: "ブロッコリー"
+      schedule: "作業計画"
 
     attributes:
       chemical:
@@ -43,6 +44,8 @@ ja:
         fax: "FAX番号"  #g
         section_id: "班"  #g
         display_order: "表示順"  #g
+        member_flag: "組合員フラグ"
+        owner_flag: "機械所有"
 
       work_result: 
         home_name: "世帯"
@@ -197,6 +200,17 @@ ja:
         broccoli_box_id: "出荷用の箱"
         rest: "残数"
 
+      schedule:
+        worked_at: "作業予定日"
+        name: "内容"
+        kind_name: "内容"
+        workers_count: "人数"
+        work_type_id: "作業分類"
+        work_kind_id: "作業種別"
+        work_flag: "作業フラグ"
+        start_at: "開始予定時刻"  #g
+        end_at: "終了予定時刻"  #g
+
   status:
     organization:
       daily_worker:
@@ -212,3 +226,6 @@ ja:
       - "60代"
       - "70歳～"
       - "女性"
+
+  calendar:
+    title: "営農カレンダー"
