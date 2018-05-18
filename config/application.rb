@@ -23,6 +23,11 @@ module Farm2
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-    config.action_view.field_error_proc = Proc.new { |html_tag, instance| "<span class='field_with_errors'>#{html_tag}</span>".html_safe }
+    config.action_view.field_error_proc = proc { |html_tag, instance| "<span class='field_with_errors'>#{html_tag}</span>".html_safe }
+
+    config.update_logger = Logger.new('log/update_worker.log', 'monthly')
+    config.update_logger.formatter = proc do |severity, datetime, progname, msg|
+      "#{datetime}: #{msg}\n"
+    end
   end
 end
