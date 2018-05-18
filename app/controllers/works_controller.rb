@@ -2,7 +2,7 @@ require 'date'
 
 class WorksController < ApplicationController
   include WorksHelper
-  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :show, :update, :destroy, :print]
+  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :show, :update, :destroy]
   before_action :set_results, only: [:show, :edit_workers, :edit_machines]
   before_action :set_lands, only: [:show, :edit_lands]
   before_action :set_broccoli, only: [:show]
@@ -10,7 +10,7 @@ class WorksController < ApplicationController
   before_action :check_fixed, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
   before_action :clear_cache, only: [:update, :create, :destroy]
   before_action :permit_not_visitor, except: [:index, :show]
-  before_action :permit_checkable_or_self, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy, :print]
+  before_action :permit_checkable_or_self, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
   before_action :permit_visitor, only: :show
   before_action :set_work_types, only: :index
 
@@ -140,11 +140,6 @@ class WorksController < ApplicationController
 
   def autocomplete_for_land_place
     render json: Land.autocomplete(params[:term])
-  end
-
-  def print
-    @work.update(printed_at: Time.now, printed_by: current_user.worker.id)
-    render partial: "show_stamp_print"
   end
 
   private
