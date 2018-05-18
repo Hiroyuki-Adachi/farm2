@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   end
 
   resources :works do
+    resources :print, controller: "works/print", only: [:create, :destroy]
     collection do
       get :work_type_select
       get :autocomplete_for_land_place
@@ -60,7 +61,6 @@ Rails.application.routes.draw do
       get :edit_lands
       get :edit_machines
       get :edit_chemicals
-      patch :print
     end
   end
 
