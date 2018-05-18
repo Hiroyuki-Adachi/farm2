@@ -120,6 +120,7 @@ class Work < ApplicationRecord
       workers << param.worker_id.to_i
       work_result = work_results.find_by(worker_id: param.worker_id)
       if work_result
+        Rails.application.config.update_logger.info "#{work_result.worker.name}:#{work_result.hours} -> #{param.hours}" if work_result.hours != param.hours.to_f 
         work_result.update(display_order: param.display_order, hours: param.hours) if work_result.display_order != param.display_order.to_i or work_result.hours != param.hours.to_f 
       else
         WorkResult.create(work_id: id, worker_id: param.worker_id, display_order: param.display_order, hours: param.hours)
