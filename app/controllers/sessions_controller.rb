@@ -1,6 +1,4 @@
 class SessionsController < ApplicationController
-  layout 'menu'
-
   def new
     log_out
   end
