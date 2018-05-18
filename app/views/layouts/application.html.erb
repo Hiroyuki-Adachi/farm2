@@ -14,7 +14,9 @@
 <body>
 
 <div class="container">
+<% if session[:user_id] %>
 <%= render 'navbar' %>
+<% end %>
 <%= yield %>
 </div>
 
