@@ -1,5 +1,5 @@
 <% if @schedules.count > 0%>
-<h1>予定</h1>
+<h1 class="h4">予定</h1>
 <ul>
   <% @schedules.each do |schedule| %>
   <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>

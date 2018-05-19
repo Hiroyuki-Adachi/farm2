@@ -2,7 +2,14 @@ class MenuController < ApplicationController
   before_action :permit_manager, except: :index
   before_action :set_system, only: [:edit, :edit_term]
 
+  SCHEDULE_DAY = 7
+
   def index
+    @schedules = ScheduleWorkerDecorator.decorate_collection(ScheduleWorker.for_personal(current_user.worker, SCHEDULE_DAY))
+    @results = WorkResult.for_menu(current_user.worker, @term)
+    @total_hours = @results.sum(:hours)
+    @results = WorkResultDecorator.decorate_collection(@results.page(1))
+    @lands = WorkLandDecorator.decorate_collection(WorkLand.for_personal(current_user.worker.home, current_system.start_date)).group_by(&:land)
   end
 
   def edit

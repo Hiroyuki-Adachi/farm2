@@ -1,7 +1,7 @@
 <% if @results.count > 0 %>
-  <h1>実績</h1>
+  <h1 class="h4">実績</h1>
   <% total_hours = 0 %>
-  <table class="type06">
+  <table class="type06 table table-sm">
     <thead>
       <tr>
         <th>日付</th>
@@ -22,7 +22,7 @@
     <tfoot>
       <tr>
         <th colspan="2">合計</th>
-        <td style="text-align:right;"><%= "%.1f"%total_hours %></td>
+        <td style="text-align:right;"><%= sprintf("%.1f", @total_hours || total_hours) %></td>
       </tr>
     </tfoot>
   </table>
