@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
-    <div class="collapse navbar-collapse" id="Navber">
+    <div class="collapse navbar-collapse" id="Navbar">
+        <%= link_to '作業日報管理', menu_index_path, {class: "navbar-brand"} %>
         <ul class="nav navbar-nav mr-auto">
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">日報管理<span class="caret"></span></a>
@@ -12,7 +13,7 @@
           </li>
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown7" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">予定管理<span class="caret"></span></a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown7">
               <%= link_to '作業予定', schedules_path, {class: "dropdown-item"} %>
             </div>
           </li>
