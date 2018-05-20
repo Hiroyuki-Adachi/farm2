@@ -53,7 +53,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Ruby library for dealing with iCalendar files
 gem 'icalendar'
-
+# Integrate Chart.js into Rails Asset Pipeline
+gem 'chart-js-rails'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
