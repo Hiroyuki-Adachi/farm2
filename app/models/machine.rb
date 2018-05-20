@@ -24,12 +24,12 @@ class Machine < ApplicationRecord
   has_many :machine_kinds, through: :machine_type
   has_many :price_headers, {class_name: :MachinePriceHeader, dependent: :destroy}, -> {order("machine_price_headers.validated_at DESC")}
 
-  belongs_to :owner, { class_name: :Home, foreign_key: :home_id }, -> { with_deleted }
+  belongs_to :owner, {class_name: :Home, foreign_key: :home_id}, -> {with_deleted}
 
   validates :validity_start_at, presence: true
   validates :validity_end_at, presence: true
   validates :display_order, presence: true
-  validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
+  validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
 
   scope :by_work, -> (work) { 
     includes(:machine_type, :machine_kinds)
@@ -37,17 +37,21 @@ class Machine < ApplicationRecord
       .order("machine_types.display_order, machines.display_order")
   }
 
-  scope :of_company, ->{where(home_id: Home.where(company_flag: true))}
-  scope :of_owners, ->(work){where(home_id: work.workers.pluck(:home_id).uniq)}
-  scope :of_no_owners, ->(work){where.not(home_id: work.workers.pluck(:home_id).uniq)}
+  scope :of_company, -> {where(home_id: Home.where(company_flag: true))}
+  scope :of_owners, ->(work) {where(home_id: work.workers.pluck(:home_id).uniq)}
+  scope :of_no_owners, ->(work) {where.not(home_id: work.workers.pluck(:home_id).uniq)}
 
   scope :by_results, -> (results) {
     joins(:machine_results)
       .where('machine_results.work_result_id in (?)', results.ids)
-      .order('machines.display_order').uniq
+      .order('machines.display_order')
+      .uniq
   }
 
-  scope :usual, -> {includes(:machine_type).order("machine_types.display_order, machines.display_order, machines.id")}
+  scope :usual, -> {
+    includes(:machine_type)
+      .order("machine_types.display_order, machines.display_order, machines.id")
+  }
 
   def company?
     owner.company_flag?
