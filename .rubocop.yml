@@ -51,5 +51,17 @@ Style/ClassAndModuleChildren:
 Style/EmptyMethod:
   EnforcedStyle: expanded
 
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+Style/WordArray:
+  EnforcedStyle: brackets
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Layout/SpaceInsideBlockBraces:
+  EnforcedStyle: no_space
+
 Layout/EndOfLine:
   EnforcedStyle: lf

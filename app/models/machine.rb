@@ -32,9 +32,9 @@ class Machine < ApplicationRecord
   validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
 
   scope :by_work, -> (work) { 
-     includes(:machine_type, :machine_kinds)
-    .where("(machine_kinds.work_kind_id = ? and validity_start_at <= ? and ? <= validity_end_at) OR (machines.id in (?))", work.work_kind_id, work.worked_at, work.worked_at, work.machine_results.pluck(:machine_id))
-    .order("machine_types.display_order, machines.display_order")
+    includes(:machine_type, :machine_kinds)
+      .where("(machine_kinds.work_kind_id = ? and validity_start_at <= ? and ? <= validity_end_at) OR (machines.id in (?))", work.work_kind_id, work.worked_at, work.worked_at, work.machine_results.pluck(:machine_id))
+      .order("machine_types.display_order, machines.display_order")
   }
 
   scope :of_company, ->{where(home_id: Home.where(company_flag: true))}
@@ -43,8 +43,8 @@ class Machine < ApplicationRecord
 
   scope :by_results, -> (results) {
     joins(:machine_results)
-    .where('machine_results.work_result_id in (?)', results.ids)
-    .order('machines.display_order').uniq
+      .where('machine_results.work_result_id in (?)', results.ids)
+      .order('machines.display_order').uniq
   }
 
   scope :usual, -> {includes(:machine_type).order("machine_types.display_order, machines.display_order, machines.id")}
@@ -55,7 +55,8 @@ class Machine < ApplicationRecord
 
   def price_details(work)
     header = price_headers.where("validated_at <= ?", work.worked_at).order(validated_at: :DESC).first
-    return header ? header.details : (machine_type ? machine_type.price_details(work) : nil)
+    return header.details if header
+    return machine_type ? machine_type.price_details(work) : nil
   end
 
   def leasable?(worked_at)

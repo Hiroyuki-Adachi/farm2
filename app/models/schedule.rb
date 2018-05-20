@@ -17,15 +17,15 @@
 
 class Schedule < ActiveRecord::Base
   validates :worked_at, presence: true
-  validates :name, length: { maximum: 40 }, if: proc { |x| x.name.present? }
+  validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
   validates :work_type_id, presence: true
   validates :work_kind_id, presence: true
 
-  belongs_to :work_type, -> { with_deleted }
-  belongs_to :work_kind, -> { with_deleted }
+  belongs_to :work_type, -> {with_deleted}
+  belongs_to :work_kind, -> {with_deleted}
 
-  has_many :schedule_workers, -> { order('schedule_workers.display_order') }, { dependent: :destroy }
-  has_many :workers, { through: :schedule_workers }, -> { with_deleted }
+  has_many :schedule_workers, -> {order('schedule_workers.display_order')}, {dependent: :destroy}
+  has_many :workers, {through: :schedule_workers}, -> {with_deleted}
 
   scope :usual, ->(term) {
       where(term: term)

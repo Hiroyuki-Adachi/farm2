@@ -17,5 +17,5 @@ class ChemicalType < ApplicationRecord
 
   validates :name,          presence: true
   validates :display_order, presence: true
-  validates :display_order, numericality: { only_integer: true }, :if => proc{|x| x.display_order.present?}
+  validates :display_order, numericality: {only_integer: true}, :if => proc{|x| x.display_order.present?}
 end

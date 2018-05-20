@@ -15,10 +15,10 @@ require 'securerandom'
 
 class ScheduleWorker < ActiveRecord::Base
   belongs_to :schedule
-  belongs_to :worker, -> { with_deleted }
-  has_one    :home, { through: :worker }, -> { with_deleted }
-  has_one    :work_type, { through: :schedule }, -> { with_deleted }
-  has_one    :work_kind, { through: :schedule }, -> { with_deleted }
+  belongs_to :worker, -> {with_deleted}
+  has_one    :home, {through: :worker}, -> {with_deleted}
+  has_one    :work_type, {through: :schedule}, -> {with_deleted}
+  has_one    :work_kind, {through: :schedule}, -> {with_deleted}
 
   before_create :set_uuid
 
