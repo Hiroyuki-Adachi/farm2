@@ -1,64 +1,81 @@
 <h1>統計情報一覧</h1>
 
-<h2>全作業時間</h2>
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th>年度</th>
-      <% @total_all.each do |ta| %>
-        <th style="text-align:right;"><%= ta[0] %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>合計</th>
-      <% @total_all.each do |ta| %>
-        <td class="numeric"><%= sprintf("%.1f", ta[1]) %></td>
-      <% end %>
-    </tr>
-  </tbody>
-</table>
-<h2>作業種別別時間</h2>
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th>年度</th>
-      <% @total_all.each do |ta| %>
-        <th style="text-align:right;"><%= ta[0] %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% WorkType.categories.each do |category| %>
-    <tr>
-      <th><%= category.name %></th>
-      <% @total_all.each do |ta| %>
-        <td class="numeric"><%= sprintf("%.1f", @total_genre[[category.genre, ta[0]]] || 0) %></td>
-      <% end %>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-<h2>世代別時間</h2>
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th>年度</th>
-      <% @total_all.each do |ta| %>
-        <th style="text-align:right;"><%= ta[0] %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% t("statistics.age").each_with_index do |age, i| %>
-    <tr>
-      <th><%= age %></th>
-      <% @total_all.each do |ta| %>
-        <td class="numeric"><%= sprintf("%.1f", @total_age[[ta[0], i]] || 0) %></td>
-      <% end %>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a href="#tab1" class="nav-link active" data-toggle="tab">全作業時間</a>
+  </li>
+  <li class="nav-item">
+    <a href="#tab2" class="nav-link" data-toggle="tab">作業種別別時間</a>
+  </li>
+  <li class="nav-item">
+    <a href="#tab3" class="nav-link" data-toggle="tab">世代別時間</a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div id="tab1" class="tab-pane active">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>年度</th>
+          <% @total_all.each do |ta| %>
+            <th style="text-align:right;"><%= ta[0] %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>合計</th>
+          <% @total_all.each do |ta| %>
+            <td class="numeric"><%= sprintf("%.1f", ta[1]) %></td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="tab2" class="tab-pane">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>年度</th>
+          <% @total_all.each do |ta| %>
+            <th style="text-align:right;"><%= ta[0] %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% WorkType.categories.each do |category| %>
+        <tr>
+          <th><%= category.name %></th>
+          <% @total_all.each do |ta| %>
+            <td class="numeric"><%= sprintf("%.1f", @total_genre[[category.genre, ta[0]]] || 0) %></td>
+          <% end %>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div id="tab3" class="tab-pane">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>年度</th>
+          <% @total_all.each do |ta| %>
+            <th style="text-align:right;"><%= ta[0] %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% t("statistics.age").each_with_index do |age, i| %>
+        <tr>
+          <th><%= age %></th>
+          <% @total_all.each do |ta| %>
+            <td class="numeric"><%= sprintf("%.1f", @total_age[[ta[0], i]] || 0) %></td>
+          <% end %>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
