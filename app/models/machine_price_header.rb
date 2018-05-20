@@ -25,11 +25,11 @@ class MachinePriceHeader < ApplicationRecord
   scope :histories, -> (machine_price){where("(machine_id = ? AND machine_id <> 0) OR (machine_type_id = ? AND machine_type_id <> 0)", machine_price.machine_id, machine_price.machine_type_id).order("validated_at ASC")}
 
   def machine?
-    return machine_id != 0
+    !machine_id.zero?
   end
 
   def machine_type?
-    return machine_id == 0
+    machine_id.zero?
   end
 
   def work_kinds
@@ -45,24 +45,19 @@ class MachinePriceHeader < ApplicationRecord
     Lease.all.each do |lease|
       result = {}
       work_kinds.each do |work_kind|
+        result[work_kind.id] = {adjust_id: 0, price: 0}
         detail = details.find_by(lease_id: lease.id, work_kind_id: work_kind.id)
-        if detail
-          result[work_kind.id] = {adjust_id: detail.adjust_id, price: detail.price}
-        else
-          result[work_kind.id] = {adjust_id: 0, price: 0}
-        end
+        result[work_kind.id] = {adjust_id: detail.adjust_id, price: detail.price} if detail
       end
       results[lease.id] = result
     end
     return results
   end
 
-  def details_form=(val)
-    @details_form = val
-  end
+  attr_writer :details_form
 
   def name
-    return machine_id == 0 ? machine_type.name : machine.usual_name
+    return machine_id.zero? ? machine_type.name : machine.usual_name
   end
 
   private

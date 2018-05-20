@@ -21,5 +21,5 @@ class MachinePriceDetail < ApplicationRecord
   belongs_to :lease
 
   validates :price, presence: true
-  validates :price, numericality: true, if: Proc.new{|x| x.price.present?}
+  validates :price, numericality: true, if: proc { |x| x.price.present?}
 end

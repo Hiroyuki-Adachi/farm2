@@ -36,8 +36,8 @@ class Organization < ApplicationRecord
   validates :chemicals_count, presence: true
   validates :daily_worker, presence: true
 
-  validates :name, length: { maximum: 20 }, if: proc { |x| x.name.present? }
-  validates :url, length: { maximum: 255 }, if: proc { |x| x.name.present? }
+  validates :name, length: {maximum: 20}, if: proc { |x| x.name.present?}
+  validates :url, length: {maximum: 255}, if: proc { |x| x.name.present?}
 
   belongs_to :broccoli_work_type, class_name: "WorkType"
   belongs_to :broccoli_work_kind, class_name: "WorkKind"
