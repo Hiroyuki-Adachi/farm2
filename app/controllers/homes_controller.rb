@@ -47,6 +47,7 @@ class HomesController < ApplicationController
   end
 
   def home_params
-    return params.require(:home).permit(:name, :phonetic, :telephone, :fax, :section_id, :display_order, :member_flag, :owner_flag)
+    params.require(:home)
+      .permit(:name, :phonetic, :telephone, :fax, :section_id, :display_order, :member_flag, :owner_flag)
   end
 end

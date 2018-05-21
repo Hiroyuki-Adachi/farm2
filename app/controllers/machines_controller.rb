@@ -48,6 +48,7 @@ class MachinesController < ApplicationController
   end
 
   def machine_params
-    return params.require(:machine).permit(:name, :display_order, :validity_start_at, :validity_end_at, :machine_type_id, :home_id)
+    params.require(:machine)
+          .permit(:name, :display_order, :validity_start_at, :validity_end_at, :machine_type_id, :home_id)
   end
 end

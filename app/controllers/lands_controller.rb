@@ -6,8 +6,8 @@ class LandsController < ApplicationController
   def index
     @homes = LandDecorator.homes
     @home_id = params[:home_id]
-    @sum_areas = @home_id.present? ? Land.usual.where(owner_id: @home_id).sum(:area) : Land.usual.sum(:area)
-    @lands = @home_id.present? ? Land.list.where(owner_id: @home_id) : Land.list
+    @sum_areas = (@home_id ? Land.usual.where(owner_id: @home_id) : Land.usual).sum(:area)
+    @lands = @home_id ? Land.list.where(owner_id: @home_id) : Land.list
     @lands = LandDecorator.decorate_collection(@lands.page(params[:page]))
   end
 
@@ -51,6 +51,7 @@ class LandsController < ApplicationController
   end
 
   def land_params
-    return params.require(:land).permit(:place, :owner_id, :manager_id, :area, :target_flag, :display_order)
+    params.require(:land)
+          .permit(:place, :owner_id, :manager_id, :area, :target_flag, :display_order)
   end
 end
