@@ -5,11 +5,13 @@ class MenuController < ApplicationController
   SCHEDULE_DAY = 7
 
   def index
-    @schedules = ScheduleWorkerDecorator.decorate_collection(ScheduleWorker.for_personal(current_user.worker, SCHEDULE_DAY))
+    @schedules = ScheduleWorker.for_personal(current_user.worker, SCHEDULE_DAY)
+    @schedules = ScheduleWorkerDecorator.decorate_collection(@schedules)
     @results = WorkResult.for_menu(current_user.worker, @term)
     @total_hours = @results.sum(:hours)
     @results = WorkResultDecorator.decorate_collection(@results.page(1))
-    @lands = WorkLandDecorator.decorate_collection(WorkLand.for_personal(current_user.worker.home, current_system.start_date)).group_by(&:land)
+    @lands =WorkLand.for_personal(current_user.worker.home, current_system.start_date)
+    @lands = WorkLandDecorator.decorate_collection(@lands).group_by(&:land)
   end
 
   def edit
@@ -26,20 +28,7 @@ class MenuController < ApplicationController
   end
 
   def update
-    if system_params[:term]
-      @term = system_params[:term].to_i
-      @system = System.find_by(term: @term, organization_id: current_user.organization.id)
-      @system ||= System.new(term: @term, organization_id: current_user.organization.id)
-      @system.target_from = Date.new(@term, 1, 1)
-      @system.target_to   = Date.new(@term, 12, 31)
-      @system.start_date  = Date.new(@term, 1, 1)
-      @system.end_date    = Date.new(@term, 12, 31)
-    else
-      @system = System.find_by(term: @term)
-      @system.target_from = Date.strptime(system_params['target_from'], "%Y-%m")
-      @system.target_to   = Date.strptime(system_params['target_to'], "%Y-%m").end_of_month
-    end
-
+    @system = init_system(system_params[:term])
     if @system.valid?
       @system.save!
       @organization = current_organization
@@ -64,5 +53,22 @@ class MenuController < ApplicationController
 
   def set_system
     @system = current_system
+  end
+
+  def init_system(param_term)
+    if param_term
+      @term = param_term.to_i
+      system = System.find_by(term: @term, organization_id: current_user.organization.id)
+      system ||= System.new(term: @term, organization_id: current_user.organization.id)
+      system.target_from = Date.new(@term, 1, 1)
+      system.target_to   = Date.new(@term, 12, 31)
+      system.start_date  = Date.new(@term, 1, 1)
+      system.end_date    = Date.new(@term, 12, 31)
+    else
+      system = System.find_by(term: @term)
+      system.target_from = Date.strptime(system_params['target_from'], "%Y-%m")
+      system.target_to   = Date.strptime(system_params['target_to'], "%Y-%m").end_of_month
+    end
+    return system
   end
 end

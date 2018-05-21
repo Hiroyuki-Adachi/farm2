@@ -4,7 +4,8 @@ class ChemicalTypesController < ApplicationController
   before_action :set_work_kinds, only: [:new, :create, :edit, :update]
 
   def index
-    @chemical_types = ChemicalTypeDecorator.decorate_collection(ChemicalType.includes(:chemicals).all.order(:display_order))
+    @chemical_types = ChemicalType.includes(:chemicals).all.order(:display_order)
+    @chemical_types = ChemicalTypeDecorator.decorate_collection(@chemical_types)
   end
 
   def new

@@ -79,7 +79,6 @@ class MachinePricesController < ApplicationController
   end
 
   def machine_price_header_params
-    return params.require(:machine_price_header).permit(:validated_at, :machine_id, :machine_type_id)
+    params.require(:machine_price_header).permit(:validated_at, :machine_id, :machine_type_id)
   end
-
 end
