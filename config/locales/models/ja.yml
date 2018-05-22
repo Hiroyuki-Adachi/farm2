@@ -88,6 +88,8 @@ ja:
         name: "名称"
         genre: "カテゴリー"
         display_order: "表示順"
+        bg_color: "背景色"
+        land_flag: "土地利用"
 
       worker: 
         family_phonetic: "姓(ふりがな)"  #g

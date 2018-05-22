@@ -2,12 +2,14 @@
 #
 # Table name: work_types # 作業分類マスタ
 #
-#  id            :integer          not null, primary key # 作業分類マスタ
-#  genre         :integer          not null              # 作業ジャンル
-#  name          :string(10)       not null              # 作業分類名称
-#  category_flag :boolean          default(FALSE)        # カテゴリーフラグ
-#  display_order :integer          default(0), not null  # 表示順
+#  id            :integer          not null, primary key   # 作業分類マスタ
+#  genre         :integer          not null                # 作業ジャンル
+#  name          :string(10)       not null                # 作業分類名称
+#  category_flag :boolean          default(FALSE)          # カテゴリーフラグ
+#  display_order :integer          default(0), not null    # 表示順
 #  deleted_at    :datetime
+#  bg_color      :string(8)                                # 背景色
+#  land_flag     :boolean          default(TRUE), not null # 土地利用
 #
 
 class WorkType < ApplicationRecord

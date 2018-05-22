@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :organizations, param: nil, only: [:edit, :update]
+  resources :land_costs, only: [:index, :create]
 
   resources :banks, param: :code, except: [:show] do
     resources :branches, param: :code, controller: "banks/branches", except: [:show]

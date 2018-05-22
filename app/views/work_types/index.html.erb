@@ -11,8 +11,8 @@
     <tbody>
       <% @work_types.each do |work_type| %>
         <tr>
-          <td><%=h work_type.genre_name %></td>
-          <td><%=h work_type.name %></td>
+          <td style="background-color: <%= work_type.bg_color %>;"><%= work_type.genre_name %></td>
+          <td style="background-color: <%= work_type.bg_color %>;"><%= work_type.name %></td>
           <td><%= link_to '修正', edit_work_type_path(work_type), {class: "btn btn-success btn-sm"} %></td>
           <td><%= link_to '削除', work_type, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
         </tr>
