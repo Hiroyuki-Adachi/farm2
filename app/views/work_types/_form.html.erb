@@ -1,16 +1,35 @@
 <%= error_print(@work_type) %>
 <%= form_for(@work_type) do |f| %>
-<div class="field form-group">
-  <%= f.label :name, class: "col-form-label-lg" %>
-  <%= f.text_field :name, {maxlength: 10, size: 15, required: true, class: "form-control"} %>
+<div class="form-row">
+  <div class="form-group col-md-2">
+    <%= f.label :name, class: "col-form-label-lg" %>
+    <%= f.text_field :name, {maxlength: 10, size: 15, required: true, class: "form-control"} %>
+  </div>
+  <div class="field form-group col-md-2">
+    <%= f.label :genre, class: "col-form-label-lg" %>
+    <%= f.select(:genre, @categories.map {|category| [category.name, category.genre]}, {}, {class: "form-control"}) %>
+  </div>
 </div>
-<div class="field form-group">
-  <%= f.label :display_order, class: "col-form-label-lg" %>
-  <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
-</div>
-<div class="field form-group">
-  <%= f.label :genre, class: "col-form-label-lg" %>
-  <%= f.select(:genre, @categories.map {|category| [category.name, category.genre]}, {}, {class: "form-control"}) %>
+<div class="form-row">
+  <div class="field form-group col-md-2">
+    <%= f.label :display_order, class: "col-form-label-lg" %>
+    <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
+  </div>
+  <div class="field form-group col-md-2">
+    <%= f.label :bg_color, class: "col-form-label-lg" %>
+    <%= f.color_field(:bg_color, {class: "form-control"}) %>
+  </div>
+  <div class="field form-group col-md-2">
+    <%= f.label :land_flag, class: "col-form-label-lg" %>
+    <div class="form-check">
+      <%= f.radio_button :land_flag, true %>
+      <label for="work_type_land_flag_true" class="form-check-label">土地を割り当てる</label>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :land_flag, false %>
+      <label for="work_type_land_flag_false" class="form-check-label">土地を割り当てない</label>
+    </div>
+  </div>
 </div>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">

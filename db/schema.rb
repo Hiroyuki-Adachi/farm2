@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180514143343) do
+ActiveRecord::Schema.define(version: 20180522132132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,15 @@ ActiveRecord::Schema.define(version: 20180514143343) do
   end
 
   add_index "homes", ["deleted_at"], name: "index_homes_on_deleted_at", using: :btree
+
+  create_table "land_costs", force: :cascade, comment: "土地原価" do |t|
+    t.integer  "term",                                               null: false, comment: "年度(期)"
+    t.integer  "land_id",                                            null: false, comment: "土地"
+    t.integer  "work_type_id",                                       null: false, comment: "作業分類"
+    t.decimal  "cost",         precision: 7, scale: 1, default: 0.0, null: false, comment: "原価"
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+  end
 
   create_table "lands", force: :cascade, comment: "土地マスタ" do |t|
     t.string   "place",         limit: 15,                                        null: false, comment: "番地"
@@ -271,14 +280,16 @@ ActiveRecord::Schema.define(version: 20180514143343) do
   add_index "sections", ["deleted_at"], name: "index_sections_on_deleted_at", using: :btree
 
   create_table "systems", force: :cascade, comment: "システムマスタ" do |t|
-    t.integer  "term",                        null: false, comment: "年度(期)"
-    t.date     "target_from",                              comment: "開始年月"
-    t.date     "target_to",                                comment: "終了年月"
+    t.integer  "term",                                          null: false, comment: "年度(期)"
+    t.date     "target_from",                                                comment: "開始年月"
+    t.date     "target_to",                                                  comment: "終了年月"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.date     "start_date",                  null: false, comment: "期首日"
-    t.date     "end_date",                    null: false, comment: "期末日"
-    t.integer  "organization_id", default: 0, null: false, comment: "組織"
+    t.date     "start_date",                                    null: false, comment: "期首日"
+    t.date     "end_date",                                      null: false, comment: "期末日"
+    t.integer  "organization_id",               default: 0,     null: false, comment: "組織"
+    t.decimal  "default_price",   precision: 5, default: 1000,  null: false, comment: "初期値(工賃)"
+    t.decimal  "default_fee",     precision: 6, default: 15000, null: false, comment: "初期値(管理料)"
   end
 
   add_index "systems", ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true, using: :btree
@@ -382,6 +393,8 @@ ActiveRecord::Schema.define(version: 20180514143343) do
     t.boolean  "category_flag",            default: false,              comment: "カテゴリーフラグ"
     t.integer  "display_order",            default: 0,     null: false, comment: "表示順"
     t.datetime "deleted_at"
+    t.string   "bg_color",      limit: 8,                               comment: "背景色"
+    t.boolean  "land_flag",                default: true,  null: false, comment: "土地利用"
   end
 
   add_index "work_types", ["deleted_at"], name: "index_work_types_on_deleted_at", using: :btree
