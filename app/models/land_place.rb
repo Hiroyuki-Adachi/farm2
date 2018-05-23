@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: land_places # 場所マスタ
+#
+#  id            :integer          not null, primary key # 場所マスタ
+#  name          :string(40)       not null              # 場所名称
+#  remarks       :text                                   # 備考
+#  display_order :integer                                # 表示順
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  deleted_at    :datetime
+#
+
 class LandPlace < ActiveRecord::Base
   acts_as_paranoid
 
