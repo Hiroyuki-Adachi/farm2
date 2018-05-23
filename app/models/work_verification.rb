@@ -13,7 +13,7 @@ class WorkVerification < ApplicationRecord
   belongs_to :work
   belongs_to :worker, -> {with_deleted}
 
-  ENOUGH = 3
+  ENOUGH = 2
 
   def self.regist(work, worker)
     return if work.created_by == worker.id

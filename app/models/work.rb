@@ -29,44 +29,44 @@ class Work < ApplicationRecord
 
   validates :worked_at, presence: true
   validates :weather,   presence: true
-  validates :name, length: { maximum: 40 }, if: proc { |x| x.name.present? }
+  validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
   validates :work_type_id, presence: true
   validates :work_kind_id, presence: true
 
-  belongs_to :work_type, -> { with_deleted }
-  belongs_to :work_kind, -> { with_deleted }
+  belongs_to :work_type, -> {with_deleted}
+  belongs_to :work_kind, -> {with_deleted}
   belongs_to :weather
-  belongs_to :fix, { class_name: "Fix", foreign_key: [:term, :fixed_at], primary_key: [:term, :fixed_at] }
-  belongs_to :creator, { class_name: "Worker", foreign_key: "created_by" }, -> { with_deleted }
-  belongs_to :printer, { class_name: "Worker", foreign_key: "printed_by" }, -> { with_deleted }
+  belongs_to :fix, {class_name: "Fix", foreign_key: [:term, :fixed_at], primary_key: [:term, :fixed_at]}
+  belongs_to :creator, {class_name: "Worker", foreign_key: "created_by"}, -> {with_deleted}
+  belongs_to :printer, {class_name: "Worker", foreign_key: "printed_by"}, -> {with_deleted}
 
-  has_many :work_lands,     -> { order('work_lands.display_order') }, { dependent: :destroy }
-  has_many :work_results,   -> { order('work_results.display_order') }, { dependent: :destroy }
+  has_many :work_lands, -> {order('work_lands.display_order')}, {dependent: :destroy}
+  has_many :work_results, -> {order('work_results.display_order')}, {dependent: :destroy}
   has_many :work_chemicals, dependent: :destroy
-  has_many :work_verifications, -> { order('work_verifications.id') }, { dependent: :destroy }
-  has_one :broccoli, {class_name: "WorkBroccoli", dependent: :destroy }
+  has_many :work_verifications, -> {order('work_verifications.id')}, {dependent: :destroy}
+  has_one :broccoli, {class_name: "WorkBroccoli", dependent: :destroy}
 
-  has_many :workers, { through: :work_results }, -> { with_deleted }
-  has_many :lands, { through: :work_lands }, -> { with_deleted }
-  has_many :chemicals, { through: :work_chemicals }, -> { with_deleted }
-  has_many :machine_results, { through: :work_results }
-  has_many :checkers, { through: :work_verifications, source: :worker }, -> { with_deleted }
+  has_many :workers, {through: :work_results}, -> {with_deleted}
+  has_many :lands, {through: :work_lands}, -> {with_deleted}
+  has_many :chemicals, {through: :work_chemicals}, -> {with_deleted}
+  has_many :machine_results, {through: :work_results}
+  has_many :checkers, {through: :work_verifications, source: :worker}, -> {with_deleted}
 
   scope :no_fixed, ->(term){where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)}
   scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, id: :DESC)}
-  scope :by_creator, ->(worker) { where(["works.created_by IS NULL OR works.created_by <> ?", worker.id]) }
+  scope :by_creator, ->(worker) {where(["works.created_by IS NULL OR works.created_by <> ?", worker.id])}
   scope :enough_check, ->(worker) {
     where(["NOT EXISTS (SELECT work_verifications.work_id FROM work_verifications WHERE work_verifications.work_id = works.id AND work_verifications.worker_id <> ? GROUP BY work_verifications.work_id HAVING COUNT(*) >= ?)", worker.id, WorkVerification::ENOUGH])
   }
   scope :by_worker, ->(worker) {
     where(["EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND work_results.worker_id = ?)", worker.id])
   }
-  scope :not_printed, -> { where(["works.printed_at IS NULL OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)"]) }
+  scope :not_printed, -> {where(["works.printed_at IS NULL OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)"]) }
 
   scope :by_chemical, -> (term) {
-      where("id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.work_id").uniq)
-     .order("worked_at, id")
+    where("id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.work_id").uniq)
+      .order("worked_at, id")
   }
 
   def set_term

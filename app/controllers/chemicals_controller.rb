@@ -4,7 +4,7 @@ class ChemicalsController < ApplicationController
   before_action :set_chemical_types, only: [:new, :create, :edit, :update]
 
   def index
-    @chemicals = ChemicalDecorator.decorate_collection(Chemical.list)
+    @chemicals = ChemicalDecorator.decorate_collection(Chemical.list.page(params[:page]))
   end
 
   def new
