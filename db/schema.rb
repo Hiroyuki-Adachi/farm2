@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180522132132) do
+ActiveRecord::Schema.define(version: 20180522222105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,15 @@ ActiveRecord::Schema.define(version: 20180522132132) do
     t.datetime "updated_at",                                         null: false
   end
 
+  create_table "land_places", force: :cascade, comment: "場所マスタ" do |t|
+    t.string   "name",          limit: 40, null: false, comment: "場所名称"
+    t.text     "remarks",                               comment: "備考"
+    t.integer  "display_order",                         comment: "表示順"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.datetime "deleted_at"
+  end
+
   create_table "lands", force: :cascade, comment: "土地マスタ" do |t|
     t.string   "place",         limit: 15,                                        null: false, comment: "番地"
     t.integer  "owner_id",                                                                     comment: "所有者"
@@ -154,6 +163,7 @@ ActiveRecord::Schema.define(version: 20180522132132) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.integer  "land_place_id",                                                                comment: "土地"
   end
 
   add_index "lands", ["deleted_at"], name: "index_lands_on_deleted_at", using: :btree

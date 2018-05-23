@@ -1,34 +1,45 @@
 <%= error_print(@land) %>
 <%= form_for(@land) do |f| %>
-<div class="field form-group">
-  <%= f.label :place, class: "col-form-label-lg" %>
-  <%= f.text_field :place, {maxlength: 15, size: 20, required: true, class: "form-control"} %>
-</div>
-<div class="field form-group">
-  <%= f.label :owner_id, class: "col-form-label-lg" %>
-  <%= f.select(:owner_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-control"}) %>
-</div>
-<div class="field form-group">
-  <%= f.label :manager_id, class: "col-form-label-lg" %>
-  <%= f.select(:manager_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-control"}) %>
-</div>
-<div class="field form-group">
-  <%= f.label :area, class: "col-form-label-lg" %>
-  <%= f.number_field(:area, {step: 0.01, max: 999.99, min: 0.01, size: 6, required: true, class: "form-control"}) %>
-</div>
-<div class="field form-group">
-  <div class="form-check">
-    <%= f.radio_button :target_flag, true %>
-    <label for="land_target_flag_true" class="form-check-label">営農組合会員</label>
+<div class="form-row">
+  <div class="field form-group col-md-3">
+    <%= f.label :place, class: "col-form-label-lg" %>
+    <%= f.text_field :place, {maxlength: 15, size: 20, required: true, class: "form-control"} %>
   </div>
-  <div class="form-check">
-    <%= f.radio_button :target_flag, false %>
-    <label for="land_target_flag_false" class="form-check-label">個人管理</label>
+  <div class="field form-group col-md-3">
+    <%= f.label :land_place_id, class: "col-form-label-lg" %>
+    <%= f.select(:land_place_id, @places.map {|place| [place.name, place.id]}, {}, {class: "form-control"}) %>
   </div>
 </div>
-<div class="field form-group">
-  <%= f.label :display_order, class: "col-form-label-lg" %>
-  <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
+<div class="form-row">
+  <div class="field form-group col-md-3">
+    <%= f.label :owner_id, class: "col-form-label-lg" %>
+    <%= f.select(:owner_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-control"}) %>
+  </div>
+  <div class="field form-group col-md-3">
+    <%= f.label :manager_id, class: "col-form-label-lg" %>
+    <%= f.select(:manager_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-control"}) %>
+  </div>
+  <div class="field form-group col-md-2">
+    <%= f.label :area, class: "col-form-label-lg" %>
+    <%= f.number_field(:area, {step: 0.01, max: 999.99, min: 0.01, size: 6, required: true, class: "form-control"}) %>
+  </div>
+  <div class="field form-group col-md-2">
+    <%= f.label :target_flag, class: "col-form-label-lg" %>
+    <div class="form-check">
+      <%= f.radio_button :target_flag, true %>
+      <label for="land_target_flag_true" class="form-check-label">営農組合会員</label>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :target_flag, false %>
+      <label for="land_target_flag_false" class="form-check-label">個人管理</label>
+    </div>
+  </div>
+</div>
+<div class="form-row">
+  <div class="field form-group col-md-2">
+    <%= f.label :display_order, class: "col-form-label-lg" %>
+    <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
+  </div>
 </div>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
@@ -40,7 +51,7 @@
     </div>
   <% end %>
   <div class="btn-group mr-2">
-    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + lands_path + "';"), class: "btn btn-outline-dark" %>
+    <%= link_to "戻る",  lands_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
 <% end %>

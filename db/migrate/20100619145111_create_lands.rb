@@ -7,7 +7,7 @@ class CreateLands < ActiveRecord::Migration
       t.decimal  :area,           {scale: 2, precision: 5, null: false, comment: "面積(α)"}
       t.integer  :display_order,  {comment: "表示順"}
       t.boolean  :target_flag,    {null: false, default: true, comment: "管理対象フラグ"}
-      
+
       t.timestamps
       t.datetime :deleted_at
     end

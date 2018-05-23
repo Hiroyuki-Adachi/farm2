@@ -21,6 +21,7 @@ ja:
       user: "利用者"
       work_broccoli: "ブロッコリー"
       schedule: "作業計画"
+      land_place: "場所"
 
     attributes:
       chemical:
@@ -64,8 +65,8 @@ ja:
         manager_id: "管理者"  #g
         area: "面積"  #g
         display_order: "表示順"  #g
-
-      work_land: 
+        land_place_id: "場所"
+        target_flag: "管理"
 
       work: 
         year: "年度"  #g
@@ -212,6 +213,11 @@ ja:
         work_flag: "作業フラグ"
         start_at: "開始予定時刻"  #g
         end_at: "終了予定時刻"  #g
+
+      land_place:
+        name: "名称"
+        display_order: "表示順"
+        remarks: "備考"
 
   status:
     organization:

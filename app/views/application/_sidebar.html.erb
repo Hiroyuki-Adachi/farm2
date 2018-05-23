@@ -44,6 +44,7 @@
     <%= link_to '薬剤種別マスタ保守', chemical_types_path, {class: "dropdown-item", "data-controller" => "chemical_types"} %>
     <%= link_to '薬剤マスタ保守', chemicals_path, {class: "dropdown-item", "data-controller" => "chemicals"} %>
     <% if current_user.manageable? %>
+    <%= link_to '場所マスタ保守', land_places_path, {class: "dropdown-item", "data-controller" => "land_places"} %>
     <%= link_to '作業分類マスタ保守', work_types_path, {class: "dropdown-item", "data-controller" => "work_types"} %>
     <%= link_to '班マスタ保守', sections_path, {class: "dropdown-item", "data-controller" => "sections"} %>
     <% end %>
