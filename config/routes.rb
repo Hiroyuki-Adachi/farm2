@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :land_places, except: [:show]
   resources :organizations, param: nil, only: [:edit, :update]
   resources :land_costs, only: [:index, :create]
 
