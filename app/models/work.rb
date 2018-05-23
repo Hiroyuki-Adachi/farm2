@@ -25,6 +25,7 @@ class Work < ApplicationRecord
 
   require 'ostruct'
 
+  ENOUGH = WorkVerification::ENOUGH
   before_create :set_term
 
   validates :worked_at, presence: true
@@ -56,13 +57,24 @@ class Work < ApplicationRecord
   scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, id: :DESC)}
   scope :by_creator, ->(worker) {where(["works.created_by IS NULL OR works.created_by <> ?", worker.id])}
-  scope :enough_check, ->(worker) {
-    where(["NOT EXISTS (SELECT work_verifications.work_id FROM work_verifications WHERE work_verifications.work_id = works.id AND work_verifications.worker_id <> ? GROUP BY work_verifications.work_id HAVING COUNT(*) >= ?)", worker.id, WorkVerification::ENOUGH])
-  }
-  scope :by_worker, ->(worker) {
-    where(["EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND work_results.worker_id = ?)", worker.id])
-  }
-  scope :not_printed, -> {where(["works.printed_at IS NULL OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)"]) }
+  scope :enough_check, ->(worker) {where([<<SQL, worker.id, worker.position == Position::DIRECTOR ? ENOUGH + 1 : ENOUGH])}
+      NOT EXISTS (
+        SELECT work_verifications.work_id FROM work_verifications
+          WHERE (work_verifications.work_id = works.id)
+            AND (work_verifications.worker_id <> ?)
+          GROUP BY work_verifications.work_id
+          HAVING COUNT(*) >= ?
+      )
+SQL
+
+  scope :by_worker, ->(worker) {where([<<SQL, worker.id])}
+    EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND work_results.worker_id = ?)
+SQL
+
+  scope :not_printed, -> {where(<<SQL)}
+      (works.printed_at IS NULL)
+    OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)
+SQL
 
   scope :by_chemical, -> (term) {
     where("id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.work_id").uniq)
