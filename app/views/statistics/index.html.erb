@@ -107,7 +107,7 @@ var chart1 = new Chart(ctx1, {
         labels: <%= @total_all.map {|ta| ta[0] }.to_json.html_safe %>,
         datasets: [{
             label: "作業時間",
-            data: <%= @total_all.map {|ta| ta[1] } %>,
+            data: <%= @total_all.map {|ta| ta[1].to_f } %>,
             backgroundColor: colors[0],
             fill: false
         }]
@@ -123,7 +123,7 @@ var chart2 = new Chart(ctx2, {
             <% categories.each_with_index do |category, i| %>
             {
               label: <%= category.name.to_json.html_safe %>,
-              data: <%= @total_all.map {|ta| @total_genre[[category.genre, ta[0]]] || 0 } %>,
+              data: <%= @total_all.map {|ta| @total_genre[[category.genre, ta[0]]].to_f } %>,
               backgroundColor: colors[<%= i%>],
               fill: false
             },
@@ -155,7 +155,7 @@ var chart3 = new Chart(ctx3, {
             <% t("statistics.age").each_with_index do |age, i| %>
             {
               label: <%= age.to_json.html_safe %>,
-              data: <%= @total_all.map {|ta| @total_age[[ta[0], i]] || 0 } %>,
+              data: <%= @total_all.map {|ta| @total_age[[ta[0], i]].to_f } %>,
               backgroundColor: colors[<%= i%>],
               fill: false
             },
