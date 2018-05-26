@@ -9,4 +9,10 @@ class LandCostsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
   end
+
+  test "土地原価(管理者以外)" do
+    session[:user_id] = users(:user_checker).id
+    get :index
+    assert_response :error
+  end
 end

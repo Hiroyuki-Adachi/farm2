@@ -7,5 +7,6 @@ class CreateLandCosts < ActiveRecord::Migration
       t.decimal :cost,         {scale: 1, precision: 7, null: false, default: 0, comment: "原価"}
       t.timestamps null: false
     end
+    add_index :land_costs, [:term, :land_id], {unique: true}
   end
 end

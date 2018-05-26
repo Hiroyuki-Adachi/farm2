@@ -144,6 +144,8 @@ ActiveRecord::Schema.define(version: 20180522222105) do
     t.datetime "updated_at",                                         null: false
   end
 
+  add_index "land_costs", ["term", "land_id"], name: "index_land_costs_on_term_and_land_id", unique: true, using: :btree
+
   create_table "land_places", force: :cascade, comment: "場所マスタ" do |t|
     t.string   "name",          limit: 40, null: false, comment: "場所名称"
     t.text     "remarks",                               comment: "備考"

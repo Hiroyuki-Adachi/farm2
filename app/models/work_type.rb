@@ -18,6 +18,7 @@ class WorkType < ApplicationRecord
   scope :categories, -> {where(category_flag: true).order(display_order: :ASC, id: :ASC)}
   scope :usual, -> {order(category_flag: :ASC, display_order: :ASC, id: :ASC)}
   scope :index, -> {where(category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
+  scope :land, -> {where(land_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
 
   def genre_id
     Rails.cache.fetch("genre_id_#{self[:genre]}", expires_in: 1.hour) do
