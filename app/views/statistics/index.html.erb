@@ -97,7 +97,7 @@
     </div>
   </div>
 </div>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
+<%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
 <script>
 var colors = ['rgba(99, 200, 132, 1.0)', 'rgba(99, 132, 200, 1.0)', 'rgba(200, 200, 132, 1.0)', 'rgba(132, 132, 132, 1.0)', 'rgba(99, 200, 200, 1.0)', 'rgba(200, 132, 132, 1.0)'];
 var ctx1 = document.getElementById("chart1").getContext('2d');

@@ -2,6 +2,39 @@
 dispLoading("表示中");
 </script>
 <h1>土地原価登録</h1>
+<div class="row">
+  <% @land_places.each_with_index do |land_place, i| %>
+    <div class="form-check form-check-inline">
+      <%= radio_button_tag :land_place_id, land_place.id, i == 0, {id: "land_place_#{land_place.id}", class: "form-check-input"} %>
+      <%= label_tag "land_place_#{land_place.id}", land_place.name, {class: "form-check-label"} %>
+    </div>        
+  <% end %>
+</div>
+<%= form_tag(action: :create) do  %>
+  <div class="row">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>番地</th>
+          <th>面積</th>
+          <th>作付</th>
+          <th>管理料</th>
+        </tr>
+      </thead>
+      <tbody id="list">
+        <%= render partial: "list" %>
+      </tbody>
+    </table>
+  </div>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+    </div>
+  </div>
+<% end %>
 <script>
 $(function() {
     removeLoading();

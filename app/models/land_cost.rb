@@ -13,5 +13,7 @@
 
 class LandCost < ActiveRecord::Base
   belongs_to :land, -> {with_deleted}
-  belongs_to :work_type, -> { with_deleted }
+  belongs_to :work_type, -> {with_deleted}
+
+  scope :usual, ->(lands, term) {where(["land_id IN (?) AND term = ?", lands.ids, term])}
 end
