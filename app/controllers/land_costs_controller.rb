@@ -4,7 +4,7 @@ class LandCostsController < ApplicationController
   def index
     @work_types = WorkType.land
     if request.xhr?
-      @lands = Land.where(land_place_id: params[:land_pace_id]).usual
+      @lands = Land.where(land_place_id: params[:land_place_id]).usual
       @costs = LandCost.usual(@lands, @term)
       respond_to do |format|
         format.js
