@@ -5,7 +5,14 @@ dispLoading("表示中");
 <div class="row">
   <% @land_places.each_with_index do |land_place, i| %>
     <div class="form-check form-check-inline">
-      <%= radio_button_tag :land_place_id, land_place.id, i == 0, {id: "land_place_#{land_place.id}", class: "form-check-input"} %>
+      <%= radio_button_tag :land_place_id, land_place.id, i == 0, {
+        id: "land_place_#{land_place.id}", class: "form-check-input",
+        data: {
+          url: land_costs_path(land_place_id: land_place.id),
+          moethod: :get,
+          remote: true
+        }
+      } %>
       <%= label_tag "land_place_#{land_place.id}", land_place.name, {class: "form-check-label"} %>
     </div>        
   <% end %>
