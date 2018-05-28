@@ -1,6 +1,7 @@
 <script>
 dispLoading("表示中");
 </script>
+<%= error_print(@land_cost) %>
 <h1>土地原価登録</h1>
 <div class="row">
   <% @land_places.each_with_index do |land_place, i| %>
@@ -23,7 +24,7 @@ dispLoading("表示中");
       <thead>
         <tr>
           <th>番地</th>
-          <th>面積</th>
+          <th class="text-nowrap">面積</th>
           <th>作付</th>
           <th>管理料</th>
         </tr>
@@ -33,6 +34,7 @@ dispLoading("表示中");
       </tbody>
     </table>
   </div>
+  <%= hidden_field_tag :land_place_id, params[:land_place_id] %>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
       <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>

@@ -22,6 +22,7 @@ ja:
       work_broccoli: "ブロッコリー"
       schedule: "作業計画"
       land_place: "場所"
+      land_cost: "土地原価"
 
     attributes:
       chemical:
@@ -219,6 +220,10 @@ ja:
         display_order: "表示順"
         remarks: "備考"
 
+      land_cost:
+        work_type_id: "作付"
+        cost: "原価"
+        
   status:
     organization:
       daily_worker:
