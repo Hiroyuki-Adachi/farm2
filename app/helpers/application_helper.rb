@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def error_print(ar)
-    render(partial: "error_templete", :locals => { :ar => ar }) if ar.errors.any?
+    render(partial: "error_templete", :locals => {:ar => ar}) if ar && ar.errors.any?
   end
 
   def data_print(data, kind, url)

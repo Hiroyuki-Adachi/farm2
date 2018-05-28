@@ -15,5 +15,13 @@ class LandCost < ActiveRecord::Base
   belongs_to :land, -> {with_deleted}
   belongs_to :work_type, -> {with_deleted}
 
+  validates :term, presence: true
+  validates :land_id, presence: true
+  validates :work_type_id, presence: true
+  validates :cost, presence: true
+
   scope :usual, ->(lands, term) {where(["land_id IN (?) AND term = ?", lands.ids, term])}
+
+  def regist(params)
+  end
 end

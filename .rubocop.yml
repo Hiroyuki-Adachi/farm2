@@ -57,6 +57,9 @@ Style/BracesAroundHashParameters:
 Style/WordArray:
   EnforcedStyle: brackets
 
+Style/Lambda:
+  Enabled: false
+
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 
