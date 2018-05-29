@@ -19,9 +19,9 @@ dispLoading("表示中");
   <% end %>
 </div>
 <%= form_tag(action: :create) do  %>
-  <div class="row">
-    <table class="table table-sm">
-      <thead>
+  <div id="table_wrapper" class="row wrapper small" style="overflow-y: scroll;">
+    <table id="tbl_list" class="table table-sm">
+      <thead style="background-color:white;">
         <tr>
           <th>番地</th>
           <th class="text-nowrap">面積</th>
@@ -35,7 +35,7 @@ dispLoading("表示中");
     </table>
   </div>
   <%= hidden_field_tag :land_place_id, params[:land_place_id] %>
-  <div class="btn-toolbar">
+  <div id="btn_toolbar" class="btn-toolbar">
     <div class="btn-group mr-2">
       <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
     </div>
@@ -46,6 +46,21 @@ dispLoading("表示中");
 <% end %>
 <script>
 $(function() {
+    $("#tbl_list").floatThead({
+        position: 'absolute',
+        scrollContainer:true,
+        zIndex: 999
+    });
+    $(window).resize(function() {
+        setTableWrapperHeight();
+    });
+    setTableWrapperHeight();
     removeLoading();
 });
+
+function setTableWrapperHeight() {
+    if($("#table_wrapper")[0]) {
+        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
+    }
+}
 </script>
