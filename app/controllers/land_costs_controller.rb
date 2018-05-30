@@ -6,16 +6,15 @@ class LandCostsController < ApplicationController
   before_action :clear_session
 
   def index
+    @land_places = LandPlace.usual
+    @land_place_id = params[:land_place_id] || @land_places.first.id
+    @lands = Land.where(land_place_id: @land_place_id).usual
+    @costs = LandCost.usual(@lands, @term)
     if request.xhr?
-      @lands = Land.where(land_place_id: params[:land_place_id]).usual
-      @costs = LandCost.usual(@lands, @term)
       respond_to do |format|
         format.js
       end
     else
-      @land_places = LandPlace.usual
-      @lands = Land.where(land_place_id: @land_places.first).usual
-      @costs = LandCost.usual(@lands, @term)
       respond_to do |format|
         format.html
       end
