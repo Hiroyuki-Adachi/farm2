@@ -27,12 +27,12 @@ class WorkResult < ApplicationRecord
   before_create :set_uuid
 
   has_many  :machine_results, {dependent: :destroy}
-  has_many  :machines,  {through: :machine_results}
+  has_many  :machines, {through: :machine_results}
 
   validates :hours, presence: true
-  validates :hours, numericality: true, :if => Proc.new{|x| x.hours.present?}
+  validates :hours, numericality: true, :if => proc{|x| x.hours.present?}
 
-  scope :by_worker_and_work, ->(worker, work) { where(worker_id: worker, work_id: work) }
+  scope :by_worker_and_work, ->(worker, work) {where(worker_id: worker, work_id: work)}
 
   scope :by_home, ->(term){
       joins(:work).eager_load(:work)

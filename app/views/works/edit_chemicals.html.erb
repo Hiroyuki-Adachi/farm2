@@ -34,7 +34,7 @@
       <%= f.submit '登録', :name => 'regist_chemicals', class: "btn btn-warning" %>
     </div>
     <div class="btn-group mr-2">
-      <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + work_path(@work.model) + "';"), class: "btn btn-outline-dark" %>
+      <%= link_to '戻る', work_path(@work.model), {class: "btn btn-outline-dark"} %>
     </div>
   </div>
 <% end %>

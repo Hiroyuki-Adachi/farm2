@@ -74,7 +74,7 @@ class WorksController < ApplicationController
   def work_type_select
     @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
     respond_to do |format|
-      format.js { render action: :work_type_select }
+      format.js {render action: :work_type_select}
     end
   end
 
