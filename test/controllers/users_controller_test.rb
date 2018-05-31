@@ -4,7 +4,7 @@ class UsersControllerTest < ActionController::TestCase
   setup do
     setup_ip
     @user = users(:users1)
-    @create = { login_name: "testuser", password: "1111", password_confirmation: "1111" }
+    @create = {login_name: "testuser", password: "1111", password_confirmation: "1111"}
   end
 
   test "ユーザ一覧" do
