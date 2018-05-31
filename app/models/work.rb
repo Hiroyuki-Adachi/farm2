@@ -139,6 +139,9 @@ SQL
       end
     end
     work_results.where.not(worker_id: workers).each(&:destroy)
+    self.printed_at = nil
+    self.printed_by = nil
+    save!
   end
 
   def regist_lands(params)

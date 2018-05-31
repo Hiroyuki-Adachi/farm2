@@ -3,7 +3,7 @@ require 'test_helper'
 class WorksControllerTest < ActionController::TestCase
   setup do
     setup_ip
-    @update = { 
+    @update = {
       worked_at: "2015-05-05", weather_id: 1, start_at: "08:00:00", end_at: "17:00:00",
       work_type_id: work_types(:work_type_koshi).id, work_kind_id: work_kinds(:work_kind_taue).id,
       name: "試験", remarks: "備考だよーーー"
@@ -98,6 +98,9 @@ class WorksControllerTest < ActionController::TestCase
       get :update, id: works(:work_not_fixed), results: [worker_id: 1, hours: 1, display_order: 1], regist_workers: true
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
+    updated_work = Work.find(works(:work_not_fixed).id)
+    assert_nil updated_work.printed_by
+    assert_nil updated_work.printed_at
 
     assert_difference('WorkLand.count') do
       get :update, id: works(:work_not_fixed), work_lands: [land_id: 1, display_order: 3], regist_lands: true
