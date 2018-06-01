@@ -21,6 +21,7 @@ class LandCost < ActiveRecord::Base
   validates :cost, presence: true
 
   scope :usual, ->(lands, term) {where(["land_id IN (?) AND term = ?", lands.ids, term])}
+  scope :total, ->(term) {joins(:land).where(term: term).group(:work_type_id).sum("lands.area")}
 
   def regist(params)
   end
