@@ -30,6 +30,7 @@
   <div aria-labelledby="navbarDropdown8" style="display:none;">
     <span class="h5">原価管理</span>
     <%= link_to '土地原価', land_costs_path, {class: "dropdown-item", "data-controller" => "land_costs"} %>
+    <%= link_to '原価一覧', total_costs_path, {class: "dropdown-item", "data-controller" => "total_costs"} %>
   </div>
   <% end %>
   <% if current_user.checkable? %>
