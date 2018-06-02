@@ -24,7 +24,7 @@
 <% if (@chemicals.count > 0 or @work.work_kind.chemical_kinds.count > 0) and current_organization.chemicals_count > 0 %>
   <%= render partial: "show_chemicals" %>
 <% end %>
-<% if @broccoli %>
+<% if @broccoli && false %>
   <%= render partial: "show_broccoli" %>
 <% end %>
 <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
