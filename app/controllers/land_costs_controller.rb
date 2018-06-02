@@ -7,7 +7,7 @@ class LandCostsController < ApplicationController
 
   def index
     @land_places = LandPlace.usual
-    @land_place_id = params[:land_place_id] || @land_places.first.id
+    @land_place_id = (params[:land_place_id] || @land_places.first.id).to_i
     @lands = Land.where(land_place_id: @land_place_id).usual
     @costs = LandCost.usual(@lands, @term)
     if request.xhr?
