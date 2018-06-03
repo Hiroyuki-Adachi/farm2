@@ -13,7 +13,7 @@ require 'securerandom'
 #  uuid          :string(36)                             # UUID(カレンダー用)
 #
 
-class ScheduleWorker < ActiveRecord::Base
+class ScheduleWorker < ApplicationRecord
   belongs_to :schedule
   belongs_to :worker, -> {with_deleted}
   has_one    :home, {through: :worker}, -> {with_deleted}

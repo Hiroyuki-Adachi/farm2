@@ -33,5 +33,5 @@
   <br />
   <div class="actions">
     <%= f.submit '登録' %>
-    <%= button_tag "戻る", type: :button, :onclick => raw("javascript:location.href = '" + bank_branches_path(bank_code: @bank.code) + "';") %>
+    <%= link_to "戻る", bank_branches_path(bank_code: @bank.code), {class: "btn btn-outline-dark"}%>
   </div>

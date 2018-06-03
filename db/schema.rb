@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180522222105) do
+ActiveRecord::Schema.define(version: 20180602121837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,25 @@ ActiveRecord::Schema.define(version: 20180522222105) do
   end
 
   add_index "chemicals", ["deleted_at"], name: "index_chemicals_on_deleted_at", using: :btree
+
+  create_table "depreciation_types", force: :cascade, comment: "減価償却分類" do |t|
+    t.integer  "depreciation_id",              comment: "減価償却"
+    t.integer  "work_type_id",    null: false, comment: "作業分類"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "depreciation_types", ["depreciation_id", "work_type_id"], name: "index_depreciation_types_on_depreciation_id_and_work_type_id", unique: true, using: :btree
+
+  create_table "depreciations", force: :cascade, comment: "減価償却" do |t|
+    t.integer  "term",                                 null: false, comment: "年度(期)"
+    t.integer  "machine_id",                                        comment: "機械"
+    t.decimal  "cost",       precision: 9, default: 0, null: false, comment: "減価償却費"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "depreciations", ["term", "machine_id"], name: "index_depreciations_on_term_and_machine_id", unique: true, using: :btree
 
   create_table "fixes", id: false, force: :cascade, comment: "確定データ" do |t|
     t.integer  "term",                          default: 0, null: false, comment: "年度(期)"

@@ -24,7 +24,7 @@
     <%= f.submit '登録', class: "btn btn-warning" %>
   </div>
   <div class="btn-group mr-2">
-    <%= button_tag "戻る", type: :button, :onclick => raw("javascript:location.href = '" + machine_types_path + "';"), class: "btn btn-outline-dark" %>
+    <%= link_to '戻る', machine_types_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
 <% end %>

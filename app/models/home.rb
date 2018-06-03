@@ -49,6 +49,7 @@ class Home < ApplicationRecord
       .order("homes.company_flag, sections.display_order, homes.display_order, homes.id")
   }
   scope :machine_owners, -> {where(owner_flag: true).order("company_flag DESC, display_order, id")}
+  scope :company, ->{where(company_flag: true)}
 
   validates :phonetic,      presence: true
   validates :name,          presence: true

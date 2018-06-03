@@ -11,7 +11,7 @@
 #  updated_at   :datetime         not null
 #
 
-class LandCost < ActiveRecord::Base
+class LandCost < ApplicationRecord
   belongs_to :land, -> {with_deleted}
   belongs_to :work_type, -> {with_deleted}
 
