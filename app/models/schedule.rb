@@ -16,7 +16,8 @@
 #
 
 
-class Schedule < ActiveRecord::Base
+
+class Schedule < ApplicationRecord
   validates :worked_at, presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
   validates :work_type_id, presence: true
@@ -34,9 +35,10 @@ class Schedule < ActiveRecord::Base
         .order(worked_at: :ASC, id: :ASC)
     }
 
-  scope :by_worker, ->(worker) {
-    where(["EXISTS (SELECT * FROM schedule_workers WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)", worker.id])
-  }
+  scope :by_worker, ->(worker) {where([<<SQL, worker.id])}
+      EXISTS (SELECT * FROM schedule_workers
+            WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
+SQL
 
   def regist_workers(params)
     workers = []

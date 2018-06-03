@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :depreciations, only: [:index, :create]
   resources :total_costs, only: [:index]
   resources :land_places, except: [:show]
   resources :organizations, param: nil, only: [:edit, :update]

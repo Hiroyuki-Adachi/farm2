@@ -67,7 +67,7 @@
     </div>
   <% end %>
   <div class="btn-group mr-2">
-    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + work_kinds_path + "';"), class: "btn btn-outline-dark" %>
+    <%= link_to "戻る", work_kinds_path, {class: "btn btn-outline-dark"}%>
   </div>
  </div>
 <% end %>

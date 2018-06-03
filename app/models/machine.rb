@@ -37,9 +37,12 @@ class Machine < ApplicationRecord
       .order("machine_types.display_order, machines.display_order")
   }
 
-  scope :of_company, -> {where(home_id: Home.where(company_flag: true))}
+  scope :of_company, -> {where(home_id: Home.company)}
   scope :of_owners, ->(work) {where(home_id: work.workers.pluck(:home_id).uniq)}
   scope :of_no_owners, ->(work) {where.not(home_id: work.workers.pluck(:home_id).uniq)}
+  scope :between_term, ->(system) {
+    where(["validity_start_at <= ? AND validity_end_at >= ?", system.start_date, system.end_date])
+  }
 
   scope :by_results, -> (results) {
     joins(:machine_results)

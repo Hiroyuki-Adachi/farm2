@@ -22,5 +22,5 @@
   </tbody>
 </table>
 <% end %>
-<%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_bank_path + "';") %>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';") %>
+<%= link_to "新規登録", new_bank_path, {class: "btn btn-success"}%>
+<%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>

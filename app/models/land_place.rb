@@ -11,7 +11,7 @@
 #  deleted_at    :datetime
 #
 
-class LandPlace < ActiveRecord::Base
+class LandPlace < ApplicationRecord
   acts_as_paranoid
 
   scope :usual, -> {order("display_order")}
