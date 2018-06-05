@@ -119,6 +119,7 @@ ja:
         display_order: 表示順
         validity_start_at: 運用開始日
         validity_end_at: 運用終了日
+        diesel_flag: "燃料"
 
       machine_type:
         name: 名称
