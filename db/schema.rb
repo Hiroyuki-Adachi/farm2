@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180602121837) do
+ActiveRecord::Schema.define(version: 20180605135613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -242,15 +242,16 @@ ActiveRecord::Schema.define(version: 20180602121837) do
   end
 
   create_table "machines", force: :cascade, comment: "機械マスタ" do |t|
-    t.string   "name",              limit: 40,             null: false, comment: "機械名称"
-    t.integer  "display_order",                            null: false, comment: "表示順"
-    t.date     "validity_start_at",                                     comment: "稼動開始日"
-    t.date     "validity_end_at",                                       comment: "稼動終了(予定)日"
-    t.integer  "machine_type_id",              default: 0, null: false, comment: "機械種別"
-    t.integer  "home_id",                      default: 0, null: false, comment: "所有者"
+    t.string   "name",              limit: 40,                 null: false, comment: "機械名称"
+    t.integer  "display_order",                                null: false, comment: "表示順"
+    t.date     "validity_start_at",                                         comment: "稼動開始日"
+    t.date     "validity_end_at",                                           comment: "稼動終了(予定)日"
+    t.integer  "machine_type_id",              default: 0,     null: false, comment: "機械種別"
+    t.integer  "home_id",                      default: 0,     null: false, comment: "所有者"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.boolean  "diesel_flag",                  default: false, null: false, comment: "ディーゼル"
   end
 
   create_table "organizations", force: :cascade, comment: "組織(体系)マスタ" do |t|

@@ -2,16 +2,17 @@
 #
 # Table name: machines # 機械マスタ
 #
-#  id                :integer          not null, primary key # 機械マスタ
-#  name              :string(40)       not null              # 機械名称
-#  display_order     :integer          not null              # 表示順
-#  validity_start_at :date                                   # 稼動開始日
-#  validity_end_at   :date                                   # 稼動終了(予定)日
-#  machine_type_id   :integer          default(0), not null  # 機械種別
-#  home_id           :integer          default(0), not null  # 所有者
+#  id                :integer          not null, primary key    # 機械マスタ
+#  name              :string(40)       not null                 # 機械名称
+#  display_order     :integer          not null                 # 表示順
+#  validity_start_at :date                                      # 稼動開始日
+#  validity_end_at   :date                                      # 稼動終了(予定)日
+#  machine_type_id   :integer          default(0), not null     # 機械種別
+#  home_id           :integer          default(0), not null     # 所有者
 #  created_at        :datetime
 #  updated_at        :datetime
 #  deleted_at        :datetime
+#  diesel_flag       :boolean          default(FALSE), not null # ディーゼル
 #
 
 class Machine < ApplicationRecord
