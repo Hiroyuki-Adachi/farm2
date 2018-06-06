@@ -42,7 +42,7 @@ class WorkKind < ApplicationRecord
   }
 
   def price
-    term_price(Organization.term)
+    new_record? ? @p_price : term_price(Organization.term)
   end
 
   def price=(val)

@@ -8,7 +8,7 @@ class WorkKindsController < ApplicationController
   end
 
   def new
-    @work_kind = WorkKind.new
+    @work_kind = WorkKind.new(price: current_system.default_price)
   end
 
   def edit
@@ -45,7 +45,7 @@ class WorkKindsController < ApplicationController
   end
 
   def work_kind_params
-    return params.require(:work_kind).permit(:name, :display_order, :price, :land_flag)
+    params.require(:work_kind).permit(:name, :display_order, :price, :land_flag)
   end
 
   def set_others
