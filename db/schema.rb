@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180605135613) do
+ActiveRecord::Schema.define(version: 20180606123404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -230,6 +230,7 @@ ActiveRecord::Schema.define(version: 20180605135613) do
     t.decimal  "fixed_amount",    precision: 7,                                      comment: "確定使用料"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "fuel_usage",      precision: 5, scale: 2, default: 0.0, null: false, comment: "燃料使用量"
   end
 
   add_index "machine_results", ["machine_id", "work_result_id"], name: "index_machine_results_on_machine_id_and_work_result_id", unique: true, using: :btree
@@ -322,6 +323,7 @@ ActiveRecord::Schema.define(version: 20180605135613) do
     t.integer  "organization_id",               default: 0,     null: false, comment: "組織"
     t.decimal  "default_price",   precision: 5, default: 1000,  null: false, comment: "初期値(工賃)"
     t.decimal  "default_fee",     precision: 6, default: 15000, null: false, comment: "初期値(管理料)"
+    t.decimal  "light_oil_price", precision: 4, default: 0,     null: false, comment: "軽油価格"
   end
 
   add_index "systems", ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true, using: :btree

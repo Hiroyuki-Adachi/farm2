@@ -56,6 +56,7 @@ class Work < ApplicationRecord
   scope :no_fixed, ->(term){where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)}
   scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, id: :DESC)}
+  scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, id: :ASC)}
   scope :by_creator, ->(worker) {where(["works.created_by IS NULL OR works.created_by <> ?", worker.id])}
   scope :enough_check, ->(worker) {where([<<SQL, worker.id, worker.position == Position::DIRECTOR ? ENOUGH + 1 : ENOUGH])}
       NOT EXISTS (
@@ -66,6 +67,8 @@ class Work < ApplicationRecord
           HAVING COUNT(*) >= ?
       )
 SQL
+  scope :by_machines, ->(machines) {joins(:machine_results).where(["machine_results.machine_id IN (?)", machines.ids])}
+  scope :by_types, ->(work_types) {where(["works.work_type_id IN (?)", work_types.ids])}
 
   scope :by_worker, ->(worker) {where([<<SQL, worker.id])}
     EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND work_results.worker_id = ?)
