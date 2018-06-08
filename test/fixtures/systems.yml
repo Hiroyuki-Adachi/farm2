@@ -13,6 +13,7 @@
 #  organization_id :integer          default(0), not null     # 組織
 #  default_price   :decimal(5, )     default(1000), not null  # 初期値(工賃)
 #  default_fee     :decimal(6, )     default(15000), not null # 初期値(管理料)
+#  light_oil_price :decimal(4, )     default(0), not null     # 軽油価格
 #
 
 s2014:

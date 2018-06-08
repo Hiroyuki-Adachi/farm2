@@ -37,6 +37,7 @@ class Machine < ApplicationRecord
       .where("(machine_kinds.work_kind_id = ? and validity_start_at <= ? and ? <= validity_end_at) OR (machines.id in (?))", work.work_kind_id, work.worked_at, work.worked_at, work.machine_results.pluck(:machine_id))
       .order("machine_types.display_order, machines.display_order")
   }
+  scope :diesel, -> {where(diesel_flag: true)}
 
   scope :of_company, -> {where(home_id: Home.company)}
   scope :of_owners, ->(work) {where(home_id: work.workers.pluck(:home_id).uniq)}

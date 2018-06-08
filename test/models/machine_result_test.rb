@@ -13,6 +13,7 @@
 #  fixed_amount    :decimal(7, )                            # 確定使用料
 #  created_at      :datetime
 #  updated_at      :datetime
+#  fuel_usage      :decimal(5, 2)    default(0.0), not null # 燃料使用量
 #
 
 require 'test_helper'
