@@ -25,7 +25,13 @@ Rails.application.routes.draw do
   resources :machines, except: [:show]
   resources :chemicals, except: [:show]
   resources :sections, except: [:show]
-  resources :statistics, only: [:index]
+  resources :statistics, only: [:index] do
+    collection do
+      get :tab1
+      get :tab2
+      get :tab3
+    end
+  end
   resources :monthly_reports, only: [:index, :show, :edit, :update]
   resources :fixes, param: "fixed_at", except: [:edit, :update]
   resources :personal_informations, param: "token", only: [:show]
