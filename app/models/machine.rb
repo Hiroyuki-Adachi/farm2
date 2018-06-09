@@ -89,7 +89,11 @@ class Machine < ApplicationRecord
     machine_type ? machine_type.name : ""
   end
 
+  def alias_name
+    company? ? name : owner_name
+  end
+
   def usual_name
-    company? ? "#{type_name}(#{name})" : "#{type_name}(#{owner_name})"
+    "#{type_name}(#{alias_name})"
   end
 end

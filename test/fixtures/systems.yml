@@ -25,6 +25,7 @@ s2014:
   organization_id: 1
   default_price: 1000
   default_fee: 15000
+  light_oil_price: 100
 
 s2015:
   term: 2015
@@ -35,3 +36,4 @@ s2015:
   organization_id: 1
   default_price: 1000
   default_fee: 15000
+  light_oil_price: 120

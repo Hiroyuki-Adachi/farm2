@@ -2,7 +2,6 @@ class FuelCostsController < ApplicationController
   include PermitManager
 
   before_action :set_machines, only: [:index]
-  before_action :set_system
   before_action :set_works, only: [:index]
 
   def index
@@ -11,6 +10,13 @@ class FuelCostsController < ApplicationController
   end
 
   def create
+    ActiveRecord::Base.transaction do
+      current_system.update_attributes(system_params)
+      params[:machine_results].each do |k, v|
+        MachineResult.find(k).update_attributes(fuel_usage: v[:fuel_usage]) if v[:fuel_usage] != v[:old_usage]
+      end
+    end
+    redirect_to fuel_costs_path
   end
 
   private
@@ -19,11 +25,11 @@ class FuelCostsController < ApplicationController
     @machines = Machine.includes(:owner).diesel.usual
   end
 
-  def set_system
-    @system = current_system
-  end
-
   def set_works
     @works = Work.by_machines(@machines).by_types(WorkType.land).by_term(current_term)
+  end
+
+  def system_params
+    params.permit(:light_oil_price)
   end
 end
