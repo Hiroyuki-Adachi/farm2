@@ -4,7 +4,7 @@
   <div class="col-md-4">
     <div class="form-inline">
       <label for="light_oil_price" class="col-form-label">標準単価</label>
-      <%= number_field_tag :light_oil_price, @system.light_oil_price, {class: "form-control", min: 0, max: 9999, style: "width: 100px;"} %>
+      <%= number_field_tag :light_oil_price, current_system.light_oil_price, {class: "form-control", min: 0, max: 999, style: "width: 100px;"} %>
     </div>
   </div>
 </div>
@@ -13,9 +13,14 @@
     <table id="tbl_list" class="table table-sm">
       <thead style="background-color:white;">
         <tr>
-          <th>日付</th>
+          <th rowspan="2">日付</th>
           <% @machines.each do |machine| %>
-            <th><%= machine.usual_name %></th>
+            <th><%= machine.type_name %></th>
+          <% end %>
+        </tr>
+        <tr>
+          <% @machines.each do |machine| %>
+            <th><%= machine.alias_name %></th>
           <% end %>
         </tr>
       </thead>
@@ -26,7 +31,10 @@
           <% @machines.each do |machine| %>
             <% machine_result = @machine_results.find {|mr| mr.machine_id == machine.id && mr.work_result.work_id == work.id} %>
             <% if machine_result %>
-            <td><%= number_field_tag "machine_results[#{machine_result.id}][fuel_usage]", machine_result.fuel_usage, {class: "form-control", min: 0, max: 999, style: "width: 80px;"} %></td>
+            <td>
+              <%= number_field_tag "machine_results[#{machine_result.id}][fuel_usage]", machine_result.fuel_usage, {class: "form-control", min: 0, max: 999.9, step: 0.1, style: "width: 80px;"} %>
+              <%= hidden_field_tag "machine_results[#{machine_result.id}][old_usage]", machine_result.fuel_usage %>
+            </td>
             <% else %>
             <td></td>
             <% end %>

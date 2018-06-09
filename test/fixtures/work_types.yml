@@ -190,7 +190,7 @@ work_types17:
   display_order: '30'
   deleted_at: 
   bg_color: "#ffffff"
-  land_flag: f
+  land_flag: t
 
 work_types18:
   id: '24'
