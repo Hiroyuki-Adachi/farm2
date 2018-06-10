@@ -2,8 +2,10 @@
 #
 # Table name: chemical_terms # 薬剤年度別利用マスタ
 #
-#  chemical_id :integer          not null # 薬剤
-#  term        :integer          not null # 年度(期)
+#  chemical_id :integer          not null              # 薬剤
+#  term        :integer          not null              # 年度(期)
+#  id          :integer          not null, primary key
+#  price       :decimal(6, )     default(0), not null  # 価格
 #
 
 chemical_terms0:

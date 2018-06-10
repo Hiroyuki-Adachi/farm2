@@ -67,7 +67,13 @@ class Work < ApplicationRecord
           HAVING COUNT(*) >= ?
       )
 SQL
-  scope :by_machines, ->(machines) {joins(:machine_results).where(["machine_results.machine_id IN (?)", machines.ids])}
+  scope :by_machines, ->(machines) {where([<<SQL, machines.ids])}
+  EXISTS (
+    SELECT * FROM work_results
+      INNER JOIN machine_results ON work_results.id = machine_results.work_result_id 
+                                AND work_results.work_id = works.id
+      WHERE machine_results.machine_id IN (?))
+SQL
   scope :by_types, ->(work_types) {where(["works.work_type_id IN (?)", work_types.ids])}
 
   scope :by_worker, ->(worker) {where([<<SQL, worker.id])}

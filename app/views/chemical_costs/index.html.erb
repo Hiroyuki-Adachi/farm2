@@ -1,0 +1,72 @@
+<h1>薬剤原価登録</h1>
+<%= form_tag(action: :create) do  %>
+<div class="row">
+  <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
+    <table id="tbl_list" class="table table-sm">
+      <thead style="background-color:white;">
+        <tr>
+          <th rowspan="2">種別</th>
+          <th rowspan="2">名称</th>
+          <th rowspan="2">価格</th>
+          <% @work_types.each do |work_type| %>
+            <th><%= work_type.genre_name %></th>
+          <% end %>
+        </tr>
+        <tr>
+          <% @work_types.each do |work_type| %>
+            <th><%= work_type.name %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody id="list">
+        <% @chemical_terms.each do |chemical_term| %>
+        <tr>
+          <th><%= chemical_term.chemical.chemical_type.name %></th>
+          <th><%= chemical_term.chemical.name %></th>
+          <td>
+            <%= number_field_tag "chemical_terms[][price]", chemical_term.price, {id: "", class: "form-control form-control-sm", min: 0, max: 999999, style: "width: 100px;"} %>
+            <%= hidden_field_tag "chemical_terms[][id]", chemical_term.id, {id: ""} %>
+          </td>
+          <% @work_types.each do |work_type| %>
+            <% chemical_work_type = @chemical_work_types.find{|ct| ct.chemical_term_id == chemical_term.id && ct.work_type_id == work_type.id} %>
+            <td>
+                <%= number_field_tag "chemical_work_types[][quantity]", chemical_work_type&.quantity || 0, {id: "", class: "form-control form-control-sm", min: 0, max: 999.9, step: 0.1, style: "width: 70px;"} %>
+                <%= hidden_field_tag "chemical_work_types[][work_type_id]", work_type.id, {id: ""} %>
+                <%= hidden_field_tag "chemical_work_types[][chemical_term_id]", chemical_term.id, {id: ""} %>
+                <%= hidden_field_tag "chemical_work_types[][id]", chemical_work_type&.id, {id: ""} %>
+            </td>
+          <% end %>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<% end %>
+<div id="btn_toolbar" class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>
+<script>
+$(function() {
+    $("#tbl_list").floatThead({
+        position: 'absolute',
+        scrollContainer:true,
+        zIndex: 999
+    });
+    $(window).resize(function() {
+        setTableWrapperHeight();
+    });
+    setTableWrapperHeight();
+});
+
+function setTableWrapperHeight() {
+    if($("#table_wrapper")[0]) {
+        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
+    }
+}
+</script>

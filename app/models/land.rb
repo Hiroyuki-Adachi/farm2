@@ -32,7 +32,7 @@ class Land < ApplicationRecord
   has_many :work_types, {through: :land_uses}
 
   scope :usual, -> {where(target_flag: true).order("place, display_order")}
-  scope :list, -> {includes(:owner, :owner_holder).order("place, lands.display_order, lands.id")}
+  scope :list, -> {includes(:land_place, :owner, :manager, :owner_holder, :manager_holder).order("place, lands.display_order, lands.id")}
 
   validates :place, presence: true
   validates :area, presence: true
