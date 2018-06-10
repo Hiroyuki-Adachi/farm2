@@ -8,72 +8,72 @@
 #  price       :decimal(6, )     default(0), not null  # 価格
 #
 
-chemical_terms0:
+chemical_term_3_2010:
   chemical_id: '3'
   term: '2010'
 
 
-chemical_terms1:
+chemical_term_3_2011:
   chemical_id: '3'
   term: '2011'
 
 
-chemical_terms2:
+chemical_term_3_2014:
   chemical_id: '3'
   term: '2014'
 
 
-chemical_terms3:
+chemical_term_3_2013:
   chemical_id: '3'
   term: '2013'
 
 
-chemical_terms4:
+chemical_term_3_2015:
   chemical_id: '3'
   term: '2015'
 
 
-chemical_terms5:
+chemical_term_3_2012:
   chemical_id: '3'
   term: '2012'
 
 
-chemical_terms6:
+chemical_term_3_2016:
   chemical_id: '3'
   term: '2016'
 
 
-chemical_terms7:
+chemical_term_4_2012:
   chemical_id: '4'
   term: '2010'
 
 
-chemical_terms8:
+chemical_term_4_2011:
   chemical_id: '4'
   term: '2011'
 
 
-chemical_terms9:
+chemical_term_4_2014:
   chemical_id: '4'
   term: '2014'
 
 
-chemical_terms10:
+chemical_term_4_2013:
   chemical_id: '4'
   term: '2013'
 
 
-chemical_terms11:
+chemical_term_4_2015:
   chemical_id: '4'
   term: '2015'
 
 
-chemical_terms12:
+chemical_term_4_2012:
   chemical_id: '4'
   term: '2012'
 
 
-chemical_terms13:
+chemical_term_4_2016:
   chemical_id: '4'
   term: '2016'
 

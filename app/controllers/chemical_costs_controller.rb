@@ -8,5 +8,10 @@ class ChemicalCostsController < ApplicationController
   end
 
   def create
+    ActiveRecord::Base.transaction do
+      ChemicalTerm.regist_price(params[:chemical_terms])
+      ChemicalWorkType.regist_quantity(params[:chemical_work_types])
+    end
+    redirect_to chemical_costs_path
   end
 end
