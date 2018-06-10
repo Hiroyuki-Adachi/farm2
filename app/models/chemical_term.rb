@@ -12,9 +12,15 @@ class ChemicalTerm < ApplicationRecord
   belongs_to :chemical
 
   scope :usual, -> (term) {
-    joins(chemical: :chemical_type)
+    includes(chemical: :chemical_type)
       .where(term: term)
       .order("chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
   }
   has_many :chemical_work_types, {dependent: :delete_all}
+
+  def self.regist_price(params)
+    params.each do |param|
+      ChemicalTerm.find(param[:id]).update_attributes(price: param[:price])
+    end
+  end
 end

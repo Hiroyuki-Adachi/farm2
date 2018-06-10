@@ -24,16 +24,16 @@
           <th><%= chemical_term.chemical.chemical_type.name %></th>
           <th><%= chemical_term.chemical.name %></th>
           <td>
-            <%= number_field_tag "chemical_terms[][price]", chemical_term.price, {id: "", class: "form-control form-control-sm", min: 0, max: 999999, style: "width: 100px;"} %>
-            <%= hidden_field_tag "chemical_terms[][id]", chemical_term.id, {id: ""} %>
+            <%= number_field_tag "chemical_terms[][price]", chemical_term.price, {id: nil, class: "form-control form-control-sm", min: 0, max: 999999, style: "width: 100px;"} %>
+            <%= hidden_field_tag "chemical_terms[][id]", chemical_term.id, {id: nil} %>
           </td>
           <% @work_types.each do |work_type| %>
             <% chemical_work_type = @chemical_work_types.find{|ct| ct.chemical_term_id == chemical_term.id && ct.work_type_id == work_type.id} %>
             <td>
-                <%= number_field_tag "chemical_work_types[][quantity]", chemical_work_type&.quantity || 0, {id: "", class: "form-control form-control-sm", min: 0, max: 999.9, step: 0.1, style: "width: 70px;"} %>
-                <%= hidden_field_tag "chemical_work_types[][work_type_id]", work_type.id, {id: ""} %>
-                <%= hidden_field_tag "chemical_work_types[][chemical_term_id]", chemical_term.id, {id: ""} %>
-                <%= hidden_field_tag "chemical_work_types[][id]", chemical_work_type&.id, {id: ""} %>
+              <%= number_field_tag "chemical_work_types[][quantity]", chemical_work_type&.quantity || 0, {id: nil, class: "form-control form-control-sm", min: 0, max: 999.9, step: 0.1, style: "width: 70px;"} %>
+              <%= hidden_field_tag "chemical_work_types[][work_type_id]", work_type.id, {id: nil} %>
+              <%= hidden_field_tag "chemical_work_types[][chemical_term_id]", chemical_term.id, {id: nil} %>
+              <%= hidden_field_tag "chemical_work_types[][id]", chemical_work_type&.id, {id: nil} %>
             </td>
           <% end %>
         </tr>
@@ -42,7 +42,6 @@
     </table>
   </div>
 </div>
-<% end %>
 <div id="btn_toolbar" class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
@@ -51,6 +50,7 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
+<% end %>
 <script>
 $(function() {
     $("#tbl_list").floatThead({
