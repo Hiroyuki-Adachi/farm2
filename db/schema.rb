@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180606123404) do
+ActiveRecord::Schema.define(version: 20180609130912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,10 +77,13 @@ ActiveRecord::Schema.define(version: 20180606123404) do
 
   add_index "chemical_kinds", ["chemical_type_id", "work_kind_id"], name: "index_chemical_kinds_on_chemical_type_id_and_work_kind_id", unique: true, using: :btree
 
-  create_table "chemical_terms", id: false, force: :cascade, comment: "薬剤年度別利用マスタ" do |t|
-    t.integer "chemical_id", null: false, comment: "薬剤"
-    t.integer "term",        null: false, comment: "年度(期)"
+  create_table "chemical_terms", force: :cascade, comment: "薬剤年度別利用マスタ" do |t|
+    t.integer "chemical_id",                           null: false, comment: "薬剤"
+    t.integer "term",                                  null: false, comment: "年度(期)"
+    t.decimal "price",       precision: 6, default: 0, null: false, comment: "価格"
   end
+
+  add_index "chemical_terms", ["chemical_id", "term"], name: "index_chemical_terms_on_chemical_id_and_term", unique: true, using: :btree
 
   create_table "chemical_types", force: :cascade, comment: "薬剤種別マスタ" do |t|
     t.string   "name",          limit: 20,             null: false, comment: "薬剤種別名称"
@@ -88,6 +91,16 @@ ActiveRecord::Schema.define(version: 20180606123404) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "chemical_work_types", force: :cascade do |t|
+    t.integer  "chemical_term_id",                                                    comment: "薬剤利用"
+    t.integer  "work_type_id",                                                        comment: "作業分類"
+    t.decimal  "quantity",         precision: 5, scale: 1, default: 0.0, null: false, comment: "使用量"
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+  end
+
+  add_index "chemical_work_types", ["chemical_term_id", "work_type_id"], name: "index_chemical_work_types_on_chemical_term_id_and_work_type_id", unique: true, using: :btree
 
   create_table "chemicals", force: :cascade, comment: "薬剤マスタ" do |t|
     t.string   "name",             limit: 20,               null: false, comment: "薬剤名称"

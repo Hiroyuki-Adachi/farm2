@@ -1,66 +1,67 @@
 <nav id="my_sidebar" class="bg-info" style="min-height:calc(100vh - 56px); padding-left: 15px;">
   <div aria-labelledby="navbarDropdown1">
     <span class="h5">日報管理</span>
-    <% unless current_user.visitor? %><%= link_to '日報入力', new_work_path, {class: "dropdown-item", "data-controller" => "works"} %><% end %>
-    <%= link_to '日報一覧', works_path, {class: "dropdown-item", "data-controller" => "works"} %>
-    <% if current_user.checkable? %><%= link_to '日報検証', work_verifications_path, {class: "dropdown-item", "data-controller" => "work_verifications"} %><% end %>
-    <% if current_user.manageable? %><%= link_to '月報入力', monthly_reports_path, {class: "dropdown-item", "data-controller" => "monthly_reports"} %><% end %>
+    <% unless current_user.visitor? %><%= link_to '日報入力', new_work_path, {class: "dropdown-item", data: {controller: :works}} %><% end %>
+    <%= link_to '日報一覧', works_path, {class: "dropdown-item", data: {controller:  "works"}} %>
+    <% if current_user.checkable? %><%= link_to '日報検証', work_verifications_path, {class: "dropdown-item", data: {controller: "work_verifications"}} %><% end %>
+    <% if current_user.manageable? %><%= link_to '月報入力', monthly_reports_path, {class: "dropdown-item", data: {controller:  "monthly_reports"}} %><% end %>
   </div>
   <div aria-labelledby="navbarDropdown7" style="display:none;">
     <span class="h5">予定管理</span>
-    <%= link_to '作業予定', schedules_path, {class: "dropdown-item", "data-controller" => "schedules"} %>
+    <%= link_to '作業予定', schedules_path, {class: "dropdown-item", data: {controller:  "schedules"}} %>
   </div>
   <% if current_user.manageable? %>
   <div aria-labelledby="navbarDropdown2" style="display:none;">
     <span class="h5">集計処理</span>
-    <%= link_to '集計対象期間変更', edit_menu_path(current_system), {class: "dropdown-item", "data-controller" => "menu"} %>
-    <%= link_to '日当一覧', work_results_path, {class: "dropdown-item", "data-controller" => "work_results"} %>
-    <%= link_to '機械利用料', machine_results_path, {class: "dropdown-item", "data-controller" => "machine_results"} %>
-    <%= link_to '剤使用量一覧', work_chemicals_path, {class: "dropdown-item", "data-controller" => "work_chemicals"} %>
+    <%= link_to '集計対象期間変更', edit_menu_path(current_system), {class: "dropdown-item", data: {controller: :menu}} %>
+    <%= link_to '日当一覧', work_results_path, {class: "dropdown-item", data: {controller: "work_results"}} %>
+    <%= link_to '機械利用料', machine_results_path, {class: "dropdown-item", data: {controller: "machine_results"}} %>
+    <%= link_to '剤使用量一覧', work_chemicals_path, {class: "dropdown-item", data: {controller: "work_chemicals"}} %>
   </div>
   <div aria-labelledby="navbarDropdown3" style="display:none;">
     <span class="h5">統計処理</span>
-    <%= link_to '統計照会', statistics_path, {class: "dropdown-item", "data-controller" => "statistics"} %>
+    <%= link_to '統計照会', statistics_path, {class: "dropdown-item", data: {controller: :statistics}} %>
   </div>
   <div aria-labelledby="navbarDropdown4" style="display:none;">
     <span class="h5">会計処理</span>
-    <%= link_to '新規確定', new_fix_path, {class: "dropdown-item", "data-controller" => "fixes"} %>
-    <%= link_to '確定一覧', fixes_path, {class: "dropdown-item", "data-controller" => "fixes"} %>
+    <%= link_to '新規確定', new_fix_path, {class: "dropdown-item", data: {controller: :fixes}} %>
+    <%= link_to '確定一覧', fixes_path, {class: "dropdown-item", data: {controller: :fixes}} %>
   </div>
   <div aria-labelledby="navbarDropdown8" style="display:none;">
     <span class="h5">原価管理</span>
-    <%= link_to '土地原価', land_costs_path, {class: "dropdown-item", "data-controller" => "land_costs"} %>
-    <%= link_to '減価償却', depreciations_path, {class: "dropdown-item", "data-controller" => "depreciations"} %>
-    <%= link_to '燃料減価', fuel_costs_path, {class: "dropdown-item", "data-controller" => "fuel_costs"} %>
-    <%= link_to '原価一覧', total_costs_path, {class: "dropdown-item", "data-controller" => "total_costs"} %>
+    <%= link_to '減価償却', depreciations_path, {class: "dropdown-item", data: {controller: :depreciations}} %>
+    <%= link_to '土地原価', land_costs_path, {class: "dropdown-item", data: {controller: "land_costs"}} %>
+    <%= link_to '燃料原価', fuel_costs_path, {class: "dropdown-item", data: {controller: "fuel_costs"}} %>
+    <%= link_to '薬剤原価', chemical_costs_path, {class: "dropdown-item", data: {controller: "chemical_costs"}} %>
+    <%= link_to '原価一覧', total_costs_path, {class: "dropdown-item", data: {controller: "total_costs"}} %>
   </div>
   <% end %>
   <% if current_user.checkable? %>
   <div aria-labelledby="navbarDropdown5" style="display:none;">
     <span class="h5">マスタ保守</span>
-    <%= link_to '世帯マスタ保守', homes_path, {class: "dropdown-item", "data-controller" => "homes"} %>
-    <%= link_to '作業者マスタ保守', workers_path, {class: "dropdown-item", "data-controller" => "workers"} %>
-    <%= link_to '土地マスタ保守', lands_path, {class: "dropdown-item", "data-controller" => "lands"} %>
-    <%= link_to '作業種別マスタ保守', work_kinds_path, {class: "dropdown-item", "data-controller" => "work_kinds"} %>
-    <%= link_to '機械種別マスタ保守', machine_types_path, {class: "dropdown-item", "data-controller" => "machine_types"} %>
-    <%= link_to '機械マスタ保守', machines_path, {class: "dropdown-item", "data-controller" => "machines"} %>
-    <%= link_to '薬剤種別マスタ保守', chemical_types_path, {class: "dropdown-item", "data-controller" => "chemical_types"} %>
-    <%= link_to '薬剤マスタ保守', chemicals_path, {class: "dropdown-item", "data-controller" => "chemicals"} %>
+    <%= link_to '世帯マスタ保守', homes_path, {class: "dropdown-item", data: {controller: :homes}} %>
+    <%= link_to '作業者マスタ保守', workers_path, {class: "dropdown-item", data: {controller: :workers}} %>
+    <%= link_to '土地マスタ保守', lands_path, {class: "dropdown-item", data: {controller: :lands}} %>
+    <%= link_to '作業種別マスタ保守', work_kinds_path, {class: "dropdown-item", data: {controller: "work_kinds"}} %>
+    <%= link_to '機械種別マスタ保守', machine_types_path, {class: "dropdown-item", data: {controller: "machine_types"}} %>
+    <%= link_to '機械マスタ保守', machines_path, {class: "dropdown-item", data: {controller: :machines}} %>
+    <%= link_to '薬剤種別マスタ保守', chemical_types_path, {class: "dropdown-item", data: {controller: "chemical_types"}} %>
+    <%= link_to '薬剤マスタ保守', chemicals_path, {class: "dropdown-item", data: {controller: :chemicals}} %>
     <% if current_user.manageable? %>
-    <%= link_to '場所マスタ保守', land_places_path, {class: "dropdown-item", "data-controller" => "land_places"} %>
-    <%= link_to '作業分類マスタ保守', work_types_path, {class: "dropdown-item", "data-controller" => "work_types"} %>
-    <%= link_to '班マスタ保守', sections_path, {class: "dropdown-item", "data-controller" => "sections"} %>
+    <%= link_to '場所マスタ保守', land_places_path, {class: "dropdown-item", data: {controller: "land_places"}} %>
+    <%= link_to '作業分類マスタ保守', work_types_path, {class: "dropdown-item", data: {controller: "work_types"}} %>
+    <%= link_to '班マスタ保守', sections_path, {class: "dropdown-item", data: {controller: :sections}} %>
     <% end %>
   </div>
   <% end %>
   <div aria-labelledby="navbarDropdown6" style="display:none;">
     <span class="h5">管理</span>
-    <% if current_user.admin? %><%= link_to '利用者マスタ保守', users_path, {class: "dropdown-item", "data-controller" => "users"} %><% end %>
+    <% if current_user.admin? %><%= link_to '利用者マスタ保守', users_path, {class: "dropdown-item", data: {controller: :users}} %><% end %>
     <% if current_user.manageable? %>
-    <%= link_to '対象年度変更', edit_term_menu_path(current_system), {class: "dropdown-item", "data-controller" => "menu"} %>
-    <%= link_to '管理情報変更', edit_organization_path(current_organization), {class: "dropdown-item", "data-controller" => "organizations"} %>
+    <%= link_to '対象年度変更', edit_term_menu_path(current_system), {class: "dropdown-item", data: {controller: :menu}} %>
+    <%= link_to '管理情報変更', edit_organization_path(current_organization), {class: "dropdown-item", data: {controller: :organizations}} %>
     <% end %>
-    <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item", "data-controller" => "users"} %>
+    <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item", data: {controller: :users}} %>
   </div>
 </nav>
 <input type="hidden" id="current_controller" value="<%= controller.controller_name %>">
