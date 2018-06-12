@@ -23,4 +23,8 @@ class ChemicalTerm < ApplicationRecord
       ChemicalTerm.find(param[:id]).update_attributes(price: param[:price])
     end
   end
+
+  def chemical_name
+    chemical.name
+  end
 end

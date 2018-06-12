@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180609130912) do
+ActiveRecord::Schema.define(version: 20180611134729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -325,18 +325,32 @@ ActiveRecord::Schema.define(version: 20180609130912) do
 
   add_index "sections", ["deleted_at"], name: "index_sections_on_deleted_at", using: :btree
 
+  create_table "seedlings", force: :cascade, comment: "育苗" do |t|
+    t.integer  "term",                                        null: false, comment: "年度(期)"
+    t.integer  "work_type_id",                                             comment: "作業分類"
+    t.decimal  "seedling_quantity", precision: 4, default: 0, null: false, comment: "苗箱数"
+    t.decimal  "soil_quantity",     precision: 4, default: 0, null: false, comment: "育苗土数"
+    t.decimal  "seed_cost",         precision: 6, default: 0, null: false, comment: "種子原価"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+  end
+
+  add_index "seedlings", ["term", "work_type_id"], name: "index_seedlings_on_term_and_work_type_id", unique: true, using: :btree
+
   create_table "systems", force: :cascade, comment: "システムマスタ" do |t|
-    t.integer  "term",                                          null: false, comment: "年度(期)"
-    t.date     "target_from",                                                comment: "開始年月"
-    t.date     "target_to",                                                  comment: "終了年月"
+    t.integer  "term",                                               null: false, comment: "年度(期)"
+    t.date     "target_from",                                                     comment: "開始年月"
+    t.date     "target_to",                                                       comment: "終了年月"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.date     "start_date",                                    null: false, comment: "期首日"
-    t.date     "end_date",                                      null: false, comment: "期末日"
-    t.integer  "organization_id",               default: 0,     null: false, comment: "組織"
-    t.decimal  "default_price",   precision: 5, default: 1000,  null: false, comment: "初期値(工賃)"
-    t.decimal  "default_fee",     precision: 6, default: 15000, null: false, comment: "初期値(管理料)"
-    t.decimal  "light_oil_price", precision: 4, default: 0,     null: false, comment: "軽油価格"
+    t.date     "start_date",                                         null: false, comment: "期首日"
+    t.date     "end_date",                                           null: false, comment: "期末日"
+    t.integer  "organization_id",                    default: 0,     null: false, comment: "組織"
+    t.decimal  "default_price",        precision: 5, default: 1000,  null: false, comment: "初期値(工賃)"
+    t.decimal  "default_fee",          precision: 6, default: 15000, null: false, comment: "初期値(管理料)"
+    t.decimal  "light_oil_price",      precision: 4, default: 0,     null: false, comment: "軽油価格"
+    t.decimal  "seedling_price",       precision: 4, default: 0,     null: false, comment: "育苗費"
+    t.integer  "seedling_chemical_id",               default: 0,                  comment: "育苗土"
   end
 
   add_index "systems", ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true, using: :btree
