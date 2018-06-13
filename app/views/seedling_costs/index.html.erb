@@ -1,68 +1,73 @@
 <h1>育苗原価</h1>
 <h2>単価</h2>
-<div class="row">
-  <div class="col-md-3 form-group">
-    <label for="system_seedling_chemical_id">種別</label>
-    <%= select_tag("system[seedling_chemical_id]", options_from_collection_for_select(@chemical_terms, :chemical_id, :chemical_name, current_system.seedling_chemical_id), {class: "form-control"}) %>
+<%= form_tag(action: :create) do  %>
+  <div class="row">
+    <div class="col-md-3 form-group">
+      <label for="system_seedling_chemical_id">種別</label>
+      <%= select_tag("system[seedling_chemical_id]", options_from_collection_for_select(@chemical_terms, :chemical_id, :chemical_name, current_system.seedling_chemical_id), {class: "form-control"}) %>
+    </div>
+    <div class="col-md-3 form-group">
+      <label for="chemical_price">価格</label>
+      <%= number_field_tag "chemical[price]", @chemical_price, {class: "form-control", min: 0, max: 999999} %>
+    </div>
+    <div class="col-md-3 form-group">
+      <label for="system_seedling_price">育苗費</label>
+      <%= number_field_tag "system[seedling_price]", @chemical_price, {class: "form-control", min: 0, max: 9999} %>
+    </div>
   </div>
-  <div class="col-md-3 form-group">
-    <label for="chemical_price">価格</label>
-    <%= number_field_tag "chemical[price]", @chemical_price, {class: "form-control", min: 0, max: 999999} %>
+  <h2>育苗</h2>
+  <div class="row">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>種別</th>
+          <th>箱数</th>
+          <th>育苗土</th>
+          <th>種子原価</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @work_types.each do |work_type| %>
+          <% seedling = @seedlings.find {|sd| sd.work_type_id == work_type.id} %>
+          <tr>
+            <th><%= work_type.name %></th>
+            <td>
+              <%= number_field_tag "seedlings[][seedling_quantity]", seedling&.seedling_quantity || 0, {class: "form-control", min: 0, max: 9999, style: "width: 80px;"} %>
+            </td>
+            <td>
+              <%= number_field_tag "seedlings[][soil_quantity]", seedling&.soil_quantity || 0, {class: "form-control", min: 0, max: 9999, style: "width: 80px;"} %>
+            </td>
+            <td>
+              <%= number_field_tag "seedlings[][seed_cost]", seedling&.seed_cost || 0, {class: "form-control", min: 0, max: 999999, style: "width: 120px;"} %>
+              <%= hidden_field_tag "seedlings[][work_type_id]", work_type.id%>
+              <%= hidden_field_tag "seedlings[][id]", seedling&.id %>
+              <%= hidden_field_tag "seedlings[][term]", current_term %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>合計</th>
+          <td>
+            <%= number_field_tag nil, 0, {id: "seedling_quantity_sum", class: "form-control", min: 0, max: 99999, style: "width: 80px;"} %>
+          </td>
+          <td>
+            <%= number_field_tag nil, 0, {id: "soil_quantity_sum", class: "form-control", min: 0, max: 99999, style: "width: 80px;"} %>
+          </td>
+          <td>
+            <%= number_field_tag nil, 0, {id: "seed_cost_sum", class: "form-control", min: 0, max: 9999999, style: "width: 120px;"} %>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
-  <div class="col-md-3 form-group">
-    <label for="system_seedling_price">育苗費</label>
-    <%= number_field_tag "system[seedling_price]", @chemical_price, {class: "form-control", min: 0, max: 9999} %>
+  <div id="btn_toolbar" class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+    </div>
   </div>
-</div>
-<h2>育苗</h2>
-<div class="row">
-  <table class="table table-sm">
-    <thead>
-      <tr>
-        <th>種別</th>
-        <% @work_types.each do |work_type| %>
-        <th><%= work_type.name %></th>
-        <% end %>
-        <th>合計</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th>箱数</th>
-        <% @work_types.each do |work_type| %>
-        <% seedling = @seedlings.find {|sd| sd.work_type_id == work_type.id} %>
-        <td>
-          <%= number_field_tag "seedlings[#{work_type.id}][seedling_quantity]", seedling&.seedling_quantity || 0, {class: "form-control", min: 0, max: 9999, style: "width: 80px;"} %>
-        </td>
-        <% end %>
-        <td>
-          <%= number_field_tag nil, 0, {id: "seedling_quantity_sum", class: "form-control", min: 0, max: 9999, style: "width: 80px;"} %>
-        </td>
-      </tr>
-      <tr>
-        <th>育苗土</th>
-        <% @work_types.each do |work_type| %>
-        <% seedling = @seedlings.find {|sd| sd.work_type_id == work_type.id} %>
-        <td>
-          <%= number_field_tag "seedlings[#{work_type.id}][soil_quantity]", seedling&.soil_quantity || 0, {class: "form-control", min: 0, max: 9999, style: "width: 80px;"} %>
-        </td>
-        <% end %>
-        <td>
-          <%= number_field_tag nil, 0, {id: "soil_quantity_sum", class: "form-control", min: 0, max: 9999, style: "width: 80px;"} %>
-        </td>
-      </tr>
-      <tr>
-        <th>種子原価</th>
-        <% @work_types.each do |work_type| %>
-        <% seedling = @seedlings.find {|sd| sd.work_type_id == work_type.id} %>
-        <td>
-          <%= number_field_tag "seedlings[#{work_type.id}][seed_cost]", seedling&.seed_cost || 0, {class: "form-control", min: 0, max: 9999, style: "width: 80px;"} %>
-        </td>
-        <% end %>
-        <td>
-          <%= number_field_tag nil, 0, {id: "seed_cost_sum", class: "form-control", min: 0, max: 9999, style: "width: 80px;"} %>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<% end %>

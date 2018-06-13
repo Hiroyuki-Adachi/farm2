@@ -9,7 +9,7 @@
 #
 
 class ChemicalTerm < ApplicationRecord
-  belongs_to :chemical
+  belongs_to :chemical, ->{with_deleted}
 
   scope :usual, -> (term) {
     includes(chemical: :chemical_type)

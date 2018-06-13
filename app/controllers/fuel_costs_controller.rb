@@ -11,9 +11,9 @@ class FuelCostsController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      current_system.update_attributes(system_params)
+      current_system.update(system_params)
       params[:machine_results].each do |k, v|
-        MachineResult.find(k).update_attributes(fuel_usage: v[:fuel_usage]) if v[:fuel_usage] != v[:old_usage]
+        MachineResult.find(k).update(fuel_usage: v[:fuel_usage]) if v[:fuel_usage] != v[:old_usage]
       end
     end
     redirect_to fuel_costs_path
