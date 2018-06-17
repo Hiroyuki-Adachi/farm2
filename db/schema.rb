@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180611134729) do
+ActiveRecord::Schema.define(version: 20180617081519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,6 +132,25 @@ ActiveRecord::Schema.define(version: 20180611134729) do
   end
 
   add_index "depreciations", ["term", "machine_id"], name: "index_depreciations_on_term_and_machine_id", unique: true, using: :btree
+
+  create_table "expense_work_types", force: :cascade, comment: "経費作業種別" do |t|
+    t.integer  "expense_id",                                                      comment: "経費"
+    t.integer  "work_type_id",                                                    comment: "作業分類"
+    t.decimal  "rate",         precision: 5, scale: 2, default: 0.0, null: false, comment: "割合"
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+  end
+
+  add_index "expense_work_types", ["expense_id", "work_type_id"], name: "index_expense_work_types_on_expense_id_and_work_type_id", unique: true, using: :btree
+
+  create_table "expenses", force: :cascade, comment: "経費" do |t|
+    t.integer  "term",                                            null: false, comment: "年度(期)"
+    t.date     "payed_on",                                        null: false, comment: "支払日"
+    t.string   "content",    limit: 40,                           null: false, comment: "支払内容"
+    t.decimal  "amount",                precision: 7, default: 0, null: false, comment: "支払金額"
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+  end
 
   create_table "fixes", id: false, force: :cascade, comment: "確定データ" do |t|
     t.integer  "term",                          default: 0, null: false, comment: "年度(期)"

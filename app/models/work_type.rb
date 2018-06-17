@@ -19,6 +19,7 @@ class WorkType < ApplicationRecord
   scope :usual, -> {order(category_flag: :ASC, display_order: :ASC, id: :ASC)}
   scope :index, -> {where(category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
   scope :land, -> {where(land_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
+  scope :select_category, -> (category) {where(category_flag: false, genre: category[:genre]).order(display_order: :ASC, id: :ASC)}
 
   def genre_id
     Rails.cache.fetch("genre_id_#{self[:genre]}", expires_in: 1.hour) do
@@ -34,9 +35,5 @@ class WorkType < ApplicationRecord
 
   def name_format
     genre_name + "(#{name})"
-  end
-
-  def self.select_category(category)
-    WorkType.where(category_flag: false, genre: category[:genre]).order(display_order: :ASC, id: :ASC)
   end
 end
