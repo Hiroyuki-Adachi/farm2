@@ -2,9 +2,9 @@ class ChemicalCostsController < ApplicationController
   include PermitManager
 
   def index
-    @chemical_terms = ChemicalTerm.usual(current_term)
+    @chemical_terms = ChemicalTerm.land.usual(current_term)
     @work_types = WorkType.land
-    @chemical_work_types = ChemicalWorkType.where(chemical_term_id: @chemical_terms.ids)
+    @chemical_work_types = ChemicalWorkType.by_chemical_terms(@chemical_terms)
   end
 
   def create

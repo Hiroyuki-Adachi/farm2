@@ -16,11 +16,12 @@ class ChemicalTerm < ApplicationRecord
       .where(term: term)
       .order("chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
   }
+  scope :land, ->{joins(:chemical).where("EXISTS (SELECT * FROM chemical_kinds WHERE chemical_kinds.chemical_type_id = chemicals.chemical_type_id)")}
   has_many :chemical_work_types, {dependent: :delete_all}
 
   def self.regist_price(params)
     params.each do |param|
-      ChemicalTerm.find(param[:id]).update_attributes(price: param[:price])
+      ChemicalTerm.find(param[:id]).update(price: param[:price])
     end
   end
 
