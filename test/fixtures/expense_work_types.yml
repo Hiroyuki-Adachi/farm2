@@ -16,3 +16,18 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+
+expence_upd1:
+  expense: expense_upd
+  work_type: work_type_koshi
+  rate: 1
+
+expence_upd2:
+  expense: expense_upd
+  work_type: work_types1
+  rate: 1
+
+expence_del1:
+  expense: expense_del
+  work_type: work_type_koshi
+  rate: 1

@@ -13,10 +13,11 @@
 
 class Expense < ActiveRecord::Base
   has_many :expense_work_types, {dependent: :delete_all}
+  has_many :work_types, {through: :expense_work_types}, -> {order(:display_order)}
 
   validates :payed_on, presence: true
   validates :content, presence: true
   validates :amount, presence: true
 
-  scope :usual, ->(term){where(term: term).order(worked_at: :ASC, id: :ASC)}
+  scope :usual, ->(term){where(term: term).order(payed_on: :ASC, id: :ASC)}
 end

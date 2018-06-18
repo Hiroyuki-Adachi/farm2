@@ -10,3 +10,15 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+
+expense_upd:
+  term: 2015
+  payed_on: "2015-02-02"
+  content: "更新テスト"
+  amount: 22222
+
+expense_del:
+  term: 2015
+  payed_on: "2015-03-03"
+  content: "削除テスト"
+  amount: 33333
