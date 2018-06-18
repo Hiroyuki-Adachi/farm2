@@ -19,8 +19,8 @@
 #
 cost1:
   term: 2015
-  land_id: lands(:lands0).id
-  work_type_id: work_types(:work_type_koshi).id
+  land: lands0
+  work_type: work_type_koshi
   cost: 0
   created_at: '2015-07-11 12:12:12'
   updated_at: '2015-07-11 12:12:12'

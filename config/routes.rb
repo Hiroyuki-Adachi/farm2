@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :expenses, except: [:show]
   resources :seedling_costs, only: [:index, :create]
   resources :chemical_costs, only: [:index, :create]
   resources :fuel_costs, only: [:index, :create]

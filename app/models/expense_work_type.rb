@@ -12,5 +12,5 @@
 
 class ExpenseWorkType < ActiveRecord::Base
   belongs_to :expense
-  belongs_to :work_type
+  belongs_to :work_type, -> {with_deleted}
 end
