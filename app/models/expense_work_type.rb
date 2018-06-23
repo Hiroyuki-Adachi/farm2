@@ -10,7 +10,19 @@
 #  updated_at   :datetime         not null
 #
 
-class ExpenseWorkType < ActiveRecord::Base
-  belongs_to :expense
+class ExpenseWorkType < ApplicationRecord
+  belongs_to :expense, inverse_of: :expense_work_type
   belongs_to :work_type, -> {with_deleted}
+
+  def true_rate
+    rate.nil? || rate.zero? ? 1 : rate
+  end
+
+  def rate?
+    !(rate.nil? || rate.zero?)
+  end
+
+  def work_type_name
+    work_type.name
+  end
 end

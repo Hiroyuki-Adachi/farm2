@@ -11,8 +11,8 @@
 #  updated_at :datetime         not null
 #
 
-class Expense < ActiveRecord::Base
-  has_many :expense_work_types, {dependent: :delete_all}
+class Expense < ApplicationRecord
+  has_many :expense_work_types, {dependent: :delete_all}, inverse_of: :expenses
   has_many :work_types, {through: :expense_work_types}, -> {order(:display_order)}
 
   validates :payed_on, presence: true
@@ -20,4 +20,6 @@ class Expense < ActiveRecord::Base
   validates :amount, presence: true
 
   scope :usual, ->(term){where(term: term).order(payed_on: :ASC, id: :ASC)}
+
+  accepts_nested_attributes_for :expense_work_types, allow_destroy: true
 end
