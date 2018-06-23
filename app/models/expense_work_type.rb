@@ -23,6 +23,6 @@ class ExpenseWorkType < ApplicationRecord
   end
 
   def work_type_name
-    work_type.name
+    work_type&.name || ""
   end
 end

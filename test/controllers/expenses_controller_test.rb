@@ -4,7 +4,9 @@ class ExpensesControllerTest < ActionController::TestCase
   setup do
     setup_ip
     @expense = expenses(:expense_upd)
-    @update = {term: 2015, payed_on: "2015-01-01", content: "テスト", amount: 98_765}
+    @update = {term: 2015, payed_on: "2015-01-01", content: "テスト", amount: 98_765,
+      expense_work_types_attributes: [{work_type_id: work_types(:work_type_koshi), rate: 2.0}]
+    }
   end
 
   test "経費原価" do
@@ -24,8 +26,10 @@ class ExpensesControllerTest < ActionController::TestCase
   end
 
   test "経費原価新規作成(実行)" do
-    assert_difference('Expense.count') do
-      post :create, expense: @update
+    assert_difference('ExpenseWorkType.where(rate: 2.0).count') do
+      assert_difference('Expense.count') do
+        post :create, expense: @update
+      end
     end
 
     assert_redirected_to expenses_path
@@ -37,8 +41,10 @@ class ExpensesControllerTest < ActionController::TestCase
   end
 
   test "経費原価変更(実行)" do
-    assert_no_difference('Expense.count') do
-      patch :update, id: @expense, expense: @update
+    assert_difference('ExpenseWorkType.count') do
+      assert_no_difference('Expense.count') do
+        patch :update, id: @expense, expense: @update
+      end
     end
     assert_redirected_to expenses_path
   end
