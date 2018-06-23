@@ -27,7 +27,6 @@
           <%= hidden_field_tag "expense[expense_work_types_attributes][][id]", expense_work_type&.id, {id: nil} %>
           <%= hidden_field_tag "expense[expense_work_types_attributes][][work_type_id]", work_type.id, {id: nil} %>
           <%= hidden_field_tag "expense[expense_work_types_attributes][][rate]", expense_work_type&.rate || 0, {id: "expense_rate_value_#{work_type.id}"} %>
-          <%= hidden_field_tag "expense[expense_work_types_attributes][][_destroy]", 0, {id: nil} %>
         </div>
       <% end %>
     </fieldset>
