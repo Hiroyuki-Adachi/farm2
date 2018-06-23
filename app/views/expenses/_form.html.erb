@@ -15,6 +15,24 @@
   </div>
 </div>
 <%= f.hidden_field :term, {value: current_term} %>
+<div class="form-row">
+  <div class="field form-group">
+    <fieldset>
+      <legend>原価対象</legend>
+      <% @work_types.each do |work_type| %>
+        <% expense_work_type = @expense.expense_work_types.find{|ewt| ewt.work_type_id == work_type.id} if @expense.expense_work_types %>
+        <div class="form-check form-check-inline">
+          <%= check_box_tag "", expense_work_type ? expense_work_type.true_rate : 1, expense_work_type ? expense_work_type.rate? : false, {id: "expense_work_types_rate_#{work_type.id}", class: "form-check-input", data: {id: "expense_rate_value_#{work_type.id}"}} %>
+          <%= label_tag "expense_work_types_rate_#{work_type.id}", work_type.name, {class: "form-check-label", id: nil} %>
+          <%= hidden_field_tag "expense[expense_work_types_attributes][][id]", expense_work_type&.id, {id: nil} %>
+          <%= hidden_field_tag "expense[expense_work_types_attributes][][work_type_id]", work_type.id, {id: nil} %>
+          <%= hidden_field_tag "expense[expense_work_types_attributes][][rate]", expense_work_type&.rate || 0, {id: "expense_rate_value_#{work_type.id}"} %>
+          <%= hidden_field_tag "expense[expense_work_types_attributes][][_destroy]", 0, {id: nil} %>
+        </div>
+      <% end %>
+    </fieldset>
+  </div>
+</div>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= f.submit '登録', class: "btn btn-warning" %>
@@ -29,3 +47,10 @@
   </div>
 </div>
 <% end %>
+<script>
+$(function() {
+    $("input[type='checkbox'][id^='expense_work_types_rate_']").click(function() {
+        $("#" + $(this).data("id")).val($(this).prop("checked") ? $(this).val() : 0);
+    });
+});
+</script>

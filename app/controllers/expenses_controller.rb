@@ -1,6 +1,7 @@
 class ExpensesController < ApplicationController
   include PermitManager
   before_action :set_expense, only: [:edit, :update, :destroy]
+  before_action :set_work_type, only: [:new, :create, :edit, :update]
 
   def index
     @expenses = ExpenseDecorator.decorate_collection(Expense.usual(current_term).page(params[:page]))
@@ -42,6 +43,13 @@ class ExpensesController < ApplicationController
   end
 
   def expense_params
-    params.require(:expense).permit(:term, :payed_on, :content, :amount)
+    params.require(:expense).permit(
+      :term, :payed_on, :content, :amount,
+      expense_work_types_attributes: [:id, :work_type_id, :rate, :_destroy]
+    )
+  end
+
+  def set_work_type
+    @work_types = WorkType.land
   end
 end
