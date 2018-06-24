@@ -7,7 +7,7 @@ class SeedlingCostsController < ApplicationController
     @chemical_price = chemical_term&.price
     @work_types = WorkType.land
     @seedlings = Seedling.usual(current_term, @work_types)
-    @lands = LandCost.total(current_term)
+    @lands = LandCost.total(Time.zone.today)
   end
 
   def create

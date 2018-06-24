@@ -9,7 +9,7 @@ class LandCostsController < ApplicationController
     @land_places = LandPlace.usual
     @land_place_id = (params[:land_place_id] || @land_places.first.id).to_i
     @lands = Land.where(land_place_id: @land_place_id).usual
-    @costs = LandCost.usual(@lands, @term)
+    @costs = LandCost.usual(@lands, Time.zone.today)
     if request.xhr?
       respond_to do |format|
         format.js
@@ -49,7 +49,7 @@ class LandCostsController < ApplicationController
   end
 
   def land_cost_params(params)
-    params.permit(:work_type_id, :cost, :land_id, :term)
+    params.permit(:work_type_id, :cost, :land_id, :activated_on)
   end
 
   def clear_session
