@@ -2,12 +2,13 @@ class LandsController < ApplicationController
   include PermitChecker
   before_action :set_land, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
+  before_action :set_places, only: [:new, :edit]
 
   def index
     @homes = LandDecorator.homes
     @home_id = params[:home_id]
-    @sum_areas = @home_id.present? ? Land.usual.where(owner_id: @home_id).sum(:area) : Land.usual.sum(:area)
-    @lands = @home_id.present? ? Land.list.where(owner_id: @home_id) : Land.list
+    @sum_areas = (@home_id ? Land.usual.where(owner_id: @home_id) : Land.usual).sum(:area)
+    @lands = @home_id ? Land.list.where(owner_id: @home_id) : Land.list
     @lands = LandDecorator.decorate_collection(@lands.page(params[:page]))
   end
 
@@ -50,7 +51,12 @@ class LandsController < ApplicationController
     @homes = Home.landable.includes(:holder)
   end
 
+  def set_places
+    @places = LandPlace.usual
+  end
+
   def land_params
-    return params.require(:land).permit(:place, :owner_id, :manager_id, :area, :target_flag, :display_order)
+    params.require(:land)
+          .permit(:place, :owner_id, :manager_id, :area, :target_flag, :display_order, :land_place_id)
   end
 end

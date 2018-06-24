@@ -17,6 +17,7 @@ require 'securerandom'
 #  uuid          :string(36)                              # UUID(カレンダー用)
 #
 
+
 class WorkResult < ApplicationRecord
   belongs_to :work
   belongs_to :worker, -> {with_deleted}
@@ -27,12 +28,12 @@ class WorkResult < ApplicationRecord
   before_create :set_uuid
 
   has_many  :machine_results, {dependent: :destroy}
-  has_many  :machines,  {through: :machine_results}
+  has_many  :machines, {through: :machine_results}
 
   validates :hours, presence: true
-  validates :hours, numericality: true, :if => Proc.new{|x| x.hours.present?}
+  validates :hours, numericality: true, :if => proc{|x| x.hours.present?}
 
-  scope :by_worker_and_work, ->(worker, work) { where(worker_id: worker, work_id: work) }
+  scope :by_worker_and_work, ->(worker, work) {where(worker_id: worker, work_id: work)}
 
   scope :by_home, ->(term){
       joins(:work).eager_load(:work)
@@ -64,6 +65,15 @@ class WorkResult < ApplicationRecord
       .where("works.worked_at >= ?", worked_at)
       .where(worker_id: worker)
       .order("works.worked_at, work_results.id")
+  }
+
+  scope :for_menu, ->(worker, term) {
+    joins(:work).eager_load(:work)
+     .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+     .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
+     .where("works.term = ?", term)
+     .where(worker_id: worker)
+     .order("works.worked_at DESC, work_results.id")
   }
 
   def price

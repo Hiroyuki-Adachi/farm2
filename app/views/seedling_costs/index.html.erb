@@ -1,0 +1,125 @@
+<h1>育苗原価</h1>
+<h2>単価</h2>
+<%= form_tag(action: :create) do  %>
+  <div class="row">
+    <div class="col-md-3 form-group">
+      <label for="system_seedling_chemical_id">種別</label>
+      <%= select_tag("system[seedling_chemical_id]", options_from_collection_for_select(@chemical_terms, :chemical_id, :chemical_name, current_system.seedling_chemical_id), {class: "form-control"}) %>
+    </div>
+    <div class="col-md-3 form-group">
+      <label for="chemical_price">価格</label>
+      <%= number_field_tag "chemical[price]", @chemical_price, {class: "form-control", min: 0, max: 999999} %>
+    </div>
+    <div class="col-md-3 form-group">
+      <label for="system_seedling_price">育苗費</label>
+      <%= number_field_tag "system[seedling_price]", @chemical_price, {class: "form-control", min: 0, max: 9999} %>
+    </div>
+  </div>
+  <h2>育苗</h2>
+  <div class="row">
+    <table class="table table-sm" style="width:auto;">
+      <thead>
+        <tr>
+          <th>種別</th>
+          <th>面積(α)</th>
+          <th>箱数</th>
+          <th colspan="2">育苗土</th>
+          <th>種子原価</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @work_types.each do |work_type| %>
+          <% seedling = @seedlings.find {|sd| sd.work_type_id == work_type.id} %>
+          <tr>
+            <th><%= work_type.name %></th>
+            <td class="numeric">
+              <%= sprintf("%.1f", @lands[work_type.id] || 0) %>
+              <%= hidden_field_tag nil, (@lands[work_type.id] || 0), {id: "land_#{work_type.id}"} %>
+            </td>
+            <td>
+              <%= number_field_tag "seedlings[][seedling_quantity]", seedling&.seedling_quantity || 0, {class: "form-control", min: 0, max: 9999, style: "width: 80px;", id: nil} %>
+            </td>
+            <td>
+              <%= check_box_tag "check_soil", work_type.id, {id: "soil_#{work_type.id}"} %>
+            </td>
+            <td>
+              <%= number_field_tag "seedlings[][soil_quantity]", seedling&.soil_quantity || 0, {class: "form-control", min: 0, max: 9999, style: "width: 80px;", id: "soil_quantity_#{work_type.id}"} %>
+            </td>
+            <td>
+              <%= number_field_tag "seedlings[][seed_cost]", seedling&.seed_cost || 0, {class: "form-control", min: 0, max: 999999, style: "width: 120px;", id: nil} %>
+              <%= hidden_field_tag "seedlings[][work_type_id]", work_type.id, {id: nil} %>
+              <%= hidden_field_tag "seedlings[][id]", seedling&.id, {id: nil} %>
+              <%= hidden_field_tag "seedlings[][term]", current_term, {id: nil} %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>合計</th>
+          <td class="numeric"><%= sprintf("%.1f", @lands.values.inject(:+) || 0) %></td>
+          <td>
+            <%= number_field_tag nil, 0, {id: "seedling_quantity_sum", class: "form-control", min: 0, max: 99999, style: "width: 80px;"} %>
+          </td>
+          <td>
+            <%= button_tag "按分", {id: "prorate", type: :button, class: "btn btn-success"} %>
+          </td>
+          <td>
+            <%= number_field_tag nil, 0, {id: "soil_quantity_sum", class: "form-control", min: 0, max: 99999, style: "width: 80px;"} %>
+          </td>
+          <td>
+            <%= number_field_tag nil, 0, {id: "seed_cost_sum", class: "form-control", min: 0, max: 9999999, style: "width: 120px;"} %>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div id="btn_toolbar" class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+    </div>
+  </div>
+<% end %>
+<script>
+$(function() {
+    $("#prorate").click(function() {
+        var total_area = 0;
+        var total_soil = parseFloat($("#soil_quantity_sum").val());
+        var sum_soil = 0;
+        var max_work_type = 0;
+        var max_area = 0;
+        var max_soil = 0;
+        $('[name="check_soil"]:checked').each(function() {
+            var cur_work_type = $(this).val();
+            var cur_area = parseFloat($("#land_" + cur_work_type).val());
+
+            total_area += cur_area;
+            if(max_area < cur_area) {
+                max_area = cur_area;
+                max_work_type = cur_work_type;
+            }
+        });
+
+        if((total_area > 0) && (total_soil > 0)) {
+            $('[name="seedlings[][soil_quantity]"').val(0);
+            $('[name="check_soil"]:checked').each(function() {
+                var cur_work_type = $(this).val();
+                var cur_area = parseFloat($("#land_" + cur_work_type).val());
+                var cur_soil = Math.round(total_soil * cur_area / total_area);
+
+                sum_soil += cur_soil;
+                $("#soil_quantity_" + cur_work_type).val(cur_soil);
+                if(cur_work_type == max_work_type) {
+                    max_soil = cur_soil;
+                }
+            });
+            if(sum_soil != total_soil) {
+                $("#soil_quantity_" + max_work_type).val(max_soil + (total_soil - sum_soil));
+            }
+        }
+    });
+});
+</script>

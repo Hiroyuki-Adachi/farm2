@@ -15,6 +15,6 @@
   <br />
   <div class="actions">
     <%= f.submit '登録' %>
-    <%= button_tag "戻る", type: :button, :onclick => raw("javascript:location.href = '" + banks_path + "';") %>
+    <%= link_to "戻る", banks_path, {class: "btn btn-outline-dark"}%>
   </div>
 <% end %>

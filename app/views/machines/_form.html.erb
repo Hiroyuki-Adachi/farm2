@@ -1,36 +1,53 @@
 <%= error_print(@machine) %>
 <%= form_for(@machine) do |f| %>
- <div class="field form-group">
-    <%= f.label :machine_type_id, class: "col-form-label-lg" %>
-   <%= f.select(:machine_type_id, @machine_types.map {|machine_type| [machine_type.name, machine_type.id]}, {}, {class: "form-control"}) %>
- </div>
- <div class="field form-group">
-    <%= f.label :name, class: "col-form-label-lg" %>
-    <%= f.text_field :name, {:maxlength => 30, :size => 30, class: "form-control"} %>
- </div>
- <div class="field form-group">
-    <%= f.label :home_id, class: "col-form-label-lg" %>
-   <%= f.select(:home_id, @homes.map {|home| [home.name, home.id]}, {}, {class: "form-control"}) %>
- </div>
- <div class="field form-group">
-    <%= f.label :display_order, class: "col-form-label-lg" %>
-    <%= f.number_field :display_order, {maxlength: 3, size: 3, required: true, min: 0, max: 9999, class: "form-control"} %>
- </div>
- <div class="field form-group">
-    <%= f.label :validity_start_at, class: "col-form-label-lg" %>
-    <%= f.date_field :validity_start_at, {required: true, class: "form-control"} %>
- </div>
- <div class="field form-group">
-    <%= f.label :validity_end_at, class: "col-form-label-lg" %>
-    <%= f.date_field :validity_end_at, {required: true, class: "form-control"} %>
- </div>
+  <div class="row">
+    <div class="col-md-3 form-group">
+      <%= f.label :machine_type_id, class: "col-form-label-lg" %>
+      <%= f.select(:machine_type_id, @machine_types.map {|machine_type| [machine_type.name, machine_type.id]}, {}, {class: "form-control"}) %>
+    </div>
+    <div class="col-md-3 form-group">
+      <%= f.label :name, class: "col-form-label-lg" %>
+      <%= f.text_field :name, {:maxlength => 30, :size => 30, class: "form-control"} %>
+    </div>
+    <div class="col-md-4 form-group">
+      <%= f.label :diesel_flag, class: "col-form-label-lg" %>
+      <div class="form-check">
+        <%= f.radio_button :diesel_flag, true, {class: "form-check-input"} %>
+        <label for="machine_diesel_flag_true" class="form-check-label">ディーゼル</label>
+      </div>
+      <div class="form-check">
+        <%= f.radio_button :diesel_flag, false, {class: "form-check-input"} %>
+        <label for="machine_diesel_flag_false" class="form-check-label">ディーゼル以外</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 form-group">
+      <%= f.label :home_id, class: "col-form-label-lg" %>
+      <%= f.select(:home_id, @homes.map {|home| [home.name, home.id]}, {}, {class: "form-control"}) %>
+    </div>
+    <div class="col-md-2 form-group">
+      <%= f.label :display_order, class: "col-form-label-lg" %>
+      <%= f.number_field :display_order, {maxlength: 3, size: 3, required: true, min: 0, max: 9999, class: "form-control"} %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 form-group">
+      <%= f.label :validity_start_at, class: "col-form-label-lg" %>
+      <%= f.date_field :validity_start_at, {required: true, class: "form-control"} %>
+    </div>
+    <div class="col-md-2 form-group">
+      <%= f.label :validity_end_at, class: "col-form-label-lg" %>
+      <%= f.date_field :validity_end_at, {required: true, class: "form-control"} %>
+    </div>
+  </div>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= f.submit '登録', class: "btn btn-warning" %>
   </div>
   <% if controller.action_name == "edit" %>
     <div class="btn-group mr-2">
-      <%= button_tag "料金設定", type: :button, :onclick => raw("javascript:location.href = '" + show_machine_machine_price_headers_path(machine_id: @machine) + "';"), class: "btn btn-success" %>
+      <%= link_to "料金設定", show_machine_machine_price_headers_path(machine_id: @machine), {class: "btn btn-success"}%>
     </div>
   <% end %>
   <% unless @machine.new_record? %>
@@ -39,7 +56,7 @@
     </div>
   <% end %>
   <div class="btn-group mr-2">
-    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + machines_path + "';"), class: "btn btn-outline-dark" %>
+    <%= link_to "戻る", machines_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
 <% end %>

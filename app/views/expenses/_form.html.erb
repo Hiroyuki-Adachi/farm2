@@ -1,0 +1,101 @@
+<%= error_print(@expense) %>
+<%= form_for(@expense) do |f| %>
+<div class="form-row">
+  <div class="form-group col-md-2">
+    <%= f.label :payed_on, class: "col-form-label-lg" %>
+    <%= f.date_field :payed_on, {required: true, class: "form-control", min: current_system.start_date, max: current_system.end_date} %>
+  </div>
+  <div class="form-group col-md-4">
+    <%= f.label :content, class: "col-form-label-lg" %>
+    <%= f.text_field :content, {:maxlength => 40, :size => 40, required: true, class: "form-control"} %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.label :amount, class: "col-form-label-lg" %>
+    <%= f.number_field :amount, {min: 1, max: 9999999, step: 1, required: true, class: "form-control"} %>
+  </div>
+</div>
+<%= f.hidden_field :term, {value: current_term} %>
+<div class="form-row">
+  <div class="field form-group">
+    <fieldset>
+      <legend>原価対象</legend>
+      <% @work_types.each do |work_type| %>
+        <% expense_work_type = @expense.expense_work_types.find{|ewt| ewt.work_type_id == work_type.id} if @expense.expense_work_types %>
+        <div class="form-check form-check-inline">
+          <%= check_box_tag "", expense_work_type ? expense_work_type.true_rate : 1, expense_work_type ? expense_work_type.rate? : false, {id: "expense_work_types_rate_#{work_type.id}", class: "form-check-input", data: {id: "expense_rate_value_#{work_type.id}", work_type_id: work_type.id, work_type_name: work_type.name}} %>
+          <%= label_tag "expense_work_types_rate_#{work_type.id}", work_type.name, {class: "form-check-label", id: nil} %>
+          <%= hidden_field_tag "expense[expense_work_types_attributes][][id]", expense_work_type&.id, {id: nil} %>
+          <%= hidden_field_tag "expense[expense_work_types_attributes][][work_type_id]", work_type.id, {id: nil} %>
+          <%= hidden_field_tag "expense[expense_work_types_attributes][][rate]", expense_work_type&.rate || 0, {id: "expense_rate_value_#{work_type.id}"} %>
+        </div>
+      <% end %>
+    </fieldset>
+  </div>
+</div>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= f.submit '登録', class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
+  <button type="button" id="showProportionModal" class="btn btn-primary">按分設定</button>
+  </div>
+  <% unless @expense.new_record? %>
+    <div class="btn-group mr-2">
+      <%= link_to '削除', @expense, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
+    </div>
+  <% end %>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', expenses_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>
+<% end %>
+<!-- Modal -->
+<div class="modal fade" id="proportionModal" tabindex="-1" role="dialog" aria-labelledby="proportionModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="proportionModalTitle">按分設定</h5>
+      </div>
+      <div id="proportionModalBody" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="saveProportionModal" class="btn btn-warning">保存</button>
+        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$(function() {
+    $("input[type='checkbox'][id^='expense_work_types_rate_']").click(function() {
+        $("#" + $(this).data("id")).val($(this).prop("checked") ? $(this).val() : 0);
+    });
+
+    $("#showProportionModal").click(function() {
+        if($("input[type='checkbox'][id^='expense_work_types_rate_']:checked").length < 2) {
+            bootbox.alert("按分設定は複数の項目にチェックされている場合のみ可能です。")
+            return;
+        }
+        $("#proportionModalBody").html("");
+        $("input[type='checkbox'][id^='expense_work_types_rate_']:checked").each(function() {
+            var work_type_id = $(this).data("work-type-id");
+            var id = "modal_rate_" + work_type_id;
+            var html = "";
+            var rate = $("#" + $(this).data("id")).val();
+            html += "<div class='row'><div class='col-md-12 form-inline'>";
+            html += "<label for='" + id + "' class='col-form-label' style='width:100px;'>" + $(this).data("work-type-name") + "</label>";
+            html += "<input type='number' id='" + id +"' min='0.01' max='99.99' step='0.01' require='true' class='form-control proportionModalRate' value='" + rate + "' data-id='expense_rate_value_" + work_type_id + "' style='width:100px;' />";
+            html += "</div></div>";
+            $("#proportionModalBody").append(html);
+        });
+        $("#proportionModal").modal("show");
+    });
+
+    $("#saveProportionModal").click(function() {
+        $(".proportionModalRate").each(function() {
+            $("#" + $(this).data("id")).val($(this).val());
+        });
+        $("#proportionModal").modal("hide");
+    });
+});
+</script>

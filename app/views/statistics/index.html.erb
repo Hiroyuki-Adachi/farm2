@@ -1,64 +1,27 @@
+<script>
+var colors = ['rgba(99, 200, 132, 1.0)', 'rgba(99, 132, 200, 1.0)', 'rgba(200, 200, 132, 1.0)', 'rgba(132, 132, 132, 1.0)', 'rgba(99, 200, 200, 1.0)', 'rgba(200, 132, 132, 1.0)'];
+</script>
 <h1>統計情報一覧</h1>
 
-<h2>全作業時間</h2>
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th>年度</th>
-      <% @total_all.each do |ta| %>
-        <th style="text-align:right;"><%= ta[0] %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>合計</th>
-      <% @total_all.each do |ta| %>
-        <td class="numeric"><%= sprintf("%.1f", ta[1]) %></td>
-      <% end %>
-    </tr>
-  </tbody>
-</table>
-<h2>作業種別別時間</h2>
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th>年度</th>
-      <% @total_all.each do |ta| %>
-        <th style="text-align:right;"><%= ta[0] %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% WorkType.categories.each do |category| %>
-    <tr>
-      <th><%= category.name %></th>
-      <% @total_all.each do |ta| %>
-        <td class="numeric"><%= sprintf("%.1f", @total_genre[[category.genre, ta[0]]] || 0) %></td>
-      <% end %>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-<h2>世代別時間</h2>
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th>年度</th>
-      <% @total_all.each do |ta| %>
-        <th style="text-align:right;"><%= ta[0] %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% t("statistics.age").each_with_index do |age, i| %>
-    <tr>
-      <th><%= age %></th>
-      <% @total_all.each do |ta| %>
-        <td class="numeric"><%= sprintf("%.1f", @total_age[[ta[0], i]] || 0) %></td>
-      <% end %>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to "全作業時間", tab1_statistics_path, {remote: true, data: {toggle: "tab"}, class: "nav-link"} %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "作業種別別時間", tab2_statistics_path, {remote: true, data: {toggle: "tab"}, class: "nav-link"} %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "世代別時間", tab3_statistics_path, {remote: true, data: {toggle: "tab"}, class: "nav-link"} %>
+  </li>
+</ul>
+
+<div class="tab-content">
+    <div class="row">
+      <div class="col-md-12">
+        <canvas id="chart" />
+      </div>
+    </div>
+    <div id="tab" class="row">
+    </div>
+</div>
+<%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>

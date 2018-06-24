@@ -5,7 +5,7 @@
 </div>
 <% end %>
 <div id="print_stamp">
-<%= render partial: "show_stamp_print" %>
+<%= render partial: "works/print/show_stamp_print" %>
 </div>
 <% if @work.fixed_at %>
 <div class="stamp stamp-fix" style="position:absolute; top:20px;left:210px">
@@ -14,7 +14,7 @@
   <span class="name"><%= fix.fixer_short_name %></span>
 </div>
 <% end %>
-<% @checkers.last(WorkVerification::ENOUGH).each_with_index do |checker, index| %>
+<% @checkers.last(WorkVerification::ENOUGH + 1).each_with_index do |checker, index| %>
 <div class="stamp stamp-check" style="position:absolute; top:20px;left:<%= index * 95 + 460 %>px">
   <span class="date"><%= checker.updated_at %></span>
   <span class="name"><%= checker.short_name %></span>

@@ -1,3 +1,9 @@
+AllCops:
+  TargetRubyVersion: 2.3
+
+Rails:
+  Enabled: true
+
 Documentation:
   Enabled: false
 
@@ -50,6 +56,21 @@ Style/ClassAndModuleChildren:
 
 Style/EmptyMethod:
   EnforcedStyle: expanded
+
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+Style/WordArray:
+  EnforcedStyle: brackets
+
+Style/Lambda:
+  Enabled: false
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Layout/SpaceInsideBlockBraces:
+  EnforcedStyle: no_space
 
 Layout/EndOfLine:
   EnforcedStyle: lf

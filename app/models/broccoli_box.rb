@@ -11,5 +11,5 @@
 #
 
 class BroccoliBox < ApplicationRecord
-  scope :usual, -> { order("display_order") }
+  scope :usual, -> {order("display_order")}
 end

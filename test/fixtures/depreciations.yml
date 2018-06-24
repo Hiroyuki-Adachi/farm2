@@ -1,0 +1,25 @@
+# == Schema Information
+#
+# Table name: depreciations # 減価償却
+#
+#  id         :integer          not null, primary key # 減価償却
+#  term       :integer          not null              # 年度(期)
+#  machine_id :integer                                # 機械
+#  cost       :decimal(9, )     default(0), not null  # 減価償却費
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+depreciation1:
+  term: 2015
+  machine_id: machines(:taueki_1).id
+  cost: 0
+  created_at: '2015-07-15 14:34:42'
+  updated_at: '2016-06-07 14:10:01'

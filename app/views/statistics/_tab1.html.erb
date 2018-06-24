@@ -1,0 +1,11 @@
+<div class="col-md-12">
+  <table class="table table-sm">
+    <tbody>
+      <tr>
+        <% @total_all.each do |ta| %>
+        <td class="numeric"><%= sprintf("%.1f", ta[1]) %></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>

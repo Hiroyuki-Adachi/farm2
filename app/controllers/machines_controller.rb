@@ -4,7 +4,7 @@ class MachinesController < ApplicationController
   before_action :set_masters, only: [:new, :create, :edit, :update]
 
   def index
-    @machines = MachineDecorator.decorate_collection(Machine.usual.page(params[:page]))
+    @machines = MachineDecorator.decorate_collection(Machine.includes(:owner).usual.page(params[:page]))
   end
 
   def new
@@ -48,6 +48,8 @@ class MachinesController < ApplicationController
   end
 
   def machine_params
-    return params.require(:machine).permit(:name, :display_order, :validity_start_at, :validity_end_at, :machine_type_id, :home_id)
+    params.require(:machine)
+          .permit(:name, :display_order, :validity_start_at, :validity_end_at,
+                  :machine_type_id, :home_id, :diesel_flag)
   end
 end

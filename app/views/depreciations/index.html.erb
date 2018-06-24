@@ -1,0 +1,60 @@
+<h1>減価償却費登録</h1>
+<%= form_tag(action: :create) do  %>
+  <div id="table_wrapper" class="row wrapper small" style="overflow-y: scroll; overflow-x: hidden;">
+    <table id="tbl_list" class="table table-sm">
+      <thead>
+        <tr>
+          <th>機械</th>
+          <th>減価償却費</th>
+          <th>対象</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @machines.each do |machine| %>
+          <tr>
+            <% depreciation = @depreciations.find{|dp| dp.machine_id == machine.id}%>
+            <td><%= machine.usual_name %></td>
+            <td><%= number_field_tag "depreciations[][cost]", depreciation&.cost || 0, {class: "form-control", min: 0, max: 999999999, style: "width: 120px;"} %></td>
+            <td>
+                <% @work_types.each do |work_type| %>
+                <div class="form-check form-check-inline">
+                    <%= check_box_tag "depreciations[][work_types][]", work_type.id, depreciation ? depreciation.work_types.include?(work_type) : false, {id: "work_type_#{machine.id}_#{work_type.id}", class: "form-check-input"} %>
+                    <%= label_tag "work_type_#{machine.id}_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+                </div>
+                <% end %>
+                <%= hidden_field_tag "depreciations[][machine_id]", machine.id %>
+                <%= hidden_field_tag "depreciations[][term]", current_term %>
+                <%= hidden_field_tag "depreciations[][id]", depreciation&.id %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div id="btn_toolbar" class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+    </div>
+  </div>
+<% end %>
+<script>
+$(function() {
+    $("#tbl_list").floatThead({
+        position: 'absolute',
+        scrollContainer:true,
+        zIndex: 999
+    });
+    $(window).resize(function() {
+        setTableWrapperHeight();
+    });
+    setTableWrapperHeight();
+});
+function setTableWrapperHeight() {
+    if($("#table_wrapper")[0]) {
+        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 50);
+    }
+}
+</script>

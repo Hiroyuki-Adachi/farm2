@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
+  resources :expenses, except: [:show]
+  resources :seedling_costs, only: [:index, :create]
+  resources :chemical_costs, only: [:index, :create]
+  resources :fuel_costs, only: [:index, :create]
+  resources :depreciations, only: [:index, :create]
+  resources :total_costs, only: [:index]
+  resources :land_places, except: [:show]
   resources :organizations, param: nil, only: [:edit, :update]
+  resources :land_costs, only: [:index, :create]
 
   resources :banks, param: :code, except: [:show] do
     resources :branches, param: :code, controller: "banks/branches", except: [:show]
@@ -20,7 +28,13 @@ Rails.application.routes.draw do
   resources :machines, except: [:show]
   resources :chemicals, except: [:show]
   resources :sections, except: [:show]
-  resources :statistics, only: [:index]
+  resources :statistics, only: [:index] do
+    collection do
+      get :tab1
+      get :tab2
+      get :tab3
+    end
+  end
   resources :monthly_reports, only: [:index, :show, :edit, :update]
   resources :fixes, param: "fixed_at", except: [:edit, :update]
   resources :personal_informations, param: "token", only: [:show]
@@ -51,6 +65,7 @@ Rails.application.routes.draw do
   end
 
   resources :works do
+    resources :print, controller: "works/print", only: [:create, :destroy]
     collection do
       get :work_type_select
       get :autocomplete_for_land_place
@@ -60,7 +75,6 @@ Rails.application.routes.draw do
       get :edit_lands
       get :edit_machines
       get :edit_chemicals
-      patch :print
     end
   end
 

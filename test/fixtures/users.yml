@@ -22,6 +22,7 @@ users1:
   password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
   organization_id: 1
   permission_id: 9
+  term: 2015
 
 user_manager:
   id: 2
@@ -30,6 +31,7 @@ user_manager:
   password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
   organization_id: 1
   permission_id: 3
+  term: 2015
 
 user_checker:
   id: 3
@@ -38,6 +40,7 @@ user_checker:
   password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
   organization_id: 1
   permission_id: 2
+  term: 2015
 
 user_user:
   id: 4
@@ -46,6 +49,7 @@ user_user:
   password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
   organization_id: 1
   permission_id: 1
+  term: 2015
 
 user_visitor:
   id: 5
@@ -54,3 +58,4 @@ user_visitor:
   password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
   organization_id: 1
   permission_id: 0
+  term: 2015

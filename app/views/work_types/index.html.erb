@@ -11,8 +11,8 @@
     <tbody>
       <% @work_types.each do |work_type| %>
         <tr>
-          <td><%=h work_type.genre_name %></td>
-          <td><%=h work_type.name %></td>
+          <td style="background-color: <%= work_type.bg_color %>;"><%= work_type.genre_name %></td>
+          <td style="background-color: <%= work_type.bg_color %>;"><%= work_type.name %></td>
           <td><%= link_to '修正', edit_work_type_path(work_type), {class: "btn btn-success btn-sm"} %></td>
           <td><%= link_to '削除', work_type, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
         </tr>
@@ -22,9 +22,9 @@
 <% end %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
-    <%= button_tag "新規登録",  type: :button, :onclick => raw("javascript:location.href = '" + new_work_type_path + "';"), class: "btn btn-success" %>
+    <%= link_to "新規登録", new_work_type_path, {class: "btn btn-success"}%>
   </div>
   <div class="btn-group mr-2">
-    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>

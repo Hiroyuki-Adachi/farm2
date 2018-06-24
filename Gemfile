@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2.7'
+gem 'rails', '~> 4.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '0.19'
 # Use SCSS for stylesheets
@@ -53,7 +53,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Ruby library for dealing with iCalendar files
 gem 'icalendar'
-
+# Integrate Chart.js into Rails Asset Pipeline
+gem 'chart-js-rails'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
