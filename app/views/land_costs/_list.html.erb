@@ -18,7 +18,7 @@
       <%= number_field_tag "land_costs[#{i}][cost]", cost&.cost || 0, {class: "form-control", min: 0, max: 999999, style: "width: 100px;", ondblclick: "cost_keydown(this, " + land.area.to_s + ", " + current_system.default_fee.to_s + ")"} %>
       <%= hidden_field_tag "land_costs[#{i}][id]", cost&.id %>
       <%= hidden_field_tag "land_costs[#{i}][land_id]", land.id %>
-      <%= hidden_field_tag "land_costs[#{i}][term]", @term %>
+      <%= hidden_field_tag "land_costs[#{i}][activated_on]", cost&.activated_on || Date.today %>
     </td>
   </tr>
 <% end %>

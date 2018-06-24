@@ -7,11 +7,11 @@ class LandCostsControllerTest < ActionController::TestCase
     @land_costs = {
       0 => {
         work_type_id: work_types(:work_types1).id, cost: 10_000, id:  @cost1.id,
-        land_id: @cost1.land_id, term: @cost1.term
+        land_id: @cost1.land_id, activated_on: @cost1.activated_on
       },
       1 => {
         work_type_id: work_types(:work_types2).id, cost: 5000,
-        land_id: lands(:lands2).id, term: @cost1.term
+        land_id: lands(:lands2).id, activated_on: @cost1.activated_on
       }}
   end
 

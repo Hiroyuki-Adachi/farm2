@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180617081519) do
+ActiveRecord::Schema.define(version: 20180624082725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,15 +187,15 @@ ActiveRecord::Schema.define(version: 20180617081519) do
   add_index "homes", ["deleted_at"], name: "index_homes_on_deleted_at", using: :btree
 
   create_table "land_costs", force: :cascade, comment: "土地原価" do |t|
-    t.integer  "term",                                               null: false, comment: "年度(期)"
-    t.integer  "land_id",                                            null: false, comment: "土地"
-    t.integer  "work_type_id",                                       null: false, comment: "作業分類"
-    t.decimal  "cost",         precision: 7, scale: 1, default: 0.0, null: false, comment: "原価"
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.integer  "land_id",                                                     null: false, comment: "土地"
+    t.integer  "work_type_id",                                                null: false, comment: "作業分類"
+    t.decimal  "cost",         precision: 7, scale: 1, default: 0.0,          null: false, comment: "原価"
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
+    t.date     "activated_on",                         default: '1900-01-01', null: false, comment: "有効日"
   end
 
-  add_index "land_costs", ["term", "land_id"], name: "index_land_costs_on_term_and_land_id", unique: true, using: :btree
+  add_index "land_costs", ["activated_on", "land_id"], name: "index_land_costs_on_activated_on_and_land_id", unique: true, using: :btree
 
   create_table "land_places", force: :cascade, comment: "場所マスタ" do |t|
     t.string   "name",          limit: 40, null: false, comment: "場所名称"

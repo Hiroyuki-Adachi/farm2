@@ -12,11 +12,15 @@ class ChemicalTerm < ApplicationRecord
   belongs_to :chemical, ->{with_deleted}
 
   scope :usual, -> (term) {
-    includes(chemical: :chemical_type)
+    joins(chemical: :chemical_type)
       .where(term: term)
-      .order("chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
+      .order(<<SQL)
+        chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id
+SQL
   }
-  scope :land, ->{joins(:chemical).where("EXISTS (SELECT * FROM chemical_kinds WHERE chemical_kinds.chemical_type_id = chemicals.chemical_type_id)")}
+  scope :land, ->{joins(:chemical).where(<<SQL)}
+  EXISTS (SELECT * FROM chemical_kinds WHERE chemical_kinds.chemical_type_id = chemicals.chemical_type_id)
+SQL
   has_many :chemical_work_types, {dependent: :delete_all}
 
   def self.regist_price(params)
