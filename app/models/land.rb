@@ -12,39 +12,45 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #  deleted_at    :datetime
+#  land_place_id :integer                                  # 土地
 #
 
 class Land < ApplicationRecord
   acts_as_paranoid
 
-  belongs_to :owner, ->{with_deleted}, {class_name: :Home, foreign_key: :owner_id}
-  belongs_to :manager, ->{with_deleted}, {class_name: :Home, foreign_key: :manager_id}
+  belongs_to :owner, -> {with_deleted}, {class_name: :Home, foreign_key: :owner_id}
+  belongs_to :manager, -> {with_deleted}, {class_name: :Home, foreign_key: :manager_id}
+  belongs_to :land_place, -> {with_deleted}
 
-  has_one :owner_holder, ->{with_deleted}, {through: :owner, source: :holder}
-  has_one :manager_holder, ->{with_deleted}, {through: :manager, source: :holder}
+  has_one :owner_holder, -> {with_deleted}, {through: :owner, source: :holder}
+  has_one :manager_holder, -> {with_deleted}, {through: :manager, source: :holder}
 
   has_many :work_lands
   has_many :works, {through: :work_lands}
 
   has_many :land_uses
-  has_many :work_types,  {through: :land_uses}
+  has_many :work_types, {through: :land_uses}
 
   scope :usual, -> {where(target_flag: true).order("place, display_order")}
-  scope :list, -> {includes(:owner, :owner_holder).order("place, lands.display_order, lands.id")}
+  scope :list, -> {includes(:land_place, :owner, :manager, :owner_holder, :manager_holder).order("place, lands.display_order, lands.id")}
 
   validates :place, presence: true
   validates :area, presence: true
   validates :display_order, presence: true
 
-  validates :area, numericality: true, if: proc { |x| x.area.present? }
-  validates :display_order, numericality: { only_integer: true }, if: proc{ |x| x.display_order.present? }
+  validates :area, numericality: true, if: proc { |x| x.area.present?}
+  validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
 
   def owner_name
-    return self.owner.member_flag ? self.owner_holder.name : self.owner.name
+    owner.member_flag ? owner_holder.name : owner.name
   end
 
   def manager_name
-    return self.manager.member_flag ? self.manager_holder.name : self.manager.name
+    manager.member_flag ? manager_holder.name : manager.name
+  end
+
+  def place_name
+    land_place ? land_place.name : ""
   end
 
   def self.autocomplete(place)

@@ -20,7 +20,7 @@
       <%= f.submit '設定', class: "btn btn-danger" %>
     </div>
     <div class="btn-group mr-2">
-      <%= button_tag "戻る",  type: :button, onclick: raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
+      <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
     </div>
   </div>
 <% end %>

@@ -13,7 +13,7 @@
       <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name, @work_type_id), {include_blank: true, class: "form-control"}) %>
     </div>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-4">
     <div class="form-inline">
       <label for="work_work_kind_id" class="h5">種別</label>
       <%= select_tag(:work_kind_id, options_from_collection_for_select(@work_kinds, :id, :name, @work_kind_id), {id: "work_work_kind_id", include_blank: true, class: "form-control"}) %>
@@ -36,7 +36,7 @@
     <%= link_to 'CSV出力', works_path(format: :csv), class: "btn btn-primary" %>
   </div>
   <div class="btn-group mr-2">
-    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + menu_index_path + "';"), class: "btn btn-outline-dark" %>
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
 <script type="text/javascript">

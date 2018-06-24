@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>作業日報管理システム(V2)</title>
@@ -13,9 +13,22 @@
 </head>
 <body>
 
-<div class="container">
-<%= render 'navbar' %>
+<div class="container-fluid">
+<% if session[:user_id] %>
+  <%= render 'navbar' %>
+  <div class="row">
+    <div class="col-md-2">
+      <%= render 'sidebar' %>
+    </div>
+    <div class="col-md-10">
+<% end %>
+      <div class="container-fluid">
 <%= yield %>
+      </div>
+<% if session[:user_id] %>
+    </div>
+  </div>
+<% end %>
 </div>
 
 </body>

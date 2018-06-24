@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   end
 
   def restrict_remote_ip
-    if PERMIT_ADDRESSES.none? { |pa| request.remote_ip.start_with?(pa) }
+    if PERMIT_ADDRESSES.none? { |pa| request.remote_ip.start_with?(pa)}
       to_error_path
     elsif session[:user_id].nil? && controller_name != "sessions"
       redirect_to root_path

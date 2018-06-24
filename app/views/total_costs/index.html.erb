@@ -1,0 +1,19 @@
+<h1>原価一覧</h1>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th></th>
+      <% @work_types.each do |work_type| %>
+      <th style="text-align: right;"><%= work_type.name %></th>
+      <% end %>
+      <th style="text-align: right;">合計</th>
+    </tr>
+    <tr>
+      <th>面積(α)</th>
+      <% @work_types.each do |work_type| %>
+      <td class="numeric"><%= sprintf("%.1f", @lands[work_type.id] || 0) %></td>
+      <% end %>
+      <td class="numeric"><%= sprintf("%.1f", @lands.values.inject(:+) || 0) %></td>
+    </tr>
+  </thead>
+</table>

@@ -2,76 +2,78 @@
 #
 # Table name: chemical_terms # 薬剤年度別利用マスタ
 #
-#  chemical_id :integer          not null # 薬剤
-#  term        :integer          not null # 年度(期)
+#  chemical_id :integer          not null              # 薬剤
+#  term        :integer          not null              # 年度(期)
+#  id          :integer          not null, primary key
+#  price       :decimal(6, )     default(0), not null  # 価格
 #
 
-chemical_terms0:
+chemical_term_3_2010:
   chemical_id: '3'
   term: '2010'
 
 
-chemical_terms1:
+chemical_term_3_2011:
   chemical_id: '3'
   term: '2011'
 
 
-chemical_terms2:
+chemical_term_3_2014:
   chemical_id: '3'
   term: '2014'
 
 
-chemical_terms3:
+chemical_term_3_2013:
   chemical_id: '3'
   term: '2013'
 
 
-chemical_terms4:
+chemical_term_3_2015:
   chemical_id: '3'
   term: '2015'
 
 
-chemical_terms5:
+chemical_term_3_2012:
   chemical_id: '3'
   term: '2012'
 
 
-chemical_terms6:
+chemical_term_3_2016:
   chemical_id: '3'
   term: '2016'
 
 
-chemical_terms7:
+chemical_term_4_2012:
   chemical_id: '4'
   term: '2010'
 
 
-chemical_terms8:
+chemical_term_4_2011:
   chemical_id: '4'
   term: '2011'
 
 
-chemical_terms9:
+chemical_term_4_2014:
   chemical_id: '4'
   term: '2014'
 
 
-chemical_terms10:
+chemical_term_4_2013:
   chemical_id: '4'
   term: '2013'
 
 
-chemical_terms11:
+chemical_term_4_2015:
   chemical_id: '4'
   term: '2015'
 
 
-chemical_terms12:
+chemical_term_4_2012:
   chemical_id: '4'
   term: '2012'
 
 
-chemical_terms13:
+chemical_term_4_2016:
   chemical_id: '4'
   term: '2016'
 
@@ -213,76 +215,6 @@ chemical_terms40:
 
 chemical_terms41:
   chemical_id: '7'
-  term: '2016'
-
-
-chemical_terms42:
-  chemical_id: '10'
-  term: '2010'
-
-
-chemical_terms43:
-  chemical_id: '10'
-  term: '2011'
-
-
-chemical_terms44:
-  chemical_id: '10'
-  term: '2014'
-
-
-chemical_terms45:
-  chemical_id: '10'
-  term: '2013'
-
-
-chemical_terms46:
-  chemical_id: '10'
-  term: '2015'
-
-
-chemical_terms47:
-  chemical_id: '10'
-  term: '2012'
-
-
-chemical_terms48:
-  chemical_id: '10'
-  term: '2016'
-
-
-chemical_terms49:
-  chemical_id: '11'
-  term: '2010'
-
-
-chemical_terms50:
-  chemical_id: '11'
-  term: '2011'
-
-
-chemical_terms51:
-  chemical_id: '11'
-  term: '2014'
-
-
-chemical_terms52:
-  chemical_id: '11'
-  term: '2013'
-
-
-chemical_terms53:
-  chemical_id: '11'
-  term: '2015'
-
-
-chemical_terms54:
-  chemical_id: '11'
-  term: '2012'
-
-
-chemical_terms55:
-  chemical_id: '11'
   term: '2016'
 
 
@@ -563,40 +495,5 @@ chemical_terms110:
 
 chemical_terms111:
   chemical_id: '17'
-  term: '2016'
-
-
-chemical_terms112:
-  chemical_id: '12'
-  term: '2010'
-
-
-chemical_terms113:
-  chemical_id: '12'
-  term: '2011'
-
-
-chemical_terms114:
-  chemical_id: '12'
-  term: '2014'
-
-
-chemical_terms115:
-  chemical_id: '12'
-  term: '2013'
-
-
-chemical_terms116:
-  chemical_id: '12'
-  term: '2015'
-
-
-chemical_terms117:
-  chemical_id: '12'
-  term: '2012'
-
-
-chemical_terms118:
-  chemical_id: '12'
   term: '2016'
 

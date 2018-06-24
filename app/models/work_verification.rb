@@ -11,13 +11,14 @@
 
 class WorkVerification < ApplicationRecord
   belongs_to :work
-  belongs_to :worker, -> { with_deleted }
+  belongs_to :worker, -> {with_deleted}
 
-  ENOUGH = 3
+  ENOUGH = 2
 
   def self.regist(work, worker)
     return if work.created_by == worker.id
 
+    Rails.application.config.update_logger.info "updated by #{worker.name}"
     wv = WorkVerification.where(work_id: work.id, worker_id: worker.id)
     if wv.exists?
       wv.first.touch

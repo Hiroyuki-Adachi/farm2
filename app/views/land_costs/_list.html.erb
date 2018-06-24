@@ -1,0 +1,24 @@
+<% @lands.each_with_index do |land, i| %>
+  <% cost = @costs.find{|c| c.land_id == land.id} %>
+  <tr>
+    <td class="text-nowrap"><%= land.place %></td>
+    <td class="numeric">
+      <%= land.area %>
+      <%= hidden_field_tag "lands[#{i}][area]", land.area %>
+    </td>
+    <td>
+      <% @work_types.each do |work_type| %>
+        <div class="form-check form-check-inline">
+          <%= radio_button_tag "land_costs[#{i}][work_type_id]", work_type.id, cost&.work_type_id == work_type.id, {id: "work_type_#{land.id}_#{work_type.id}", class: "form-check-input", onclick: "worktype_select(this)"} %>
+          <%= label_tag "work_type_#{land.id}_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+        </div>
+      <% end %>
+    </td>
+    <td>
+      <%= number_field_tag "land_costs[#{i}][cost]", cost&.cost || 0, {class: "form-control", min: 0, max: 999999, style: "width: 100px;", ondblclick: "cost_keydown(this, " + land.area.to_s + ", " + current_system.default_fee.to_s + ")"} %>
+      <%= hidden_field_tag "land_costs[#{i}][id]", cost&.id %>
+      <%= hidden_field_tag "land_costs[#{i}][land_id]", land.id %>
+      <%= hidden_field_tag "land_costs[#{i}][term]", @term %>
+    </td>
+  </tr>
+<% end %>

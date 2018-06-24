@@ -15,17 +15,19 @@
 #  end_at       :datetime         default(Thu, 01 Jan 1970 17:00:00 UTC +00:00), not null # 終了予定時刻
 #
 
-class Schedule < ActiveRecord::Base
+
+
+class Schedule < ApplicationRecord
   validates :worked_at, presence: true
-  validates :name, length: { maximum: 40 }, if: proc { |x| x.name.present? }
+  validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
   validates :work_type_id, presence: true
   validates :work_kind_id, presence: true
 
-  belongs_to :work_type, -> { with_deleted }
-  belongs_to :work_kind, -> { with_deleted }
+  belongs_to :work_type, -> {with_deleted}
+  belongs_to :work_kind, -> {with_deleted}
 
-  has_many :schedule_workers, -> { order('schedule_workers.display_order') }, { dependent: :destroy }
-  has_many :workers, { through: :schedule_workers }, -> { with_deleted }
+  has_many :schedule_workers, -> {order('schedule_workers.display_order')}, {dependent: :destroy}
+  has_many :workers, {through: :schedule_workers}, -> {with_deleted}
 
   scope :usual, ->(term) {
       where(term: term)
@@ -33,9 +35,10 @@ class Schedule < ActiveRecord::Base
         .order(worked_at: :ASC, id: :ASC)
     }
 
-  scope :by_worker, ->(worker) {
-    where(["EXISTS (SELECT * FROM schedule_workers WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)", worker.id])
-  }
+  scope :by_worker, ->(worker) {where([<<SQL, worker.id])}
+      EXISTS (SELECT * FROM schedule_workers
+            WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
+SQL
 
   def regist_workers(params)
     workers = []

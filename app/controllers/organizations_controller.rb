@@ -1,7 +1,6 @@
 class OrganizationsController < ApplicationController
   include PermitManager
   before_action :set_organization
-  layout 'menu'
 
   def edit
     @work_kinds = WorkKind.usual

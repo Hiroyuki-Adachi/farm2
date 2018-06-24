@@ -1,60 +1,70 @@
 <%= error_print(@work_kind) %>
 <%= form_for(@work_kind) do |f| %>
- <div class="field form-group">
-    <%= f.label :name, class: "col-form-label-lg" %>
-    <%= f.text_field :name, {maxlength: 40, size: 20, required: true, class: "form-control"} %>
- </div>
- <div class="field form-group">
-    <%= f.label :display_order, class: "col-form-label-lg" %>
-    <%= f.number_field :display_order, {min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
- </div>
- <div class="field form-group">
-    <%= f.label :price, class: "col-form-label-lg" %>
-    <%= f.number_field :price, {min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
- </div>
- <div class="field form-group">
- <% if current_organization.lands_count > 0 %>
-    <%= f.label :land_flag, class: "col-form-label-lg" %>
-    <%= f.check_box :land_flag %>
- <% else %>
-   <%= f.hidden_field land_flag, false %>
- <% end %>
- </div>
- <div class="field form-group">
- <fieldset>
-    <legend>該当作業</legend>
-  <% @work_types.each do |work_type| %>
-    <div class="form-check form-check-inline">
-      <%= check_box_tag "work_types[]", work_type.id, @work_kind.work_types.include?(work_type), {id: "work_type_#{work_type.id}", class: "form-check-input"} %>
-      <%= label_tag "work_type_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+  <div class="row">
+    <div class="field form-group col-md-4">
+        <%= f.label :name, class: "col-form-label-lg" %>
+        <%= f.text_field :name, {maxlength: 40, size: 20, required: true, class: "form-control"} %>
     </div>
-  <% end %>
-  </fieldset>
+    <div class="field form-group col-md-2">
+        <%= f.label :display_order, class: "col-form-label-lg" %>
+        <%= f.number_field :display_order, {min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
+    </div>
+    <div class="field form-group col-md-2">
+        <%= f.label :price, class: "col-form-label-lg" %>
+        <%= f.number_field :price, {min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field form-group col-md-2">
+      <% if current_organization.lands_count > 0 %>
+        <%= f.label :land_flag, class: "col-form-label-lg" %>
+        <%= f.check_box :land_flag %>
+      <% else %>
+        <%= f.hidden_field land_flag, false %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field form-group col-md-12">
+      <fieldset>
+        <legend>該当作業</legend>
+        <% @work_types.each do |work_type| %>
+          <div class="form-check form-check-inline">
+            <%= check_box_tag "work_types[]", work_type.id, @work_kind.work_types.include?(work_type), {id: "work_type_#{work_type.id}", class: "form-check-input"} %>
+            <%= label_tag "work_type_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+          </div>
+        <% end %>
+      </fieldset>
+    </div>
   </div>
   <% if current_organization.machines_count > 0 %>
-    <div class="field">
-      <fieldset class="form-group">
-        <legend>使用機械種別</legend>
-      <% @machine_types.each do |machine_type| %>
-        <div class="form-check form-check-inline">
-          <%= check_box_tag "machine_types[]", machine_type.id, @work_kind.machine_types.include?(machine_type), {id: "machine_type_#{machine_type.id}", class: "form-check-input"} %>
-          <%= label_tag "machine_type_#{machine_type.id}", machine_type.name, {class: "form-check-label"} %>
-        </div>
-      <% end %>
-      </fieldset>
+    <div class="row">
+      <div class="field col-md-12">
+        <fieldset class="form-group">
+          <legend>使用機械種別</legend>
+        <% @machine_types.each do |machine_type| %>
+          <div class="form-check form-check-inline">
+            <%= check_box_tag "machine_types[]", machine_type.id, @work_kind.machine_types.include?(machine_type), {id: "machine_type_#{machine_type.id}", class: "form-check-input"} %>
+            <%= label_tag "machine_type_#{machine_type.id}", machine_type.name, {class: "form-check-label"} %>
+          </div>
+        <% end %>
+        </fieldset>
+      </div>
     </div>
   <% end %>
   <% if current_organization.chemicals_count > 0 %>
-  <div class="field">
-    <fieldset class="form-group">
-      <legend>使用薬品種別</legend>
-      <% @chemical_types.each do |chemical_type| %>
-        <div class="form-check form-check-inline">
-          <%= check_box_tag "chemical_types[]", chemical_type.id, @work_kind.chemical_types.include?(chemical_type), {id: "chemical_type_#{chemical_type.id}", class: "form-check-input"} %>
-          <%= label_tag "chemical_type_#{chemical_type.id}", chemical_type.name, {class: "form-check-label"} %>
-        </div>
-      <% end %>
-    </fieldset>
+    <div class="row">
+      <div class="field col-md-12">
+        <fieldset class="form-group">
+          <legend>使用薬品種別</legend>
+          <% @chemical_types.each do |chemical_type| %>
+            <div class="form-check form-check-inline">
+              <%= check_box_tag "chemical_types[]", chemical_type.id, @work_kind.chemical_types.include?(chemical_type), {id: "chemical_type_#{chemical_type.id}", class: "form-check-input"} %>
+              <%= label_tag "chemical_type_#{chemical_type.id}", chemical_type.name, {class: "form-check-label"} %>
+            </div>
+          <% end %>
+        </fieldset>
+      </div>
     </div>
  <% end %>
 <div class="btn-toolbar">
@@ -67,7 +77,7 @@
     </div>
   <% end %>
   <div class="btn-group mr-2">
-    <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + work_kinds_path + "';"), class: "btn btn-outline-dark" %>
+    <%= link_to "戻る", work_kinds_path, {class: "btn btn-outline-dark"}%>
   </div>
  </div>
 <% end %>

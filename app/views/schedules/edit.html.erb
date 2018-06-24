@@ -11,7 +11,7 @@
       <%= link_to '削除', schedule_path(id: @schedule), method: :delete, class: "btn btn-danger", data: {confirm: "本当に削除してもよろしいですか?"} %>
     </div>
     <div class="btn-group mr-2">
-      <%= button_tag "戻る",  type: :button, :onclick => raw("javascript:location.href = '" + schedules_path + "';"), class: "btn btn-outline-dark" %>
+      <%= link_to "戻る", schedules_path, {class: "btn btn-outline-dark"}%>
     </div>
   </div>
 <% end %>

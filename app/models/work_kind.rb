@@ -18,7 +18,7 @@ class WorkKind < ApplicationRecord
   after_save :save_price
 
   has_many :machine_kinds
-  has_many :machine_types,-> {order("machine_types.display_order")}, through: :machine_kinds 
+  has_many :machine_types, -> {order("machine_types.display_order")}, through: :machine_kinds 
 
   has_many :chemical_kinds
   has_many :chemical_types, -> {order("chemical_types.display_order")}, through: :chemical_kinds
@@ -31,18 +31,18 @@ class WorkKind < ApplicationRecord
   validates :price, presence: true
   validates :display_order, presence: true
 
-  validates :price, numericality: true, if: proc { |x| x.price.present? }
-  validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present? }
+  validates :price, numericality: true, if: proc { |x| x.price.present?}
+  validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
 
-  scope :usual, -> { where(other_flag: false).order(:display_order) }
-  scope :by_type, -> (work_type) { 
-     joins(:work_kind_types)
-    .where("work_kind_types.work_type_id = ?", 
-     work_type.genre_id).order("work_kinds.other_flag, work_kinds.display_order, work_kinds.id")
+  scope :usual, -> {where(other_flag: false).order(:display_order)}
+  scope :by_type, ->(work_type) {
+    joins(:work_kind_types)
+      .where("work_kind_types.work_type_id = ?", work_type.genre_id)
+      .order("work_kinds.other_flag, work_kinds.display_order, work_kinds.id")
   }
 
   def price
-    term_price(Organization.term)
+    new_record? ? @p_price : term_price(Organization.term)
   end
 
   def price=(val)

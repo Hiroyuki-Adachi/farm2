@@ -30,7 +30,8 @@ class BroccoliController < ApplicationController
   end
 
   def set_broccoli
-    @broccoli = (@work.broccoli ? @work.broccoli : WorkBroccoli.new(work_id: @work.id, shipped_on: @work.worked_at)).decorate
+    @broccoli = @work.broccoli || WorkBroccoli.new(work_id: @work.id, shipped_on: @work.worked_at)
+    @broccoli = @broccoli.decorate
     @boxes = BroccoliBox.usual
     @sizes = BroccoliSize.usual
     @ranks = BroccoliRank.usual

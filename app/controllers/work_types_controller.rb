@@ -4,7 +4,7 @@ class WorkTypesController < ApplicationController
   before_action :set_category, only: [:new, :create, :edit, :update]
 
   def index
-    @work_types = WorkType.index
+    @work_types = WorkTypeDecorator.decorate_collection(WorkType.index)
   end
 
   def new
@@ -47,6 +47,6 @@ class WorkTypesController < ApplicationController
   end
 
   def work_type_params
-    return params.require(:work_type).permit(:name, :display_order, :genre)
+    return params.require(:work_type).permit(:name, :display_order, :genre, :bg_color, :land_flag)
   end
 end

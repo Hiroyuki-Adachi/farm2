@@ -34,7 +34,7 @@
     </div>
     <% if controller.action_name == "edit" %>
       <div class="btn-group mr-2">
-        <%= button_tag "履歴", type: :button, :onclick => raw("location.href = '" + machine_price_headers_path(id: @machine_price.id) + "';"), class: "btn btn-success" %>
+        <%= link_to '履歴', machine_price_headers_path(id: @machine_price.id), class: "btn btn-success" %>
       </div>
       <div class="btn-group mr-2">
         <%= link_to '削除', @machine_price, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
@@ -42,11 +42,11 @@
     <% end %>
     <% if @machine_price.machine_id == 0 %>
       <div class="btn-group mr-2">
-        <%= button_tag "戻る", type: :button, :onclick => raw("location.href = '" + edit_machine_type_path(@machine_price.machine_type_id) + "';"), class: "btn btn-outline-dark" %>
+        <%= link_to '戻る', edit_machine_type_path(@machine_price.machine_type_id), class: "btn btn-outline-dark" %>
       </div>
     <% else %>
       <div class="btn-group mr-2">
-        <%= button_tag "戻る", type: :button, :onclick => raw("location.href = '" + edit_machine_path(@machine_price.machine_id) + "';"), class: "btn btn-outline-dark" %>
+        <%= link_to '戻る', edit_machine_path(@machine_price.machine_id), class: "btn btn-outline-dark" %>
       </div>
     <% end %>
   </div>

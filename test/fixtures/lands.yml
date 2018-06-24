@@ -12,6 +12,7 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #  deleted_at    :datetime
+#  land_place_id :integer                                  # 土地
 #
 
 lands0:
@@ -25,6 +26,7 @@ lands0:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  land_place_id: land_places(:land_place0).id
 
 
 lands1:
@@ -38,6 +40,7 @@ lands1:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  land_place_id: land_places(:land_place0).id
 
 
 lands2:
@@ -51,6 +54,7 @@ lands2:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  land_place_id: land_places(:land_place0).id
 
 
 lands3:

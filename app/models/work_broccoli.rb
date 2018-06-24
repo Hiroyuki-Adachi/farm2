@@ -26,7 +26,7 @@ class WorkBroccoli < ApplicationRecord
 
   def harvest(rank, size)
     return nil unless harvests
-    harvests.find { |h| h.broccoli_rank_id == rank.id && h.broccoli_size_id == size.id }
+    harvests.find { |h| h.broccoli_rank_id == rank.id && h.broccoli_size_id == size.id}
   end
 
   def regist_harvests(params)

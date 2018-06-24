@@ -10,5 +10,5 @@
 #
 
 class BroccoliRank < ApplicationRecord
-  scope :usual, -> { order("display_order") }
+  scope :usual, -> {order("display_order")}
 end

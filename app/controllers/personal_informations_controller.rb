@@ -1,14 +1,14 @@
 class PersonalInformationsController < ApplicationController
+  before_action :set_worker
   after_action :to_sjis, only: [:show]
 
   SCHEDULE_DAY = 3
 
   def show
-    @worker = Worker.find_by(token: params[:token])
     if @worker
       @schedules = ScheduleWorkerDecorator.decorate_collection(ScheduleWorker.for_personal(@worker, SCHEDULE_DAY))
       @results = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
-      @lands = WorkLandDecorator.decorate_collection(WorkLand.for_personal(@worker.home, worked_from)).group_by(&:land)
+      @lands = WorkLandDecorator.decorate_collection(WorkLand.for_personal(@worker.home, current_system.start_date)).group_by(&:land)
       @machines = MachineResultDecorator.decorate_collection(MachineResult.for_personal(@worker.home, worked_from))
       @company = Worker.company.first
       render layout: false
@@ -36,5 +36,10 @@ class PersonalInformationsController < ApplicationController
     else
       Date.new(Date.today.year, 7, 1)
     end
+  end
+
+  def set_worker
+    @worker = Worker.find_by(token: params[:token])
+    @current_user = @worker.user
   end
 end

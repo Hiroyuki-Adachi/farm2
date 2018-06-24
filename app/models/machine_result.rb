@@ -13,6 +13,7 @@
 #  fixed_amount    :decimal(7, )                            # 確定使用料
 #  created_at      :datetime
 #  updated_at      :datetime
+#  fuel_usage      :decimal(5, 2)    default(0.0), not null # 燃料使用量
 #
 
 class MachineResult < ApplicationRecord
@@ -60,6 +61,9 @@ class MachineResult < ApplicationRecord
    .where("machines.home_id = ?", home.id)
    .order("works.worked_at, machines.display_order, machines.id")
   }
+
+  scope :by_works, ->(works) {joins(:work_result).where(["work_results.work_id IN (?)", works.ids]).order("machine_results.id")}
+  scope :by_work_machine, ->(work, machine) {joins(:work_result).find_by(["machine_results.machine_id = ? AND work_results.work_id = ?", machine.id, work.id])}
 
   def sum_hours
     work.machine_results.inject(0) {|a, e| a + (e.machine_id == machine_id ? e.hours : 0) }

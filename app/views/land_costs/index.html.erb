@@ -1,0 +1,93 @@
+<script>
+dispLoading("表示中");
+</script>
+<%= error_print(@land_cost) %>
+<h1>土地原価登録</h1>
+<div class="row">
+  <% @land_places.each do |land_place| %>
+    <div class="form-check form-check-inline">
+      <%= radio_button_tag :land_place_id, land_place.id, land_place.id == @land_place_id, {
+        id: "land_place_#{land_place.id}", class: "form-check-input",
+        data: {
+          url: land_costs_path(land_place_id: land_place.id),
+          method: :get,
+          remote: true
+        },
+        onclick: "$('#land_place_id').val(" + land_place.id.to_s + ")"
+      } %>
+      <%= label_tag "land_place_#{land_place.id}", land_place.name, {class: "form-check-label"} %>
+    </div>        
+  <% end %>
+</div>
+<%= form_tag(action: :create) do  %>
+  <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
+    <table id="tbl_list" class="table table-sm">
+      <thead style="background-color:white;">
+        <tr>
+          <th>番地</th>
+          <th class="text-nowrap">面積</th>
+          <th>作付</th>
+          <th>管理料</th>
+        </tr>
+      </thead>
+      <tbody id="list">
+        <%= render partial: "list" %>
+      </tbody>
+    </table>
+  </div>
+  <%= hidden_field_tag :land_place_id, params[:land_place_id] %>
+  <div id="btn_toolbar" class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+    </div>
+  </div>
+<% end %>
+<script>
+var colors = <%=raw @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>;
+
+$(function() {
+    $("#tbl_list").floatThead({
+        position: 'absolute',
+        scrollContainer:true,
+        zIndex: 999
+    });
+    $(window).resize(function() {
+        setTableWrapperHeight();
+    });
+
+    all_worktypes_select();
+
+    $("input[type='radio'][id^='land_place']").bind("ajax:complete", function(xhr, response, status) {
+        if(status == "success"){
+            $('#land_place_id').val($(this).val());
+            all_worktypes_select();
+        }
+    });
+
+    setTableWrapperHeight();
+    removeLoading();
+});
+
+function setTableWrapperHeight() {
+    if($("#table_wrapper")[0]) {
+        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
+    }
+}
+
+function cost_keydown(elm, area, fee) {
+    elm.value = area * (fee / 10);
+}
+
+function all_worktypes_select() {
+    $("input[type='radio'][id^='work_type']:checked").each(function() {
+        worktype_select($(this)[0]);
+    });
+}
+
+function worktype_select(elm) {
+    $(elm).parents("tr").css("background-color", colors[elm.value]);
+}
+</script>
