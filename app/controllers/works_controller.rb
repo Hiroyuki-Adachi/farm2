@@ -31,7 +31,6 @@ class WorksController < ApplicationController
     else
       respond_to do |format|
         format.html do
-          @months = WorkDecorator.months(@term)
           set_pager
         end
         format.csv do
@@ -166,7 +165,7 @@ class WorksController < ApplicationController
   end
 
   def check_fixed
-    redirect_to(works_path(page: params[:page], month: params[:month])) if @work.fixed_at
+    redirect_to works_path if @work.fixed_at
   end
 
   def clear_cache
@@ -182,24 +181,30 @@ class WorksController < ApplicationController
       @work_kind_id = ""
       @page = 1
     elsif path[:controller] == "works" && path[:action] == "index"
-      @month = params[:month] || ""
       @work_type_id = params[:work_type_id] || ""
       @work_kind_id = params[:work_kind_id] || ""
-      @page = params[:page].blank? ? 1 : params[:page]
+      @worked_at1 = params[:worked_at1]
+      @worked_at2 = params[:worked_at2]
+      @page = params[:page] || 1
     else
-      @month = session[:work_search]["month"]
       @work_type_id = session[:work_search]["work_type_id"]
       @work_kind_id = session[:work_search]["work_kind_id"]
+      @worked_at1 = session[:work_search]["worked_at1"]
+      @worked_at2 = session[:work_search]["worked_at2"]
       @page = session[:work_search]["page"] || 1
     end
-    @works = @works.where("date_trunc('month', worked_at) = ?", @month) unless @month.blank?
-    @works = @works.where(work_type_id: @work_type_id) unless @work_type_id.blank?
-    @works = @works.where(work_kind_id: @work_kind_id) unless @work_kind_id.blank?
+    @works = @works.where(work_type_id: @work_type_id) if @work_type_id.present?
+    @works = @works.where(work_kind_id: @work_kind_id) if @work_kind_id.present?
+    @works = @works.where(["worked_at >= ?", @worked_at1]) if @worked_at1.present?
+    @works = @works.where(["worked_at <= ?", @worked_at2]) if @worked_at2.present?
     @works_count = @works.count
-    @total_hours = @works.inject(0) { |a, e| a + (@sum_hours[e.id] || 0) }
-    @total_workers = @works.inject(0) { |a, e| a + (@count_workers[e.id] || 0) }
+    @total_hours = @works.inject(0) { |a, e| a + (@sum_hours[e.id] || 0)}
+    @total_workers = @works.inject(0) { |a, e| a + (@count_workers[e.id] || 0)}
     @works = WorkDecorator.decorate_collection(@works.page(@page))
-    session[:work_search] = { month: @month, page: @page, work_type_id: @work_type_id, work_kind_id: @work_kind_id }
+    session[:work_search] = {
+      page: @page, work_type_id: @work_type_id, work_kind_id: @work_kind_id,
+      worked_at1: @worked_at1, worked_at2: @worked_at2
+    }
   end
 
   def set_broccoli
