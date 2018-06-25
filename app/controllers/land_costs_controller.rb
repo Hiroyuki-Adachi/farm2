@@ -1,8 +1,9 @@
 class LandCostsController < ApplicationController
   include PermitManager
 
-  before_action :set_work_types, only: [:index]
+  before_action :set_work_types, only: [:index, :edit]
   before_action :set_land_cost, only: [:index]
+  before_action :set_land, only: [:edit, :update]
   before_action :clear_session
 
   def index
@@ -37,19 +38,39 @@ class LandCostsController < ApplicationController
     redirect_to land_costs_path(land_place_id: params[:land_place_id])
   end
 
+  def edit
+    @land.land_costs.build
+  end
+
+  def update
+    if @land.update(land_params(params))
+      redirect_to land_costs_path(land_place_id: @land.land_place)
+    else
+      render action: :edit
+    end
+  end
+
   private
 
   def set_work_types
     @work_types = WorkType.land
   end
 
+  def set_land
+    @land = Land.find(params[:land_id])
+  end
+
   def set_land_cost
     @land_cost = session[:land_cost] ? LandCost.new(session[:land_cost]) : nil
-    @land_cost.valid? if @land_cost
+    @land_cost&.valid?
   end
 
   def land_cost_params(params)
     params.permit(:work_type_id, :cost, :land_id, :activated_on)
+  end
+
+  def land_params(params)
+    params.require(:land).permit(land_costs_attributes: [:id, :activated_on, :work_type_id, :cost, :_destroy])
   end
 
   def clear_session
