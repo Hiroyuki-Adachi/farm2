@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :total_costs, only: [:index]
   resources :land_places, except: [:show]
   resources :organizations, param: nil, only: [:edit, :update]
-  resources :land_costs, only: [:index, :create]
+  resources :land_costs, param: "land_id", only: [:index, :create, :edit, :update]
 
   resources :banks, param: :code, except: [:show] do
     resources :branches, param: :code, controller: "banks/branches", except: [:show]
