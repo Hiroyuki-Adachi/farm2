@@ -13,6 +13,7 @@ class LandCostsControllerTest < ActionController::TestCase
         work_type_id: work_types(:work_types2).id, cost: 5000,
         land_id: lands(:lands2).id, activated_on: @cost1.activated_on
       }}
+    @land_update = {land_costs_attributes: [{activated_on: Date.new(2015, 5, 5), work_type_id: work_types(:work_types1).id, cost: 123_000}]}
   end
 
   test "土地原価(表示)" do
@@ -35,5 +36,17 @@ class LandCostsControllerTest < ActionController::TestCase
     @cost1 = LandCost.find(@cost1.id)
     assert_equal @cost1.work_type_id, work_types(:work_types1).id
     assert_equal @cost1.cost, 10_000
+  end
+
+  test "土地原価履歴" do
+    get :edit, land_id: lands(:lands0)
+    assert_response :success
+  end
+
+  test "土地原価履歴(更新)" do
+    assert_difference('LandCost.count') do
+      get :update, {land_id: lands(:lands0), land: @land_update}
+    end
+    assert_redirected_to land_costs_path
   end
 end
