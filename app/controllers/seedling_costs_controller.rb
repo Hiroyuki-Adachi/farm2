@@ -3,7 +3,7 @@ class SeedlingCostsController < ApplicationController
 
   def index
     chemical_term = ChemicalTerm.find_by(chemical_id: current_system.seedling_chemical_id, term: current_term)
-    @chemical_terms = ChemicalTerm.usual(current_term)
+    @chemical_terms = ChemicalTerm.includes(:chemical).usual(current_term)
     @chemical_price = chemical_term&.price
     @work_types = WorkType.land
     @seedlings = Seedling.usual(current_term, @work_types)
