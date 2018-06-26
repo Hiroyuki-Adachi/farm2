@@ -83,8 +83,7 @@ lands4:
   deleted_at: 
 
 
-lands5:
-  id: '6'
+land_land_cost:
   place: 5382-ｲ
   owner_id: '1'
   manager_id: '1'
