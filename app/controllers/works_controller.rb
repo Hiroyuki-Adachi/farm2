@@ -23,15 +23,16 @@ class WorksController < ApplicationController
     @count_workers = Rails.cache.fetch(count_workers_key(@term), expires_in: 1.hour) do
       WorkResult.where(work_id: @works.ids).group(:work_id).count(:worker_id).to_h
     end
+    set_pager
     if request.xhr?
-      set_pager
       respond_to do |format|
+        @works = WorkDecorator.decorate_collection(@works.page(@page))
         format.js
       end
     else
       respond_to do |format|
         format.html do
-          set_pager
+          @works = WorkDecorator.decorate_collection(@works.page(@page))
         end
         format.csv do
           render :content_type => 'text/csv; charset=cp943'
@@ -200,7 +201,6 @@ class WorksController < ApplicationController
     @works_count = @works.count
     @total_hours = @works.inject(0) { |a, e| a + (@sum_hours[e.id] || 0)}
     @total_workers = @works.inject(0) { |a, e| a + (@count_workers[e.id] || 0)}
-    @works = WorkDecorator.decorate_collection(@works.page(@page))
     session[:work_search] = {
       page: @page, work_type_id: @work_type_id, work_kind_id: @work_kind_id,
       worked_at1: @worked_at1, worked_at2: @worked_at2
