@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180624082725) do
+ActiveRecord::Schema.define(version: 20180626135545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -344,14 +344,23 @@ ActiveRecord::Schema.define(version: 20180624082725) do
 
   add_index "sections", ["deleted_at"], name: "index_sections_on_deleted_at", using: :btree
 
+  create_table "seedling_homes", force: :cascade, comment: "育苗担当世帯" do |t|
+    t.integer  "seedling_id",                                        comment: "育苗"
+    t.integer  "home_id",                                            comment: "世帯"
+    t.decimal  "quantity",    precision: 4, default: 0, null: false, comment: "苗箱数"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "seedling_homes", ["seedling_id", "home_id"], name: "index_seedling_homes_on_seedling_id_and_home_id", unique: true, using: :btree
+
   create_table "seedlings", force: :cascade, comment: "育苗" do |t|
-    t.integer  "term",                                        null: false, comment: "年度(期)"
-    t.integer  "work_type_id",                                             comment: "作業分類"
-    t.decimal  "seedling_quantity", precision: 4, default: 0, null: false, comment: "苗箱数"
-    t.decimal  "soil_quantity",     precision: 4, default: 0, null: false, comment: "育苗土数"
-    t.decimal  "seed_cost",         precision: 6, default: 0, null: false, comment: "種子原価"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.integer  "term",                                    null: false, comment: "年度(期)"
+    t.integer  "work_type_id",                                         comment: "作業分類"
+    t.decimal  "soil_quantity", precision: 4, default: 0, null: false, comment: "育苗土数"
+    t.decimal  "seed_cost",     precision: 6, default: 0, null: false, comment: "種子原価"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
   add_index "seedlings", ["term", "work_type_id"], name: "index_seedlings_on_term_and_work_type_id", unique: true, using: :btree
