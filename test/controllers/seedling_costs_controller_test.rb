@@ -38,4 +38,18 @@ class SeedlingCostsControllerTest < ActionController::TestCase
     get :edit, seedling_id: seedlings(:seedling1).id
     assert_response :success
   end
+
+  test "育苗担当(実行)" do
+    seedling_insert = {seedling_homes_attributes: [{home_id: 3, quantity: 200}]}
+    assert_difference('SeedlingHome.count') do
+      patch :update, seedling_id: seedlings(:seedling1).id, seedling: seedling_insert
+    end
+    assert_redirected_to edit_seedling_cost_path(seedling_id: seedlings(:seedling1).id)
+
+    seedling_delete = {seedling_homes_attributes: [{id: seedling_homes(:seedling_home1).id, _destroy: 1}]}
+    assert_difference('SeedlingHome.count', -1) do
+      patch :update, seedling_id: seedlings(:seedling1).id, seedling: seedling_delete
+    end
+    assert_redirected_to edit_seedling_cost_path(seedling_id: seedlings(:seedling1).id)
+  end
 end
