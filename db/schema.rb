@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180626135545) do
+ActiveRecord::Schema.define(version: 20180628135450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -307,6 +307,7 @@ ActiveRecord::Schema.define(version: 20180626135545) do
     t.integer  "broccoli_work_type_id",                                             comment: "ブロッコリ作業分類"
     t.integer  "broccoli_work_kind_id",                                             comment: "ブロッコリ種別分類"
     t.integer  "chemical_group_count",             default: 1,                      comment: "薬剤グループ数"
+    t.integer  "rice_planting_id",                                                  comment: "田植作業種別"
   end
 
   create_table "schedule_workers", force: :cascade, comment: "作業予定作業者" do |t|
@@ -353,6 +354,17 @@ ActiveRecord::Schema.define(version: 20180626135545) do
   end
 
   add_index "seedling_homes", ["seedling_id", "home_id"], name: "index_seedling_homes_on_seedling_id_and_home_id", unique: true, using: :btree
+
+  create_table "seedling_results", force: :cascade, comment: "育苗結果" do |t|
+    t.integer  "seedling_home_id",                                        comment: "育苗担当"
+    t.integer  "work_result_id",                                          comment: "作業結果"
+    t.integer  "display_order",                  default: 0, null: false, comment: "表示順"
+    t.decimal  "quantity",         precision: 3, default: 0, null: false, comment: "苗箱数"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "seedling_results", ["seedling_home_id", "work_result_id", "display_order"], name: "seedling_results_2nd_key", unique: true, using: :btree
 
   create_table "seedlings", force: :cascade, comment: "育苗" do |t|
     t.integer  "term",                                    null: false, comment: "年度(期)"
