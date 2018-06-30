@@ -87,4 +87,8 @@ class WorkResult < ApplicationRecord
   def set_uuid
     self.uuid = SecureRandom.uuid
   end
+
+  def worker_name
+    worker.name
+  end
 end

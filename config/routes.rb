@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :seedling_results, param: "seedling_home_id", only: [:index, :edit, :update] do
+    collection do
+      get :work_results
+    end
+  end
   resources :expenses, except: [:show]
   resources :seedling_costs, param: "seedling_id", only: [:index, :create, :edit, :update]
   resources :chemical_costs, only: [:index, :create]
