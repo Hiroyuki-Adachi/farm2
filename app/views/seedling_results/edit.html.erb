@@ -1,0 +1,63 @@
+<%= error_print(@seedling_home) %>
+<h1>育苗使用</h1>
+<h4><%= @seedling_home.home_name %>(<%= @seedling_home.work_type_name %>)</h4>
+<%= form_for(@seedling_home, url: {controller: :seedling_results, action: :update}) do |shf| %>
+  <div class="row">
+    <table class="table table-sm" style="width:auto;">
+      <thead>
+        <tr>
+          <th>削除</th>
+          <th>田植日</th>
+          <th>運出担当</th>
+          <th class="numeric">箱数</th>
+          <th>廃棄</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= shf.fields_for :seedling_results do |srf| %>
+        <% work_results = srf.object.work_result&.work&.work_results&.includes(:worker) || [] %>
+        <tr>
+          <td><%= srf.check_box :_destroy, {id: nil} %></td>
+          <td>
+            <%= srf.select(:work_id, @works.map {|work| [work.worked_at, work.id]}, {include_blank: true}, {class: "form-control work_select", id: nil, style: "width: 150px;", data: {index: srf.index}}) %>
+          </td>
+          <td>
+            <%= srf.select(:work_result_id, work_results.map {|work_result| [work_result.worker_name, work_result.id]}, {include_blank: true}, class: "form-control", style: "width: 150px;", id: "work_result_id_#{srf.index}") %>
+          </td>
+          <td>
+            <%= srf.number_field :quantity, {class: "form-control", min: 0, max: 999, style: "width: 100px;", id: nil} %>
+            <%= srf.hidden_field :id, {id: nil} %>
+            <%= srf.hidden_field :display_order, {value: srf.index, id: nil} %>
+          </td>
+          <td>
+            <%= srf.check_box :disposal_flag %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div id="btn_toolbar" class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', seedling_results_path, class: "btn btn-outline-dark" %>
+    </div>
+  </div>
+<% end %>
+<script>
+$(function() {
+    $(".work_select").change(function() {
+        var index = $(this).data("index");
+        if($(this).val() == "") {
+            $("#work_result_id_" + index).html("");
+        } else {
+            $.get("<%= work_results_seedling_results_path %>", {work_id: $(this).val(), index: index}, function() {
+                $("#work_result_id_" + index).prepend("<option value='' />")
+                $("#work_result_id_" + index).val("");
+            });
+        }
+    });
+})
+</script>

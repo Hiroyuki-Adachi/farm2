@@ -11,8 +11,28 @@
 #
 
 class SeedlingHome < ActiveRecord::Base
-  belongs_to :home
+  belongs_to :home, -> {with_deleted}
   belongs_to :seedling
+  has_many :seedling_results, {dependent: :destroy}
 
-  scope :total, ->(seedlings){where(seedling_id: seedlings.ids).group(:seedling_id).sum(:quantity)}
+  accepts_nested_attributes_for :seedling_results, allow_destroy: true, reject_if: :reject_seedling_results
+
+  scope :total, ->(seedlings) {where(seedling_id: seedlings.ids).group(:seedling_id).sum(:quantity)}
+  scope :usual, ->(term) {includes({seedling: :work_type}, :home).where(seedlings: {term: term}).order("homes.display_order, homes.id, work_types.display_order, work_types.id")}
+
+  def reject_seedling_results(attributes)
+    attributes[:work_result_id].blank?
+  end
+
+  def home_name
+    home.name
+  end
+
+  def work_type_name
+    seedling.work_type_name
+  end
+
+  def work_type_id
+    seedling.work_type_id
+  end
 end

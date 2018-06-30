@@ -356,12 +356,13 @@ ActiveRecord::Schema.define(version: 20180628135450) do
   add_index "seedling_homes", ["seedling_id", "home_id"], name: "index_seedling_homes_on_seedling_id_and_home_id", unique: true, using: :btree
 
   create_table "seedling_results", force: :cascade, comment: "育苗結果" do |t|
-    t.integer  "seedling_home_id",                                        comment: "育苗担当"
-    t.integer  "work_result_id",                                          comment: "作業結果"
-    t.integer  "display_order",                  default: 0, null: false, comment: "表示順"
-    t.decimal  "quantity",         precision: 3, default: 0, null: false, comment: "苗箱数"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.integer  "seedling_home_id",                                            comment: "育苗担当"
+    t.integer  "work_result_id",                                              comment: "作業結果"
+    t.integer  "display_order",                  default: 0,     null: false, comment: "表示順"
+    t.decimal  "quantity",         precision: 3, default: 0,     null: false, comment: "苗箱数"
+    t.boolean  "disposal_flag",                  default: false, null: false, comment: "廃棄フラグ"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   add_index "seedling_results", ["seedling_home_id", "work_result_id", "display_order"], name: "seedling_results_2nd_key", unique: true, using: :btree

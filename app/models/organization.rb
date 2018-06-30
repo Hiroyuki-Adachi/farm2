@@ -42,6 +42,7 @@ class Organization < ApplicationRecord
 
   belongs_to :broccoli_work_type, class_name: "WorkType"
   belongs_to :broccoli_work_kind, class_name: "WorkKind"
+  belongs_to :rice_planting, class_name: "WorkKind"
 
   def self.term
     Rails.cache.fetch(:organization_term, expires_in: 1.hour) do
