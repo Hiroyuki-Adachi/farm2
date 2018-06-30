@@ -35,5 +35,6 @@ org:
   chemical_group_count: 2
   daily_worker: 0
   term: 2015
+  rice_planting_id: 1
   broccoli_work_type_id: work_type_broccoli
   broccoli_work_kind_id: work_kind_broccoli
