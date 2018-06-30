@@ -10,7 +10,7 @@
           </li>
           <% if current_user.manageable? %>
           <li class="nav-item dropdown">
-            <%= link_to '集計処理', work_results_path, {class: "nav-link", id: :navbarDropdown2, role: :button} %>
+            <%= link_to '集計処理', seedling_results_path, {class: "nav-link", id: :navbarDropdown2, role: :button} %>
           </li>
           <li class="nav-item dropdown">
             <%= link_to '統計処理', statistics_path, {class: "nav-link", id: :navbarDropdown3, role: :button} %>
