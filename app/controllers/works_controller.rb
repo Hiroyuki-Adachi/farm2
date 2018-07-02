@@ -174,6 +174,12 @@ class WorksController < ApplicationController
   end
 
   def set_pager
+    set_search_info
+    do_search
+    set_session
+  end
+
+  def set_search_info
     path = Rails.application.routes.recognize_path(request.referer)
     if path[:controller] == "menu" || session[:work_search].nil?
       session.delete(:work_search)
@@ -194,6 +200,9 @@ class WorksController < ApplicationController
       @worked_at2 = session[:work_search]["worked_at2"]
       @page = session[:work_search]["page"] || 1
     end
+  end
+
+  def do_search
     @works = @works.where(work_type_id: @work_type_id) if @work_type_id.present?
     @works = @works.where(work_kind_id: @work_kind_id) if @work_kind_id.present?
     @works = @works.where(["worked_at >= ?", @worked_at1]) if @worked_at1.present?
@@ -201,6 +210,9 @@ class WorksController < ApplicationController
     @works_count = @works.count
     @total_hours = @works.inject(0) { |a, e| a + (@sum_hours[e.id] || 0)}
     @total_workers = @works.inject(0) { |a, e| a + (@count_workers[e.id] || 0)}
+  end
+
+  def set_session
     session[:work_search] = {
       page: @page, work_type_id: @work_type_id, work_kind_id: @work_kind_id,
       worked_at1: @worked_at1, worked_at2: @worked_at2

@@ -17,7 +17,6 @@ require 'securerandom'
 #  uuid          :string(36)                              # UUID(カレンダー用)
 #
 
-
 class WorkResult < ApplicationRecord
   belongs_to :work
   belongs_to :worker, -> {with_deleted}

@@ -8,6 +8,7 @@
 #  quantity    :decimal(4, )     default(0), not null  # 苗箱数
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  sowed_on    :date                                   # 播種日
 #
 
 class SeedlingHome < ActiveRecord::Base
