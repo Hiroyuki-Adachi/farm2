@@ -21,7 +21,7 @@ class FuelCostsControllerTest < ActionController::TestCase
     fuel_usage = 25
     assert_no_difference('System.count') do
       assert_no_difference('MachineResult.count') do
-        post :create, {
+        post :create, params: {
           light_oil_price: light_oil_price,
           machine_results: {machine_results(:machine_results0).id => {
             fuel_usage: fuel_usage, old_usage: 0

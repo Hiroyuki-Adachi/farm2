@@ -12,12 +12,12 @@ class MenuControllerTest < ActionController::TestCase
   end
 
   test "集計対象期間変更画面表示" do
-    get :edit, id: @system
+    get :edit, params: {id: @system}
     assert_response :success
   end
 
   test "対象年度変更画面表示" do
-    get :edit_term, id: @system
+    get :edit_term, params: {id: @system}
     assert_response :success
   end
 
@@ -25,7 +25,7 @@ class MenuControllerTest < ActionController::TestCase
     new_term = systems(:s2015).term + 1
     System.where(term: new_term).destroy_all
     assert_difference('System.count', 1) do
-      patch :update, id: @system, system: { term: new_term }
+      patch :update, params: {id: @system, system: {term: new_term}}
     end
     assert_equal Organization.first.term, new_term
   end
@@ -33,12 +33,12 @@ class MenuControllerTest < ActionController::TestCase
   test "対象年度変更(実行:既存)" do
     now_term = systems(:s2014).term
     assert_no_difference('System.count') do
-      patch :update, id: @system, system: { term: now_term }
+      patch :update, params: {id: @system, system: {term: now_term}}
     end
     assert_equal Organization.first.term, now_term
   end
 
   def teardown
-    patch :update, id: @system, system: { term: systems(:s2015).term }
+    patch :update, params: {id: @system, system: {term: systems(:s2015).term}}
   end
 end

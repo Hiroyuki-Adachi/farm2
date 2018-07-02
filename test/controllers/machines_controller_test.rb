@@ -29,27 +29,27 @@ class MachinesControllerTest < ActionController::TestCase
 
   test "機械マスタ新規作成(実行)" do
     assert_difference('Machine.count') do
-      post :create, machine: @update
+      post :create, params: {machine: @update}
     end
 
     assert_redirected_to machines_path
   end
 
   test "機械マスタ変更(表示)" do
-    get :edit, id: @machine
+    get :edit, params: {id: @machine}
     assert_response :success
   end
 
   test "機械種別マスタ変更(実行)" do
     assert_no_difference('Machine.count') do
-      patch :update, id: @machine, machine: @update
+      patch :update, params: {id: @machine, machine: @update}
     end
     assert_redirected_to machines_path
   end
 
   test "機械種別マスタ削除" do
     assert_difference('Machine.count', -1) do
-      delete :destroy, id: @machine
+      delete :destroy, params: {id: @machine}
     end
     assert_redirected_to machines_path
   end

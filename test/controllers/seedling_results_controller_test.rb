@@ -17,14 +17,14 @@ class SeedlingResultsControllerTest < ActionController::TestCase
   end
 
   test "育苗使用(担当)" do
-    get :edit, seedling_home_id: seedling_homes(:seedling_home1)
+    get :edit, params: {seedling_home_id: seedling_homes(:seedling_home1)}
     assert_response :success
   end
 
   test "育苗使用(担当:更新)" do
     seedling_result_insert = {seedling_results_attributes: [{work_result_id: 5581, quantity: 100}]}
     assert_difference('SeedlingResult.count') do
-      patch :update, seedling_home_id: seedling_homes(:seedling_home1), seedling_home: seedling_result_insert
+      patch :update, params: {seedling_home_id: seedling_homes(:seedling_home1), seedling_home: seedling_result_insert}
     end
     assert_redirected_to edit_seedling_result_path(seedling_home_id: seedling_homes(:seedling_home1))
   end

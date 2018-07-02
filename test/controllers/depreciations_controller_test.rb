@@ -24,7 +24,7 @@ class DepreciationsControllerTest < ActionController::TestCase
       term: 2015
     }
     assert_difference('DepreciationType.count', 2) do
-      post :create, depreciations: [update]
+      post :create, params: {depreciations: [update]}
     end
     assert_redirected_to depreciations_path
 

@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -16,7 +15,7 @@ ActiveRecord::Schema.define(version: 20180701054817) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "bank_branches", id: false, force: :cascade, comment: "支店マスタ" do |t|
+  create_table "bank_branches", primary_key: ["bank_code", "code"], force: :cascade, comment: "支店マスタ" do |t|
     t.string   "bank_code",  limit: 4,  null: false, comment: "金融機関コード"
     t.string   "code",       limit: 3,  null: false, comment: "支店コード"
     t.string   "name",       limit: 40, null: false, comment: "支店名称"
@@ -30,7 +29,7 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.datetime "updated_at",            null: false
   end
 
-  create_table "banks", primary_key: "code", force: :cascade, comment: "金融機関マスタ" do |t|
+  create_table "banks", primary_key: "code", id: :string, limit: 4, comment: "金融機関コード", force: :cascade, comment: "金融機関マスタ" do |t|
     t.string   "name",       limit: 40, null: false, comment: "金融機関名称"
     t.string   "phonetic",   limit: 40, null: false, comment: "金融機関名称(ﾌﾘｶﾞﾅ)"
     t.datetime "created_at",            null: false
@@ -38,11 +37,11 @@ ActiveRecord::Schema.define(version: 20180701054817) do
   end
 
   create_table "broccoli_boxes", force: :cascade, comment: "ブロッコリ箱マスタ" do |t|
-    t.decimal  "weight",                   precision: 3, scale: 1, default: 0.0, null: false, comment: "重さ(kg)"
-    t.string   "display_name",  limit: 10,                         default: "",  null: false, comment: "表示名"
-    t.integer  "display_order",                                    default: 0,   null: false, comment: "表示順"
-    t.datetime "created_at",                                                     null: false
-    t.datetime "updated_at",                                                     null: false
+    t.decimal  "weight",                   precision: 3, scale: 1, default: "0.0", null: false, comment: "重さ(kg)"
+    t.string   "display_name",  limit: 10,                         default: "",    null: false, comment: "表示名"
+    t.integer  "display_order",                                    default: 0,     null: false, comment: "表示順"
+    t.datetime "created_at",                                                       null: false
+    t.datetime "updated_at",                                                       null: false
   end
 
   create_table "broccoli_harvests", force: :cascade, comment: "ブロッコリー収穫" do |t|
@@ -52,9 +51,8 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.decimal  "inspection",       precision: 3, default: 0, null: false, comment: "検査後数量"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+    t.index ["work_broccoli_id", "broccoli_rank_id", "broccoli_size_id"], name: "broccoli_harvest_sheet", unique: true, using: :btree
   end
-
-  add_index "broccoli_harvests", ["work_broccoli_id", "broccoli_rank_id", "broccoli_size_id"], name: "broccoli_harvest_sheet", unique: true, using: :btree
 
   create_table "broccoli_ranks", force: :cascade, comment: "ブロッコリ等級マスタ" do |t|
     t.string   "display_name",  limit: 10, default: "", null: false, comment: "表示名"
@@ -73,17 +71,15 @@ ActiveRecord::Schema.define(version: 20180701054817) do
   create_table "chemical_kinds", force: :cascade, comment: "作業種別薬剤種別利用マスタ" do |t|
     t.integer "chemical_type_id", null: false, comment: "薬剤種別"
     t.integer "work_kind_id",     null: false, comment: "作業種別"
+    t.index ["chemical_type_id", "work_kind_id"], name: "index_chemical_kinds_on_chemical_type_id_and_work_kind_id", unique: true, using: :btree
   end
-
-  add_index "chemical_kinds", ["chemical_type_id", "work_kind_id"], name: "index_chemical_kinds_on_chemical_type_id_and_work_kind_id", unique: true, using: :btree
 
   create_table "chemical_terms", force: :cascade, comment: "薬剤年度別利用マスタ" do |t|
     t.integer "chemical_id",                           null: false, comment: "薬剤"
     t.integer "term",                                  null: false, comment: "年度(期)"
     t.decimal "price",       precision: 6, default: 0, null: false, comment: "価格"
+    t.index ["chemical_id", "term"], name: "index_chemical_terms_on_chemical_id_and_term", unique: true, using: :btree
   end
-
-  add_index "chemical_terms", ["chemical_id", "term"], name: "index_chemical_terms_on_chemical_id_and_term", unique: true, using: :btree
 
   create_table "chemical_types", force: :cascade, comment: "薬剤種別マスタ" do |t|
     t.string   "name",          limit: 20,             null: false, comment: "薬剤種別名称"
@@ -93,14 +89,13 @@ ActiveRecord::Schema.define(version: 20180701054817) do
   end
 
   create_table "chemical_work_types", force: :cascade do |t|
-    t.integer  "chemical_term_id",                                                    comment: "薬剤利用"
-    t.integer  "work_type_id",                                                        comment: "作業分類"
-    t.decimal  "quantity",         precision: 5, scale: 1, default: 0.0, null: false, comment: "使用量"
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
+    t.integer  "chemical_term_id",                                                      comment: "薬剤利用"
+    t.integer  "work_type_id",                                                          comment: "作業分類"
+    t.decimal  "quantity",         precision: 5, scale: 1, default: "0.0", null: false, comment: "使用量"
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
+    t.index ["chemical_term_id", "work_type_id"], name: "index_chemical_work_types_on_chemical_term_id_and_work_type_id", unique: true, using: :btree
   end
-
-  add_index "chemical_work_types", ["chemical_term_id", "work_type_id"], name: "index_chemical_work_types_on_chemical_term_id_and_work_type_id", unique: true, using: :btree
 
   create_table "chemicals", force: :cascade, comment: "薬剤マスタ" do |t|
     t.string   "name",             limit: 20,               null: false, comment: "薬剤名称"
@@ -110,18 +105,16 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string   "unit",             limit: 2,  default: "袋", null: false, comment: "単位"
+    t.index ["deleted_at"], name: "index_chemicals_on_deleted_at", using: :btree
   end
-
-  add_index "chemicals", ["deleted_at"], name: "index_chemicals_on_deleted_at", using: :btree
 
   create_table "depreciation_types", force: :cascade, comment: "減価償却分類" do |t|
     t.integer  "depreciation_id",              comment: "減価償却"
     t.integer  "work_type_id",    null: false, comment: "作業分類"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["depreciation_id", "work_type_id"], name: "index_depreciation_types_on_depreciation_id_and_work_type_id", unique: true, using: :btree
   end
-
-  add_index "depreciation_types", ["depreciation_id", "work_type_id"], name: "index_depreciation_types_on_depreciation_id_and_work_type_id", unique: true, using: :btree
 
   create_table "depreciations", force: :cascade, comment: "減価償却" do |t|
     t.integer  "term",                                 null: false, comment: "年度(期)"
@@ -129,19 +122,17 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.decimal  "cost",       precision: 9, default: 0, null: false, comment: "減価償却費"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
+    t.index ["term", "machine_id"], name: "index_depreciations_on_term_and_machine_id", unique: true, using: :btree
   end
-
-  add_index "depreciations", ["term", "machine_id"], name: "index_depreciations_on_term_and_machine_id", unique: true, using: :btree
 
   create_table "expense_work_types", force: :cascade, comment: "経費作業種別" do |t|
-    t.integer  "expense_id",                                                      comment: "経費"
-    t.integer  "work_type_id",                                                    comment: "作業分類"
-    t.decimal  "rate",         precision: 5, scale: 2, default: 0.0, null: false, comment: "割合"
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.integer  "expense_id",                                                        comment: "経費"
+    t.integer  "work_type_id",                                                      comment: "作業分類"
+    t.decimal  "rate",         precision: 5, scale: 2, default: "0.0", null: false, comment: "割合"
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.index ["expense_id", "work_type_id"], name: "index_expense_work_types_on_expense_id_and_work_type_id", unique: true, using: :btree
   end
-
-  add_index "expense_work_types", ["expense_id", "work_type_id"], name: "index_expense_work_types_on_expense_id_and_work_type_id", unique: true, using: :btree
 
   create_table "expenses", force: :cascade, comment: "経費" do |t|
     t.integer  "term",                                            null: false, comment: "年度(期)"
@@ -152,7 +143,7 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.datetime "updated_at",                                      null: false
   end
 
-  create_table "fixes", id: false, force: :cascade, comment: "確定データ" do |t|
+  create_table "fixes", primary_key: ["term", "fixed_at"], force: :cascade, comment: "確定データ" do |t|
     t.integer  "term",                          default: 0, null: false, comment: "年度(期)"
     t.date     "fixed_at",                                  null: false, comment: "確定日"
     t.integer  "works_count",                               null: false, comment: "合計作業数"
@@ -182,20 +173,18 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.boolean  "owner_flag",                     default: false, null: false, comment: "所有者フラグ"
+    t.index ["deleted_at"], name: "index_homes_on_deleted_at", using: :btree
   end
-
-  add_index "homes", ["deleted_at"], name: "index_homes_on_deleted_at", using: :btree
 
   create_table "land_costs", force: :cascade, comment: "土地原価" do |t|
     t.integer  "land_id",                                                     null: false, comment: "土地"
     t.integer  "work_type_id",                                                null: false, comment: "作業分類"
-    t.decimal  "cost",         precision: 7, scale: 1, default: 0.0,          null: false, comment: "原価"
+    t.decimal  "cost",         precision: 7, scale: 1, default: "0.0",        null: false, comment: "原価"
     t.datetime "created_at",                                                  null: false
     t.datetime "updated_at",                                                  null: false
     t.date     "activated_on",                         default: '1900-01-01', null: false, comment: "有効日"
+    t.index ["activated_on", "land_id"], name: "index_land_costs_on_activated_on_and_land_id", unique: true, using: :btree
   end
-
-  add_index "land_costs", ["activated_on", "land_id"], name: "index_land_costs_on_activated_on_and_land_id", unique: true, using: :btree
 
   create_table "land_places", force: :cascade, comment: "場所マスタ" do |t|
     t.string   "name",          limit: 40, null: false, comment: "場所名称"
@@ -217,17 +206,15 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.integer  "land_place_id",                                                                comment: "土地"
+    t.index ["deleted_at"], name: "index_lands_on_deleted_at", using: :btree
+    t.index ["place"], name: "index_lands_on_place", using: :btree
   end
-
-  add_index "lands", ["deleted_at"], name: "index_lands_on_deleted_at", using: :btree
-  add_index "lands", ["place"], name: "index_lands_on_place", using: :btree
 
   create_table "machine_kinds", force: :cascade, comment: "作業種別機械利用可能マスタ" do |t|
     t.integer "machine_type_id", null: false, comment: "機械種別"
     t.integer "work_kind_id",    null: false, comment: "作業種別"
+    t.index ["machine_type_id", "work_kind_id"], name: "machine_kinds_2nd_key", unique: true, using: :btree
   end
-
-  add_index "machine_kinds", ["machine_type_id", "work_kind_id"], name: "machine_kinds_2nd_key", unique: true, using: :btree
 
   create_table "machine_price_details", force: :cascade, comment: "機械利用単価マスタ(明細)" do |t|
     t.integer  "machine_price_header_id",                           null: false, comment: "単価ヘッダ"
@@ -237,9 +224,8 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.decimal  "price",                   precision: 5, default: 0, null: false, comment: "単価"
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
+    t.index ["machine_price_header_id", "lease_id", "work_kind_id"], name: "machine_price_details_2nd_key", unique: true, using: :btree
   end
-
-  add_index "machine_price_details", ["machine_price_header_id", "lease_id", "work_kind_id"], name: "machine_price_details_2nd_key", unique: true, using: :btree
 
   create_table "machine_price_headers", force: :cascade, comment: "機械利用単価マスタ(ヘッダ)" do |t|
     t.date     "validated_at",                null: false, comment: "起点日"
@@ -247,25 +233,23 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.integer  "machine_type_id", default: 0, null: false, comment: "機械種別"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.index ["validated_at", "machine_id", "machine_type_id"], name: "machine_price_headers_2nd_key", unique: true, using: :btree
   end
-
-  add_index "machine_price_headers", ["validated_at", "machine_id", "machine_type_id"], name: "machine_price_headers_2nd_key", unique: true, using: :btree
 
   create_table "machine_results", force: :cascade, comment: "機械稼動データ" do |t|
-    t.integer  "machine_id",                                                         comment: "機械"
-    t.integer  "work_result_id",                                                     comment: "作業結果データ"
-    t.integer  "display_order",                           default: 1,   null: false, comment: "表示順"
-    t.decimal  "hours",           precision: 3, scale: 1, default: 0.0, null: false, comment: "稼動時間"
-    t.decimal  "fixed_quantity",  precision: 6, scale: 2,                            comment: "確定稼動量"
-    t.integer  "fixed_adjust_id",                                                    comment: "確定稼動単位"
-    t.decimal  "fixed_price",     precision: 5,                                      comment: "確定稼動単価"
-    t.decimal  "fixed_amount",    precision: 7,                                      comment: "確定使用料"
+    t.integer  "machine_id",                                                           comment: "機械"
+    t.integer  "work_result_id",                                                       comment: "作業結果データ"
+    t.integer  "display_order",                           default: 1,     null: false, comment: "表示順"
+    t.decimal  "hours",           precision: 3, scale: 1, default: "0.0", null: false, comment: "稼動時間"
+    t.decimal  "fixed_quantity",  precision: 6, scale: 2,                              comment: "確定稼動量"
+    t.integer  "fixed_adjust_id",                                                      comment: "確定稼動単位"
+    t.decimal  "fixed_price",     precision: 5,                                        comment: "確定稼動単価"
+    t.decimal  "fixed_amount",    precision: 7,                                        comment: "確定使用料"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "fuel_usage",      precision: 5, scale: 2, default: 0.0, null: false, comment: "燃料使用量"
+    t.decimal  "fuel_usage",      precision: 5, scale: 2, default: "0.0", null: false, comment: "燃料使用量"
+    t.index ["machine_id", "work_result_id"], name: "index_machine_results_on_machine_id_and_work_result_id", unique: true, using: :btree
   end
-
-  add_index "machine_results", ["machine_id", "work_result_id"], name: "index_machine_results_on_machine_id_and_work_result_id", unique: true, using: :btree
 
   create_table "machine_types", force: :cascade, comment: "機械種別マスタ" do |t|
     t.string   "name",          limit: 10,             null: false, comment: "機械種別名称"
@@ -317,9 +301,8 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.string   "uuid",          limit: 36,                          comment: "UUID(カレンダー用)"
+    t.index ["schedule_id", "worker_id"], name: "index_schedule_workers_on_schedule_id_and_worker_id", unique: true, using: :btree
   end
-
-  add_index "schedule_workers", ["schedule_id", "worker_id"], name: "index_schedule_workers_on_schedule_id_and_worker_id", unique: true, using: :btree
 
   create_table "schedules", force: :cascade, comment: "作業予定" do |t|
     t.integer  "term",                                                    null: false, comment: "年度(期)"
@@ -341,9 +324,8 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_sections_on_deleted_at", using: :btree
   end
-
-  add_index "sections", ["deleted_at"], name: "index_sections_on_deleted_at", using: :btree
 
   create_table "seedling_homes", force: :cascade, comment: "育苗担当世帯" do |t|
     t.integer  "seedling_id",                                        comment: "育苗"
@@ -352,9 +334,8 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
     t.date     "sowed_on",                                           comment: "播種日"
+    t.index ["seedling_id", "home_id"], name: "index_seedling_homes_on_seedling_id_and_home_id", unique: true, using: :btree
   end
-
-  add_index "seedling_homes", ["seedling_id", "home_id"], name: "index_seedling_homes_on_seedling_id_and_home_id", unique: true, using: :btree
 
   create_table "seedling_results", force: :cascade, comment: "育苗結果" do |t|
     t.integer  "seedling_home_id",                                            comment: "育苗担当"
@@ -364,9 +345,8 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.boolean  "disposal_flag",                  default: false, null: false, comment: "廃棄フラグ"
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
+    t.index ["seedling_home_id", "work_result_id", "display_order"], name: "seedling_results_2nd_key", unique: true, using: :btree
   end
-
-  add_index "seedling_results", ["seedling_home_id", "work_result_id", "display_order"], name: "seedling_results_2nd_key", unique: true, using: :btree
 
   create_table "seedlings", force: :cascade, comment: "育苗" do |t|
     t.integer  "term",                                    null: false, comment: "年度(期)"
@@ -375,9 +355,8 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.decimal  "seed_cost",     precision: 6, default: 0, null: false, comment: "種子原価"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
+    t.index ["term", "work_type_id"], name: "index_seedlings_on_term_and_work_type_id", unique: true, using: :btree
   end
-
-  add_index "seedlings", ["term", "work_type_id"], name: "index_seedlings_on_term_and_work_type_id", unique: true, using: :btree
 
   create_table "systems", force: :cascade, comment: "システムマスタ" do |t|
     t.integer  "term",                                               null: false, comment: "年度(期)"
@@ -393,10 +372,9 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.decimal  "light_oil_price",      precision: 4, default: 0,     null: false, comment: "軽油価格"
     t.decimal  "seedling_price",       precision: 4, default: 0,     null: false, comment: "育苗費"
     t.integer  "seedling_chemical_id",               default: 0,                  comment: "育苗土"
+    t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true, using: :btree
+    t.index ["term"], name: "index_systems_on_term", unique: true, using: :btree
   end
-
-  add_index "systems", ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true, using: :btree
-  add_index "systems", ["term"], name: "index_systems_on_term", unique: true, using: :btree
 
   create_table "users", force: :cascade, comment: "利用者マスタ" do |t|
     t.string   "login_name",      limit: 12,                         null: false, comment: "ログイン名"
@@ -409,10 +387,9 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.date     "target_to",                   default: '2010-12-31', null: false, comment: "終了年月"
     t.integer  "organization_id",             default: 0,            null: false, comment: "組織"
     t.integer  "permission_id",               default: 0,            null: false, comment: "権限"
+    t.index ["login_name"], name: "index_users_on_login_name", unique: true, using: :btree
+    t.index ["worker_id"], name: "index_users_on_worker_id", unique: true, using: :btree
   end
-
-  add_index "users", ["login_name"], name: "index_users_on_login_name", unique: true, using: :btree
-  add_index "users", ["worker_id"], name: "index_users_on_worker_id", unique: true, using: :btree
 
   create_table "work_broccolis", force: :cascade, comment: "ブロッコリー作業" do |t|
     t.integer  "work_id",                                   null: false, comment: "作業"
@@ -421,20 +398,18 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.decimal  "rest",            precision: 3, default: 0, null: false, comment: "残数"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+    t.index ["work_id"], name: "index_work_broccolis_on_work_id", unique: true, using: :btree
   end
-
-  add_index "work_broccolis", ["work_id"], name: "index_work_broccolis_on_work_id", unique: true, using: :btree
 
   create_table "work_chemicals", force: :cascade, comment: "薬剤使用データ" do |t|
-    t.integer  "work_id",                                                 null: false, comment: "作業"
-    t.integer  "chemical_id",                                             null: false, comment: "薬剤"
-    t.decimal  "quantity",          precision: 5, scale: 1, default: 0.0, null: false, comment: "使用量"
+    t.integer  "work_id",                                                   null: false, comment: "作業"
+    t.integer  "chemical_id",                                               null: false, comment: "薬剤"
+    t.decimal  "quantity",          precision: 5, scale: 1, default: "0.0", null: false, comment: "使用量"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "chemical_group_no",                         default: 1,   null: false, comment: "薬剤グループ番号"
+    t.integer  "chemical_group_no",                         default: 1,     null: false, comment: "薬剤グループ番号"
+    t.index ["work_id", "chemical_id", "chemical_group_no"], name: "work_chemicals_2nd_key", unique: true, using: :btree
   end
-
-  add_index "work_chemicals", ["work_id", "chemical_id", "chemical_group_no"], name: "work_chemicals_2nd_key", unique: true, using: :btree
 
   create_table "work_kind_prices", force: :cascade, comment: "作業単価マスタ" do |t|
     t.integer  "term",                                      null: false, comment: "年度(期)"
@@ -442,16 +417,14 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.decimal  "price",        precision: 5, default: 1000, null: false, comment: "単価"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+    t.index ["term", "work_kind_id"], name: "index_work_kind_prices_on_term_and_work_kind_id", unique: true, using: :btree
   end
-
-  add_index "work_kind_prices", ["term", "work_kind_id"], name: "index_work_kind_prices_on_term_and_work_kind_id", unique: true, using: :btree
 
   create_table "work_kind_types", force: :cascade, comment: "作業種別分類対応マスタ" do |t|
     t.integer "work_kind_id", comment: "作業種別"
     t.integer "work_type_id", comment: "作業分類"
+    t.index ["work_kind_id", "work_type_id"], name: "index_work_kind_types_on_work_kind_id_and_work_type_id", unique: true, using: :btree
   end
-
-  add_index "work_kind_types", ["work_kind_id", "work_type_id"], name: "index_work_kind_types_on_work_kind_id_and_work_type_id", unique: true, using: :btree
 
   create_table "work_kinds", force: :cascade, comment: "作業種別マスタ" do |t|
     t.string   "name",          limit: 20,                 null: false, comment: "作業種別名称"
@@ -461,9 +434,8 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.boolean  "land_flag",                default: true,  null: false, comment: "土地利用フラグ"
+    t.index ["deleted_at"], name: "index_work_kinds_on_deleted_at", using: :btree
   end
-
-  add_index "work_kinds", ["deleted_at"], name: "index_work_kinds_on_deleted_at", using: :btree
 
   create_table "work_lands", force: :cascade, comment: "作業地データ" do |t|
     t.integer  "work_id",                                comment: "作業"
@@ -471,24 +443,22 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.integer  "display_order", default: 0, null: false, comment: "表示順"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["work_id", "land_id"], name: "index_work_lands_on_work_id_and_land_id", unique: true, using: :btree
   end
-
-  add_index "work_lands", ["work_id", "land_id"], name: "index_work_lands_on_work_id_and_land_id", unique: true, using: :btree
 
   create_table "work_results", force: :cascade, comment: "作業結果データ" do |t|
-    t.integer  "work_id",                                                                     comment: "作業"
-    t.integer  "worker_id",                                                                   comment: "作業者"
-    t.decimal  "hours",                    precision: 5, scale: 1, default: 0.0, null: false, comment: "作業時間"
-    t.integer  "display_order",                                    default: 0,   null: false, comment: "表示順"
-    t.decimal  "fixed_hours",              precision: 5, scale: 1,                            comment: "確定作業時間"
-    t.decimal  "fixed_price",              precision: 5,                                      comment: "確定作業単価"
-    t.decimal  "fixed_amount",             precision: 7,                                      comment: "確定作業日当"
+    t.integer  "work_id",                                                                       comment: "作業"
+    t.integer  "worker_id",                                                                     comment: "作業者"
+    t.decimal  "hours",                    precision: 5, scale: 1, default: "0.0", null: false, comment: "作業時間"
+    t.integer  "display_order",                                    default: 0,     null: false, comment: "表示順"
+    t.decimal  "fixed_hours",              precision: 5, scale: 1,                              comment: "確定作業時間"
+    t.decimal  "fixed_price",              precision: 5,                                        comment: "確定作業単価"
+    t.decimal  "fixed_amount",             precision: 7,                                        comment: "確定作業日当"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "uuid",          limit: 36,                                                    comment: "UUID(カレンダー用)"
+    t.string   "uuid",          limit: 36,                                                      comment: "UUID(カレンダー用)"
+    t.index ["work_id", "worker_id"], name: "index_work_results_on_work_id_and_worker_id", unique: true, using: :btree
   end
-
-  add_index "work_results", ["work_id", "worker_id"], name: "index_work_results_on_work_id_and_worker_id", unique: true, using: :btree
 
   create_table "work_types", force: :cascade, comment: "作業分類マスタ" do |t|
     t.integer  "genre",                                    null: false, comment: "作業ジャンル"
@@ -498,18 +468,16 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.datetime "deleted_at"
     t.string   "bg_color",      limit: 8,                               comment: "背景色"
     t.boolean  "land_flag",                default: true,  null: false, comment: "土地利用"
+    t.index ["deleted_at"], name: "index_work_types_on_deleted_at", using: :btree
   end
-
-  add_index "work_types", ["deleted_at"], name: "index_work_types_on_deleted_at", using: :btree
 
   create_table "work_verifications", force: :cascade, comment: "日報検証" do |t|
     t.integer  "work_id",                 comment: "作業"
     t.integer  "worker_id",               comment: "作業者"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["work_id", "worker_id"], name: "index_work_verifications_on_work_id_and_worker_id", unique: true, using: :btree
   end
-
-  add_index "work_verifications", ["work_id", "worker_id"], name: "index_work_verifications_on_work_id_and_worker_id", unique: true, using: :btree
 
   create_table "workers", force: :cascade, comment: "作業者マスタ" do |t|
     t.string   "family_phonetic", limit: 15,                     null: false, comment: "姓(ﾌﾘｶﾞﾅ)"
@@ -533,10 +501,9 @@ ActiveRecord::Schema.define(version: 20180701054817) do
     t.datetime "deleted_at"
     t.string   "token",           limit: 36, default: "",        null: false, comment: "アクセストークン"
     t.integer  "position_id",                default: 0,         null: false, comment: "役職"
+    t.index ["deleted_at"], name: "index_workers_on_deleted_at", using: :btree
+    t.index ["token"], name: "index_workers_on_token", unique: true, using: :btree
   end
-
-  add_index "workers", ["deleted_at"], name: "index_workers_on_deleted_at", using: :btree
-  add_index "workers", ["token"], name: "index_workers_on_token", unique: true, using: :btree
 
   create_table "works", force: :cascade, comment: "作業データ" do |t|
     t.integer  "term",                                null: false, comment: "年度(期)"
