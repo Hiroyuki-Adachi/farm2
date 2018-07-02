@@ -28,7 +28,7 @@ class ExpensesControllerTest < ActionController::TestCase
   test "経費原価新規作成(実行)" do
     assert_difference('ExpenseWorkType.where(rate: 2.0).count') do
       assert_difference('Expense.count') do
-        post :create, expense: @update
+        post :create, params: {expense: @update}
       end
     end
 
@@ -36,14 +36,14 @@ class ExpensesControllerTest < ActionController::TestCase
   end
 
   test "経費原価変更(表示)" do
-    get :edit, id: @expense
+    get :edit, params: {id: @expense}
     assert_response :success
   end
 
   test "経費原価変更(実行)" do
     assert_difference('ExpenseWorkType.count') do
       assert_no_difference('Expense.count') do
-        patch :update, id: @expense, expense: @update
+        patch :update, params: {id: @expense, expense: @update}
       end
     end
     assert_redirected_to expenses_path
@@ -51,7 +51,7 @@ class ExpensesControllerTest < ActionController::TestCase
 
   test "経費原価削除" do
     assert_difference('Expense.count', -1) do
-      delete :destroy, id: @expense
+      delete :destroy, params: {id: @expense}
     end
     assert_redirected_to expenses_path
   end

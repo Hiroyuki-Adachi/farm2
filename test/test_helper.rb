@@ -1,5 +1,5 @@
 ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 
 class ActiveSupport::TestCase
@@ -8,12 +8,8 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
   def setup_ip
-    @request = ActionController::TestRequest.new
-    @request.instance_eval do
-      def remote_ip
-        "127.0.0.1"
-      end
-    end
+    @request = ActionController::TestRequest.create
+    @request.remote_addr = "127.0.0.1"
     session[:user_id] = 1
   end
 end

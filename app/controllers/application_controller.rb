@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
   end
 
   def to_error_path
-    render text: 'Service Unavailable', status: 503
+    render plain: 'Service Unavailable', status: 503
   end
 
   def user_present?

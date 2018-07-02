@@ -8,7 +8,7 @@ class PersonalCalendarsController < ApplicationController
       calendar = make_calendar
       calendar.publish
       headers["Content-Type"] = "text/calendar; charset=UTF-8"
-      render text: calendar.to_ical
+      render plain: calendar.to_ical
     else
       to_error_path
     end

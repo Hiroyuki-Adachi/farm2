@@ -25,27 +25,27 @@ class HomesControllerTest < ActionController::TestCase
 
   test "世帯マスタ新規作成(実行)" do
     assert_difference('Home.count') do
-      post :create, home: @update
+      post :create, params: {home: @update}
     end
 
     assert_redirected_to homes_path
   end
 
   test "世帯マスタ変更(表示)" do
-    get :edit, id: @home
+    get :edit, params: {id: @home}
     assert_response :success
   end
 
   test "世帯マスタ変更(実行)" do
     assert_no_difference('Home.count') do
-      patch :update, id: @home, home: @update
+      patch :update, params: {id: @home, home: @update}
     end
     assert_redirected_to homes_path
   end
 
   test "世帯マスタ削除" do
     assert_difference('Home.count', -1) do
-      delete :destroy, id: @home
+      delete :destroy, params: {id: @home}
     end
     assert_redirected_to homes_path
   end

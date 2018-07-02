@@ -30,7 +30,7 @@ class LandCostsControllerTest < ActionController::TestCase
 
   test "土地原価新規作成(実行)" do
     assert_difference('LandCost.count') do
-      post :create, land_costs: @land_costs
+      post :create, params: {land_costs: @land_costs}
     end
     assert_redirected_to land_costs_path
 
@@ -40,20 +40,20 @@ class LandCostsControllerTest < ActionController::TestCase
   end
 
   test "土地原価履歴" do
-    get :edit, land_id: lands(:land_land_cost)
+    get :edit, params: {land_id: lands(:land_land_cost)}
     assert_response :success
   end
 
   test "土地原価履歴(更新:追加)" do
     assert_difference('LandCost.count') do
-      patch :update, {land_id: lands(:land_land_cost), land: @land_update}
+      patch :update, params: {land_id: lands(:land_land_cost), land: @land_update}
     end
     assert_redirected_to land_costs_path
   end
 
   test "土地原価履歴(更新:削除)" do
     assert_difference('LandCost.count', -1) do
-      patch :update, {land_id: lands(:land_land_cost), land: @land_delete}
+      patch :update, params: {land_id: lands(:land_land_cost), land: @land_delete}
     end
     assert_redirected_to land_costs_path
   end
