@@ -8,11 +8,11 @@
     </div>
     <div class="col-md-3 form-group">
       <label for="chemical_price">価格</label>
-      <%= number_field_tag "chemical[price]", @chemical_price, {class: "form-control", min: 0, max: 999999} %>
+      <%= number_field_tag "chemical[price]", @chemical_price, {required: true, class: "form-control", min: 0, max: 999999} %>
     </div>
     <div class="col-md-3 form-group">
       <label for="system_seedling_price">育苗費</label>
-      <%= number_field_tag "system[seedling_price]", @chemical_price, {class: "form-control", min: 0, max: 9999} %>
+      <%= number_field_tag "system[seedling_price]", current_system.seedling_price, {required: true, class: "form-control", min: 0, max: 9999} %>
     </div>
   </div>
   <h2>育苗</h2>

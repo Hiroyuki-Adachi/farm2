@@ -40,7 +40,8 @@ class SeedlingCostsControllerTest < ActionController::TestCase
   end
 
   test "育苗担当(実行)" do
-    seedling_insert = {seedling_homes_attributes: [{home_id: 3, quantity: 200}]}
+    sowed_on = Time.local(2015, 5, 1)
+    seedling_insert = {seedling_homes_attributes: [{home_id: 3, quantity: 200, sowed_on: sowed_on}]}
     assert_difference('SeedlingHome.count') do
       patch :update, seedling_id: seedlings(:seedling1).id, seedling: seedling_insert
     end

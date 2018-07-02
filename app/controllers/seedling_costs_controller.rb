@@ -56,6 +56,8 @@ class SeedlingCostsController < ApplicationController
   end
 
   def seedling_home_params
-    params.require(:seedling).permit(seedling_homes_attributes: [:id, :home_id, :quantity, :_destroy])
+    params
+      .require(:seedling)
+      .permit(seedling_homes_attributes: [:id, :home_id, :sowed_on, :quantity, :_destroy])
   end
 end

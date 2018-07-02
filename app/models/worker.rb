@@ -34,17 +34,17 @@ class Worker < ApplicationRecord
 
   before_create :set_token
 
-  belongs_to :home, -> { with_deleted }
+  belongs_to :home, -> {with_deleted}
   belongs_to :gender
   belongs_to :position
 
   has_many :work_results
-  has_many :works, -> { order(:worked_at) }, through: :work_results
+  has_many :works, -> {order(:worked_at)}, through: :work_results
 
   has_one :user
 
-  scope :usual, -> { includes(home: :section).where(["homes.company_flag = ?", false]).order('sections.display_order, homes.display_order, workers.display_order')}
-  scope :company, -> { joins(:home).eager_load(:home).where(["homes.company_flag = ?", true]).order("workers.display_order")}
+  scope :usual, -> {includes(home: :section).where(["homes.company_flag = ?", false]).order('sections.display_order, homes.display_order, workers.display_order')}
+  scope :company, -> {joins(:home).eager_load(:home).where(["homes.company_flag = ?", true]).order("workers.display_order")}
 
   REG_MAIL = /\A([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+\z/
 

@@ -7,6 +7,7 @@
         <tr>
           <th>削除</th>
           <th>担当</th>
+          <th>播種日</th>
           <th>箱数</th>
         </tr>
       </thead>
@@ -16,6 +17,9 @@
           <td><%= shf.check_box :_destroy %></td>
           <td>
             <%= shf.select(:home_id, @homes.map {|home| [home.name, home.id]}, {include_blank: true}, class: "form-control") %>
+          </td>
+          <td>
+            <%= shf.date_field :sowed_on, {class: "form-control", min: current_system.start_date, max: current_system.end_date} %>
           </td>
           <td>
             <%= shf.number_field :quantity, {class: "form-control", min: 0, max: 9999, style: "width: 100px;"} %>
