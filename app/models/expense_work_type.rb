@@ -11,7 +11,7 @@
 #
 
 class ExpenseWorkType < ApplicationRecord
-  belongs_to :expense, inverse_of: :expense_work_type
+  belongs_to :expense
   belongs_to :work_type, -> {with_deleted}
 
   def true_rate

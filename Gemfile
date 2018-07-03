@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0'
+gem 'rails', '~> 5.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '0.19'
 # Use SCSS for stylesheets
@@ -41,7 +41,7 @@ gem 'kaminari'
 # Draper adds an object-oriented layer of presentation logic to your Rails application.
 gem 'draper', '~>3'
 # ActiveRecords infamously doesn't support composite primary keys.
-gem 'composite_primary_keys', '~> 9'
+gem 'composite_primary_keys', '~> 10'
 # Comments for migrations
 gem 'migration_comments'
 
@@ -78,6 +78,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'listen', '~> 3.1.5'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
   # Add a comment summarizing the current schema to the top or bottom of each informations.

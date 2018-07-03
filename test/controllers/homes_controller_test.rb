@@ -4,7 +4,7 @@ class HomesControllerTest < ActionController::TestCase
   setup do
     setup_ip
     @home = homes(:home1)
-    @update = { name: "試験", phonetic: "しけん", section_id: 1, member_flag: true, display_order: 99 }
+    @update = {name: "試験", phonetic: "しけん", section_id: 1, member_flag: true, display_order: 99}
   end
 
   test "世帯マスタ一覧" do
