@@ -50,7 +50,7 @@ class Machine < ApplicationRecord
     joins(:machine_results)
       .where('machine_results.work_result_id in (?)', results.ids)
       .order('machines.display_order')
-      .uniq
+      .distinct
   }
 
   scope :usual, -> {

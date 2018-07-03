@@ -8,7 +8,7 @@ class Works::PrintControllerTest < ActionController::TestCase
 
   test "印刷" do
     work = Work.find(works(:works4).id)
-    get :create, work_id: work.id
+    get :create, params: {work_id: work.id}
     assert_response :success
 
     work = Work.find(work.id)
@@ -19,7 +19,7 @@ class Works::PrintControllerTest < ActionController::TestCase
   test "印刷取消" do
     work = Work.find(works(:works5).id)
 
-    get :destroy, work_id: work.id, id: 0
+    get :destroy, params: {work_id: work.id, id: 0}
     assert_response :success
     work = Work.find(work.id)
     assert_nil work.printed_at
