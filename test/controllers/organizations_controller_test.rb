@@ -7,7 +7,7 @@ class OrganizationsControllerTest < ActionController::TestCase
   end
 
   test "管理マスタ変更画面表示" do
-    get :edit, id: @organization
+    get :edit, params: {id: @organization}
     assert_response :success
   end
 

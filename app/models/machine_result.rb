@@ -103,9 +103,9 @@ class MachineResult < ApplicationRecord
     end
 
     if owner.id == work_result.worker.home_id
-      price_details = price_details.where(lease_id: Lease::NORMAL)
+      price_details = price_details.where(lease_id: Lease::NORMAL.id)
     else
-      price_details = price_details.where(lease_id: Lease::LEASE)
+      price_details = price_details.where(lease_id: Lease::LEASE.id)
     end
     unless price_details.exists?
       clear_amount
@@ -138,7 +138,7 @@ class MachineResult < ApplicationRecord
       when Adjust::DAY
         1
     end
-    @amount = @price * @quantity 
+    @amount = @price * @quantity
   end
 
   def clear_amount
