@@ -33,8 +33,8 @@ class FixesControllerTest < ActionController::TestCase
     assert_difference('Fix.count') do
       post :create, params: {fixed_at: fixed_at, fixed_works: @no_fix_works}
     end
-    assert_equal fixed_at, Work.find(works(:work_no_fix1).id).fixed_at.strftime('%Y-%m-%d')
-    assert_equal fixed_at, Work.find(works(:work_no_fix2).id).fixed_at.strftime('%Y-%m-%d')
+    assert_equal fixed_at, Work.find(works(:work_no_fix1).id).fixed_at&.strftime('%Y-%m-%d')
+    assert_equal fixed_at, Work.find(works(:work_no_fix2).id).fixed_at&.strftime('%Y-%m-%d')
     assert_equal users(:users1).worker_id, Fix.where(fixed_at: fixed_at, term: 2015).first.fixed_by
     assert_redirected_to fixes_path
   end

@@ -11,6 +11,7 @@ class WorksControllerTest < ActionController::TestCase
   end
 
   test "作業一覧" do
+    request.headers['HTTP_REFERER'] = 'http://127.0.0.1/'
     get :index
     assert_response :success
   end
@@ -38,6 +39,7 @@ class WorksControllerTest < ActionController::TestCase
   end
 
   test "作業照会" do
+    request.headers['HTTP_REFERER'] = 'http://127.0.0.1/'
     get :show, params: {id: works(:work_fixed)}
     assert_response :success
 
