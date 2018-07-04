@@ -14,7 +14,7 @@
 class WorkChemical < ApplicationRecord
   belongs_to :chemical
   belongs_to :work
-  has_one    :chemical_type, -> {with_deleted}, {through: :chemical}
+  has_one    :chemical_type, {through: :chemical}
   has_one    :work_type, -> {with_deleted}, {through: :work}
   has_one    :work_kind, -> {with_deleted}, {through: :work}
 
