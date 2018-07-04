@@ -23,9 +23,9 @@ class Machine < ApplicationRecord
 
   belongs_to :machine_type
   has_many :machine_kinds, through: :machine_type
-  has_many :price_headers, {class_name: :MachinePriceHeader, dependent: :destroy}, -> {order("machine_price_headers.validated_at DESC")}
+  has_many :price_headers, -> {order("machine_price_headers.validated_at DESC")}, {class_name: :MachinePriceHeader, dependent: :destroy}
 
-  belongs_to :owner, {class_name: :Home, foreign_key: :home_id}, -> {with_deleted}
+  belongs_to :owner, -> {with_deleted}, {class_name: :Home, foreign_key: :home_id}
 
   validates :validity_start_at, presence: true
   validates :validity_end_at, presence: true

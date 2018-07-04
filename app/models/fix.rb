@@ -17,7 +17,7 @@ class Fix < ApplicationRecord
   self.primary_keys = [:term, :fixed_at]
   before_destroy :clear_fix
 
-  belongs_to :fixer, {class_name: "Worker", foreign_key: "fixed_by"}, -> {with_deleted}
+  belongs_to :fixer, -> {with_deleted}, {class_name: "Worker", foreign_key: "fixed_by"}
 
   scope :usual, ->(term) {where(term: term).order(fixed_at: :ASC)}
 

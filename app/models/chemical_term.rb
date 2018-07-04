@@ -9,12 +9,12 @@
 #
 
 class ChemicalTerm < ApplicationRecord
-  belongs_to :chemical, ->{with_deleted}
+  belongs_to :chemical, -> {with_deleted}
 
   scope :usual, -> (term) {
     joins(chemical: :chemical_type)
       .where(term: term)
-      .order(<<SQL)
+      .order(Arel.sql(<<SQL))
         chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id
 SQL
   }
