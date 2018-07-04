@@ -13,8 +13,11 @@ class WorksController < ApplicationController
   before_action :permit_checkable_or_self, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
   before_action :permit_visitor, only: :show
   before_action :set_work_types, only: :index
+  before_action :permit_this_term, except: [:index, :show, :new, :create]
+  before_action :set_term, only: :index
 
   def index
+    @terms = WorkDecorator.terms
     @works = Work.usual(@term)
     @works = @works.by_worker(current_user.worker) if current_user.visitor?
     @sum_hours = Rails.cache.fetch(sum_hours_key(@term), expires_in: 1.hour) do
@@ -42,7 +45,7 @@ class WorksController < ApplicationController
   end
 
   def new
-    @work = Work.new(worked_at: Date.today, work_type_id: @work_types.first.id, start_at: '8:00', end_at: '17:00')
+    @work = Work.new(worked_at: Time.zone.today, work_type_id: @work_types.first.id, start_at: '8:00', end_at: '17:00')
     @results = []
     @work_lands = []
     @work_kinds = WorkKind.by_type(@work_types.first)
@@ -179,6 +182,17 @@ class WorksController < ApplicationController
     set_session
   end
 
+  def set_term
+    path = Rails.application.routes.recognize_path(request.referer)
+    if path[:controller] == "menu" || session[:work_search].nil?
+      @term = current_term
+    elsif path[:controller] == "works" && path[:action] == "index"
+      @term = params[:term] || current_term
+    else
+      @term = session[:work_search]["term"] || current_term
+    end
+  end
+
   def set_search_info
     path = Rails.application.routes.recognize_path(request.referer)
     if path[:controller] == "menu" || session[:work_search].nil?
@@ -215,7 +229,7 @@ class WorksController < ApplicationController
   def set_session
     session[:work_search] = {
       page: @page, work_type_id: @work_type_id, work_kind_id: @work_kind_id,
-      worked_at1: @worked_at1, worked_at2: @worked_at2
+      worked_at1: @worked_at1, worked_at2: @worked_at2, term: @term
     }
   end
 
@@ -242,5 +256,9 @@ class WorksController < ApplicationController
 
   def permit_visitor
     to_error_path if current_user.visitor? && !@work.work_results.exists?(worker_id: current_user.worker.id)
+  end
+
+  def permit_this_term
+    to_error_path unless @work.present? && @work.term == current_term
   end
 end

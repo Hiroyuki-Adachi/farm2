@@ -30,7 +30,7 @@
 <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
 <%= link_to '削除',raw(work_path(id: @work)), method: :delete, class: "btn btn-danger", data: {confirm: "本当に削除してもよろしいですか?"} %>
 <% end %>
-<% unless current_user.visitor? %><%= button_tag "新規登録",  type: :button, class: "btn btn-success", onclick: raw("location.href = '" + new_work_path + "';") %><% end %>
+<% if !current_user.visitor? && @work.term == current_term %><%= button_tag "新規登録",  type: :button, class: "btn btn-success", onclick: raw("location.href = '" + new_work_path + "';") %><% end %>
 <% if updatable_work(current_user, @work) %>
 <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: raw("execPrint('" + work_print_index_path(work_id: @work.id) + "');") %>
 <%= button_tag "印刷情報削除", type: :button, class: "btn btn-danger", onclick: raw("cancelPrint('" + work_print_path(work_id: @work.id, id: 0) + "');") %>
