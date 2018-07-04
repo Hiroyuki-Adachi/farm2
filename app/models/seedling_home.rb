@@ -36,4 +36,8 @@ class SeedlingHome < ActiveRecord::Base
   def work_type_id
     seedling.work_type_id
   end
+
+  def dispose?
+    seedling_results.where(disposal_flag: true).exists?
+  end
 end
