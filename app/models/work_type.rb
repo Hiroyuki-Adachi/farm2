@@ -17,7 +17,7 @@ class WorkType < ApplicationRecord
 
   scope :categories, -> {where(category_flag: true).order(display_order: :ASC, id: :ASC)}
   scope :usual, -> {order(category_flag: :ASC, display_order: :ASC, id: :ASC)}
-  scope :index, -> {where(category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
+  scope :indexes, -> {where(category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
   scope :land, -> {where(land_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
   scope :select_category, -> (category) {where(category_flag: false, genre: category[:genre]).order(display_order: :ASC, id: :ASC)}
 

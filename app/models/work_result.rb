@@ -20,9 +20,9 @@ require 'securerandom'
 class WorkResult < ApplicationRecord
   belongs_to :work
   belongs_to :worker, -> {with_deleted}
-  has_one    :home, {through: :worker}, -> {with_deleted}
-  has_one    :work_type, {through: :work}, -> {with_deleted}
-  has_one    :work_kind, {through: :work}, -> {with_deleted}
+  has_one    :home, -> {with_deleted}, {through: :worker}
+  has_one    :work_type, -> {with_deleted}, {through: :work}
+  has_one    :work_kind, -> {with_deleted}, {through: :work}
 
   before_create :set_uuid
 

@@ -228,7 +228,7 @@ class WorksController < ApplicationController
   end
 
   def set_work_types
-    @work_types = WorkType.index
+    @work_types = WorkType.indexes
     @work_kinds = WorkKind.usual
   end
 

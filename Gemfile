@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1'
+gem 'rails', '~> 5.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '0.19'
 # Use SCSS for stylesheets
@@ -16,6 +16,8 @@ gem 'therubyracer', platforms: :ruby
 
 # Use bootstrap4
 gem 'bootstrap', '>= 4.0'
+
+gem 'bootsnap', require: false
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.1'
@@ -41,7 +43,7 @@ gem 'kaminari'
 # Draper adds an object-oriented layer of presentation logic to your Rails application.
 gem 'draper', '~>3'
 # ActiveRecords infamously doesn't support composite primary keys.
-gem 'composite_primary_keys', '~> 10'
+gem 'composite_primary_keys', '~> 11'
 # Comments for migrations
 gem 'migration_comments'
 

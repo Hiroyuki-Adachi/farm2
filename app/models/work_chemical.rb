@@ -14,9 +14,9 @@
 class WorkChemical < ApplicationRecord
   belongs_to :chemical
   belongs_to :work
-  has_one    :chemical_type, {through: :chemical}, -> {with_deleted}
-  has_one    :work_type, {through: :work}, -> {with_deleted}
-  has_one    :work_kind, {through: :work}, -> {with_deleted}
+  has_one    :chemical_type, -> {with_deleted}, {through: :chemical}
+  has_one    :work_type, -> {with_deleted}, {through: :work}
+  has_one    :work_kind, -> {with_deleted}, {through: :work}
 
   validates_presence_of :quantity
   validates_numericality_of :quantity, if: proc { |x| x.quantity.present?}

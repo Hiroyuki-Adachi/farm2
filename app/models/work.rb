@@ -38,8 +38,8 @@ class Work < ApplicationRecord
   belongs_to :work_kind, -> {with_deleted}
   belongs_to :weather
   belongs_to :fix, {class_name: "Fix", foreign_key: [:term, :fixed_at], primary_key: [:term, :fixed_at]}
-  belongs_to :creator, {class_name: "Worker", foreign_key: "created_by"}, -> {with_deleted}
-  belongs_to :printer, {class_name: "Worker", foreign_key: "printed_by"}, -> {with_deleted}
+  belongs_to :creator, -> {with_deleted}, {class_name: "Worker", foreign_key: "created_by"}
+  belongs_to :printer, -> {with_deleted}, {class_name: "Worker", foreign_key: "printed_by"}
 
   has_many :work_lands, -> {order('work_lands.display_order')}, {dependent: :destroy}
   has_many :work_results, -> {order('work_results.display_order')}, {dependent: :destroy}
@@ -47,11 +47,11 @@ class Work < ApplicationRecord
   has_many :work_verifications, -> {order('work_verifications.id')}, {dependent: :destroy}
   has_one :broccoli, {class_name: "WorkBroccoli", dependent: :destroy}
 
-  has_many :workers, {through: :work_results}, -> {with_deleted}
-  has_many :lands, {through: :work_lands}, -> {with_deleted}
-  has_many :chemicals, {through: :work_chemicals}, -> {with_deleted}
+  has_many :workers, -> {with_deleted}, {through: :work_results}
+  has_many :lands, -> {with_deleted}, {through: :work_lands}
+  has_many :chemicals, -> {with_deleted}, {through: :work_chemicals}
   has_many :machine_results, {through: :work_results}
-  has_many :checkers, {through: :work_verifications, source: :worker}, -> {with_deleted}
+  has_many :checkers, -> {with_deleted}, {through: :work_verifications, source: :worker}
 
   scope :no_fixed, ->(term){where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)}
   scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}
