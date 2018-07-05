@@ -8,10 +8,10 @@ class WorksControllerTest < ActionController::TestCase
       work_type_id: work_types(:work_type_koshi).id, work_kind_id: work_kinds(:work_kind_taue).id,
       name: "試験", remarks: "備考だよーーー"
     }
+    request.headers['HTTP_REFERER'] = 'http://127.0.0.1/'
   end
 
   test "作業一覧" do
-    request.headers['HTTP_REFERER'] = 'http://127.0.0.1/'
     get :index
     assert_response :success
   end
@@ -39,7 +39,6 @@ class WorksControllerTest < ActionController::TestCase
   end
 
   test "作業照会" do
-    request.headers['HTTP_REFERER'] = 'http://127.0.0.1/'
     get :show, params: {id: works(:work_fixed)}
     assert_response :success
 
@@ -53,6 +52,11 @@ class WorksControllerTest < ActionController::TestCase
 
     get :edit, params: {id: works(:work_fixed)}
     assert_redirected_to works_path
+  end
+
+  test "作業変更(過去年度)" do
+    get :edit, params: {id: works(:works_past)}
+    assert_response :error
   end
 
   test "作業変更(作業者)(表示)" do
@@ -132,5 +136,12 @@ class WorksControllerTest < ActionController::TestCase
       delete :destroy, params: {id: works(:work_fixed)}
     end
     assert_redirected_to works_path
+  end
+
+  test "作業削除(過去年度)" do
+    assert_no_difference('Work.count') do
+      delete :destroy, params: {id: works(:works_past)}
+    end
+    assert_response :error
   end
 end
