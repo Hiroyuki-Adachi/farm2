@@ -9,7 +9,7 @@ class WorkResultsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
 
-    get :index, fixed_at: "2015-02-28"
+    get :index, params: {fixed_at: "2015-02-28"}
     assert_response :success
   end
 end

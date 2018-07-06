@@ -72,8 +72,8 @@ work_types5:
   bg_color: "#ffffff"
   land_flag: t
 
-work_types6:
-  id: '8'
+work_types_wcs:
+  id: 8
   genre: '2'
   name: "飼料稲"
   category_flag: f

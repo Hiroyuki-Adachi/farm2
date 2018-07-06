@@ -1,0 +1,38 @@
+<h1>育苗使用</h1>
+<% if @seedling_homes.count > 0 %>
+<table class="table table-sm" style="width:auto;">
+  <thead>
+    <tr>
+      <th>世帯</th>
+      <th>品種</th>
+      <th class="numeric">契約数</th>
+      <th class="numeric">使用数</th>
+      <th>状態</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @seedling_homes.each do |seedling_home| %>
+      <tr>
+        <td><%= seedling_home.home_name %></td>
+        <td><%= seedling_home.work_type_name %></td>
+        <td class="numeric"><%= seedling_home.quantity %></td>
+        <td class="numeric"><%= sprintf("%d", @seedling_result_quantities[seedling_home.id] || 0) %></td>
+        <td>
+          <% if seedling_home.quantity > (@seedling_result_quantities[seedling_home.id] || 0) %>
+          <%= seedling_home.dispose? ? "廃棄" : "不足" %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to '使用', edit_seedling_result_path(seedling_home_id: seedling_home.id), {class: "btn btn-success btn-sm"} %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
+  </div>
+</div>

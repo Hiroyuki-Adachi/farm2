@@ -23,7 +23,7 @@ class ChemicalCostsControllerTest < ActionController::TestCase
     quantity = 12.3
     assert_no_difference('ChemicalTerm.count') do
       assert_difference('ChemicalWorkType.where.not(quantity: 0).count') do
-        post :create, {
+        post :create, params: {
           chemical_terms: [{id: chemical_term_id, price: chemical_price}],
           chemical_work_types: [{
             work_type_id: work_type_id,

@@ -3,6 +3,6 @@ class TotalCostsController < ApplicationController
 
   def index
     @work_types = WorkType.land
-    @lands = LandCost.total(current_term)
+    @lands = LandCost.total(Time.zone.today)
   end
 end

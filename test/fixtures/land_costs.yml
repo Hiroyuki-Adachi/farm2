@@ -2,13 +2,13 @@
 #
 # Table name: land_costs # 土地原価
 #
-#  id           :integer          not null, primary key  # 土地原価
-#  term         :integer          not null               # 年度(期)
-#  land_id      :integer          not null               # 土地
-#  work_type_id :integer          not null               # 作業分類
-#  cost         :decimal(7, 1)    default(0.0), not null # 原価
+#  id           :integer          not null, primary key               # 土地原価
+#  land_id      :integer          not null                            # 土地
+#  work_type_id :integer          not null                            # 作業分類
+#  cost         :decimal(7, 1)    default(0.0), not null              # 原価
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  activated_on :date             default(Mon, 01 Jan 1900), not null # 有効日
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
@@ -18,9 +18,9 @@
 # below each fixture, per the syntax in the comments below
 #
 cost1:
-  term: 2015
-  land: lands0
-  work_type: work_type_koshi
-  cost: 0
+  activated_on: '2015-01-01'
+  land: land_land_cost
+  work_type_id: 8
+  cost: 100
   created_at: '2015-07-11 12:12:12'
   updated_at: '2015-07-11 12:12:12'

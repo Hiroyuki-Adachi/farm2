@@ -1,33 +1,31 @@
 <nav id="my_sidebar" class="bg-info" style="min-height:calc(100vh - 56px); padding-left: 15px;">
-  <div aria-labelledby="navbarDropdown1">
+  <div aria-labelledby="navbarDaily">
     <span class="h5">日報管理</span>
-    <% unless current_user.visitor? %><%= link_to '日報入力', new_work_path, {class: "dropdown-item", data: {controller: :works}} %><% end %>
-    <%= link_to '日報一覧', works_path, {class: "dropdown-item", data: {controller:  "works"}} %>
+    <% unless current_user.visitor? %><%= link_to '日報入力', new_work_path, {class: "dropdown-item", data: {controller: :works, actions: [:new, :edit, :show]}} %><% end %>
+    <%= link_to '日報一覧', works_path, {class: "dropdown-item", data: {controller:  "works", actions: [:index]}} %>
     <% if current_user.checkable? %><%= link_to '日報検証', work_verifications_path, {class: "dropdown-item", data: {controller: "work_verifications"}} %><% end %>
     <% if current_user.manageable? %><%= link_to '月報入力', monthly_reports_path, {class: "dropdown-item", data: {controller:  "monthly_reports"}} %><% end %>
   </div>
-  <div aria-labelledby="navbarDropdown7" style="display:none;">
+  <div aria-labelledby="navbarSchedule" style="display:none;">
     <span class="h5">予定管理</span>
     <%= link_to '作業予定', schedules_path, {class: "dropdown-item", data: {controller:  "schedules"}} %>
   </div>
   <% if current_user.manageable? %>
-  <div aria-labelledby="navbarDropdown2" style="display:none;">
+  <div aria-labelledby="navbarTotal" style="display:none;">
     <span class="h5">集計処理</span>
-    <%= link_to '集計対象期間変更', edit_menu_path(current_system), {class: "dropdown-item", data: {controller: :menu}} %>
+    <%= link_to '統計照会', statistics_path, {class: "dropdown-item", data: {controller: :statistics}} %>
+    <%= link_to '集計対象期間変更', edit_menu_path(current_system), {class: "dropdown-item", data: {controller: :menu, actions: [:edit]}} %>
     <%= link_to '日当一覧', work_results_path, {class: "dropdown-item", data: {controller: "work_results"}} %>
     <%= link_to '機械利用料', machine_results_path, {class: "dropdown-item", data: {controller: "machine_results"}} %>
-    <%= link_to '剤使用量一覧', work_chemicals_path, {class: "dropdown-item", data: {controller: "work_chemicals"}} %>
+    <%= link_to '薬剤使用量一覧', work_chemicals_path, {class: "dropdown-item", data: {controller: "work_chemicals"}} %>
+    <%= link_to '育苗一覧', seedling_results_path, {class: "dropdown-item", data: {controller: "seedling_results"}} %>
   </div>
-  <div aria-labelledby="navbarDropdown3" style="display:none;">
-    <span class="h5">統計処理</span>
-    <%= link_to '統計照会', statistics_path, {class: "dropdown-item", data: {controller: :statistics}} %>
-  </div>
-  <div aria-labelledby="navbarDropdown4" style="display:none;">
+  <div aria-labelledby="navbarFix" style="display:none;">
     <span class="h5">会計処理</span>
-    <%= link_to '新規確定', new_fix_path, {class: "dropdown-item", data: {controller: :fixes}} %>
-    <%= link_to '確定一覧', fixes_path, {class: "dropdown-item", data: {controller: :fixes}} %>
+    <%= link_to '新規確定', new_fix_path, {class: "dropdown-item", data: {controller: :fixes, actions: [:new]}} %>
+    <%= link_to '確定一覧', fixes_path, {class: "dropdown-item", data: {controller: :fixes, actions: [:index]}} %>
   </div>
-  <div aria-labelledby="navbarDropdown8" style="display:none;">
+  <div aria-labelledby="navbarCost" style="display:none;">
     <span class="h5">原価管理</span>
     <%= link_to '原価一覧', total_costs_path, {class: "dropdown-item", data: {controller: "total_costs"}} %>
     <%= link_to '減価償却', depreciations_path, {class: "dropdown-item", data: {controller: :depreciations}} %>
@@ -39,7 +37,7 @@
   </div>
   <% end %>
   <% if current_user.checkable? %>
-  <div aria-labelledby="navbarDropdown5" style="display:none;">
+  <div aria-labelledby="navbarMaster" style="display:none;">
     <span class="h5">マスタ保守</span>
     <%= link_to '世帯マスタ保守', homes_path, {class: "dropdown-item", data: {controller: :homes}} %>
     <%= link_to '作業者マスタ保守', workers_path, {class: "dropdown-item", data: {controller: :workers}} %>
@@ -56,30 +54,40 @@
     <% end %>
   </div>
   <% end %>
-  <div aria-labelledby="navbarDropdown6" style="display:none;">
+  <div aria-labelledby="navbarManagement" style="display:none;">
     <span class="h5">管理</span>
-    <% if current_user.admin? %><%= link_to '利用者マスタ保守', users_path, {class: "dropdown-item", data: {controller: :users}} %><% end %>
+    <% if current_user.admin? %><%= link_to '利用者マスタ保守', users_path, {class: "dropdown-item", data: {controller: :users, actions: [:new, :index]}} %><% end %>
     <% if current_user.manageable? %>
-    <%= link_to '対象年度変更', edit_term_menu_path(current_system), {class: "dropdown-item", data: {controller: :menu}} %>
+    <%= link_to '対象年度変更', edit_term_menu_path(current_system), {class: "dropdown-item", data: {controller: :menu, actions: [:edit_term]}} %>
     <%= link_to '管理情報変更', edit_organization_path(current_organization), {class: "dropdown-item", data: {controller: :organizations}} %>
     <% end %>
-    <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item", data: {controller: :users}} %>
+    <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item", data: {controller: :users, actions: [:edit]}} %>
   </div>
 </nav>
 <input type="hidden" id="current_controller" value="<%= controller.controller_name %>">
 <input type="hidden" id="current_action" value="<%= controller.action_name %>">
 <script>
 $(function() {
-    if($("#current_controller").val() == "menu" && $("#current_action").val() == "index") {
+    var controller = $("#current_controller").val();
+    var action = $("#current_action").val();
+    if(controller == "menu" && action == "index") {
         return;
     }
     $("#my_sidebar").find("a[data-controller]").each(function(i, e) {
-        if(e.dataset.controller == $("#current_controller").val()) {
-            var navdiv = $(e).parent("div");
-            e.style.backgroundColor = "White";
-            navdiv.show();
-            $("#" + navdiv.attr("aria-labelledby")).addClass("active");
+        if(e.dataset.controller == controller) {
+            if($("a[data-controller='" + controller + "']").length <= 1) {
+                activeBar(e);
+            } else if(JSON.parse(e.dataset.actions).indexOf(action) >= 0) {
+                activeBar(e);
+            }
         }
     });
 });
+
+function activeBar(e) {
+    var navdiv = $(e).parent("div");
+    e.style.backgroundColor = "White";
+    navdiv.show();
+    $("#" + navdiv.attr("aria-labelledby")).addClass("active");
+}
 </script>

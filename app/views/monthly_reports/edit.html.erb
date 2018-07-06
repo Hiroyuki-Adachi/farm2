@@ -116,7 +116,7 @@ function calc_total_hours()
         <td><%= number_field_tag "data[#{d}][hours]", result ? sprintf("%.1f", result.hours) : "0.0", 
           {max: 24, min: 0, step: 0.5, onchange: "calc_total_hours()", class: "form-control"} %></td>
         <td><%= select_tag("data[#{d}][work_type_id]",
-            options_from_collection_for_select(WorkType.index, :id, :name, work ? work.work_type_id : 1), {class: "form-control"}) %></td>
+            options_from_collection_for_select(WorkType.indexes, :id, :name, work ? work.work_type_id : 1), {class: "form-control"}) %></td>
         <td><%= text_field_tag "data[#{d}][name]", work ? work.name : "", {:maxlength => 40, :size => 30, class: "form-control"} %></td>
       <% else %>
         <td>&nbsp;</td>

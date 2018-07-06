@@ -25,24 +25,24 @@ class LandPlacesControllerTest < ActionController::TestCase
 
   test "場所マスタ新規作成(実行)" do
     assert_difference('LandPlace.count') do
-      post :create, land_place: {name: "中央", display_order: 2, remarks: "備考です"}
+      post :create, params: {land_place: {name: "中央", display_order: 2, remarks: "備考です"}}
     end
     assert_redirected_to land_places_path
   end
 
   test "場所マスタ変更(表示)" do
-    get :edit, id: @land_place
+    get :edit, params: {id: @land_place}
     assert_response :success
   end
 
   test "場所マスタ変更(実行)" do
-    patch :update, id: @land_place, land_place: {name: "東側", display_order: 99, remarks: ""}
+    patch :update, params: {id: @land_place, land_place: {name: "東側", display_order: 99, remarks: ""}}
     assert_redirected_to land_places_path
   end
 
   test "場所マスタ削除" do
     assert_difference('LandPlace.count', -1) do
-      delete :destroy, id: @land_place
+      delete :destroy, params: {id: @land_place}
     end
     assert_redirected_to land_places_path
   end

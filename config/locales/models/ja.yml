@@ -179,6 +179,7 @@ ja:
         url: "URL"
         broccoli_work_type_id: "ブロッコリーを選択"
         broccoli_work_kind_id: "収穫を選択"
+        rice_planting_id: "田植を選択"
 
       section:
         name: 名称

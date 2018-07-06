@@ -21,20 +21,20 @@ class WorkKindsControllerTest < ActionController::TestCase
   test "作業種別マスタ新規作成(実行)" do
     assert_difference('WorkKind.count') do
       assert_difference('WorkKindPrice.count') do
-        post :create, work_kind: @update
+        post :create, params: {work_kind: @update}
       end
     end
     assert_redirected_to work_kinds_path
   end
 
   test "作業種別マスタ変更(表示)" do
-    get :edit, id: @work_kind
+    get :edit, params: {id: @work_kind}
     assert_response :success
   end
 
   test "作業種別マスタ変更(実行)" do
     assert_no_difference('WorkKind.count') do
-      patch :update, id: @work_kind, work_kind: @update
+      patch :update, params: {id: @work_kind, work_kind: @update}
     end
     assert_equal @update[:price], WorkKindPrice.find_by(term: @term, work_kind_id: @work_kind).price
     assert_equal 1, WorkKindPrice.where(work_kind_id: @work_kind, price: @update[:price]).count
@@ -43,7 +43,7 @@ class WorkKindsControllerTest < ActionController::TestCase
 
   test "作業種別マスタ削除" do
     assert_difference('WorkKind.count', -1) do
-      delete :destroy, id: @work_kind
+      delete :destroy, params: {id: @work_kind}
     end
     assert_redirected_to work_kinds_path
   end

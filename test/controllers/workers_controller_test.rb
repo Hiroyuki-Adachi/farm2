@@ -28,26 +28,26 @@ class WorkersControllerTest < ActionController::TestCase
 
   test "作業者マスタ新規作成(実行)" do
     assert_difference('Worker.count') do
-      post :create, worker: @update
+      post :create, params: {worker: @update}
     end
     assert_redirected_to workers_path
   end
 
   test "作業者マスタ変更(表示)" do
-    get :edit, id: @worker
+    get :edit, params: {id: @worker}
     assert_response :success
   end
 
   test "作業者マスタ変更(実行)" do
     assert_no_difference('Worker.count') do
-      patch :update, id: @worker, worker: @update
+      patch :update, params: {id: @worker, worker: @update}
     end
     assert_redirected_to workers_path
   end
 
   test "作業者マスタ削除" do
     assert_difference('Worker.count', -1) do
-      delete :destroy, id: @worker
+      delete :destroy, params: {id: @worker}
     end
     assert_redirected_to workers_path
   end

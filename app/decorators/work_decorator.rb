@@ -3,20 +3,15 @@ class WorkDecorator < Draper::Decorator
   decorates_association :creator
   decorates_association :printer
 
-  def self.months(term)
-    cache_key = "months#{term}"
-    months = []
-    if Rails.cache.exist?(cache_key)
-      months = Rails.cache.read(cache_key)
-    else
-      months << ["全て", ""]
-      Work.select("date_trunc('month', worked_at) AS worked_month").where(term: term).order("date_trunc('month', worked_at)").uniq.each {|w|
-        worked_month = Time.parse(w.worked_month.to_s)
-        months << [worked_month.strftime("%Y年%m月"), worked_month.strftime("%Y-%m-01")]
-      }
-      Rails.cache.write(cache_key, months, expires_in: 1.hour)
+  def self.terms
+    terms = []
+    term = Work.minimum(:term)
+    term ||= Time.zone.now.year
+    while term <= Time.zone.now.year
+      terms << [term, term]
+      term += 1
     end
-    return months
+    return terms
   end
 
   def worked_at
@@ -24,11 +19,11 @@ class WorkDecorator < Draper::Decorator
   end
 
   def worked_at_short
-    model.worked_at.strftime('%m-%d')
+    model.worked_at&.strftime('%m-%d')
   end
 
   def fixed_at
-    model.fixed_at.strftime('%Y年 %m月') if model.fixed_at
+    model.fixed_at&.strftime('%Y年 %m月')
   end
 
   def name

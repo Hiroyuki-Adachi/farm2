@@ -4,7 +4,7 @@ class MachineTypesControllerTest < ActionController::TestCase
   setup do
     setup_ip
     @machine_type = machine_types(:machine_types1)
-    @update = { name: "試験", display_order: 99 }
+    @update = {name: "試験", display_order: 99}
   end
 
   test "機械種別マスタ一覧" do
@@ -19,30 +19,30 @@ class MachineTypesControllerTest < ActionController::TestCase
 
   test "機械種別マスタ新規作成(実行)" do
     assert_difference('MachineType.count') do
-      post :create, machine_type: @update
+      post :create, params: {machine_type: @update}
     end
 
     assert_redirected_to machine_types_path
   end
 
   test "機械種別マスタ変更(表示)" do
-    get :edit, id: @machine_type
+    get :edit, params: {id: @machine_type}
     assert_response :success
   end
 
   test "機械種別マスタ変更(実行)" do
     assert_no_difference('MachineType.count') do
-      patch :update, id: @machine_type, machine_type: @update
+      patch :update, params: {id: @machine_type, machine_type: @update}
     end
     assert_redirected_to machine_types_path
   end
 
   test "機械種別マスタ削除" do
     assert_raise(ActiveRecord::DeleteRestrictionError) do
-      delete :destroy, id: @machine_type
+      delete :destroy, params: {id: @machine_type}
     end
     assert_difference('MachineType.count', -1) do
-      delete :destroy, id: machine_types(:machine_types_removable)
+      delete :destroy, params: {id: machine_types(:machine_types_removable)}
     end
     assert_redirected_to machine_types_path
   end

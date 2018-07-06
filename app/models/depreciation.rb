@@ -16,7 +16,7 @@ class Depreciation < ApplicationRecord
   has_many :depreciation_types, {dependent: :destroy}
   has_many :work_types, {through: :depreciation_types}
 
-  scope :usual, ->(term){joins(:machine, :machine_type).where(["depreciations.term = ?", term])}
+  scope :usual, ->(term) {joins(:machine, :machine_type).where(["depreciations.term = ?", term])}
 
   def regist_work_types(work_types)
     work_types.each do |work_type|

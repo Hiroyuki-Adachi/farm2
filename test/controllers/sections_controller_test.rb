@@ -19,26 +19,26 @@ class SectionsControllerTest < ActionController::TestCase
 
   test "班マスタ新規作成(実行)" do
     assert_difference('Section.count') do
-      post :create, section: @update
+      post :create, params: {section: @update}
     end
     assert_redirected_to sections_path
   end
 
   test "班マスタ変更(表示)" do
-    get :edit, id: @section
+    get :edit, params: {id: @section}
     assert_response :success
   end
 
   test "班マスタ変更(実行)" do
     assert_no_difference('Section.count') do
-      patch :update, id: @section, section: @update
+      patch :update, params: {id: @section, section: @update}
     end
     assert_redirected_to sections_path
   end
 
   test "班マスタ削除" do
     assert_difference('Section.count', -1) do
-      delete :destroy, id: @section
+      delete :destroy, params: {id: @section}
     end
     assert_redirected_to sections_path
   end
