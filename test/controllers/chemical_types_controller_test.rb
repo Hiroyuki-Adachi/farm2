@@ -19,30 +19,30 @@ class ChemicalTypesControllerTest < ActionController::TestCase
 
   test "薬剤種別マスタ新規作成(実行)" do
     assert_difference('ChemicalType.count') do
-      post :create, chemical_type: @update
+      post :create, params: {chemical_type: @update}
     end
 
     assert_redirected_to chemical_types_path
   end
 
   test "薬剤種別マスタ変更(表示)" do
-    get :edit, id: @chemical_type
+    get :edit, params: {id: @chemical_type}
     assert_response :success
   end
 
   test "薬剤種別マスタ変更(実行)" do
     assert_no_difference('ChemicalType.count') do
-      patch :update, id: @chemical_type, chemical_type: @update
+      patch :update, params: {id: @chemical_type, chemical_type: @update}
     end
     assert_redirected_to chemical_types_path
   end
 
   test "薬剤種別マスタ削除" do
     assert_raise(ActiveRecord::DeleteRestrictionError) do
-      delete :destroy, id: @chemical_type
+      delete :destroy, params: {id: @chemical_type}
     end
     assert_difference('ChemicalType.count', -1) do
-      delete :destroy, id: chemical_types(:chemical_type_empty)
+      delete :destroy, params: {id: chemical_types(:chemical_type_empty)}
     end
     assert_redirected_to chemical_types_path
   end

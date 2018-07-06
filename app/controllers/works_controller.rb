@@ -13,8 +13,11 @@ class WorksController < ApplicationController
   before_action :permit_checkable_or_self, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
   before_action :permit_visitor, only: :show
   before_action :set_work_types, only: :index
+  before_action :permit_this_term, except: [:index, :show, :new, :create]
+  before_action :set_term, only: :index
 
   def index
+    @terms = WorkDecorator.terms
     @works = Work.usual(@term)
     @works = @works.by_worker(current_user.worker) if current_user.visitor?
     @sum_hours = Rails.cache.fetch(sum_hours_key(@term), expires_in: 1.hour) do
@@ -23,16 +26,16 @@ class WorksController < ApplicationController
     @count_workers = Rails.cache.fetch(count_workers_key(@term), expires_in: 1.hour) do
       WorkResult.where(work_id: @works.ids).group(:work_id).count(:worker_id).to_h
     end
+    set_pager
     if request.xhr?
-      set_pager
       respond_to do |format|
+        @works = WorkDecorator.decorate_collection(@works.page(@page))
         format.js
       end
     else
       respond_to do |format|
         format.html do
-          @months = WorkDecorator.months(@term)
-          set_pager
+          @works = WorkDecorator.decorate_collection(@works.page(@page))
         end
         format.csv do
           render :content_type => 'text/csv; charset=cp943'
@@ -42,7 +45,7 @@ class WorksController < ApplicationController
   end
 
   def new
-    @work = Work.new(worked_at: Date.today, work_type_id: @work_types.first.id, start_at: '8:00', end_at: '17:00')
+    @work = Work.new(worked_at: Time.zone.today, work_type_id: @work_types.first.id, start_at: '8:00', end_at: '17:00')
     @results = []
     @work_lands = []
     @work_kinds = WorkKind.by_type(@work_types.first)
@@ -166,7 +169,7 @@ class WorksController < ApplicationController
   end
 
   def check_fixed
-    redirect_to(works_path(page: params[:page], month: params[:month])) if @work.fixed_at
+    redirect_to works_path if @work.fixed_at
   end
 
   def clear_cache
@@ -174,6 +177,23 @@ class WorksController < ApplicationController
   end
 
   def set_pager
+    set_search_info
+    do_search
+    set_session
+  end
+
+  def set_term
+    path = Rails.application.routes.recognize_path(request.referer)
+    if path[:controller] == "menu" || session[:work_search].nil?
+      @term = current_term
+    elsif path[:controller] == "works" && path[:action] == "index"
+      @term = params[:term] || current_term
+    else
+      @term = session[:work_search]["term"] || current_term
+    end
+  end
+
+  def set_search_info
     path = Rails.application.routes.recognize_path(request.referer)
     if path[:controller] == "menu" || session[:work_search].nil?
       session.delete(:work_search)
@@ -182,24 +202,35 @@ class WorksController < ApplicationController
       @work_kind_id = ""
       @page = 1
     elsif path[:controller] == "works" && path[:action] == "index"
-      @month = params[:month] || ""
       @work_type_id = params[:work_type_id] || ""
       @work_kind_id = params[:work_kind_id] || ""
-      @page = params[:page].blank? ? 1 : params[:page]
+      @worked_at1 = params[:worked_at1]
+      @worked_at2 = params[:worked_at2]
+      @page = params[:page] || 1
     else
-      @month = session[:work_search]["month"]
       @work_type_id = session[:work_search]["work_type_id"]
       @work_kind_id = session[:work_search]["work_kind_id"]
+      @worked_at1 = session[:work_search]["worked_at1"]
+      @worked_at2 = session[:work_search]["worked_at2"]
       @page = session[:work_search]["page"] || 1
     end
-    @works = @works.where("date_trunc('month', worked_at) = ?", @month) unless @month.blank?
-    @works = @works.where(work_type_id: @work_type_id) unless @work_type_id.blank?
-    @works = @works.where(work_kind_id: @work_kind_id) unless @work_kind_id.blank?
+  end
+
+  def do_search
+    @works = @works.where(work_type_id: @work_type_id) if @work_type_id.present?
+    @works = @works.where(work_kind_id: @work_kind_id) if @work_kind_id.present?
+    @works = @works.where(["worked_at >= ?", @worked_at1]) if @worked_at1.present?
+    @works = @works.where(["worked_at <= ?", @worked_at2]) if @worked_at2.present?
     @works_count = @works.count
-    @total_hours = @works.inject(0) { |a, e| a + (@sum_hours[e.id] || 0) }
-    @total_workers = @works.inject(0) { |a, e| a + (@count_workers[e.id] || 0) }
-    @works = WorkDecorator.decorate_collection(@works.page(@page))
-    session[:work_search] = { month: @month, page: @page, work_type_id: @work_type_id, work_kind_id: @work_kind_id }
+    @total_hours = @works.inject(0) { |a, e| a + (@sum_hours[e.id] || 0)}
+    @total_workers = @works.inject(0) { |a, e| a + (@count_workers[e.id] || 0)}
+  end
+
+  def set_session
+    session[:work_search] = {
+      page: @page, work_type_id: @work_type_id, work_kind_id: @work_kind_id,
+      worked_at1: @worked_at1, worked_at2: @worked_at2, term: @term
+    }
   end
 
   def set_broccoli
@@ -211,7 +242,7 @@ class WorksController < ApplicationController
   end
 
   def set_work_types
-    @work_types = WorkType.index
+    @work_types = WorkType.indexes
     @work_kinds = WorkKind.usual
   end
 
@@ -225,5 +256,9 @@ class WorksController < ApplicationController
 
   def permit_visitor
     to_error_path if current_user.visitor? && !@work.work_results.exists?(worker_id: current_user.worker.id)
+  end
+
+  def permit_this_term
+    to_error_path unless @work.present? && @work.term == current_term
   end
 end

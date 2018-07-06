@@ -7,14 +7,16 @@ class ChangeTermTest < ActionDispatch::IntegrationTest
   end
 
   test "対象年度変更(実行:新規)" do
-    post_via_redirect(sessions_path, login_name: "1234567890", password: "password")
+    post sessions_path, params: {login_name: "1234567890", password: "password"}
+    follow_redirect!
     assert_response :success
 
     new_term = systems(:s2015).term + 1
-    patch_via_redirect(menu_path(@system), system: { term: new_term })
+    patch menu_path(@system), params: {system: {term: new_term}}
+    follow_redirect!
     assert_response :success
 
-    get_via_redirect(menu_index_path)
+    get menu_index_path
     assert_response :success
     assert_equal new_term, assigns(:term)
   end

@@ -22,6 +22,7 @@
 #  broccoli_work_type_id :integer                                       # ブロッコリ作業分類
 #  broccoli_work_kind_id :integer                                       # ブロッコリ種別分類
 #  chemical_group_count  :integer          default(1)                   # 薬剤グループ数
+#  rice_planting_id      :integer                                       # 田植作業種別
 #
 
 org:
@@ -34,5 +35,6 @@ org:
   chemical_group_count: 2
   daily_worker: 0
   term: 2015
+  rice_planting_id: 1
   broccoli_work_type_id: work_type_broccoli
   broccoli_work_kind_id: work_kind_broccoli

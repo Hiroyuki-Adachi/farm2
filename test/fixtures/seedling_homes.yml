@@ -1,0 +1,24 @@
+# == Schema Information
+#
+# Table name: seedling_homes # 育苗担当世帯
+#
+#  id          :integer          not null, primary key # 育苗担当世帯
+#  seedling_id :integer                                # 育苗
+#  home_id     :integer                                # 世帯
+#  quantity    :decimal(4, )     default(0), not null  # 苗箱数
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  sowed_on    :date                                   # 播種日
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+seedling_home1:
+  seedling: seedling1
+  home_id: 1
+  quantity: 200
+  sowed_on: "2015-05-01"

@@ -27,7 +27,7 @@ class Schedule < ApplicationRecord
   belongs_to :work_kind, -> {with_deleted}
 
   has_many :schedule_workers, -> {order('schedule_workers.display_order')}, {dependent: :destroy}
-  has_many :workers, {through: :schedule_workers}, -> {with_deleted}
+  has_many :workers, -> {with_deleted}, {through: :schedule_workers}
 
   scope :usual, ->(term) {
       where(term: term)

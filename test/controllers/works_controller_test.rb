@@ -8,6 +8,7 @@ class WorksControllerTest < ActionController::TestCase
       work_type_id: work_types(:work_type_koshi).id, work_kind_id: work_kinds(:work_kind_taue).id,
       name: "試験", remarks: "備考だよーーー"
     }
+    request.headers['HTTP_REFERER'] = 'http://127.0.0.1/'
   end
 
   test "作業一覧" do
@@ -28,7 +29,7 @@ class WorksControllerTest < ActionController::TestCase
 
   test "作業登録(実行)" do
     assert_difference('Work.count') do
-      post :create, work: @update, regist: true
+      post :create, params: {work: @update, regist: true}
     end
 
     work = Work.where(name: "試験").first
@@ -38,64 +39,69 @@ class WorksControllerTest < ActionController::TestCase
   end
 
   test "作業照会" do
-    get :show, id: works(:work_fixed)
+    get :show, params: {id: works(:work_fixed)}
     assert_response :success
 
-    get :show, id: works(:work_not_fixed)
+    get :show, params: {id: works(:work_not_fixed)}
     assert_response :success
   end
 
   test "作業変更(表示)" do
-    get :edit, id: works(:work_not_fixed)
+    get :edit, params: {id: works(:work_not_fixed)}
     assert_response :success
 
-    get :edit, id: works(:work_fixed)
+    get :edit, params: {id: works(:work_fixed)}
     assert_redirected_to works_path
   end
 
+  test "作業変更(過去年度)" do
+    get :edit, params: {id: works(:works_past)}
+    assert_response :error
+  end
+
   test "作業変更(作業者)(表示)" do
-    get :edit_workers, id: works(:work_not_fixed)
+    get :edit_workers, params: {id: works(:work_not_fixed)}
     assert_response :success
 
-    get :edit_workers, id: works(:work_fixed)
+    get :edit_workers, params: {id: works(:work_fixed)}
     assert_redirected_to works_path
   end
 
   test "作業変更(土地)(表示)" do
-    get :edit_lands, id: works(:work_not_fixed)
+    get :edit_lands, params: {id: works(:work_not_fixed)}
     assert_response :success
 
-    get :edit_lands, id: works(:work_fixed)
+    get :edit_lands, params: {id: works(:work_fixed)}
     assert_redirected_to works_path
   end
 
   test "作業変更(機械)(表示)" do
-    get :edit_machines, id: works(:work_not_fixed)
+    get :edit_machines, params: {id: works(:work_not_fixed)}
     assert_response :success
 
-    get :edit_machines, id: works(:work_fixed)
+    get :edit_machines, params: {id: works(:work_fixed)}
     assert_redirected_to works_path
   end
 
   test "作業変更(薬品)(表示)" do
-    get :edit_chemicals, id: works(:work_not_fixed)
+    get :edit_chemicals, params: {id: works(:work_not_fixed)}
     assert_response :success
 
-    get :edit_chemicals, id: works(:work_fixed)
+    get :edit_chemicals, params: {id: works(:work_fixed)}
     assert_redirected_to works_path
   end
 
   test "作業変更(実行)" do
-    get :update, id: works(:work_not_fixed), work: @update, regist: true
+    get :update, params: {id: works(:work_not_fixed), work: @update, regist: true}
     assert_redirected_to work_path(id: works(:work_not_fixed))
     assert_equal Work.find(works(:work_not_fixed).id).name, @update[:name]
 
-    get :update, id: works(:work_fixed), work: @update, regist: true
+    get :update, params: {id: works(:work_fixed), work: @update, regist: true}
     assert_redirected_to works_path
     assert_equal Work.find(works(:work_fixed).id).name, works(:work_fixed).name
 
     assert_difference('WorkResult.count') do
-      get :update, id: works(:work_not_fixed), results: [worker_id: 1, hours: 1, display_order: 1], regist_workers: true
+      get :update, params: {id: works(:work_not_fixed), results: [worker_id: 1, hours: 1, display_order: 1], regist_workers: true}
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
     updated_work = Work.find(works(:work_not_fixed).id)
@@ -103,17 +109,17 @@ class WorksControllerTest < ActionController::TestCase
     assert_nil updated_work.printed_at
 
     assert_difference('WorkLand.count') do
-      get :update, id: works(:work_not_fixed), work_lands: [land_id: 1, display_order: 3], regist_lands: true
+      get :update, params: {id: works(:work_not_fixed), work_lands: [land_id: 1, display_order: 3], regist_lands: true}
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
 
     assert_difference('MachineResult.count') do
-      get :update, id: works(:work_not_fixed), machine_hours: { 4 => { WorkResult.last.id => 5 }}, regist_machines: true
+      get :update, params: {id: works(:work_not_fixed), machine_hours: { 4 => { WorkResult.last.id => 5 }}, regist_machines: true}
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
 
     assert_difference('WorkChemical.count') do
-      get :update, id: works(:work_not_fixed), chemicals: { 4 => { 1 => 10 }}, regist_chemicals: true
+      get :update, params: {id: works(:work_not_fixed), chemicals: { 4 => { 1 => 10 }}, regist_chemicals: true}
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
 
@@ -122,13 +128,20 @@ class WorksControllerTest < ActionController::TestCase
 
   test "作業削除" do
     assert_difference('Work.count', -1) do
-      delete :destroy, id: works(:work_not_fixed)
+      delete :destroy, params: {id: works(:work_not_fixed)}
     end
     assert_redirected_to works_path
 
     assert_no_difference('Work.count') do
-      delete :destroy, id: works(:work_fixed)
+      delete :destroy, params: {id: works(:work_fixed)}
     end
     assert_redirected_to works_path
+  end
+
+  test "作業削除(過去年度)" do
+    assert_no_difference('Work.count') do
+      delete :destroy, params: {id: works(:works_past)}
+    end
+    assert_response :error
   end
 end

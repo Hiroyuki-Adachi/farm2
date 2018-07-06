@@ -19,7 +19,7 @@ class FixesControllerTest < ActionController::TestCase
   end
 
   test "確定照会" do
-    get :show, fixed_at: @fix
+    get :show, params: {fixed_at: @fix}
     assert_response :success
   end
 
@@ -31,17 +31,17 @@ class FixesControllerTest < ActionController::TestCase
   test "新規確定(実行)" do
     fixed_at = '2015-03-31'
     assert_difference('Fix.count') do
-      post :create, fixed_at: fixed_at, fixed_works: @no_fix_works
+      post :create, params: {fixed_at: fixed_at, fixed_works: @no_fix_works}
     end
-    assert_equal fixed_at, Work.find(works(:work_no_fix1).id).fixed_at.strftime('%Y-%m-%d')
-    assert_equal fixed_at, Work.find(works(:work_no_fix2).id).fixed_at.strftime('%Y-%m-%d')
+    assert_equal fixed_at, Work.find(works(:work_no_fix1).id).fixed_at&.strftime('%Y-%m-%d')
+    assert_equal fixed_at, Work.find(works(:work_no_fix2).id).fixed_at&.strftime('%Y-%m-%d')
     assert_equal users(:users1).worker_id, Fix.where(fixed_at: fixed_at, term: 2015).first.fixed_by
     assert_redirected_to fixes_path
   end
 
   test "確定取消" do
     assert_difference('Fix.count', -1) do
-      delete :destroy, fixed_at: @fix
+      delete :destroy, params: {fixed_at: @fix}
     end
     assert_redirected_to fixes_path
   end

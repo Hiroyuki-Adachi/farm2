@@ -18,13 +18,7 @@ class MenuController < ApplicationController
   end
 
   def edit_term
-    @terms = []
-    term = Work.minimum(:term)
-    term ||= Time.now.year
-    while term <= Time.now.year
-      @terms << [term, term]
-      term += 1
-    end
+    @terms = WorkDecorator.terms
   end
 
   def update

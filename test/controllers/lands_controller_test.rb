@@ -4,7 +4,7 @@ class LandsControllerTest < ActionController::TestCase
   setup do
     setup_ip
     @land = lands(:lands1)
-    @update = { place: "9999", owner_id: Home.first, manager_id: Home.first, area: 55.5, display_order: 99, target_flag: true }
+    @update = {place: "9999", owner_id: Home.first, manager_id: Home.first, area: 55.5, display_order: 99, target_flag: true}
   end
 
   test "土地マスタ一覧" do
@@ -25,27 +25,27 @@ class LandsControllerTest < ActionController::TestCase
 
   test "土地マスタ新規作成(実行)" do
     assert_difference('Land.count') do
-      post :create, land: @update
+      post :create, params: {land: @update}
     end
 
     assert_redirected_to lands_path
   end
 
   test "土地マスタ変更(表示)" do
-    get :edit, id: @land
+    get :edit, params: {id: @land}
     assert_response :success
   end
 
   test "土地マスタ変更(実行)" do
     assert_no_difference('Land.count') do
-      patch :update, id: @land, land: @update
+      patch :update, params: {id: @land, land: @update}
     end
     assert_redirected_to lands_path
   end
 
   test "土地マスタ削除" do
     assert_difference('Land.count', -1) do
-      delete :destroy, id: @land
+      delete :destroy, params: {id: @land}
     end
     assert_redirected_to lands_path
   end

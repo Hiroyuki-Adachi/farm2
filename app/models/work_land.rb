@@ -13,7 +13,7 @@
 class WorkLand < ApplicationRecord
   belongs_to :work
   belongs_to :land, -> {with_deleted}
-  has_one    :work_kind, {through: :work}, -> {with_deleted}
+  has_one    :work_kind, -> {with_deleted}, {through: :work}
 
   scope :for_personal, ->(home, worked_at) {
     joins(:work).eager_load(:work)

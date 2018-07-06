@@ -19,33 +19,33 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "ユーザ新規作成(表示)" do
-    get :new, worker_id: workers(:worker5).id
+    get :new, params: {worker_id: workers(:worker5).id}
     assert_response :success
   end
 
   test "ユーザ新規作成(実行)" do
     assert_difference('User.count') do
-      post :create, user: @create
+      post :create, params: {user: @create}
     end
     assert_redirected_to users_path
   end
 
   test "ユーザ変更(表示)" do
-    get :edit, id: @user
+    get :edit, params: {id: @user}
     assert_response :success
   end
 
   test "ユーザ変更(実行)" do
-    patch :update, id: @user, user: { login_name: @user.login_name, password: "AAAA", password_confirmation: "AAA" }
+    patch :update, params: {id: @user, user: {login_name: @user.login_name, password: "AAAA", password_confirmation: "AAA"}}
     assert_response :success
 
-    patch :update, id: @user, user: { login_name: @user.login_name, password: "AAAA", password_confirmation: "AAAA" }
+    patch :update, params: {id: @user, user: {login_name: @user.login_name, password: "AAAA", password_confirmation: "AAAA"}}
     assert_redirected_to menu_index_path
   end
 
   test "ユーザ削除" do
     assert_difference('User.count', -1) do
-      delete :destroy, id: @user
+      delete :destroy, params: {id: @user}
     end
     assert_redirected_to users_path
   end

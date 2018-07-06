@@ -30,6 +30,7 @@ class Land < ApplicationRecord
 
   has_many :land_uses
   has_many :work_types, {through: :land_uses}
+  has_many :land_costs, -> {order(:activated_on)}
 
   scope :usual, -> {where(target_flag: true).order("place, display_order")}
   scope :list, -> {includes(:land_place, :owner, :manager, :owner_holder, :manager_holder).order("place, lands.display_order, lands.id")}
@@ -40,6 +41,8 @@ class Land < ApplicationRecord
 
   validates :area, numericality: true, if: proc { |x| x.area.present?}
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
+
+  accepts_nested_attributes_for :land_costs, allow_destroy: true, reject_if: :reject_land_costs
 
   def owner_name
     owner.member_flag ? owner_holder.name : owner.name
@@ -59,5 +62,9 @@ class Land < ApplicationRecord
       results << {label: land.place + "(#{land.area})", value: land.id, details: {place: land.place, id: land.id, owner: land.owner.name, area: land.area}}
     end
     return results.to_json
+  end
+
+  def reject_land_costs(attributes)
+    attributes[:activated_on].blank? || attributes[:work_type_id].blank?
   end
 end

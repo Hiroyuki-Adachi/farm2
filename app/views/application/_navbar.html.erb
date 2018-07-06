@@ -3,32 +3,29 @@
         <%= link_to '作業日報管理', menu_index_path, {class: "navbar-brand"} %>
         <ul class="nav navbar-nav mr-auto">
           <li class="nav-item dropdown">
-            <%= link_to '日報管理', works_path, {class: "nav-link", id: :navbarDropdown1, role: :button} %>
+            <%= link_to '日報管理', works_path, {class: "nav-link", id: :navbarDaily, role: :button} %>
           </li>
           <li class="nav-item dropdown">
-            <%= link_to '予定管理', schedules_path, {class: "nav-link", id: :navbarDropdown7, role: :button} %>
+            <%= link_to '予定管理', schedules_path, {class: "nav-link", id: :navbarSchedule, role: :button} %>
           </li>
           <% if current_user.manageable? %>
           <li class="nav-item dropdown">
-            <%= link_to '集計処理', work_results_path, {class: "nav-link", id: :navbarDropdown2, role: :button} %>
+            <%= link_to '集計処理', statistics_path, {class: "nav-link", id: :navbarTotal, role: :button} %>
           </li>
           <li class="nav-item dropdown">
-            <%= link_to '統計処理', statistics_path, {class: "nav-link", id: :navbarDropdown3, role: :button} %>
+            <%= link_to '会計処理', fixes_path, {class: "nav-link", id: :navbarFix, role: :button} %>
           </li>
           <li class="nav-item dropdown">
-            <%= link_to '会計処理', fixes_path, {class: "nav-link", id: :navbarDropdown4, role: :button} %>
-          </li>
-          <li class="nav-item dropdown">
-            <%= link_to '原価管理', total_costs_path, {class: "nav-link", id: :navbarDropdown8, role: :button} %>
+            <%= link_to '原価管理', total_costs_path, {class: "nav-link", id: :navbarCost, role: :button} %>
           </li>
           <% end %>
           <% if current_user.checkable? %>
           <li class="nav-item dropdown">
-            <%= link_to 'マスタ保守', homes_path, {class: "nav-link", id: :navbarDropdown5, role: :button} %>
+            <%= link_to 'マスタ保守', homes_path, {class: "nav-link", id: :navbarMaster, role: :button} %>
           </li>
           <% end %>
           <li class="nav-item dropdown">
-            <%= link_to '管理', edit_user_path(current_user), {class: "nav-link", id: :navbarDropdown6, role: :button} %>
+            <%= link_to '管理', edit_user_path(current_user), {class: "nav-link", id: :navbarManagement, role: :button} %>
           </li>
           <li class="nav-item dropdown">
             <%= link_to 'ログアウト', session_path(current_user.id), {method: :delete, class: "nav-link", role: :button} %>

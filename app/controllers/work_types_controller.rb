@@ -4,7 +4,7 @@ class WorkTypesController < ApplicationController
   before_action :set_category, only: [:new, :create, :edit, :update]
 
   def index
-    @work_types = WorkTypeDecorator.decorate_collection(WorkType.index)
+    @work_types = WorkTypeDecorator.decorate_collection(WorkType.indexes)
   end
 
   def new

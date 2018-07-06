@@ -1,0 +1,75 @@
+<%= error_print(@land) %>
+<h1>土地原価履歴</h1>
+<div class="row">
+  <div class="col-md-2 form-inline">
+    <label>地番：</label>
+    <label><%= @land.place %></label>
+  </div>
+  <div class="col-md-2 form-inline">
+    <label>面積(α)：</label>
+    <label><%= @land.area %></label>
+  </div>
+  <div class="col-md-2 form-inline">
+    <label>所有者：</label>
+    <label><%= @land.owner_name %></label>
+  </div>
+  <div class="col-md-2 form-inline">
+    <label>管理者：</label>
+    <label><%= @land.manager_name %></label>
+  </div>
+</div>
+<%= form_for(@land, url: {controller: :land_costs, action: :update}) do |lf| %>
+  <div class="row">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>削除</th>
+          <th>日付</th>
+          <th>作付</th>
+          <th>管理料</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= lf.fields_for :land_costs do |lcf| %>
+        <tr>
+          <td><%= lcf.check_box :_destroy %></td>
+          <td><%= lcf.date_field :activated_on, {class: "form-control"} %></td>
+          <td>
+            <% @work_types.each do |work_type| %>
+              <div class="form-check form-check-inline">
+                <%= lcf.radio_button :work_type_id, work_type.id, {id: "work_type_#{lcf.index}_#{work_type.id}", class: "form-check-input", onclick: "worktype_select(this)"} %>
+                <%= label_tag "work_type_#{lcf.index}_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+              </div>
+            <% end %>
+          </td>
+          <td>
+            <%= lcf.number_field :cost, {class: "form-control", min: 0, max: 999999, style: "width: 100px;"} %>
+            <%= lcf.hidden_field :id %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div id="btn_toolbar" class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', land_costs_path(land_place_id: @land.land_place), class: "btn btn-outline-dark" %>
+    </div>
+  </div>
+<% end %>
+<script>
+var colors = <%=raw @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>;
+
+$(function() {
+    $("input[type='radio'][id^='work_type']:checked").each(function() {
+        worktype_select($(this)[0]);
+    });
+});
+
+function worktype_select(elm) {
+    $(elm).parents("tr").css("background-color", colors[elm.value]);
+}
+</script>

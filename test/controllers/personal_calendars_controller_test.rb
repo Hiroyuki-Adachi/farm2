@@ -7,7 +7,7 @@ class PersonalCalendarsControllerTest < ActionController::TestCase
 
   test "個人カレンダー" do
     session[:user_id] = nil
-    get :show, token: @worker.token
+    get :show, params: {token: @worker.token}
     assert response.header["Content-Type"].match(%r{^text/calendar})
   end
 end

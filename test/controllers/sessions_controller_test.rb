@@ -13,20 +13,20 @@ class SessionsControllerTest < ActionController::TestCase
   end
 
   test "ログイン実行(認証エラー)" do
-    post :create, login_name: @user.login_name, password: "hogehoge"
+    post :create, params: {login_name: @user.login_name, password: "hogehoge"}
     assert_template :new
     assert_nil session[:user_id]
   end
 
   test "ログイン実行(成功)" do
-    post :create, login_name: @user.login_name, password: "password"
+    post :create, params: {login_name: @user.login_name, password: "password"}
     assert_redirected_to menu_index_path
     assert_equal session[:user_id], @user.id
   end
 
   test "ログアウト" do
     session[:user_id] = @user.id
-    post :destroy, id: @user
+    post :destroy, params: {id: @user}
     assert_redirected_to root_path
     assert_nil session[:user_id]
   end

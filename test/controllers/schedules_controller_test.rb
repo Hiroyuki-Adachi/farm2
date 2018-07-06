@@ -33,25 +33,25 @@ class SchedulesControllerTest < ActionController::TestCase
 
   test "作業予定登録(実行)" do
     assert_difference('Schedule.count') do
-      post :create, schedule: @update
+      post :create, params: {schedule: @update}
     end
     assert_redirected_to new_schedule_worker_path(schedule_id: Schedule.maximum(:id))
   end
 
   test "作業予定変更(表示)" do
-    get :edit, id: schedules(:schedule1)
+    get :edit, params: {id: schedules(:schedule1)}
     assert_response :success
   end
 
   test "作業予定変更(実行)" do
-    get :update, id: schedules(:schedule1), schedule: @update
+    get :update, params: {id: schedules(:schedule1), schedule: @update}
     assert_redirected_to schedules_path
     assert_equal Schedule.find(schedules(:schedule1).id).name, @update[:name]
   end
 
   test "作業予定削除" do
     assert_difference('Schedule.count', -1) do
-      delete :destroy, id: schedules(:schedule1)
+      delete :destroy, params: {id: schedules(:schedule1)}
     end
     assert_redirected_to schedules_path
   end
