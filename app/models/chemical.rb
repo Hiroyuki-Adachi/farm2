@@ -41,7 +41,7 @@ class Chemical < ApplicationRecord
   }
 
   def this_term_flag
-    return chemical_terms.where(term: @term).exists?
+    chemical_terms.where(term: @term).exists?
   end
 
   attr_writer :this_term_flag
