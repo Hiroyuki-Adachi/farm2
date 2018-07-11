@@ -14,13 +14,9 @@
 #  updated_at         :datetime         not null
 #
 
-class TotalCost < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-  belongs_to :work, optional: true
-  belongs_to :expense, optional: true
-  belongs_to :depreciation, optional: true
-  belongs_to :total_cost_type
-
-  has_many :total_cost_details, {dependent: :destroy}
-end
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
