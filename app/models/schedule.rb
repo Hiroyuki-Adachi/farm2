@@ -15,8 +15,6 @@
 #  end_at       :datetime         default(Thu, 01 Jan 1970 17:00:00 UTC +00:00), not null # 終了予定時刻
 #
 
-
-
 class Schedule < ApplicationRecord
   validates :worked_at, presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}

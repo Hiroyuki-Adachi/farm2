@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_01_054817) do
+ActiveRecord::Schema.define(version: 2018_07_11_130030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -374,6 +374,28 @@ ActiveRecord::Schema.define(version: 2018_07_01_054817) do
     t.integer "seedling_chemical_id", default: 0, comment: "育苗土"
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
     t.index ["term"], name: "index_systems_on_term", unique: true
+  end
+
+  create_table "total_cost_details", comment: "集計原価(明細)", force: :cascade do |t|
+    t.integer "total_cost_id", null: false, comment: "集計原価"
+    t.integer "work_type_id", null: false, comment: "作業分類"
+    t.decimal "rate", precision: 5, scale: 2, default: "0.0", null: false, comment: "割合"
+    t.decimal "area", precision: 7, scale: 2, null: false, comment: "面積(α)"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["total_cost_id", "work_type_id"], name: "index_total_cost_details_on_total_cost_id_and_work_type_id", unique: true
+  end
+
+  create_table "total_costs", comment: "集計原価", force: :cascade do |t|
+    t.integer "term", null: false, comment: "年度(期)"
+    t.integer "total_cost_type_id", null: false, comment: "集計原価種別"
+    t.date "occurred_on", null: false, comment: "発生日"
+    t.integer "work_id", comment: "作業"
+    t.integer "expense_id", comment: "経費"
+    t.integer "depreciation_id", comment: "減価償却"
+    t.decimal "amount", precision: 9, default: "0", null: false, comment: "原価額"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: :serial, comment: "利用者マスタ", comment: "利用者マスタ", force: :cascade do |t|
