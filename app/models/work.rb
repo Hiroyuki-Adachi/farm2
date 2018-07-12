@@ -103,10 +103,14 @@ SQL
     OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)
 SQL
 
-  scope :by_chemical, -> (term) {
+  scope :by_chemical, ->(term) {
     where("id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.work_id").uniq)
       .order("worked_at, id")
   }
+
+  scope :for_cost, ->(term) {where([<<SQL, term, WorkType.land.ids])}
+  works.term = ? AND (work_type_id IN (?) OR EXISTS(SELECT * FROM work_lands WHERE works.id = work_lands.work_id))
+SQL
 
   def set_term
     self.term = Organization.term
@@ -129,7 +133,7 @@ SQL
   end
 
   def sum_workers_amount
-    work_results.inject(0) { |a, e| a + e.amount } || 0
+    work_results.inject(0) {|a, e| a + e.amount} || 0
   end
 
   def sum_machines_amount

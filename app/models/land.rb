@@ -28,8 +28,6 @@ class Land < ApplicationRecord
   has_many :work_lands
   has_many :works, {through: :work_lands}
 
-  has_many :land_uses
-  has_many :work_types, {through: :land_uses}
   has_many :land_costs, -> {order(:activated_on)}
 
   scope :usual, -> {where(target_flag: true).order("place, display_order")}
