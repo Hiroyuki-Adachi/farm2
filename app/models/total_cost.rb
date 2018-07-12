@@ -23,4 +23,41 @@ class TotalCost < ApplicationRecord
   belongs_to :total_cost_type
 
   has_many :total_cost_details, {dependent: :destroy}
+
+  def self.make(term)
+    TotalCost.where(term: term).destroy_all
+    make_work_worker(term)
+  end
+
+  def self.make_work_worker(term)
+    Work.for_cost(term).each do |work|
+      total_cost = TotalCost.new(
+        term: term,
+        total_cost_type_id: TotalCostType::WORKWORKER.id,
+        occurred_on: work.worked_at,
+        work_id: work.id,
+        amount: work.sum_workers_amount
+      )
+      total_cost.save
+      if (work.work_lands&.count || 0).positive?
+        LandCost.sum_area_by_lands(work.worked_at, work.lands.ids).each do |k, v|
+          TotalCostDetail.create(
+            total_cost_id: total_cost.id,
+            work_type_id: k,
+            rate: 1,
+            area: v
+          )
+        end
+      else
+        TotalCostDetail.create(
+          total_cost_id: total_cost.id,
+          work_type_id: work.work_type_id,
+          rate: 1,
+          area: LandCost.sum_area_by_work_type(work.worked_at, work.work_type_id)
+        )
+      end
+    end
+  end
+
+  private_class_method :make_work_worker
 end
