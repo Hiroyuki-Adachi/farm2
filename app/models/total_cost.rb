@@ -24,9 +24,55 @@ class TotalCost < ApplicationRecord
 
   has_many :total_cost_details, {dependent: :destroy}
 
+  delegate :name, to: :total_cost_type, prefix: true
+
+  scope :usual, ->(term) {includes(:total_cost_details, work: :work_kind).where(term: term).order("occurred_on, id")}
+
+  def kind_name
+    if work.present?
+      work.work_kind.name
+    elsif expense.present?
+      expense.content
+    elsif depreciation.present?
+      depreciation.machine&.usual_name
+    end
+  end
+
   def self.make(term)
     TotalCost.where(term: term).destroy_all
     make_work_worker(term)
+    TotalCost.where(term: term).find_each do |tc|
+      tc.total_cost_details.each do |tcd|
+        tcd.cost = tc.cost(tcd.work_type_id)
+        tcd.base_cost = tc.base_cost(tcd.work_type_id)
+        tcd.save!
+      end
+    end
+  end
+
+  def self.created_at(term)
+    TotalCost.where(term: term).minimum(:created_at)
+  end
+
+  def cost(work_type_id)
+    return nil unless total_cost_details.where(work_type_id: work_type_id).exists?
+    return amount * rate(work_type_id)
+  end
+
+  def base_cost(work_type_id)
+    cost = cost(work_type_id)
+    cost / LandCost.sum_area_by_work_type(occurred_on, work_type_id) * 10 if cost
+  end
+
+  def rate(work_type_id)
+    numer = 0
+    denom = 0
+    total_cost_details.each do |tcd|
+      denom += (tcd.rate * tcd.area)
+      numer = tcd.rate * tcd.area if tcd.work_type_id == work_type_id
+    end
+
+    return numer / denom
   end
 
   def self.make_work_worker(term)

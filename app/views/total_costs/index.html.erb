@@ -1,19 +1,66 @@
 <h1>原価一覧</h1>
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th></th>
-      <% @work_types.each do |work_type| %>
-      <th style="text-align: right;"><%= work_type.name %></th>
+<div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
+  <table id="tbl_list" class="table table-sm">
+    <thead style="background-color:white;">
+      <tr>
+        <th colspan="3"></th>
+        <% @work_types.each do |work_type| %>
+        <th style="text-align: right;"><%= work_type.name %></th>
+        <% end %>
+      </tr>
+      <tr>
+        <th>日付</th>
+        <th>種類</th>
+        <th>内容</th>
+        <% @work_types.each do |work_type| %>
+        <td class="numeric"><%= sprintf("%.1f", @lands[work_type.id] || 0) %></td>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @total_costs.each do |tc| %>
+        <tr>
+          <th><%= tc.occurred_on.strftime('%m-%d') %></th>
+          <th><%= tc.total_cost_type_name %></th>
+          <th><%= tc.kind_name %></th>
+          <% @work_types.each do |work_type| %>
+          <% tcd = tc.total_cost_details.find {|tcd| tcd.work_type_id == work_type.id } %>
+          <td class="numeric"><%= tcd ? sprintf("%.1f", tcd.base_cost) : "" %></td>
+          <% end %>
+        </tr>
       <% end %>
-      <th style="text-align: right;">合計</th>
-    </tr>
-    <tr>
-      <th>面積(α)</th>
-      <% @work_types.each do |work_type| %>
-      <td class="numeric"><%= sprintf("%.1f", @lands[work_type.id] || 0) %></td>
-      <% end %>
-      <td class="numeric"><%= sprintf("%.1f", @lands.values.inject(:+) || 0) %></td>
-    </tr>
-  </thead>
-</table>
+    </tbody>
+  </table>
+</div>
+<%= form_tag(action: :create) do  %>
+<div id="btn_toolbar" class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= submit_tag '計算実行', class: "btn btn-warning", data: {confirm: "原価を再計算してもよろしいですか？"} %>
+  </div>
+</div>
+<% end %>
+<script>
+$(function() {
+    $("#tbl_list").floatThead({
+        position: 'absolute',
+        scrollContainer:true,
+        zIndex: 999
+    });
+    $(window).resize(function() {
+        setTableWrapperHeight();
+    });
+
+    $('form').submit(function(){
+        dispLoading("計算中");
+    });
+
+    setTableWrapperHeight();
+    removeLoading();
+});
+
+function setTableWrapperHeight() {
+    if($("#table_wrapper")[0]) {
+        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
+    }
+}
+</script>

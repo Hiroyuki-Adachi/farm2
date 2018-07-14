@@ -196,7 +196,7 @@ SQL
         hour = hour.to_f
         machine_result = MachineResult.find_by(work_result_id: work_result_id, machine_id: machine_id)
         if machine_result
-          if hour > 0
+          if hour.positive?
             machine_result.update(hours: hour) if machine_result.hours != hour
           else
             machine_result.destroy
@@ -216,7 +216,7 @@ SQL
         quantity = quantity.to_f
         work_chemical = work_chemicals.find_by(chemical_id: chemical_id, chemical_group_no: chemical_group_no)
         if work_chemical
-          if quantity > 0
+          if quantity.positive?
             work_chemical.update(quantity: quantity) unless work_chemical.quantity == quantity
           else
             work_chemical.destroy
