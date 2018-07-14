@@ -5,6 +5,8 @@ class CreateTotalCostDetails < ActiveRecord::Migration[5.2]
       t.integer :work_type_id, null: false, comment: "作業分類"
       t.decimal :rate, precision: 6, scale: 2, default: 0, null: false, comment: "割合"
       t.decimal :area, precision: 7, scale: 2, defailt: 0, null: false, comment: "面積(α)"
+      t.decimal :cost, {precision: 9, null: true, comment: "原価"}
+      t.decimal :base_cost, {precision: 9, scale: 3, null: true, comment: "原価(10α当)"}
 
       t.timestamps null: false
     end

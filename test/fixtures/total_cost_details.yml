@@ -7,6 +7,8 @@
 #  work_type_id  :integer          not null               # 作業分類
 #  rate          :decimal(6, 2)    default(0.0), not null # 割合
 #  area          :decimal(7, 2)    not null               # 面積(α)
+#  cost          :decimal(9, )                            # 原価
+#  base_cost     :decimal(9, 3)                           # 原価(10α当)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #

@@ -381,6 +381,8 @@ ActiveRecord::Schema.define(version: 2018_07_11_130030) do
     t.integer "work_type_id", null: false, comment: "作業分類"
     t.decimal "rate", precision: 6, scale: 2, default: "0.0", null: false, comment: "割合"
     t.decimal "area", precision: 7, scale: 2, null: false, comment: "面積(α)"
+    t.decimal "cost", precision: 9, comment: "原価"
+    t.decimal "base_cost", precision: 9, scale: 3, comment: "原価(10α当)"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["total_cost_id", "work_type_id"], name: "index_total_cost_details_on_total_cost_id_and_work_type_id", unique: true
