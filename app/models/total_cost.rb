@@ -40,7 +40,7 @@ class TotalCost < ApplicationRecord
 
   def self.make(term)
     TotalCost.where(term: term).destroy_all
-    make_work_worker(term)
+    make_work(term)
     TotalCost.where(term: term).find_each do |tc|
       tc.total_cost_details.each do |tcd|
         tcd.cost = tc.cost(tcd.work_type_id)
@@ -75,35 +75,60 @@ class TotalCost < ApplicationRecord
     return numer / denom
   end
 
-  def self.make_work_worker(term)
+  def self.make_work(term)
     Work.for_cost(term).each do |work|
-      total_cost = TotalCost.new(
-        term: term,
-        total_cost_type_id: TotalCostType::WORKWORKER.id,
-        occurred_on: work.worked_at,
-        work_id: work.id,
-        amount: work.sum_workers_amount
-      )
-      total_cost.save
-      if (work.work_lands&.count || 0).positive?
-        LandCost.sum_area_by_lands(work.worked_at, work.lands.ids).each do |k, v|
-          TotalCostDetail.create(
-            total_cost_id: total_cost.id,
-            work_type_id: k,
-            rate: 1,
-            area: v
-          )
-        end
-      else
-        TotalCostDetail.create(
-          total_cost_id: total_cost.id,
-          work_type_id: work.work_type_id,
-          rate: 1,
-          area: LandCost.sum_area_by_work_type(work.worked_at, work.work_type_id)
-        )
-      end
+      make_work_worker(term, work)
+      make_work_machine(term, work)
     end
   end
 
+  def self.make_work_worker(term, work)
+    total_cost = TotalCost.new(
+      term: term,
+      total_cost_type_id: TotalCostType::WORKWORKER.id,
+      occurred_on: work.worked_at,
+      work_id: work.id,
+      amount: work.sum_workers_amount
+    )
+    total_cost.save
+    make_work_details(work, total_cost)
+  end
+
+  def self.make_work_machine(term, work)
+    machine_amount = work.sum_machines_amount
+    return unless machine_amount&.positive?
+
+    total_cost = TotalCost.new(
+      term: term,
+      total_cost_type_id: TotalCostType::WORKMACHINE.id,
+      occurred_on: work.worked_at,
+      work_id: work.id,
+      amount: machine_amount
+    )
+    total_cost.save
+    make_work_details(work, total_cost)
+  end
+
+  def self.make_work_details(work, total_cost)
+    if (work.work_lands&.count || 0).positive?
+      LandCost.sum_area_by_lands(work.worked_at, work.lands.ids).each do |k, v|
+        TotalCostDetail.create(
+          total_cost_id: total_cost.id,
+          work_type_id: k,
+          area: v
+        )
+      end
+    else
+      TotalCostDetail.create(
+        total_cost_id: total_cost.id,
+        work_type_id: work.work_type_id,
+        area: LandCost.sum_area_by_work_type(work.worked_at, work.work_type_id)
+      )
+    end
+  end
+
+  private_class_method :make_work
   private_class_method :make_work_worker
+  private_class_method :make_work_machine
+  private_class_method :make_work_details
 end

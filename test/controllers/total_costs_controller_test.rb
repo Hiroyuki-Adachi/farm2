@@ -15,4 +15,9 @@ class TotalCostsControllerTest < ActionController::TestCase
     get :index
     assert_response :error
   end
+
+  test "原価計算" do
+    post :create
+    assert_redirected_to total_costs_path
+  end
 end
