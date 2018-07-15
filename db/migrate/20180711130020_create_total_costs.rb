@@ -11,5 +11,6 @@ class CreateTotalCosts < ActiveRecord::Migration[5.2]
 
       t.timestamps null: false
     end
+    add_index :total_costs, [:term, :occurred_on], {unique: false}
   end
 end

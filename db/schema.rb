@@ -379,7 +379,7 @@ ActiveRecord::Schema.define(version: 2018_07_11_130030) do
   create_table "total_cost_details", comment: "集計原価(明細)", force: :cascade do |t|
     t.integer "total_cost_id", null: false, comment: "集計原価"
     t.integer "work_type_id", null: false, comment: "作業分類"
-    t.decimal "rate", precision: 6, scale: 2, default: "0.0", null: false, comment: "割合"
+    t.decimal "rate", precision: 6, scale: 2, default: "1.0", null: false, comment: "割合"
     t.decimal "area", precision: 7, scale: 2, null: false, comment: "面積(α)"
     t.decimal "cost", precision: 9, comment: "原価"
     t.decimal "base_cost", precision: 9, scale: 3, comment: "原価(10α当)"
@@ -398,6 +398,7 @@ ActiveRecord::Schema.define(version: 2018_07_11_130030) do
     t.decimal "amount", precision: 9, default: "0", null: false, comment: "原価額"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
   end
 
   create_table "users", id: :serial, comment: "利用者マスタ", comment: "利用者マスタ", force: :cascade do |t|
