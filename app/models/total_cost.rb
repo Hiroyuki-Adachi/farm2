@@ -9,6 +9,7 @@
 #  work_id            :integer                                # 作業
 #  expense_id         :integer                                # 経費
 #  depreciation_id    :integer                                # 減価償却
+#  work_chemical_id   :integer                                # 薬剤使用
 #  amount             :decimal(9, )     default(0), not null  # 原価額
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
@@ -20,16 +21,23 @@ class TotalCost < ApplicationRecord
   belongs_to :work, optional: true
   belongs_to :expense, optional: true
   belongs_to :depreciation, optional: true
+  belongs_to :work_chemical, optional: true
   belongs_to :total_cost_type
 
   has_many :total_cost_details, {dependent: :destroy}
 
   delegate :name, to: :total_cost_type, prefix: true
 
-  scope :usual, ->(term) {includes(:total_cost_details, work: :work_kind).where(term: term).order("occurred_on, id")}
+  scope :usual, ->(term) {
+    includes(:total_cost_details, work: :work_kind, work_chemical: :chemical)
+      .where(term: term)
+      .order("occurred_on, id")
+  }
 
   def kind_name
-    if work.present?
+    if work_chemical_id.present?
+      work_chemical.chemical.name
+    elsif work.present?
       work.work_kind.name
     elsif expense.present?
       expense.content
@@ -79,6 +87,7 @@ class TotalCost < ApplicationRecord
     Work.for_cost(term).each do |work|
       make_work_worker(term, work)
       make_work_machine(term, work)
+      make_work_chemical(term, work)
     end
   end
 
@@ -109,6 +118,24 @@ class TotalCost < ApplicationRecord
     make_work_details(work, total_cost)
   end
 
+  def self.make_work_chemical(term, work)
+    work.work_chemicals.each do |wc|
+      ct = ChemicalTerm.find_by(term: term, chemical_id: wc.chemical_id)
+      next unless ct&.price&.positive?
+
+      total_cost = TotalCost.new(
+        term: term,
+        total_cost_type_id: TotalCostType::WORKCHEMICAL.id,
+        occurred_on: work.worked_at,
+        work_id: work.id,
+        work_chemical_id: wc.id,
+        amount: ct.price * wc.quantity
+      )
+      total_cost.save
+      make_work_chemical_details(work, total_cost, ct)
+    end
+  end
+
   def self.make_work_details(work, total_cost)
     if (work.work_lands&.count || 0).positive?
       LandCost.sum_area_by_lands(work.worked_at, work.lands.ids).each do |k, v|
@@ -127,8 +154,32 @@ class TotalCost < ApplicationRecord
     end
   end
 
+  def self.make_work_chemical_details(work, total_cost, chemical_term)
+    if (work.work_lands&.count || 0).positive?
+      LandCost.sum_area_by_lands(work.worked_at, work.lands.ids).each do |k, v|
+        cwt = ChemicalWorkType.find_by(chemical_term_id: chemical_term.id, work_type_id: k)
+        TotalCostDetail.create(
+          total_cost_id: total_cost.id,
+          work_type_id: k,
+          rate: cwt.quantity,
+          area: v
+        )
+      end
+    else
+      cwt = ChemicalWorkType.find_by(chemical_term_id: chemical_term.id, work_type_id: work.work_type_id)
+      TotalCostDetail.create(
+        total_cost_id: total_cost.id,
+        work_type_id: work.work_type_id,
+        rate: cwt.quantity,
+        area: LandCost.sum_area_by_work_type(work.worked_at, work.work_type_id)
+      )
+    end
+  end
+
   private_class_method :make_work
   private_class_method :make_work_worker
   private_class_method :make_work_machine
+  private_class_method :make_work_chemical
   private_class_method :make_work_details
+  private_class_method :make_work_chemical_details
 end
