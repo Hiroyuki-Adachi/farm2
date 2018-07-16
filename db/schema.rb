@@ -395,6 +395,7 @@ ActiveRecord::Schema.define(version: 2018_07_11_130030) do
     t.integer "work_id", comment: "作業"
     t.integer "expense_id", comment: "経費"
     t.integer "depreciation_id", comment: "減価償却"
+    t.integer "work_chemical_id", comment: "薬剤使用"
     t.decimal "amount", precision: 9, default: "0", null: false, comment: "原価額"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -7,6 +7,7 @@ class CreateTotalCosts < ActiveRecord::Migration[5.2]
       t.integer :work_id, {null: true, comment: "作業"}
       t.integer :expense_id, {null: true, comment: "経費"}
       t.integer :depreciation_id, {null: true, comment: "減価償却"}
+      t.integer :work_chemical_id, {null: true, comment: "薬剤使用"}
       t.decimal :amount, {precision: 9, default: "0", null: false, comment: "原価額"}
 
       t.timestamps null: false
