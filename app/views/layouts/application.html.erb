@@ -13,11 +13,13 @@
 </head>
 <body>
 
+<% if session[:user_id] %>
+<%= render 'navbar' %>
+<% end %>
 <div class="container-fluid">
 <% if session[:user_id] %>
-  <%= render 'navbar' %>
   <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-2 bg-info" style="padding-right: 0; max-width: 200px;">
       <%= render 'sidebar' %>
     </div>
     <div class="col-md-10">
