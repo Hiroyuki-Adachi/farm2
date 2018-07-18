@@ -23,6 +23,7 @@
     <span class="h5">会計処理</span>
     <%= link_to '新規確定', new_fix_path, {class: "dropdown-item", data: {controller: :fixes, actions: [:new]}} %>
     <%= link_to '確定一覧', fixes_path, {class: "dropdown-item", data: {controller: :fixes, actions: [:index]}} %>
+    <%= link_to '育苗集計', total_seedlings_path, {class: "dropdown-item", data: {controller: :total_seedlings}} %>
   </div>
   <div aria-labelledby="navbarCost" style="display:none;">
     <span class="h5">原価管理</span>
