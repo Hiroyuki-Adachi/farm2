@@ -10,8 +10,14 @@ class SeedlingResultsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "育苗使用(管理者以外)" do
+  test "育苗使用(検閲者)" do
     session[:user_id] = users(:user_checker).id
+    get :index
+    assert_response :success
+  end
+
+  test "育苗使用(利用者)" do
+    session[:user_id] = users(:user_user).id
     get :index
     assert_response :error
   end

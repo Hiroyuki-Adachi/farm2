@@ -4,6 +4,7 @@
     <% unless current_user.visitor? %><%= link_to '日報入力', new_work_path, {class: "dropdown-item", data: {controller: :works, actions: [:new, :edit, :show]}} %><% end %>
     <%= link_to '日報一覧', works_path, {class: "dropdown-item", data: {controller:  "works", actions: [:index]}} %>
     <% if current_user.checkable? %><%= link_to '日報検証', work_verifications_path, {class: "dropdown-item", data: {controller: "work_verifications"}} %><% end %>
+    <% if current_user.checkable? %><%= link_to '育苗一覧', seedling_results_path, {class: "dropdown-item", data: {controller: "seedling_results"}} %><% end %>
   </div>
   <div aria-labelledby="navbarSchedule" style="display:none;">
     <span class="h5">予定管理</span>
@@ -17,7 +18,6 @@
     <%= link_to '日当一覧', work_results_path, {class: "dropdown-item", data: {controller: "work_results"}} %>
     <%= link_to '機械利用料', machine_results_path, {class: "dropdown-item", data: {controller: "machine_results"}} %>
     <%= link_to '薬剤使用量一覧', work_chemicals_path, {class: "dropdown-item", data: {controller: "work_chemicals"}} %>
-    <%= link_to '育苗一覧', seedling_results_path, {class: "dropdown-item", data: {controller: "seedling_results"}} %>
   </div>
   <div aria-labelledby="navbarFix" style="display:none;">
     <span class="h5">会計処理</span>
