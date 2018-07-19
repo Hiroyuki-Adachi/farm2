@@ -8,7 +8,9 @@ class PersonalInformationsController < ApplicationController
     if @worker
       @schedules = ScheduleWorkerDecorator.decorate_collection(ScheduleWorker.for_personal(@worker, SCHEDULE_DAY))
       @results = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
-      @lands = WorkLandDecorator.decorate_collection(WorkLand.for_personal(@worker.home, current_system.start_date)).group_by(&:land)
+      @lands = WorkLand.for_personal(@worker.home, now_system.start_date)
+      @land_costs = LandCost.newest(Time.zone.today).where(land_id: @lands.map(&:land_id))
+      @lands = WorkLandDecorator.decorate_collection(@lands).group_by(&:land)
       @machines = MachineResultDecorator.decorate_collection(MachineResult.for_personal(@worker.home, worked_from))
       @company = Worker.company.first
       render layout: false
@@ -21,20 +23,20 @@ class PersonalInformationsController < ApplicationController
 
   def to_sjis
     headers["Content-Type"] = 'text/html; charset=Shift_JIS'
-    response.body           = response.body.encode(Encoding::SHIFT_JIS)
+    response.body = response.body.encode(Encoding::SHIFT_JIS)
   end
 
   def restrict_remote_ip
   end
 
   def worked_from
-    case Date.today.month
+    case Time.zone.today.month
     when 1..3
-      Date.new(Date.today.year - 1, 12, 1)
+      Date.new(Time.zone.today.year - 1, 12, 1)
     when 4..7
-      Date.new(Date.today.year, 1, 1)
+      Date.new(Time.zone.today.year, 1, 1)
     else
-      Date.new(Date.today.year, 7, 1)
+      Date.new(Time.zone.today.year, 7, 1)
     end
   end
 
