@@ -1,0 +1,31 @@
+<h1>WCS一覧</h1>
+<% if @whole_crops.count > 0 %>
+<table class="table table-sm" style="width:auto;">
+  <thead>
+    <tr>
+      <th>収穫日</th>
+      <th>品種</th>
+      <th class="numeric">面積</th>
+      <th class="numeric">ロール数</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @whole_crops.each do |whole_crop| %>
+      <tr>
+        <td><%= whole_crop.work.worked_at %></td>
+        <td><%= whole_crop.work.work_type.name %></td>
+        <td class="numeric"><%= whole_crop.work.sum_areas %></td>
+        <td class="numeric"><%= whole_crop.rolls %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "CSV出力", whole_crops_path(format: :csv), {class: "btn btn-outline-success"} %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
+  </div>
+</div>

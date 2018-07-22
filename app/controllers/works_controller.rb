@@ -2,7 +2,7 @@ require 'date'
 
 class WorksController < ApplicationController
   include WorksHelper
-  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :show, :update, :destroy]
+  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :edit_whole_crops, :show, :update, :destroy]
   before_action :set_results, only: [:show, :edit_workers, :edit_machines]
   before_action :set_lands, only: [:show, :edit_lands]
   before_action :set_broccoli, only: [:show]
@@ -95,11 +95,15 @@ class WorksController < ApplicationController
   def edit_machines
     @company_machines = Machine.by_work(@work.model).of_company
     @owner_machines = Machine.by_work(@work.model).of_owners(@work.model)
-    @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select {|m| m.leasable?(@work.model.worked_at) }
+    @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select {|m| m.leasable?(@work.model.worked_at)}
   end
 
   def edit_chemicals
     @chemicals = Chemical.usual(current_term, @work.model)
+  end
+
+  def edit_whole_crops
+    @whole_crop = @work.whole_crop
   end
 
   def update
@@ -109,31 +113,18 @@ class WorksController < ApplicationController
     if params[:regist]
       if @work.update(work_params)
         @work.refresh_broccoli(current_organization)
-        redirect_to(work_path(@work))
       else
         render action: :edit
       end
     end
 
-    if params[:regist_workers]
-      @work.regist_results(params[:results])
-      redirect_to(work_path(@work))
-    end
+    @work.regist_results(params[:results]) if params[:regist_workers]
+    @work.regist_lands(params[:work_lands] || []) if params[:regist_lands]
+    @work.regist_machines(params[:machine_hours] || []) if params[:regist_machines]
+    @work.regist_chemicals(params[:chemicals]) if params[:regist_chemicals]
+    WorkWholeCrop.regist(@work, params[:whole_crop]) if params[:regist_whole_crop]
 
-    if params[:regist_lands]
-      @work.regist_lands(params[:work_lands] || [])
-      redirect_to(work_path(@work))
-    end
-
-    if params[:regist_machines]
-      @work.regist_machines(params[:machine_hours] || [])
-      redirect_to(work_path(@work))
-    end
-
-    if params[:regist_chemicals]
-      @work.regist_chemicals(params[:chemicals])
-      redirect_to(work_path(@work))
-    end
+    redirect_to(work_path(@work))
   end
 
   def destroy

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_11_130030) do
+ActiveRecord::Schema.define(version: 2018_07_22_111656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -292,6 +292,7 @@ ActiveRecord::Schema.define(version: 2018_07_11_130030) do
     t.integer "broccoli_work_kind_id", comment: "ブロッコリ種別分類"
     t.integer "chemical_group_count", default: 1, comment: "薬剤グループ数"
     t.integer "rice_planting_id", comment: "田植作業種別"
+    t.integer "whole_crop_work_kind_id", comment: "WCS収穫分類"
   end
 
   create_table "schedule_workers", id: :serial, comment: "作業予定作業者", comment: "作業予定作業者", force: :cascade do |t|
@@ -396,7 +397,7 @@ ActiveRecord::Schema.define(version: 2018_07_11_130030) do
     t.integer "expense_id", comment: "経費"
     t.integer "depreciation_id", comment: "減価償却"
     t.integer "work_chemical_id", comment: "薬剤使用"
-    t.decimal "amount", precision: 9, default: "0", null: false, comment: "原価額"
+    t.decimal "amount", precision: 9, default: -> { "(0)::numeric" }, null: false, comment: "原価額"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
@@ -503,6 +504,14 @@ ActiveRecord::Schema.define(version: 2018_07_11_130030) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["work_id", "worker_id"], name: "index_work_verifications_on_work_id_and_worker_id", unique: true
+  end
+
+  create_table "work_whole_crops", comment: "WCS作業", force: :cascade do |t|
+    t.integer "work_id", null: false, comment: "作業"
+    t.decimal "rolls", precision: 4, default: "0", null: false, comment: "ロール数"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["work_id"], name: "index_work_whole_crops_on_work_id", unique: true
   end
 
   create_table "workers", id: :serial, comment: "作業者マスタ", comment: "作業者マスタ", force: :cascade do |t|

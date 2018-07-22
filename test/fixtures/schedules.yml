@@ -11,8 +11,8 @@
 #  work_flag    :boolean          default(TRUE), not null                                 # 作業フラグ
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  start_at     :datetime         default(Thu, 01 Jan 1970 08:00:00 UTC +00:00), not null # 開始予定時刻
-#  end_at       :datetime         default(Thu, 01 Jan 1970 17:00:00 UTC +00:00), not null # 終了予定時刻
+#  start_at     :datetime         default(Thu, 01 Jan 1970 08:00:00 JST +09:00), not null # 開始予定時刻
+#  end_at       :datetime         default(Thu, 01 Jan 1970 17:00:00 JST +09:00), not null # 終了予定時刻
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
