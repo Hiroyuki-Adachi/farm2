@@ -91,6 +91,11 @@ class WorksControllerTest < ActionController::TestCase
     assert_redirected_to works_path
   end
 
+  test "作業変更(WCS)(表示)" do
+    get :edit_whole_crop, params: {id: works(:work_wcs)}
+    assert_response :success
+  end
+
   test "作業変更(実行)" do
     get :update, params: {id: works(:work_not_fixed), work: @update, regist: true}
     assert_redirected_to work_path(id: works(:work_not_fixed))
@@ -124,6 +129,18 @@ class WorksControllerTest < ActionController::TestCase
     assert_redirected_to work_path(id: works(:work_not_fixed))
 
     assert_not_empty WorkVerification.where(work_id: works(:work_not_fixed), worker_id: User.find(session[:user_id]).worker_id)
+  end
+
+  test "作業変更(WCS)(実行)" do
+    assert_difference('WorkWholeCrop.count') do
+      get :update, params: {id: works(:work_wcs), whole_crop: {rolls: 100}, regist_whole_crop: true}
+    end
+    assert_redirected_to work_path(id: works(:work_wcs))
+
+    assert_no_difference('WorkWholeCrop.count') do
+      get :update, params: {id: works(:work_wcs), whole_crop: {rolls: 150}, regist_whole_crop: true}
+    end
+    assert_redirected_to work_path(id: works(:work_wcs))
   end
 
   test "作業削除" do

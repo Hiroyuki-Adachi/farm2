@@ -15,7 +15,7 @@
 
 <%= render partial: "show_base" %>
 <% if @whole_crop || current_organization.whole_crop_work_kind_id == @work.work_kind_id %>
-<%= render partial: "show_whole_crops" %>
+<%= render partial: "show_whole_crop" %>
 <% end %>
 <%= render partial: "show_workers" %>
 <% if (@work_lands.count > 0 || @work.work_kind.land_flag) && current_organization.lands_count > 0 %>
@@ -48,7 +48,7 @@ $(function() {
   $("#cover_lands").height($("#content_lands").height()).width($("#content_lands").width());
   $("#cover_machines").height($("#content_machines").height()).width($("#content_machines").width());
   $("#cover_chemicals").height($("#content_chemicals").height()).width($("#content_chemicals").width());
-  $("#cover_whole_crops").height($("#content_whole_crops").height()).width($("#content_whole_crops").width());
+  $("#cover_whole_crop").height($("#content_whole_crop").height()).width($("#content_whole_crop").width());
 });
 </script>
 <% end %>

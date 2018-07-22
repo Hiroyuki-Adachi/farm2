@@ -1,0 +1,11 @@
+<div id="content_whole_crop" class="content">
+  <table id="detail_whole_crop">
+    <tbody>
+      <tr>
+        <th style="width:100px;">WCS</th>
+        <td class="numeric" style="width:260px;"><%= @work&.whole_crop&.rolls %>巻</td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="cover_whole_crop" class="cover" onclick="location.href='<%= edit_whole_crop_work_path(id: @work) %>'"></div>
+</div>
