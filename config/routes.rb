@@ -82,7 +82,7 @@ Rails.application.routes.draw do
       get :edit_lands
       get :edit_machines
       get :edit_chemicals
-      get :edit_whole_crops
+      get :edit_whole_crop
     end
   end
 

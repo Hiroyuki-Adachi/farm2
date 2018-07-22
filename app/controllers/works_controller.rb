@@ -2,7 +2,7 @@ require 'date'
 
 class WorksController < ApplicationController
   include WorksHelper
-  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :edit_whole_crops, :show, :update, :destroy]
+  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :edit_whole_crop, :show, :update, :destroy]
   before_action :set_results, only: [:show, :edit_workers, :edit_machines]
   before_action :set_lands, only: [:show, :edit_lands]
   before_action :set_broccoli, only: [:show]
@@ -102,7 +102,7 @@ class WorksController < ApplicationController
     @chemicals = Chemical.usual(current_term, @work.model)
   end
 
-  def edit_whole_crops
+  def edit_whole_crop
     @whole_crop = @work.whole_crop
   end
 
