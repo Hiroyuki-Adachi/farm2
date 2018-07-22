@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :whole_crops, only: [:index]
   resources :total_seedlings, only: [:index]
   resources :seedling_results, param: "seedling_home_id", only: [:index, :edit, :update] do
     collection do
@@ -81,6 +82,7 @@ Rails.application.routes.draw do
       get :edit_lands
       get :edit_machines
       get :edit_chemicals
+      get :edit_whole_crops
     end
   end
 
