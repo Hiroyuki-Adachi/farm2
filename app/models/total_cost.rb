@@ -13,6 +13,7 @@
 #  amount             :decimal(9, )     not null              # 原価額
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  seedling_home_id   :integer                                # 育苗担当
 #
 
 class TotalCost < ApplicationRecord
@@ -22,6 +23,7 @@ class TotalCost < ApplicationRecord
   belongs_to :expense, optional: true
   belongs_to :depreciation, optional: true
   belongs_to :work_chemical, optional: true
+  belongs_to :seedling_home, optional: true
   belongs_to :total_cost_type
 
   has_many :total_cost_details, {dependent: :destroy}
@@ -43,12 +45,15 @@ class TotalCost < ApplicationRecord
       expense.content
     elsif depreciation.present?
       depreciation.machine&.usual_name
+    elsif seedling_home.present?
+      seedling_home.home_name
     end
   end
 
-  def self.make(term)
+  def self.make(term, organization)
     TotalCost.where(term: term).destroy_all
     make_work(term)
+    make_seedling(term, organization)
     TotalCost.where(term: term).find_each do |tc|
       tc.total_cost_details.each do |tcd|
         tcd.cost = tc.cost(tcd.work_type_id)
@@ -176,10 +181,31 @@ class TotalCost < ApplicationRecord
     end
   end
 
+  def self.make_seedling(term, organization)
+    seedling_price = System.find_by(term: term, organization_id: organization.id).seedling_price
+    seedling_homes = SeedlingHome.usual(term)
+    seedling_homes.each do |seedling_home|
+      total_cost = TotalCost.new(
+        term: term,
+        total_cost_type_id: TotalCostType::SEEDLING.id,
+        occurred_on: seedling_home.sowed_on,
+        seedling_home_id: seedling_home.id,
+        amount: seedling_price * seedling_home.cost_quantity
+      )
+      total_cost.save
+      TotalCostDetail.create(
+        total_cost_id: total_cost.id,
+        work_type_id: seedling_home.seedling.work_type_id,
+        area: LandCost.sum_area_by_work_type(seedling_home.sowed_on, seedling_home.seedling.work_type_id)
+      )
+    end
+  end
+
   private_class_method :make_work
   private_class_method :make_work_worker
   private_class_method :make_work_machine
   private_class_method :make_work_chemical
   private_class_method :make_work_details
   private_class_method :make_work_chemical_details
+  private_class_method :make_seedling
 end
