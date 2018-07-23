@@ -9,7 +9,7 @@ class TotalCostsController < ApplicationController
 
   def create
     TotalCost.transaction do
-      TotalCost.make(current_term)
+      TotalCost.make(current_term, current_organization)
     end
     redirect_to total_costs_path
   end
