@@ -183,7 +183,7 @@ class TotalCost < ApplicationRecord
 
   def self.make_seedling(term, organization)
     seedling_price = System.find_by(term: term, organization_id: organization.id).seedling_price
-    seedling_homes = SeedlingHome.usual(term)
+    seedling_homes = SeedlingHome.usual(term).where.not(sowed_on: nil)
     seedling_homes.each do |seedling_home|
       total_cost = TotalCost.new(
         term: term,

@@ -20,7 +20,7 @@ class WorkLand < ApplicationRecord
    .joins(:land).eager_load(:land)
    .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
    .where("works.worked_at >= ?", worked_at)
-   .where("lands.owner_id = ?", home.id)
+   .where("lands.manager_id = ?", home.id)
    .order("lands.display_order, lands.id, works.worked_at")
  }
 end
