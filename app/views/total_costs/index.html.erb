@@ -19,7 +19,7 @@
     </thead>
     <tbody>
       <% @total_costs.each do |tc| %>
-        <tr>
+        <tr class="<%= tc.member_flag ? 'text-primary' : 'text-body' %>">
           <th><%= tc.occurred_on.strftime('%m-%d') %></th>
           <th><%= tc.total_cost_type_name %></th>
           <th><%= tc.kind_name %></th>

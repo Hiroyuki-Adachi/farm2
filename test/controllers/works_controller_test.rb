@@ -133,12 +133,12 @@ class WorksControllerTest < ActionController::TestCase
 
   test "作業変更(WCS)(実行)" do
     assert_difference('WorkWholeCrop.count') do
-      get :update, params: {id: works(:work_wcs), whole_crop: {rolls: 100}, regist_whole_crop: true}
+      get :update, params: {id: works(:work_wcs), whole_crop: {rolls: 100, weight: 200}, regist_whole_crop: true}
     end
     assert_redirected_to work_path(id: works(:work_wcs))
 
     assert_no_difference('WorkWholeCrop.count') do
-      get :update, params: {id: works(:work_wcs), whole_crop: {rolls: 150}, regist_whole_crop: true}
+      get :update, params: {id: works(:work_wcs), whole_crop: {rolls: 150, weight: 250}, regist_whole_crop: true}
     end
     assert_redirected_to work_path(id: works(:work_wcs))
   end
