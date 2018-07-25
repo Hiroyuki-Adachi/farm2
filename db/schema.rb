@@ -401,6 +401,7 @@ ActiveRecord::Schema.define(version: 2018_07_23_135231) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "seedling_home_id", comment: "育苗担当"
+    t.boolean "member_flag", default: false, null: false, comment: "組合員支払フラグ"
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
   end
 
@@ -510,6 +511,7 @@ ActiveRecord::Schema.define(version: 2018_07_23_135231) do
   create_table "work_whole_crops", comment: "WCS作業", force: :cascade do |t|
     t.integer "work_id", null: false, comment: "作業"
     t.decimal "rolls", precision: 4, default: "0", null: false, comment: "ロール数"
+    t.decimal "weight", precision: 4, scale: 1, default: "0.0", null: false, comment: "重量"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["work_id"], name: "index_work_whole_crops_on_work_id", unique: true

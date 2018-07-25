@@ -3,17 +3,18 @@
 # Table name: total_costs # 集計原価
 #
 #  id                 :bigint(8)        not null, primary key
-#  term               :integer          not null              # 年度(期)
-#  total_cost_type_id :integer          not null              # 集計原価種別
-#  occurred_on        :date             not null              # 発生日
-#  work_id            :integer                                # 作業
-#  expense_id         :integer                                # 経費
-#  depreciation_id    :integer                                # 減価償却
-#  work_chemical_id   :integer                                # 薬剤使用
-#  amount             :decimal(9, )     not null              # 原価額
+#  term               :integer          not null                 # 年度(期)
+#  total_cost_type_id :integer          not null                 # 集計原価種別
+#  occurred_on        :date             not null                 # 発生日
+#  work_id            :integer                                   # 作業
+#  expense_id         :integer                                   # 経費
+#  depreciation_id    :integer                                   # 減価償却
+#  work_chemical_id   :integer                                   # 薬剤使用
+#  amount             :decimal(9, )     not null                 # 原価額
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  seedling_home_id   :integer                                # 育苗担当
+#  seedling_home_id   :integer                                   # 育苗担当
+#  member_flag        :boolean          default(FALSE), not null # 組合員支払フラグ
 #
 
 class TotalCost < ApplicationRecord
@@ -102,7 +103,8 @@ class TotalCost < ApplicationRecord
       total_cost_type_id: TotalCostType::WORKWORKER.id,
       occurred_on: work.worked_at,
       work_id: work.id,
-      amount: work.sum_workers_amount
+      amount: work.sum_workers_amount,
+      member_flag: true
     )
     total_cost.save
     make_work_details(work, total_cost)
@@ -117,7 +119,8 @@ class TotalCost < ApplicationRecord
       total_cost_type_id: TotalCostType::WORKMACHINE.id,
       occurred_on: work.worked_at,
       work_id: work.id,
-      amount: machine_amount
+      amount: machine_amount,
+      member_flag: true
     )
     total_cost.save
     make_work_details(work, total_cost)
@@ -190,7 +193,8 @@ class TotalCost < ApplicationRecord
         total_cost_type_id: TotalCostType::SEEDLING.id,
         occurred_on: seedling_home.sowed_on,
         seedling_home_id: seedling_home.id,
-        amount: seedling_price * seedling_home.cost_quantity
+        amount: seedling_price * seedling_home.cost_quantity,
+        member_flag: true
       )
       total_cost.save
       TotalCostDetail.create(

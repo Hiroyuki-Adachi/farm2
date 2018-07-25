@@ -2,8 +2,13 @@
 <%= error_print(@work) %>
 <%= form_for(@work, url: {action: :update }, html: {method: :put}) do |f| %>
   <div class="row">
-    <div class="col-md-12 form-inline">
-      <%= number_field_tag "whole_crop[rolls]", @whole_crop&.rolls, {max: 9999, min: 0, step: 1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %><span>巻</span>
+    <div class="col-md-4 form-inline">
+      <label for="whole_crop_weight">重量</label>
+      <%= number_field_tag "whole_crop[weight]", @whole_crop&.rolls, {max: 999, min: 0, step: 1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %><span>kg</span>
+    </div>
+    <div class="col-md-4 form-inline">
+      <label for="whole_crop_weight">本数</label>
+      <%= number_field_tag "whole_crop[rolls]", @whole_crop&.rolls, {max: 9999, min: 0, step: 1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %><span>本</span>
     </div>
   </div>
   <div class="row">
