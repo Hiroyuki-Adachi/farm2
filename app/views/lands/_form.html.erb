@@ -24,6 +24,10 @@
     <%= f.number_field(:area, {step: 0.01, max: 999.99, min: 0.01, size: 6, required: true, class: "form-control"}) %>
   </div>
   <div class="field form-group col-md-2">
+    <%= f.label :reg_area, class: "col-form-label-lg" %>
+    <%= f.number_field(:reg_area, {step: 0.01, max: 999.99, min: 0, size: 6, class: "form-control"}) %>
+  </div>
+  <div class="field form-group col-md-2">
     <%= f.label :target_flag, class: "col-form-label-lg" %>
     <div class="form-check">
       <%= f.radio_button :target_flag, true %>

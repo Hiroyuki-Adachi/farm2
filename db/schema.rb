@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(version: 2018_07_23_135231) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.integer "land_place_id", comment: "土地"
+    t.decimal "reg_area", precision: 5, scale: 2, comment: "登記面積"
     t.index ["deleted_at"], name: "index_lands_on_deleted_at"
     t.index ["place"], name: "index_lands_on_place"
   end
