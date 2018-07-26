@@ -65,10 +65,11 @@ ja:
         place: "番地"  #g
         owner_id: "所有者"  #g
         manager_id: "管理者"  #g
-        area: "面積"  #g
+        area: "耕作面積"  #g
         display_order: "表示順"  #g
         land_place_id: "場所"
         target_flag: "管理"
+        reg_area: "登記面積"
 
       work: 
         year: "年度"  #g

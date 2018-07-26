@@ -4,7 +4,10 @@ class LandsControllerTest < ActionController::TestCase
   setup do
     setup_ip
     @land = lands(:lands1)
-    @update = {place: "9999", owner_id: Home.first, manager_id: Home.first, area: 55.5, display_order: 99, target_flag: true}
+    @update = {
+      place: "9999", owner_id: Home.first, manager_id: Home.first, area: 55.5,
+      display_order: 99, target_flag: true, reg_area: 66.6
+    }
   end
 
   test "土地マスタ一覧" do
