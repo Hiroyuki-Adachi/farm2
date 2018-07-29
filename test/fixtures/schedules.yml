@@ -30,3 +30,13 @@ schedule1:
   name: "H27 作付け計画、その他"
   start_at: '2015-04-01 09:00'
   end_at: '2015-04-01 17:00'
+
+schedule_meeting:
+  term: 2015
+  worked_at: '2015-05-01'
+  work_type_id: 12
+  work_kind_id: 31
+  work_flag: false
+  name: "会議"
+  start_at: '2015-04-01 09:00'
+  end_at: '2015-04-01 17:00'
