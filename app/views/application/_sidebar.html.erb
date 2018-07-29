@@ -9,6 +9,7 @@
   <div aria-labelledby="navbarSchedule" style="display:none;">
     <span class="h5">予定管理</span>
     <%= link_to '作業予定', schedules_path, {class: "dropdown-item", data: {controller:  "schedules"}} %>
+    <%= link_to '議事録', minutes_path, {class: "dropdown-item", data: {controller:  "minutes"}} %>
   </div>
   <% if current_user.manageable? %>
   <div aria-labelledby="navbarTotal" style="display:none;">

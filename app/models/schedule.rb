@@ -27,6 +27,8 @@ class Schedule < ApplicationRecord
   has_many :schedule_workers, -> {order('schedule_workers.display_order')}, {dependent: :destroy}
   has_many :workers, -> {with_deleted}, {through: :schedule_workers}
 
+  has_one :minute, {dependent: :destroy}
+
   scope :usual, ->(term) {
       where(term: term)
         .includes(:work_type, :work_kind, schedule_workers: [worker: :home])
@@ -37,6 +39,8 @@ class Schedule < ApplicationRecord
       EXISTS (SELECT * FROM schedule_workers
             WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
 SQL
+
+  scope :for_minute, ->(term) {where(term: term, work_flag: false).order(worked_at: :ASC, id: :ASC)}
 
   def regist_workers(params)
     workers = []

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_23_135231) do
+ActiveRecord::Schema.define(version: 2018_07_28_125523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -270,6 +270,15 @@ ActiveRecord::Schema.define(version: 2018_07_23_135231) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.boolean "diesel_flag", default: false, null: false, comment: "ディーゼル"
+  end
+
+  create_table "minutes", comment: "議事録", force: :cascade do |t|
+    t.integer "schedule_id", default: 0, null: false, comment: "作業予定"
+    t.string "pdf_name", limit: 50, comment: "PDFファイル名"
+    t.binary "pdf", comment: "PDF"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["schedule_id"], name: "index_minutes_on_schedule_id", unique: true
   end
 
   create_table "organizations", id: :serial, comment: "組織(体系)マスタ", comment: "組織(体系)マスタ", force: :cascade do |t|

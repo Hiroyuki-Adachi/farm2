@@ -13,6 +13,7 @@
 #  updated_at    :datetime
 #  deleted_at    :datetime
 #  land_place_id :integer                                  # 土地
+#  reg_area      :decimal(5, 2)                            # 登記面積
 #
 
 lands0:
