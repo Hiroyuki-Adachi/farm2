@@ -15,6 +15,8 @@
 #  updated_at         :datetime         not null
 #  seedling_home_id   :integer                                   # 育苗担当
 #  member_flag        :boolean          default(FALSE), not null # 組合員支払フラグ
+#  land_id            :integer                                   # 土地
+#  fiscal_flag        :boolean          default(FALSE), not null # 決算期フラグ
 #
 
 class TotalCost < ApplicationRecord
@@ -25,6 +27,7 @@ class TotalCost < ApplicationRecord
   belongs_to :depreciation, optional: true
   belongs_to :work_chemical, optional: true
   belongs_to :seedling_home, optional: true
+  belongs_to :land, optional: true
   belongs_to :total_cost_type
 
   has_many :total_cost_details, {dependent: :destroy}
@@ -34,7 +37,7 @@ class TotalCost < ApplicationRecord
   scope :usual, ->(term) {
     includes(:total_cost_details, work: :work_kind, work_chemical: :chemical)
       .where(term: term)
-      .order("occurred_on, id")
+      .order("fiscal_flag, occurred_on, id")
   }
 
   def kind_name
@@ -48,6 +51,8 @@ class TotalCost < ApplicationRecord
       depreciation.machine&.usual_name
     elsif seedling_home.present?
       seedling_home.home_name
+    elsif land.present?
+      land.place
     end
   end
 
@@ -55,6 +60,7 @@ class TotalCost < ApplicationRecord
     TotalCost.where(term: term).destroy_all
     make_work(term)
     make_seedling(term, organization)
+    make_lands(term, organization)
     TotalCost.where(term: term).find_each do |tc|
       tc.total_cost_details.each do |tcd|
         tcd.cost = tc.cost(tcd.work_type_id)
@@ -205,11 +211,29 @@ class TotalCost < ApplicationRecord
     end
   end
 
-  private_class_method :make_work
-  private_class_method :make_work_worker
-  private_class_method :make_work_machine
-  private_class_method :make_work_chemical
-  private_class_method :make_work_details
-  private_class_method :make_work_chemical_details
-  private_class_method :make_seedling
+  def self.make_lands(term, organization)
+    sys = System.find_by(term: term, organization_id: organization.id)
+    Land.usual.each do |land|
+      cost, results = land.costs(sys.start_date, sys.end_date)
+      next if cost.zero?
+      total_cost = TotalCost.new(
+        term: term,
+        total_cost_type_id: TotalCostType::LAND.id,
+        occurred_on: sys.end_date,
+        land_id: land.id,
+        amount: cost,
+        member_flag: true,
+        fiscal_flag: true
+      )
+      total_cost.save
+      results.each do |k, v|
+        TotalCostDetail.create(
+          total_cost_id: total_cost.id,
+          work_type_id: k,
+          rate: v,
+          area: land.area
+        )
+      end
+    end
+  end
 end

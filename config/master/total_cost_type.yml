@@ -13,6 +13,9 @@
 - id: 5
   code: Seedling
   name: "育苗"
+- id: 6
+  code: Land
+  name: "土地管理"
 - id: 9
   code: Expense
   name: "経費"

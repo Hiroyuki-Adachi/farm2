@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_28_125523) do
+ActiveRecord::Schema.define(version: 2018_07_29_124644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,8 @@ ActiveRecord::Schema.define(version: 2018_07_28_125523) do
     t.decimal "amount", precision: 7, default: "0", null: false, comment: "支払金額"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "chemical_type_id", default: 0, null: false, comment: "薬剤種別"
+    t.integer "chemical_id", comment: "薬剤"
   end
 
   create_table "fixes", primary_key: ["term", "fixed_at"], comment: "確定データ", force: :cascade do |t|
@@ -412,6 +414,8 @@ ActiveRecord::Schema.define(version: 2018_07_28_125523) do
     t.datetime "updated_at", null: false
     t.integer "seedling_home_id", comment: "育苗担当"
     t.boolean "member_flag", default: false, null: false, comment: "組合員支払フラグ"
+    t.integer "land_id", comment: "土地"
+    t.boolean "fiscal_flag", default: false, null: false, comment: "決算期フラグ"
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
   end
 

@@ -66,4 +66,16 @@ class Land < ApplicationRecord
   def reject_land_costs(attributes)
     attributes[:activated_on].blank? || attributes[:work_type_id].blank?
   end
+
+  def costs(start_date, end_date)
+    results = {}
+    tmp_date = start_date
+    tmp_cost = land_costs.newest(start_date).first
+    land_costs.where(["activated_on BETWEEN ? AND ?", start_date + 1, end_date]).order("land_costs.activated_on").each do |land_cost|
+      results[land_cost.work_type_id] = (results[land_cost.work_type_id] || 0) + (land_cost.activated_on - tmp_date)
+    end
+    results[tmp_cost.work_type_id] = (results[tmp_cost.work_type_id] || 0) + (end_date - tmp_date + 1)
+
+    return tmp_cost.cost, results
+  end
 end

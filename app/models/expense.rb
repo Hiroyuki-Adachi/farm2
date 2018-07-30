@@ -2,13 +2,15 @@
 #
 # Table name: expenses # 経費
 #
-#  id         :integer          not null, primary key # 経費
-#  term       :integer          not null              # 年度(期)
-#  payed_on   :date             not null              # 支払日
-#  content    :string(40)       not null              # 支払内容
-#  amount     :decimal(7, )     default(0), not null  # 支払金額
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id               :integer          not null, primary key # 経費
+#  term             :integer          not null              # 年度(期)
+#  payed_on         :date             not null              # 支払日
+#  content          :string(40)       not null              # 支払内容
+#  amount           :decimal(7, )     default(0), not null  # 支払金額
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  chemical_type_id :integer          default(0), not null  # 薬剤種別
+#  chemical_id      :integer                                # 薬剤
 #
 
 class Expense < ApplicationRecord

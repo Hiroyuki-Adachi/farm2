@@ -15,6 +15,8 @@
 #  updated_at         :datetime         not null
 #  seedling_home_id   :integer                                   # 育苗担当
 #  member_flag        :boolean          default(FALSE), not null # 組合員支払フラグ
+#  land_id            :integer                                   # 土地
+#  fiscal_flag        :boolean          default(FALSE), not null # 決算期フラグ
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
