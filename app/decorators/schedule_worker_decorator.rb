@@ -12,6 +12,8 @@ class ScheduleWorkerDecorator < Draper::Decorator
                 "明日"
               when 2
                 "明後日"
+              when 7
+                "一週間後"
               else
                 (model.schedule.worked_at - Date.today).to_i.to_s + "日後"
               end

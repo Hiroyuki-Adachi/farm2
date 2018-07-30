@@ -4,6 +4,8 @@
   <% @schedules.each do |schedule| %>
   <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
   <% end %>
+  <% if @minute.present? %>
   <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(→<%= link_to '議事録', minute_path(@minute.id), {target: :_blank, data: {turbolinks: false}} %>)</li>
+  <% end %>
 </ul>
 <% end %>
