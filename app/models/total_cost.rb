@@ -17,6 +17,7 @@
 #  member_flag        :boolean          default(FALSE), not null # 組合員支払フラグ
 #  land_id            :integer                                   # 土地
 #  fiscal_flag        :boolean          default(FALSE), not null # 決算期フラグ
+#  display_order      :integer          default(0), not null     # 並び順
 #
 
 class TotalCost < ApplicationRecord
@@ -35,9 +36,9 @@ class TotalCost < ApplicationRecord
   delegate :name, to: :total_cost_type, prefix: true
 
   scope :usual, ->(term) {
-    includes(:total_cost_details, work: :work_kind, work_chemical: :chemical)
+    includes(:total_cost_details, :land, work: :work_kind, work_chemical: :chemical, seedling_home: :home)
       .where(term: term)
-      .order("fiscal_flag, occurred_on, id")
+      .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
 
   def kind_name
@@ -110,6 +111,7 @@ class TotalCost < ApplicationRecord
       occurred_on: work.worked_at,
       work_id: work.id,
       amount: work.sum_workers_amount,
+      display_order: work.work_kind_order,
       member_flag: true
     )
     total_cost.save
@@ -126,6 +128,7 @@ class TotalCost < ApplicationRecord
       occurred_on: work.worked_at,
       work_id: work.id,
       amount: machine_amount,
+      display_order: work.work_kind_order,
       member_flag: true
     )
     total_cost.save
@@ -143,6 +146,7 @@ class TotalCost < ApplicationRecord
         occurred_on: work.worked_at,
         work_id: work.id,
         work_chemical_id: wc.id,
+        display_order: wc.chemical_display_order,
         amount: ct.price * wc.quantity
       )
       total_cost.save
@@ -200,6 +204,7 @@ class TotalCost < ApplicationRecord
         occurred_on: seedling_home.sowed_on,
         seedling_home_id: seedling_home.id,
         amount: seedling_price * seedling_home.cost_quantity,
+        display_order: seedling_home.home_display_order,
         member_flag: true
       )
       total_cost.save
@@ -223,6 +228,7 @@ class TotalCost < ApplicationRecord
         land_id: land.id,
         amount: cost,
         member_flag: true,
+        display_order: land.land_display_order,
         fiscal_flag: true
       )
       total_cost.save

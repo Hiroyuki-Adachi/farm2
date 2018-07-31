@@ -284,4 +284,8 @@ SQL
   def self.array_by_worked_at(works, worked_at)
     works.find { |work| work.worked_at == worked_at }
   end
+
+  def work_kind_order
+    work_kind.display_order * 100 + work_kind_id
+  end
 end
