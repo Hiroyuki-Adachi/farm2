@@ -17,6 +17,7 @@
 #  member_flag        :boolean          default(FALSE), not null # 組合員支払フラグ
 #  land_id            :integer                                   # 土地
 #  fiscal_flag        :boolean          default(FALSE), not null # 決算期フラグ
+#  display_order      :integer          default(0), not null     # 並び順
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

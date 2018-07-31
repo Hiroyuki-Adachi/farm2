@@ -1,4 +1,6 @@
 <h1>原価一覧</h1>
+<% old_group1_id = 0%>
+<% old_group2_id = 0%>
 <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
   <table id="tbl_list" class="table table-sm">
     <thead style="background-color:white;">
@@ -9,9 +11,9 @@
         <% end %>
       </tr>
       <tr>
-        <th>日付</th>
         <th>種類</th>
         <th>内容</th>
+        <th>日付</th>
         <% @work_types.each do |work_type| %>
         <td class="numeric"><%= sprintf("%.1f", @lands[work_type.id] || 0) %></td>
         <% end %>
@@ -19,10 +21,31 @@
     </thead>
     <tbody>
       <% @total_costs.each do |tc| %>
-        <tr class="<%= tc.member_flag ? 'text-primary' : 'text-body' %>">
-          <th><%= tc.fiscal_flag ? "決算" : tc.occurred_on.strftime('%m-%d') %></th>
+        <% if tc.total_cost_type_id != old_group1_id %>
+          <% old_group1_id = tc.total_cost_type_id %>
+          <tr class="group1-total table-primary" data-group1="<%= old_group1_id %>" style="cursor: pointer;">
+            <th><%= tc.total_cost_type_name %></th>
+            <td colspan="2"></td>
+            <% @work_types.each do |work_type| %>
+            <td class="numeric"><%= @group1_costs[old_group1_id][work_type.id] ? sprintf("%.0f", @group1_costs[old_group1_id][work_type.id]) : "" %></td>
+            <% end %>
+          </tr>
+        <% end %>
+        <% if tc.display_order != old_group2_id %>
+          <% old_group2_id = tc.display_order %>
+          <tr class="group2-total table-secondary" data-group1="<%= old_group1_id %>" data-group2="<%= old_group2_id %>" style="cursor: pointer;">
+            <th><%= tc.total_cost_type_name %></th>
+            <th><%= tc.kind_name %></th>
+            <th></th>
+            <% @work_types.each do |work_type| %>
+            <td class="numeric"><%= @group2_costs[old_group2_id][work_type.id] ? sprintf("%.0f", @group2_costs[old_group2_id][work_type.id]) : "" %></td>
+            <% end %>
+          </tr>
+        <% end %>
+        <tr class="detail <%= tc.member_flag ? 'text-success' : 'text-body' %>" data-group1="<%= old_group1_id %>" data-group2="<%= old_group2_id %>">
           <th><%= tc.total_cost_type_name %></th>
           <th><%= tc.kind_name %></th>
+          <th><%= tc.fiscal_flag ? "決算" : tc.occurred_on.strftime('%m-%d') %></th>
           <% @work_types.each do |work_type| %>
           <% tcd = tc.total_cost_details.find {|tcd| tcd.work_type_id == work_type.id } %>
           <td class="numeric"><%= tcd && tcd.cost ? sprintf("%.0f", tcd.cost) : "" %></td>
@@ -36,6 +59,9 @@
 <div id="btn_toolbar" class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= submit_tag '計算実行', class: "btn btn-warning", data: {confirm: "原価を再計算してもよろしいですか？"} %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
 <% end %>
@@ -53,6 +79,26 @@ $(function() {
     $('form').submit(function(){
         dispLoading("計算中");
     });
+
+    $(".group1-total").click(function() {
+        var s = $(".group2-total[data-group1='" + $(this).data("group1") + "']");
+        if(s.is(":visible")) {
+            s.hide();
+            $(".detail[data-group1='" + $(this).data("group1") + "']").hide();
+        } else {
+            s.show();
+        }
+    });
+    $(".group2-total").click(function() {
+        var s = $(".detail[data-group2='" + $(this).data("group2") + "']");
+        if(s.is(":visible")) {
+            s.hide();
+        } else {
+            s.show();
+        }
+    });
+  
+    $(".group2-total, .detail").hide();
 
     setTableWrapperHeight();
     removeLoading();

@@ -78,4 +78,8 @@ class Land < ApplicationRecord
 
     return tmp_cost.cost, results
   end
+
+  def land_display_order
+    land_place.display_order * 10000 + land_place_id * 1000 + display_order * 100 + id
+  end
 end

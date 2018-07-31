@@ -46,4 +46,8 @@ class SeedlingHome < ActiveRecord::Base
     return quantity if quantity <= result_quantity
     return dispose? ? quantity : result_quantity
   end
+
+  def home_display_order
+    home.display_order * 100 + home_id
+  end
 end

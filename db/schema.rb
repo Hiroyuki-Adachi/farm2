@@ -416,6 +416,7 @@ ActiveRecord::Schema.define(version: 2018_07_29_124644) do
     t.boolean "member_flag", default: false, null: false, comment: "組合員支払フラグ"
     t.integer "land_id", comment: "土地"
     t.boolean "fiscal_flag", default: false, null: false, comment: "決算期フラグ"
+    t.integer "display_order", default: 0, null: false, comment: "並び順"
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
   end
 
