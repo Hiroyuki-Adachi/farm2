@@ -141,6 +141,10 @@ SQL
     machine_results.to_a.uniq(&:machine_id).inject(0) { |a, e| a + e.amount} || 0
   end
 
+  def sum_machines_fuel
+    machine_results.to_a.uniq(&:machine_id).inject(0) { |a, e| a + e.fuel_usage} || 0
+  end
+
   def self.for_verifications(term, worker)
     Work.includes(:work_results, :machine_results, :work_lands, :work_type, :work_chemicals, :checkers).no_fixed(term).by_creator(worker).enough_check(worker).not_printed
   end

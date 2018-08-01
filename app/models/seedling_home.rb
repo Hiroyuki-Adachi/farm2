@@ -48,6 +48,6 @@ class SeedlingHome < ActiveRecord::Base
   end
 
   def home_display_order
-    home.display_order * 100 + home_id
+    home.home_display_order
   end
 end
