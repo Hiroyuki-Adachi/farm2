@@ -36,32 +36,17 @@ class TotalCost < ApplicationRecord
   delegate :name, to: :total_cost_type, prefix: true
 
   scope :usual, ->(term) {
-    includes(:total_cost_details, :land, work: :work_kind, work_chemical: :chemical, seedling_home: :home)
+    includes(:total_cost_details, land: :manager, work: :work_kind, work_chemical: :chemical, seedling_home: :home)
       .where(term: term)
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
 
-  def kind_name
-    if work_chemical_id.present?
-      work_chemical.chemical.name
-    elsif work.present?
-      work.work_kind.name
-    elsif expense.present?
-      expense.content
-    elsif depreciation.present?
-      depreciation.machine&.usual_name
-    elsif seedling_home.present?
-      seedling_home.home_name
-    elsif land.present?
-      land.place
-    end
-  end
-
   def self.make(term, organization)
     TotalCost.where(term: term).destroy_all
-    make_work(term)
-    make_seedling(term, organization)
-    make_lands(term, organization)
+    sys = System.find_by(term: term, organization_id: organization.id)
+    make_work(term, sys)
+    make_seedling(term, sys)
+    make_lands(term, sys)
     TotalCost.where(term: term).find_each do |tc|
       tc.total_cost_details.each do |tcd|
         tcd.cost = tc.cost(tcd.work_type_id)
@@ -96,11 +81,12 @@ class TotalCost < ApplicationRecord
     return numer / denom
   end
 
-  def self.make_work(term)
+  def self.make_work(term, sys)
     Work.for_cost(term).each do |work|
       make_work_worker(term, work)
       make_work_machine(term, work)
       make_work_chemical(term, work)
+      make_work_fuel(term, work, sys)
     end
   end
 
@@ -128,6 +114,26 @@ class TotalCost < ApplicationRecord
       occurred_on: work.worked_at,
       work_id: work.id,
       amount: machine_amount,
+      display_order: work.work_kind_order,
+      member_flag: true
+    )
+    total_cost.save
+    make_work_details(work, total_cost)
+  end
+
+  def self.make_work_fuel(term, work, sys)
+    machine_fuel = work.sum_machines_fuel
+    return unless machine_fuel&.positive?
+
+    fuel_price = sys&.light_oil_price || 0
+    return unless fuel_price&.positive?
+
+    total_cost = TotalCost.new(
+      term: term,
+      total_cost_type_id: TotalCostType::WORKFUEL.id,
+      occurred_on: work.worked_at,
+      work_id: work.id,
+      amount: machine_fuel * fuel_price,
       display_order: work.work_kind_order,
       member_flag: true
     )
@@ -194,8 +200,8 @@ class TotalCost < ApplicationRecord
     end
   end
 
-  def self.make_seedling(term, organization)
-    seedling_price = System.find_by(term: term, organization_id: organization.id).seedling_price
+  def self.make_seedling(term, sys)
+    seedling_price = sys.seedling_price
     seedling_homes = SeedlingHome.usual(term).where.not(sowed_on: nil)
     seedling_homes.each do |seedling_home|
       total_cost = TotalCost.new(
@@ -216,8 +222,7 @@ class TotalCost < ApplicationRecord
     end
   end
 
-  def self.make_lands(term, organization)
-    sys = System.find_by(term: term, organization_id: organization.id)
+  def self.make_lands(term, sys)
     Land.usual.each do |land|
       cost, results = land.costs(sys.start_date, sys.end_date)
       next if cost.zero?
@@ -228,7 +233,7 @@ class TotalCost < ApplicationRecord
         land_id: land.id,
         amount: cost,
         member_flag: true,
-        display_order: land.land_display_order,
+        display_order: land.manager.home_display_order,
         fiscal_flag: true
       )
       total_cost.save

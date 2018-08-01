@@ -4,8 +4,8 @@ class TotalCostsController < ApplicationController
   def index
     @work_types = WorkType.land
     @lands = LandCost.total(Time.zone.today)
-    @total_costs = TotalCost.usual(current_term)
-    @group1_costs, @group2_costs = calc_totals(@total_costs)
+    @total_costs = TotalCostDecorator.decorate_collection(TotalCost.usual(current_term))
+    @group1_costs, @group2_costs = calc_totals(@total_costs.object)
   end
 
   def create
@@ -18,11 +18,11 @@ class TotalCostsController < ApplicationController
   private
 
   def calc_totals(total_costs)
-    group1_totals = Hash.new{|h, k| h[k] = {}}
-    group2_totals = Hash.new{|h, k| h[k] = {}}
+    group1_totals = Hash.new { |h, k| h[k] = {}}
+    group2_totals = Hash.new { |h, k| h[k] = {}}
     total_costs.each do |tc|
       group1_totals = set_totals(group1_totals, tc, tc.total_cost_type_id)
-      group2_totals = set_totals(group2_totals, tc, tc.display_order)
+      group2_totals = set_totals(group2_totals, tc, tc.total_cost_type_id * 1_000_000 + tc.display_order)
     end
 
     return group1_totals, group2_totals

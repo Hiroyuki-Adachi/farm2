@@ -65,4 +65,8 @@ class Home < ApplicationRecord
   def owner_name
     holder && !company_flag ? holder.name + '(' + name + ')' : name
   end
+
+  def home_display_order
+    display_order * 100 + id
+  end
 end
