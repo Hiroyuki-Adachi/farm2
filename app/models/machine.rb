@@ -71,9 +71,9 @@ class Machine < ApplicationRecord
   def leasable?(worked_at)
     return false if company?
     header = price_headers.where("validated_at <= ?", worked_at).order(validated_at: :DESC).first
-    return header.details.where(lease_id: Lease::LEASE).exists? if header
+    return header.details.where(lease_id: Lease::LEASE.id).exists? if header
     header = machine_type.price_headers.where("validated_at <= ?", worked_at).order(validated_at: :DESC).first
-    return header.details.where(lease_id: Lease::LEASE).exists? if header
+    return header.details.where(lease_id: Lease::LEASE.id).exists? if header
     return false
   end
 
