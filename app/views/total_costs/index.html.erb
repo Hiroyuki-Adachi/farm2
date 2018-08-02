@@ -27,7 +27,7 @@
             <th><%= tc.total_cost_type_name %></th>
             <td colspan="2"></td>
             <% @work_types.each do |work_type| %>
-            <td class="numeric"><%= @group1_costs[old_group1_id][work_type.id] ? @group1_costs[old_group1_id][work_type.id].to_s(:delimited) : "" %></td>
+            <td class="numeric"><%= @group1_costs[old_group1_id][work_type.id]&.to_s(:delimited) %></td>
             <% end %>
           </tr>
         <% end %>
@@ -38,7 +38,7 @@
             <th><%= tc.kind_name %></th>
             <th></th>
             <% @work_types.each do |work_type| %>
-            <td class="numeric"><%= @group2_costs[old_group1_id * 1_000_000 + old_group2_id][work_type.id] ? @group2_costs[old_group1_id * 1_000_000 + old_group2_id][work_type.id].to_s(:delimited) : "" %></td>
+            <td class="numeric"><%= @group2_costs[old_group1_id][old_group2_id][work_type.id]&.to_s(:delimited) %></td>
             <% end %>
           </tr>
         <% end %>
@@ -48,7 +48,7 @@
           <th><%= tc.detail_name %></th>
           <% @work_types.each do |work_type| %>
           <% tcd = tc.total_cost_details.find {|tcd| tcd.work_type_id == work_type.id } %>
-          <td class="numeric"><%= tcd && tcd.cost ? tcd.cost.to_s(:delimited) : "" %></td>
+          <td class="numeric"><%= tcd&.cost&.to_s(:delimited) %></td>
           <% end %>
         </tr>
       <% end %>

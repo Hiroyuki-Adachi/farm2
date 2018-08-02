@@ -19,10 +19,10 @@ class TotalCostsController < ApplicationController
 
   def calc_totals(total_costs)
     group1_totals = Hash.new { |h, k| h[k] = {}}
-    group2_totals = Hash.new { |h, k| h[k] = {}}
+    group2_totals = Hash.new { |h1, k1| h1[k1] = Hash.new { |h2, k2| h2[k2] = {}}}
     total_costs.each do |tc|
-      group1_totals = set_totals(group1_totals, tc, tc.total_cost_type_id)
-      group2_totals = set_totals(group2_totals, tc, tc.total_cost_type_id * 1_000_000 + tc.display_order)
+      set_totals(group1_totals, tc, tc.total_cost_type_id)
+      set_totals(group2_totals[tc.total_cost_type_id], tc, tc.display_order)
     end
 
     return group1_totals, group2_totals
