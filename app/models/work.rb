@@ -110,7 +110,7 @@ SQL
   }
 
   scope :for_cost, ->(term) {where([<<SQL, term, WorkType.land.ids])}
-  works.term = ? AND (work_type_id IN (?) OR EXISTS(SELECT * FROM work_lands WHERE works.id = work_lands.work_id))
+  works.term = ? AND (work_type_id IN (?))
 SQL
 
   def set_term

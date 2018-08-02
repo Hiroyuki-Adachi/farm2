@@ -134,8 +134,7 @@ class TotalCost < ApplicationRecord
       occurred_on: work.worked_at,
       work_id: work.id,
       amount: machine_fuel * fuel_price,
-      display_order: work.work_kind_order,
-      member_flag: true
+      display_order: work.work_kind_order
     )
     total_cost.save
     make_work_details(work, total_cost)
