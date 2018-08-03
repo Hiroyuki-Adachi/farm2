@@ -47,13 +47,7 @@ class TotalCost < ApplicationRecord
     make_work(term, sys)
     make_seedling(term, sys)
     make_lands(term, sys)
-    TotalCost.where(term: term).find_each do |tc|
-      tc.total_cost_details.each do |tcd|
-        tcd.cost = tc.cost(tcd.work_type_id)
-        tcd.base_cost = tc.base_cost(tcd.work_type_id)
-        tcd.save!
-      end
-    end
+    make_details(term)
   end
 
   def self.created_at(term)
@@ -87,6 +81,16 @@ class TotalCost < ApplicationRecord
       make_work_machine(term, work)
       make_work_chemical(term, work)
       make_work_fuel(term, work, sys)
+    end
+  end
+
+  def self.make_details(term)
+    TotalCost.where(term: term).find_each do |tc|
+      tc.total_cost_details.each do |tcd|
+        tcd.cost = tc.cost(tcd.work_type_id)
+        tcd.base_cost = tc.base_cost(tcd.work_type_id)
+        tcd.save!
+      end
     end
   end
 

@@ -13739,3 +13739,9 @@ work_result_feb_last:
   worker_id: 1
   hours: 6
   display_order: 1
+
+work_result_genka1:
+  work: work_genka
+  worker_id: 1
+  hours: 6
+  display_order: 1
