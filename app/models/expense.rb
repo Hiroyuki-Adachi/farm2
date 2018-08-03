@@ -11,11 +11,15 @@
 #  updated_at       :datetime         not null
 #  chemical_type_id :integer          default(0), not null  # 薬剤種別
 #  chemical_id      :integer                                # 薬剤
+#  expense_type_id  :integer          default(0), not null  # 経費種別
 #
 
 class Expense < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
   has_many :expense_work_types, {dependent: :delete_all}
   has_many :work_types, -> {order(:display_order)}, {through: :expense_work_types}
+  belongs_to :expense_type
 
   validates :payed_on, presence: true
   validates :content, presence: true

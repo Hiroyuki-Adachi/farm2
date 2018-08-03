@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_29_124644) do
+ActiveRecord::Schema.define(version: 2018_08_03_150247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,7 @@ ActiveRecord::Schema.define(version: 2018_07_29_124644) do
     t.datetime "updated_at", null: false
     t.integer "chemical_type_id", default: 0, null: false, comment: "薬剤種別"
     t.integer "chemical_id", comment: "薬剤"
+    t.integer "expense_type_id", default: 0, null: false, comment: "経費種別"
   end
 
   create_table "fixes", primary_key: ["term", "fixed_at"], comment: "確定データ", force: :cascade do |t|

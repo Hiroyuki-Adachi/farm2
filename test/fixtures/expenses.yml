@@ -11,6 +11,7 @@
 #  updated_at       :datetime         not null
 #  chemical_type_id :integer          default(0), not null  # 薬剤種別
 #  chemical_id      :integer                                # 薬剤
+#  expense_type_id  :integer          default(0), not null  # 経費種別
 #
 
 expense_upd:
@@ -18,9 +19,11 @@ expense_upd:
   payed_on: "2015-02-02"
   content: "更新テスト"
   amount: 22222
+  expense_type_id: 10
 
 expense_del:
   term: 2015
   payed_on: "2015-03-03"
   content: "削除テスト"
   amount: 33333
+  expense_type_id: 10
