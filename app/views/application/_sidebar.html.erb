@@ -1,6 +1,6 @@
-<nav id="my_sidebar" style="padding-left: 15px;">
+<nav id="mySidebar" style="padding-left: 15px;">
   <div aria-labelledby="navbarDaily">
-    <span class="h5">日報管理</span>
+    <span class="h5">日報管理</span><button type="button" id="sideClose" class="close" onclick="closeSide()">&times;</button>
     <% unless current_user.visitor? %><%= link_to '日報入力', new_work_path, {class: "dropdown-item", data: {controller: :works, actions: [:new, :edit, :show]}} %><% end %>
     <%= link_to '日報一覧', works_path, {class: "dropdown-item", data: {controller:  "works", actions: [:index]}} %>
     <% if current_user.checkable? %><%= link_to '日報検証', work_verifications_path, {class: "dropdown-item", data: {controller: "work_verifications"}} %><% end %>
@@ -75,7 +75,7 @@ $(function() {
     if(controller == "menu" && action == "index") {
         return;
     }
-    $("#my_sidebar").find("a[data-controller]").each(function(i, e) {
+    $("#mySidebar").find("a[data-controller]").each(function(i, e) {
         if(e.dataset.controller == controller) {
             if($("a[data-controller='" + controller + "']").length <= 1) {
                 activeBar(e);
@@ -91,5 +91,14 @@ function activeBar(e) {
     e.style.backgroundColor = "White";
     navdiv.show();
     $("#" + navdiv.attr("aria-labelledby")).addClass("active");
+}
+
+function closeSide() {
+    $("#sideWrapper").hide("slow");
+    $("#myContent").removeClass("col-md-10");
+    $("#myContent").addClass("col-md-12");
+    setTimeout(function(){
+        $(window).trigger('resize');
+    }, 1000);
 }
 </script>
