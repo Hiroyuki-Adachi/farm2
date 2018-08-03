@@ -76,11 +76,11 @@ class WorkResult < ApplicationRecord
   }
 
   def price
-    (self.work.fixed_at ? self.fixed_price : self.work.work_kind.term_price(self.work.term)) || 0
+    (work.fixed_at ? fixed_price : work.work_kind.term_price(work.term)) || 0
   end
 
   def amount
-    (self.work.fixed_at ? self.fixed_amount : self.hours * price) || 0
+    (work.fixed_at ? fixed_amount : hours * price) || 0
   end
 
   def set_uuid

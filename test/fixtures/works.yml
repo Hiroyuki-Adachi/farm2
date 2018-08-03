@@ -5287,7 +5287,6 @@ works_past:
   created_at: '2014-03-01 08:29:46.287334'
   updated_at: '2014-03-01 08:29:46.287334'
 
-
 works329:
   id: '1811'
   term: '2016'
@@ -5339,3 +5338,16 @@ work_broccoli:
   end_at: '2015-05-01 16:00:00'
   fixed_at: '2015-06-01'
   work_kind_id: work_kind_broccoli
+
+work_genka:
+  term: 2017
+  worked_at: "2017-02-16"
+  weather_id: 1
+  work_type_id: work_type_koshi
+  name: "原価テスト"
+  start_at: '2017-02-16 08:00:00'
+  end_at: '2017-02-16 17:00:00'
+  fixed_at: 
+  work_kind_id: 1
+  created_at: '2017-03-01 08:34:35.513224'
+  updated_at: '2017-03-01 08:34:35.513224'

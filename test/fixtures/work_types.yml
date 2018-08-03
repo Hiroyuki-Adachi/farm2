@@ -42,18 +42,18 @@ work_types2:
   bg_color: "#ffffff"
   land_flag: t
 
-work_types3:
-  id: '5'
+work_type_mugi:
+  id: 5
   genre: '2'
   name: "麦"
   category_flag: f
   display_order: '0'
-  deleted_at: '2014-05-01 00:00:00'
+  deleted_at: 
   bg_color: "#ffffff"
   land_flag: t
 
-work_types4:
-  id: '6'
+work_type_bokuso:
+  id: 6
   genre: '2'
   name: "牧草"
   category_flag: f
