@@ -1,6 +1,7 @@
 class ExpensesController < ApplicationController
   include PermitManager
   before_action :set_expense, only: [:edit, :update, :destroy]
+  before_action :set_master, only: [:new, :create, :edit, :update]
   before_action :set_work_type, only: [:new, :create, :edit, :update]
 
   def index
@@ -42,9 +43,13 @@ class ExpensesController < ApplicationController
     @expense = Expense.find(params[:id])
   end
 
+  def set_master
+    @expense_types = ExpenseType.all
+  end
+
   def expense_params
     params.require(:expense).permit(
-      :term, :payed_on, :content, :amount,
+      :term, :payed_on, :content, :amount, :expense_type_id,
       expense_work_types_attributes: [:id, :work_type_id, :rate, :_destroy]
     )
   end

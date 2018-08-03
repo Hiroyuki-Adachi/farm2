@@ -5,6 +5,7 @@
     <thead>
       <tr>
         <th>支払日</th>
+        <th>種別</th>
         <th>内容</th>
         <th class="numeric">金額</th>
         <th>原価ベース</th>
@@ -15,6 +16,7 @@
     <% @expenses.each do |expense| %>
         <tr>
         <td><%= expense.payed_on %></td>
+        <td><%= expense.expense_type.name %></td>
         <td><%= expense.content %></td>
         <td class="numeric"><%= expense.amount %></td>
         <td><%= expense.work_types %></td>
