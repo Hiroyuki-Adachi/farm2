@@ -231,8 +231,16 @@ ja:
         
       expense:
         payed_on: "支払日"
+        expense_type_id: "支払種別"
         content: "支払内容"
         amount: "支払額"
+        chemical_type_id: "薬剤種別"
+        chemical_id: "薬剤"
+        discount: "値引額"
+        discount_numor: "値引率(値引額)"
+        discount_denom: "値引率(支払額)"
+        cost_flag: "原価区分"
+        quantity: "数量"
 
   status:
     organization:

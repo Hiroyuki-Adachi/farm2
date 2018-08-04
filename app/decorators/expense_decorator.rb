@@ -18,7 +18,15 @@ class ExpenseDecorator < Draper::Decorator
     h.number_to_currency(model.amount, {precision: 0, unit: ""})
   end
 
+  def discount_amount
+    h.number_to_currency(model.discount_amount, {precision: 0, unit: ""})
+  end
+
   def work_types
     model.expense_work_types.includes(:work_type).reject{ |ewt| ewt.rate.zero?}.map{ |ewt| ewt.work_type_name}&.join(",")
+  end
+
+  def cost_flag
+    model.cost_flag ? "支払時" : "使用時"
   end
 end

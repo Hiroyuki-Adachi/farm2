@@ -137,13 +137,18 @@ ActiveRecord::Schema.define(version: 2018_08_03_150247) do
   create_table "expenses", id: :serial, comment: "経費", comment: "経費", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.date "payed_on", null: false, comment: "支払日"
-    t.string "content", limit: 40, null: false, comment: "支払内容"
+    t.string "content", limit: 40, comment: "支払内容"
     t.decimal "amount", precision: 7, default: "0", null: false, comment: "支払金額"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "chemical_type_id", default: 0, null: false, comment: "薬剤種別"
+    t.integer "chemical_type_id", default: 0, comment: "薬剤種別"
     t.integer "chemical_id", comment: "薬剤"
     t.integer "expense_type_id", default: 0, null: false, comment: "経費種別"
+    t.decimal "quantity", precision: 4, comment: "数量"
+    t.decimal "discount", precision: 7, comment: "割引額"
+    t.decimal "discount_numor", precision: 7, comment: "割引率(分子)"
+    t.decimal "discount_denom", precision: 7, comment: "割引率(分母)"
+    t.boolean "cost_flag", default: false, null: false, comment: "支払時原価フラグ"
   end
 
   create_table "fixes", primary_key: ["term", "fixed_at"], comment: "確定データ", force: :cascade do |t|
