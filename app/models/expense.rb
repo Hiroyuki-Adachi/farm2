@@ -38,9 +38,10 @@ class Expense < ApplicationRecord
   accepts_nested_attributes_for :expense_work_types, allow_destroy: true
 
   def discount_amount
-    amount -= discount if discount.present?
-    amount -= (amount * discount_numor / discount_denom).round if discount_rate?
-    return amount
+    work_amount = amount
+    work_amount -= discount if discount.present?
+    work_amount -= (amount * discount_numor / discount_denom).round if discount_rate?
+    return work_amount
   end
 
   def discount_rate?
