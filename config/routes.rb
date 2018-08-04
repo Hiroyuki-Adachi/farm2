@@ -7,7 +7,12 @@ Rails.application.routes.draw do
       get :work_results
     end
   end
-  resources :expenses, except: [:show]
+  resources :expenses, except: [:show] do
+    collection do
+      get :chemical_type_select
+      get :chemical_select
+    end
+  end
   resources :seedling_costs, param: "seedling_id", only: [:index, :create, :edit, :update]
   resources :chemical_costs, only: [:index, :create]
   resources :fuel_costs, only: [:index, :create]

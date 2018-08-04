@@ -1,0 +1,3 @@
+$("#expense_chemical_type_id").html("<%= escape_javascript(options_from_collection_for_select(@chemical_types, :id, :name)) %>");
+$("#expense_chemical_type_id").prepend($("<option>").val("").text(""));
+$("#expense_chemical_type_id").val("");

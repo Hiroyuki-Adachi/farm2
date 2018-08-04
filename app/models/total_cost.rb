@@ -47,6 +47,7 @@ class TotalCost < ApplicationRecord
     make_work(term, sys)
     make_seedling(term, sys)
     make_lands(term, sys)
+    make_expenses(term)
     make_details(term)
   end
 
@@ -246,6 +247,29 @@ class TotalCost < ApplicationRecord
           work_type_id: k,
           rate: v,
           area: land.area
+        )
+      end
+    end
+  end
+
+  def self.make_expenses(term)
+    Expense.cost(term).each do |expense|
+      total_cost = TotalCost.new(
+        term: term,
+        total_cost_type_id: TotalCostType::EXPENSE.id,
+        occurred_on: expense.payed_on,
+        expense_id: expense.id,
+        amount: expense.discount_amount,
+        display_order: expense.expense_type_id
+      )
+      total_cost.save
+      expense.expense_work_types.each do |expense_work_type|
+        next if expense_work_type.rate.zero?
+        TotalCostDetail.create(
+          total_cost_id: total_cost.id,
+          work_type_id: expense_work_type.work_type_id,
+          rate: expense_work_type.rate,
+          area: LandCost.sum_area_by_work_type(expense.payed_on, expense_work_type.work_type_id)
         )
       end
     end
