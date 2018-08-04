@@ -3,7 +3,7 @@
   name: "作業(作業者)"
 - id: 2
   code: WorkMachine
-  name: "作業(機械)"
+  name: "作業(機械使用)"
 - id: 3
   code: WorkFuel
   name: "作業(燃料)"

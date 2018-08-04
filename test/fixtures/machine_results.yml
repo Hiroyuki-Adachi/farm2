@@ -4003,3 +4003,10 @@ machine_result_feb_day_t:
   created_at: '2016-02-23 08:53:39.156026'
   updated_at: '2016-02-23 08:53:39.156026'
 
+machine_result_genka1:
+  machine: machine_hour_t
+  work_result: work_result_genka1
+  display_order: 1
+  hours: 3
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
