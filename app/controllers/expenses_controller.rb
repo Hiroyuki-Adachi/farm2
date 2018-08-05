@@ -39,16 +39,12 @@ class ExpensesController < ApplicationController
 
   def chemical_type_select
     @chemical_types = ChemicalType.usual
-    respond_to do |format|
-      format.js {render action: :chemical_type_select}
-    end
+    render action: :chemical_type_select
   end
 
   def chemical_select
     @chemicals = Chemical.by_type(params[:chemical_type_id])
-    respond_to do |format|
-      format.js {render action: :chemical_select}
-    end
+    render action: :chemical_select
   end
 
   private
