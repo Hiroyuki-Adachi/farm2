@@ -10,3 +10,9 @@
 - id: 40
   code: MACHINE
   name: "機械"
+- id: 50
+  code: PACK
+  name: "梱包"
+- id: 99
+  code: OTHER
+  name: "その他"
