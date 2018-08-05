@@ -36,7 +36,7 @@ class TotalCost < ApplicationRecord
   delegate :name, to: :total_cost_type, prefix: true
 
   scope :usual, ->(term) {
-    includes(:total_cost_details, land: :manager, work: :work_kind, work_chemical: :chemical, seedling_home: :home)
+    includes(:total_cost_details, :expense, land: :manager, work: :work_kind, work_chemical: :chemical, seedling_home: :home)
       .where(term: term)
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
