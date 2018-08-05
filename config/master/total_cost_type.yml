@@ -1,21 +1,21 @@
-- id: 1
+- id: 10
   code: WorkWorker
   name: "作業(作業者)"
-- id: 2
+- id: 20
   code: WorkMachine
   name: "作業(機械使用)"
-- id: 3
+- id: 30
   code: WorkFuel
   name: "作業(燃料)"
-- id: 4
+- id: 40
   code: WorkChemical
   name: "作業(薬剤)"
-- id: 5
+- id: 50
   code: Seedling
   name: "育苗"
-- id: 6
+- id: 60
   code: Land
   name: "土地管理"
-- id: 9
+- id: 90
   code: Expense
   name: "経費"

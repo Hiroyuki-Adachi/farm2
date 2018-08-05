@@ -32,11 +32,9 @@ class Expense < ApplicationRecord
   validates :content, presence: true, unless: :chemical?
   validates :amount, presence: true
 
-  scope :usual, ->(term) {where(term: term).order(payed_on: :ASC, id: :ASC)}
+  scope :usual, ->(term) {includes(:chemical).where(term: term).order(payed_on: :ASC, id: :ASC)}
   scope :cost, ->(term) {where(term: term, cost_flag: true).order(:id)}
-  scope :chemicals, ->(term) {
-    where(term: term, expense_type_id: ExpenseType::CHEMICAL.id, cost_flag: false)
-  }
+  scope :chemicals, ->(term) {where(term: term, expense_type_id: ExpenseType::CHEMICAL.id, cost_flag: false)}
 
   accepts_nested_attributes_for :expense_work_types, allow_destroy: true
 

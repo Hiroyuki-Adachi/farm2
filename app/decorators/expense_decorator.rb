@@ -26,6 +26,10 @@ class ExpenseDecorator < Draper::Decorator
     model.expense_work_types.includes(:work_type).reject{ |ewt| ewt.rate.zero?}.map{ |ewt| ewt.work_type_name}&.join(",")
   end
 
+  def content
+    model.chemical? ? model.chemical.name : model.content
+  end
+
   def cost_flag
     model.cost_flag ? "支払時" : "使用時"
   end

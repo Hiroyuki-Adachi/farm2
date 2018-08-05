@@ -230,7 +230,7 @@ ja:
         cost: "原価"
         
       expense:
-        payed_on: "支払日"
+        payed_on: "購入日"
         expense_type_id: "支払種別"
         content: "支払内容"
         amount: "支払額"
