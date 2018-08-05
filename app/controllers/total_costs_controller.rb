@@ -30,6 +30,7 @@ class TotalCostsController < ApplicationController
 
   def set_totals(totals, cost, key)
     cost.total_cost_details.each do |tcd|
+      next if tcd.cost.to_i.zero?
       totals[key][tcd.work_type_id] ||= 0
       totals[key][tcd.work_type_id] += tcd.cost
     end
