@@ -29,11 +29,14 @@ class Expense < ApplicationRecord
   belongs_to :chemical, optional: true
 
   validates :payed_on, presence: true
-  validates :content, presence: true
-  validates :amount, presence: true, unless: :chemical?
+  validates :content, presence: true, unless: :chemical?
+  validates :amount, presence: true
 
   scope :usual, ->(term) {where(term: term).order(payed_on: :ASC, id: :ASC)}
   scope :cost, ->(term) {where(term: term, cost_flag: true).order(:id)}
+  scope :chemicals, ->(term) {
+    where(term: term, expense_type_id: ExpenseType::CHEMICAL.id, cost_flag: false)
+  }
 
   accepts_nested_attributes_for :expense_work_types, allow_destroy: true
 
@@ -50,5 +53,21 @@ class Expense < ApplicationRecord
 
   def chemical?
     expense_type == ExpenseType::CHEMICAL
+  end
+
+  def self.chemical_prices(term)
+    prices = Hash.new { |h, k| h[k] = {}}
+    results = {}
+    Expense.chemicals(term).each do |expense|
+      prices[expense.chemical_id][:sum_amount] ||= 0
+      prices[expense.chemical_id][:sum_quantity] ||= 0
+      prices[expense.chemical_id][:sum_amount] += expense.discount_amount
+      prices[expense.chemical_id][:sum_quantity] += expense.quantity
+    end
+    prices.each do |chemical_id, price|
+      next if price[:sum_quantity].zero?
+      results[chemical_id] ||= (price[:sum_amount] / price[:sum_quantity]).round
+    end
+    return results
   end
 end
