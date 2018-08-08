@@ -1,2 +1,0 @@
-module Works::PrintHelper
-end

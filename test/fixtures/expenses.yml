@@ -9,7 +9,7 @@
 #  amount           :decimal(7, )     default(0), not null     # 支払金額
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  chemical_type_id :integer          default(0), not null     # 薬剤種別
+#  chemical_type_id :integer          default(0)               # 薬剤種別
 #  chemical_id      :integer                                   # 薬剤
 #  expense_type_id  :integer          default(0), not null     # 経費種別
 #  quantity         :decimal(4, )                              # 数量

@@ -1,16 +1,65 @@
 <h1>作業日報(WCS)登録</h1>
 <%= error_print(@work) %>
-<%= form_for(@work, url: {action: :update }, html: {method: :put}) do |f| %>
-  <div class="row">
-    <div class="col-md-4 form-inline">
-      <label for="whole_crop_weight">重量</label>
-      <%= number_field_tag "whole_crop[weight]", @whole_crop&.rolls, {max: 999, min: 0, step: 1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %><span>kg</span>
-    </div>
-    <div class="col-md-4 form-inline">
-      <label for="whole_crop_weight">本数</label>
-      <%= number_field_tag "whole_crop[rolls]", @whole_crop&.rolls, {max: 9999, min: 0, step: 1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %><span>本</span>
-    </div>
-  </div>
+<%= form_for(@work, url: {action: :update}, html: {method: :put}) do |f| %>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th rowspan="2"></th>
+        <th rowspan="2">日付</th>
+        <th rowspan="2">ロール数</th>
+        <th rowspan="2">地番</th>
+        <th colspan="<%= WholeCropRoll::MAX_ROLLS + 1 %>">重量</th>
+      </tr>
+      <tr>
+        <% WholeCropRoll::MAX_ROLLS.times do |i| %>
+        <th><%= i + 1 %></th>
+        <% end %>
+        <th>合計</th>
+      </tr>
+    </thead>
+    <% line = 0 %>
+    <tbody id="tbody_lands">
+      <% @whole_crop.wcs_lands.each_with_index do |wcs_land, i| %>
+        <tr>
+          <th class="lineNo"><%= (line += 1) %></th>
+          <td><%= @work.worked_at %></td>
+          <td class="land_info">
+            <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][id]", wcs_land.id %>
+            <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][display_order]", wcs_land.display_order %>
+            <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][work_land_id]", wcs_land.work_land_id %>
+            <%= number_field_tag "whole_crop[wcs_lands][#{i}][rolls]", @wcs_land.rolls, {max: 999, min: 0, step: 1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
+          </td>
+          <td><%= wcs_land.work_land.land.place %></td>
+          <% WholeCropRoll::MAX_ROLLS.times do |j| %>
+            <td>
+              <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][wcs_rolls][#{j}][id]", @wcs_land.wcs_rolls[j]&.id %>
+              <%= number_field_tag "whole_crop[wcs_lands][#{i}][wcs_rolls][#{j}][weight]", @wcs_land.wcs_rolls[j]&.weight, {max: 999.9, min: 0, step: 0.1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
+              <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][wcs_rolls][#{j}][display_order]", @wcs_land.wcs_rolls[j]&.display_order %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+      <% @work.work_lands.each_with_index do |work_land, i| %>
+        <% next if @whole_crop.wcs_lands && @whole_crop.wcs_lands.exists?(work_land_id: work_land.id) %>
+        <tr>
+          <th class="lineNo"><%= (line += 1) %></th>
+          <td><%= @work.worked_at %></td>
+          <td class="land_info">
+            <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][display_order]", i %>
+            <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][work_land_id]", work_land.id %>
+            <%= number_field_tag "whole_crop[wcs_lands][#{i}][rolls]", 0, {max: 999, min: 0, step: 1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
+          </td>
+          <td><%= work_land.land.place %></td>
+          <% WholeCropRoll::MAX_ROLLS.times do |j| %>
+            <td>
+              <%= number_field_tag "whole_crop[wcs_lands][#{i}][wcs_rolls][#{j}][weight]", 0, {max: 999.9, min: 0, step: 0.1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
+              <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][wcs_rolls][#{j}][display_order]", j + 1 %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
   <div class="row">
     <div class="btn-toolbar">
       <div class="btn-group mr-2">
@@ -22,3 +71,22 @@
     </div>
   </div>
 <% end %>
+<script>
+$(function() {
+    $("#tbody_lands").sortable({
+        cursor: "move",
+        update: function(e, ui) {
+          renumberLands();
+        }
+    });
+
+    renumberLands();
+});
+
+function renumberLands() {
+    $("#tbody_lands tr").each(function(index, elm) {
+        $(elm).find(".lineNo").text(index + 1);
+        $(elm).find(".land_info").find("input[id$='display_order']").val(index + 1);
+    });
+}
+</script>
