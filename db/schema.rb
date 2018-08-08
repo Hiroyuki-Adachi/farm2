@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_03_150247) do
+ActiveRecord::Schema.define(version: 2018_08_06_124745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -441,6 +441,26 @@ ActiveRecord::Schema.define(version: 2018_08_03_150247) do
     t.index ["worker_id"], name: "index_users_on_worker_id", unique: true
   end
 
+  create_table "whole_crop_lands", comment: "WCS土地", force: :cascade do |t|
+    t.integer "work_whole_crop_id", default: 0, null: false, comment: "WCS作業"
+    t.integer "work_land_id", default: 0, null: false, comment: "作業地"
+    t.integer "display_order", default: 0, null: false, comment: "番号"
+    t.decimal "rolls", precision: 3, default: "0", null: false, comment: "ロール数"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["work_whole_crop_id", "display_order"], name: "index_whole_crop_lands_on_work_whole_crop_id_and_display_order", unique: true
+    t.index ["work_whole_crop_id", "work_land_id"], name: "index_whole_crop_lands_on_work_whole_crop_id_and_work_land_id", unique: true
+  end
+
+  create_table "whole_crop_rolls", comment: "WCSロール", force: :cascade do |t|
+    t.integer "whole_crop_land_id", default: 0, null: false, comment: "WCS土地"
+    t.integer "display_order", default: 0, null: false, comment: "番号"
+    t.decimal "weight", precision: 4, scale: 1, default: "0.0", null: false, comment: "重量"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["whole_crop_land_id", "display_order"], name: "index_whole_crop_rolls_on_whole_crop_land_id_and_display_order", unique: true
+  end
+
   create_table "work_broccolis", id: :serial, comment: "ブロッコリー作業", comment: "ブロッコリー作業", force: :cascade do |t|
     t.integer "work_id", null: false, comment: "作業"
     t.integer "broccoli_box_id", null: false, comment: "箱"
@@ -531,10 +551,10 @@ ActiveRecord::Schema.define(version: 2018_08_03_150247) do
 
   create_table "work_whole_crops", comment: "WCS作業", force: :cascade do |t|
     t.integer "work_id", null: false, comment: "作業"
-    t.decimal "rolls", precision: 4, default: "0", null: false, comment: "ロール数"
-    t.decimal "weight", precision: 4, scale: 1, default: "0.0", null: false, comment: "重量"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "unit_price", precision: 5, scale: 2, default: "0.0", null: false, comment: "標準単価"
+    t.decimal "tax_rate", precision: 3, scale: 1, default: "0.0", null: false, comment: "消費税率"
     t.index ["work_id"], name: "index_work_whole_crops_on_work_id", unique: true
   end
 

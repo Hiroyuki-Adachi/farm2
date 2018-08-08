@@ -103,7 +103,7 @@ class WorksController < ApplicationController
   end
 
   def edit_whole_crop
-    @whole_crop = @work.whole_crop
+    @whole_crop = @work.whole_crop || WorkWholeCrop.new
   end
 
   def update
