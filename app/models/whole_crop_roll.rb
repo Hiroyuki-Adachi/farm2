@@ -15,14 +15,14 @@ class WholeCropRoll < ApplicationRecord
 
   scope :valid, -> {where("weight > ?", 0)}
 
-  belongs_to :wcs_land, {class_name: "WholeCropLand"}
+  belongs_to :wcs_land, {class_name: "WholeCropLand", foreign_key: "whole_crop_land_id"}
 
   def self.regist(wcs_land, params)
     params.each do |param|
       if param[:id].present?
         WholeCropRoll.find(param[:id]).update(wcs_roll_param(wcs_land, param))
       else
-	WholeCropRoll.create(wcs_roll_param(wcs_land, param))
+	      WholeCropRoll.create(wcs_roll_param(wcs_land, param))
       end
     end
   end

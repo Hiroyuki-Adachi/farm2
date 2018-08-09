@@ -2,12 +2,13 @@
 #
 # Table name: work_whole_crops # WCS作業
 #
-#  id         :bigint(8)        not null, primary key
-#  work_id    :integer          not null               # 作業
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  unit_price :decimal(5, 2)    default(0.0), not null # 標準単価
-#  tax_rate   :decimal(3, 1)    default(0.0), not null # 消費税率
+#  id           :bigint(8)        not null, primary key
+#  work_id      :integer          not null               # 作業
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  unit_price   :decimal(5, 2)    default(0.0), not null # 標準単価
+#  tax_rate     :decimal(3, 1)    default(0.0), not null # 消費税率
+#  article_name :string(15)       default(""), not null  # 品名
 #
 
 class WorkWholeCrop < ApplicationRecord

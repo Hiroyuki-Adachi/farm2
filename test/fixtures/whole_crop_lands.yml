@@ -17,3 +17,10 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+wcs_land1:
+  work_whole_crop: whole_crop1
+  work_land_id: 5849
+  display_order: 1
+  rolls: 15
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'

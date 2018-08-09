@@ -16,3 +16,37 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+wcs_roll1:
+  wcs_land: wcs_land1
+  display_order: 1
+  weight: 268
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll2:
+  wcs_land: wcs_land1
+  display_order: 2
+  weight: 265
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll3:
+  wcs_land: wcs_land1
+  display_order: 3
+  weight: 266
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll4:
+  wcs_land: wcs_land1
+  display_order: 4
+  weight: 266
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll5:
+  wcs_land: wcs_land1
+  display_order: 5
+  weight: 273
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
