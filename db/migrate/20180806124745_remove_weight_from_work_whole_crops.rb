@@ -4,6 +4,7 @@ class RemoveWeightFromWorkWholeCrops < ActiveRecord::Migration[5.2]
     remove_column :work_whole_crops, :weight
     add_column :work_whole_crops, :unit_price, :decimal, {scale: 2, precision: 5, null: false, default: 0, comment: "標準単価"}
     add_column :work_whole_crops, :tax_rate, :decimal, {scale: 1, precision: 3, null: false, default: 0, comment: "消費税率"}
+    add_column :work_whole_crops, :article_name, :string, {limit: 15, null: false, default: '', comment: "品名"}
   end
 
   def down
@@ -11,5 +12,6 @@ class RemoveWeightFromWorkWholeCrops < ActiveRecord::Migration[5.2]
     add_column :work_whole_crops, :weight, :decimal, {scale: 1, precision: 4, null: false, default: 0, comment: "重量"}
     remove_column :work_whole_crops, :unit_price
     remove_column :work_whole_crops, :tax_rate
+    remove_column :work_whole_crops, :article_name
   end
 end

@@ -17,4 +17,12 @@ class WholeCropDecorator < Draper::Decorator
   def amount
     model.amount.to_i.to_s(:delimited)
   end
+
+  def weight
+    model.weight.floor(0).to_i
+  end
+
+  def rolls
+    model.rolls.to_i
+  end
 end
