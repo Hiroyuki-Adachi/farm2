@@ -555,6 +555,7 @@ ActiveRecord::Schema.define(version: 2018_08_06_124745) do
     t.datetime "updated_at", null: false
     t.decimal "unit_price", precision: 5, scale: 2, default: "0.0", null: false, comment: "標準単価"
     t.decimal "tax_rate", precision: 3, scale: 1, default: "0.0", null: false, comment: "消費税率"
+    t.string "article_name", limit: 15, default: "", null: false, comment: "品名"
     t.index ["work_id"], name: "index_work_whole_crops_on_work_id", unique: true
   end
 

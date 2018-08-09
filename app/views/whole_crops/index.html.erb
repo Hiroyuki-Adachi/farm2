@@ -22,7 +22,9 @@
       <tr>
         <td><%= whole_crop.work.work_type.name %></td>
 	<td><%= whole_crop.work.worked_at %></td>
-	<td>稲WCS(6重)</td>
+	<td>
+    <%= text_field_tag "whole_crop[][article_name]", whole_crop.article_name, {maxlength: 15, class: "form-control form-control-sm", style: "width: 120px"}%>
+  </td>
 	<td class="numeric"><%= whole_crop.weight %></td>
 	<td class="numeric"><%= whole_crop.rolls %></td>
 	<td>

@@ -6,7 +6,7 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
     csv << [
       whole_crop.work.work_type.name,
       whole_crop.work.worked_at,
-      "稲WCS(6重)",
+      whole_crop.article_name,
       whole_crop.weight,
       whole_crop.rolls,
       whole_crop.unit_price,

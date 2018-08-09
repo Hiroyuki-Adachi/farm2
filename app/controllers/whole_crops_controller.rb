@@ -21,7 +21,7 @@ class WholeCropsController < ApplicationController
   private
 
   def whole_crop_param(param)
-    param.permit(:id, :tax_rate, :unit_price)
+    param.permit(:id, :tax_rate, :unit_price, :article_name)
   end
 end
 
