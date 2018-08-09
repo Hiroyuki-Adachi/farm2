@@ -8,13 +8,12 @@
         <th rowspan="2">日付</th>
         <th rowspan="2">ロール数</th>
         <th rowspan="2">地番</th>
-        <th colspan="<%= WholeCropRoll::MAX_ROLLS + 1 %>">重量</th>
+        <th colspan="<%= WholeCropRoll::MAX_ROLLS %>">重量</th>
       </tr>
       <tr>
         <% WholeCropRoll::MAX_ROLLS.times do |i| %>
         <th><%= i + 1 %></th>
         <% end %>
-        <th>合計</th>
       </tr>
     </thead>
     <% line = 0 %>
@@ -24,17 +23,17 @@
           <th class="lineNo"><%= (line += 1) %></th>
           <td><%= @work.worked_at %></td>
           <td class="land_info">
-            <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][id]", wcs_land.id %>
-            <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][display_order]", wcs_land.display_order %>
-            <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][work_land_id]", wcs_land.work_land_id %>
-            <%= number_field_tag "whole_crop[wcs_lands][#{i}][rolls]", @wcs_land.rolls, {max: 999, min: 0, step: 1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
+            <%= hidden_field_tag "whole_crop[wcs_lands][][id]", wcs_land.id %>
+            <%= hidden_field_tag "whole_crop[wcs_lands][][display_order]", wcs_land.display_order %>
+            <%= hidden_field_tag "whole_crop[wcs_lands][][work_land_id]", wcs_land.work_land_id %>
+            <%= number_field_tag "whole_crop[wcs_lands][][rolls]", wcs_land.rolls, {max: 999, min: 0, step: 1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
           </td>
           <td><%= wcs_land.work_land.land.place %></td>
           <% WholeCropRoll::MAX_ROLLS.times do |j| %>
             <td>
-              <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][wcs_rolls][#{j}][id]", @wcs_land.wcs_rolls[j]&.id %>
-              <%= number_field_tag "whole_crop[wcs_lands][#{i}][wcs_rolls][#{j}][weight]", @wcs_land.wcs_rolls[j]&.weight, {max: 999.9, min: 0, step: 0.1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
-              <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][wcs_rolls][#{j}][display_order]", @wcs_land.wcs_rolls[j]&.display_order %>
+              <%= hidden_field_tag "whole_crop[wcs_lands][][wcs_rolls][][id]", wcs_land.wcs_rolls[j]&.id %>
+              <%= number_field_tag "whole_crop[wcs_lands][][wcs_rolls][][weight]", wcs_land.wcs_rolls[j]&.weight || 0, {max: 999.9, min: 0, step: 0.1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
+              <%= hidden_field_tag "whole_crop[wcs_lands][][wcs_rolls][][display_order]", j + 1 %>
             </td>
           <% end %>
         </tr>
@@ -45,21 +44,23 @@
           <th class="lineNo"><%= (line += 1) %></th>
           <td><%= @work.worked_at %></td>
           <td class="land_info">
-            <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][display_order]", i %>
-            <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][work_land_id]", work_land.id %>
-            <%= number_field_tag "whole_crop[wcs_lands][#{i}][rolls]", 0, {max: 999, min: 0, step: 1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
+            <%= hidden_field_tag "whole_crop[wcs_lands][][display_order]", i %>
+            <%= hidden_field_tag "whole_crop[wcs_lands][][work_land_id]", work_land.id %>
+            <%= number_field_tag "whole_crop[wcs_lands][][rolls]", 0, {max: 999, min: 0, step: 1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
           </td>
           <td><%= work_land.land.place %></td>
           <% WholeCropRoll::MAX_ROLLS.times do |j| %>
             <td>
-              <%= number_field_tag "whole_crop[wcs_lands][#{i}][wcs_rolls][#{j}][weight]", 0, {max: 999.9, min: 0, step: 0.1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
-              <%= hidden_field_tag "whole_crop[wcs_lands][#{i}][wcs_rolls][#{j}][display_order]", j + 1 %>
+              <%= number_field_tag "whole_crop[wcs_lands][][wcs_rolls][][weight]", 0, {max: 999.9, min: 0, step: 0.1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
+              <%= hidden_field_tag "whole_crop[wcs_lands][][wcs_rolls][][display_order]", j + 1 %>
             </td>
           <% end %>
         </tr>
       <% end %>
     </tbody>
   </table>
+  <%= hidden_field_tag "whole_crop[id]", @work.whole_crop&.id %>
+  <%= hidden_field_tag "whole_crop[work_id]", @work.id %>
   <div class="row">
     <div class="btn-toolbar">
       <div class="btn-group mr-2">

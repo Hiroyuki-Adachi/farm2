@@ -13,17 +13,19 @@
 class WorkWholeCrop < ApplicationRecord
   belongs_to :work
 
-  has_many :wcs_lands, -> {order("whole_crop_rolls.display_order")}, {class_name: "WholeCropLand", dependent: :destroy}
+  has_many :wcs_lands, -> {order("whole_crop_lands.display_order")}, {class_name: "WholeCropLand", dependent: :destroy}
   has_many :wcs_rolls, {through: :wcs_lands}
 
   scope :usual, ->(term) {joins(:work).where(["works.term = ?", term]).order("works.worked_at, works.id")}
 
   def self.regist(work, params)
-    if work.whole_crop
-      work.whole_crop.update(params)
+    work_whole_crop = work.whole_crop
+    if work_whole_crop
+      work_whole_crop.update(whole_crop_params(params))
     else
-      WorkWholeCrop.create(params)
+      work_whole_crop = WorkWholeCrop.create(whole_crop_params(params))
     end
+    WholeCropLand.regist(work_whole_crop, params.require(:wcs_lands))
   end
 
   def rolls
@@ -31,6 +33,26 @@ class WorkWholeCrop < ApplicationRecord
   end
 
   def weight
-    wcs_rolls.count.zero? ? 0 : (wcs_rolls.sum(:weight) / wcs_rolls.count).floor(1)
+    wcs_rolls.valid.count.zero? ? 0 : (wcs_rolls.sum(:weight) / wcs_rolls.valid.count).floor(1)
+  end
+
+  def self.whole_crop_params(params)
+    params.permit(:id, :work_id)
+  end
+
+  def roll_price
+    weight.floor(0) * unit_price
+  end
+
+  def price
+    roll_price * rolls
+  end
+
+  def tax_amount
+    (price * tax_rate / 100).floor(0)
+  end
+
+  def amount
+    price + tax_amount
   end
 end

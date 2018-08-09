@@ -16,4 +16,22 @@ class WholeCropLand < ApplicationRecord
   belongs_to :work_land
 
   has_many :wcs_rolls, -> {order("whole_crop_rolls.display_order")}, {class_name: "WholeCropRoll", dependent: :destroy}
+
+  def self.regist(whole_crop, params)
+    params.each do |param|
+      wcs_land = nil
+      if param[:id].present?
+	wcs_land = WholeCropLand.find(param[:id])
+	wcs_land.update(wcs_lands_param(whole_crop, param))
+      else
+        wcs_land = WholeCropLand.create(wcs_lands_param(whole_crop, param))
+      end
+      WholeCropRoll.regist(wcs_land, param.require(:wcs_rolls))
+    end
+  end
+
+  def self.wcs_lands_param(whole_crop, param)
+    param.permit(:id, :work_land_id, :display_order, :rolls).merge(work_whole_crop_id: whole_crop.id)
+  end
 end
+
