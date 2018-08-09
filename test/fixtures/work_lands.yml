@@ -127,121 +127,13 @@ work_lands12:
   updated_at: '2015-03-21 00:50:03.253117'
 
 
-work_lands13:
+work_land_wcs1:
   id: '5803'
   work_id: '1491'
   land_id: '2'
   display_order: '1'
   created_at: '2015-03-22 01:12:00.323138'
   updated_at: '2015-03-22 01:12:00.323138'
-
-
-work_lands14:
-  id: '5804'
-  work_id: '1491'
-  land_id: '1'
-  display_order: '2'
-  created_at: '2015-03-22 01:12:00.513391'
-  updated_at: '2015-03-22 01:12:00.513391'
-
-
-work_lands15:
-  id: '5805'
-  work_id: '1491'
-  land_id: '3'
-  display_order: '3'
-  created_at: '2015-03-22 01:12:00.625894'
-  updated_at: '2015-03-22 01:12:00.625894'
-
-
-work_lands16:
-  id: '5806'
-  work_id: '1491'
-  land_id: '4'
-  display_order: '4'
-  created_at: '2015-03-22 01:12:00.675991'
-  updated_at: '2015-03-22 01:12:00.675991'
-
-
-work_lands17:
-  id: '5807'
-  work_id: '1491'
-  land_id: '6'
-  display_order: '5'
-  created_at: '2015-03-22 01:12:00.774194'
-  updated_at: '2015-03-22 01:12:00.774194'
-
-
-work_lands18:
-  id: '5808'
-  work_id: '1491'
-  land_id: '7'
-  display_order: '6'
-  created_at: '2015-03-22 01:12:00.940522'
-  updated_at: '2015-03-22 01:12:00.940522'
-
-
-work_lands19:
-  id: '5809'
-  work_id: '1491'
-  land_id: '8'
-  display_order: '7'
-  created_at: '2015-03-22 01:12:01.014657'
-  updated_at: '2015-03-22 01:12:01.014657'
-
-
-work_lands20:
-  id: '5810'
-  work_id: '1491'
-  land_id: '10'
-  display_order: '8'
-  created_at: '2015-03-22 01:12:01.103264'
-  updated_at: '2015-03-22 01:12:01.103264'
-
-
-work_lands21:
-  id: '5811'
-  work_id: '1491'
-  land_id: '9'
-  display_order: '9'
-  created_at: '2015-03-22 01:12:01.230209'
-  updated_at: '2015-03-22 01:12:01.230209'
-
-
-work_lands22:
-  id: '5812'
-  work_id: '1491'
-  land_id: '11'
-  display_order: '10'
-  created_at: '2015-03-22 01:12:01.355346'
-  updated_at: '2015-03-22 01:12:01.355346'
-
-
-work_lands23:
-  id: '5813'
-  work_id: '1491'
-  land_id: '14'
-  display_order: '11'
-  created_at: '2015-03-22 01:12:01.373309'
-  updated_at: '2015-03-22 01:12:01.373309'
-
-
-work_lands24:
-  id: '5814'
-  work_id: '1491'
-  land_id: '13'
-  display_order: '12'
-  created_at: '2015-03-22 01:12:01.37991'
-  updated_at: '2015-03-22 01:12:01.37991'
-
-
-work_lands25:
-  id: '5815'
-  work_id: '1491'
-  land_id: '12'
-  display_order: '13'
-  created_at: '2015-03-22 01:12:01.386433'
-  updated_at: '2015-03-22 01:12:01.386433'
 
 
 work_lands47:
