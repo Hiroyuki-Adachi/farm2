@@ -133,36 +133,29 @@ class WorksControllerTest < ActionController::TestCase
 
   test "作業変更(WCS)(実行)" do
     assert_difference("WholeCropRoll.count", 5) do
-    assert_difference("WholeCropLand.count") do
-    assert_difference('WorkWholeCrop.count') do
-      get :update, params: {
-	      id: works(:work_wcs), 
-	      whole_crop: {
-		  work_id: works(:work_wcs),
-		  wcs_lands: [{
-			 work_land_id: work_lands(:work_land_wcs1).id,
-			 display_order: 1,
-			 rolls: 200,
-			 wcs_rolls: [{
-				display_order: 1,
-				weight: 290
-			},{
-				display_order: 2,
-				weight: 300
-			},{
-				display_order: 3,
-				weight: 295
-			},{
-				display_order: 4,
-				weight: 298
-			},{
-				display_order: 5,
-				weight: 295
-			}]
-			
-		  }]}, regist_whole_crop: true}
-    end
-    end
+      assert_difference("WholeCropLand.count") do
+        assert_difference('WorkWholeCrop.count') do
+          get :update, params: {
+            id: works(:work_wcs),
+            whole_crop: {
+              work_id: works(:work_wcs),
+              wcs_lands: [{
+                work_land_id: work_lands(:work_land_wcs1).id,
+                display_order: 1,
+                rolls: 200,
+                wcs_rolls: [
+                  {display_order: 1, weight: 290},
+                  {display_order: 2, weight: 300},
+                  {display_order: 3, weight: 295},
+                  {display_order: 4, weight: 298},
+                  {display_order: 5, weight: 295}
+                ]
+              }]
+            },
+            regist_whole_crop: true
+          }
+        end
+      end
     end
     assert_redirected_to work_path(id: works(:work_wcs))
   end
