@@ -122,7 +122,7 @@ class WorksController < ApplicationController
     @work.regist_lands(params[:work_lands] || []) if params[:regist_lands]
     @work.regist_machines(params[:machine_hours] || []) if params[:regist_machines]
     @work.regist_chemicals(params[:chemicals]) if params[:regist_chemicals]
-    WorkWholeCrop.regist(@work, params[:whole_crop]) if params[:regist_whole_crop]
+    WorkWholeCrop.regist(@work, params.require(:whole_crop)) if params[:regist_whole_crop]
 
     redirect_to(work_path(@work))
   end

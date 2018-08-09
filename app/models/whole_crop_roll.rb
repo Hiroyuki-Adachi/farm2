@@ -13,5 +13,21 @@
 class WholeCropRoll < ApplicationRecord
   MAX_ROLLS = 5
 
+  scope :valid, -> {where("weight > ?", 0)}
+
   belongs_to :wcs_land, {class_name: "WholeCropLand"}
+
+  def self.regist(wcs_land, params)
+    params.each do |param|
+      if param[:id].present?
+        WholeCropRoll.find(param[:id]).update(wcs_roll_param(wcs_land, param))
+      else
+	WholeCropRoll.create(wcs_roll_param(wcs_land, param))
+      end
+    end
+  end
+
+  def self.wcs_roll_param(wcs_land, param)
+    param.permit(:id, :display_order, :weight).merge(whole_crop_land_id: wcs_land.id)
+  end
 end
