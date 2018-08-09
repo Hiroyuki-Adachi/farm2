@@ -27,12 +27,12 @@
 	<td class="numeric"><%= whole_crop.rolls %></td>
 	<td>
 	  <%= hidden_field_tag "whole_crop[][id]", whole_crop.id %>
-	  <%= number_field_tag "whole_crop[][unit_price]", whole_crop.unit_price, {min: 1, max: 100, step: 1, class: "form-control", style: "width: 100px"} %>
+	  <%= number_field_tag "whole_crop[][unit_price]", whole_crop.unit_price, {min: 1, max: 100, step: 1, class: "form-control form-control-sm", style: "width: 80px"} %>
 	</td>
         <td class="numeric"><%= whole_crop.roll_price %></td>
 	<td class="numeric"><%= whole_crop.price %></td>
 	<td>
-	  <%= number_field_tag "whole_crop[][tax_rate]", whole_crop.tax_rate, {min: 0, max: 99, step: 1, class: "form-control", style: "width: 100px"} %>
+	  <%= number_field_tag "whole_crop[][tax_rate]", whole_crop.tax_rate, {min: 0, max: 99, step: 1, class: "form-control form-control-sm", style: "width: 80px"} %>
 	</td>
 	<td class="numeric"><%= whole_crop.tax_amount %></td>
 	<td class="numeric"><%= whole_crop.amount %></td>
