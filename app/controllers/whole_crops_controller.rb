@@ -10,4 +10,18 @@ class WholeCropsController < ApplicationController
       format.csv {render :content_type => 'text/csv; charset=cp943'}
     end
   end
+
+  def create
+    params.require(:whole_crop).each do |param|
+      WorkWholeCrop.find(param[:id]).update(whole_crop_param(param))
+    end
+    redirect_to whole_crops_path
+  end
+
+  private
+
+  def whole_crop_param(param)
+    param.permit(:id, :tax_rate, :unit_price)
+  end
 end
+
