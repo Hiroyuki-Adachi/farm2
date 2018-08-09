@@ -1,5 +1,6 @@
 <h1>WCS一覧</h1>
 <% if @whole_crops.count > 0 %>
+<%= form_tag(whole_crops_path, {method: :post}) do %>
 <table class="table table-sm" style="width:auto;">
   <thead>
     <tr>
@@ -39,12 +40,16 @@
     <% end %>
   </tbody>
 </table>
-<% end %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= link_to "CSV出力", whole_crops_path(format: :csv), {class: "btn btn-outline-success"} %>
   </div>
   <div class="btn-group mr-2">
+    <%= submit_tag "計算／保存", {class: "btn btn-warning"} %> 
+  </div>
+  <div class="btn-group mr-2">
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
+<% end %>
+<% end %>
