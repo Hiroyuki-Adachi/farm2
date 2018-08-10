@@ -14,6 +14,9 @@
   code: Seedling
   name: "育苗"
 - id: 60
+  code: Dry
+  name: "乾燥・調整"
+- id: 80
   code: Land
   name: "土地管理"
 - id: 90
