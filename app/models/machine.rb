@@ -96,4 +96,11 @@ class Machine < ApplicationRecord
   def usual_name
     "#{type_name}(#{alias_name})"
   end
+
+  def machine_order
+    max_machine = Machine.maximum(:id)
+    result = machine_type.machine_type_order
+    result = (result * Machine.maximum(:display_order) + display_order) * max_machine + id
+    return result
+  end
 end

@@ -22,7 +22,7 @@ class WholeCropRoll < ApplicationRecord
       if param[:id].present?
         WholeCropRoll.find(param[:id]).update(wcs_roll_param(wcs_land, param))
       else
-	      WholeCropRoll.create(wcs_roll_param(wcs_land, param))
+        WholeCropRoll.create(wcs_roll_param(wcs_land, param))
       end
     end
   end

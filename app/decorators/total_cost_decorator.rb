@@ -9,7 +9,7 @@ class TotalCostDecorator < Draper::Decorator
     elsif expense.present?
       expense.expense_type.name
     elsif depreciation.present?
-      depreciation.machine&.usual_name
+      depreciation.machine.machine_type.name
     elsif seedling_home.present?
       seedling_home.home_name
     elsif land.present?
@@ -18,6 +18,12 @@ class TotalCostDecorator < Draper::Decorator
   end
 
   def detail_name
-    land.present? ? land.place : occurred_on.strftime('%m-%d')
+    if land.present?
+      land.place
+    elsif depreciation.present?
+      depreciation.machine.alias_name
+    else
+      occurred_on.strftime('%m-%d')
+    end
   end
 end
