@@ -19,3 +19,6 @@
 - id: 90
   code: Expense
   name: "経費"
+- id: 100
+  code: Sales
+  name: "売上"

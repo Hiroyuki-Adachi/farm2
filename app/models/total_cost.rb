@@ -37,7 +37,7 @@ class TotalCost < ApplicationRecord
 
   scope :usual, ->(term) {
     includes(:total_cost_details, :expense, land: :manager, work: :work_kind, work_chemical: :chemical, seedling_home: :home)
-      .where(term: term)
+      .where(term: term).where.not(total_cost_type_id: TotalCostType::SALES.id)
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
 
