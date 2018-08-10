@@ -16,37 +16,72 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-wcs_roll1:
+wcs_roll11:
   wcs_land: wcs_land1
   display_order: 1
-  weight: 268
+  weight: 10
   created_at: '2015-05-04 05:58:01.086207'
   updated_at: '2015-05-04 05:58:01.086207'
 
-wcs_roll2:
+wcs_roll12:
   wcs_land: wcs_land1
   display_order: 2
-  weight: 265
+  weight: 20
   created_at: '2015-05-04 05:58:01.086207'
   updated_at: '2015-05-04 05:58:01.086207'
 
-wcs_roll3:
+wcs_roll13:
   wcs_land: wcs_land1
   display_order: 3
-  weight: 266
+  weight: 30
   created_at: '2015-05-04 05:58:01.086207'
   updated_at: '2015-05-04 05:58:01.086207'
 
-wcs_roll4:
+wcs_roll14:
   wcs_land: wcs_land1
   display_order: 4
-  weight: 266
+  weight: 40
   created_at: '2015-05-04 05:58:01.086207'
   updated_at: '2015-05-04 05:58:01.086207'
 
-wcs_roll5:
+wcs_roll15:
   wcs_land: wcs_land1
   display_order: 5
-  weight: 273
+  weight: 50
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll21:
+  wcs_land: wcs_land2
+  display_order: 1
+  weight: 60
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll22:
+  wcs_land: wcs_land2
+  display_order: 2
+  weight: 70
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll23:
+  wcs_land: wcs_land2
+  display_order: 3
+  weight: 80
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll24:
+  wcs_land: wcs_land2
+  display_order: 4
+  weight: 98
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll25:
+  wcs_land: wcs_land2
+  display_order: 5
+  weight: 0
   created_at: '2015-05-04 05:58:01.086207'
   updated_at: '2015-05-04 05:58:01.086207'
