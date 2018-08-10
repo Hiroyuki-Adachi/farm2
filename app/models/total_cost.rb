@@ -48,6 +48,7 @@ class TotalCost < ApplicationRecord
     make_seedling(term, sys)
     make_lands(term, sys)
     make_expenses(term)
+    make_depreciation(term, sys)
     make_details(term)
   end
 
@@ -96,7 +97,7 @@ class TotalCost < ApplicationRecord
   end
 
   def self.make_work_worker(term, work)
-    total_cost = TotalCost.new(
+    total_cost = TotalCost.create(
       term: term,
       total_cost_type_id: TotalCostType::WORKWORKER.id,
       occurred_on: work.worked_at,
@@ -105,7 +106,6 @@ class TotalCost < ApplicationRecord
       display_order: work.work_kind_order,
       member_flag: true
     )
-    total_cost.save
     make_work_details(work, total_cost)
   end
 
@@ -113,7 +113,7 @@ class TotalCost < ApplicationRecord
     machine_amount = work.sum_machines_amount
     return unless machine_amount&.positive?
 
-    total_cost = TotalCost.new(
+    total_cost = TotalCost.create(
       term: term,
       total_cost_type_id: TotalCostType::WORKMACHINE.id,
       occurred_on: work.worked_at,
@@ -122,7 +122,6 @@ class TotalCost < ApplicationRecord
       display_order: work.work_kind_order,
       member_flag: true
     )
-    total_cost.save
     make_work_details(work, total_cost)
   end
 
@@ -133,7 +132,7 @@ class TotalCost < ApplicationRecord
     fuel_price = sys&.light_oil_price || 0
     return unless fuel_price&.positive?
 
-    total_cost = TotalCost.new(
+    total_cost = TotalCost.create(
       term: term,
       total_cost_type_id: TotalCostType::WORKFUEL.id,
       occurred_on: work.worked_at,
@@ -141,7 +140,6 @@ class TotalCost < ApplicationRecord
       amount: machine_fuel * fuel_price,
       display_order: work.work_kind_order
     )
-    total_cost.save
     make_work_details(work, total_cost)
   end
 
@@ -150,7 +148,7 @@ class TotalCost < ApplicationRecord
       ct = ChemicalTerm.find_by(term: term, chemical_id: wc.chemical_id)
       next unless ct&.price&.positive?
 
-      total_cost = TotalCost.new(
+      total_cost = TotalCost.create(
         term: term,
         total_cost_type_id: TotalCostType::WORKCHEMICAL.id,
         occurred_on: work.worked_at,
@@ -159,7 +157,6 @@ class TotalCost < ApplicationRecord
         display_order: wc.chemical_display_order,
         amount: ct.price * wc.quantity
       )
-      total_cost.save
       make_work_chemical_details(work, total_cost, ct)
     end
   end
@@ -208,7 +205,7 @@ class TotalCost < ApplicationRecord
     seedling_price = sys.seedling_price
     seedling_homes = SeedlingHome.usual(term).where.not(sowed_on: nil)
     seedling_homes.each do |seedling_home|
-      total_cost = TotalCost.new(
+      total_cost = TotalCost.create(
         term: term,
         total_cost_type_id: TotalCostType::SEEDLING.id,
         occurred_on: seedling_home.sowed_on,
@@ -217,7 +214,6 @@ class TotalCost < ApplicationRecord
         display_order: seedling_home.home_display_order,
         member_flag: true
       )
-      total_cost.save
       TotalCostDetail.create(
         total_cost_id: total_cost.id,
         work_type_id: seedling_home.seedling.work_type_id,
@@ -230,7 +226,7 @@ class TotalCost < ApplicationRecord
     Land.usual.each do |land|
       cost, results = land.costs(sys.start_date, sys.end_date)
       next if cost.zero?
-      total_cost = TotalCost.new(
+      total_cost = TotalCost.create(
         term: term,
         total_cost_type_id: TotalCostType::LAND.id,
         occurred_on: sys.end_date,
@@ -240,7 +236,6 @@ class TotalCost < ApplicationRecord
         display_order: land.manager.home_display_order,
         fiscal_flag: true
       )
-      total_cost.save
       results.each do |k, v|
         TotalCostDetail.create(
           total_cost_id: total_cost.id,
@@ -254,7 +249,7 @@ class TotalCost < ApplicationRecord
 
   def self.make_expenses(term)
     Expense.cost(term).each do |expense|
-      total_cost = TotalCost.new(
+      total_cost = TotalCost.create(
         term: term,
         total_cost_type_id: TotalCostType::EXPENSE.id,
         occurred_on: expense.payed_on,
@@ -262,7 +257,6 @@ class TotalCost < ApplicationRecord
         amount: expense.discount_amount,
         display_order: expense.expense_type_id
       )
-      total_cost.save
       expense.expense_work_types.each do |expense_work_type|
         next if expense_work_type.rate.zero?
         TotalCostDetail.create(
@@ -270,6 +264,30 @@ class TotalCost < ApplicationRecord
           work_type_id: expense_work_type.work_type_id,
           rate: expense_work_type.rate,
           area: LandCost.sum_area_by_work_type(expense.payed_on, expense_work_type.work_type_id)
+        )
+      end
+    end
+  end
+
+  def self.make_depreciation(term, sys)
+    days = (sys.end_date - sys.start_date + 1).to_i
+    lands = TotalCostDetail.lands(term, days)
+    Depreciation.usual(term).where.not(cost: 0).each do |depreciation|
+      total_cost = TotalCost.create(
+        term: term,
+        total_cost_type_id: TotalCostType::DEPRECIATION.id,
+        occurred_on: sys.end_date,
+        depreciation_id: depreciation.id,
+        amount: depreciation.cost,
+        display_order: depreciation.machine.machine_type.machine_type_order,
+        fiscal_flag: true
+      )
+      depreciation.depreciation_types.each do |depreciation_type|
+        TotalCostDetail.create(
+          total_cost_id: total_cost.id,
+          work_type_id: depreciation_type.work_type_id,
+          rate: 1,
+          area: lands[depreciation_type.work_type_id]
         )
       end
     end
