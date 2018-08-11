@@ -7,6 +7,5 @@ class CreateWholeCropRolls < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
-    add_index :whole_crop_rolls, [:whole_crop_land_id, :display_order], {unique: true}
   end
 end
