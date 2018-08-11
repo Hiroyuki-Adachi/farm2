@@ -9,6 +9,5 @@ class CreateWholeCropLands < ActiveRecord::Migration[5.2]
       t.timestamps
     end
     add_index :whole_crop_lands, [:work_whole_crop_id, :work_land_id], {unique: true}
-    add_index :whole_crop_lands, [:work_whole_crop_id, :display_order], {unique: true}
   end
 end
