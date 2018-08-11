@@ -61,3 +61,4 @@ s2017:
   default_price: 1000
   default_fee: 15000
   light_oil_price: 120
+  light_oil_price: 100

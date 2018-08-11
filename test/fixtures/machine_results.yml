@@ -4010,3 +4010,4 @@ machine_result_genka1:
   hours: 3
   created_at: '2016-02-23 08:53:39.156026'
   updated_at: '2016-02-23 08:53:39.156026'
+  fuel_usage: 45
