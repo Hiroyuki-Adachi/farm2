@@ -61,6 +61,22 @@ class TotalCostTest < ActiveSupport::TestCase
     assert_in_delta 4100, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 6).cost, 1
   end
 
+  test "原価計算_作業費_薬剤" do
+    assert_difference('TotalCostDetail.count', 2) do
+      assert_difference('TotalCost.count') do
+        TotalCost.make_work_chemical(@term, @work)
+      end
+    end
+    total_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::WORKCHEMICAL.id)
+    assert_equal 600 * 5, total_cost.amount
+
+    assert_no_difference('TotalCostDetail.count') do
+      TotalCost.make_details(@term)
+    end
+    assert_in_delta 600 * 4, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 5).cost, 1
+    assert_in_delta 600 * 1, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 6).cost, 1
+  end
+
   test "原価計算_作業費_燃料" do
     assert_difference('TotalCostDetail.count', 2) do
       assert_difference('TotalCost.count') do
