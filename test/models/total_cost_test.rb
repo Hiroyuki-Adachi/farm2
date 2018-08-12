@@ -110,4 +110,23 @@ class TotalCostTest < ActiveSupport::TestCase
     assert_in_delta land_cost * (365 - 31) / 365, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 5).cost, 1
     assert_in_delta land_cost * 31 / 365, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 8).cost, 1
   end
+
+  test "原価計算_減価償却" do
+    dep_cost = 300_000
+    rate8 = (@land.area * (365 - 31) / 365).round(2)
+    TotalCost.make_lands(@term, @sys)
+    assert_difference('TotalCostDetail.count', 2) do
+      assert_difference('TotalCost.count') do
+        TotalCost.make_depreciation(@term, @sys)
+      end
+    end
+    total_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::DEPRECIATION.id)
+    assert_equal dep_cost, total_cost.amount
+
+    assert_no_difference('TotalCostDetail.count') do
+      TotalCost.make_details(@term)
+    end
+    assert_in_delta dep_cost * rate8 / (20 + rate8), TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 5).cost, 1
+    assert_in_delta dep_cost * 20 / (20 + rate8), TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 6).cost, 1
+  end
 end
