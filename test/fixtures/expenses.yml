@@ -34,3 +34,11 @@ expense_del:
   amount: 33333
   expense_type_id: 10
   cost_flag: true
+
+expense_genka:
+  term: 2017
+  payed_on: "2017-02-02"
+  content: "原価テスト"
+  amount: 45000
+  expense_type_id: 99
+  cost_flag: true
