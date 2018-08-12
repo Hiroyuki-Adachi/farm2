@@ -37,9 +37,12 @@ class TotalCost < ApplicationRecord
 
   scope :usual, ->(term) {
     includes(:total_cost_details, :expense, land: :manager, work: :work_kind, work_chemical: :chemical, seedling_home: :home)
-      .where(term: term).where.not(total_cost_type_id: TotalCostType::SALES.id)
+      .where(term: term)
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
+
+  scope :costs, -> {where.not(total_cost_type_id: TotalCostType::SALES.id)}
+  scope :sales, -> {where(total_cost_type_id: TotalCostType::SALES.id)}
 
   def self.make(term, organization)
     TotalCost.where(term: term).destroy_all
@@ -50,6 +53,8 @@ class TotalCost < ApplicationRecord
     make_expenses(term)
     make_depreciation(term, sys)
     make_details(term)
+
+    make_sales(term)
   end
 
   def self.created_at(term)
@@ -290,6 +295,34 @@ class TotalCost < ApplicationRecord
           area: lands[depreciation_type.work_type_id]
         )
       end
+    end
+  end
+
+  def self.make_sales(term)
+    make_sales_wcs(term)
+  end
+
+  def self.make_sales_wcs(term)
+    WholeCropLand.for_sales(term).each do |wcs_land|
+      next if wcs_land.price.zero?
+      land = wcs_land.work_land.land
+      work = wcs_land.work_whole_crop.work
+      total_cost = TotalCost.create(
+        term: term,
+        total_cost_type_id: TotalCostType::SALES.id,
+        occurred_on: work.worked_at,
+        land_id: land.id,
+        amount: wcs_land.price,
+        display_order: land.manager.home_display_order
+      )
+      TotalCostDetail.create(
+        total_cost_id: total_cost.id,
+        work_type_id: work.work_type_id,
+        cost: wcs_land.price,
+        base_cost: wcs_land.price / land.area,
+        rate: 1,
+        area: land.area
+      )
     end
   end
 end

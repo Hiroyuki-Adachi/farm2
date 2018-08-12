@@ -448,7 +448,6 @@ ActiveRecord::Schema.define(version: 2018_08_06_124745) do
     t.decimal "rolls", precision: 3, default: "0", null: false, comment: "ロール数"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["work_whole_crop_id", "display_order"], name: "index_whole_crop_lands_on_work_whole_crop_id_and_display_order", unique: true
     t.index ["work_whole_crop_id", "work_land_id"], name: "index_whole_crop_lands_on_work_whole_crop_id_and_work_land_id", unique: true
   end
 
@@ -458,7 +457,6 @@ ActiveRecord::Schema.define(version: 2018_08_06_124745) do
     t.decimal "weight", precision: 4, scale: 1, default: "0.0", null: false, comment: "重量"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["whole_crop_land_id", "display_order"], name: "index_whole_crop_rolls_on_whole_crop_land_id_and_display_order", unique: true
   end
 
   create_table "work_broccolis", id: :serial, comment: "ブロッコリー作業", comment: "ブロッコリー作業", force: :cascade do |t|
