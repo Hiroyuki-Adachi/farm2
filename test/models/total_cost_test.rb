@@ -27,6 +27,7 @@ class TotalCostTest < ActiveSupport::TestCase
     @work = works(:work_genka)
     @term = 2017
     @sys = systems(:s2017)
+    @land = lands(:land_genka2)
   end
 
   test "原価計算_作業費_作業者" do
@@ -91,5 +92,22 @@ class TotalCostTest < ActiveSupport::TestCase
     end
     assert_in_delta 3000, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 5).cost, 1
     assert_in_delta 1500, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 6).cost, 1
+  end
+
+  test "原価計算_土地管理" do
+    land_cost = 40_000
+    assert_difference('TotalCostDetail.count', 4) do
+      assert_difference('TotalCost.count', 3) do
+        TotalCost.make_lands(@term, @sys)
+      end
+    end
+    total_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::LAND.id, land_id: @land.id)
+    assert_equal land_cost, total_cost.amount
+
+    assert_no_difference('TotalCostDetail.count') do
+      TotalCost.make_details(@term)
+    end
+    assert_in_delta land_cost * (365 - 31) / 365, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 5).cost, 1
+    assert_in_delta land_cost * 31 / 365, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 8).cost, 1
   end
 end

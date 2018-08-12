@@ -68,7 +68,8 @@ class TotalCost < ApplicationRecord
 
   def base_cost(work_type_id)
     cost = cost(work_type_id)
-    cost / LandCost.sum_area_by_work_type(occurred_on, work_type_id) * 10 if cost
+    sum_area = LandCost.sum_area_by_work_type(occurred_on, work_type_id)
+    return cost && !sum_area.zero? ? cost / sum_area * 10 : 0
   end
 
   def rate(work_type_id)

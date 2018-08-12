@@ -33,10 +33,18 @@ land_cost_genka1:
   created_at: '2015-07-11 12:12:12'
   updated_at: '2015-07-11 12:12:12'
 
-land_cost_genka2:
+land_cost_genka21:
   activated_on: '2015-01-01'
   land: land_genka2
   work_type_id: 5
+  cost: 40000
+  created_at: '2015-07-11 12:12:12'
+  updated_at: '2015-07-11 12:12:12'
+
+land_cost_genka22:
+  activated_on: '2017-12-01'
+  land: land_genka2
+  work_type_id: 8
   cost: 40000
   created_at: '2015-07-11 12:12:12'
   updated_at: '2015-07-11 12:12:12'

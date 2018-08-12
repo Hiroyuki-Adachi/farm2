@@ -73,14 +73,20 @@ class Land < ApplicationRecord
     tmp_cost = land_costs.newest(start_date)&.first
     return 0, [] unless tmp_cost
     land_costs.where(["activated_on BETWEEN ? AND ?", start_date + 1, end_date]).order("land_costs.activated_on").each do |land_cost|
-      results[land_cost.work_type_id] = (results[land_cost.work_type_id] || 0) + (land_cost.activated_on - tmp_date)
+      results[tmp_cost.work_type_id] ||= 0
+      results[tmp_cost.work_type_id] += (land_cost.activated_on - tmp_date)
+      tmp_date = land_cost.activated_on
+      tmp_cost = land_cost
     end
-    results[tmp_cost.work_type_id] = (results[tmp_cost.work_type_id] || 0) + (end_date - tmp_date + 1)
+    results[tmp_cost.work_type_id] ||= 0
+    results[tmp_cost.work_type_id] += (end_date - tmp_date + 1)
 
     return tmp_cost.cost, results
   end
 
   def land_display_order
-    land_place.display_order * 10000 + land_place_id * 1000 + display_order * 100 + id
+    result = land_place.display_order * LandPlace.maximum(:id) + land_place_id
+    result = (result * Land.maximum(:display_order) + display_order) * Land.maximum(:id) + id
+    return result
   end
 end
