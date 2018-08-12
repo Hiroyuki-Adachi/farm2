@@ -1,6 +1,6 @@
 <h1>原価一覧</h1>
-<% old_group1_id = 0%>
-<% old_group2_id = 0%>
+<% old_group1_id = 0 %>
+<% old_group2_id = 0 %>
 <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
   <table id="tbl_list" class="table table-sm">
     <thead style="background-color:white;">
@@ -52,15 +52,47 @@
           <% end %>
         </tr>
       <% end %>
-    </tbody>
-    <tfoot>
       <tr>
-        <th colspan="3">合計</th>
+        <th colspan="3">原価合計</th>
         <% @work_types.each do |work_type| %>
         <td class="numeric"><%= @sum_costs[work_type.id]&.to_s(:delimited) %></td>
         <% end %>
       </tr>
-    </tfoot>
+      <% old_group1_id = 0 %>
+      <% old_group2_id = 0 %>
+      <% @total_sales.each do |tc| %>
+        <% if tc.total_cost_type_id != old_group1_id %>
+          <% old_group1_id = tc.total_cost_type_id %>
+          <tr class="group1-total table-primary" data-group1="<%= old_group1_id %>" style="cursor: pointer;">
+            <th><%= tc.total_cost_type_name %></th>
+            <td colspan="2"></td>
+            <% @work_types.each do |work_type| %>
+            <td class="numeric"><%= @group1_sales[old_group1_id][work_type.id]&.to_s(:delimited) %></td>
+            <% end %>
+          </tr>
+        <% end %>
+        <% if tc.display_order != old_group2_id %>
+          <% old_group2_id = tc.display_order %>
+          <tr class="group2-total table-secondary" data-group1="<%= old_group1_id %>" data-group2="<%= old_group2_id %>" style="cursor: pointer;">
+            <th><%= tc.total_cost_type_name %></th>
+            <th><%= tc.kind_name %></th>
+            <th></th>
+            <% @work_types.each do |work_type| %>
+            <td class="numeric"><%= @group2_sales[old_group1_id][old_group2_id][work_type.id]&.to_s(:delimited) %></td>
+            <% end %>
+          </tr>
+        <% end %>
+        <tr class="detail <%= tc.member_flag ? 'text-success' : 'text-body' %>" data-group1="<%= old_group1_id %>" data-group2="<%= old_group2_id %>">
+          <th><%= tc.total_cost_type_name %></th>
+          <th><%= tc.kind_name %></th>
+          <th><%= tc.detail_name %></th>
+          <% @work_types.each do |work_type| %>
+          <% tcd = tc.total_cost_details.find {|tcd| tcd.work_type_id == work_type.id } %>
+          <td class="numeric"><%= tcd&.cost&.to_s(:delimited) %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
 </div>
 <%= form_tag(action: :create) do  %>

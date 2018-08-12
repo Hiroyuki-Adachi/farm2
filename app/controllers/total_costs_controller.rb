@@ -4,8 +4,10 @@ class TotalCostsController < ApplicationController
   def index
     @work_types = WorkType.land
     @lands = LandCost.total(Time.zone.today)
-    @total_costs = TotalCostDecorator.decorate_collection(TotalCost.usual(current_term))
+    @total_costs = TotalCostDecorator.decorate_collection(TotalCost.usual(current_term).costs)
+    @total_sales = TotalCostDecorator.decorate_collection(TotalCost.usual(current_term).sales)
     @group1_costs, @group2_costs, @sum_costs = calc_totals(@total_costs.object)
+    @group1_sales, @group2_sales, @sum_sales = calc_totals(@total_sales.object)
   end
 
   def create
