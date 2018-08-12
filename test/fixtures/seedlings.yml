@@ -24,3 +24,11 @@ seedling1:
   seed_cost: 10000
   created_at: '2015-07-15 14:03:52'
   updated_at: '2015-11-20 08:53:25.416569'
+
+seedling_genka:
+  term: 2017
+  work_type_id: 6
+  soil_quantity: 200
+  seed_cost: 10000
+  created_at: '2015-07-15 14:03:52'
+  updated_at: '2015-11-20 08:53:25.416569'

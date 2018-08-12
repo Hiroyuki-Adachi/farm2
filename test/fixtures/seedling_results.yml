@@ -18,3 +18,9 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+
+seedling_result_genka:
+  seedling_home: seedling_home_genka
+  work_result: work_result_genka1
+  display_order: 1
+  quantity: 210
