@@ -145,4 +145,21 @@ class TotalCostTest < ActiveSupport::TestCase
     end
     assert_in_delta seedling_cost, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 6).cost, 1
   end
+
+  test "原価計算_経費" do
+    expense = expenses(:expense_genka)
+    assert_difference('TotalCostDetail.count', 2) do
+      assert_difference('TotalCost.count') do
+        TotalCost.make_expenses(@term)
+      end
+    end
+    total_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::EXPENSE.id)
+    assert_equal expense.amount, total_cost.amount
+
+    assert_no_difference('TotalCostDetail.count') do
+      TotalCost.make_details(@term)
+    end
+    assert_in_delta expense.amount * 2 / 3, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 5).cost, 1
+    assert_in_delta expense.amount * 1 / 3, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 6).cost, 1
+  end
 end
