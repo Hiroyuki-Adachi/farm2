@@ -60,5 +60,5 @@ s2017:
   organization_id: 1
   default_price: 1000
   default_fee: 15000
-  light_oil_price: 120
   light_oil_price: 100
+  seedling_price: 400

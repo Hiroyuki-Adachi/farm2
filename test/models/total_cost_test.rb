@@ -129,4 +129,20 @@ class TotalCostTest < ActiveSupport::TestCase
     assert_in_delta dep_cost * rate8 / (20 + rate8), TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 5).cost, 1
     assert_in_delta dep_cost * 20 / (20 + rate8), TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 6).cost, 1
   end
+
+  test "原価計算_育苗" do
+    seedling_cost = @sys.seedling_price * 200
+    assert_difference('TotalCostDetail.count') do
+      assert_difference('TotalCost.count') do
+        TotalCost.make_seedling(@term, @sys)
+      end
+    end
+    total_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::SEEDLING.id)
+    assert_equal seedling_cost, total_cost.amount
+
+    assert_no_difference('TotalCostDetail.count') do
+      TotalCost.make_details(@term)
+    end
+    assert_in_delta seedling_cost, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 6).cost, 1
+  end
 end
