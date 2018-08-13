@@ -18,6 +18,7 @@
 #  land_id            :integer                                   # 土地
 #  fiscal_flag        :boolean          default(FALSE), not null # 決算期フラグ
 #  display_order      :integer          default(0), not null     # 並び順
+#  whole_crop_land_id :integer                                   # WCS土地
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

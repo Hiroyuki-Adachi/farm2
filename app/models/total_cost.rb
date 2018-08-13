@@ -18,6 +18,7 @@
 #  land_id            :integer                                   # 土地
 #  fiscal_flag        :boolean          default(FALSE), not null # 決算期フラグ
 #  display_order      :integer          default(0), not null     # 並び順
+#  whole_crop_land_id :integer                                   # WCS土地
 #
 
 class TotalCost < ApplicationRecord
@@ -28,6 +29,7 @@ class TotalCost < ApplicationRecord
   belongs_to :depreciation, optional: true
   belongs_to :work_chemical, optional: true
   belongs_to :seedling_home, optional: true
+  belongs_to :wcs_land, {class_name: "WholeCropLand", foreign_key: "whole_crop_land_id", optional: true}
   belongs_to :land, optional: true
   belongs_to :total_cost_type
 
@@ -313,6 +315,7 @@ class TotalCost < ApplicationRecord
         total_cost_type_id: TotalCostType::SALES.id,
         occurred_on: work.worked_at,
         land_id: land.id,
+        whole_crop_land_id: wcs_land.id,
         amount: wcs_land.price,
         display_order: land.manager.home_display_order
       )
