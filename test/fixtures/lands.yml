@@ -3219,8 +3219,8 @@ lands245:
 lands246:
   id: '253'
   place: "ﾃﾞｼﾞﾏ49"
-  owner_id: '35'
-  manager_id: '35'
+  owner_id: 33
+  manager_id: 33
   area: '38.00'
   display_order: '2'
   target_flag: t

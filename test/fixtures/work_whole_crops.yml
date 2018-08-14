@@ -23,3 +23,9 @@ whole_crop1:
   updated_at: '2015-03-22 01:16:55.91993'
   unit_price: 15
   tax_rate: 8
+
+whole_crop_sale:
+  work: work_wcs_sale
+  unit_price: 10
+  tax_rate: 8
+  article_name: "WCS稲(6重)"

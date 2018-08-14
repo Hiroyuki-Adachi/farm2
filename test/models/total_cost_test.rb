@@ -163,4 +163,21 @@ class TotalCostTest < ActiveSupport::TestCase
     assert_in_delta expense.amount * 2 / 3, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 5).cost, 1
     assert_in_delta expense.amount * 1 / 3, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 6).cost, 1
   end
+
+  test "売上計算_WCS" do
+    sales = whole_crop_lands(:wcs_land_sale).rolls
+    sales *= whole_crop_rolls(:wcs_roll_sale1).weight
+    sales *= work_whole_crops(:whole_crop_sale).unit_price
+    sales *= (100 + work_whole_crops(:whole_crop_sale).tax_rate) / 100
+    assert_difference('TotalCostDetail.count') do
+      assert_difference('TotalCost.count') do
+        TotalCost.make_sales_wcs(@term)
+      end
+    end
+    total_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::SALES.id)
+    assert_equal sales.floor(0), total_cost.amount
+
+    total_cost_detail = TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 8)
+    assert_equal sales.floor(0), total_cost_detail.cost
+  end
 end
