@@ -75,7 +75,7 @@ work_types5:
 work_types_wcs:
   id: 8
   genre: '2'
-  name: "飼料稲"
+  name: "たちあやか"
   category_flag: f
   display_order: '90'
   deleted_at: 

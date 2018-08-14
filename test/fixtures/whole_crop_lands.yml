@@ -32,3 +32,9 @@ wcs_land2:
   rolls: 30
   created_at: '2015-05-04 05:58:01.086207'
   updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_land_sale:
+  work_whole_crop: whole_crop_sale
+  work_land: work_land_wcs_sale
+  display_order: 1
+  rolls: 20
