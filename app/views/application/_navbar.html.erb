@@ -11,6 +11,11 @@
           <li class="nav-item">
             <%= link_to '予定管理', schedules_path, {class: "nav-link", id: :navbarSchedule} %>
           </li>
+          <% if current_user.checkable? %>
+          <li class="nav-item">
+            <%= link_to '収穫管理', seedling_results_path, {class: "nav-link", id: :navbarHarvest} %>
+          </li>
+          <% end %>
           <% if current_user.manageable? %>
           <li class="nav-item">
             <%= link_to '集計処理', statistics_path, {class: "nav-link", id: :navbarTotal} %>

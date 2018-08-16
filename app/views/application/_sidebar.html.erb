@@ -4,13 +4,19 @@
     <% unless current_user.visitor? %><%= link_to '日報入力', new_work_path, {class: "dropdown-item", data: {controller: :works, actions: [:new, :edit, :show]}} %><% end %>
     <%= link_to '日報一覧', works_path, {class: "dropdown-item", data: {controller:  "works", actions: [:index]}} %>
     <% if current_user.checkable? %><%= link_to '日報検証', work_verifications_path, {class: "dropdown-item", data: {controller: "work_verifications"}} %><% end %>
-    <% if current_user.checkable? %><%= link_to '育苗一覧', seedling_results_path, {class: "dropdown-item", data: {controller: "seedling_results"}} %><% end %>
   </div>
   <div aria-labelledby="navbarSchedule" style="display:none;">
     <span class="h5">予定管理</span>
     <%= link_to '作業予定', schedules_path, {class: "dropdown-item", data: {controller:  "schedules"}} %>
     <%= link_to '議事録', minutes_path, {class: "dropdown-item", data: {controller:  "minutes"}} %>
   </div>
+  <% if current_user.checkable? %>
+  <div aria-labelledby="navbarHarvest" style="display:none;">
+    <span class="h5">収穫管理</span>
+    <%= link_to '育苗一覧', seedling_results_path, {class: "dropdown-item", data: {controller: "seedling_results"}} %>
+    <%= link_to 'ブロッコリ売上', broccoli_sales_path, {class: "dropdown-item", data: {controller: "broccoli_sales"}} %>
+  </div>
+  <% end %>
   <% if current_user.manageable? %>
   <div aria-labelledby="navbarTotal" style="display:none;">
     <span class="h5">集計処理</span>
