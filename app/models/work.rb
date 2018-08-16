@@ -113,6 +113,14 @@ SQL
   works.term = ? AND (work_type_id IN (?))
 SQL
 
+  scope :for_broccoli, ->(organization) {
+    includes(:broccoli)
+      .where(
+        work_type_id: organization.broccoli_work_type_id,
+        work_kind_id: organization.broccoli_work_kind_id
+      )
+  }
+
   def set_term
     self.term = Organization.term
   end

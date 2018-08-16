@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_13_000052) do
+ActiveRecord::Schema.define(version: 2018_08_16_113152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -462,11 +462,13 @@ ActiveRecord::Schema.define(version: 2018_08_13_000052) do
 
   create_table "work_broccolis", id: :serial, comment: "ブロッコリー作業", comment: "ブロッコリー作業", force: :cascade do |t|
     t.integer "work_id", null: false, comment: "作業"
-    t.integer "broccoli_box_id", null: false, comment: "箱"
+    t.integer "broccoli_box_id", comment: "箱"
     t.date "shipped_on", null: false, comment: "出荷日"
     t.decimal "rest", precision: 3, default: "0", null: false, comment: "残数"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "sale", precision: 6, comment: "販売金額"
+    t.decimal "cost", precision: 6, comment: "販売経費"
     t.index ["work_id"], name: "index_work_broccolis_on_work_id", unique: true
   end
 

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :broccoli_sales, only: [:index, :create]
   resources :minutes, only: [:index, :create, :show, :destroy]
   resources :whole_crops, only: [:index, :create]
   resources :total_seedlings, only: [:index]
