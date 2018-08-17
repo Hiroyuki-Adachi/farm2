@@ -25,6 +25,11 @@ class WorkBroccoli < ApplicationRecord
 
   has_many :harvests, class_name: "BroccoliHarvest", foreign_key: :work_broccoli_id, dependent: :destroy
 
+  scope :for_sales, ->(term) {
+    joins(:work)
+      .where(["works.term = ? AND work_broccolis.sale > 0", term])
+  }
+
   def harvest(rank, size)
     return nil unless harvests
     harvests.find { |h| h.broccoli_rank_id == rank.id && h.broccoli_size_id == size.id}

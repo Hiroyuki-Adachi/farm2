@@ -303,6 +303,7 @@ class TotalCost < ApplicationRecord
 
   def self.make_sales(term)
     make_sales_wcs(term)
+    make_sales_broccoli(term)
   end
 
   def self.make_sales_wcs(term)
@@ -328,5 +329,48 @@ class TotalCost < ApplicationRecord
         area: land.area
       )
     end
+  end
+
+  def self.make_sales_broccoli(term)
+    WorkBroccoli.for_sales(term).each do |broccoli|
+      sum_area = LandCost.sum_area_by_work_type(broccoli.shipped_on, broccoli.work.work_type_id)
+      LandCost.by_work_type(broccoli.work.work_type_id, broccoli.shipped_on).each do |land_cost|
+        amount = broccoli.sale * land_cost.land.area / sum_area
+        total_cost = TotalCost.create(
+          term: term,
+          total_cost_type_id: TotalCostType::SALES.id,
+          land_id: land_cost.land.id,
+          occurred_on: broccoli.shipped_on,
+          amount: amount,
+          display_order: land_cost.land.manager.home_display_order
+        )
+        TotalCostDetail.create(
+          total_cost_id: total_cost.id,
+          work_type_id: broccoli.work.work_type_id,
+          cost: amount,
+          rate: 1,
+          area: land_cost.land.area
+        )
+      end
+      make_cost_broccoli(term, broccoli, sum_area) if broccoli.cost&.positive?
+    end
+  end
+
+  def self.make_cost_broccoli(term, broccoli, sum_area)
+    total_cost = TotalCost.create(
+      term: term,
+      work_id: broccoli.work.id,
+      total_cost_type_id: TotalCostType::SALECOST.id,
+      occurred_on: broccoli.shipped_on,
+      amount: broccoli.cost,
+      display_order: 0
+    )
+    TotalCostDetail.create(
+      total_cost_id: total_cost.id,
+      work_type_id: broccoli.work.work_type_id,
+      cost: broccoli.cost,
+      rate: 1,
+      area: sum_area
+    )
   end
 end
