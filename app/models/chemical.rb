@@ -26,22 +26,24 @@ class Chemical < ApplicationRecord
 
   attr_accessor :term
 
-  scope :usual, -> (term, work){
+  scope :usual, ->(term, work) {
     joins(:chemical_type)
       .where("(chemicals.id IN (SELECT chemical_id FROM chemical_terms WHERE term = ?) AND chemicals.chemical_type_id IN (?)) OR chemicals.id IN (?)", term, work.work_kind.chemical_kinds.pluck(:chemical_type_id), work.chemicals.pluck(:chemical_id))
       .order("chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
   }
   scope :list, ->{includes(:chemical_type).order("chemical_types.display_order, chemicals.display_order, chemicals.id")}
 
-  scope :by_work, -> (term) {
+  scope :by_work, ->(term) {
     joins(:chemical_type)
       .with_deleted
       .where("chemicals.id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.chemical_id").uniq)
       .order("chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
   }
 
+  scope :by_type, ->(chemical_type_id) {where(chemical_type_id: chemical_type_id).order(:display_order, :id)}
+
   def this_term_flag
-    return chemical_terms.where(term: @term).exists?
+    chemical_terms.where(term: @term).exists?
   end
 
   attr_writer :this_term_flag

@@ -33,4 +33,8 @@ class WorkChemical < ApplicationRecord
       .where("systems.term = ?", term)
       .order("works.worked_at, works.id, chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
   }
+
+  def chemical_display_order
+    chemical_type.display_order * 100_000 + chemical_type.id * 1000 + chemical.display_order * 100 + chemical_id
+  end
 end

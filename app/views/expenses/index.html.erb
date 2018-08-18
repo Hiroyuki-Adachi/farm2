@@ -4,9 +4,12 @@
   <table class="table table-sm">
     <thead>
       <tr>
-        <th>支払日</th>
+        <th>購入日</th>
+        <th>種別</th>
         <th>内容</th>
         <th class="numeric">金額</th>
+        <th class="numeric">金額(割引後)</th>
+        <th>原価組込</th>
         <th>原価ベース</th>
         <th></th>
       </tr>
@@ -15,8 +18,11 @@
     <% @expenses.each do |expense| %>
         <tr>
         <td><%= expense.payed_on %></td>
+        <td><%= expense.expense_type.name %></td>
         <td><%= expense.content %></td>
         <td class="numeric"><%= expense.amount %></td>
+        <td class="numeric"><%= expense.discount_amount %></td>
+        <td><%= expense.cost_flag %></td>
         <td><%= expense.work_types %></td>
         <td><%= link_to '修正', edit_expense_path(expense), {class: "btn btn-success btn-sm"} %></td>
         </tr>

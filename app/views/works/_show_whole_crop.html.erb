@@ -1,0 +1,18 @@
+<style>
+#content_whole_crop {
+    margin-left: 480px;
+    margin-top: -50px;
+    z-index: 20;
+}
+</style>
+<div id="content_whole_crop" class="content">
+  <table id="detail_whole_crop">
+    <tbody>
+      <tr>
+        <td class="numeric" style="width:110px;"><%= @work&.whole_crop&.weight %>kg</td>
+        <td class="numeric" style="width:110px;"><%= @work&.whole_crop&.rolls %>本</td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="cover_whole_crop" class="cover" onclick="location.href='<%= edit_whole_crop_work_path(id: @work) %>'"></div>
+</div>

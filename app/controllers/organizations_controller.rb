@@ -33,7 +33,8 @@ class OrganizationsController < ApplicationController
       :url,
       :broccoli_work_type_id,
       :broccoli_work_kind_id,
-      :rice_planting_id
+      :rice_planting_id,
+      :whole_crop_work_kind_id
     )
   end
 end

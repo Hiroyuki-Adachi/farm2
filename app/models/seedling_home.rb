@@ -40,4 +40,14 @@ class SeedlingHome < ActiveRecord::Base
   def dispose?
     seedling_results.where(disposal_flag: true).exists?
   end
+
+  def cost_quantity
+    result_quantity = seedling_results.sum(:quantity)
+    return quantity if quantity <= result_quantity
+    return dispose? ? quantity : result_quantity
+  end
+
+  def home_display_order
+    home.home_display_order
+  end
 end

@@ -10,8 +10,10 @@ class MenuController < ApplicationController
     @results = WorkResult.for_menu(current_user.worker, @term)
     @total_hours = @results.sum(:hours)
     @results = WorkResultDecorator.decorate_collection(@results.page(1))
-    @lands =WorkLand.for_personal(current_user.worker.home, current_system.start_date)
+    @lands = WorkLand.for_personal(current_user.worker.home, now_system.start_date)
+    @land_costs = LandCost.newest(Time.zone.today).where(land_id: @lands.map(&:land_id))
     @lands = WorkLandDecorator.decorate_collection(@lands).group_by(&:land)
+    @minute = Minute.for_personal(current_user.worker).decorate
   end
 
   def edit

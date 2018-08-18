@@ -14,14 +14,17 @@
 <body>
 
 <%= render partial: "show_base" %>
+<% if @whole_crop || current_organization.whole_crop_work_kind_id == @work.work_kind_id %>
+<%= render partial: "show_whole_crop" %>
+<% end %>
 <%= render partial: "show_workers" %>
-<% if (@work_lands.count > 0 or @work.work_kind.land_flag) and current_organization.lands_count > 0 %>
+<% if (@work_lands.count > 0 || @work.work_kind.land_flag) && current_organization.lands_count > 0 %>
   <%= render partial: "show_lands" %>
 <% end %>
-<% if (@machines.count > 0 or @work.work_kind.machine_kinds.count > 0) and current_organization.machines_count > 0 %>
+<% if (@machines.count > 0 || @work.work_kind.machine_kinds.count > 0) && current_organization.machines_count > 0 %>
   <%= render partial: "show_machines" %>
 <% end %>
-<% if (@chemicals.count > 0 or @work.work_kind.chemical_kinds.count > 0) and current_organization.chemicals_count > 0 %>
+<% if (@chemicals.count > 0 || @work.work_kind.chemical_kinds.count > 0) && current_organization.chemicals_count > 0 %>
   <%= render partial: "show_chemicals" %>
 <% end %>
 <% if @broccoli && false %>
@@ -45,6 +48,7 @@ $(function() {
   $("#cover_lands").height($("#content_lands").height()).width($("#content_lands").width());
   $("#cover_machines").height($("#content_machines").height()).width($("#content_machines").width());
   $("#cover_chemicals").height($("#content_chemicals").height()).width($("#content_chemicals").width());
+  $("#cover_whole_crop").height($("#content_whole_crop").height()).width($("#content_whole_crop").width());
 });
 </script>
 <% end %>

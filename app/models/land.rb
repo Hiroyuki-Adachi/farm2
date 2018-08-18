@@ -13,6 +13,7 @@
 #  updated_at    :datetime
 #  deleted_at    :datetime
 #  land_place_id :integer                                  # 土地
+#  reg_area      :decimal(5, 2)                            # 登記面積
 #
 
 class Land < ApplicationRecord
@@ -28,8 +29,6 @@ class Land < ApplicationRecord
   has_many :work_lands
   has_many :works, {through: :work_lands}
 
-  has_many :land_uses
-  has_many :work_types, {through: :land_uses}
   has_many :land_costs, -> {order(:activated_on)}
 
   scope :usual, -> {where(target_flag: true).order("place, display_order")}
@@ -66,5 +65,28 @@ class Land < ApplicationRecord
 
   def reject_land_costs(attributes)
     attributes[:activated_on].blank? || attributes[:work_type_id].blank?
+  end
+
+  def costs(start_date, end_date)
+    results = {}
+    tmp_date = start_date
+    tmp_cost = land_costs.newest(start_date)&.first
+    return 0, [] unless tmp_cost
+    land_costs.where(["activated_on BETWEEN ? AND ?", start_date + 1, end_date]).order("land_costs.activated_on").each do |land_cost|
+      results[tmp_cost.work_type_id] ||= 0
+      results[tmp_cost.work_type_id] += (land_cost.activated_on - tmp_date)
+      tmp_date = land_cost.activated_on
+      tmp_cost = land_cost
+    end
+    results[tmp_cost.work_type_id] ||= 0
+    results[tmp_cost.work_type_id] += (end_date - tmp_date + 1)
+
+    return tmp_cost.cost, results
+  end
+
+  def land_display_order
+    result = land_place.display_order * LandPlace.maximum(:id) + land_place_id
+    result = (result * Land.maximum(:display_order) + display_order) * Land.maximum(:id) + id
+    return result
   end
 end
