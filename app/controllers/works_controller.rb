@@ -2,7 +2,7 @@ require 'date'
 
 class WorksController < ApplicationController
   include WorksHelper
-  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :show, :update, :destroy]
+  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :edit_whole_crop, :show, :update, :destroy]
   before_action :set_results, only: [:show, :edit_workers, :edit_machines]
   before_action :set_lands, only: [:show, :edit_lands]
   before_action :set_broccoli, only: [:show]
@@ -13,7 +13,7 @@ class WorksController < ApplicationController
   before_action :permit_checkable_or_self, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
   before_action :permit_visitor, only: :show
   before_action :set_work_types, only: :index
-  before_action :permit_this_term, except: [:index, :show, :new, :create]
+  before_action :permit_this_term, only: [:edit, :update, :destroy]
   before_action :set_term, only: :index
 
   def index
@@ -95,11 +95,15 @@ class WorksController < ApplicationController
   def edit_machines
     @company_machines = Machine.by_work(@work.model).of_company
     @owner_machines = Machine.by_work(@work.model).of_owners(@work.model)
-    @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select {|m| m.leasable?(@work.model.worked_at) }
+    @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select {|m| m.leasable?(@work.model.worked_at)}
   end
 
   def edit_chemicals
-    @chemicals = Chemical.usual(@term, @work.model)
+    @chemicals = Chemical.usual(current_term, @work.model)
+  end
+
+  def edit_whole_crop
+    @whole_crop = @work.whole_crop || WorkWholeCrop.new
   end
 
   def update
@@ -109,31 +113,18 @@ class WorksController < ApplicationController
     if params[:regist]
       if @work.update(work_params)
         @work.refresh_broccoli(current_organization)
-        redirect_to(work_path(@work))
       else
         render action: :edit
       end
     end
 
-    if params[:regist_workers]
-      @work.regist_results(params[:results])
-      redirect_to(work_path(@work))
-    end
+    @work.regist_results(params[:results]) if params[:regist_workers]
+    @work.regist_lands(params[:work_lands] || []) if params[:regist_lands]
+    @work.regist_machines(params[:machine_hours] || []) if params[:regist_machines]
+    @work.regist_chemicals(params[:chemicals]) if params[:regist_chemicals]
+    WorkWholeCrop.regist(@work, params.require(:whole_crop)) if params[:regist_whole_crop]
 
-    if params[:regist_lands]
-      @work.regist_lands(params[:work_lands] || [])
-      redirect_to(work_path(@work))
-    end
-
-    if params[:regist_machines]
-      @work.regist_machines(params[:machine_hours] || [])
-      redirect_to(work_path(@work))
-    end
-
-    if params[:regist_chemicals]
-      @work.regist_chemicals(params[:chemicals])
-      redirect_to(work_path(@work))
-    end
+    redirect_to(work_path(@work))
   end
 
   def destroy

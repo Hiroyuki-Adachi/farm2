@@ -1,34 +1,42 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
-    <div class="collapse navbar-collapse" id="Navbar">
-        <%= link_to '作業日報管理', menu_index_path, {class: "navbar-brand"} %>
-        <ul class="nav navbar-nav mr-auto">
-          <li class="nav-item dropdown">
-            <%= link_to '日報管理', works_path, {class: "nav-link", id: :navbarDaily, role: :button} %>
+    <%= link_to '作業日報管理', menu_index_path, {class: "navbar-brand"} %>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarFarm2" aria-controls="navbarFarm2" aria-expanded="false" aria-label="ナビゲーションの切替">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarFarm2">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <%= link_to '日報管理', works_path, {class: "nav-link", id: :navbarDaily} %>
           </li>
-          <li class="nav-item dropdown">
-            <%= link_to '予定管理', schedules_path, {class: "nav-link", id: :navbarSchedule, role: :button} %>
+          <li class="nav-item">
+            <%= link_to '予定管理', schedules_path, {class: "nav-link", id: :navbarSchedule} %>
           </li>
+          <% if current_user.checkable? %>
+          <li class="nav-item">
+            <%= link_to '収穫管理', seedling_results_path, {class: "nav-link", id: :navbarHarvest} %>
+          </li>
+          <% end %>
           <% if current_user.manageable? %>
-          <li class="nav-item dropdown">
-            <%= link_to '集計処理', statistics_path, {class: "nav-link", id: :navbarTotal, role: :button} %>
+          <li class="nav-item">
+            <%= link_to '集計処理', statistics_path, {class: "nav-link", id: :navbarTotal} %>
           </li>
-          <li class="nav-item dropdown">
-            <%= link_to '会計処理', fixes_path, {class: "nav-link", id: :navbarFix, role: :button} %>
+          <li class="nav-item">
+            <%= link_to '会計処理', fixes_path, {class: "nav-link", id: :navbarFix} %>
           </li>
-          <li class="nav-item dropdown">
-            <%= link_to '原価管理', total_costs_path, {class: "nav-link", id: :navbarCost, role: :button} %>
+          <li class="nav-item">
+            <%= link_to '原価管理', total_costs_path, {class: "nav-link", id: :navbarCost} %>
           </li>
           <% end %>
           <% if current_user.checkable? %>
-          <li class="nav-item dropdown">
-            <%= link_to 'マスタ保守', homes_path, {class: "nav-link", id: :navbarMaster, role: :button} %>
+          <li class="nav-item">
+            <%= link_to 'マスタ保守', homes_path, {class: "nav-link", id: :navbarMaster} %>
           </li>
           <% end %>
-          <li class="nav-item dropdown">
-            <%= link_to '管理', edit_user_path(current_user), {class: "nav-link", id: :navbarManagement, role: :button} %>
+          <li class="nav-item">
+            <%= link_to '管理', edit_user_path(current_user), {class: "nav-link", id: :navbarManagement} %>
           </li>
-          <li class="nav-item dropdown">
-            <%= link_to 'ログアウト', session_path(current_user.id), {method: :delete, class: "nav-link", role: :button} %>
+          <li class="nav-item">
+            <%= link_to 'ログアウト', session_path(current_user.id), {method: :delete, class: "nav-link"} %>
           </li>
         </ul>
         <span class="navbar-text ml-auto"><%= current_name %>さん</span>

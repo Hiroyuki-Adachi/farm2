@@ -22,7 +22,7 @@
 
 require 'test_helper'
 
-class WorkKindTest < ActiveSupport::TestCase
+class WorkTest < ActiveSupport::TestCase
   setup do
     @work = works(:work_for_price)
     @sum_hours = work_results(:work_result_for_price1).hours + work_results(:work_result_for_price2).hours

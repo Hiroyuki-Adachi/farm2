@@ -1,0 +1,92 @@
+# == Schema Information
+#
+# Table name: whole_crop_rolls # WCSロール
+#
+#  id                 :bigint(8)        not null, primary key
+#  whole_crop_land_id :integer          default(0), not null   # WCS土地
+#  display_order      :integer          default(0), not null   # 番号
+#  weight             :decimal(4, 1)    default(0.0), not null # 重量
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+wcs_roll11:
+  wcs_land: wcs_land1
+  display_order: 1
+  weight: 10
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll12:
+  wcs_land: wcs_land1
+  display_order: 2
+  weight: 20
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll13:
+  wcs_land: wcs_land1
+  display_order: 3
+  weight: 30
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll14:
+  wcs_land: wcs_land1
+  display_order: 4
+  weight: 40
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll15:
+  wcs_land: wcs_land1
+  display_order: 5
+  weight: 50
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll21:
+  wcs_land: wcs_land2
+  display_order: 1
+  weight: 60
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll22:
+  wcs_land: wcs_land2
+  display_order: 2
+  weight: 70
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll23:
+  wcs_land: wcs_land2
+  display_order: 3
+  weight: 80
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll24:
+  wcs_land: wcs_land2
+  display_order: 4
+  weight: 98
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll25:
+  wcs_land: wcs_land2
+  display_order: 5
+  weight: 0
+  created_at: '2015-05-04 05:58:01.086207'
+  updated_at: '2015-05-04 05:58:01.086207'
+
+wcs_roll_sale1:
+  wcs_land: wcs_land_sale
+  display_order: 1
+  weight: 300

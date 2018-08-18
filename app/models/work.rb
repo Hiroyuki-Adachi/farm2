@@ -46,6 +46,7 @@ class Work < ApplicationRecord
   has_many :work_chemicals, dependent: :destroy
   has_many :work_verifications, -> {order('work_verifications.id')}, {dependent: :destroy}
   has_one :broccoli, {class_name: "WorkBroccoli", dependent: :destroy}
+  has_one :whole_crop, {class_name: "WorkWholeCrop", dependent: :destroy}
 
   has_many :workers, -> {with_deleted}, {through: :work_results}
   has_many :lands, -> {with_deleted}, {through: :work_lands}
@@ -103,9 +104,21 @@ SQL
     OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)
 SQL
 
-  scope :by_chemical, -> (term) {
+  scope :by_chemical, ->(term) {
     where("id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.work_id").uniq)
       .order("worked_at, id")
+  }
+
+  scope :for_cost, ->(term) {where([<<SQL, term, WorkType.land.ids])}
+  works.term = ? AND (work_type_id IN (?))
+SQL
+
+  scope :for_broccoli, ->(organization) {
+    includes(:broccoli)
+      .where(
+        work_type_id: organization.broccoli_work_type_id,
+        work_kind_id: organization.broccoli_work_kind_id
+      )
   }
 
   def set_term
@@ -129,11 +142,15 @@ SQL
   end
 
   def sum_workers_amount
-    work_results.inject(0) { |a, e| a + e.amount } || 0
+    work_results.inject(0) { |a, e| a + e.amount} || 0
   end
 
   def sum_machines_amount
     machine_results.to_a.uniq(&:machine_id).inject(0) { |a, e| a + e.amount} || 0
+  end
+
+  def sum_machines_fuel
+    machine_results.to_a.uniq(&:machine_id).inject(0) { |a, e| a + e.fuel_usage} || 0
   end
 
   def self.for_verifications(term, worker)
@@ -192,7 +209,7 @@ SQL
         hour = hour.to_f
         machine_result = MachineResult.find_by(work_result_id: work_result_id, machine_id: machine_id)
         if machine_result
-          if hour > 0
+          if hour.positive?
             machine_result.update(hours: hour) if machine_result.hours != hour
           else
             machine_result.destroy
@@ -212,7 +229,7 @@ SQL
         quantity = quantity.to_f
         work_chemical = work_chemicals.find_by(chemical_id: chemical_id, chemical_group_no: chemical_group_no)
         if work_chemical
-          if quantity > 0
+          if quantity.positive?
             work_chemical.update(quantity: quantity) unless work_chemical.quantity == quantity
           else
             work_chemical.destroy
@@ -278,5 +295,9 @@ SQL
 
   def self.array_by_worked_at(works, worked_at)
     works.find { |work| work.worked_at == worked_at }
+  end
+
+  def work_kind_order
+    work_kind.display_order * 100 + work_kind_id
   end
 end

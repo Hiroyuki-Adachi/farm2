@@ -31,3 +31,13 @@ expence_del1:
   expense: expense_del
   work_type: work_type_koshi
   rate: 1
+
+expence_work_type_genka1:
+  expense: expense_genka
+  work_type_id: 5
+  rate: 1
+
+expence_work_type_genka2:
+  expense: expense_genka
+  work_type_id: 6
+  rate: 1

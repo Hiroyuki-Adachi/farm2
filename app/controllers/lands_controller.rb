@@ -57,6 +57,15 @@ class LandsController < ApplicationController
 
   def land_params
     params.require(:land)
-          .permit(:place, :owner_id, :manager_id, :area, :target_flag, :display_order, :land_place_id)
+          .permit(
+            :place,
+            :owner_id,
+            :manager_id,
+            :area,
+            :target_flag,
+            :display_order,
+            :land_place_id,
+            :reg_area
+          )
   end
 end

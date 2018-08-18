@@ -1,5 +1,5 @@
 class SeedlingResultsController < ApplicationController
-  include PermitManager
+  include PermitChecker
   before_action :set_seedling_home, only: [:edit, :update]
   before_action :set_works, only: [:edit]
 

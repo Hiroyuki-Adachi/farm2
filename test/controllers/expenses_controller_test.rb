@@ -4,7 +4,7 @@ class ExpensesControllerTest < ActionController::TestCase
   setup do
     setup_ip
     @expense = expenses(:expense_upd)
-    @update = {term: 2015, payed_on: "2015-01-01", content: "テスト", amount: 98_765,
+    @update = {term: 2015, payed_on: "2015-01-01", content: "テスト", amount: 98_765, expense_type_id: 10,
       expense_work_types_attributes: [{work_type_id: work_types(:work_type_koshi), rate: 2.0}]
     }
   end

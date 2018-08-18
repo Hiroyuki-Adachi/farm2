@@ -35,6 +35,13 @@ th.numeric {
   width: auto;
 }
 
+#sideWrapper {
+  @media (min-width: 767.98px) {
+    padding-right: 0;
+    max-width: 200px;
+  }
+}
+
 #loading {
   display: table;
   width: 100%;

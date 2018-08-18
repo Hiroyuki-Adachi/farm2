@@ -22,3 +22,9 @@ seedling_home1:
   home_id: 1
   quantity: 200
   sowed_on: "2015-05-01"
+
+seedling_home_genka:
+  seedling: seedling_genka
+  home_id: 1
+  quantity: 200
+  sowed_on: "2017-05-01"

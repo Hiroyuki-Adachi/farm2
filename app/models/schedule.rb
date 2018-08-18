@@ -11,11 +11,9 @@
 #  work_flag    :boolean          default(TRUE), not null                                 # 作業フラグ
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  start_at     :datetime         default(Thu, 01 Jan 1970 08:00:00 UTC +00:00), not null # 開始予定時刻
-#  end_at       :datetime         default(Thu, 01 Jan 1970 17:00:00 UTC +00:00), not null # 終了予定時刻
+#  start_at     :datetime         default(Thu, 01 Jan 1970 08:00:00 JST +09:00), not null # 開始予定時刻
+#  end_at       :datetime         default(Thu, 01 Jan 1970 17:00:00 JST +09:00), not null # 終了予定時刻
 #
-
-
 
 class Schedule < ApplicationRecord
   validates :worked_at, presence: true
@@ -29,6 +27,8 @@ class Schedule < ApplicationRecord
   has_many :schedule_workers, -> {order('schedule_workers.display_order')}, {dependent: :destroy}
   has_many :workers, -> {with_deleted}, {through: :schedule_workers}
 
+  has_one :minute, {dependent: :destroy}
+
   scope :usual, ->(term) {
       where(term: term)
         .includes(:work_type, :work_kind, schedule_workers: [worker: :home])
@@ -39,6 +39,8 @@ class Schedule < ApplicationRecord
       EXISTS (SELECT * FROM schedule_workers
             WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
 SQL
+
+  scope :for_minute, ->(term) {where(term: term, work_flag: false).order(worked_at: :ASC, id: :ASC)}
 
   def regist_workers(params)
     workers = []

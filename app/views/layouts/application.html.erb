@@ -13,14 +13,16 @@
 </head>
 <body>
 
+<% if session[:user_id] %>
+<%= render 'navbar' %>
+<% end %>
 <div class="container-fluid">
 <% if session[:user_id] %>
-  <%= render 'navbar' %>
   <div class="row">
-    <div class="col-md-2">
+    <div id="sideWrapper" class="col-md-2 bg-info">
       <%= render 'sidebar' %>
     </div>
-    <div class="col-md-10">
+    <div id="myContent" class="col-md-10">
 <% end %>
       <div class="container-fluid">
 <%= yield %>
