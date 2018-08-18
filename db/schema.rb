@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_16_113152) do
+ActiveRecord::Schema.define(version: 2018_08_18_134629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -215,6 +215,7 @@ ActiveRecord::Schema.define(version: 2018_08_16_113152) do
     t.datetime "deleted_at"
     t.integer "land_place_id", comment: "土地"
     t.decimal "reg_area", precision: 5, scale: 2, comment: "登記面積"
+    t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
     t.index ["deleted_at"], name: "index_lands_on_deleted_at"
     t.index ["place"], name: "index_lands_on_place"
   end
@@ -505,6 +506,7 @@ ActiveRecord::Schema.define(version: 2018_08_16_113152) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.boolean "land_flag", default: true, null: false, comment: "土地利用フラグ"
+    t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
     t.index ["deleted_at"], name: "index_work_kinds_on_deleted_at"
   end
 
@@ -582,6 +584,7 @@ ActiveRecord::Schema.define(version: 2018_08_16_113152) do
     t.datetime "deleted_at"
     t.string "token", limit: 36, default: "", null: false, comment: "アクセストークン"
     t.integer "position_id", default: 0, null: false, comment: "役職"
+    t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
     t.index ["deleted_at"], name: "index_workers_on_deleted_at"
     t.index ["token"], name: "index_workers_on_token", unique: true
   end
