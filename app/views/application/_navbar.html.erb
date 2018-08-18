@@ -13,6 +13,9 @@
           </li>
           <% if current_user.checkable? %>
           <li class="nav-item">
+            <%= link_to 'ブロッコリ', broccoli_reports_path, {class: "nav-link", id: :navbarBroccoli} %>
+          </li>
+          <li class="nav-item">
             <%= link_to '収穫管理', seedling_results_path, {class: "nav-link", id: :navbarHarvest} %>
           </li>
           <% end %>

@@ -11,6 +11,10 @@
     <%= link_to '議事録', minutes_path, {class: "dropdown-item", data: {controller:  "minutes"}} %>
   </div>
   <% if current_user.checkable? %>
+  <div aria-labelledby="navbarBroccoli" style="display:none;">
+    <span class="h5">ブロッコリ</span>
+    <%= link_to '作業月報', broccoli_reports_path, {class: "dropdown-item", data: {controller: "broccoli_reports"}} %>
+  </div>
   <div aria-labelledby="navbarHarvest" style="display:none;">
     <span class="h5">収穫管理</span>
     <%= link_to '育苗一覧', seedling_results_path, {class: "dropdown-item", data: {controller: "seedling_results"}} %>

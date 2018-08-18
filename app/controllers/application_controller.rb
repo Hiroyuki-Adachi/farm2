@@ -26,6 +26,18 @@ class ApplicationController < ActionController::Base
         && current_organization.broccoli_work_kind_id == work.work_kind_id
   end
 
+  def sum_hours(term, works)
+    Rails.cache.fetch(sum_hours_key(term), expires_in: 1.hour) do
+      WorkResult.where(work_id: works.ids).group(:work_id).sum(:hours).to_h
+    end
+  end
+
+  def count_workers(term, works)
+    Rails.cache.fetch(count_workers_key(term), expires_in: 1.hour) do
+      WorkResult.where(work_id: works.ids).group(:work_id).count(:worker_id).to_h
+    end
+  end
+
   private
 
   def set_term
