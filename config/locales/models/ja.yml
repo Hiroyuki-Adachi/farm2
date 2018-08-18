@@ -70,6 +70,7 @@ ja:
         land_place_id: "場所"
         target_flag: "管理"
         reg_area: "登記面積"
+        broccoli_mark: "ブロッコリ記号"
 
       work: 
         year: "年度"  #g
@@ -113,6 +114,7 @@ ja:
         home_id: "世帯"
         token: "アクセストークン"
         position_id: "役職"
+        broccoli_mark: "ブロッコリ記号"
 
       machine:
         name: 名称
@@ -146,7 +148,8 @@ ja:
         display_order: 表示順
         price: 作業単価
         land_flag: "土地利用"
-        
+        broccoli_mark: "ブロッコリ記号"
+
       bank:
         code: "コード"
         name: "名称"

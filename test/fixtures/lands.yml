@@ -14,6 +14,7 @@
 #  deleted_at    :datetime
 #  land_place_id :integer                                  # 土地
 #  reg_area      :decimal(5, 2)                            # 登記面積
+#  broccoli_mark :string(1)                                # ブロッコリ記号
 #
 
 lands0:
