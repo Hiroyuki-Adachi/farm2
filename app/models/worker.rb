@@ -24,6 +24,7 @@
 #  deleted_at      :datetime
 #  token           :string(36)       default(""), not null        # アクセストークン
 #  position_id     :integer          default(0), not null         # 役職
+#  broccoli_mark   :string(1)                                     # ブロッコリ記号
 #
 
 require 'securerandom'

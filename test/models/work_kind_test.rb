@@ -10,6 +10,7 @@
 #  updated_at    :datetime
 #  deleted_at    :datetime
 #  land_flag     :boolean          default(TRUE), not null  # 土地利用フラグ
+#  broccoli_mark :string(1)                                 # ブロッコリ記号
 #
 
 require 'test_helper'
