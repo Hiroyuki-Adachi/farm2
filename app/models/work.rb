@@ -121,6 +121,11 @@ SQL
       )
   }
 
+  scope :broccoli_reports, ->(organization, w_at) {
+    where(work_type_id: organization.broccoli_work_type_id)
+      .where(worked_at: Date.new(w_at.year, w_at.month, 1)..Date.new(w_at.year, w_at.month, -1))
+  }
+
   def set_term
     self.term = Organization.term
   end

@@ -20,12 +20,8 @@ class WorksController < ApplicationController
     @terms = WorkDecorator.terms
     @works = Work.usual(@term)
     @works = @works.by_worker(current_user.worker) if current_user.visitor?
-    @sum_hours = Rails.cache.fetch(sum_hours_key(@term), expires_in: 1.hour) do
-      WorkResult.where(work_id: @works.ids).group(:work_id).sum(:hours).to_h
-    end
-    @count_workers = Rails.cache.fetch(count_workers_key(@term), expires_in: 1.hour) do
-      WorkResult.where(work_id: @works.ids).group(:work_id).count(:worker_id).to_h
-    end
+    @sum_hours = sum_hours(@term, @works)
+    @count_workers = count_workers(@term, @works)
     set_pager
     if request.xhr?
       respond_to do |format|
