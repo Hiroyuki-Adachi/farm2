@@ -109,11 +109,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def checker_short_names
-    results = []
-    model.checkers.each do |checker|
-      results << checker.decorate.short_name
-    end
-    results.join(", ")
+    model.checkers.map { |checker| checker.decorate.short_name}.join(", ")
   end
 
   def exists_workers
@@ -130,5 +126,17 @@ class WorkDecorator < Draper::Decorator
 
   def exists_chemicals
     model.work_chemicals.count.zero? ? "" : "薬品"
+  end
+
+  def broccoli_worker_names
+    model.workers.map { |worker| worker.broccoli_mark.presence || worker.name}.join(", ")
+  end
+
+  def broccoli_land_places
+    model.lands.map { |land| land.broccoli_mark.presence || land.place}.join(", ")
+  end
+
+  def broccoli_work_kind_name
+    model.work_kind.broccoli_mark.presence || model.work_kind.name
   end
 end

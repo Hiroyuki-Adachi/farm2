@@ -65,7 +65,8 @@ class LandsController < ApplicationController
             :target_flag,
             :display_order,
             :land_place_id,
-            :reg_area
+            :reg_area,
+            :broccoli_mark
           )
   end
 end
