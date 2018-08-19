@@ -51,8 +51,12 @@ $(function() {
     $(window).resize(function() {
         setTableWrapperHeight();
     });
+    $('form').submit(function(){
+        dispLoading("計算中");
+    });
 
     setTableWrapperHeight();
+    removeLoading();
 });
 
 function setTableWrapperHeight() {

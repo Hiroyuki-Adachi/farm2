@@ -11,9 +11,7 @@ class TotalCostsController < ApplicationController
   end
 
   def create
-    TotalCost.transaction do
-      TotalCost.make(current_term, current_organization)
-    end
+    TotalCostsMakeJob.perform_later(current_term, current_organization)
     redirect_to total_costs_path
   end
 

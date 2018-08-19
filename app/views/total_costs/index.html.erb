@@ -116,10 +116,6 @@ $(function() {
         setTableWrapperHeight();
     });
 
-    $('form').submit(function(){
-        dispLoading("計算中");
-    });
-
     $(".group1-total").click(function() {
         var s = $(".group2-total[data-group1='" + $(this).data("group1") + "']");
         if(s.is(":visible")) {
@@ -141,7 +137,6 @@ $(function() {
     $(".group2-total, .detail").hide();
 
     setTableWrapperHeight();
-    removeLoading();
 });
 
 function setTableWrapperHeight() {

@@ -22,6 +22,8 @@ module Farm2
     config.active_record.belongs_to_required_by_default = false
     config.active_record.default_timezone = :local
 
+    config.active_job.queue_adapter = :delayed_job
+
     config.update_logger = Logger.new('log/update_worker.log', 'monthly')
     config.update_logger.formatter = proc do |_severity, datetime, _progname, msg|
       "#{datetime}: #{msg}\n"
