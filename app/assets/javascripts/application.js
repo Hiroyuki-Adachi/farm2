@@ -34,6 +34,22 @@ $(document).on("change", "div.form-check-inline input[type='checkbox']", functio
 
 $(function() {
     $("div.form-check-inline input[type='checkbox']").trigger("change");
+
+    // for sidebar
+    var controller = $("#current_controller").val();
+    var action = $("#current_action").val();
+    if(controller == "menu" && action == "index") {
+        return;
+    }
+    $("#mySidebar").find("a[data-controller]").each(function(_i, e) {
+        if(e.dataset.controller == controller) {
+            if($("a[data-controller='" + controller + "']").length <= 1) {
+                activeBar(e);
+            } else if(JSON.parse(e.dataset.actions).indexOf(action) >= 0) {
+                activeBar(e);
+            }
+        }
+    });
 });
 
 /* ------------------------------
@@ -88,4 +104,21 @@ $.rails.allowAction = function(element) {
     bootbox.confirm(opts);
   
     return false;
-  }
+}
+
+// for side-bar
+function activeBar(e) {
+    var navdiv = $(e).parent("div");
+    e.style.backgroundColor = "White";
+    navdiv.show();
+    $("#" + navdiv.attr("aria-labelledby")).addClass("active");
+}
+
+function closeSide() {
+    $("#sideWrapper").hide("slow");
+    $("#myContent").removeClass("col-md-10");
+    $("#myContent").addClass("col-md-12");
+    setTimeout(function(){
+        $(window).trigger('resize');
+    }, 1000);
+}
