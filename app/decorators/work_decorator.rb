@@ -129,11 +129,11 @@ class WorkDecorator < Draper::Decorator
   end
 
   def broccoli_worker_names
-    model.workers.map { |worker| worker.broccoli_mark.presence || worker.name}.join(", ")
+    model.workers.map { |worker| worker.broccoli_mark.presence || worker.name}.sort.join(", ")
   end
 
   def broccoli_land_places
-    model.lands.map { |land| land.broccoli_mark.presence || land.place}.join(", ")
+    model.lands.map { |land| land.broccoli_mark.presence || land.place}.sort.join(", ")
   end
 
   def broccoli_work_kind_name
