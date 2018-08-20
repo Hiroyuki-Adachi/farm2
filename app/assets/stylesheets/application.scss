@@ -60,3 +60,9 @@ th.numeric {
   padding-top: 140px;
   background: image-url("loading.gif") center center no-repeat;
 }
+
+@media print {
+  #mySidebar {
+    display: none;
+  }
+}
