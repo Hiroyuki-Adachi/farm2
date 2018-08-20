@@ -67,6 +67,9 @@
         <%= f.submit '登録', :name => 'regist_whole_crop', class: "btn btn-warning" %>
       </div>
       <div class="btn-group mr-2">
+        <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: raw("window.print();") %>
+      </div>
+      <div class="btn-group mr-2">
         <%= link_to '戻る', work_path(@work.model), {class: "btn btn-outline-dark"} %>
       </div>
     </div>
