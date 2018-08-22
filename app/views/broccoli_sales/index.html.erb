@@ -18,13 +18,13 @@
           <td>
             <%= hidden_field_tag "work_broccoli[][id]", work.broccoli&.id, {id: nil} %>
             <%= hidden_field_tag "work_broccoli[][work_id]", work.id, {id: nil} %>
-            <%= date_field_tag "work_broccoli[][shipped_on]", work.broccoli&.shipped_on || work.worked_at, {id: nil, required: true, class: "form-control form-control-sm", style: "width: 140px;"} %>
+            <%= date_field_tag "work_broccoli[][shipped_on]", work.broccoli&.shipped_on || work.worked_at, {id: nil, required: true, class: "form-control form-control-sm", style: "width: 160px;"} %>
           </td>
           <td>
-            <%= number_field_tag "work_broccoli[][sale]", work.broccoli&.sale, {id: nil, class: "form-control form-control-sm", min: 0, max: 999999, style: "width: 100px;"} %>
+            <%= number_field_tag "work_broccoli[][sale]", work.broccoli&.sale, {id: nil, class: "form-control form-control-sm", min: 0, max: 999999, style: "width: 120px;", data: {work: work.id}} %>
           </td>
           <td>
-            <%= number_field_tag "work_broccoli[][cost]", work.broccoli&.cost, {id: nil, class: "form-control form-control-sm", min: 0, max: 999999, style: "width: 100px;"} %>
+            <%= number_field_tag "work_broccoli[][cost]", work.broccoli&.cost, {id: nil, class: "form-control form-control-sm", min: 0, max: 999999, style: "width: 120px;", data: {work: work.id}} %>
           </td>
         </tr>
         <% end %>
@@ -53,6 +53,10 @@ $(function() {
     });
     $('form').submit(function(){
         dispLoading("計算中");
+    });
+
+    $("input[name$='[sale]'").change(function() {
+        $("input[name$='[cost]'][data-work='" + $(this).data("work") + "']").attr("max", $(this).val());
     });
 
     setTableWrapperHeight();
