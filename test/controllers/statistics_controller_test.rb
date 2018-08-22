@@ -10,8 +10,8 @@ class StatisticsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "統計情報一覧(管理者以外)" do
-    session[:user_id] = users(:user_checker).id
+  test "統計情報一覧(利用者)" do
+    session[:user_id] = users(:user_user).id
     get :index
     assert_response :error
   end
