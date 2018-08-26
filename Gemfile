@@ -15,6 +15,10 @@ gem 'uglifier', '>= 1.3.0'
 #gem 'therubyracer', platforms: :ruby
 gem 'mini_racer', '0.1.14'
 
+gem 'delayed_job_active_record'
+
+gem 'daemons'
+
 # Use bootstrap4
 gem 'bootstrap', '>= 4.0'
 

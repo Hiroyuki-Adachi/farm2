@@ -5,6 +5,8 @@
     <td><%= work.broccoli_land_places %></td>
     <td><%= work.broccoli_work_kind_name %></td>
     <td class="numeric"><%= @sum_hours[work.id] || 0 %></td>
+    <td><%= work.model.name %></td>
+    <td><%= work.remarks %></td>
     <td><%= link_to "作業日報", work_path(work), {class: "btn btn-outline-success btn-sm"} %></td>
   </tr>
 <% end %>
