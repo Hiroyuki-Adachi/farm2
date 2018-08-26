@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_18_134629) do
+ActiveRecord::Schema.define(version: 2018_08_19_105547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,21 @@ ActiveRecord::Schema.define(version: 2018_08_18_134629) do
     t.datetime "deleted_at"
     t.string "unit", limit: 2, default: "袋", null: false, comment: "単位"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
+  end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
   create_table "depreciation_types", id: :serial, comment: "減価償却分類", comment: "減価償却分類", force: :cascade do |t|

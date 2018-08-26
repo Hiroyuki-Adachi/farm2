@@ -14,7 +14,7 @@ class Minute < ApplicationRecord
   belongs_to :schedule
 
   scope :for_personal, ->(worker) {
-    joins(:schedule).where([<<SQL, worker.id]).order("schedules.worked_at, minutes.id").select("minutes.id, minutes.schedule_id").last
+    joins(:schedule).where([<<SQL, worker.id]).order("schedules.worked_at, minutes.id").select("minutes.id, minutes.schedule_id")
     EXISTS (SELECT * FROM schedule_workers
       WHERE schedules.id = schedule_workers.schedule_id AND schedule_workers.worker_id = ?
     )

@@ -13,7 +13,7 @@ class PersonalInformationsController < ApplicationController
     @land_costs = LandCost.newest(Time.zone.today).where(land_id: @lands.map(&:land_id))
     @lands = WorkLandDecorator.decorate_collection(@lands).group_by(&:land)
     @machines = MachineResultDecorator.decorate_collection(MachineResult.for_personal(@worker.home, worked_from))
-    @minute = Minute.for_personal(@worker).decorate
+    @minute = Minute.for_personal(@worker).last&.decorate
     @company = Worker.company.first
     render layout: false
   end

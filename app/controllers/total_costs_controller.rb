@@ -2,6 +2,7 @@ class TotalCostsController < ApplicationController
   include PermitManager
 
   def index
+    @making_flag = Delayed::Job.exists?
     @work_types = WorkType.land
     @lands = LandCost.total(Time.zone.today)
     @total_costs = TotalCostDecorator.decorate_collection(TotalCost.usual(current_term).costs)
@@ -11,9 +12,7 @@ class TotalCostsController < ApplicationController
   end
 
   def create
-    TotalCost.transaction do
-      TotalCost.make(current_term, current_organization)
-    end
+    TotalCostsMakeJob.perform_later(current_term, current_organization)
     redirect_to total_costs_path
   end
 
