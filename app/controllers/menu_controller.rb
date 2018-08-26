@@ -13,7 +13,7 @@ class MenuController < ApplicationController
     @lands = WorkLand.for_personal(current_user.worker.home, now_system.start_date)
     @land_costs = LandCost.newest(Time.zone.today).where(land_id: @lands.map(&:land_id))
     @lands = WorkLandDecorator.decorate_collection(@lands).group_by(&:land)
-    @minute = Minute.for_personal(current_user.worker).decorate
+    @minute = Minute.for_personal(current_user.worker).last&.decorate
   end
 
   def edit
