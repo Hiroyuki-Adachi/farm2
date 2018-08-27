@@ -6,6 +6,6 @@
   <% end %>
 <% end %>
 <% if @minute.present? %>
-  <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(→<%= link_to '議事録', minute_path(@minute.id), {target: :_blank, data: {turbolinks: false}} %>)</li>
+  <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(<%= link_to '議事録', minute_path(@minute.id, token: params[:token]), {target: :_blank, data: {turbolinks: false}} %>)</li>
 <% end %>
 </ul>
