@@ -16,8 +16,20 @@ class MinutesControllerTest < ActionController::TestCase
     assert_response :error
   end
 
-  test "議事録PDF参照" do
+  test "議事録PDF参照(通常)" do
     get :show, params: {id: minutes(:minute1)}
+    assert_response :success
+  end
+
+  test "議事録PDF参照(権限なし)" do
+    session[:user_id] = nil
+    get :show, params: {id: minutes(:minute1)}
+    assert_response :error
+  end
+
+  test "議事録PDF参照(TOKEN)" do
+    session[:user_id] = nil
+    get :show, params: {token: workers(:worker1).token, id: minutes(:minute1)}
     assert_response :success
   end
 
