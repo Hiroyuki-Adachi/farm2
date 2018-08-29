@@ -90,4 +90,9 @@ class WorkResult < ApplicationRecord
   def worker_name
     worker.name
   end
+
+  def self.by_works(term, fixed_at)
+    results = WorkResult.where(work_id: Work.fixed(term, fixed_at).ids).group(:worker_id)
+    return results.sum(:fixed_hours), results.sum(:fixed_amount)
+  end
 end

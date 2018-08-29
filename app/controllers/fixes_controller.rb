@@ -3,12 +3,17 @@ class FixesController < ApplicationController
   before_action :set_fix, only: [:destroy]
   include PermitManager
 
+  MAX_WORKER = 3
+
   def index
     @fixes = FixDecorator.decorate_collection(Fix.usual(@term))
   end
 
   def show
-    @works = WorkDecorator.decorate_collection(Work.fixed(@term, @fixed_at))
+    @homes = Home.includes(:holder).for_finance1
+    @lands = Land.for_finance1.group(:manager_id).sum(:area)
+    @work_hours, @work_amounts = WorkResult.by_works(@term, @fixed_at)
+    render action: :show1
   end
 
   def new

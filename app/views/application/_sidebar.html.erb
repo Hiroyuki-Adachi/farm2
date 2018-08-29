@@ -34,7 +34,7 @@
   <div aria-labelledby="navbarFix" style="display:none;">
     <span class="h5">会計処理</span>
     <%= link_to '新規確定', new_fix_path, {class: "dropdown-item", data: {controller: :fixes, actions: [:new]}} %>
-    <%= link_to '確定一覧', fixes_path, {class: "dropdown-item", data: {controller: :fixes, actions: [:index]}} %>
+    <%= link_to '確定一覧', fixes_path, {class: "dropdown-item", data: {controller: :fixes, actions: [:index, :show]}} %>
     <%= link_to '育苗集計', total_seedlings_path, {class: "dropdown-item", data: {controller: :total_seedlings}} %>
     <%= link_to 'WCS一覧', whole_crops_path, {class: "dropdown-item", data: {controller: :whole_crops}} %>
   </div>
