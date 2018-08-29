@@ -34,6 +34,7 @@ class Land < ApplicationRecord
 
   scope :usual, -> {where(target_flag: true).order("place, display_order")}
   scope :list, -> {includes(:land_place, :owner, :manager, :owner_holder, :manager_holder).order("place, lands.display_order, lands.id")}
+  scope :for_finance1, -> {where("owner_id = manager_id").where(target_flag: true)}
 
   validates :place, presence: true
   validates :area, presence: true
