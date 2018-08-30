@@ -34,31 +34,31 @@ class WorkResult < ApplicationRecord
 
   scope :by_worker_and_work, ->(worker, work) {where(worker_id: worker, work_id: work)}
 
-  scope :by_home, ->(term){
-      joins(:work).eager_load(:work)
-     .joins(:worker).eager_load(:worker)
-     .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
-     .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
-     .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
-     .joins("INNER JOIN systems ON systems.term = works.term")
-     .joins("INNER JOIN sections ON sections.id = homes.section_id")
-     .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
-     .where("systems.term = ?", term)
-     .order("sections.display_order, homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
+  scope :by_home, ->(term) {
+    joins(:work)
+      .joins(:worker)
+      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
+      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+      .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
+      .joins("INNER JOIN systems ON systems.term = works.term")
+      .joins("INNER JOIN sections ON sections.id = homes.section_id")
+      .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
+      .where("systems.term = ?", term)
+      .order("sections.display_order, homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }
 
-  scope :by_home_for_fix, ->(term, fixed_at){
-      joins(:work).eager_load(:work)
-     .joins(:worker).eager_load(:worker)
-     .joins(:work_type).eager_load(:work_type)
-     .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
-     .joins("INNER JOIN sections ON sections.id = homes.section_id")
-     .where("works.term = ? AND works.fixed_at = ?", term, fixed_at)
-     .order("sections.display_order, homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
+  scope :by_home_for_fix, ->(term, fixed_at) {
+    joins(:work)
+      .joins(:worker)
+      .joins(:work_type)
+      .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
+      .joins("INNER JOIN sections ON sections.id = homes.section_id")
+      .where("works.term = ? AND works.fixed_at = ?", term, fixed_at)
+      .order("sections.display_order, homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }
 
   scope :for_personal, ->(worker, worked_at) {
-     joins(:work).eager_load(:work)
+    joins(:work)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
       .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
       .where("works.worked_at >= ?", worked_at)
@@ -67,12 +67,12 @@ class WorkResult < ApplicationRecord
   }
 
   scope :for_menu, ->(worker, term) {
-    joins(:work).eager_load(:work)
-     .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
-     .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
-     .where("works.term = ?", term)
-     .where(worker_id: worker)
-     .order("works.worked_at DESC, work_results.id")
+    joins(:work)
+      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
+      .where("works.term = ?", term)
+      .where(worker_id: worker)
+      .order("works.worked_at DESC, work_results.id")
   }
 
   def price
@@ -89,5 +89,9 @@ class WorkResult < ApplicationRecord
 
   def worker_name
     worker.name
+  end
+
+  def self.by_works(term, fixed_at)
+    WorkResult.where(work_id: Work.fixed(term, fixed_at).ids).group(:worker_id).sum(:fixed_hours)
   end
 end
