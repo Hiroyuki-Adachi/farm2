@@ -5,31 +5,44 @@
     <tr>
       <th>屋号</th>
       <th>土地管理</th>
-      <% FixesController::MAX_WORKER.times do |i| %>
+      <% FixesController::MAX_WORKERS.times do |i| %>
       <th>作業者<%= i + 1 %></th>
       <th>時間<%= i + 1 %></th>
-      <th>金額<%= i + 1 %></th>
       <% end %>
+      <% FixesController::MAX_SEEDLINGS.times do |i| %>
+      <th>品種<%= i + 1 %></th>
+      <th>箱数<%= i + 1 %></th>
+      <% end %>
+      <th>使用料</th>
     </tr>
   </thead>
   <tbody id="tbody_works">
     <% @homes.each do |home| %>
       <tr>
         <td><%= home.name %></td>
-        <td class="numeric"><%= (@lands[home.id] * 100).to_i.to_s(:delimited, delimiter: ',') %></td>
+        <td class="numeric"><%= @lands[home.id] %></td>
         <% i = 0 %>
         <% home.workers.each do |worker| %>
           <% next unless @work_hours[worker.id] %>
           <td><%= worker.name %></td>
           <td class="numeric"><%= @work_hours[worker.id] %></td>
-          <td class="numeric"><%= @work_amounts[worker.id].to_i.to_s(:delimited, delimiter: ',') %></td>
           <% i += 1%>
         <% end %>
-        <% (FixesController::MAX_WORKER - i).times do %>
-          <td></td>
+        <% (FixesController::MAX_WORKERS - i).times do %>
           <td></td>
           <td></td>
         <% end %>
+        <% i = 0 %>
+        <% @seedling_homes.by_home(home).each do |seedling_home| %>
+          <td><%= seedling_home.work_type_name %></td>
+          <td class="numeric"><%= seedling_home.cost_quantity.to_i %></td>
+          <% i += 1%>
+        <% end %>
+        <% (FixesController::MAX_SEEDLINGS - i).times do %>
+          <td></td>
+          <td></td>
+        <% end %>
+        <td class="numeric"><%= @machines[home.id].to_i %></td>
       </tr>
     <% end %>
   </tbody>
