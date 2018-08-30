@@ -49,6 +49,7 @@ ja:
         display_order: "表示順"  #g
         member_flag: "組合員フラグ"
         owner_flag: "機械所有"
+        finance_order: "出力順(会計用)"
 
       work_result: 
         home_name: "世帯"

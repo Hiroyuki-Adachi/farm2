@@ -19,7 +19,12 @@ class SeedlingHome < ActiveRecord::Base
   accepts_nested_attributes_for :seedling_results, allow_destroy: true, reject_if: :reject_seedling_results
 
   scope :total, ->(seedlings) {where(seedling_id: seedlings.ids).group(:seedling_id).sum(:quantity)}
-  scope :usual, ->(term) {includes({seedling: :work_type}, :home).where(seedlings: {term: term}).order("homes.display_order, homes.id, work_types.display_order, work_types.id")}
+  scope :usual, ->(term) {
+    includes({seedling: :work_type}, :home)
+      .where(seedlings: {term: term})
+      .order("homes.display_order, homes.id, work_types.display_order, work_types.id")
+  }
+  scope :by_home, ->(home) {where(home_id: home.id)}
 
   def reject_seedling_results(attributes)
     attributes[:work_result_id].blank?

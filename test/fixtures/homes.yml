@@ -20,6 +20,7 @@
 #  updated_at          :datetime
 #  deleted_at          :datetime
 #  owner_flag          :boolean          default(FALSE), not null # 所有者フラグ
+#  finance_order       :integer                                   # 出力順(会計用)
 #
 
 home1:
