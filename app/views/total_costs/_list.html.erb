@@ -19,14 +19,14 @@
       </tr>
     </thead>
     <tbody>
-      <% @total_costs.each do |tc| %>
+      <% @total_directs.each do |tc| %>
         <% if tc.total_cost_type_id != old_group1_id %>
           <% old_group1_id = tc.total_cost_type_id %>
           <tr class="group1-total table-primary" data-group1="<%= old_group1_id %>" style="cursor: pointer;">
             <th><%= tc.total_cost_type_name %></th>
             <td colspan="2"></td>
             <% @work_types.each do |work_type| %>
-            <td class="numeric"><%= @group1_costs[old_group1_id][work_type.id]&.to_s(:delimited) %></td>
+            <td class="numeric"><%= @group1_directs[old_group1_id][work_type.id]&.to_s(:delimited) %></td>
             <% end %>
           </tr>
         <% end %>
@@ -37,7 +37,7 @@
             <th><%= tc.kind_name %></th>
             <th></th>
             <% @work_types.each do |work_type| %>
-            <td class="numeric"><%= @group2_costs[old_group1_id][old_group2_id][work_type.id]&.to_s(:delimited) %></td>
+            <td class="numeric"><%= @group2_directs[old_group1_id][old_group2_id][work_type.id]&.to_s(:delimited) %></td>
             <% end %>
           </tr>
         <% end %>
@@ -52,9 +52,9 @@
         </tr>
       <% end %>
       <tr>
-        <th colspan="3">原価合計</th>
+        <th colspan="3">直接原価合計</th>
         <% @work_types.each do |work_type| %>
-        <td class="numeric"><%= @sum_costs[work_type.id]&.to_s(:delimited) %></td>
+        <td class="numeric"><%= @sum_directs[work_type.id]&.to_s(:delimited) %></td>
         <% end %>
       </tr>
       <% old_group1_id = 0 %>
