@@ -259,7 +259,7 @@ class TotalCost < ApplicationRecord
     Expense.cost(term).each do |expense|
       total_cost = TotalCost.create(
         term: term,
-        total_cost_type_id: TotalCostType::EXPENSE.id,
+        total_cost_type_id: expense.cost_type,
         occurred_on: expense.payed_on,
         expense_id: expense.id,
         amount: expense.discount_amount,
