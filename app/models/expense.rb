@@ -53,6 +53,10 @@ class Expense < ApplicationRecord
     expense_type == ExpenseType::CHEMICAL
   end
 
+  def cost_type
+    expense_type.direct? ? TotalCostType::EXPENSEDIRECT.id : TotalCostType::EXPENSEINDIRECT.id
+  end
+
   def self.chemical_prices(term)
     prices = Hash.new { |h, k| h[k] = {}}
     results = {}
