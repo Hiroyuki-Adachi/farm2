@@ -20,7 +20,6 @@
 #
 
 class Expense < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
 
   has_many :expense_work_types, {dependent: :delete_all}
   has_many :work_types, -> {order(:display_order)}, {through: :expense_work_types}
@@ -34,7 +33,11 @@ class Expense < ApplicationRecord
 
   scope :usual, ->(term) {includes(:chemical).where(term: term).order(payed_on: :ASC, id: :ASC)}
   scope :cost, ->(term) {where(term: term, cost_flag: true).order(:id)}
-  scope :chemicals, ->(term) {where(term: term, expense_type_id: ExpenseType::CHEMICAL.id, cost_flag: false)}
+  scope :chemicals, ->(term) {
+    joins(:expense_type)
+      .where(term: term, cost_flag: false)
+      .where("expense_types.chemical_flag = ?", true)
+  }
 
   accepts_nested_attributes_for :expense_work_types, allow_destroy: true
 
@@ -50,11 +53,11 @@ class Expense < ApplicationRecord
   end
 
   def chemical?
-    expense_type == ExpenseType::CHEMICAL
+    expense_type&.chemical_flag.present?
   end
 
   def cost_type
-    expense_type.direct? ? TotalCostType::EXPENSEDIRECT.id : TotalCostType::EXPENSEINDIRECT.id
+    expense_work_types.exists? ? TotalCostType::EXPENSEDIRECT.id : TotalCostType::EXPENSEINDIRECT.id
   end
 
   def self.chemical_prices(term)

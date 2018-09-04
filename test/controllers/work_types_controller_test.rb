@@ -12,6 +12,12 @@ class WorkTypesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "作業分類マスタ一覧(管理者以外)" do
+    session[:user_id] = users(:user_checker).id
+    get :index
+    assert_response :error
+  end
+
   test "作業分類マスタ新規作成(表示)" do
     get :new
     assert_response :success

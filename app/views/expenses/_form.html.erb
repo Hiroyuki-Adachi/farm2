@@ -156,7 +156,7 @@ $(function() {
 });
 
 function change_expense_type(expense_type) {
-    if(expense_type.val() == "<%= ExpenseType::CHEMICAL.id %>") {
+    if(expense_type.val() == "<%= ExpenseType.chemical_id %>") {
         $("#expense_chemical_type_id").prop("disabled", false);
         $("#expense_chemical_id").prop("disabled", false);
         $.get("<%= chemical_type_select_expenses_path %>");

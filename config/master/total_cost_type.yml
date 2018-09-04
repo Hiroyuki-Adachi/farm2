@@ -37,3 +37,6 @@
 - id: 200
   code: Sales
   name: "売上"
+- id: 210
+  code: Subsidy
+  name: "助成金"
