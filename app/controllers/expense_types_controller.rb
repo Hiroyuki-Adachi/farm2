@@ -37,7 +37,7 @@ class ExpenseTypesController < ApplicationController
 
   private
 
-  def set_work_type
+  def set_expense_type
     @expense_type = ExpenseType.find(params[:id])
   end
 

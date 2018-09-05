@@ -63,6 +63,7 @@
     <% if current_user.manageable? %>
     <%= link_to '場所マスタ保守', land_places_path, {class: "dropdown-item", data: {controller: "land_places"}} %>
     <%= link_to '作業分類マスタ保守', work_types_path, {class: "dropdown-item", data: {controller: "work_types"}} %>
+    <%= link_to '経費種別マスタ保守', expense_types_path, {class: "dropdown-item", data: {controller: "expense_types"}} %>
     <%= link_to '班マスタ保守', sections_path, {class: "dropdown-item", data: {controller: :sections}} %>
     <% end %>
   </div>
