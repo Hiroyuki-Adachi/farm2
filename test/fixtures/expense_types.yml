@@ -14,10 +14,13 @@
 #
 expense_type1:
   name: "種別1"
+  display_order: 1
 
 expense_type2:
   name: "種別2"
+  display_order: 2
 
 expense_type3:
   name: "薬剤"
   chemical_flag: true
+  display_order: 3
