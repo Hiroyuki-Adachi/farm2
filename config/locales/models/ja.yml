@@ -252,6 +252,7 @@ ja:
         chemical_flag: "薬品フラグ"
         other_flag: "その他フラグ"
         sales_flag: "売上フラグ"
+        display_order: "表示順"
 
   status:
     organization:
