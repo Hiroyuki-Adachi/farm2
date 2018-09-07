@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :expense_types, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :broccoli_reports, only: [:index]
   resources :broccoli_sales, only: [:index, :create]
   resources :minutes, only: [:index, :create, :show, :destroy]

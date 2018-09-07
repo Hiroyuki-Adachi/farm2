@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_29_110338) do
+ActiveRecord::Schema.define(version: 2018_09_04_123910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,17 @@ ActiveRecord::Schema.define(version: 2018_08_29_110338) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["term", "machine_id"], name: "index_depreciations_on_term_and_machine_id", unique: true
+  end
+
+  create_table "expense_types", comment: "経費種別", force: :cascade do |t|
+    t.string "name", limit: 10, default: "", null: false, comment: "経費種別名称"
+    t.boolean "chemical_flag", default: false, null: false, comment: "薬剤フラグ"
+    t.boolean "sales_flag", default: false, null: false, comment: "売上フラグ"
+    t.boolean "other_flag", default: false, null: false, comment: "その他フラグ"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", comment: "削除年月日"
   end
 
   create_table "expense_work_types", id: :serial, comment: "経費作業種別", comment: "経費作業種別", force: :cascade do |t|

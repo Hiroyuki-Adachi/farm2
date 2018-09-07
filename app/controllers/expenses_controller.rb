@@ -57,10 +57,10 @@ class ExpensesController < ApplicationController
     @expense_types = ExpenseType.all
     @chemical_types = []
     @chemicals = []
-    if @expense && @expense.expense_type == ExpenseType::CHEMICAL
-      @chemical_types = ChemicalType.usual
-      @chemicals = Chemical.by_type(@expense.chemical ? @expense.chemical.chemical_type.id : @chemical_types.first.id)
-    end
+    return unless @expense&.expense_type&.chemical_flag
+
+    @chemical_types = ChemicalType.usual
+    @chemicals = Chemical.by_type(@expense.chemical ? @expense.chemical.chemical_type.id : @chemical_types.first.id)
   end
 
   def expense_params

@@ -154,7 +154,7 @@ class TotalCostTest < ActiveSupport::TestCase
         TotalCost.make_expenses(@term)
       end
     end
-    total_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::EXPENSE.id)
+    total_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::EXPENSEDIRECT.id)
     assert_equal expense.amount, total_cost.amount
 
     assert_no_difference('TotalCostDetail.count') do
