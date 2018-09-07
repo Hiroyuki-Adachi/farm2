@@ -12,13 +12,15 @@
 #  updated_at    :datetime         not null
 #  deleted_at    :datetime                                  # 削除年月日
 #
+expense_type1:
+  name: "種別1"
+  display_order: 1
 
-class ExpenseType < ApplicationRecord
-  acts_as_paranoid
+expense_type2:
+  name: "種別2"
+  display_order: 2
 
-  scope :usual, -> {order(display_order: :ASC, id: :ASC)}
-
-  def self.chemical_id
-    return ExpenseType.find_by(chemical_flag: true, sales_flag: false)&.id || 0
-  end
-end
+expense_type3:
+  name: "薬剤"
+  chemical_flag: true
+  display_order: 3

@@ -43,8 +43,8 @@ class TotalCost < ApplicationRecord
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
 
-  scope :costs, -> {where.not(total_cost_type_id: TotalCostType::SALES.id)}
-  scope :sales, -> {where(total_cost_type_id: TotalCostType::SALES.id)}
+  scope :direct, -> {where(total_cost_type_id: 0..99)}
+  scope :sales, -> {where(total_cost_type_id: 200..299)}
 
   def self.make(term, organization)
     TotalCost.where(term: term).destroy_all
@@ -259,7 +259,7 @@ class TotalCost < ApplicationRecord
     Expense.cost(term).each do |expense|
       total_cost = TotalCost.create(
         term: term,
-        total_cost_type_id: TotalCostType::EXPENSE.id,
+        total_cost_type_id: expense.cost_type,
         occurred_on: expense.payed_on,
         expense_id: expense.id,
         amount: expense.discount_amount,

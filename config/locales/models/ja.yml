@@ -24,6 +24,7 @@ ja:
       land_place: "場所"
       land_cost: "土地原価"
       expense: "原価経費"
+      expense_type: "経費種別"
 
     attributes:
       chemical:
@@ -245,6 +246,13 @@ ja:
         discount_denom: "値引率(支払額)"
         cost_flag: "原価区分"
         quantity: "数量"
+
+      expense_type:
+        name: "経費種別名称"
+        chemical_flag: "薬品フラグ"
+        other_flag: "その他フラグ"
+        sales_flag: "売上フラグ"
+        display_order: "表示順"
 
   status:
     organization:
