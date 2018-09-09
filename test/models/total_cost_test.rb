@@ -149,8 +149,8 @@ class TotalCostTest < ActiveSupport::TestCase
 
   test "原価計算_経費" do
     expense = expenses(:expense_genka)
-    assert_difference('TotalCostDetail.count', 2) do
-      assert_difference('TotalCost.count') do
+    assert_difference('TotalCostDetail.count', 5) do
+      assert_difference('TotalCost.count', 2) do
         TotalCost.make_expenses(@term)
       end
     end

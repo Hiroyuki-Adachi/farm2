@@ -56,8 +56,12 @@ class Expense < ApplicationRecord
     expense_type&.chemical_flag.present?
   end
 
+  def direct?
+    expense_work_types.exists?
+  end
+
   def cost_type
-    expense_work_types.exists? ? TotalCostType::EXPENSEDIRECT.id : TotalCostType::EXPENSEINDIRECT.id
+    direct? ? TotalCostType::EXPENSEDIRECT.id : TotalCostType::EXPENSEINDIRECT.id
   end
 
   def self.chemical_prices(term)
