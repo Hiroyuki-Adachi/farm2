@@ -5343,7 +5343,7 @@ work_genka:
   term: 2017
   worked_at: "2017-02-16"
   weather_id: 1
-  work_type_id: work_type_koshi
+  work_type_id: 1
   name: "原価テスト"
   start_at: '2017-02-16 08:00:00'
   end_at: '2017-02-16 17:00:00'

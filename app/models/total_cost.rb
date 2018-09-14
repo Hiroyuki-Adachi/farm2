@@ -86,8 +86,10 @@ class TotalCost < ApplicationRecord
   end
 
   def self.make_work(term, sys)
-    Work.for_cost(term).each do |work|
+    Work.by_term(term).each do |work|
       make_work_worker(term, work)
+      next unless work.work_type.land_flag
+
       make_work_machine(term, work)
       make_work_chemical(term, work)
       make_work_fuel(term, work, sys)
@@ -107,14 +109,18 @@ class TotalCost < ApplicationRecord
   def self.make_work_worker(term, work)
     total_cost = TotalCost.create(
       term: term,
-      total_cost_type_id: TotalCostType::WORKWORKER.id,
+      total_cost_type_id: work.total_cost_type.id,
       occurred_on: work.worked_at,
       work_id: work.id,
       amount: work.sum_workers_amount,
       display_order: work.work_kind_order,
       member_flag: true
     )
-    make_work_details(work, total_cost)
+    if work.work_type&.land_flag
+      make_work_details(work, total_cost)
+    else
+      make_details_for_indirect(total_cost.id, work.worked_at)
+    end
   end
 
   def self.make_work_machine(term, work)
@@ -265,14 +271,18 @@ class TotalCost < ApplicationRecord
         amount: expense.discount_amount,
         display_order: expense.expense_type_id
       )
-      expense.expense_work_types.each do |expense_work_type|
-        next if expense_work_type.rate.zero?
-        TotalCostDetail.create(
-          total_cost_id: total_cost.id,
-          work_type_id: expense_work_type.work_type_id,
-          rate: expense_work_type.rate,
-          area: LandCost.sum_area_by_work_type(expense.payed_on, expense_work_type.work_type_id)
-        )
+      if expense.direct?
+        expense.expense_work_types.each do |expense_work_type|
+          next if expense_work_type.rate.zero?
+          TotalCostDetail.create(
+            total_cost_id: total_cost.id,
+            work_type_id: expense_work_type.work_type_id,
+            rate: expense_work_type.rate,
+            area: LandCost.sum_area_by_work_type(expense.payed_on, expense_work_type.work_type_id)
+          )
+        end
+      else
+        make_details_for_indirect(total_cost.id, expense.payed_on)
       end
     end
   end
@@ -372,5 +382,18 @@ class TotalCost < ApplicationRecord
       rate: 1,
       area: sum_area
     )
+  end
+
+  def self.make_details_for_indirect(total_cost_id, occurred_on)
+    WorkType.land.each do |work_type|
+      area = LandCost.sum_area_by_work_type(occurred_on, work_type.id)
+      next unless area.positive?
+      TotalCostDetail.create(
+        total_cost_id: total_cost_id,
+        work_type_id: work_type.id,
+        rate: 1,
+        area: area
+      )
+    end
   end
 end

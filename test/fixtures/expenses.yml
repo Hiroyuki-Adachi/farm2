@@ -42,3 +42,11 @@ expense_genka:
   amount: 45000
   expense_type: expense_type2
   cost_flag: true
+
+expense_indirect:
+  term: 2017
+  payed_on: "2017-02-05"
+  content: "原価テスト(間接)"
+  amount: 30000
+  expense_type: expense_type2
+  cost_flag: true

@@ -41,7 +41,7 @@ class PersonalCalendarsController < ApplicationController
     event.dtstart = ::Icalendar::Values::DateTime.new(to_datetime(work.worked_at, work.start_at))
     event.dtend = ::Icalendar::Values::DateTime.new(to_datetime(work.worked_at, work.end_at))
     event.description = work.remarks
-    event.uid = result.uuid.upcase
+    event.uid = result.uuid&.upcase
     event.created = work.created_at
     event.last_modified = work.updated_at
     return event
@@ -53,7 +53,7 @@ class PersonalCalendarsController < ApplicationController
     event.summary = schedule.schedule_name
     event.dtstart = ::Icalendar::Values::DateTime.new(to_datetime(schedule_model.worked_at, schedule_model.start_at))
     event.dtend = ::Icalendar::Values::DateTime.new(to_datetime(schedule_model.worked_at, schedule_model.end_at))
-    event.uid = schedule.uuid.upcase
+    event.uid = schedule.uuid&.upcase
     event.created = schedule_model.created_at
     event.last_modified = schedule_model.updated_at
     return event
