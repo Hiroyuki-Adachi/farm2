@@ -305,4 +305,8 @@ SQL
   def work_kind_order
     work_kind.display_order * 100 + work_kind_id
   end
+
+  def total_cost_type
+    work_type&.land_flag ? TotalCostType::WORKWORKER : TotalCostType::WORKINDIRECT
+  end
 end

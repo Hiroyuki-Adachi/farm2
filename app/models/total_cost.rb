@@ -86,8 +86,10 @@ class TotalCost < ApplicationRecord
   end
 
   def self.make_work(term, sys)
-    Work.for_cost(term).each do |work|
+    Work.by_term(term).each do |work|
       make_work_worker(term, work)
+      next unless work.work_type.land_flag
+
       make_work_machine(term, work)
       make_work_chemical(term, work)
       make_work_fuel(term, work, sys)
@@ -107,14 +109,18 @@ class TotalCost < ApplicationRecord
   def self.make_work_worker(term, work)
     total_cost = TotalCost.create(
       term: term,
-      total_cost_type_id: TotalCostType::WORKWORKER.id,
+      total_cost_type_id: work.total_cost_type.id,
       occurred_on: work.worked_at,
       work_id: work.id,
       amount: work.sum_workers_amount,
       display_order: work.work_kind_order,
       member_flag: true
     )
-    make_work_details(work, total_cost)
+    if work.work_type&.land_flag
+      make_work_details(work, total_cost)
+    else
+      make_details_for_indirect(total_cost.id, work.worked_at)
+    end
   end
 
   def self.make_work_machine(term, work)
