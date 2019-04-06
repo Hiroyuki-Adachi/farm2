@@ -25,10 +25,6 @@
       <%= f.label :section_id, class: "col-form-label-lg" %>
       <%= f.select(:section_id, @sections.map {|section| [section.name, section.id]}, {}, {class: "form-control"}) %>
     </div>
-    <div class="col-md-3 field form-group">
-      <%= f.label :display_order, class: "col-form-label-lg" %>
-      <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
-    </div>
     <div class="col-md-2 field form-group">
       <%= f.label :member_flag, class: "col-form-label-lg" %>
       <div class="form-check">
@@ -50,6 +46,14 @@
         <%= f.radio_button :owner_flag, false, {class: "form-check-input"} %>
         <label for="home_owner_flag_false" class="form-check-label">不可</label>
       </div>
+    </div>
+    <div class="col-md-2 field form-group">
+      <%= f.label :display_order, class: "col-form-label-lg" %>
+      <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
+    </div>
+    <div class="col-md-2 field form-group">
+      <%= f.label :finance_order, class: "col-form-label-lg" %>
+      <%= f.number_field(:finance_order, {maxlength: 4, size: 4, required: false, class: "form-control"}) %>
     </div>
   </div>
   <div class="btn-toolbar">

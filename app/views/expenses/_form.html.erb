@@ -5,13 +5,56 @@
     <%= f.label :payed_on, class: "col-form-label-lg" %>
     <%= f.date_field :payed_on, {required: true, class: "form-control", min: current_system.start_date, max: current_system.end_date} %>
   </div>
+  <div class="form-group col-md-2">
+    <%= f.label :expense_type_id, class: "col-form-label-lg" %>
+    <%= f.select(:expense_type_id, @expense_types.map {|expense_type| [expense_type.name, expense_type.id]}, {}, {class: "form-control"}) %>
+  </div>
   <div class="form-group col-md-4">
     <%= f.label :content, class: "col-form-label-lg" %>
-    <%= f.text_field :content, {:maxlength => 40, :size => 40, required: true, class: "form-control"} %>
+    <%= f.text_field :content, {:maxlength => 40, :size => 40, class: "form-control"} %>
   </div>
   <div class="form-group col-md-2">
     <%= f.label :amount, class: "col-form-label-lg" %>
     <%= f.number_field :amount, {min: 1, max: 9999999, step: 1, required: true, class: "form-control"} %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.label :quantity, class: "col-form-label-lg" %>
+    <%= f.number_field :quantity, {min: 0, max: 9999, required: false, class: "form-control"} %>
+  </div>
+</div>
+<div class="form-row">
+  <div class="form-group col-md-2">
+    <%= f.label :chemical_type_id, class: "col-form-label-lg" %>
+    <%= f.select(:chemical_type_id, @chemical_types.map {|chemical_type| [chemical_type.name, chemical_type.id]}, {include_blank: true}, {class: "form-control"}) %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.label :chemical_id, class: "col-form-label-lg" %>
+    <%= f.select(:chemical_id, @chemicals.map {|chemical| [chemical.name, chemical.id]}, {include_blank: true}, {class: "form-control"}) %>
+  </div>
+</div>
+<div class="form-row">
+  <div class="form-group col-md-2">
+    <%= f.label :discount, class: "col-form-label-lg" %>
+    <%= f.number_field :discount, {min: 0, max: 9999999, step: 1, required: false, class: "form-control"} %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.label :discount_numor, class: "col-form-label-lg" %>
+    <%= f.number_field :discount_numor, {min: 0, max: 9999999, step: 1, required: false, class: "form-control"} %>
+  </div>
+  <div class="form-group col-md-2">
+    <%= f.label :discount_denom, class: "col-form-label-lg" %>
+    <%= f.number_field :discount_denom, {min: 0, max: 9999999, step: 1, required: false, class: "form-control"} %>
+  </div>
+  <div class="form-group col-md-4">
+    <%= f.label :cost_flag, class: "col-form-label-lg" %>
+    <div class="form-check">
+      <%= f.radio_button :cost_flag, true %>
+      <label for="expense_cost_flag_true" class="form-check-label">支払時に原価とする。</label>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :cost_flag, false %>
+      <label for="expense_cost_flag_false" class="form-check-label">使用時に原価とする。</label>
+    </div>
   </div>
 </div>
 <%= f.hidden_field :term, {value: current_term} %>
@@ -97,5 +140,35 @@ $(function() {
         });
         $("#proportionModal").modal("hide");
     });
+
+    $('select[name="expense[expense_type_id]"]').change(function(){
+        change_expense_type($(this));
+    });
+
+    $('select[name="expense[chemical_type_id]"]').change(function(){
+        change_chemical_type($(this));
+    });
+
+    <% if @expense.new_record? %>
+    change_expense_type($(this));
+    change_chemical_type($(this));
+    <% end %>
 });
+
+function change_expense_type(expense_type) {
+    if(expense_type.val() == "<%= ExpenseType.chemical_id %>") {
+        $("#expense_chemical_type_id").prop("disabled", false);
+        $("#expense_chemical_id").prop("disabled", false);
+        $.get("<%= chemical_type_select_expenses_path %>");
+    } else {
+        $("#expense_chemical_type_id").val("");
+        $("#expense_chemical_id").val("");
+        $("#expense_chemical_type_id").prop("disabled", true);
+        $("#expense_chemical_id").prop("disabled", true);
+    }
+}
+
+function change_chemical_type(chemical_type) {
+    $.get("<%= chemical_select_expenses_path %>", {chemical_type_id: chemical_type.val()});
+}
 </script>

@@ -10,6 +10,7 @@ module Farm2
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
+    config.time_zone = 'Tokyo'
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -19,6 +20,9 @@ module Farm2
     config.i18n.default_locale = :ja
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
     config.active_record.belongs_to_required_by_default = false
+    config.active_record.default_timezone = :local
+
+    config.active_job.queue_adapter = :delayed_job
 
     config.update_logger = Logger.new('log/update_worker.log', 'monthly')
     config.update_logger.formatter = proc do |_severity, datetime, _progname, msg|

@@ -24,6 +24,7 @@ ja:
       land_place: "場所"
       land_cost: "土地原価"
       expense: "原価経費"
+      expense_type: "経費種別"
 
     attributes:
       chemical:
@@ -49,6 +50,7 @@ ja:
         display_order: "表示順"  #g
         member_flag: "組合員フラグ"
         owner_flag: "機械所有"
+        finance_order: "出力順(会計用)"
 
       work_result: 
         home_name: "世帯"
@@ -65,10 +67,12 @@ ja:
         place: "番地"  #g
         owner_id: "所有者"  #g
         manager_id: "管理者"  #g
-        area: "面積"  #g
+        area: "耕作面積"  #g
         display_order: "表示順"  #g
         land_place_id: "場所"
         target_flag: "管理"
+        reg_area: "登記面積"
+        broccoli_mark: "ブロッコリ記号"
 
       work: 
         year: "年度"  #g
@@ -112,6 +116,7 @@ ja:
         home_id: "世帯"
         token: "アクセストークン"
         position_id: "役職"
+        broccoli_mark: "ブロッコリ記号"
 
       machine:
         name: 名称
@@ -145,7 +150,8 @@ ja:
         display_order: 表示順
         price: 作業単価
         land_flag: "土地利用"
-        
+        broccoli_mark: "ブロッコリ記号"
+
       bank:
         code: "コード"
         name: "名称"
@@ -180,6 +186,7 @@ ja:
         broccoli_work_type_id: "ブロッコリーを選択"
         broccoli_work_kind_id: "収穫を選択"
         rice_planting_id: "田植を選択"
+        whole_crop_work_kind_id: "WCS収穫を選択"
 
       section:
         name: 名称
@@ -228,9 +235,24 @@ ja:
         cost: "原価"
         
       expense:
-        payed_on: "支払日"
+        payed_on: "購入日"
+        expense_type_id: "支払種別"
         content: "支払内容"
         amount: "支払額"
+        chemical_type_id: "薬剤種別"
+        chemical_id: "薬剤"
+        discount: "値引額"
+        discount_numor: "値引率(値引額)"
+        discount_denom: "値引率(支払額)"
+        cost_flag: "原価区分"
+        quantity: "数量"
+
+      expense_type:
+        name: "経費種別名称"
+        chemical_flag: "薬品フラグ"
+        other_flag: "その他フラグ"
+        sales_flag: "売上フラグ"
+        display_order: "表示順"
 
   status:
     organization:

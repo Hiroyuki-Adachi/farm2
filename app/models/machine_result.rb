@@ -62,6 +62,14 @@ class MachineResult < ApplicationRecord
    .order("works.worked_at, machines.display_order, machines.id")
   }
 
+  scope :for_fix, ->(term, fixed_at) {
+    joins(:machine)
+      .joins(:work_result)
+      .joins(:work)
+      .where("works.fixed_at = ? AND machine_results.fixed_price IS NOT NULL", fixed_at)
+      .where("works.term = ?", term)
+  }
+
   scope :by_works, ->(works) {joins(:work_result).where(["work_results.work_id IN (?)", works.ids]).order("machine_results.id")}
   scope :by_work_machine, ->(work, machine) {joins(:work_result).find_by(["machine_results.machine_id = ? AND work_results.work_id = ?", machine.id, work.id])}
 

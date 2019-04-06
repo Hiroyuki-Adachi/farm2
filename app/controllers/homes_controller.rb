@@ -48,6 +48,16 @@ class HomesController < ApplicationController
 
   def home_params
     params.require(:home)
-      .permit(:name, :phonetic, :telephone, :fax, :section_id, :display_order, :member_flag, :owner_flag)
+      .permit(
+        :name,
+        :phonetic,
+        :telephone,
+        :fax,
+        :section_id,
+        :display_order,
+        :member_flag,
+        :owner_flag,
+        :finance_order
+      )
   end
 end

@@ -13,6 +13,8 @@
 #  updated_at    :datetime
 #  deleted_at    :datetime
 #  land_place_id :integer                                  # 土地
+#  reg_area      :decimal(5, 2)                            # 登記面積
+#  broccoli_mark :string(1)                                # ブロッコリ記号
 #
 
 lands0:
@@ -70,8 +72,7 @@ lands3:
   deleted_at: 
 
 
-lands4:
-  id: '5'
+land_land_cost2:
   place: 5382-ﾆ
   owner_id: '1'
   manager_id: '1'
@@ -83,7 +84,7 @@ lands4:
   deleted_at: 
 
 
-land_land_cost:
+land_land_cost1:
   place: 5382-ｲ
   owner_id: '1'
   manager_id: '1'
@@ -3218,8 +3219,8 @@ lands245:
 lands246:
   id: '253'
   place: "ﾃﾞｼﾞﾏ49"
-  owner_id: '35'
-  manager_id: '35'
+  owner_id: 33
+  manager_id: 33
   area: '38.00'
   display_order: '2'
   target_flag: t
@@ -3239,3 +3240,26 @@ lands247:
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
   deleted_at: 
+
+land_genka1:
+  place: "1111-1"
+  owner_id: '5'
+  manager_id: '5'
+  area: 20.0
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-08-20 23:40:01.492837'
+  updated_at: '2010-08-20 23:40:01.492837'
+  deleted_at: 
+
+land_genka2:
+  place: "1111-2"
+  owner_id: '5'
+  manager_id: '5'
+  area: 40.0
+  display_order: '1'
+  target_flag: t
+  created_at: '2010-08-20 23:40:01.492837'
+  updated_at: '2010-08-20 23:40:01.492837'
+  deleted_at: 
+

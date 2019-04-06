@@ -65,6 +65,18 @@ class WorkersController < ApplicationController
   end
 
   def worker_params
-    return params.require(:worker).permit(:family_phonetic, :family_name, :first_phonetic, :first_name, :home_id, :mobile, :display_order, :gender_id, :birthday, :position_id)
+    return params.require(:worker).permit(
+      :family_phonetic,
+      :family_name,
+      :first_phonetic,
+      :first_name,
+      :home_id,
+      :mobile,
+      :display_order,
+      :gender_id,
+      :birthday,
+      :position_id,
+      :broccoli_mark
+    )
   end
 end

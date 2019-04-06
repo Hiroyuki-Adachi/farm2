@@ -18,7 +18,7 @@ body {
 }
 
 div#show {
-    font-family: "ヒラギノ明朝 Pro W3", "細明朝体", "ＭＳ Ｐ明朝", serif;
+    font-family: "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
     font-size: 16pt;
     text-align: center;
     margin: 0px;

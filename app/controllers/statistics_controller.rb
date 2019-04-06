@@ -1,5 +1,5 @@
 class StatisticsController < ApplicationController
-  include PermitManager
+  include PermitChecker
 
   before_action :set_total, only: [:tab1, :tab2, :tab3]
 

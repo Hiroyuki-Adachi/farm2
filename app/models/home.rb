@@ -20,6 +20,7 @@
 #  updated_at          :datetime
 #  deleted_at          :datetime
 #  owner_flag          :boolean          default(FALSE), not null # 所有者フラグ
+#  finance_order       :integer                                   # 出力順(会計用)
 #
 
 class Home < ApplicationRecord
@@ -50,6 +51,7 @@ class Home < ApplicationRecord
   }
   scope :machine_owners, -> {where(owner_flag: true).order("company_flag DESC, display_order, id")}
   scope :company, ->{where(company_flag: true)}
+  scope :for_finance1, -> {where(member_flag: true, owner_flag: true).order(finance_order: :ASC, id: :ASC)}
 
   validates :phonetic,      presence: true
   validates :name,          presence: true
@@ -64,5 +66,9 @@ class Home < ApplicationRecord
 
   def owner_name
     holder && !company_flag ? holder.name + '(' + name + ')' : name
+  end
+
+  def home_display_order
+    display_order * 100 + id
   end
 end
