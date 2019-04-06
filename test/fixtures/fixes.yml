@@ -2,6 +2,7 @@
 #
 # Table name: fixes # 確定データ
 #
+#  term            :integer          default(0), not null, primary key # 年度(期)
 #  fixed_at        :date             not null, primary key             # 確定日
 #  works_count     :integer          not null                          # 合計作業数
 #  hours           :integer          not null                          # 合計作業工数
@@ -9,7 +10,6 @@
 #  machines_amount :decimal(8, )     not null                          # 合計機械利用料
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  term            :integer          default(0), not null, primary key # 年度(期)
 #  fixed_by        :integer                                            # 確定者
 #
 

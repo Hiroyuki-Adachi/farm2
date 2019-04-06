@@ -24,6 +24,7 @@
 #  deleted_at      :datetime
 #  token           :string(36)       default(""), not null        # アクセストークン
 #  position_id     :integer          default(0), not null         # 役職
+#  broccoli_mark   :string(1)                                     # ブロッコリ記号
 #
 
 require 'securerandom'
@@ -45,8 +46,11 @@ class Worker < ApplicationRecord
 
   scope :usual, -> {includes(home: :section).where(["homes.company_flag = ?", false]).order('sections.display_order, homes.display_order, workers.display_order')}
   scope :company, -> {joins(:home).eager_load(:home).where(["homes.company_flag = ?", true]).order("workers.display_order")}
+  scope :by_homes, ->(homes) {where(home_id: homes.ids).order("display_order")}
 
   REG_MAIL = /\A([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+\z/
+  REG_MOBILE = /\A(090|080|070)-\d{4}-\d{4}\z/
+  REG_KANA = /\A[\p{Hiragana}]+/
 
   validates :family_phonetic, presence: true
   validates :family_name, presence: true
@@ -54,14 +58,15 @@ class Worker < ApplicationRecord
   validates :first_name, presence: true
   validates :display_order, presence: true
 
-  validates :family_phonetic, format: {with: /\A[\p{Hiragana}ー－]+\z/}, :if => proc{ |x| x.family_phonetic.present? }
-  validates :first_phonetic,  format: {with: /\A[\p{Hiragana}ー－]+\z/}, :if => proc{ |x| x.first_phonetic.present? }
+  validates :family_phonetic, format: {with: REG_KANA}, :if => proc { |x| x.family_phonetic.present?}
+  validates :first_phonetic,  format: {with: REG_KANA}, :if => proc { |x| x.first_phonetic.present?}
 
-  validates :mobile, format: {with: /\A(090|080|070)-\d{4}-\d{4}\z/}, :if => proc { |x| x.mobile.present? }
-  validates :pc_mail, format: {with: REG_MAIL},  :if => proc { |x| x.pc_mail.present? }
-  validates :mobile_mail, format: {with: REG_MAIL},  :if => proc { |x| x.mobile_mail.present? }
+  validates :mobile, format: {with: REG_MOBILE}, :if => proc { |x| x.mobile.present?}
+  validates :pc_mail, format: {with: REG_MAIL}, :if => proc { |x| x.pc_mail.present?}
+  validates :mobile_mail, format: {with: REG_MAIL}, :if => proc { |x| x.mobile_mail.present?}
 
-  validates :display_order, numericality: {only_integer: true}, :if => proc { |x| x.display_order.present? }
+  validates :display_order, numericality: {only_integer: true}, :if => proc { |x| x.display_order.present?}
+  validates :broccoli_mark, uniqueness: true, :if => proc { |x| x.broccoli_mark.present?}
 
   def name
     family_name + ' ' + first_name

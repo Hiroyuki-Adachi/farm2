@@ -14,4 +14,8 @@ class ChemicalCostsController < ApplicationController
     end
     redirect_to chemical_costs_path
   end
+
+  def import
+    render json: Expense.chemical_prices(current_term)
+  end
 end

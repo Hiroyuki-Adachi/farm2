@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: expense_types # 経費種別
+#
+#  id            :bigint(8)        not null, primary key
+#  name          :string(10)       default(""), not null    # 経費種別名称
+#  chemical_flag :boolean          default(FALSE), not null # 薬剤フラグ
+#  sales_flag    :boolean          default(FALSE), not null # 売上フラグ
+#  other_flag    :boolean          default(FALSE), not null # その他フラグ
+#  display_order :integer          default(0), not null     # 表示順
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  deleted_at    :datetime                                  # 削除年月日
+#
+expense_type1:
+  name: "種別1"
+  display_order: 1
+
+expense_type2:
+  name: "種別2"
+  display_order: 2
+
+expense_type3:
+  name: "薬剤"
+  chemical_flag: true
+  display_order: 3

@@ -35,6 +35,13 @@ th.numeric {
   width: auto;
 }
 
+#sideWrapper {
+  @media (min-width: 767.98px) {
+    padding-right: 0;
+    max-width: 200px;
+  }
+}
+
 #loading {
   display: table;
   width: 100%;
@@ -52,4 +59,10 @@ th.numeric {
   vertical-align: middle;
   padding-top: 140px;
   background: image-url("loading.gif") center center no-repeat;
+}
+
+@media print {
+  #mySidebar {
+    display: none;
+  }
 }

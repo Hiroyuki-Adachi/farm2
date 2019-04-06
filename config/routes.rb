@@ -1,15 +1,30 @@
 Rails.application.routes.draw do
+  resources :expense_types, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :broccoli_reports, only: [:index]
+  resources :broccoli_sales, only: [:index, :create]
+  resources :minutes, only: [:index, :create, :show, :destroy]
+  resources :whole_crops, only: [:index, :create]
+  resources :total_seedlings, only: [:index]
   resources :seedling_results, param: "seedling_home_id", only: [:index, :edit, :update] do
     collection do
       get :work_results
     end
   end
-  resources :expenses, except: [:show]
+  resources :expenses, except: [:show] do
+    collection do
+      get :chemical_type_select
+      get :chemical_select
+    end
+  end
   resources :seedling_costs, param: "seedling_id", only: [:index, :create, :edit, :update]
-  resources :chemical_costs, only: [:index, :create]
+  resources :chemical_costs, only: [:index, :create] do
+    collection do
+      get :import
+    end
+  end
   resources :fuel_costs, only: [:index, :create]
   resources :depreciations, only: [:index, :create]
-  resources :total_costs, only: [:index]
+  resources :total_costs, only: [:index, :create]
   resources :land_places, except: [:show]
   resources :organizations, param: nil, only: [:edit, :update]
   resources :land_costs, param: "land_id", only: [:index, :create, :edit, :update]
@@ -80,6 +95,7 @@ Rails.application.routes.draw do
       get :edit_lands
       get :edit_machines
       get :edit_chemicals
+      get :edit_whole_crop
     end
   end
 

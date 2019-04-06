@@ -34,4 +34,24 @@ SQL
   scope :by_work_type, ->(work_type_id, target) {newest(target).where(work_type_id: work_type_id)}
 
   scope :total, ->(target) {joins(:land).newest(target).group(:work_type_id).sum("lands.area")}
+
+  def self.sum_area_by_lands(target, land_ids)
+    LandCost.newest(target).where(land_id: land_ids).group(:work_type_id).joins(:land).sum(:area)
+  end
+
+  def self.sum_area_by_work_type(target, work_type_id)
+    LandCost.by_work_type(work_type_id, target).joins(:land).sum(:area)
+  end
+
+  def update_work_type(params, start_date)
+    return if work_type_id == params[:work_type_id].to_i && cost == params[:cost].to_i
+
+    if activated_on < start_date
+      land_cost = LandCost.new(params)
+      land_cost.activated_on = start_date
+      land_cost.save
+    else
+      update(params)
+    end
+  end
 end

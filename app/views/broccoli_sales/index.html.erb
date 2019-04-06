@@ -1,0 +1,71 @@
+<h1>ブロッコリー売上</h1>
+<%= form_tag(action: :create) do %>
+<div class="row">
+  <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll; width: auto;">
+    <table id="tbl_list" class="table table-sm">
+      <thead style="background-color:white;">
+        <tr>
+          <th>収穫日</th>
+          <th>出荷日</th>
+          <th>売上金額(税込)</th>
+          <th>販売経費</th>
+        </tr>
+      </thead>
+      <tbody id="list">
+        <% @works.each do |work| %>
+        <tr>
+          <th><%= work.worked_at %></th>
+          <td>
+            <%= hidden_field_tag "work_broccoli[][id]", work.broccoli&.id, {id: nil} %>
+            <%= hidden_field_tag "work_broccoli[][work_id]", work.id, {id: nil} %>
+            <%= date_field_tag "work_broccoli[][shipped_on]", work.broccoli&.shipped_on || work.worked_at, {id: nil, required: true, class: "form-control form-control-sm", style: "width: 160px;"} %>
+          </td>
+          <td>
+            <%= number_field_tag "work_broccoli[][sale]", work.broccoli&.sale, {id: nil, class: "form-control form-control-sm", min: 0, max: 999999, style: "width: 120px;", data: {work: work.id}} %>
+          </td>
+          <td>
+            <%= number_field_tag "work_broccoli[][cost]", work.broccoli&.cost, {id: nil, class: "form-control form-control-sm", min: 0, max: 999999, style: "width: 120px;", data: {work: work.id}} %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="btn_toolbar" class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>
+<% end %>
+<script>
+$(function() {
+    $("#tbl_list").floatThead({
+        position: 'absolute',
+        scrollContainer:true,
+        zIndex: 999
+    });
+    $(window).resize(function() {
+        setTableWrapperHeight();
+    });
+    $('form').submit(function(){
+        dispLoading("計算中");
+    });
+
+    $("input[name$='[sale]'").change(function() {
+        $("input[name$='[cost]'][data-work='" + $(this).data("work") + "']").attr("max", $(this).val());
+    });
+
+    setTableWrapperHeight();
+    removeLoading();
+});
+
+function setTableWrapperHeight() {
+    if($("#table_wrapper")[0]) {
+        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
+    }
+}
+</script>

@@ -181,3 +181,10 @@ chemicals16:
   updated_at: '2014-05-18 06:58:59.997245'
   deleted_at: 
 
+chemical_genka:
+  name: "原価テスト用ダミー"
+  display_order: 99
+  chemical_type_id: '3'
+  created_at: '2014-05-18 06:58:59.997245'
+  updated_at: '2014-05-18 06:58:59.997245'
+  deleted_at: 

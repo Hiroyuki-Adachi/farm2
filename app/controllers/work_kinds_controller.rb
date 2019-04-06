@@ -45,7 +45,13 @@ class WorkKindsController < ApplicationController
   end
 
   def work_kind_params
-    params.require(:work_kind).permit(:name, :display_order, :price, :land_flag)
+    params.require(:work_kind).permit(
+      :name,
+      :display_order,
+      :price,
+      :land_flag,
+      :broccoli_mark
+    )
   end
 
   def set_others

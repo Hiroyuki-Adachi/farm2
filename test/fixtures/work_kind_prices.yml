@@ -810,3 +810,8 @@ work_kind_prices_first_0:
   term: 2010
   work_kind: work_kind_first_term
   price: 3000
+
+work_kind_price_taue:
+  term: 2017
+  work_kind_id: 1
+  price: 1000

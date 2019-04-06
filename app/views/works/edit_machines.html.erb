@@ -49,7 +49,7 @@
         </thead>
         <tbody>
           <% home_ids = @owner_machines.pluck(:home_id).uniq %>
-          <% owner_results = @results.select {|result| home_ids.include?(result.worker.home_id) } %>
+          <% owner_results = @results.select {|result| home_ids.include?(result.worker.home_id)} %>
           <% owner_results.each do |result| %>
             <tr>
               <td><%= result.worker.name %></td>

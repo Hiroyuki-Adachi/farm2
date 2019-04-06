@@ -27,7 +27,6 @@ work_results0:
   created_at: '2015-03-21 00:36:54.072555'
   updated_at: '2015-03-21 00:36:54.072555'
 
-
 work_results1:
   id: '5210'
   work_id: '1479'
@@ -13736,6 +13735,12 @@ work_result_march_1st:
 
 work_result_feb_last:
   work: work_feb_last
+  worker_id: 1
+  hours: 6
+  display_order: 1
+
+work_result_genka1:
+  work: work_genka
   worker_id: 1
   hours: 6
   display_order: 1
