@@ -1,6 +1,5 @@
 class PersonalInformationsController < ApplicationController
   before_action :set_worker
-  after_action :to_sjis, only: [:show]
 
   SCHEDULE_DAY = 3
 
@@ -20,19 +19,14 @@ class PersonalInformationsController < ApplicationController
 
   private
 
-  def to_sjis
-    headers["Content-Type"] = 'text/html; charset=Shift_JIS'
-    response.body = response.body.encode(Encoding::SHIFT_JIS)
-  end
-
   def restrict_remote_ip
   end
 
   def worked_from
-    case Time.zone.today.month
-    when 1..3
+    m = Time.zone.today.month
+    if @current_user.view_month[0] <= m && m < @current_user.view_month[1]
       Date.new(Time.zone.today.year - 1, 12, 1)
-    when 4..7
+    elsif @current_user.view_month[1] <= m && m < @current_user.view_month[2]
       Date.new(Time.zone.today.year, 1, 1)
     else
       Date.new(Time.zone.today.year, 7, 1)
