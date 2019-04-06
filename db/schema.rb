@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_04_123910) do
+ActiveRecord::Schema.define(version: 2019_04_06_121134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -466,6 +466,7 @@ ActiveRecord::Schema.define(version: 2018_09_04_123910) do
     t.date "target_to", default: "2010-12-31", null: false, comment: "終了年月"
     t.integer "organization_id", default: 0, null: false, comment: "組織"
     t.integer "permission_id", default: 0, null: false, comment: "権限"
+    t.integer "view_month", default: [1, 4, 8], null: false, comment: "表示切替月", array: true
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["worker_id"], name: "index_users_on_worker_id", unique: true
   end
