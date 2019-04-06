@@ -19,7 +19,7 @@
 #
 cost1:
   activated_on: '2015-01-01'
-  land: land_land_cost
+  land: land_land_cost1
   work_type_id: 8
   cost: 100
   created_at: '2015-07-11 12:12:12'
