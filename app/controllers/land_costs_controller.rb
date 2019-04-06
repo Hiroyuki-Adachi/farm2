@@ -28,7 +28,7 @@ class LandCostsController < ApplicationController
       params[:land_costs].each do |_, land_cost|
         if land_cost[:id].present?
           @land_cost = LandCost.find(land_cost[:id])
-          session[:land_cost] = @land_cost.attributes unless @land_cost.update(land_cost_params(land_cost))
+          session[:land_cost] = @land_cost.attributes unless @land_cost.update_work_type(land_cost_params(land_cost), current_system.start_date)
         else
           @land_cost = LandCost.new(land_cost_params(land_cost))
           session[:land_cost] = @land_cost.attributes unless @land_cost.save
