@@ -1,5 +1,7 @@
 class PersonalInformationsController < ApplicationController
   before_action :set_worker
+  layout 'sm'
+  include PersonalInformationsHelper
 
   SCHEDULE_DAY = 3
 
@@ -14,7 +16,6 @@ class PersonalInformationsController < ApplicationController
     @machines = MachineResultDecorator.decorate_collection(MachineResult.for_personal(@worker.home, worked_from))
     @minute = Minute.for_personal(@worker).last&.decorate
     @company = Worker.company.first
-    render layout: false
   end
 
   private
