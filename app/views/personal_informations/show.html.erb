@@ -1,9 +1,9 @@
 <% if @results.count > 0 %>
   <% total_hours = 0 %>
-  <table class="type06 table table-sm">
+  <table id="personal_table" class="type06 table table-sm">
     <tbody>
       <% @results.each do |result| %>
-        <tr>
+        <tr data-href="<%=raw personal_information_work_path(personal_information_token: params[:token], id: result.model.work.id) %>">
           <td><%= image_tag(image_name(result.work.work_type), size: "48x48")%>
           <td>
             <div><%= result.worked_at_short %></div>
@@ -26,3 +26,11 @@
     </tfoot>
   </table>
 <% end %>
+<script>
+$(function(){
+    $('#personal_table tr').click(function(){
+        window.location = $(this).data('href');
+        return false;
+    });
+});
+</script>

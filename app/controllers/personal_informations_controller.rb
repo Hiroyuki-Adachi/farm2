@@ -18,10 +18,17 @@ class PersonalInformationsController < ApplicationController
     @company = Worker.company.first
   end
 
-  private
+  protected
 
   def restrict_remote_ip
   end
+
+  def set_worker
+    @worker = Worker.find_by(token: params[:token] || params[:personal_information_token])
+    @current_user = @worker.user
+  end
+
+  private
 
   def worked_from
     m = Time.zone.today.month
@@ -32,10 +39,5 @@ class PersonalInformationsController < ApplicationController
     else
       Date.new(Time.zone.today.year, 7, 1)
     end
-  end
-
-  def set_worker
-    @worker = Worker.find_by(token: params[:token])
-    @current_user = @worker.user
   end
 end
