@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=10.0, user-scalable=yes" />
+  <title>作業日報管理システム(V2)</title>
+  <%= stylesheet_link_tag    'sm', media: 'all' %>
+  <%= javascript_include_tag 'sm' %>
+  <%= csrf_meta_tags %>
+  <script type="text/javascript">
+   I18n.defaultLocale = "<%= I18n.default_locale %>";
+   I18n.locale = "<%= I18n.locale %>";
+  </script>
+</head>
+<body>
+<div class="container-fluid">
+<%= yield %>
+</div>
+</body>
+</html>
