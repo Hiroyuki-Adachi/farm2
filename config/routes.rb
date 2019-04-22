@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   resources :fixes, param: "fixed_at", except: [:edit, :update]
   resources :personal_informations, param: "token", only: [:show] do
     resources :works, controller: "personal_informations/works", only: [:show]
+    resources :lands, controller: "personal_informations/lands", only: [:index]
   end
   resources :personal_calendars, param: "token", only: [:show]
   resources :users, except: [:show] do
