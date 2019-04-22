@@ -15,5 +15,10 @@
 <% end %>
 <%= render partial: "works/show_stamp"%>
 <script>
-
+$(function() {
+    $(".stamp").each(function() {
+        $(this).offset({top: $(this).offset().top + 48});
+    });
+    $("#work_id").offset({top: $("#work_id").offset().top + 48});
+});
 </script>
