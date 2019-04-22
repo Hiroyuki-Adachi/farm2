@@ -10,9 +10,6 @@ class PersonalInformationsController < ApplicationController
 
     @schedules = ScheduleWorkerDecorator.decorate_collection(ScheduleWorker.for_personal(@worker, SCHEDULE_DAY))
     @results = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
-    @lands = WorkLand.for_personal(@worker.home, now_system.start_date)
-    @land_costs = LandCost.newest(Time.zone.today).where(land_id: @lands.map(&:land_id))
-    @lands = WorkLandDecorator.decorate_collection(@lands).group_by(&:land)
     @machines = MachineResultDecorator.decorate_collection(MachineResult.for_personal(@worker.home, worked_from))
     @minute = Minute.for_personal(@worker).last&.decorate
     @company = Worker.company.first

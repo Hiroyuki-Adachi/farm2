@@ -12,10 +12,13 @@
    I18n.locale = "<%= I18n.locale %>";
   </script>
 </head>
-<body>
+<body style="padding-top:64px;">
 <div class="container-fluid">
-<nav class="navbar navbar-dark bg-success">
+<nav class="navbar navbar-dark bg-success fixed-top" role="navigation">
+  <div class="container">
   <%= link_to "作業日報", personal_information_path(token: params[:token] || params[:personal_information_token]), {class: "navbar-brand"} %>
+  <%= link_to "管理農地", personal_information_lands_path(personal_information_token: params[:token] || params[:personal_information_token]), {class: "navbar-brand"} %>
+  </div>
 </nav>
 <%= yield %>
 </div>
