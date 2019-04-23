@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   resources :personal_informations, param: "token", only: [:show] do
     resources :works, controller: "personal_informations/works", only: [:show]
     resources :lands, controller: "personal_informations/lands", only: [:index]
+    resources :machines, controller: "personal_informations/machines", only: [:index]
   end
   resources :personal_calendars, param: "token", only: [:show]
   resources :users, except: [:show] do

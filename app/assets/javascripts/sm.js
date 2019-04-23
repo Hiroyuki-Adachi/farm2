@@ -18,3 +18,4 @@
 //= require jquery.floatThead
 //= require i18n
 //= require i18n/translations
+//= require bootstrap-sprockets

@@ -10,7 +10,6 @@ class PersonalInformationsController < ApplicationController
 
     @schedules = ScheduleWorkerDecorator.decorate_collection(ScheduleWorker.for_personal(@worker, SCHEDULE_DAY))
     @results = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
-    @machines = MachineResultDecorator.decorate_collection(MachineResult.for_personal(@worker.home, worked_from))
     @minute = Minute.for_personal(@worker).last&.decorate
     @company = Worker.company.first
   end
