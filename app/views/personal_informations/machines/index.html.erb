@@ -1,0 +1,14 @@
+<% if @machines.count > 0 %>
+  <table class="table table table-sm">
+    <tbody>
+      <% @machines.each do |machine| %>
+        <tr>
+          <td><%= image_tag(image_name(machine.work.work_type), size: "48x48")%></td>
+          <td><%= machine.worked_at_short %></td>
+          <td><%= machine.type_name %></td>
+          <td style="text-align:right;"><%= machine.quantity %>(<%= machine.unit %>)</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

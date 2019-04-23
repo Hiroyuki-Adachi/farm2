@@ -12,14 +12,25 @@
    I18n.locale = "<%= I18n.locale %>";
   </script>
 </head>
+<% token = params[:token] || params[:personal_information_token] %>
 <body style="padding-top:64px;">
 <div class="container-fluid">
 <div id="site-header">
 <nav class="navbar navbar-dark bg-success fixed-top" role="navigation">
-  <div class="container">
-  <%= link_to "作業日報", personal_information_path(token: params[:token] || params[:personal_information_token]), {class: "navbar-brand"} %>
-  <%= link_to "管理農地", personal_information_lands_path(personal_information_token: params[:token] || params[:personal_information_token]), {class: "navbar-brand"} %>
-  </div>
+  <%= link_to "作業日報", personal_information_path(token: token), {class: "navbar-brand"} %>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarFarm2" aria-controls="navbarFarm2" aria-expanded="false" aria-label="ナビゲーションの切替">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarFarm2">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <%= link_to "管理農地", personal_information_lands_path(personal_information_token: token), {class: "nav-link"} %>
+          </li>
+          <li class="nav-item">
+            <%= link_to '機械賃借', personal_information_machines_path(personal_information_token: token), {class: "nav-link"} %>
+          </li>
+        </ul>
+    </div>
 </nav>
 </div>
 <%= yield %>
