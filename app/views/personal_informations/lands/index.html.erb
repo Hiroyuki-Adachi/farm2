@@ -1,4 +1,7 @@
 <% if @lands.count > 0 %>
+  <style>
+    .manage {color: blue;}
+  </style>
   <table class="table table-sm">
   <thead>
   <tr>
@@ -13,9 +16,9 @@
   <% land_id = 0 %>
   <% @lands.each do |land, results| %>
     <% land_cost = @land_costs.find{|land_cost| land_cost.land_id == land.id} %>
-    <tr>
-      <td rowspan="<% results.count %>"><%= land.place %><%= land.manager_id == land.owner_id ? "" : "(管)" %></td>
-      <td rowspan="<% results.count %>"><%= sprintf("%.1f", land.area) %></td>
+    <tr class="<%= land.manager_id == land.owner_id ? "" : "manage" %>">
+      <td rowspan="<% results.count %>"><%= land.place %></td>
+      <td rowspan="<% results.count %>" style="text-align: right;"><%= sprintf("%.1f", land.area) %></td>
       <td rowspan="<% results.count %>"><%= land_cost&.work_type&.name %></td>
       <% results.each_with_index do |result, i| %>
       <td><%= result.worked_at_short%></td>
