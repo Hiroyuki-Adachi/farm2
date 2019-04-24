@@ -17,7 +17,7 @@
 <div class="container-fluid">
 <div id="site-header">
 <nav class="navbar navbar-dark bg-success fixed-top" role="navigation">
-  <%= link_to "作業日報", personal_information_path(token: token), {class: "navbar-brand"} %>
+  <%= link_to "作業日報(#{current_name})", personal_information_path(token: token), {class: "navbar-brand"} %>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarFarm2" aria-controls="navbarFarm2" aria-expanded="false" aria-label="ナビゲーションの切替">
       <span class="navbar-toggler-icon"></span>
     </button>
