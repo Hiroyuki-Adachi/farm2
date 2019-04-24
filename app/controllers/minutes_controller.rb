@@ -5,7 +5,7 @@ class MinutesController < ApplicationController
   skip_before_action :restrict_remote_ip, only: [:show]
 
   def index
-    @schedules = ScheduleDecorator.decorate_collection(Schedule.for_minute(current_term))
+    @schedules = ScheduleDecorator.decorate_collection(Schedule.for_minute)
   end
 
   def create
