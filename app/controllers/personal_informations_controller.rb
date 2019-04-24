@@ -8,9 +8,7 @@ class PersonalInformationsController < ApplicationController
   def show
     to_error_path unless @worker
 
-    @schedules = ScheduleWorkerDecorator.decorate_collection(ScheduleWorker.for_personal(@worker, SCHEDULE_DAY))
     @results = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
-    @minute = Minute.for_personal(@worker).last&.decorate
     @company = Worker.company.first
   end
 

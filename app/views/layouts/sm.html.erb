@@ -24,6 +24,9 @@
     <div class="collapse navbar-collapse" id="navbarFarm2">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
+            <%= link_to "作業予定", personal_information_schedules_path(personal_information_token: token), {class: "nav-link"} %>
+          </li>
+          <li class="nav-item">
             <%= link_to "管理農地", personal_information_lands_path(personal_information_token: token), {class: "nav-link"} %>
           </li>
           <li class="nav-item">
