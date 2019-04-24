@@ -256,6 +256,10 @@ SQL
     Work.joins(:work_results).group(:term).order(:term).sum("work_results.hours")
   end
 
+  def self.total_by_worker(worker_id, term)
+    Work.joins(:work_results).where(["work_results.worker_id = ? AND works.term >= ?", worker_id, term - 9]).group(:term).order(:term).sum("work_results.hours")
+  end
+
   def self.total_genre
     Work.joins(:work_results)
         .joins("INNER JOIN work_types ON works.work_type_id = work_types.id")
