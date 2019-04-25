@@ -1,4 +1,4 @@
-class CreateWorkKindTypes < ActiveRecord::Migration
+class CreateWorkKindTypes < ActiveRecord::Migration[4.2]
   def change
     create_table :work_kind_types, {comment: "作業種別分類対応マスタ"} do |t|
       t.integer :work_kind_id, {comment: "作業種別"}

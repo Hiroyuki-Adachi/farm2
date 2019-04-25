@@ -1,4 +1,4 @@
-class CreateFixes < ActiveRecord::Migration
+class CreateFixes < ActiveRecord::Migration[4.2]
   def change
     create_table :fixes, {id: false, comment: "確定データ"} do |t|
       t.integer :term, {null: false, default: 0, comment: "年度(期)"}

@@ -1,4 +1,4 @@
-class CreateSystems < ActiveRecord::Migration
+class CreateSystems < ActiveRecord::Migration[4.2]
   def change
     create_table :systems, {comment: "システムマスタ"} do |t|
       t.integer  :term,         {limit: 4, null: false, comment: "年度(期)"}

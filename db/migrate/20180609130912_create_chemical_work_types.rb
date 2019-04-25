@@ -1,4 +1,4 @@
-class CreateChemicalWorkTypes < ActiveRecord::Migration
+class CreateChemicalWorkTypes < ActiveRecord::Migration[4.2]
   def change
     create_table :chemical_work_types, {comment: "薬剤使用量"} do |t|
       t.integer :chemical_term_id, {comment: "薬剤利用"}

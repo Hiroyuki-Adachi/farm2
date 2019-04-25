@@ -1,4 +1,4 @@
-class AddOrganizationToSystem < ActiveRecord::Migration
+class AddOrganizationToSystem < ActiveRecord::Migration[4.2]
   def up
     add_column :systems, :organization_id, :integer, {null: true, comment: "組織"}
     System.all.each do |system|

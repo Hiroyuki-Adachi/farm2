@@ -1,4 +1,4 @@
-class AddUrlToOrganizations < ActiveRecord::Migration
+class AddUrlToOrganizations < ActiveRecord::Migration[4.2]
   def up
     add_column :organizations, :url, :string, {null: true, comment: "URL"}
   end

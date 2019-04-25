@@ -1,4 +1,4 @@
-class CreateWorkKindPrices < ActiveRecord::Migration
+class CreateWorkKindPrices < ActiveRecord::Migration[4.2]
   def change
     create_table :work_kind_prices, {comment: "作業単価マスタ"} do |t|
       t.integer   :term, {null: false, comment: "年度(期)"}

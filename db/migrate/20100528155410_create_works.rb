@@ -1,4 +1,4 @@
-class CreateWorks < ActiveRecord::Migration
+class CreateWorks < ActiveRecord::Migration[4.2]
   def change
     create_table :works, {comment: "作業データ"} do |t|
       t.integer   :term,          {limit: 4, null: false, comment: "年度(期)"}
