@@ -1,4 +1,4 @@
-class CreateMachinePriceDetails < ActiveRecord::Migration
+class CreateMachinePriceDetails < ActiveRecord::Migration[4.2]
   def change
     create_table :machine_price_details, {comment: "機械利用単価マスタ(明細)"} do |t|
       t.integer :machine_price_header_id, {null: false, comment: "単価ヘッダ"}

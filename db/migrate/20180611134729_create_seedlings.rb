@@ -1,4 +1,4 @@
-class CreateSeedlings < ActiveRecord::Migration
+class CreateSeedlings < ActiveRecord::Migration[4.2]
   def change
     create_table :seedlings, {comment: "育苗"} do |t|
       t.integer :term, {limit: 4, null: false, comment: "年度(期)"}

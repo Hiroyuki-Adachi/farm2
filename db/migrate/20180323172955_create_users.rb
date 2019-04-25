@@ -1,4 +1,4 @@
-class CreateUsers < ActiveRecord::Migration
+class CreateUsers < ActiveRecord::Migration[4.2]
   def up
     create_table :users, comment: "利用者マスタ" do |t|
       t.string :login_name, null: false, limit: 12, comment: "ログイン名"

@@ -1,4 +1,4 @@
-class CreateChemicalKinds < ActiveRecord::Migration
+class CreateChemicalKinds < ActiveRecord::Migration[4.2]
   def change
     create_table :chemical_kinds, {comment: "作業種別薬剤種別利用マスタ"} do |t|
       t.integer :chemical_type_id,  {null: false, comment: "薬剤種別"}

@@ -1,4 +1,4 @@
-class RenameFromTermToActiveDateOnLandCosts < ActiveRecord::Migration
+class RenameFromTermToActiveDateOnLandCosts < ActiveRecord::Migration[4.2]
   def up
     remove_index :land_costs, [:term, :land_id]
     add_column :land_costs, :activated_on, :date, {null: false, default: '1900-01-01', comment: "有効日"}
