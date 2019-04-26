@@ -22,7 +22,7 @@ class SeedlingHome < ActiveRecord::Base
   scope :usual, ->(term) {
     includes({seedling: :work_type}, :home)
       .where(seedlings: {term: term})
-      .order("homes.display_order, homes.id, work_types.display_order, work_types.id")
+      .order("homes.display_order, homes.id, seedling_homes.sowed_on, work_types.display_order, work_types.id")
   }
   scope :by_home, ->(home) {where(home_id: home.id)}
 
