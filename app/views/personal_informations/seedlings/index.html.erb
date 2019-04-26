@@ -1,0 +1,30 @@
+<% if @seedling_homes.count > 0 %>
+  <table class="table table table-sm">
+    <tbody>
+      <tr>
+        <th>品種</th>
+        <th>契約数</th>
+        <th>払出日(払出):(累計)
+      </tr>
+      <% @seedling_homes.each do |seedling_home| %>
+        <tr>
+          <td><%= seedling_home.work_type_name %></td>
+          <td style="text-align:right; "><%= number_to_currency(seedling_home.quantity, precision: 0, unit: "") %></td>
+          <td>
+            <% sum_quantity = 0%>
+            <% SeedlingResult.by_work_day(seedling_home).each do |worked_at, quantity| %>
+            <div>
+              <% sum_quantity += quantity %>
+              <%= worked_at.strftime('%m/%d') %>
+              (<%= number_to_currency(quantity, precision: 0, unit: "") .rjust(4) %>)
+              :
+              (<%= number_to_currency(sum_quantity, precision: 0, unit: "") .rjust(5) %>)
+              <%= SeedlingResult.dispose?(seedling_home, worked_at) ? "(廃)" : "" %>
+            </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
