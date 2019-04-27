@@ -1,4 +1,4 @@
-class CreateSections < ActiveRecord::Migration
+class CreateSections < ActiveRecord::Migration[4.2]
   def change
     create_table :sections, {comment: "班／町内マスタ"} do |t|
       t.string  :name,          {null: false, limit: 40, comment: "班名称"}

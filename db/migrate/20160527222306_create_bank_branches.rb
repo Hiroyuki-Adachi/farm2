@@ -1,4 +1,4 @@
-class CreateBankBranches < ActiveRecord::Migration
+class CreateBankBranches < ActiveRecord::Migration[4.2]
   def change
     create_table :bank_branches, {id: false, comment: "支店マスタ"} do |t|
       t.string :bank_code, {null: false, limit: 4, comment: "金融機関コード"}

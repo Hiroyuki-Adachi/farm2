@@ -1,4 +1,4 @@
-class CreateDepreciationTypes < ActiveRecord::Migration
+class CreateDepreciationTypes < ActiveRecord::Migration[4.2]
   def change
     create_table :depreciation_types, {comment: "減価償却分類"} do |t|
       t.integer :depreciation_id, {comment: "減価償却"}

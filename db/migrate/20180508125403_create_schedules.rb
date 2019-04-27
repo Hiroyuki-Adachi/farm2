@@ -1,4 +1,4 @@
-class CreateSchedules < ActiveRecord::Migration
+class CreateSchedules < ActiveRecord::Migration[4.2]
   def change
     create_table :schedules, {comment: "作業予定"} do |t|
       t.integer   :term,          {limit: 4, null: false, comment: "年度(期)"}

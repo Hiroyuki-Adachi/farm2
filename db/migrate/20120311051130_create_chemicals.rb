@@ -1,4 +1,4 @@
-class CreateChemicals < ActiveRecord::Migration
+class CreateChemicals < ActiveRecord::Migration[4.2]
   def change
     create_table :chemicals, {comment: "薬剤マスタ"} do |t|
       t.string  :name,              {null: false, limit: 20, comment: "薬剤名称"}

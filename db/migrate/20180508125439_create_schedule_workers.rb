@@ -1,4 +1,4 @@
-class CreateScheduleWorkers < ActiveRecord::Migration
+class CreateScheduleWorkers < ActiveRecord::Migration[4.2]
   def change
     create_table :schedule_workers, {comment: "作業予定作業者"} do |t|
       t.integer :schedule_id,   {comment: "作業予定"}

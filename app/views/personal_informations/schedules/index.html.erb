@@ -1,0 +1,12 @@
+<ul>
+<% if @schedules.count > 0%>
+  <% @schedules.each do |schedule| %>
+  <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
+  <% end %>
+<% end %>
+<% if @minute.present? %>
+  <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(<%= link_to '議事録', minute_path(@minute.id, token: params[:token]), {target: :_blank, data: {turbolinks: false}} %>)</li>
+<% end %>
+  <li>Google カレンダーを使用している方は、<a href="http://www.google.com/calendar/render?cid=http://shimodekisu-farm.mydns.jp/personal_calendars/<%= params[:token] %>" target="_blank">こちらのリンク</a>を押すと作業の予定や実績を連動することができます。</li>
+  <li>管理者への連絡は、<%= mail_to @company.pc_mail, "こちらのリンク", subject: "日報システムについて" %>を押してください。</li>
+</ul>

@@ -1,4 +1,4 @@
-class AddRandomToWorkers < ActiveRecord::Migration
+class AddRandomToWorkers < ActiveRecord::Migration[4.2]
   def up
     add_column :workers, :token, :string, {null: false, limit: 36, default: '', comment: "アクセストークン"}
     Worker.with_deleted.each do |worker|

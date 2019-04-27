@@ -1,4 +1,4 @@
-class AddGroupNoToWorkChemicals < ActiveRecord::Migration
+class AddGroupNoToWorkChemicals < ActiveRecord::Migration[4.2]
   def up
     remove_index :work_chemicals, [:work_id, :chemical_id]
     add_column :work_chemicals, :chemical_group_no, :integer, {null: false, default: 1, comment: "薬剤グループ番号"}

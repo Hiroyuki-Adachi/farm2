@@ -1,4 +1,4 @@
-class CreateDepreciations < ActiveRecord::Migration
+class CreateDepreciations < ActiveRecord::Migration[4.2]
   def change
     create_table :depreciations, {comment: "減価償却"} do |t|
       t.integer :term, {limit: 4, null: false, comment: "年度(期)"}

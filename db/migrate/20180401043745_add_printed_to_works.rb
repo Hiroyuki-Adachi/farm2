@@ -1,4 +1,4 @@
-class AddPrintedToWorks < ActiveRecord::Migration
+class AddPrintedToWorks < ActiveRecord::Migration[4.2]
   def up
     add_column :works, :printed_at, :datetime, {null: true, comment: "印刷日時"}
     add_column :works, :printed_by, :integer, {null: true, comment: "印刷者"}

@@ -1,4 +1,4 @@
-class AddPermissionToUsers < ActiveRecord::Migration
+class AddPermissionToUsers < ActiveRecord::Migration[4.2]
   def up
     add_column :users, :permission_id, :integer, {null: false, default: 0, comment: "権限"}
     User.all.each do |user|

@@ -1,4 +1,4 @@
-class CreateBroccoliSizes < ActiveRecord::Migration
+class CreateBroccoliSizes < ActiveRecord::Migration[4.2]
   def up
     create_table :broccoli_sizes, comment: "ブロッコリ階級マスタ"  do |t|
       t.string  :display_name,  {limit: 10, null: false, default: "", comment: "表示名"}
