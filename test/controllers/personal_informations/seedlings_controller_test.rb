@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PersonalInformations::SeedlingsControllerTest < ActionDispatch::IntegrationTest
+class PersonalInformations::SeedlingsControllerTest < ActionController::TestCase
   setup do
     @worker = workers(:worker1)
   end
