@@ -1,4 +1,4 @@
-class CreateMachineResults < ActiveRecord::Migration
+class CreateMachineResults < ActiveRecord::Migration[4.2]
   def change
     create_table :machine_results, {comment: "機械稼動データ"} do |t|
       t.integer :machine_id,      {comment: "機械"}

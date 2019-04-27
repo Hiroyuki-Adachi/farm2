@@ -1,4 +1,4 @@
-class CreateExpenses < ActiveRecord::Migration
+class CreateExpenses < ActiveRecord::Migration[4.2]
   def change
     create_table :expenses, {comment: "経費"} do |t|
       t.integer :term, {limit: 4, null: false, comment: "年度(期)"}

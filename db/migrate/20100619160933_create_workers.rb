@@ -1,4 +1,4 @@
-class CreateWorkers < ActiveRecord::Migration
+class CreateWorkers < ActiveRecord::Migration[4.2]
   def change
     create_table :workers, {comment: "作業者マスタ"} do |t|
       t.string   :family_phonetic, {limit: 15, null: false, comment: "姓(ﾌﾘｶﾞﾅ)"}

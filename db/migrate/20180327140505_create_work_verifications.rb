@@ -1,4 +1,4 @@
-class CreateWorkVerifications < ActiveRecord::Migration
+class CreateWorkVerifications < ActiveRecord::Migration[4.2]
   def change
     create_table :work_verifications, comment: "日報検証" do |t|
       t.integer :work_id,       {comment: "作業"}

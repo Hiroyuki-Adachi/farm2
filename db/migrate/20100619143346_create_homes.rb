@@ -1,4 +1,4 @@
-class CreateHomes < ActiveRecord::Migration
+class CreateHomes < ActiveRecord::Migration[4.2]
   def change
     create_table :homes, {comment: "世帯マスタ"} do |t|
       t.string   :phonetic,       {limit: 15, comment: "世帯名(よみ)"}

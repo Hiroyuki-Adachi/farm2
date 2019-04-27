@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-12">
+    <canvas id="chart" />
+  </div>
+</div>
+<script>
+var colors = ['rgba(99, 200, 132, 1.0)', 'rgba(99, 132, 200, 1.0)', 'rgba(200, 200, 132, 1.0)', 'rgba(132, 132, 132, 1.0)', 'rgba(99, 200, 200, 1.0)', 'rgba(200, 132, 132, 1.0)'];
+var ctx = document.getElementById("chart").getContext('2d');
+var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: <%= @total_all.map {|ta| ta[0] - 2000 }.to_json.html_safe %>,
+        datasets: [{
+            label: "作業時間",
+            data: <%= @total_all.map {|ta| ta[1].to_f } %>,
+            backgroundColor: colors[0],
+            fill: false
+        }]
+    }
+});
+</script>
