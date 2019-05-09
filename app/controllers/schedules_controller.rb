@@ -13,7 +13,7 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.new(
       worked_at: Time.zone.today,
       work_type_id: @work_types.first.id,
-      term: @term,
+      term: 0,
       work_flag: true
     ).decorate
   end
