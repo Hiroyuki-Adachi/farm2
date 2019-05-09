@@ -14,7 +14,7 @@ module PersonalInformationsHelper
     when 12 then
         "farm1.png"
     when 13 then
-        "tractor.png"
+        "spanner.png"
     when 38 then
         "farm2.png"
     when 42 then
