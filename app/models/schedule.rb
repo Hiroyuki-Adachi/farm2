@@ -30,7 +30,7 @@ class Schedule < ApplicationRecord
   has_one :minute, {dependent: :destroy}
 
   scope :usual, -> {
-      where(["worked_at >= current_timestamp"])
+      where(["worked_at >= current_date"])
         .includes(:work_type, :work_kind, schedule_workers: [worker: :home])
         .order(worked_at: :ASC, id: :ASC)
     }
