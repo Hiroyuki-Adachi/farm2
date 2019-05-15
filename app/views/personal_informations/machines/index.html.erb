@@ -1,0 +1,20 @@
+<% if @machines.count > 0 %>
+  <table class="table table table-sm">
+    <tbody>
+      <% @machines.each do |machine| %>
+        <tr>
+          <td><%= image_tag(image_name(machine.work.work_type), size: "48x48")%></td>
+          <td>
+            <div><%= machine.worked_at_short %></div>
+            <div class="small"><%= machine.model.work.start_at.strftime("%H:%M") %>〜<%= machine.model.work.end_at.strftime("%H:%M") %></div>
+          </td>
+          <td>
+            <div><%= machine.type_name %></div>
+            <div class="small"><%= machine.work.work_kind.name %></div>
+          </td>
+          <td style="text-align:right;"><%= machine.quantity %>(<%= machine.unit %>)</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

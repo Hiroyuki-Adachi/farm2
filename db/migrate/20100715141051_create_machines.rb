@@ -1,4 +1,4 @@
-class CreateMachines < ActiveRecord::Migration
+class CreateMachines < ActiveRecord::Migration[4.2]
   def change
     create_table :machines, {comment: "機械マスタ"} do |t|
       t.string  :name,              {limit: 40, null: false, comment: "機械名称"}

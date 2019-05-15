@@ -1,4 +1,4 @@
-class CreateMachinePriceHeaders < ActiveRecord::Migration
+class CreateMachinePriceHeaders < ActiveRecord::Migration[4.2]
   def change
     create_table :machine_price_headers, {comment: "機械利用単価マスタ(ヘッダ)"} do |t|
       t.date    :validated_at,    {null: false, comment: "起点日"}

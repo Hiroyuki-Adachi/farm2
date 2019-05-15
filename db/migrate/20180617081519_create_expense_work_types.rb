@@ -1,4 +1,4 @@
-class CreateExpenseWorkTypes < ActiveRecord::Migration
+class CreateExpenseWorkTypes < ActiveRecord::Migration[4.2]
   def change
     create_table :expense_work_types, {comment: "経費作業種別"} do |t|
       t.integer :expense_id, {comment: "経費"}

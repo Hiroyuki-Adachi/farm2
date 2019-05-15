@@ -1,4 +1,4 @@
-class AddOwnerFlagToHome < ActiveRecord::Migration
+class AddOwnerFlagToHome < ActiveRecord::Migration[4.2]
   def up
     add_column :homes, :owner_flag, :boolean, {null: false, default: false, comment: "所有者フラグ"}
     Home.where(company_flag: true).update_all(owner_flag: true)

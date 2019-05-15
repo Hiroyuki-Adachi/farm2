@@ -1,4 +1,4 @@
-class CreateWorkKinds < ActiveRecord::Migration
+class CreateWorkKinds < ActiveRecord::Migration[4.2]
   def change
     create_table :work_kinds, {comment: "作業種別マスタ"} do |t|
       t.string  :name,          {limit: 20, null: false, comment: "作業種別名称"}

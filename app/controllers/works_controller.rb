@@ -64,7 +64,7 @@ class WorksController < ApplicationController
     @work = Work.new(work_params)
     @work.created_by = current_user.worker.id
     if @work.save
-      redirect_to(work_path(@work.id))
+      redirect_to(edit_workers_work_path(@work.id))
     else
       render action: :new
     end

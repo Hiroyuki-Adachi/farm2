@@ -1,4 +1,4 @@
-class CreateBroccoliHarvests < ActiveRecord::Migration
+class CreateBroccoliHarvests < ActiveRecord::Migration[4.2]
   def up
     create_table :broccoli_harvests, {comment: "ブロッコリー収穫"} do |t|
       t.integer :work_broccoli_id, {null: false, comment: "ブロッコリー作業"}

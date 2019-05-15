@@ -1,4 +1,4 @@
-class CreateOrganizations < ActiveRecord::Migration
+class CreateOrganizations < ActiveRecord::Migration[4.2]
   def change
     create_table :organizations, {comment: "組織(体系)マスタ"} do |t|
       t.string  :name,          {null: false, limit: 20, comment: "組織名称"}

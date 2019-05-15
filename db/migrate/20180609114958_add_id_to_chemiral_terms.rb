@@ -1,4 +1,4 @@
-class AddIdToChemiralTerms < ActiveRecord::Migration
+class AddIdToChemiralTerms < ActiveRecord::Migration[4.2]
   def up
     execute "ALTER TABLE chemical_terms DROP CONSTRAINT chemical_terms_pkey;"
     add_column :chemical_terms, :id, :serial, {null: false}

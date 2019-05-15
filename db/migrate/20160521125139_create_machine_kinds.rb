@@ -1,4 +1,4 @@
-class CreateMachineKinds < ActiveRecord::Migration
+class CreateMachineKinds < ActiveRecord::Migration[4.2]
   def change
     create_table :machine_kinds, {comment: "作業種別機械利用可能マスタ"} do |t|
       t.integer :machine_type_id, {null: false, comment: "機械種別"}

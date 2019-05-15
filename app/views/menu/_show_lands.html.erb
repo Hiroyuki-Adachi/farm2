@@ -1,0 +1,31 @@
+<% if @lands.count > 0 %>
+  <h1 class="h4">管理</h1>
+  <table class="table table table-sm">
+  <thead>
+  <tr>
+    <th>地番</th>
+    <th>面積</th>
+    <th>品種</th>
+    <th>内容</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% land_id = 0 %>
+  <% @lands.each do |land, results| %>
+    <% land_cost = @land_costs.find{|land_cost| land_cost.land_id == land.id} %>
+    <tr>
+      <td><%= land.place %><%= land.manager_id == land.owner_id ? "" : "(管)" %></td>
+      <td><%= sprintf("%.1f", land.area) %></td>
+      <td><%= land_cost&.work_type&.name %></td>
+      <td><% results.each_with_index do |result, i| %>
+      <%= result.worked_at_short%>(<%= result.work_kind_name %>)
+        <% if i < results.size - 1 %>
+          →
+        <% end%>
+      <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+  </table>
+<% end %>
