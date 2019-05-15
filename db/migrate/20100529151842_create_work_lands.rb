@@ -1,4 +1,4 @@
-class CreateWorkLands < ActiveRecord::Migration
+class CreateWorkLands < ActiveRecord::Migration[4.2]
   def change
     create_table :work_lands, {comment: "作業地データ"} do |t|
       t.integer :work_id, {comment: "作業"}

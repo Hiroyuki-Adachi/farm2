@@ -1,4 +1,4 @@
-class AddPositionToWorkers < ActiveRecord::Migration
+class AddPositionToWorkers < ActiveRecord::Migration[4.2]
   def up
     add_column :workers, :position_id, :integer, {null: false, default: 0, comment: "役職"}
   end

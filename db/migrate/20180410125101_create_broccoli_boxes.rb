@@ -1,4 +1,4 @@
-class CreateBroccoliBoxes < ActiveRecord::Migration
+class CreateBroccoliBoxes < ActiveRecord::Migration[4.2]
   def up
     create_table :broccoli_boxes, comment: "ブロッコリ箱マスタ" do |t|
       t.decimal :weight, {scale: 1, precision: 3, null: false, default: 0, comment: "重さ(kg)"}

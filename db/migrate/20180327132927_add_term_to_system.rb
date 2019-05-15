@@ -1,6 +1,6 @@
 require 'date'
 
-class AddTermToSystem < ActiveRecord::Migration
+class AddTermToSystem < ActiveRecord::Migration[4.2]
   def up
     add_column :systems, :start_date, :date, {null: true, comment: "期首日"}
     add_column :systems, :end_date, :date, {null: true, comment: "期末日"}

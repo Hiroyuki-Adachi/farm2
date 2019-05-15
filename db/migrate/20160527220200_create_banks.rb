@@ -1,4 +1,4 @@
-class CreateBanks < ActiveRecord::Migration
+class CreateBanks < ActiveRecord::Migration[4.2]
   def change
     create_table :banks, {id: false, comment: "金融機関マスタ"} do |t|
       t.string :code, {null: false, limit: 4, comment: "金融機関コード"}

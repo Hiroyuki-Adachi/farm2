@@ -29,8 +29,8 @@ class Schedule < ApplicationRecord
 
   has_one :minute, {dependent: :destroy}
 
-  scope :usual, ->(term) {
-      where(term: term)
+  scope :usual, -> {
+      where(["worked_at >= current_date"])
         .includes(:work_type, :work_kind, schedule_workers: [worker: :home])
         .order(worked_at: :ASC, id: :ASC)
     }
@@ -40,7 +40,7 @@ class Schedule < ApplicationRecord
             WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
 SQL
 
-  scope :for_minute, ->(term) {where(term: term, work_flag: false).order(worked_at: :ASC, id: :ASC)}
+  scope :for_minute, -> {where(["(worked_at BETWEEN (current_timestamp + '-1 year') AND current_timestamp) AND (work_flag = ?)", false]).order(worked_at: :ASC, id: :ASC)}
 
   def regist_workers(params)
     workers = []

@@ -1,4 +1,4 @@
-class AddUuidToWorkers < ActiveRecord::Migration
+class AddUuidToWorkers < ActiveRecord::Migration[4.2]
   def up
     add_column :work_results,     :uuid, :string, {null: true, limit: 36, comment: "UUID(カレンダー用)"}
     add_column :schedule_workers, :uuid, :string, {null: true, limit: 36, comment: "UUID(カレンダー用)"}

@@ -1,4 +1,4 @@
-class CreateSeedlingHomes < ActiveRecord::Migration
+class CreateSeedlingHomes < ActiveRecord::Migration[4.2]
   def up
     create_table :seedling_homes, {comment: "育苗担当世帯"} do |t|
       t.integer :seedling_id, {comment: "育苗"}

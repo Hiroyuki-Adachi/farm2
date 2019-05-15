@@ -1,4 +1,4 @@
-class CreateSeedlingResults < ActiveRecord::Migration
+class CreateSeedlingResults < ActiveRecord::Migration[4.2]
   def change
     create_table :seedling_results, {comment: "育苗結果"} do |t|
       t.integer :seedling_home_id, {comment: "育苗担当"}

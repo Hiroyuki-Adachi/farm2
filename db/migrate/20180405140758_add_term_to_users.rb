@@ -1,4 +1,4 @@
-class AddTermToUsers < ActiveRecord::Migration
+class AddTermToUsers < ActiveRecord::Migration[4.2]
   def up
     add_column :users, :term, :integer, {null: false, limit: 4, default: 0, comment: "期"}
     add_column :users, :target_from, :date, {null: false, default: '2010-01-01', comment: "開始年月"}

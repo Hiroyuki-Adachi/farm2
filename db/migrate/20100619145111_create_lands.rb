@@ -1,4 +1,4 @@
-class CreateLands < ActiveRecord::Migration
+class CreateLands < ActiveRecord::Migration[4.2]
   def change
     create_table :lands, {comment: "土地マスタ"} do |t|
       t.string   :place,          {limit: 15, null: false, comment: "番地"}

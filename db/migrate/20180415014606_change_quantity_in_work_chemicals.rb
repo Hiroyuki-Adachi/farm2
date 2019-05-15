@@ -1,4 +1,4 @@
-class ChangeQuantityInWorkChemicals < ActiveRecord::Migration
+class ChangeQuantityInWorkChemicals < ActiveRecord::Migration[4.2]
   def up
     change_column :work_chemicals, :quantity, :decimal, {scale: 1, precision: 5, null: false, default: 0, comment: "使用量"}
   end
