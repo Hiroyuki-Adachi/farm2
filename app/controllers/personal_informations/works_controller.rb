@@ -5,6 +5,7 @@ class PersonalInformations::WorksController < PersonalInformationsController
 
   def show
     to_error_path unless @worker
+    to_error_path unless @work.work_results.exists?(worker_id: @worker.id)
 
     @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
     @chemicals = @work.work_chemicals.group(:chemical_id).sum(:quantity).to_a

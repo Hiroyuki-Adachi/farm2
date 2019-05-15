@@ -6,16 +6,22 @@
   <tbody>
   <% land_id = 0 %>
   <% @lands.each do |land, results| %>
-    <% land_cost = @land_costs.find{|land_cost| land_cost.land_id == land.id} %>
     <tr class="<%= land.manager_id == land.owner_id ? "" : "manage" %>">
-      <td><%= land.place %></td>
-      <td style="text-align:right;"><%= sprintf("%.1f", land.area) %></td>
-      <td><%= land_cost&.work_type&.name %></td>
-      <td>
-      <% results.each do |result| %>
-      <div class="small"><%= result.worked_at_short%>：<%= result.work_kind_name %></div>
+      <td rowspan="<%= results.count %>"><%= land.place %></td>
+      <td style="text-align:right;" rowspan="<%= results.count %>"><%= sprintf("%.1f", land.area) %></td>
+
+      <% work_type_name = "" %>
+      <% results.each_with_index do |result, i| %>
+        <% land_cost = @land_costs.newest(result.work.worked_at).find{|land_cost| land_cost.land_id == land.id} %>
+        <td class="small"><%= work_type_name == land_cost&.work_type&.name ? "" : land_cost&.work_type&.name %></td>
+        <td class="small"><%= result.worked_at_short%></td>
+        <td class="small"><%= result.work_kind_name %></td>
+        <% if i < results.count - 1 %>
+        </tr>
+        <tr>
+        <% end %>
+        <% work_type_name = land_cost&.work_type&.name %>
       <% end %>
-      </td>
     </tr>
   <% end %>
   </tbody>
