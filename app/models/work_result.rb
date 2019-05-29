@@ -28,6 +28,7 @@ class WorkResult < ApplicationRecord
 
   has_many  :machine_results, {dependent: :destroy}
   has_many  :machines, {through: :machine_results}
+  has_many  :seedling_results, {dependent: :destroy}
 
   validates :hours, presence: true
   validates :hours, numericality: true, :if => proc{|x| x.hours.present?}
