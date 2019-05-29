@@ -33,5 +33,13 @@ class SeedlingResultsControllerTest < ActionController::TestCase
       patch :update, params: {seedling_home_id: seedling_homes(:seedling_home1), seedling_home: seedling_result_insert}
     end
     assert_redirected_to edit_seedling_result_path(seedling_home_id: seedling_homes(:seedling_home1))
+
+    seedling_result_delete = {seedling_results_attributes: [{_destroy: true, id: seedling_results(:seedling_home1_genka)}]}
+    assert_no_difference('WorkResult.count') do
+      assert_difference('SeedlingResult.count', -1) do
+        patch :update, params: {seedling_home_id: seedling_homes(:seedling_home1), seedling_home: seedling_result_delete}
+      end
+    end
+    assert_redirected_to edit_seedling_result_path(seedling_home_id: seedling_homes(:seedling_home1))
   end
 end
