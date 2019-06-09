@@ -187,6 +187,7 @@ ja:
         broccoli_work_kind_id: "収穫を選択"
         rice_planting_id: "田植を選択"
         whole_crop_work_kind_id: "WCS収穫を選択"
+        contract_work_type_id: "受託作業を選択"
 
       section:
         name: 名称

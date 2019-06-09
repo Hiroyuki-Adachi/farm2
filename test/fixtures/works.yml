@@ -5256,12 +5256,12 @@ works326:
   updated_at: '2016-02-09 02:11:26.362171'
 
 
-works327:
+works_contract:
   id: '1805'
   term: '2016'
   worked_at: '2016-02-03'
   weather_id: '1'
-  work_type_id: '11'
+  work_type_id: 28
   name: ''
   remarks: ''
   start_at: '2016-02-09 10:00:00'
