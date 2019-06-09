@@ -28,6 +28,7 @@
       <%= link_to '日当一覧', work_results_path, {class: "dropdown-item", data: {controller: "work_results"}} %>
       <%= link_to '機械利用料', machine_results_path, {class: "dropdown-item", data: {controller: "machine_results"}} %>
       <%= link_to '薬剤使用量一覧', work_chemicals_path, {class: "dropdown-item", data: {controller: "work_chemicals"}} %>
+      <%= link_to '組合内受託一覧', contracts_path, {class: "dropdown-item", data: {controller: "contracts"}} %>
     <% end %>
   </div>
   <% if current_user.manageable? %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_06_121134) do
+ActiveRecord::Schema.define(version: 2019_06_09_111228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -339,6 +339,7 @@ ActiveRecord::Schema.define(version: 2019_04_06_121134) do
     t.integer "chemical_group_count", default: 1, comment: "薬剤グループ数"
     t.integer "rice_planting_id", comment: "田植作業種別"
     t.integer "whole_crop_work_kind_id", comment: "WCS収穫分類"
+    t.integer "contract_work_type_id", comment: "受託作業分類"
   end
 
   create_table "schedule_workers", id: :serial, comment: "作業予定作業者", comment: "作業予定作業者", force: :cascade do |t|
