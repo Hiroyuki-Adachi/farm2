@@ -126,6 +126,8 @@ SQL
       .where(worked_at: Date.new(w_at.year, w_at.month, 1)..Date.new(w_at.year, w_at.month, -1))
   }
 
+  scope :exists_lands, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
+
   def set_term
     self.term = Organization.term
   end
