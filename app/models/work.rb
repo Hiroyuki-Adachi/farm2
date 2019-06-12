@@ -127,6 +127,11 @@ SQL
   }
 
   scope :exists_lands, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
+  scope :by_target, ->(term) {
+    joins("INNER JOIN systems ON systems.term = works.term")
+     .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
+     .where("systems.term = ?", term)
+  }
 
   def set_term
     self.term = Organization.term
