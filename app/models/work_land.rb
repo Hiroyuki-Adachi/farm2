@@ -8,6 +8,7 @@
 #  display_order :integer          default(0), not null  # 表示順
 #  created_at    :datetime
 #  updated_at    :datetime
+#  fixed_cost    :decimal(6, )                           # 確定作業原価
 #
 
 class WorkLand < ApplicationRecord
@@ -37,6 +38,7 @@ class WorkLand < ApplicationRecord
   end
 
   def cost
+    return fixed_cost if fixed_cost
     local_cost = interim_cost
     return local_cost unless largest?
     return local_cost + (work.sum_workers_amount - work.work_lands.map(&:interim_cost).sum)

@@ -545,6 +545,7 @@ ActiveRecord::Schema.define(version: 2019_06_09_111228) do
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal "fixed_cost", precision: 6, comment: "確定作業原価"
     t.index ["work_id", "land_id"], name: "index_work_lands_on_work_id_and_land_id", unique: true
   end
 
