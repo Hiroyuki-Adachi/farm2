@@ -65,6 +65,7 @@ Rails.application.routes.draw do
     resources :schedules, controller: "personal_informations/schedules", only: [:index]
     resources :statistics, controller: "personal_informations/statistics", only: [:index]
     resources :seedlings, controller: "personal_informations/seedlings", only: [:index]
+    resources :contracts, controller: "personal_informations/contracts", only: [:index]
   end
   resources :personal_calendars, param: "token", only: [:show]
   resources :users, except: [:show] do

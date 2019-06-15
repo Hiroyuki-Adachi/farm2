@@ -22,8 +22,6 @@ class PersonalInformationsController < ApplicationController
     @current_user = @worker.user
   end
 
-  private
-
   def worked_from
     m = Time.zone.today.month
     if @current_user.view_month[0] <= m && m < @current_user.view_month[1]

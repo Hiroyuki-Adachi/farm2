@@ -132,6 +132,14 @@ SQL
      .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
      .where("systems.term = ?", term)
   }
+  scope :for_contract, ->(worker, worked_at, work_type_id) {
+    where("works.worked_at >= ? AND works.work_type_id = ?", worked_at, work_type_id)
+      .where([<<SQL, worker.home_id])}
+      EXISTS (SELECT * FROM work_lands
+        INNER JOIN lands ON work_lands.land_id = lands.id
+        WHERE work_lands.work_id = works.id
+          AND lands.manager_id = ?)
+SQL
 
   def set_term
     self.term = Organization.term
