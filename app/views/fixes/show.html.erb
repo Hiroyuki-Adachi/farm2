@@ -1,0 +1,36 @@
+<h1><%= @fixed_at.strftime('%Y年 %m月')%>確定分照会</h1>
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>屋号</th>
+      <% FixesController::MAX_WORKERS.times do |i| %>
+      <th>作業者<%= i + 1 %></th>
+      <th>時間<%= i + 1 %></th>
+      <% end %>
+      <th>使用料</th>
+      <th>委託料</th>
+    </tr>
+  </thead>
+  <tbody id="tbody_works">
+    <% @homes.each do |home| %>
+      <tr>
+        <td><%= home.name %></td>
+        <% i = 0 %>
+        <% home.workers.each do |worker| %>
+          <% next unless @work_hours[worker.id] %>
+          <td><%= worker.name %></td>
+          <td class="numeric"><%= @work_hours[worker.id] %></td>
+          <% i += 1%>
+        <% end %>
+        <% (FixesController::MAX_WORKERS - i).times do %>
+          <td></td>
+          <td></td>
+        <% end %>
+        <td class="numeric"><%= @machines[home.id].to_i %></td>
+        <td class="numeric">0</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to '戻る', fixes_path, class: "btn btn-outline-dark" %>

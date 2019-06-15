@@ -26,6 +26,14 @@ class WorkLand < ApplicationRecord
       .order("lands.display_order, lands.id, works.worked_at")
   }
 
+  scope :for_fix, ->(term, fixed_at, contract_id) {
+    joins(:work)
+      .joins(:land)
+      .where("works.work_type_id = ?", contract_id)
+      .where("works.fixed_at = ? AND work_lands.fixed_cost IS NOT NULL", fixed_at)
+      .where("works.term = ?", term)
+  }
+
   def interim_cost
     (work.sum_workers_amount * land.area / work.sum_areas).round
   end
