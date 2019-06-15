@@ -2930,12 +2930,12 @@ lands223:
   deleted_at: 
 
 
-lands224:
+land_max:
   id: '230'
   place: "土江"
   owner_id: '34'
-  manager_id: '34'
-  area: '86.70'
+  manager_id: 2
+  area: 83.30
   display_order: '902'
   target_flag: t
   created_at: '2010-07-20 07:56:04.873465'
