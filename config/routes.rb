@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :calendars, only: [:index]
   resources :contracts, only: [:index]
   resources :expense_types, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :broccoli_reports, only: [:index]

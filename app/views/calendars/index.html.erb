@@ -1,0 +1,30 @@
+<h1>カレンダー</h1>
+<style>
+@page {size: A3 landscape}
+</style>
+<div style="overflow:scroll; width:1000px; height: 800px;">
+  <div style="width:2600px;">
+    <% 12.times do |month|%>
+    <div class="float-left" style="width:200px; margin-left:10px;">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th colspan="2"><%= month + 1%>月</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% today = Date.new(@year, month + 1, 1) %>
+        <% last = today >> 1 %>
+        <% while today < last %>
+        <tr>
+            <th class="numeric"><%= today.day %></th>
+            <td></td>
+        </tr>
+        <% today += 1%>
+        <% end %>
+        </tbody>
+    </table>
+    </div>
+    <% end %>
+  </div>
+</div>
