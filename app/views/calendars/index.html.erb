@@ -2,11 +2,11 @@
 <style>
 @page {size: A3 landscape}
 </style>
-<div style="overflow:scroll; width:1000px; height: 800px;">
+<div id="calendar-base" style="overflow:scroll;">
   <div style="width:2600px;">
     <% 12.times do |month|%>
     <div class="float-left" style="width:200px; margin-left:10px;">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-sm">
         <thead>
         <tr>
             <th colspan="2"><%= month + 1%>月</th>
@@ -17,7 +17,7 @@
         <% last = today >> 1 %>
         <% while today < last %>
         <tr>
-            <th class="numeric"><%= today.day %></th>
+            <th class="numeric" style="width:50px;"><%= today.day %></th>
             <td></td>
         </tr>
         <% today += 1%>
@@ -28,3 +28,19 @@
     <% end %>
   </div>
 </div>
+<script>
+$(function() {
+    $(window).on("resize", function() {
+        init_size();
+    });
+
+    init_size();
+});
+
+function init_size() {
+    const off = $("#calendar-base").offset();
+
+    $("#calendar-base").height($(window).height() - off.top);
+    $("#calendar-base").width($(window).width() - off.left);
+}
+</script>
