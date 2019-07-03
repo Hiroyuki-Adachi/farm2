@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_09_111228) do
+ActiveRecord::Schema.define(version: 2019_07_03_114344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,15 @@ ActiveRecord::Schema.define(version: 2019_06_09_111228) do
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "calendar_work_kinds", comment: "カレンダー作業種別", force: :cascade do |t|
+    t.integer "user_id", null: false, comment: "利用者"
+    t.integer "work_kind_id", null: false, comment: "作業種別"
+    t.string "text_color", limit: 8, default: "#000000", null: false, comment: "文字色"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "work_kind_id"], name: "calendar_work_kind_index", unique: true
   end
 
   create_table "chemical_kinds", id: :serial, comment: "作業種別薬剤種別利用マスタ", comment: "作業種別薬剤種別利用マスタ", force: :cascade do |t|
@@ -468,6 +477,7 @@ ActiveRecord::Schema.define(version: 2019_06_09_111228) do
     t.integer "organization_id", default: 0, null: false, comment: "組織"
     t.integer "permission_id", default: 0, null: false, comment: "権限"
     t.integer "view_month", default: [1, 4, 8], null: false, comment: "表示切替月", array: true
+    t.integer "calendar_term", default: 2018, null: false, comment: "期(カレンダー)"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["worker_id"], name: "index_users_on_worker_id", unique: true
   end
