@@ -1,0 +1,6 @@
+<h1>カレンダー制御</h1>
+<div class="float-left">
+<% @work_kinds.each do |work_kind| %>
+  <div><%= check_box_tag "work_kind_id[#{work_kind.id}}", {class: "form-check-input"} %><%= label_tag "work_kind_id_#{work_kind.id}_", work_kind.name %></div>
+<% end %>
+</div>

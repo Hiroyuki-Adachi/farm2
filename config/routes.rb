@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :calendar_work_kinds, only: [:index, :create]
   resources :calendars, only: [:index]
   resources :contracts, only: [:index]
   resources :expense_types, only: [:index, :new, :create, :edit, :update, :destroy]

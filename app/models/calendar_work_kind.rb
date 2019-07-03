@@ -11,4 +11,8 @@
 #
 
 class CalendarWorkKind < ApplicationRecord
+  belongs_to :user
+  belongs_to :work_kind
+
+  scope :usual, ->(user) {where(user_id: user)}
 end
