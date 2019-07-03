@@ -2,6 +2,6 @@ class CalendarsController < ApplicationController
   include PermitManager
 
   def index
-    @year = 2019
+    @year = current_user.calendar_term
   end
 end
