@@ -21,6 +21,8 @@ gem 'daemons'
 
 # Use bootstrap4
 gem 'bootstrap', '>= 4.0'
+# Japan Holiday
+gem 'holiday_jp'
 
 gem 'bootsnap', require: false
 

@@ -1,6 +1,9 @@
 <h1>カレンダー</h1>
 <style>
 @page {size: A3 landscape}
+th.wday-6 {color: Blue;}
+th.wday-0 {color: Red;}
+th.holiday {color: Red !important; }
 </style>
 <div id="calendar-base" style="overflow:scroll;">
   <div style="width:2600px;">
@@ -17,7 +20,7 @@
         <% last = today >> 1 %>
         <% while today < last %>
         <tr>
-            <th class="numeric" style="width:50px;"><%= today.day %></th>
+            <th class="numeric wday-<%= today.wday%> <%= HolidayJp.holiday?(today) ? "holiday" : "" %>" style="width:50px;"><%= today.day %>(<%= I18n.t('date.abbr_day_names')[today.wday]%>)</th>
             <td></td>
         </tr>
         <% today += 1%>
