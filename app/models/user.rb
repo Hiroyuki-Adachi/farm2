@@ -24,6 +24,8 @@ class User < ApplicationRecord
   belongs_to :organization
   belongs_to :permission
 
+  has_many :calendar_work_kinds, dependent: :destroy
+
   validates :login_name, uniqueness: true
   validates_length_of :password, maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED
 
