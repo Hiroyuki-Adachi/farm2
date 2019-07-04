@@ -55,7 +55,7 @@ class WorkResult < ApplicationRecord
       .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
       .joins("INNER JOIN sections ON sections.id = homes.section_id")
       .where("works.term = ? AND works.fixed_at = ?", term, fixed_at)
-      .order("sections.display_order, homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
+      .order("homes.finance_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }
 
   scope :for_personal, ->(worker, worked_at) {
