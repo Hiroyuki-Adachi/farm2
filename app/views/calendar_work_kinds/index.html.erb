@@ -3,26 +3,33 @@
 <% base.times do |i| %>
   <div class="row">
     <div class="col-md-3">
-      <%= check_box_tag "work_kind_id[#{@work_kinds[base * 0 + i].id}]", {class: "form-check-input float-left"} %>
+      <%= check_box_tag "work_kind_id[#{@work_kinds[base * 0 + i].id}]", true, false, {class: "form-check-input float-left"} %>
       <%= label_tag "work_kind_id_#{@work_kinds[base * 0 + i].id}", @work_kinds[base * 0 + i].name %>
-      <%= color_field_tag "text_color[#{@work_kinds[base * 0 + i].id}]", {class: "form-control float-right"} %>
+      <%= color_field_tag "text_color[#{@work_kinds[base * 0 + i].id}]", nil, {data: {kind: "#{@work_kinds[base * 0 + i].id}"}, class: "form-control float-right", style: "width:100px;"} %>
     </div>
     <div class="col-md-3">
-      <%= check_box_tag "work_kind_id[#{@work_kinds[base * 1 + i].id}]", {class: "form-check-input float-left"} %>
+      <%= check_box_tag "work_kind_id[#{@work_kinds[base * 1 + i].id}]", true, false, {class: "form-check-input float-left"} %>
       <%= label_tag "work_kind_id_#{@work_kinds[base * 1 + i].id}", @work_kinds[base * 1 + i].name %>
-      <%= color_field_tag "text_color[#{@work_kinds[base * 1 + i].id}]", {class: "form-control float-right"} %>
+      <%= color_field_tag "text_color[#{@work_kinds[base * 1 + i].id}]", nil, {data: {kind: "#{@work_kinds[base * 1 + i].id}"}, class: "form-control float-right", style: "width:100px;"} %>
     </div>
     <div class="col-md-3">
-      <%= check_box_tag "work_kind_id[#{@work_kinds[base * 2 + i].id}]", {class: "form-check-input float-left"} %>
+      <%= check_box_tag "work_kind_id[#{@work_kinds[base * 2 + i].id}]", true, false, {class: "form-check-input float-left"} %>
       <%= label_tag "work_kind_id_#{@work_kinds[base * 2 + i].id}", @work_kinds[base * 2 + i].name %>
-      <%= color_field_tag "text_color[#{@work_kinds[base * 2 + i].id}]", {class: "form-control float-right"} %>
+      <%= color_field_tag "text_color[#{@work_kinds[base * 2 + i].id}]", nil, {data: {kind: "#{@work_kinds[base * 2 + i].id}"}, class: "form-control float-right", style: "width:100px;"} %>
     </div>
     <% if @work_kinds[base * 3 + i] %>
       <div class="col-md-3">
-        <%= check_box_tag "work_kind_id[#{@work_kinds[base * 3 + i].id}]", {class: "form-check-input float-left"} %>
+        <%= check_box_tag "work_kind_id[#{@work_kinds[base * 3 + i].id}]", true, false, {class: "form-check-input float-left"} %>
         <%= label_tag "work_kind_id_#{@work_kinds[base * 3 + i].id}", @work_kinds[base * 3 + i].name %>
-        <%= color_field_tag "text_color[#{@work_kinds[base * 3 + i].id}]", {class: "form-control float-right"} %>
+        <%= color_field_tag "text_color[#{@work_kinds[base * 3 + i].id}]", nil, {data: {kind: "#{@work_kinds[base * 3 + i].id}"}, class: "form-control float-right", style: "width:100px;"} %>
       </div>
     <% end %>
   </div>
 <% end %>
+<script>
+$(function() {
+    $("input[type='color']").change(function() {
+        $("#work_kind_id_" + $(this).data("kind")).prop("checked", true);
+    });
+});
+</script>
