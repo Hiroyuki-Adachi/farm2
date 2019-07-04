@@ -1,6 +1,28 @@
 <h1>カレンダー制御</h1>
-<div class="float-left">
-<% @work_kinds.each do |work_kind| %>
-  <div><%= check_box_tag "work_kind_id[#{work_kind.id}}", {class: "form-check-input"} %><%= label_tag "work_kind_id_#{work_kind.id}_", work_kind.name %></div>
+<% base = (@work_kinds.size - 1) / 4 + 1%>
+<% base.times do |i| %>
+  <div class="row">
+    <div class="col-md-3">
+      <%= check_box_tag "work_kind_id[#{@work_kinds[base * 0 + i].id}]", {class: "form-check-input float-left"} %>
+      <%= label_tag "work_kind_id_#{@work_kinds[base * 0 + i].id}", @work_kinds[base * 0 + i].name %>
+      <%= color_field_tag "text_color[#{@work_kinds[base * 0 + i].id}]", {class: "form-control float-right"} %>
+    </div>
+    <div class="col-md-3">
+      <%= check_box_tag "work_kind_id[#{@work_kinds[base * 1 + i].id}]", {class: "form-check-input float-left"} %>
+      <%= label_tag "work_kind_id_#{@work_kinds[base * 1 + i].id}", @work_kinds[base * 1 + i].name %>
+      <%= color_field_tag "text_color[#{@work_kinds[base * 1 + i].id}]", {class: "form-control float-right"} %>
+    </div>
+    <div class="col-md-3">
+      <%= check_box_tag "work_kind_id[#{@work_kinds[base * 2 + i].id}]", {class: "form-check-input float-left"} %>
+      <%= label_tag "work_kind_id_#{@work_kinds[base * 2 + i].id}", @work_kinds[base * 2 + i].name %>
+      <%= color_field_tag "text_color[#{@work_kinds[base * 2 + i].id}]", {class: "form-control float-right"} %>
+    </div>
+    <% if @work_kinds[base * 3 + i] %>
+      <div class="col-md-3">
+        <%= check_box_tag "work_kind_id[#{@work_kinds[base * 3 + i].id}]", {class: "form-check-input float-left"} %>
+        <%= label_tag "work_kind_id_#{@work_kinds[base * 3 + i].id}", @work_kinds[base * 3 + i].name %>
+        <%= color_field_tag "text_color[#{@work_kinds[base * 3 + i].id}]", {class: "form-control float-right"} %>
+      </div>
+    <% end %>
+  </div>
 <% end %>
-</div>
