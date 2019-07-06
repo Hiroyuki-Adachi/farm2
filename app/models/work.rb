@@ -141,6 +141,12 @@ SQL
           AND lands.manager_id = ?)
 SQL
 
+  scope :for_calendar, ->(term, work_kinds) {
+    select(:worked_at, :work_kind_id, :work_type_id)
+      .where(term: term, work_kind_id: work_kinds)
+      .distinct
+  }
+
   def set_term
     self.term = Organization.term
   end

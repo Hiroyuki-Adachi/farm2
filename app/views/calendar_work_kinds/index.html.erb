@@ -1,35 +1,54 @@
 <h1>カレンダー制御</h1>
-<% base = (@work_kinds.size - 1) / 4 + 1%>
-<% base.times do |i| %>
+<%= form_tag(action: :create) do %>
   <div class="row">
-    <div class="col-md-3">
-      <%= check_box_tag "work_kind_id[#{@work_kinds[base * 0 + i].id}]", true, false, {class: "form-check-input float-left"} %>
-      <%= label_tag "work_kind_id_#{@work_kinds[base * 0 + i].id}", @work_kinds[base * 0 + i].name %>
-      <%= color_field_tag "text_color[#{@work_kinds[base * 0 + i].id}]", nil, {data: {kind: "#{@work_kinds[base * 0 + i].id}"}, class: "form-control float-right", style: "width:100px;"} %>
+    <div class="col-md-2">
+      <%= select_tag(:calendar_term, options_for_select(@terms, selected: current_user.calendar_term), {class: "form-control"}) %>
     </div>
-    <div class="col-md-3">
-      <%= check_box_tag "work_kind_id[#{@work_kinds[base * 1 + i].id}]", true, false, {class: "form-check-input float-left"} %>
-      <%= label_tag "work_kind_id_#{@work_kinds[base * 1 + i].id}", @work_kinds[base * 1 + i].name %>
-      <%= color_field_tag "text_color[#{@work_kinds[base * 1 + i].id}]", nil, {data: {kind: "#{@work_kinds[base * 1 + i].id}"}, class: "form-control float-right", style: "width:100px;"} %>
+  </div>
+  <% rep = 4 %>
+  <% base = (@work_kinds.size - 1) / rep + 1%>
+  <% base.times do |i| %>
+    <div class="row">
+      <% rep.times do |j| %>
+        <% if @work_kinds[base * j + i] %>
+          <div class="col-md-3">
+            <% work_kind_id = @work_kinds[base * j + i].id %>
+            <% calendar_work_kind = @calendar_work_kinds.find {|c| c.work_kind_id == work_kind_id} %>
+            <%= check_box_tag "work_kind_id[]", work_kind_id, !calendar_work_kind.nil?, {data: {kind: "#{work_kind_id}"}, class: "form-check-input float-left", id: "work_kind_id_#{work_kind_id}"} %>
+            <%= label_tag "work_kind_id_#{work_kind_id}", @work_kinds[base * j + i].name %>
+            <%= color_field_tag "text_color[#{work_kind_id}]", calendar_work_kind&.text_color, {data: {kind: "#{work_kind_id}"}, class: "form-control float-right", style: "width:100px;"} %>
+          </div>
+        <% end %>
+      <% end %>
     </div>
-    <div class="col-md-3">
-      <%= check_box_tag "work_kind_id[#{@work_kinds[base * 2 + i].id}]", true, false, {class: "form-check-input float-left"} %>
-      <%= label_tag "work_kind_id_#{@work_kinds[base * 2 + i].id}", @work_kinds[base * 2 + i].name %>
-      <%= color_field_tag "text_color[#{@work_kinds[base * 2 + i].id}]", nil, {data: {kind: "#{@work_kinds[base * 2 + i].id}"}, class: "form-control float-right", style: "width:100px;"} %>
+  <% end %>
+  <div id="btn_toolbar" class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
     </div>
-    <% if @work_kinds[base * 3 + i] %>
-      <div class="col-md-3">
-        <%= check_box_tag "work_kind_id[#{@work_kinds[base * 3 + i].id}]", true, false, {class: "form-check-input float-left"} %>
-        <%= label_tag "work_kind_id_#{@work_kinds[base * 3 + i].id}", @work_kinds[base * 3 + i].name %>
-        <%= color_field_tag "text_color[#{@work_kinds[base * 3 + i].id}]", nil, {data: {kind: "#{@work_kinds[base * 3 + i].id}"}, class: "form-control float-right", style: "width:100px;"} %>
-      </div>
-    <% end %>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', calendars_path, class: "btn btn-outline-dark" %>
+    </div>
   </div>
 <% end %>
 <script>
 $(function() {
     $("input[type='color']").change(function() {
-        $("#work_kind_id_" + $(this).data("kind")).prop("checked", true);
+        const id = "work_kind_id_" + $(this).data("kind");
+        $("#" + id).prop("checked", true);
+        $("label[for='" + id + "']").css("color", $(this).val());
+    });
+
+    $("input[type='color']").each(function(i, e) {
+        const id = "work_kind_id_" + $(this).data("kind");
+        $("label[for='" + id + "']").css("color", $(this).val());
+    });
+
+    $("[id^='work_kind_id'").change(function() {
+        if(!$(this).prop("checked")) {
+            $("label[for='" + $(this).prop("id") + "']").css("color", "");
+            $("#text_color_" + $(this).data("kind")).val("");
+        }
     });
 });
 </script>
