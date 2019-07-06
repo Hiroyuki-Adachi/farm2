@@ -5,40 +5,70 @@ th.wday-6 {color: Blue;}
 th.wday-0 {color: Red;}
 th.holiday {color: Red !important; }
 <% @calendar_work_kinds.each do |calendar_work_kind| %>
-span.kind-<%= calendar_work_kind.work_kind_id %> {color: <%= calendar_work_kind.text_color %>}
+div.kind-<%= calendar_work_kind.work_kind_id %> {color: <%= calendar_work_kind.text_color %> !important;}
 <% end %>
-span.work_kind
+@media screen {
+  #calendar-wrapper {overflow: scroll;}
+  #calendar-base {width: 2550px;}
+  .calendar-month {width:200px; margin-left:10px; }
+  .calendar-table tbody th {width:65px;}
+}
+@media print {
+  #calendar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin-left: 0;
+    z-index: 10;
+    width: 100vw;
+  }
+  h1 {display: none;}
+  #calendar-base {width: 100%;}
+  .calendar-month {margin-left:0.1vw;}
+  .calendar-year {width: 2.0vw; font-size: 0.6vw;}
+  .calendar-content {width: 5.1vw; font-size: 0.8vw;}
+  .btn-toolbar {display: none;}
+  .calendar-table {line-height: 1.2;}
+  .calendar-table th, .calendar-table td {padding: 0; border: 1px solid black !important;} 
+  .calendar-table td div {font-size: 0.6vw;}
+  .calendar-day {font-size: 0.75vw; display: block; margin: 0;}
+  .calendar-wday {font-size: 0.75vw; display: block; margin: 0;}
+}
 </style>
 <div class="row">
-  <div id="calendar-base" style="overflow:scroll;">
-    <div style="width:2600px;">
+  <div id="calendar-wrapper">
+    <div id="calendar-base">
         <% 12.times do |month|%>
-        <div class="float-left" style="width:200px; margin-left:10px;">
-        <table class="table table-bordered table-sm">
-            <thead>
-            <tr>
-                <th colspan="2"><%= month + 1%>月</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% today = Date.new(@year, month + 1, 1) %>
-            <% last = today >> 1 %>
-            <% while today < last %>
-            <tr>
-                <th class="numeric wday-<%= today.wday%> <%= HolidayJp.holiday?(today) ? "holiday" : "" %>" style="width:50px;"><%= today.day %>(<%= I18n.t('date.abbr_day_names')[today.wday]%>)</th>
-                <td>
-                  <% @works.each do |work| %>
-                    <% if work.worked_at == today %>
-                      <span class="kind-<%= work.work_kind_id %>"><%= work.work_kind.name %>(<%= work.work_type.name %>)</span>
-                    <% end %>
-                  <% end %>
-                </td>
-            </tr>
-            <% today += 1%>
-            <% end %>
-            </tbody>
-        </table>
-        </div>
+          <div class="float-left calendar-month">
+            <table class="table table-bordered table-sm calendar-table">
+              <thead>
+                <tr>
+                    <th class="calendar-year"><%= @year %></th>
+                    <th class="calendar-content"><%= month + 1 %>月</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% today = Date.new(@year, month + 1, 1) %>
+                <% last = today >> 1 %>
+                <% while today < last %>
+                <tr>
+                    <th class="numeric wday-<%= today.wday%> <%= HolidayJp.holiday?(today) ? "holiday" : "" %>">
+                      <span class="calendar-day"><%= today.day %></span>
+                      <span class="calendar-wday">(<%= I18n.t('date.abbr_day_names')[today.wday]%>)</span>
+                    </th>
+                    <td>
+                      <% @works.each do |work| %>
+                        <% if work.worked_at == today %>
+                          <div class="kind-<%= work.work_kind_id %>"><%= work.work_kind.name %>(<%= work.work_type.name %>)</div>
+                        <% end %>
+                      <% end %>
+                    </td>
+                </tr>
+                <% today += 1 %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         <% end %>
     </div>
   </div>
@@ -61,9 +91,9 @@ $(function() {
 });
 
 function init_size() {
-    const off = $("#calendar-base").offset();
+    const off = $("#calendar-wrapper").offset();
 
-    $("#calendar-base").height($(window).height() - off.top - $("#btn_toolbar").height());
-    $("#calendar-base").width($(window).width() - off.left);
+    $("#calendar-wrapper").height($(window).height() - off.top - $("#btn_toolbar").height());
+    $("#calendar-wrapper").width($(window).width() - off.left);
 }
 </script>
