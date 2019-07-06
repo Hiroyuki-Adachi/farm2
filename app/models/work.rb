@@ -54,7 +54,10 @@ class Work < ApplicationRecord
   has_many :machine_results, {through: :work_results}
   has_many :checkers, -> {with_deleted}, {through: :work_verifications, source: :worker}
 
-  scope :no_fixed, ->(term){where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)}
+  scope :no_fixed, ->(term){
+    includes(:work_type, :work_kind)
+      .where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)
+  }
   scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, id: :DESC)}
   scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, id: :ASC).order(worked_at: :ASC, id: :ASC)}
