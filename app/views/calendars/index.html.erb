@@ -4,31 +4,51 @@
 th.wday-6 {color: Blue;}
 th.wday-0 {color: Red;}
 th.holiday {color: Red !important; }
+<% @calendar_work_kinds.each do |calendar_work_kind| %>
+span.kind-<%= calendar_work_kind.work_kind_id %> {color: <%= calendar_work_kind.text_color %>}
+<% end %>
+span.work_kind
 </style>
-<div id="calendar-base" style="overflow:scroll;">
-  <div style="width:2600px;">
-    <% 12.times do |month|%>
-    <div class="float-left" style="width:200px; margin-left:10px;">
-    <table class="table table-bordered table-sm">
-        <thead>
-        <tr>
-            <th colspan="2"><%= month + 1%>月</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% today = Date.new(@year, month + 1, 1) %>
-        <% last = today >> 1 %>
-        <% while today < last %>
-        <tr>
-            <th class="numeric wday-<%= today.wday%> <%= HolidayJp.holiday?(today) ? "holiday" : "" %>" style="width:50px;"><%= today.day %>(<%= I18n.t('date.abbr_day_names')[today.wday]%>)</th>
-            <td></td>
-        </tr>
-        <% today += 1%>
+<div class="row">
+  <div id="calendar-base" style="overflow:scroll;">
+    <div style="width:2600px;">
+        <% 12.times do |month|%>
+        <div class="float-left" style="width:200px; margin-left:10px;">
+        <table class="table table-bordered table-sm">
+            <thead>
+            <tr>
+                <th colspan="2"><%= month + 1%>月</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% today = Date.new(@year, month + 1, 1) %>
+            <% last = today >> 1 %>
+            <% while today < last %>
+            <tr>
+                <th class="numeric wday-<%= today.wday%> <%= HolidayJp.holiday?(today) ? "holiday" : "" %>" style="width:50px;"><%= today.day %>(<%= I18n.t('date.abbr_day_names')[today.wday]%>)</th>
+                <td>
+                  <% @works.each do |work| %>
+                    <% if work.worked_at == today %>
+                      <span class="kind-<%= work.work_kind_id %>"><%= work.work_kind.name %>(<%= work.work_type.name %>)</span>
+                    <% end %>
+                  <% end %>
+                </td>
+            </tr>
+            <% today += 1%>
+            <% end %>
+            </tbody>
+        </table>
+        </div>
         <% end %>
-        </tbody>
-    </table>
     </div>
-    <% end %>
+  </div>
+</div>
+<div id="btn_toolbar" class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to '制御', calendar_work_kinds_path, class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
 <script>
@@ -43,7 +63,7 @@ $(function() {
 function init_size() {
     const off = $("#calendar-base").offset();
 
-    $("#calendar-base").height($(window).height() - off.top);
+    $("#calendar-base").height($(window).height() - off.top - $("#btn_toolbar").height());
     $("#calendar-base").width($(window).width() - off.left);
 }
 </script>
