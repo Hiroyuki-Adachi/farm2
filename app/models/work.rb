@@ -143,6 +143,7 @@ SQL
 
   scope :for_calendar, ->(term, work_kinds) {
     select(:worked_at, :work_kind_id, :work_type_id)
+      .includes(:work_kind, :work_type)
       .where(term: term, work_kind_id: work_kinds)
       .distinct
   }
