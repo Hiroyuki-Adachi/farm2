@@ -145,10 +145,10 @@ SQL
 SQL
 
   scope :for_calendar, ->(term, work_kinds) {
-    select(:worked_at, :work_kind_id, :work_type_id)
+    group(:worked_at, :work_kind_id, :work_type_id)
+      .select("min(works.id) AS id, works.worked_at, works.work_kind_id, works.work_type_id")
       .includes(:work_kind, :work_type)
       .where(term: term, work_kind_id: work_kinds)
-      .distinct
   }
 
   def set_term

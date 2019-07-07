@@ -6,6 +6,7 @@ th.wday-0 {color: Red;}
 th.holiday {color: Red !important; }
 <% @calendar_work_kinds.each do |calendar_work_kind| %>
 div.kind-<%= calendar_work_kind.work_kind_id %> {color: <%= calendar_work_kind.text_color %> !important;}
+div.kind-<%= calendar_work_kind.work_kind_id %> a {color: <%= calendar_work_kind.text_color %> !important;}
 <% end %>
 @media screen {
   #calendar-wrapper {overflow: scroll;}
@@ -33,6 +34,7 @@ div.kind-<%= calendar_work_kind.work_kind_id %> {color: <%= calendar_work_kind.t
   .calendar-table td div {font-size: 0.6vw;}
   .calendar-day {font-size: 0.75vw; display: block; margin: 0;}
   .calendar-wday {font-size: 0.75vw; display: block; margin: 0;}
+  .calendar-kind a {text-decoration:none;}
 }
 </style>
 <div class="row">
@@ -59,7 +61,9 @@ div.kind-<%= calendar_work_kind.work_kind_id %> {color: <%= calendar_work_kind.t
                     <td>
                       <% @works.each do |work| %>
                         <% if work.worked_at == today %>
-                          <div class="kind-<%= work.work_kind_id %>"><%= work.work_kind.name %>(<%= work.work_type.name %>)</div>
+                          <div class="kind-<%= work.work_kind_id %> calendar-kind">
+                            <%= link_to  work.work_kind.name + "(#{work.work_type.name})", work_path(id: work) %>
+                          </div>
                         <% end %>
                       <% end %>
                     </td>
