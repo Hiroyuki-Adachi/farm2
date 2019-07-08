@@ -59,6 +59,17 @@ div.kind-<%= calendar_work_kind.work_kind_id %> a {color: <%= calendar_work_kind
                       <span class="calendar-wday">(<%= I18n.t('date.abbr_day_names')[today.wday]%>)</span>
                     </th>
                     <td>
+                      <% @schedules.each do |schedule| %>
+                        <% if schedule.worked_at == today %>
+                          <div class="kind-<%= schedule.work_kind_id %> calendar-kind">
+                            <% if schedule.minute %>
+                            <%= link_to schedule.work_kind.name, minute_path(schedule.minute.id), {target: :_blank} %>
+                            <% else %>
+                            <%= schedule.work_kind.name %>
+                            <% end %>
+                          </div>
+                        <% end %>
+                      <% end %>
                       <% @works.each do |work| %>
                         <% if work.worked_at == today %>
                           <div class="kind-<%= work.work_kind_id %> calendar-kind">
