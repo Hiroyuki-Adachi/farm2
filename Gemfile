@@ -69,6 +69,9 @@ gem 'chart-js-rails'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+# Use Puma as the app server
+gem 'puma'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
