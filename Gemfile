@@ -21,6 +21,8 @@ gem 'daemons'
 
 # Use bootstrap4
 gem 'bootstrap', '>= 4.0'
+# Japan Holiday
+gem 'holiday_jp'
 
 gem 'bootsnap', require: false
 
@@ -66,6 +68,9 @@ gem 'icalendar'
 gem 'chart-js-rails'
 # Use Unicorn as the app server
 # gem 'unicorn'
+
+# Use Puma as the app server
+gem 'puma'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
