@@ -19,7 +19,7 @@ state_path "/tmp/puma_farm2.state"
 #
 environment "production"
 
-daemonize true
+#daemonize true
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
