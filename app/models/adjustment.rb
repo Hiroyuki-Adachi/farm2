@@ -1,0 +1,2 @@
+class Adjustment < ApplicationRecord
+end

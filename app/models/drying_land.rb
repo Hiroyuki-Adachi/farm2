@@ -1,0 +1,2 @@
+class DryingLand < ApplicationRecord
+end
