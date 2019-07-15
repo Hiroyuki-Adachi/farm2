@@ -1,0 +1,2 @@
+class DryingMoth < ApplicationRecord
+end
