@@ -1,2 +1,19 @@
+# == Schema Information
+#
+# Table name: dryings # 乾燥
+#
+#  id             :bigint           not null, primary key
+#  work_type_id   :integer                                 # 作業分類
+#  home_id        :integer          default(0), not null   # 担当世帯
+#  drying_type_id :integer          default(0), not null   # 乾燥種別
+#  carried_on     :date                                    # 搬入日
+#  shipped_on     :date                                    # 出荷日
+#  water_content  :decimal(3, 1)                           # 水分
+#  rice_weight    :decimal(5, 1)    default(0.0), not null # 乾燥米(kg)
+#  fixed_amount   :decimal(7, )     default(0), not null   # 確定額
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+
 class Drying < ApplicationRecord
 end

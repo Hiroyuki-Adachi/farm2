@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_03_114344) do
+ActiveRecord::Schema.define(version: 2019_07_15_125025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "adjustments", comment: "調整", force: :cascade do |t|
+    t.integer "drying_id", default: 0, null: false, comment: "乾燥"
+    t.integer "home_id", default: 0, null: false, comment: "担当世帯"
+    t.date "carried_on", comment: "搬入日"
+    t.date "shipped_on", comment: "出荷日"
+    t.decimal "rice_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "調整米(kg)"
+    t.decimal "waste_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "くず米(kg)"
+    t.decimal "fixed_amount", precision: 7, default: "0", null: false, comment: "確定額"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drying_id"], name: "adjustments_secondary", unique: true
+  end
 
   create_table "bank_branches", primary_key: ["bank_code", "code"], comment: "支店マスタ", force: :cascade do |t|
     t.string "bank_code", limit: 4, null: false, comment: "金融機関コード"
@@ -149,6 +162,39 @@ ActiveRecord::Schema.define(version: 2019_07_03_114344) do
     t.index ["term", "machine_id"], name: "index_depreciations_on_term_and_machine_id", unique: true
   end
 
+  create_table "drying_lands", comment: "乾燥調整場所", force: :cascade do |t|
+    t.integer "drying_id", default: 0, null: false, comment: "乾燥調整"
+    t.integer "land_id", default: 0, null: false, comment: "作業地"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drying_id", "land_id"], name: "drying_lands_secondary", unique: true
+  end
+
+  create_table "drying_moths", comment: "乾燥籾", force: :cascade do |t|
+    t.integer "drying_id", default: 0, null: false, comment: "乾燥調整"
+    t.integer "moth_no", default: 0, null: false, comment: "回数"
+    t.decimal "water_content", precision: 3, scale: 1, default: "0.0", null: false, comment: "水分"
+    t.decimal "moth_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "籾(kg)"
+    t.decimal "rice_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "玄米(kg)"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drying_id", "moth_no"], name: "drying_moths_secondary", unique: true
+  end
+
+  create_table "dryings", comment: "乾燥", force: :cascade do |t|
+    t.integer "work_type_id", comment: "作業分類"
+    t.integer "home_id", default: 0, null: false, comment: "担当世帯"
+    t.integer "drying_type_id", default: 0, null: false, comment: "乾燥種別"
+    t.date "carried_on", comment: "搬入日"
+    t.date "shipped_on", comment: "出荷日"
+    t.decimal "water_content", precision: 3, scale: 1, comment: "水分"
+    t.decimal "rice_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "乾燥米(kg)"
+    t.decimal "fixed_amount", precision: 7, default: "0", null: false, comment: "確定額"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["carried_on", "home_id"], name: "dryings_secondary", unique: true
+  end
+
   create_table "expense_types", comment: "経費種別", force: :cascade do |t|
     t.string "name", limit: 10, default: "", null: false, comment: "経費種別名称"
     t.boolean "chemical_flag", default: false, null: false, comment: "薬剤フラグ"
@@ -217,6 +263,7 @@ ActiveRecord::Schema.define(version: 2019_07_03_114344) do
     t.datetime "deleted_at"
     t.boolean "owner_flag", default: false, null: false, comment: "所有者フラグ"
     t.integer "finance_order", comment: "出力順(会計用)"
+    t.integer "drying_order", default: 0, null: false, comment: "出力順(乾燥調整用)"
     t.index ["deleted_at"], name: "index_homes_on_deleted_at"
   end
 
@@ -349,6 +396,7 @@ ActiveRecord::Schema.define(version: 2019_07_03_114344) do
     t.integer "rice_planting_id", comment: "田植作業種別"
     t.integer "whole_crop_work_kind_id", comment: "WCS収穫分類"
     t.integer "contract_work_type_id", comment: "受託作業分類"
+    t.integer "harvesting_work_kind_id", comment: "稲刈作業種別"
   end
 
   create_table "schedule_workers", id: :serial, comment: "作業予定作業者", comment: "作業予定作業者", force: :cascade do |t|
@@ -429,6 +477,9 @@ ActiveRecord::Schema.define(version: 2019_07_03_114344) do
     t.decimal "light_oil_price", precision: 4, default: "0", null: false, comment: "軽油価格"
     t.decimal "seedling_price", precision: 4, default: "0", null: false, comment: "育苗費"
     t.integer "seedling_chemical_id", default: 0, comment: "育苗土"
+    t.decimal "dry_price", precision: 4, default: "0", null: false, comment: "基準額(乾燥のみ)"
+    t.decimal "adjust_price", precision: 4, default: "0", null: false, comment: "基準額(調整のみ)"
+    t.decimal "dry_adjust_price", precision: 4, default: "0", null: false, comment: "基準額(乾燥調整)"
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
     t.index ["term"], name: "index_systems_on_term", unique: true
   end

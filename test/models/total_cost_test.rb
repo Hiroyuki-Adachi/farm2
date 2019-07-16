@@ -2,7 +2,7 @@
 #
 # Table name: total_costs # 集計原価
 #
-#  id                 :bigint(8)        not null, primary key
+#  id                 :bigint           not null, primary key
 #  term               :integer          not null                 # 年度(期)
 #  total_cost_type_id :integer          not null                 # 集計原価種別
 #  occurred_on        :date             not null                 # 発生日
