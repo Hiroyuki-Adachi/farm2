@@ -182,10 +182,11 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
   end
 
   create_table "dryings", comment: "乾燥", force: :cascade do |t|
+    t.integer "term", null: false, comment: "年度(期)"
     t.integer "work_type_id", comment: "作業分類"
     t.integer "home_id", default: 0, null: false, comment: "担当世帯"
     t.integer "drying_type_id", default: 0, null: false, comment: "乾燥種別"
-    t.date "carried_on", comment: "搬入日"
+    t.date "carried_on", null: false, comment: "搬入日"
     t.date "shipped_on", comment: "出荷日"
     t.decimal "water_content", precision: 3, scale: 1, comment: "水分"
     t.decimal "rice_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "乾燥米(kg)"
@@ -263,7 +264,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
     t.datetime "deleted_at"
     t.boolean "owner_flag", default: false, null: false, comment: "所有者フラグ"
     t.integer "finance_order", comment: "出力順(会計用)"
-    t.integer "drying_order", default: 0, null: false, comment: "出力順(乾燥調整用)"
+    t.integer "drying_order", comment: "出力順(乾燥調整用)"
     t.index ["deleted_at"], name: "index_homes_on_deleted_at"
   end
 

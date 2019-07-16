@@ -57,7 +57,8 @@ class HomesController < ApplicationController
         :display_order,
         :member_flag,
         :owner_flag,
-        :finance_order
+        :finance_order,
+        :drying_order
       )
   end
 end
