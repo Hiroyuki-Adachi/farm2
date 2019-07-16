@@ -151,6 +151,13 @@ SQL
       .where(term: term, work_kind_id: work_kinds)
   }
 
+  scope :for_drying, ->(term, organization) {
+    select("worked_at")
+      .where(term: term, work_kind_id: organization.harvesting_work_kind_id)
+      .distinct
+      .order("worked_at")
+  }
+
   def set_term
     self.term = Organization.term
   end
