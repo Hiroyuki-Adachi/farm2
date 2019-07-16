@@ -35,7 +35,8 @@ class OrganizationsController < ApplicationController
       :broccoli_work_kind_id,
       :rice_planting_id,
       :whole_crop_work_kind_id,
-      :contract_work_type_id
+      :contract_work_type_id,
+      :harvesting_work_kind_id
     )
   end
 end

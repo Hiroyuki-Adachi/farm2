@@ -21,6 +21,7 @@
 #  deleted_at          :datetime
 #  owner_flag          :boolean          default(FALSE), not null # 所有者フラグ
 #  finance_order       :integer                                   # 出力順(会計用)
+#  drying_order        :integer          default(0), not null     # 出力順(乾燥調整用)
 #
 
 home1:

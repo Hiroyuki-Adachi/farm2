@@ -63,6 +63,10 @@
       <%= f.label :contract_work_type_id, class: "col-form-label-lg" %>
       <%= f.collection_select(:contract_work_type_id, @work_types, :id, :name, {include_blank: true}, {class: "form-control"}) %>
     </div>
+    <div class="field form-group col-md-3">
+      <%= f.label :harvesting_work_kind_id, class: "col-form-label-lg" %>
+      <%= f.collection_select(:harvesting_work_kind_id, @work_kinds, :id, :name, {include_blank: true}, {class: "form-control"}) %>
+    </div>
   </div>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">

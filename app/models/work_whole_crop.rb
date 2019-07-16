@@ -2,7 +2,7 @@
 #
 # Table name: work_whole_crops # WCS作業
 #
-#  id           :bigint(8)        not null, primary key
+#  id           :bigint           not null, primary key
 #  work_id      :integer          not null               # 作業
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
