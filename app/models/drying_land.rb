@@ -10,4 +10,5 @@
 #
 
 class DryingLand < ApplicationRecord
+  belongs_to :drying
 end

@@ -15,4 +15,13 @@
 #
 
 class Adjustment < ApplicationRecord
+  belongs_to :drying
+
+  def rice_bag
+    return rice_weight.div(Drying::KG_PER_BAG)
+  end
+
+  def half_weight
+    return rice_weight % Drying::KG_PER_BAG
+  end
 end
