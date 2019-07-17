@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :dryings
+  resources :dryings, except: [:new]
   resources :calendar_work_kinds, only: [:index, :create]
   resources :calendars, only: [:index]
   resources :contracts, only: [:index]

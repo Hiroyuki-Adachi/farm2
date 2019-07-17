@@ -17,4 +17,9 @@
 #
 
 class Drying < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
+  belongs_to :work_type, -> {with_deleted}
+  belongs_to :home, -> {with_deleted}
+  belongs_to :drying_type
 end
