@@ -53,6 +53,7 @@ class Home < ApplicationRecord
   scope :machine_owners, -> {where(owner_flag: true).order("company_flag DESC, display_order, id")}
   scope :company, ->{where(company_flag: true)}
   scope :for_finance1, -> {where(member_flag: true, owner_flag: true).order(finance_order: :ASC, id: :ASC)}
+  scope :for_drying, -> {where.not(drying_order: nil).order(:drying_order)}
 
   validates :phonetic,      presence: true
   validates :name,          presence: true
