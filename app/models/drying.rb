@@ -19,7 +19,18 @@
 class Drying < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
+  KG_PER_BAG = 30
+
   belongs_to :work_type, -> {with_deleted}
   belongs_to :home, -> {with_deleted}
   belongs_to :drying_type
+  has_many   :drying_moths, {dependent: :destroy}
+  has_many   :drying_lands, {dependent: :destroy}
+  has_one    :adjustment,   {dependent: :destroy}
+
+  scope :by_home, ->(term, home) {where(term: term, home_id: home).order(:carried_on)}
+
+  def rice_bag
+    return rice_weight / KG_PER_BAG
+  end
 end

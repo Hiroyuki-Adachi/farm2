@@ -1,10 +1,11 @@
 <style>
 .drying-data {cursor: pointer;}
+.drying-data:hover {background-color: green;}
 .drying-list {width:auto;}
 .drying-list tbody tr th, .drying-list tbody tr td {text-align: center; padding: 5px;}
 </style>
 <h1>乾燥調整一覧</h1>
-<table class="table talbe-sm drying-list">
+<table class="table talbe-sm table-bordered drying-list">
   <thead>
     <tr>
       <th>世帯</th>
@@ -16,7 +17,7 @@
   <tbody>
     <% @homes.each do |home| %>
     <tr>
-      <th><%= link_to home.name, edit_drying_path(home), {class: "btn btn-outline-success btn-sm", style: "width: 60px;"} %></th>
+      <th><%= link_to home.name, drying_path(home), {class: "btn btn-outline-success btn-sm", style: "width: 60px;"} %></th>
       <% @works.each do |work| %>
         <% drying = @dryings.find {|d| d.carried_on == work.model.worked_at && d.home_id == home.id } %>
         <% if drying %>

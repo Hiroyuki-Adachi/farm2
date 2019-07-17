@@ -19,6 +19,8 @@ class DryingsController < ApplicationController
   end
 
   def show
+    @home = Home.find(params[:id])
+    @dryings = DryingDecorator.decorate_collection(Drying.by_home(current_term, @home))
   end
 
   def edit

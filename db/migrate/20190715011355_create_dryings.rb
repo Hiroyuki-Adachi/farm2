@@ -9,7 +9,7 @@ class CreateDryings < ActiveRecord::Migration[5.2]
       t.date    :shipped_on,     {null: true, comment: "出荷日"}
       t.decimal :water_content,  {null: true, scale: 1, precision: 3, comment: "水分"}
       t.decimal :rice_weight,    {null: false, default: 0, scale: 1, precision: 5, comment: "乾燥米(kg)"}
-      t.decimal :fixed_amount,   {null: false, default: 0, scale: 0, precision: 7, comment: "確定額"}
+      t.decimal :fixed_amount,   {null: true, scale: 0, precision: 7, comment: "確定額"}
 
       t.timestamps
     end

@@ -1,0 +1,32 @@
+@page {size: A3 landscape}
+th.wday-6 {color: Blue;}
+th.wday-0 {color: Red;}
+th.holiday {color: Red !important; }
+@media screen {
+  #calendar-wrapper {overflow: scroll;}
+  #calendar-base {width: 2550px;}
+  .calendar-month {width:200px; margin-left:10px; }
+  .calendar-table tbody th {width:65px;}
+}
+@media print {
+  #calendar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin-left: 0;
+    z-index: 10;
+    width: 100vw;
+  }
+  h1 {display: none;}
+  #calendar-base {width: 100%;}
+  .calendar-month {margin-left:0.1vw;}
+  .calendar-year {width: 2.0vw; font-size: 0.6vw;}
+  .calendar-content {width: 5.1vw; font-size: 0.8vw;}
+  .btn-toolbar {display: none;}
+  .calendar-table {line-height: 1.2;}
+  .calendar-table th, .calendar-table td {padding: 0; border: 1px solid black !important;} 
+  .calendar-table td div {font-size: 0.6vw;}
+  .calendar-day {font-size: 0.75vw; display: block; margin: 0;}
+  .calendar-wday {font-size: 0.75vw; display: block; margin: 0;}
+  .calendar-kind a {text-decoration:none;}
+}

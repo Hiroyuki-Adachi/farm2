@@ -13,4 +13,5 @@
 #
 
 class DryingMoth < ApplicationRecord
+  belongs_to :drying
 end
