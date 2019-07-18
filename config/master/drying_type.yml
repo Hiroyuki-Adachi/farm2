@@ -6,10 +6,10 @@
   name: "カントリー"
 - id: 2
   code: Self
-  name: "自家"
+  name: "乾燥調整"
 - id: 3
   code: Another
-  name: "他家"
+  name: "乾燥のみ"
 - id: 4
   code: Adjust
   name: "調整のみ"

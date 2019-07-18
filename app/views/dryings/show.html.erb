@@ -72,6 +72,7 @@
         <th>合計(kg)</th>
         <th>くず米(kg)</th>
         <th>合計(袋)</th>
+        <th>単価(円)</th>
         <th>金額(円)</th>
       </tr>
     </thead>
@@ -82,6 +83,7 @@
         <td class="numeric"><%= format_weight(@total_dryings[DryingType::COUNTRY.id]) %></td>
         <td class="text-center">-</td>
         <td class="numeric"><%= format_bag(@total_dryings[DryingType::COUNTRY.id]) %></td>
+        <td class="numeric"><%= number_to_currency(current_system.dry_price, {precision: 0, unit: ""}) %></td>
         <td class="numeric"><%= format_amount(@total_dryings[DryingType::COUNTRY.id], current_system.dry_price) %></td>
         <% total_amount += calc_amount(@total_dryings[DryingType::COUNTRY.id], current_system.dry_price) %>
       </tr>
@@ -90,19 +92,22 @@
         <td class="numeric"><%= format_weight(@total_dryings[DryingType::SELF.id]) %></td>
         <td class="numeric"><%= format_weight(@waste_totals[DryingType::SELF.id]) %></td>
         <td class="numeric"><%= format_bag(@total_dryings[DryingType::SELF.id]) %></td>
+        <td class="numeric"><%= number_to_currency(current_system.dry_adjust_price, {precision: 0, unit: ""}) %></td>
         <td class="numeric"><%= format_amount(@total_dryings[DryingType::SELF.id] + @waste_totals[DryingType::SELF.id], current_system.dry_adjust_price) %></td>
-        <% total_amount += calc_amount(@total_dryings[DryingType::SELF.id] + @waste_totals[DryingType::SELF.id], current_system.dry_price) %>
+        <% total_amount += calc_amount(@total_dryings[DryingType::SELF.id] + @waste_totals[DryingType::SELF.id], current_system.dry_adjust_price) %>
       </tr>
       <tr>
         <th>調整のみ</th>
         <td class="numeric"><%= format_weight(@total_dryings[DryingType::ADJUST.id]) %></td>
         <td class="numeric"><%= format_weight(@waste_totals[DryingType::ADJUST.id]) %></td>
         <td class="numeric"><%= format_bag(@total_dryings[DryingType::ADJUST.id]) %></td>
+        <td class="numeric"><%= number_to_currency(current_system.adjust_price, {precision: 0, unit: ""}) %></td>
         <td class="numeric"><%= format_amount(@total_dryings[DryingType::ADJUST.id] + @waste_totals[DryingType::ADJUST.id], current_system.adjust_price) %></td>
-        <% total_amount += calc_amount(@total_dryings[DryingType::ADJUST.id] + @waste_totals[DryingType::ADJUST.id], current_system.dry_price) %>
+        <% total_amount += calc_amount(@total_dryings[DryingType::ADJUST.id] + @waste_totals[DryingType::ADJUST.id], current_system.adjust_price) %>
       </tr>
       <tr>
         <th>合 計</th>
+        <td class="text-center">-</td>
         <td class="text-center">-</td>
         <td class="text-center">-</td>
         <td class="text-center">-</td>
