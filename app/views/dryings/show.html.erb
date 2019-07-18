@@ -78,24 +78,24 @@
     <tbody>
       <tr>
         <th>乾籾出荷</th>
-        <td class="numeric"><%= @total_dryings[DryingType::COUNTRY.id].to_s(:delimited) %></td>
+        <td class="numeric"><%= format_weight(@total_dryings[DryingType::COUNTRY.id]) %></td>
         <td class="text-center">-</td>
-        <td class="numeric"><%= format("%.2f", @total_dryings[DryingType::COUNTRY.id] / Drying::KG_PER_BAG) %></td>
-        <td class="numeric"><%= ((@total_dryings[DryingType::COUNTRY.id] / Drying::KG_PER_BAG) * current_system.dry_price).to_s(:delimited) %></td>
+        <td class="numeric"><%= format_bag(@total_dryings[DryingType::COUNTRY.id]) %></td>
+        <td class="numeric"><%= format_amount(@total_dryings[DryingType::COUNTRY.id], current_system.dry_price) %></td>
       </tr>
       <tr>
         <th>調整出荷</th>
-        <td class="numeric"><%= @total_dryings[DryingType::SELF.id].to_s(:delimited) %></td>
-        <td class="numeric"><%= @waste_totals[DryingType::SELF.id].to_s(:delimited) %></td>
-        <td class="numeric"><%= format("%.2f", @total_dryings[DryingType::SELF.id] / Drying::KG_PER_BAG) %></td>
-        <td class="numeric"><%= ((@total_dryings[DryingType::SELF.id] + @waste_totals[DryingType::SELF.id]) / Drying::KG_PER_BAG * current_system.dry_adjust_price).to_s(:delimited) %></td>
+        <td class="numeric"><%= format_weight(@total_dryings[DryingType::SELF.id]) %></td>
+        <td class="numeric"><%= format_weight(@waste_totals[DryingType::SELF.id]) %></td>
+        <td class="numeric"><%= format_bag(@total_dryings[DryingType::SELF.id]) %></td>
+        <td class="numeric"><%= format_amount(@total_dryings[DryingType::SELF.id] + @waste_totals[DryingType::SELF.id], current_system.dry_adjust_price) %></td>
       </tr>
       <tr>
         <th>調整のみ</th>
-        <td class="numeric"><%= @total_dryings[DryingType::ADJUST.id].to_s(:delimited) %></td>
-        <td class="numeric"><%= @waste_totals[DryingType::ADJUST.id].to_s(:delimited) %></td>
-        <td class="numeric"><%= format("%.2f", @total_dryings[DryingType::ADJUST.id] / Drying::KG_PER_BAG) %></td>
-        <td class="numeric"><%= ((@total_dryings[DryingType::ADJUST.id] + @waste_totals[DryingType::ADJUST.id]) / Drying::KG_PER_BAG * current_system.adjust_price).to_s(:delimited) %></td>
+        <td class="numeric"><%= format_weight(@total_dryings[DryingType::ADJUST.id]) %></td>
+        <td class="numeric"><%= format_weight(@waste_totals[DryingType::ADJUST.id]) %></td>
+        <td class="numeric"><%= format_bag(@total_dryings[DryingType::ADJUST.id]) %></td>
+        <td class="numeric"><%= format_amount(@total_dryings[DryingType::ADJUST.id] + @waste_totals[DryingType::ADJUST.id], current_system.adjust_price) %></td>
       </tr>
       <tr>
         <th>合 計</th>
