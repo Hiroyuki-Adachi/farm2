@@ -7,7 +7,11 @@ module DryingsHelper
     format("%.2f", weight / Drying::KG_PER_BAG)
   end
 
+  def calc_amount(weight, price)
+    weight / Drying::KG_PER_BAG * price
+  end
+
   def format_amount(weight, price)
-    number_to_currency(weight / Drying::KG_PER_BAG * price, {precision: 0, unit: ""})
+    number_to_currency(calc_amount(weight, price), {precision: 0, unit: ""})
   end
 end
