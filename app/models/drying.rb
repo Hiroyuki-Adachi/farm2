@@ -28,9 +28,17 @@ class Drying < ApplicationRecord
   has_many   :drying_lands, {dependent: :destroy}
   has_one    :adjustment,   {dependent: :destroy}
 
-  scope :by_home, ->(term, home) {where(term: term, home_id: home).order(:carried_on)}
+  scope :by_home, ->(term, home) {
+    left_joins(:adjustment)
+      .where(["dryings.term = ? AND (dryings.home_id = ? OR adjustments.home_id = ?)", term, home.id, home.id])
+      .order(:carried_on)
+  }
 
   def rice_bag
     return rice_weight / KG_PER_BAG
+  end
+
+  def adjust_only?(home_id)
+    return drying_type == DryingType::ANOTHER && adjustment&.home_id == home_id
   end
 end

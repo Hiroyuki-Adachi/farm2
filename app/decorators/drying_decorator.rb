@@ -30,7 +30,20 @@ class DryingDecorator < Draper::Decorator
     model.rice_weight&.positive? ? model.rice_weight.to_s(:delimited) : ""
   end
 
-  def adjust_rice_weight
-    model.adjustment&.rice_weight&.positive? ? model.adjustment.rice_weight.to_s(:delimited) : ""
+  def adjust_rice_bag
+    model.adjustment&.rice_bag&.positive? ? model.adjustment.rice_bag : ""
+  end
+
+  def adjust_half_weight
+    model.adjustment&.half_weight&.positive? ? format("%.1f", model.adjustment.half_weight) : ""
+  end
+
+  def adjust_waste_weight
+    model.adjustment&.waste_weight&.positive? ? format("%.1f", model.adjustment.waste_weight) : ""
+  end
+
+  def drying_type_name(home_id)
+    return DryingType::ADJUST.name if model.adjust_only?(home_id)
+    return model.drying_type.name
   end
 end
