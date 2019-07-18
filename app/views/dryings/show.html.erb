@@ -1,4 +1,25 @@
 <h1>乾燥／調整管理表(<%= @home.name %>)</h1>
+<style>
+table {
+  overflow: hidden;
+  display:inline-block;
+}
+td, th {
+    border: 1px solid #999;
+    padding: 10px;
+    position: relative;
+}
+td:hover::after { 
+    background-color: #ffa;
+    content: '';  
+    height: 10000px;    
+    left: 0;
+    position: absolute;  
+    top: -5000px;
+    width: 100%;
+    z-index: -1;        
+}
+</style>
 <div class="row">
   <table class="table table-bordered table-sm" style="width:auto;">
     <tbody>

@@ -1,10 +1,10 @@
 class DryingsController < ApplicationController
   include PermitManager
   before_action :set_drying, only: [:edit, :update, :destroy]
+  before_action :set_homes, only: [:index, :edit]
 
   def index
     @works = WorkDecorator.decorate_collection(Work.for_drying(current_term, current_organization))
-    @homes = Home.for_drying
     @new_drying = Drying.new(term: current_term)
     @dryings = Drying.where(term: current_term).to_a
   end
@@ -43,6 +43,10 @@ class DryingsController < ApplicationController
 
   def set_drying
     @drying = Drying.find(params[:id])
+  end
+
+  def set_homes
+    @homes = Home.for_drying
   end
 
   def calc_total(dryings, home)
