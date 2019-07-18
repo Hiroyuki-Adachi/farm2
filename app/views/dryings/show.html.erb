@@ -29,6 +29,12 @@
             <% end %>
           </tr>
           <tr>
+            <th>種別</th>
+            <% @dryings.each do |drying| %>
+              <td><%= drying.drying_type_name(@home.id) %></td>
+            <% end %>
+          </tr>
+          <tr>
             <th>乾籾出荷</th>
             <% @dryings.each do |drying| %>
               <td class="numeric"><%= drying.dry_rice_weight %>kg</td>
@@ -37,13 +43,69 @@
           <tr>
             <th>調整出荷</th>
             <% @dryings.each do |drying| %>
-              <td class="numeric"><%= drying.adjust_rice_weight %>kg</td>
+              <td class="numeric"><%= drying.adjust_rice_bag %>袋</td>
+            <% end %>
+          </tr>
+          <tr>
+            <th>調整残</th>
+            <% @dryings.each do |drying| %>
+              <td class="numeric"><%= drying.adjust_half_weight %>kg</td>
+            <% end %>
+          </tr>
+          <tr>
+            <th>くず米</th>
+            <% @dryings.each do |drying| %>
+              <td class="numeric"><%= drying.adjust_waste_weight %>kg</td>
             <% end %>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+</div>
+<h2>合計</h2>
+<div class="row">
+  <table class="table table-bordered table-sm" style="width:auto;">
+    <thead>
+      <tr>
+        <th>種類</th>
+        <th>合計(kg)</th>
+        <th>くず米(kg)</th>
+        <th>合計(袋)</th>
+        <th>金額(円)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>乾籾出荷</th>
+        <td class="numeric"><%= @total_dryings[DryingType::COUNTRY.id].to_s(:delimited) %></td>
+        <td class="text-center">-</td>
+        <td class="numeric"><%= format("%.2f", @total_dryings[DryingType::COUNTRY.id] / Drying::KG_PER_BAG) %></td>
+        <td class="numeric"><%= ((@total_dryings[DryingType::COUNTRY.id] / Drying::KG_PER_BAG) * current_system.dry_price).to_s(:delimited) %></td>
+      </tr>
+      <tr>
+        <th>調整出荷</th>
+        <td class="numeric"><%= @total_dryings[DryingType::SELF.id].to_s(:delimited) %></td>
+        <td class="numeric"><%= @waste_totals[DryingType::SELF.id].to_s(:delimited) %></td>
+        <td class="numeric"><%= format("%.2f", @total_dryings[DryingType::SELF.id] / Drying::KG_PER_BAG) %></td>
+        <td class="numeric"><%= ((@total_dryings[DryingType::SELF.id] + @waste_totals[DryingType::SELF.id]) / Drying::KG_PER_BAG * current_system.dry_adjust_price).to_s(:delimited) %></td>
+      </tr>
+      <tr>
+        <th>調整のみ</th>
+        <td class="numeric"><%= @total_dryings[DryingType::ADJUST.id].to_s(:delimited) %></td>
+        <td class="numeric"><%= @waste_totals[DryingType::ADJUST.id].to_s(:delimited) %></td>
+        <td class="numeric"><%= format("%.2f", @total_dryings[DryingType::ADJUST.id] / Drying::KG_PER_BAG) %></td>
+        <td class="numeric"><%= ((@total_dryings[DryingType::ADJUST.id] + @waste_totals[DryingType::ADJUST.id]) / Drying::KG_PER_BAG * current_system.adjust_price).to_s(:delimited) %></td>
+      </tr>
+      <tr>
+        <th>合 計</th>
+        <td class="text-center">-</td>
+        <td class="text-center">-</td>
+        <td class="text-center">-</td>
+        <td class="numeric"></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">

@@ -10,3 +10,6 @@
 - id: 3
   code: Another
   name: "他家"
+- id: 4
+  code: Adjust
+  name: "調整のみ"
