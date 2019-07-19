@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
     t.date "shipped_on", comment: "出荷日"
     t.decimal "rice_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "調整米(kg)"
     t.decimal "waste_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "くず米(kg)"
-    t.decimal "fixed_amount", precision: 7, default: "0", null: false, comment: "確定額"
+    t.decimal "fixed_amount", precision: 7, comment: "確定額"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["drying_id"], name: "adjustments_secondary", unique: true
@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
     t.date "shipped_on", comment: "出荷日"
     t.decimal "water_content", precision: 3, scale: 1, comment: "水分"
     t.decimal "rice_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "乾燥米(kg)"
-    t.decimal "fixed_amount", precision: 7, default: "0", null: false, comment: "確定額"
+    t.decimal "fixed_amount", precision: 7, comment: "確定額"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["carried_on", "home_id"], name: "dryings_secondary", unique: true
