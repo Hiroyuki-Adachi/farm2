@@ -151,13 +151,8 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
       <%= link_to '削除', @drying, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
     </div>
     <div class="btn-group mr-2">
-      <%= link_to '戻る(乾燥)', drying_path(@drying.home), class: "btn btn-outline-dark" %>
+      <%= link_to '戻る', drying_path(@drying.home), class: "btn btn-outline-dark" %>
     </div>
-    <% if @drying.adjustment&.home %>
-      <div class="btn-group mr-2">
-        <%= link_to '戻る(調整)', drying_path(@drying.adjustment.home), class: "btn btn-outline-dark" %>
-      </div>
-    <% end %>
   </div>
 <% end %>
 <script>

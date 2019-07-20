@@ -21,7 +21,7 @@ class DryingsController < ApplicationController
   def show
     @home = Home.find(params[:id])
     @dryings = DryingDecorator.decorate_collection(Drying.by_home(current_term, @home))
-    @total_dryings, @waste_totals = calc_total(@dryings, @home)
+    @total_dryings, @waste_totals = Drying.calc_total(@dryings, @home)
   end
 
   def edit
@@ -78,31 +78,5 @@ class DryingsController < ApplicationController
     @drying.drying_moths.build(default_moths) if @drying.drying_moths.empty?
     @drying.drying_lands.build
     @drying.build_adjustment unless @drying.adjustment
-  end
-
-  def calc_total(dryings, home)
-    rice_totals = {
-      DryingType::ADJUST.id => 0.0,
-      DryingType::COUNTRY.id => 0.0,
-      DryingType::SELF.id => 0.0
-    }
-    waste_totals = {
-      DryingType::ADJUST.id => 0.0,
-      DryingType::SELF.id => 0.0
-    }
-    dryings.each do |drying|
-      if drying.adjust_only?(home.id)
-        rice_totals[DryingType::ADJUST.id] += drying.adjustment.rice_weight || 0
-        waste_totals[DryingType::ADJUST.id] += drying.adjustment.waste_weight || 0
-        next
-      end
-      if drying.drying_type == DryingType::SELF
-        rice_totals[DryingType::SELF.id] += drying.adjustment.rice_weight || 0
-        waste_totals[DryingType::SELF.id] += drying.adjustment.waste_weight || 0
-      else
-        rice_totals[DryingType::COUNTRY.id] += drying.rice_weight || 0
-      end
-    end
-    return rice_totals, waste_totals
   end
 end

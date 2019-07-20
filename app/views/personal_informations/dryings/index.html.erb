@@ -5,20 +5,38 @@
       <th>出荷日</th>
       <th>品種</th>
       <th>種別</th>
-      <th>出荷量(kg)</th>
-      <th>袋</th>
+      <th class="text-right">出荷量(kg)</th>
+      <th class="text-right">袋</th>
     </thead>
     <tbody>
       <% @dryings.each do |drying| %>
         <tr>
           <td><%= drying.carried_on_short %></td>
           <td><%= drying.shipped_on_short %></td>
-          <td><%= drying.work_type.name %></td>
+          <td><%= drying&.work_type&.name %></td>
           <td><%= drying.drying_type_name(@worker.home.id) %></td>
-          <td class="numeric"><%= drying.all_rice_weight %></td>
-          <td class="numeric"><%= drying.all_rice_bag %></td>
+          <td class="text-right"><%= drying.all_rice_weight_format %></td>
+          <td class="text-right"><%= drying.all_rice_bag_format %></td>
         </tr>
       <% end %>
     </tbody>
+    <tfoot>
+      <tr>
+        <th rowspan="3" colspan="3">合計</th>
+        <th>乾籾出荷</th>
+        <td class="text-right"><%= format_weight(@total_dryings[DryingType::COUNTRY.id]) %></td>
+        <td class="text-right"><%= format_bag(@total_dryings[DryingType::COUNTRY.id]) %></td>
+      </tr>
+      <tr>
+        <th>調整出荷</th>
+        <td class="text-right"><%= format_weight(@total_dryings[DryingType::SELF.id] + @waste_totals[DryingType::SELF.id]) %></td>
+        <td class="text-right"><%= format_bag(@total_dryings[DryingType::SELF.id] + @waste_totals[DryingType::SELF.id]) %></td>
+      </tr>
+      <tr>
+        <th>調整のみ</th>
+        <td class="text-right"><%= format_weight(@total_dryings[DryingType::ADJUST.id] + @waste_totals[DryingType::ADJUST.id]) %></td>
+        <td class="text-right"><%= format_bag(@total_dryings[DryingType::ADJUST.id] + @waste_totals[DryingType::ADJUST.id]) %></td>
+      </tr>
+    </tfoot>
   </table>
 <% end %>
