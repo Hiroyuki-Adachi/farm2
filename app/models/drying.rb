@@ -28,6 +28,8 @@ class Drying < ApplicationRecord
   has_many   :drying_lands, {dependent: :destroy}
   has_one    :adjustment,   {dependent: :destroy}
 
+  before_save :save_rice_weight, :save_adjustment
+
   accepts_nested_attributes_for :drying_moths
   accepts_nested_attributes_for :drying_lands
   accepts_nested_attributes_for :adjustment
@@ -44,5 +46,21 @@ class Drying < ApplicationRecord
 
   def adjust_only?(home_id)
     return drying_type == DryingType::ANOTHER && adjustment&.home_id == home_id
+  end
+
+  def save_rice_weight
+    if drying_type == DryingType::COUNTRY
+      self.rice_weight = DryingMoth.where(drying_id: id).sum(:rice_weight)
+    else
+      drying_moths.destroy_all
+    end
+  end
+
+  def save_adjustment
+    if drying_type == DryingType::COUNTRY
+      adjustment.destroy
+    else
+      self.rice_weight = adjustment.rice_weight
+    end
   end
 end
