@@ -1,5 +1,5 @@
 class OrganizationsController < ApplicationController
-  include PermitManager
+  before_action :permit_admin, only: [:edit, :update]
   before_action :set_organization
 
   def edit

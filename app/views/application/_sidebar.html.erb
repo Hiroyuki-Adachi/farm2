@@ -81,7 +81,10 @@
     <% end %>
     <% if current_user.manageable? %>
       <%= link_to '対象年度変更', edit_term_menu_path(current_system), {class: "dropdown-item", data: {controller: :menu, actions: [:edit_term]}} %>
+    <% end %>
+    <% if current_user.admin? %>
       <%= link_to '管理情報変更', edit_organization_path(current_organization), {class: "dropdown-item", data: {controller: :organizations}} %>
+      <%= link_to 'システム変更', edit_system_path(current_system), {class: "dropdown-item", data: {controller: :systems}} %>
     <% end %>
     <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item", data: {controller: :users, actions: [:edit]}} %>
   </div>
