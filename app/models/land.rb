@@ -91,4 +91,8 @@ class Land < ApplicationRecord
     result = (result * Land.maximum(:display_order) + display_order) * Land.maximum(:id) + id
     return result
   end
+
+  def cost(target)
+    LandCost.newest(target).find_by(land_id: id)
+  end
 end

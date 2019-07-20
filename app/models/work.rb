@@ -345,4 +345,14 @@ SQL
   def total_cost_type
     work_type&.land_flag ? TotalCostType::WORKWORKER : TotalCostType::WORKINDIRECT
   end
+
+  def self.types_by_worked_at(worked_at)
+    work_types = []
+    Work.where(worked_at: worked_at).each do |work|
+      work.lands.each do |land|
+        work_types << land.cost(worked_at).work_type
+      end
+    end
+    return work_types.uniq
+  end
 end

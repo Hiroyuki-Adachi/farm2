@@ -17,11 +17,11 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
 
   create_table "adjustments", comment: "調整", force: :cascade do |t|
     t.integer "drying_id", default: 0, null: false, comment: "乾燥"
-    t.integer "home_id", default: 0, null: false, comment: "担当世帯"
+    t.integer "home_id", comment: "担当世帯"
     t.date "carried_on", comment: "搬入日"
     t.date "shipped_on", comment: "出荷日"
-    t.decimal "rice_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "調整米(kg)"
-    t.decimal "waste_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "くず米(kg)"
+    t.decimal "rice_weight", precision: 5, scale: 1, comment: "調整米(kg)"
+    t.decimal "waste_weight", precision: 5, scale: 1, comment: "くず米(kg)"
     t.decimal "fixed_amount", precision: 7, comment: "確定額"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
   create_table "drying_lands", comment: "乾燥調整場所", force: :cascade do |t|
     t.integer "drying_id", default: 0, null: false, comment: "乾燥調整"
     t.integer "land_id", default: 0, null: false, comment: "作業地"
+    t.decimal "percentage", precision: 4, scale: 1, default: "100.0", null: false, comment: "割合"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["drying_id", "land_id"], name: "drying_lands_secondary", unique: true
@@ -172,13 +173,14 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
 
   create_table "drying_moths", comment: "乾燥籾", force: :cascade do |t|
     t.integer "drying_id", default: 0, null: false, comment: "乾燥調整"
-    t.integer "moth_no", default: 0, null: false, comment: "回数"
-    t.decimal "water_content", precision: 3, scale: 1, default: "0.0", null: false, comment: "水分"
-    t.decimal "moth_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "籾(kg)"
-    t.decimal "rice_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "玄米(kg)"
+    t.integer "moth_count", default: 0, null: false, comment: "回数"
+    t.integer "moth_no", comment: "No."
+    t.decimal "water_content", precision: 3, scale: 1, comment: "水分"
+    t.decimal "moth_weight", precision: 5, scale: 1, comment: "籾(kg)"
+    t.decimal "rice_weight", precision: 5, scale: 1, comment: "玄米(kg)"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["drying_id", "moth_no"], name: "drying_moths_secondary", unique: true
+    t.index ["drying_id", "moth_count"], name: "drying_moths_secondary", unique: true
   end
 
   create_table "dryings", comment: "乾燥", force: :cascade do |t|
@@ -189,7 +191,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
     t.date "carried_on", null: false, comment: "搬入日"
     t.date "shipped_on", comment: "出荷日"
     t.decimal "water_content", precision: 3, scale: 1, comment: "水分"
-    t.decimal "rice_weight", precision: 5, scale: 1, default: "0.0", null: false, comment: "乾燥米(kg)"
+    t.decimal "rice_weight", precision: 5, scale: 1, comment: "乾燥米(kg)"
     t.decimal "fixed_amount", precision: 7, comment: "確定額"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
