@@ -25,6 +25,7 @@ ja:
       land_cost: "土地原価"
       expense: "原価経費"
       expense_type: "経費種別"
+      system: "システム"
 
     attributes:
       chemical:
@@ -174,6 +175,11 @@ ja:
         target_to: 期間(至)
         start_date: "期首"
         end_date: "期末"
+        default_price: "工賃(初期値)"
+        default_fee: "初期値(管理料)"
+        dry_price: "基準額(乾燥のみ)"
+        adjust_price: "基準額(調整のみ)"
+        dry_adjust_price: "基準額(乾燥調整)"
 
       organization:
         name: "組織名称"

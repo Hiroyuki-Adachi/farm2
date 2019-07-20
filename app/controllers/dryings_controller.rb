@@ -96,11 +96,12 @@ class DryingsController < ApplicationController
         waste_totals[DryingType::ADJUST.id] += drying.adjustment.waste_weight || 0
         next
       end
-      if drying.adjustment == DryingType::SELF
+      if drying.drying_type == DryingType::SELF
         rice_totals[DryingType::SELF.id] += drying.adjustment.rice_weight || 0
         waste_totals[DryingType::SELF.id] += drying.adjustment.waste_weight || 0
+      else
+        rice_totals[DryingType::COUNTRY.id] += drying.rice_weight || 0
       end
-      rice_totals[DryingType::COUNTRY.id] += drying.rice_weight || 0
     end
     return rice_totals, waste_totals
   end

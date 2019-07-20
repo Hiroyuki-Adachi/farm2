@@ -11,8 +11,8 @@ class OrganizationsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "管理マスタ変更(管理者以外)" do
-    session[:user_id] = users(:user_checker).id
+  test "管理マスタ変更(システム管理者以外)" do
+    session[:user_id] = users(:user_manager).id
     get :edit, params: {id: @organization}
     assert_response :error
   end
