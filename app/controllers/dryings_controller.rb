@@ -48,7 +48,13 @@ class DryingsController < ApplicationController
   def drying_params
     params.require(:drying).permit(
       :term, :home_id, :work_type_id, :carried_on, :shipped_on, :water_content, :rice_weight,
-      :drying_type_id
+      :drying_type_id,
+      drying_moths_attributes: [
+        :moth_count, :moth_no, :water_content, :moth_weight, :rice_weight, :id
+      ],
+      adjustment_attributes: [
+        :home_id, :carried_on, :shipped_on, :id, :rice_bag, :half_weight, :waste_weight
+      ]
     )
   end
 
@@ -69,9 +75,9 @@ class DryingsController < ApplicationController
   end
 
   def build_drying
-    @drying.drying_moths.build(default_moths)
+    @drying.drying_moths.build(default_moths) if @drying.drying_moths.empty?
     @drying.drying_lands.build
-    @drying.build_adjustment
+    @drying.build_adjustment unless @drying.adjustment
   end
 
   def calc_total(dryings, home)
@@ -86,13 +92,13 @@ class DryingsController < ApplicationController
     }
     dryings.each do |drying|
       if drying.adjust_only?(home.id)
-        rice_totals[DryingType::ADJUST.id] += drying.adjust.rice_weight || 0
-        waste_totals[DryingType::ADJUST.id] += drying.adjust.waste_totals || 0
+        rice_totals[DryingType::ADJUST.id] += drying.adjustment.rice_weight || 0
+        waste_totals[DryingType::ADJUST.id] += drying.adjustment.waste_weight || 0
         next
       end
       if drying.adjustment == DryingType::SELF
-        rice_totals[DryingType::SELF.id] += drying.adjust.rice_weight || 0
-        waste_totals[DryingType::SELF.id] += drying.adjust.waste_totals || 0
+        rice_totals[DryingType::SELF.id] += drying.adjustment.rice_weight || 0
+        waste_totals[DryingType::SELF.id] += drying.adjustment.waste_weight || 0
       end
       rice_totals[DryingType::COUNTRY.id] += drying.rice_weight || 0
     end
