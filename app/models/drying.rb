@@ -39,7 +39,7 @@ class Drying < ApplicationRecord
   }
 
   def rice_bag
-    return rice_weight / KG_PER_BAG
+    return (rice_weight || 0) / KG_PER_BAG
   end
 
   def adjust_only?(home_id)

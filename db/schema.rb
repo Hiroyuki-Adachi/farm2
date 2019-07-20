@@ -20,7 +20,8 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
     t.integer "home_id", comment: "担当世帯"
     t.date "carried_on", comment: "搬入日"
     t.date "shipped_on", comment: "出荷日"
-    t.decimal "rice_weight", precision: 5, scale: 1, comment: "調整米(kg)"
+    t.decimal "rice_bag", precision: 3, comment: "調整米(袋)"
+    t.decimal "half_weight", precision: 3, scale: 1, comment: "半端米(kg)"
     t.decimal "waste_weight", precision: 5, scale: 1, comment: "くず米(kg)"
     t.decimal "fixed_amount", precision: 7, comment: "確定額"
     t.datetime "created_at", null: false

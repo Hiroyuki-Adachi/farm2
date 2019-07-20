@@ -7,7 +7,8 @@
 #  home_id      :integer                                # 担当世帯
 #  carried_on   :date                                   # 搬入日
 #  shipped_on   :date                                   # 出荷日
-#  rice_weight  :decimal(5, 1)                          # 調整米(kg)
+#  rice_bag     :decimal(3, )                           # 調整米(袋)
+#  half_weight  :decimal(3, 1)                          # 半端米(kg)
 #  waste_weight :decimal(5, 1)                          # くず米(kg)
 #  fixed_amount :decimal(7, )                           # 確定額
 #  created_at   :datetime         not null

@@ -1,3 +1,7 @@
+<style>
+#drying-moths td, #drying-moths th {padding: 0.25rem;}
+td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
+</style>
 <h1>乾燥／調整管理表</h1>
 <%= form_for(@drying.model, url: {controller: :dryings, action: :update}) do |fd| %>
   <div class="row">
@@ -21,80 +25,121 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5" style="border: medium solid lightpink">
       <h2>乾燥</h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <label class="col-form-label-lg">乾燥担当：<%= @drying.home.name %></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 form-inline field form-group">
+            <label class="col-form-label-lg">搬入日：</label>
+            <label class="col-form-label-lg"><%= @drying.carried_on %></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 form-inline field form-group">
+            <label class="col-form-label-lg">出荷日：</label>
+            <%= fd.date_field :shipped_on, {min: @drying.model.carried_on, required: true, class: "form-control dry-input dry-country dry-self dry-another"} %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 form-inline field form-group">
+            <label class="col-form-label-lg">水分：</label>
+            <%= fd.number_field :water_content, {min: 10, max: 20, step: 0.1, required: false, class: "form-control form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
+            <label class="col-form-label-lg">%</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <table id="drying-moths" class="table talbe-sm">
+              <thead>
+                <tr>
+                  <th>回数</th>
+                  <th>No.</th>
+                  <th>籾(kg)</th>
+                  <th>玄米(kg)</th>
+                  <th>水分(%)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= fd.fields_for :drying_moths do |fm| %>
+                <tr>
+                  <td class="numeric">
+                    <%= fm.object.moth_count %>
+                    <%= fm.hidden_field :moth_count %>
+                  </td>
+                  <td>
+                    <%= fm.number_field :moth_no, {class: "form-control form-control-sm dry-input dry-country", min: 0, max: 9999, style: "width: 80px;"} %>
+                  </td>
+                  <td>
+                    <%= fm.number_field :moth_weight, {class: "form-control form-control-sm dry-input dry-country", min: 0, max: 9999.9, step: 0.1, style: "width: 80px;"} %>
+                  </td>
+                  <td>
+                    <%= fm.number_field :rice_weight, {class: "form-control form-control-sm dry-input dry-country", min: 0, max: 9999.9, step: 0.1, style: "width: 80px;"} %>
+                  </td>
+                  <td>
+                    <%= fm.number_field :water_content, {class: "form-control form-control-sm dry-input dry-country", min: 10, max: 20, step: 0.1, style: "width: 80px;"} %>
+                    <%= fm.hidden_field :id %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th colspan="2">合計</th>
+                  <td class="numeric" id="sum_moth_weight"></td>
+                  <td class="numeric" id="sum_rice_weight"></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5" style="border: medium solid lightskyblue">
       <h2>調整</h2>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6 form-inline field form-group">
-      <label class="col-form-label-lg">搬入日</label>
-      <label class="col-form-label-lg"><%= @drying.carried_on %></label>
-    </div>
-    <div class="col-md-6 form-inline field form-group">
-      <label class="col-form-label-lg">調整担当</label>
-      <%= fd.select(:home_id, @homes.map {|h| [h.owner_name, h.id]}, {include_blank: true}, {class: "form-control dry-input dry-another"}) %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3 form-inline field form-group">
-      <label class="col-form-label-lg">出荷日</label>
-      <%= fd.date_field :shipped_on, {min: @drying.model.carried_on, required: true, class: "form-control dry-input dry-country dry-self dry-another"} %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3 form-inline field form-group">
-      <label class="col-form-label-lg">水分</label>
-      <%= fd.number_field :water_content, {min: 10, max: 20, step: 0.1, required: false, class: "form-control form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
-      <label class="col-form-label-lg">%</label>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <table class="table talbe-sm" style="width:auto;">
-        <thead>
-          <tr>
-            <th>回数</th>
-            <th>No.</th>
-            <th>籾(kg)</th>
-            <th>玄米(kg)</th>
-            <th>水分(%)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <%= fd.fields_for :drying_moths do |fm| %>
-          <tr>
-            <td class="numeric">
-              <%= fm.object.moth_count %>
-              <%= fm.hidden_field :moth_count %>
-            </td>
-            <td>
-              <%= fm.number_field :moth_no, {class: "form-control form-control-sm dry-input dry-country", min: 0, max: 9999, style: "width: 80px;"} %>
-            </td>
-            <td>
-              <%= fm.number_field :moth_weight, {class: "form-control form-control-sm dry-input dry-country", min: 0, max: 9999.9, step: 0.1, style: "width: 80px;"} %>
-            </td>
-            <td>
-              <%= fm.number_field :rice_weight, {class: "form-control form-control-sm dry-input dry-country", min: 0, max: 9999.9, step: 0.1, style: "width: 80px;"} %>
-            </td>
-            <td>
-              <%= fm.number_field :water_content, {class: "form-control form-control-sm dry-input dry-country", min: 10, max: 20, step: 0.1, style: "width: 80px;"} %>
-              <%= fm.hidden_field :id %>
-            </td>
-          </tr>
-          <% end %>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th colspan="2">合計</th>
-            <td class="numeric" id="sum_moth_weight"></td>
-            <td class="numeric" id="sum_rice_weight"></td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
+      <div class="container">
+        <%= fd.fields_for :adjustment do |fa| %>
+          <div class="row">
+            <div class="col-md-12 form-inline field form-group">
+              <label class="col-form-label-lg">調整担当：</label>
+              <%= fa.select(:home_id, @homes.map {|h| [h.owner_name, h.id]}, {include_blank: true}, {class: "form-control dry-input dry-another"}) %>
+              <%= fa.hidden_field :id %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-inline field form-group">
+              <label class="col-form-label-lg">出荷日：</label>
+              <%= fa.date_field :shipped_on, {min: @drying.model.carried_on, class: "form-control dry-input dry-another"} %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-inline field form-group">
+              <label class="col-form-label-lg">調整 出荷：</label>
+              <%= fa.number_field :rice_bag, {min: 0, max: 999, step: 1, required: false, class: "form-control form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
+              <label class="col-form-label-lg">袋</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-inline field form-group">
+              <label class="col-form-label-lg">調整 半端：</label>
+              <%= fa.number_field :half_weight, {min: 0, max: 99.9, step: 0.1, required: false, class: "form-control form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
+              <label class="col-form-label-lg">kg</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-inline field form-group">
+              <label class="col-form-label-lg">くず米：</label>
+              <%= fa.number_field :waste_weight, {min: 0, max: 999.9, step: 0.1, required: false, class: "form-control form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
+              <label class="col-form-label-lg">kg</label>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
   <div class="btn-toolbar">
@@ -114,3 +159,32 @@
     <% end %>
   </div>
 <% end %>
+<script>
+$(function() {
+    $('input[type="number"][name$="[moth_weight]"], input[type="number"][name$="[rice_weight]"]').change(function() {
+        calc_sum();
+    });
+
+    calc_sum();
+});
+
+function calc_sum() {
+    const sum_moth = sum_weight('input[type="number"][name$="[moth_weight]"]');
+    const sum_rice = sum_weight('input[type="number"][name$="[rice_weight]"]');
+    const formatter = new Intl.NumberFormat('ja-JP', {minimumFractionDigits: 1});
+  
+    document.getElementById("sum_moth_weight").innerText = formatter.format(sum_moth);
+    document.getElementById("sum_rice_weight").innerText = formatter.format(sum_rice);
+}
+
+function sum_weight(selector) {
+    let sum_weight = 0;
+    $(selector).each(function() {
+        if($.isNumeric($(this).val())) {
+            sum_weight += parseFloat($(this).val());
+        }
+    });
+
+    return sum_weight;
+}
+</script>
