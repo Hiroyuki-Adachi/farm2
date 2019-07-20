@@ -31,6 +31,7 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
         <div class="row">
           <div class="col-md-12">
             <label class="col-form-label-lg">乾燥担当：<%= @drying.home.name %></label>
+            <%= fd.hidden_field :home_id %>
           </div>
         </div>
         <div class="row">
@@ -48,7 +49,7 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
         <div class="row">
           <div class="col-md-12 form-inline field form-group">
             <label class="col-form-label-lg">水分：</label>
-            <%= fd.number_field :water_content, {min: 10, max: 20, step: 0.1, required: false, class: "form-control form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
+            <%= fd.number_field :water_content, {min: 10, max: 20, step: 0.1, required: false, class: "form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
             <label class="col-form-label-lg">%</label>
           </div>
         </div>
@@ -144,7 +145,7 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
   </div>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
-      <%= fd.submit '登録', class: "btn btn-warning" %>
+      <%= fd.submit '登録', class: "btn btn-warning dry-input" %>
     </div>
     <div class="btn-group mr-2">
       <%= link_to '削除', @drying, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
@@ -164,8 +165,12 @@ $(function() {
     $('input[type="number"][name$="[moth_weight]"], input[type="number"][name$="[rice_weight]"]').change(function() {
         calc_sum();
     });
+    $('input[name="drying[drying_type_id]"]').change(function() {
+        change_enabled();
+    });
 
     calc_sum();
+    change_enabled();
 });
 
 function calc_sum() {
@@ -186,5 +191,36 @@ function sum_weight(selector) {
     });
 
     return sum_weight;
+}
+
+function change_enabled() {
+    const dry_type = $('input[name="drying[drying_type_id]"]:checked').val();
+
+    if(dry_type == undefined) {
+        $(".dry-input").prop("disabled", true);
+        return;
+    }
+    $(".dry-input").prop("disabled", false);
+    $("input.dry-country, input.dry-another, input.dry-self").prop("readonly", true);
+    $("select.dry-country, select.dry-another, select.dry-self").enableSelection();
+    switch(dry_type * 1) {
+        case 1: // Country
+          $("input.dry-country").prop("readonly", false);
+          $("input.dry-another, input.dry-self").not(".dry-country").val("");
+          $("#drying_adjustment_attributes_home_id").val("");
+          $("select.dry-another, select.dry-self").not(".dry-country").disableSelection();
+          break;
+
+        case 2: // Self
+          $("input.dry-self").prop("readonly", false);
+          $("input.dry-another, input.dry-country").not(".dry-self").val("");
+          $("#drying_adjustment_attributes_home_id").val($("#drying_home_id").val());
+          $("select.dry-another, select.dry-country").not(".dry-self").disableSelection();
+          break;
+
+        case 3: // Another
+          $("input.dry-another").prop("readonly", false);
+          break;
+    }
 }
 </script>
