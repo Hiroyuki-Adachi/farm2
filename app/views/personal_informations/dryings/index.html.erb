@@ -1,0 +1,24 @@
+<% if @dryings.count > 0 %>
+  <table class="table table-sm">
+    <thead>
+      <th>搬入日</th>
+      <th>出荷日</th>
+      <th>品種</th>
+      <th>種別</th>
+      <th>出荷量(kg)</th>
+      <th>袋</th>
+    </thead>
+    <tbody>
+      <% @dryings.each do |drying| %>
+        <tr>
+          <td><%= drying.carried_on_short %></td>
+          <td><%= drying.shipped_on_short %></td>
+          <td><%= drying.work_type.name %></td>
+          <td><%= drying.drying_type_name(@worker.home.id) %></td>
+          <td class="numeric"><%= drying.all_rice_weight %></td>
+          <td class="numeric"><%= drying.all_rice_bag %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -18,8 +18,16 @@ class DryingDecorator < Draper::Decorator
     model.carried_on&.strftime('%m月%d日')
   end
 
+  def carried_on_short
+    model.carried_on&.strftime('%m-%d')
+  end
+
   def shipped_on
     model.shipped_on&.strftime('%m月%d日')
+  end
+
+  def shipped_on_short
+    model.shipped_on&.strftime('%m-%d')
   end
 
   def water_content
@@ -28,6 +36,16 @@ class DryingDecorator < Draper::Decorator
 
   def dry_rice_weight
     model.rice_weight&.positive? ? model.rice_weight.to_s(:delimited) : ""
+  end
+
+  def all_rice_weight
+    return dry_rice_weight unless model.drying_type == DryingType::SELF
+    (model&.adjustment&.rice_weight || 0).to_s(:delimited)
+  end
+
+  def all_rice_bag
+    return format("%.2f", model.rice_bag) unless model.drying_type == DryingType::SELF
+    format("%.2f", (model&.adjustment&.rice_weight || 0) / Drying::KG_PER_BAG)
   end
 
   def adjust_rice_bag
