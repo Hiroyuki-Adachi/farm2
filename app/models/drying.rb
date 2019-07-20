@@ -50,7 +50,8 @@ class Drying < ApplicationRecord
 
   def save_rice_weight
     if drying_type == DryingType::COUNTRY
-      self.rice_weight = DryingMoth.where(drying_id: id).sum(:rice_weight)
+      self.rice_weight = drying_moths.sum(:rice_weight)
+      self.water_content = drying_moths[0].water_content
     else
       drying_moths.destroy_all
     end
