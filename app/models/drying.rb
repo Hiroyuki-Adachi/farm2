@@ -37,7 +37,7 @@ class Drying < ApplicationRecord
   scope :by_home, ->(term, home) {
     left_joins(:adjustment)
       .where(["dryings.term = ? AND (dryings.home_id = ? OR adjustments.home_id = ?)", term, home.id, home.id])
-      .order(:carried_on)
+      .order(:carried_on).order(:id)
   }
 
   def rice_bag
@@ -58,10 +58,13 @@ class Drying < ApplicationRecord
   end
 
   def save_adjustment
-    if drying_type == DryingType::COUNTRY
+    case drying_type
+    when DryingType::COUNTRY
       adjustment.destroy
+    when DryingType::SELF
+      self.rice_weight = nil
     else
-      self.rice_weight = adjustment.rice_weight
+      self.rice_weight = adjustment&.rice_weight
     end
   end
 end
