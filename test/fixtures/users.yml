@@ -25,6 +25,7 @@ users1:
   organization_id: 1
   permission_id: 9
   term: 2015
+  calendar_term: 2014
 
 user_manager:
   id: 2
@@ -34,6 +35,7 @@ user_manager:
   organization_id: 1
   permission_id: 3
   term: 2015
+  calendar_term: 2014
 
 user_checker:
   id: 3
@@ -43,6 +45,7 @@ user_checker:
   organization_id: 1
   permission_id: 2
   term: 2015
+  calendar_term: 2014
 
 user_user:
   id: 4
@@ -52,6 +55,7 @@ user_user:
   organization_id: 1
   permission_id: 1
   term: 2015
+  calendar_term: 2014
 
 user_visitor:
   id: 5
@@ -61,3 +65,13 @@ user_visitor:
   organization_id: 1
   permission_id: 0
   term: 2015
+  calendar_term: 2014
+
+user31:
+  worker_id: 31
+  login_name: '56777'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 0
+  term: 2015
+  calendar_term: 2014

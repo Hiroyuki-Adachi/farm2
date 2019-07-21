@@ -43,3 +43,4 @@ org:
   broccoli_work_kind_id: work_kind_broccoli
   whole_crop_work_kind_id: 15
   contract_work_type_id: 28
+  harvesting_work_kind_id: 4

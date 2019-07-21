@@ -19,3 +19,23 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+
+drying1_moth1:
+  drying_id: drying1
+  moth_count: 1
+  moth_no: 1506
+  water_content: 14.5
+  moth_weight: 1558
+  rice_weight: 1069.2
+  created_at: '2015-09-16 01:57:00.617803'
+  updated_at: '2015-09-16 01:57:00.617803'
+
+drying1_moth2:
+  drying_id: drying1
+  moth_count: 2
+  moth_no: 1590
+  water_content: 14.6
+  moth_weight: 1724
+  rice_weight: 1201.2
+  created_at: '2015-09-16 01:57:00.617803'
+  updated_at: '2015-09-16 01:57:00.617803'

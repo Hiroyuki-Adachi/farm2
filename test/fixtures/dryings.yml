@@ -22,3 +22,14 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+
+drying1:
+  term: 2015
+  work_type_id: 1
+  home_id: 31
+  drying_type_id: 1
+  carried_on: '2015-08-29'
+  shipped_on: '2015-08-30'
+  rice_weight: 2270.4
+  created_at: '2015-09-16 01:57:00.617803'
+  updated_at: '2015-09-16 01:57:00.617803'

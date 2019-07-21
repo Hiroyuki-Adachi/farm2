@@ -1,4 +1,4 @@
 require 'test_helper'
 
-class HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
+class HarvestWholeCropsControllerTest < ActionController::TestCase
 end
