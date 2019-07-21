@@ -40,8 +40,19 @@ class Drying < ApplicationRecord
       .order(:carried_on).order(:id)
   }
 
+  scope :for_harvest, ->(term) {
+    joins(:home, :work_type)
+      .where(["dryings.term = ?", term])
+      .order("work_types.display_order, dryings.carried_on, homes.drying_order, dryings.id")
+  }
+
   def rice_bag
     return (rice_weight || 0) / KG_PER_BAG
+  end
+
+  def harvest_weight
+    return rice_weight if drying_type == DryingType::COUNTRY
+    return adjustment.rice_weight
   end
 
   def adjust_only?(home_id)

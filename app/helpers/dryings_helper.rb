@@ -7,6 +7,11 @@ module DryingsHelper
     format("%.2f", weight / Drying::KG_PER_BAG)
   end
 
+  def format_rice_percentage(rice_weight, waste_weight)
+    return "" if (rice_weight + waste_weight).zero?
+    return format("%.2f", waste_weight / (rice_weight + waste_weight) * 100)
+  end
+
   def calc_amount(weight, price)
     weight / Drying::KG_PER_BAG * price
   end
