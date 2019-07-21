@@ -18,7 +18,11 @@
     <div aria-labelledby="navbarHarvest" style="display:none;">
       <span class="h5">収穫管理</span>
       <%= link_to '育苗一覧', seedling_results_path, {class: "dropdown-item", data: {controller: "seedling_results"}} %>
-      <%= link_to '乾燥調整一覧', dryings_path, {class: "dropdown-item", data: {controller: "dryings"}} %>
+      <% if current_user.manageable? %>
+        <%= link_to '乾燥調整一覧', dryings_path, {class: "dropdown-item", data: {controller: :dryings}} %>
+        <%= link_to '収穫一覧(水稲)', harvest_rices_path, {class: "dropdown-item", data: {controller: "harvest_rices"}} %>
+        <%= link_to '収穫一覧(WCS)', harvest_whole_crops_path, {class: "dropdown-item", data: {controller: "harvest_whole_crops"}} %>
+      <% end %>
     </div>
   <% end %>
   <div aria-labelledby="navbarTotal" style="display:none;">

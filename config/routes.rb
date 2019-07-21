@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :harvest_whole_crops, only: [:index]
+  resources :harvest_rices, only: [:index]
   resources :dryings, except: [:new]
   resources :calendar_work_kinds, only: [:index, :create]
   resources :calendars, only: [:index]
