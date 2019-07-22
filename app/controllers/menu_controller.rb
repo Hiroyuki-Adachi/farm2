@@ -1,5 +1,5 @@
 class MenuController < ApplicationController
-  before_action :permit_manager, except: :index
+  before_action :permit_manager, except: [:index, :edit_term, :update]
   before_action :set_system, only: [:edit, :edit_term]
 
   SCHEDULE_DAY = 7
@@ -24,11 +24,18 @@ class MenuController < ApplicationController
   end
 
   def update
+    unless current_user.manageable?
+      current_user.term = system_params[:term]
+      current_user.save!
+      redirect_to(menu_index_path, :notice => '設定を変更しました。')
+      return
+    end
     @system = init_system(system_params[:term])
     if @system.valid?
       @system.save!
       @organization = current_organization
       @organization.update(term: @term)
+      User.update_all(term: @term, updated_at: DateTime.now)
       redirect_to(menu_index_path, :notice => '設定を変更しました。')
     elsif system_params[:term]
       render :action => :edit_term
