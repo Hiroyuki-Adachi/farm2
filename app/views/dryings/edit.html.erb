@@ -153,10 +153,12 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
     <div class="btn-group mr-2">
       <%= link_to '戻る', drying_path(@drying.home), class: "btn btn-outline-dark" %>
     </div>
+    <input type="hidden" id="adjustment_home_sql" value="">
   </div>
 <% end %>
 <script>
 $(function() {
+    document.getElementById("adjustment_home_sql").value = document.getElementById("drying_adjustment_attributes_home_id").innerHTML;
     $('input[type="number"][name$="[moth_weight]"], input[type="number"][name$="[rice_weight]"]').change(function() {
         calc_sum();
     });
@@ -209,12 +211,14 @@ function change_enabled() {
         case 2: // Self
           $("input.dry-self").prop("readonly", false);
           $("input.dry-another, input.dry-country").not(".dry-self").val("");
+          document.getElementById("drying_adjustment_attributes_home_id").innerHTML = document.getElementById("adjustment_home_sql").value;
           $("#drying_adjustment_attributes_home_id").val($("#drying_home_id").val());
           $("select.dry-another, select.dry-country").not(".dry-self").disableSelection();
           break;
 
         case 3: // Another
           $("input.dry-another").prop("readonly", false);
+          $("#drying_adjustment_attributes_home_id option[value='" + $("#drying_home_id").val() + "']").remove();
           break;
     }
 }
