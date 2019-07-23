@@ -18,6 +18,9 @@ class WorkWholeCrop < ApplicationRecord
   has_many :wcs_rolls, {through: :wcs_lands}
 
   scope :usual, ->(term) {joins(:work).where(["works.term = ?", term]).order("works.worked_at, works.id")}
+  scope :for_harvest, ->(term) {joins(work: :work_type).where(["works.term = ?", term])
+    .order("work_types.display_order, works.worked_at, works.id")
+  }
 
   def self.regist(work, params)
     work_whole_crop = work.whole_crop
