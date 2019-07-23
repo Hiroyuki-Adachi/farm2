@@ -350,9 +350,9 @@ SQL
     work_types = []
     Work.where(worked_at: worked_at).each do |work|
       work.lands.each do |land|
-        work_types << land.cost(worked_at).work_type
+        work_types << land.cost(worked_at)&.work_type
       end
     end
-    return work_types.uniq
+    return work_types.compact.uniq
   end
 end
