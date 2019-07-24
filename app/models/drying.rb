@@ -51,8 +51,12 @@ class Drying < ApplicationRecord
   end
 
   def harvest_weight
-    return rice_weight if drying_type == DryingType::COUNTRY
-    return adjustment.rice_weight
+    return rice_weight || 0 if drying_type == DryingType::COUNTRY
+    return adjustment&.rice_weight || 0
+  end
+
+  def shipped_weight
+    harvest_weight + (adjustment&.waste_weight || 0)
   end
 
   def adjust_only?(home_id)
@@ -66,6 +70,15 @@ class Drying < ApplicationRecord
     else
       drying_moths.destroy_all
     end
+  end
+
+  def price(system, home_id)
+    return system.adjust_price if adjust_only?(home_id)
+    return drying_type == DryingType::SELF ? system.dry_adjust_price : system.dry_price
+  end
+
+  def amount(system, home_id)
+    shipped_weight / KG_PER_BAG * price(system, home_id)
   end
 
   def save_adjustment
