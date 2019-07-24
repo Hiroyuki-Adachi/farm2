@@ -73,4 +73,8 @@ class Home < ApplicationRecord
   def home_display_order
     display_order * 100 + id
   end
+
+  def finance_code
+    finance_order ? finance_order.to_s.insert(1, "-") : ""
+  end
 end
