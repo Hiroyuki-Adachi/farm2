@@ -11,7 +11,7 @@ CSV.generate(encoding: "windows-31J") do |csv|
       result.work.work_type.genre_name + "(#{result.work.work_type.name})",
       result.work.work_kind.name + (result.work.name.present? ? "(#{result.work.name})" : ""),
       result.hours,
-      result.work.price,
+      result.price,
       result.amount
     ]
   end
