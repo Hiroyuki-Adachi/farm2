@@ -52,8 +52,7 @@ class WorkResult < ApplicationRecord
     joins(:work)
       .joins(:worker)
       .joins(:work_type)
-      .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
-      .joins("INNER JOIN sections ON sections.id = homes.section_id")
+      .joins("INNER JOIN homes ON homes.id = workers.home_id AND member_flag = TRUE").preload(:home)
       .where("works.term = ? AND works.fixed_at = ?", term, fixed_at)
       .order("homes.finance_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }
