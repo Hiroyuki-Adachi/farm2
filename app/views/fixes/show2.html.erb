@@ -1,0 +1,52 @@
+<h1><%= @fixed_at.strftime('%Y年 %m月')%>確定分照会</h1>
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>屋号</th>
+      <th>管理地</th>
+      <th>小作地</th>
+      <% FixesController::MAX_WORKERS.times do |i| %>
+      <th>作業者<%= i + 1 %></th>
+      <th>時間<%= i + 1 %></th>
+      <% end %>
+      <th>乾籾出荷</th>
+      <th>調整出荷</th>
+      <th>調整のみ</th>
+      <th>使用料</th>
+      <th>委託料</th>
+    </tr>
+  </thead>
+  <tbody id="tbody_works">
+    <% @homes.each do |home| %>
+      <tr>
+        <td><%= home.name %></td>
+        <td class="numeric"><%= @lands1[home.id] %></td>
+        <td class="numeric"><%= @lands2[home.id] %></td>
+        <% i = 0 %>
+        <% home.workers.each do |worker| %>
+          <% next unless @work_hours[worker.id] %>
+          <td><%= worker.name %></td>
+          <td class="numeric"><%= @work_hours[worker.id] %></td>
+          <% i += 1%>
+        <% end %>
+        <% (FixesController::MAX_WORKERS - i).times do %>
+          <td></td>
+          <td></td>
+        <% end %>
+        <% if home.drying_order %>
+          <td class="numeric"><%= format_bag(@total_dryings[home.id][DryingType::COUNTRY.id]) %></td>
+          <td class="numeric"><%= format_bag(@total_dryings[home.id][DryingType::SELF.id] + @waste_totals[home.id][DryingType::SELF.id]) %></td>
+          <td class="numeric"><%= format_bag(@total_dryings[home.id][DryingType::ADJUST.id] + @waste_totals[home.id][DryingType::ADJUST.id]) %></td>
+        <% else %>
+          <td></td>
+          <td></td>
+          <td></td>
+        <% end %>
+        <td class="numeric"><%= number_with_delimiter(@machines[home.id].to_i, {precision: 0}) %></td>
+        <td class="numeric"><%= number_with_delimiter(-@contracts[home.id].to_i, {precision: 0}) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to '戻る', fixes_path, class: "btn btn-outline-dark" %>

@@ -28,7 +28,7 @@
           <td></td>
         <% end %>
         <td class="numeric"><%= @machines[home.id].to_i %></td>
-        <td class="numeric">0</td>
+        <td class="numeric"><%= number_with_delimiter(-@contracts[home.id].to_i, {precision: 0}) %></td>
       </tr>
     <% end %>
   </tbody>
