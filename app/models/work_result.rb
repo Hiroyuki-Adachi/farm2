@@ -49,9 +49,10 @@ class WorkResult < ApplicationRecord
   }
 
   scope :by_home_for_fix, ->(term, fixed_at) {
-    joins(:work)
-      .joins(:worker)
-      .joins(:work_type)
+    joins(:work).includes(:work)
+      .joins(:worker).includes(:worker)
+      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
+      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
       .joins("INNER JOIN homes ON homes.id = workers.home_id AND member_flag = TRUE").preload(:home)
       .where("works.term = ? AND works.fixed_at = ?", term, fixed_at)
       .order("homes.finance_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
