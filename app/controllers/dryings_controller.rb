@@ -2,6 +2,8 @@ class DryingsController < ApplicationController
   include PermitManager
   before_action :set_drying, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:index, :edit]
+  before_action :set_lands, only: [:edit]
+  before_action :set_work_types, only: [:edit]
 
   def index
     @works = WorkDecorator.decorate_collection(Work.for_drying(current_term, current_organization))
@@ -26,7 +28,6 @@ class DryingsController < ApplicationController
 
   def edit
     build_drying
-    @work_types = Work.types_by_worked_at(@drying.carried_on)
     @drying = @drying.decorate
   end
 
@@ -54,6 +55,9 @@ class DryingsController < ApplicationController
       ],
       adjustment_attributes: [
         :home_id, :carried_on, :shipped_on, :id, :rice_bag, :half_weight, :waste_weight
+      ],
+      drying_lands_attributes: [
+        :land_id, :display_order, :id
       ]
     )
   end
@@ -70,13 +74,29 @@ class DryingsController < ApplicationController
     return moths
   end
 
+  def default_lands
+    lands = []
+    DryingLand::MAX_COUNT.times do |i|
+      lands << {display_order: i}
+    end
+    return lands
+  end
+
   def set_homes
     @homes = Home.for_drying
   end
 
+  def set_lands
+    @lands = WorkLand.by_worked_at(@drying.carried_on)
+  end
+
+  def set_work_types
+    @work_types = Work.types_by_worked_at(@drying.carried_on)
+  end
+
   def build_drying
     @drying.drying_moths.build(default_moths) if @drying.drying_moths.empty?
-    @drying.drying_lands.build
+    @drying.drying_lands.build(default_lands) if @drying.drying_lands.empty?
     @drying.build_adjustment unless @drying.adjustment
   end
 end

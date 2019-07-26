@@ -51,4 +51,12 @@ class WorkLand < ApplicationRecord
     return local_cost unless largest?
     return local_cost + (work.sum_workers_amount - work.work_lands.map(&:interim_cost).sum)
   end
+
+  def self.by_worked_at(worked_at)
+    lands = []
+    Work.where(worked_at: worked_at).find_each do |work|
+      lands << work.lands.to_a
+    end
+    return lands.flatten.uniq
+  end
 end

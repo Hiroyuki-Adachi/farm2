@@ -165,11 +165,12 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
 
   create_table "drying_lands", comment: "乾燥調整場所", force: :cascade do |t|
     t.integer "drying_id", default: 0, null: false, comment: "乾燥調整"
-    t.integer "land_id", default: 0, null: false, comment: "作業地"
+    t.integer "land_id", comment: "作業地"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.decimal "percentage", precision: 4, scale: 1, default: "100.0", null: false, comment: "割合"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["drying_id", "land_id"], name: "drying_lands_secondary", unique: true
+    t.index ["drying_id", "display_order"], name: "drying_lands_3rd", unique: true
   end
 
   create_table "drying_moths", comment: "乾燥籾", force: :cascade do |t|
