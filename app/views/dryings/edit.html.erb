@@ -142,6 +142,20 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
         <% end %>
       </div>
     </div>
+    <div class="col-md-2" style="border: medium solid lightgreen">
+      <h2>水田</h2>
+      <div class="container">
+        <%= fd.fields_for :drying_lands do |fl| %>
+          <div class="row">
+            <div class="col-md-12 form-inline field form-group">
+              <%= fl.select(:land_id, @lands.map {|l| [l.place, l.id]}, {include_blank: true}, {class: "form-control dry-input"}) %>
+              <%= fl.hidden_field :id %>
+              <%= fl.hidden_field :display_order %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
