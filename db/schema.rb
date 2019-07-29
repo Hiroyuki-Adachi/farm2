@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_15_125025) do
+ActiveRecord::Schema.define(version: 2019_07_27_122523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -269,6 +269,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
     t.boolean "owner_flag", default: false, null: false, comment: "所有者フラグ"
     t.integer "finance_order", comment: "出力順(会計用)"
     t.integer "drying_order", comment: "出力順(乾燥調整用)"
+    t.integer "owned_rice_order", comment: "出力順(保有米)"
     t.index ["deleted_at"], name: "index_homes_on_deleted_at"
   end
 
@@ -402,6 +403,33 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
     t.integer "whole_crop_work_kind_id", comment: "WCS収穫分類"
     t.integer "contract_work_type_id", comment: "受託作業分類"
     t.integer "harvesting_work_kind_id", comment: "稲刈作業種別"
+  end
+
+  create_table "owned_rice_prices", comment: "保有米単価", force: :cascade do |t|
+    t.integer "term", null: false, comment: "年度(期)"
+    t.integer "rice_type_id", default: 0, null: false, comment: "品種"
+    t.decimal "owned_price", precision: 5, default: "0", null: false, comment: "保有米価格"
+    t.decimal "relative_price", precision: 5, default: "0", null: false, comment: "縁故米価格"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["term", "rice_type_id"], name: "owned_rice_prices_2nd", unique: true
+  end
+
+  create_table "owned_rices", comment: "保有米", force: :cascade do |t|
+    t.integer "home_id", default: 0, null: false, comment: "購入世帯"
+    t.integer "owned_rice_price_id", default: 0, null: false, comment: "保有米単価"
+    t.decimal "owned_price", precision: 3, default: "0", null: false, comment: "保有米数"
+    t.decimal "relative_price", precision: 3, default: "0", null: false, comment: "縁故米数"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["home_id", "owned_rice_price_id"], name: "owned_rices_2nd", unique: true
+  end
+
+  create_table "rice_types", comment: "品種(米)", force: :cascade do |t|
+    t.string "name", limit: 10, default: "", null: false, comment: "品種名"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "schedule_workers", id: :serial, comment: "作業予定作業者", comment: "作業予定作業者", force: :cascade do |t|
@@ -637,6 +665,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_125025) do
     t.datetime "deleted_at"
     t.string "bg_color", limit: 8, comment: "背景色"
     t.boolean "land_flag", default: true, null: false, comment: "土地利用"
+    t.integer "rice_type_id", comment: "品種(米)"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
   end
 

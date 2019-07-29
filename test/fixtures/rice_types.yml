@@ -1,0 +1,17 @@
+# == Schema Information
+#
+# Table name: rice_types # 品種(米)
+#
+#  id            :bigint           not null, primary key
+#  name          :string(10)       default(""), not null # 品種名
+#  display_order :integer          default(0), not null  # 表示順
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#

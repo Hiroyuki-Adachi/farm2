@@ -10,6 +10,7 @@
 #  deleted_at    :datetime
 #  bg_color      :string(8)                                # 背景色
 #  land_flag     :boolean          default(TRUE), not null # 土地利用
+#  rice_type_id  :integer                                  # 品種(米)
 #
 
 class WorkType < ApplicationRecord
