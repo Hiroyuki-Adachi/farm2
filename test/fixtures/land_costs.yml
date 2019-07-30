@@ -2,7 +2,7 @@
 #
 # Table name: land_costs # 土地原価
 #
-#  id           :integer          not null, primary key               # 土地原価
+#  id           :integer          not null, primary key
 #  land_id      :integer          not null                            # 土地
 #  work_type_id :integer          not null                            # 作業分類
 #  cost         :decimal(7, 1)    default(0.0), not null              # 原価

@@ -2,7 +2,7 @@
 #
 # Table name: machines # 機械マスタ
 #
-#  id                :integer          not null, primary key    # 機械マスタ
+#  id                :integer          not null, primary key
 #  name              :string(40)       not null                 # 機械名称
 #  display_order     :integer          not null                 # 表示順
 #  validity_start_at :date                                      # 稼動開始日
