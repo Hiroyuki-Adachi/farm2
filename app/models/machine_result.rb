@@ -2,7 +2,7 @@
 #
 # Table name: machine_results # 機械稼動データ
 #
-#  id              :integer          not null, primary key  # 機械稼動データ
+#  id              :integer          not null, primary key
 #  machine_id      :integer                                 # 機械
 #  work_result_id  :integer                                 # 作業結果データ
 #  display_order   :integer          default(1), not null   # 表示順

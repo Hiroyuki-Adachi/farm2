@@ -4,7 +4,7 @@ require 'securerandom'
 #
 # Table name: schedule_workers # 作業予定作業者
 #
-#  id            :integer          not null, primary key # 作業予定作業者
+#  id            :integer          not null, primary key
 #  schedule_id   :integer                                # 作業予定
 #  worker_id     :integer                                # 作業者
 #  display_order :integer          default(0), not null  # 表示順
