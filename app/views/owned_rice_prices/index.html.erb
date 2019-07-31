@@ -1,0 +1,24 @@
+<h1>保有米(単価:<%= current_term %>年度)</h1>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>作業名</th>
+      <th>品種名</th>
+      <th class="numeric">単価(保有米)</th>
+      <th class="numeric">単価(縁故米)</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @work_types.each do |work_type| %>
+    <% owned_rice_price = @owned_rice_prices.find {|o| o.work_type_id == work_type.id} %>
+      <tr>
+        <td><%= work_type.name %></td>
+        <td><%= owned_rice_price&.name %></td>
+        <td class="numeric"><%= owned_rice_price&.owned_price&.to_s(:delimited) %></td>
+        <td class="numeric"><%= owned_rice_price&.relative_price&.to_s(:delimited) %></td>
+        <td><%= link_to '修正', edit_owned_rice_price_path(work_type_id: work_type.id), {class: "btn btn-success btn-sm"} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
