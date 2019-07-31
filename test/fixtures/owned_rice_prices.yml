@@ -5,6 +5,7 @@
 #  id             :bigint           not null, primary key
 #  term           :integer          not null              # 年度(期)
 #  work_type_id   :integer          default(0), not null  # 品種
+#  display_order  :integer          default(0), not null  # 表示順
 #  name           :string(10)       default(""), not null # 品種名
 #  owned_price    :decimal(5, )     default(0), not null  # 保有米価格
 #  relative_price :decimal(5, )     default(0), not null  # 縁故米価格

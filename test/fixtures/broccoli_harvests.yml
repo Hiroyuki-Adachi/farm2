@@ -2,7 +2,7 @@
 #
 # Table name: broccoli_harvests # ブロッコリー収穫
 #
-#  id               :integer          not null, primary key
+#  id               :integer          not null, primary key # ブロッコリー収穫
 #  work_broccoli_id :integer          not null              # ブロッコリー作業
 #  broccoli_rank_id :integer          not null              # ブロッコリー等級
 #  broccoli_size_id :integer          not null              # ブロッコリー階級

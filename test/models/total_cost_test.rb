@@ -10,7 +10,7 @@
 #  expense_id         :integer                                   # 経費
 #  depreciation_id    :integer                                   # 減価償却
 #  work_chemical_id   :integer                                   # 薬剤使用
-#  amount             :decimal(9, )     default(0), not null     # 原価額
+#  amount             :decimal(9, )     not null                 # 原価額
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  seedling_home_id   :integer                                   # 育苗担当

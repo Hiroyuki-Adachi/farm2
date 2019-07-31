@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: chemical_work_types # 薬剤使用量
+# Table name: chemical_work_types
 #
 #  id               :integer          not null, primary key
 #  chemical_term_id :integer                                 # 薬剤利用

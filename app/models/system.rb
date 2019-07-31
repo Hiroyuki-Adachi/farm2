@@ -2,7 +2,7 @@
 #
 # Table name: systems # システムマスタ
 #
-#  id                   :integer          not null, primary key
+#  id                   :integer          not null, primary key    # システムマスタ
 #  term                 :integer          not null                 # 年度(期)
 #  target_from          :date                                      # 開始年月
 #  target_to            :date                                      # 終了年月
