@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "broccoli_boxes", id: :serial, comment: "ブロッコリ箱マスタ", force: :cascade do |t|
+  create_table "broccoli_boxes", id: :serial, comment: "ブロッコリ箱マスタ", comment: "ブロッコリ箱マスタ", force: :cascade do |t|
     t.decimal "weight", precision: 3, scale: 1, default: "0.0", null: false, comment: "重さ(kg)"
     t.string "display_name", limit: 10, default: "", null: false, comment: "表示名"
     t.integer "display_order", default: 0, null: false, comment: "表示順"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "broccoli_harvests", id: :serial, comment: "ブロッコリー収穫", force: :cascade do |t|
+  create_table "broccoli_harvests", id: :serial, comment: "ブロッコリー収穫", comment: "ブロッコリー収穫", force: :cascade do |t|
     t.integer "work_broccoli_id", null: false, comment: "ブロッコリー作業"
     t.integer "broccoli_rank_id", null: false, comment: "ブロッコリー等級"
     t.integer "broccoli_size_id", null: false, comment: "ブロッコリー階級"
@@ -68,14 +68,14 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["work_broccoli_id", "broccoli_rank_id", "broccoli_size_id"], name: "broccoli_harvest_sheet", unique: true
   end
 
-  create_table "broccoli_ranks", id: :serial, comment: "ブロッコリ等級マスタ", force: :cascade do |t|
+  create_table "broccoli_ranks", id: :serial, comment: "ブロッコリ等級マスタ", comment: "ブロッコリ等級マスタ", force: :cascade do |t|
     t.string "display_name", limit: 10, default: "", null: false, comment: "表示名"
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "broccoli_sizes", id: :serial, comment: "ブロッコリ階級マスタ", force: :cascade do |t|
+  create_table "broccoli_sizes", id: :serial, comment: "ブロッコリ階級マスタ", comment: "ブロッコリ階級マスタ", force: :cascade do |t|
     t.string "display_name", limit: 10, default: "", null: false, comment: "表示名"
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.datetime "created_at", null: false
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["user_id", "work_kind_id"], name: "calendar_work_kind_index", unique: true
   end
 
-  create_table "chemical_kinds", id: :serial, comment: "作業種別薬剤種別利用マスタ", force: :cascade do |t|
+  create_table "chemical_kinds", id: :serial, comment: "作業種別薬剤種別利用マスタ", comment: "作業種別薬剤種別利用マスタ", force: :cascade do |t|
     t.integer "chemical_type_id", null: false, comment: "薬剤種別"
     t.integer "work_kind_id", null: false, comment: "作業種別"
     t.index ["chemical_type_id", "work_kind_id"], name: "index_chemical_kinds_on_chemical_type_id_and_work_kind_id", unique: true
@@ -104,14 +104,14 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["chemical_id", "term"], name: "index_chemical_terms_on_chemical_id_and_term", unique: true
   end
 
-  create_table "chemical_types", id: :serial, comment: "薬剤種別マスタ", force: :cascade do |t|
+  create_table "chemical_types", id: :serial, comment: "薬剤種別マスタ", comment: "薬剤種別マスタ", force: :cascade do |t|
     t.string "name", limit: 20, null: false, comment: "薬剤種別名称"
     t.integer "display_order", default: 1, null: false, comment: "表示順"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "chemical_work_types", id: :serial, comment: "薬剤使用量", force: :cascade do |t|
+  create_table "chemical_work_types", id: :serial, force: :cascade do |t|
     t.integer "chemical_term_id", comment: "薬剤利用"
     t.integer "work_type_id", comment: "作業分類"
     t.decimal "quantity", precision: 5, scale: 1, default: "0.0", null: false, comment: "使用量"
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["chemical_term_id", "work_type_id"], name: "index_chemical_work_types_on_chemical_term_id_and_work_type_id", unique: true
   end
 
-  create_table "chemicals", id: :serial, comment: "薬剤マスタ", force: :cascade do |t|
+  create_table "chemicals", id: :serial, comment: "薬剤マスタ", comment: "薬剤マスタ", force: :cascade do |t|
     t.string "name", limit: 20, null: false, comment: "薬剤名称"
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.integer "chemical_type_id", null: false, comment: "薬剤種別"
@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "depreciation_types", id: :serial, comment: "減価償却分類", force: :cascade do |t|
+  create_table "depreciation_types", id: :serial, comment: "減価償却分類", comment: "減価償却分類", force: :cascade do |t|
     t.integer "depreciation_id", comment: "減価償却"
     t.integer "work_type_id", null: false, comment: "作業分類"
     t.datetime "created_at", null: false
@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["depreciation_id", "work_type_id"], name: "index_depreciation_types_on_depreciation_id_and_work_type_id", unique: true
   end
 
-  create_table "depreciations", id: :serial, comment: "減価償却", force: :cascade do |t|
+  create_table "depreciations", id: :serial, comment: "減価償却", comment: "減価償却", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.integer "machine_id", comment: "機械"
     t.decimal "cost", precision: 9, default: "0", null: false, comment: "減価償却費"
@@ -211,7 +211,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.datetime "deleted_at", comment: "削除年月日"
   end
 
-  create_table "expense_work_types", id: :serial, comment: "経費作業種別", force: :cascade do |t|
+  create_table "expense_work_types", id: :serial, comment: "経費作業種別", comment: "経費作業種別", force: :cascade do |t|
     t.integer "expense_id", comment: "経費"
     t.integer "work_type_id", comment: "作業分類"
     t.decimal "rate", precision: 5, scale: 2, default: "0.0", null: false, comment: "割合"
@@ -220,7 +220,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["expense_id", "work_type_id"], name: "index_expense_work_types_on_expense_id_and_work_type_id", unique: true
   end
 
-  create_table "expenses", id: :serial, comment: "経費", force: :cascade do |t|
+  create_table "expenses", id: :serial, comment: "経費", comment: "経費", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.date "payed_on", null: false, comment: "支払日"
     t.string "content", limit: 40, comment: "支払内容"
@@ -249,7 +249,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.integer "fixed_by", comment: "確定者"
   end
 
-  create_table "homes", id: :serial, comment: "世帯マスタ", force: :cascade do |t|
+  create_table "homes", id: :serial, comment: "世帯マスタ", comment: "世帯マスタ", force: :cascade do |t|
     t.string "phonetic", limit: 15, comment: "世帯名(よみ)"
     t.string "name", limit: 10, comment: "世帯名"
     t.integer "worker_id", comment: "世帯主(代表者)"
@@ -273,7 +273,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["deleted_at"], name: "index_homes_on_deleted_at"
   end
 
-  create_table "land_costs", id: :serial, comment: "土地原価", force: :cascade do |t|
+  create_table "land_costs", id: :serial, comment: "土地原価", comment: "土地原価", force: :cascade do |t|
     t.integer "land_id", null: false, comment: "土地"
     t.integer "work_type_id", null: false, comment: "作業分類"
     t.decimal "cost", precision: 7, scale: 1, default: "0.0", null: false, comment: "原価"
@@ -283,7 +283,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["activated_on", "land_id"], name: "index_land_costs_on_activated_on_and_land_id", unique: true
   end
 
-  create_table "land_places", id: :serial, comment: "場所マスタ", force: :cascade do |t|
+  create_table "land_places", id: :serial, comment: "場所マスタ", comment: "場所マスタ", force: :cascade do |t|
     t.string "name", limit: 40, null: false, comment: "場所名称"
     t.text "remarks", comment: "備考"
     t.integer "display_order", comment: "表示順"
@@ -292,7 +292,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.datetime "deleted_at"
   end
 
-  create_table "lands", id: :serial, comment: "土地マスタ", force: :cascade do |t|
+  create_table "lands", id: :serial, comment: "土地マスタ", comment: "土地マスタ", force: :cascade do |t|
     t.string "place", limit: 15, null: false, comment: "番地"
     t.integer "owner_id", comment: "所有者"
     t.integer "manager_id", comment: "管理者"
@@ -309,13 +309,13 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["place"], name: "index_lands_on_place"
   end
 
-  create_table "machine_kinds", id: :serial, comment: "作業種別機械利用可能マスタ", force: :cascade do |t|
+  create_table "machine_kinds", id: :serial, comment: "作業種別機械利用可能マスタ", comment: "作業種別機械利用可能マスタ", force: :cascade do |t|
     t.integer "machine_type_id", null: false, comment: "機械種別"
     t.integer "work_kind_id", null: false, comment: "作業種別"
     t.index ["machine_type_id", "work_kind_id"], name: "machine_kinds_2nd_key", unique: true
   end
 
-  create_table "machine_price_details", id: :serial, comment: "機械利用単価マスタ(明細)", force: :cascade do |t|
+  create_table "machine_price_details", id: :serial, comment: "機械利用単価マスタ(明細)", comment: "機械利用単価マスタ(明細)", force: :cascade do |t|
     t.integer "machine_price_header_id", null: false, comment: "単価ヘッダ"
     t.integer "lease_id", null: false, comment: "リース"
     t.integer "work_kind_id", default: 0, null: false, comment: "作業種別"
@@ -326,7 +326,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["machine_price_header_id", "lease_id", "work_kind_id"], name: "machine_price_details_2nd_key", unique: true
   end
 
-  create_table "machine_price_headers", id: :serial, comment: "機械利用単価マスタ(ヘッダ)", force: :cascade do |t|
+  create_table "machine_price_headers", id: :serial, comment: "機械利用単価マスタ(ヘッダ)", comment: "機械利用単価マスタ(ヘッダ)", force: :cascade do |t|
     t.date "validated_at", null: false, comment: "起点日"
     t.integer "machine_id", default: 0, null: false, comment: "機械"
     t.integer "machine_type_id", default: 0, null: false, comment: "機械種別"
@@ -335,7 +335,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["validated_at", "machine_id", "machine_type_id"], name: "machine_price_headers_2nd_key", unique: true
   end
 
-  create_table "machine_results", id: :serial, comment: "機械稼動データ", force: :cascade do |t|
+  create_table "machine_results", id: :serial, comment: "機械稼動データ", comment: "機械稼動データ", force: :cascade do |t|
     t.integer "machine_id", comment: "機械"
     t.integer "work_result_id", comment: "作業結果データ"
     t.integer "display_order", default: 1, null: false, comment: "表示順"
@@ -350,14 +350,14 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["machine_id", "work_result_id"], name: "index_machine_results_on_machine_id_and_work_result_id", unique: true
   end
 
-  create_table "machine_types", id: :serial, comment: "機械種別マスタ", force: :cascade do |t|
+  create_table "machine_types", id: :serial, comment: "機械種別マスタ", comment: "機械種別マスタ", force: :cascade do |t|
     t.string "name", limit: 10, null: false, comment: "機械種別名称"
     t.integer "display_order", default: 1, null: false, comment: "表示順"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "machines", id: :serial, comment: "機械マスタ", force: :cascade do |t|
+  create_table "machines", id: :serial, comment: "機械マスタ", comment: "機械マスタ", force: :cascade do |t|
     t.string "name", limit: 40, null: false, comment: "機械名称"
     t.integer "display_order", null: false, comment: "表示順"
     t.date "validity_start_at", comment: "稼動開始日"
@@ -379,7 +379,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["schedule_id"], name: "index_minutes_on_schedule_id", unique: true
   end
 
-  create_table "organizations", id: :serial, comment: "組織(体系)マスタ", force: :cascade do |t|
+  create_table "organizations", id: :serial, comment: "組織(体系)マスタ", comment: "組織(体系)マスタ", force: :cascade do |t|
     t.string "name", limit: 20, null: false, comment: "組織名称"
     t.integer "workers_count", default: 12, null: false, comment: "作業日報の作業者数"
     t.integer "lands_count", default: 17, null: false, comment: "作業日報の土地数"
@@ -408,6 +408,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
   create_table "owned_rice_prices", comment: "保有米単価", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.integer "work_type_id", default: 0, null: false, comment: "品種"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.string "name", limit: 10, default: "", null: false, comment: "品種名"
     t.decimal "owned_price", precision: 5, default: "0", null: false, comment: "保有米価格"
     t.decimal "relative_price", precision: 5, default: "0", null: false, comment: "縁故米価格"
@@ -419,14 +420,14 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
   create_table "owned_rices", comment: "保有米", force: :cascade do |t|
     t.integer "home_id", default: 0, null: false, comment: "購入世帯"
     t.integer "owned_rice_price_id", default: 0, null: false, comment: "保有米単価"
-    t.decimal "owned_price", precision: 3, default: "0", null: false, comment: "保有米数"
-    t.decimal "relative_price", precision: 3, default: "0", null: false, comment: "縁故米数"
+    t.decimal "owned_count", precision: 3, default: "0", null: false, comment: "保有米数"
+    t.decimal "relative_count", precision: 3, default: "0", null: false, comment: "縁故米数"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["home_id", "owned_rice_price_id"], name: "owned_rices_2nd", unique: true
   end
 
-  create_table "schedule_workers", id: :serial, comment: "作業予定作業者", force: :cascade do |t|
+  create_table "schedule_workers", id: :serial, comment: "作業予定作業者", comment: "作業予定作業者", force: :cascade do |t|
     t.integer "schedule_id", comment: "作業予定"
     t.integer "worker_id", comment: "作業者"
     t.integer "display_order", default: 0, null: false, comment: "表示順"
@@ -436,7 +437,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["schedule_id", "worker_id"], name: "index_schedule_workers_on_schedule_id_and_worker_id", unique: true
   end
 
-  create_table "schedules", id: :serial, comment: "作業予定", force: :cascade do |t|
+  create_table "schedules", id: :serial, comment: "作業予定", comment: "作業予定", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.date "worked_at", null: false, comment: "作業予定日"
     t.integer "work_type_id", comment: "作業分類"
@@ -449,7 +450,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.datetime "end_at", default: "1970-01-01 17:00:00", null: false, comment: "終了予定時刻"
   end
 
-  create_table "sections", id: :serial, comment: "班／町内マスタ", force: :cascade do |t|
+  create_table "sections", id: :serial, comment: "班／町内マスタ", comment: "班／町内マスタ", force: :cascade do |t|
     t.string "name", limit: 40, null: false, comment: "班名称"
     t.integer "display_order", default: 1, null: false, comment: "表示順"
     t.boolean "work_flag", default: true, null: false, comment: "作業班フラグ"
@@ -459,7 +460,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["deleted_at"], name: "index_sections_on_deleted_at"
   end
 
-  create_table "seedling_homes", id: :serial, comment: "育苗担当世帯", force: :cascade do |t|
+  create_table "seedling_homes", id: :serial, comment: "育苗担当世帯", comment: "育苗担当世帯", force: :cascade do |t|
     t.integer "seedling_id", comment: "育苗"
     t.integer "home_id", comment: "世帯"
     t.decimal "quantity", precision: 4, default: "0", null: false, comment: "苗箱数"
@@ -469,7 +470,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["seedling_id", "home_id"], name: "index_seedling_homes_on_seedling_id_and_home_id", unique: true
   end
 
-  create_table "seedling_results", id: :serial, comment: "育苗結果", force: :cascade do |t|
+  create_table "seedling_results", id: :serial, comment: "育苗結果", comment: "育苗結果", force: :cascade do |t|
     t.integer "seedling_home_id", comment: "育苗担当"
     t.integer "work_result_id", comment: "作業結果"
     t.integer "display_order", default: 0, null: false, comment: "表示順"
@@ -480,7 +481,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["seedling_home_id", "work_result_id", "display_order"], name: "seedling_results_2nd_key", unique: true
   end
 
-  create_table "seedlings", id: :serial, comment: "育苗", force: :cascade do |t|
+  create_table "seedlings", id: :serial, comment: "育苗", comment: "育苗", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.integer "work_type_id", comment: "作業分類"
     t.decimal "soil_quantity", precision: 4, default: "0", null: false, comment: "育苗土数"
@@ -490,7 +491,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["term", "work_type_id"], name: "index_seedlings_on_term_and_work_type_id", unique: true
   end
 
-  create_table "systems", id: :serial, comment: "システムマスタ", force: :cascade do |t|
+  create_table "systems", id: :serial, comment: "システムマスタ", comment: "システムマスタ", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.date "target_from", comment: "開始年月"
     t.date "target_to", comment: "終了年月"
@@ -531,7 +532,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.integer "expense_id", comment: "経費"
     t.integer "depreciation_id", comment: "減価償却"
     t.integer "work_chemical_id", comment: "薬剤使用"
-    t.decimal "amount", precision: 9, default: "0", null: false, comment: "原価額"
+    t.decimal "amount", precision: 9, default: -> { "(0)::numeric" }, null: false, comment: "原価額"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "seedling_home_id", comment: "育苗担当"
@@ -543,7 +544,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
   end
 
-  create_table "users", id: :serial, comment: "利用者マスタ", force: :cascade do |t|
+  create_table "users", id: :serial, comment: "利用者マスタ", comment: "利用者マスタ", force: :cascade do |t|
     t.string "login_name", limit: 12, null: false, comment: "ログイン名"
     t.string "password_digest", limit: 128, null: false, comment: "パスワード"
     t.integer "worker_id", comment: "作業者"
@@ -578,7 +579,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "work_broccolis", id: :serial, comment: "ブロッコリー作業", force: :cascade do |t|
+  create_table "work_broccolis", id: :serial, comment: "ブロッコリー作業", comment: "ブロッコリー作業", force: :cascade do |t|
     t.integer "work_id", null: false, comment: "作業"
     t.integer "broccoli_box_id", comment: "箱"
     t.date "shipped_on", null: false, comment: "出荷日"
@@ -590,7 +591,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["work_id"], name: "index_work_broccolis_on_work_id", unique: true
   end
 
-  create_table "work_chemicals", id: :serial, comment: "薬剤使用データ", force: :cascade do |t|
+  create_table "work_chemicals", id: :serial, comment: "薬剤使用データ", comment: "薬剤使用データ", force: :cascade do |t|
     t.integer "work_id", null: false, comment: "作業"
     t.integer "chemical_id", null: false, comment: "薬剤"
     t.decimal "quantity", precision: 5, scale: 1, default: "0.0", null: false, comment: "使用量"
@@ -600,7 +601,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["work_id", "chemical_id", "chemical_group_no"], name: "work_chemicals_2nd_key", unique: true
   end
 
-  create_table "work_kind_prices", id: :serial, comment: "作業単価マスタ", force: :cascade do |t|
+  create_table "work_kind_prices", id: :serial, comment: "作業単価マスタ", comment: "作業単価マスタ", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.integer "work_kind_id", null: false, comment: "作業種別"
     t.decimal "price", precision: 5, default: "1000", null: false, comment: "単価"
@@ -609,13 +610,13 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["term", "work_kind_id"], name: "index_work_kind_prices_on_term_and_work_kind_id", unique: true
   end
 
-  create_table "work_kind_types", id: :serial, comment: "作業種別分類対応マスタ", force: :cascade do |t|
+  create_table "work_kind_types", id: :serial, comment: "作業種別分類対応マスタ", comment: "作業種別分類対応マスタ", force: :cascade do |t|
     t.integer "work_kind_id", comment: "作業種別"
     t.integer "work_type_id", comment: "作業分類"
     t.index ["work_kind_id", "work_type_id"], name: "index_work_kind_types_on_work_kind_id_and_work_type_id", unique: true
   end
 
-  create_table "work_kinds", id: :serial, comment: "作業種別マスタ", force: :cascade do |t|
+  create_table "work_kinds", id: :serial, comment: "作業種別マスタ", comment: "作業種別マスタ", force: :cascade do |t|
     t.string "name", limit: 20, null: false, comment: "作業種別名称"
     t.integer "display_order", null: false, comment: "表示順"
     t.boolean "other_flag", default: false, null: false, comment: "その他フラグ"
@@ -627,7 +628,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["deleted_at"], name: "index_work_kinds_on_deleted_at"
   end
 
-  create_table "work_lands", id: :serial, comment: "作業地データ", force: :cascade do |t|
+  create_table "work_lands", id: :serial, comment: "作業地データ", comment: "作業地データ", force: :cascade do |t|
     t.integer "work_id", comment: "作業"
     t.integer "land_id", comment: "土地"
     t.integer "display_order", default: 0, null: false, comment: "表示順"
@@ -637,7 +638,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["work_id", "land_id"], name: "index_work_lands_on_work_id_and_land_id", unique: true
   end
 
-  create_table "work_results", id: :serial, comment: "作業結果データ", force: :cascade do |t|
+  create_table "work_results", id: :serial, comment: "作業結果データ", comment: "作業結果データ", force: :cascade do |t|
     t.integer "work_id", comment: "作業"
     t.integer "worker_id", comment: "作業者"
     t.decimal "hours", precision: 5, scale: 1, default: "0.0", null: false, comment: "作業時間"
@@ -651,7 +652,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["work_id", "worker_id"], name: "index_work_results_on_work_id_and_worker_id", unique: true
   end
 
-  create_table "work_types", id: :serial, comment: "作業分類マスタ", force: :cascade do |t|
+  create_table "work_types", id: :serial, comment: "作業分類マスタ", comment: "作業分類マスタ", force: :cascade do |t|
     t.integer "genre", null: false, comment: "作業ジャンル"
     t.string "name", limit: 10, null: false, comment: "作業分類名称"
     t.boolean "category_flag", default: false, comment: "カテゴリーフラグ"
@@ -662,7 +663,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
   end
 
-  create_table "work_verifications", id: :serial, comment: "日報検証", force: :cascade do |t|
+  create_table "work_verifications", id: :serial, comment: "日報検証", comment: "日報検証", force: :cascade do |t|
     t.integer "work_id", comment: "作業"
     t.integer "worker_id", comment: "作業者"
     t.datetime "created_at", null: false
@@ -680,7 +681,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["work_id"], name: "index_work_whole_crops_on_work_id", unique: true
   end
 
-  create_table "workers", id: :serial, comment: "作業者マスタ", force: :cascade do |t|
+  create_table "workers", id: :serial, comment: "作業者マスタ", comment: "作業者マスタ", force: :cascade do |t|
     t.string "family_phonetic", limit: 15, null: false, comment: "姓(ﾌﾘｶﾞﾅ)"
     t.string "family_name", limit: 10, null: false, comment: "姓"
     t.string "first_phonetic", limit: 15, null: false, comment: "名(ﾌﾘｶﾞﾅ)"
@@ -707,7 +708,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.index ["token"], name: "index_workers_on_token", unique: true
   end
 
-  create_table "works", id: :serial, comment: "作業データ", force: :cascade do |t|
+  create_table "works", id: :serial, comment: "作業データ", comment: "作業データ", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.date "worked_at", null: false, comment: "作業日"
     t.integer "weather_id", comment: "天気"

@@ -2,7 +2,7 @@
 #
 # Table name: depreciations # 減価償却
 #
-#  id         :integer          not null, primary key
+#  id         :integer          not null, primary key # 減価償却
 #  term       :integer          not null              # 年度(期)
 #  machine_id :integer                                # 機械
 #  cost       :decimal(9, )     default(0), not null  # 減価償却費

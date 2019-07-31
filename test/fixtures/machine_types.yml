@@ -2,7 +2,7 @@
 #
 # Table name: machine_types # 機械種別マスタ
 #
-#  id            :integer          not null, primary key
+#  id            :integer          not null, primary key # 機械種別マスタ
 #  name          :string(10)       not null              # 機械種別名称
 #  display_order :integer          default(1), not null  # 表示順
 #  created_at    :datetime

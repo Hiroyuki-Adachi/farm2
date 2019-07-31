@@ -2,7 +2,7 @@
 #
 # Table name: work_types # 作業分類マスタ
 #
-#  id            :integer          not null, primary key
+#  id            :integer          not null, primary key   # 作業分類マスタ
 #  genre         :integer          not null                # 作業ジャンル
 #  name          :string(10)       not null                # 作業分類名称
 #  category_flag :boolean          default(FALSE)          # カテゴリーフラグ

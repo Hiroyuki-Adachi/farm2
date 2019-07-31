@@ -2,7 +2,7 @@
 #
 # Table name: land_places # 場所マスタ
 #
-#  id            :integer          not null, primary key
+#  id            :integer          not null, primary key # 場所マスタ
 #  name          :string(40)       not null              # 場所名称
 #  remarks       :text                                   # 備考
 #  display_order :integer                                # 表示順

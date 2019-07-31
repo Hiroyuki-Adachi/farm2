@@ -2,7 +2,7 @@
 #
 # Table name: work_broccolis # ブロッコリー作業
 #
-#  id              :integer          not null, primary key
+#  id              :integer          not null, primary key # ブロッコリー作業
 #  work_id         :integer          not null              # 作業
 #  broccoli_box_id :integer                                # 箱
 #  shipped_on      :date             not null              # 出荷日
