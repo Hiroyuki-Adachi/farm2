@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :owned_rice_prices, param: "work_type_id", only: [:index, :create, :edit, :update, :destroy]
   resources :harvest_whole_crops, only: [:index]
   resources :harvest_rices, only: [:index]
   resources :dryings, except: [:new]
