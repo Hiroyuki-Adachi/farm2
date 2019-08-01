@@ -26,6 +26,7 @@ ja:
       expense: "原価経費"
       expense_type: "経費種別"
       system: "システム"
+      owned_rice_price: "保有米(単価)"
 
     attributes:
       chemical:
@@ -262,6 +263,12 @@ ja:
         other_flag: "その他フラグ"
         sales_flag: "売上フラグ"
         display_order: "表示順"
+
+      owned_rice_price:
+        name: "品種名"
+        display_order: "表示順"
+        owned_price: "保有米価格"
+        relative_price: "縁故米価格"
 
   status:
     organization:

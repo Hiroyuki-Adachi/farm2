@@ -1,4 +1,4 @@
-<h1>保有米(単価:<%= current_term %>年度)</h1>
+<h1>保有米単価一覧(<%= current_term %>年度)</h1>
 <table class="table table-sm">
   <thead>
     <tr>
@@ -17,7 +17,7 @@
         <td><%= owned_rice_price&.name %></td>
         <td class="numeric"><%= owned_rice_price&.owned_price&.to_s(:delimited) %></td>
         <td class="numeric"><%= owned_rice_price&.relative_price&.to_s(:delimited) %></td>
-        <td><%= link_to '修正', edit_owned_rice_price_path(work_type_id: work_type.id), {class: "btn btn-success btn-sm"} %></td>
+        <td><%= link_to '修正', edit_owned_rice_price_path(id: work_type.id), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>
   </tbody>
