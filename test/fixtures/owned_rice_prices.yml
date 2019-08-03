@@ -7,6 +7,7 @@
 #  work_type_id   :integer          default(0), not null  # 品種
 #  display_order  :integer          default(0), not null  # 表示順
 #  name           :string(10)       default(""), not null # 品種名
+#  short_name     :string(5)        default(""), not null # 品種名(略称)
 #  owned_price    :decimal(5, )     default(0), not null  # 保有米価格
 #  relative_price :decimal(5, )     default(0), not null  # 縁故米価格
 #  created_at     :datetime         not null

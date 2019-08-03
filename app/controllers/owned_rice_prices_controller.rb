@@ -41,6 +41,6 @@ class OwnedRicePricesController < ApplicationController
 
   def owned_rice_price_params
     params.require(:owned_rice_price)
-          .permit(:term, :work_type_id, :display_order, :name, :owned_price, :relative_price)
+          .permit(:term, :work_type_id, :display_order, :name, :short_name, :owned_price, :relative_price)
   end
 end

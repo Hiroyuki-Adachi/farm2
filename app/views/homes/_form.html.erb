@@ -61,6 +61,10 @@
       <%= f.label :drying_order, class: "col-form-label-lg" %>
       <%= f.number_field(:drying_order, {maxlength: 4, size: 4, min: 1, required: false, class: "form-control"}) %>
     </div>
+    <div class="col-md-2 field form-group">
+      <%= f.label :owned_rice_order, class: "col-form-label-lg" %>
+      <%= f.number_field(:owned_rice_order, {maxlength: 4, size: 4, min: 1, required: false, class: "form-control"}) %>
+    </div>
   </div>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
