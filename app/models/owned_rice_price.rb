@@ -20,4 +20,5 @@ class OwnedRicePrice < ApplicationRecord
   has_many   :owned_rices, {dependent: :destroy}
 
   scope :usual, ->(term) {where(term: term).order(:display_order)}
+  scope :relative, -> {where("owned_rice_prices.relative_price > 0")}
 end

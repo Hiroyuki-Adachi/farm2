@@ -1,6 +1,5 @@
 class OwnedRicePricesController < ApplicationController
   include PermitManager
-  before_action :set_owned_rice_price, only: [:edit, :update]
 
   def index
     @work_types = WorkType.indexes
@@ -8,6 +7,8 @@ class OwnedRicePricesController < ApplicationController
   end
 
   def edit
+    @owned_rice_price = OwnedRicePrice.find_by(term: current_term, work_type_id: params[:id])
+    @owned_rice_price ||= OwnedRicePrice.new(term: current_term, work_type_id: params[:id])
   end
 
   def create
@@ -20,6 +21,7 @@ class OwnedRicePricesController < ApplicationController
   end
 
   def update
+    @owned_rice_price = OwnedRicePrice.find(params[:id])
     if @owned_rice_price.update(owned_rice_price_params)
       redirect_to owned_rice_prices_path
     else
@@ -33,11 +35,6 @@ class OwnedRicePricesController < ApplicationController
   end
 
   private
-
-  def set_owned_rice_price
-    @owned_rice_price = OwnedRicePrice.find_by(term: current_term, work_type_id: params[:id])
-    @owned_rice_price ||= OwnedRicePrice.new(term: current_term, work_type_id: params[:id])
-  end
 
   def owned_rice_price_params
     params.require(:owned_rice_price)
