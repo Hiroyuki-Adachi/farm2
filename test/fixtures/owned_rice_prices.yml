@@ -20,3 +20,11 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+owned_rice_price1:
+  term: 2015
+  work_type_id: 1
+  display_order: 10
+  name: "コシヒカリ"
+  short_name: "コシ"
+  owned_price: 6000
+  relative_price: 7000
