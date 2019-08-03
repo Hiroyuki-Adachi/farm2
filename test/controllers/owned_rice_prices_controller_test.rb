@@ -35,7 +35,7 @@ class OwnedRicePricesControllerTest < ActionController::TestCase
   test "保有米単価マスタ変更(実行)" do
     assert_no_difference('OwnedRicePrice.count') do
       patch :update, params: {
-        id: 1,
+        id: owned_rice_prices(:owned_rice_price1),
         owned_rice_price: {
           work_type_id: 1, display_order: 10, name: "コシヒカリ２", short_name: "コシ２",
           owned_price: 7000, relative_price: 8000, term: 2015
