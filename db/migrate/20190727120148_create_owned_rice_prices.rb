@@ -5,6 +5,7 @@ class CreateOwnedRicePrices < ActiveRecord::Migration[5.2]
       t.integer :work_type_id, {null: false, default: 0, comment: "品種"}
       t.integer :display_order, {null: false, default: 0, comment: "表示順"}
       t.string  :name, {null: false, limit: 10, default: "", comment: "品種名"}
+      t.string  :short_name, {null: false, limit: 5, default: "", comment: "品種名(略称)"}
       t.decimal :owned_price, {null: false, scale: 0, precision: 5, default: 0, comment: "保有米価格"}
       t.decimal :relative_price, {null: false, scale: 0, precision: 5, default: 0, comment: "縁故米価格"}
 

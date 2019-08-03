@@ -410,6 +410,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.integer "work_type_id", default: 0, null: false, comment: "品種"
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.string "name", limit: 10, default: "", null: false, comment: "品種名"
+    t.string "short_name", limit: 5, default: "", null: false, comment: "品種名(略称)"
     t.decimal "owned_price", precision: 5, default: "0", null: false, comment: "保有米価格"
     t.decimal "relative_price", precision: 5, default: "0", null: false, comment: "縁故米価格"
     t.datetime "created_at", null: false
