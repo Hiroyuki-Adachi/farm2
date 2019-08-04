@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :owned_rices, only: [:index, :create, :edit, :update]
+  resources :owned_rices, only: [:index, :edit, :update]
   resources :owned_rice_prices, only: [:index, :create, :edit, :update, :destroy]
   resources :harvest_whole_crops, only: [:index]
   resources :harvest_rices, only: [:index]
