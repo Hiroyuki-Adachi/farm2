@@ -22,7 +22,6 @@
         <%= link_to '乾燥調整一覧', dryings_path, {class: "dropdown-item", data: {controller: :dryings}} %>
         <%= link_to '収穫一覧(水稲)', harvest_rices_path, {class: "dropdown-item", data: {controller: "harvest_rices"}} %>
         <%= link_to '収穫一覧(WCS)', harvest_whole_crops_path, {class: "dropdown-item", data: {controller: "harvest_whole_crops"}} %>
-        <%= link_to '保有米(単価)', owned_rice_prices_path, {class: "dropdown-item", data: {controller: :owned_rice_prices}} %>
         <%= link_to '保有米一覧', owned_rices_path, {class: "dropdown-item", data: {controller: :owned_rices}} %>
       <% end %>
     </div>
@@ -74,6 +73,7 @@
     <%= link_to '薬剤種別マスタ保守', chemical_types_path, {class: "dropdown-item", data: {controller: "chemical_types"}} %>
     <%= link_to '薬剤マスタ保守', chemicals_path, {class: "dropdown-item", data: {controller: :chemicals}} %>
     <% if current_user.manageable? %>
+      <%= link_to '保有米単価マスタ保守', owned_rice_prices_path, {class: "dropdown-item", data: {controller: :owned_rice_prices}} %>
       <%= link_to '場所マスタ保守', land_places_path, {class: "dropdown-item", data: {controller: "land_places"}} %>
       <%= link_to '作業分類マスタ保守', work_types_path, {class: "dropdown-item", data: {controller: "work_types"}} %>
       <%= link_to '経費種別マスタ保守', expense_types_path, {class: "dropdown-item", data: {controller: "expense_types"}} %>
