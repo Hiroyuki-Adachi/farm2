@@ -49,6 +49,7 @@
     <%= link_to '乾燥調整一覧', total_dryings_path, {class: "dropdown-item", data: {controller: :total_dryings}} %>
     <%= link_to 'WCS一覧', whole_crops_path, {class: "dropdown-item", data: {controller: :whole_crops}} %>
     <%= link_to '組合内受託一覧', contracts_path, {class: "dropdown-item", data: {controller: "contracts"}} %>
+    <%= link_to '保有米一覧', total_owned_rices_path, {class: "dropdown-item", data: {controller: :total_owned_rices}} %>
   </div>
   <div aria-labelledby="navbarCost" style="display:none;">
     <span class="h5">原価管理</span>
@@ -64,20 +65,20 @@
   <% if current_user.checkable? %>
   <div aria-labelledby="navbarMaster" style="display:none;">
     <span class="h5">マスタ保守</span>
-    <%= link_to '世帯マスタ保守', homes_path, {class: "dropdown-item", data: {controller: :homes}} %>
-    <%= link_to '作業者マスタ保守', workers_path, {class: "dropdown-item", data: {controller: :workers}} %>
-    <%= link_to '土地マスタ保守', lands_path, {class: "dropdown-item", data: {controller: :lands}} %>
-    <%= link_to '作業種別マスタ保守', work_kinds_path, {class: "dropdown-item", data: {controller: "work_kinds"}} %>
-    <%= link_to '機械種別マスタ保守', machine_types_path, {class: "dropdown-item", data: {controller: "machine_types"}} %>
-    <%= link_to '機械マスタ保守', machines_path, {class: "dropdown-item", data: {controller: :machines}} %>
-    <%= link_to '薬剤種別マスタ保守', chemical_types_path, {class: "dropdown-item", data: {controller: "chemical_types"}} %>
-    <%= link_to '薬剤マスタ保守', chemicals_path, {class: "dropdown-item", data: {controller: :chemicals}} %>
+    <%= link_to '世帯マスタ', homes_path, {class: "dropdown-item", data: {controller: :homes}} %>
+    <%= link_to '作業者マスタ', workers_path, {class: "dropdown-item", data: {controller: :workers}} %>
+    <%= link_to '土地マスタ', lands_path, {class: "dropdown-item", data: {controller: :lands}} %>
+    <%= link_to '作業種別マスタ', work_kinds_path, {class: "dropdown-item", data: {controller: "work_kinds"}} %>
+    <%= link_to '機械種別マスタ', machine_types_path, {class: "dropdown-item", data: {controller: "machine_types"}} %>
+    <%= link_to '機械マスタ', machines_path, {class: "dropdown-item", data: {controller: :machines}} %>
+    <%= link_to '薬剤種別マスタ', chemical_types_path, {class: "dropdown-item", data: {controller: "chemical_types"}} %>
+    <%= link_to '薬剤マスタ', chemicals_path, {class: "dropdown-item", data: {controller: :chemicals}} %>
     <% if current_user.manageable? %>
-      <%= link_to '保有米単価マスタ保守', owned_rice_prices_path, {class: "dropdown-item", data: {controller: :owned_rice_prices}} %>
-      <%= link_to '場所マスタ保守', land_places_path, {class: "dropdown-item", data: {controller: "land_places"}} %>
-      <%= link_to '作業分類マスタ保守', work_types_path, {class: "dropdown-item", data: {controller: "work_types"}} %>
-      <%= link_to '経費種別マスタ保守', expense_types_path, {class: "dropdown-item", data: {controller: "expense_types"}} %>
-      <%= link_to '班マスタ保守', sections_path, {class: "dropdown-item", data: {controller: :sections}} %>
+      <%= link_to '保有米単価マスタ', owned_rice_prices_path, {class: "dropdown-item", data: {controller: :owned_rice_prices}} %>
+      <%= link_to '場所マスタ', land_places_path, {class: "dropdown-item", data: {controller: "land_places"}} %>
+      <%= link_to '作業分類マスタ', work_types_path, {class: "dropdown-item", data: {controller: "work_types"}} %>
+      <%= link_to '経費種別マスタ', expense_types_path, {class: "dropdown-item", data: {controller: "expense_types"}} %>
+      <%= link_to '班マスタ', sections_path, {class: "dropdown-item", data: {controller: :sections}} %>
     <% end %>
   </div>
   <% end %>
