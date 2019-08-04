@@ -25,6 +25,14 @@ class OwnedRice < ApplicationRecord
       .where(["owned_rice_prices.term = ? AND owned_rices.home_id = ?", term, home_id])
   }
 
+  scope :for_finance, ->(term) {
+    joins(:owned_rice_price)
+      .joins(:home)
+      .where(["owned_rice_prices.term = ?", term])
+      .where("(owned_rices.owned_count > 0 OR owned_rices.relative_count > 0)")
+      .order("homes.finance_order, homes.id, owned_rice_prices.display_order, owned_rice_prices.id")
+  }
+
   def sum_count
     owned_count + relative_count
   end
@@ -36,5 +44,17 @@ class OwnedRice < ApplicationRecord
     else
       OwnedRice.create(params)
     end
+  end
+
+  def owned_price
+    owned_count * owned_rice_price.owned_price
+  end
+
+  def relative_price
+    relative_count * owned_rice_price.relative_price
+  end
+
+  def sum_price
+    owned_price + relative_price
   end
 end
