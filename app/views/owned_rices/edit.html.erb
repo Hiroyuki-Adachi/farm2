@@ -1,2 +1,38 @@
-<h1>OwnedRice#edit</h1>
-<p>Find me in app/views/owned_rice/edit.html.erb</p>
+<h1>保有米登録(<%= @home.name %>)</h1>
+<% if @p_owned_prices.size > 0 %>
+  <%= render(:partial => 'show_previous') %>
+<% end %>
+<h2><%= current_term %>年度</h2>
+<%= form_tag(owned_rice_path(id: @home.id), method: :put) do %>
+  <h3>保有米</h3>
+  <div class="row">
+    <% @owned_prices.each do |owned_price| %>
+      <% owned_rice = @owned_rices.find {|o| o.owned_rice_price_id == owned_price.id} %>
+      <div class="col-md-2 form-group">
+        <%= label_tag "owned_rices_#{owned_price.id}", owned_price.name, class: "col-form-label-lg" %>
+        <%= number_field_tag "owned_rices[#{owned_price.id}][owned_count]", owned_rice&.owned_count || 0, {id: "owned_rices_#{owned_price.id}", class: "form-control form-control-sm", required: true, min: 0, max: 999} %>
+        <%= hidden_field_tag "owned_rices[#{owned_price.id}][owned_rice_price_id]", owned_price.id %>
+        <%= hidden_field_tag "owned_rices[#{owned_price.id}][home_id]", @home.id %>
+        <%= hidden_field_tag "owned_rices[#{owned_price.id}][id]", owned_rice&.id %>
+      </div>
+    <% end %>
+  </div>
+  <h3>縁故米</h3>
+  <div class="row">
+    <% @relative_prices.each do |owned_price| %>
+      <% owned_rice = @owned_rices.find {|o| o.owned_rice_price_id == owned_price.id} %>
+      <div class="col-md-2 form-group">
+        <%= label_tag "relative_rices_#{owned_price.id}", owned_price.name, class: "col-form-label-lg" %>
+        <%= number_field_tag "owned_rices[#{owned_price.id}][relative_count]", owned_rice&.relative_count || 0, {id: "relative_rices_#{owned_price.id}", class: "form-control form-control-sm", required: true, min: 0, max: 999} %>
+      </div>
+    <% end %>
+  </div>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to "戻る", owned_rices_path, {class: "btn btn-outline-dark"}%>
+    </div>
+  </div>
+<% end %>

@@ -13,14 +13,28 @@
 
 class OwnedRice < ApplicationRecord
   belongs_to :owned_rice_price
-  belongs_to :home_id
+  belongs_to :home
 
   scope :usual, ->(term) {
     joins(:owned_rice_price)
       .where(["owned_rice_prices.term = ?", term])
   }
 
+  scope :by_home, ->(term, home_id) {
+    joins(:owned_rice_price)
+      .where(["owned_rice_prices.term = ? AND owned_rices.home_id = ?", term, home_id])
+  }
+
   def sum_count
     owned_count + relative_count
+  end
+
+  def self.regist(id, params)
+    owned_rice = OwnedRice.find_by(id: id) if id
+    if owned_rice
+      owned_rice.update(params)
+    else
+      OwnedRice.create(params)
+    end
   end
 end
