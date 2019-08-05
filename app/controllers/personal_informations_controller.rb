@@ -8,7 +8,7 @@ class PersonalInformationsController < ApplicationController
   def show
     to_error_path unless @worker
 
-    @results = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
+    @results1 = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
     @company = Worker.company.first
   end
 
