@@ -58,11 +58,11 @@ class WorkResult < ApplicationRecord
       .order("homes.finance_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }
 
-  scope :for_personal, ->(worker, worked_at) {
+  scope :for_personal, ->(worker, worked_from, worked_to = Time.zone.today) {
     joins(:work)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
       .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
-      .where("works.worked_at >= ?", worked_at)
+      .where("works.worked_at BETWEEN ? AND ?", worked_from, worked_to)
       .where(worker_id: worker)
       .order("works.worked_at, work_results.id")
   }
