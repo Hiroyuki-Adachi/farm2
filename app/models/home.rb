@@ -82,4 +82,12 @@ class Home < ApplicationRecord
   def finance_code
     finance_order ? finance_order.to_s.insert(1, "-") : ""
   end
+
+  def owned_area
+    owned_lands.sum(:area)
+  end
+
+  def owned_rice_limit
+    (owned_area / 10 * 2).ceil
+  end
 end
