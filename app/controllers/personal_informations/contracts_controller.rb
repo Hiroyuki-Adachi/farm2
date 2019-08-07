@@ -3,7 +3,7 @@ class PersonalInformations::ContractsController < PersonalInformationsController
     to_error_path unless @worker
 
     @works = WorkDecorator.decorate_collection(
-      Work.for_contract(@worker, worked_from, current_organization.contract_work_type_id)
+      Work.for_contract(@worker, between_worked_at[0], current_organization.contract_work_type_id)
     )
   end
 end
