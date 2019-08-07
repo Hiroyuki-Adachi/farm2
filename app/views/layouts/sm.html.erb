@@ -18,34 +18,79 @@
 <div id="site-header">
 <nav class="navbar navbar-dark bg-success fixed-top" role="navigation">
   <%= link_to "作業日報(#{current_name})", personal_information_path(token: token), {class: "navbar-brand"} %>
-    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarFarm2" aria-controls="navbarFarm2" aria-expanded="false" aria-label="ナビゲーションの切替">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarFarm2">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <%= link_to "作業予定", personal_information_schedules_path(personal_information_token: token), {class: "nav-link"} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "管理農地", personal_information_lands_path(personal_information_token: token), {class: "nav-link"} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to '機械賃借', personal_information_machines_path(personal_information_token: token), {class: "nav-link"} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to '育苗払出', personal_information_seedlings_path(personal_information_token: token), {class: "nav-link"} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to '乾燥調整', personal_information_dryings_path(personal_information_token: token), {class: "nav-link"} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to '組合内委託', personal_information_contracts_path(personal_information_token: token), {class: "nav-link"} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to '集計', personal_information_statistics_path(personal_information_token: token), {class: "nav-link"} %>
-          </li>
-        </ul>
+  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarFarm2" aria-controls="navbarFarm2" aria-expanded="false" aria-label="ナビゲーションの切替">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarFarm2">
+    <div class="container">
+      <div class="row">
+        <div class="col-3">
+          <a href="<%= personal_information_schedules_path(personal_information_token: token)%>">
+            <figure class="figure">
+              <img class="figure-img" width="48" height="48" src="/images/menu/calendar.png" />
+              <figcaption class="figure-caption text-white">予定</figcaption>
+            </figure>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="<%= personal_information_lands_path(personal_information_token: token)%>">
+            <figure class="figure">
+              <img class="figure-img" width="48" height="48" src="/images/menu/tanbo.png" />
+              <figcaption class="figure-caption text-white">農地</figcaption>
+            </figure>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="<%= personal_information_machines_path(personal_information_token: token)%>">
+            <figure class="figure">
+              <img class="figure-img" width="48" height="48" src="/images/menu/tractor.png" />
+              <figcaption class="figure-caption text-white">賃借</figcaption>
+            </figure>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="<%= personal_information_seedlings_path(personal_information_token: token)%>">
+            <figure class="figure">
+              <img class="figure-img" width="48" height="48" src="/images/menu/jouro.png" />
+              <figcaption class="figure-caption text-white">育苗</figcaption>
+            </figure>
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <a href="<%= personal_information_dryings_path(personal_information_token: token)%>">
+            <figure class="figure">
+              <img class="figure-img" width="48" height="48" src="/images/menu/country.png" />
+              <figcaption class="figure-caption text-white">乾燥</figcaption>
+            </figure>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="<%= personal_information_contracts_path(personal_information_token: token)%>">
+            <figure class="figure">
+              <img class="figure-img" width="48" height="48" src="/images/menu/hands.jpg" />
+              <figcaption class="figure-caption text-white">委託</figcaption>
+            </figure>
+          </a>
+        </div>
+        <div class="col-3">
+          <figure class="figure">
+            <img class="figure-img" width="48" height="48" src="/images/menu/kome.png" />
+            <figcaption class="figure-caption text-white">保有米</figcaption>
+          </figure>
+        </div>
+        <div class="col-3">
+          <a href="<%= personal_information_statistics_path(personal_information_token: token)%>">
+            <figure class="figure">
+              <img class="figure-img" width="48" height="48" src="/images/menu/graph.png" />
+              <figcaption class="figure-caption text-white">集計</figcaption>
+            </figure>
+          </a>
+        </div>
+      </div>
     </div>
+  </div>
 </nav>
 </div>
 <%= yield %>
