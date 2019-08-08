@@ -23,7 +23,10 @@ class OwnedRice < ApplicationRecord
   scope :by_home, ->(term, home_id) {
     joins(:owned_rice_price)
       .where(["owned_rice_prices.term = ? AND owned_rices.home_id = ?", term, home_id])
+      .order("owned_rice_prices.display_order, owned_rice_prices.id")
   }
+
+  scope :available, -> {where("owned_rices.owned_count > 0 OR owned_rices.relative_count > 0")}
 
   scope :for_finance, ->(term) {
     joins(:owned_rice_price)
