@@ -1,0 +1,34 @@
+<% if @owned_rices.count > 0 %>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th>品種</th>
+        <th class="text-right">保有米数</th>
+        <th class="text-right">縁故米数</th>
+        <th class="text-right">合計数</th>
+      </tr>
+    </thead>
+    <% sum_owned_count = 0 %>
+    <% sum_relative_count = 0 %>
+    <tbody>
+      <% @owned_rices.each do |owned_rice| %>
+        <tr>
+          <td><%= owned_rice&.owned_rice_price&.name %></td>
+          <td class="text-right"><%= owned_rice.owned_count %></td>
+          <td class="text-right"><%= owned_rice.relative_count %></td>
+          <td class="text-right"><%= owned_rice.sum_count %></td>
+        </tr>
+        <% sum_owned_count += owned_rice.owned_count %>
+        <% sum_relative_count += owned_rice.relative_count %>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>合計</th>
+        <td class="text-right"><%= sum_owned_count %></td>
+        <td class="text-right"><%= sum_relative_count %></td>
+        <td class="text-right"><%= sum_owned_count + sum_relative_count %></td>
+      </tr>
+    </tfoot>
+  </table>
+<% end %>
