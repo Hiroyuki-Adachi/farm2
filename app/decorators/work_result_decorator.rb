@@ -44,6 +44,10 @@ class WorkResultDecorator < Draper::Decorator
     return work.name
   end
 
+  def work_short_name
+    return work_name.slice(0..9)
+  end
+
   def work_name_short
     model.work.work_type.name + "(" + model.work.work_kind.name + ")"
   end
