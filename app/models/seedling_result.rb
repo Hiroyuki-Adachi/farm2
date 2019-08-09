@@ -14,7 +14,7 @@
 
 class SeedlingResult < ActiveRecord::Base
   belongs_to :seedling_home
-  belongs_to :work_result, {dependent: :destroy}
+  belongs_to :work_result
 
   scope :total, ->(seedling_homes) {where(seedling_home_id: seedling_homes.ids).group(:seedling_home_id).sum(:quantity)}
 

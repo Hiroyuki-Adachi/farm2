@@ -8,7 +8,9 @@ class PersonalInformationsController < ApplicationController
   def show
     to_error_path unless @worker
 
-    @results = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
+    worked_from, worked_to = between_worked_at
+    @results1 = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from, worked_to))
+    @results2 = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_to))
     @company = Worker.company.first
   end
 
@@ -22,16 +24,22 @@ class PersonalInformationsController < ApplicationController
     @current_user = @worker.user
   end
 
-  private
-
-  def worked_from
+  def between_worked_at
     m = Time.zone.today.month
-    if @current_user.view_month[0] <= m && m < @current_user.view_month[1]
-      Date.new(Time.zone.today.year - 1, 12, 1)
-    elsif @current_user.view_month[1] <= m && m < @current_user.view_month[2]
-      Date.new(Time.zone.today.year, 1, 1)
+    y = Time.zone.today.year
+    case month_type(m)
+    when 0
+      return Date.new(y - 1, 12, 1), Date.new(y, 1, 1)
+    when 1
+      return Date.new(y, 1, 1), Date.new(y, 7, 1)
     else
-      Date.new(Time.zone.today.year, 7, 1)
+      return Date.new(y, 7, 1), Date.new(y, 12, 1)
     end
+  end
+
+  def month_type(month)
+    return 0 if @current_user.view_month[0] <= month && month < @current_user.view_month[1]
+    return 1 if @current_user.view_month[1] <= month && month < @current_user.view_month[2]
+    return 2
   end
 end

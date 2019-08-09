@@ -1,0 +1,41 @@
+# == Schema Information
+#
+# Table name: drying_moths # 乾燥籾
+#
+#  id            :bigint           not null, primary key
+#  drying_id     :integer          default(0), not null  # 乾燥調整
+#  moth_count    :integer          default(0), not null  # 回数
+#  moth_no       :integer                                # No.
+#  water_content :decimal(3, 1)                          # 水分
+#  moth_weight   :decimal(5, 1)                          # 籾(kg)
+#  rice_weight   :decimal(5, 1)                          # 玄米(kg)
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+drying1_moth1:
+  drying_id: drying1
+  moth_count: 1
+  moth_no: 1506
+  water_content: 14.5
+  moth_weight: 1558
+  rice_weight: 1069.2
+  created_at: '2015-09-16 01:57:00.617803'
+  updated_at: '2015-09-16 01:57:00.617803'
+
+drying1_moth2:
+  drying_id: drying1
+  moth_count: 2
+  moth_no: 1590
+  water_content: 14.6
+  moth_weight: 1724
+  rice_weight: 1201.2
+  created_at: '2015-09-16 01:57:00.617803'
+  updated_at: '2015-09-16 01:57:00.617803'

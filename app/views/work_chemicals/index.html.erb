@@ -1,56 +1,51 @@
-<h1>作業別薬剤使用量一覧</h1>
-<%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
-<%= stylesheet_link_tag 'work-lists', :media => 'all' %>
-<% even = false %>
-<% chemical_type_id = 0 %>
-<table class="table table-sm">
-<colgroup span="3" />
-<% even = false %>
-<% @chemicals.each do |chemical| %>
-  <% even = !even if chemical.chemical_type_id != chemical_type_id %>
-  <% chemical_type_id = chemical.chemical_type_id %>
-  <colgroup class="<%= even ? 'even_color' : 'odd_color' %>" /> 
-<% end %>
+<h1>薬剤使用量一覧</h1>
+<table class="table table-sm table-bordered">
   <thead>
     <tr>
-    <th rowspan="3">作業日</th>
-    <th rowspan="3">作業種別</th>
-    <th rowspan="3">作業内容</th>
-    <% @chemicals.each do |chemical| %>
-      <th><%= chemical.chemical_type.name %></th>
-    <% end %>
-    </tr>
-    <tr>
-    <% @chemicals.each do |chemical| %>
-      <th style="word-break:break-all;" title="<%= chemical.name %>"><div style="overflow:hidden;width:60px;"><%= chemical.name %></div></th>
-    <% end %>
-    </tr>
-    <tr>
-    <% @chemicals.each do |chemical| %>
-      <th><%= chemical.unit %></th>
-    <% end %>
+      <th>薬剤種別</th>
+      <th>薬剤</th>
+      <th>作業日</th>
+      <th>作業種別</th>
+      <th>作業内容</th>
+      <th>使用量</th>
+      <th>単位</th>
     </tr>
   </thead>
   <tbody>
-    <% @works.each do |work| %>
-    <tr>
-      <td><%= work.worked_at %></td>
-      <td><%= work.work_type_name %></td>
-      <td style="word-break:break-all;white-space:nowrap;" title="<%= work.name %>"><div style="overflow:hidden;width:100px;"><%= work.name %></div></td>
-      <% @chemicals.each do |chemical| %>
-        <td class="numeric"><%= @work_chemicals["#{work.id},#{chemical.id}"] %></td>
-      <% end %>
-    </tr>
-    <% end %>
-  </tbody>
-  <tbody>
-    <tr>
-      <th colspan="3">合計</th>
-      <% even = false %>
-      <% @chemicals.each do |chemical| %>
+    <% @chemicals.each do |chemical| %>
+      <tr class="chemical-total table-primary" data-chemical="<%= chemical.id %>" style="cursor: pointer;">
+        <td><%= chemical.chemical_type.name %></td>
+        <td><%= chemical.name %></td>
+        <td colspan="3"></td>
         <td class="numeric"><%= @total_chemicals[chemical.id] %></td>
+        <td><%= chemical.unit %></td>
+      </tr>
+      <% @works.each do |work| %>
+        <% next unless @work_chemicals["#{work.id},#{chemical.id}"] %>
+        <tr class="detail" data-chemical="<%= chemical.id %>">
+          <td colspan="2"></td>
+          <td><%= work.worked_at %></td>
+          <td><%= work.work_type_name %></td>
+          <td><%= work.name %></td>
+          <td class="numeric"><%= @work_chemicals["#{work.id},#{chemical.id}"] %></td>
+          <td><%= chemical.unit %></td>
+        </tr>
       <% end %>
-    </tr>
+    <% end %>
   </tbody>
 </table>
 <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
+<script>
+$(function() {
+    $(".chemical-total").click(function() {
+        var s = $(".detail[data-chemical='" + $(this).data("chemical") + "']");
+        if(s.is(":visible")) {
+            s.hide();
+        } else {
+            s.show();
+        }
+    });
+  
+    $(".detail").hide();
+});
+</script>

@@ -1,0 +1,15 @@
+- id: 0
+  code: None
+  name: "未設定"
+- id: 1
+  code: Country
+  name: "カントリー"
+- id: 2
+  code: Self
+  name: "乾燥調整"
+- id: 3
+  code: Another
+  name: "乾燥のみ"
+- id: 4
+  code: Adjust
+  name: "調整のみ"

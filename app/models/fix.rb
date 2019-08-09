@@ -38,9 +38,12 @@ class Fix < ApplicationRecord
           works_amount += amount
           hours += result.hours
         end
-        work.machine_results.to_a.uniq {|mr| mr.machine_id }.each do |result|
+        work.machine_results.to_a.uniq(&:machine_id).each do |result|
           result.update(fixed_quantity: result.quantity, fixed_adjust_id: result.adjust.id, fixed_price: result.price, fixed_amount: result.amount)
           machines_amount += result.amount
+        end
+        work.work_lands.each do |work_land|
+          work_land.update(fixed_cost: work_land.cost)
         end
         work.update(fixed_at: fixed_at)
         works_count += 1
@@ -53,12 +56,15 @@ class Fix < ApplicationRecord
   private
 
   def clear_fix
-    Work.where(term: term, fixed_at: fixed_at).each do |work|
+    Work.where(term: term, fixed_at: fixed_at).find_each do |work|
       work.work_results.each do |result|
         result.update(fixed_hours: nil, fixed_price: nil, fixed_amount: nil)
       end
       work.machine_results.each do |result|
         result.update(fixed_quantity: nil, fixed_adjust_id: nil, fixed_price: nil, fixed_amount: nil)
+      end
+      work.work_lands.each do |work_land|
+        work_land.update(fixed_cost: nil)
       end
       work.update(fixed_at: nil)
     end

@@ -24,3 +24,9 @@ seedling_result_genka:
   work_result: work_result_genka1
   display_order: 1
   quantity: 210
+
+seedling_home1_genka:
+  seedling_home: seedling_home1
+  work_result: work_result_genka1
+  display_order: 1
+  quantity: 300

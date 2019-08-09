@@ -1,0 +1,47 @@
+<h1>システム保守</h1>
+
+<%= error_print(@system) %>
+<%= form_for(@system) do |f| %>
+  <div class="row">
+    <div class="col-md-2 form-group">
+      <%= f.label :start_date, class: "col-form-label-lg" %>
+      <%= f.date_field :start_date, {required: true, class: "form-control"} %>
+    </div>
+    <div class="col-md-2 form-group">
+      <%= f.label :end_date, class: "col-form-label-lg" %>
+      <%= f.date_field :end_date, {required: true, class: "form-control"} %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 form-group">
+      <%= f.label :default_price, class: "col-form-label-lg" %>
+      <%= f.number_field :default_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
+    </div>
+    <div class="col-md-2 form-group">
+      <%= f.label :default_fee, class: "col-form-label-lg" %>
+      <%= f.number_field :default_fee, {min: 0, max: 99999, required: true, class: "form-control"} %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 form-group">
+      <%= f.label :dry_price, class: "col-form-label-lg" %>
+      <%= f.number_field :dry_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
+    </div>
+    <div class="col-md-2 form-group">
+      <%= f.label :adjust_price, class: "col-form-label-lg" %>
+      <%= f.number_field :adjust_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
+    </div>
+    <div class="col-md-2 form-group">
+      <%= f.label :dry_adjust_price, class: "col-form-label-lg" %>
+      <%= f.number_field :dry_adjust_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
+    </div>
+  </div>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+        <%= f.submit '登録', class: "btn btn-danger" %>
+    </div>
+    <div class="btn-group mr-2">
+        <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
+    </div>
+  </div>
+<% end %>

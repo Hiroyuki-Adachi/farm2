@@ -30,15 +30,29 @@ class MenuControllerTest < ActionController::TestCase
     assert_equal Organization.first.term, new_term
   end
 
-  test "対象年度変更(実行:既存)" do
+  test "対象年度変更(実行:既存)(管理者)" do
     now_term = systems(:s2014).term
     assert_no_difference('System.count') do
       patch :update, params: {id: @system, system: {term: now_term}}
     end
     assert_equal Organization.first.term, now_term
+    assert_equal User.find(2).term, now_term
+  end
+
+  test "対象年度変更(実行:既存)(管理者以外)" do
+    session[:user_id] = users(:user_user).id
+    old_term = systems(:s2015).term
+    now_term = systems(:s2014).term
+    assert_no_difference('System.count') do
+      patch :update, params: {id: @system, system: {term: now_term}}
+    end
+    assert_equal Organization.first.term, old_term
+    assert_equal User.find(users(:users1).id).term, old_term
+    assert_equal User.find(users(:user_user).id).term, now_term
   end
 
   def teardown
-    patch :update, params: {id: @system, system: {term: systems(:s2015).term}}
+    User.update_all(term: systems(:s2015).term)
+    Organization.update_all(term: systems(:s2015).term)
   end
 end

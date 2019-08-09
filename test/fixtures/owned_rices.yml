@@ -1,0 +1,25 @@
+# == Schema Information
+#
+# Table name: owned_rices # 保有米
+#
+#  id                  :bigint           not null, primary key
+#  home_id             :integer          default(0), not null  # 購入世帯
+#  owned_rice_price_id :integer          default(0), not null  # 保有米単価
+#  owned_count         :decimal(3, )     default(0), not null  # 保有米数
+#  relative_count      :decimal(3, )     default(0), not null  # 縁故米数
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+owned_rice1:
+  home_id: 1
+  owned_rice_price: owned_rice_price1
+  owned_count: 10
+  relative_count: 20

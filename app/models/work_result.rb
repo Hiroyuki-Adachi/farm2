@@ -28,6 +28,7 @@ class WorkResult < ApplicationRecord
 
   has_many  :machine_results, {dependent: :destroy}
   has_many  :machines, {through: :machine_results}
+  has_many  :seedling_results, {dependent: :destroy}
 
   validates :hours, presence: true
   validates :hours, numericality: true, :if => proc{|x| x.hours.present?}
@@ -48,20 +49,20 @@ class WorkResult < ApplicationRecord
   }
 
   scope :by_home_for_fix, ->(term, fixed_at) {
-    joins(:work)
-      .joins(:worker)
-      .joins(:work_type)
-      .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
-      .joins("INNER JOIN sections ON sections.id = homes.section_id")
+    joins(:work).includes(:work)
+      .joins(:worker).includes(:worker)
+      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
+      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+      .joins("INNER JOIN homes ON homes.id = workers.home_id AND member_flag = TRUE").preload(:home)
       .where("works.term = ? AND works.fixed_at = ?", term, fixed_at)
-      .order("sections.display_order, homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
+      .order("homes.finance_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }
 
-  scope :for_personal, ->(worker, worked_at) {
+  scope :for_personal, ->(worker, worked_from, worked_to = Time.zone.today + 1) {
     joins(:work)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
       .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
-      .where("works.worked_at >= ?", worked_at)
+      .where("works.worked_at BETWEEN ? AND ?", worked_from, worked_to - 1)
       .where(worker_id: worker)
       .order("works.worked_at, work_results.id")
   }

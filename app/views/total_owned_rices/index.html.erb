@@ -1,0 +1,76 @@
+<h1>保有米集計</h1>
+<% old_home_id = 0 %>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th rowspan="2">世帯</th>
+      <th rowspan="2">品種</th>
+      <th colspan="3">保有米</th>
+      <th colspan="3">縁故米</th>
+      <th colspan="2">合計額</th>
+    </tr>
+    <tr>
+      <th class="numeric">数量</th>
+      <th class="numeric">単価</th>
+      <th class="numeric">金額</th>
+      <th class="numeric">数量</th>
+      <th class="numeric">単価</th>
+      <th class="numeric">金額</th>
+      <th class="numeric">数量</th>
+      <th class="numeric">金額</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @owned_rices.each do |owned_rice| %>
+      <% if owned_rice.home_id != old_home_id %>
+        <% old_home_id = owned_rice.home_id %>
+        <tr class="home-total table-primary" data-home="<%= old_home_id %>" style="cursor: pointer;">
+          <td><%= owned_rice.home.name %></td>
+          <td></td>
+          <td class="numeric"><%= @home_totals[old_home_id][:owned_count] %></td>
+          <td></td>
+          <td class="numeric"><%= @home_totals[old_home_id][:owned_price].to_s(:delimited) %></td>
+          <td class="numeric"><%= @home_totals[old_home_id][:relative_count] %></td>
+          <td></td>
+          <td class="numeric"><%= @home_totals[old_home_id][:relative_price].to_s(:delimited) %></td>
+          <td class="numeric"><%= @home_totals[old_home_id][:sum_count] %></td>
+          <td class="numeric"><%= @home_totals[old_home_id][:sum_price].to_s(:delimited) %></td>
+        </tr>
+      <% end %>
+      <tr class="detail" data-home="<%= old_home_id %>">
+        <td></td>
+        <td><%= owned_rice.owned_rice_price.name %></td>
+        <td class="numeric"><%= owned_rice.owned_count %></td>
+        <td class="numeric"><%= owned_rice.owned_rice_price.owned_price.to_s(:delimited) %></td>
+        <td class="numeric"><%= owned_rice.owned_price.to_s(:delimited) %></td>
+        <td class="numeric"><%= owned_rice.relative_count %></td>
+        <td class="numeric"><%= owned_rice.owned_rice_price.relative_price.to_s(:delimited) %></td>
+        <td class="numeric"><%= owned_rice.relative_price.to_s(:delimited) %></td>
+        <td class="numeric"><%= owned_rice.sum_count %></td>
+        <td class="numeric"><%= owned_rice.sum_price.to_s(:delimited) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "CSV出力", total_owned_rices_path(format: :csv), {class: "btn btn-outline-success"} %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
+  </div>
+</div>
+<script>
+$(function() {
+    $(".home-total").click(function() {
+        var s = $(".detail[data-home='" + $(this).data("home") + "']");
+        if(s.is(":visible")) {
+            s.hide();
+        } else {
+            s.show();
+        }
+    });
+  
+    $(".detail").hide();
+});
+</script>
