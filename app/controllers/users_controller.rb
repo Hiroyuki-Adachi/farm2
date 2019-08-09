@@ -47,10 +47,6 @@ class UsersController < ApplicationController
     params.require(:user).permit(:login_name, :password, :password_confirmation, :worker_id)
   end
 
-  def permit_admin
-    to_error_path unless current_user.admin?
-  end
-
   def permit_self
     to_error_path unless current_user.admin? || current_user.id == @user.id
   end

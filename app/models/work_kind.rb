@@ -18,15 +18,17 @@ class WorkKind < ApplicationRecord
 
   after_save :save_price
 
-  has_many :machine_kinds
+  has_many :machine_kinds, dependent: :destroy
   has_many :machine_types, -> {order("machine_types.display_order")}, through: :machine_kinds 
 
-  has_many :chemical_kinds
+  has_many :chemical_kinds, dependent: :destroy
   has_many :chemical_types, -> {order("chemical_types.display_order")}, through: :chemical_kinds
 
-  has_many :work_kind_types
+  has_many :work_kind_types, dependent: :destroy
   has_many :work_types, through: :work_kind_types
-  has_many :work_kind_prices
+  has_many :work_kind_prices, dependent: :destroy
+
+  has_many :calendar_work_kinds, dependent: :destroy
 
   validates :name, presence: true
   validates :price, presence: true

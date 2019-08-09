@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_06_121134) do
+ActiveRecord::Schema.define(version: 2019_07_27_120215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "adjustments", comment: "調整", force: :cascade do |t|
+    t.integer "drying_id", default: 0, null: false, comment: "乾燥"
+    t.integer "home_id", comment: "担当世帯"
+    t.date "carried_on", comment: "搬入日"
+    t.date "shipped_on", comment: "出荷日"
+    t.decimal "rice_bag", precision: 3, comment: "調整米(袋)"
+    t.decimal "half_weight", precision: 3, scale: 1, comment: "半端米(kg)"
+    t.decimal "waste_weight", precision: 5, scale: 1, comment: "くず米(kg)"
+    t.decimal "fixed_amount", precision: 7, comment: "確定額"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drying_id"], name: "adjustments_secondary", unique: true
+  end
 
   create_table "bank_branches", primary_key: ["bank_code", "code"], comment: "支店マスタ", force: :cascade do |t|
     t.string "bank_code", limit: 4, null: false, comment: "金融機関コード"
@@ -66,6 +80,15 @@ ActiveRecord::Schema.define(version: 2019_04_06_121134) do
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "calendar_work_kinds", comment: "カレンダー作業種別", force: :cascade do |t|
+    t.integer "user_id", null: false, comment: "利用者"
+    t.integer "work_kind_id", null: false, comment: "作業種別"
+    t.string "text_color", limit: 8, default: "#000000", null: false, comment: "文字色"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "work_kind_id"], name: "calendar_work_kind_index", unique: true
   end
 
   create_table "chemical_kinds", id: :serial, comment: "作業種別薬剤種別利用マスタ", comment: "作業種別薬剤種別利用マスタ", force: :cascade do |t|
@@ -140,6 +163,43 @@ ActiveRecord::Schema.define(version: 2019_04_06_121134) do
     t.index ["term", "machine_id"], name: "index_depreciations_on_term_and_machine_id", unique: true
   end
 
+  create_table "drying_lands", comment: "乾燥調整場所", force: :cascade do |t|
+    t.integer "drying_id", default: 0, null: false, comment: "乾燥調整"
+    t.integer "land_id", comment: "作業地"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
+    t.decimal "percentage", precision: 4, scale: 1, default: "100.0", null: false, comment: "割合"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drying_id", "display_order"], name: "drying_lands_3rd", unique: true
+  end
+
+  create_table "drying_moths", comment: "乾燥籾", force: :cascade do |t|
+    t.integer "drying_id", default: 0, null: false, comment: "乾燥調整"
+    t.integer "moth_count", default: 0, null: false, comment: "回数"
+    t.integer "moth_no", comment: "No."
+    t.decimal "water_content", precision: 3, scale: 1, comment: "水分"
+    t.decimal "moth_weight", precision: 5, scale: 1, comment: "籾(kg)"
+    t.decimal "rice_weight", precision: 5, scale: 1, comment: "玄米(kg)"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drying_id", "moth_count"], name: "drying_moths_secondary", unique: true
+  end
+
+  create_table "dryings", comment: "乾燥", force: :cascade do |t|
+    t.integer "term", null: false, comment: "年度(期)"
+    t.integer "work_type_id", comment: "作業分類"
+    t.integer "home_id", default: 0, null: false, comment: "担当世帯"
+    t.integer "drying_type_id", default: 0, null: false, comment: "乾燥種別"
+    t.date "carried_on", null: false, comment: "搬入日"
+    t.date "shipped_on", comment: "出荷日"
+    t.decimal "water_content", precision: 3, scale: 1, comment: "水分"
+    t.decimal "rice_weight", precision: 5, scale: 1, comment: "乾燥米(kg)"
+    t.decimal "fixed_amount", precision: 7, comment: "確定額"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["carried_on", "home_id"], name: "dryings_secondary", unique: true
+  end
+
   create_table "expense_types", comment: "経費種別", force: :cascade do |t|
     t.string "name", limit: 10, default: "", null: false, comment: "経費種別名称"
     t.boolean "chemical_flag", default: false, null: false, comment: "薬剤フラグ"
@@ -208,6 +268,8 @@ ActiveRecord::Schema.define(version: 2019_04_06_121134) do
     t.datetime "deleted_at"
     t.boolean "owner_flag", default: false, null: false, comment: "所有者フラグ"
     t.integer "finance_order", comment: "出力順(会計用)"
+    t.integer "drying_order", comment: "出力順(乾燥調整用)"
+    t.integer "owned_rice_order", comment: "出力順(保有米)"
     t.index ["deleted_at"], name: "index_homes_on_deleted_at"
   end
 
@@ -339,6 +401,31 @@ ActiveRecord::Schema.define(version: 2019_04_06_121134) do
     t.integer "chemical_group_count", default: 1, comment: "薬剤グループ数"
     t.integer "rice_planting_id", comment: "田植作業種別"
     t.integer "whole_crop_work_kind_id", comment: "WCS収穫分類"
+    t.integer "contract_work_type_id", comment: "受託作業分類"
+    t.integer "harvesting_work_kind_id", comment: "稲刈作業種別"
+  end
+
+  create_table "owned_rice_prices", comment: "保有米単価", force: :cascade do |t|
+    t.integer "term", null: false, comment: "年度(期)"
+    t.integer "work_type_id", default: 0, null: false, comment: "品種"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
+    t.string "name", limit: 10, default: "", null: false, comment: "品種名"
+    t.string "short_name", limit: 5, default: "", null: false, comment: "品種名(略称)"
+    t.decimal "owned_price", precision: 5, default: "0", null: false, comment: "保有米価格"
+    t.decimal "relative_price", precision: 5, default: "0", null: false, comment: "縁故米価格"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["term", "work_type_id"], name: "owned_rice_prices_2nd", unique: true
+  end
+
+  create_table "owned_rices", comment: "保有米", force: :cascade do |t|
+    t.integer "home_id", default: 0, null: false, comment: "購入世帯"
+    t.integer "owned_rice_price_id", default: 0, null: false, comment: "保有米単価"
+    t.decimal "owned_count", precision: 3, default: "0", null: false, comment: "保有米数"
+    t.decimal "relative_count", precision: 3, default: "0", null: false, comment: "縁故米数"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["home_id", "owned_rice_price_id"], name: "owned_rices_2nd", unique: true
   end
 
   create_table "schedule_workers", id: :serial, comment: "作業予定作業者", comment: "作業予定作業者", force: :cascade do |t|
@@ -419,6 +506,9 @@ ActiveRecord::Schema.define(version: 2019_04_06_121134) do
     t.decimal "light_oil_price", precision: 4, default: "0", null: false, comment: "軽油価格"
     t.decimal "seedling_price", precision: 4, default: "0", null: false, comment: "育苗費"
     t.integer "seedling_chemical_id", default: 0, comment: "育苗土"
+    t.decimal "dry_price", precision: 4, default: "0", null: false, comment: "基準額(乾燥のみ)"
+    t.decimal "adjust_price", precision: 4, default: "0", null: false, comment: "基準額(調整のみ)"
+    t.decimal "dry_adjust_price", precision: 4, default: "0", null: false, comment: "基準額(乾燥調整)"
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
     t.index ["term"], name: "index_systems_on_term", unique: true
   end
@@ -467,6 +557,7 @@ ActiveRecord::Schema.define(version: 2019_04_06_121134) do
     t.integer "organization_id", default: 0, null: false, comment: "組織"
     t.integer "permission_id", default: 0, null: false, comment: "権限"
     t.integer "view_month", default: [1, 4, 8], null: false, comment: "表示切替月", array: true
+    t.integer "calendar_term", default: 2018, null: false, comment: "期(カレンダー)"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["worker_id"], name: "index_users_on_worker_id", unique: true
   end
@@ -544,6 +635,7 @@ ActiveRecord::Schema.define(version: 2019_04_06_121134) do
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal "fixed_cost", precision: 6, comment: "確定作業原価"
     t.index ["work_id", "land_id"], name: "index_work_lands_on_work_id_and_land_id", unique: true
   end
 

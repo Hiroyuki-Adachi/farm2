@@ -8,6 +8,7 @@
 #  display_order :integer          default(0), not null  # 表示順
 #  created_at    :datetime
 #  updated_at    :datetime
+#  fixed_cost    :decimal(6, )                           # 確定作業原価
 #
 
 work_lands0:
@@ -7336,209 +7337,47 @@ work_lands846:
   updated_at: '2015-12-23 05:21:51.164133'
 
 
-work_lands847:
-  id: '6670'
-  work_id: '1780'
-  land_id: '57'
-  display_order: '1'
-  created_at: '2015-12-23 05:30:12.445767'
-  updated_at: '2015-12-23 05:30:12.445767'
-
-
-work_lands848:
-  id: '6671'
-  work_id: '1780'
-  land_id: '56'
-  display_order: '2'
-  created_at: '2015-12-23 05:30:12.464933'
-  updated_at: '2015-12-23 05:30:12.464933'
-
-
-work_lands849:
-  id: '6672'
-  work_id: '1780'
-  land_id: '88'
-  display_order: '3'
-  created_at: '2015-12-23 05:30:12.47183'
-  updated_at: '2015-12-23 05:30:12.47183'
-
-
-work_lands850:
-  id: '6673'
-  work_id: '1780'
-  land_id: '89'
-  display_order: '4'
-  created_at: '2015-12-23 05:30:12.478766'
-  updated_at: '2015-12-23 05:30:12.478766'
-
-
-work_lands851:
-  id: '6674'
-  work_id: '1780'
-  land_id: '90'
-  display_order: '5'
-  created_at: '2015-12-23 05:30:12.485673'
-  updated_at: '2015-12-23 05:30:12.485673'
-
-
-work_lands852:
-  id: '6675'
-  work_id: '1780'
-  land_id: '91'
-  display_order: '6'
-  created_at: '2015-12-23 05:30:12.492523'
-  updated_at: '2015-12-23 05:30:12.492523'
-
-
-work_lands853:
-  id: '6676'
-  work_id: '1780'
-  land_id: '92'
-  display_order: '7'
-  created_at: '2015-12-23 05:30:12.499454'
-  updated_at: '2015-12-23 05:30:12.499454'
-
-
-work_lands854:
-  id: '6677'
-  work_id: '1780'
-  land_id: '106'
-  display_order: '8'
-  created_at: '2015-12-23 05:30:12.506329'
-  updated_at: '2015-12-23 05:30:12.506329'
-
-
-work_lands855:
-  id: '6678'
-  work_id: '1780'
-  land_id: '107'
-  display_order: '9'
-  created_at: '2015-12-23 05:30:12.513115'
-  updated_at: '2015-12-23 05:30:12.513115'
-
-
-work_lands856:
-  id: '6679'
-  work_id: '1780'
-  land_id: '108'
-  display_order: '10'
-  created_at: '2015-12-23 05:30:12.520027'
-  updated_at: '2015-12-23 05:30:12.520027'
-
-
-work_lands857:
-  id: '6680'
-  work_id: '1780'
-  land_id: '109'
-  display_order: '11'
-  created_at: '2015-12-23 05:30:12.526995'
-  updated_at: '2015-12-23 05:30:12.526995'
-
-
-work_lands858:
-  id: '6681'
-  work_id: '1780'
-  land_id: '111'
-  display_order: '12'
-  created_at: '2015-12-23 05:30:12.533877'
-  updated_at: '2015-12-23 05:30:12.533877'
-
-
-work_lands859:
-  id: '6682'
-  work_id: '1780'
-  land_id: '110'
-  display_order: '13'
-  created_at: '2015-12-23 05:30:12.540659'
-  updated_at: '2015-12-23 05:30:12.540659'
-
-
-work_lands860:
-  id: '6683'
-  work_id: '1780'
-  land_id: '122'
-  display_order: '14'
-  created_at: '2015-12-23 05:30:12.547533'
-  updated_at: '2015-12-23 05:30:12.547533'
-
-
-work_lands861:
-  id: '6684'
-  work_id: '1780'
-  land_id: '123'
-  display_order: '15'
-  created_at: '2015-12-23 05:30:12.554346'
-  updated_at: '2015-12-23 05:30:12.554346'
-
-
-work_lands862:
-  id: '6685'
-  work_id: '1780'
-  land_id: '124'
-  display_order: '16'
-  created_at: '2015-12-23 05:30:12.561422'
-  updated_at: '2015-12-23 05:30:12.561422'
-
-
-work_lands863:
-  id: '6686'
-  work_id: '1780'
-  land_id: '125'
-  display_order: '17'
-  created_at: '2015-12-23 05:30:12.568199'
-  updated_at: '2015-12-23 05:30:12.568199'
-
-
-work_lands864:
-  id: '6687'
-  work_id: '1780'
-  land_id: '126'
-  display_order: '18'
-  created_at: '2015-12-23 05:30:12.575003'
-  updated_at: '2015-12-23 05:30:12.575003'
-
-
-work_lands865:
+work_land_test1:
   id: '6688'
   work_id: '1780'
   land_id: '127'
-  display_order: '19'
+  display_order: 1
   created_at: '2015-12-23 05:30:12.581764'
   updated_at: '2015-12-23 05:30:12.581764'
 
 
-work_lands866:
+work_land_test2:
   id: '6689'
   work_id: '1780'
   land_id: '138'
-  display_order: '20'
+  display_order: 2
   created_at: '2015-12-23 05:30:12.588436'
   updated_at: '2015-12-23 05:30:12.588436'
 
 
-work_lands867:
+work_land_test3:
   id: '6690'
   work_id: '1780'
   land_id: '139'
-  display_order: '21'
+  display_order: 3
   created_at: '2015-12-23 05:30:12.595212'
   updated_at: '2015-12-23 05:30:12.595212'
 
 
-work_lands868:
+work_land_test4:
   id: '6691'
   work_id: '1780'
   land_id: '140'
-  display_order: '22'
+  display_order: 4
   created_at: '2015-12-23 05:30:12.601899'
   updated_at: '2015-12-23 05:30:12.601899'
 
 
-work_lands869:
+work_land_test_max:
   id: '6692'
   work_id: '1780'
-  land_id: '141'
-  display_order: '23'
+  land_id: 230
+  display_order: 5
   created_at: '2015-12-23 05:30:12.608622'
   updated_at: '2015-12-23 05:30:12.608622'
 
@@ -7603,3 +7442,10 @@ work_land_wcs_sale:
   work: work_wcs_sale
   land_id: 253
   display_order: 1
+
+work_land_harvest:
+  work_id: 1624
+  land: land_genka1
+  display_order: 1
+  created_at: '2017-12-23 05:30:12.608622'
+  updated_at: '2017-12-23 05:30:12.608622'

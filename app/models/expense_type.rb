@@ -2,7 +2,7 @@
 #
 # Table name: expense_types # 経費種別
 #
-#  id            :bigint(8)        not null, primary key
+#  id            :bigint           not null, primary key
 #  name          :string(10)       default(""), not null    # 経費種別名称
 #  chemical_flag :boolean          default(FALSE), not null # 薬剤フラグ
 #  sales_flag    :boolean          default(FALSE), not null # 売上フラグ

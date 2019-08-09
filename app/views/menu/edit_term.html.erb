@@ -1,7 +1,11 @@
 <h1>対象年度変更</h1>
 <%= error_print(@system) %>
 <%= form_for(@system, url: {controller: :menu, action: :update }, html: {method: :put}) do |f| %>
-  <%= f.select(:term, @terms, {}, {class: "form-control"}) %>
+  <div class="row">
+    <div class="col-md-2">
+      <%= f.select(:term, @terms, {}, {class: "form-control"}) %>
+    </div>
+  </div>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
       <%= f.submit '設定', class: "btn btn-danger" %>

@@ -16,6 +16,7 @@
 //= require jquery-ui/sortable
 //= require jquery.ui.touch-punch
 //= require jquery.floatThead
+//= require jquery.selection
 //= require i18n
 //= require i18n/translations
 //= require dateformat

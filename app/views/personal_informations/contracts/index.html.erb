@@ -1,0 +1,20 @@
+<% if @works.count > 0 %>
+  <table id="personal_table" class="type06 table table-sm">
+    <tbody>
+      <% @works.each do |work| %>
+        <tr>
+          <td><%= image_tag(image_name(work.work_type), size: "48x48")%></td>
+          <td>
+            <div><%= work.worked_at %></div>
+            <div class="small"><%= work.model.start_at.strftime("%H:%M") %>〜<%= work.model.end_at.strftime("%H:%M") %></div>
+          </td>
+          <td>
+            <div><%= work.work_kind.name %></div>
+            <div class="small"><%= work.name %></div>
+          </td>
+          <td style="text-align:right;"><%= work.sum_hours %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

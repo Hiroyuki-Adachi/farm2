@@ -20,7 +20,6 @@
 #
 
 class Expense < ApplicationRecord
-
   has_many :expense_work_types, {dependent: :delete_all}
   has_many :work_types, -> {order(:display_order)}, {through: :expense_work_types}
   belongs_to :expense_type
