@@ -171,7 +171,7 @@ SQL
   end
 
   def sum_areas
-    lands.sum(:area)
+    lands.sum(:area) || 0
   end
 
   def price
