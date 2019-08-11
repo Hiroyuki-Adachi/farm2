@@ -11,7 +11,7 @@
               <div class="small"><%= result.model.work.start_at.strftime("%H:%M") %>〜<%= result.model.work.end_at.strftime("%H:%M") %></div>
             </td>
             <td>
-              <div><%= result.work.work_kind.name %></div>
+              <div><%= result.work_kind_short_name %></div>
               <div class="small"><%= result.work_short_name  %></div>
             </td>
             <td class="text-right"><%= result.hours %></td>
