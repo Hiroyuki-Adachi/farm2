@@ -45,7 +45,7 @@ class WorkResultDecorator < Draper::Decorator
   end
 
   def work_name
-    return work.model.name
+    return work.name
   end
 
   def work_short_name
