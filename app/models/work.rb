@@ -355,4 +355,14 @@ SQL
     end
     return work_types.compact.uniq
   end
+
+  def exact_work_types
+    return [work_type] if work_lands.empty?
+    work_types = []
+    lands.each do |land|
+      work_types << land.cost(worked_at)&.work_type
+    end
+    return work_types.compact.uniq if work_types.compact.length.positive?
+    return [work_type]
+  end
 end
