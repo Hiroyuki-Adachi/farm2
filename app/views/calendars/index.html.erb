@@ -40,9 +40,9 @@ div.kind-<%= calendar_work_kind.work_kind_id %> a {color: <%= calendar_work_kind
                         <% end %>
                       <% end %>
                       <% @works.each do |work| %>
-                        <% if work.worked_at == today %>
-                          <div class="kind-<%= work.work_kind_id %> calendar-kind">
-                            <%= link_to  work.work_kind.name + "(#{work.work_type.name})", work_path(id: work) %>
+                        <% if work.model.worked_at == today %>
+                          <div class="kind-<%= work.model.work_kind_id %> calendar-kind">
+                            <%= link_to work.work_kind.name + "(#{work.exact_work_type_name})", work_path(id: work) %>
                           </div>
                         <% end %>
                       <% end %>
