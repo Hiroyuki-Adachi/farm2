@@ -33,7 +33,7 @@ class WorkWholeCrop < ApplicationRecord
   end
 
   def rolls
-    wcs_lands.sum(:rolls)
+    wcs_lands.sum(:rolls) || 0
   end
 
   def weight
