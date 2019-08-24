@@ -11,6 +11,8 @@
       <th>作業日</th>
       <th>重量(kg)</th>
       <th>ロール数</th>
+      <th>面積(a)</th>
+      <th>ロール数(10a当)</th>
     </tr>
   </thead>
   <tbody>
@@ -20,7 +22,9 @@
       <tr class="work-type-total table-primary" data-work_type="<%= old_work_type_id %>">
         <td><%= whole_crop.work.work_type.name %></td>
         <td colspan="2"></td>
-        <td class="numeric"><%= @work_type_totals[old_work_type_id][:rolls].to_s(:delimited) %></td>
+        <td class="numeric"><%= format_rolls(@work_type_totals[old_work_type_id][:rolls]) %></td>
+        <td class="numeric"><%= format_area(@work_type_totals[old_work_type_id][:areas]) %></td>
+        <td class="numeric"><%= format_rolls(@work_type_totals[old_work_type_id][:rolls] / @work_type_totals[old_work_type_id][:areas] * 10) %></td>
       </tr>
     <% end %>
     <% if whole_crop.work.model.worked_at.beginning_of_month != old_worked_at %>
@@ -29,14 +33,18 @@
         <td></td>
         <td><%= old_worked_at.strftime("%Y年 %m月") %></td>
         <td></td>
-        <td class="numeric"><%= @worked_at_totals[old_work_type_id][old_worked_at][:rolls].to_s(:delimited) %></td>
+        <td class="numeric"><%= format_rolls(@worked_at_totals[old_work_type_id][old_worked_at][:rolls]) %></td>
+        <td class="numeric"><%= format_area(@worked_at_totals[old_work_type_id][old_worked_at][:areas]) %></td>
+        <td class="numeric"><%= format_rolls(@worked_at_totals[old_work_type_id][old_worked_at][:rolls] / @worked_at_totals[old_work_type_id][old_worked_at][:areas] * 10) %></td>
       </tr>
     <% end %>
     <tr class="detail" data-work_type="<%= old_work_type_id %>" data-worked_at="<%= old_worked_at %>">
       <td></td>
       <td><%= whole_crop.work.worked_at %></td>
       <td class="numeric"><%= whole_crop.weight.to_s(:delimited) %></td>
-      <td class="numeric"><%= whole_crop.rolls.to_s(:delimited) %></td>
+      <td class="numeric"><%= format_rolls(whole_crop.rolls) %></td>
+      <td class="numeric"><%= format_area(whole_crop.work.sum_areas) %></td>
+      <td class="numeric"><%= format_rolls(whole_crop.rolls / whole_crop.work.sum_areas * 10) %></td>
     </tr>
   <% end %>
   </tbody>

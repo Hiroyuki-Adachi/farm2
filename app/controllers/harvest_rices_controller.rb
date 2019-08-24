@@ -3,7 +3,7 @@ class HarvestRicesController < ApplicationController
 
   def index
     @dryings = Drying.for_harvest(current_term)
-    @work_type_totals, @carried_on_totals = calc_totals(@dryings)
+    @work_type_totals, @carried_on_totals, @areas = calc_totals(@dryings)
   end
 
   private
@@ -11,12 +11,14 @@ class HarvestRicesController < ApplicationController
   def calc_totals(dryings)
     work_type_totals = {}
     carried_on_totals = Hash.new { |h, k| h[k] = {}}
+    areas = {}
     dryings.each do |drying|
+      areas[drying.carried_on] = LandCost.sum_area_for_harvest(drying.carried_on, current_organization.harvesting_work_kind_id) unless areas[drying.carried_on]
       work_type_totals = set_totals1(work_type_totals, drying, drying.work_type_id)
       carried_on_totals = set_totals2(carried_on_totals, drying, drying.work_type_id, drying.carried_on)
     end
 
-    return work_type_totals, carried_on_totals
+    return work_type_totals, carried_on_totals, areas
   end
 
   def set_totals1(totals, drying, key)

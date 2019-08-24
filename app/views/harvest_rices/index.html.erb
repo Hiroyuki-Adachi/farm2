@@ -14,18 +14,24 @@
       <th>収穫量(kg)</th>
       <th>収穫量(袋)</th>
       <th>くず米(%)</th>
+      <th>面積(a)</th>
+      <th>収穫量(10a当)</th>
     </tr>
   </thead>
   <tbody>
   <% @dryings.each do |drying| %>
     <% if drying.work_type_id != old_work_type_id %>
       <% old_work_type_id = drying.work_type_id %>
+      <% old_carried_on = nil %>
+      <% sum_area = @areas.values.sum{|area| area[old_work_type_id] || 0}%>
       <tr class="work-type-total table-primary" data-work_type="<%= old_work_type_id %>">
         <td><%= drying.work_type.name %></td>
         <td colspan="3"></td>
         <td class="numeric"><%= format_weight(@work_type_totals[old_work_type_id][:rice_weight]) %></td>
         <td class="numeric"><%= format_bag(@work_type_totals[old_work_type_id][:rice_weight]) %></td>
         <td class="numeric"><%= format_rice_percentage(@work_type_totals[old_work_type_id][:base_weight], @work_type_totals[old_work_type_id][:waste_weight]) %></td>
+        <td class="numeric"><%= format_area(sum_area) %></td>
+        <td class="numeric"><%= format_bag(@work_type_totals[old_work_type_id][:rice_weight] / sum_area * 10) %></td>
       </tr>
     <% end %>
     <% if drying.carried_on != old_carried_on %>
@@ -37,6 +43,8 @@
         <td class="numeric"><%= format_weight(@carried_on_totals[old_work_type_id][old_carried_on][:rice_weight]) %></td>
         <td class="numeric"><%= format_bag(@carried_on_totals[old_work_type_id][old_carried_on][:rice_weight]) %></td>
         <td class="numeric"><%= format_rice_percentage(@carried_on_totals[old_work_type_id][old_carried_on][:base_weight], @carried_on_totals[old_work_type_id][old_carried_on][:waste_weight]) %></td>
+        <td class="numeric"><%= format_area(@areas[old_carried_on][old_work_type_id]) %></td>
+        <td class="numeric"><%= format_bag(@carried_on_totals[old_work_type_id][old_carried_on][:rice_weight] / @areas[old_carried_on][old_work_type_id] * 10) %></td>
       </tr>
     <% end %>
     <tr class="detail" data-work_type="<%= old_work_type_id %>" data-carried_on="<%= old_carried_on %>">
@@ -51,6 +59,8 @@
         <%= format_rice_percentage(drying.adjustment.rice_weight, drying.adjustment.waste_weight) %>
         <% end %>
       </td>
+      <td class="numeric"></td>
+      <td class="numeric"></td>
     </tr>
   <% end %>
   </tbody>

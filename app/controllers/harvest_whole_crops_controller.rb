@@ -27,14 +27,16 @@ class HarvestWholeCropsController < ApplicationController
 
   def set_totals1(totals, whole_crop, key)
     totals[key] = {
-      rolls: (totals[key] ? totals[key][:rolls] : 0) + (whole_crop.rolls || 0)
+      rolls: (totals[key] ? totals[key][:rolls] : 0) + whole_crop.rolls,
+      areas: (totals[key] ? totals[key][:areas] : 0) + whole_crop.work.sum_areas
     }
     return totals
   end
 
   def set_totals2(totals, whole_crop, key1, key2)
     totals[key1][key2] = {
-      rolls: (totals[key1][key2] ? totals[key1][key2][:rolls] : 0) + (whole_crop.rolls || 0)
+      rolls: (totals[key1][key2] ? totals[key1][key2][:rolls] : 0) + whole_crop.rolls,
+      areas: (totals[key1][key2] ? totals[key1][key2][:areas] : 0) + whole_crop.work.sum_areas
     }
     return totals
   end
