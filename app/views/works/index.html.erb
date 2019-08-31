@@ -46,7 +46,7 @@
 <% end %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
-    <%= button_tag "CSV出力", {id: :search_csv, class: "btn btn-primary", type: :button} %>
+    <%= link_to 'CSV出力', works_path(format: :csv), class: "btn btn-primary" %>
   </div>
   <div class="btn-group mr-2">
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
@@ -59,12 +59,6 @@ $(function() {
             $("#work_work_kind_id").prepend("<option value='' />")
             $("#work_work_kind_id").val("");
         });
-    });
-    $("#search_csv").click(function() {
-        const action = $("#search_form").prop("action");
-        $("#search_form").prop("action", "<%= works_path(format: :csv) %>");
-        $("#search_form").submit();
-        $("#search_form").prop("action", action);
     });
 });
 </script>
