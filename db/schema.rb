@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_27_120215) do
+ActiveRecord::Schema.define(version: 2019_09_29_054925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,16 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.datetime "deleted_at"
     t.string "unit", limit: 2, default: "袋", null: false, comment: "単位"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
+  end
+
+  create_table "daily_weathers", primary_key: "target_date", id: :date, comment: "対象日", comment: "気象", force: :cascade do |t|
+    t.float "height", comment: "最高気温"
+    t.float "lowest", comment: "最低気温"
+    t.float "sunshine", comment: "日照時間"
+    t.float "rain", comment: "降水量"
+    t.boolean "force_flag", default: true, null: false, comment: "強制取得フラグ"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -635,7 +645,6 @@ ActiveRecord::Schema.define(version: 2019_07_27_120215) do
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal "fixed_cost", precision: 6, comment: "確定作業原価"
     t.index ["work_id", "land_id"], name: "index_work_lands_on_work_id_and_land_id", unique: true
   end
 
