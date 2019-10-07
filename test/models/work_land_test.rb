@@ -8,7 +8,6 @@
 #  display_order :integer          default(0), not null  # 表示順
 #  created_at    :datetime
 #  updated_at    :datetime
-#  fixed_cost    :decimal(6, )                           # 確定作業原価
 #
 
 require 'test_helper'
