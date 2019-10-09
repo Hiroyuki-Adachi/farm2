@@ -2,7 +2,7 @@
 #
 # Table name: schedules # 作業予定
 #
-#  id           :integer          not null, primary key
+#  id           :integer          not null, primary key                                   # 作業予定
 #  term         :integer          not null                                                # 年度(期)
 #  worked_at    :date             not null                                                # 作業予定日
 #  work_type_id :integer                                                                  # 作業分類

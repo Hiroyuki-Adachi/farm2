@@ -2,7 +2,7 @@
 #
 # Table name: systems # システムマスタ
 #
-#  id                   :integer          not null, primary key
+#  id                   :integer          not null, primary key    # システムマスタ
 #  term                 :integer          not null                 # 年度(期)
 #  target_from          :date                                      # 開始年月
 #  target_to            :date                                      # 終了年月
@@ -19,6 +19,8 @@
 #  dry_price            :decimal(4, )     default(0), not null     # 基準額(乾燥のみ)
 #  adjust_price         :decimal(4, )     default(0), not null     # 基準額(調整のみ)
 #  dry_adjust_price     :decimal(4, )     default(0), not null     # 基準額(乾燥調整)
+#  half_sum_flag        :boolean          default(FALSE), not null # 半端米集計フラグ
+#  waste_sum_flag       :boolean          default(FALSE), not null # くず米集計フラグ
 #
 
 s2014:

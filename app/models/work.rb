@@ -2,7 +2,7 @@
 #
 # Table name: works # 作業データ
 #
-#  id           :integer          not null, primary key
+#  id           :integer          not null, primary key # 作業データ
 #  term         :integer          not null              # 年度(期)
 #  worked_at    :date             not null              # 作業日
 #  weather_id   :integer                                # 天気
