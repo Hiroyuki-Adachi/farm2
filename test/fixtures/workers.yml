@@ -2,7 +2,7 @@
 #
 # Table name: workers # 作業者マスタ
 #
-#  id              :integer          not null, primary key        # 作業者マスタ
+#  id              :integer          not null, primary key
 #  family_phonetic :string(15)       not null                     # 姓(ﾌﾘｶﾞﾅ)
 #  family_name     :string(10)       not null                     # 姓
 #  first_phonetic  :string(15)       not null                     # 名(ﾌﾘｶﾞﾅ)

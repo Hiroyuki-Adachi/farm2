@@ -2,7 +2,7 @@
 #
 # Table name: lands # 土地マスタ
 #
-#  id            :integer          not null, primary key   # 土地マスタ
+#  id            :integer          not null, primary key
 #  place         :string(15)       not null                # 番地
 #  owner_id      :integer                                  # 所有者
 #  manager_id    :integer                                  # 管理者

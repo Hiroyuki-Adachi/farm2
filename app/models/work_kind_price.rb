@@ -2,7 +2,7 @@
 #
 # Table name: work_kind_prices # 作業単価マスタ
 #
-#  id           :integer          not null, primary key   # 作業単価マスタ
+#  id           :integer          not null, primary key
 #  term         :integer          not null                # 年度(期)
 #  work_kind_id :integer          not null                # 作業種別
 #  price        :decimal(5, )     default(1000), not null # 単価

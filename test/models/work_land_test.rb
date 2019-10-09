@@ -2,12 +2,13 @@
 #
 # Table name: work_lands # 作業地データ
 #
-#  id            :integer          not null, primary key # 作業地データ
+#  id            :integer          not null, primary key
 #  work_id       :integer                                # 作業
 #  land_id       :integer                                # 土地
 #  display_order :integer          default(0), not null  # 表示順
 #  created_at    :datetime
 #  updated_at    :datetime
+#  fixed_cost    :decimal(6, )                           # 確定作業原価
 #
 
 require 'test_helper'

@@ -2,7 +2,7 @@
 #
 # Table name: homes # 世帯マスタ
 #
-#  id                  :integer          not null, primary key    # 世帯マスタ
+#  id                  :integer          not null, primary key
 #  phonetic            :string(15)                                # 世帯名(よみ)
 #  name                :string(10)                                # 世帯名
 #  worker_id           :integer                                   # 世帯主(代表者)

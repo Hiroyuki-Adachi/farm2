@@ -2,7 +2,7 @@
 #
 # Table name: work_kinds # 作業種別マスタ
 #
-#  id            :integer          not null, primary key    # 作業種別マスタ
+#  id            :integer          not null, primary key
 #  name          :string(20)       not null                 # 作業種別名称
 #  display_order :integer          not null                 # 表示順
 #  other_flag    :boolean          default(FALSE), not null # その他フラグ

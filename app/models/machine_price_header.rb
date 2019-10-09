@@ -2,7 +2,7 @@
 #
 # Table name: machine_price_headers # 機械利用単価マスタ(ヘッダ)
 #
-#  id              :integer          not null, primary key # 機械利用単価マスタ(ヘッダ)
+#  id              :integer          not null, primary key
 #  validated_at    :date             not null              # 起点日
 #  machine_id      :integer          default(0), not null  # 機械
 #  machine_type_id :integer          default(0), not null  # 機械種別

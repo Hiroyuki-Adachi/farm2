@@ -4,7 +4,7 @@ require 'securerandom'
 #
 # Table name: work_results # 作業結果データ
 #
-#  id            :integer          not null, primary key  # 作業結果データ
+#  id            :integer          not null, primary key
 #  work_id       :integer                                 # 作業
 #  worker_id     :integer                                 # 作業者
 #  hours         :decimal(5, 1)    default(0.0), not null # 作業時間
