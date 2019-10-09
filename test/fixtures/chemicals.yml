@@ -2,7 +2,7 @@
 #
 # Table name: chemicals # 薬剤マスタ
 #
-#  id               :integer          not null, primary key
+#  id               :integer          not null, primary key  # 薬剤マスタ
 #  name             :string(20)       not null               # 薬剤名称
 #  display_order    :integer          default(0), not null   # 表示順
 #  chemical_type_id :integer          not null               # 薬剤種別

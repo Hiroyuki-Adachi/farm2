@@ -2,7 +2,7 @@
 #
 # Table name: machine_price_details # 機械利用単価マスタ(明細)
 #
-#  id                      :integer          not null, primary key
+#  id                      :integer          not null, primary key # 機械利用単価マスタ(明細)
 #  machine_price_header_id :integer          not null              # 単価ヘッダ
 #  lease_id                :integer          not null              # リース
 #  work_kind_id            :integer          default(0), not null  # 作業種別
