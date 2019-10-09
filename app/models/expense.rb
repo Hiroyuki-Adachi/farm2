@@ -2,7 +2,7 @@
 #
 # Table name: expenses # 経費
 #
-#  id               :integer          not null, primary key    # 経費
+#  id               :integer          not null, primary key
 #  term             :integer          not null                 # 年度(期)
 #  payed_on         :date             not null                 # 支払日
 #  content          :string(40)                                # 支払内容

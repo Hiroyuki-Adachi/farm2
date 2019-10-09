@@ -2,7 +2,7 @@
 #
 # Table name: organizations # 組織(体系)マスタ
 #
-#  id                      :integer          not null, primary key         # 組織(体系)マスタ
+#  id                      :integer          not null, primary key
 #  name                    :string(20)       not null                      # 組織名称
 #  workers_count           :integer          default(12), not null         # 作業日報の作業者数
 #  lands_count             :integer          default(17), not null         # 作業日報の土地数

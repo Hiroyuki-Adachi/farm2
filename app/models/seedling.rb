@@ -2,7 +2,7 @@
 #
 # Table name: seedlings # 育苗
 #
-#  id            :integer          not null, primary key # 育苗
+#  id            :integer          not null, primary key
 #  term          :integer          not null              # 年度(期)
 #  work_type_id  :integer                                # 作業分類
 #  soil_quantity :decimal(4, )     default(0), not null  # 育苗土数
