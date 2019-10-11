@@ -27,7 +27,9 @@ class SystemsController < ApplicationController
       :default_fee,
       :dry_price,
       :adjust_price,
-      :dry_adjust_price
+      :dry_adjust_price,
+      :half_sum_flag,
+      :waste_sum_flag
     )
   end
 end
