@@ -52,11 +52,11 @@
       <td></td>
       <td><%= drying.home.name %></td>
       <td><%= drying.drying_type.name %></td>
-      <td class="numeric"><%= format_weight(drying.harvest_weight) %></td>
-      <td class="numeric"><%= format_bag(drying.harvest_weight) %></td>
+      <td class="numeric"><%= format_weight(drying.harvest_weight(current_system)) %></td>
+      <td class="numeric"><%= format_bag(drying.harvest_weight(current_system)) %></td>
       <td class="numeric">
         <% if drying.adjustment %>
-        <%= format_rice_percentage(drying.adjustment.rice_weight, drying.adjustment.waste_weight) %>
+        <%= format_rice_percentage(drying.adjustment.rice_weight(current_system), drying.adjustment.waste_weight) %>
         <% end %>
       </td>
       <td class="numeric"></td>

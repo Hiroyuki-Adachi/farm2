@@ -49,7 +49,7 @@ class DryingDecorator < Draper::Decorator
 
   def all_rice_bag
     return model.rice_bag unless model.drying_type == DryingType::SELF
-    (model&.adjustment&.rice_weight || 0) / Drying::KG_PER_BAG
+    (model&.adjustment&.rice_weight || 0) / Drying::KG_PER_BAG_RICE
   end
 
   def all_rice_bag_format

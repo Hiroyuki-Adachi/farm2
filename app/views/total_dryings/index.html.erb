@@ -22,7 +22,7 @@
           <td><%= drying.carried_on %></td>
           <td><%= drying.shipped_on %></td>
           <td><%= drying.drying_type_name(home.id) %></td>
-          <td class="numeric"><%= format_bag(drying.shipped_weight) %></td>
+          <td class="numeric"><%= format_bag(drying.shipped_weight(current_system)) %></td>
           <td class="numeric"><%= number_to_currency(drying.price(current_system, home.id), {precision: 0, unit: ""}) %></td>
           <td class="numeric"><%= number_to_currency(drying.amount(current_system, home.id), {precision: 0, unit: ""}) %></td>
         </tr>

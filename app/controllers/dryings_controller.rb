@@ -54,7 +54,7 @@ class DryingsController < ApplicationController
         :moth_count, :moth_no, :water_content, :moth_weight, :rice_weight, :id
       ],
       adjustment_attributes: [
-        :home_id, :carried_on, :shipped_on, :id, :rice_bag, :half_weight, :waste_weight
+        :home_id, :carried_on, :shipped_on, :id, :rice_bag, :half_weight, :waste_bag
       ],
       drying_lands_attributes: [
         :land_id, :display_order, :id

@@ -23,8 +23,8 @@ class HarvestRicesController < ApplicationController
 
   def set_totals1(totals, drying, key)
     totals[key] = {
-      rice_weight: (totals[key] ? totals[key][:rice_weight] : 0) + (drying.harvest_weight || 0),
-      base_weight: (totals[key] ? totals[key][:base_weight] : 0) + (drying&.adjustment&.rice_weight || 0),
+      rice_weight: (totals[key] ? totals[key][:rice_weight] : 0) + (drying.harvest_weight(current_system) || 0),
+      base_weight: (totals[key] ? totals[key][:base_weight] : 0) + (drying&.adjustment&.rice_weight(current_system) || 0),
       waste_weight: (totals[key] ? totals[key][:waste_weight] : 0) + (drying&.adjustment&.waste_weight || 0)
     }
     return totals
@@ -32,8 +32,8 @@ class HarvestRicesController < ApplicationController
 
   def set_totals2(totals, drying, key1, key2)
     totals[key1][key2] = {
-      rice_weight: (totals[key1][key2] ? totals[key1][key2][:rice_weight] : 0) + (drying.harvest_weight || 0),
-      base_weight: (totals[key1][key2] ? totals[key1][key2][:base_weight] : 0) + (drying&.adjustment&.rice_weight || 0),
+      rice_weight: (totals[key1][key2] ? totals[key1][key2][:rice_weight] : 0) + (drying.harvest_weight(current_system) || 0),
+      base_weight: (totals[key1][key2] ? totals[key1][key2][:base_weight] : 0) + (drying&.adjustment&.rice_weight(current_system) || 0),
       waste_weight: (totals[key1][key2] ? totals[key1][key2][:waste_weight] : 0) + (drying&.adjustment&.waste_weight || 0)
     }
     return totals
