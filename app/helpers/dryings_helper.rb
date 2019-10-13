@@ -4,7 +4,7 @@ module DryingsHelper
   end
 
   def format_bag(weight)
-    format("%.2f", (weight || 0) / Drying::KG_PER_BAG)
+    format("%.2f", (weight || 0) / Drying::KG_PER_BAG_RICE)
   end
 
   def format_rice_percentage(rice_weight, waste_weight)
@@ -13,7 +13,7 @@ module DryingsHelper
   end
 
   def calc_amount(weight, price)
-    (weight || 0) / Drying::KG_PER_BAG * price
+    (weight || 0) / Drying::KG_PER_BAG_RICE * price
   end
 
   def format_amount(weight, price)

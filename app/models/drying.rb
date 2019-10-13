@@ -19,7 +19,8 @@
 class Drying < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
-  KG_PER_BAG = 30
+  KG_PER_BAG_RICE = 30
+  KG_PER_BAG_WASTE = 25
 
   belongs_to :work_type, -> {with_deleted}
   belongs_to :home, -> {with_deleted}
@@ -47,16 +48,16 @@ class Drying < ApplicationRecord
   }
 
   def rice_bag
-    return (rice_weight || 0) / KG_PER_BAG
+    return (rice_weight || 0) / KG_PER_BAG_RICE
   end
 
-  def harvest_weight
+  def harvest_weight(system)
     return rice_weight || 0 if drying_type == DryingType::COUNTRY
-    return adjustment&.rice_weight || 0
+    return adjustment&.rice_weight(system) || 0
   end
 
-  def shipped_weight
-    harvest_weight + (adjustment&.waste_weight || 0)
+  def shipped_weight(system)
+    harvest_weight(system) + (system.waste_sum_flag? ? (adjustment&.waste_weight || 0) : 0)
   end
 
   def adjust_only?(home_id)
@@ -78,7 +79,7 @@ class Drying < ApplicationRecord
   end
 
   def amount(system, home_id)
-    shipped_weight / KG_PER_BAG * price(system, home_id)
+    shipped_weight(system) / KG_PER_BAG_RICE * price(system, home_id)
   end
 
   def save_adjustment
