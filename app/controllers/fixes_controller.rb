@@ -68,7 +68,7 @@ class FixesController < ApplicationController
     @waste_totals = {}
     Home.for_drying.each do |home|
       @total_dryings[home.id], @waste_totals[home.id] = Drying.calc_total(
-        Drying.by_home(current_term, home), home
+        Drying.by_home(current_term, home), home, current_system
       )
     end
   end
