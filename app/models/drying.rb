@@ -89,11 +89,11 @@ class Drying < ApplicationRecord
     when DryingType::SELF
       self.rice_weight = nil
     else
-      self.rice_weight = adjustment&.rice_weight
+      self.rice_weight = adjustment&.rice_weight(System.find_by(term: term))
     end
   end
 
-  def self.calc_total(dryings, home)
+  def self.calc_total(dryings, home, system)
     rice_totals = {
       DryingType::ADJUST.id => 0.0,
       DryingType::COUNTRY.id => 0.0,
@@ -105,12 +105,12 @@ class Drying < ApplicationRecord
     }
     dryings.each do |drying|
       if drying.adjust_only?(home.id)
-        rice_totals[DryingType::ADJUST.id] += drying.adjustment.rice_weight || 0
+        rice_totals[DryingType::ADJUST.id] += drying.adjustment.rice_weight(system) || 0
         waste_totals[DryingType::ADJUST.id] += drying.adjustment.waste_weight || 0
         next
       end
       if drying.drying_type == DryingType::SELF
-        rice_totals[DryingType::SELF.id] += drying.adjustment.rice_weight || 0
+        rice_totals[DryingType::SELF.id] += drying.adjustment.rice_weight(system) || 0
         waste_totals[DryingType::SELF.id] += drying.adjustment.waste_weight || 0
       else
         rice_totals[DryingType::COUNTRY.id] += drying.rice_weight || 0

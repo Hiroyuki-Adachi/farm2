@@ -19,6 +19,8 @@ class Adjustment < ApplicationRecord
   belongs_to :drying
   belongs_to :home, -> {with_deleted}
 
+  before_save :save_waste_bag
+
   def rice_weight(system)
     return (rice_bag || 0) * Drying::KG_PER_BAG_RICE + (system.half_sum_flag ? (half_weight || 0) : 0)
   end
@@ -28,6 +30,6 @@ class Adjustment < ApplicationRecord
   end
 
   def waste_bag=(val)
-    waste_weight = val ? val * Drying::KG_PER_BAG_WASTE : nil
+    waste_weight = val ? val.to_d * Drying::KG_PER_BAG_WASTE : nil
   end
 end

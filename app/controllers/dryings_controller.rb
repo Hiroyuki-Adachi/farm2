@@ -23,7 +23,7 @@ class DryingsController < ApplicationController
   def show
     @home = Home.find(params[:id])
     @dryings = DryingDecorator.decorate_collection(Drying.by_home(current_term, @home))
-    @total_dryings, @waste_totals = Drying.calc_total(@dryings, @home)
+    @total_dryings, @waste_totals = Drying.calc_total(@dryings, @home, current_system)
   end
 
   def edit
