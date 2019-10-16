@@ -103,19 +103,27 @@ class Drying < ApplicationRecord
       DryingType::ADJUST.id => 0.0,
       DryingType::SELF.id => 0.0
     }
+    shipped_totals = {
+      DryingType::ADJUST.id => 0.0,
+      DryingType::COUNTRY.id => 0.0,
+      DryingType::SELF.id => 0.0
+    }
     dryings.each do |drying|
       if drying.adjust_only?(home.id)
         rice_totals[DryingType::ADJUST.id] += drying.adjustment.rice_weight(system) || 0
         waste_totals[DryingType::ADJUST.id] += drying.adjustment.waste_weight || 0
+        shipped_totals[DryingType::ADJUST.id] += drying.shipped_weight(system)
         next
       end
       if drying.drying_type == DryingType::SELF
         rice_totals[DryingType::SELF.id] += drying.adjustment.rice_weight(system) || 0
         waste_totals[DryingType::SELF.id] += drying.adjustment.waste_weight || 0
+        shipped_totals[DryingType::SELF.id] += drying.shipped_weight(system)
       else
         rice_totals[DryingType::COUNTRY.id] += drying.rice_weight || 0
+        shipped_totals[DryingType::COUNTRY.id] += drying.shipped_weight(system)
       end
     end
-    return rice_totals, waste_totals
+    return rice_totals, waste_totals, shipped_totals
   end
 end
