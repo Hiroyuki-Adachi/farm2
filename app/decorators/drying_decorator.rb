@@ -68,6 +68,10 @@ class DryingDecorator < Draper::Decorator
     model.adjustment&.waste_weight&.positive? ? format("%.1f", model.adjustment.waste_weight) : ""
   end
 
+  def adjust_waste_bag
+    model.adjustment&.waste_weight&.positive? ? model.adjustment.waste_bag : ""
+  end
+
   def drying_type_name(home_id)
     return DryingType::ADJUST.name if model.adjust_only?(home_id)
     return model.drying_type.name
