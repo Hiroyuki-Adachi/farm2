@@ -135,8 +135,8 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
           <div class="row">
             <div class="col-md-12 form-inline field form-group">
               <label class="col-form-label-lg">くず米：</label>
-              <%= fa.number_field :waste_bag, {min: 0, max: 99.9, step: 0.1, required: false, class: "form-control form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
-              <label class="col-form-label-lg">袋</label>
+              <%= fa.number_field :waste_weight, {min: 0, max: 999, step: 1, required: false, class: "form-control form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
+              <label class="col-form-label-lg">kg</label>
             </div>
           </div>
         <% end %>
