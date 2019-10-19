@@ -74,7 +74,7 @@
       <tr>
         <th>くず米</th>
         <% @dryings.each do |drying| %>
-          <td class="numeric" data-drying="<%= edit_drying_path(drying) %>"><%= drying.adjust_waste_bag %>袋</td>
+          <td class="numeric" data-drying="<%= edit_drying_path(drying) %>"><%= drying.adjust_waste_weight %>kg</td>
         <% end %>
       </tr>
     </tbody>
