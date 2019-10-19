@@ -10,7 +10,6 @@
 #  carried_on     :date             not null              # 搬入日
 #  shipped_on     :date                                   # 出荷日
 #  water_content  :decimal(3, 1)                          # 水分
-#  rice_weight    :decimal(5, 1)                          # 乾燥米(kg)
 #  fixed_amount   :decimal(7, )                           # 確定額
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -30,7 +29,6 @@ drying1:
   drying_type_id: 1
   carried_on: '2015-08-29'
   shipped_on: '2015-08-30'
-  rice_weight: 2270.4
   created_at: '2015-09-16 01:57:00.617803'
   updated_at: '2015-09-16 01:57:00.617803'
 
@@ -41,6 +39,5 @@ drying2:
   drying_type_id: 2
   carried_on: '2015-08-29'
   shipped_on: '2015-08-30'
-  rice_weight: 2270.4
   created_at: '2015-09-16 01:57:00.617803'
   updated_at: '2015-09-16 01:57:00.617803'
