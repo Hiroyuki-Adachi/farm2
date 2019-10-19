@@ -52,7 +52,7 @@ class Drying < ApplicationRecord
   end
 
   def harvest_weight(system)
-    return rice_weight || 0 if drying_type == DryingType::COUNTRY
+    return drying_moths.sum(:rice_weight) || 0 if drying_type == DryingType::COUNTRY
     return adjustment&.rice_weight(system) || 0
   end
 
@@ -71,6 +71,7 @@ class Drying < ApplicationRecord
     else
       drying_moths.destroy_all
     end
+    self
   end
 
   def price(system, home_id)
@@ -91,6 +92,7 @@ class Drying < ApplicationRecord
     else
       self.rice_weight = adjustment&.rice_weight(System.find_by(term: term))
     end
+    self
   end
 
   def self.calc_total(dryings, home, system)
@@ -120,7 +122,7 @@ class Drying < ApplicationRecord
         waste_totals[DryingType::SELF.id] += drying.adjustment.waste_weight || 0
         shipped_totals[DryingType::SELF.id] += drying.shipped_weight(system)
       else
-        rice_totals[DryingType::COUNTRY.id] += drying.rice_weight || 0
+        rice_totals[DryingType::COUNTRY.id] += drying.drying_moths.sum(:rice_weight) || 0
         shipped_totals[DryingType::COUNTRY.id] += drying.shipped_weight(system)
       end
     end

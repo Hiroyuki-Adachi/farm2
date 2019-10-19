@@ -4,6 +4,7 @@ class DryingsController < ApplicationController
   before_action :set_homes, only: [:index, :edit]
   before_action :set_lands, only: [:edit]
   before_action :set_work_types, only: [:edit]
+  before_action :build_drying, only: [:edit]
 
   def index
     @works = WorkDecorator.decorate_collection(Work.for_drying(current_term, current_organization))
@@ -27,7 +28,6 @@ class DryingsController < ApplicationController
   end
 
   def edit
-    build_drying
     @drying = @drying.decorate
   end
 
@@ -83,7 +83,7 @@ class DryingsController < ApplicationController
   end
 
   def set_homes
-    @homes = Home.for_drying
+    @homes = Home.for_drying.includes(:holder)
   end
 
   def set_lands

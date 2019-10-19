@@ -236,4 +236,44 @@ function change_enabled() {
           break;
     }
 }
+
+document.addEventListener("paste", function (e) {
+    if (e.clipboardData && e.clipboardData.getData) {
+        const dry_type = $('input[name="drying[drying_type_id]"]:checked').val();
+        if(dry_type == undefined) return;
+
+        const clip = e.clipboardData.getData('text/plain');
+        switch(dry_type * 1) {
+          case 1: // Country
+            paste_dry(clip);
+            break;
+
+          case 2:
+          case 3:
+            paste_adjust(clip);
+            break;
+        }
+
+        calc_sum();
+    }
+});
+
+function paste_dry(clip) {
+    const lines = clip.split("\n");
+    for(let i = 0; i < lines.length; i++) {
+        const weights = lines[i].split("\t");
+        if(weights.length < 3) continue;
+        weights[1] = weights[1].replace(/,/g, "");
+        weights[2] = weights[2].replace(/,/g, "");
+
+        if($.isNumeric(weights[0])) $(`#drying_drying_moths_attributes_${i}_moth_no`).val(weights[0]);
+        if($.isNumeric(weights[1])) $(`#drying_drying_moths_attributes_${i}_moth_weight`).val(weights[1]);
+        if($.isNumeric(weights[2])) $(`#drying_drying_moths_attributes_${i}_rice_weight`).val(weights[2]);
+    }
+}
+
+function paste_adjust(clip) {
+    const bag = clip.replace(/(\t|\n)/g, "");
+    if($.isNumeric(bag)) $("#drying_adjustment_attributes_rice_bag").val(bag);
+}
 </script>
