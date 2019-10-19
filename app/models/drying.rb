@@ -10,7 +10,6 @@
 #  carried_on     :date             not null              # 搬入日
 #  shipped_on     :date                                   # 出荷日
 #  water_content  :decimal(3, 1)                          # 水分
-#  rice_weight    :decimal(5, 1)                          # 乾燥米(kg)
 #  fixed_amount   :decimal(7, )                           # 確定額
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -29,7 +28,7 @@ class Drying < ApplicationRecord
   has_many   :drying_lands, {dependent: :destroy}
   has_one    :adjustment,   {dependent: :destroy}
 
-  before_save :save_rice_weight, :save_adjustment
+  after_save :delete_child
 
   accepts_nested_attributes_for :drying_moths
   accepts_nested_attributes_for :drying_lands
@@ -51,8 +50,12 @@ class Drying < ApplicationRecord
     return (rice_weight || 0) / KG_PER_BAG_RICE
   end
 
+  def rice_weight
+    return drying_moths.sum(:rice_weight)
+  end
+
   def harvest_weight(system)
-    return drying_moths.sum(:rice_weight) || 0 if drying_type == DryingType::COUNTRY
+    return rice_weight || 0 if drying_type == DryingType::COUNTRY
     return adjustment&.rice_weight(system) || 0
   end
 
@@ -64,10 +67,9 @@ class Drying < ApplicationRecord
     return drying_type == DryingType::ANOTHER && adjustment&.home_id == home_id
   end
 
-  def save_rice_weight
+  def delete_child
     if drying_type == DryingType::COUNTRY
-      self.rice_weight = drying_moths.sum(:rice_weight)
-      self.water_content = drying_moths[0].water_content
+      adjustment.destroy
     else
       drying_moths.destroy_all
     end
@@ -81,18 +83,6 @@ class Drying < ApplicationRecord
 
   def amount(system, home_id)
     shipped_weight(system) / KG_PER_BAG_RICE * price(system, home_id)
-  end
-
-  def save_adjustment
-    case drying_type
-    when DryingType::COUNTRY
-      adjustment.destroy
-    when DryingType::SELF
-      self.rice_weight = nil
-    else
-      self.rice_weight = adjustment&.rice_weight(System.find_by(term: term))
-    end
-    self
   end
 
   def self.calc_total(dryings, home, system)

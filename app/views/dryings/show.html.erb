@@ -42,12 +42,6 @@
         <% end %>
       </tr>
       <tr>
-        <th>水分</th>
-        <% @dryings.each do |drying| %>
-          <td class="numeric" data-drying="<%= edit_drying_path(drying) %>"><%= drying.water_content %>%</td>
-        <% end %>
-      </tr>
-      <tr>
         <th>種別</th>
         <% @dryings.each do |drying| %>
           <td data-drying="<%= edit_drying_path(drying) %>"><%= drying.drying_type_name(@home.id) %></td>
