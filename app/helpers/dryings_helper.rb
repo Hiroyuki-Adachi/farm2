@@ -21,7 +21,7 @@ module DryingsHelper
   end
 
   def format_area(area)
-    format("%.1f", area)
+    area ? format("%.1f", area) : ""
   end
 
   def format_rolls(rolls)

@@ -21,7 +21,7 @@
 #
 
 drying1_moth1:
-  drying_id: drying1
+  drying: drying1
   moth_count: 1
   moth_no: 1506
   water_content: 14.5
@@ -31,11 +31,23 @@ drying1_moth1:
   updated_at: '2015-09-16 01:57:00.617803'
 
 drying1_moth2:
-  drying_id: drying1
+  drying: drying1
   moth_count: 2
   moth_no: 1590
   water_content: 14.6
   moth_weight: 1724
   rice_weight: 1201.2
+  created_at: '2015-09-16 01:57:00.617803'
+  updated_at: '2015-09-16 01:57:00.617803'
+
+drying1_moth3:
+  drying: drying1
+  moth_count: 3
+  created_at: '2015-09-16 01:57:00.617803'
+  updated_at: '2015-09-16 01:57:00.617803'
+
+drying1_moth4:
+  drying: drying1
+  moth_count: 4
   created_at: '2015-09-16 01:57:00.617803'
   updated_at: '2015-09-16 01:57:00.617803'
