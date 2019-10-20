@@ -13,13 +13,7 @@ state_path "/tmp/puma_farm2.state"
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
-#port        ENV["PORT"] || 3333
-
-# Specifies the `environment` that Puma will run in.
-#
 environment "production"
-
-#daemonize true
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
