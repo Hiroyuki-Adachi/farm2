@@ -1,0 +1,86 @@
+<%= stylesheet_link_tag 'calendar', media: 'all' %>
+<h1>カレンダー</h1>
+<style>
+<% @calendar_work_kinds.each do |calendar_work_kind| %>
+div.kind-<%= calendar_work_kind.work_kind_id %> {color: <%= calendar_work_kind.text_color %> !important;}
+div.kind-<%= calendar_work_kind.work_kind_id %> a {color: <%= calendar_work_kind.text_color %> !important;}
+<% end %>
+</style>
+<div class="row">
+  <div id="calendar-wrapper">
+    <div id="calendar-base">
+        <% 12.times do |month|%>
+          <div class="float-left calendar-month">
+            <table class="table table-bordered table-sm calendar-table">
+              <thead>
+                <tr>
+                    <th class="calendar-year"><%= @year %></th>
+                    <th class="calendar-content"><%= month + 1 %>月</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% today = Date.new(@year, month + 1, 1) %>
+                <% last = today >> 1 %>
+                <% while today < last %>
+                <tr>
+                    <th class="numeric wday-<%= today.wday%> <%= HolidayJp.holiday?(today) ? "holiday" : "" %>">
+                      <span class="calendar-day"><%= today.day %></span>
+                      <span class="calendar-wday">(<%= I18n.t('date.abbr_day_names')[today.wday]%>)</span>
+                    </th>
+                    <td>
+                      <% @schedules.each do |schedule| %>
+                        <% if schedule.worked_at == today %>
+                          <div class="kind-<%= schedule.work_kind_id %> calendar-kind">
+                            <% if schedule.minute %>
+                            <%= link_to schedule.work_kind.name, minute_path(schedule.minute.id), {target: :_blank} %>
+                            <% else %>
+                            <%= schedule.work_kind.name %>
+                            <% end %>
+                          </div>
+                        <% end %>
+                      <% end %>
+                      <% @works.each do |work| %>
+                        <% if work.model.worked_at == today %>
+                          <div class="kind-<%= work.model.work_kind_id %> calendar-kind">
+                            <%= link_to work.work_kind.name + "(#{work.exact_work_type_name})", work_path(id: work) %>
+                          </div>
+                        <% end %>
+                      <% end %>
+                    </td>
+                </tr>
+                <% today += 1 %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
+    </div>
+  </div>
+</div>
+<div id="btn_toolbar" class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: "window.print();" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '制御', calendar_work_kinds_path, class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>
+<script>
+$(function() {
+    $(window).on("resize", function() {
+        init_size();
+    });
+
+    init_size();
+});
+
+function init_size() {
+    const off = $("#calendar-wrapper").offset();
+
+    $("#calendar-wrapper").height($(window).height() - off.top - $("#btn_toolbar").height());
+    $("#calendar-wrapper").width($(window).width() - off.left);
+}
+</script>

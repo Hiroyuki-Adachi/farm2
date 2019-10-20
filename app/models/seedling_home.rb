@@ -26,20 +26,12 @@ class SeedlingHome < ActiveRecord::Base
   }
   scope :by_home, ->(home) {where(home_id: home.id)}
 
+  delegate :name, to: :home, prefix: true
+  delegate :work_type_name, to: :seedling
+  delegate :work_type_id, to: :seedling
+
   def reject_seedling_results(attributes)
     attributes[:work_result_id].blank?
-  end
-
-  def home_name
-    home.name
-  end
-
-  def work_type_name
-    seedling.work_type_name
-  end
-
-  def work_type_id
-    seedling.work_type_id
   end
 
   def dispose?

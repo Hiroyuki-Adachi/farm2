@@ -1,0 +1,18 @@
+# == Schema Information
+#
+# Table name: calendar_work_kinds # カレンダー作業種別
+#
+#  id           :bigint           not null, primary key
+#  user_id      :integer          not null                     # 利用者
+#  work_kind_id :integer          not null                     # 作業種別
+#  text_color   :string(8)        default("#000000"), not null # 文字色
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#

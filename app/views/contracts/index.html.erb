@@ -1,0 +1,77 @@
+<h1>組合内受託一覧</h1>
+<% old_home_id = 0 %>
+<% old_work_id = 0 %>
+<% home_flag = false %>
+<table class="table table-sm table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th>世帯</th>
+      <th>作業日</th>
+      <th>作業内容</th>
+      <th>地番</th>
+      <th>面積</th>
+      <th>金額</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @work_lands.each do |work_land| %>
+    <% if work_land.land.manager_id != old_home_id %>
+      <% old_home_id = work_land.land.manager_id %>
+      <tr class="home-total table-primary" data-home="<%= old_home_id %>" style="cursor: pointer;">
+        <td><%= work_land.land.manager.name %></td>
+        <td colspan="4"></td>
+        <td class="numeric"><%= number_to_currency(@home_totals[old_home_id][:cost], {precision: 0, unit: ""}) %></td>
+      </tr>
+      <% home_flag = true %>
+    <% end %>
+    <% if work_land.work.id != old_work_id || home_flag %>
+      <% old_work_id = work_land.work.id %>
+      <tr class="work-total table-secondary" data-home="<%= old_home_id %>" data-work="<%= old_work_id %>" style="cursor: pointer;">
+        <td></td>
+        <td><%= work_land.work.decorate.worked_at %></td>
+        <td style="overflow:hidden;"><%= work_land.work.decorate.name %></td>
+        <td></td>
+        <td class="numeric"><%= number_to_currency(@work_totals[old_home_id][old_work_id][:area], {precision: 2, unit: ""}) %></td>
+        <td class="numeric"><%= number_to_currency(@work_totals[old_home_id][old_work_id][:cost], {precision: 0, unit: ""}) %></td>
+      </tr>
+    <% end %>
+    <tr class="detail" data-home="<%= old_home_id %>" data-work="<%= old_work_id %>">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><%= work_land.land.place %></td>
+      <td class="numeric"><%= number_to_currency(work_land.land.area, {precision: 2, unit: ""}) %></td>
+      <td class="numeric"><%= number_to_currency(work_land.cost, {precision: 0, unit: ""}) %></td>
+    </tr>
+    <% home_flag = false %>
+  <% end %>
+  </tbody>
+</table>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", (params[:fixed_at] ? fixes_path : menu_index_path), {class: "btn btn-outline-dark"} %>
+  </div>
+</div>
+<script>
+$(function() {
+    $(".home-total").click(function() {
+        var s = $(".work-total[data-home='" + $(this).data("home") + "']");
+        if(s.is(":visible")) {
+            s.hide();
+            $(".detail[data-home='" + $(this).data("home") + "']").hide();
+        } else {
+            s.show();
+        }
+    });
+    $(".work-total").click(function() {
+        var s = $(".detail[data-work='" + $(this).data("work") + "'][data-home='" + $(this).data("home") + "']");
+        if(s.is(":visible")) {
+            s.hide();
+        } else {
+            s.show();
+        }
+    });
+  
+    $(".work-total, .detail").hide();
+});
+</script>

@@ -38,6 +38,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def permit_admin
+    to_error_path unless current_user.admin?
+  end
+
   private
 
   def set_term

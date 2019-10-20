@@ -54,7 +54,10 @@ class Work < ApplicationRecord
   has_many :machine_results, {through: :work_results}
   has_many :checkers, -> {with_deleted}, {through: :work_verifications, source: :worker}
 
-  scope :no_fixed, ->(term){where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)}
+  scope :no_fixed, ->(term){
+    includes(:work_type, :work_kind)
+      .where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)
+  }
   scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, id: :DESC)}
   scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, id: :ASC).order(worked_at: :ASC, id: :ASC)}
@@ -126,6 +129,35 @@ SQL
       .where(worked_at: Date.new(w_at.year, w_at.month, 1)..Date.new(w_at.year, w_at.month, -1))
   }
 
+  scope :exists_lands, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
+  scope :by_target, ->(term) {
+    joins("INNER JOIN systems ON systems.term = works.term")
+     .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
+     .where("systems.term = ?", term)
+  }
+  scope :for_contract, ->(worker, worked_at, work_type_id) {
+    where("works.worked_at >= ? AND works.work_type_id = ?", worked_at, work_type_id)
+      .where([<<SQL, worker.home_id])}
+      EXISTS (SELECT * FROM work_lands
+        INNER JOIN lands ON work_lands.land_id = lands.id
+        WHERE work_lands.work_id = works.id
+          AND lands.manager_id = ?)
+SQL
+
+  scope :for_calendar, ->(term, work_kinds) {
+    group(:worked_at, :work_kind_id, :work_type_id)
+      .select("min(works.id) AS id, works.worked_at, works.work_kind_id, works.work_type_id")
+      .includes(:work_kind, :work_type)
+      .where(term: term, work_kind_id: work_kinds)
+  }
+
+  scope :for_drying, ->(term, organization) {
+    select("worked_at")
+      .where(term: term, work_kind_id: organization.harvesting_work_kind_id)
+      .distinct
+      .order("worked_at")
+  }
+
   def set_term
     self.term = Organization.term
   end
@@ -139,7 +171,7 @@ SQL
   end
 
   def sum_areas
-    lands.sum(:area)
+    lands.sum(:area) || 0
   end
 
   def price
@@ -312,5 +344,25 @@ SQL
 
   def total_cost_type
     work_type&.land_flag ? TotalCostType::WORKWORKER : TotalCostType::WORKINDIRECT
+  end
+
+  def self.types_by_worked_at(worked_at)
+    work_types = []
+    Work.where(worked_at: worked_at).each do |work|
+      work.lands.each do |land|
+        work_types << land.cost(worked_at)&.work_type
+      end
+    end
+    return work_types.compact.uniq
+  end
+
+  def exact_work_types
+    return [work_type] if work_lands.empty?
+    work_types = []
+    lands.each do |land|
+      work_types << land.cost(worked_at)&.work_type
+    end
+    return work_types.compact.uniq if work_types.compact.length.positive?
+    return [work_type]
   end
 end

@@ -21,6 +21,8 @@
 #  deleted_at          :datetime
 #  owner_flag          :boolean          default(FALSE), not null # 所有者フラグ
 #  finance_order       :integer                                   # 出力順(会計用)
+#  drying_order        :integer                                   # 出力順(乾燥調整用)
+#  owned_rice_order    :integer                                   # 出力順(保有米)
 #
 
 home1:
@@ -122,6 +124,7 @@ home5:
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
   owner_flag: t
+  drying_order: 10
 
 home6:
   id: 6
@@ -222,6 +225,7 @@ home10:
   updated_at: 2013-02-02 10:25:52.006322
   deleted_at: 
   owner_flag: t
+  drying_order: 20
 
 home11:
   id: 11
@@ -262,6 +266,7 @@ home12:
   updated_at: 2013-02-02 10:26:18.539551
   deleted_at: 
   owner_flag: t
+  drying_order: 30
 
 home13:
   id: 13
@@ -322,6 +327,7 @@ home15:
   updated_at: 2013-02-02 10:26:58.570884
   deleted_at: 
   owner_flag: t
+  drying_order: 40
 
 home16:
   id: 16
@@ -342,6 +348,7 @@ home16:
   updated_at: 2016-03-19 10:15:22.288612
   deleted_at: 
   owner_flag: t
+  drying_order: 50
 
 home17:
   id: 17
@@ -422,6 +429,7 @@ home20:
   updated_at: 2013-02-02 10:23:55.63099
   deleted_at: 
   owner_flag: t
+  drying_order: 60
 
 home21:
   id: 21
@@ -482,6 +490,7 @@ home23:
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
   owner_flag: t
+  drying_order: 70
 
 home24:
   id: 24
@@ -502,6 +511,7 @@ home24:
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
   owner_flag: t
+  drying_order: 80
 
 home25:
   id: 25
@@ -542,6 +552,7 @@ home26:
   updated_at: 2010-07-13 14:27:43.23003
   deleted_at: 
   owner_flag: t
+  drying_order: 90
 
 home27:
   id: 27
@@ -562,6 +573,7 @@ home27:
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
   owner_flag: t
+  drying_order: 100
 
 home28:
   id: 28
@@ -582,6 +594,7 @@ home28:
   updated_at: 2013-02-02 10:27:45.209744
   deleted_at: 
   owner_flag: t
+  drying_order: 110
 
 home29:
   id: 29
@@ -602,6 +615,7 @@ home29:
   updated_at: 2013-02-02 10:28:13.530099
   deleted_at: 
   owner_flag: t
+  drying_order: 120
 
 home30:
   id: 30
@@ -622,6 +636,7 @@ home30:
   updated_at: 2013-02-02 10:28:55.232448
   deleted_at: 
   owner_flag: t
+  drying_order: 130
 
 home31:
   id: 31
@@ -642,6 +657,7 @@ home31:
   updated_at: 2013-02-02 10:29:12.53829
   deleted_at: 
   owner_flag: t
+  drying_order: 140
 
 home32:
   id: 32
@@ -682,6 +698,7 @@ home33:
   updated_at: 2013-02-02 10:29:46.964267
   deleted_at: 
   owner_flag: t
+  drying_order: 150
 
 home_kumiai:
   id: 37

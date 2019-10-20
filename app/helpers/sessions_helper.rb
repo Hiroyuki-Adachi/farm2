@@ -23,6 +23,10 @@ module SessionsHelper
     current_user.term
   end
 
+  def previous_term
+    current_term - 1
+  end
+
   def now_system
     organization_id = current_user.organization_id
     @now_system ||= System.find_by(["organization_id = ? AND (current_date BETWEEN start_date AND end_date)", organization_id])

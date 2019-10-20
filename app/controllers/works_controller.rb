@@ -188,7 +188,7 @@ class WorksController < ApplicationController
       @work_type_id = ""
       @work_kind_id = ""
       @page = 1
-    elsif path[:controller] == "works" && path[:action] == "index"
+    elsif path[:controller] == "works" && path[:action] == "index" && params[:format] != "csv"
       @work_type_id = params[:work_type_id] || ""
       @work_kind_id = params[:work_kind_id] || ""
       @worked_at1 = params[:worked_at1]

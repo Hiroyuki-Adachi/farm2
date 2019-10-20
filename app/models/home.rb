@@ -21,6 +21,8 @@
 #  deleted_at          :datetime
 #  owner_flag          :boolean          default(FALSE), not null # 所有者フラグ
 #  finance_order       :integer                                   # 出力順(会計用)
+#  drying_order        :integer                                   # 出力順(乾燥調整用)
+#  owned_rice_order    :integer                                   # 出力順(保有米)
 #
 
 class Home < ApplicationRecord
@@ -52,6 +54,11 @@ class Home < ApplicationRecord
   scope :machine_owners, -> {where(owner_flag: true).order("company_flag DESC, display_order, id")}
   scope :company, ->{where(company_flag: true)}
   scope :for_finance1, -> {where(member_flag: true, owner_flag: true).order(finance_order: :ASC, id: :ASC)}
+  scope :for_drying, -> {where.not(drying_order: nil).order(:drying_order)}
+  scope :for_owned_rice, -> {
+    where(member_flag: true, owner_flag: true)
+      .order(owned_rice_order: :ASC, display_order: :ASC, id: :ASC)
+  }
 
   validates :phonetic,      presence: true
   validates :name,          presence: true
@@ -70,5 +77,17 @@ class Home < ApplicationRecord
 
   def home_display_order
     display_order * 100 + id
+  end
+
+  def finance_code
+    finance_order ? finance_order.to_s.insert(1, "-") : ""
+  end
+
+  def owned_area
+    owned_lands.sum(:area)
+  end
+
+  def owned_rice_limit
+    (owned_area / 10 * 2).ceil
   end
 end

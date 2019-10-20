@@ -1,0 +1,279 @@
+<style>
+#drying-moths td, #drying-moths th {padding: 0.25rem;}
+td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
+</style>
+<h1>乾燥／調整登録</h1>
+<%= form_for(@drying.model, url: {controller: :dryings, action: :update}) do |fd| %>
+  <div class="row">
+    <div class="col-md-5 form-inline form-group">
+      <div class="form-check">
+        <%= fd.radio_button :drying_type_id, DryingType::COUNTRY.id, {class: "form-check-input", id: "drying_type_country"} %>
+        <label for="drying_type_country" class="form-check-label h3"><%= DryingType::COUNTRY.name %></label>
+      </div>
+      <div class="form-check" style="margin-left:20px;">
+        <%= fd.radio_button :drying_type_id, DryingType::ANOTHER.id, {class: "form-check-input", id: "drying_type_another"} %>
+        <label for="drying_type_another" class="form-check-label h3"><%= DryingType::ANOTHER.name %></label>
+      </div>
+      <div class="form-check" style="margin-left:20px;">
+        <%= fd.radio_button :drying_type_id, DryingType::SELF.id, {class: "form-check-input", id: "drying_type_self"} %>
+        <label for="drying_type_self" class="form-check-label h3"><%= DryingType::SELF.name %></label>
+      </div>
+    </div>
+    <div class="col-md-3 form-inline field form-group">
+      <label class="col-form-label-lg">品種</label>
+      <%= fd.select(:work_type_id, @work_types.map {|w| [w.name, w.id]}, {}, {class: "form-control dry-input"}) %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5" style="border: medium solid lightpink">
+      <h2>乾燥</h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <label class="col-form-label-lg">乾燥担当：<%= @drying.home.name %></label>
+            <%= fd.hidden_field :home_id %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 form-inline field form-group">
+            <label class="col-form-label-lg">搬入日：</label>
+            <label class="col-form-label-lg"><%= @drying.carried_on %></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 form-inline field form-group">
+            <label class="col-form-label-lg">出荷日：</label>
+            <%= fd.date_field :shipped_on, {min: @drying.model.carried_on, required: true, class: "form-control dry-input dry-country dry-self dry-another"} %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 form-inline field form-group">
+            <label class="col-form-label-lg">水分：</label>
+            <%= fd.number_field :water_content, {min: 10, max: 20, step: 0.1, required: false, class: "form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
+            <label class="col-form-label-lg">%</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <table id="drying-moths" class="table talbe-sm">
+              <thead>
+                <tr>
+                  <th>回数</th>
+                  <th>No.</th>
+                  <th>籾(kg)</th>
+                  <th>玄米(kg)</th>
+                  <th>水分(%)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= fd.fields_for :drying_moths do |fm| %>
+                <tr>
+                  <td class="numeric">
+                    <%= fm.object.moth_count %>
+                    <%= fm.hidden_field :moth_count %>
+                  </td>
+                  <td>
+                    <%= fm.number_field :moth_no, {class: "form-control form-control-sm dry-input dry-country", min: 0, max: 9999, style: "width: 80px;"} %>
+                  </td>
+                  <td>
+                    <%= fm.number_field :moth_weight, {class: "form-control form-control-sm dry-input dry-country", min: 0, max: 9999.9, step: 0.1, style: "width: 80px;"} %>
+                  </td>
+                  <td>
+                    <%= fm.number_field :rice_weight, {class: "form-control form-control-sm dry-input dry-country", min: 0, max: 9999.9, step: 0.1, style: "width: 80px;"} %>
+                  </td>
+                  <td>
+                    <%= fm.number_field :water_content, {class: "form-control form-control-sm dry-input dry-country", min: 10, max: 20, step: 0.1, style: "width: 80px;"} %>
+                    <%= fm.hidden_field :id %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th colspan="2">合計</th>
+                  <td class="numeric" id="sum_moth_weight"></td>
+                  <td class="numeric" id="sum_rice_weight"></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5" style="border: medium solid lightskyblue">
+      <h2>調整</h2>
+      <div class="container">
+        <%= fd.fields_for :adjustment do |fa| %>
+          <div class="row">
+            <div class="col-md-12 form-inline field form-group">
+              <label class="col-form-label-lg">調整担当：</label>
+              <%= fa.select(:home_id, @homes.map {|h| [h.owner_name, h.id]}, {include_blank: true}, {class: "form-control dry-input dry-another"}) %>
+              <%= fa.hidden_field :id %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-inline field form-group">
+              <label class="col-form-label-lg">出荷日：</label>
+              <%= fa.date_field :shipped_on, {min: @drying.model.carried_on, class: "form-control dry-input dry-another"} %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-inline field form-group">
+              <label class="col-form-label-lg">調整 出荷：</label>
+              <%= fa.number_field :rice_bag, {min: 0, max: 999, step: 1, required: false, class: "form-control form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
+              <label class="col-form-label-lg">袋</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-inline field form-group">
+              <label class="col-form-label-lg">調整 半端：</label>
+              <%= fa.number_field :half_weight, {min: 0, max: 99.9, step: 0.1, required: false, class: "form-control form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
+              <label class="col-form-label-lg">kg</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-inline field form-group">
+              <label class="col-form-label-lg">くず米：</label>
+              <%= fa.number_field :waste_weight, {min: 0, max: 999, step: 1, required: false, class: "form-control form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
+              <label class="col-form-label-lg">kg</label>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-2" style="border: medium solid lightgreen">
+      <h2>水田</h2>
+      <div class="container">
+        <%= fd.fields_for :drying_lands do |fl| %>
+          <div class="row">
+            <div class="col-md-12 form-inline field form-group">
+              <%= fl.select(:land_id, @lands.map {|l| [l.place, l.id]}, {include_blank: true}, {class: "form-control dry-input"}) %>
+              <%= fl.hidden_field :id %>
+              <%= fl.hidden_field :display_order %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= fd.submit '登録', class: "btn btn-warning dry-input" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '削除', @drying, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', drying_path(@drying.home), class: "btn btn-outline-dark" %>
+    </div>
+    <input type="hidden" id="adjustment_home_sql" value="">
+  </div>
+<% end %>
+<script>
+$(function() {
+    document.getElementById("adjustment_home_sql").value = document.getElementById("drying_adjustment_attributes_home_id").innerHTML;
+    $('input[type="number"][name$="[moth_weight]"], input[type="number"][name$="[rice_weight]"]').change(function() {
+        calc_sum();
+    });
+    $('input[name="drying[drying_type_id]"]').change(function() {
+        change_enabled();
+    });
+
+    calc_sum();
+    change_enabled();
+});
+
+function calc_sum() {
+    const sum_moth = sum_weight('input[type="number"][name$="[moth_weight]"]');
+    const sum_rice = sum_weight('input[type="number"][name$="[rice_weight]"]');
+    const formatter = new Intl.NumberFormat('ja-JP', {minimumFractionDigits: 1});
+  
+    document.getElementById("sum_moth_weight").innerText = formatter.format(sum_moth);
+    document.getElementById("sum_rice_weight").innerText = formatter.format(sum_rice);
+}
+
+function sum_weight(selector) {
+    let sum_weight = 0;
+    $(selector).each(function() {
+        if($.isNumeric($(this).val())) {
+            sum_weight += parseFloat($(this).val());
+        }
+    });
+
+    return sum_weight;
+}
+
+function change_enabled() {
+    const dry_type = $('input[name="drying[drying_type_id]"]:checked').val();
+
+    if(dry_type == undefined) {
+        $(".dry-input").prop("disabled", true);
+        return;
+    }
+    $(".dry-input").prop("disabled", false);
+    $("input.dry-country, input.dry-another, input.dry-self").prop("readonly", true);
+    $("select.dry-country, select.dry-another, select.dry-self").enableSelection();
+    switch(dry_type * 1) {
+        case 1: // Country
+          $("input.dry-country").prop("readonly", false);
+          $("input.dry-another, input.dry-self").not(".dry-country").val("");
+          $("#drying_adjustment_attributes_home_id").val("");
+          $("select.dry-another, select.dry-self").not(".dry-country").disableSelection();
+          break;
+
+        case 2: // Self
+          $("input.dry-self").prop("readonly", false);
+          $("input.dry-another, input.dry-country").not(".dry-self").val("");
+          document.getElementById("drying_adjustment_attributes_home_id").innerHTML = document.getElementById("adjustment_home_sql").value;
+          $("#drying_adjustment_attributes_home_id").val($("#drying_home_id").val());
+          $("select.dry-another, select.dry-country").not(".dry-self").disableSelection();
+          break;
+
+        case 3: // Another
+          $("input.dry-another").prop("readonly", false);
+          $("#drying_adjustment_attributes_home_id option[value='" + $("#drying_home_id").val() + "']").remove();
+          break;
+    }
+}
+
+document.addEventListener("paste", function (e) {
+    if (e.clipboardData && e.clipboardData.getData) {
+        const dry_type = $('input[name="drying[drying_type_id]"]:checked').val();
+        if(dry_type == undefined) return;
+
+        const clip = e.clipboardData.getData('text/plain');
+        switch(dry_type * 1) {
+          case 1: // Country
+            paste_dry(clip);
+            break;
+
+          case 2:
+          case 3:
+            paste_adjust(clip);
+            break;
+        }
+
+        calc_sum();
+    }
+});
+
+function paste_dry(clip) {
+    const lines = clip.split("\n");
+    for(let i = 0; i < lines.length; i++) {
+        const weights = lines[i].split("\t");
+        if(weights.length < 3) continue;
+        weights[1] = weights[1].replace(/,/g, "");
+        weights[2] = weights[2].replace(/,/g, "");
+
+        if($.isNumeric(weights[0])) $(`#drying_drying_moths_attributes_${i}_moth_no`).val(weights[0]);
+        if($.isNumeric(weights[1])) $(`#drying_drying_moths_attributes_${i}_moth_weight`).val(weights[1]);
+        if($.isNumeric(weights[2])) $(`#drying_drying_moths_attributes_${i}_rice_weight`).val(weights[2]);
+    }
+}
+
+function paste_adjust(clip) {
+    const bag = clip.replace(/(\t|\n)/g, "");
+    if($.isNumeric(bag)) $("#drying_adjustment_attributes_rice_bag").val(bag);
+}
+</script>

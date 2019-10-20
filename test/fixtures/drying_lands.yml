@@ -1,0 +1,19 @@
+# == Schema Information
+#
+# Table name: drying_lands # 乾燥調整場所
+#
+#  id            :bigint           not null, primary key
+#  drying_id     :integer          default(0), not null     # 乾燥調整
+#  land_id       :integer                                   # 作業地
+#  display_order :integer          default(0), not null     # 表示順
+#  percentage    :decimal(4, 1)    default(100.0), not null # 割合
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#

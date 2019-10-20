@@ -1,4 +1,4 @@
-<%= form_tag works_path, {method: :get} do %>
+<%= form_tag works_path, {method: :get, id: :search_form} do %>
 <div class="row">
   <div class="col-md-3">
      <h1>作業一覧</h1>
@@ -54,11 +54,11 @@
 </div>
 <script type="text/javascript">
 $(function() {
-  $('#work_type_id').change(function(){
-    $.get("<%= work_type_select_works_path %>", {work_type_id: $(this).val()}, function() {
-      $("#work_work_kind_id").prepend("<option value='' />")
-      $("#work_work_kind_id").val("");
+    $('#work_type_id').change(function(){
+        $.get("<%= work_type_select_works_path %>", {work_type_id: $(this).val()}, function() {
+            $("#work_work_kind_id").prepend("<option value='' />")
+            $("#work_work_kind_id").val("");
+        });
     });
-  });
 });
 </script>

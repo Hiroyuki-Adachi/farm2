@@ -1,3 +1,4 @@
+@page {size: A4 }
 @media print {
     input[type="button"].btn,a.btn,button[type="button"].btn {display:none;}
     div.modal-dialog {display:none;}

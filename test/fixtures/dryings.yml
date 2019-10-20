@@ -1,0 +1,43 @@
+# == Schema Information
+#
+# Table name: dryings # 乾燥
+#
+#  id             :bigint           not null, primary key
+#  term           :integer          not null              # 年度(期)
+#  work_type_id   :integer                                # 作業分類
+#  home_id        :integer          default(0), not null  # 担当世帯
+#  drying_type_id :integer          default(0), not null  # 乾燥種別
+#  carried_on     :date             not null              # 搬入日
+#  shipped_on     :date                                   # 出荷日
+#  water_content  :decimal(3, 1)                          # 水分
+#  fixed_amount   :decimal(7, )                           # 確定額
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+drying1:
+  term: 2015
+  work_type_id: 6
+  home_id: 31
+  drying_type_id: 1
+  carried_on: '2015-08-29'
+  shipped_on: '2015-08-30'
+  created_at: '2015-09-16 01:57:00.617803'
+  updated_at: '2015-09-16 01:57:00.617803'
+
+drying2:
+  term: 2015
+  work_type_id: 6
+  home_id: 30
+  drying_type_id: 2
+  carried_on: '2015-08-29'
+  shipped_on: '2015-08-30'
+  created_at: '2015-09-16 01:57:00.617803'
+  updated_at: '2015-09-16 01:57:00.617803'

@@ -8,6 +8,7 @@
 #  display_order :integer          default(0), not null  # 表示順
 #  created_at    :datetime
 #  updated_at    :datetime
+#  fixed_cost    :decimal(6, )                           # 確定作業原価
 #
 
 class WorkLand < ApplicationRecord
@@ -24,4 +25,38 @@ class WorkLand < ApplicationRecord
       .where("lands.manager_id = ?", home.id)
       .order("lands.display_order, lands.id, works.worked_at")
   }
+
+  scope :for_fix, ->(term, fixed_at, contract_id) {
+    joins(:work)
+      .joins(:land)
+      .where("works.work_type_id = ?", contract_id)
+      .where("works.fixed_at = ? AND work_lands.fixed_cost IS NOT NULL", fixed_at)
+      .where("works.term = ?", term)
+  }
+
+  def interim_cost
+    (work.sum_workers_amount * land.area / work.sum_areas).round
+  end
+
+  def largest?
+    max_area = work.lands.map(&:area).max
+    return false if land.area != max_area
+
+    return land.id == work.lands.select { |land| land.area == max_area}.map(&:id).min
+  end
+
+  def cost
+    return fixed_cost if fixed_cost
+    local_cost = interim_cost
+    return local_cost unless largest?
+    return local_cost + (work.sum_workers_amount - work.work_lands.map(&:interim_cost).sum)
+  end
+
+  def self.by_worked_at(worked_at)
+    lands = []
+    Work.where(worked_at: worked_at).find_each do |work|
+      lands << work.lands.to_a
+    end
+    return lands.flatten.uniq
+  end
 end

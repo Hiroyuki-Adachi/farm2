@@ -35,6 +35,7 @@ class Land < ApplicationRecord
   scope :usual, -> {where(target_flag: true).order("place, display_order")}
   scope :list, -> {includes(:land_place, :owner, :manager, :owner_holder, :manager_holder).order("place, lands.display_order, lands.id")}
   scope :for_finance1, -> {where("owner_id = manager_id").where(target_flag: true)}
+  scope :for_finance2, -> {where("owner_id <> manager_id").where(target_flag: true)}
 
   validates :place, presence: true
   validates :area, presence: true
@@ -90,5 +91,9 @@ class Land < ApplicationRecord
     result = land_place.display_order * LandPlace.maximum(:id) + land_place_id
     result = (result * Land.maximum(:display_order) + display_order) * Land.maximum(:id) + id
     return result
+  end
+
+  def cost(target)
+    LandCost.newest(target).find_by(land_id: id)
   end
 end

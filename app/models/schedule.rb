@@ -42,6 +42,15 @@ SQL
 
   scope :for_minute, -> {where(["(worked_at BETWEEN (current_timestamp + '-1 year') AND current_timestamp) AND (work_flag = ?)", false]).order(worked_at: :ASC, id: :ASC)}
 
+  scope :for_calendar, ->(term, work_kinds) {
+    group(:worked_at, :work_kind_id)
+      .select("min(schedules.id) AS id, schedules.worked_at, schedules.work_kind_id")
+      .joins("INNER JOIN systems ON systems.term = #{term}")
+      .includes(:work_kind)
+      .where(work_kind_id: work_kinds, work_flag: false)
+      .where("schedules.worked_at BETWEEN systems.start_date AND systems.end_date")
+  }
+
   def regist_workers(params)
     workers = []
     params.each do |param|

@@ -139,4 +139,8 @@ class WorkDecorator < Draper::Decorator
   def broccoli_work_kind_name
     model.work_kind.broccoli_mark.presence || model.work_kind.name
   end
+
+  def exact_work_type_name
+    model.exact_work_types.map(&:name).join("、")
+  end
 end

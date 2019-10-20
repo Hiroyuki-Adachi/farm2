@@ -25,6 +25,8 @@ ja:
       land_cost: "土地原価"
       expense: "原価経費"
       expense_type: "経費種別"
+      system: "システム"
+      owned_rice_price: "保有米(単価)"
 
     attributes:
       chemical:
@@ -51,6 +53,8 @@ ja:
         member_flag: "組合員フラグ"
         owner_flag: "機械所有"
         finance_order: "出力順(会計用)"
+        drying_order: "出力順(乾燥調整用)"
+        owned_rice_order: "出力順(保有米用)"
 
       work_result: 
         home_name: "世帯"
@@ -173,6 +177,13 @@ ja:
         target_to: 期間(至)
         start_date: "期首"
         end_date: "期末"
+        default_price: "工賃(初期値)"
+        default_fee: "初期値(管理料)"
+        dry_price: "基準額(乾燥のみ)"
+        adjust_price: "基準額(調整のみ)"
+        dry_adjust_price: "基準額(乾燥調整)"
+        half_sum_flag: "半端米を集計に含める"
+        waste_sum_flag: "くず米を集計に含める"
 
       organization:
         name: "組織名称"
@@ -187,6 +198,8 @@ ja:
         broccoli_work_kind_id: "収穫を選択"
         rice_planting_id: "田植を選択"
         whole_crop_work_kind_id: "WCS収穫を選択"
+        contract_work_type_id: "受託作業を選択"
+        harvesting_work_kind_id: "稲刈りを選択"
 
       section:
         name: 名称
@@ -253,6 +266,13 @@ ja:
         other_flag: "その他フラグ"
         sales_flag: "売上フラグ"
         display_order: "表示順"
+
+      owned_rice_price:
+        name: "品種名"
+        short_name: "品種名(略称)"
+        display_order: "表示順"
+        owned_price: "保有米価格"
+        relative_price: "縁故米価格"
 
   status:
     organization:

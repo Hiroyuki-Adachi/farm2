@@ -14,6 +14,7 @@
       <th>箱数<%= i + 1 %></th>
       <% end %>
       <th>使用料</th>
+      <th>委託料</th>
     </tr>
   </thead>
   <tbody id="tbody_works">
@@ -42,7 +43,8 @@
           <td></td>
           <td></td>
         <% end %>
-        <td class="numeric"><%= @machines[home.id].to_i %></td>
+        <td class="numeric"><%= number_with_delimiter(@machines[home.id].to_i, {precision: 0}) %></td>
+        <td class="numeric"><%= number_with_delimiter(-@contracts[home.id].to_i, {precision: 0}) %></td>
       </tr>
     <% end %>
   </tbody>
