@@ -44,7 +44,7 @@
         <td class="numeric"><%= format_bag(@carried_on_totals[old_work_type_id][old_carried_on][:rice_weight]) %></td>
         <td class="numeric"><%= format_rice_percentage(@carried_on_totals[old_work_type_id][old_carried_on][:base_weight], @carried_on_totals[old_work_type_id][old_carried_on][:waste_weight]) %></td>
         <td class="numeric"><%= format_area(@areas[old_carried_on][old_work_type_id]) %></td>
-        <td class="numeric"><%= format_bag(@carried_on_totals[old_work_type_id][old_carried_on][:rice_weight] / @areas[old_carried_on][old_work_type_id] * 10) %></td>
+        <td class="numeric"><%=  @areas[old_carried_on][old_work_type_id] || 0 == 0 ? "" : format_bag(@carried_on_totals[old_work_type_id][old_carried_on][:rice_weight] / @areas[old_carried_on][old_work_type_id] * 10) %></td>
       </tr>
     <% end %>
     <tr class="detail" data-work_type="<%= old_work_type_id %>" data-carried_on="<%= old_carried_on %>">
