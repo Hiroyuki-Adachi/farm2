@@ -17,11 +17,11 @@
       <tr>
         <td><%= seedling_home.home_name %></td>
         <td><%= seedling_home.work_type_name %></td>
-        <td class="numeric"><%= seedling_home.quantity %></td>
-        <td class="numeric"><%= sprintf("%d", @seedling_result_quantities[seedling_home.id] || 0) %></td>
+        <td class="numeric"><%= seedling_home.quantity.to_s(:delimited) %></td>
+        <td class="numeric"><%= (@seedling_result_quantities[seedling_home.id].to_i || 0).to_s(:delimited) %></td>
         <td><%= seedling_status(seedling_home) %></td>
         <td class="numeric"><%= sprintf("%d", @seedling_price) %></td>
-        <td class="numeric"><%= sprintf("%d", seedling_amount(seedling_home)) %></td>
+        <td class="numeric"><%= seedling_amount(seedling_home).to_s(:delimited) %></td>
       </tr>
     <% end %>
   </tbody>

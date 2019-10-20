@@ -43,19 +43,29 @@
   <div class="row">
     <div class="field form-group col-md-3">
       <%= f.label :broccoli_work_type_id, class: "col-form-label-lg" %>
-      <%= f.collection_select(:broccoli_work_type_id, @work_types, :id, :name, {}, {class: "form-control"}) %>
+      <%= f.collection_select(:broccoli_work_type_id, @work_types, :id, :name, {include_blank: true}, {class: "form-control"}) %>
     </div>
     <div class="field form-group col-md-3">
       <%= f.label :broccoli_work_kind_id, class: "col-form-label-lg" %>
-      <%= f.collection_select(:broccoli_work_kind_id, @work_kinds, :id, :name, {}, {class: "form-control"}) %>
+      <%= f.collection_select(:broccoli_work_kind_id, @work_kinds, :id, :name, {include_blank: true}, {class: "form-control"}) %>
     </div>
     <div class="field form-group col-md-3">
       <%= f.label :rice_planting_id, class: "col-form-label-lg" %>
-      <%= f.collection_select(:rice_planting_id, @work_kinds, :id, :name, {}, {class: "form-control"}) %>
+      <%= f.collection_select(:rice_planting_id, @work_kinds, :id, :name, {include_blank: true}, {class: "form-control"}) %>
     </div>
     <div class="field form-group col-md-3">
       <%= f.label :whole_crop_work_kind_id, class: "col-form-label-lg" %>
-      <%= f.collection_select(:whole_crop_work_kind_id, @work_kinds, :id, :name, {}, {class: "form-control"}) %>
+      <%= f.collection_select(:whole_crop_work_kind_id, @work_kinds, :id, :name, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field form-group col-md-3">
+      <%= f.label :contract_work_type_id, class: "col-form-label-lg" %>
+      <%= f.collection_select(:contract_work_type_id, @work_types, :id, :name, {include_blank: true}, {class: "form-control"}) %>
+    </div>
+    <div class="field form-group col-md-3">
+      <%= f.label :harvesting_work_kind_id, class: "col-form-label-lg" %>
+      <%= f.collection_select(:harvesting_work_kind_id, @work_kinds, :id, :name, {include_blank: true}, {class: "form-control"}) %>
     </div>
   </div>
 <div class="btn-toolbar">

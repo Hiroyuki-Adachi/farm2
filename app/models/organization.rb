@@ -24,6 +24,8 @@
 #  chemical_group_count    :integer          default(1)                    # 薬剤グループ数
 #  rice_planting_id        :integer                                        # 田植作業種別
 #  whole_crop_work_kind_id :integer                                        # WCS収穫分類
+#  contract_work_type_id   :integer                                        # 受託作業分類
+#  harvesting_work_kind_id :integer                                        # 稲刈作業種別
 #
 
 class Organization < ApplicationRecord

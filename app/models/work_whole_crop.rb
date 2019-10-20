@@ -2,7 +2,7 @@
 #
 # Table name: work_whole_crops # WCS作業
 #
-#  id           :bigint(8)        not null, primary key
+#  id           :bigint           not null, primary key
 #  work_id      :integer          not null               # 作業
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -18,6 +18,9 @@ class WorkWholeCrop < ApplicationRecord
   has_many :wcs_rolls, {through: :wcs_lands}
 
   scope :usual, ->(term) {joins(:work).where(["works.term = ?", term]).order("works.worked_at, works.id")}
+  scope :for_harvest, ->(term) {joins(work: :work_type).where(["works.term = ?", term])
+    .order("work_types.display_order, works.worked_at, works.id")
+  }
 
   def self.regist(work, params)
     work_whole_crop = work.whole_crop
@@ -30,7 +33,7 @@ class WorkWholeCrop < ApplicationRecord
   end
 
   def rolls
-    wcs_lands.sum(:rolls)
+    wcs_lands.sum(:rolls) || 0
   end
 
   def weight

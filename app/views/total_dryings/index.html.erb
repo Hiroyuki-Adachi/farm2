@@ -1,0 +1,41 @@
+<h1>乾燥調整集計</h1>
+<% if @dryings.count > 0 %>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>世帯</th>
+      <th>品種</th>
+      <th>搬入日</th>
+      <th>出荷日</th>
+      <th>種別</th>
+      <th class="numeric">総出荷量(袋)</th>
+      <th class="numeric">単価</th>
+      <th class="numeric">価格</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @dryings.each do |home, dryings| %>
+      <% dryings.each do |drying| %>
+        <tr>
+          <td><%= home&.name %></td>
+          <td><%= drying.work_type&.name %></td>
+          <td><%= drying.carried_on %></td>
+          <td><%= drying.shipped_on %></td>
+          <td><%= drying.drying_type_name(home.id) %></td>
+          <td class="numeric"><%= format_bag(drying.shipped_weight(current_system)) %></td>
+          <td class="numeric"><%= number_to_currency(drying.price(current_system, home.id), {precision: 0, unit: ""}) %></td>
+          <td class="numeric"><%= number_to_currency(drying.amount(current_system, home.id), {precision: 0, unit: ""}) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "CSV出力", total_dryings_path(format: :csv), {class: "btn btn-outline-success"} %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
+  </div>
+</div>

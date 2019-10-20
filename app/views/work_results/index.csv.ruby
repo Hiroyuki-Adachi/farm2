@@ -1,21 +1,18 @@
 require 'csv'
-require 'nkf'
 
-csv_str = CSV.generate do |csv|
-  cols = {
-    WorkResult.human_attribute_name(:home_name)      => ->(w) {w.worker.home.name},
-    WorkResult.human_attribute_name(:worker_name)    => ->(w) {w.worker.name},
-    WorkResult.human_attribute_name(:worked_at)      => ->(w) {w.work.worked_at},
-    WorkResult.human_attribute_name(:work_type_name) => ->(w) {w.work.work_type.genre_name + "(#{w.work.work_type.name})"},
-    WorkResult.human_attribute_name(:work_name)      => ->(w) {w.work.work_kind.name + (w.work.name.present? ? "(#{w.work.name})" : "")},
-    WorkResult.human_attribute_name(:hours)          => ->(w) {w.hours},
-    WorkResult.human_attribute_name(:price)          => ->(w) {w.work.price},
-    WorkResult.human_attribute_name(:amount)         => ->(w) {w.hours * w.work.price}
-  }
-  csv << cols.keys
-  @results.each do |work|
-    csv << cols.map { |_k, col| col.call(work) }
+CSV.generate(encoding: "windows-31J") do |csv|
+  csv << ["コード", "世帯", "作業者", "作業日", "作業種別", "作業内容", "作業時間", "作業単価", "金額"]
+  @results.each do |result|
+    csv << [
+      result.worker.home&.finance_code,
+      result.worker.home.name,
+      result.worker.name,
+      result.work.worked_at,
+      result.work.work_type.genre_name + "(#{result.work.work_type.name})",
+      result.work.work_kind.name + (result.work.name.present? ? "(#{result.work.name})" : ""),
+      result.hours,
+      result.price,
+      result.amount
+    ]
   end
 end
-
-NKF::nkf('--sjis -Lw', csv_str)

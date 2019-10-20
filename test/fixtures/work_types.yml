@@ -231,3 +231,13 @@ work_type_broccoli:
   deleted_at: 
   bg_color: "#ffffff"
   land_flag: t
+
+work_type_contract:
+  id: 28
+  genre: 3
+  name: "受託作業"
+  category_flag: f
+  display_order: 320
+  deleted_at: 
+  bg_color: "#ffffff"
+  land_flag: t

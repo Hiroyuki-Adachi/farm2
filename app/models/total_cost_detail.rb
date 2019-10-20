@@ -2,7 +2,7 @@
 #
 # Table name: total_cost_details # 集計原価(明細)
 #
-#  id            :bigint(8)        not null, primary key
+#  id            :bigint           not null, primary key
 #  total_cost_id :integer          not null               # 集計原価
 #  work_type_id  :integer          not null               # 作業分類
 #  rate          :decimal(6, 2)    default(1.0), not null # 割合

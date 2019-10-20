@@ -1,0 +1,79 @@
+<style>
+ .work-type-total, .worked-at-total {cursor: pointer;}
+</style>
+<h1>収穫一覧(WCS)</h1>
+<% old_work_type_id = nil %>
+<% old_worked_at = nil %>
+<table class="table table-sm table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th>品種</th>
+      <th>作業日</th>
+      <th>重量(kg)</th>
+      <th>ロール数</th>
+      <th>面積(a)</th>
+      <th>ロール数(10a当)</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @whole_crops.each do |whole_crop| %>
+    <% if whole_crop.work.work_type_id != old_work_type_id %>
+      <% old_work_type_id = whole_crop.work.work_type_id %>
+      <tr class="work-type-total table-primary" data-work_type="<%= old_work_type_id %>">
+        <td><%= whole_crop.work.work_type.name %></td>
+        <td colspan="2"></td>
+        <td class="numeric"><%= format_rolls(@work_type_totals[old_work_type_id][:rolls]) %></td>
+        <td class="numeric"><%= format_area(@work_type_totals[old_work_type_id][:areas]) %></td>
+        <td class="numeric"><%= format_rolls(@work_type_totals[old_work_type_id][:rolls] / @work_type_totals[old_work_type_id][:areas] * 10) %></td>
+      </tr>
+    <% end %>
+    <% if whole_crop.work.model.worked_at.beginning_of_month != old_worked_at %>
+      <% old_worked_at = whole_crop.work.model.worked_at.beginning_of_month %>
+      <tr class="worked-at-total table-secondary" data-work_type="<%= old_work_type_id %>" data-worked_at="<%= old_worked_at %>">
+        <td></td>
+        <td><%= old_worked_at.strftime("%Y年 %m月") %></td>
+        <td></td>
+        <td class="numeric"><%= format_rolls(@worked_at_totals[old_work_type_id][old_worked_at][:rolls]) %></td>
+        <td class="numeric"><%= format_area(@worked_at_totals[old_work_type_id][old_worked_at][:areas]) %></td>
+        <td class="numeric"><%= format_rolls(@worked_at_totals[old_work_type_id][old_worked_at][:rolls] / @worked_at_totals[old_work_type_id][old_worked_at][:areas] * 10) %></td>
+      </tr>
+    <% end %>
+    <tr class="detail" data-work_type="<%= old_work_type_id %>" data-worked_at="<%= old_worked_at %>">
+      <td></td>
+      <td><%= whole_crop.work.worked_at %></td>
+      <td class="numeric"><%= whole_crop.weight.to_s(:delimited) %></td>
+      <td class="numeric"><%= format_rolls(whole_crop.rolls) %></td>
+      <td class="numeric"><%= format_area(whole_crop.work.sum_areas) %></td>
+      <td class="numeric"><%= format_rolls(whole_crop.rolls / whole_crop.work.sum_areas * 10) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"} %>
+  </div>
+</div>
+<script>
+$(function() {
+    $(".work-type-total").click(function() {
+        var s = $(".worked-at-total[data-work_type='" + $(this).data("work_type") + "']");
+        if(s.is(":visible")) {
+            s.hide();
+            $(".detail[data-work_type='" + $(this).data("work_type") + "']").hide();
+        } else {
+            s.show();
+        }
+    });
+    $(".worked-at-total").click(function() {
+        var s = $(".detail[data-work_type='" + $(this).data("work_type") + "'][data-worked_at='" + $(this).data("worked_at") + "']");
+        if(s.is(":visible")) {
+            s.hide();
+        } else {
+            s.show();
+        }
+    });
+  
+    $(".worked-at-total, .detail").hide();
+});
+</script>

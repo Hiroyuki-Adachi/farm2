@@ -2,7 +2,7 @@
 #
 # Table name: whole_crop_lands # WCS土地
 #
-#  id                 :bigint(8)        not null, primary key
+#  id                 :bigint           not null, primary key
 #  work_whole_crop_id :integer          default(0), not null  # WCS作業
 #  work_land_id       :integer          default(0), not null  # 作業地
 #  display_order      :integer          default(0), not null  # 番号

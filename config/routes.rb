@@ -1,10 +1,20 @@
 Rails.application.routes.draw do
+  resources :owned_rices, only: [:index, :edit, :update]
+  resources :owned_rice_prices, only: [:index, :create, :edit, :update, :destroy]
+  resources :harvest_whole_crops, only: [:index]
+  resources :harvest_rices, only: [:index]
+  resources :dryings, except: [:new]
+  resources :calendar_work_kinds, only: [:index, :create]
+  resources :calendars, only: [:index]
+  resources :contracts, only: [:index]
   resources :expense_types, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :broccoli_reports, only: [:index]
   resources :broccoli_sales, only: [:index, :create]
   resources :minutes, only: [:index, :create, :show, :destroy]
   resources :whole_crops, only: [:index, :create]
   resources :total_seedlings, only: [:index]
+  resources :total_dryings, only: [:index]
+  resources :total_owned_rices, only: [:index]
   resources :seedling_results, param: "seedling_home_id", only: [:index, :edit, :update] do
     collection do
       get :work_results
@@ -27,6 +37,7 @@ Rails.application.routes.draw do
   resources :total_costs, only: [:index, :create]
   resources :land_places, except: [:show]
   resources :organizations, param: nil, only: [:edit, :update]
+  resources :systems, param: nil, only: [:edit, :update]
   resources :land_costs, param: "land_id", only: [:index, :create, :edit, :update]
 
   resources :banks, param: :code, except: [:show] do
@@ -64,6 +75,9 @@ Rails.application.routes.draw do
     resources :schedules, controller: "personal_informations/schedules", only: [:index]
     resources :statistics, controller: "personal_informations/statistics", only: [:index]
     resources :seedlings, controller: "personal_informations/seedlings", only: [:index]
+    resources :contracts, controller: "personal_informations/contracts", only: [:index]
+    resources :dryings, controller: "personal_informations/dryings", only: [:index]
+    resources :owned_rices, controller: "personal_informations/owned_rices", only: [:index]
   end
   resources :personal_calendars, param: "token", only: [:show]
   resources :users, except: [:show] do

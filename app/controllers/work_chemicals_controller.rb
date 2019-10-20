@@ -8,7 +8,8 @@ class WorkChemicalsController < ApplicationController
     @total_chemicals = {}
     WorkChemical.by_work(@term).each do |wc|
       @work_chemicals["#{wc.work_id},#{wc.chemical_id}"] = wc.quantity
-      @total_chemicals[wc.chemical_id] = @total_chemicals[wc.chemical_id].to_i + wc.quantity
+      @total_chemicals[wc.chemical_id] = 0 if @total_chemicals[wc.chemical_id].nil?
+      @total_chemicals[wc.chemical_id] += wc.quantity
     end
   end
 end

@@ -53,13 +53,13 @@ class MachineResult < ApplicationRecord
     .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
   }
 
-  scope :for_personal, -> (home, worked_at) {
+  scope :for_personal, ->(home, worked_at) {
     joins(:work).eager_load(:work)
-   .joins(:machine).eager_load(:machine)
-   .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
-   .where("works.worked_at >= ?", worked_at)
-   .where("machines.home_id = ?", home.id)
-   .order("works.worked_at, machines.display_order, machines.id")
+      .joins(:machine).eager_load(:machine)
+      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+      .where("works.worked_at >= ?", worked_at)
+      .where("machines.home_id = ?", home.id)
+      .order("works.worked_at, machines.display_order, machines.id")
   }
 
   scope :for_fix, ->(term, fixed_at) {

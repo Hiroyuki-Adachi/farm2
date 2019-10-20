@@ -43,6 +43,20 @@ SQL
     LandCost.by_work_type(work_type_id, target).joins(:land).sum(:area)
   end
 
+  def self.sum_area_for_harvest(worked_at, work_kind_id)
+    results = {}
+    Work.where(worked_at: worked_at, work_kind_id: work_kind_id).each do |work|
+      work.lands.each do |land|
+        land_cost = land.cost(worked_at)
+        next if land_cost.nil?
+        results[land_cost.work_type_id] = 0 unless results[land_cost.work_type_id]
+        results[land_cost.work_type_id] += land.area
+      end
+    end
+
+    return results
+  end
+
   def update_work_type(params, start_date)
     return if work_type_id == params[:work_type_id].to_i && cost == params[:cost].to_i
 
