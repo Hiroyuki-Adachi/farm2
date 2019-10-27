@@ -30,7 +30,7 @@
           <% @work_types.each do |work_type| %>
             <% chemical_work_type = @chemical_work_types.find{|ct| ct.chemical_term_id == chemical_term.id && ct.work_type_id == work_type.id} %>
             <td>
-              <%= number_field_tag "chemical_work_types[][quantity]", chemical_work_type&.quantity || 0, {id: nil, class: "form-control form-control-sm", min: 0, max: 999.9, step: 0.1, style: "width: 70px;"} %>
+              <%= number_field_tag "chemical_work_types[][quantity]", chemical_work_type&.quantity || 0, {id: nil, class: "form-control form-control-sm zero-gray", min: 0, max: 999.9, step: 0.1, style: "width: 70px; color:" + ((chemical_work_type&.quantity || 0).zero? ? "gainsboro" : "black")} %>
               <%= hidden_field_tag "chemical_work_types[][work_type_id]", work_type.id, {id: nil} %>
               <%= hidden_field_tag "chemical_work_types[][chemical_term_id]", chemical_term.id, {id: nil} %>
               <%= hidden_field_tag "chemical_work_types[][id]", chemical_work_type&.id, {id: nil} %>
@@ -65,6 +65,14 @@ $(function() {
         setTableWrapperHeight();
     });
 
+    $(".zero-gray").change(function() {
+        if($(this).prop('value') == 0) {
+            $(this).css("color", "gainsboro");
+        } else {
+            $(this).css("color", "black");
+        }
+    });
+
     setTableWrapperHeight();
 });
 
@@ -85,4 +93,5 @@ function execImport() {
         }
     }));
 }
+
 </script>
