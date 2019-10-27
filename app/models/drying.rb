@@ -43,7 +43,7 @@ class Drying < ApplicationRecord
   scope :for_harvest, ->(term) {
     joins(:home, :work_type)
       .where(["dryings.term = ?", term])
-      .order("work_types.display_order, dryings.carried_on, homes.drying_order, dryings.id")
+      .order(Arel.sql("work_types.display_order, dryings.carried_on, homes.drying_order, dryings.id"))
   }
 
   def rice_bag

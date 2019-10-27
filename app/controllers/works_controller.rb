@@ -95,7 +95,7 @@ class WorksController < ApplicationController
   end
 
   def edit_chemicals
-    @chemicals = Chemical.usual(current_term, @work.model)
+    @chemicals = Chemical.usual(@work.model)
   end
 
   def edit_whole_crop

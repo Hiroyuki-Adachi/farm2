@@ -40,18 +40,18 @@ class Home < ApplicationRecord
   scope :usual, -> {
     includes(:section)
       .where(["sections.work_flag = ?", true])
-      .order("sections.display_order, homes.display_order, homes.id")
+      .order(Arel.sql("sections.display_order, homes.display_order, homes.id"))
   }
   scope :list, -> {
     includes(:section, :holder)
       .where(company_flag: false)
-      .order("sections.display_order, homes.display_order, homes.id")
+      .order(Arel.sql("sections.display_order, homes.display_order, homes.id"))
   }
   scope :landable, -> {
     joins(:section)
-      .order("homes.company_flag, sections.display_order, homes.display_order, homes.id")
+      .order(Arel.sql("homes.company_flag, sections.display_order, homes.display_order, homes.id"))
   }
-  scope :machine_owners, -> {where(owner_flag: true).order("company_flag DESC, display_order, id")}
+  scope :machine_owners, -> {where(owner_flag: true).order(Arel.sql("company_flag DESC, display_order, id"))}
   scope :company, ->{where(company_flag: true)}
   scope :for_finance1, -> {where(member_flag: true, owner_flag: true).order(finance_order: :ASC, id: :ASC)}
   scope :for_drying, -> {where.not(drying_order: nil).order(:drying_order)}
