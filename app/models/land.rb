@@ -32,8 +32,8 @@ class Land < ApplicationRecord
 
   has_many :land_costs, -> {order(:activated_on)}
 
-  scope :usual, -> {where(target_flag: true).order("place, display_order")}
-  scope :list, -> {includes(:land_place, :owner, :manager, :owner_holder, :manager_holder).order("place, lands.display_order, lands.id")}
+  scope :usual, -> {where(target_flag: true).order(:place, :display_order)}
+  scope :list, -> {includes(:land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
   scope :for_finance1, -> {where("owner_id = manager_id").where(target_flag: true)}
   scope :for_finance2, -> {where("owner_id <> manager_id").where(target_flag: true)}
 
