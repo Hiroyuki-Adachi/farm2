@@ -10,7 +10,8 @@
 
 class ChemicalTerm < ApplicationRecord
   belongs_to :chemical, -> {with_deleted}
-
+  has_many :chemical_work_types, {dependent: :delete_all}
+  
   scope :usual, -> (term) {
     joins(chemical: :chemical_type)
       .where(term: term)
@@ -21,7 +22,6 @@ SQL
   scope :land, ->{joins(:chemical).where(<<SQL)}
   EXISTS (SELECT * FROM chemical_kinds WHERE chemical_kinds.chemical_type_id = chemicals.chemical_type_id)
 SQL
-  has_many :chemical_work_types, {dependent: :delete_all}
 
   def self.regist_price(params)
     params.each do |param|
