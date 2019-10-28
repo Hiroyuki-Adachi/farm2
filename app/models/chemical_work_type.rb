@@ -13,8 +13,13 @@
 class ChemicalWorkType < ActiveRecord::Base
   belongs_to :chemical_term
   belongs_to :work_type
+  delegate :chemical, to: :chemical_term
 
   scope :by_chemical_terms, ->(chemical_terms) {where(chemical_term_id: chemical_terms.ids)}
+  scope :by_work, -> (work) {
+    joins(chemical_term: :chemical)
+    .where(["chemical_work_types.work_type_id IN (?) AND quantity > 0", work.exact_work_types.map(&:id)])
+  }
 
   def self.regist_quantity(params)
     params.each do |param|
