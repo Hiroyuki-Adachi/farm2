@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :minutes, only: [:index, :create, :show, :destroy]
   resources :whole_crops, only: [:index, :create]
   resources :total_seedlings, only: [:index]
+  resources :total_chemicals, only: [:index]
   resources :total_dryings, only: [:index]
   resources :total_owned_rices, only: [:index]
   resources :seedling_results, param: "seedling_home_id", only: [:index, :edit, :update] do
