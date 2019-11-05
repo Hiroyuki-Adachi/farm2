@@ -28,7 +28,7 @@ class Chemical < ApplicationRecord
 
   scope :usual, ->(work) {
     joins(:chemical_type)
-      .where(<<-WHERE, work.term, work.work_kind.chemical_kinds.pluck(:chemical_type_id), ChemicalWorkType.by_work(work).map(&:chemical).map(&:id), work.chemicals.pluck(:chemical_id))
+      .where(<<-WHERE, work.term, ChemicalWorkType.by_work(work).map(&:chemical).map(&:id), work.work_kind.chemical_kinds.pluck(:chemical_type_id), work.chemicals.pluck(:chemical_id))
             (
                   chemicals.id IN (SELECT chemical_id FROM chemical_terms WHERE term = ?)
               AND chemicals.id IN (?)
