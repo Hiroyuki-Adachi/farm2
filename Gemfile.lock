@@ -300,6 +300,7 @@ DEPENDENCIES
   jquery-ui-rails (~> 5.0)
   kaminari
   listen (~> 3.1.5)
+  loofah (>= 2.3.1)
   migration_comments
   mini_racer (= 0.1.14)
   paranoia
