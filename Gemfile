@@ -24,6 +24,9 @@ gem 'bootstrap', '>= 4.0'
 # Japan Holiday
 gem 'holiday_jp'
 
+# In the Loofah gem for Ruby through v2.3.0 unsanitized JavaScript may occur in sanitized output when a crafted SVG element is republished.
+gem "loofah", ">= 2.3.1"
+
 gem 'bootsnap', require: false
 
 # Use jquery as the JavaScript library
