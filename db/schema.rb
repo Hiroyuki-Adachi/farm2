@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_19_143515) do
+ActiveRecord::Schema.define(version: 2019_11_11_125441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,20 @@ ActiveRecord::Schema.define(version: 2019_10_19_143515) do
     t.datetime "deleted_at"
     t.string "unit", limit: 2, default: "袋", null: false, comment: "単位"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
+  end
+
+  create_table "daily_weathers", primary_key: "target_date", id: :date, comment: "対象日", comment: "気象", force: :cascade do |t|
+    t.float "height", comment: "最高気温"
+    t.float "lowest", comment: "最低気温"
+    t.float "humidity", comment: "湿度"
+    t.float "sunshine", comment: "日照時間"
+    t.float "rain", comment: "降水量"
+    t.float "snow", comment: "降雪量"
+    t.float "pressure", comment: "気圧"
+    t.float "wind_speed", comment: "風速"
+    t.string "wind_direction", limit: 3, comment: "風向"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
