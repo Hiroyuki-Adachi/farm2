@@ -1,16 +1,27 @@
 require 'nokogiri'
 require 'csv'
+require 'openssl'
 
 class ImportJmaJob < ApplicationJob
   queue_as :default
 
   START_YEAR = 2010
   JMA_URL = "https://www.data.jma.go.jp/gmd/risk/obsdl/"
-  BEGIN_POS = 6
+  BEGIN_ROW = 6
 
-  def perform()
-    import(Date.today.year - 1)
-    import(Date.today.year)
+  COL_MATSUE = 54
+  COL_HIKAWA = 27
+  COL_IZUMO = 0
+
+  def perform(*years)
+    if years.empty?
+      import(Date.today.year - 1)
+      import(Date.today.year)
+    else
+      years.each do |y|
+        import(y)
+      end
+    end
   end
 
   private
@@ -20,21 +31,26 @@ class ImportJmaJob < ApplicationJob
     return unless res.is_a?(Net::HTTPSuccess)
 
     CSV.parse(res.body).each_with_index do |csv, i|
-      next if i < BEGIN_POS
+      next if i < BEGIN_ROW
 
-      
+      total_weather = TotalWeather.find_by(target_date: csv[0])
+      if total_weather
+        total_weather.update(csv_params(csv))
+      else
+        TotalWeather.create(csv_params(csv))
+      end
     end
   end
 
   def submit(year)
     uri = URI.parse(JMA_URL + "show/table")
     req = Net::HTTP::Post.new(uri)
-    req.set_form_data(params(year))
+    req.set_form_data(submit_params(year))
 
-    return Net::HTTP.start(uri.hostname, uri.port, {use_ssl: uri.scheme == "https"}) { |http| http.request(req) }
+    return Net::HTTP.start(uri.hostname, uri.port, {use_ssl: true, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}) { |http| http.request(req) }
   end
 
-  def params(year)
+  def submit_params(year)
     {
       "stationNumList" => '["a0694","a1310","s47741"]',
       "aggrgPeriod" => "1",
@@ -55,6 +71,31 @@ class ImportJmaJob < ApplicationJob
       "ymdLiteral" => "1",
       "PHPSESSID" => "#{sesid}"
     }
+  end
+
+  def csv_params(csv)
+    {
+      target_date: csv[0],
+      height: csv_value(csv, 1),
+      lowest: csv_value(csv, 4),
+      humidity: csv_value(csv, 22),
+      sunshine: csv_value(csv, 10),
+      rain: csv_value(csv, 7),
+      snow: csv_value(csv, 13),
+      pressure: csv_value(csv, 25),
+      wind_speed: csv_value(csv, 16),
+      wind_direction: csv_value(csv, 19)
+    }
+  end
+
+  def csv_value(csv, pos)
+    if (csv[pos + COL_HIKAWA + 1].to_i >= csv[pos + COL_IZUMO + 1].to_i) && (csv[pos + COL_HIKAWA + 1].to_i >= csv[pos + COL_MATSUE + 1].to_i)
+      return csv[pos + COL_HIKAWA]
+    elsif csv[pos + COL_IZUMO + 1].to_i >= csv[pos + COL_MATSUE + 1].to_i
+      return csv[pos + COL_IZUMO]
+    else
+      return csv[pos + COL_MATSUE]
+    end
   end
 
   def sesid
