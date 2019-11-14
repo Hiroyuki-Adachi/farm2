@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 class ImportJmaJob < ApplicationJob
   queue_as :default
 
@@ -5,24 +7,31 @@ class ImportJmaJob < ApplicationJob
   JMA_URL = "https://www.data.jma.go.jp/gmd/risk/obsdl/"
 
   def perform()
-    START_YEAR.upto(Date.today.year) do |year|
-      import(year)
-    end
+    import(Date.today.year - 1)
+    import(Date.today.year)
   end
 
   private
 
   def import(year)
-
+    res = submit(year)
   end
 
-  def search_params(year, sesid)
+  def submit(year)
+    uri = URI.parse(JMA_URL + "show/table")
+    req = Net::HTTP::Post.new(uri)
+    req.set_form_data(params(year))
+
+    return Net::HTTP.start(uri.hostname, uri.port, {use_ssl: uri.scheme == "https"}) { |http| http.request(req) }
+  end
+
+  def params(year)
     {
-      "stationNumList" => "[&quot;a0694&quot;,&quot;a1310&quot;,&quot;s47741&quot;]",
+      "stationNumList" => '["a0694","a1310","s47741"]',
       "aggrgPeriod" => "1",
-      "elementNumList" => "[[&quot;401&quot;,&quot;&quot;],[&quot;202&quot;,&quot;&quot;],[&quot;203&quot;,&quot;&quot;],[&quot;101&quot;,&quot;&quot;],[&quot;301&quot;,&quot;&quot;],[&quot;305&quot;,&quot;&quot;],[&quot;503&quot;,&quot;&quot;],[&quot;601&quot;,&quot;&quot;],[&quot;605&quot;,&quot;&quot;]]",
+      "elementNumList" => '[["401",""],["202",""],["203",""],["101",""],["301",""],["305",""],["503",""],["601",""],["605",""]]',
       "interAnnualFlag" => "1",
-      "ymdList" => "[&quot;#{year}&quot;,&quot;#{year}&quot;,&quot;1&quot;,&quot;12&quot;,&quot;1&quot;,&quot;31&quot;]",
+      "ymdList" => "[\"#{year}\",\"#{year}\",\"1\",\"12\",\"1\",\"31\"]",
       "optionNumList" => "[]",
       "downloadFlag" => "true",
       "rmkFlag" => "1",
@@ -39,7 +48,7 @@ class ImportJmaJob < ApplicationJob
     }
   end
 
-  def read_sesid
+  def sesid
     res = Net::HTTP.get_response(URI.parse(JMA_URL))
     return unless res.is_a?(Net::HTTPSuccess)
 
