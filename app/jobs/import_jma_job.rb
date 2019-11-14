@@ -39,7 +39,11 @@ class ImportJmaJob < ApplicationJob
     }
   end
 
-  def sesid
-    url = URI.parse(JMA_URL)
+  def read_sesid
+    res = Net::HTTP.get_response(URI.parse(JMA_URL))
+    return unless res.is_a?(Net::HTTPSuccess)
+
+    elems = Nokogiri::HTML.parse(res.body, nil).css("#sid")
+    return elems[0].attributes["value"].value
   end
 end
