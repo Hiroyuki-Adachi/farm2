@@ -1,10 +1,12 @@
 require 'nokogiri'
+require 'csv'
 
 class ImportJmaJob < ApplicationJob
   queue_as :default
 
   START_YEAR = 2010
   JMA_URL = "https://www.data.jma.go.jp/gmd/risk/obsdl/"
+  BEGIN_POS = 6
 
   def perform()
     import(Date.today.year - 1)
@@ -15,6 +17,13 @@ class ImportJmaJob < ApplicationJob
 
   def import(year)
     res = submit(year)
+    return unless res.is_a?(Net::HTTPSuccess)
+
+    CSV.parse(res.body).each_with_index do |csv, i|
+      next if i < BEGIN_POS
+
+      
+    end
   end
 
   def submit(year)
