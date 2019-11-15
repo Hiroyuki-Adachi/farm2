@@ -33,11 +33,11 @@ class ImportJmaJob < ApplicationJob
     CSV.parse(res.body).each_with_index do |csv, i|
       next if i < BEGIN_ROW
 
-      total_weather = TotalWeather.find_by(target_date: csv[0])
-      if total_weather
-        total_weather.update(csv_params(csv))
+      daily_weather = DailyWeather.find_by(target_date: csv[0])
+      if daily_weather
+        daily_weather.update(csv_params(csv))
       else
-        TotalWeather.create(csv_params(csv))
+        DailyWeather.create(csv_params(csv))
       end
     end
   end
