@@ -7,12 +7,26 @@ class ImportJmaJob < ApplicationJob
 
   START_YEAR = 2010
   JMA_URL = "https://www.data.jma.go.jp/gmd/risk/obsdl/"
-  BEGIN_ROW = 6
+  ROW_PLACE = 2
+  ROW_TYPE = 3
+  ROW_KIND = 5
+  ROW_DATA = 6
 
-  COL_MATSUE = 54
-  COL_HIKAWA = 27
-  COL_IZUMO = 0
+  PLACE_MATSUE = "松江"
+  PLACE_HIKAWA = "斐川"
+  PLACE_IZUMO = "出雲"
 
+  TYPE_HEIGHT = "最高気温"
+  TYPE_LOWEST = "最低気温"
+  TYPE_HUMIDITY = "平均湿度"
+  TYPE_SUNSHINE = "日照時間"
+  TYPE_RAIN = "降水量"
+  TYPE_SNOW = "降雪量"
+  TYPE_PRESSURE = "平均現地気圧"
+  TYPE_WIND_SPEED = "平均風速"
+  TYPE_WIND_DIRECTION = "最多風向"
+
+  KIND_QUALITY = "品質"
   def perform(*years)
     if years.empty?
       import(Date.today.year - 1)
@@ -30,8 +44,11 @@ class ImportJmaJob < ApplicationJob
     res = submit(year)
     return unless res.is_a?(Net::HTTPSuccess)
 
-    CSV.parse(res.body).each_with_index do |csv, i|
-      next if i < BEGIN_ROW
+    CSV.parse(res.body.encode(Encoding::UTF_8, Encoding::Shift_JIS)).each_with_index do |csv, i|
+      @csv_places = csv if i == ROW_PLACE
+      @csv_types = csv if i == ROW_TYPE
+      @csv_kinds = csv if i == ROW_KIND
+      next if i < ROW_DATA
 
       daily_weather = DailyWeather.find_by(target_date: csv[0])
       if daily_weather
@@ -54,7 +71,7 @@ class ImportJmaJob < ApplicationJob
     {
       "stationNumList" => '["a0694","a1310","s47741"]',
       "aggrgPeriod" => "1",
-      "elementNumList" => '[["401",""],["202",""],["203",""],["101",""],["301",""],["305",""],["503",""],["601",""],["605",""]]',
+      "elementNumList" => '[["202",""],["203",""],["101",""],["301",""],["401",""],["305",""],["503",""],["601",""],["605",""]]',
       "interAnnualFlag" => "1",
       "ymdList" => "[\"#{year}\",\"#{year}\",\"1\",\"12\",\"1\",\"31\"]",
       "optionNumList" => "[]",
@@ -76,26 +93,50 @@ class ImportJmaJob < ApplicationJob
   def csv_params(csv)
     {
       target_date: csv[0],
-      height: csv_value(csv, 1),
-      lowest: csv_value(csv, 4),
-      humidity: csv_value(csv, 22),
-      sunshine: csv_value(csv, 10),
-      rain: csv_value(csv, 7),
-      snow: csv_value(csv, 13),
-      pressure: csv_value(csv, 25),
-      wind_speed: csv_value(csv, 16),
-      wind_direction: csv_value(csv, 19)
+      height: csv_value(csv, TYPE_HEIGHT),
+      lowest: csv_value(csv, TYPE_LOWEST),
+      humidity: csv_value(csv, TYPE_HUMIDITY),
+      sunshine: csv_value(csv, TYPE_SUNSHINE),
+      rain: csv_value(csv, TYPE_RAIN),
+      snow: csv_value(csv, TYPE_SNOW),
+      pressure: csv_value(csv, TYPE_PRESSURE),
+      wind_speed: csv_value(csv, TYPE_WIND_SPEED),
+      wind_direction: csv_value(csv, TYPE_WIND_DIRECTION)
     }
   end
 
-  def csv_value(csv, pos)
-    if (csv[pos + COL_HIKAWA + 1].to_i >= csv[pos + COL_IZUMO + 1].to_i) && (csv[pos + COL_HIKAWA + 1].to_i >= csv[pos + COL_MATSUE + 1].to_i)
-      return csv[pos + COL_HIKAWA]
-    elsif csv[pos + COL_IZUMO + 1].to_i >= csv[pos + COL_MATSUE + 1].to_i
-      return csv[pos + COL_IZUMO]
+  def csv_value(csv, type)
+    if (quality(csv, type, PLACE_HIKAWA) >= quality(csv, type, PLACE_IZUMO)) && (quality(csv, type, PLACE_HIKAWA) >= quality(csv, type, PLACE_MATSUE))
+      return csv[csv_pos(type, PLACE_HIKAWA)]
+    elsif quality(csv, type, PLACE_IZUMO) >= quality(csv, type, PLACE_MATSUE)
+      return csv[csv_pos(type, PLACE_IZUMO)]
     else
-      return csv[pos + COL_MATSUE]
+      return csv[csv_pos(type, PLACE_MATSUE)]
     end
+  end
+
+  def quality(csv, type, place)
+    csv[csv_pos(type, place, KIND_QUALITY)].to_i
+  end
+
+  def csv_pos(type, place, kind = nil)
+    pos = @csv_places.index {|cp| cp && cp.start_with?(place)}
+    @csv_types.each_with_index do |ct, i|
+      next if i < pos
+      if ct && ct.start_with?(type)
+        pos = i
+        break
+      end
+    end
+    return pos if kind.nil?
+    @csv_kinds.each_with_index do |ck, i|
+      next if i < pos
+      if ck && ck.start_with?(kind)
+        pos = i
+        break
+      end
+    end
+    return pos
   end
 
   def sesid
