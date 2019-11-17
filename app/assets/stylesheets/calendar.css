@@ -7,6 +7,12 @@ th.holiday {color: Red !important; }
   #calendar-base {width: 2550px;}
   .calendar-month {width:200px; margin-left:10px; }
   .calendar-table tbody th {width:65px;}
+  .weather {font-size: 0.75vw;}
+  .weather .height {color: Red;}
+  .weather .lowest {color: Blue;}
+  .weather .sunshine {color: Red;}
+  .weather .rain {color: Blue;}
+  .weather .snow {color: Blue;}
 }
 @media print {
   #calendar-wrapper {
@@ -29,4 +35,5 @@ th.holiday {color: Red !important; }
   .calendar-day {font-size: 0.75vw; display: block; margin: 0;}
   .calendar-wday {font-size: 0.75vw; display: block; margin: 0;}
   .calendar-kind a {text-decoration:none;}
+  .weather {display: none;}
 }
