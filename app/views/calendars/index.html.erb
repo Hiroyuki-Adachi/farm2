@@ -6,6 +6,22 @@ div.kind-<%= calendar_work_kind.work_kind_id %> {color: <%= calendar_work_kind.t
 div.kind-<%= calendar_work_kind.work_kind_id %> a {color: <%= calendar_work_kind.text_color %> !important;}
 <% end %>
 </style>
+<div class="form-check form-check-inline">
+  <input class="form-check-input check-weather" type="checkbox" id="check_temprature" data-css="div.temprature" />
+  <label class="form-check-label" for="check_temprature">気温</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input check-weather" type="checkbox" id="check_water" data-css="div.water" />
+  <label class="form-check-label" for="check_water">日照時間(降水量)</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input check-weather" type="checkbox" id="check_wind" data-css="div.wind" />
+  <label class="form-check-label" for="check_wind">風</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input check-weather" type="checkbox" id="check_other" data-css="div.other" />
+  <label class="form-check-label" for="check_other">その他</label>
+</div>
 <div class="row">
   <div id="calendar-wrapper">
     <div id="calendar-base">
@@ -23,6 +39,7 @@ div.kind-<%= calendar_work_kind.work_kind_id %> a {color: <%= calendar_work_kind
                 <% last = today >> 1 %>
                 <% while today < last %>
                 <tr>
+                  <% weather = @weathers.find {|w| w.target_date == today} %>
                     <th class="numeric wday-<%= today.wday%> <%= HolidayJp.holiday?(today) ? "holiday" : "" %>">
                       <span class="calendar-day"><%= today.day %></span>
                       <span class="calendar-wday">(<%= I18n.t('date.abbr_day_names')[today.wday]%>)</span>
@@ -46,6 +63,14 @@ div.kind-<%= calendar_work_kind.work_kind_id %> a {color: <%= calendar_work_kind
                           </div>
                         <% end %>
                       <% end %>
+                      <% if weather %>
+                        <div class="weather">
+                          <div class="temprature"><span class="height"><%= weather.height %>℃</span> <span class="lowest"><%= weather.lowest %>℃</span></div>
+                          <div class="water"><span class="sunshine"><%= weather.sunshine %>H</span> <span class="rain"><%= weather.rain %>mm</span></div>
+                          <div class="wind"><span class="speed"><%= weather.wind_speed%>m/s</span><span class="direction">(<%= weather.wind_direction %>)</span></div>
+                          <div class="other"><span class="pressure"><%= weather.pressure %>hPa</span><span class="humidity">(<%= weather.humidity %>%)</span></div>
+                        </div>
+                      <% end%>
                     </td>
                 </tr>
                 <% today += 1 %>
@@ -73,8 +98,15 @@ $(function() {
     $(window).on("resize", function() {
         init_size();
     });
+    $(".check-weather").change(function() {
+        check_weather($(this));
+    });
 
     init_size();
+    check_weather($("#check_temprature"));
+    check_weather($("#check_water"));
+    check_weather($("#check_wind"));
+    check_weather($("#check_other"));
 });
 
 function init_size() {
@@ -82,5 +114,13 @@ function init_size() {
 
     $("#calendar-wrapper").height($(window).height() - off.top - $("#btn_toolbar").height());
     $("#calendar-wrapper").width($(window).width() - off.left);
+}
+
+function check_weather(checkbox) {
+    if(checkbox.prop("checked")) {
+        $(checkbox.data("css")).show();
+    } else {
+        $(checkbox.data("css")).hide();
+    }
 }
 </script>

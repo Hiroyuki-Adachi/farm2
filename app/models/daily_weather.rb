@@ -17,4 +17,8 @@
 #
 
 class DailyWeather < ApplicationRecord
+  scope :usual, ->(year) {
+    where(target_date: [Date.new(year, 1, 1)..Date.new(year, 12, 31)])
+      .order(target_date: :asc)
+  }
 end
