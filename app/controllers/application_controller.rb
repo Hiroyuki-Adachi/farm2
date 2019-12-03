@@ -26,20 +26,31 @@ class ApplicationController < ActionController::Base
         && current_organization.broccoli_work_kind_id == work.work_kind_id
   end
 
-  def sum_hours(term, works)
+  def sum_hours(term)
     Rails.cache.fetch(sum_hours_key(term), expires_in: 1.hour) do
-      WorkResult.where(work_id: works.ids).group(:work_id).sum(:hours).to_h
+      WorkResult.where(work_id: Work.usual(term).ids).group(:work_id).sum(:hours).to_h
     end
   end
 
-  def count_workers(term, works)
+  def count_workers(term)
     Rails.cache.fetch(count_workers_key(term), expires_in: 1.hour) do
-      WorkResult.where(work_id: works.ids).group(:work_id).count(:worker_id).to_h
+      WorkResult.where(work_id: Work.usual(term).ids).group(:work_id).count(:worker_id).to_h
     end
   end
 
   def permit_admin
     to_error_path unless current_user.admin?
+  end
+
+  def make_months
+    results = []
+    head = current_system.start_date
+    while head <= Time.zone.today
+      head = Date.new(head.year, head.month, 1)
+      results << [head.strftime("%Y年 %m月"), head]
+      head = head.next_month
+    end
+    return results
   end
 
   private

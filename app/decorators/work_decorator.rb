@@ -128,6 +128,10 @@ class WorkDecorator < Draper::Decorator
     model.work_chemicals.count.zero? ? "" : "薬品"
   end
 
+  def machine_names
+    model.machine_results.map(&:machine).flatten.uniq.map(&:type_name).join("、")
+  end
+
   def broccoli_worker_names
     model.workers.map { |worker| worker.broccoli_mark.presence || worker.name}.sort.join(", ")
   end
