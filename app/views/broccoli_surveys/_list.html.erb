@@ -1,0 +1,12 @@
+<% @works.each do |work| %>
+  <tr>
+    <td></td>
+    <td><%= work.worked_at %></td>
+    <td><%= work.name %></td>
+    <td class="numeric"><%= @sum_hours[work.id] || 0 %></td>
+    <td class="numeric"><%= @count_workers[work.id] || 0 %></td>
+    <td><%= work.machine_names %></td>
+    <td><%= work.remarks %></td>
+    <td><%= link_to "作業日報", work_path(work), {class: "btn btn-outline-success btn-sm"} %></td>
+  </tr>
+<% end %>

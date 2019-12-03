@@ -20,8 +20,8 @@ class WorksController < ApplicationController
     @terms = WorkDecorator.terms
     @works = Work.usual(@term)
     @works = @works.by_worker(current_user.worker) if current_user.visitor?
-    @sum_hours = sum_hours(@term, @works)
-    @count_workers = count_workers(@term, @works)
+    @sum_hours = sum_hours(@term)
+    @count_workers = count_workers(@term)
     set_pager
     if request.xhr?
       respond_to do |format|
