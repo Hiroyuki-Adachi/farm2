@@ -21,4 +21,8 @@ module ApplicationHelper
     qr = ::RQRCode::QRCode.new(current_organization.try(:url).to_s + text)
     ChunkyPNG::Image.from_datastream(qr.as_png.resize(300, 300).to_datastream).to_data_url
   end
+
+  def hhmm(hours, count = 1)
+    Time.at((hours || 0) * 3600 / count).utc.strftime("%H:%M")
+  end
 end
