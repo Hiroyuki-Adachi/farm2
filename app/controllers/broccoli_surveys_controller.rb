@@ -16,6 +16,9 @@ class BroccoliSurveysController < ApplicationController
     else
       respond_to do |format|
         format.html
+        format.csv do
+          render :content_type => 'text/csv; charset=cp943'
+        end
       end
     end
   end
