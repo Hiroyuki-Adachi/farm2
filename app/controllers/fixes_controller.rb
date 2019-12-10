@@ -11,6 +11,7 @@ class FixesController < ApplicationController
   SHOW2_MONTH = 11
 
   def index
+    @making_flag = Delayed::Job.exists?
     @fixes = FixDecorator.decorate_collection(Fix.usual(current_term))
   end
 
@@ -36,7 +37,7 @@ class FixesController < ApplicationController
   end
 
   def create
-    Fix.do_fix(current_term, @fixed_at, current_user.worker_id, params[:fixed_works])
+    FixWorksJob.perform_later(current_term, params[:fixed_at], current_user.worker_id, params[:fixed_works])
     redirect_to fixes_path
   end
 
