@@ -41,14 +41,6 @@
           </a>
         </div>
         <div class="col-3">
-          <a href="<%= personal_information_machines_path(personal_information_token: token)%>">
-            <figure class="figure text-center">
-              <img class="figure-img" width="48" height="48" src="/images/menu/tractor.png" />
-              <figcaption class="figure-caption text-white">賃 借</figcaption>
-            </figure>
-          </a>
-        </div>
-        <div class="col-3">
           <a href="<%= personal_information_seedlings_path(personal_information_token: token)%>">
             <figure class="figure text-center">
               <img class="figure-img" width="48" height="48" src="/images/menu/jouro.png" />
@@ -56,13 +48,30 @@
             </figure>
           </a>
         </div>
+        <div class="col-3">
+          <a href="<%= personal_information_statistics_path(personal_information_token: token)%>">
+            <figure class="figure text-center">
+              <img class="figure-img" width="48" height="48" src="/images/menu/graph.png" />
+              <figcaption class="figure-caption text-white">集 計</figcaption>
+            </figure>
+          </a>
+        </div>
       </div>
+      <!-- 
       <div class="row">
         <div class="col-3">
           <a href="<%= personal_information_dryings_path(personal_information_token: token)%>">
             <figure class="figure text-center">
               <img class="figure-img" width="48" height="48" src="/images/menu/country.png" />
               <figcaption class="figure-caption text-white">乾 燥</figcaption>
+            </figure>
+          </a>
+        </div>
+        <div class="col-3">
+          <a href="<%= personal_information_machines_path(personal_information_token: token)%>">
+            <figure class="figure text-center">
+              <img class="figure-img" width="48" height="48" src="/images/menu/tractor.png" />
+              <figcaption class="figure-caption text-white">賃 借</figcaption>
             </figure>
           </a>
         </div>
@@ -82,15 +91,8 @@
             </figure>
           </a>
         </div>
-        <div class="col-3">
-          <a href="<%= personal_information_statistics_path(personal_information_token: token)%>">
-            <figure class="figure text-center">
-              <img class="figure-img" width="48" height="48" src="/images/menu/graph.png" />
-              <figcaption class="figure-caption text-white">集 計</figcaption>
-            </figure>
-          </a>
-        </div>
       </div>
+      -->
     </div>
   </div>
 </nav>
