@@ -11,7 +11,7 @@ class FixDecorator < Draper::Decorator
   #   end
 
   def fixed_at
-    model.fixed_at ? model.fixed_at.strftime("%Y年 %m月") : nil
+    model.fixed_at ? model.fixed_at.strftime("%Y-%m-%d") : nil
   end
 
   def fixer_short_name
