@@ -20,9 +20,9 @@
       <%= link_to '育苗一覧', seedling_results_path, {class: "dropdown-item", data: {controller: "seedling_results"}} %>
       <% if current_user.manageable? %>
         <%= link_to '乾燥調整一覧', dryings_path, {class: "dropdown-item", data: {controller: :dryings}} %>
-        <!-- <%= link_to '収穫一覧(水稲)', harvest_rices_path, {class: "dropdown-item", data: {controller: "harvest_rices"}} %> -->
+        <%= link_to '収穫一覧(水稲)', harvest_rices_path, {class: "dropdown-item", data: {controller: "harvest_rices"}} %>
         <%= link_to '収穫一覧(WCS)', harvest_whole_crops_path, {class: "dropdown-item", data: {controller: "harvest_whole_crops"}} %>
-        <!-- <%= link_to '保有米一覧', owned_rices_path, {class: "dropdown-item", data: {controller: :owned_rices}} %> -->
+        <%= link_to '保有米一覧', owned_rices_path, {class: "dropdown-item", data: {controller: :owned_rices}} %>
       <% end %>
     </div>
   <% end %>
@@ -47,10 +47,10 @@
     <%= link_to '新規確定', new_fix_path, {class: "dropdown-item", data: {controller: :fixes, actions: [:new]}} %>
     <%= link_to '確定一覧', fixes_path, {class: "dropdown-item", data: {controller: :fixes, actions: [:index, :show]}} %>
     <%= link_to '育苗集計', total_seedlings_path, {class: "dropdown-item", data: {controller: :total_seedlings}} %>
-    <!-- <%= link_to '乾燥調整一覧', total_dryings_path, {class: "dropdown-item", data: {controller: :total_dryings}} %> -->
+    <%= link_to '乾燥調整一覧', total_dryings_path, {class: "dropdown-item", data: {controller: :total_dryings}} %>
     <%= link_to 'WCS一覧', whole_crops_path, {class: "dropdown-item", data: {controller: :whole_crops}} %>
     <%= link_to '組合内受託一覧', contracts_path, {class: "dropdown-item", data: {controller: "contracts"}} %>
-    <!-- <%= link_to '保有米一覧', total_owned_rices_path, {class: "dropdown-item", data: {controller: :total_owned_rices}} %> -->
+    <%= link_to '保有米一覧', total_owned_rices_path, {class: "dropdown-item", data: {controller: :total_owned_rices}} %>
   </div>
   <div aria-labelledby="navbarCost" style="display:none;">
     <span class="h5">原価管理</span>
