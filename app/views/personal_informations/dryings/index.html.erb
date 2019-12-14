@@ -14,9 +14,9 @@
           <td><%= drying.carried_on_short %></td>
           <td><%= drying.shipped_on_short %></td>
           <td><%= drying&.work_type&.name %></td>
-          <td><%= drying.drying_type_name(@worker.home.id) %></td>
-          <td class="text-right"><%= drying.all_rice_weight_format %></td>
-          <td class="text-right"><%= drying.all_rice_bag_format %></td>
+          <td><%= drying.drying_type_name(@worker.home_id) %></td>
+          <td class="text-right"><%= drying.all_rice_weight_format(current_system) %></td>
+          <td class="text-right"><%= drying.all_rice_bag_format(current_system) %></td>
         </tr>
       <% end %>
     </tbody>
