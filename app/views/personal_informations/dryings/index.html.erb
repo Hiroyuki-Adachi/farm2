@@ -15,8 +15,8 @@
           <td><%= drying.shipped_on_short %></td>
           <td><%= drying&.work_type&.name %></td>
           <td><%= drying.drying_type_name(@worker.home_id) %></td>
-          <td class="text-right"><%= drying.all_rice_weight_format(current_system) %></td>
-          <td class="text-right"><%= drying.all_rice_bag_format(current_system) %></td>
+          <td class="text-right"><%= format_weight(drying.all_rice_weight(current_system)) %></td>
+          <td class="text-right"><%= format_bag(drying.all_rice_bag(current_system)) %></td>
         </tr>
       <% end %>
     </tbody>
@@ -24,18 +24,18 @@
       <tr>
         <th rowspan="3" colspan="3">合計</th>
         <th>乾籾出荷</th>
-        <td class="text-right"><%= format_weight(@total_dryings[DryingType::COUNTRY.id]) %></td>
+        <td class="text-right"><%= format_weight(@total_dryings[DryingType::COUNTRY.id].to_i) %></td>
         <td class="text-right"><%= format_bag(@total_dryings[DryingType::COUNTRY.id]) %></td>
       </tr>
       <tr>
         <th>調整出荷</th>
-        <td class="text-right"><%= format_weight(@total_dryings[DryingType::SELF.id] + @waste_totals[DryingType::SELF.id]) %></td>
-        <td class="text-right"><%= format_bag(@total_dryings[DryingType::SELF.id] + @waste_totals[DryingType::SELF.id]) %></td>
+        <td class="text-right"><%= format_weight(@total_dryings[DryingType::SELF.id].to_i + @waste_totals[DryingType::SELF.id].to_i) %></td>
+        <td class="text-right"><%= format_bag(@total_dryings[DryingType::SELF.id].to_i + @waste_totals[DryingType::SELF.id].to_i) %></td>
       </tr>
       <tr>
         <th>調整のみ</th>
-        <td class="text-right"><%= format_weight(@total_dryings[DryingType::ADJUST.id] + @waste_totals[DryingType::ADJUST.id]) %></td>
-        <td class="text-right"><%= format_bag(@total_dryings[DryingType::ADJUST.id] + @waste_totals[DryingType::ADJUST.id]) %></td>
+        <td class="text-right"><%= format_weight(@total_dryings[DryingType::ADJUST.id].to_i + @waste_totals[DryingType::ADJUST.id].to_i) %></td>
+        <td class="text-right"><%= format_bag(@total_dryings[DryingType::ADJUST.id].to_i + @waste_totals[DryingType::ADJUST.id].to_i) %></td>
       </tr>
     </tfoot>
   </table>
