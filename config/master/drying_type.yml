@@ -3,10 +3,10 @@
   name: "未設定"
 - id: 1
   code: Country
-  name: "カントリー"
+  name: "乾籾出荷"
 - id: 2
   code: Self
-  name: "乾燥調整"
+  name: "調整出荷"
 - id: 3
   code: Another
   name: "乾燥のみ"

@@ -21,15 +21,15 @@
     <tfoot>
       <tr>
         <th rowspan="3" colspan="3">合計</th>
-        <th>乾籾出荷</th>
+        <th><%= DryingType::COUNTRY.name %></th>
         <td class="text-right"><%= format_bag(@total_dryings[DryingType::COUNTRY.id]) %></td>
       </tr>
       <tr>
-        <th>調整出荷</th>
+        <th><%= DryingType::SELF.name %></th>
         <td class="text-right"><%= format_bag(@total_dryings[DryingType::SELF.id].to_i + @waste_totals[DryingType::SELF.id].to_i) %></td>
       </tr>
       <tr>
-        <th>調整のみ</th>
+        <th><%= DryingType::ADJUST.name %></th>
         <td class="text-right"><%= format_bag(@total_dryings[DryingType::ADJUST.id].to_i + @waste_totals[DryingType::ADJUST.id].to_i) %></td>
       </tr>
     </tfoot>
