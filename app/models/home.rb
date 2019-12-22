@@ -88,6 +88,6 @@ class Home < ApplicationRecord
   end
 
   def owned_rice_limit
-    (owned_area / 10 * 2).ceil
+    (owned_area / 10 * OwnedRice::OWNED_RICE_COUNT).floor
   end
 end

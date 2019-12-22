@@ -21,6 +21,10 @@
       <%= f.label :default_fee, class: "col-form-label-lg" %>
       <%= f.number_field :default_fee, {min: 0, max: 99999, required: true, class: "form-control"} %>
     </div>
+    <div class="col-md-2 form-group">
+      <%= f.label :relative_price, class: "col-form-label-lg" %>
+      <%= f.number_field :relative_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-2 form-group">

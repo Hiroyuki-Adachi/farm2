@@ -27,7 +27,7 @@ class OwnedRicesControllerTest < ActionController::TestCase
         id: 1,
         owned_rices: {owned_rice_prices(:owned_rice_price1).id => {
           home_id: 1, owned_rice_price_id: owned_rice_prices(:owned_rice_price1), id: owned_rices(:owned_rice1),
-          owned_count: 20, relative_count: 30
+          owned_count: 20
         }}
       }
     end
@@ -40,7 +40,7 @@ class OwnedRicesControllerTest < ActionController::TestCase
         id: 2,
         owned_rices: {owned_rice_prices(:owned_rice_price1).id => {
           home_id: 2, owned_rice_price_id: owned_rice_prices(:owned_rice_price1),
-          owned_count: 5, relative_count: 6
+          owned_count: 5
         }}
       }
     end

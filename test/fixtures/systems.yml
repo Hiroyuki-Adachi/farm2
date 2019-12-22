@@ -21,6 +21,7 @@
 #  dry_adjust_price     :decimal(4, )     default(0), not null     # 基準額(乾燥調整)
 #  half_sum_flag        :boolean          default(FALSE), not null # 半端米集計フラグ
 #  waste_sum_flag       :boolean          default(FALSE), not null # くず米集計フラグ
+#  relative_price       :decimal(5, )     default(0), not null     # 縁故米加算額
 #
 
 s2014:
@@ -33,6 +34,7 @@ s2014:
   default_price: 1000
   default_fee: 15000
   light_oil_price: 100
+  relative_price: 1000
 
 s2015:
   term: 2015
@@ -44,6 +46,7 @@ s2015:
   default_price: 1000
   default_fee: 15000
   light_oil_price: 120
+  relative_price: 1000
 
 s2016:
   term: 2016
@@ -55,6 +58,7 @@ s2016:
   default_price: 1000
   default_fee: 15000
   light_oil_price: 120
+  relative_price: 1000
 
 s2017:
   term: 2017
@@ -67,3 +71,4 @@ s2017:
   default_fee: 15000
   light_oil_price: 100
   seedling_price: 400
+  relative_price: 1000

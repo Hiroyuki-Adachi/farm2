@@ -1,57 +1,24 @@
 <h2><%= previous_term %>年度</h2>
 <table class="table table-sm table-bordered">
-  <colgroup>
-    <col span="<%= @p_owned_prices.size + 1 %>" style="background-color: aliceblue" />
-    <col span="<%= @p_relative_prices.size + 1 %>" style="background-color: honeydew" />
-    <col span="<%= @p_owned_prices.size %>" style="background-color: lemonchiffon" />
-    <col />
-  </colgroup>
   <thead>
     <tr>
-    <th colspan="<%= @p_owned_prices.size + 1 %>">保有米</th>
-    <th colspan="<%= @p_relative_prices.size + 1 %>">縁故米</th>
-    <th colspan="<%= @p_owned_prices.size %>">合計</th>
-    <th rowspan="2">合計</th>
-    </tr>
-    <tr>
     <% @p_owned_prices.each do |owned_price| %>
         <th><%= owned_price.name %></th>
     <% end %>
-    <th>小計</th>
-    <% @p_relative_prices.each do |relative_price| %>
-        <th><%= relative_price.name %></th>
-    <% end %>
-    <th>小計</th>
-    <% @p_owned_prices.each do |owned_price| %>
-        <th><%= owned_price.name %></th>
-    <% end %>
+    <th>合計</th>
+    <th>うち縁故米</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-    <% total_count = 0 %>
-    <% @p_owned_prices.each do |owned_price| %>
+      <% total_count = 0 %>
+      <% @p_owned_prices.each do |owned_price| %>
         <% owned_rice = @p_owned_rices.find {|o| o.owned_rice_price_id == owned_price.id} %>
         <td class="numeric"><%= owned_rice&.owned_count || 0 %></td>
         <% total_count += (owned_rice&.owned_count || 0) %>
-    <% end %>
-    <td class="numeric"><%= total_count %></td>
-
-    <% total_count = 0 %>
-    <% @p_relative_prices.each do |relative_price| %>
-        <% owned_rice = @p_owned_rices.find {|o| o.owned_rice_price_id == relative_price.id} %>
-        <td class="numeric"><%= owned_rice&.relative_count || 0 %></td>
-        <% total_count += (owned_rice&.relative_count || 0) %>
-    <% end %>
-    <td class="numeric"><%= total_count %></td>
-
-    <% total_count = 0 %>
-    <% @p_owned_prices.each do |owned_price| %>
-        <% owned_rice = @p_owned_rices.find {|o| o.owned_rice_price_id == owned_price.id} %>
-        <td class="numeric"><%= owned_rice&.sum_count || 0 %></td>
-        <% total_count += (owned_rice&.sum_count || 0) %>
-    <% end %>
-    <td class="numeric"><%= total_count %></td>
+      <% end %>
+      <td class="numeric"><%= total_count %></td>
+      <td class="numeric"></td>
     </tr>
   </tbody>
 </table>

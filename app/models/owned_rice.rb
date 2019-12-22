@@ -6,7 +6,6 @@
 #  home_id             :integer          default(0), not null  # 購入世帯
 #  owned_rice_price_id :integer          default(0), not null  # 保有米単価
 #  owned_count         :decimal(3, )     default(0), not null  # 保有米数
-#  relative_count      :decimal(3, )     default(0), not null  # 縁故米数
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
@@ -14,6 +13,8 @@
 class OwnedRice < ApplicationRecord
   belongs_to :owned_rice_price
   belongs_to :home
+
+  OWNED_RICE_COUNT = 2 # 10a当たりの保有米数
 
   scope :usual, ->(term) {
     joins(:owned_rice_price)
@@ -26,13 +27,13 @@ class OwnedRice < ApplicationRecord
       .order("owned_rice_prices.display_order, owned_rice_prices.id")
   }
 
-  scope :available, -> {where("owned_rices.owned_count > 0 OR owned_rices.relative_count > 0")}
+  scope :available, -> {where("owned_rices.owned_count > 0")}
 
   scope :for_finance, ->(term) {
     joins(:owned_rice_price)
       .joins(:home)
       .where(["owned_rice_prices.term = ?", term])
-      .where("(owned_rices.owned_count > 0 OR owned_rices.relative_count > 0)")
+      .where("owned_rices.owned_count > 0")
       .order("homes.finance_order, homes.id, owned_rice_prices.display_order, owned_rice_prices.id")
   }
 
@@ -51,13 +52,5 @@ class OwnedRice < ApplicationRecord
 
   def owned_price
     owned_count * owned_rice_price.owned_price
-  end
-
-  def relative_price
-    relative_count * owned_rice_price.relative_price
-  end
-
-  def sum_price
-    owned_price + relative_price
   end
 end

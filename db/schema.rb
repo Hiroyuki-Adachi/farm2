@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_11_125441) do
+ActiveRecord::Schema.define(version: 2019_12_22_080730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -425,7 +425,6 @@ ActiveRecord::Schema.define(version: 2019_11_11_125441) do
     t.string "name", limit: 10, default: "", null: false, comment: "品種名"
     t.string "short_name", limit: 5, default: "", null: false, comment: "品種名(略称)"
     t.decimal "owned_price", precision: 5, default: "0", null: false, comment: "保有米価格"
-    t.decimal "relative_price", precision: 5, default: "0", null: false, comment: "縁故米価格"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["term", "work_type_id"], name: "owned_rice_prices_2nd", unique: true
@@ -435,7 +434,6 @@ ActiveRecord::Schema.define(version: 2019_11_11_125441) do
     t.integer "home_id", default: 0, null: false, comment: "購入世帯"
     t.integer "owned_rice_price_id", default: 0, null: false, comment: "保有米単価"
     t.decimal "owned_count", precision: 3, default: "0", null: false, comment: "保有米数"
-    t.decimal "relative_count", precision: 3, default: "0", null: false, comment: "縁故米数"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["home_id", "owned_rice_price_id"], name: "owned_rices_2nd", unique: true
@@ -524,6 +522,7 @@ ActiveRecord::Schema.define(version: 2019_11_11_125441) do
     t.decimal "dry_adjust_price", precision: 4, default: "0", null: false, comment: "基準額(乾燥調整)"
     t.boolean "half_sum_flag", default: false, null: false, comment: "半端米集計フラグ"
     t.boolean "waste_sum_flag", default: false, null: false, comment: "くず米集計フラグ"
+    t.decimal "relative_price", precision: 5, default: "0", null: false, comment: "縁故米加算額"
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
     t.index ["term"], name: "index_systems_on_term", unique: true
   end
