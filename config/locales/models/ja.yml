@@ -184,6 +184,7 @@ ja:
         dry_adjust_price: "基準額(乾燥調整)"
         half_sum_flag: "半端米を集計に含める"
         waste_sum_flag: "くず米を集計に含める"
+        relative_price: "縁故米(加算額)"
 
       organization:
         name: "組織名称"

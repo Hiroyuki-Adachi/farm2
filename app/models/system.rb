@@ -21,6 +21,7 @@
 #  dry_adjust_price     :decimal(4, )     default(0), not null     # 基準額(乾燥調整)
 #  half_sum_flag        :boolean          default(FALSE), not null # 半端米集計フラグ
 #  waste_sum_flag       :boolean          default(FALSE), not null # くず米集計フラグ
+#  relative_price       :decimal(5, )     default(0), not null     # 縁故米加算額
 #
 
 class System < ApplicationRecord

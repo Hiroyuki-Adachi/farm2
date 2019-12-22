@@ -26,29 +26,7 @@
       </div>
     <% end %>
     <div class="col-md-2 d-flex align-items-end">
-      <span class="h5">合計:<span id="sum_owned_rice"></span></span>
-    </div>
-  </div>
-  <h3>縁故米</h3>
-  <div class="row">
-    <% @relative_prices.each do |owned_price| %>
-      <% owned_rice = @owned_rices.find {|o| o.owned_rice_price_id == owned_price.id} %>
-      <div class="col-md-2 form-group">
-        <%= label_tag "relative_rices_#{owned_price.id}", owned_price.name, class: "col-form-label-lg" %>
-        <%= number_field_tag "owned_rices[#{owned_price.id}][relative_count]", owned_rice&.relative_count || 0, {id: "relative_rices_#{owned_price.id}", class: "form-control form-control-sm relative-rice rice", required: true, min: 0, max: 999} %>
-      </div>
-    <% end %>
-    <div class="col-md-2 d-flex align-items-end">
-      <span class="h5">合計:<span id="sum_relative_rice"></span></span>
-    </div>
-    <div class="col-md-2 d-flex align-items-end">
-      <span class="h5">総合計:<span id="total_rice"></span></span>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div id="alert-over" class="alert alert-warning" role="alert">保有米の限度量を超えている可能性があります。</div>
-      <div id="alert-under" class="alert alert-warning" role="alert">保有米に余裕があるのに縁故米が入力されています。</div>
+      <span class="h5">合計:<span id="sum_owned_rice"></span>袋</span>
     </div>
   </div>
   <div class="btn-toolbar">
@@ -63,30 +41,17 @@
 <script>
 $(function() {
     $(".rice").on('change keyup click', function() {
-        check_limit();
+        dispSum();
     });
 
-    check_limit();
+    dispSum();
 });
 
-function check_limit() {
-    $(".alert").hide();
-
-    let owned_rice = 0, relative_rice = 0;
+function dispSum() {
+    let owned_rice = 0;
     $(".owned-rice").each(function() {
         owned_rice += parseInt($(this).val());
     });
     $("#sum_owned_rice").text(owned_rice);
-    $(".relative-rice").each(function() {
-        relative_rice += parseInt($(this).val());
-    });
-    $("#sum_relative_rice").text(relative_rice);
-    $("#total_rice").text(owned_rice + relative_rice);
-    if(owned_rice > parseInt($("#owned_limit").val())) {
-        $("#alert-over").show();
-    }
-    if((owned_rice < parseInt($("#owned_limit").val())) && (relative_rice > 0)) {
-        $("#alert-under").show();
-    }
 }
 </script>

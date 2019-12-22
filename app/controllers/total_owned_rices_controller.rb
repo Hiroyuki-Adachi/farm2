@@ -6,6 +6,7 @@ class TotalOwnedRicesController < ApplicationController
     respond_to do |format|
       format.html do
         @home_totals = calc_totals(@owned_rices)
+        @home_relatives = set_relatives(@home_totals)
       end
       format.csv do
         render :content_type => 'text/csv; charset=cp943'
@@ -27,12 +28,19 @@ class TotalOwnedRicesController < ApplicationController
   def set_totals(totals, owned_rice, key)
     totals[key] = {
       owned_count: (totals[key] ? totals[key][:owned_count] : 0) + owned_rice.owned_count,
-      relative_count: (totals[key] ? totals[key][:relative_count] : 0) + owned_rice.relative_count,
-      owned_price: (totals[key] ? totals[key][:owned_price] : 0) + owned_rice.owned_price,
-      relative_price: (totals[key] ? totals[key][:relative_price] : 0) + owned_rice.relative_price,
-      sum_count: (totals[key] ? totals[key][:sum_count] : 0) + owned_rice.sum_count,
-      sum_price: (totals[key] ? totals[key][:sum_price] : 0) + owned_rice.sum_price
+      owned_price: (totals[key] ? totals[key][:owned_price] : 0) + owned_rice.owned_price
     }
     return totals
+  end
+
+  def set_relatives(totals)
+    results = {}
+    totals.each do |k,v|
+      if v[:owned_count] > Home.find(k).owned_rice_limit
+        results[k] = v[:owned_count] - Home.find(k).owned_rice_limit
+        totals[k][:owned_price] += results[k] * current_system.relative_price
+      end
+    end
+    return results
   end
 end
