@@ -90,4 +90,24 @@ class Home < ApplicationRecord
   def owned_rice_limit
     (owned_area / 10 * OwnedRice::OWNED_RICE_COUNT).floor
   end
+
+  def owned_count(system)
+    OwnedRice.by_home(system.term, self.id).sum(:owned_count)
+  end
+
+  def owned_price(system)
+    OwnedRice.by_home(system.term, self.id).inject(0) {|sum, e| sum + e.owned_price}
+  end
+
+  def relative_count(system)
+    [0, owned_count(system) - owned_rice_limit].max
+  end
+
+  def relative_price(system)
+    relative_count(system) * system.relative_price
+  end
+
+  def total_price(system)
+    owned_price(system) + relative_price(system)
+  end
 end
