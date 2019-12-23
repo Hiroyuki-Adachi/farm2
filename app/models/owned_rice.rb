@@ -37,10 +37,6 @@ class OwnedRice < ApplicationRecord
       .order("homes.finance_order, homes.id, owned_rice_prices.display_order, owned_rice_prices.id")
   }
 
-  def sum_count
-    owned_count + relative_count
-  end
-
   def self.regist(id, params)
     owned_rice = OwnedRice.find_by(id: id) if id
     if owned_rice
