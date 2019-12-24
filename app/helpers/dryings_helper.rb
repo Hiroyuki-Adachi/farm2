@@ -13,7 +13,7 @@ module DryingsHelper
   end
 
   def calc_amount(weight, price)
-    (weight || 0) / Drying::KG_PER_BAG_RICE * price
+    ((weight || 0) / Drying::KG_PER_BAG_RICE * price).round(-2)
   end
 
   def format_amount(weight, price)
