@@ -84,11 +84,11 @@ class Home < ApplicationRecord
   end
 
   def owned_area
-    owned_lands.sum(:area)
+    owned_lands.where(target_flag: true).sum(:area)
   end
 
   def owned_rice_limit
-    (owned_area / 10 * OwnedRice::OWNED_RICE_COUNT).floor
+    (owned_area / 10 * OwnedRice::OWNED_RICE_COUNT).ceil
   end
 
   def owned_count(system)
