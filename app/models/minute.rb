@@ -20,4 +20,8 @@ class Minute < ApplicationRecord
     )
 SQL
   }
+
+  def member?(worker)
+    return schedule.workers.include?(worker)
+  end
 end
