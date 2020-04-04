@@ -4,7 +4,6 @@ class PersonalInformations::WorksController < PersonalInformationsController
   before_action :set_lands, only: [:show]
 
   def show
-    to_error_path unless @worker
     to_error_path unless @work.work_results.exists?(worker_id: @worker.id)
 
     @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))

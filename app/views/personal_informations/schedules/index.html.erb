@@ -5,8 +5,8 @@
   <% end %>
 <% end %>
 <% if @minute.present? %>
-  <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(<%= link_to '議事録', minute_path(@minute.id, token: params[:token]), {target: :_blank, data: {turbolinks: false}} %>)</li>
+  <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(<%= link_to '議事録', personal_information_minute_path(@minute.id, personal_information_token: @worker.token), {target: :_blank, data: {turbolinks: false}} %>)</li>
 <% end %>
-  <li>Google カレンダーを使用している方は、<a href="http://www.google.com/calendar/render?cid=<%= @organization.url %>personal_calendars/<%= params[:token] %>" target="_blank">こちらのリンク</a>を押すと作業の予定や実績を連動することができます。</li>
+  <li>Google カレンダーを使用している方は、<a href="http://www.google.com/calendar/render?cid=<%= @organization.url %>personal_calendars/<%= @worker.token %>" target="_blank">こちらのリンク</a>を押すと作業の予定や実績を連動することができます。</li>
   <li>管理者への連絡は、<%= mail_to @company.pc_mail, "こちらのリンク", subject: "日報システムについて" %>を押してください。</li>
 </ul>

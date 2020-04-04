@@ -6,8 +6,6 @@ class PersonalInformationsController < ApplicationController
   SCHEDULE_DAY = 3
 
   def show
-    to_error_path unless @worker
-
     worked_from, worked_to = between_worked_at
     @results1 = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from, worked_to))
     @results2 = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_to))
@@ -16,12 +14,12 @@ class PersonalInformationsController < ApplicationController
 
   protected
 
-  def restrict_remote_ip
-  end
+  def restrict_remote_ip; end
 
   def set_worker
     @worker = Worker.find_by(token: params[:token] || params[:personal_information_token])
-    @current_user = @worker.user
+    to_error_path unless @worker
+    @current_user = @worker&.user
   end
 
   def between_worked_at
