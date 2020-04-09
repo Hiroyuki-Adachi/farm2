@@ -2,11 +2,11 @@ source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2'
+gem 'rails', '~> 6.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '0.19'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+# gem 'sass-rails', '>= 4.0.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -51,9 +51,9 @@ gem 'paranoia'
 # A paginator for modern web app frameworks and ORMs
 gem 'kaminari'
 # Draper adds an object-oriented layer of presentation logic to your Rails application.
-gem 'draper', '~>3'
+gem 'draper', '>= 3.1.0'
 # ActiveRecords infamously doesn't support composite primary keys.
-gem 'composite_primary_keys', '~> 11'
+gem 'composite_primary_keys', '~> 12'
 # Comments for migrations
 gem 'migration_comments'
 
