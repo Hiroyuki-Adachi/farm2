@@ -5332,12 +5332,12 @@ work_feb_last:
 work_broccoli:
   term: 2015
   worked_at: '2015-05-28'
-  work_type_id: work_type_broccoli
+  work_type: work_type_broccoli
   name: "ブロッコリーテスト"
   start_at: '2015-05-01 14:00:00'
   end_at: '2015-05-01 16:00:00'
   fixed_at: '2015-06-01'
-  work_kind_id: work_kind_broccoli
+  work_kind: work_kind_broccoli
 
 work_genka:
   term: 2017
