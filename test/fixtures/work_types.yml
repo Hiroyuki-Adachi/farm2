@@ -223,7 +223,6 @@ work_types20:
   land_flag: f
 
 work_type_broccoli:
-  id: 27
   genre: 2
   name: "ブロッコリー"
   category_flag: f
