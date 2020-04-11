@@ -71,7 +71,7 @@ class WorkKind < ApplicationRecord
     term = Organization.term
     work_kind_price = WorkKindPrice.where(work_kind_id: id, term: term).order(:id).first
     if work_kind_price
-      work_kind_price.update_attributes(price: @p_price)
+      work_kind_price.update(price: @p_price)
     else
       WorkKindPrice.create(work_kind_id: id, term: term, price: @p_price)
     end

@@ -99,7 +99,7 @@ worker = Worker.create!(
   home_id: home.id
 )
 
-home.update_attributes(worker_id: worker.id)
+home.update(worker_id: worker.id)
 
 User.create!(
   login_name: "system",
