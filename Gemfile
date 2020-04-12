@@ -17,12 +17,12 @@ gem 'mini_racer', '0.1.14'
 
 gem 'delayed_job_active_record'
 
-gem 'webpacker'
+gem 'webpacker', github: 'rails/webpacker'
 
 gem 'daemons'
 
 # Use bootstrap4
-gem 'bootstrap', '>= 4.0'
+# gem 'bootstrap', '>= 4.0'
 # Japan Holiday
 gem 'holiday_jp'
 
