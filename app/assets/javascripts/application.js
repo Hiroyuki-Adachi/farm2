@@ -18,8 +18,6 @@
 //= require i18n
 //= require i18n/translations
 //= require dateformat
-//= require popper
-//= require bootstrap-sprockets
 //= require bootbox.min
 //= require Chart.min
 
