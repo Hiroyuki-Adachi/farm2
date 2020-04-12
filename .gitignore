@@ -54,3 +54,10 @@ bower.json
 # Ignore pow environment settings
 .powenv
 >>>>>>> e6ca6ba13509c44f9281c3d9be65fa086f1d7fb9
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

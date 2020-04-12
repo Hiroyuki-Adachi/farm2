@@ -17,6 +17,8 @@ gem 'mini_racer', '0.1.14'
 
 gem 'delayed_job_active_record'
 
+gem 'webpacker'
+
 gem 'daemons'
 
 # Use bootstrap4
