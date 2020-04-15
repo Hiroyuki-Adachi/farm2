@@ -1,8 +1,6 @@
-import 'bootstrap'
-import '../javascripts/application';
+require("rails-ujs").start()
+
+import "bootstrap"
 import '../stylesheets/application';
 
-require('jquery')
-
 require.context('../images', true, /\.(png|jpg|jpeg|svg)$/);
-
