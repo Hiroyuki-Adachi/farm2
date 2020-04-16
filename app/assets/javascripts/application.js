@@ -19,7 +19,6 @@
 //= require i18n/translations
 //= require dateformat
 //= require bootbox.min
-//= require Chart.min
 
 $(document).on("change", "div.form-check-inline input[type='checkbox']", function(e) {
     if($(this).prop('checked')) {
