@@ -1,7 +1,10 @@
-require("rails-ujs").start();
+require("@rails/ujs").start();
+window.Rails = require("@rails/ujs");
+
 import "bootstrap"
 import "chart.js"
 import '../stylesheets/application';
+
 window.bootbox = require('bootbox');
 
-require.context('../images', true, /\.(png|jpg|jpeg|svg)$/);
+const images = require.context('../images', true);
