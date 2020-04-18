@@ -52,61 +52,47 @@ function removeLoading(){
 
 // bootbox-rails
 (function() {
-    const handleConfirm = function(element) {
-      if (!allowAction(this)) {
-        Rails.stopEverything(element)
-      }
+  const handleConfirm = function(element) {
+    if (!allowAction(this)) {
+      Rails.stopEverything(element);
     }
-  
-    const allowAction = element => {
-      if (element.getAttribute('data-confirm') === null) {
-        return true
-      }
-  
-      showConfirmationDialog(element)
-      return false
+  }
+	
+  const allowAction = function(element) {
+    if (element.getAttribute('data-confirm') === null) {
+      return true;
     }
-  
-    // Display the confirmation dialog
-    const showConfirmationDialog = element => {
-      const message = element.getAttribute('data-confirm')
-      const opts = {
-        message: message,
-        buttons: {
-            confirm: {
-                label: 'はい',
-                className: 'btn-success'
-            },
-            cancel: {
-                label: 'いいえ',
-                className: 'btn-danger'
-            }
-        },
-        callback: function(result) {
-          if (result) {
-            element.removeAttr('data-confirm');
-            element.trigger('click.rails')
+    showConfirmationDialog(element);
+    return false;
+  }
+
+  const showConfirmationDialog = function(element) {
+    const message = element.getAttribute('data-confirm');
+    const opts = {
+      message: message,
+      buttons: {
+          confirm: {
+              label: 'はい',
+              className: 'btn-success'
+          },
+          cancel: {
+              label: 'いいえ',
+              className: 'btn-danger'
           }
+      },
+      callback: function(result) {
+        if (result) {
+          element.removeAttribute('data-confirm');
+          element.click();
         }
-      };
-    
-      bootbox.confirm(opts);
-    }
-  
-    const confirmed = (element, result) => {
-      if (result.value) {
-        // User clicked confirm button
-        element.removeAttribute('data-confirm')
-        element.click()
       }
-    }
+    };
+    bootbox.confirm(opts);
+  }
   
-    // Hook the event before the other rails events so it works togeter
-    // with `method: :delete`.
-    // See https://github.com/rails/rails/blob/master/actionview/app/assets/javascripts/rails-ujs/start.coffee#L69
-    document.addEventListener('rails:attachBindings', element => {
-      Rails.delegate(document, 'a[data-confirm]', 'click', handleConfirm)
-    })
+  document.addEventListener('rails:attachBindings', function(element) {
+    Rails.delegate(document, 'a[data-confirm], input[data-confirm], button[data-confirm]', 'click', handleConfirm);
+  });
 }).call(this)
 
 // for side-bar
