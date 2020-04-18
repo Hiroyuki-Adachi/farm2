@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@rails/webpacker": "5.0.1",
+    "bootbox": "4.4",
     "bootstrap": "4.3.1",
     "chart.js": "^2.9.3",
     "jquery": "3.4.1",
