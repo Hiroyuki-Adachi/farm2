@@ -51,7 +51,7 @@ function removeLoading(){
 }
 
 // bootbox-rails
-(function() {
+$(function() {
   const handleConfirm = function(element) {
     if (!allowAction(this)) {
       Rails.stopEverything(element);
@@ -64,6 +64,14 @@ function removeLoading(){
     }
     showConfirmationDialog(element);
     return false;
+  }
+
+  const confirmed = function(element, result) {
+    if (result.value) {
+      // User clicked confirm button
+      element.removeAttribute('data-confirm')
+      element.click()
+    }
   }
 
   const showConfirmationDialog = function(element) {
@@ -81,19 +89,14 @@ function removeLoading(){
           }
       },
       callback: function(result) {
-        if (result) {
-          element.removeAttribute('data-confirm');
-          element.click();
-        }
+        confirmed(element, {value: result});
       }
     };
     bootbox.confirm(opts);
   }
   
-  document.addEventListener('rails:attachBindings', function(element) {
-    Rails.delegate(document, 'a[data-confirm], input[data-confirm], button[data-confirm]', 'click', handleConfirm);
-  });
-}).call(this)
+  $("a[data-confirm]").on('click',handleConfirm);
+});
 
 // for side-bar
 function activeBar(e) {
