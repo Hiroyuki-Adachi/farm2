@@ -10,8 +10,6 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery-ui/autocomplete
-//= require jquery-ui/sortable
 //= require jquery.ui.touch-punch
 //= require jquery.floatThead
 //= require i18n
