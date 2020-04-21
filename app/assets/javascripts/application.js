@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery.ui.touch-punch
-//= require jquery.floatThead
 //= require jquery.selection
 //= require i18n
 //= require i18n/translations
