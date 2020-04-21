@@ -14,4 +14,6 @@ require('jquery-ui/ui/widgets/sortable');
 require('jquery-ui/ui/widgets/autocomplete');
 require('jquery-ui/themes/base/all.css');
 
+require('floatthead');
+
 import '../stylesheets/application';
