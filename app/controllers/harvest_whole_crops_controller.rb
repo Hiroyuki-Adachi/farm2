@@ -1,5 +1,6 @@
 class HarvestWholeCropsController < ApplicationController
   include PermitManager
+  helper DryingsHelper
 
   def index
     @whole_crops = WorkWholeCrop.for_harvest(current_term)

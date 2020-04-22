@@ -24,6 +24,8 @@ module Farm2
     config.active_record.belongs_to_required_by_default = false
     config.active_record.default_timezone = :local
 
+    config.action_controller.include_all_helpers = false
+
     config.active_job.queue_adapter = :delayed_job
 
     config.update_logger = Logger.new('log/update_worker.log', 'monthly')
