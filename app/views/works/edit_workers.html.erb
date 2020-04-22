@@ -1,5 +1,5 @@
 <h1>作業日報(作業者)登録</h1>
-<%= javascript_include_tag 'work-workers.js' %>
+<%= javascript_pack_tag 'work-workers' %>
 <%= error_print(@work) %>
 
 <%= form_for(@work.model, url: {action: :update }, html: {method: :put}) do |f| %>
@@ -24,7 +24,7 @@
           <td><%= result.worker.name %></td>
           <td><%= number_field_tag "results[][hours]", result.hours, {id: nil, max: 99, min: 0, step: 0.5, required: true, class: "form-control form-control-sm", style: "width: 75px;"} %></td>
           <td>
-              <input type="button" value="削除" class="btn btn-outline-dark btn-sm" onclick="remove_worker(<%= result.worker_id %>)" />
+              <%= tag(:input, {type: :button, value: "削除", class: "btn btn-outline-dark btn-sm remove-worker", data: {worker: result.worker_id}}) %>
               <%= hidden_field_tag "results[][worker_id]", result.worker_id, {:id => nil} %>
               <%= hidden_field_tag "results[][display_order]", i + 1, {:id => nil} %>
           </td>
@@ -47,7 +47,7 @@
           <tbody>
             <% Worker.usual.each do |worker| %>
             <tr id="master_worker_<%= worker.id %>">
-              <td><input id="add_button_<%= worker.id %>" type="button" class="btn btn-outline-dark btn-sm" value="←追加" onclick="add_worker(<%= worker.id %>, '<%= worker.name %>')" /></td>
+              <td><%= tag(:input, {type: :button, id: "add_button_#{worker.id}", class: "btn btn-outline-dark btn-sm add-worker", value: "←追加", data: {worker: worker.id, name: worker.name} }) %></td>
               <td style="width:80px;"><%= worker.home.name %></td>
               <td style="width:120px;"><%= worker.name %></td>
               <td style="display: none;"><%= worker.home.section_id %></td>
