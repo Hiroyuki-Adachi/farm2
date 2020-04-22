@@ -31,8 +31,8 @@ function add_worker(worker_id, worker_name)
     var elem_button = document.createElement("input")
     elem_button.type = "button";
     elem_button.value = "\u524a\u9664"; // 削除
-    elem_button.className = "btn btn-outline-dark btn-sm";
-    elem_button.onclick = new Function("remove_worker(" + worker_id + ");");
+    elem_button.className = "btn btn-outline-dark btn-sm remove-worker";
+    elem_button.dataset.worker = worker_id;
     cell_del.appendChild(elem_button);
 
     var elem_worker = document.createElement("input");
@@ -140,5 +140,13 @@ $(function() {
 
   $("input[type='radio'][name='section']").change(function() {
     change_section($(this)[0])
+  });
+
+  $(".add-worker").on("click", function() {
+    add_worker($(this).data("worker"), $(this).data("name"));
+  });
+
+  $("#tbody_workers").on("click", ".remove-worker", function() {
+    remove_worker($(this).data("worker"));
   });
 });
