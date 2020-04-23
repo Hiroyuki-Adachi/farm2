@@ -10,6 +10,5 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery.ui.touch-punch
 //= require i18n
 //= require i18n/translations

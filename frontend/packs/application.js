@@ -14,6 +14,8 @@ require('jquery-ui/ui/widgets/sortable');
 require('jquery-ui/ui/widgets/autocomplete');
 require('jquery-ui/themes/base/all.css');
 
+require('jquery-ui-touch-punch');
+
 require('floatthead');
 
 import '../stylesheets/application';
