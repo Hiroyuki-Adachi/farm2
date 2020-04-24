@@ -24,8 +24,14 @@ $(function() {
         'span.hover'
     );
 
+    $("#list").on('click', ".execute", function() {
+        execCreate($(this).data("url"), $(this).data("work"));
+    });
+    $("#list").on('click', ".cancel", function() {
+        execDestroy($(this).data("url"));
+    });
+
     setTableWrapperHeight();
-    removeLoading();
 });
 
 function setTableWrapperHeight() {
@@ -35,7 +41,7 @@ function setTableWrapperHeight() {
 }
 
 function execCreate(url, work_id) {
-    dispLoading("承認中...");
+    loading.disp("承認中...");
     $.ajax({
         url: url,
         type: "POST",
@@ -44,14 +50,14 @@ function execCreate(url, work_id) {
     }).done(function(html) {
         $("#list").html(html);
     }).always(function() {
-        removeLoading();
+        loading.remove();
         changePrint($("#print_self")[0]);
     });
     return false;
 }
 
 function execDestroy(url) {
-    dispLoading("取消中...");
+    loading.disp("取消中...");
     $.ajax({
         url: url,
         type: "DELETE",
@@ -59,7 +65,7 @@ function execDestroy(url) {
     }).done(function(html) {
         $("#list").html(html);
     }).always(function() {
-        removeLoading();
+        loading.remove();
         changePrint($("#print_self")[0]);
     });
     return false;

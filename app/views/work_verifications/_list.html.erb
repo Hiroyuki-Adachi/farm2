@@ -13,24 +13,24 @@
   <tbody>
     <% @works.each do |work| %>
       <tr>
-        <td><%=h work.worked_at %>&nbsp;<%=h work.work_time %></td>
-        <td><%=h work.genre_name %></td>
+        <td><%= work.worked_at %>&nbsp;<%= work.work_time %></td>
+        <td><%= work.genre_name %></td>
         <td class="numeric"><%= work.id %></td>
-        <td><%=h data_print(work.work_results, "作業", show_workers_work_verification_path(work)) %></td>
-        <td><%=h data_print(work.work_lands, "土地", show_lands_work_verification_path(work)) %></td>
-        <td><%=h data_print(work.machine_results, "機械", show_machines_work_verification_path(work)) %></td>
-        <td><%=h data_print(work.work_chemicals, "薬剤", show_chemicals_work_verification_path(work)) %></td>
+        <td><%= data_print(work.work_results, "作業", show_workers_work_verification_path(work)) %></td>
+        <td><%= data_print(work.work_lands, "土地", show_lands_work_verification_path(work)) %></td>
+        <td><%= data_print(work.machine_results, "機械", show_machines_work_verification_path(work)) %></td>
+        <td><%= data_print(work.work_chemicals, "薬剤", show_chemicals_work_verification_path(work)) %></td>
         <td>
-        <% if work.checkers.include?(current_user.worker) %>
-        <%= link_to "取消", "#", {onclick: "return execDestroy('" + work_verification_path(work)+ "')", class: "btn btn-danger btn-sm"} %>
-        <%= hidden_field_tag :self_flag, work.id, {id: nil} %>
-        <% else %>
-        <%= link_to "検証", "#", {onclick: "return execCreate('" + work_verifications_path + "', " + work.id.to_s + ")", class: "btn btn-outline-danger btn-sm"} %>
-        <% end %>
+          <% if work.checkers.include?(current_user.worker) %>
+            <%= link_to "取消", "#", {class: "btn btn-danger btn-sm cancel", data: {url: work_verification_path(work)}} %>
+            <%= hidden_field_tag :self_flag, work.id, {id: nil} %>
+          <% else %>
+            <%= link_to "検証", "#", {class: "btn btn-outline-danger btn-sm execute", data: {url: work_verifications_path, work: work.id}} %>
+          <% end %>
         </td>
         <td><%= link_to "修正", work_path(work), {class: "btn btn-outline-success btn-sm"} %></td>
-        <td><%=h work.creator_short_name %></td>
-        <td><%=h work.checker_short_names %></td>
+        <td><%= work.creator_short_name %></td>
+        <td><%= work.checker_short_names %></td>
       </tr>
     <% end %>
   </tbody>
