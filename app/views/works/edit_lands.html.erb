@@ -1,5 +1,5 @@
 <h1>作業日報(作業田)登録</h1>
-<%= javascript_include_tag 'work-lands.js' %>
+<%= javascript_pack_tag 'work-lands' %>
 <%= error_print(@work) %>
 
 <%= form_for(@work.model, url: {action: :update }, html: {method: :put}) do |f| %>
@@ -24,9 +24,9 @@
           <td style="width:150px;"><%= work_land.place_name %></td>
           <td class="numeric" style="width:60px;"><%= work_land.area %></td>
           <td style="width:50px;">
-              <input type="button" value="削除" onclick="remove_land(<%= work_land.land_id %>)" class="btn btn-outline-dark btn-sm"/>
-              <%= hidden_field_tag "work_lands[][land_id]", work_land.land_id, {:id => nil} %>
-              <%= hidden_field_tag "work_lands[][display_order]", i + 1, {:id => nil} %>
+            <%= tag(:input, {type: :button, value: "削除", class: "btn btn-outline-dark btn-sm remove-land", data: {land: work_land.land_id}})%>
+            <%= hidden_field_tag "work_lands[][land_id]", work_land.land_id, {:id => nil} %>
+            <%= hidden_field_tag "work_lands[][display_order]", i + 1, {:id => nil} %>
           </td>
         </tr>
       <% end %>
@@ -56,23 +56,4 @@
   </div>
 </div>
 <% end %>
-
-<script type="text/javascript">
-$(function() {
-  calc_total_area();
-
-  $("#land").autocomplete({
-    source : "<%= autocomplete_for_land_place_works_path %>",
-    minLength: 2,
-    select: function(e, ui) {
-      if(ui.item) {
-        add_land(ui.item.details.id, ui.item.details.place + "(" + ui.item.details.owner + ")", ui.item.details.area);
-      }
-      return false;
-    }
-  });
-
-  var land_base = jQuery("#land_base");
-  $(".ui-autocomplete").offset({top: land_base.offset().top + land_base.height(), left: land_base.offset().left})
-});
-</script>
+<%= hidden_field_tag "autocomplete_for_land_place_works_path", autocomplete_for_land_place_works_path %>
