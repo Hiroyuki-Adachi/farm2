@@ -18,4 +18,5 @@ require('jquery-ui-touch-punch');
 
 require('floatthead');
 
+import "../javascripts/jquery.selection";
 import '../stylesheets/application';
