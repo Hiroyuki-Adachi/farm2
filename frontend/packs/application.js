@@ -8,6 +8,7 @@ window.bootbox = require('bootbox');
 
 const $ = require('jquery');
 const images = require.context('../images', true);
+window.moment = require('moment');
 
 require('jquery-ui');
 require('jquery-ui/ui/widgets/sortable');
