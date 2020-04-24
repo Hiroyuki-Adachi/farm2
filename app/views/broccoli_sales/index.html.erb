@@ -52,7 +52,7 @@ $(function() {
         setTableWrapperHeight();
     });
     $('form').submit(function(){
-        dispLoading("計算中");
+        loading.disp("計算中");
     });
 
     $("input[name$='[sale]'").change(function() {
@@ -60,7 +60,7 @@ $(function() {
     });
 
     setTableWrapperHeight();
-    removeLoading();
+    loading.remove();
 });
 
 function setTableWrapperHeight() {
