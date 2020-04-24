@@ -62,9 +62,9 @@ function add_land(land_id, land_place, land_area)
 
     var elem_button = document.createElement("input")
     elem_button.type = "button";
-    elem_button.className = "btn btn-outline-dark btn-sm";
+    elem_button.className = "btn btn-outline-dark btn-sm remove-land";
     elem_button.value = "削除";
-    elem_button.onclick = new Function("remove_land(" + land_id + ");");
+    elem_button.dataset.land = land_id;
     cell_del.appendChild(elem_button);
 
     var elem_land = document.createElement("input");
@@ -98,7 +98,7 @@ $(function() {
     }
   });
 
-  $("#tbody_lands", ".remove-land", function() {
+  $("#tbody_lands").on("click", ".remove-land", function() {
     remove_land($(this).data("land"));
   });
 
@@ -118,5 +118,5 @@ $(function() {
   const land_base = jQuery("#land_base");
   $(".ui-autocomplete").offset({top: land_base.offset().top + land_base.height(), left: land_base.offset().left})
 
-  $("#tbody_lands").disableSelection();
+  // $("#tbody_lands").disableSelection();
 });
