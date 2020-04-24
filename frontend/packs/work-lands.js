@@ -98,5 +98,25 @@ $(function() {
     }
   });
 
+  $("#tbody_lands", ".remove-land", function() {
+    remove_land($(this).data("land"));
+  });
+
+  calc_total_area();
+
+  $("#land").autocomplete({
+    source : $("#autocomplete_for_land_place_works_path").val(),
+    minLength: 2,
+    select: function(e, ui) {
+      if(ui.item) {
+        add_land(ui.item.details.id, ui.item.details.place + "(" + ui.item.details.owner + ")", ui.item.details.area);
+      }
+      return false;
+    }
+  });
+
+  const land_base = jQuery("#land_base");
+  $(".ui-autocomplete").offset({top: land_base.offset().top + land_base.height(), left: land_base.offset().left})
+
   $("#tbody_lands").disableSelection();
 });
