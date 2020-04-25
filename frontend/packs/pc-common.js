@@ -1,3 +1,4 @@
+import '../stylesheets/pc-common';
 window.loading = require("../javascripts/loading");
 
 $(document).on("change", "div.form-check-inline input[type='checkbox']", function(e) {
