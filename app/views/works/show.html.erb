@@ -11,7 +11,8 @@
    I18n.defaultLocale = "<%= I18n.default_locale %>";
    I18n.locale = "<%= I18n.locale %>";
   </script>
-<%= stylesheet_link_tag 'work-show', :media => 'all' %>
+  <%= javascript_pack_tag 'work-show'%>
+  <%= stylesheet_pack_tag 'work-show', :media => 'all' %>
 </head>
 <body>
 
