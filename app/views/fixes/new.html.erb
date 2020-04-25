@@ -1,28 +1,5 @@
-<script type="text/javascript">
-$(function() {
-    $("#tbl_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
-
-    setTableWrapperHeight();
-});
-
-function setTableWrapperHeight() {
-    if($("#table_wrapper")[0]) {
-        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
-    }
-}
-</script>
+<%= javascript_pack_tag 'fixes' %>
 <h1>新規確定</h1>
-
-<%= javascript_include_tag 'fixes' %>
-
 <h2>確定月</h2>
 <%= form_tag(action: :create) do %>
 <%= select_tag('fixed_at', options_for_select(@terms), {class: "form-control"}) %>
@@ -32,10 +9,10 @@ function setTableWrapperHeight() {
 <% if @works.count > 0 %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
-    <input type="button" value="全選択" onclick="checkAll(true);" class="btn btn-primary" />
+    <%= tag(:input, {type: :button, value: "全選択", class: "btn btn-primary all-check"})%>
   </div>
   <div class="btn-group mr-2">
-    <input type="button" value="全解除" onclick="checkAll(false);" class="btn btn-primary" />
+    <%= tag(:input, {type: :button, value: "全解除", class: "btn btn-primary all-cancel"})%>
   </div>
 </div>
 <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
@@ -84,10 +61,10 @@ function setTableWrapperHeight() {
 <div id="btn_toolbar" class="btn-toolbar">
 <% if @works.count > 0 %>
   <div class="btn-group mr-2">
-    <input type="button" value="全選択" onclick="checkAll(true);" class="btn btn-primary" />
+    <%= tag(:input, {type: :button, value: "全選択", class: "btn btn-primary all-check"})%>
   </div>
   <div class="btn-group mr-2">
-    <input type="button" value="全解除" onclick="checkAll(false);" class="btn btn-primary" />
+    <%= tag(:input, {type: :button, value: "全解除", class: "btn btn-primary all-cancel"})%>
   </div>
 <% end %>
   <div class="btn-group mr-2">
