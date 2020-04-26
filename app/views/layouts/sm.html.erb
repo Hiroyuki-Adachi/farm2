@@ -4,13 +4,11 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.3, maximum-scale=10.0, user-scalable=yes" />
   <title>作業日報管理システム(V2)</title>
-  <%= stylesheet_link_tag    'sm', media: 'all' %>
-  <%= stylesheet_pack_tag    'application' %>
   <%= javascript_pack_tag    'application' %>
-  <%= javascript_include_tag 'sm' %>
+  <%= stylesheet_pack_tag    'application' %>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
-   var language = "<%= I18n.locale %>";
+   const language = "<%= I18n.locale %>";
    I18n.translations = <%= I18n::JS.filtered_translations.to_json %>;
   </script>
 </head>
