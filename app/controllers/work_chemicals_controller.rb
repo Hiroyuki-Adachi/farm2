@@ -4,12 +4,43 @@ class WorkChemicalsController < ApplicationController
   def index
     @works = WorkDecorator.decorate_collection(Work.by_chemical(@term))
     @chemicals = Chemical.by_work(@term)
+    calc_work_chemicals
+    respond_to do |format|
+      format.html
+      format.csv {render :content_type => 'text/csv; charset=cp943'}
+    end
+  end
+
+  private
+
+  def calc_work_chemicals
     @work_chemicals = {}
     @total_chemicals = {}
-    WorkChemical.by_work(@term).each do |wc|
-      @work_chemicals["#{wc.work_id},#{wc.chemical_id}"] = wc.quantity
-      @total_chemicals[wc.chemical_id] = 0 if @total_chemicals[wc.chemical_id].nil?
-      @total_chemicals[wc.chemical_id] += wc.quantity
+    @work_areas = {}
+    @work_types = {}
+    work_rate_denom = Hash.new { |h,k| h[k] = Hash.new(&h.default_proc) }
+    work_rate_numer = Hash.new { |h,k| h[k] = {} }
+    WorkChemical.by_work(@term).each do |work_chemical|
+      next if (work_chemical.work.work_lands&.count || 0).zero?
+      LandCost.sum_area_by_lands(work_chemical.work.worked_at, work_chemical.work.lands.ids).each do |work_type_id, area|
+        chemical_work_type = ChemicalWorkType.by_work_chemical(work_chemical, work_type_id)
+        next unless chemical_work_type
+        @work_areas["#{work_chemical.work_id},#{work_type_id},#{work_chemical.chemical_id}"] = area
+        next if work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type_id].present?
+        denom = area * chemical_work_type.quantity
+        work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type_id] = denom
+        work_rate_numer[work_chemical.work_id][work_chemical.chemical_id] ||= 0
+        work_rate_numer[work_chemical.work_id][work_chemical.chemical_id] += denom
+      end
+    end
+    WorkChemical.by_work(@term).each do |work_chemical|
+      @work_types[work_chemical.work_id] = work_chemical.work.exact_work_types
+      @work_types[work_chemical.work_id].each do |work_type|
+        quantity = work_chemical.quantity * work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type.id] / work_rate_numer[work_chemical.work_id][work_chemical.chemical_id]
+        @work_chemicals["#{work_chemical.work_id},#{work_type.id},#{work_chemical.chemical_id}"] = quantity
+        @total_chemicals[work_chemical.chemical_id] ||= 0
+        @total_chemicals[work_chemical.chemical_id] += quantity
+      end
     end
   end
 end

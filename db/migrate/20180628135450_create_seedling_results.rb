@@ -9,7 +9,6 @@ class CreateSeedlingResults < ActiveRecord::Migration[4.2]
 
       t.timestamps null: false
     end
-    add_index :seedling_results, [:seedling_home_id, :work_result_id, :display_order], {unique: true, name: :seedling_results_2nd_key}
     add_column :organizations, :rice_planting_id, :integer, {null: true, comment: "田植作業種別"}
   end
 end

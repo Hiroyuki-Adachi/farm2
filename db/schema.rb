@@ -490,7 +490,6 @@ ActiveRecord::Schema.define(version: 2020_04_10_144019) do
     t.boolean "disposal_flag", default: false, null: false, comment: "廃棄フラグ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["seedling_home_id", "work_result_id", "display_order"], name: "seedling_results_2nd_key", unique: true
   end
 
   create_table "seedlings", id: :serial, comment: "育苗", force: :cascade do |t|
