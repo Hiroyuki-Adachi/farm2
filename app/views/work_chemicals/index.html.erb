@@ -8,7 +8,7 @@
       <th>作業種別</th>
       <th>作業内容</th>
       <th>面積(a)</th>
-      <th>使用量(10a当)</th>
+      <th>使用量</th>
       <th>10a当</th>
       <th>単位</th>
     </tr>
@@ -20,27 +20,37 @@
         <td><%= chemical.name %></td>
         <td colspan="3"></td>
         <td class="numeric"></td>
-        <td class="numeric"><%= @total_chemicals[chemical.id] %></td>
+        <td class="numeric"><%= number_with_precision(@total_chemicals[chemical.id], precision: 2) %></td>
         <td class="numeric"></td>
         <td><%= chemical.unit %></td>
       </tr>
       <% @works.each do |work| %>
-        <% next unless @work_chemicals["#{work.id},#{chemical.id}"] %>
-        <tr class="detail" data-chemical="<%= chemical.id %>">
-          <td colspan="2"></td>
-          <td><%= work.worked_at %></td>
-          <td><%= work.work_type_name %></td>
-          <td><%= work.name %></td>
-          <td class="numeric"><%= work.sum_areas %></td>
-          <td class="numeric"><%= @work_chemicals["#{work.id},#{chemical.id}"] %></td>
-          <td class="numeric"><%= number_with_precision(@work_chemicals["#{work.id},#{chemical.id}"] / work.sum_areas * 10, precision: 2) %></td>
-          <td><%= chemical.unit %></td>
-        </tr>
+        <% @work_types[work.id].each do |work_type| %>
+          <% work_chemical = @work_chemicals["#{work.id},#{work_type.id},#{chemical.id}"] %>
+          <% next if work_chemical.to_i.zero? %>
+          <tr class="detail" data-chemical="<%= chemical.id %>">
+            <td colspan="2"></td>
+            <td><%= work.worked_at %></td>
+            <td><%= work_type.name %></td>
+            <td><%= work.name %></td>
+            <td class="numeric"><%= @work_areas["#{work.id},#{work_type.id},#{chemical.id}"] %></td>
+            <td class="numeric"><%= number_with_precision(work_chemical, precision: 2) %></td>
+            <td class="numeric"><%= number_with_precision(work_chemical / @work_areas["#{work.id},#{work_type.id},#{chemical.id}"] * 10, precision: 2) %></td>
+            <td><%= chemical.unit %></td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   </tbody>
 </table>
-<%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "CSV出力", work_chemicals_path(format: :csv), {class: "btn btn-outline-success"} %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
+  </div>
+</div>
 <script>
 $(function() {
     $(".chemical-total").click(function() {

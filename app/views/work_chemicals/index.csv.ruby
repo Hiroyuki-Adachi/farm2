@@ -1,29 +1,24 @@
 require 'csv'
-require 'nkf'
 
-csv_str = CSV.generate do |csv|
-  cols = [
-    WorkChemical.human_attribute_name(:worked_at),
-    WorkChemical.human_attribute_name(:work_type_name),
-    WorkChemical.human_attribute_name(:work_name)
-  ]
+CSV.generate(encoding: "UTF-8") do |csv|
+  csv << ["薬剤種別", "薬剤", "作業日", "作業種別", "作業内容", "面積(a)", "使用量", "10a当", "単位"]
   @chemicals.each do |chemical|
-    cols << chemical.name
-  end
-
-  csv << cols
-
-  @works.each do |work|
-    cols = [
-      work.worked_at,
-      work.work_type.genre_name + "(#{work.work_type.name})",
-      work.work_kind.name + "(#{work.name})"
-    ]
-    @chemicals.each do |chemical|
-      cols << @work_chemicals["#{work.id},#{chemical.id}"]
+    @works.each do |work|
+      @work_types[work.id].each do |work_type|
+        work_chemical = @work_chemicals["#{work.id},#{work_type.id},#{chemical.id}"]
+        next if work_chemical.to_i.zero?
+        csv << [
+          chemical.chemical_type.name,
+          chemical.name,
+          work.model.worked_at,
+          work_type.name,
+          work.name,
+          @work_areas["#{work.id},#{work_type.id},#{chemical.id}"],
+          work_chemical,
+          work_chemical / @work_areas["#{work.id},#{work_type.id},#{chemical.id}"] * 10,
+          chemical.unit
+        ]
+      end
     end
-    csv << cols
   end
 end
-
-NKF.nkf('--sjis -Lw', csv_str)
