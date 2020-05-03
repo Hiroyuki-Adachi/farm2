@@ -18,7 +18,9 @@ class ChemicalWorkType < ActiveRecord::Base
   scope :by_chemical_terms, ->(chemical_terms) {where(chemical_term_id: chemical_terms.ids)}
   scope :by_work, -> (work) {
     joins(chemical_term: :chemical)
-    .where(["chemical_work_types.work_type_id IN (?) AND quantity > 0", work.exact_work_types.map(&:id)])
+    .where(["chemical_work_types.work_type_id IN (?) AND chemical_work_types.quantity > 0 AND chemical_terms.term = ?",
+      work.exact_work_types.map(&:id), work.term]
+    )
   }
 
   def self.regist_quantity(params)
@@ -34,5 +36,14 @@ class ChemicalWorkType < ActiveRecord::Base
 
   def self.chemical_work_type_params(param)
     param.permit(:chemical_term_id, :work_type_id, :quantity)
+  end
+
+  def self.by_work_chemical(work_chemical, work_type_id)
+    joins(chemical_term: :chemical)
+    .find_by(<<SQL, work_type_id, work_chemical.work.term, work_chemical.chemical_id)
+          chemical_work_types.work_type_id = ? 
+      AND chemical_terms.term = ?
+      AND chemical_terms.chemical_id = ?
+SQL
   end
 end
