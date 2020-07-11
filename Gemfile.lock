@@ -64,7 +64,11 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
+<<<<<<< HEAD
     builder (3.2.4)
+=======
+    builder (3.2.3)
+>>>>>>> dependabot/bundler/puma-4.3.5
     byebug (11.0.1)
     chart-js-rails (0.1.6)
       railties (> 3.1)
@@ -171,7 +175,7 @@ GEM
     pry-stack_explorer (0.4.9.3)
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
-    puma (4.3.3)
+    puma (4.3.5)
       nio4r (~> 2.0)
     rack (2.0.8)
     rack-test (1.1.0)
