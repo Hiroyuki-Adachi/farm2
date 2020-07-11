@@ -65,10 +65,14 @@ GEM
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
 <<<<<<< HEAD
+<<<<<<< HEAD
     builder (3.2.4)
 =======
     builder (3.2.3)
 >>>>>>> dependabot/bundler/puma-4.3.5
+=======
+    builder (3.2.4)
+>>>>>>> master
     byebug (11.0.1)
     chart-js-rails (0.1.6)
       railties (> 3.1)
@@ -275,7 +279,7 @@ GEM
       sprockets-rails (>= 2.0, < 4.0)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.4)
+    websocket-extensions (0.1.5)
     yard (0.9.20)
 
 PLATFORMS
