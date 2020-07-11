@@ -366,4 +366,10 @@ SQL
     return work_types.compact.uniq if work_types.compact.length.positive?
     return [work_type]
   end
+
+  def sum_seedlings(work_type_id)
+    work_results.joins(seedling_results: {seedling_home: :seedling})
+      .where(["seedling_results.disposal_flag = FALSE AND seedlings.work_type_id = ?", work_type_id])
+      .sum("seedling_results.quantity")
+  end
 end

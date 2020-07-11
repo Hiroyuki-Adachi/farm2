@@ -1,0 +1,57 @@
+<h1>苗使用量一覧</h1>
+<table class="table table-sm table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th>作業分類</th>
+      <th>作業日</th>
+      <th>面積(a)</th>
+      <th>使用量</th>
+      <th>10a当</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @work_types.each do |work_type| %>
+      <% next if @work_areas[work_type.id].blank? %>
+      <tr class="work-type-total table-primary" data-work-type="<%= work_type.id %>" style="cursor: pointer;">
+        <td><%= work_type.name %></td>
+        <td></td>
+        <td class="numeric"><%= @work_areas[work_type.id].values.inject(:+) %></td>
+        <td class="numeric"><%= @work_seedlings[work_type.id].values.inject(:+) %></td>
+        <td class="numeric"><%= format("%.2f", @work_seedlings[work_type.id].values.inject(:+) / @work_areas[work_type.id].values.inject(:+) * 10) %></td>
+      </tr>
+      <% @work_areas[work_type.id].keys.each do |work_id| %>
+        <% work = Work.find_by(id: work_id) %>
+        <% next if work.blank? %>
+        <tr class="detail" data-work-type="<%= work_type.id %>">
+          <td></td>
+          <td><%= work.worked_at %></td>
+          <td class="numeric"><%= @work_areas[work_type.id][work.id] %></td>
+          <td class="numeric"><%= @work_seedlings[work_type.id][work.id] %></td>
+          <td class="numeric"><%= format("%.2f", @work_seedlings[work_type.id][work.id] / @work_areas[work_type.id][work.id] * 10) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "CSV出力", work_seedlings_path(format: :csv), {class: "btn btn-outline-success"} %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", (params[:fixed_at] ? fixes_path : menu_index_path), {class: "btn btn-outline-dark"} %>
+  </div>
+</div>
+<script>
+$(function() {
+    $(".work-type-total").click(function() {
+        var s = $(".detail[data-work-type='" + $(this).data("work-type") + "']");
+        if(s.is(":visible")) {
+            s.hide();
+        } else {
+            s.show();
+        }
+    });
+  
+    $(".detail").hide();
+});
+</script>
