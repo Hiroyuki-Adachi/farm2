@@ -3,12 +3,14 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>作業日報管理システム(V2)</title>
-  <%= stylesheet_link_tag    'application', media: 'all' %>
-  <%= javascript_include_tag 'application' %>
+  <%= javascript_pack_tag 'application' %>
+  <%= stylesheet_pack_tag 'application' %>
+  <%= javascript_pack_tag 'pc-common' %>
+  <%= stylesheet_pack_tag 'pc-common' %>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
-   I18n.defaultLocale = "<%= I18n.default_locale %>";
-   I18n.locale = "<%= I18n.locale %>";
+   const language = "<%= I18n.locale %>";
+   I18n.translations = <%= I18n::JS.filtered_translations.to_json %>;
   </script>
 </head>
 <body>

@@ -1,5 +1,6 @@
 class HarvestRicesController < ApplicationController
   include PermitManager
+  helper DryingsHelper
 
   def index
     @dryings = Drying.for_harvest(current_term)

@@ -1,5 +1,6 @@
 class DryingsController < ApplicationController
   include PermitManager
+
   before_action :set_drying, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:index, :edit]
   before_action :set_lands, only: [:edit]

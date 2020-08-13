@@ -15,7 +15,7 @@
           <td class="numeric"><%= i + 1 %></td>
           <td><%= schedule_worker.worker.name %></td>
           <td>
-            <input type="button" value="削除" class="btn btn-outline-dark btn-sm" onclick="remove_worker(<%= schedule_worker.worker_id %>)" />
+            <%= tag(:input, {type: :button, value: "削除", class: "btn btn-outline-dark btn-sm remove-worker", data: {worker: schedule_worker.worker_id}})%>
             <%= hidden_field_tag "schedule_workers[][worker_id]", schedule_worker.worker_id, {:id => nil} %>
             <%= hidden_field_tag "schedule_workers[][display_order]", i + 1, {:id => nil} %>
           </td>
@@ -38,7 +38,9 @@
         <tbody>
           <% Worker.usual.each do |worker| %>
           <tr id="master_worker_<%= worker.id %>">
-            <td><input id="add_button_<%= worker.id %>" type="button" class="btn btn-outline-dark btn-sm" value="←追加" onclick="add_worker(<%= worker.id %>)" /></td>
+            <td>
+              <%= tag(:input, {id: "add_button_#{worker.id}", type: :button, value: "←追加", class: "btn btn-outline-dark btn-sm add-worker", data: {worker: worker.id}})%>
+            </td>
             <td style="width:80px;"><%= worker.home.name %></td>
             <td style="width:120px;"><%= worker.name %></td>
             <td style="display: none;"><%= worker.home.section_id %></td>
@@ -52,16 +54,16 @@
       <div class="btn-group" role="group">
         <% @sections.each do |section| %>
           <% if section[1] != 0 %>
-            <input type="button" value="←<%= section[0] %>" onclick="add_section(<%= section[1] %>)" class="btn btn-outline-dark">
+            <%= tag(:input, {type: :button, value: "←#{section[0]}", class: "btn btn-outline-dark add-section", data: {section: section[1]}})%>
           <% end %>
         <% end %>
       </div>
     </div>
     <div class="row">
       <div class="btn-group" role="group">
-        <input type="button" value="←理事" onclick="add_positions(['Director'])" class="btn btn-outline-dark">
-        <input type="button" value="←役員" onclick="add_positions(['Director', 'Leader'])" class="btn btn-outline-dark">
-        <input type="button" value="←全組合員" onclick="add_positions(['Director', 'Leader', 'Member'])" class="btn btn-outline-dark">
+        <%= tag(:input, {type: :button, id: "add_director", value: "←理事", class: "btn btn-outline-dark"})%>
+        <%= tag(:input, {type: :button, id: "add_leader", value: "←役員", class: "btn btn-outline-dark"})%>
+        <%= tag(:input, {type: :button, id: "add_member", value: "←全組合員", class: "btn btn-outline-dark"})%>
       </div>
     </div>
   </div>
