@@ -18,7 +18,7 @@ gem 'mini_racer', '0.1.14'
 
 gem 'delayed_job_active_record'
 
-gem 'webpacker', github: 'rails/webpacker'
+gem 'webpacker', '~> 5.0'
 
 gem 'daemons'
 
