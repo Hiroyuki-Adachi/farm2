@@ -1,5 +1,6 @@
 class TotalDryingsController < ApplicationController
   include PermitManager
+  helper DryingsHelper
 
   def index
     @dryings = {}

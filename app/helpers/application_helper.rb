@@ -1,4 +1,8 @@
+require 'sessions_helper.rb'
+
 module ApplicationHelper
+  include SessionsHelper
+
   def hbr(text)
     return simple_format(h(text))
   end
