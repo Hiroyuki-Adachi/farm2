@@ -69,8 +69,8 @@ class WorkResult < ApplicationRecord
 
   scope :for_menu, ->(worker, term) {
     joins(:work)
-      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
-      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
+      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").includes(:work_kind)
+      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").includes(:work_type)
       .where("works.term = ?", term)
       .where(worker_id: worker)
       .order("works.worked_at DESC, work_results.id")
