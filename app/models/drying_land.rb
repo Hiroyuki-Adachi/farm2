@@ -2,13 +2,17 @@
 #
 # Table name: drying_lands # 乾燥調整場所
 #
-#  id            :bigint           not null, primary key
-#  drying_id     :integer          default(0), not null     # 乾燥調整
-#  land_id       :integer                                   # 作業地
-#  display_order :integer          default(0), not null     # 表示順
-#  percentage    :decimal(4, 1)    default(100.0), not null # 割合
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id                    :bigint           not null, primary key
+#  display_order(表示順) :integer          default(0), not null
+#  percentage(割合)      :decimal(4, 1)    default(100.0), not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  drying_id(乾燥調整)   :integer          default(0), not null
+#  land_id(作業地)       :integer
+#
+# Indexes
+#
+#  drying_lands_3rd  (drying_id,display_order) UNIQUE
 #
 
 class DryingLand < ApplicationRecord

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_10_144019) do
+ActiveRecord::Schema.define(version: 2020_08_19_125549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 2020_04_10_144019) do
     t.datetime "updated_at"
     t.datetime "deleted_at"
     t.string "unit", limit: 2, default: "袋", null: false, comment: "単位"
+    t.string "phonetic", limit: 40, default: "", null: false, comment: "薬剤ふりがな"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
   end
 
@@ -639,6 +640,7 @@ ActiveRecord::Schema.define(version: 2020_04_10_144019) do
     t.datetime "deleted_at"
     t.boolean "land_flag", default: true, null: false, comment: "土地利用フラグ"
     t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
+    t.string "phonetic", limit: 40, default: "", null: false, comment: "作業種別ふりがな"
     t.index ["deleted_at"], name: "index_work_kinds_on_deleted_at"
   end
 

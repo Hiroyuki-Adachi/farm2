@@ -2,13 +2,17 @@
 #
 # Table name: land_costs # 土地原価
 #
-#  id           :integer          not null, primary key               # 土地原価
-#  land_id      :integer          not null                            # 土地
-#  work_type_id :integer          not null                            # 作業分類
-#  cost         :decimal(7, 1)    default(0.0), not null              # 原価
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  activated_on :date             default(Mon, 01 Jan 1900), not null # 有効日
+#  id(土地原価)           :integer          not null, primary key
+#  activated_on(有効日)   :date             default(Mon, 01 Jan 1900), not null
+#  cost(原価)             :decimal(7, 1)    default(0.0), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  land_id(土地)          :integer          not null
+#  work_type_id(作業分類) :integer          not null
+#
+# Indexes
+#
+#  index_land_costs_on_activated_on_and_land_id  (activated_on,land_id) UNIQUE
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

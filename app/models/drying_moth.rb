@@ -2,15 +2,19 @@
 #
 # Table name: drying_moths # 乾燥籾
 #
-#  id            :bigint           not null, primary key
-#  drying_id     :integer          default(0), not null  # 乾燥調整
-#  moth_count    :integer          default(0), not null  # 回数
-#  moth_no       :integer                                # No.
-#  water_content :decimal(3, 1)                          # 水分
-#  moth_weight   :decimal(5, 1)                          # 籾(kg)
-#  rice_weight   :decimal(5, 1)                          # 玄米(kg)
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id                    :bigint           not null, primary key
+#  moth_count(回数)      :integer          default(0), not null
+#  moth_no(No.)          :integer
+#  moth_weight(籾(kg))   :decimal(5, 1)
+#  rice_weight(玄米(kg)) :decimal(5, 1)
+#  water_content(水分)   :decimal(3, 1)
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  drying_id(乾燥調整)   :integer          default(0), not null
+#
+# Indexes
+#
+#  drying_moths_secondary  (drying_id,moth_count) UNIQUE
 #
 
 class DryingMoth < ApplicationRecord

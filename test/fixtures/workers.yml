@@ -2,29 +2,34 @@
 #
 # Table name: workers # 作業者マスタ
 #
-#  id              :integer          not null, primary key        # 作業者マスタ
-#  family_phonetic :string(15)       not null                     # 姓(ﾌﾘｶﾞﾅ)
-#  family_name     :string(10)       not null                     # 姓
-#  first_phonetic  :string(15)       not null                     # 名(ﾌﾘｶﾞﾅ)
-#  first_name      :string(10)       not null                     # 名
-#  birthday        :date                                          # 誕生日
-#  home_id         :integer                                       # 世帯
-#  mobile          :string(15)                                    # 携帯番号
-#  mobile_mail     :string(50)                                    # メールアドレス(携帯)
-#  pc_mail         :string(50)                                    # メールアドレス(PC)
-#  display_order   :integer                                       # 表示順
-#  work_flag       :boolean          default(TRUE), not null      # 作業フラグ
-#  gender_id       :integer          default(0), not null         # 性別
-#  bank_code       :string(4)        default("0000"), not null    # 口座(金融機関)
-#  branch_code     :string(3)        default("000"), not null     # 口座(支店)
-#  account_type_id :integer          default(0), not null         # 口座種別
-#  account_number  :string(7)        default("0000000"), not null # 口座番号
-#  created_at      :datetime
-#  updated_at      :datetime
-#  deleted_at      :datetime
-#  token           :string(36)       default(""), not null        # アクセストークン
-#  position_id     :integer          default(0), not null         # 役職
-#  broccoli_mark   :string(1)                                     # ブロッコリ記号
+#  id(作業者マスタ)                  :integer          not null, primary key
+#  account_number(口座番号)          :string(7)        default("0000000"), not null
+#  bank_code(口座(金融機関))         :string(4)        default("0000"), not null
+#  birthday(誕生日)                  :date
+#  branch_code(口座(支店))           :string(3)        default("000"), not null
+#  broccoli_mark(ブロッコリ記号)     :string(1)
+#  deleted_at                        :datetime
+#  display_order(表示順)             :integer
+#  family_name(姓)                   :string(10)       not null
+#  family_phonetic(姓(ﾌﾘｶﾞﾅ))   :string(15)       not null
+#  first_name(名)                    :string(10)       not null
+#  first_phonetic(名(ﾌﾘｶﾞﾅ))    :string(15)       not null
+#  mobile(携帯番号)                  :string(15)
+#  mobile_mail(メールアドレス(携帯)) :string(50)
+#  pc_mail(メールアドレス(PC))       :string(50)
+#  token(アクセストークン)           :string(36)       default(""), not null
+#  work_flag(作業フラグ)             :boolean          default(TRUE), not null
+#  created_at                        :datetime
+#  updated_at                        :datetime
+#  account_type_id(口座種別)         :integer          default(0), not null
+#  gender_id(性別)                   :integer          default(0), not null
+#  home_id(世帯)                     :integer
+#  position_id(役職)                 :integer          default(0), not null
+#
+# Indexes
+#
+#  index_workers_on_deleted_at  (deleted_at)
+#  index_workers_on_token       (token) UNIQUE
 #
 
 worker1:

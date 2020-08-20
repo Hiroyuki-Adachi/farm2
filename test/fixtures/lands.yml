@@ -2,19 +2,24 @@
 #
 # Table name: lands # 土地マスタ
 #
-#  id            :integer          not null, primary key   # 土地マスタ
-#  place         :string(15)       not null                # 番地
-#  owner_id      :integer                                  # 所有者
-#  manager_id    :integer                                  # 管理者
-#  area          :decimal(5, 2)    not null                # 面積(α)
-#  display_order :integer                                  # 表示順
-#  target_flag   :boolean          default(TRUE), not null # 管理対象フラグ
-#  created_at    :datetime
-#  updated_at    :datetime
-#  deleted_at    :datetime
-#  land_place_id :integer                                  # 土地
-#  reg_area      :decimal(5, 2)                            # 登記面積
-#  broccoli_mark :string(1)                                # ブロッコリ記号
+#  id(土地マスタ)                :integer          not null, primary key
+#  area(面積(α))                 :decimal(5, 2)    not null
+#  broccoli_mark(ブロッコリ記号) :string(1)
+#  deleted_at                    :datetime
+#  display_order(表示順)         :integer
+#  place(番地)                   :string(15)       not null
+#  reg_area(登記面積)            :decimal(5, 2)
+#  target_flag(管理対象フラグ)   :boolean          default(TRUE), not null
+#  created_at                    :datetime
+#  updated_at                    :datetime
+#  land_place_id(土地)           :integer
+#  manager_id(管理者)            :integer
+#  owner_id(所有者)              :integer
+#
+# Indexes
+#
+#  index_lands_on_deleted_at  (deleted_at)
+#  index_lands_on_place       (place)
 #
 
 lands0:

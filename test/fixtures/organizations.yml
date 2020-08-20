@@ -2,30 +2,30 @@
 #
 # Table name: organizations # 組織(体系)マスタ
 #
-#  id                      :integer          not null, primary key         # 組織(体系)マスタ
-#  name                    :string(20)       not null                      # 組織名称
-#  workers_count           :integer          default(12), not null         # 作業日報の作業者数
-#  lands_count             :integer          default(17), not null         # 作業日報の土地数
-#  machines_count          :integer          default(8), not null          # 作業日報の機械数
-#  chemicals_count         :integer          default(4), not null          # 作業日報の薬剤数
-#  daily_worker            :integer          default("no_print"), not null # 作業日報の作業者名付加情報
-#  consignor_code          :string(10)                                     # 委託者コード
-#  consignor_name          :string(40)                                     # 委託者コード
-#  bank_code               :string(4)        default("0000"), not null     # 口座の金融機関コード
-#  branch_code             :string(3)        default("000"), not null      # 口座の支店コード
-#  account_type_id         :integer          default(0), not null          # 口座種別
-#  account_number          :string(7)        default("0000000"), not null  # 口座番号
-#  term                    :integer          default(0), not null          # 現在の年度(期)
-#  created_at              :datetime
-#  updated_at              :datetime
-#  url                     :string                                         # URL
-#  broccoli_work_type_id   :integer                                        # ブロッコリ作業分類
-#  broccoli_work_kind_id   :integer                                        # ブロッコリ種別分類
-#  chemical_group_count    :integer          default(1)                    # 薬剤グループ数
-#  rice_planting_id        :integer                                        # 田植作業種別
-#  whole_crop_work_kind_id :integer                                        # WCS収穫分類
-#  contract_work_type_id   :integer                                        # 受託作業分類
-#  harvesting_work_kind_id :integer                                        # 稲刈作業種別
+#  id(組織(体系)マスタ)                      :integer          not null, primary key
+#  account_number(口座番号)                  :string(7)        default("0000000"), not null
+#  bank_code(口座の金融機関コード)           :string(4)        default("0000"), not null
+#  branch_code(口座の支店コード)             :string(3)        default("000"), not null
+#  chemical_group_count(薬剤グループ数)      :integer          default(1)
+#  chemicals_count(作業日報の薬剤数)         :integer          default(4), not null
+#  consignor_code(委託者コード)              :string(10)
+#  consignor_name(委託者コード)              :string(40)
+#  daily_worker(作業日報の作業者名付加情報)  :integer          default("no_print"), not null
+#  lands_count(作業日報の土地数)             :integer          default(17), not null
+#  machines_count(作業日報の機械数)          :integer          default(8), not null
+#  name(組織名称)                            :string(20)       not null
+#  term(現在の年度(期))                      :integer          default(0), not null
+#  url(URL)                                  :string
+#  workers_count(作業日報の作業者数)         :integer          default(12), not null
+#  created_at                                :datetime
+#  updated_at                                :datetime
+#  account_type_id(口座種別)                 :integer          default(0), not null
+#  broccoli_work_kind_id(ブロッコリ種別分類) :integer
+#  broccoli_work_type_id(ブロッコリ作業分類) :integer
+#  contract_work_type_id(受託作業分類)       :integer
+#  harvesting_work_kind_id(稲刈作業種別)     :integer
+#  rice_planting_id(田植作業種別)            :integer
+#  whole_crop_work_kind_id(WCS収穫分類)      :integer
 #
 
 org:

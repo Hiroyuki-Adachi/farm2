@@ -50,7 +50,8 @@ class WorkKindsController < ApplicationController
       :display_order,
       :price,
       :land_flag,
-      :broccoli_mark
+      :broccoli_mark,
+      :phonetic
     )
   end
 

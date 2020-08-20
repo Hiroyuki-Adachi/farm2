@@ -2,12 +2,16 @@
 #
 # Table name: calendar_work_kinds # カレンダー作業種別
 #
-#  id           :bigint           not null, primary key
-#  user_id      :integer          not null                     # 利用者
-#  work_kind_id :integer          not null                     # 作業種別
-#  text_color   :string(8)        default("#000000"), not null # 文字色
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id                     :bigint           not null, primary key
+#  text_color(文字色)     :string(8)        default("#000000"), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  user_id(利用者)        :integer          not null
+#  work_kind_id(作業種別) :integer          not null
+#
+# Indexes
+#
+#  calendar_work_kind_index  (user_id,work_kind_id) UNIQUE
 #
 
 class CalendarWorkKind < ApplicationRecord

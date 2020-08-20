@@ -2,14 +2,19 @@
 #
 # Table name: chemicals # 薬剤マスタ
 #
-#  id               :integer          not null, primary key  # 薬剤マスタ
-#  name             :string(20)       not null               # 薬剤名称
-#  display_order    :integer          default(0), not null   # 表示順
-#  chemical_type_id :integer          not null               # 薬剤種別
-#  created_at       :datetime
-#  updated_at       :datetime
-#  deleted_at       :datetime
-#  unit             :string(2)        default("袋"), not null # 単位
+#  id(薬剤マスタ)             :integer          not null, primary key
+#  deleted_at                 :datetime
+#  display_order(表示順)      :integer          default(0), not null
+#  name(薬剤名称)             :string(20)       not null
+#  phonetic(薬剤ふりがな)     :string(40)       default(""), not null
+#  unit(単位)                 :string(2)        default("袋"), not null
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  chemical_type_id(薬剤種別) :integer          not null
+#
+# Indexes
+#
+#  index_chemicals_on_deleted_at  (deleted_at)
 #
 
 class Chemical < ApplicationRecord
@@ -23,6 +28,8 @@ class Chemical < ApplicationRecord
   validates :name,          presence: true
   validates :display_order, presence: true
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
+  validates :phonetic,      presence: true
+  validates :phonetic, format: { with: /\A[\p{Hiragana}ー－A-Z0-9]+\z/ }, if: proc { |x| x.phonetic.present?}
 
   attr_accessor :term
 
@@ -37,19 +44,19 @@ class Chemical < ApplicationRecord
          OR chemicals.id IN (?)
 WHERE
       .order(Arel.sql(<<-ORDER))
-        chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id
+        chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id
 ORDER
   }
-  scope :list, ->{includes(:chemical_type).order(Arel.sql("chemical_types.display_order, chemicals.display_order, chemicals.id"))}
+  scope :list, ->{includes(:chemical_type).order(Arel.sql("chemical_types.display_order, chemicals.phonetic, chemicals.display_order, chemicals.id"))}
 
   scope :by_work, ->(term) {
     joins(:chemical_type)
       .with_deleted
       .where("chemicals.id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.chemical_id").uniq)
-      .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id"))
+      .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 
-  scope :by_type, ->(chemical_type_id) {where(chemical_type_id: chemical_type_id).order(:display_order, :id)}
+  scope :by_type, ->(chemical_type_id) {where(chemical_type_id: chemical_type_id).order(:phonetic, :display_order, :id)}
 
   def this_term_flag
     chemical_terms.where(term: @term).exists?

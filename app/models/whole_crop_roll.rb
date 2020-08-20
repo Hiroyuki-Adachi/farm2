@@ -2,12 +2,12 @@
 #
 # Table name: whole_crop_rolls # WCSロール
 #
-#  id                 :bigint           not null, primary key
-#  whole_crop_land_id :integer          default(0), not null   # WCS土地
-#  display_order      :integer          default(0), not null   # 番号
-#  weight             :decimal(4, 1)    default(0.0), not null # 重量
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  id                          :bigint           not null, primary key
+#  display_order(番号)         :integer          default(0), not null
+#  weight(重量)                :decimal(4, 1)    default(0.0), not null
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  whole_crop_land_id(WCS土地) :integer          default(0), not null
 #
 
 class WholeCropRoll < ApplicationRecord

@@ -2,17 +2,17 @@
 #
 # Table name: bank_branches # 支店マスタ
 #
-#  bank_code  :string(4)        not null, primary key # 金融機関コード
-#  code       :string(3)        not null, primary key # 支店コード
-#  name       :string(40)       not null              # 支店名称
-#  phonetic   :string(40)       not null              # 支店名称(ﾌﾘｶﾞﾅ)
-#  zip_code   :string(7)                              # 郵便番号
-#  address1   :string(50)                             # 住所1
-#  address2   :string(50)                             # 住所2
-#  telephone  :string(15)                             # 電話番号
-#  fax        :string(15)                             # FAX番号
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  address1(住所1)                :string(50)
+#  address2(住所2)                :string(50)
+#  bank_code(金融機関コード)      :string(4)        not null, primary key
+#  code(支店コード)               :string(3)        not null, primary key
+#  fax(FAX番号)                   :string(15)
+#  name(支店名称)                 :string(40)       not null
+#  phonetic(支店名称(ﾌﾘｶﾞﾅ)) :string(40)       not null
+#  telephone(電話番号)            :string(15)
+#  zip_code(郵便番号)             :string(7)
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

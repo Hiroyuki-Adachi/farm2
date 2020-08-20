@@ -2,13 +2,17 @@
 #
 # Table name: work_chemicals # 薬剤使用データ
 #
-#  id                :integer          not null, primary key  # 薬剤使用データ
-#  work_id           :integer          not null               # 作業
-#  chemical_id       :integer          not null               # 薬剤
-#  quantity          :decimal(5, 1)    default(0.0), not null # 使用量
-#  created_at        :datetime
-#  updated_at        :datetime
-#  chemical_group_no :integer          default(1), not null   # 薬剤グループ番号
+#  id(薬剤使用データ)                  :integer          not null, primary key
+#  chemical_group_no(薬剤グループ番号) :integer          default(1), not null
+#  quantity(使用量)                    :decimal(5, 1)    default(0.0), not null
+#  created_at                          :datetime
+#  updated_at                          :datetime
+#  chemical_id(薬剤)                   :integer          not null
+#  work_id(作業)                       :integer          not null
+#
+# Indexes
+#
+#  work_chemicals_2nd_key  (work_id,chemical_id,chemical_group_no) UNIQUE
 #
 
 class WorkChemical < ApplicationRecord
