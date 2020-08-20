@@ -2,12 +2,12 @@
 #
 # Table name: broccoli_boxes # ブロッコリ箱マスタ
 #
-#  id            :integer          not null, primary key  # ブロッコリ箱マスタ
-#  weight        :decimal(3, 1)    default(0.0), not null # 重さ(kg)
-#  display_name  :string(10)       default(""), not null  # 表示名
-#  display_order :integer          default(0), not null   # 表示順
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id(ブロッコリ箱マスタ) :integer          not null, primary key
+#  display_name(表示名)   :string(10)       default(""), not null
+#  display_order(表示順)  :integer          default(0), not null
+#  weight(重さ(kg))       :decimal(3, 1)    default(0.0), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

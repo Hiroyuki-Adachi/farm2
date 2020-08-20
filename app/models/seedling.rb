@@ -2,13 +2,17 @@
 #
 # Table name: seedlings # 育苗
 #
-#  id            :integer          not null, primary key # 育苗
-#  term          :integer          not null              # 年度(期)
-#  work_type_id  :integer                                # 作業分類
-#  soil_quantity :decimal(4, )     default(0), not null  # 育苗土数
-#  seed_cost     :decimal(6, )     default(0), not null  # 種子原価
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id(育苗)                :integer          not null, primary key
+#  seed_cost(種子原価)     :decimal(6, )     default(0), not null
+#  soil_quantity(育苗土数) :decimal(4, )     default(0), not null
+#  term(年度(期))          :integer          not null
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  work_type_id(作業分類)  :integer
+#
+# Indexes
+#
+#  index_seedlings_on_term_and_work_type_id  (term,work_type_id) UNIQUE
 #
 
 class Seedling < ActiveRecord::Base

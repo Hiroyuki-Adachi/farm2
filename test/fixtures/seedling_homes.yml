@@ -2,13 +2,17 @@
 #
 # Table name: seedling_homes # 育苗担当世帯
 #
-#  id          :integer          not null, primary key # 育苗担当世帯
-#  seedling_id :integer                                # 育苗
-#  home_id     :integer                                # 世帯
-#  quantity    :decimal(4, )     default(0), not null  # 苗箱数
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  sowed_on    :date                                   # 播種日
+#  id(育苗担当世帯)  :integer          not null, primary key
+#  quantity(苗箱数)  :decimal(4, )     default(0), not null
+#  sowed_on(播種日)  :date
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  home_id(世帯)     :integer
+#  seedling_id(育苗) :integer
+#
+# Indexes
+#
+#  index_seedling_homes_on_seedling_id_and_home_id  (seedling_id,home_id) UNIQUE
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

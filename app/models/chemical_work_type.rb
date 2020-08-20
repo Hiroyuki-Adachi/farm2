@@ -2,12 +2,16 @@
 #
 # Table name: chemical_work_types
 #
-#  id               :integer          not null, primary key
-#  chemical_term_id :integer                                 # 薬剤利用
-#  work_type_id     :integer                                 # 作業分類
-#  quantity         :decimal(5, 1)    default(0.0), not null # 使用量
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id                         :integer          not null, primary key
+#  quantity(使用量)           :decimal(5, 1)    default(0.0), not null
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  chemical_term_id(薬剤利用) :integer
+#  work_type_id(作業分類)     :integer
+#
+# Indexes
+#
+#  index_chemical_work_types_on_chemical_term_id_and_work_type_id  (chemical_term_id,work_type_id) UNIQUE
 #
 
 class ChemicalWorkType < ActiveRecord::Base

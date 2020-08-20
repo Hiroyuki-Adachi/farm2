@@ -2,15 +2,20 @@
 #
 # Table name: work_kinds # 作業種別マスタ
 #
-#  id            :integer          not null, primary key    # 作業種別マスタ
-#  name          :string(20)       not null                 # 作業種別名称
-#  display_order :integer          not null                 # 表示順
-#  other_flag    :boolean          default(FALSE), not null # その他フラグ
-#  created_at    :datetime
-#  updated_at    :datetime
-#  deleted_at    :datetime
-#  land_flag     :boolean          default(TRUE), not null  # 土地利用フラグ
-#  broccoli_mark :string(1)                                 # ブロッコリ記号
+#  id(作業種別マスタ)            :integer          not null, primary key
+#  broccoli_mark(ブロッコリ記号) :string(1)
+#  deleted_at                    :datetime
+#  display_order(表示順)         :integer          not null
+#  land_flag(土地利用フラグ)     :boolean          default(TRUE), not null
+#  name(作業種別名称)            :string(20)       not null
+#  other_flag(その他フラグ)      :boolean          default(FALSE), not null
+#  phonetic(作業種別ふりがな)    :string(40)       default(""), not null
+#  created_at                    :datetime
+#  updated_at                    :datetime
+#
+# Indexes
+#
+#  index_work_kinds_on_deleted_at  (deleted_at)
 #
 
 class WorkKind < ApplicationRecord
@@ -32,12 +37,14 @@ class WorkKind < ApplicationRecord
 
   validates :name, presence: true
   validates :price, presence: true
+  validates :phonetic, presence: true
+  validates :phonetic, format: { with: /\A[\p{Hiragana}ー－A-Z0-9]+\z/ }, if: proc { |x| x.phonetic.present?}
   validates :display_order, presence: true
 
   validates :price, numericality: true, if: proc { |x| x.price.present?}
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
 
-  scope :usual, -> {where(other_flag: false).order(:display_order)}
+  scope :usual, -> {where(other_flag: false).order(:phonetic, :display_order, :id)}
   scope :by_type, ->(work_type) {
     joins(:work_kind_types)
       .where(["work_kind_types.work_type_id = ?", work_type.genre_id])

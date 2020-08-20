@@ -2,15 +2,15 @@
 #
 # Table name: expense_types # 経費種別
 #
-#  id            :bigint           not null, primary key
-#  name          :string(10)       default(""), not null    # 経費種別名称
-#  chemical_flag :boolean          default(FALSE), not null # 薬剤フラグ
-#  sales_flag    :boolean          default(FALSE), not null # 売上フラグ
-#  other_flag    :boolean          default(FALSE), not null # その他フラグ
-#  display_order :integer          default(0), not null     # 表示順
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  deleted_at    :datetime                                  # 削除年月日
+#  id                        :bigint           not null, primary key
+#  chemical_flag(薬剤フラグ) :boolean          default(FALSE), not null
+#  deleted_at(削除年月日)    :datetime
+#  display_order(表示順)     :integer          default(0), not null
+#  name(経費種別名称)        :string(10)       default(""), not null
+#  other_flag(その他フラグ)  :boolean          default(FALSE), not null
+#  sales_flag(売上フラグ)    :boolean          default(FALSE), not null
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
 #
 
 class ExpenseType < ApplicationRecord

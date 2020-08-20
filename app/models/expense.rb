@@ -2,21 +2,21 @@
 #
 # Table name: expenses # 経費
 #
-#  id               :integer          not null, primary key    # 経費
-#  term             :integer          not null                 # 年度(期)
-#  payed_on         :date             not null                 # 支払日
-#  content          :string(40)                                # 支払内容
-#  amount           :decimal(7, )     default(0), not null     # 支払金額
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  chemical_type_id :integer          default(0)               # 薬剤種別
-#  chemical_id      :integer                                   # 薬剤
-#  expense_type_id  :integer          default(0), not null     # 経費種別
-#  quantity         :decimal(4, )                              # 数量
-#  discount         :decimal(7, )                              # 割引額
-#  discount_numor   :decimal(7, )                              # 割引率(分子)
-#  discount_denom   :decimal(7, )                              # 割引率(分母)
-#  cost_flag        :boolean          default(FALSE), not null # 支払時原価フラグ
+#  id(経費)                     :integer          not null, primary key
+#  amount(支払金額)             :decimal(7, )     default(0), not null
+#  content(支払内容)            :string(40)
+#  cost_flag(支払時原価フラグ)  :boolean          default(FALSE), not null
+#  discount(割引額)             :decimal(7, )
+#  discount_denom(割引率(分母)) :decimal(7, )
+#  discount_numor(割引率(分子)) :decimal(7, )
+#  payed_on(支払日)             :date             not null
+#  quantity(数量)               :decimal(4, )
+#  term(年度(期))               :integer          not null
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
+#  chemical_id(薬剤)            :integer
+#  chemical_type_id(薬剤種別)   :integer          default(0)
+#  expense_type_id(経費種別)    :integer          default(0), not null
 #
 
 class Expense < ApplicationRecord

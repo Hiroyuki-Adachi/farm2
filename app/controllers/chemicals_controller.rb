@@ -49,7 +49,7 @@ class ChemicalsController < ApplicationController
 
   def chemical_params
     params.require(:chemical)
-          .permit(:name, :display_order, :chemical_type_id, :this_term_flag, :unit)
+          .permit(:name, :display_order, :chemical_type_id, :this_term_flag, :unit, :phonetic)
           .merge(term: @term)
   end
 end

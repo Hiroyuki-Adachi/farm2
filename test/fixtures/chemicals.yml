@@ -2,14 +2,19 @@
 #
 # Table name: chemicals # 薬剤マスタ
 #
-#  id               :integer          not null, primary key  # 薬剤マスタ
-#  name             :string(20)       not null               # 薬剤名称
-#  display_order    :integer          default(0), not null   # 表示順
-#  chemical_type_id :integer          not null               # 薬剤種別
-#  created_at       :datetime
-#  updated_at       :datetime
-#  deleted_at       :datetime
-#  unit             :string(2)        default("袋"), not null # 単位
+#  id(薬剤マスタ)             :integer          not null, primary key
+#  deleted_at                 :datetime
+#  display_order(表示順)      :integer          default(0), not null
+#  name(薬剤名称)             :string(20)       not null
+#  phonetic(薬剤ふりがな)     :string(40)       default(""), not null
+#  unit(単位)                 :string(2)        default("袋"), not null
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  chemical_type_id(薬剤種別) :integer          not null
+#
+# Indexes
+#
+#  index_chemicals_on_deleted_at  (deleted_at)
 #
 
 chemicals0:

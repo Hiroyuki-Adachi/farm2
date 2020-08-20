@@ -2,13 +2,17 @@
 #
 # Table name: work_lands # 作業地データ
 #
-#  id            :integer          not null, primary key # 作業地データ
-#  work_id       :integer                                # 作業
-#  land_id       :integer                                # 土地
-#  display_order :integer          default(0), not null  # 表示順
-#  created_at    :datetime
-#  updated_at    :datetime
-#  fixed_cost    :decimal(6, )                           # 確定作業原価
+#  id(作業地データ)         :integer          not null, primary key
+#  display_order(表示順)    :integer          default(0), not null
+#  fixed_cost(確定作業原価) :decimal(6, )
+#  created_at               :datetime
+#  updated_at               :datetime
+#  land_id(土地)            :integer
+#  work_id(作業)            :integer
+#
+# Indexes
+#
+#  index_work_lands_on_work_id_and_land_id  (work_id,land_id) UNIQUE
 #
 
 require 'test_helper'

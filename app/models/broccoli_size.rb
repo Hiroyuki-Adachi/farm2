@@ -2,11 +2,11 @@
 #
 # Table name: broccoli_sizes # ブロッコリ階級マスタ
 #
-#  id            :integer          not null, primary key # ブロッコリ階級マスタ
-#  display_name  :string(10)       default(""), not null # 表示名
-#  display_order :integer          default(0), not null  # 表示順
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id(ブロッコリ階級マスタ) :integer          not null, primary key
+#  display_name(表示名)     :string(10)       default(""), not null
+#  display_order(表示順)    :integer          default(0), not null
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
 #
 
 class BroccoliSize < ApplicationRecord

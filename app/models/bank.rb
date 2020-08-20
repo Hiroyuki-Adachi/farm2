@@ -2,11 +2,11 @@
 #
 # Table name: banks # 金融機関マスタ
 #
-#  code       :string(4)        not null, primary key # 金融機関コード
-#  name       :string(40)       not null              # 金融機関名称
-#  phonetic   :string(40)       not null              # 金融機関名称(ﾌﾘｶﾞﾅ)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  code(金融機関コード)               :string(4)        not null, primary key
+#  name(金融機関名称)                 :string(40)       not null
+#  phonetic(金融機関名称(ﾌﾘｶﾞﾅ)) :string(40)       not null
+#  created_at                         :datetime         not null
+#  updated_at                         :datetime         not null
 #
 
 class Bank < ApplicationRecord

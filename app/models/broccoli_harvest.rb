@@ -2,13 +2,17 @@
 #
 # Table name: broccoli_harvests # ブロッコリー収穫
 #
-#  id               :integer          not null, primary key # ブロッコリー収穫
-#  work_broccoli_id :integer          not null              # ブロッコリー作業
-#  broccoli_rank_id :integer          not null              # ブロッコリー等級
-#  broccoli_size_id :integer          not null              # ブロッコリー階級
-#  inspection       :decimal(3, )     default(0), not null  # 検査後数量
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id(ブロッコリー収穫)               :integer          not null, primary key
+#  inspection(検査後数量)             :decimal(3, )     default(0), not null
+#  created_at                         :datetime         not null
+#  updated_at                         :datetime         not null
+#  broccoli_rank_id(ブロッコリー等級) :integer          not null
+#  broccoli_size_id(ブロッコリー階級) :integer          not null
+#  work_broccoli_id(ブロッコリー作業) :integer          not null
+#
+# Indexes
+#
+#  broccoli_harvest_sheet  (work_broccoli_id,broccoli_rank_id,broccoli_size_id) UNIQUE
 #
 
 class BroccoliHarvest < ApplicationRecord

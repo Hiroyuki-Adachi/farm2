@@ -4,13 +4,17 @@ require 'securerandom'
 #
 # Table name: schedule_workers # 作業予定作業者
 #
-#  id            :integer          not null, primary key # 作業予定作業者
-#  schedule_id   :integer                                # 作業予定
-#  worker_id     :integer                                # 作業者
-#  display_order :integer          default(0), not null  # 表示順
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  uuid          :string(36)                             # UUID(カレンダー用)
+#  id(作業予定作業者)       :integer          not null, primary key
+#  display_order(表示順)    :integer          default(0), not null
+#  uuid(UUID(カレンダー用)) :string(36)
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  schedule_id(作業予定)    :integer
+#  worker_id(作業者)        :integer
+#
+# Indexes
+#
+#  index_schedule_workers_on_schedule_id_and_worker_id  (schedule_id,worker_id) UNIQUE
 #
 
 class ScheduleWorker < ApplicationRecord

@@ -2,13 +2,17 @@
 #
 # Table name: whole_crop_lands # WCS土地
 #
-#  id                 :bigint           not null, primary key
-#  work_whole_crop_id :integer          default(0), not null  # WCS作業
-#  work_land_id       :integer          default(0), not null  # 作業地
-#  display_order      :integer          default(0), not null  # 番号
-#  rolls              :decimal(3, )     default(0), not null  # ロール数
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  id                          :bigint           not null, primary key
+#  display_order(番号)         :integer          default(0), not null
+#  rolls(ロール数)             :decimal(3, )     default(0), not null
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  work_land_id(作業地)        :integer          default(0), not null
+#  work_whole_crop_id(WCS作業) :integer          default(0), not null
+#
+# Indexes
+#
+#  index_whole_crop_lands_on_work_whole_crop_id_and_work_land_id  (work_whole_crop_id,work_land_id) UNIQUE
 #
 
 class WholeCropLand < ApplicationRecord

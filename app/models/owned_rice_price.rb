@@ -2,15 +2,19 @@
 #
 # Table name: owned_rice_prices # 保有米単価
 #
-#  id            :bigint           not null, primary key
-#  term          :integer          not null              # 年度(期)
-#  work_type_id  :integer          default(0), not null  # 品種
-#  display_order :integer          default(0), not null  # 表示順
-#  name          :string(10)       default(""), not null # 品種名
-#  short_name    :string(5)        default(""), not null # 品種名(略称)
-#  owned_price   :decimal(5, )     default(0), not null  # 保有米価格
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id                       :bigint           not null, primary key
+#  display_order(表示順)    :integer          default(0), not null
+#  name(品種名)             :string(10)       default(""), not null
+#  owned_price(保有米価格)  :decimal(5, )     default(0), not null
+#  short_name(品種名(略称)) :string(5)        default(""), not null
+#  term(年度(期))           :integer          not null
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  work_type_id(品種)       :integer          default(0), not null
+#
+# Indexes
+#
+#  owned_rice_prices_2nd  (term,work_type_id) UNIQUE
 #
 
 class OwnedRicePrice < ApplicationRecord

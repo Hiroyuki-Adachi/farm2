@@ -2,17 +2,21 @@
 #
 # Table name: adjustments # 調整
 #
-#  id           :bigint           not null, primary key
-#  drying_id    :integer          default(0), not null  # 乾燥
-#  home_id      :integer                                # 担当世帯
-#  carried_on   :date                                   # 搬入日
-#  shipped_on   :date                                   # 出荷日
-#  rice_bag     :decimal(3, )                           # 調整米(袋)
-#  half_weight  :decimal(3, 1)                          # 半端米(kg)
-#  waste_weight :decimal(5, 1)                          # くず米(kg)
-#  fixed_amount :decimal(7, )                           # 確定額
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id                       :bigint           not null, primary key
+#  carried_on(搬入日)       :date
+#  fixed_amount(確定額)     :decimal(7, )
+#  half_weight(半端米(kg))  :decimal(3, 1)
+#  rice_bag(調整米(袋))     :decimal(3, )
+#  shipped_on(出荷日)       :date
+#  waste_weight(くず米(kg)) :decimal(5, 1)
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  drying_id(乾燥)          :integer          default(0), not null
+#  home_id(担当世帯)        :integer
+#
+# Indexes
+#
+#  adjustments_secondary  (drying_id) UNIQUE
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
