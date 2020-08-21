@@ -21,7 +21,6 @@
 #  index_lands_on_deleted_at  (deleted_at)
 #  index_lands_on_place       (place)
 #
-
 class Land < ApplicationRecord
   acts_as_paranoid
 

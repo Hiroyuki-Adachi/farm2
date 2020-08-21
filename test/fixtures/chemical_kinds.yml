@@ -10,7 +10,6 @@
 #
 #  index_chemical_kinds_on_chemical_type_id_and_work_kind_id  (chemical_type_id,work_kind_id) UNIQUE
 #
-
 chemical_kind_hiryo:
   chemical_type_id: 3
   work_kind_id: 6

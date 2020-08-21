@@ -10,7 +10,6 @@
 #
 #  index_chemical_kinds_on_chemical_type_id_and_work_kind_id  (chemical_type_id,work_kind_id) UNIQUE
 #
-
 class ChemicalKind < ApplicationRecord
   belongs_to :chemical_type
   belongs_to :work_kind

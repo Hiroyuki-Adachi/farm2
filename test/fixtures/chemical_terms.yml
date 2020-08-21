@@ -11,7 +11,6 @@
 #
 #  index_chemical_terms_on_chemical_id_and_term  (chemical_id,term) UNIQUE
 #
-
 chemical_term_3_2010:
   chemical_id: '3'
   term: '2010'

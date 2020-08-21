@@ -16,10 +16,10 @@
 #
 #  index_chemicals_on_deleted_at  (deleted_at)
 #
-
 chemicals0:
   id: '1'
   name: キチット（1㎏）
+  phonetic: 'きちっと'
   display_order: '0'
   chemical_type_id: '1'
   created_at: '2012-03-12 13:11:32.31246'
@@ -30,6 +30,7 @@ chemicals0:
 chemicals1:
   id: '2'
   name: Gオンコル(1kg)
+  phonetic: 'Gおんこる'
   display_order: '0'
   chemical_type_id: '2'
   created_at: '2012-03-12 13:11:53.807702'
@@ -40,6 +41,7 @@ chemicals1:
 chemicals2:
   id: '3'
   name: セラコートRワン
+  phonetic: 'さらこーとRわん'
   display_order: '0'
   chemical_type_id: '3'
   created_at: '2012-03-12 13:12:06.115492'
@@ -50,6 +52,7 @@ chemicals2:
 chemicals3:
   id: '4'
   name: 米育ち一発024号
+  phonetic: 'こめそだちいっぱつ'
   display_order: '0'
   chemical_type_id: '3'
   created_at: '2012-03-12 13:12:22.070992'
@@ -60,6 +63,7 @@ chemicals3:
 chemicals4:
   id: '5'
   name: いずも稲作名人
+  phonetic: 'いずもいなさくめいじん'
   display_order: '0'
   chemical_type_id: '3'
   created_at: '2012-03-12 13:12:34.018633'
@@ -70,6 +74,7 @@ chemicals4:
 chemicals5:
   id: '6'
   name: オンコル5(3kg)
+  phonetic: 'おんこる'
   display_order: '0'
   chemical_type_id: '2'
   created_at: '2012-03-12 13:12:54.344329'
@@ -80,6 +85,7 @@ chemicals5:
 chemicals6:
   id: '7'
   name: バッチリ
+  phonetic: 'ばっちり'
   display_order: '0'
   chemical_type_id: '1'
   created_at: '2012-07-14 07:47:00.516233'
@@ -90,6 +96,7 @@ chemicals6:
 chemicals7:
   id: '8'
   name: 硫安
+  phonetic: 'りゅうあん'
   display_order: '0'
   chemical_type_id: '3'
   created_at: '2012-07-14 08:21:46.652279'
@@ -100,6 +107,7 @@ chemicals7:
 chemicals8:
   id: '9'
   name: いーね463
+  phonetic: 'いーね'
   display_order: '0'
   chemical_type_id: '3'
   created_at: '2012-07-14 08:22:33.336458'
@@ -110,6 +118,7 @@ chemicals8:
 chemicals9:
   id: '10'
   name: V550
+  phonetic: 'V550'
   display_order: '0'
   chemical_type_id: '1'
   created_at: '2012-07-22 01:44:36.194534'
@@ -120,6 +129,7 @@ chemicals9:
 chemicals10:
   id: '11'
   name: V550
+  phonetic: 'V550'
   display_order: '0'
   chemical_type_id: '3'
   created_at: '2012-07-22 01:47:15.346027'
@@ -130,6 +140,7 @@ chemicals10:
 chemicals11:
   id: '12'
   name: 苗（コシヒカリ）
+  phonetic: 'いね'
   display_order: '0'
   chemical_type_id: '7'
   created_at: '2014-04-27 00:57:04.89384'
@@ -140,6 +151,7 @@ chemicals11:
 chemicals12:
   id: '13'
   name: サラブレッド（1㎏）
+  phonetic: 'さらぶれっど'
   display_order: '0'
   chemical_type_id: '1'
   created_at: '2014-04-27 01:04:07.871168'
@@ -150,6 +162,7 @@ chemicals12:
 chemicals13:
   id: '14'
   name: グランドオリゼメート
+  phonetic: 'ぐらんどおりぜめーと'
   display_order: '0'
   chemical_type_id: '2'
   created_at: '2014-05-06 06:07:21.412255'
@@ -160,6 +173,7 @@ chemicals13:
 chemicals14:
   id: '15'
   name: フルターボ
+  phonetic: 'ふるたーぼ'
   display_order: '0'
   chemical_type_id: '2'
   created_at: '2014-05-06 06:07:42.918094'
@@ -170,6 +184,7 @@ chemicals14:
 chemicals15:
   id: '16'
   name: オサキニ
+  phonetic: 'おさきに'
   display_order: '0'
   chemical_type_id: '1'
   created_at: '2014-05-18 06:58:44.740219'
@@ -180,6 +195,7 @@ chemicals15:
 chemicals16:
   id: '17'
   name: ユーコート844
+  phonetic: 'ゆーこーと'
   display_order: '0'
   chemical_type_id: '3'
   created_at: '2014-05-18 06:58:59.997245'
@@ -188,6 +204,7 @@ chemicals16:
 
 chemical_genka:
   name: "原価テスト用ダミー"
+  phonetic: 'げんかてすと'
   display_order: 99
   chemical_type_id: '3'
   created_at: '2014-05-18 06:58:59.997245'

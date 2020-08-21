@@ -10,7 +10,6 @@
 #
 #  machine_kinds_2nd_key  (machine_type_id,work_kind_id) UNIQUE
 #
-
 class MachineKind < ApplicationRecord
   belongs_to :machine_type
   belongs_to :work_kind

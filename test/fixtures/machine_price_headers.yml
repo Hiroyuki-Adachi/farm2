@@ -13,7 +13,6 @@
 #
 #  machine_price_headers_2nd_key  (validated_at,machine_id,machine_type_id) UNIQUE
 #
-
 machine_price_header_t:
   id: '4'
   validated_at: '2001-01-01'

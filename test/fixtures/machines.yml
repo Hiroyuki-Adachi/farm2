@@ -14,7 +14,6 @@
 #  home_id(所有者)                   :integer          default(0), not null
 #  machine_type_id(機械種別)         :integer          default(0), not null
 #
-
 taueki_1:
   id: 2
   name: 8条(旧NSU87)

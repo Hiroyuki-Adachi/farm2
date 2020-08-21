@@ -16,7 +16,6 @@
 #
 #  index_chemicals_on_deleted_at  (deleted_at)
 #
-
 class Chemical < ApplicationRecord
   acts_as_paranoid
 

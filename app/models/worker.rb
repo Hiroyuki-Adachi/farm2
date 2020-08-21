@@ -31,7 +31,6 @@
 #  index_workers_on_deleted_at  (deleted_at)
 #  index_workers_on_token       (token) UNIQUE
 #
-
 require 'securerandom'
 
 class Worker < ApplicationRecord

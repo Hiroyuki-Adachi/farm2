@@ -13,7 +13,6 @@
 #
 #  index_work_kind_prices_on_term_and_work_kind_id  (term,work_kind_id) UNIQUE
 #
-
 class WorkKindPrice < ApplicationRecord
   belongs_to :work_kind
 

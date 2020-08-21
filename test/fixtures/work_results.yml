@@ -18,7 +18,6 @@
 #
 #  index_work_results_on_work_id_and_worker_id  (work_id,worker_id) UNIQUE
 #
-
 work_results0:
   id: '5209'
   work_id: '1478'

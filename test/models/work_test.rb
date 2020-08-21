@@ -19,7 +19,6 @@
 #  work_kind_id(作業種別) :integer          default(0), not null
 #  work_type_id(作業分類) :integer
 #
-
 require 'test_helper'
 
 class WorkTest < ActiveSupport::TestCase

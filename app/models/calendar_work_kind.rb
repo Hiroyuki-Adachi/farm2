@@ -13,7 +13,6 @@
 #
 #  calendar_work_kind_index  (user_id,work_kind_id) UNIQUE
 #
-
 class CalendarWorkKind < ApplicationRecord
   belongs_to :user
   belongs_to :work_kind

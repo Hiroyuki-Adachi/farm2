@@ -1,5 +1,3 @@
-require 'date'
-require 'securerandom'
 # == Schema Information
 #
 # Table name: schedule_workers # 作業予定作業者
@@ -16,7 +14,8 @@ require 'securerandom'
 #
 #  index_schedule_workers_on_schedule_id_and_worker_id  (schedule_id,worker_id) UNIQUE
 #
-
+require 'date'
+require 'securerandom'
 class ScheduleWorker < ApplicationRecord
   belongs_to :schedule
   belongs_to :worker, -> {with_deleted}

@@ -9,7 +9,6 @@
 #  updated_at                  :datetime         not null
 #  whole_crop_land_id(WCS土地) :integer          default(0), not null
 #
-
 class WholeCropRoll < ApplicationRecord
   MAX_ROLLS = 5
 

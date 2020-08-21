@@ -14,7 +14,6 @@
 #
 #  work_chemicals_2nd_key  (work_id,chemical_id,chemical_group_no) UNIQUE
 #
-
 work_chemical1:
   work_id: 1478
   chemical_id: 3

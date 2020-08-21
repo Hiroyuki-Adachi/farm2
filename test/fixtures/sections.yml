@@ -14,7 +14,6 @@
 #
 #  index_sections_on_deleted_at  (deleted_at)
 #
-
 sections0:
   id: '1'
   name: 1班

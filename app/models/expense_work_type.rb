@@ -13,7 +13,6 @@
 #
 #  index_expense_work_types_on_expense_id_and_work_type_id  (expense_id,work_type_id) UNIQUE
 #
-
 class ExpenseWorkType < ApplicationRecord
   belongs_to :expense
   belongs_to :work_type, -> {with_deleted}

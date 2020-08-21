@@ -14,7 +14,6 @@
 #
 #  index_whole_crop_lands_on_work_whole_crop_id_and_work_land_id  (work_whole_crop_id,work_land_id) UNIQUE
 #
-
 class WholeCropLand < ApplicationRecord
   belongs_to :work_whole_crop
   belongs_to :work_land

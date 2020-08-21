@@ -1,9 +1,3 @@
-<%
-def pdf_data(file_name)
-  Base64.encode64(IO.read("test/fixtures/pdf/#{file_name}")).gsub(/^/, "    ")
-end
-%>
-
 # == Schema Information
 #
 # Table name: minutes # 議事録
@@ -19,7 +13,11 @@ end
 #
 #  index_minutes_on_schedule_id  (schedule_id) UNIQUE
 #
-
+<%
+def pdf_data(file_name)
+  Base64.encode64(IO.read("test/fixtures/pdf/#{file_name}")).gsub(/^/, "    ")
+end
+%>
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 # This model initially had no columns defined. If you add columns to the

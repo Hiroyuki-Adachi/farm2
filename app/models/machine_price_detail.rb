@@ -15,7 +15,6 @@
 #
 #  machine_price_details_2nd_key  (machine_price_header_id,lease_id,work_kind_id) UNIQUE
 #
-
 class MachinePriceDetail < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 

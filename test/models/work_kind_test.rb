@@ -17,7 +17,6 @@
 #
 #  index_work_kinds_on_deleted_at  (deleted_at)
 #
-
 require 'test_helper'
 
 class WorkKindTest < ActiveSupport::TestCase

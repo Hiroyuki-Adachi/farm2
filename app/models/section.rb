@@ -14,7 +14,6 @@
 #
 #  index_sections_on_deleted_at  (deleted_at)
 #
-
 class Section < ApplicationRecord
   acts_as_paranoid
 

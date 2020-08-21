@@ -28,7 +28,6 @@
 #  index_systems_on_term                      (term) UNIQUE
 #  index_systems_on_term_and_organization_id  (term,organization_id) UNIQUE
 #
-
 class System < ApplicationRecord
   validates :term,        presence: true
   validates :target_from, presence: true

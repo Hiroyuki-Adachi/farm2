@@ -14,7 +14,6 @@
 #
 #  broccoli_harvest_sheet  (work_broccoli_id,broccoli_rank_id,broccoli_size_id) UNIQUE
 #
-
 class BroccoliHarvest < ApplicationRecord
   validates :work_broccoli_id, presence: true
   validates :broccoli_rank_id, presence: true

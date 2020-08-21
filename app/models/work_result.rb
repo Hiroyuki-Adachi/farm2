@@ -1,5 +1,3 @@
-require 'date'
-require 'securerandom'
 # == Schema Information
 #
 # Table name: work_results # 作業結果データ
@@ -20,7 +18,8 @@ require 'securerandom'
 #
 #  index_work_results_on_work_id_and_worker_id  (work_id,worker_id) UNIQUE
 #
-
+require 'date'
+require 'securerandom'
 class WorkResult < ApplicationRecord
   belongs_to :work
   belongs_to :worker, -> {with_deleted}

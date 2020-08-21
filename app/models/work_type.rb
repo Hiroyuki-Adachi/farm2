@@ -8,6 +8,7 @@
 #  deleted_at                      :datetime
 #  display_order(表示順)           :integer          default(0), not null
 #  genre(作業ジャンル)             :integer          not null
+#  icon(アイコン)                  :binary
 #  land_flag(土地利用)             :boolean          default(TRUE), not null
 #  name(作業分類名称)              :string(10)       not null
 #
@@ -15,7 +16,6 @@
 #
 #  index_work_types_on_deleted_at  (deleted_at)
 #
-
 class WorkType < ApplicationRecord
   acts_as_paranoid
 

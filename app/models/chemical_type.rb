@@ -8,7 +8,6 @@
 #  created_at            :datetime
 #  updated_at            :datetime
 #
-
 class ChemicalType < ApplicationRecord
   has_many :chemicals, -> {order("chemicals.display_order")}, dependent: :restrict_with_exception
   has_many :chemical_kinds

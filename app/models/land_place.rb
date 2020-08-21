@@ -10,7 +10,6 @@
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #
-
 class LandPlace < ApplicationRecord
   acts_as_paranoid
 

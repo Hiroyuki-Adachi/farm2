@@ -18,7 +18,6 @@
 #
 #  adjustments_secondary  (drying_id) UNIQUE
 #
-
 class Adjustment < ApplicationRecord
   belongs_to :drying
   belongs_to :home, -> {with_deleted}

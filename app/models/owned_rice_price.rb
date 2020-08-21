@@ -16,7 +16,6 @@
 #
 #  owned_rice_prices_2nd  (term,work_type_id) UNIQUE
 #
-
 class OwnedRicePrice < ApplicationRecord
   belongs_to :work_type
 

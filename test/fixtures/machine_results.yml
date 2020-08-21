@@ -19,7 +19,6 @@
 #
 #  index_machine_results_on_machine_id_and_work_result_id  (machine_id,work_result_id) UNIQUE
 #
-
 machine_results0:
   id: '1024'
   machine_id: '4'

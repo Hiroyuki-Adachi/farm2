@@ -11,7 +11,6 @@
 #  seedling_home_id(育苗担当) :integer
 #  work_result_id(作業結果)   :integer
 #
-
 class SeedlingResult < ActiveRecord::Base
   belongs_to :seedling_home
   belongs_to :work_result

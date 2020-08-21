@@ -14,7 +14,6 @@
 #
 #  index_work_lands_on_work_id_and_land_id  (work_id,land_id) UNIQUE
 #
-
 require 'test_helper'
 
 class WorkLandTest < ActiveSupport::TestCase

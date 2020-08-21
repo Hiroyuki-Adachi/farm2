@@ -16,7 +16,6 @@
 #
 #  index_total_cost_details_on_total_cost_id_and_work_type_id  (total_cost_id,work_type_id) UNIQUE
 #
-
 class TotalCostDetail < ApplicationRecord
   belongs_to :total_cost
   belongs_to :work_type

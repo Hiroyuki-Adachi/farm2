@@ -8,7 +8,6 @@
 #  created_at            :datetime
 #  updated_at            :datetime
 #
-
 class MachineType < ApplicationRecord
   has_many :machines, -> {order("machines.display_order, machines.id")}, dependent: :restrict_with_exception 
 

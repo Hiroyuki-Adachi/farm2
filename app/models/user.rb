@@ -21,7 +21,6 @@
 #  index_users_on_login_name  (login_name) UNIQUE
 #  index_users_on_worker_id   (worker_id) UNIQUE
 #
-
 class User < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 

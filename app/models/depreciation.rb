@@ -13,7 +13,6 @@
 #
 #  index_depreciations_on_term_and_machine_id  (term,machine_id) UNIQUE
 #
-
 class Depreciation < ApplicationRecord
   belongs_to :machine
   has_one :machine_type, {through: :machine}

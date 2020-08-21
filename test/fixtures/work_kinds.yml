@@ -17,10 +17,10 @@
 #
 #  index_work_kinds_on_deleted_at  (deleted_at)
 #
-
 work_kind_taue:
   id: '1'
   name: "田植"
+  phonetic: 'たうえ'
   display_order: '15'
   other_flag: f
   created_at: '2010-07-15 14:03:52'
@@ -31,6 +31,7 @@ work_kind_taue:
 work_kinds1:
   id: '2'
   name: "代掻"
+  phonetic: 'しろかき'
   display_order: '14'
   other_flag: f
   created_at: '2010-07-15 14:03:52'
@@ -41,6 +42,7 @@ work_kinds1:
 work_kinds2:
   id: '3'
   name: "荒耕"
+  phonetic: 'あらうち'
   display_order: '13'
   other_flag: f
   created_at: '2010-07-15 14:03:52'
@@ -51,6 +53,7 @@ work_kinds2:
 work_kinds3:
   id: '4'
   name: "稲刈り"
+  phonetic: 'いねかり'
   display_order: '18'
   other_flag: f
   created_at: '2010-07-15 14:03:52'
@@ -61,6 +64,7 @@ work_kinds3:
 work_kinds4:
   id: '5'
   name: "役員会"
+  phonetic: 'やくいんかい'
   display_order: '100'
   other_flag: f
   created_at: '2010-07-19 10:01:04.245501'
@@ -71,6 +75,7 @@ work_kinds4:
 work_kinds5:
   id: '6'
   name: "追肥"
+  phonetic: 'ついひ'
   display_order: '17'
   other_flag: f
   created_at: '2010-07-19 10:03:59.748838'
@@ -81,6 +86,7 @@ work_kinds5:
 work_kinds6:
   id: '7'
   name: "鶏ふん運搬"
+  phonetic: 'けいふんうんぱん'
   display_order: '5'
   other_flag: f
   created_at: '2010-07-19 10:19:58.078141'
@@ -91,6 +97,7 @@ work_kinds6:
 work_kinds7:
   id: '8'
   name: "改良剤散布"
+  phonetic: 'かいりょうざいさんぷ'
   display_order: '11'
   other_flag: f
   created_at: '2010-07-19 10:30:39.907171'
@@ -101,6 +108,7 @@ work_kinds7:
 work_kinds8:
   id: '9'
   name: "鶏ふん振り"
+  phonetic: 'けいふんふり'
   display_order: '5'
   other_flag: f
   created_at: '2010-07-19 11:03:31.828554'
@@ -111,6 +119,7 @@ work_kinds8:
 work_kinds9:
   id: '10'
   name: "草刈"
+  phonetic: 'くさかり'
   display_order: '17'
   other_flag: f
   created_at: '2010-07-19 12:10:18.771079'
@@ -121,6 +130,7 @@ work_kinds9:
 work_kinds10:
   id: '11'
   name: "保守"
+  phonetic: 'ほしゅ'
   display_order: '20'
   other_flag: f
   created_at: '2010-07-19 12:30:25.718941'
@@ -131,6 +141,7 @@ work_kinds10:
 work_kinds11:
   id: '12'
   name: PC
+  phonetic: 'PC'
   display_order: '4'
   other_flag: f
   created_at: '2010-07-19 12:33:38.767993'
@@ -141,6 +152,7 @@ work_kinds11:
 work_kinds12:
   id: '13'
   name: "直播"
+  phonetic: 'ちょくはん'
   display_order: '16'
   other_flag: f
   created_at: '2010-07-19 12:44:04.061495'
@@ -151,6 +163,7 @@ work_kinds12:
 work_kinds13:
   id: '14'
   name: "麦刈り"
+  phonetic: 'むぎかり'
   display_order: '4'
   other_flag: f
   created_at: '2010-07-19 13:14:49.531161'
@@ -161,6 +174,7 @@ work_kinds13:
 work_kinds14:
   id: '15'
   name: WCS
+  phonetic: 'WCS'
   display_order: '19'
   other_flag: f
   created_at: '2010-09-19 23:29:32.395154'
@@ -171,6 +185,7 @@ work_kinds14:
 work_kinds15:
   id: '16'
   name: "除草剤散布"
+  phonetic: 'じょそうざいさんぷ'
   display_order: '17'
   other_flag: f
   created_at: '2011-06-25 00:21:43.323872'
@@ -181,6 +196,7 @@ work_kinds15:
 work_kinds16:
   id: '17'
   name: "溝掘り"
+  phonetic: 'みぞほり'
   display_order: '30'
   other_flag: f
   created_at: '2011-07-20 09:03:37.969283'
@@ -191,6 +207,7 @@ work_kinds16:
 work_kinds17:
   id: '18'
   name: "稲わら"
+  phonetic: 'いなわら'
   display_order: '20'
   other_flag: f
   created_at: '2011-10-15 00:12:57.603634'
@@ -201,6 +218,7 @@ work_kinds17:
 work_kinds18:
   id: '19'
   name: "議事録作成"
+  phonetic: 'ぎじろくさくせい'
   display_order: '999'
   other_flag: f
   created_at: '2012-03-11 04:47:45.040099'
@@ -211,6 +229,7 @@ work_kinds18:
 work_kinds19:
   id: '20'
   name: "畦塗"
+  phonetic: 'あぜぬり'
   display_order: '21'
   other_flag: f
   created_at: '2012-04-22 00:27:18.278707'
@@ -221,6 +240,7 @@ work_kinds19:
 work_kinds20:
   id: '21'
   name: "格納庫大掃除"
+  phonetic: 'かくのうこおおそうじ'
   display_order: '0'
   other_flag: f
   created_at: '2012-12-24 10:18:40.050517'
@@ -231,6 +251,7 @@ work_kinds20:
 work_kinds21:
   id: '22'
   name: "改良剤散布"
+  phonetic: 'かいりょうざいさんぷ'
   display_order: '10'
   other_flag: f
   created_at: '2013-11-19 09:19:11.056484'
@@ -241,6 +262,7 @@ work_kinds21:
 work_kinds22:
   id: '23'
   name: "堆肥散布"
+  phonetic: 'たいひさんぷ'
   display_order: '12'
   other_flag: f
   created_at: '2013-11-19 09:19:43.796183'
@@ -251,6 +273,7 @@ work_kinds22:
 work_kinds23:
   id: '24'
   name: "理事会"
+  phonetic: 'りじかい'
   display_order: '1'
   other_flag: f
   created_at: '2013-11-20 08:50:16.189633'
@@ -261,6 +284,7 @@ work_kinds23:
 work_kinds24:
   id: '25'
   name: "役員会"
+  phonetic: 'やくいんかい'
   display_order: '3'
   other_flag: f
   created_at: '2013-11-20 08:50:51.864188'
@@ -271,6 +295,7 @@ work_kinds24:
 work_kinds25:
   id: '26'
   name: "議事録作成"
+  phonetic: 'ぎじろくさくせい'
   display_order: '4'
   other_flag: f
   created_at: '2013-11-20 09:04:30.017103'
@@ -281,6 +306,7 @@ work_kinds25:
 work_kinds26:
   id: '27'
   name: "免税軽油申請書作成"
+  phonetic: 'めんぜいけいゆしんせいしょさくせい'
   display_order: '5'
   other_flag: f
   created_at: '2014-04-02 09:31:26.87329'
@@ -291,6 +317,7 @@ work_kinds26:
 work_kinds27:
   id: '28'
   name: "種籾分配"
+  phonetic: 'たねもみぶんぱい'
   display_order: '22'
   other_flag: f
   created_at: '2014-04-09 08:36:02.534004'
@@ -301,6 +328,7 @@ work_kinds27:
 work_kinds28:
   id: '29'
   name: "請求書作成"
+  phonetic: 'せいきゅうしょさくせい'
   display_order: '6'
   other_flag: f
   created_at: '2014-06-13 08:03:40.06117'
@@ -311,6 +339,7 @@ work_kinds28:
 work_kinds29:
   id: '30'
   name: "その他"
+  phonetic: 'そのた'
   display_order: '48'
   other_flag: f
   created_at: '2014-07-20 07:38:41.358746'
@@ -321,6 +350,7 @@ work_kinds29:
 work_kinds30:
   id: '31'
   name: "地ならし"
+  phonetic: 'じならし'
   display_order: '10'
   other_flag: f
   created_at: '2015-03-21 00:57:53.234839'
@@ -331,6 +361,7 @@ work_kinds30:
 work_kinds31:
   id: '32'
   name: "支払明細書作成"
+  phonetic: 'しはらいめいさいしょさくせい'
   display_order: '7'
   other_flag: f
   created_at: '2015-03-21 10:01:44.429361'
@@ -341,6 +372,7 @@ work_kinds31:
 work_kinds32:
   id: '33'
   name: "出荷"
+  phonetic: 'しゅっか'
   display_order: '40'
   other_flag: f
   created_at: '2015-09-13 03:03:19.96282'
@@ -351,6 +383,7 @@ work_kinds32:
 work_kinds33:
   id: '34'
   name: "野菜"
+  phonetic: 'やさい'
   display_order: '42'
   other_flag: f
   created_at: '2015-12-17 09:02:27.79936'
@@ -361,6 +394,7 @@ work_kinds33:
 work_kinds34:
   id: '35'
   name: "野菜"
+  phonetic: 'やさい'
   display_order: '1'
   other_flag: f
   created_at: '2015-12-17 09:02:29.315946'
@@ -371,6 +405,7 @@ work_kinds34:
 work_kinds35:
   id: '36'
   name: "監査会"
+  phonetic: 'かんさかい'
   display_order: '2'
   other_flag: f
   created_at: '2015-12-17 09:03:37.881127'
@@ -381,6 +416,7 @@ work_kinds35:
 work_kinds36:
   id: '37'
   name: "米検査（みずほ倉庫）"
+  phonetic: 'こめけんさ'
   display_order: '41'
   other_flag: f
   created_at: '2015-12-19 06:49:54.784257'
@@ -391,6 +427,7 @@ work_kinds36:
 work_kinds37:
   id: '38'
   name: "収支内訳書作成"
+  phonetic: 'しゅうしうちわけしょさくせい'
   display_order: '8'
   other_flag: f
   created_at: '2016-02-09 02:07:33.833683'
@@ -401,6 +438,7 @@ work_kinds37:
 work_kinds38:
   id: '39'
   name: "その他"
+  phonetic: 'そのた'
   display_order: '999'
   other_flag: t
   created_at: '2010-07-15 14:03:52'
@@ -409,6 +447,7 @@ work_kinds38:
 
 work_kind_every_term:
   name: "年度ごと作業単価"
+  phonetic: 'さぎょうたんか'
   display_order: 100
   other_flag: f
   created_at: '2016-02-09 02:07:33.833683'
@@ -417,6 +456,7 @@ work_kind_every_term:
 
 work_kind_first_term:
   name: "初年度のみ作業単価"
+  phonetic: 'さぎょうたんか'
   display_order: 101
   other_flag: f
   created_at: '2016-02-09 02:07:33.833683'
@@ -425,6 +465,7 @@ work_kind_first_term:
 
 work_kind_broccoli:
   name: "収穫"
+  phonetic: 'しゅうかく'
   display_order: 10
   other_flag: f
   created_at: '2018-02-09 02:07:33.833683'
