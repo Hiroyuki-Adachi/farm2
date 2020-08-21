@@ -8,7 +8,6 @@
 #  created_at            :datetime
 #  updated_at            :datetime
 #
-
 chemical_types0:
   id: '1'
   name: 除草剤

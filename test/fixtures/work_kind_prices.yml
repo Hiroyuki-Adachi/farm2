@@ -13,7 +13,6 @@
 #
 #  index_work_kind_prices_on_term_and_work_kind_id  (term,work_kind_id) UNIQUE
 #
-
 work_kind_prices0:
   id: '2'
   term: '2012'

@@ -27,7 +27,6 @@
 #  rice_planting_id(田植作業種別)            :integer
 #  whole_crop_work_kind_id(WCS収穫分類)      :integer
 #
-
 class Organization < ApplicationRecord
   enum daily_worker: {no_print: 0, print_home: 1, print_section: 2}
 

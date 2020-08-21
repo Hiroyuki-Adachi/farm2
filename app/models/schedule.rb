@@ -14,7 +14,6 @@
 #  work_kind_id(作業種別) :integer          default(0), not null
 #  work_type_id(作業分類) :integer
 #
-
 class Schedule < ApplicationRecord
   validates :worked_at, presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}

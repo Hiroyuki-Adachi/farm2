@@ -6,7 +6,7 @@ class WorkKindsControllerTest < ActionController::TestCase
     @work_kind = work_kinds(:work_kinds1)
     @term = Organization.first.term
     Organization.first.save_term
-    @update = { name: "試験", display_order: 99, price: 1500, land_flag: true }
+    @update = { name: "試験", phonetic: 'しけん', display_order: 99, price: 1500, land_flag: true }
   end
 
   test "作業種別マスタ一覧" do

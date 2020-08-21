@@ -16,7 +16,6 @@
 #
 #  drying_moths_secondary  (drying_id,moth_count) UNIQUE
 #
-
 class DryingMoth < ApplicationRecord
   belongs_to :drying
 

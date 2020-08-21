@@ -18,7 +18,6 @@
 #  chemical_type_id(薬剤種別)   :integer          default(0)
 #  expense_type_id(経費種別)    :integer          default(0), not null
 #
-
 expense_upd:
   term: 2015
   payed_on: "2015-02-02"

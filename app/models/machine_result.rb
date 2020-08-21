@@ -19,7 +19,6 @@
 #
 #  index_machine_results_on_machine_id_and_work_result_id  (machine_id,work_result_id) UNIQUE
 #
-
 class MachineResult < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 

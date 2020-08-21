@@ -8,7 +8,6 @@
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #
-
 class BroccoliSize < ApplicationRecord
   scope :usual, -> {order("display_order")}
 end

@@ -27,7 +27,6 @@
 #  rice_planting_id(田植作業種別)            :integer
 #  whole_crop_work_kind_id(WCS収穫分類)      :integer
 #
-
 org:
   id: 1
   name: "てすと営農組合"

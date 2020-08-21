@@ -28,7 +28,6 @@
 #
 #  index_homes_on_deleted_at  (deleted_at)
 #
-
 class Home < ApplicationRecord
   acts_as_paranoid
 

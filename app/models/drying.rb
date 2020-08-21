@@ -18,7 +18,6 @@
 #
 #  dryings_secondary  (carried_on,home_id) UNIQUE
 #
-
 class Drying < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 

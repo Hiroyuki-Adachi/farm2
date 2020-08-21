@@ -11,7 +11,6 @@
 #
 #  index_chemical_terms_on_chemical_id_and_term  (chemical_id,term) UNIQUE
 #
-
 class ChemicalTerm < ApplicationRecord
   belongs_to :chemical, -> {with_deleted}
   has_many :chemical_work_types, {dependent: :delete_all}

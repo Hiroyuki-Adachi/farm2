@@ -4,7 +4,7 @@ class ChemicalsControllerTest < ActionController::TestCase
   setup do
     setup_ip
     @chemical = chemicals(:chemicals1)
-    @update = {name: "試験", display_order: 99, chemical_type_id: chemical_types(:chemical_types1), this_term_flag: false}
+    @update = {name: "試験", phonetic: 'しけん', display_order: 99, chemical_type_id: chemical_types(:chemical_types1), this_term_flag: false}
     @term = Organization.first.term
   end
 

@@ -12,7 +12,6 @@
 #
 #  index_work_verifications_on_work_id_and_worker_id  (work_id,worker_id) UNIQUE
 #
-
 class WorkVerification < ApplicationRecord
   belongs_to :work
   belongs_to :worker, -> {with_deleted}

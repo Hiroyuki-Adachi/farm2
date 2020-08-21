@@ -10,7 +10,6 @@
 #
 #  index_work_kind_types_on_work_kind_id_and_work_type_id  (work_kind_id,work_type_id) UNIQUE
 #
-
 class WorkKindType < ApplicationRecord
   belongs_to :work_kind
   belongs_to :work_type

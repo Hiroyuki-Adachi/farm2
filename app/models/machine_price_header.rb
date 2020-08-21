@@ -13,7 +13,6 @@
 #
 #  machine_price_headers_2nd_key  (validated_at,machine_id,machine_type_id) UNIQUE
 #
-
 class MachinePriceHeader < ApplicationRecord
   require "ostruct"
 

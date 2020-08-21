@@ -14,7 +14,6 @@
 #
 #  index_land_costs_on_activated_on_and_land_id  (activated_on,land_id) UNIQUE
 #
-
 class LandCost < ApplicationRecord
   belongs_to :land, -> {with_deleted}
   belongs_to :work_type, -> {with_deleted}

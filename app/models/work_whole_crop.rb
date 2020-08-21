@@ -14,7 +14,6 @@
 #
 #  index_work_whole_crops_on_work_id  (work_id) UNIQUE
 #
-
 class WorkWholeCrop < ApplicationRecord
   belongs_to :work
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_19_125549) do
+ActiveRecord::Schema.define(version: 2020_08_21_133432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -676,6 +676,7 @@ ActiveRecord::Schema.define(version: 2020_08_19_125549) do
     t.datetime "deleted_at"
     t.string "bg_color", limit: 8, comment: "背景色"
     t.boolean "land_flag", default: true, null: false, comment: "土地利用"
+    t.binary "icon", comment: "アイコン"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
   end
 

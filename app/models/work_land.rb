@@ -14,7 +14,6 @@
 #
 #  index_work_lands_on_work_id_and_land_id  (work_id,land_id) UNIQUE
 #
-
 class WorkLand < ApplicationRecord
   belongs_to :work
   belongs_to :land, -> {with_deleted}

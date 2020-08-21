@@ -21,7 +21,6 @@
 #  index_lands_on_deleted_at  (deleted_at)
 #  index_lands_on_place       (place)
 #
-
 lands0:
   id: '1'
   place: 5386-ﾛ

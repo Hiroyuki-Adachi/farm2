@@ -28,7 +28,6 @@
 #
 #  index_homes_on_deleted_at  (deleted_at)
 #
-
 home1:
   id: 1
   phonetic: なかまえ

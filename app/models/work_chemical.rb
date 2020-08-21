@@ -14,7 +14,6 @@
 #
 #  work_chemicals_2nd_key  (work_id,chemical_id,chemical_group_no) UNIQUE
 #
-
 class WorkChemical < ApplicationRecord
   belongs_to :chemical
   belongs_to :work

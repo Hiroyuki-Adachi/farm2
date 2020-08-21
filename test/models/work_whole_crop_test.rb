@@ -14,7 +14,6 @@
 #
 #  index_work_whole_crops_on_work_id  (work_id) UNIQUE
 #
-
 require 'test_helper'
 
 class WorkWholeCropTest < ActiveSupport::TestCase

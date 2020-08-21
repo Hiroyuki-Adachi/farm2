@@ -24,7 +24,6 @@
 #
 #  index_total_costs_on_term_and_occurred_on  (term,occurred_on)
 #
-
 class TotalCost < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 

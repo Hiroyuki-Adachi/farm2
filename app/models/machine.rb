@@ -14,7 +14,6 @@
 #  home_id(所有者)                   :integer          default(0), not null
 #  machine_type_id(機械種別)         :integer          default(0), not null
 #
-
 class Machine < ApplicationRecord
   acts_as_paranoid
 

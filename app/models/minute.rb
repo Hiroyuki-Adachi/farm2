@@ -13,7 +13,6 @@
 #
 #  index_minutes_on_schedule_id  (schedule_id) UNIQUE
 #
-
 class Minute < ApplicationRecord
   belongs_to :schedule
 

@@ -15,7 +15,6 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #
-
 class DailyWeather < ApplicationRecord
   scope :usual, ->(year) {
     where(target_date: [Date.new(year, 1, 1)..Date.new(year, 12, 31)])

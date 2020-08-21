@@ -16,7 +16,6 @@
 #
 #  index_work_broccolis_on_work_id  (work_id) UNIQUE
 #
-
 class WorkBroccoli < ApplicationRecord
   require 'ostruct'
 

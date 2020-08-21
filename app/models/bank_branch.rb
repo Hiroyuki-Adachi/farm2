@@ -14,7 +14,6 @@
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
 #
-
 class BankBranch < ApplicationRecord
   self.primary_keys = :bank_code, :code
 
