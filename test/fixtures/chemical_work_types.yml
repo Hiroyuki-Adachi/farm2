@@ -13,11 +13,6 @@
 #
 #  index_chemical_work_types_on_chemical_term_id_and_work_type_id  (chemical_term_id,work_type_id) UNIQUE
 #
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-
 chemical_work_type_genka5:
   chemical_term: chemical_term_genka
   work_type_id: 5

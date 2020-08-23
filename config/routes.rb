@@ -55,7 +55,11 @@ Rails.application.routes.draw do
   resources :machine_types, except: [:show]
   resources :chemical_types, except: [:show]
   resources :work_kinds, except: [:show]
-  resources :work_types, except: [:show]
+  resources :work_types, except: [:show] do
+    member do
+      get :show_icon
+    end
+  end
   resources :lands, except: [:show]
   resources :homes, except: [:show]
   resources :workers, except: [:show]

@@ -29,4 +29,8 @@ module ApplicationHelper
   def hhmm(hours, count = 1)
     Time.at((hours || 0) * 3600 / count).utc.strftime("%H:%M")
   end
+
+  def work_type_icon_tag(work_type)
+    image_tag(work_type.icon ? show_icon_work_type_path(work_type) : "/images/works/default.png", size: "48x48")
+  end
 end

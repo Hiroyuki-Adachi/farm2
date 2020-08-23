@@ -9,10 +9,6 @@
 #  updated_at                  :datetime         not null
 #  whole_crop_land_id(WCS土地) :integer          default(0), not null
 #
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
 wcs_roll11:
   wcs_land: wcs_land1
   display_order: 1

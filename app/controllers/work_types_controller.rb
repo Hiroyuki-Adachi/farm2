@@ -1,6 +1,6 @@
 class WorkTypesController < ApplicationController
-  include PermitManager
-  before_action :set_work_type, only: [:edit, :update, :destroy]
+  before_action :permit_manager, except: [:show_icon]
+  before_action :set_work_type, only: [:edit, :update, :destroy, :show_icon]
   before_action :set_category, only: [:new, :create, :edit, :update]
 
   def index
@@ -16,6 +16,11 @@ class WorkTypesController < ApplicationController
 
   def create
     @work_type = WorkType.new(work_type_params)
+    icon = work_type_params[:icon]
+    if icon != nil
+      @work_type.icon = icon.read
+      @work_type.icon_name = icon.original_filename
+    end
     if @work_type.save
       redirect_to work_types_path
     else
@@ -24,7 +29,13 @@ class WorkTypesController < ApplicationController
   end
 
   def update
-    if @work_type.update(work_type_params)
+    icon = work_type_params[:icon]
+    @work_type.attributes = work_type_params
+    if icon != nil && icon.original_filename != @work_type.icon_name
+      @work_type.icon = icon.read
+      @work_type.icon_name = icon.original_filename
+    end
+    if @work_type.save
       redirect_to work_types_path
     else
       render action: :edit
@@ -34,6 +45,10 @@ class WorkTypesController < ApplicationController
   def destroy
     @work_type.destroy
     redirect_to work_types_path
+  end
+
+  def show_icon
+    send_data @work_type.icon, type: 'image/jpeg',:disposition => 'inline'
   end
 
   private
@@ -47,6 +62,10 @@ class WorkTypesController < ApplicationController
   end
 
   def work_type_params
-    return params.require(:work_type).permit(:name, :display_order, :genre, :bg_color, :land_flag)
+    return params.require(:work_type).permit(:name, :display_order, :genre, :bg_color, :land_flag, :icon)
+  end
+
+  def permit_manager
+    to_error_path unless current_user.manageable?
   end
 end
