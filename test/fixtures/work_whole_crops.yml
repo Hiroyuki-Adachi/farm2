@@ -14,10 +14,6 @@
 #
 #  index_work_whole_crops_on_work_id  (work_id) UNIQUE
 #
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
 whole_crop1:
   work_id: 1508
   created_at: '2015-03-22 01:15:45.28871'

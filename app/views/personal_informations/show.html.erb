@@ -5,7 +5,7 @@
       <tbody>
         <% results.each do |result| %>
           <tr data-href="<%=raw personal_information_work_path(personal_information_token: params[:token], id: result.model.work.id) %>">
-            <td><%= image_tag(image_name(result.work.work_type), size: "48x48")%></td>
+            <td><%= work_type_icon_tag(result.work.work_type) %></td>
             <td>
               <div><%= result.worked_at_short %></div>
               <div class="small"><%= result.model.work.start_at.strftime("%H:%M") %>〜<%= result.model.work.end_at.strftime("%H:%M") %></div>

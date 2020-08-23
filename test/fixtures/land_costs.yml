@@ -14,10 +14,6 @@
 #
 #  index_land_costs_on_activated_on_and_land_id  (activated_on,land_id) UNIQUE
 #
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
 cost1:
   activated_on: '2015-01-01'
   land: land_land_cost1

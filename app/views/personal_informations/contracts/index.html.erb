@@ -3,7 +3,7 @@
     <tbody>
       <% @works.each do |work| %>
         <tr>
-          <td><%= image_tag(image_name(work.work_type), size: "48x48")%></td>
+          <td><%= work_type_icon_tag(work.work_type) %></td>
           <td>
             <div><%= work.worked_at %></div>
             <div class="small"><%= work.model.start_at.strftime("%H:%M") %>〜<%= work.model.end_at.strftime("%H:%M") %></div>

@@ -1,7 +1,6 @@
 class PersonalInformationsController < ApplicationController
   before_action :set_worker
   layout 'sm'
-  include PersonalInformationsHelper
 
   SCHEDULE_DAY = 3
 

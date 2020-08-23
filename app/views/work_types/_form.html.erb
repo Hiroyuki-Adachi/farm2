@@ -1,5 +1,5 @@
 <%= error_print(@work_type) %>
-<%= form_for(@work_type) do |f| %>
+<%= form_for(@work_type, {:multipart => true }) do |f| %>
 <div class="form-row">
   <div class="form-group col-md-2">
     <%= f.label :name, class: "col-form-label-lg" %>
@@ -29,6 +29,12 @@
       <%= f.radio_button :land_flag, false %>
       <label for="work_type_land_flag_false" class="form-check-label">土地を割り当てない</label>
     </div>
+  </div>
+</div>
+<div class="form-row">
+  <div class="field form-group col-md-2">
+    <%= f.label :icon, class: "col-form-label-lg" %>
+    <%= f.file_field(:icon, {class: "form-control-file"}) %>
   </div>
 </div>
 <div class="btn-toolbar">

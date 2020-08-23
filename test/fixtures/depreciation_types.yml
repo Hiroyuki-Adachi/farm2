@@ -12,11 +12,6 @@
 #
 #  index_depreciation_types_on_depreciation_id_and_work_type_id  (depreciation_id,work_type_id) UNIQUE
 #
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-
 depreciation_type_genka1:
   depreciation: depreciation_genka
   work_type_id: 5

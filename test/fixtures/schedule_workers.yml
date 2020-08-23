@@ -14,10 +14,6 @@
 #
 #  index_schedule_workers_on_schedule_id_and_worker_id  (schedule_id,worker_id) UNIQUE
 #
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
 schedule_worker1:
   schedule_id: 1
   worker_id: 1
