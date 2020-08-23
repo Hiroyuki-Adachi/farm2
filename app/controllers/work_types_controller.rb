@@ -48,7 +48,7 @@ class WorkTypesController < ApplicationController
   end
 
   def show_icon
-    send_data @work_type.icon, type: 'image/jpeg',:disposition => 'inline'
+    send_data @work_type.icon, :disposition => 'inline'
   end
 
   private
