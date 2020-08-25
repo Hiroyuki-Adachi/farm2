@@ -39,7 +39,7 @@ gem 'bootsnap', require: false
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+# gem 'sdoc', '~> 0.4.0', group: :doc
 # Internationalization and localization solution
 gem 'i18n-js'
 # This gem provides XML serialization for your Active Model objects and Active Record models.
