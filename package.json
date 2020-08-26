@@ -2,8 +2,8 @@
   "dependencies": {
     "@rails/ujs": "^6.0.2-2",
     "@rails/webpacker": "5.0.1",
-    "bootbox": "~5.1",
-    "bootstrap": "~4.5",
+    "bootbox": "~5",
+    "bootstrap": "~4",
     "chart.js": "^2.9.3",
     "floatthead": "^2.1.4",
     "i18n-js": "^3.5.1",
