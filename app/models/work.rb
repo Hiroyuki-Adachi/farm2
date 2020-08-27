@@ -45,6 +45,7 @@ class Work < ApplicationRecord
   has_many :work_results, -> {order('work_results.display_order')}, {dependent: :destroy}
   has_many :work_chemicals, dependent: :destroy
   has_many :work_verifications, -> {order('work_verifications.id')}, {dependent: :destroy}
+  has_many :work_work_types, dependent: :destroy
   has_one :broccoli, {class_name: "WorkBroccoli", dependent: :destroy}
   has_one :whole_crop, {class_name: "WorkWholeCrop", dependent: :destroy}
 
@@ -238,6 +239,7 @@ SQL
       end
     end
     work_lands.where.not(land_id: lands).each(&:destroy)
+    set_work_work_types
   end
 
   def regist_machines(params)
@@ -370,5 +372,16 @@ SQL
     work_results.joins(seedling_results: {seedling_home: :seedling})
       .where(["seedling_results.disposal_flag = FALSE AND seedlings.work_type_id = ?", work_type_id])
       .sum("seedling_results.quantity")
+  end
+
+  def set_work_work_types
+    work_work_types.delete_all
+    work_types = []
+    lands.each do |land|
+      work_types << land.cost(worked_at)&.work_type
+    end
+    work_types.compact.uniq.each do |wt|
+      work_work_types.create(work_type_id: wt.id)
+    end
   end
 end
