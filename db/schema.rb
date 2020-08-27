@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_21_133432) do
+ActiveRecord::Schema.define(version: 2020_08_27_104427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -697,6 +697,14 @@ ActiveRecord::Schema.define(version: 2020_08_21_133432) do
     t.decimal "tax_rate", precision: 3, scale: 1, default: "0.0", null: false, comment: "消費税率"
     t.string "article_name", limit: 15, default: "", null: false, comment: "品名"
     t.index ["work_id"], name: "index_work_whole_crops_on_work_id", unique: true
+  end
+
+  create_table "work_work_types", id: false, comment: "作業分類キャッシュ", force: :cascade do |t|
+    t.integer "work_id", null: false, comment: "作業"
+    t.integer "work_type_id", null: false, comment: "作業分類"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["work_id", "work_type_id"], name: "work_work_types_2nd", unique: true
   end
 
   create_table "workers", id: :serial, comment: "作業者マスタ", force: :cascade do |t|
