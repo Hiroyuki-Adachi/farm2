@@ -54,6 +54,7 @@ class Work < ApplicationRecord
   has_many :chemicals, -> {with_deleted}, {through: :work_chemicals}
   has_many :machine_results, {through: :work_results}
   has_many :checkers, -> {with_deleted}, {through: :work_verifications, source: :worker}
+  has_many :work_types, through: :work_work_types
 
   scope :no_fixed, ->(term){
     includes(:work_type, :work_kind)
@@ -107,6 +108,7 @@ SQL
       (works.printed_at IS NULL)
     OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)
 SQL
+  scope :by_land, ->(land) {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.land_id = ?)", land.id)}
 
   scope :by_chemical, ->(term) {
     where("id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.work_id").uniq)
@@ -239,7 +241,7 @@ SQL
       end
     end
     work_lands.where.not(land_id: lands).each(&:destroy)
-    set_work_work_types
+    regist_work_work_types
   end
 
   def regist_machines(params)
@@ -349,22 +351,23 @@ SQL
   end
 
   def self.types_by_worked_at(worked_at)
-    work_types = []
+    wts = []
     Work.where(worked_at: worked_at).each do |work|
       work.lands.each do |land|
-        work_types << land.cost(worked_at)&.work_type
+        wts << land.cost(worked_at)&.work_type
       end
     end
-    return work_types.compact.uniq
+    return wts.compact.uniq
   end
 
   def exact_work_types
     return [work_type] if work_lands.empty?
-    work_types = []
+    return work_types if work_types.exists?
+    wts = []
     lands.each do |land|
-      work_types << land.cost(worked_at)&.work_type
+      wts << land.cost(worked_at)&.work_type
     end
-    return work_types.compact.uniq if work_types.compact.length.positive?
+    return wts.compact.uniq if wts.compact.length.positive?
     return [work_type]
   end
 
@@ -374,13 +377,13 @@ SQL
       .sum("seedling_results.quantity")
   end
 
-  def set_work_work_types
+  def regist_work_work_types
     work_work_types.delete_all
-    work_types = []
+    wts = []
     lands.each do |land|
-      work_types << land.cost(worked_at)&.work_type
+      wts << land.cost(worked_at)&.work_type
     end
-    work_types.compact.uniq.each do |wt|
+    wts.compact.uniq.each do |wt|
       work_work_types.create(work_type_id: wt.id)
     end
   end

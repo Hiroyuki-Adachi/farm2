@@ -71,4 +71,14 @@ SQL
       update(params)
     end
   end
+
+  def next_land_cost
+    LandCost.where("land_id = ? AND activated_on > ?", land_id, activated_on).order(activated_on: :asc).first
+  end
+
+  def regist_work_work_types
+    Work.where("worked_at BETWEEN ? AND ?", activated_on, next_land_cost&.activated_on || Date.today).by_land(land).each do |w|
+      w.regist_work_work_types
+    end
+  end
 end
