@@ -26,7 +26,6 @@
           <th>削除</th>
           <th>日付</th>
           <th>作付</th>
-          <th>管理料</th>
         </tr>
       </thead>
       <tbody>
@@ -43,7 +42,7 @@
             <% end %>
           </td>
           <td>
-            <%= lcf.number_field :cost, {class: "form-control", min: 0, max: 999999, style: "width: 100px;"} %>
+            <%= lcf.hidden_field :cost %>
             <%= lcf.hidden_field :id %>
           </td>
         </tr>
