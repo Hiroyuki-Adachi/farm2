@@ -73,4 +73,13 @@ class WorkTest < ActiveSupport::TestCase
         .where(term: 2015, "work_results.worker_id" => workers(:worker3).id).sum("work_results.hours")
     assert_equal total_hours, Work.total_age[[2015, 5]]
   end
+
+  test "作業種別キャッシュ" do
+    w = works(:work_for_work_type_cache)
+    w.regist_work_work_types
+    wts = w.work_types.order(id: :asc)
+    assert_equal wts.count, 2
+    assert wts.ids.include?(land_costs(:land_cost_genka1).work_type_id)
+    assert wts.ids.include?(land_costs(:land_cost_genka21).work_type_id)
+  end
 end
