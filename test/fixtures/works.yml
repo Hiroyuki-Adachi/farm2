@@ -5286,20 +5286,17 @@ works_past:
   created_at: '2014-03-01 08:29:46.287334'
   updated_at: '2014-03-01 08:29:46.287334'
 
-works329:
-  id: '1811'
-  term: '2016'
+work_for_work_type_cache:
+  term: 2016
   worked_at: '2016-02-16'
   weather_id: '1'
   work_type_id: '11'
-  name: H27年監査
+  name: "作業種別キャッシュテスト"
   remarks: ''
   start_at: '2016-03-01 14:00:00'
   end_at: '2016-03-01 16:00:00'
   fixed_at: 
   work_kind_id: '36'
-  created_at: '2016-03-01 08:34:35.513224'
-  updated_at: '2016-03-01 08:34:35.513224'
 
 work_for_price:
   term: 2015
