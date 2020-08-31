@@ -1,11 +1,13 @@
-<table>
-  <tbody>
-    <% @results.each_with_index do |result, i| %>
-      <tr>
-        <td class="numeric"><%= i + 1 %></td>
-        <td><%= result.worker_name(current_organization) %></td>
-        <td class="numeric"><%= result.hours  %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% xx = 2; yy = (([current_organization.workers_count, @results.count].max - 1) / xx + 1) %>
+<div class="container-fluid">
+  <% yy.times do |i| %>
+    <div class="row">
+      <% xx.times do |x| %>
+        <% j = i + yy * x %>
+        <div class="col-md-1"><%= j + 1 %></div>
+        <div class="col-md-3"><%=raw @results[j] ? @results[j].worker_name(current_organization) : "&nbsp;" %></div>
+        <div class="col-md-2"><%=raw @results[j] ? @results[j].hours : "&nbsp;" %></div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
