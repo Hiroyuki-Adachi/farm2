@@ -8,22 +8,9 @@ $(function() {
         setTableWrapperHeight();
     });
 
-    $(document).on({
-        'mouseenter': function() {
-            var e = $(this);
-            e.off('hover');
-            $.get(e.data('url'), function(data) {
-                e.popover({content: data, html: true});
-                e.popover('show');
-            });
-        },
-        'mouseleave': function() {
-            var e = $(this);
-            e.popover('hide');
-        }},
-        'span.hover'
-    );
-
+    $("#list").on('click', ".show-work", function() {
+        execShow($(this).data("url"));
+    });
     $("#list").on('click', ".execute", function() {
         execCreate($(this).data("url"), $(this).data("work"));
     });
@@ -67,6 +54,19 @@ function execDestroy(url) {
     }).always(function() {
         loading.remove();
         changePrint($("#print_self")[0]);
+    });
+    return false;
+}
+
+function execShow(url) {
+    $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "html"
+    }).done(function(html) {
+        $("#show_work_body").html(html);
+        $("#show_work").modal({keyboard: true});
+    }).always(function() {
     });
     return false;
 }
