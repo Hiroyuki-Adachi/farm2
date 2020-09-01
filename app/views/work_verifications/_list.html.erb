@@ -4,7 +4,7 @@
       <th>作業日時</th>
       <th>分類</th>
       <th class="numeric">No.</th>
-      <th colspan="3">処理ボタン</th>
+      <th colspan="2">処理ボタン</th>
       <th>記入者</th>
       <th>検証者</th>
     </tr>
@@ -17,13 +17,8 @@
         <td class="numeric"><%= work.id %></td>
         <td>
           <%= link_to "確認", "#", {class: "btn btn-outline-primary btn-sm show-work", data: {url: show_workers_work_verification_path(work)}} %>
-        </td>
-        <td>
           <% if work.checkers.include?(current_user.worker) %>
-            <%= link_to "取消", "#", {class: "btn btn-danger btn-sm cancel", data: {url: work_verification_path(work)}} %>
             <%= hidden_field_tag :self_flag, work.id, {id: nil} %>
-          <% else %>
-            <%= link_to "検証", "#", {class: "btn btn-outline-danger btn-sm execute", data: {url: work_verifications_path, work: work.id}} %>
           <% end %>
         </td>
         <td><%= link_to "修正", work_path(work), {class: "btn btn-outline-success btn-sm"} %></td>
