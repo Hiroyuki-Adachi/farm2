@@ -1,12 +1,45 @@
 <% xx = 2; yy = (([current_organization.workers_count, @results.count].max - 1) / xx + 1) %>
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 h3"><%= @work.worked_at %>&nbsp;天候(<%= @work.weather.name %>)</div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 h4"><%= @work.start_at %>〜<%= @work.end_at %></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 h5"><%= @work.work_type_name%></div>
+    <div class="col-md-6 h5"><%= @work.name %></div>
+  </div>
+  <div class="row">
+    <h3>作業者</h3>
+  </div>
   <% yy.times do |i| %>
     <div class="row">
       <% xx.times do |x| %>
         <% j = i + yy * x %>
-        <div class="col-md-1"><%= j + 1 %></div>
-        <div class="col-md-3"><%=raw @results[j] ? @results[j].worker_name(current_organization) : "&nbsp;" %></div>
-        <div class="col-md-2"><%=raw @results[j] ? @results[j].hours : "&nbsp;" %></div>
+        <div class="col-md-1 text-right border border-primary"><%= j + 1 %></div>
+        <div class="col-md-4 text-left border border-primary"><%=raw @results[j] ? @results[j].worker_name(current_organization) : "" %></div>
+        <div class="col-md-1 text-right border border-primary"><%=raw @results[j] ? @results[j].hours : "" %></div>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="row">
+    <h3>土地</h3>
+  </div>
+  <% xx = 3; yy = ([current_organization.lands_count, @work_lands.count].max / xx + 1) %>
+  <% total_area = 0 %>
+  <% yy.times do |i| %>
+    <div class="row">
+      <% xx.times do |x| %>
+      <% j = i + yy * x %>
+        <% if j == (yy * xx - 1) %>
+          <div class="col-md-2 text-center border border-info small">合計</div>
+          <div class="col-md-2 text-right border border-info small"><%= sprintf("%.2f", total_area) %></div>
+        <% else %>
+          <div class="col-md-1 text-right border border-info small"><%= j + 1 %></div>
+          <div class="col-md-3 text-left border border-info small"><%=raw @work_lands[j] ? @work_lands[j].place : "" %></div>
+          <% total_area += @work_lands[j].land.area if @work_lands[j]  %>
+        <% end %>
       <% end %>
     </div>
   <% end %>
