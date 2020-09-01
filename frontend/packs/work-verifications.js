@@ -8,17 +8,16 @@ $(function() {
         setTableWrapperHeight();
     });
 
+    $("#print_self").on('click', function() {
+        changePrint($(this)[0]);
+    });
+
     $("#list").on('click', ".show-work", function() {
         execShow($(this).data("url"));
     });
-    $("#list").on('click', ".execute", function() {
-        execCreate($(this).data("url"), $(this).data("work"));
-    });
-    $("#list").on('click', ".cancel", function() {
-        execDestroy($(this).data("url"));
-    });
 
     setTableWrapperHeight();
+    $("#print_self").attr("checked", true).change();
 });
 
 function setTableWrapperHeight() {
@@ -28,6 +27,7 @@ function setTableWrapperHeight() {
 }
 
 function execCreate(url, work_id) {
+    $("#show_work").modal('hide');
     loading.disp("承認中...");
     $.ajax({
         url: url,
@@ -44,6 +44,7 @@ function execCreate(url, work_id) {
 }
 
 function execDestroy(url) {
+    $("#show_work").modal('hide');
     loading.disp("取消中...");
     $.ajax({
         url: url,
@@ -64,9 +65,15 @@ function execShow(url) {
         type: "GET",
         dataType: "html"
     }).done(function(html) {
-        $("#show_work_body").html(html);
+        $("#show_work_content").html(html);
         $("#show_work").modal({keyboard: true});
     }).always(function() {
+        $("#work_exec").on('click', function() {
+            execCreate($(this).data("url"), $(this).data("work"));
+        });
+        $("#work_cancel").on('click', function() {
+            execDestroy($(this).data("url"));
+        });
     });
     return false;
 }
