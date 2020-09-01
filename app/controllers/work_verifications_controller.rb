@@ -21,30 +21,9 @@ class WorkVerificationsController < ApplicationController
 
   def show_workers
     @results = WorkResultDecorator.decorate_collection(@work.work_results.includes(:worker) || [])
-    respond_to do |format|
-      format.html { render partial: "show_workers" }
-    end
-  end
-
-  def show_lands
     @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land) || [])
     respond_to do |format|
-      format.html { render partial: "show_lands" }
-    end
-  end
-
-  def show_machines
-    @results = @work.work_results || []
-    @machines = MachineDecorator.decorate_collection(Machine.by_results(@results).includes(:work_results))
-    respond_to do |format|
-      format.html { render partial: "show_machines" }
-    end
-  end
-
-  def show_chemicals
-    @chemicals = @work.work_chemicals.group(:chemical_id).sum(:quantity)
-    respond_to do |format|
-      format.html { render partial: "show_chemicals" }
+      format.html { render partial: "show_workers" }
     end
   end
 
