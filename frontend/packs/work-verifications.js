@@ -26,13 +26,12 @@ function setTableWrapperHeight() {
     }
 }
 
-function execCreate(url, work_id) {
+function execCreate(url) {
     $("#show_work").modal('hide');
     loading.disp("承認中...");
     $.ajax({
         url: url,
-        type: "POST",
-        data: {work_id: work_id},
+        type: "PUT",
         dataType: "html"
     }).done(function(html) {
         $("#list").html(html);

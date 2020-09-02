@@ -1,6 +1,6 @@
 class WorkVerificationsController < ApplicationController
   include PermitChecker
-  before_action :set_work, only: [:show_workers, :show_lands, :show_machines, :show_chemicals]
+  before_action :set_work, only: [:show]
 
   def index
     @works = WorkDecorator.decorate_collection(Work.for_verifications(@term, current_user.worker))
@@ -9,7 +9,7 @@ class WorkVerificationsController < ApplicationController
     end
   end
 
-  def create
+  def update
     WorkVerification.regist(Work.find(params[:work_id]), current_user.worker)
     reload
   end
@@ -19,11 +19,11 @@ class WorkVerificationsController < ApplicationController
     reload
   end
 
-  def show_workers
+  def show
     @results = WorkResultDecorator.decorate_collection(@work.work_results.includes(:worker) || [])
     @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land) || [])
     respond_to do |format|
-      format.html { render partial: "show_workers" }
+      format.html { render partial: "show" }
     end
   end
 
