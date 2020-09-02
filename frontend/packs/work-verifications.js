@@ -8,7 +8,7 @@ $(function() {
         setTableWrapperHeight();
     });
 
-    $("#print_self").on('click', function() {
+    $("#print_self").on('change', function() {
         changePrint($(this)[0]);
     });
 
@@ -17,7 +17,11 @@ $(function() {
     });
 
     setTableWrapperHeight();
-    $("#print_self").attr("checked", true).change();
+});
+
+$(window).on('load', function() {
+    $("#print_self").attr("checked", true);
+    changePrint($("#print_self")[0]);
 });
 
 function setTableWrapperHeight() {
