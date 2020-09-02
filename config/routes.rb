@@ -91,14 +91,7 @@ Rails.application.routes.draw do
   resources :users, except: [:show] do
     resources :permissions, controller: "users/permissions", only: [:new, :create]
   end
-  resources :work_verifications, param: "work_id", only: [:index, :create, :destroy] do
-    member do
-      get :show_workers
-      get :show_lands
-      get :show_machines
-      get :show_chemicals
-    end
-  end
+  resources :work_verifications, param: "work_id", only: [:index, :update, :destroy, :show]
 
   resources :menu, only: [:index, :edit, :update] do
     member do

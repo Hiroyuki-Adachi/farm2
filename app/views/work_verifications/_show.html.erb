@@ -50,7 +50,7 @@
   <% if @work.checkers.include?(current_user.worker) %>
     <button id="work_cancel" type="button" class="btn btn-danger" data-url="<%= work_verification_path(@work) %>">取消</button>
   <% else %>
-    <button id="work_exec" type="button" class="btn btn-outline-danger" data-url="<%= work_verifications_path%>" data-work="<%= @work.id%>">承認</button>
+    <button id="work_exec" type="button" class="btn btn-outline-danger" data-url="<%= work_verification_path(@work) %>">承認</button>
   <% end %>
   <button type="button" class="btn btn-outline-dark" data-dismiss="modal">閉じる</button>
 </div>

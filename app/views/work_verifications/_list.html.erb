@@ -16,7 +16,7 @@
         <td><%= work.genre_name %></td>
         <td class="numeric"><%= work.id %></td>
         <td>
-          <%= link_to "確認", "#", {class: "btn btn-outline-primary btn-sm show-work", data: {url: show_workers_work_verification_path(work)}} %>
+          <%= link_to "確認", "#", {class: "btn btn-outline-primary btn-sm show-work", data: {url: work_verification_path(work)}} %>
           <% if work.checkers.include?(current_user.worker) %>
             <%= hidden_field_tag :self_flag, work.id, {id: nil} %>
           <% end %>
