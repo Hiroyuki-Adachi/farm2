@@ -194,7 +194,9 @@ SQL
   end
 
   def self.for_verifications(term, worker)
-    Work.includes(:work_results, :machine_results, :work_lands, :work_type, :work_chemicals, :checkers).no_fixed(term).by_creator(worker).enough_check(worker).not_printed
+    Work.includes(:work_results, :creator)
+      .includes(:machine_results, :work_lands, :work_type, :work_chemicals, :checkers)
+      .no_fixed(term).by_creator(worker).enough_check(worker).not_printed
   end
 
   def self.get_terms(term)
