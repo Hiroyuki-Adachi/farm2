@@ -1,12 +1,16 @@
-<h1>管理マスタ修正</h1>
-
+<h1>管理情報変更</h1>
 <%= error_print(@organization) %>
 <%= form_for(@organization) do |f| %>
- <div class="field form-group">
-    <%= f.label :name, class: "col-form-label-lg" %>
-    <%= f.text_field :name, {maxlength: 20, size: 20, required: true, class: "form-control"} %>
- </div>
- <div class="row">
+  <div class="row">
+    <div class="field form-group col-md-3">
+        <%= f.label :name, class: "col-form-label-lg" %>
+        <%= f.text_field :name, {maxlength: 20, size: 20, required: true, class: "form-control"} %>
+    </div>
+    <div class="col-md-9">
+      <div id="map" class="embed-responsive embed-responsive-21by9"></div>
+    </div>
+  </div>
+  <div class="row">
     <div class="field form-group col-md-3">
       <%= f.label :workers_count, class: "col-form-label-lg" %>
       <%= f.number_field :workers_count, {min: 2, max: 50, step: 1, required: true, class: "form-control"} %>
@@ -24,17 +28,17 @@
       <%= f.number_field :chemicals_count, {min: 0, max: 50, step: 1, required: true, class: "form-control"} %>
     </div>
   </div>
- <div class="row">
-    <div class="field form-group col-md-3">
-        <%= f.label :daily_worker, class: "col-form-label-lg" %>
-        <%= f.select :daily_worker, @organization.localed_daily_workers, {}, {class: "form-control"} %>
+  <div class="row">
+      <div class="field form-group col-md-3">
+          <%= f.label :daily_worker, class: "col-form-label-lg" %>
+          <%= f.select :daily_worker, @organization.localed_daily_workers, {}, {class: "form-control"} %>
+      </div>
+      <div class="field form-group col-md-3">
+        <%= f.label :chemical_group_count, class: "col-form-label-lg" %>
+        <%= f.number_field :chemical_group_count, {min: 0, max: 5, step: 1, required: true, class: "form-control"} %>
+      </div>
     </div>
-    <div class="field form-group col-md-3">
-      <%= f.label :chemical_group_count, class: "col-form-label-lg" %>
-      <%= f.number_field :chemical_group_count, {min: 0, max: 5, step: 1, required: true, class: "form-control"} %>
-    </div>
-  </div>
- <div class="row">
+  <div class="row">
     <div class="field form-group col-md-6">
         <%= f.label :url, class: "col-form-label-lg" %>
         <%= f.url_field :url, {maxlength: 255, class: "form-control"} %>
@@ -68,12 +72,29 @@
       <%= f.collection_select(:harvesting_work_kind_id, @work_kinds, :id, :name, {include_blank: true}, {class: "form-control"}) %>
     </div>
   </div>
-<div class="btn-toolbar">
-  <div class="btn-group mr-2">
-    <%= f.submit '登録', class: "btn btn-danger" %>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= f.submit '登録', class: "btn btn-danger" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
+    </div>
   </div>
-  <div class="btn-group mr-2">
-    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
-  </div>
- </div>
 <% end %>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&callback=initMap" async defer></script>
+<script>
+let map
+
+function initMap(){
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 35.435293, lng:132.823309},
+    zoom: 16,
+    mapTypeId: google.maps.MapTypeId.SATELLITE
+  });
+
+  marker = new google.maps.Marker({
+    position:  {lat: 35.435293, lng:132.823309},
+    map: map
+  });
+}
+</script>
