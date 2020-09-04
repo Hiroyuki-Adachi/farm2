@@ -1,21 +1,24 @@
 <%= error_print(@land) %>
 <%= form_for(@land) do |f| %>
 <div class="form-row">
-  <div class="field form-group col-md-3">
+  <div class="field form-group col-md-2">
     <%= f.label :place, class: "col-form-label-lg" %>
     <%= f.text_field :place, {maxlength: 15, size: 20, required: true, class: "form-control"} %>
   </div>
-  <div class="field form-group col-md-3">
+  <div class="field form-group col-md-2">
     <%= f.label :land_place_id, class: "col-form-label-lg" %>
     <%= f.select(:land_place_id, @places.map {|place| [place.name, place.id]}, {}, {class: "form-control"}) %>
   </div>
+  <div class="col-md-8">
+    <div id="map" class="embed-responsive embed-responsive-16by9"></div>
+  </div>
 </div>
 <div class="form-row">
-  <div class="field form-group col-md-3">
+  <div class="field form-group col-md-2">
     <%= f.label :owner_id, class: "col-form-label-lg" %>
     <%= f.select(:owner_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-control"}) %>
   </div>
-  <div class="field form-group col-md-3">
+  <div class="field form-group col-md-2">
     <%= f.label :manager_id, class: "col-form-label-lg" %>
     <%= f.select(:manager_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-control"}) %>
   </div>
@@ -29,7 +32,7 @@
   </div>
 </div>
 <div class="form-row">
-  <div class="field form-group col-md-3">
+  <div class="field form-group col-md-2">
     <%= f.label :target_flag, class: "col-form-label-lg" %>
     <div class="form-check">
       <%= f.radio_button :target_flag, true %>
@@ -47,6 +50,7 @@
   <div class="field form-group col-md-2">
     <%= f.label :broccoli_mark, class: "col-form-label-lg" %>
     <%= f.text_field :broccoli_mark, {maxlength: 1, class: "form-control"} %>
+    <%= f.hidden_field :region %>
   </div>
 </div>
 <div class="btn-toolbar">
@@ -63,3 +67,32 @@
   </div>
 </div>
 <% end %>
+<%= hidden_field_tag "location", "[#{current_organization.location.x},#{current_organization.location.y}]" %>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&callback=initMap&libraries=drawing" async defer></script>
+<script>
+function initMap(){
+  const org = JSON.parse($("#location").val());
+  const pos = new google.maps.LatLng(org[0], org[1])
+
+  const map = new google.maps.Map(document.getElementById('map'), {
+    center: pos,
+    zoom: 18,
+    mapTypeId: google.maps.MapTypeId.SATELLITE
+  });
+
+  const drawingManager = new google.maps.drawing.DrawingManager({
+    drawingMode: google.maps.drawing.OverlayType.POLYGON,
+    drawingControl: true,
+    drawingControlOptions: {
+      position: google.maps.ControlPosition.TOP_CENTER,
+      drawingModes: [google.maps.drawing.OverlayType.POLYGON]
+    },
+    polygonOptions: {
+      fillColor: '#99ff99',
+      strokeColor: "#ffffff",
+      editable: true
+    },
+    map: map
+  });
+}
+</script>

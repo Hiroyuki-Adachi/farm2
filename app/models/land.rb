@@ -9,6 +9,7 @@
 #  display_order(表示順)         :integer
 #  place(番地)                   :string(15)       not null
 #  reg_area(登記面積)            :decimal(5, 2)
+#  region(領域)                  :polygon
 #  target_flag(管理対象フラグ)   :boolean          default(TRUE), not null
 #  created_at                    :datetime
 #  updated_at                    :datetime

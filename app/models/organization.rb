@@ -12,6 +12,7 @@
 #  consignor_name(委託者コード)              :string(40)
 #  daily_worker(作業日報の作業者名付加情報)  :integer          default("no_print"), not null
 #  lands_count(作業日報の土地数)             :integer          default(17), not null
+#  location(位置)                            :point            default(#<struct ActiveRecord::Point x=35.0, y=135.0>), not null
 #  machines_count(作業日報の機械数)          :integer          default(8), not null
 #  name(組織名称)                            :string(20)       not null
 #  term(現在の年度(期))                      :integer          default(0), not null
