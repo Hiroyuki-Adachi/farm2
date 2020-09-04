@@ -70,6 +70,7 @@
     <div class="field form-group col-md-3">
       <%= f.label :harvesting_work_kind_id, class: "col-form-label-lg" %>
       <%= f.collection_select(:harvesting_work_kind_id, @work_kinds, :id, :name, {include_blank: true}, {class: "form-control"}) %>
+      <%= f.hidden_field :location, {value: "(#{@organization.location.x},#{@organization.location.y})"} %>
     </div>
   </div>
   <div class="btn-toolbar">
@@ -83,18 +84,24 @@
 <% end %>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&callback=initMap" async defer></script>
 <script>
-let map
-
 function initMap(){
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 35.435293, lng:132.823309},
+  const org = JSON.parse($("#organization_location").val().replace("(", "[").replace(")", "]"));
+  const pos = new google.maps.LatLng(org[0], org[1])
+
+  const map = new google.maps.Map(document.getElementById('map'), {
+    center: pos,
     zoom: 16,
     mapTypeId: google.maps.MapTypeId.SATELLITE
   });
 
-  marker = new google.maps.Marker({
-    position:  {lat: 35.435293, lng:132.823309},
+  const marker = new google.maps.Marker({
+    position: pos,
+    draggable: true,
     map: map
+  });
+
+  marker.addListener("dragend", function(arg) {
+    $("#organization_location").val(arg.latLng.toString());
   });
 }
 </script>
