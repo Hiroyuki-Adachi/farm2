@@ -9,6 +9,7 @@
 #  updated_at               :datetime
 #  land_id(土地)            :integer
 #  work_id(作業)            :integer
+#  work_type_id(作業分類)   :integer
 #
 # Indexes
 #

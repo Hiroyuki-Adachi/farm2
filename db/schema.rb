@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_04_111440) do
+ActiveRecord::Schema.define(version: 2020_09_04_123728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -319,6 +319,7 @@ ActiveRecord::Schema.define(version: 2020_09_04_111440) do
     t.integer "land_place_id", comment: "土地"
     t.decimal "reg_area", precision: 5, scale: 2, comment: "登記面積"
     t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
+    t.polygon "region", comment: "領域"
     t.index ["deleted_at"], name: "index_lands_on_deleted_at"
     t.index ["place"], name: "index_lands_on_place"
   end
@@ -417,7 +418,7 @@ ActiveRecord::Schema.define(version: 2020_09_04_111440) do
     t.integer "whole_crop_work_kind_id", comment: "WCS収穫分類"
     t.integer "contract_work_type_id", comment: "受託作業分類"
     t.integer "harvesting_work_kind_id", comment: "稲刈作業種別"
-    t.point "location", default: [132.0, 35.0], null: false, comment: "位置"
+    t.point "location", default: [35.0, 135.0], null: false, comment: "位置"
   end
 
   create_table "owned_rice_prices", comment: "保有米単価", force: :cascade do |t|
