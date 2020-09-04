@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_27_104427) do
+ActiveRecord::Schema.define(version: 2020_09_04_070405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -651,6 +651,7 @@ ActiveRecord::Schema.define(version: 2020_08_27_104427) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal "fixed_cost", precision: 6, comment: "確定作業原価"
+    t.integer "work_type_id", comment: "作業分類"
     t.index ["work_id", "land_id"], name: "index_work_lands_on_work_id_and_land_id", unique: true
   end
 
