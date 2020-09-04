@@ -383,7 +383,9 @@ SQL
     work_work_types.delete_all
     wts = []
     lands.each do |land|
-      wts << land.cost(worked_at)&.work_type
+      wt = land.cost(worked_at)&.work_type
+      work_lands.find_by(land_id: land)&.update(work_type_id: wt.id)
+      wts << wt
     end
     wts.compact.uniq.each do |wt|
       work_work_types.create(work_type_id: wt.id)
