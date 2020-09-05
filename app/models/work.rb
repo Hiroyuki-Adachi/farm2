@@ -384,7 +384,7 @@ SQL
     wts = []
     lands.each do |land|
       wt = land.cost(worked_at)&.work_type
-      work_lands.find_by(land_id: land)&.update(work_type_id: wt.id)
+      work_lands.find_by(land_id: land)&.update(work_type_id: wt.id) if wt
       wts << wt
     end
     wts.compact.uniq.each do |wt|
