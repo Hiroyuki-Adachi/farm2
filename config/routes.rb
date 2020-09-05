@@ -41,7 +41,11 @@ Rails.application.routes.draw do
   resources :land_places, except: [:show]
   resources :organizations, param: nil, only: [:edit, :update]
   resources :systems, param: nil, only: [:edit, :update]
-  resources :land_costs, param: "land_id", only: [:index, :create, :edit, :update]
+  resources :land_costs, param: "land_id", only: [:index, :create, :edit, :update] do
+    collection do
+      get :map
+    end
+  end
 
   resources :banks, param: :code, except: [:show] do
     resources :branches, param: :code, controller: "banks/branches", except: [:show]

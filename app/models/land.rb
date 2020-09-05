@@ -118,4 +118,8 @@ class Land < ApplicationRecord
     end
     return [(max_v[0] + min_v[0]) / 2, (max_v[1] + min_v[1]) / 2]
   end
+
+  def region=(value)
+    super(value == "" ? nil : value)
+  end
 end

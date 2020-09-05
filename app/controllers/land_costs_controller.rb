@@ -6,6 +6,8 @@ class LandCostsController < ApplicationController
   before_action :set_land, only: [:edit, :update]
   before_action :clear_session
 
+  helper GmapHelper
+
   def index
     @land_places = LandPlace.usual
     @land_place_id = (params[:land_place_id] || @land_places.first.id).to_i
@@ -48,6 +50,11 @@ class LandCostsController < ApplicationController
     else
       render action: :edit
     end
+  end
+
+  def map
+    @lands = Land.where.not(region: nil)
+    @costs = LandCost.usual(@lands, Time.zone.today)
   end
 
   private
