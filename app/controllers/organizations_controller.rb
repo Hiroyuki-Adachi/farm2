@@ -1,6 +1,7 @@
 class OrganizationsController < ApplicationController
   before_action :permit_admin, only: [:edit, :update]
   before_action :set_organization
+  helper GmapHelper
 
   def edit
     @work_kinds = WorkKind.usual
