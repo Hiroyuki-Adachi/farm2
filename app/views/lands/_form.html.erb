@@ -78,7 +78,7 @@ function initMap(){
   if($("#land_region").val() != "") {
     JSON.parse($("#land_region").val().replace(/\(/g, "[").replace(/\)/g, "]")).forEach(function(rg) {
       region.push({lat: rg[0], lng: rg[1]});
-    })
+    });
   }
 
   const map = new google.maps.Map(document.getElementById('map'), {

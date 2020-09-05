@@ -14,6 +14,7 @@
       <th>地番</th>
       <th>所有者</th>
       <th>管理者</th>
+      <th>地図</th>
       <th style="text-align:right;">耕作面積(α)</th>
       <th></th>
     </tr>
@@ -25,6 +26,7 @@
       <td><%= land.place %></td>
       <td><%= land.owner_name %></td>
       <td><%= land.owner_id == land.manager_id ? "" : land.manager_name %></td>
+      <td><%= land.region.present? ? "◯" : "" %></td>
       <td class="numeric"><%= land.area %></td>
       <td><%= link_to '修正', edit_land_path(land), {class: "btn btn-success btn-sm"} %></td>
     </tr>
