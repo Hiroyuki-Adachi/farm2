@@ -101,4 +101,21 @@ class Land < ApplicationRecord
   def cost(target)
     LandCost.newest(target).find_by(land_id: id)
   end
+
+  def region_values
+    return nil if region.empty?
+    return JSON.parse(region.gsub(/\(/, "[").gsub(/\)/, "]"))
+  end
+
+  def region_center
+    max_v = [-180, -180]
+    min_v = [180, 180]
+    region_values.each do |rv|
+      max_v[0] = rv[0] if max_v[0] < rv[0]
+      max_v[1] = rv[1] if max_v[1] < rv[1]
+      min_v[0] = rv[0] if min_v[0] > rv[0]
+      min_v[1] = rv[1] if min_v[1] > rv[1]
+    end
+    return [(max_v[0] + min_v[0]) / 2, (max_v[1] + min_v[1]) / 2]
+  end
 end

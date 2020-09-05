@@ -4,6 +4,7 @@ module GmapHelper
   end
 
   def land_location(land)
-    return "#{current_organization.location.x},#{current_organization.location.y}"
+    return "#{land.region_center[0]},#{land.region_center[1]}" if land.region.present?
+    return "#{current_organization.location.x},#{current_organization.location.y}" 
   end
 end

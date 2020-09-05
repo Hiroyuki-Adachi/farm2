@@ -72,12 +72,29 @@
 <script>
 function initMap(){
   const org = JSON.parse($("#location").val());
-  const pos = new google.maps.LatLng(org[0], org[1])
+  const pos = new google.maps.LatLng(org[0], org[1]);
+
+  let region = [];
+  if($("#land_region").val() != "") {
+    JSON.parse($("#land_region").val().replace(/\(/g, "[").replace(/\)/g, "]")).forEach(function(rg) {
+      region.push({lat: rg[0], lng: rg[1]});
+    })
+  }
 
   const map = new google.maps.Map(document.getElementById('map'), {
     center: pos,
     zoom: 18,
     mapTypeId: google.maps.MapTypeId.SATELLITE
+  });
+
+  const landRegion = new google.maps.Polygon({
+    paths: region,
+    strokeColor: "#FF0000",
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: "#FF0000",
+    fillOpacity: 0.35,
+    map: map
   });
 
   const drawingManager = new google.maps.drawing.DrawingManager({
