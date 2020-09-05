@@ -30,6 +30,9 @@
     <%= f.label :reg_area, class: "col-form-label-lg" %>
     <%= f.number_field(:reg_area, {step: 0.01, max: 999.99, min: 0, size: 6, class: "form-control"}) %>
   </div>
+  <div class="col-md-2">
+    <input type="button" value="クリア" id="clear_region"  class="btn btn-danger mt-5" />
+  </div>
 </div>
 <div class="form-row">
   <div class="field form-group col-md-2">
@@ -70,6 +73,8 @@
 <%= hidden_field_tag "location", "[#{land_location(@land)}]" %>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&callback=initMap&libraries=drawing" async defer></script>
 <script>
+let landRegion;
+
 function initMap(){
   const org = JSON.parse($("#location").val());
   const pos = new google.maps.LatLng(org[0], org[1]);
@@ -87,7 +92,7 @@ function initMap(){
     mapTypeId: google.maps.MapTypeId.SATELLITE
   });
 
-  const landRegion = new google.maps.Polygon({
+  landRegion = new google.maps.Polygon({
     paths: region,
     strokeColor: "#FF0000",
     strokeOpacity: 0.8,
@@ -126,4 +131,13 @@ function initMap(){
     $("#land_region").val(region);
   });
 }
+
+$(function() {
+  $("#clear_region").click(function() {
+    if(landRegion) {
+      landRegion.setMap(null);
+      $("#land_region").val("");
+    }
+  });
+});
 </script>
