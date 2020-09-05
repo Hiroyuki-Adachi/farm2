@@ -3,6 +3,7 @@ class LandsController < ApplicationController
   before_action :set_land, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
   before_action :set_places, only: [:new, :create, :edit, :update]
+  helper GmapHelper
 
   def index
     @homes = LandDecorator.homes

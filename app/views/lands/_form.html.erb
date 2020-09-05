@@ -67,7 +67,7 @@
   </div>
 </div>
 <% end %>
-<%= hidden_field_tag "location", "[#{current_organization.location.x},#{current_organization.location.y}]" %>
+<%= hidden_field_tag "location", "[#{land_location(@land)}]" %>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&callback=initMap&libraries=drawing" async defer></script>
 <script>
 function initMap(){
@@ -93,6 +93,20 @@ function initMap(){
       editable: true
     },
     map: map
+  });
+
+  google.maps.event.addListener(drawingManager, 'polygoncomplete', function(arg) {
+    let region = "(";
+    let firstFlag = true;
+    arg.getPath().getArray().forEach(function(path) {
+      if(!firstFlag) {
+        region += ",";
+      }
+      region += "(" + path.lat() + "," + path.lng() + ")";
+      firstFlag = false;
+    });
+    region += ")";
+    $("#land_region").val(region);
   });
 }
 </script>
