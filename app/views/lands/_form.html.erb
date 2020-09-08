@@ -118,17 +118,11 @@ function initMap(){
   });
 
   google.maps.event.addListener(drawingManager, 'polygoncomplete', function(arg) {
-    let region = "(";
-    let firstFlag = true;
+    let polygon = [];
     arg.getPath().getArray().forEach(function(path) {
-      if(!firstFlag) {
-        region += ",";
-      }
-      region += "(" + path.lat() + "," + path.lng() + ")";
-      firstFlag = false;
+      polygon.push("(" + path.lat() + "," + path.lng() + ")");
     });
-    region += ")";
-    $("#land_region").val(region);
+    $("#land_region").val("(" + polygon.join(",") + ")");
   });
 }
 
