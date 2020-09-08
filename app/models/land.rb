@@ -31,10 +31,10 @@ class Land < ApplicationRecord
 
   has_one :owner_holder, -> {with_deleted}, {through: :owner, source: :holder}
   has_one :manager_holder, -> {with_deleted}, {through: :manager, source: :holder}
+  has_one :plan_land
 
   has_many :work_lands
   has_many :works, {through: :work_lands}
-
   has_many :land_costs, -> {order(:activated_on)}
 
   scope :usual, -> {where(target_flag: true).order(:place, :display_order)}

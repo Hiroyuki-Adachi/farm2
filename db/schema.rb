@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_04_123728) do
+ActiveRecord::Schema.define(version: 2020_09_08_110918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -440,6 +440,14 @@ ActiveRecord::Schema.define(version: 2020_09_04_123728) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["home_id", "owned_rice_price_id"], name: "owned_rices_2nd", unique: true
+  end
+
+  create_table "plan_lands", id: false, comment: "作付計画", force: :cascade do |t|
+    t.integer "land_id", null: false, comment: "土地"
+    t.integer "work_type_id", null: false, comment: "作業分類"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["land_id"], name: "plan_lands_2nd", unique: true
   end
 
   create_table "schedule_workers", id: :serial, comment: "作業予定作業者", force: :cascade do |t|
