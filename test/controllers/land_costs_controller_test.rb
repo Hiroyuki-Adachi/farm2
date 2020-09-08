@@ -77,4 +77,9 @@ class LandCostsControllerTest < ActionController::TestCase
     end
     assert_redirected_to land_costs_path
   end
+
+  test "土地原価管理(地図)" do
+    get :map
+    assert_response :success
+  end
 end

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :plans do
+    resources :lands, only: [:new, :create]
+  end
   resources :work_seedlings, only: [:index]
   resources :owned_rices, only: [:index, :edit, :update]
   resources :owned_rice_prices, only: [:index, :create, :edit, :update, :destroy]

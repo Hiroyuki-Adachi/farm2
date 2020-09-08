@@ -26,6 +26,9 @@
           <li class="nav-item">
             <%= link_to '原価管理', land_costs_path, {class: "nav-link", id: :navbarCost} %>
           </li>
+          <li class="nav-item">
+            <%= link_to '生産計画', new_plans_land_path, {class: "nav-link", id: :navbarPlan} %>
+          </li>
           <% end %>
           <% if current_user.checkable? %>
           <li class="nav-item">

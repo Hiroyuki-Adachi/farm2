@@ -63,6 +63,10 @@
     <%= link_to '育苗原価', seedling_costs_path, {class: "dropdown-item", data: {controller: "seedling_costs"}} %>
     <!-- <%= link_to '原価経費', expenses_path, {class: "dropdown-item", data: {controller: "expenses"}} %> -->
   </div>
+  <div aria-labelledby="navbarPlan" style="display:none;">
+    <span class="h5">生産計画</span>
+    <%= link_to '作付計画', land_costs_path, {class: "dropdown-item", data: {controller: "lands"}} %>
+  </div>
   <% end %>
   <% if current_user.checkable? %>
   <div aria-labelledby="navbarMaster" style="display:none;">
