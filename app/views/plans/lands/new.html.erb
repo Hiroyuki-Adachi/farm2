@@ -4,24 +4,38 @@
     <div id="map" class="embed-responsive embed-responsive-16by9"></div>
   </div>
 </div>
-<div id="btn_toolbar" class="btn-toolbar">
-  <div class="btn-group mr-2">
-    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+<h3 id="work_type_name" style="background-color: black;">&nbsp;</h3>
+<% @work_types.each_with_index do |work_type, i| %>
+  <div class="btn-group">
+    <%= tag(:input, {type: :button, value: work_type.name, class: "btn", style: "background-color: #{work_type.bg_color}; width:100px;", data: {id: work_type.id}, onclick: "clickWorkType(#{work_type.id})"}) %>
+    <span id="land_area_<%= work_type.id %>" class="label text-right area-sum" style="width: 50px;">0.0</span>
   </div>
-</div>
+<% end %>
 <%= hidden_field_tag :location, "[#{current_location}]" %>
-<div id="lands">
-  <% @lands.each do |land| %>
-    <%= hidden_field_tag "land[#{land.id}]", land&.plan_land&.work_type_id, {data: {id: land.id, place: land.place, area: land.area, region: land.region}} %>
-  <% end %>
-</div>
-<div id="work_types">
-  <% @work_types.each do |work_type| %>
-    <%= hidden_field_tag "work_type_#{work_type.id}", work_type.name, {name: nil, data: {id: work_type.id, color: work_type.bg_color}} %>
-  <% end %>
-</div>
+<%= form_tag(action: :create) do %>
+  <div id="lands">
+    <% @lands.each do |land| %>
+      <%= hidden_field_tag "land[#{land.id}]", land&.plan_land&.work_type_id, {data: {id: land.id, place: land.place, area: land.area, region: land.region}} %>
+    <% end %>
+  </div>
+  <div id="work_types">
+    <% @work_types.each do |work_type| %>
+      <%= hidden_field_tag "work_type_#{work_type.id}", work_type.name, {name: nil, data: {id: work_type.id, color: work_type.bg_color}} %>
+    <% end %>
+  </div>
+  <div id="btn_toolbar" class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+    </div>
+  </div>
+<% end %>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&callback=initMap" async defer></script>
 <script>
+let selectedWorkType;
+
 function initMap(){
   const org = JSON.parse(document.getElementById("location").value);
   const pos = new google.maps.LatLng(org[0], org[1]);
@@ -41,7 +55,7 @@ function initMap(){
 
   const workTypes = {};
   [].forEach.call(document.getElementById("work_types").getElementsByTagName("input"), function(workType) {
-    workTypes[workType.dataset.id] = workType.dataset.bg_color;
+    workTypes[workType.dataset.id] = workType.dataset.color;
   });
 
   const landRegions = {};
@@ -53,13 +67,44 @@ function initMap(){
     const workType = workTypes[land.value];
     landRegions[land.dataset.id] = new google.maps.Polygon({
       paths: paths,
-      strokeColor: workType == null ? DEFAULT_COLOR : workType.dataset.color,
+      strokeColor: workType == null ? DEFAULT_COLOR : workType,
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: workType == null ? DEFAULT_COLOR : workType.dataset.color,
+      fillColor: workType == null ? DEFAULT_COLOR : workType,
       fillOpacity: 0.35,
+      landId: land.dataset.id,
       map: map
     });
+
+    landRegions[land.dataset.id].addListener("click", function(arg) {
+      this.setOptions({
+        strokeColor: selectedWorkType.dataset.color,
+        fillColor: selectedWorkType.dataset.color
+      });
+      document.getElementById("land_" + this.landId).value = selectedWorkType.dataset.id;
+      dispSum();
+    });
+  });
+
+  dispSum();
+}
+
+function clickWorkType(workTypeId) {
+  selectedWorkType = document.getElementById("work_type_" + workTypeId);
+  const workTypeName = document.getElementById("work_type_name");
+  workTypeName.style.backgroundColor = selectedWorkType.dataset.color;
+  workTypeName.innerText = selectedWorkType.value;
+}
+
+function dispSum() {
+  const landAreas = {};
+  [].forEach.call(document.getElementById("lands").getElementsByTagName("input"), function(land) {
+    if(land.value != "") {
+      landAreas[land.value] = (landAreas[land.value] || 0) + parseFloat(land.dataset.area);
+    }
+  });
+  Object.keys(landAreas).forEach(function(key) {
+    document.getElementById("land_area_" + key).innerText = landAreas[key];
   });
 }
 </script>

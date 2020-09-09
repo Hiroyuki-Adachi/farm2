@@ -65,7 +65,7 @@
   </div>
   <div aria-labelledby="navbarPlan" style="display:none;">
     <span class="h5">生産計画</span>
-    <%= link_to '作付計画', land_costs_path, {class: "dropdown-item", data: {controller: "lands"}} %>
+    <%= link_to '作付計画', new_plans_land_path, {class: "dropdown-item", data: {controller: "lands", actions: [:new]}} %>
   </div>
   <% end %>
   <% if current_user.checkable? %>
