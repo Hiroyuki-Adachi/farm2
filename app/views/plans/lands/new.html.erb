@@ -10,17 +10,22 @@
   </div>
 </div>
 <%= hidden_field_tag :location, "[#{current_location}]" %>
-<% @lands.each do |land| %>
-  <%= hidden_field_tag :lands, land.region, {id: "land_#{land.id}", data: {id: land.id, place: land.place, area: land.area, work_type: land&.plan_land&.work_type_id}} %>
-<% end %>
-<% @work_types.each do |work_type| %>
-  <%= hidden_field_tag :work_types, work_type.name, {id: "work_type_#{work_type.id}", data: {id: work_type.id, color: work_type.bg_color}} %>
-<% end %>
+<div id="lands">
+  <% @lands.each do |land| %>
+    <%= hidden_field_tag "land[#{land.id}]", land&.plan_land&.work_type_id, {data: {id: land.id, place: land.place, area: land.area, region: land.region}} %>
+  <% end %>
+</div>
+<div id="work_types">
+  <% @work_types.each do |work_type| %>
+    <%= hidden_field_tag "work_type_#{work_type.id}", work_type.name, {name: nil, data: {id: work_type.id, color: work_type.bg_color}} %>
+  <% end %>
+</div>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&callback=initMap" async defer></script>
 <script>
 function initMap(){
   const org = JSON.parse(document.getElementById("location").value);
   const pos = new google.maps.LatLng(org[0], org[1]);
+  const DEFAULT_COLOR = "#000000";
 
   const map = new google.maps.Map(document.getElementById('map'), {
     center: pos,
@@ -34,22 +39,27 @@ function initMap(){
     map: map
   });
 
-  let landRegions = [];
-  document.getElementsByName("lands").forEach(function(land) {
-    let paths = [];
-    JSON.parse(land.value.replace(/\(/g, "[").replace(/\)/g, "]")).forEach(function(rg) {
+  const workTypes = {};
+  [].forEach.call(document.getElementById("work_types").getElementsByTagName("input"), function(workType) {
+    workTypes[workType.dataset.id] = workType.dataset.bg_color;
+  });
+
+  const landRegions = {};
+  [].forEach.call(document.getElementById("lands").getElementsByTagName("input"), function(land) {
+    const paths = [];
+    JSON.parse(land.dataset.region.replace(/\(/g, "[").replace(/\)/g, "]")).forEach(function(rg) {
       paths.push({lat: rg[0], lng: rg[1]});
     });
-    const work_type = document.getElementById("work_type_" + land.dataset.work_type)
-    landRegions.push(new google.maps.Polygon({
+    const workType = workTypes[land.value];
+    landRegions[land.dataset.id] = new google.maps.Polygon({
       paths: paths,
-      strokeColor: work_type == null ? "#000000" : work_type.dataset.color,
+      strokeColor: workType == null ? DEFAULT_COLOR : workType.dataset.color,
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: work_type == null ? "#000000" : work_type.dataset.color,
+      fillColor: workType == null ? DEFAULT_COLOR : workType.dataset.color,
       fillOpacity: 0.35,
       map: map
-    }));
+    });
   });
 }
 </script>
