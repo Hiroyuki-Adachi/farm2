@@ -14,4 +14,11 @@
 class PlanLand < ApplicationRecord
   belongs_to :land
   belongs_to :work_type
+
+  def self.create_all(params)
+    PlanLand.delete_all
+    params.each do |param|
+      PlanLand.create(land_id: param[0], work_type_id: param[1]) if param[1].present?
+    end
+  end
 end
