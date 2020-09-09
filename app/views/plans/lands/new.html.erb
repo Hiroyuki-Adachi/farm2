@@ -11,6 +11,7 @@
     <span id="land_area_<%= work_type.id %>" class="label text-right area-sum" style="width: 50px;">0.0</span>
   </div>
 <% end %>
+<div id="land_area_sum" class="label text-right font-weight-bold" style="width: 150px;">0.0</div>
 <%= hidden_field_tag :location, "[#{current_location}]" %>
 <%= form_tag(action: :create) do %>
   <div id="lands">
@@ -103,8 +104,12 @@ function dispSum() {
       landAreas[land.value] = (landAreas[land.value] || 0) + parseFloat(land.dataset.area);
     }
   });
+  let sumArea = 0;
   Object.keys(landAreas).forEach(function(key) {
     document.getElementById("land_area_" + key).innerText = landAreas[key];
+    sumArea += landAreas[key];
   });
+
+  document.getElementById("land_area_sum").innerText = sumArea;
 }
 </script>
