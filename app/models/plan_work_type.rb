@@ -19,4 +19,5 @@
 #  plan_work_types_2nd  (work_type_id) UNIQUE
 #
 class PlanWorkType < ApplicationRecord
+  belongs_to :work_type, -> {with_deleted}
 end
