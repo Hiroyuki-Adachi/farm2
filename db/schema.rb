@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_08_110918) do
+ActiveRecord::Schema.define(version: 2020_09_10_062534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -448,6 +448,32 @@ ActiveRecord::Schema.define(version: 2020_09_08_110918) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["land_id"], name: "plan_lands_2nd", unique: true
+  end
+
+  create_table "plan_seedlings", comment: "育苗計画", force: :cascade do |t|
+    t.integer "plan_work_type_id", null: false, comment: "作業計画"
+    t.integer "home_id", comment: "世帯"
+    t.decimal "quantity", precision: 4, default: "0", null: false, comment: "枚数"
+    t.decimal "seeds", precision: 3, default: "0", null: false, comment: "種子(kg)"
+    t.decimal "seed_bag1", precision: 2, default: "0", null: false, comment: "種子(大袋)"
+    t.decimal "seed_bag2", precision: 2, default: "0", null: false, comment: "種子(小袋)"
+    t.decimal "soil_bag", precision: 4, default: "0", null: false, comment: "育苗土(袋)"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "plan_work_types", comment: "作業計画", force: :cascade do |t|
+    t.integer "work_type_id", null: false, comment: "作業分類"
+    t.decimal "area", precision: 7, scale: 2, default: "0.0", null: false, comment: "面積(α)"
+    t.integer "month", default: 0, null: false, comment: "開始月"
+    t.decimal "unit", precision: 3, scale: 1, default: "0.0", null: false, comment: "枚数(10a当)"
+    t.decimal "quantity", precision: 5, default: "0", null: false, comment: "枚数"
+    t.decimal "between_stocks", precision: 2, default: "0", null: false, comment: "株間(cm)"
+    t.decimal "seeds", precision: 3, default: "0", null: false, comment: "種子(1枚当g)"
+    t.decimal "soils", precision: 4, scale: 2, default: "0.0", null: false, comment: "育苗土(1枚当袋)"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["work_type_id"], name: "plan_work_types_2nd", unique: true
   end
 
   create_table "schedule_workers", id: :serial, comment: "作業予定作業者", force: :cascade do |t|
