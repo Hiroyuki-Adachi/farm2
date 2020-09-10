@@ -101,15 +101,16 @@ function dispSum() {
   const landAreas = {};
   [].forEach.call(document.getElementById("lands").getElementsByTagName("input"), function(land) {
     if(land.value != "") {
-      landAreas[land.value] = (landAreas[land.value] || 0) + parseFloat(land.dataset.area);
+      landAreas[land.value] = new Decimal(landAreas[land.value] || 0);
+      landAreas[land.value] = landAreas[land.value].plus(land.dataset.area);
     }
   });
-  let sumArea = 0;
+  let sumArea = new Decimal(0);
   Object.keys(landAreas).forEach(function(key) {
-    document.getElementById("land_area_" + key).innerText = landAreas[key];
-    sumArea += landAreas[key];
+    document.getElementById("land_area_" + key).innerText = landAreas[key].toFixed(1);
+    sumArea = sumArea.plus(landAreas[key]);
   });
 
-  document.getElementById("land_area_sum").innerText = sumArea;
+  document.getElementById("land_area_sum").innerText = sumArea.toFixed(1);
 }
 </script>

@@ -13,6 +13,9 @@ window.moment = require('moment');
 import I18n from 'i18n-js';
 window.I18n = I18n;
 
+import Decimal from 'decimal.js';
+window.Decimal = Decimal;
+
 require('jquery-ui');
 require('jquery-ui/ui/widgets/sortable');
 require('jquery-ui/ui/widgets/autocomplete');
