@@ -9,6 +9,46 @@
         <% end %>
       </tr>
       <tr>
+        <th class="text-nowrap">田植月</th>
+        <% @work_types.each do |work_type| %>
+          <td><%= select_tag("work_types[#{work_type.id}][month]", options_for_select([['対象外', 0], ['4月', 4], ['5月', 5]], work_type.plan&.month || 0), {class: "form-control work-type-months", onchange: "changeMonth(this)", data: {id: work_type.id}}) %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <th class="text-nowrap">作付面積</th>
+        <% @work_types.each do |work_type| %>
+          <td class="text-right work-type-areas" data-id="<%= work_type.id %>"><%= number_with_precision(@plan_lands[work_type.id] || 0, precision: 1) %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <th class="text-nowrap"><input type="button" class="btn btn-primary" value="設定" onclick="setAreas();"></th>
+        <% @work_types.each do |work_type| %>
+          <td><%= number_field_tag "work_types[#{work_type.id}][area]", work_type.plan&.area || 0, {class: "form-control form-control-sm", step: 0.1, min: 0, max: 9999.9, onchange: "calcQuantity(#{work_type.id})"} %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <th class="text-nowrap">枚数(10a当)</th>
+        <% @work_types.each do |work_type| %>
+          <td><%= number_field_tag "work_types[#{work_type.id}][unit]", work_type.plan&.unit.to_i || 0, {class: "form-control form-control-sm", step: 1, min: 0, max: 99, onchange: "calcQuantity(#{work_type.id})"} %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <th class="text-nowrap">苗箱枚数</th>
+        <% @work_types.each do |work_type| %>
+          <td class="text-right work-type-quantities" id="quantity_<%= work_type.id %>" data-id="<%= work_type.id %>">0.0</td>
+        <% end %>
+      </tr>
+      <tr>
+        <th class="text-nowrap"><input type="button" class="btn btn-primary" value="設定" onclick="setQuantities();"></th>
+        <% @work_types.each do |work_type| %>
+          <td><%= number_field_tag "work_types[#{work_type.id}][quantity]", work_type.plan&.quantity || 0, {class: "form-control form-control-sm", min: 0, max: 99999} %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <th class="text-nowrap">株間(cm)</th>
+        <% @work_types.each do |work_type| %>
+          <td><%= number_field_tag "work_types[#{work_type.id}][between_stocks]", work_type.plan&.between_stocks || 0, {class: "form-control form-control-sm", min: 0, max: 99} %></td>
+        <% end %>
       </tr>
     </table>
   </div>
@@ -21,3 +61,49 @@
     </div>
   </div>
 <% end %>
+<script>
+window.addEventListener('load', (event) => {
+  Array.from(document.getElementsByClassName("work-type-months")).forEach(function(sel) {
+    changeMonth(sel);
+  });
+});
+
+function setAreas()
+{
+  Array.from(document.getElementsByClassName("work-type-areas")).forEach(function(td) {
+    const work_type_id = td.dataset.id;
+    document.getElementById(`work_types_${work_type_id}_area`).value = td.innerText;
+  });
+}
+
+function setQuantities()
+{
+  Array.from(document.getElementsByClassName("work-type-quantities")).forEach(function(td) {
+    const work_type_id = td.dataset.id;
+    document.getElementById(`work_types_${work_type_id}_quantity`).value = td.innerText;
+  });
+}
+
+function changeMonth(month) {
+  const work_type_id = month.dataset.id;
+  if(month.value == 0) {
+    document.getElementById(`work_types_${work_type_id}_unit`).value = 0;
+    document.getElementById(`work_types_${work_type_id}_unit`).disabled = true;
+    document.getElementById(`work_types_${work_type_id}_quantity`).value = 0;
+    document.getElementById(`work_types_${work_type_id}_quantity`).disabled = true;
+    document.getElementById(`work_types_${work_type_id}_between_stocks`).value = 0;
+    document.getElementById(`work_types_${work_type_id}_between_stocks`).disabled = true;
+  } else {
+    document.getElementById(`work_types_${work_type_id}_unit`).disabled = false;
+    document.getElementById(`work_types_${work_type_id}_quantity`).disabled = false;
+    document.getElementById(`work_types_${work_type_id}_between_stocks`).disabled = false;
+  }
+  calcQuantity(work_type_id);
+}
+
+function calcQuantity(work_type_id) {
+  const unit = new Decimal(document.getElementById(`work_types_${work_type_id}_unit`).value);
+  const area = new Decimal(document.getElementById(`work_types_${work_type_id}_area`).value);
+  document.getElementById(`quantity_${work_type_id}`).innerText = unit.times(area).div(10).ceil().toFixed(0);
+}
+</script>

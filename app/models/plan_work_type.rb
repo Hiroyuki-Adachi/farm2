@@ -20,4 +20,15 @@
 #
 class PlanWorkType < ApplicationRecord
   belongs_to :work_type, -> {with_deleted}
+
+  def self.create_all(params)
+    params.each do |work_type_id, param|
+      plan_work_type = PlanWorkType.find_by(work_type_id: work_type_id)
+      if plan_work_type.present?
+        plan_work_type.update(param)
+      else
+        plan_work_type = PlanWorkType.create(param.merge(work_type_id: work_type_id))
+      end
+    end
+  end
 end
