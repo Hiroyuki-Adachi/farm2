@@ -65,8 +65,8 @@
   </div>
   <div aria-labelledby="navbarPlan" style="display:none;">
     <span class="h5">生産計画</span>
-    <%= link_to '作付計画', new_plans_land_path, {class: "dropdown-item", data: {controller: "lands", actions: [:new]}} %>
-    <%= link_to '育苗計画', new_plans_work_type_path, {class: "dropdown-item", data: {controller: "work_types", actions: [:new]}} %>
+    <%= link_to '作付計画', new_plans_land_path, {class: "dropdown-item", data: {controller: :plan_lands}} %>
+    <%= link_to '育苗計画', new_plans_work_type_path, {class: "dropdown-item", data: {controller: :plan_seedlings}} %>
   </div>
   <% end %>
   <% if current_user.checkable? %>
@@ -74,7 +74,7 @@
     <span class="h5">マスタ保守</span>
     <%= link_to '世帯マスタ', homes_path, {class: "dropdown-item", data: {controller: :homes}} %>
     <%= link_to '作業者マスタ', workers_path, {class: "dropdown-item", data: {controller: :workers}} %>
-    <%= link_to '土地マスタ', lands_path, {class: "dropdown-item", data: {controller: :lands, actions: [:index, :edit]}} %>
+    <%= link_to '土地マスタ', lands_path, {class: "dropdown-item", data: {controller: :lands}} %>
     <%= link_to '作業種別マスタ', work_kinds_path, {class: "dropdown-item", data: {controller: "work_kinds"}} %>
     <%= link_to '機械種別マスタ', machine_types_path, {class: "dropdown-item", data: {controller: "machine_types"}} %>
     <%= link_to '機械マスタ', machines_path, {class: "dropdown-item", data: {controller: :machines}} %>
@@ -100,5 +100,3 @@
     <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item", data: {controller: :users, actions: [:edit]}} %>
   </div>
 </nav>
-<input type="hidden" id="current_controller" value="<%= controller.controller_name %>">
-<input type="hidden" id="current_action" value="<%= controller.action_name %>">
