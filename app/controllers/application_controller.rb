@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   prepend_view_path Rails.root.join("frontend")
   include SessionsHelper
+  helper_method :menu_name
 
   PERMIT_ADDRESSES = ['127.0.0.1', '192.168.', '10.8.0.'].freeze
 
@@ -74,5 +75,9 @@ class ApplicationController < ActionController::Base
 
   def user_present?
     session[:user_id].present?
+  end
+
+  def menu_name
+    return controller_name
   end
 end

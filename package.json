@@ -5,6 +5,7 @@
     "bootbox": "~5",
     "bootstrap": "~4",
     "chart.js": "^2.9.3",
+    "decimal.js": "~10",
     "floatthead": "^2.1.4",
     "i18n-js": "^3.5.1",
     "jquery": "~3.5",
@@ -12,8 +13,7 @@
     "jquery-ui-touch-punch": "^0.2.3",
     "moment": "^2.24.0",
     "popper.js": "^1.16.1",
-    "serialize-javascript": "~3.1",
-    "decimal.js": "~10"
+    "serialize-javascript": "~3.1"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.11"

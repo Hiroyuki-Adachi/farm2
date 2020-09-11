@@ -12,4 +12,10 @@ class Plans::LandsController < ApplicationController
     PlanLand.create_all(params["land"])
     redirect_to new_plans_land_path
   end
+
+  private
+
+  def menu_name
+    return :plan_lands
+  end
 end
