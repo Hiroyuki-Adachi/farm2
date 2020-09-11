@@ -3,6 +3,7 @@ class LandsController < ApplicationController
   before_action :set_land, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
   before_action :set_places, only: [:new, :create, :edit, :update]
+  before_action :set_other_lands, only: [:new, :edit]
   helper GmapHelper
 
   def index
@@ -54,6 +55,10 @@ class LandsController < ApplicationController
 
   def set_places
     @places = LandPlace.usual
+  end
+
+  def set_other_lands
+    @other_lands = Land.regionable.where.not(id: @land)
   end
 
   def land_params
