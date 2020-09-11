@@ -41,6 +41,7 @@ class Land < ApplicationRecord
   scope :list, -> {includes(:land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
   scope :for_finance1, -> {where("owner_id = manager_id").where(target_flag: true)}
   scope :for_finance2, -> {where("owner_id <> manager_id").where(target_flag: true)}
+  scope :regionable, -> {where.not(region: nil)}
 
   validates :place, presence: true
   validates :area, presence: true
