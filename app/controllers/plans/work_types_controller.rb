@@ -8,6 +8,7 @@ class Plans::WorkTypesController < ApplicationController
 
   def create
     PlanWorkType.create_all(param_work_types)
+    redirect_to new_plans_seedling_path
   end
 
   private

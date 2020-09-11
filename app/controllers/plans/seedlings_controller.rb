@@ -2,7 +2,7 @@ class Plans::SeedlingsController < ApplicationController
   include PermitManager
 
   def new
-    @plans = WorkTypePlan.usual
+    @plans = PlanWorkType.usual
   end
 
   private

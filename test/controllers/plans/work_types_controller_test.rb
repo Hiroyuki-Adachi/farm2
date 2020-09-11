@@ -22,5 +22,6 @@ class Plans::WorkTypesControllerTest < ActionController::TestCase
     assert_difference('PlanWorkType.count') do
       post :create, params: {work_types: {work_type.id => {month: 4, area: 100}}}
     end
+    assert_redirected_to new_plans_seedling_path
   end
 end
