@@ -460,6 +460,7 @@ ActiveRecord::Schema.define(version: 2020_09_10_062534) do
     t.decimal "soil_bag", precision: 4, default: "0", null: false, comment: "育苗土(袋)"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["plan_work_type_id", "home_id"], name: "plan_seedlings_2nd", unique: true
   end
 
   create_table "plan_work_types", comment: "作業計画", force: :cascade do |t|
@@ -471,6 +472,8 @@ ActiveRecord::Schema.define(version: 2020_09_10_062534) do
     t.decimal "between_stocks", precision: 2, default: "0", null: false, comment: "株間(cm)"
     t.decimal "seeds", precision: 3, default: "0", null: false, comment: "種子(1枚当g)"
     t.decimal "soils", precision: 4, scale: 2, default: "0.0", null: false, comment: "育苗土(1枚当袋)"
+    t.decimal "bag_weight1", precision: 3, scale: 1, default: "0.0", null: false, comment: "大袋(kg)"
+    t.decimal "bag_weight2", precision: 3, scale: 1, default: "0.0", null: false, comment: "小袋(kg)"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["work_type_id"], name: "plan_work_types_2nd", unique: true

@@ -13,5 +13,9 @@
 #  home_id(世帯)               :integer
 #  plan_work_type_id(作業計画) :integer          not null
 #
+# Indexes
+#
+#  plan_seedlings_2nd  (plan_work_type_id,home_id) UNIQUE
+#
 class PlanSeedling < ApplicationRecord
 end

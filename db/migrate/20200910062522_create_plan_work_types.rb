@@ -9,6 +9,8 @@ class CreatePlanWorkTypes < ActiveRecord::Migration[6.0]
       t.decimal :between_stocks, {scale: 0, precision: 2, null: false, default: 0, comment: "株間(cm)"}
       t.decimal :seeds, {scale: 0, precision: 3, null: false, default: 0, comment: "種子(1枚当g)"}
       t.decimal :soils, {scale: 2, precision: 4, null: false, default: 0, comment: "育苗土(1枚当袋)"}
+      t.decimal :bag_weight1, {scale: 1, precision: 3, null: false, default: 0, comment: "大袋(kg)"}
+      t.decimal :bag_weight2, {scale: 1, precision: 3, null: false, default: 0, comment: "小袋(kg)"}
 
       t.timestamps
     end

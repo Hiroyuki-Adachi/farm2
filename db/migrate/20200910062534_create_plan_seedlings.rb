@@ -11,5 +11,6 @@ class CreatePlanSeedlings < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
+    add_index :plan_seedlings, [:plan_work_type_id, :home_id], {unique: true, name: "plan_seedlings_2nd"}
   end
 end

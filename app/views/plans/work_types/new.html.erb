@@ -50,6 +50,23 @@
           <td><%= number_field_tag "work_types[#{work_type.id}][between_stocks]", work_type.plan&.between_stocks || 0, {class: "form-control form-control-sm", min: 0, max: 99} %></td>
         <% end %>
       </tr>
+      <tr>
+        <th class="text-nowrap">育苗土(kg/枚)</th>
+        <% @work_types.each do |work_type| %>
+          <td><%= number_field_tag "work_types[#{work_type.id}][soils]", work_type.plan&.soils || 0, {class: "form-control form-control-sm", step: 0.01, min: 0, max: 9.99} %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <th class="text-nowrap" rowspan="2">種子(kg/袋)</th>
+        <% @work_types.each do |work_type| %>
+          <td><%= number_field_tag "work_types[#{work_type.id}][bag_weight1]", work_type.plan&.bag_weight1 || 0, {class: "form-control form-control-sm", step: 0.1, min: 0, max: 99.9} %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <% @work_types.each do |work_type| %>
+          <td><%= number_field_tag "work_types[#{work_type.id}][bag_weight2]", work_type.plan&.bag_weight2 || 0, {class: "form-control form-control-sm", step: 0.1, min: 0, max: 99.9} %></td>
+        <% end %>
+      </tr>
     </table>
   </div>
   <div id="btn_toolbar" class="btn-toolbar">
@@ -93,10 +110,19 @@ function changeMonth(month) {
     document.getElementById(`work_types_${work_type_id}_quantity`).disabled = true;
     document.getElementById(`work_types_${work_type_id}_between_stocks`).value = 0;
     document.getElementById(`work_types_${work_type_id}_between_stocks`).disabled = true;
+    document.getElementById(`work_types_${work_type_id}_soils`).value = 0;
+    document.getElementById(`work_types_${work_type_id}_soils`).disabled = true;
+    document.getElementById(`work_types_${work_type_id}_bag_weight1`).value = 0;
+    document.getElementById(`work_types_${work_type_id}_bag_weight1`).disabled = true;
+    document.getElementById(`work_types_${work_type_id}_bag_weight2`).value = 0;
+    document.getElementById(`work_types_${work_type_id}_bag_weight2`).disabled = true;
   } else {
     document.getElementById(`work_types_${work_type_id}_unit`).disabled = false;
     document.getElementById(`work_types_${work_type_id}_quantity`).disabled = false;
     document.getElementById(`work_types_${work_type_id}_between_stocks`).disabled = false;
+    document.getElementById(`work_types_${work_type_id}_soils`).disabled = false;
+    document.getElementById(`work_types_${work_type_id}_bag_weight1`).disabled = false;
+    document.getElementById(`work_types_${work_type_id}_bag_weight2`).disabled = false;
   }
   calcQuantity(work_type_id);
 }
