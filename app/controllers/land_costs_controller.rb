@@ -53,7 +53,7 @@ class LandCostsController < ApplicationController
   end
 
   def map
-    @costs = LandCost.usual(Land.where.not(region: nil), Time.zone.today)
+    @costs = LandCost.usual(Land.regionable, Time.zone.today)
   end
 
   private

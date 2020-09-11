@@ -4,7 +4,7 @@ class Plans::LandsController < ApplicationController
   helper GmapHelper
 
   def new
-    @lands = Land.where.not(region: nil).includes(:plan_land)
+    @lands = Land.regionable.includes(:plan_land)
     @work_types = WorkType.land
   end
 
