@@ -70,6 +70,9 @@
   </div>
 </div>
 <% end %>
+<% @other_lands.each do |land| %>
+<%= hidden_field_tag "other_lands", land.region %>
+<% end %>
 <%= hidden_field_tag "location", "[#{land_location(@land)}]" %>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&callback=initMap&libraries=drawing" async defer></script>
 <script>
@@ -79,13 +82,6 @@ function initMap(){
   const org = JSON.parse($("#location").val());
   const pos = new google.maps.LatLng(org[0], org[1]);
 
-  let region = [];
-  if($("#land_region").val() != "") {
-    JSON.parse($("#land_region").val().replace(/\(/g, "[").replace(/\)/g, "]")).forEach(function(rg) {
-      region.push({lat: rg[0], lng: rg[1]});
-    });
-  }
-
   const map = new google.maps.Map(document.getElementById('map'), {
     center: pos,
     zoom: 18,
@@ -93,7 +89,7 @@ function initMap(){
   });
 
   landRegion = new google.maps.Polygon({
-    paths: region,
+    paths: convertRegion(document.getElementById("land_region").value),
     strokeColor: "#FF0000",
     strokeOpacity: 0.8,
     strokeWeight: 2,
@@ -101,6 +97,19 @@ function initMap(){
     fillOpacity: 0.35,
     map: map
   });
+
+  const otherRegions = []
+  document.getElementsByName("other_lands").forEach(function(other) {
+    otherRegions.push(new google.maps.Polygon({
+        paths: convertRegion(other.value),
+        strokeColor: "#ffffff",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#ffffff",
+        fillOpacity: 0.35,
+        map: map
+    }));
+  }); 
 
   const drawingManager = new google.maps.drawing.DrawingManager({
     drawingMode: google.maps.drawing.OverlayType.POLYGON,
@@ -111,7 +120,7 @@ function initMap(){
     },
     polygonOptions: {
       fillColor: '#99ff99',
-      strokeColor: "#ffffff",
+      strokeColor: "#99ff99",
       editable: true
     },
     map: map
@@ -134,4 +143,16 @@ $(function() {
     }
   });
 });
+
+function convertRegion(region) {
+  if(region == "") {
+    return [];
+  }
+
+  const results = [];
+  JSON.parse(region.replace(/\(/g, "[").replace(/\)/g, "]")).forEach(function(rg) {
+    results.push({lat: rg[0], lng: rg[1]});
+  });
+  return results;
+}
 </script>
