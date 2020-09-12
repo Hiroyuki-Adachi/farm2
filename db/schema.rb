@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_10_062534) do
+ActiveRecord::Schema.define(version: 2020_09_11_234926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -284,6 +284,7 @@ ActiveRecord::Schema.define(version: 2020_09_10_062534) do
     t.integer "finance_order", comment: "出力順(会計用)"
     t.integer "drying_order", comment: "出力順(乾燥調整用)"
     t.integer "owned_rice_order", comment: "出力順(保有米)"
+    t.integer "seedling_order", comment: "出力順(育苗用)"
     t.index ["deleted_at"], name: "index_homes_on_deleted_at"
   end
 
@@ -454,10 +455,6 @@ ActiveRecord::Schema.define(version: 2020_09_10_062534) do
     t.integer "plan_work_type_id", null: false, comment: "作業計画"
     t.integer "home_id", comment: "世帯"
     t.decimal "quantity", precision: 4, default: "0", null: false, comment: "枚数"
-    t.decimal "seeds", precision: 3, default: "0", null: false, comment: "種子(kg)"
-    t.decimal "seed_bag1", precision: 2, default: "0", null: false, comment: "種子(大袋)"
-    t.decimal "seed_bag2", precision: 2, default: "0", null: false, comment: "種子(小袋)"
-    t.decimal "soil_bag", precision: 4, default: "0", null: false, comment: "育苗土(袋)"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["plan_work_type_id", "home_id"], name: "plan_seedlings_2nd", unique: true

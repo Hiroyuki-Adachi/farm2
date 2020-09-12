@@ -16,6 +16,7 @@
 #  owned_rice_order(出力順(保有米))    :integer
 #  owner_flag(所有者フラグ)            :boolean          default(FALSE), not null
 #  phonetic(世帯名(よみ))              :string(15)
+#  seedling_order(出力順(育苗用))      :integer
 #  telephone(電話番号)                 :string(15)
 #  worker_payment_flag(個人支払フラグ) :boolean          default(FALSE), not null
 #  zip_code(郵便番号)                  :string(7)
@@ -47,6 +48,7 @@ home1:
   updated_at: 2016-03-19 10:14:35.174495
   deleted_at: 
   owner_flag: t
+  seedling_order: 1
 
 home2:
   id: 2

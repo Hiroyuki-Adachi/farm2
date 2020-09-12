@@ -29,7 +29,7 @@ class SeedlingCostsController < ApplicationController
   end
 
   def edit
-    @homes = Home.usual
+    @homes = Home.for_seedling
     @seedling.seedling_homes.build
   end
 

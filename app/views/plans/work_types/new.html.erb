@@ -1,7 +1,7 @@
-<h1>育苗計画1</h1>
+<h1>育苗計画(品種別)</h1>
 <%= form_tag(action: :create) do %>
   <div class="row">
-    <table class="table">
+    <table class="table table-sm">
       <tr>
         <th>品種</th>
         <% @work_types.each do |work_type| %>
@@ -29,7 +29,7 @@
       <tr>
         <th class="text-nowrap">枚数(10a当)</th>
         <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][unit]", work_type.plan&.unit.to_i || 0, {class: "form-control form-control-sm", step: 1, min: 0, max: 99, onchange: "calcQuantity(#{work_type.id})"} %></td>
+          <td><%= number_field_tag "work_types[#{work_type.id}][unit]", work_type.plan&.unit.to_i || 0, {class: "form-control form-control-sm", required: true, step: 1, min: 0, max: 99, onchange: "calcQuantity(#{work_type.id})"} %></td>
         <% end %>
       </tr>
       <tr>
@@ -41,30 +41,36 @@
       <tr>
         <th class="text-nowrap"><input type="button" class="btn btn-primary" value="設定" onclick="setQuantities();"></th>
         <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][quantity]", work_type.plan&.quantity || 0, {class: "form-control form-control-sm", min: 0, max: 99999} %></td>
+          <td><%= number_field_tag "work_types[#{work_type.id}][quantity]", work_type.plan&.quantity || 0, {class: "form-control form-control-sm", required: true,min: 0, max: 99999} %></td>
         <% end %>
       </tr>
       <tr>
         <th class="text-nowrap">株間(cm)</th>
         <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][between_stocks]", work_type.plan&.between_stocks || 0, {class: "form-control form-control-sm", min: 0, max: 99} %></td>
+          <td><%= number_field_tag "work_types[#{work_type.id}][between_stocks]", work_type.plan&.between_stocks || 0, {class: "form-control form-control-sm", required: true,min: 0, max: 99} %></td>
         <% end %>
       </tr>
       <tr>
         <th class="text-nowrap">育苗土(kg/枚)</th>
         <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][soils]", work_type.plan&.soils || 0, {class: "form-control form-control-sm", step: 0.01, min: 0, max: 9.99} %></td>
+          <td><%= number_field_tag "work_types[#{work_type.id}][soils]", work_type.plan&.soils || 0, {class: "form-control form-control-sm", required: true,step: 0.01, min: 0, max: 9.99} %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <th class="text-nowrap">種子(g/枚)</th>
+        <% @work_types.each do |work_type| %>
+          <td><%= number_field_tag "work_types[#{work_type.id}][seeds]", work_type.plan&.seeds || 0, {class: "form-control form-control-sm", required: true, step: 1, min: 0, max: 999} %></td>
         <% end %>
       </tr>
       <tr>
         <th class="text-nowrap" rowspan="2">種子(kg/袋)</th>
         <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][bag_weight1]", work_type.plan&.bag_weight1 || 0, {class: "form-control form-control-sm", step: 0.1, min: 0, max: 99.9} %></td>
+          <td><%= number_field_tag "work_types[#{work_type.id}][bag_weight1]", work_type.plan&.bag_weight1 || 0, {class: "form-control form-control-sm", required: true,step: 0.1, min: 0, max: 99.9} %></td>
         <% end %>
       </tr>
       <tr>
         <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][bag_weight2]", work_type.plan&.bag_weight2 || 0, {class: "form-control form-control-sm", step: 0.1, min: 0, max: 99.9} %></td>
+          <td><%= number_field_tag "work_types[#{work_type.id}][bag_weight2]", work_type.plan&.bag_weight2 || 0, {class: "form-control form-control-sm", required: true, step: 0.1, min: 0, max: 99.9} %></td>
         <% end %>
       </tr>
     </table>
@@ -112,6 +118,8 @@ function changeMonth(month) {
     document.getElementById(`work_types_${work_type_id}_between_stocks`).disabled = true;
     document.getElementById(`work_types_${work_type_id}_soils`).value = 0;
     document.getElementById(`work_types_${work_type_id}_soils`).disabled = true;
+    document.getElementById(`work_types_${work_type_id}_seeds`).value = 0;
+    document.getElementById(`work_types_${work_type_id}_seeds`).disabled = true;
     document.getElementById(`work_types_${work_type_id}_bag_weight1`).value = 0;
     document.getElementById(`work_types_${work_type_id}_bag_weight1`).disabled = true;
     document.getElementById(`work_types_${work_type_id}_bag_weight2`).value = 0;
@@ -121,6 +129,7 @@ function changeMonth(month) {
     document.getElementById(`work_types_${work_type_id}_quantity`).disabled = false;
     document.getElementById(`work_types_${work_type_id}_between_stocks`).disabled = false;
     document.getElementById(`work_types_${work_type_id}_soils`).disabled = false;
+    document.getElementById(`work_types_${work_type_id}_seeds`).disabled = false;
     document.getElementById(`work_types_${work_type_id}_bag_weight1`).disabled = false;
     document.getElementById(`work_types_${work_type_id}_bag_weight2`).disabled = false;
   }

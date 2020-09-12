@@ -59,7 +59,8 @@ class HomesController < ApplicationController
         :owner_flag,
         :finance_order,
         :drying_order,
-        :owned_rice_order
+        :owned_rice_order,
+        :seedling_order
       )
   end
 end

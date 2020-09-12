@@ -56,6 +56,7 @@ ja:
         finance_order: "出力順(会計用)"
         drying_order: "出力順(乾燥調整用)"
         owned_rice_order: "出力順(保有米用)"
+        seedling_order: "出力順(育苗用)"
 
       work_result: 
         home_name: "世帯"

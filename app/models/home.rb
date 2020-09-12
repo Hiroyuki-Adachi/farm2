@@ -16,6 +16,7 @@
 #  owned_rice_order(出力順(保有米))    :integer
 #  owner_flag(所有者フラグ)            :boolean          default(FALSE), not null
 #  phonetic(世帯名(よみ))              :string(15)
+#  seedling_order(出力順(育苗用))      :integer
 #  telephone(電話番号)                 :string(15)
 #  worker_payment_flag(個人支払フラグ) :boolean          default(FALSE), not null
 #  zip_code(郵便番号)                  :string(7)
@@ -57,11 +58,12 @@ class Home < ApplicationRecord
   scope :machine_owners, -> {where(owner_flag: true).order(Arel.sql("company_flag DESC, display_order, id"))}
   scope :company, ->{where(company_flag: true)}
   scope :for_finance1, -> {where(member_flag: true, owner_flag: true).order(finance_order: :ASC, id: :ASC)}
-  scope :for_drying, -> {where.not(drying_order: nil).order(:drying_order)}
+  scope :for_drying, -> {where.not(drying_order: nil).order(:drying_order, id: :ASC)}
   scope :for_owned_rice, -> {
     where(member_flag: true, owner_flag: true)
       .order(owned_rice_order: :ASC, display_order: :ASC, id: :ASC)
   }
+  scope :for_seedling, -> {where.not(seedling_order: nil).order(seedling_order: :ASC, id: :ASC)}
 
   validates :phonetic,      presence: true
   validates :name,          presence: true

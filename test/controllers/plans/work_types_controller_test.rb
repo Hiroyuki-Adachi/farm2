@@ -6,18 +6,18 @@ class Plans::WorkTypesControllerTest < ActionController::TestCase
     session[:user_id] = users(:user_manager).id
   end
 
-  test "育苗計画1(表示)" do
+  test "育苗計画(品種)(表示)" do
     get :new
     assert_response :success
   end
 
-  test "育苗計画1(表示)(管理者以外)" do
+  test "育苗計画(品種)(表示)(管理者以外)" do
     session[:user_id] = users(:user_checker).id
     get :new
     assert_response :error
   end
 
-  test "育苗計画1(作成)" do
+  test "育苗計画(品種)(作成)" do
     work_type = work_types(:work_type_koshi)
     assert_difference('PlanWorkType.count') do
       post :create, params: {work_types: {work_type.id => {month: 4, area: 100}}}
