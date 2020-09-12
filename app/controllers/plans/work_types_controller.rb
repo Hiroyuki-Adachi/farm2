@@ -18,6 +18,16 @@ class Plans::WorkTypesController < ApplicationController
   end
 
   def param_work_types
-    params.permit(work_types: [:area, :month, :quantity, :seeds, :unit]).require(:work_types)
+    params.permit(work_types: [
+      :area, 
+      :month, 
+      :quantity, 
+      :seeds, 
+      :unit,
+      :between_stocks,
+      :soils,
+      :bag_weight1,
+      :bag_weight2
+      ]).require(:work_types)
   end
 end
