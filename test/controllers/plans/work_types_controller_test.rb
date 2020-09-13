@@ -19,6 +19,7 @@ class Plans::WorkTypesControllerTest < ActionController::TestCase
 
   test "育苗計画(品種)(作成)" do
     work_type = work_types(:work_type_koshi)
+    PlanWorkType.destroy_all
     assert_difference('PlanWorkType.count') do
       post :create, params: {work_types: {work_type.id => {month: 4, area: 100}}}
     end

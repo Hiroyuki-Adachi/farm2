@@ -20,3 +20,12 @@
 #
 #  plan_work_types_2nd  (work_type_id) UNIQUE
 #
+plan_work_type_kinu:
+  work_type_id: 2
+  area: 35.3
+  between_stocks: 20
+  month: 4
+  quantity: 100
+  seeds: 120
+  soils: 0.25
+  unit: 18
