@@ -12,5 +12,5 @@
 #  plan_lands_2nd  (land_id) UNIQUE
 #
 plan_land1:
-  work_type_id: 2
+  work_type_id: 4
   land_id: 2

@@ -16,7 +16,7 @@
 <%= form_tag(action: :create) do %>
   <div id="lands">
     <% @lands.each do |land| %>
-      <%= hidden_field_tag "land[#{land.id}]", land&.plan_land&.work_type_id, {data: {id: land.id, place: land.place, area: land.area, region: land.region}} %>
+      <%= hidden_field_tag "land[#{land.id}]", land&.plan_land&.work_type_id, {data: {id: land.id, place: land.place, area: land.area, region: land.region, owner: land.owner.name}} %>
     <% end %>
   </div>
   <div id="work_types">
@@ -27,6 +27,9 @@
   <div id="btn_toolbar" class="btn-toolbar">
     <div class="btn-group mr-2">
       <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '初期化', plans_land_path(0), {method: :delete, data: {confirm: "本当に初期化してもよろしいですか?"}, class: "btn btn-danger"} %>
     </div>
     <div class="btn-group mr-2">
       <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
@@ -45,7 +48,7 @@ function initMap(){
   const map = new google.maps.Map(document.getElementById('map'), {
     center: pos,
     zoom: 16,
-    mapTypeId: google.maps.MapTypeId.SATELLITE
+    mapTypeId: google.maps.MapTypeId.ROADMAP
   });
 
   const marker = new google.maps.Marker({
@@ -55,18 +58,19 @@ function initMap(){
   });
 
   const workTypes = {};
-  [].forEach.call(document.getElementById("work_types").getElementsByTagName("input"), function(workType) {
+  Array.from(document.getElementById("work_types").getElementsByTagName("input")).forEach(function(workType) {
     workTypes[workType.dataset.id] = workType.dataset.color;
   });
 
   const landRegions = {};
-  [].forEach.call(document.getElementById("lands").getElementsByTagName("input"), function(land) {
+  Array.from(document.getElementById("lands").getElementsByTagName("input")).forEach(function(land) {
     const paths = [];
     JSON.parse(land.dataset.region.replace(/\(/g, "[").replace(/\)/g, "]")).forEach(function(rg) {
       paths.push({lat: rg[0], lng: rg[1]});
     });
     const workType = workTypes[land.value];
     landRegions[land.dataset.id] = new google.maps.Polygon({
+      title: `place.dataset.place(${land.dataset.owner}):${land.area}`,
       paths: paths,
       strokeColor: workType == null ? DEFAULT_COLOR : workType,
       strokeOpacity: 0.8,
