@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :plans do
-    resources :lands, only: [:new, :create]
+    resources :lands, only: [:new, :create, :destroy]
     resources :seedlings, only: [:new, :create, :index]
     resources :work_types, only: [:new, :create]
   end

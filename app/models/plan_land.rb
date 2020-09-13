@@ -21,4 +21,11 @@ class PlanLand < ApplicationRecord
       PlanLand.create(land_id: param[0], work_type_id: param[1]) if param[1].present?
     end
   end
+
+  def self.clear_all(target)
+    PlanLand.delete_all
+    Land.regionable.each do |land|
+      PlanLand.create(land_id: land.id, work_type_id: land.cost(target).work_type_id)
+    end
+  end
 end
