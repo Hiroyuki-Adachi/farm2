@@ -46,5 +46,10 @@ module Farm2
     config.update_logger.formatter = proc do |_severity, datetime, _progname, msg|
       "#{datetime}: #{msg}\n"
     end
+
+    config.access_logger = Logger.new('log/access_info.log', 'monthly')
+    config.access_logger.formatter = proc do |_severity, datetime, _progname, msg|
+      "#{datetime}: #{msg}\n"
+    end
   end
 end
