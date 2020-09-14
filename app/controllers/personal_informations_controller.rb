@@ -9,6 +9,7 @@ class PersonalInformationsController < ApplicationController
     @results1 = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from, worked_to))
     @results2 = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_to))
     @company = Worker.company.first
+    Rails.application.config.access_logger.info "SM-#{@worker.name}"
   end
 
   protected
