@@ -4,7 +4,14 @@
     <div id="map" class="embed-responsive embed-responsive-16by9"></div>
   </div>
 </div>
-<h3 id="work_type_name" style="background-color: black;">&nbsp;</h3>
+<div class="row">
+  <div class="col-md-6">
+    <h3 id="work_type_name" style="background-color: black;">&nbsp;</h3>
+  </div>
+  <div class="col-md-6">
+    <h3 id="land_info"></h3>
+  </div>
+</div>
 <% @work_types.each_with_index do |work_type, i| %>
   <div class="btn-group">
     <%= tag(:input, {type: :button, value: work_type.name, class: "btn", style: "background-color: #{work_type.bg_color}; width:100px;", data: {id: work_type.id}, onclick: "clickWorkType(#{work_type.id})"}) %>
@@ -70,7 +77,6 @@ function initMap(){
     });
     const workType = workTypes[land.value];
     landRegions[land.dataset.id] = new google.maps.Polygon({
-      title: `place.dataset.place(${land.dataset.owner}):${land.area}`,
       paths: paths,
       strokeColor: workType == null ? DEFAULT_COLOR : workType,
       strokeOpacity: 0.8,
@@ -89,6 +95,15 @@ function initMap(){
       document.getElementById("land_" + this.landId).value = selectedWorkType.dataset.id;
       dispSum();
     });
+
+    landRegions[land.dataset.id].addListener("mouseover", function(arg) {
+      const land = document.getElementById("land_" + this.landId);
+      document.getElementById("land_info").innerText = `${land.dataset.place}(${land.dataset.owner}):${land.dataset.area}a`;
+    });
+
+    landRegions[land.dataset.id].addListener("mouseout", function(arg) {
+      document.getElementById("land_info").innerText = "";
+    });
   });
 
   dispSum();
@@ -103,7 +118,7 @@ function clickWorkType(workTypeId) {
 
 function dispSum() {
   const landAreas = {};
-  [].forEach.call(document.getElementById("lands").getElementsByTagName("input"), function(land) {
+  Array.from(document.getElementById("lands").getElementsByTagName("input")).forEach(function(land) {
     if(land.value != "") {
       landAreas[land.value] = new Decimal(landAreas[land.value] || 0);
       landAreas[land.value] = landAreas[land.value].plus(land.dataset.area);
