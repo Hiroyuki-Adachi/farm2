@@ -35,7 +35,11 @@ ja:
         chemical_type_id: "種別"
         display_order: "表示順"
         this_term_flag: "本年度使用する"
-        unit: "単位"
+        unit: "消費単位"
+        base_unit_id: "基本単位"
+        base_quantity: "消費数"
+        carton_unit: "購買単位"
+        carton_quantity: "購買数"
 
       chemical_type:
         name: "名称"

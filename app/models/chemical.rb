@@ -3,6 +3,9 @@
 # Table name: chemicals # 薬剤マスタ
 #
 #  id(薬剤マスタ)             :integer          not null, primary key
+#  base_quantity(入数)        :decimal(6, )     default(0), not null
+#  carton_quantity(購買単位)  :decimal(6, )     default(0), not null
+#  carton_unit(購買単位)      :string(2)        default("0"), not null
 #  deleted_at                 :datetime
 #  display_order(表示順)      :integer          default(0), not null
 #  name(薬剤名称)             :string(20)       not null
@@ -10,6 +13,7 @@
 #  unit(単位)                 :string(2)        default("袋"), not null
 #  created_at                 :datetime
 #  updated_at                 :datetime
+#  base_unit_id(基本単位)     :integer          default(0), not null
 #  chemical_type_id(薬剤種別) :integer          not null
 #
 # Indexes
@@ -17,11 +21,14 @@
 #  index_chemicals_on_deleted_at  (deleted_at)
 #
 class Chemical < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
   acts_as_paranoid
 
   after_save :save_term
 
   belongs_to :chemical_type
+  belongs_to :base_unit
   has_many :chemical_terms, {dependent: :delete_all}
 
   validates :name,          presence: true

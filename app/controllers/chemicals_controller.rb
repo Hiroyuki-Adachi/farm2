@@ -2,6 +2,7 @@ class ChemicalsController < ApplicationController
   include PermitChecker
   before_action :set_chemical, only: [:edit, :update, :destroy]
   before_action :set_chemical_types, only: [:new, :create, :edit, :update]
+  before_action :set_base_units, only: [:new, :edit]
 
   def index
     @chemicals = ChemicalDecorator.decorate_collection(Chemical.list.page(params[:page]))
@@ -43,13 +44,28 @@ class ChemicalsController < ApplicationController
     @chemical.term = @term
   end
 
+  def set_base_units
+    @base_units = BaseUnit.all
+  end
+
   def set_chemical_types
     @chemical_types = ChemicalType.all.order(:display_order)
   end
 
   def chemical_params
     params.require(:chemical)
-          .permit(:name, :display_order, :chemical_type_id, :this_term_flag, :unit, :phonetic)
+          .permit(
+            :name, 
+            :display_order, 
+            :chemical_type_id, 
+            :this_term_flag, 
+            :unit, 
+            :phonetic,
+            :base_quantity,
+            :carton_quantity,
+            :carton_unit,
+            :base_unit_id
+          )
           .merge(term: @term)
   end
 end
