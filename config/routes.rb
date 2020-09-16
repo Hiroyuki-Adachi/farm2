@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     resources :lands, only: [:new, :create, :destroy]
     resources :seedlings, only: [:new, :create, :index]
     resources :work_types, only: [:new, :create]
+    resources :chemicals, only: [:new, :create]
   end
   resources :work_seedlings, only: [:index]
   resources :owned_rices, only: [:index, :edit, :update]

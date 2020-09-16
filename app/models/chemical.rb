@@ -3,9 +3,9 @@
 # Table name: chemicals # 薬剤マスタ
 #
 #  id(薬剤マスタ)             :integer          not null, primary key
-#  base_quantity(入数)        :decimal(6, )     default(0), not null
-#  carton_quantity(購買単位)  :decimal(6, )     default(0), not null
-#  carton_unit(購買単位)      :string(2)        default("0"), not null
+#  base_quantity(消費数)      :decimal(6, )     default(0), not null
+#  carton_quantity(購買数)    :decimal(6, )     default(0), not null
+#  carton_unit(購買単位)      :string(2)        default(""), not null
 #  deleted_at                 :datetime
 #  display_order(表示順)      :integer          default(0), not null
 #  name(薬剤名称)             :string(20)       not null
@@ -63,6 +63,12 @@ ORDER
   }
 
   scope :by_type, ->(chemical_type_id) {where(chemical_type_id: chemical_type_id).order(:phonetic, :display_order, :id)}
+
+  scope :by_work_kind, ->(work_kind_id) {
+    joins(chemical_type: :chemical_kinds).includes(:chemical_type)
+      .where("chemical_kinds.work_kind_id = ?", work_kind_id)
+      .order("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.id")
+  }
 
   def this_term_flag
     chemical_terms.where(term: @term).exists?

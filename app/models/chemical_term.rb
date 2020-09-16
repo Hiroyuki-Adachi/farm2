@@ -22,6 +22,7 @@ class ChemicalTerm < ApplicationRecord
         chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id
 SQL
   }
+
   scope :land, ->{joins(:chemical).where(<<SQL)}
   EXISTS (SELECT * FROM chemical_kinds WHERE chemical_kinds.chemical_type_id = chemicals.chemical_type_id)
 SQL
@@ -34,5 +35,12 @@ SQL
 
   def chemical_name
     chemical.name
+  end
+
+  def self.create_for_plans(params, term)
+    ChemicalTerm.destroy_all
+    params[:chemicals].each do |chemical_id|
+      ChemicalTerm.create(term: term, chemical_id: chemical_id)
+    end
   end
 end
