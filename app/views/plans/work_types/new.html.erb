@@ -96,6 +96,7 @@ function setAreas()
   Array.from(document.getElementsByClassName("work-type-areas")).forEach(function(td) {
     const work_type_id = td.dataset.id;
     document.getElementById(`work_types_${work_type_id}_area`).value = td.innerText;
+    calcQuantity(work_type_id);
   });
 }
 

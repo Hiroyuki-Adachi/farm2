@@ -130,9 +130,9 @@ ActiveRecord::Schema.define(version: 2020_09_15_111909) do
     t.string "unit", limit: 2, default: "袋", null: false, comment: "単位"
     t.string "phonetic", limit: 40, default: "", null: false, comment: "薬剤ふりがな"
     t.integer "base_unit_id", default: 0, null: false, comment: "基本単位"
-    t.decimal "base_quantity", precision: 6, default: "0", null: false, comment: "入数"
-    t.string "carton_unit", limit: 2, default: "0", null: false, comment: "購買単位"
-    t.decimal "carton_quantity", precision: 6, default: "0", null: false, comment: "購買単位"
+    t.decimal "base_quantity", precision: 6, default: "0", null: false, comment: "消費数"
+    t.string "carton_unit", limit: 2, default: "", null: false, comment: "購買単位"
+    t.decimal "carton_quantity", precision: 6, default: "0", null: false, comment: "購買数"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
   end
 

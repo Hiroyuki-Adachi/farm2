@@ -67,6 +67,7 @@
     <span class="h5">生産計画</span>
     <%= link_to '作付計画', new_plans_land_path, {class: "dropdown-item", data: {controller: :plan_lands}} %>
     <%= link_to '育苗計画', new_plans_work_type_path, {class: "dropdown-item", data: {controller: :plan_seedlings}} %>
+    <%= link_to '薬剤計画', new_plans_chemical_path, {class: "dropdown-item", data: {controller: :plan_chemicals}} %>
   </div>
   <% end %>
   <% if current_user.checkable? %>
