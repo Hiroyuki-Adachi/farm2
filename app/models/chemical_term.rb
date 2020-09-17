@@ -19,7 +19,7 @@ class ChemicalTerm < ApplicationRecord
     joins(chemical: :chemical_type)
       .where(term: term)
       .order(Arel.sql(<<SQL))
-        chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id
+        chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id
 SQL
   }
 

@@ -13,7 +13,7 @@
   <div class="row">
     <div class="field form-group col-md-3">
       <%= f.label :phonetic, class: "col-form-label-lg" %>
-      <%= f.text_field :phonetic, {maxlength: 40, size: 40, pattern: "[\u3041-\u3096\uFF21-\uFF3A\d]*", required: true, class: "form-control"} %>
+      <%= f.text_field :phonetic, {maxlength: 40, size: 40, pattern: "[\u3041-\u3096\uFF21-\uFF3A\dー]*", required: true, class: "form-control"} %>
     </div>
     <div class="field form-group col-md-3">
       <div class="form-check form-check-inline">

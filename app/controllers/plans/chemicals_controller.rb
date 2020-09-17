@@ -7,7 +7,7 @@ class Plans::ChemicalsController < ApplicationController
 
   def create
     ChemicalTerm.create_for_plans(params, current_term + 1)
-    redirect_to new_plans_chemical_path
+    redirect_to new_plans_chemical_work_type_path
   end
 
   private

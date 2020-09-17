@@ -1,1 +1,47 @@
 <h1>薬剤計画(使用量)</h1>
+<%= form_tag(action: :create) do %>
+  <div class="row">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th rowspan="2">種別</th>
+          <th rowspan="2">名称</th>
+          <th rowspan="2">単位</th>
+          <% @plan_work_types.each do |pwt| %>
+            <th style="background-color: <%= pwt.work_type.bg_color %>"><%= pwt.work_type.name %></th>
+          <% end %>
+        </tr>
+        <tr>
+          <% @plan_work_types.each do |pwt| %>
+            <th class="numeric" style="background-color: <%= pwt.work_type.bg_color %>"><%= number_with_precision(pwt.area, precision: 1) %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @chemical_terms.each do |ct| %>
+          <tr>
+            <th><%= ct.chemical.chemical_type.name %></th>
+            <th><%= ct.chemical.name %></th>
+            <th><%= ct.chemical.base_unit.name %></th>
+            <% @plan_work_types.each do |pwt| %>
+              <td>
+                <%= number_field_tag "chemical_work_types[#{ct.id}][#{pwt.work_type_id}][quantity]", 
+                    @chemical_work_types.find_by(chemical_term_id: ct.id, work_type_id: pwt.work_type_id) || 0, 
+                    {class: "form-control form-control-sm", style: "width: 150px;", step: 1, min: 0, max: 99999, required: true} 
+                %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div id="btn_toolbar" class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', new_plans_chemical_path, class: "btn btn-outline-dark" %>
+    </div>
+  </div>
+<% end %>
