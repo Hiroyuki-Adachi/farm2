@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Plans::ChemicalsControllerTest < ActionDispatch::IntegrationTest
+class Plans::ChemicalsControllerTest < ActionController::TestCase
   setup do
     setup_ip
     session[:user_id] = users(:user_manager).id
