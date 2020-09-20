@@ -54,6 +54,7 @@ class LandCostsController < ApplicationController
 
   def map
     @costs = LandCost.usual(Land.regionable, Time.zone.today)
+    @work_types = WorkType.land
   end
 
   private
