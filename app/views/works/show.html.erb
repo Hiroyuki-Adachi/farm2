@@ -41,6 +41,9 @@
 <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: raw("execPrint('" + work_print_index_path(work_id: @work.id) + "');") %>
 <%= button_tag "印刷情報削除", type: :button, class: "btn btn-danger", onclick: raw("cancelPrint('" + work_print_path(work_id: @work.id, id: 0) + "');") %>
 <% end %>
+<% if @work.lands.regionable.exists? %>
+<%= link_to "地図", map_work_path(@work), {class: "btn btn-info"} %>
+<% end %>
 <%= button_tag "戻る",  type: :button, class: "btn btn-default", :onclick => raw("location.href = '" + (session[:work_referer] ? session[:work_referer] : works_path) + "';") %>
 <%= render partial: "show_stamp"%>
 <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>

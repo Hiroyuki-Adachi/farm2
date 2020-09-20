@@ -129,6 +129,7 @@ Rails.application.routes.draw do
       get :edit_machines
       get :edit_chemicals
       get :edit_whole_crop
+      get :map
     end
   end
 

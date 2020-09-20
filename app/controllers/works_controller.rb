@@ -2,7 +2,7 @@ require 'date'
 
 class WorksController < ApplicationController
   include WorksHelper
-  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :edit_whole_crop, :show, :update, :destroy]
+  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :edit_whole_crop, :show, :update, :destroy, :map]
   before_action :set_results, only: [:show, :edit_workers, :edit_machines]
   before_action :set_lands, only: [:show, :edit_lands]
   before_action :set_broccoli, only: [:show]
@@ -15,6 +15,8 @@ class WorksController < ApplicationController
   before_action :set_work_types, only: :index
   before_action :permit_this_term, only: [:edit, :update, :destroy]
   before_action :set_term, only: :index
+
+  helper GmapHelper
 
   def index
     @terms = WorkDecorator.terms
@@ -130,6 +132,9 @@ class WorksController < ApplicationController
 
   def autocomplete_for_land_place
     render json: Land.autocomplete(params[:term])
+  end
+
+  def map
   end
 
   private

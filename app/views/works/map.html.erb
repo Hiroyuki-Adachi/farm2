@@ -1,4 +1,4 @@
-<h1>土地原価登録</h1>
+<h1>作業地図</h1>
 <div class="row">
   <div class="col-md-12">
     <div id="map" class="embed-responsive embed-responsive-16by9"></div>
@@ -8,23 +8,15 @@
       <h3 id="land_info"></h3>
     </div>
   </div>
-  <div class="row">
-    <% @work_types.each_with_index do |work_type, i| %>
-      <div class="btn-group" style="background-color: <%= work_type.bg_color%>;">
-        <span id="work_type_<%= work_type.id %>" style="width:100px;"><%= work_type.name %></span>
-        <span id="land_area_<%= work_type.id %>" class="label text-right area-sum" style="width: 50px;">0.0</span>
-      </div>
-    <% end %>
-  </div>
 </div>
 <div id="btn_toolbar" class="btn-toolbar">
   <div class="btn-group mr-2">
-    <%= link_to '戻る', land_costs_path, class: "btn btn-outline-dark" %>
+    <%= link_to '戻る', work_path(@work), class: "btn btn-outline-dark" %>
   </div>
 </div>
 <%= hidden_field_tag :location, "[#{current_location}]" %>
-<% @costs.each do |cost| %>
-  <%= hidden_field_tag :regions, cost.land.region, {id: "land_#{cost.land.id}", data: {id: cost.land.id, place: cost.land.place, area: cost.land.area, owner: cost.land.owner.name, color: cost.work_type.bg_color, "work-type" => cost.work_type_id}} %>
+<% @work.lands.regionable.each do |land| %>
+  <%= hidden_field_tag :regions, land.region, {id: "land_#{land.id}", data: {id: land.id, place: land.place, area: land.area, owner: land.owner.name}} %>
 <% end %>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&callback=initMap" async defer></script>
 <script>
@@ -52,10 +44,10 @@ function initMap(){
     });
     landRegions[land.dataset.id] = new google.maps.Polygon({
       paths: paths,
-      strokeColor: land.dataset.color,
+      strokeColor: "#339933",
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: land.dataset.color,
+      fillColor: "#339933",
       fillOpacity: 0.35,
       landId: land.dataset.id,
       map: map
@@ -69,23 +61,6 @@ function initMap(){
     landRegions[land.dataset.id].addListener("mouseout", function(arg) {
       document.getElementById("land_info").innerText = "";
     });
-  });
-
-  dispSum();
-}
-
-function dispSum() {
-  const landAreas = {};
-  document.getElementsByName("regions").forEach(function(land) {
-    if(land.value != "") {
-      landAreas[land.dataset.workType] = new Decimal(landAreas[land.dataset.workType] || 0);
-      landAreas[land.dataset.workType] = landAreas[land.dataset.workType].plus(land.dataset.area);
-    }
-  });
-  let sumArea = new Decimal(0);
-  Object.keys(landAreas).forEach(function(key) {
-    document.getElementById("land_area_" + key).innerText = landAreas[key].toFixed(1);
-    sumArea = sumArea.plus(landAreas[key]);
   });
 }
 </script>
