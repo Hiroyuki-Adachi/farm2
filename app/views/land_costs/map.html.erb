@@ -1,21 +1,28 @@
-<h1>土地原価登録</h1>
+<div class="row">
+  <div class="col-md-8">
+    <h1>土地利用地図</h1>
+  </div>
+  <div class="col-md-2">
+    <%= date_field_tag :target, @target, {class: "form-control", data: {url: map_land_costs_path}, onchange: "changeTarget(this)"} %>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-12">
     <div id="map" class="embed-responsive embed-responsive-16by9"></div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <h3 id="land_info"></h3>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h3 id="land_info">&nbsp;</h3>
+  </div>
+</div>
+<div class="row">
+  <% @work_types.each_with_index do |work_type, i| %>
+    <div class="btn-group" style="background-color: <%= work_type.bg_color%>;">
+      <span id="work_type_<%= work_type.id %>" style="width:100px;"><%= work_type.name %></span>
+      <span id="land_area_<%= work_type.id %>" class="label text-right area-sum" style="width: 50px;">0.0</span>
     </div>
-  </div>
-  <div class="row">
-    <% @work_types.each_with_index do |work_type, i| %>
-      <div class="btn-group" style="background-color: <%= work_type.bg_color%>;">
-        <span id="work_type_<%= work_type.id %>" style="width:100px;"><%= work_type.name %></span>
-        <span id="land_area_<%= work_type.id %>" class="label text-right area-sum" style="width: 50px;">0.0</span>
-      </div>
-    <% end %>
-  </div>
+  <% end %>
 </div>
 <div id="btn_toolbar" class="btn-toolbar">
   <div class="btn-group mr-2">
@@ -67,7 +74,7 @@ function initMap(){
     });
 
     landRegions[land.dataset.id].addListener("mouseout", function(arg) {
-      document.getElementById("land_info").innerText = "";
+      document.getElementById("land_info").innerHTML = "&nbsp;";
     });
   });
 
@@ -87,5 +94,9 @@ function dispSum() {
     document.getElementById("land_area_" + key).innerText = landAreas[key].toFixed(1);
     sumArea = sumArea.plus(landAreas[key]);
   });
+}
+
+function changeTarget(target) {
+  location.href = target.dataset.url + "?target=" + target.value;
 }
 </script>
