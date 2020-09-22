@@ -1,19 +1,9 @@
 <div class="row">
   <div class="col-md-12">
-    <div class="text-center h6">作業時間(年間推移)</div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
     <canvas id="chart1" />
   </div>
 </div>
 <hr />
-<div class="row">
-  <div class="col-md-12">
-    <div class="text-center h6">作業時間(前年同月比)</div>
-  </div>
-</div>
 <div class="row">
   <div class="col-md-12">
     <canvas id="chart2" />
@@ -25,13 +15,36 @@ const ctx2 = document.getElementById("chart2").getContext('2d');
 const chart1 = new Chart(ctx1, {
   type: 'bar',
   data: {
-    labels: <%= @total_all.map {|ta| ta[0] - 2000 }.to_json.html_safe %>,
+    labels: <%= @total_worker.map {|ta| ta[0] - 2000 }.to_json.html_safe %>,
     datasets: [{
-      label: "作業時間",
-      data: <%= @total_all.map {|ta| ta[1].to_f } %>,
+      label: "本人",
+      data: <%= @total_worker.map {|ta| ta[1].to_f } %>,
       backgroundColor: 'rgba(99, 200, 132, 1.0)',
       fill: false
+    }, {
+      label: "世帯",
+      data: <%= @total_home.map {|ta| ta[1].to_f } %>,
+      backgroundColor: 'rgba(192, 192, 192, 1.0)',
+      fill: false
     }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: '作業時間(年間推移)'
+    },
+    scales: {
+      xAxes: [{
+        stacked: true
+      }],
+      yAxes: [{
+        stacked: true,
+        ticks: {
+            beginAtZero: true,
+            min: 0
+        }            
+      }]
+    }
   }
 });
 const chart2 = new Chart(ctx2, {
@@ -43,14 +56,18 @@ const chart2 = new Chart(ctx2, {
       data: <%= @total_month1.map {|ta| ta.to_f } %>,
       backgroundColor: 'rgba(192, 192, 192, 1.0)',
       fill: true
-    },
-    {
+    }, {
       label: "今年度",
       data: <%= @total_month2.map {|ta| ta.to_f } %>,
       backgroundColor: 'rgba(99, 200, 132, 1.0)',
       fill: true
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: '作業時間(前年同月比)'
     }
-    ]
   }
 });
 </script>
