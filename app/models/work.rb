@@ -298,6 +298,14 @@ SQL
     Work.joins(:work_results).where(["work_results.worker_id = ? AND works.term >= ?", worker_id, term - 9]).group(:term).order(:term).sum("work_results.hours")
   end
 
+  def self.total_by_month(worker_id, term)
+    results = [0,0,0,0,0,0,0,0,0,0,0,0]
+    Work.joins(:work_results).where(["work_results.worker_id = ? AND works.term = ?", worker_id, term]).group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k,v|
+      results[k.to_i - 1] = v
+    end
+    return results
+  end
+
   def self.total_genre
     Work.joins(:work_results)
         .joins("INNER JOIN work_types ON works.work_type_id = work_types.id")

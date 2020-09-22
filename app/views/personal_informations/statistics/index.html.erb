@@ -1,21 +1,56 @@
 <div class="row">
   <div class="col-md-12">
-    <canvas id="chart" />
+    <div class="text-center h6">作業時間(年間推移)</div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <canvas id="chart1" />
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col-md-12">
+    <div class="text-center h6">作業時間(前年同月比)</div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <canvas id="chart2" />
   </div>
 </div>
 <script>
-var colors = ['rgba(99, 200, 132, 1.0)', 'rgba(99, 132, 200, 1.0)', 'rgba(200, 200, 132, 1.0)', 'rgba(132, 132, 132, 1.0)', 'rgba(99, 200, 200, 1.0)', 'rgba(200, 132, 132, 1.0)'];
-var ctx = document.getElementById("chart").getContext('2d');
-var chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: <%= @total_all.map {|ta| ta[0] - 2000 }.to_json.html_safe %>,
-        datasets: [{
-            label: "作業時間",
-            data: <%= @total_all.map {|ta| ta[1].to_f } %>,
-            backgroundColor: colors[0],
-            fill: false
-        }]
+const ctx1 = document.getElementById("chart1").getContext('2d');
+const ctx2 = document.getElementById("chart2").getContext('2d');
+const chart1 = new Chart(ctx1, {
+  type: 'bar',
+  data: {
+    labels: <%= @total_all.map {|ta| ta[0] - 2000 }.to_json.html_safe %>,
+    datasets: [{
+      label: "作業時間",
+      data: <%= @total_all.map {|ta| ta[1].to_f } %>,
+      backgroundColor: 'rgba(99, 200, 132, 1.0)',
+      fill: false
+    }]
+  }
+});
+const chart2 = new Chart(ctx2, {
+  type: 'bar',
+  data: {
+    labels: [1,2,3,4,5,6,7,8,9,10,11,12],
+    datasets: [{
+      label: "前年度",
+      data: <%= @total_month1.map {|ta| ta.to_f } %>,
+      backgroundColor: 'rgba(192, 192, 192, 1.0)',
+      fill: true
+    },
+    {
+      label: "今年度",
+      data: <%= @total_month2.map {|ta| ta.to_f } %>,
+      backgroundColor: 'rgba(99, 200, 132, 1.0)',
+      fill: true
     }
+    ]
+  }
 });
 </script>
