@@ -60,6 +60,19 @@ SQL
     return results
   end
 
+  def self.import_plans(base_date)
+    LandCost.newest(base_date).each do |cost|
+      plan = PlanLand.find_by(land_id: cost.land_id)
+      if plan && plan.work_type_id != cost.work_type_id
+        if cost.activated_on == base_date
+          cost.update(work_type_id: plan.work_type_id)
+        else
+          LandCost.create(land_id: plan.land_id, work_type_id: plan.work_type_id, activated_on: base_date)
+        end
+      end
+    end
+  end
+
   def update_work_type(params, start_date)
     return if work_type_id == params[:work_type_id].to_i && cost == params[:cost].to_i
 
