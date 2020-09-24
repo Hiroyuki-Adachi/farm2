@@ -71,6 +71,9 @@ Rails.application.routes.draw do
       get :show_icon
     end
   end
+  namespace :lands do
+    resources :cards, param: "land_id", only: [:index, :show]
+  end
   resources :lands, except: [:show]
   resources :homes, except: [:show]
   resources :workers, except: [:show]

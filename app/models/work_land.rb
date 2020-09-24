@@ -39,6 +39,15 @@ class WorkLand < ApplicationRecord
       .where("works.term = ?", term)
   }
 
+  scope :for_cards, ->(land_id, worked_at) {
+    joins(:work).eager_load(:work)
+      .joins(:land).eager_load(:land)
+      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+      .where("works.worked_at >= ?", worked_at)
+      .where("lands.id = ?", land_id)
+      .order("works.worked_at, works.id")
+  }
+
   def interim_cost
     (work.sum_workers_amount * land.area / work.sum_areas).round
   end
