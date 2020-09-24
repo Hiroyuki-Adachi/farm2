@@ -1,0 +1,33 @@
+<h1>土地カルテ(<%= @land.place %>)</h1>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th rowspan="2">日付</th>
+      <th rowspan="2">区分</th>
+      <th rowspan="2">作業内容</th>
+      <th colspan="3">使用薬剤</th>
+    </tr>
+    <tr>
+      <th>種別</th>
+      <th>名称</th>
+      <th>使用量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @work_lands.each do |work_land| %>
+      <tr>
+        <td><%= work_land.work.worked_at %></td>
+        <td><%= work_land&.work_type&.name %></td>
+        <td><%= work_land.work_kind_name %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", lands_cards_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>
