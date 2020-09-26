@@ -40,9 +40,9 @@ class WorkLand < ApplicationRecord
   }
 
   scope :for_cards, ->(land_id, worked_at) {
-    joins(:work).eager_load(:work)
-      .joins(:land).eager_load(:land)
-      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+    joins(:work).includes(:work)
+      .joins(:land).includes(:land)
+      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").includes(work: :work_kind)
       .where("works.worked_at >= ?", worked_at)
       .where("lands.id = ?", land_id)
       .order("works.worked_at, works.id")
@@ -72,5 +72,46 @@ class WorkLand < ApplicationRecord
       lands << work.lands.to_a
     end
     return lands.flatten.uniq
+  end
+
+  def self.sum_areas(work_id, work_type_id)
+    WorkLand.joins(:land).where(work_id: work_id, work_type_id: work_type_id).sum("lands.area")
+  end
+
+  def same_areas
+    return WorkLand.sum_areas(work_id, work_type_id)
+  end
+
+  def total_areas
+    WorkLand.joins(:land).where(work_id: work_id).sum("lands.area")
+  end
+
+  def total_sunshine(organization)
+    rice_plant_work = Work.by_land(land).where(work_kind_id: organization.rice_planting_id, term: work.term).order(:worked_at, :id).first
+    return nil unless rice_plant_work
+    return nil if work.worked_at < rice_plant_work.worked_at 
+    return DailyWeather.sum_sunshine(rice_plant_work.worked_at, work.worked_at)
+  end
+
+  def chemicals
+    results = []
+    work.work_chemicals.each do |work_chemical|
+      chemical_term = ChemicalTerm.find_by(chemical_id: work_chemical.chemical_id, term: work_chemical.work.term)
+      next unless chemical_term
+      chemical_work_type = ChemicalWorkType.find_by(chemical_term_id: chemical_term, work_type_id: work_type_id)
+      next unless chemical_work_type && chemical_work_type.quantity.positive?
+      denom = 0
+      numer = same_areas * chemical_work_type.quantity
+      ChemicalWorkType.usable(chemical_term).each do |cw|
+        denom += (WorkLand.sum_areas(work_id, cw.work_type_id) * cw.quantity)
+      end
+      next if denom.zero?
+      results.push({
+        chemical: work_chemical.chemical,
+        quantity: work_chemical.quantity * numer / denom / same_areas * 10,
+      })
+    end
+    results.push({chemical: nil, quantity: nil}) if results.count.zero?
+    return results
   end
 end

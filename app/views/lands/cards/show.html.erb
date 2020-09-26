@@ -1,28 +1,43 @@
-<h1>土地カルテ(<%= @land.place %>)</h1>
+<h1>土地カルテ(<%= @land.place %>:<%= @land.owner.name %>[<%= @land.area %>a])</h1>
 <table class="table table-sm">
   <thead>
     <tr>
       <th rowspan="2">日付</th>
       <th rowspan="2">区分</th>
       <th rowspan="2">作業内容</th>
-      <th colspan="3">使用薬剤</th>
+      <th rowspan="2" class="text-right">日照時間</th>
+      <th rowspan="2">&nbsp;</th>
+      <th colspan="6" class="text-center">使用薬剤</th>
     </tr>
     <tr>
       <th>種別</th>
       <th>名称</th>
-      <th>使用量</th>
+      <th colspan="2">使用量(10a当)</th>
     </tr>
   </thead>
   <tbody>
     <% @work_lands.each do |work_land| %>
+      <% chemicals = work_land.chemicals %>
+      <% rowspan = chemicals.count <= 1 ? "" : " rowspan=""#{chemicals.count}"""%>
       <tr>
-        <td><%= work_land.work.worked_at %></td>
-        <td><%= work_land&.work_type&.name %></td>
-        <td><%= work_land.work_kind_name %></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td <%=raw rowspan%>><%= work_land.work.worked_at %></td>
+        <td <%=raw rowspan%>><%= work_land&.work_type&.name %></td>
+        <td <%=raw rowspan%>><%= work_land.work_kind_name %></td>
+        <td <%=raw rowspan%> class="numeric"><%= number_with_precision(work_land.total_sunshine(current_organization), precision: 2) %></td>
+        <td <%=raw rowspan%>><%= link_to "作業日報", work_path(work_land.work_id), {class: "btn btn-outline-success btn-sm"} %></td>
+        <td><%= chemicals[0][:chemical]&.chemical_type&.name %></td>
+        <td><%= chemicals[0][:chemical]&.name %></td>
+        <td><%= number_with_precision(chemicals[0][:quantity], precision: 2) %></td>
+        <td><%= chemicals[0][:chemical]&.unit %></td>
       </tr>
+        <% chemicals.drop(1).each do |chemical| %>
+          <tr>
+            <td><%= chemical[:chemical].chemical_type&.name%></td>
+            <td><%= chemical[:chemical].name %></td>
+            <td><%= number_with_precision(chemical[:quantity], precision: 2) %></td>
+            <td><%= chemical[:chemical].unit %></td>
+          </tr>
+        <% end %>
     <% end %>
   </tbody>
 </table>

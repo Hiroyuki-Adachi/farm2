@@ -108,10 +108,10 @@ SQL
       (works.printed_at IS NULL)
     OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)
 SQL
-  scope :by_land, ->(land) {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.land_id = ?)", land.id)}
+  scope :by_land, ->(land) {where("EXISTS (SELECT * FROM work_lands WHERE works.id = work_lands.work_id AND work_lands.land_id = ?)", land.id)}
 
   scope :by_chemical, ->(term) {
-    where("id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.work_id").uniq)
+    where("id IN (?)", WorkChemical.by_term(term).pluck("work_chemicals.work_id").uniq)
       .order("worked_at, id")
   }
 

@@ -55,10 +55,10 @@ ORDER
   }
   scope :list, ->{includes(:chemical_type).order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))}
 
-  scope :by_work, ->(term) {
+  scope :by_term, ->(term) {
     joins(:chemical_type)
       .with_deleted
-      .where("chemicals.id IN (?)", WorkChemical.by_work(term).pluck("work_chemicals.chemical_id").uniq)
+      .where("chemicals.id IN (?)", WorkChemical.by_term(term).pluck("work_chemicals.chemical_id").uniq)
       .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 

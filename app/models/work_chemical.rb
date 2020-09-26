@@ -24,7 +24,7 @@ class WorkChemical < ApplicationRecord
   validates_presence_of :quantity
   validates_numericality_of :quantity, if: proc { |x| x.quantity.present?}
 
-  scope :by_work, ->(term){
+  scope :by_term, ->(term){
     joins(:work)
       .eager_load(:work)
       .joins(:chemical).eager_load(:chemical)
