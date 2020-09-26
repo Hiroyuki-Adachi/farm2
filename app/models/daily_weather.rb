@@ -20,4 +20,8 @@ class DailyWeather < ApplicationRecord
     where(target_date: [Date.new(year, 1, 1)..Date.new(year, 12, 31)])
       .order(target_date: :asc)
   }
+
+  def self.sum_sunshine(date1, date2)
+    DailyWeather.where(target_date: date1..date2).sum(:sunshine)
+  end
 end

@@ -56,7 +56,7 @@ class WorksController < ApplicationController
     @chemicals = @work.work_chemicals.group(:chemical_id).sum(:quantity).to_a
     @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
 
-    if url_hash[:action] == "index"
+    if ["index", "show"].include?(url_hash[:action])
       session[:work_referer] = url_hash[:controller] == "works" ? nil : request.referer
     end
     render layout: false

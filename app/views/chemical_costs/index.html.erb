@@ -67,9 +67,15 @@ $(function() {
 
     $(".zero-gray").change(function() {
         if($(this).prop('value') == 0) {
-            $(this).css("color", "gainsboro");
+            $(this).css({
+              color: "gainsboro",
+              "background-color": "white"
+            });
         } else {
-            $(this).css("color", "black");
+            $(this).css({
+              color: "black",
+              "background-color": "yellow"
+            });
         }
     });
 
