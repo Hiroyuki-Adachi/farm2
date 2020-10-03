@@ -5,6 +5,7 @@
       <th rowspan="2">日付</th>
       <th rowspan="2">区分</th>
       <th rowspan="2">作業内容</th>
+      <th colspan="2" rowspan="2" class="text-center">気温</th>
       <th rowspan="2" class="text-right">日照時間</th>
       <th rowspan="2">&nbsp;</th>
       <th colspan="6" class="text-center">使用薬剤</th>
@@ -23,6 +24,8 @@
         <td <%=raw rowspan%>><%= work_land.work.worked_at %></td>
         <td <%=raw rowspan%>><%= work_land&.work_type&.name %></td>
         <td <%=raw rowspan%>><%= work_land.work_kind_name %></td>
+        <td <%=raw rowspan%> class="numeric"><%= number_with_precision(work_land.work&.daily_weather&.height, precision: 1) %></td>
+        <td <%=raw rowspan%> class="numeric"><%= number_with_precision(work_land.work&.daily_weather&.lowest, precision: 1) %></td>
         <td <%=raw rowspan%> class="numeric"><%= number_with_precision(work_land.total_sunshine(current_organization), precision: 2) %></td>
         <td <%=raw rowspan%>><%= link_to "作業日報", work_path(work_land.work_id), {class: "btn btn-outline-success btn-sm"} %></td>
         <td><%= chemicals[0][:chemical]&.chemical_type&.name %></td>
