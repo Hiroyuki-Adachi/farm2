@@ -1,26 +1,26 @@
 $(function() {
     $(window).on("resize", function() {
-        init_size();
+        initSize();
     });
     $(".check-weather").change(function() {
-        check_weather($(this));
+        checkWeather($(this));
     });
 
-    init_size();
-    check_weather($("#check_temprature"));
-    check_weather($("#check_water"));
-    check_weather($("#check_wind"));
-    check_weather($("#check_other"));
+    initSize();
+    checkWeather($("#check_temprature"));
+    checkWeather($("#check_water"));
+    checkWeather($("#check_wind"));
+    checkWeather($("#check_other"));
 });
 
-function init_size() {
+function initSize() {
     const off = $("#calendar-wrapper").offset();
 
     $("#calendar-wrapper").height($(window).height() - off.top - $("#btn_toolbar").height());
     $("#calendar-wrapper").width($(window).width() - off.left);
 }
 
-function check_weather(checkbox) {
+function checkWeather(checkbox) {
     if(checkbox.prop("checked")) {
         $(checkbox.data("css")).show();
     } else {

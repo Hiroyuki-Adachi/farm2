@@ -8,7 +8,7 @@
       <th colspan="2" rowspan="2" class="text-center">気温</th>
       <th rowspan="2" class="text-right">日照時間</th>
       <th rowspan="2">&nbsp;</th>
-      <th colspan="6" class="text-center">使用薬剤</th>
+      <th colspan="7" class="text-center">使用薬剤</th>
     </tr>
     <tr>
       <th>種別</th>
@@ -32,6 +32,7 @@
         <td><%= chemicals[0][:chemical]&.name %></td>
         <td><%= number_with_precision(chemicals[0][:quantity], precision: 2) %></td>
         <td><%= chemicals[0][:chemical]&.unit %></td>
+        <td>(<%= number_with_precision(chemicals[0][:standard], precision: 2) %>)</td>
       </tr>
         <% chemicals.drop(1).each do |chemical| %>
           <tr>
@@ -39,6 +40,7 @@
             <td><%= chemical[:chemical].name %></td>
             <td><%= number_with_precision(chemical[:quantity], precision: 2) %></td>
             <td><%= chemical[:chemical].unit %></td>
+            <td>(<%= number_with_precision(chemical[:standard], precision: 2) %>)</td>
           </tr>
         <% end %>
     <% end %>
