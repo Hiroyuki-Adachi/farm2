@@ -109,6 +109,7 @@ class WorkLand < ApplicationRecord
       results.push({
         chemical: work_chemical.chemical,
         quantity: work_chemical.quantity * numer / denom / same_areas * 10,
+        standard: chemical_work_type.quantity
       })
     end
     results.push({chemical: nil, quantity: nil}) if results.count.zero?
