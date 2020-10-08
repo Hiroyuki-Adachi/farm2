@@ -74,6 +74,15 @@ ORDER
     chemical_terms.where(term: @term).exists?
   end
 
+  def base_unit_name
+    return base_unit.name if base_quantity < 1000
+    return case base_unit when BaseUnit::WEIGHT then "kg" when BaseUnit::VOLUME then "ℓ" else "" end
+  end
+
+  def base_base_quantity
+    return base_quantity < 1000 ? base_quantity : (base_quantity / 1000)
+  end
+
   attr_writer :this_term_flag
 
   private

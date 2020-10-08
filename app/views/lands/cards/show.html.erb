@@ -31,7 +31,7 @@
         <td><%= chemicals[0][:chemical]&.chemical_type&.name %></td>
         <td><%= chemicals[0][:chemical]&.name %></td>
         <td><%= number_with_precision(chemicals[0][:quantity], precision: 2) %></td>
-        <td><%= chemicals[0][:chemical]&.unit %></td>
+        <td><%= chemicals[0][:chemical]&.base_unit_name %></td>
         <td>(<%= number_with_precision(chemicals[0][:standard], precision: 2) %>)</td>
       </tr>
         <% chemicals.drop(1).each do |chemical| %>
@@ -39,7 +39,7 @@
             <td><%= chemical[:chemical].chemical_type&.name%></td>
             <td><%= chemical[:chemical].name %></td>
             <td><%= number_with_precision(chemical[:quantity], precision: 2) %></td>
-            <td><%= chemical[:chemical].unit %></td>
+            <td><%= chemical[:chemical].base_unit_name %></td>
             <td>(<%= number_with_precision(chemical[:standard], precision: 2) %>)</td>
           </tr>
         <% end %>
