@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_15_111909) do
+ActiveRecord::Schema.define(version: 2020_10_14_103607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -325,6 +325,8 @@ ActiveRecord::Schema.define(version: 2020_09_15_111909) do
     t.decimal "reg_area", precision: 5, scale: 2, comment: "登記面積"
     t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
     t.polygon "region", comment: "領域"
+    t.boolean "group_flag", default: false, null: false, comment: "グループフラグ"
+    t.integer "group_id", comment: "グループID"
     t.index ["deleted_at"], name: "index_lands_on_deleted_at"
     t.index ["place"], name: "index_lands_on_place"
   end
