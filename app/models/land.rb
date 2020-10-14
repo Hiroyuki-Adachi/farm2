@@ -7,12 +7,14 @@
 #  broccoli_mark(ブロッコリ記号) :string(1)
 #  deleted_at                    :datetime
 #  display_order(表示順)         :integer
+#  group_flag(グループフラグ)    :boolean          default(FALSE), not null
 #  place(番地)                   :string(15)       not null
 #  reg_area(登記面積)            :decimal(5, 2)
 #  region(領域)                  :polygon
 #  target_flag(管理対象フラグ)   :boolean          default(TRUE), not null
 #  created_at                    :datetime
 #  updated_at                    :datetime
+#  group_id(グループID)          :integer
 #  land_place_id(土地)           :integer
 #  manager_id(管理者)            :integer
 #  owner_id(所有者)              :integer
@@ -28,6 +30,7 @@ class Land < ApplicationRecord
   belongs_to :owner, -> {with_deleted}, {class_name: :Home, foreign_key: :owner_id}
   belongs_to :manager, -> {with_deleted}, {class_name: :Home, foreign_key: :manager_id}
   belongs_to :land_place, -> {with_deleted}
+  belongs_to :group, {class_name: :Land, foreign_key: :group_id}
 
   has_one :owner_holder, -> {with_deleted}, {through: :owner, source: :holder}
   has_one :manager_holder, -> {with_deleted}, {through: :manager, source: :holder}
@@ -36,6 +39,7 @@ class Land < ApplicationRecord
   has_many :work_lands
   has_many :works, {through: :work_lands}
   has_many :land_costs, -> {order(:activated_on)}
+  has_many :members, {dependent: :nullify, foreign_key: :group_id, class_name: :Land}
 
   scope :usual, -> {where(target_flag: true).order(:place, :display_order)}
   scope :list, -> {includes(:land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
