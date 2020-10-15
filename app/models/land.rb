@@ -42,7 +42,8 @@ class Land < ApplicationRecord
   has_many :members, {dependent: :nullify, foreign_key: :group_id, class_name: :Land}
 
   scope :usual, -> {where(target_flag: true).order(:place, :display_order)}
-  scope :list, -> {includes(:land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
+  scope :list, -> {where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
+  scope :group_list, -> {where(group_flag: true).includes(:land_place, :members).order(Arel.sql("place, lands.display_order, lands.id"))}
   scope :for_finance1, -> {where("owner_id = manager_id").where(target_flag: true)}
   scope :for_finance2, -> {where("owner_id <> manager_id").where(target_flag: true)}
   scope :regionable, -> {where.not(region: nil).where(target_flag: true)}
@@ -126,5 +127,9 @@ class Land < ApplicationRecord
 
   def region=(value)
     super(value == "" ? nil : value)
+  end
+
+  def area
+    return group_flag ? members.sum(:area) : super
   end
 end

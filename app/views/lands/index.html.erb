@@ -12,6 +12,7 @@
     <tr>
       <th>場所</th>
       <th>地番</th>
+      <th>グループ</th>
       <th>所有者</th>
       <th>管理者</th>
       <th>地図</th>
@@ -24,6 +25,7 @@
     <tr style="<%= 'background-color:darkgray' unless land.target_flag %>">
       <td><%= land.place_name %></td>
       <td><%= land.place %></td>
+      <td><%= land.group&.place %></td>
       <td><%= land.owner_name %></td>
       <td><%= land.owner_id == land.manager_id ? "" : land.manager_name %></td>
       <td><%= land.region.present? ? "◯" : "" %></td>
@@ -33,7 +35,7 @@
   <% end %>
   </tbody>
   <tfoot>
-    <th colspan="4">合計</th>
+    <th colspan="5">合計</th>
     <td class="numeric"><%= sprintf("%.2f", @sum_areas) %></td>
     <td colspan="2">&nbsp;</td>
   </tfoot>
