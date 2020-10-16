@@ -156,8 +156,7 @@ lands9:
   deleted_at: 
 
 
-lands10:
-  id: '11'
+lands_group1_1:
   place: 5396-ｲ
   owner_id: '18'
   manager_id: '18'
@@ -167,10 +166,9 @@ lands10:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  group: land_group1
 
-
-lands11:
-  id: '12'
+lands_group1_2:
   place: 5396-ﾛ
   owner_id: '18'
   manager_id: '18'
@@ -180,7 +178,17 @@ lands11:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  group: land_group1
 
+land_group1:
+  place: 5396-ﾛ
+  area: 0
+  display_order: '1'
+  target_flag: t
+  group_flag: t
+  created_at: '2010-07-11 12:42:48'
+  updated_at: '2010-07-11 12:42:48'
+  deleted_at: 
 
 lands12:
   id: '13'

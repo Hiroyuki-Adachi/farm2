@@ -1,0 +1,11 @@
+<div>
+  <div id="map" class="embed-responsive embed-responsive-16by9"></div>
+  <input type="button" value="クリア" id="clear_region"  class="btn btn-danger mt-5" />
+</div>
+<%= f.hidden_field :region %>
+<% @other_lands.each do |land| %>
+<%= hidden_field_tag "other_lands", land.region %>
+<% end %>
+<%= hidden_field_tag "location", "[#{land_location(@land)}]" %>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&libraries=drawing" async defer></script>
+<%= javascript_pack_tag 'lands' %>

@@ -10,7 +10,7 @@
     <%= f.select(:land_place_id, @places.map {|place| [place.name, place.id]}, {}, {class: "form-control"}) %>
   </div>
   <div class="col-md-8">
-    <div id="map" class="embed-responsive embed-responsive-16by9"></div>
+  <%= render(partial: "map", :locals => {:f => f}) %>
   </div>
 </div>
 <div class="form-row">
@@ -70,9 +70,3 @@
   </div>
 </div>
 <% end %>
-<% @other_lands.each do |land| %>
-<%= hidden_field_tag "other_lands", land.region %>
-<% end %>
-<%= hidden_field_tag "location", "[#{land_location(@land)}]" %>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&libraries=drawing" async defer></script>
-<%= javascript_pack_tag 'lands' %>
