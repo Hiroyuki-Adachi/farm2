@@ -21,7 +21,7 @@ class Lands::GroupsController < ApplicationController
   def create
     @land = Land.new(land_params)
     if @land.save
-      redirect_to lands_path
+      redirect_to lands_groups_path
     else
       render action: :new
     end
@@ -29,7 +29,7 @@ class Lands::GroupsController < ApplicationController
 
   def update
     if @land.update(land_params)
-      redirect_to lands_path
+      redirect_to lands_groups_path
     else
       render action: :edit
     end
@@ -37,7 +37,7 @@ class Lands::GroupsController < ApplicationController
 
   def destroy
     @land.destroy
-    redirect_to lands_path
+    redirect_to lands_groups_path
   end
 
   private
@@ -55,6 +55,7 @@ class Lands::GroupsController < ApplicationController
             :broccoli_mark,
             :region
           )
+          .merge(area: 0, group_flag: true)
   end
 
   def set_places
