@@ -10,7 +10,8 @@
       <th>場所</th>
       <th>地番</th>
       <th>地図</th>
-      <th style="text-align:right;">耕作面積(α)</th>
+      <th class="text-right">管理水田数</th>
+      <th class="text-right">耕作面積(α)</th>
       <th></th>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
       <td><%= land.place_name %></td>
       <td><%= land.place %></td>
       <td><%= land.region.present? ? "◯" : "" %></td>
+      <td class="numeric"><%= land.members.count %></td>
       <td class="numeric"><%= land.area %></td>
       <td><%= link_to '修正', edit_lands_group_path(land), {class: "btn btn-success btn-sm"} %></td>
     </tr>

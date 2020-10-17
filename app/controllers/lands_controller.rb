@@ -47,6 +47,7 @@ class LandsController < ApplicationController
 
   def set_land
     @land = Land.find(params[:id])
+    throw(:abort) if @land.group_flag
   end
 
   def set_homes
