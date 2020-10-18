@@ -17,7 +17,7 @@
   </thead>
   <tbody>
   <% @lands.each do |land| %>
-    <tr style="<%= 'background-color:darkgray' unless land.target_flag %>">
+    <tr>
       <td><%= land.place_name %></td>
       <td><%= land.place %></td>
       <td><%= land.region.present? ? "◯" : "" %></td>

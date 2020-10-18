@@ -19,7 +19,7 @@ class WorkLandDecorator < Draper::Decorator
   end
 
   def place_name
-    return model.land.place + "(#{model.land.owner.name})"
+    return model.land.place + (model.land.owner ? "(#{model.land.owner.name})" : "")
   end
 
   def worked_at_short

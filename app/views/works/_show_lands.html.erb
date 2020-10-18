@@ -19,11 +19,11 @@
         <% j = i + yy * x %>
           <% if j == (yy * xx - 1) %>
             <th class="land" colspan="2">合　計</th>
-            <td class="land numeric"><%= sprintf("%.2f", total_area) %></td>
+            <td class="land numeric"><%= sprintf("%.1f", total_area) %></td>
           <% else %>
             <td class="land numeric"><%= j + 1 %></td>
             <td class="land"><%=raw @work_lands[j] ? @work_lands[j].place : "&nbsp;" %></td>
-            <td class="land numeric"><%=raw @work_lands[j] ? @work_lands[j].area : "&nbsp;" %></td>
+            <td class="land numeric"><%=raw @work_lands[j] ? sprintf("%.1f", @work_lands[j].area) : "&nbsp;" %></td>
             <% total_area += @work_lands[j].land.area if @work_lands[j]  %>
           <% end %>
         <% end %>
