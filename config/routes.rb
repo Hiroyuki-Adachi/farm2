@@ -73,7 +73,11 @@ Rails.application.routes.draw do
   end
   namespace :lands do
     resources :cards, param: "land_id", only: [:index, :show]
-    resources :groups, param: "land_id", except: [:show]
+    resources :groups, except: [:show] do
+      collection do
+        get :autocomplete
+      end
+    end
   end
   resources :lands, except: [:show]
   resources :homes, except: [:show]

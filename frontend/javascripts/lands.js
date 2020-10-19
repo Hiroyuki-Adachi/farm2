@@ -1,7 +1,7 @@
 let landRegion;
 
 function initMap(){
-  const org = JSON.parse($("#location").val());
+  const org = JSON.parse(document.getElementById("location").value);
   const pos = new google.maps.LatLng(org[0], org[1]);
 
   const map = new google.maps.Map(document.getElementById('map'), {

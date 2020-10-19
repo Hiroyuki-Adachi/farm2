@@ -327,6 +327,7 @@ ActiveRecord::Schema.define(version: 2020_10_14_103607) do
     t.polygon "region", comment: "領域"
     t.boolean "group_flag", default: false, null: false, comment: "グループフラグ"
     t.integer "group_id", comment: "グループID"
+    t.integer "group_order", default: 0, null: false, comment: "グループ内並び順"
     t.index ["deleted_at"], name: "index_lands_on_deleted_at"
     t.index ["place"], name: "index_lands_on_place"
   end
