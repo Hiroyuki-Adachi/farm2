@@ -8,6 +8,7 @@
 #  deleted_at                    :datetime
 #  display_order(表示順)         :integer
 #  group_flag(グループフラグ)    :boolean          default(FALSE), not null
+#  group_order(グループ内並び順) :integer          default(0), not null
 #  place(番地)                   :string(15)       not null
 #  reg_area(登記面積)            :decimal(5, 2)
 #  region(領域)                  :polygon
@@ -39,7 +40,7 @@ class Land < ApplicationRecord
   has_many :work_lands
   has_many :works, {through: :work_lands}
   has_many :land_costs, -> {order(:activated_on)}
-  has_many :members, {dependent: :nullify, foreign_key: :group_id, class_name: :Land}
+  has_many :members, ->{order(:group_order, :display_order, :id)}, {dependent: :nullify, foreign_key: :group_id, class_name: :Land}
 
   scope :usual, -> {where(target_flag: true).order(:place, :display_order)}
   scope :list, -> {where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
@@ -72,6 +73,14 @@ class Land < ApplicationRecord
   def self.autocomplete(place)
     results = []
     Land.where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order).limit(15).each do |land|
+      results << {label: land.place + "(#{land.area})", value: land.id, details: {place: land.place, id: land.id, owner: land&.owner&.name || "", area: land.area}}
+    end
+    return results.to_json
+  end
+
+  def self.autocomplete_groups(place)
+    results = []
+    Land.where("target_flag = TRUE AND group_flag = FALSE AND (place like ?)", "%#{place}%").order(:place, :display_order).limit(15).each do |land|
       results << {label: land.place + "(#{land.area})", value: land.id, details: {place: land.place, id: land.id, owner: land&.owner&.name || "", area: land.area}}
     end
     return results.to_json
@@ -131,5 +140,12 @@ class Land < ApplicationRecord
 
   def area
     return group_flag ? members.sum(:area) : super
+  end
+
+  def self.update_members(land_id, members)
+    Land.where(group_id: land_id, group_flag: false).update(group_id: nil, group_order: 0)
+    members.each do |member|
+      Land.find_by(member[:land_id])&.update(group_id: land_id, group_order: member[:display_order])
+    end
   end
 end

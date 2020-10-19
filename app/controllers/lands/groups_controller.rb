@@ -21,6 +21,7 @@ class Lands::GroupsController < ApplicationController
   def create
     @land = Land.new(land_params)
     if @land.save
+      Land.update_members(@land.id, params[:members])
       redirect_to lands_groups_path
     else
       render action: :new
@@ -29,6 +30,7 @@ class Lands::GroupsController < ApplicationController
 
   def update
     if @land.update(land_params)
+      Land.update_members(@land.id, params[:members])
       redirect_to lands_groups_path
     else
       render action: :edit
@@ -40,10 +42,14 @@ class Lands::GroupsController < ApplicationController
     redirect_to lands_groups_path
   end
 
+  def autocomplete
+    render json: Land.autocomplete_groups(params[:term])
+  end
+
   private
 
   def set_land
-    @land = Land.find(params[:land_id])
+    @land = Land.find(params[:id])
     throw(:abort) unless @land.group_flag
   end
 
