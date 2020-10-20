@@ -2,7 +2,7 @@
   <div id="map" class="embed-responsive embed-responsive-16by9"></div>
   <input type="button" value="クリア" id="clear_region"  class="btn btn-danger mt-5" />
 </div>
-<%= f.hidden_field :region %>
+<%= f.hidden_field :region, {id: :land_region} %>
 <% @other_lands.each do |land| %>
 <%= hidden_field_tag "other_lands", land.region %>
 <% end %>

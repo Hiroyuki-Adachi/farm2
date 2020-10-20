@@ -144,8 +144,9 @@ class Land < ApplicationRecord
 
   def self.update_members(land_id, members)
     Land.where(group_id: land_id, group_flag: false).update(group_id: nil, group_order: 0)
+    return unless members
     members.each do |member|
-      Land.find_by(member[:land_id])&.update(group_id: land_id, group_order: member[:display_order])
+      Land.where(id: member[:land_id]).update(group_id: land_id, group_order: member[:display_order])
     end
   end
 end

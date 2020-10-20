@@ -1,5 +1,5 @@
 <%= error_print(@land) %>
-<%= form_for(@land, url: {controller: "lands/groups"}) do |f| %>
+<%= form_with(model: @land, url: @land.new_record? ? lands_groups_path : lands_group_path(@land)) do |f| %>
 <div class="form-row">
   <div class="field form-group col-md-2">
     <%= f.label :place, class: "col-form-label-lg" %>
@@ -23,7 +23,7 @@
     <%= f.text_field :broccoli_mark, {maxlength: 1, class: "form-control"} %>
   </div>
   <div class="field form-group col-md-2">
-    <span id="total_area"><%= @land.area %></td>
+    <span id="total_area"><%= @land.area %></span>
   </div>
 </div>
 <div class="form-row">

@@ -115,7 +115,4 @@ $(function() {
       return false;
     }
   });
-
-  const landBase = jQuery("#land_base");
-  $(".ui-autocomplete").offset({top: landBase.offset().top + landBase.height(), left: landBase.offset().left})
 });
