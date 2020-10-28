@@ -32,6 +32,8 @@ gem "loofah", ">= 2.3.1"
 
 gem 'bootsnap', require: false
 
+gem 'wareki'
+
 # Use jquery as the JavaScript library
 # gem 'jquery-ui-rails', '~> 5.0'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
