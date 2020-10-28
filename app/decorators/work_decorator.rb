@@ -17,7 +17,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def worked_at
-    model.worked_at.strftime('%Jf年 %m月 %d日') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})"
+    model.worked_at.strftime('%Jy年%m月%d日') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})"
   end
 
   def worked_at_short
@@ -25,7 +25,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def fixed_at
-    model.fixed_at&.strftime('%Jf年 %m月')
+    model.fixed_at&.strftime('%Jy年 %m月')
   end
 
   def name
@@ -79,7 +79,7 @@ class WorkDecorator < Draper::Decorator
 
   def self.get_terms(term)
     terms = []
-    Work.get_terms(term).each { |t| terms << [t.strftime('%Jf年 %m月'), t.strftime('%Y-%m-%d')] }
+    Work.get_terms(term).each { |t| terms << [t.strftime('%Jy年 %m月'), t.strftime('%Y-%m-%d')] }
     return terms
   end
 
