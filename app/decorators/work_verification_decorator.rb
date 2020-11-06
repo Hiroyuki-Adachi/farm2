@@ -1,3 +1,5 @@
+require 'wareki'
+
 class WorkVerificationDecorator < Draper::Decorator
   delegate_all
 
@@ -6,6 +8,6 @@ class WorkVerificationDecorator < Draper::Decorator
   end
 
   def updated_at
-    model.updated_at.strftime('%Y-%m-%d')
+    model.updated_at.to_date.strftime('%Je')[0] + model.updated_at.to_date.strftime('%Jg-%m-%d')
   end
 end
