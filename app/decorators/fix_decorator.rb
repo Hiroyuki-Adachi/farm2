@@ -1,3 +1,5 @@
+require 'wareki'
+
 class FixDecorator < Draper::Decorator
   delegate_all
 
@@ -11,7 +13,7 @@ class FixDecorator < Draper::Decorator
   #   end
 
   def fixed_at
-    model.fixed_at ? model.fixed_at.strftime("%Y-%m-%d") : nil
+    model.fixed_at ? model.fixed_at.strftime('%Je')[0] + model.fixed_at.strftime("%Jg-%m-%d") : nil
   end
 
   def fixer_short_name
