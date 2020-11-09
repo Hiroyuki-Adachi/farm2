@@ -138,10 +138,6 @@ class Land < ApplicationRecord
     super(value == "" ? nil : value)
   end
 
-  def area
-    return group_flag ? members.sum(:area) : super
-  end
-
   def self.update_members(land_id, members)
     Land.where(group_id: land_id, group_flag: false).update(group_id: nil, group_order: 0)
     return unless members

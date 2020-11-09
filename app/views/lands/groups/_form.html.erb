@@ -23,7 +23,11 @@
     <%= f.text_field :broccoli_mark, {maxlength: 1, class: "form-control"} %>
   </div>
   <div class="field form-group col-md-2">
-    <span id="total_area"><%= @land.area %></span>
+    <%= f.label :area, class: "col-form-label-lg" %>
+    <%= f.number_field(:area, {step: 0.01, max: 999.99, min: 0.01, size: 6, required: true, class: "form-control", id: :land_area}) %>
+  </div>
+  <div class="field form-group col-md-1">
+    <input type="button" class="btn btn-primary" value="計算" id="re_calc" />
   </div>
 </div>
 <div class="form-row">

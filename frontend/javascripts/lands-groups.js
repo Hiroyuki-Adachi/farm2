@@ -5,7 +5,6 @@ function removeLand(landId)
     document.getElementById("tbody_lands").deleteRow(document.getElementById("land_" + landId.toString()).rowIndex - 1);
 
     renumberLand();
-    calcTotalArea();
 }
 
 function renumberLand()
@@ -29,7 +28,7 @@ function calcTotalArea()
         totalArea = totalArea.plus(tbodyLands.rows[i].cells[3].innerHTML);
     }
 
-    document.getElementById("total_area").innerHTML = totalArea.toFixed(1);
+    document.getElementById("land_area").value = totalArea.toFixed(1);
 }
 
 function addLand(landId, landPlace, landOwner, landArea)
@@ -80,8 +79,6 @@ function addLand(landId, landPlace, landOwner, landArea)
     elemOrder.value = displayOrder;
     cellDel.appendChild(elemOrder);
 
-    calcTotalArea();
-
     $("#land").val("");
 }
 
@@ -103,8 +100,6 @@ $(function() {
     removeLand($(this).data("land"));
   });
 
-  calcTotalArea();
-
   $("#land").autocomplete({
     source : $("#autocomplete_lands_groups_path").val(),
     minLength: 2,
@@ -114,5 +109,9 @@ $(function() {
       }
       return false;
     }
+  });
+
+  document.getElementById("re_calc").addEventListener('click', function() {
+    calcTotalArea();
   });
 });
