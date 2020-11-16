@@ -57,12 +57,13 @@ class Lands::GroupsController < ApplicationController
     params.require(:land)
           .permit(
             :place,
+            :area,
             :display_order,
             :land_place_id,
             :broccoli_mark,
             :region
           )
-          .merge(area: 0, group_flag: true)
+          .merge(group_flag: true)
   end
 
   def set_places
