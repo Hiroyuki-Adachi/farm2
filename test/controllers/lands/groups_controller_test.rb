@@ -6,7 +6,7 @@ class Lands::GroupsControllerTest <  ActionController::TestCase
     @member = lands(:lands1)
     @group = lands(:land_group1)
     @update = {
-      place: "TEST", display_order: 1
+      place: "TEST", display_order: 1, area: 10
     }
   end
 
