@@ -19,5 +19,5 @@
 class DryingMoth < ApplicationRecord
   belongs_to :drying
 
-  MAX_COUNT = 4
+  MAX_COUNT = 5
 end
