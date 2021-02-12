@@ -97,7 +97,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'listen', '~> 3.1.5'
+  gem 'listen'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
   # Add a comment summarizing the current schema to the top or bottom of each informations.
