@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :sorimachi do
+    resources :imports, only: [:new, :create]
+  end
   namespace :plans do
     resources :lands, only: [:new, :create, :destroy]
     resources :seedlings, only: [:new, :create, :index]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_103607) do
+ActiveRecord::Schema.define(version: 2021_02_15_114038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -544,6 +544,39 @@ ActiveRecord::Schema.define(version: 2020_10_14_103607) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["term", "work_type_id"], name: "index_seedlings_on_term_and_work_type_id", unique: true
+  end
+
+  create_table "sorimachi_journals", comment: "ソリマチ仕訳", force: :cascade do |t|
+    t.integer "term", null: false, comment: "年度(期)"
+    t.integer "line", null: false, comment: "行番号"
+    t.integer "detail", null: false, comment: "明細番号"
+    t.date "accounted_on", null: false, comment: "仕訳日"
+    t.string "code01", limit: 4, null: false, comment: "コード0-1"
+    t.string "code02", limit: 4, null: false, comment: "コード0-2"
+    t.string "code03", limit: 4, null: false, comment: "コード0-3"
+    t.string "code04", limit: 4, null: false, comment: "コード0-4"
+    t.string "code05", limit: 4, null: false, comment: "コード0-5"
+    t.string "code06", limit: 4, null: false, comment: "コード0-6"
+    t.string "code07", limit: 4, null: false, comment: "コード0-7"
+    t.decimal "amount1", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額1"
+    t.string "code11", limit: 6, null: false, comment: "コード1-1"
+    t.string "code12", limit: 6, null: false, comment: "コード1-2"
+    t.string "code13", limit: 6, null: false, comment: "コード1-3"
+    t.string "code14", limit: 6, null: false, comment: "コード1-4"
+    t.string "code15", limit: 6, null: false, comment: "コード1-5"
+    t.string "code16", limit: 6, null: false, comment: "コード1-6"
+    t.string "code17", limit: 6, null: false, comment: "コード1-7"
+    t.string "code18", limit: 6, null: false, comment: "コード1-8"
+    t.decimal "amount2", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額2"
+    t.string "code21", limit: 1, null: false, comment: "コード2-1"
+    t.string "remark1", limit: 50, null: false, comment: "備考1"
+    t.string "remark2", limit: 50, null: false, comment: "備考2"
+    t.string "remark3", limit: 50, null: false, comment: "備考3"
+    t.string "code31", limit: 1, null: false, comment: "コード3-1"
+    t.decimal "amount3", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額3"
+    t.string "code41", limit: 1, null: false, comment: "コード4-1"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "systems", id: :serial, comment: "システムマスタ", force: :cascade do |t|
