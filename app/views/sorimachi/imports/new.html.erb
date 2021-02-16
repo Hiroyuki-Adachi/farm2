@@ -1,5 +1,5 @@
 <h1>ソリマチインポート</h1>
-<%= form_tag sorimachi_imports_path do |f| %>
+<%= form_tag(sorimachi_imports_path, {multipart: true}) do |f| %>
   <div class="row">
     <div class="col-md-4 form-group">
       <%= file_field_tag :import_file, {class: "custom-file-input", data: {buttonText: "ファイル選択"}} %>

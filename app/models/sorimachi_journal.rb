@@ -1,3 +1,5 @@
+require 'csv'
+
 # == Schema Information
 #
 # Table name: sorimachi_journals # ソリマチ仕訳
@@ -35,4 +37,22 @@
 #  updated_at           :datetime         not null
 #
 class SorimachiJournal < ApplicationRecord
+  def self.import(term, file)
+    SorimachiJournal.where(term: term).destroy_all
+    
+    f = CSV.open(file.path, encoding:"cp932")
+    f.readline
+    f.readline
+    f.each do |row|
+      SorimachiJournal.create(row.to_has.slice(*updatable_attributes))
+    end
+  end
+
+  def self.updatable_attributes
+    ['line', 'detail', 'accounted_on',
+      'code01', 'code02', 'code03', 'code04', 'code05', 'code06', 'code07', 'amount1', 
+      'code11', 'code12', 'code13', 'code14', 'code15', 'code16', 'code17', 'code18', 'amount2', 
+      'code21', 'remark1', 'remark2', 'remark3', 'code31', 'amount3', 'code41'
+    ]
+  end
 end
