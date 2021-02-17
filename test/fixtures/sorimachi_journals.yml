@@ -3,7 +3,7 @@
 # Table name: sorimachi_journals # ソリマチ仕訳
 #
 #  id                   :bigint           not null, primary key
-#  accounted_on(仕訳日) :date             not null
+#  accounted_on(仕訳日) :date
 #  amount1(金額1)       :decimal(11, 2)   default(0.0), not null
 #  amount2(金額2)       :decimal(11, 2)   default(0.0), not null
 #  amount3(金額3)       :decimal(11, 2)   default(0.0), not null
@@ -24,15 +24,19 @@
 #  code18(コード1-8)    :string(6)        not null
 #  code21(コード2-1)    :string(1)        not null
 #  code31(コード3-1)    :string(1)        not null
-#  code41(コード4-1)    :string(1)        not null
 #  detail(明細番号)     :integer          not null
 #  line(行番号)         :integer          not null
 #  remark1(備考1)       :string(50)       not null
 #  remark2(備考2)       :string(50)       not null
 #  remark3(備考3)       :string(50)       not null
+#  remark4(備考4)       :string(50)       not null
 #  term(年度(期))       :integer          not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
+#
+# Indexes
+#
+#  sorimachi_journals_2nd  (term,line,detail) UNIQUE
 #
 
 # This model initially had no columns defined. If you add columns to the

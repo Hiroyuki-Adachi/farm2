@@ -5,7 +5,7 @@ require 'csv'
 # Table name: sorimachi_journals # ソリマチ仕訳
 #
 #  id                   :bigint           not null, primary key
-#  accounted_on(仕訳日) :date             not null
+#  accounted_on(仕訳日) :date
 #  amount1(金額1)       :decimal(11, 2)   default(0.0), not null
 #  amount2(金額2)       :decimal(11, 2)   default(0.0), not null
 #  amount3(金額3)       :decimal(11, 2)   default(0.0), not null
@@ -26,25 +26,28 @@ require 'csv'
 #  code18(コード1-8)    :string(6)        not null
 #  code21(コード2-1)    :string(1)        not null
 #  code31(コード3-1)    :string(1)        not null
-#  code41(コード4-1)    :string(1)        not null
 #  detail(明細番号)     :integer          not null
 #  line(行番号)         :integer          not null
 #  remark1(備考1)       :string(50)       not null
 #  remark2(備考2)       :string(50)       not null
 #  remark3(備考3)       :string(50)       not null
+#  remark4(備考4)       :string(50)       not null
 #  term(年度(期))       :integer          not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
+#
+# Indexes
+#
+#  sorimachi_journals_2nd  (term,line,detail) UNIQUE
 #
 class SorimachiJournal < ApplicationRecord
   def self.import(term, file)
     SorimachiJournal.where(term: term).destroy_all
     
-    f = CSV.open(file.path, encoding:"cp932")
-    f.readline
-    f.readline
-    f.each do |row|
-      SorimachiJournal.create(row.to_has.slice(*updatable_attributes))
+    CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: /^\/\//) do |row|
+      sorimachi = SorimachiJournal.new([updatable_attributes, row].transpose.to_h)
+      sorimachi.term = term
+      sorimachi.save!
     end
   end
 
@@ -52,7 +55,7 @@ class SorimachiJournal < ApplicationRecord
     ['line', 'detail', 'accounted_on',
       'code01', 'code02', 'code03', 'code04', 'code05', 'code06', 'code07', 'amount1', 
       'code11', 'code12', 'code13', 'code14', 'code15', 'code16', 'code17', 'code18', 'amount2', 
-      'code21', 'remark1', 'remark2', 'remark3', 'code31', 'amount3', 'code41'
+      'code21', 'remark1', 'remark2', 'remark3', 'code31', 'amount3', 'remark4'
     ]
   end
 end

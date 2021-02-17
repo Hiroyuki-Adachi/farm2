@@ -550,7 +550,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_114038) do
     t.integer "term", null: false, comment: "年度(期)"
     t.integer "line", null: false, comment: "行番号"
     t.integer "detail", null: false, comment: "明細番号"
-    t.date "accounted_on", null: false, comment: "仕訳日"
+    t.date "accounted_on", comment: "仕訳日"
     t.string "code01", limit: 4, null: false, comment: "コード0-1"
     t.string "code02", limit: 4, null: false, comment: "コード0-2"
     t.string "code03", limit: 4, null: false, comment: "コード0-3"
@@ -574,9 +574,10 @@ ActiveRecord::Schema.define(version: 2021_02_15_114038) do
     t.string "remark3", limit: 50, null: false, comment: "備考3"
     t.string "code31", limit: 1, null: false, comment: "コード3-1"
     t.decimal "amount3", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額3"
-    t.string "code41", limit: 1, null: false, comment: "コード4-1"
+    t.string "remark4", limit: 50, null: false, comment: "備考4"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["term", "line", "detail"], name: "sorimachi_journals_2nd", unique: true
   end
 
   create_table "systems", id: :serial, comment: "システムマスタ", force: :cascade do |t|

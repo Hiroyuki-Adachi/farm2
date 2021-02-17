@@ -1,4 +1,6 @@
 class Sorimachi::ImportsController < ApplicationController
+  include PermitManager
+
   def index
   end
 
