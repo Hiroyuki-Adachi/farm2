@@ -28,15 +28,19 @@ class MenuControllerTest < ActionController::TestCase
       patch :update, params: {id: @system, system: {term: new_term}}
     end
     assert_equal Organization.first.term, new_term
+    assert_equal User.find(session[:user_id]).term, new_term
+    assert_equal User.find(2).term, new_term
   end
 
   test "対象年度変更(実行:既存)(管理者)" do
     now_term = systems(:s2014).term
+    old_term = systems(:s2015).term
     assert_no_difference('System.count') do
       patch :update, params: {id: @system, system: {term: now_term}}
     end
-    assert_equal Organization.first.term, now_term
-    assert_equal User.find(2).term, now_term
+    assert_equal Organization.first.term, old_term
+    assert_equal User.find(session[:user_id]).term, now_term
+    assert_equal User.find(2).term, old_term
   end
 
   test "対象年度変更(実行:既存)(管理者以外)" do
