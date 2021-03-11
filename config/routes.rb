@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   resources :dryings, except: [:new]
   resources :calendar_work_kinds, only: [:index, :create]
   resources :calendars, only: [:index]
+  namespace :calendars do
+    resources :excels, only: [:index]
+  end
   resources :contracts, only: [:index]
   resources :expense_types, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :broccoli_surveys, only: [:index]
