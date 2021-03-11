@@ -88,6 +88,9 @@ div.kind-<%= calendar_work_kind.work_kind_id %> a {color: <%= calendar_work_kind
     <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: "window.print();" %>
   </div>
   <div class="btn-group mr-2">
+    <%= link_to 'Excel出力', calendars_excels_path(format: :xlsx), class: "btn btn-success" %>
+  </div>
+  <div class="btn-group mr-2">
     <%= link_to '制御', calendar_work_kinds_path, class: "btn btn-warning" %>
   </div>
   <div class="btn-group mr-2">
