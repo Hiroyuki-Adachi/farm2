@@ -36,4 +36,8 @@ class CalendarWorkKind < ApplicationRecord
     end
     CalendarWorkKind.where(user_id: user_id).where.not(work_kind_id: work_kinds).find_each(&:destroy)
   end
+
+  def excel_color
+    text_color.gsub(/#/, '')
+  end
 end
