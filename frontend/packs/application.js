@@ -6,7 +6,7 @@ import "chart.js";
 
 window.bootbox = require('bootbox');
 
-const $ = require('jquery');
+window.jQuery = window.$ = require('jquery');
 const images = require.context('../images', true);
 window.moment = require('moment');
 
