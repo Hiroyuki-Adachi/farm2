@@ -152,6 +152,7 @@ SQL
       .select("min(works.id) AS id, works.worked_at, works.work_kind_id, works.work_type_id")
       .includes(:work_kind, :work_type)
       .where(term: term, work_kind_id: work_kinds)
+      .order(:worked_at)
   }
 
   scope :for_drying, ->(term, organization) {

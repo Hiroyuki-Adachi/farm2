@@ -16,7 +16,7 @@ module SessionsHelper
   end
 
   def current_system
-    @current_system ||= System.find_by(term: current_organization.term, organization_id: current_user.organization_id)
+    @current_system ||= System.find_by(term: current_user.term, organization_id: current_user.organization_id)
   end
 
   def current_term
