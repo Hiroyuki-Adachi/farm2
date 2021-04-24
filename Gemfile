@@ -56,7 +56,7 @@ gem 'kaminari'
 # Draper adds an object-oriented layer of presentation logic to your Rails application.
 gem 'draper'
 # ActiveRecords infamously doesn't support composite primary keys.
-gem 'composite_primary_keys'
+gem 'composite_primary_keys', '~> 13'
 # Comments for migrations
 gem 'migration_comments'
 
