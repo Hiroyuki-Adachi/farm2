@@ -10,3 +10,6 @@
 - id: 3
   code: Director
   name: "理事"
+- id: 9
+  code: Advisor
+  name: "顧問"
