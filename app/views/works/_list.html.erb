@@ -28,6 +28,10 @@
       <td class="numeric"><%= @total_workers %></td>
       <td class="numeric"><%= @total_hours %></td>
     </tr>
+    <tr>
+      <th colspan="5">組合員のみ</th>
+      <td class="numeric"><%= sprintf("%.1f", @total_hours_member) %></td>
+    </tr>
   </tfoot>
 </table>
 <%= paginate @works, remote: true %>
