@@ -19,7 +19,7 @@
 class OwnedRicePrice < ApplicationRecord
   belongs_to :work_type
 
-  has_many   :owned_rices, {dependent: :destroy}
+  has_many   :owned_rices, dependent: :destroy
 
   scope :usual, ->(term) {where(term: term).order(:display_order)}
 end

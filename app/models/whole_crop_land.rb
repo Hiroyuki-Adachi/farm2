@@ -18,7 +18,7 @@ class WholeCropLand < ApplicationRecord
   belongs_to :work_whole_crop
   belongs_to :work_land
 
-  has_many :wcs_rolls, -> {order("whole_crop_rolls.display_order")}, {class_name: "WholeCropRoll", dependent: :destroy}
+  has_many :wcs_rolls, -> {order("whole_crop_rolls.display_order")}, class_name: "WholeCropRoll", dependent: :destroy
 
   scope :for_sales, ->(term) {
     joins(work_whole_crop: :work).where(["works.term = ?", term]).where.not(rolls: 0)

@@ -28,19 +28,19 @@
 class Land < ApplicationRecord
   acts_as_paranoid
 
-  belongs_to :owner, -> {with_deleted}, {class_name: :Home, foreign_key: :owner_id}
-  belongs_to :manager, -> {with_deleted}, {class_name: :Home, foreign_key: :manager_id}
+  belongs_to :owner, -> {with_deleted}, class_name: :Home, foreign_key: :owner_id
+  belongs_to :manager, -> {with_deleted}, class_name: :Home, foreign_key: :manager_id
   belongs_to :land_place, -> {with_deleted}
-  belongs_to :group, {class_name: :Land, foreign_key: :group_id}
+  belongs_to :group, class_name: :Land, foreign_key: :group_id
 
-  has_one :owner_holder, -> {with_deleted}, {through: :owner, source: :holder}
-  has_one :manager_holder, -> {with_deleted}, {through: :manager, source: :holder}
+  has_one :owner_holder, -> {with_deleted}, through: :owner, source: :holder
+  has_one :manager_holder, -> {with_deleted}, through: :manager, source: :holder
   has_one :plan_land
 
   has_many :work_lands
-  has_many :works, {through: :work_lands}
+  has_many :works, through: :work_lands
   has_many :land_costs, -> {order(:activated_on)}
-  has_many :members, ->{order(:group_order, :display_order, :id)}, {dependent: :nullify, foreign_key: :group_id, class_name: :Land}
+  has_many :members, ->{order(:group_order, :display_order, :id)}, dependent: :nullify, foreign_key: :group_id, class_name: :Land
 
   scope :usual, -> {where(target_flag: true).order(:place, :display_order)}
   scope :list, -> {where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}

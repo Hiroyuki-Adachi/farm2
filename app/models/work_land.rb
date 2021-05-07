@@ -19,8 +19,8 @@ class WorkLand < ApplicationRecord
   belongs_to :work
   belongs_to :land, -> {with_deleted}
   belongs_to :work_type, -> {with_deleted}
-  has_one    :work_kind, -> {with_deleted}, {through: :work}
-  has_one    :wcs_land, {class_name: "WholeCropLand", dependent: :destroy}
+  has_one    :work_kind, -> {with_deleted}, through: :work
+  has_one    :wcs_land, class_name: "WholeCropLand", dependent: :destroy
 
   scope :for_personal, ->(home, worked_at) {
     joins(:work).includes(work: :work_kind)
