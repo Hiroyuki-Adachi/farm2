@@ -23,15 +23,15 @@ require 'securerandom'
 class WorkResult < ApplicationRecord
   belongs_to :work
   belongs_to :worker, -> {with_deleted}
-  has_one    :home, -> {with_deleted}, {through: :worker}
-  has_one    :work_type, -> {with_deleted}, {through: :work}
-  has_one    :work_kind, -> {with_deleted}, {through: :work}
+  has_one    :home, -> {with_deleted}, through: :worker
+  has_one    :work_type, -> {with_deleted}, through: :work
+  has_one    :work_kind, -> {with_deleted}, through: :work
 
   before_create :set_uuid
 
-  has_many  :machine_results, {dependent: :destroy}
-  has_many  :machines, {through: :machine_results}
-  has_many  :seedling_results, {dependent: :destroy}
+  has_many  :machine_results, dependent: :destroy
+  has_many  :machines, through: :machine_results
+  has_many  :seedling_results, dependent: :destroy
 
   validates :hours, presence: true
   validates :hours, numericality: true, :if => proc{|x| x.hours.present?}

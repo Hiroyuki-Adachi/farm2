@@ -26,11 +26,11 @@ class MachineResult < ApplicationRecord
   belongs_to  :work_result
   belongs_to  :fixed_adjust, {class_name: "Adjust"}
 
-  has_one :work, {through: :work_result}
-  has_one :owner, -> {with_deleted}, {through: :machine}
-  has_one :work_type, -> {with_deleted}, {through: :work}
-  has_one :machine_type, -> {with_deleted}, {through: :machine}
-  has_one :work_kind, -> {with_deleted}, {through: :work}
+  has_one :work, through: :work_result
+  has_one :owner, -> {with_deleted}, through: :machine
+  has_one :work_type, -> {with_deleted}, through: :work
+  has_one :machine_type, -> {with_deleted}, through: :machine
+  has_one :work_kind, -> {with_deleted}, through: :work
 
   scope :by_home, ->(term) {
      joins(:machine).eager_load(:machine)

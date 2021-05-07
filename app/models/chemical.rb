@@ -29,7 +29,7 @@ class Chemical < ApplicationRecord
 
   belongs_to :chemical_type
   belongs_to :base_unit
-  has_many :chemical_terms, {dependent: :delete_all}
+  has_many :chemical_terms, dependent: :delete_all
 
   validates :name,          presence: true
   validates :display_order, presence: true

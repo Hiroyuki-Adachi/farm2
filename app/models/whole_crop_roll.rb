@@ -14,7 +14,7 @@ class WholeCropRoll < ApplicationRecord
 
   scope :valid, -> {where("weight > ?", 0)}
 
-  belongs_to :wcs_land, {class_name: "WholeCropLand", foreign_key: "whole_crop_land_id"}
+  belongs_to :wcs_land, class_name: "WholeCropLand", foreign_key: "whole_crop_land_id"
 
   def self.regist(wcs_land, params)
     params.each do |param|

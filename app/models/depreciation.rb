@@ -15,9 +15,9 @@
 #
 class Depreciation < ApplicationRecord
   belongs_to :machine
-  has_one :machine_type, {through: :machine}
-  has_many :depreciation_types, {dependent: :destroy}
-  has_many :work_types, {through: :depreciation_types}
+  has_one :machine_type, through: :machine
+  has_many :depreciation_types, dependent: :destroy
+  has_many :work_types, through: :depreciation_types
 
   scope :usual, ->(term) {joins(:machine, :machine_type).where(["depreciations.term = ?", term])}
 

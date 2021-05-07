@@ -27,9 +27,9 @@ class Drying < ApplicationRecord
   belongs_to :work_type, -> {with_deleted}
   belongs_to :home, -> {with_deleted}
   belongs_to :drying_type
-  has_many   :drying_moths, {dependent: :destroy}
-  has_many   :drying_lands, {dependent: :destroy}
-  has_one    :adjustment,   {dependent: :destroy}
+  has_many   :drying_moths, dependent: :destroy
+  has_many   :drying_lands, dependent: :destroy
+  has_one    :adjustment,   dependent: :destroy
 
   after_save :delete_child
 

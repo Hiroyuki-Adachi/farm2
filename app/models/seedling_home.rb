@@ -17,7 +17,7 @@
 class SeedlingHome < ActiveRecord::Base
   belongs_to :home, -> {with_deleted}
   belongs_to :seedling
-  has_many :seedling_results, {dependent: :destroy}
+  has_many :seedling_results, dependent: :destroy
 
   accepts_nested_attributes_for :seedling_results, allow_destroy: true, reject_if: :reject_seedling_results
 
