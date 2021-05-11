@@ -4,7 +4,7 @@ source 'http://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 0.19'
+gem 'pg'
 # Use SCSS for stylesheets
 # gem 'sassc-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -56,9 +56,9 @@ gem 'kaminari'
 # Draper adds an object-oriented layer of presentation logic to your Rails application.
 gem 'draper'
 # ActiveRecords infamously doesn't support composite primary keys.
-gem 'composite_primary_keys', '~> 12'
+gem 'composite_primary_keys', '~> 13'
 # Comments for migrations
-gem 'migration_comments'
+# gem 'migration_comments'
 
 # Library for encoding QR Codes in Ruby.
 gem 'rqrcode'
