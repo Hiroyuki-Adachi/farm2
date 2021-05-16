@@ -2,10 +2,9 @@ source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0'
-
+gem 'rails', '~> 6.1'
 # Use postgresql as the database for Active Record
-gem 'pg', '0.19'
+gem 'pg'
 # Use SCSS for stylesheets
 # gem 'sassc-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -18,7 +17,7 @@ gem 'mini_racer', '0.1.14'
 
 gem 'delayed_job_active_record'
 
-gem 'webpacker', '~> 5.0'
+gem 'webpacker', '~> 5.2'
 
 gem 'daemons'
 
@@ -30,7 +29,7 @@ gem 'holiday_jp'
 # In the Loofah gem for Ruby through v2.3.0 unsanitized JavaScript may occur in sanitized output when a crafted SVG element is republished.
 gem "loofah", ">= 2.3.1"
 
-gem 'bootsnap', require: false
+gem 'bootsnap'
 
 gem 'wareki'
 
@@ -55,11 +54,11 @@ gem 'paranoia'
 # A paginator for modern web app frameworks and ORMs
 gem 'kaminari'
 # Draper adds an object-oriented layer of presentation logic to your Rails application.
-gem 'draper', '>= 3.1.0'
+gem 'draper'
 # ActiveRecords infamously doesn't support composite primary keys.
-gem 'composite_primary_keys', '~> 12'
+gem 'composite_primary_keys', '~> 13'
 # Comments for migrations
-gem 'migration_comments'
+# gem 'migration_comments'
 
 # Library for encoding QR Codes in Ruby.
 gem 'rqrcode'
@@ -91,7 +90,7 @@ group :development, :test do
   # debase is a fast implementation of the standard Ruby debugger debug.rb for Ruby 2.0
   gem 'debase'
   # An interface which glues ruby-debug to IDEs
-  gem 'ruby-debug-ide', '0.6.0'
+  gem 'ruby-debug-ide', '~> 0.6'
 
   gem 'pry-byebug'
   gem 'pry-doc'
@@ -102,7 +101,7 @@ end
 group :development do
   gem 'listen'
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 4.0'
   # Add a comment summarizing the current schema to the top or bottom of each informations.
   gem 'annotate'
   # RuboCop is a Ruby static code analyzer.

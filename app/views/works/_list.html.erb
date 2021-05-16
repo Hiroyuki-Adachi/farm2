@@ -28,6 +28,12 @@
       <td class="numeric"><%= @total_workers %></td>
       <td class="numeric"><%= @total_hours %></td>
     </tr>
+    <% unless @total_hours_member == @total_hours %>
+    <tr>
+      <th colspan="5">組合員のみ</th>
+      <td class="numeric"><%= sprintf("%.1f", @total_hours_member) %></td>
+    </tr>
+    <% end %>
   </tfoot>
 </table>
 <%= paginate @works, remote: true %>
