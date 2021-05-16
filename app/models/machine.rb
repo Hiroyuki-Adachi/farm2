@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: machines # 機械マスタ
+# Table name: machines
 #
 #  id(機械マスタ)                    :integer          not null, primary key
 #  deleted_at                        :datetime

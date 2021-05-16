@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: chemical_types # 薬剤種別マスタ
+# Table name: chemical_types
 #
 #  id(薬剤種別マスタ)    :integer          not null, primary key
 #  display_order(表示順) :integer          default(1), not null

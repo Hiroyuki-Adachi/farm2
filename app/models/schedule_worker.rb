@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: schedule_workers # 作業予定作業者
+# Table name: schedule_workers
 #
 #  id(作業予定作業者)       :integer          not null, primary key
 #  display_order(表示順)    :integer          default(0), not null

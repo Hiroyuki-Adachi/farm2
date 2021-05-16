@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: daily_weathers # 気象
+# Table name: daily_weathers
 #
 #  height(最高気温)     :float
 #  humidity(湿度)       :float

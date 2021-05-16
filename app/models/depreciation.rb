@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: depreciations # 減価償却
+# Table name: depreciations
 #
 #  id(減価償却)     :integer          not null, primary key
 #  cost(減価償却費) :decimal(9, )     default(0), not null

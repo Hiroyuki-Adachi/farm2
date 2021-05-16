@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: chemicals # 薬剤マスタ
+# Table name: chemicals
 #
 #  id(薬剤マスタ)             :integer          not null, primary key
 #  base_quantity(消費数)      :decimal(6, )     default(0), not null

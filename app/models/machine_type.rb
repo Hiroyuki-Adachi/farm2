@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: machine_types # 機械種別マスタ
+# Table name: machine_types
 #
 #  id(機械種別マスタ)    :integer          not null, primary key
 #  display_order(表示順) :integer          default(1), not null

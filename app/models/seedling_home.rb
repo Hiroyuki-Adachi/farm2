@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: seedling_homes # 育苗担当世帯
+# Table name: seedling_homes
 #
 #  id(育苗担当世帯)  :integer          not null, primary key
 #  quantity(苗箱数)  :decimal(4, )     default(0), not null

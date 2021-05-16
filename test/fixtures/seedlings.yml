@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: seedlings # 育苗
+# Table name: seedlings
 #
 #  id(育苗)                :integer          not null, primary key
 #  seed_cost(種子原価)     :decimal(6, )     default(0), not null

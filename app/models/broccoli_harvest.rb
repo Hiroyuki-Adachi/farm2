@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: broccoli_harvests # ブロッコリー収穫
+# Table name: broccoli_harvests
 #
 #  id(ブロッコリー収穫)               :integer          not null, primary key
 #  inspection(検査後数量)             :decimal(3, )     default(0), not null

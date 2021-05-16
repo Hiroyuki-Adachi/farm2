@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: depreciation_types # 減価償却分類
+# Table name: depreciation_types
 #
 #  id(減価償却分類)          :integer          not null, primary key
 #  created_at                :datetime         not null
