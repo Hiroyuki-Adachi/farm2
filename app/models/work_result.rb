@@ -102,4 +102,13 @@ class WorkResult < ApplicationRecord
   def sum_seedlings(work_type_id)
     seedling_results.where(disposal_flag: false).sum(:quantity)
   end
+
+  def self.sum_hours_for_member(works)
+    WorkResult.includes(:work)
+      .joins(:worker)
+      .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
+      .where(work_id: works)
+      .where(["homes.member_flag = ?", true])
+      .sum(:hours)
+  end
 end

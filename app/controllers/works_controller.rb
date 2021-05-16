@@ -216,6 +216,7 @@ class WorksController < ApplicationController
     @works_count = @works.count
     @total_hours = @works.inject(0) { |a, e| a + (@sum_hours[e.id] || 0)}
     @total_workers = @works.inject(0) { |a, e| a + (@count_workers[e.id] || 0)}
+    @total_hours_member = WorkResult.sum_hours_for_member(@works)
   end
 
   def set_session
