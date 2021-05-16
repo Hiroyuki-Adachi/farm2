@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: users # 利用者マスタ
+# Table name: users
 #
 #  id(利用者マスタ)              :integer          not null, primary key
 #  calendar_term(期(カレンダー)) :integer          default(2018), not null

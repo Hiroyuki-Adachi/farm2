@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: systems # システムマスタ
+# Table name: systems
 #
 #  id(システムマスタ)                 :integer          not null, primary key
 #  adjust_price(基準額(調整のみ))     :decimal(4, )     default(0), not null

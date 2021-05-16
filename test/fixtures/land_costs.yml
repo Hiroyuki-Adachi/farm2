@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: land_costs # 土地原価
+# Table name: land_costs
 #
 #  id(土地原価)           :integer          not null, primary key
 #  activated_on(有効日)   :date             default(Mon, 01 Jan 1900), not null

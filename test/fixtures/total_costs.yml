@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: total_costs # 集計原価
+# Table name: total_costs
 #
 #  id                               :bigint           not null, primary key
 #  amount(原価額)                   :decimal(9, )     not null

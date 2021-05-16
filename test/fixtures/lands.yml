@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: lands # 土地マスタ
+# Table name: lands
 #
 #  id(土地マスタ)                :integer          not null, primary key
 #  area(面積(α))                 :decimal(5, 2)    not null

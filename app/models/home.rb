@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: homes # 世帯マスタ
+# Table name: homes
 #
 #  id(世帯マスタ)                      :integer          not null, primary key
 #  address1(住所1)                     :string(50)
@@ -11,6 +11,7 @@
 #  drying_order(出力順(乾燥調整用))    :integer
 #  fax(FAX番号)                        :string(15)
 #  finance_order(出力順(会計用))       :integer
+#  location(位置)                      :point
 #  member_flag(組合員フラグ)           :boolean          default(TRUE), not null
 #  name(世帯名)                        :string(10)
 #  owned_rice_order(出力順(保有米))    :integer
