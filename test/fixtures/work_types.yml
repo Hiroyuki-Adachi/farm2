@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_types # 作業分類マスタ
+# Table name: work_types
 #
 #  id(作業分類マスタ)              :integer          not null, primary key
 #  bg_color(背景色)                :string(8)

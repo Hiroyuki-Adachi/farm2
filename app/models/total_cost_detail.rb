@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: total_cost_details # 集計原価(明細)
+# Table name: total_cost_details
 #
 #  id                      :bigint           not null, primary key
 #  area(面積(α))           :decimal(7, 2)    not null

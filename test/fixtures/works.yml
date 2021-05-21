@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: works # 作業データ
+# Table name: works
 #
 #  id(作業データ)         :integer          not null, primary key
 #  created_by(作成者)     :integer

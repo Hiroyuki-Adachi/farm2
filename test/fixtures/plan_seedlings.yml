@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: plan_seedlings # 育苗計画
+# Table name: plan_seedlings
 #
 #  id                          :bigint           not null, primary key
 #  quantity(枚数)              :decimal(4, )     default(0), not null

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: organizations # 組織(体系)マスタ
+# Table name: organizations
 #
 #  id(組織(体系)マスタ)                      :integer          not null, primary key
 #  account_number(口座番号)                  :string(7)        default("0000000"), not null

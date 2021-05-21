@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: plan_lands # 作付計画
+# Table name: plan_lands
 #
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null

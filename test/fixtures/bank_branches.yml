@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: bank_branches # 支店マスタ
+# Table name: bank_branches
 #
 #  address1(住所1)                :string(50)
 #  address2(住所2)                :string(50)
