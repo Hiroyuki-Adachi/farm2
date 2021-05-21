@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_broccolis # ブロッコリー作業
+# Table name: work_broccolis
 #
 #  id(ブロッコリー作業) :integer          not null, primary key
 #  cost(販売経費)       :decimal(6, )

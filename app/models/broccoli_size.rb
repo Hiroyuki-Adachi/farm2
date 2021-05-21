@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: broccoli_sizes # ブロッコリ階級マスタ
+# Table name: broccoli_sizes
 #
 #  id(ブロッコリ階級マスタ) :integer          not null, primary key
 #  display_name(表示名)     :string(10)       default(""), not null

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: drying_moths # 乾燥籾
+# Table name: drying_moths
 #
 #  id                    :bigint           not null, primary key
 #  moth_count(回数)      :integer          default(0), not null

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_kind_prices # 作業単価マスタ
+# Table name: work_kind_prices
 #
 #  id(作業単価マスタ)     :integer          not null, primary key
 #  price(単価)            :decimal(5, )     default(1000), not null

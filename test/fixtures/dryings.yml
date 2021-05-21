@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: dryings # 乾燥
+# Table name: dryings
 #
 #  id                       :bigint           not null, primary key
 #  carried_on(搬入日)       :date             not null

@@ -82,26 +82,5 @@
     </div>
   </div>
 <% end %>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&callback=initMap" async defer></script>
-<script>
-function initMap(){
-  const org = JSON.parse($("#organization_location").val().replace("(", "[").replace(")", "]"));
-  const pos = new google.maps.LatLng(org[0], org[1])
-
-  const map = new google.maps.Map(document.getElementById('map'), {
-    center: pos,
-    zoom: 16,
-    mapTypeId: google.maps.MapTypeId.SATELLITE
-  });
-
-  const marker = new google.maps.Marker({
-    position: pos,
-    draggable: true,
-    map: map
-  });
-
-  marker.addListener("dragend", function(arg) {
-    $("#organization_location").val(arg.latLng.toString());
-  });
-}
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" async defer></script>
+<%= javascript_pack_tag 'organizations' %>

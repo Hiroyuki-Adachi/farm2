@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_results # 作業結果データ
+# Table name: work_results
 #
 #  id(作業結果データ)         :integer          not null, primary key
 #  display_order(表示順)      :integer          default(0), not null

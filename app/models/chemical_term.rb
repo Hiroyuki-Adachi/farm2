@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: chemical_terms # 薬剤年度別利用マスタ
+# Table name: chemical_terms
 #
 #  id                :integer          not null, primary key
 #  price(価格)       :decimal(6, )     default(0), not null

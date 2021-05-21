@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: chemical_kinds # 作業種別薬剤種別利用マスタ
+# Table name: chemical_kinds
 #
 #  id(作業種別薬剤種別利用マスタ) :integer          not null, primary key
 #  chemical_type_id(薬剤種別)     :integer          not null

@@ -9,6 +9,9 @@
       <%= f.label :phonetic, class: "col-form-label-lg" %>
       <%= f.text_field :phonetic, {maxlength: 10, size: 15, required: true, class: "form-control"} %>
     </div>
+    <div class="col-md-6">
+      <div id="map" class="embed-responsive embed-responsive-4by3"></div>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-3 field form-group">
@@ -70,6 +73,7 @@
       <%= f.number_field(:seedling_order, {maxlength: 4, size: 4, min: 1, required: false, class: "form-control"}) %>
     </div>
   </div>
+  <%= f.hidden_field :location, {value: "[#{@home.location ? @home.location.x : current_organization.location.x},#{@home.location ? @home.location.y : current_organization.location.y}]"} %>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
       <%= f.submit '登録', class: "btn btn-warning" %>
@@ -84,3 +88,5 @@
     </div>
   </div>
 <% end %>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" async defer></script>
+<%= javascript_pack_tag 'homes' %>
