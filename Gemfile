@@ -92,10 +92,10 @@ group :development, :test do
   # An interface which glues ruby-debug to IDEs
   gem 'ruby-debug-ide', '~> 0.6'
 
-  gem 'pry-byebug'
-  gem 'pry-doc'
-  gem 'pry-rails'
-  gem 'pry-stack_explorer'
+  #gem 'pry-byebug'
+  #gem 'pry-doc'
+  #gem 'pry-rails'
+  #gem 'pry-stack_explorer'
 end
 
 group :development do
