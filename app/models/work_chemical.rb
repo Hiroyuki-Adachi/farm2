@@ -3,8 +3,12 @@
 # Table name: work_chemicals
 #
 #  id(薬剤使用データ)                  :integer          not null, primary key
+#  aqueous_flag(水溶フラグ)            :boolean          default(FALSE), not null
+#  area_flag(10a当たり入力)            :boolean          default(FALSE), not null
 #  chemical_group_no(薬剤グループ番号) :integer          default(1), not null
+#  magnification(水溶液(リットル))     :decimal(5, 1)
 #  quantity(使用量)                    :decimal(5, 1)    default(0.0), not null
+#  remarks(備考)                       :text             default(""), not null
 #  created_at                          :datetime
 #  updated_at                          :datetime
 #  chemical_id(薬剤)                   :integer          not null
