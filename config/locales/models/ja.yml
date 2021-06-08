@@ -40,6 +40,7 @@ ja:
         base_quantity: "消費数"
         carton_unit: "購買単位"
         carton_quantity: "購買数"
+        aqueous_flag: "水溶フラグ"
 
       chemical_type:
         name: "名称"
