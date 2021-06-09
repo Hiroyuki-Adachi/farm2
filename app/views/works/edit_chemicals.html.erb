@@ -5,13 +5,13 @@
   <%= render(:partial => 'show_work', :locals => {:f => f}) %>
   <% group_count = [@work.work_chemicals.maximum(:chemical_group_no).to_i, current_organization.chemical_group_count].max %>
   <div class="row">
-    <div class="col-md-2">総面積</div>
-    <div class="col-md-2"><%= @work.sum_areas %>a</div>
+    <div class="col-md-2 h3">総面積</div>
+    <div class="col-md-2 h3"><%= @work.sum_areas %>a</div>
     <div class="col-md-8 form-group">
       <% group_count.times do |index| %>
         <div class="form-check-inline">
-          <input class="form-check-input" type="radio" name="col-group" id="col-group<%= index%>" value="<%= index%>">
-          <label class="form-check-label" for="col-group<%= index%>"><%= index + 1%>グループ</label>
+          <%= radio_button_tag "col_group", index, index == 0, {class: "form-check-input", onchange: "changeGroup(#{index})"} %>
+          <%= label_tag "col_group_#{index}", "#{index + 1}グループ", {class: "form-check-label"} %>
         </div>
       <% end %>
     </div>
@@ -25,12 +25,13 @@
             <th>種別</th>
             <th>名称</th>
             <% group_count.times do |index| %>
-            <th class="col-data<%= index%>">10a当</th>
-            <th class="col-data<%= index%>">希釈</th>
-            <th class="col-data<%= index%>">希釈倍率</th>
-            <th class="col-data<%= index%>">使用量</th>
-            <th class="col-data<%= index%>"></th>
-            <th class="col-data<%= index%>">備考</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">10a当</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">希釈</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">希釈倍率</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;" colspan="2">使用量</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;"></th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">成分</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">備考</th>
             <% end %>
             <th></th>
           </tr>
@@ -42,20 +43,26 @@
           <td><%= chemical.chemical_type.name %></td>
           <% group_count.times do |index| %>
             <% work_chemical = @work.work_chemicals.find_by(chemical_id: chemical.id, chemical_group_no: index + 1) %>
-            <td class="col-data<%= index%>">
-              <%= check_box_tag "chemicals[#{chemical.id}][#{index + 1}][area_flag]", true, false, {class: "form-control form-control-sm"} %>
+            <td class="text-center col-data" data-index="<%= index%>" style="display:none;">
+              <%= check_box_tag "chemicals[#{chemical.id}][#{index + 1}][area_flag]", true, work_chemical&.area_flag, {class: "form-check-input"} %>
             </td>
-            <td class="col-data<%= index%>">
-              <%= check_box_tag "chemicals[#{chemical.id}][#{index + 1}][aqueous_flag]", true, false, {class: "form-control form-control-sm"} %>
+            <td class="text-center col-data" data-index="<%= index%>" style="display:none;">
+              <%= check_box_tag "chemicals[#{chemical.id}][#{index + 1}][aqueous_flag]", true, work_chemical&.aqueous_flag, {class: "form-check-input"} %>
             </td>
-            <td class="col-data<%= index%>">
+            <td class="col-data"  data-index="<%= index%>" style="display:none;">
               <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][magnification]", work_chemical&.magnification, {min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm"} %>
             </td>
-            <td class="col-data<%= index%>">
+            <td class="col-data" data-index="<%= index%>" style="display:none;">
+              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_amount]", work_chemical&.dilution_amount, {min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm"} %>
+            </td>
+            <td class="col-data" data-index="<%= index%>" style="display:none;">
+              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][quantity10]", work_chemical&.quantity10, {min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm"} %>
+            </td>
+            <td class="col-data" data-index="<%= index%>" style="display:none;"><%= chemical.unit %></td>
+            <td class="col-data" data-index="<%= index%>" style="display:none;">
               <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][quantity]", work_chemical&.quantity, {min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm"} %>
             </td>
-            <td class="col-data<%= index%>"><%= chemical.unit %></td>
-            <td class="col-data<%= index%>">
+            <td class="col-data" data-index="<%= index%>" style="display:none;">
             <%= text_field_tag "chemicals[#{chemical.id}][#{index + 1}][remarks]", work_chemical&.remarks, class: "form-control form-control-sm" %>
             </td>
           <% end %>
@@ -75,9 +82,19 @@
   </div>
 <% end %>
 <script>
-window.addEventListener("load", (event) => {
-  document.querySelectorAll(".col-data1").forEach((element) => {
-    element.style.display = "none";
+window.addEventListener("DOMContentLoaded", (event) => {
+  document.querySelectorAll("[data-index='0']").forEach((element) => {
+    element.style.display = "table-cell";
   });
 });
+
+function changeGroup(group)
+{
+  document.querySelectorAll(".col-data").forEach((element) => {
+    element.style.display = "none";
+  });
+  document.querySelectorAll(`[data-index="${group}"]`).forEach((element) => {
+    element.style.display = "table-cell";
+  });
+}
 </script>
