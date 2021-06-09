@@ -44,4 +44,13 @@ class WorkChemical < ApplicationRecord
   def chemical_display_order
     chemical_type.display_order * 100_000 + chemical_type.id * 1000 + chemical.display_order * 100 + chemical_id
   end
+
+  def quantity10
+    sum_area = work.sum_area
+    return sum_area == 0 ? 0 : quantity / sum_area
+  end
+
+  def dilution_amount
+    return aqueous_flag ? quantity * magnification : quantity
+  end
 end

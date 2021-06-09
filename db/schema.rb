@@ -629,7 +629,6 @@ ActiveRecord::Schema.define(version: 2021_06_08_113451) do
     t.float "scale", default: 0.0, null: false, comment: "倍率"
     t.float "level", default: 0.0, null: false, comment: "水位(cm)"
     t.float "temperature", default: 0.0, null: false, comment: "水温(℃)"
-    t.boolean "test_flag", default: false, null: false, comment: "テストフラグ"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -644,12 +643,10 @@ ActiveRecord::Schema.define(version: 2021_06_08_113451) do
   end
 
   create_table "water_meters", comment: "水位計", force: :cascade do |t|
-    t.string "name", limit: 30, default: "", null: false, comment: "名称"
     t.string "uuid", limit: 36, null: false, comment: "識別UUID"
     t.integer "water_location_id", null: false, comment: "設置位置"
     t.float "offset", default: 0.0, null: false, comment: "オフセット"
     t.float "scale", default: 0.0, null: false, comment: "倍率"
-    t.boolean "test_flag", default: false, null: false, comment: "テストフラグ"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "deleted_at"
