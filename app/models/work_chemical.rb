@@ -47,7 +47,7 @@ class WorkChemical < ApplicationRecord
 
   def quantity10
     sum_area = work.sum_areas
-    return sum_area == 0 ? 0 : (quantity / sum_area).round(1)
+    return sum_area == 0 ? 0 : (quantity / sum_area * 10).round(1)
   end
 
   def dilution_amount
