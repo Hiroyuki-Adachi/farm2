@@ -1,31 +1,25 @@
+ <div class="pagebreak"></div>
 <div id="content_chemicals" class="content">
   <div class="sub_title">※使用薬剤</div>
   <table id="detail_chemicals" style="width:720px;">
     <thead>
     <tr>
-      <% xx = 2; yy = (([current_organization.chemicals_count, @chemicals.count].max - 1) / xx + 1) %>
-      <% xx.times do %>
-      <th style="width:100px;">種別</th>
-      <th style="width:190px;">名称</th>
-      <th style="width:70px;">使用量</th>
-      <% end %>
+      <th style="width:200px;">種別</th>
+      <th style="width:380px;">名称</th>
+      <th style="width:140px;">使用量</th>
     </tr>
     </thead>
     <tbody>
-      <% yy.times do |i| %>
-      <tr>
-        <% xx.times do |x| %>
-          <% j = i + yy * x %>
-          <% if @chemicals[j] %>
-            <% chemical = Chemical.find(@chemicals[j][0]) %>
-            <td class="chemical"><%= chemical.chemical_type.name %></td>
-            <td class="chemical"><%= chemical.name %></td>
-            <td class="chemical numeric"><%= @chemicals[j][1] %><%= chemical.unit %></td>
-          <%  else %>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          <% end %>
+      <% ([current_organization.chemicals_count, @chemicals.count].max - 1).times do |i| %>
+        <% if @chemicals[i] %>
+          <% chemical = Chemical.find(@chemicals[i][0]) %>
+          <td class="chemical"><%= chemical.chemical_type.name %></td>
+          <td class="chemical"><%= chemical.name %></td>
+          <td class="chemical numeric"><%= @chemicals[i][1] %><%= chemical.unit %></td>
+        <%  else %>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
         <% end %>
       </tr>
       <% end %>
