@@ -35,7 +35,7 @@
   <div class="row">
     <div class="field form-group col-md-3">
       <%= f.label :unit, class: "col-form-label-lg" %>
-      <%= f.text_field :unit, {:maxlength => 2, :size => 4, required: true, class: "form-control"} %>
+      <%= f.collection_select :unit, Unit.all, :code, :name %>
     </div>
     <div class="field form-group col-md-3">
       <%= f.label :base_quantity, class: "col-form-label-lg" %>
@@ -43,7 +43,7 @@
     </div>
     <div class="field form-group col-md-3">
       <%= f.label :carton_unit, class: "col-form-label-lg" %>
-      <%= f.text_field :carton_unit, {:maxlength => 2, :size => 4, required: true, class: "form-control"} %>
+      <%= f.collection_select :carton_unit, Unit.all, :code, :name %>
     </div>
     <div class="field form-group col-md-3">
       <%= f.label :carton_quantity, class: "col-form-label-lg" %>
