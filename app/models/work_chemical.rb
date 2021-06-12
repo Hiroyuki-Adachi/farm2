@@ -51,6 +51,6 @@ class WorkChemical < ApplicationRecord
   end
 
   def dilution_amount
-    return aqueous_flag ? quantity * magnification : quantity
+    return aqueous_flag && chemical.unit_scale.positive? ? quantity * magnification / chemical.unit_scale : quantity
   end
 end

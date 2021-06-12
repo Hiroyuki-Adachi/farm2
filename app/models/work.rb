@@ -270,16 +270,16 @@ SQL
       chemical_id = chemical_id.to_i
       chemicals.each do |chemical_group_no, quantity|
         chemical_group_no = chemical_group_no.to_i
-        quantity = quantity.to_f
         work_chemical = work_chemicals.find_by(chemical_id: chemical_id, chemical_group_no: chemical_group_no)
         if work_chemical
-          if quantity.positive?
-            work_chemical.update(quantity: quantity) unless work_chemical.quantity == quantity
+          if quantity[:quantity].to_f.positive?
+            work_chemical.update(quantity_params(quantity, {}))
           else
             work_chemical.destroy
           end
         else
-          WorkChemical.create(work_id: id, chemical_id: chemical_id, chemical_group_no: chemical_group_no, quantity: quantity) if quantity > 0
+          add_params = {work_id: id, chemical_id: chemical_id, chemical_group_no:chemical_group_no}
+          WorkChemical.create(quantity_params(quantity, add_params)) if quantity[:quantity].to_f.positive?
         end
       end
     end
@@ -416,5 +416,11 @@ SQL
     wts.compact.uniq.each do |wt|
       work_work_types.create(work_type_id: wt.id)
     end
+  end
+
+  private
+
+  def quantity_params(quantity, add_params)
+    quantity.permit(:quantity, :aqueous_flag, :magnification, :remarks).merge(add_params)
   end
 end
