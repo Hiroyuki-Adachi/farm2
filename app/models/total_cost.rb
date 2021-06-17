@@ -46,20 +46,20 @@ class TotalCost < ApplicationRecord
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
 
-  scope :direct, -> {where(total_cost_type_id: 0..99)}
+  scope :direct, -> {where(total_cost_type_id: 0..101)}
   scope :sales, -> {where(total_cost_type_id: 200..299)}
 
   def self.make(term, organization)
     TotalCost.where(term: term).destroy_all
     sys = System.find_by(term: term, organization_id: organization.id)
     make_work(term, sys)
-    make_seedling(term, sys)
-    make_lands(term, sys)
-    make_expenses(term)
-    make_depreciation(term, sys)
+    # make_seedling(term, sys)
+    # make_lands(term, sys)
+    # make_expenses(term)
+    # make_depreciation(term, sys)
     make_details(term)
 
-    make_sales(term)
+    # make_sales(term)
   end
 
   def self.created_at(term)
@@ -91,11 +91,10 @@ class TotalCost < ApplicationRecord
   def self.make_work(term, sys)
     Work.by_term(term).each do |work|
       make_work_worker(term, work)
-      next unless work.work_type.land_flag
 
-      make_work_machine(term, work)
-      make_work_chemical(term, work)
-      make_work_fuel(term, work, sys)
+      # make_work_machine(term, work)
+      # make_work_chemical(term, work)
+      # make_work_fuel(term, work, sys)
     end
   end
 
@@ -119,7 +118,7 @@ class TotalCost < ApplicationRecord
       display_order: work.work_kind_order,
       member_flag: true
     )
-    if work.work_type&.land_flag
+    if work.work_type&.land_flag || work.work_lands.exists?
       make_work_details(work, total_cost)
     else
       make_details_for_indirect(total_cost.id, work.worked_at)
