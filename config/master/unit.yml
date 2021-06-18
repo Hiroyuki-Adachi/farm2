@@ -1,0 +1,35 @@
+cc:
+  code: "cc"
+  name: "cc"
+  weight: false
+  scale: 1000
+l:
+  code: "ℓ"
+  name: "ℓ"
+  weight: false
+  scale: 1
+g:
+  code: "g"
+  name: "g"
+  weight: true
+  scale: 1000
+kg:
+  code: "kg"
+  name: "kg"
+  weight: true
+  scale: 1
+bag:
+  code: "袋"
+  name: "袋"
+  weight: false
+  scale: 0
+hon:
+  code: "本"
+  name: "本"
+  weight: false
+  scale: 0
+can:
+  code: "缶"
+  name: "缶"
+  weight: false
+  scale: 0

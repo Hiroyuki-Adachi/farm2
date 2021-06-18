@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_16_021429) do
+ActiveRecord::Schema.define(version: 2021_06_08_113451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 2021_05_16_021429) do
     t.decimal "base_quantity", precision: 6, default: "0", null: false, comment: "消費数"
     t.string "carton_unit", limit: 2, default: "", null: false, comment: "購買単位"
     t.decimal "carton_quantity", precision: 6, default: "0", null: false, comment: "購買数"
+    t.boolean "aqueous_flag", default: false, null: false, comment: "水溶フラグ"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
   end
 
@@ -620,6 +621,38 @@ ActiveRecord::Schema.define(version: 2021_05_16_021429) do
     t.index ["worker_id"], name: "index_users_on_worker_id", unique: true
   end
 
+  create_table "water_levels", comment: "水位", force: :cascade do |t|
+    t.integer "water_location_id", null: false, comment: "水位位置"
+    t.integer "water_meter_id", null: false, comment: "水位計"
+    t.float "voltage", default: 0.0, null: false, comment: "電圧(mV)"
+    t.float "offset", default: 0.0, null: false, comment: "オフセット"
+    t.float "scale", default: 0.0, null: false, comment: "倍率"
+    t.float "level", default: 0.0, null: false, comment: "水位(cm)"
+    t.float "temperature", default: 0.0, null: false, comment: "水温(℃)"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "water_locations", comment: "水位位置", force: :cascade do |t|
+    t.string "name", limit: 30, default: "", null: false, comment: "名称"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
+    t.point "location", default: [35.0, 135.0], null: false, comment: "位置"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
+  end
+
+  create_table "water_meters", comment: "水位計", force: :cascade do |t|
+    t.string "uuid", limit: 36, null: false, comment: "識別UUID"
+    t.integer "water_location_id", null: false, comment: "設置位置"
+    t.float "offset", default: 0.0, null: false, comment: "オフセット"
+    t.float "scale", default: 0.0, null: false, comment: "倍率"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
+    t.index ["uuid"], name: "index_water_meters_on_uuid", unique: true
+  end
+
   create_table "whole_crop_lands", comment: "WCS土地", force: :cascade do |t|
     t.integer "work_whole_crop_id", default: 0, null: false, comment: "WCS作業"
     t.integer "work_land_id", default: 0, null: false, comment: "作業地"
@@ -657,6 +690,10 @@ ActiveRecord::Schema.define(version: 2021_05_16_021429) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "chemical_group_no", default: 1, null: false, comment: "薬剤グループ番号"
+    t.boolean "aqueous_flag", default: false, null: false, comment: "水溶フラグ"
+    t.boolean "area_flag", default: false, null: false, comment: "10a当たり入力"
+    t.decimal "magnification", precision: 5, scale: 1, comment: "水溶液(リットル)"
+    t.text "remarks", default: "", null: false, comment: "備考"
     t.index ["work_id", "chemical_id", "chemical_group_no"], name: "work_chemicals_2nd_key", unique: true
   end
 
