@@ -124,7 +124,12 @@ class WorksControllerTest < ActionController::TestCase
     assert_redirected_to work_path(id: works(:work_not_fixed))
 
     assert_difference('WorkChemical.count') do
-      get :update, params: {id: works(:work_not_fixed), chemicals: { 4 => { 1 => 10 }}, regist_chemicals: true}
+      get :update, params: {
+        id: works(:work_not_fixed), chemicals: { 4 => { 1 => {
+            aqueous_flag: true, magnification: 10, dilution_amount: 10, quantity: 10
+           }}},
+        regist_chemicals: true
+      }
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
 
