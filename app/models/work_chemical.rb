@@ -3,8 +3,12 @@
 # Table name: work_chemicals
 #
 #  id(薬剤使用データ)                  :integer          not null, primary key
+#  aqueous_flag(水溶フラグ)            :boolean          default(FALSE), not null
+#  area_flag(10a当たり入力)            :boolean          default(FALSE), not null
 #  chemical_group_no(薬剤グループ番号) :integer          default(1), not null
+#  magnification(水溶液(リットル))     :decimal(5, 1)
 #  quantity(使用量)                    :decimal(5, 1)    default(0.0), not null
+#  remarks(備考)                       :text             default(""), not null
 #  created_at                          :datetime
 #  updated_at                          :datetime
 #  chemical_id(薬剤)                   :integer          not null
@@ -39,5 +43,14 @@ class WorkChemical < ApplicationRecord
 
   def chemical_display_order
     chemical_type.display_order * 100_000 + chemical_type.id * 1000 + chemical.display_order * 100 + chemical_id
+  end
+
+  def quantity10
+    sum_area = work.sum_areas
+    return sum_area == 0 ? 0 : (quantity / sum_area * 10).round(1)
+  end
+
+  def dilution_amount
+    return aqueous_flag && chemical.unit_scale.positive? ? quantity * magnification / chemical.unit_scale : quantity
   end
 end

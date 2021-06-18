@@ -3,6 +3,7 @@
 # Table name: chemicals
 #
 #  id(薬剤マスタ)             :integer          not null, primary key
+#  aqueous_flag(水溶フラグ)   :boolean          default(FALSE), not null
 #  base_quantity(消費数)      :decimal(6, )     default(0), not null
 #  carton_quantity(購買数)    :decimal(6, )     default(0), not null
 #  carton_unit(購買単位)      :string(2)        default(""), not null
@@ -81,6 +82,10 @@ ORDER
 
   def base_base_quantity
     return base_quantity < 1000 ? base_quantity : (base_quantity / 1000)
+  end
+
+  def unit_scale
+    return Unit.find_by(code: unit).scale
   end
 
   attr_writer :this_term_flag
