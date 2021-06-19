@@ -621,38 +621,6 @@ ActiveRecord::Schema.define(version: 2021_06_08_113451) do
     t.index ["worker_id"], name: "index_users_on_worker_id", unique: true
   end
 
-  create_table "water_levels", comment: "水位", force: :cascade do |t|
-    t.integer "water_location_id", null: false, comment: "水位位置"
-    t.integer "water_meter_id", null: false, comment: "水位計"
-    t.float "voltage", default: 0.0, null: false, comment: "電圧(mV)"
-    t.float "offset", default: 0.0, null: false, comment: "オフセット"
-    t.float "scale", default: 0.0, null: false, comment: "倍率"
-    t.float "level", default: 0.0, null: false, comment: "水位(cm)"
-    t.float "temperature", default: 0.0, null: false, comment: "水温(℃)"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "water_locations", comment: "水位位置", force: :cascade do |t|
-    t.string "name", limit: 30, default: "", null: false, comment: "名称"
-    t.integer "display_order", default: 0, null: false, comment: "表示順"
-    t.point "location", default: [35.0, 135.0], null: false, comment: "位置"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "deleted_at"
-  end
-
-  create_table "water_meters", comment: "水位計", force: :cascade do |t|
-    t.string "uuid", limit: 36, null: false, comment: "識別UUID"
-    t.integer "water_location_id", null: false, comment: "設置位置"
-    t.float "offset", default: 0.0, null: false, comment: "オフセット"
-    t.float "scale", default: 0.0, null: false, comment: "倍率"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "deleted_at"
-    t.index ["uuid"], name: "index_water_meters_on_uuid", unique: true
-  end
-
   create_table "whole_crop_lands", comment: "WCS土地", force: :cascade do |t|
     t.integer "work_whole_crop_id", default: 0, null: false, comment: "WCS作業"
     t.integer "work_land_id", default: 0, null: false, comment: "作業地"
