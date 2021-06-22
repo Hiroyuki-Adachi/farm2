@@ -15,7 +15,6 @@
       <% end %>
     </td>
     <td>
-      <%= hidden_field_tag "land_costs[#{i}][cost]", cost&.cost || 0 %>
       <%= hidden_field_tag "land_costs[#{i}][id]", cost&.id %>
       <%= hidden_field_tag "land_costs[#{i}][land_id]", land.id %>
       <%= hidden_field_tag "land_costs[#{i}][activated_on]", cost&.activated_on || current_system.start_date %>

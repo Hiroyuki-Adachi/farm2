@@ -57,7 +57,6 @@
   <div aria-labelledby="navbarCost" style="display:none;">
     <span class="h5">原価管理</span>
     <!-- <%= link_to '減価償却', depreciations_path, {class: "dropdown-item", data: {controller: :depreciations}} %> -->
-    <%= link_to '土地原価', land_costs_path, {class: "dropdown-item", data: {controller: "land_costs"}} %>
     <!-- <%= link_to '燃料原価', fuel_costs_path, {class: "dropdown-item", data: {controller: "fuel_costs"}} %> -->
     <%= link_to '薬剤原価', chemical_costs_path, {class: "dropdown-item", data: {controller: "chemical_costs"}} %>
     <%= link_to '育苗原価', seedling_costs_path, {class: "dropdown-item", data: {controller: "seedling_costs"}} %>
@@ -67,6 +66,7 @@
   <div aria-labelledby="navbarPlan" style="display:none;">
     <span class="h5">生産計画</span>
     <%= link_to '作付計画', new_plans_land_path, {class: "dropdown-item", data: {controller: :plan_lands}} %>
+    <%= link_to '作付明細', land_costs_path, {class: "dropdown-item", data: {controller: "land_costs"}} %>
     <!-- <%= link_to '育苗計画', new_plans_work_type_path, {class: "dropdown-item", data: {controller: :plan_seedlings}} %> -->
     <!-- <%= link_to '薬剤計画', new_plans_chemical_path, {class: "dropdown-item", data: {controller: :plan_chemicals}} %> -->
   </div>
