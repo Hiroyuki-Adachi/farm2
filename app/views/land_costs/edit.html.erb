@@ -1,5 +1,5 @@
 <%= error_print(@land) %>
-<h1>土地原価履歴</h1>
+<h1>作付履歴</h1>
 <div class="row">
   <div class="col-md-2 form-inline">
     <label>地番：</label>
@@ -42,7 +42,6 @@
             <% end %>
           </td>
           <td>
-            <%= lcf.hidden_field :cost %>
             <%= lcf.hidden_field :id %>
           </td>
         </tr>

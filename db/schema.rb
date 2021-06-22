@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_08_113451) do
+ActiveRecord::Schema.define(version: 2021_06_22_114451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -297,11 +297,19 @@ ActiveRecord::Schema.define(version: 2021_06_08_113451) do
   create_table "land_costs", id: { type: :serial, comment: "土地原価" }, comment: "土地原価", force: :cascade do |t|
     t.integer "land_id", null: false, comment: "土地"
     t.integer "work_type_id", null: false, comment: "作業分類"
-    t.decimal "cost", precision: 7, scale: 1, default: "0.0", null: false, comment: "原価"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "activated_on", default: "1900-01-01", null: false, comment: "有効日"
     t.index ["activated_on", "land_id"], name: "index_land_costs_on_activated_on_and_land_id", unique: true
+  end
+
+  create_table "land_fees", comment: "土地料金", force: :cascade do |t|
+    t.integer "term", null: false, comment: "年度(期)"
+    t.integer "land_id", null: false, comment: "土地"
+    t.decimal "manage_fee", precision: 7, scale: 1, default: "0.0", null: false, comment: "管理料"
+    t.decimal "peasant_fee", precision: 7, scale: 1, default: "0.0", null: false, comment: "小作料"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "land_places", id: { type: :serial, comment: "場所マスタ" }, comment: "場所マスタ", force: :cascade do |t|
