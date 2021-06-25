@@ -81,6 +81,7 @@ Rails.application.routes.draw do
         get :autocomplete
       end
     end
+    resources :fees, only: [:index, :create, :edit, :update]
   end
   resources :lands, except: [:show]
   resources :homes, except: [:show]
