@@ -53,7 +53,7 @@ class Home < ApplicationRecord
       .order(Arel.sql("sections.display_order, homes.display_order, homes.id"))
   }
   scope :landable, -> {
-    joins(:section)
+    joins(:section).includes(:section)
       .order(Arel.sql("homes.company_flag, sections.display_order, homes.display_order, homes.id"))
   }
   scope :machine_owners, -> {where(owner_flag: true).order(Arel.sql("company_flag DESC, display_order, id"))}
@@ -65,6 +65,7 @@ class Home < ApplicationRecord
       .order(owned_rice_order: :ASC, display_order: :ASC, id: :ASC)
   }
   scope :for_seedling, -> {where.not(seedling_order: nil).order(seedling_order: :ASC, id: :ASC)}
+  scope :for_fee, -> {where("EXISTS (SELECT 1 FROM lands WHERE homes.id = lands.owner_id AND lands.deleted_at IS NULL AND lands.target_flag = TRUE)")}
 
   validates :phonetic,      presence: true
   validates :name,          presence: true
