@@ -8,5 +8,6 @@ class CreateLandFees < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+    add_index :land_fees, [:term, :land_id], {unique: true, name: "land_fees_2nd"}
   end
 end

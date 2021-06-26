@@ -117,4 +117,20 @@ class Home < ApplicationRecord
   def total_price(system)
     owned_price(system) + relative_price(system)
   end
+
+  def total_area
+    owned_lands.where(target_flag: true).sum(:area)
+  end
+
+  def total_area_reg
+    owned_lands.where(target_flag: true).sum(:reg_area)
+  end
+
+  def total_manage_fee(term)
+    LandFee.where(term: term, land_id: owned_lands.ids).sum(:manage_fee)
+  end
+
+  def total_peasant_fee(term)
+    LandFee.where(term: term, land_id: owned_lands.ids).sum(:peasant_fee)
+  end
 end
