@@ -146,4 +146,8 @@ class Land < ApplicationRecord
       Land.where(id: member[:land_id]).update(group_id: land_id, group_order: member[:display_order])
     end
   end
+
+  def land_fee(term)
+    LandFee.find_by(term: term, land_id: self.id)
+  end
 end

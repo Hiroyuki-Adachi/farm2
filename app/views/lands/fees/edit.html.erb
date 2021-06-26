@@ -1,0 +1,70 @@
+<h1>土地原価修正(<%= @home.name %>)</h1>
+<%= form_tag lands_fee_path, {method: :put, id: @home.id} do  %>
+<table class="table table-sm">
+  <thead>
+    <th>番地</th>
+    <th class="numeric">登記面積</th>
+    <th class="numeric">耕作面積</th>
+    <th></th>
+    <th class="numeric">管理料(単価)</th>
+    <th class="numeric">管理料</th>
+    <th class="numeric">小作料(単価)</th>
+    <th class="numeric">小作料</th>
+  </thead>
+  <% sum_area = 0 %>
+  <% sum_reg_area = 0 %>
+  <% sum_manage_fee = 0 %>
+  <% sum_peasant_fee = 0 %>
+  <tbody>
+    <% @home.owned_lands.usual.each do |land| %>
+    <% land_fee = land.land_fee(current_term) %>
+    <tr>
+      <td><%= land.place %></td>
+      <td class="numeric"><%= number_with_precision(land.reg_area, precision: 2) %></td>
+      <td class="numeric"><%= number_with_precision(land.area, precision: 1) %></td>
+      <td><%= link_to 'マスタ', edit_land_path(land), {class: "btn btn-success btn-sm"} %></td>
+      <td><%= number_field_tag "land_fees[#{land.id}][manage_fee]", number_with_precision(land_fee&.manage_fee / land.reg_area * 10, precision: 0), {class: "form-control", min: 0, max: 999999, step: 1} %></td>
+      <td><%= number_field_tag "land_fees[#{land.id}][manage_fee]", number_with_precision(land_fee&.manage_fee, precision: 0), {class: "form-control", min: 0, max: 999999, step: 1, onchange: "sumManage()"} %></td>
+      <td><%= number_field_tag "land_fees[#{land.id}][manage_fee]", number_with_precision(land_fee&.peasant_fee / land.reg_area * 10, precision: 0), {class: "form-control", min: 0, max: 999999, step: 1} %></td>
+      <td>
+        <%= number_field_tag "land_fees[#{land.id}][peasant_fee]", number_with_precision(land_fee&.peasant_fee, precision: 0), {class: "form-control", min: 0, max: 999999, step: 1} %>
+        <%= hidden_field_tag "land_fees[#{land.id}][term]", current_term %>
+        <%= hidden_field_tag "land_fees[#{land.id}][id]", land_fee&.id %>
+      </td>
+    </tr>
+    <% sum_area += land.area %>
+    <% sum_reg_area += land.reg_area %>
+    <% sum_manage_fee += land_fee&.manage_fee %>
+    <% sum_peasant_fee += land_fee&.peasant_fee %>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <th>合計</th>
+    <th class="numeric"><%= number_with_precision(sum_reg_area, precision: 2) %></th>
+    <th class="numeric"><%= number_with_precision(sum_area, precision: 1) %></th>
+    <td></td>
+    <td></td>
+    <td id="sum_manage_fee" class="numeric"><%= number_with_precision(sum_manage_fee, precision: 0, delimiter: ',') %></td>
+    <td></td>
+    <td id="sum_peasant_fee" class="numeric"><%= number_with_precision(sum_peasant_fee, precision: 0, delimiter: ',') %></td>
+  </tfoot>
+</table>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', lands_fees_path, {class: "btn btn-outline-dark"} %>
+  </div>
+</div>
+<% end %>
+<script>
+function sumManage()
+{
+  let amount = new Decimal(0);
+  document.querySelectorAll("input[name$='[manage_fee]']").forEach(e => {
+    amount = amount.plus(new Decimal(e.value));
+  });
+  document.getElementById("sum_manage_fee").innerText = amount.toFixed(0);
+}
+</script>
