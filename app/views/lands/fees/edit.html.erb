@@ -20,16 +20,21 @@
     <% land_fee = land.land_fee(current_term) %>
     <tr>
       <td><%= land.place %></td>
-      <td class="numeric"><%= number_with_precision(land.reg_area, precision: 2) %></td>
+      <td class="numeric" id="area_<%= land.id %>"><%= number_with_precision(land.reg_area, precision: 2) %></td>
       <td class="numeric"><%= number_with_precision(land.area, precision: 1) %></td>
       <td><%= link_to 'マスタ', edit_land_path(land), {class: "btn btn-success btn-sm"} %></td>
-      <td><%= number_field_tag "land_fees[#{land.id}][manage_fee]", number_with_precision(land_fee&.manage_fee / land.reg_area * 10, precision: 0), {class: "form-control", min: 0, max: 999999, step: 1} %></td>
-      <td><%= number_field_tag "land_fees[#{land.id}][manage_fee]", number_with_precision(land_fee&.manage_fee, precision: 0), {class: "form-control", min: 0, max: 999999, step: 1, onchange: "sumManage()"} %></td>
-      <td><%= number_field_tag "land_fees[#{land.id}][manage_fee]", number_with_precision(land_fee&.peasant_fee / land.reg_area * 10, precision: 0), {class: "form-control", min: 0, max: 999999, step: 1} %></td>
+      <td><%= number_field_tag "land_fees[#{land.id}][manage_price]", number_with_precision(land_fee&.manage_fee / land.reg_area * 10, precision: 0),
+        {class: "form-control", min: 0, max: 999999, step: 1, onchange: "changeManagePrice(this)", id: "manage_price_#{land.id}", data: {id: land.id}} %></td>
+      <td><%= number_field_tag "land_fees[#{land.id}][manage_fee]", number_with_precision(land_fee&.manage_fee, precision: 0), 
+        {class: "form-control", min: 0, max: 999999, step: 1, onchange: "changeManageFee(this)", id: "manage_fee_#{land.id}", data: {id: land.id}} %></td>
+      <td><%= number_field_tag "land_fees[#{land.id}][peasant_price]", number_with_precision(land_fee&.peasant_fee / land.reg_area * 10, precision: 0),
+        {class: "form-control", min: 0, max: 999999, step: 1, onchange: "changePeasantPrice(this)", id: "peasant_price_#{land.id}", data: {id: land.id}} %></td>
       <td>
-        <%= number_field_tag "land_fees[#{land.id}][peasant_fee]", number_with_precision(land_fee&.peasant_fee, precision: 0), {class: "form-control", min: 0, max: 999999, step: 1} %>
+        <%= number_field_tag "land_fees[#{land.id}][peasant_fee]", number_with_precision(land_fee&.peasant_fee, precision: 0),
+          {class: "form-control", min: 0, max: 999999, step: 1, onchange: "changePeasantFee(this)", id: "peasant_fee_#{land.id}", data: {id: land.id}} %>
         <%= hidden_field_tag "land_fees[#{land.id}][term]", current_term %>
         <%= hidden_field_tag "land_fees[#{land.id}][id]", land_fee&.id %>
+        <%= hidden_field_tag "land_fees[#{land.id}][land_id]", land.id %>
       </td>
     </tr>
     <% sum_area += land.area %>
@@ -58,13 +63,4 @@
   </div>
 </div>
 <% end %>
-<script>
-function sumManage()
-{
-  let amount = new Decimal(0);
-  document.querySelectorAll("input[name$='[manage_fee]']").forEach(e => {
-    amount = amount.plus(new Decimal(e.value));
-  });
-  document.getElementById("sum_manage_fee").innerText = amount.toFixed(0);
-}
-</script>
+<%= javascript_pack_tag 'land-fees' %>
