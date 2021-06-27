@@ -1,6 +1,9 @@
 - id: 10
   code: Land
-  name: "土地管理"
+  name: "土地(管理)"
+- id: 15
+  code: Peasant
+  name: "土地(小作)"
 - id: 20
   code: Depreciation
   name: "減価償却"

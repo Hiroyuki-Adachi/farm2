@@ -53,8 +53,8 @@ class TotalCost < ApplicationRecord
     TotalCost.where(term: term).destroy_all
     sys = System.find_by(term: term, organization_id: organization.id)
     make_work(term, sys)
-    # make_seedling(term, sys)
-    # make_lands(term, sys)
+    make_seedling(term, sys)
+    make_lands(term, sys)
     # make_expenses(term)
     # make_depreciation(term, sys)
     make_details(term)
@@ -241,24 +241,48 @@ class TotalCost < ApplicationRecord
   def self.make_lands(term, sys)
     Land.usual.each do |land|
       cost, results = land.costs(sys.start_date, sys.end_date)
-      next if cost.zero?
-      total_cost = TotalCost.create(
-        term: term,
-        total_cost_type_id: TotalCostType::LAND.id,
-        occurred_on: sys.end_date,
-        land_id: land.id,
-        amount: cost,
-        member_flag: true,
-        display_order: land.manager.home_display_order,
-        fiscal_flag: true
-      )
-      results.each do |k, v|
-        TotalCostDetail.create(
-          total_cost_id: total_cost.id,
-          work_type_id: k,
-          rate: v,
-          area: land.area
+      next if cost.nil?
+
+      if cost.manage_fee.positive?
+        total_cost = TotalCost.create(
+          term: term,
+          total_cost_type_id: TotalCostType::LAND.id,
+          occurred_on: sys.end_date,
+          land_id: land.id,
+          amount: cost.manage_fee,
+          member_flag: true,
+          display_order: land.manager.home_display_order,
+          fiscal_flag: true
         )
+        results.each do |k, v|
+          TotalCostDetail.create(
+            total_cost_id: total_cost.id,
+            work_type_id: k,
+            rate: v,
+            area: land.area
+          )
+        end
+      end
+
+      if cost.peasant_fee.positive?
+        total_cost = TotalCost.create(
+          term: term,
+          total_cost_type_id: TotalCostType::PEASANT.id,
+          occurred_on: sys.end_date,
+          land_id: land.id,
+          amount: cost.peasant_fee,
+          member_flag: true,
+          display_order: land.manager.home_display_order,
+          fiscal_flag: true
+        )
+        results.each do |k, v|
+          TotalCostDetail.create(
+            total_cost_id: total_cost.id,
+            work_type_id: k,
+            rate: v,
+            area: land.area
+          )
+        end
       end
     end
   end
