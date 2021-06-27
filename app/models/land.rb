@@ -41,6 +41,7 @@ class Land < ApplicationRecord
   has_many :works, {through: :work_lands}
   has_many :land_costs, -> {order(:activated_on)}
   has_many :members, ->{order(:group_order, :display_order, :id)}, {dependent: :nullify, foreign_key: :group_id, class_name: :Land}
+  has_many :land_fees
 
   scope :usual, -> {where(target_flag: true).order(:place, :display_order)}
   scope :list, -> {where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
@@ -91,21 +92,20 @@ class Land < ApplicationRecord
   end
 
   def costs(start_date, end_date)
-    return 0
-    # results = {}
-    # tmp_date = start_date
-    # tmp_cost = land_costs.newest(start_date)&.first
-    # return 0, [] unless tmp_cost
-    # land_costs.where(["activated_on BETWEEN ? AND ?", start_date + 1, end_date]).order("land_costs.activated_on").each do |land_cost|
-    #   results[tmp_cost.work_type_id] ||= 0
-    #   results[tmp_cost.work_type_id] += (land_cost.activated_on - tmp_date)
-    #   tmp_date = land_cost.activated_on
-    #   tmp_cost = land_cost
-    # end
-    # results[tmp_cost.work_type_id] ||= 0
-    # results[tmp_cost.work_type_id] += (end_date - tmp_date + 1)
+    results = {}
+    tmp_date = start_date
+    tmp_cost = land_costs.newest(start_date)&.first
+    return 0, [] unless tmp_cost
+    land_costs.where(["activated_on BETWEEN ? AND ?", start_date + 1, end_date]).order("land_costs.activated_on").each do |land_cost|
+      results[tmp_cost.work_type_id] ||= 0
+      results[tmp_cost.work_type_id] += (land_cost.activated_on - tmp_date)
+      tmp_date = land_cost.activated_on
+      tmp_cost = land_cost
+    end
+    results[tmp_cost.work_type_id] ||= 0
+    results[tmp_cost.work_type_id] += (end_date - tmp_date + 1)
 
-    # return tmp_cost.cost, results
+    return land_fee(start_date.year), results
   end
 
   def land_display_order
