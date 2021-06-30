@@ -95,7 +95,7 @@ class Land < ApplicationRecord
     results = {}
     tmp_date = start_date
     tmp_cost = land_costs.newest(start_date)&.first
-    return 0, [] unless tmp_cost
+    return nil, [] unless tmp_cost
     land_costs.where(["activated_on BETWEEN ? AND ?", start_date + 1, end_date]).order("land_costs.activated_on").each do |land_cost|
       results[tmp_cost.work_type_id] ||= 0
       results[tmp_cost.work_type_id] += (land_cost.activated_on - tmp_date)

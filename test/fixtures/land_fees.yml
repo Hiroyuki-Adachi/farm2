@@ -10,12 +10,13 @@
 #  updated_at          :datetime         not null
 #  land_id(土地)       :integer          not null
 #
-# Indexes
-#
-#  land_fees_2nd  (term,land_id) UNIQUE
-#
 
 # This model initially had no columns defined. If you add columns to the
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+land_fee1:
+  land: land_genka2
+  term: 2017
+  manage_fee: 17500
+  peasant_fee: 26250
