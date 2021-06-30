@@ -10,10 +10,6 @@
 #  updated_at          :datetime         not null
 #  land_id(土地)       :integer          not null
 #
-# Indexes
-#
-#  land_fees_2nd  (term,land_id) UNIQUE
-#
 require "test_helper"
 
 class LandFeeTest < ActiveSupport::TestCase

@@ -23,24 +23,24 @@
       <td class="numeric" id="area_<%= land.id %>"><%= number_with_precision(land.reg_area, precision: 2) %></td>
       <td class="numeric"><%= number_with_precision(land.area, precision: 1) %></td>
       <td><%= link_to 'マスタ', edit_land_path(land), {class: "btn btn-success btn-sm"} %></td>
-      <td><%= number_field_tag "land_fees[#{land.id}][manage_price]", number_with_precision(land_fee&.manage_fee / land.reg_area * 10, precision: 0),
+      <td><%= number_field_tag "land_fees[#{land.id}][manage_price]", number_with_precision(land_fee&.manage_fee.to_f / land.reg_area * 10, precision: 0),
         {class: "form-control", min: 0, max: 999999, step: 1, onchange: "changeManagePrice(this)", id: "manage_price_#{land.id}", data: {id: land.id}} %></td>
-      <td><%= number_field_tag "land_fees[#{land.id}][manage_fee]", number_with_precision(land_fee&.manage_fee, precision: 0), 
+      <td><%= number_field_tag "land_fees[#{land.id}][manage_fee]", number_with_precision(land_fee&.manage_fee.to_f, precision: 0), 
         {class: "form-control", min: 0, max: 999999, step: 1, onchange: "changeManageFee(this)", id: "manage_fee_#{land.id}", data: {id: land.id}} %></td>
-      <td><%= number_field_tag "land_fees[#{land.id}][peasant_price]", number_with_precision(land_fee&.peasant_fee / land.reg_area * 10, precision: 0),
+      <td><%= number_field_tag "land_fees[#{land.id}][peasant_price]", number_with_precision(land_fee&.peasant_fee.to_f / land.reg_area * 10, precision: 0),
         {class: "form-control", min: 0, max: 999999, step: 1, onchange: "changePeasantPrice(this)", id: "peasant_price_#{land.id}", data: {id: land.id}} %></td>
       <td>
-        <%= number_field_tag "land_fees[#{land.id}][peasant_fee]", number_with_precision(land_fee&.peasant_fee, precision: 0),
+        <%= number_field_tag "land_fees[#{land.id}][peasant_fee]", number_with_precision(land_fee&.peasant_fee.to_f, precision: 0),
           {class: "form-control", min: 0, max: 999999, step: 1, onchange: "changePeasantFee(this)", id: "peasant_fee_#{land.id}", data: {id: land.id}} %>
         <%= hidden_field_tag "land_fees[#{land.id}][term]", current_term %>
         <%= hidden_field_tag "land_fees[#{land.id}][id]", land_fee&.id %>
         <%= hidden_field_tag "land_fees[#{land.id}][land_id]", land.id %>
       </td>
     </tr>
-    <% sum_area += land.area %>
-    <% sum_reg_area += land.reg_area %>
-    <% sum_manage_fee += land_fee&.manage_fee %>
-    <% sum_peasant_fee += land_fee&.peasant_fee %>
+    <% sum_area += land.area.to_f %>
+    <% sum_reg_area += land.reg_area.to_f %>
+    <% sum_manage_fee += land_fee&.manage_fee.to_f %>
+    <% sum_peasant_fee += land_fee&.peasant_fee.to_f %>
     <% end %>
   </tbody>
   <tfoot>
