@@ -201,7 +201,7 @@ GEM
     rqrcode (2.0.0)
       chunky_png (~> 1.0)
       rqrcode_core (~> 1.0)
-    rqrcode_core (1.0.0)
+    rqrcode_core (1.1.0)
     rubocop (1.18.1)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
