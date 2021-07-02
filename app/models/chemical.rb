@@ -83,6 +83,10 @@ ORDER
     return base_quantity < 1000 ? base_quantity : (base_quantity / 1000)
   end
 
+  def unit_scale
+    return Unit.find_by(code: unit).scale
+  end
+
   attr_writer :this_term_flag
 
   private

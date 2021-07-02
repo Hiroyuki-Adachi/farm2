@@ -4,9 +4,14 @@ window.Rails = require("@rails/ujs");
 import "bootstrap";
 import "chart.js";
 
-window.bootbox = require('bootbox');
+const bootbox = require('bootbox');
+window.bootbox = bootbox;
+global.bootbox = bootbox;
 
-window.jQuery = window.$ = require('jquery');
+const jQuery = require('jquery');
+window.jQuery = window.$ = jQuery;
+global.jQuery = global.$ = jQuery;
+
 const images = require.context('../images', true);
 window.moment = require('moment');
 

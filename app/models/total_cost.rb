@@ -46,7 +46,7 @@ class TotalCost < ApplicationRecord
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
 
-  scope :direct, -> {where(total_cost_type_id: 0..99)}
+  scope :direct, -> {where(total_cost_type_id: 0..101)}
   scope :sales, -> {where(total_cost_type_id: 200..299)}
 
   def self.make(term, organization)
@@ -55,11 +55,11 @@ class TotalCost < ApplicationRecord
     make_work(term, sys)
     make_seedling(term, sys)
     make_lands(term, sys)
-    make_expenses(term)
-    make_depreciation(term, sys)
+    # make_expenses(term)
+    # make_depreciation(term, sys)
     make_details(term)
 
-    make_sales(term)
+    # make_sales(term)
   end
 
   def self.created_at(term)
@@ -91,11 +91,10 @@ class TotalCost < ApplicationRecord
   def self.make_work(term, sys)
     Work.by_term(term).each do |work|
       make_work_worker(term, work)
-      next unless work.work_type.land_flag
 
-      make_work_machine(term, work)
-      make_work_chemical(term, work)
-      make_work_fuel(term, work, sys)
+      # make_work_machine(term, work)
+      # make_work_chemical(term, work)
+      # make_work_fuel(term, work, sys)
     end
   end
 
@@ -119,7 +118,7 @@ class TotalCost < ApplicationRecord
       display_order: work.work_kind_order,
       member_flag: true
     )
-    if work.work_type&.land_flag
+    if work.work_type&.land_flag || work.work_lands.exists?
       make_work_details(work, total_cost)
     else
       make_details_for_indirect(total_cost.id, work.worked_at)
@@ -242,25 +241,33 @@ class TotalCost < ApplicationRecord
   def self.make_lands(term, sys)
     Land.usual.each do |land|
       cost, results = land.costs(sys.start_date, sys.end_date)
-      next if cost.zero?
-      total_cost = TotalCost.create(
-        term: term,
-        total_cost_type_id: TotalCostType::LAND.id,
-        occurred_on: sys.end_date,
-        land_id: land.id,
-        amount: cost,
-        member_flag: true,
-        display_order: land.manager.home_display_order,
-        fiscal_flag: true
+      next if cost.nil?
+
+      make_lands_sub(term, TotalCostType::LAND.id, land, results, cost.manage_fee, sys.end_date)
+      make_lands_sub(term, TotalCostType::PEASANT.id, land, results, cost.peasant_fee, sys.end_date)
+    end
+  end
+
+  def self.make_lands_sub(term, cost_type_id, land, results, fee, end_date)
+    return unless fee.positive?
+
+    total_cost = TotalCost.create(
+      term: term,
+      total_cost_type_id: cost_type_id,
+      occurred_on: end_date,
+      land_id: land.id,
+      amount: fee,
+      member_flag: true,
+      display_order: land.manager.home_display_order,
+      fiscal_flag: true
+    )
+    results.each do |k, v|
+      TotalCostDetail.create(
+        total_cost_id: total_cost.id,
+        work_type_id: k,
+        rate: v,
+        area: land.area
       )
-      results.each do |k, v|
-        TotalCostDetail.create(
-          total_cost_id: total_cost.id,
-          work_type_id: k,
-          rate: v,
-          area: land.area
-        )
-      end
     end
   end
 

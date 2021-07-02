@@ -53,7 +53,7 @@ class Home < ApplicationRecord
       .order(Arel.sql("sections.display_order, homes.display_order, homes.id"))
   }
   scope :landable, -> {
-    joins(:section)
+    joins(:section).includes(:section)
       .order(Arel.sql("homes.company_flag, sections.display_order, homes.display_order, homes.id"))
   }
   scope :machine_owners, -> {where(owner_flag: true).order(Arel.sql("company_flag DESC, display_order, id"))}
@@ -65,6 +65,7 @@ class Home < ApplicationRecord
       .order(owned_rice_order: :ASC, display_order: :ASC, id: :ASC)
   }
   scope :for_seedling, -> {where.not(seedling_order: nil).order(seedling_order: :ASC, id: :ASC)}
+  scope :for_fee, -> {where("EXISTS (SELECT 1 FROM lands WHERE homes.id = lands.owner_id AND lands.deleted_at IS NULL AND lands.target_flag = TRUE)")}
 
   validates :phonetic,      presence: true
   validates :name,          presence: true
@@ -115,5 +116,21 @@ class Home < ApplicationRecord
 
   def total_price(system)
     owned_price(system) + relative_price(system)
+  end
+
+  def total_area
+    owned_lands.where(target_flag: true).sum(:area)
+  end
+
+  def total_area_reg
+    owned_lands.where(target_flag: true).sum(:reg_area)
+  end
+
+  def total_manage_fee(term)
+    LandFee.where(term: term, land_id: owned_lands.ids).sum(:manage_fee)
+  end
+
+  def total_peasant_fee(term)
+    LandFee.where(term: term, land_id: owned_lands.ids).sum(:peasant_fee)
   end
 end

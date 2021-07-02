@@ -444,6 +444,7 @@ lands31:
   owner_id: '5'
   manager_id: '5'
   area: '34.50'
+  reg_area: '35.50'
   display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
@@ -483,6 +484,7 @@ lands34:
   owner_id: '5'
   manager_id: '5'
   area: '23.70'
+  reg_area: 24
   display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
@@ -496,6 +498,7 @@ lands35:
   owner_id: '5'
   manager_id: '5'
   area: '29.40'
+  reg_area: 30
   display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
@@ -509,6 +512,7 @@ lands36:
   owner_id: '5'
   manager_id: '5'
   area: '15.20'
+  reg_area: 16
   display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
@@ -821,6 +825,7 @@ lands60:
   owner_id: '5'
   manager_id: '5'
   area: '9.70'
+  reg_area: 10
   display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
@@ -3044,6 +3049,7 @@ lands231:
   owner_id: '5'
   manager_id: '5'
   area: '31.40'
+  reg_area: 32
   display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:45:07.81524'
@@ -3057,6 +3063,7 @@ lands232:
   owner_id: '5'
   manager_id: '5'
   area: '29.40'
+  reg_area: 30
   display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:45:40.933709'
@@ -3070,6 +3077,7 @@ lands233:
   owner_id: '5'
   manager_id: '5'
   area: '29.40'
+  reg_area: 30
   display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:46:37.501499'
@@ -3083,6 +3091,7 @@ lands234:
   owner_id: '5'
   manager_id: '5'
   area: '29.40'
+  reg_area: 30
   display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:47:08.121628'
@@ -3252,6 +3261,7 @@ lands247:
   owner_id: '5'
   manager_id: '5'
   area: '16.00'
+  reg_area: 17.0
   display_order: '1'
   target_flag: t
   created_at: '2010-08-20 23:40:01.492837'
@@ -3263,6 +3273,7 @@ land_genka1:
   owner_id: '5'
   manager_id: '5'
   area: 20.0
+  reg_area: 21.0
   display_order: '1'
   target_flag: t
   created_at: '2010-08-20 23:40:01.492837'
@@ -3274,6 +3285,7 @@ land_genka2:
   owner_id: '5'
   manager_id: '5'
   area: 40.0
+  reg_area: 41.0
   display_order: '1'
   target_flag: t
   created_at: '2010-08-20 23:40:01.492837'
