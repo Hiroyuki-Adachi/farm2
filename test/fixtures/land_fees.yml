@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: land_fees
+#
+#  id                  :bigint           not null, primary key
+#  manage_fee(管理料)  :decimal(7, 1)    default(0.0), not null
+#  peasant_fee(小作料) :decimal(7, 1)    default(0.0), not null
+#  term(年度(期))      :integer          not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  land_id(土地)       :integer          not null
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+land_fee1:
+  land: land_genka2
+  term: 2017
+  manage_fee: 17500
+  peasant_fee: 26250

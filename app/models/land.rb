@@ -94,7 +94,7 @@ class Land < ApplicationRecord
     results = {}
     tmp_date = start_date
     tmp_cost = land_costs.newest(start_date)&.first
-    return 0, [] unless tmp_cost
+    return nil, [] unless tmp_cost
     land_costs.where(["activated_on BETWEEN ? AND ?", start_date + 1, end_date]).order("land_costs.activated_on").each do |land_cost|
       results[tmp_cost.work_type_id] ||= 0
       results[tmp_cost.work_type_id] += (land_cost.activated_on - tmp_date)
@@ -104,7 +104,7 @@ class Land < ApplicationRecord
     results[tmp_cost.work_type_id] ||= 0
     results[tmp_cost.work_type_id] += (end_date - tmp_date + 1)
 
-    return tmp_cost.cost, results
+    return land_fee(start_date.year), results
   end
 
   def land_display_order
@@ -144,5 +144,9 @@ class Land < ApplicationRecord
     members.each do |member|
       Land.where(id: member[:land_id]).update(group_id: land_id, group_order: member[:display_order])
     end
+  end
+
+  def land_fee(term)
+    LandFee.find_by(term: term, land_id: self.id)
   end
 end

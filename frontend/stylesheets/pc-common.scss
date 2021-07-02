@@ -1,6 +1,9 @@
 input[type=number] {
   text-align: right;
 }
+input[type=number].narrow {
+  width: 100px;
+}
   
 td.numeric {
   text-align: right;
