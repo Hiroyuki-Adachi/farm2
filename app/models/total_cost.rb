@@ -243,47 +243,31 @@ class TotalCost < ApplicationRecord
       cost, results = land.costs(sys.start_date, sys.end_date)
       next if cost.nil?
 
-      if cost.manage_fee.positive?
-        total_cost = TotalCost.create(
-          term: term,
-          total_cost_type_id: TotalCostType::LAND.id,
-          occurred_on: sys.end_date,
-          land_id: land.id,
-          amount: cost.manage_fee,
-          member_flag: true,
-          display_order: land.manager.home_display_order,
-          fiscal_flag: true
-        )
-        results.each do |k, v|
-          TotalCostDetail.create(
-            total_cost_id: total_cost.id,
-            work_type_id: k,
-            rate: v,
-            area: land.area
-          )
-        end
-      end
+      make_lands_sub(term, TotalCostType::LAND.id, land, results, cost.manage_fee, sys.end_date)
+      make_lands_sub(term, TotalCostType::PEASANT.id, land, results, cost.peasant_fee, sys.end_date)
+    end
+  end
 
-      if cost.peasant_fee.positive?
-        total_cost = TotalCost.create(
-          term: term,
-          total_cost_type_id: TotalCostType::PEASANT.id,
-          occurred_on: sys.end_date,
-          land_id: land.id,
-          amount: cost.peasant_fee,
-          member_flag: true,
-          display_order: land.manager.home_display_order,
-          fiscal_flag: true
-        )
-        results.each do |k, v|
-          TotalCostDetail.create(
-            total_cost_id: total_cost.id,
-            work_type_id: k,
-            rate: v,
-            area: land.area
-          )
-        end
-      end
+  def self.make_lands_sub(term, cost_type_id, land, results, fee, end_date)
+    return unless fee.positive?
+
+    total_cost = TotalCost.create(
+      term: term,
+      total_cost_type_id: cost_type_id,
+      occurred_on: end_date,
+      land_id: land.id,
+      amount: fee,
+      member_flag: true,
+      display_order: land.manager.home_display_order,
+      fiscal_flag: true
+    )
+    results.each do |k, v|
+      TotalCostDetail.create(
+        total_cost_id: total_cost.id,
+        work_type_id: k,
+        rate: v,
+        area: land.area
+      )
     end
   end
 
