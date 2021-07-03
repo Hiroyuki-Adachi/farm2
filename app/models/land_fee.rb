@@ -10,6 +10,10 @@
 #  updated_at          :datetime         not null
 #  land_id(土地)       :integer          not null
 #
+# Indexes
+#
+#  land_fees_2nd  (term,land_id) UNIQUE
+#
 class LandFee < ApplicationRecord
   belongs_to :land
 

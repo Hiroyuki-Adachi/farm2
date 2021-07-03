@@ -2,6 +2,7 @@ class TotalCostsController < ApplicationController
   include PermitManager
 
   def index
+    @fixes = Fix.usual(current_term)
     @making_flag = Delayed::Job.exists?
     @work_types = WorkType.land
     @lands = LandCost.total(Time.zone.today)
@@ -12,7 +13,7 @@ class TotalCostsController < ApplicationController
   end
 
   def create
-    TotalCostsMakeJob.perform_later(current_term, current_organization)
+    TotalCostsMakeJob.perform_later(current_term, current_organization, params[:fixed_on])
     redirect_to total_costs_path
   end
 

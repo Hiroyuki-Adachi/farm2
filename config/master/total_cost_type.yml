@@ -43,3 +43,6 @@
 - id: 210
   code: Subsidy
   name: "助成金"
+- id: 300
+  code: Machine
+  name: "機械稼働"
