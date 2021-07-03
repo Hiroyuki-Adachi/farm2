@@ -48,6 +48,9 @@ Rails.application.routes.draw do
   resources :fuel_costs, only: [:index, :create]
   resources :depreciations, only: [:index, :create]
   resources :total_costs, only: [:index, :create]
+  namespace :total_costs do
+    resources :machines, only: [:index]
+  end
   resources :land_places, except: [:show]
   resources :organizations, param: nil, only: [:edit, :update]
   resources :systems, param: nil, only: [:edit, :update]
