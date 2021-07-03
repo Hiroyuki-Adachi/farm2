@@ -1,2 +1,23 @@
-<h1>TotalCosts::Machines#index</h1>
-<p>Find me in app/views/total_costs/machines/index.html.erb</p>
+<h1>機械稼働時間一覧</h1>
+<table id="tbl_list" class="table table-sm">
+  <thead style="background-color:white;">
+    <tr>
+      <th>種別</th>
+      <th>名称</th>
+      <% @work_types.each do |work_type| %>
+      <th class="numeric"><%= work_type.name %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @machines.each do |machine| %>
+      <tr>
+        <td><%= machine.type_name %></td>
+        <td><%= machine.name %></td>
+        <% @work_types.each do |work_type| %>
+        <td class="numeric"><%= number_with_precision((@machine_minutes[[work_type.id, machine.id]] || 0).to_f / 60, precision: 2) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
