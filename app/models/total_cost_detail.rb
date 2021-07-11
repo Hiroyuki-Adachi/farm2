@@ -35,4 +35,12 @@ class TotalCostDetail < ApplicationRecord
       .group(["total_cost_details.work_type_id", "total_costs.machine_id"])
       .sum("total_cost_details.cost")
   }
+
+  scope :areas, ->(term, days) {
+    joins(:total_cost)
+      .where(["total_costs.term = ?", term])
+      .where(["total_costs.total_cost_type_id = ?", TotalCostType::AREA.id])
+      .group("total_cost_details.work_type_id")
+      .sum("total_cost_details.area * total_cost_details.rate / #{days}")
+  }
 end

@@ -5,7 +5,7 @@ class TotalCostsController < ApplicationController
     @fixes = Fix.usual(current_term)
     @making_flag = Delayed::Job.exists?
     @work_types = WorkType.land
-    @lands = LandCost.total(Time.zone.today)
+    @lands = TotalCostDetail.areas(current_term, current_system.end_date - current_system.start_date + 1)
     @total_directs = TotalCostDecorator.decorate_collection(TotalCost.usual(current_term).direct)
     @total_sales = TotalCostDecorator.decorate_collection(TotalCost.usual(current_term).sales)
     @group1_directs, @group2_directs, @sum_directs = calc_totals(@total_directs.object)
