@@ -46,7 +46,7 @@ class TotalCost < ApplicationRecord
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
 
-  scope :direct, -> {where(total_cost_type_id: 0..101)}
+  scope :direct, -> {where(total_cost_type_id: 10..101)}
   scope :sales, -> {where(total_cost_type_id: 200..299)}
 
   def self.make(term, organization, fixed_on)
@@ -265,6 +265,7 @@ class TotalCost < ApplicationRecord
       cost, results = land.costs(sys.start_date, sys.end_date)
       next if cost.nil?
 
+      make_lands_sub(term, TotalCostType::AREA.id, land, results, land.area * 100, sys.end_date)
       make_lands_sub(term, TotalCostType::LAND.id, land, results, cost.manage_fee, sys.end_date)
       make_lands_sub(term, TotalCostType::PEASANT.id, land, results, cost.peasant_fee, sys.end_date)
     end
