@@ -51,8 +51,8 @@ class TotalCostTest < ActiveSupport::TestCase
   end
 
   test "原価計算_土地" do
-    assert_difference('TotalCostDetail.count', 4) do
-      assert_difference('TotalCost.count', 2) do
+    assert_difference('TotalCostDetail.count', 6) do
+      assert_difference('TotalCost.count', 3) do
         TotalCost.make_lands(@term, @sys)
       end
     end
