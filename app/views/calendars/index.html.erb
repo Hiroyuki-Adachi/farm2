@@ -7,21 +7,23 @@ div.kind-<%= calendar_work_kind.work_kind_id %> {color: <%= calendar_work_kind.t
 div.kind-<%= calendar_work_kind.work_kind_id %> a {color: <%= calendar_work_kind.text_color %> !important;}
 <% end %>
 </style>
-<div class="form-check form-check-inline">
-  <input class="form-check-input check-weather" type="checkbox" id="check_temprature" data-css="div.temprature" />
-  <label class="form-check-label" for="check_temprature">気温</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input check-weather" type="checkbox" id="check_water" data-css="div.water" />
-  <label class="form-check-label" for="check_water">日照時間(降水量)</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input check-weather" type="checkbox" id="check_wind" data-css="div.wind" />
-  <label class="form-check-label" for="check_wind">風</label>
-</div>
-<div class="form-check form-check-inline">
-  <input class="form-check-input check-weather" type="checkbox" id="check_other" data-css="div.other" />
-  <label class="form-check-label" for="check_other">その他</label>
+<div class="btn-toolbar">
+  <div class="form-check form-check-inline">
+    <input class="form-check-input check-weather" type="checkbox" id="check_temprature" data-css="div.temprature" />
+    <label class="form-check-label" for="check_temprature">気温</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input check-weather" type="checkbox" id="check_water" data-css="div.water" />
+    <label class="form-check-label" for="check_water">日照時間(降水量)</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input check-weather" type="checkbox" id="check_wind" data-css="div.wind" />
+    <label class="form-check-label" for="check_wind">風</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input check-weather" type="checkbox" id="check_other" data-css="div.other" />
+    <label class="form-check-label" for="check_other">その他</label>
+  </div>
 </div>
 <div class="row">
   <div id="calendar-wrapper">
