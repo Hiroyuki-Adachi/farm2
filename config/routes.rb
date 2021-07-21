@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :calendars, only: [:index]
   namespace :calendars do
     resources :excels, only: [:index]
+    resources :year_excels, only: [:index]
   end
   resources :contracts, only: [:index]
   resources :expense_types, only: [:index, :new, :create, :edit, :update, :destroy]
