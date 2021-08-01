@@ -31,7 +31,7 @@ class Calendars::YearExcelsController < CalendarsController
 
     @works.each do |work|
       work_cell = data_sheet[work.model.worked_at.day * 2 + 4][(work.model.worked_at.month - 1) * 3 + 2]
-      work_cell.change_contents("#{work.work_kind.name}(#{work.exact_work_type_name})")
+      work_cell.change_contents("#{work.work_kind.name}(#{work.exact_work_type_name}:#{work.sum_areas}a)")
     end
 
     respond_to do |format|
