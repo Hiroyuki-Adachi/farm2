@@ -87,7 +87,7 @@ div.kind-<%= calendar_work_kind.work_kind_id %> a {color: <%= calendar_work_kind
 </div>
 <div id="btn_toolbar" class="btn-toolbar">
   <div class="btn-group mr-2">
-    <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: "window.print();" %>
+    <%= button_tag "印刷", type: :button, class: "btn btn-success", disabled: "disabled", onclick: "window.print();" %>
   </div>
 <% if @works.any? && @calendar_work_kinds.one? %>
   <div class="btn-group mr-2">
