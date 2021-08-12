@@ -24,7 +24,7 @@
 <%= form_tag(action: :create) do %>
   <div id="lands">
     <% @lands.each do |land| %>
-      <%= hidden_field_tag "land[#{land.id}]", land&.plan_land&.work_type_id, {data: {id: land.id, place: land.place, area: land.area, region: land.region, owner: land.owner.name}} %>
+      <%= hidden_field_tag "land[#{land.id}]", land.work_type_id, {data: {id: land.id, place: land.place, area: land.area, region: land.region, owner: land.owner.name}} %>
     <% end %>
   </div>
   <div id="work_types">
