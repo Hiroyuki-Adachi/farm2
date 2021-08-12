@@ -10,6 +10,14 @@ class TotalCostsController < ApplicationController
     @total_sales = TotalCostDecorator.decorate_collection(TotalCost.usual(current_term).sales)
     @group1_directs, @group2_directs, @sum_directs = calc_totals(@total_directs.object)
     @group1_sales, @group2_sales, @sum_sales = calc_totals(@total_sales.object)
+
+    respond_to do |format|
+      format.html do
+      end
+      format.csv do
+        render :content_type => 'text/csv; charset=cp943'
+      end
+    end
   end
 
   def create
