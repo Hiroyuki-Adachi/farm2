@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_03_083142) do
+ActiveRecord::Schema.define(version: 2021_08_12_034308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -466,7 +466,8 @@ ActiveRecord::Schema.define(version: 2021_07_03_083142) do
     t.integer "work_type_id", null: false, comment: "作業分類"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["land_id"], name: "plan_lands_2nd", unique: true
+    t.integer "user_id", default: 0, null: false, comment: "利用者"
+    t.index ["user_id", "land_id"], name: "plan_lands_2nd", unique: true
   end
 
   create_table "plan_seedlings", comment: "育苗計画", force: :cascade do |t|
