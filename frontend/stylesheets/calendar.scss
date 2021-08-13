@@ -1,4 +1,7 @@
-@page {size: A3 landscape}
+@page {
+  size: A3 landscape;
+  margin: 0;
+}
 th.wday-6 {color: Blue;}
 th.wday-0 {color: Red;}
 th.holiday {color: Red !important; }
@@ -15,19 +18,23 @@ th.holiday {color: Red !important; }
   .weather .snow {color: Blue;}
 }
 @media print {
+  html, body {
+    width: 420mm;
+    height: 297mm;
+  }
   #calendar-wrapper {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 2vh;
+    left: 1vw;
     margin-left: 0;
     z-index: 10;
     width: 100vw;
   }
   h1 {display: none;}
   #calendar-base {width: 100%;}
-  .calendar-month {margin-left:0.1vw;}
+  .calendar-month {margin-left:0.05vw;}
   .calendar-year {width: 2.0vw; font-size: 0.6vw;}
-  .calendar-content {width: 5.1vw; font-size: 0.8vw;}
+  .calendar-content {width: 5.8vw; font-size: 0.8vw;}
   .btn-toolbar {display: none;}
   .calendar-table {line-height: 1.2;}
   .calendar-table th, .calendar-table td {padding: 0; border: 1px solid black !important;} 

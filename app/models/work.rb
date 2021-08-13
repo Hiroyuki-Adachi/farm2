@@ -132,7 +132,13 @@ SQL
       .where(worked_at: Date.new(w_at.year, w_at.month, 1)..Date.new(w_at.year, w_at.month, -1))
   }
 
-  scope :exists_lands, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
+  scope :landable, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
+  scope :machinable, -> {where(<<SQL)}
+  EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND EXISTS (
+    SELECT * FROM machine_results WHERE work_results.id = machine_results.work_result_id
+  ))
+SQL
+ 
   scope :by_target, ->(term) {
     joins("INNER JOIN systems ON systems.term = works.term")
      .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")

@@ -46,19 +46,19 @@ class TotalCost < ApplicationRecord
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
 
-  scope :direct, -> {where(total_cost_type_id: 0..101)}
+  scope :direct, -> {where(total_cost_type_id: 10..101)}
   scope :sales, -> {where(total_cost_type_id: 200..299)}
 
-  def self.make(term, organization)
+  def self.make(term, organization, fixed_on)
     TotalCost.where(term: term).destroy_all
     sys = System.find_by(term: term, organization_id: organization.id)
-    make_work(term, sys)
+    make_work(term, fixed_on)
     make_seedling(term, sys)
     make_lands(term, sys)
+    make_machines(term, fixed_on)
     # make_expenses(term)
     # make_depreciation(term, sys)
     make_details(term)
-
     # make_sales(term)
   end
 
@@ -88,8 +88,8 @@ class TotalCost < ApplicationRecord
     return numer / denom
   end
 
-  def self.make_work(term, sys)
-    Work.by_term(term).each do |work|
+  def self.make_work(term, fixed_on)
+    Work.by_term(term).where("worked_at <= ?", fixed_on) .each do |work|
       make_work_worker(term, work)
 
       # make_work_machine(term, work)
@@ -123,6 +123,28 @@ class TotalCost < ApplicationRecord
     else
       make_details_for_indirect(total_cost.id, work.worked_at)
     end
+  end
+
+  def self.make_machines(term, fixed_on)
+    Work.by_term(term).machinable.where("worked_at <= ?", fixed_on) .each do |work|
+      work.machine_results.each do |machine_result|
+        make_machine(work, machine_result)
+      end
+    end
+  end
+
+  def self.make_machine(work, machine_result)
+    total_cost = TotalCost.create(
+      term: work.term,
+      total_cost_type_id: TotalCostType::MACHINE.id,
+      occurred_on: work.worked_at,
+      work_id: work.id,
+      machine_id: machine_result.machine_id,
+      amount: machine_result.hours * 60,
+      display_order: work.work_kind_order,
+      member_flag: false
+    )
+    make_work_details(work, total_cost)
   end
 
   def self.make_work_machine(term, work)
@@ -243,6 +265,7 @@ class TotalCost < ApplicationRecord
       cost, results = land.costs(sys.start_date, sys.end_date)
       next if cost.nil?
 
+      make_lands_sub(term, TotalCostType::AREA.id, land, results, land.area * 100, sys.end_date)
       make_lands_sub(term, TotalCostType::LAND.id, land, results, cost.manage_fee, sys.end_date)
       make_lands_sub(term, TotalCostType::PEASANT.id, land, results, cost.peasant_fee, sys.end_date)
     end

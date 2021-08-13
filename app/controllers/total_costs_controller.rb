@@ -2,17 +2,26 @@ class TotalCostsController < ApplicationController
   include PermitManager
 
   def index
+    @fixes = Fix.usual(current_term)
     @making_flag = Delayed::Job.exists?
     @work_types = WorkType.land
-    @lands = LandCost.total(Time.zone.today)
+    @lands = TotalCostDetail.areas(current_term, current_system.end_date - current_system.start_date + 1)
     @total_directs = TotalCostDecorator.decorate_collection(TotalCost.usual(current_term).direct)
     @total_sales = TotalCostDecorator.decorate_collection(TotalCost.usual(current_term).sales)
     @group1_directs, @group2_directs, @sum_directs = calc_totals(@total_directs.object)
     @group1_sales, @group2_sales, @sum_sales = calc_totals(@total_sales.object)
+
+    respond_to do |format|
+      format.html do
+      end
+      format.csv do
+        render :content_type => 'text/csv; charset=cp943'
+      end
+    end
   end
 
   def create
-    TotalCostsMakeJob.perform_later(current_term, current_organization)
+    TotalCostsMakeJob.perform_later(current_term, current_organization, params[:fixed_on])
     redirect_to total_costs_path
   end
 

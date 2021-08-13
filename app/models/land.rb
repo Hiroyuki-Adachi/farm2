@@ -35,12 +35,13 @@ class Land < ApplicationRecord
 
   has_one :owner_holder, -> {with_deleted}, through: :owner, source: :holder
   has_one :manager_holder, -> {with_deleted}, through: :manager, source: :holder
-  has_one :plan_land
 
   has_many :work_lands
   has_many :works, through: :work_lands
   has_many :land_costs, -> {order(:activated_on)}
   has_many :members, ->{order(:group_order, :display_order, :id)}, dependent: :nullify, foreign_key: :group_id, class_name: :Land
+  has_many :land_fees
+  has_many :plan_lands
 
   scope :usual, -> {where(target_flag: true).order(:place, :display_order)}
   scope :list, -> {where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
@@ -60,6 +61,12 @@ class Land < ApplicationRecord
 
   def owner_name
     owner.member_flag ? owner_holder.name : owner.name
+  end
+
+  def self.for_plan(user_id)
+    self.regionable
+    .joins("LEFT OUTER JOIN plan_lands ON plan_lands.land_id = lands.id AND plan_lands.user_id = #{user_id}")
+    .select("lands.*, plan_lands.work_type_id")
   end
 
   def manager_name
@@ -88,6 +95,10 @@ class Land < ApplicationRecord
 
   def reject_land_costs(attributes)
     attributes[:activated_on].blank? || attributes[:work_type_id].blank?
+  end
+
+  def plan_land(user_id)
+    return self.plan_lands.find_by(user_id: user_id)
   end
 
   def costs(start_date, end_date)
