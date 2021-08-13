@@ -10,7 +10,7 @@ class ContractsController < ApplicationController
 
   def work_lands
     work_lands = []
-    Work.by_target(current_term).exists_lands.where(work_type_id: current_organization.contract_work_type_id).each do |work|
+    Work.by_target(current_term).landable.where(work_type_id: current_organization.contract_work_type_id).each do |work|
       work_lands << work.work_lands
     end
     work_lands = work_lands.flatten.sort { |a, b| a.work.worked_at <=> b.work.worked_at}

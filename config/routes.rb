@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :calendars, only: [:index]
   namespace :calendars do
     resources :excels, only: [:index]
+    resources :year_excels, only: [:index]
   end
   resources :contracts, only: [:index]
   resources :expense_types, only: [:index, :new, :create, :edit, :update, :destroy]
@@ -48,6 +49,9 @@ Rails.application.routes.draw do
   resources :fuel_costs, only: [:index, :create]
   resources :depreciations, only: [:index, :create]
   resources :total_costs, only: [:index, :create]
+  namespace :total_costs do
+    resources :machines, only: [:index]
+  end
   resources :land_places, except: [:show]
   resources :organizations, param: nil, only: [:edit, :update]
   resources :systems, param: nil, only: [:edit, :update]

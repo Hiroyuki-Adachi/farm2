@@ -51,8 +51,8 @@ class TotalCostTest < ActiveSupport::TestCase
   end
 
   test "原価計算_土地" do
-    assert_difference('TotalCostDetail.count', 4) do
-      assert_difference('TotalCost.count', 2) do
+    assert_difference('TotalCostDetail.count', 6) do
+      assert_difference('TotalCost.count', 3) do
         TotalCost.make_lands(@term, @sys)
       end
     end
@@ -74,5 +74,23 @@ class TotalCostTest < ActiveSupport::TestCase
     assert_in_delta total_cost.amount * (365 - 31) / 365 , total_cost_detail.cost, 1
     total_cost_detail = TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 8)
     assert_in_delta total_cost.amount * 31 / 365 , total_cost_detail.cost, 1
+  end
+
+  test "原価計算_機械稼働時間" do
+    assert_difference('TotalCostDetail.count', 2) do
+      assert_difference('TotalCost.count', 1) do
+        TotalCost.make_machines(@term, Date.new(@term, 6, 30))
+      end
+    end
+    machine_minute = machine_results(:machine_result_genka1).hours * 60
+    machine_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::MACHINE.id)
+    assert_equal machine_minute, machine_cost.amount
+
+    assert_no_difference('TotalCostDetail.count') do
+      TotalCost.make_details(@term)
+    end
+
+    assert_in_delta machine_minute * 2 / 3, TotalCostDetail.find_by(total_cost_id: machine_cost.id, work_type_id: 5).cost, 1
+    assert_in_delta machine_minute * 1 / 3, TotalCostDetail.find_by(total_cost_id: machine_cost.id, work_type_id: 6).cost, 1
   end
 end

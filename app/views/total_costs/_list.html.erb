@@ -1,3 +1,12 @@
+<div class="form-inline">
+  <%= form_tag(action: :create) do  %>
+    <%= select_tag('fixed_on', options_from_collection_for_select(@fixes, :fixed_at, :fixed_at), {class: "form-control"}) %>
+    <div class="btn-group mr-2">
+      <%= submit_tag '計算実行', class: "btn btn-warning", data: {confirm: "原価を再計算してもよろしいですか？"} %>
+    </div>
+  <% end %>
+</div>
+<hr />
 <% old_group1_id = 0 %>
 <% old_group2_id = 0 %>
 <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
@@ -94,16 +103,14 @@
     </tbody>
   </table>
 </div>
-<%= form_tag(action: :create) do  %>
 <div id="btn_toolbar" class="btn-toolbar">
   <div class="btn-group mr-2">
-    <%= submit_tag '計算実行', class: "btn btn-warning", data: {confirm: "原価を再計算してもよろしいですか？"} %>
+    <%= link_to "CSV出力", total_costs_path(format: :csv), {class: "btn btn-outline-success"} %>
   </div>
   <div class="btn-group mr-2">
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
-<% end %>
 <script>
 $(function() {
     $("#tbl_list").floatThead({
