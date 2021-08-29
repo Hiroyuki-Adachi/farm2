@@ -1,3 +1,16 @@
+<style>
+@media print {
+  html, body {
+    width: 420mm;
+    height: 297mm;
+  }
+  h1 {display: none;}
+  #map div > img {
+    position: absolute;
+  }
+  .btn-toolbar {display: none;}
+}
+</style>
 <h1>作付計画</h1>
 <div class="row">
   <div class="col-md-12">
@@ -33,6 +46,9 @@
     <% end %>
   </div>
   <div id="btn_toolbar" class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: "window.print();" %>
+    </div>
     <div class="btn-group mr-2">
       <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
     </div>
