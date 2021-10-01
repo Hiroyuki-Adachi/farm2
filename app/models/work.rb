@@ -35,11 +35,11 @@ class Work < ApplicationRecord
 
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
-  belongs_to :weather
   belongs_to :fix, class_name: "Fix", foreign_key: [:term, :fixed_at], primary_key: [:term, :fixed_at]
   belongs_to :creator, -> {with_deleted}, {class_name: "Worker", foreign_key: "created_by"}
   belongs_to :printer, -> {with_deleted}, {class_name: "Worker", foreign_key: "printed_by"}
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
+  belongs_to_active_hash :weather
 
   has_many :work_lands, -> {order('work_lands.display_order')}, dependent: :destroy
   has_many :work_results, -> {order('work_results.display_order')}, dependent: :destroy
