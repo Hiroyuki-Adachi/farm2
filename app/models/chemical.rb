@@ -22,13 +22,12 @@
 #
 class Chemical < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-
   acts_as_paranoid
 
   after_save :save_term
 
   belongs_to :chemical_type
-  belongs_to :base_unit
+  belongs_to_active_hash :base_unit
   has_many :chemical_terms, dependent: :delete_all
 
   validates :name,          presence: true
