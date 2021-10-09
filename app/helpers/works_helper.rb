@@ -3,8 +3,8 @@ module WorksHelper
     (user.checkable? || work.created_by == user.worker.id) && work.term == user.term
   end
 
-  def chemical_per_area(work, chemical_quantity, chemical)
-    area_quantity = work.sum_areas.zero? ? 0 : (chemical_quantity / work.sum_areas * 10)
+  def chemical_per_area(areas, chemical_quantity, chemical)
+    area_quantity = areas.zero? ? 0 : (chemical_quantity / areas * 10)
     area_quantity *= chemical.base_quantity
     if (area_quantity > 1000000)
       return sprintf("%.2f", area_quantity / 1000000) + chemical.base_unit.mega_name
