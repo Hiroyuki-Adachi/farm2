@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_12_034308) do
+ActiveRecord::Schema.define(version: 2021_11_03_110852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,14 @@ ActiveRecord::Schema.define(version: 2021_08_12_034308) do
     t.decimal "carton_quantity", precision: 6, default: "0", null: false, comment: "購買数"
     t.boolean "aqueous_flag", default: false, null: false, comment: "水溶フラグ"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
+  end
+
+  create_table "cost_types", comment: "原価種別", force: :cascade do |t|
+    t.string "name", limit: 10, null: false, comment: "原価種別名称"
+    t.string "phonetic", limit: 20, null: false, comment: "原価種別名称(ふりがな)"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "daily_weathers", primary_key: "target_date", id: { type: :date, comment: "対象日" }, comment: "気象", force: :cascade do |t|
@@ -701,6 +709,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_034308) do
     t.boolean "land_flag", default: true, null: false, comment: "土地利用フラグ"
     t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
     t.string "phonetic", limit: 40, default: "", null: false, comment: "作業種別ふりがな"
+    t.integer "cost_type_id", comment: "原価種別"
     t.index ["deleted_at"], name: "index_work_kinds_on_deleted_at"
   end
 
