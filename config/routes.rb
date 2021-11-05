@@ -53,6 +53,7 @@ Rails.application.routes.draw do
     resources :machines, only: [:index]
   end
   resources :land_places, except: [:show]
+  resources :cost_types, except: [:show]
   resources :organizations, param: nil, only: [:edit, :update]
   resources :systems, param: nil, only: [:edit, :update]
   resources :land_costs, param: "land_id", only: [:index, :create, :edit, :update] do
