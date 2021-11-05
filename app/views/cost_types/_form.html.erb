@@ -1,0 +1,45 @@
+<%= error_print(@cost_type) %>
+<style>
+.label-exists {
+  color: blue;
+}
+</style>
+<%= form_for(@cost_type) do |f| %>
+  <div class="row">
+    <div class="field form-group col-md-2">
+      <%= f.label :name, class: "col-form-label-lg" %>
+      <%= f.text_field :name, {maxlength: 10, size: 10, required: true, class: "form-control"} %>
+    </div>
+    <div class="field form-group col-md-2">
+      <%= f.label :phonetic, class: "col-form-label-lg" %>
+      <%= f.text_field :phonetic, {maxlength: 20, size: 20, required: true, class: "form-control"} %>
+    </div>
+    <div class="field form-group col-md-2">
+      <%= f.label :display_order, class: "col-form-label-lg" %>
+      <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field form-group col-md-12">
+      <fieldset>
+        <legend>対応作業</legend>
+        <% @work_kinds.each do |work_kind| %>
+          <div class="form-check form-check-inline">
+            <%= check_box_tag "cost_type[work_kind_ids][]", work_kind.id, @cost_type.id && @cost_type.id == work_kind.cost_type_id, {id: "work_kind_#{work_kind.id}", class: "form-check-input"} %>
+            <%= label_tag "work_kind_#{work_kind.id}", work_kind.name, {class: "form-check-label " + ((work_kind.cost_type_id && @cost_type.id != work_kind.cost_type_id)? "label-exists" : "") } %>
+          </div>
+        <% end %>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row">
+    <div class="btn-toolbar">
+      <div class="btn-group mr-2">
+        <%= f.submit '登録', class: "btn btn-warning" %>
+      </div>
+      <div class="btn-group mr-2">
+        <%= link_to "戻る", cost_types_path, {class: "btn btn-outline-dark"}%>
+      </div>
+    </div>
+  </div>
+<% end %>
