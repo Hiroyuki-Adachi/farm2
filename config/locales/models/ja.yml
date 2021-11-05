@@ -164,7 +164,8 @@ ja:
         price: 作業単価
         land_flag: "土地利用"
         broccoli_mark: "ブロッコリ記号"
-        phonetic: "名称(ふりがな)"  #g
+        phonetic: "名称(ふりがな)"
+        cost_type_id: "原価種別"
 
       bank:
         code: "コード"
