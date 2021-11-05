@@ -2,6 +2,7 @@ class WorkKindsController < ApplicationController
   include PermitChecker
   before_action :set_work_kind, only: [:edit, :update, :destroy]
   before_action :set_others, only: [:new, :create, :edit, :update]
+  before_action :set_cost_types, only: [:new, :create, :edit, :update]
 
   def index
     @work_kinds = WorkKind.usual.page(params[:page])
@@ -65,5 +66,9 @@ class WorkKindsController < ApplicationController
     @work_kind.work_types = params[:work_types] ? WorkType.find(params[:work_types]) : []
     @work_kind.machine_types = params[:machine_types] ? MachineType.find(params[:machine_types]) : []
     @work_kind.chemical_types = params[:chemical_types] ? ChemicalType.find(params[:chemical_types]) : []
+  end
+
+  def set_cost_types
+    @cost_types = CostType.usual
   end
 end

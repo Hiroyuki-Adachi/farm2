@@ -31,6 +31,10 @@
         <%= f.hidden_field land_flag, false %>
       <% end %>
     </div>
+    <div class="field form-group col-md-2">
+      <%= f.label :cost_type_id, class: "col-form-label-lg" %>
+      <%= f.select(:cost_type_id, @cost_types.map {|cost_type| [cost_type.name, cost_type.id]}, {include_blank: true}, {class: "form-control"}) %>
+    </div>
   </div>
   <div class="row">
     <div class="field form-group col-md-12">
