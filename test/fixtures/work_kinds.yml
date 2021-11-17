@@ -12,6 +12,7 @@
 #  phonetic(作業種別ふりがな)    :string(40)       default(""), not null
 #  created_at                    :datetime
 #  updated_at                    :datetime
+#  cost_type_id(原価種別)        :integer
 #
 # Indexes
 #

@@ -14,6 +14,7 @@
 #  depreciation_id(減価償却)        :integer
 #  expense_id(経費)                 :integer
 #  land_id(土地)                    :integer
+#  machine_id(機械)                 :integer
 #  seedling_home_id(育苗担当)       :integer
 #  total_cost_type_id(集計原価種別) :integer          not null
 #  whole_crop_land_id(WCS土地)      :integer
