@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_03_110852) do
+ActiveRecord::Schema.define(version: 2021_11_17_114814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -748,6 +748,7 @@ ActiveRecord::Schema.define(version: 2021_11_03_110852) do
     t.boolean "land_flag", default: true, null: false, comment: "土地利用"
     t.string "icon_name", limit: 40, comment: "アイコン名"
     t.binary "icon", comment: "アイコン"
+    t.boolean "cost_flag", default: false, null: false, comment: "原価フラグ"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
   end
 
