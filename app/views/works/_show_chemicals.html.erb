@@ -17,7 +17,7 @@
           <td class="chemical"><%= chemical.chemical_type.name %></td>
           <td class="chemical"><%= chemical.name %></td>
           <td class="chemical numeric"><%= @chemicals[i][1] %><%= chemical.unit %></td>
-          <td class="chemical numeric"><%= sprintf("%.2f", @work.sum_areas.zero? ? 0 : (@chemicals[i][1] / @work.sum_areas * 10)) %><%= chemical.unit %></td>
+          <td class="chemical numeric"><%= chemical_per_area(@work.sum_areas, @chemicals[i][1], chemical) %></td>
         <%  else %>
           <td></td>
           <td></td>

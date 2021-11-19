@@ -1,16 +1,16 @@
 require("@rails/ujs").start();
 window.Rails = require("@rails/ujs");
 
+const jQuery = require('jquery');
+window.jQuery = window.$ = jQuery;
+global.jQuery = global.$ = jQuery;
+
 import "bootstrap";
 import "chart.js";
 
 const bootbox = require('bootbox');
 window.bootbox = bootbox;
 global.bootbox = bootbox;
-
-const jQuery = require('jquery');
-window.jQuery = window.$ = jQuery;
-global.jQuery = global.$ = jQuery;
 
 const images = require.context('../images', true);
 window.moment = require('moment');

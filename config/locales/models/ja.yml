@@ -27,6 +27,7 @@ ja:
       expense_type: "経費種別"
       system: "システム"
       owned_rice_price: "保有米(単価)"
+      cost_type: "原価種別"
 
     attributes:
       chemical:
@@ -163,7 +164,8 @@ ja:
         price: 作業単価
         land_flag: "土地利用"
         broccoli_mark: "ブロッコリ記号"
-        phonetic: "名称(ふりがな)"  #g
+        phonetic: "名称(ふりがな)"
+        cost_type_id: "原価種別"
 
       bank:
         code: "コード"
@@ -283,6 +285,11 @@ ja:
         display_order: "表示順"
         owned_price: "保有米価格"
         relative_price: "縁故米価格"
+
+      cost_type:
+        name: "名称"
+        phonetic: "名称(ふりがな)" 
+        display_order: "表示順"
 
   status:
     organization:

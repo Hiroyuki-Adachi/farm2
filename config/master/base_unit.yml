@@ -4,6 +4,10 @@
 - id: 1
   code: Weight
   name: "g"
+  kilo_name: "kg"
+  mega_name: "t"
 - id: 2
   code: Volume
   name: "ml"
+  kilo_name: "ℓ"
+  mega_name: "kℓ"
