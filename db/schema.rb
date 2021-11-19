@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_17_114814) do
+ActiveRecord::Schema.define(version: 2021_11_19_120323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -620,6 +620,7 @@ ActiveRecord::Schema.define(version: 2021_11_17_114814) do
     t.integer "display_order", default: 0, null: false, comment: "並び順"
     t.integer "whole_crop_land_id", comment: "WCS土地"
     t.integer "machine_id", comment: "機械"
+    t.integer "cost_type_id", comment: "原価種別"
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
   end
 
