@@ -22,6 +22,8 @@ class WorkKind < ApplicationRecord
 
   after_save :save_price
 
+  belongs_to :cost_type
+
   has_many :machine_kinds, dependent: :destroy
   has_many :machine_types, -> {order("machine_types.display_order")}, through: :machine_kinds 
 

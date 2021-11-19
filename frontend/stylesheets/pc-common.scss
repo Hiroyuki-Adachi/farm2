@@ -44,6 +44,10 @@ th.numeric {
   background: url("../images/loading.gif") center center no-repeat;
 }
 
+.form-check-input, .form-check-label {
+  cursor: pointer;
+}
+
 @media print {
   #mySidebar {
     display: none;
