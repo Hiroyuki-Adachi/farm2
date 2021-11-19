@@ -46,7 +46,7 @@ gem 'i18n-js'
 # This gem provides XML serialization for your Active Model objects and Active Record models.
 gem 'activemodel-serializers-xml'
 # ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource for an ActiveRecord-like model.
-gem 'active_hash'
+gem 'active_hash', :git => 'https://github.com/zilkey/active_hash', :branch => "master"
 # TZInfo::Data is the public domain IANA Time Zone Database packaged as a set of Ruby modules for use with TZInfo.
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 # Paranoia is a re-implementation of acts_as_paranoid for Rails 3/4/5.

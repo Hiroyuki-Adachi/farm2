@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/zilkey/active_hash
+  revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
+  branch: master
+  specs:
+    active_hash (3.1.0)
+      activesupport (>= 5.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -39,8 +47,6 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    active_hash (3.1.0)
-      activesupport (>= 5.0.0)
     activejob (6.1.4.1)
       activesupport (= 6.1.4.1)
       globalid (>= 0.3.6)
@@ -124,10 +130,10 @@ GEM
       kaminari-core (= 1.2.1)
     kaminari-core (1.2.1)
     libv8 (5.9.211.38.1)
-    listen (3.5.1)
+    listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.9.1)
+    loofah (2.12.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -255,7 +261,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_hash
+  active_hash!
   activemodel-serializers-xml
   annotate
   bcrypt (~> 3.1.7)
@@ -291,4 +297,4 @@ DEPENDENCIES
   webpacker (~> 5.2)
 
 BUNDLED WITH
-   2.2.15
+   2.2.22
