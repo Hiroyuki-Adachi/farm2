@@ -28,12 +28,17 @@ class WorkType < ApplicationRecord
   scope :usual, -> {order(category_flag: :ASC, display_order: :ASC, id: :ASC)}
   scope :indexes, -> {where(category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
   scope :land, -> {where(land_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
+  scope :cost, -> {where(cost_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
   scope :select_category, -> (category) {where(category_flag: false, genre: category[:genre]).order(display_order: :ASC, id: :ASC)}
 
   def genre_id
     Rails.cache.fetch("genre_id_#{self[:genre]}", expires_in: 1.hour) do
       WorkType.with_deleted.find_by(genre: self[:genre], category_flag: true).id
     end
+  end
+
+  def cost_only?
+    return self.cost_flag && !self.land_flag
   end
 
   def genre_name

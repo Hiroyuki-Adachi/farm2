@@ -68,6 +68,8 @@ class TotalCost < ApplicationRecord
   end
 
   def cost(work_type_id)
+    work_type = WorkType.find(work_type_id)
+    return amount if work_type.cost_only?
     return nil unless total_cost_details.where(work_type_id: work_type_id).exists?
     return amount * rate(work_type_id)
   end
@@ -75,6 +77,7 @@ class TotalCost < ApplicationRecord
   def base_cost(work_type_id)
     cost = cost(work_type_id)
     sum_area = LandCost.sum_area_by_work_type(occurred_on, work_type_id)
+    return 0 if sum_area.zero?
     return cost && !sum_area.zero? ? cost / sum_area * 10 : 0
   end
 
@@ -117,9 +120,10 @@ class TotalCost < ApplicationRecord
       work_id: work.id,
       amount: work.sum_workers_amount,
       display_order: work.work_kind_order,
+      cost_type_id: work.work_kind.cost_type_id,
       member_flag: true
     )
-    if work.work_type&.land_flag || work.work_lands.exists?
+    if work.work_type&.cost_flag || work.work_lands.exists?
       make_work_details(work, total_cost)
     else
       make_details_for_indirect(total_cost.id, work.worked_at)
@@ -201,7 +205,13 @@ class TotalCost < ApplicationRecord
   end
 
   def self.make_work_details(work, total_cost)
-    if (work.work_lands&.count || 0).positive?
+    if work.work_type.cost_only?
+      TotalCostDetail.create(
+        total_cost_id: total_cost.id,
+        work_type_id: work.work_type_id,
+        area: 0
+      )
+    elsif (work.work_lands&.count || 0).positive?
       LandCost.sum_area_by_lands(work.worked_at, work.lands.ids).each do |k, v|
         TotalCostDetail.create(
           total_cost_id: total_cost.id,

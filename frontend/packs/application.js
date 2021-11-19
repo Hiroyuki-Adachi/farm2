@@ -1,7 +1,7 @@
-import Rails from "@rails/ujs";
-window.Rails = Rails;
+require("@rails/ujs").start();
+window.Rails = require("@rails/ujs");
 
-import jQuery from 'jquery';
+const jQuery = require('jquery');
 window.jQuery = window.$ = jQuery;
 global.jQuery = global.$ = jQuery;
 
@@ -13,8 +13,7 @@ window.bootbox = bootbox;
 global.bootbox = bootbox;
 
 const images = require.context('../images', true);
-import moment from 'moment';
-window.moment = moment;
+window.moment = require('moment');
 
 import I18n from 'i18n-js';
 window.I18n = I18n;
@@ -22,16 +21,14 @@ window.I18n = I18n;
 import Decimal from 'decimal.js';
 window.Decimal = Decimal;
 
-import 'jquery-ui';
-import 'jquery-ui/ui/widgets/sortable';
-import 'jquery-ui/ui/widgets/autocomplete';
-import 'jquery-ui/themes/base/all.css';
+require('jquery-ui');
+require('jquery-ui/ui/widgets/sortable');
+require('jquery-ui/ui/widgets/autocomplete');
+require('jquery-ui/themes/base/all.css');
 
-import 'jquery-ui-touch-punch';
+require('jquery-ui-touch-punch');
 
-import 'floatthead';
+require('floatthead');
 
 import "../javascripts/jquery.selection";
 import '../stylesheets/application';
-
-Rails.start();
