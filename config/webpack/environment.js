@@ -4,7 +4,9 @@ const webpack = require('webpack');
 environment.toWebpackConfig().merge({
   resolve: {
     alias: {
-      'jquery': 'jquery/src/jquery'
+      $: 'jquery',
+      jQuery: 'jquery',
+      Popper: 'popper.js'
     }
   }
 });
