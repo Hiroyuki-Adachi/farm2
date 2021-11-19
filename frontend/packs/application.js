@@ -1,14 +1,16 @@
 import Rails from "@rails/ujs";
+window.Rails = Rails;
+
+import jQuery from 'jquery';
+window.jQuery = window.$ = jQuery;
+global.jQuery = global.$ = jQuery;
+
+import "bootstrap";
+import "chart.js";
 
 import bootbox from 'bootbox';
 window.bootbox = bootbox;
-
-import jQuery from 'jquery';
-window.$ = window.jQuery = jQuery;
-
-import "bootstrap";
-
-import "chart.js";
+global.bootbox = bootbox;
 
 const images = require.context('../images', true);
 import moment from 'moment';
