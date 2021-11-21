@@ -11,3 +11,7 @@
 #
 #  work_work_types_2nd  (work_id,work_type_id) UNIQUE
 #
+
+work_work_type_not_fixed:
+  work_id: 1495
+  work_type_id: 1
