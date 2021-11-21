@@ -12,6 +12,8 @@
 #  work_work_types_2nd  (work_id,work_type_id) UNIQUE
 #
 class WorkWorkType < ApplicationRecord
+  self.primary_keys = :work_id, :work_type_id
+
   belongs_to :work
   belongs_to :work_type
 end
