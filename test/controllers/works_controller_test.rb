@@ -105,7 +105,7 @@ class WorksControllerTest < ActionController::TestCase
     assert_redirected_to works_path
     assert_equal Work.find(works(:work_fixed).id).name, works(:work_fixed).name
 
-    assert_difference('WorkResult.count') do
+    assert_no_difference('WorkResult.count') do
       get :update, params: {id: works(:work_not_fixed), results: [worker_id: 1, hours: 1, display_order: 1], regist_workers: true}
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
@@ -113,7 +113,7 @@ class WorksControllerTest < ActionController::TestCase
     assert_nil updated_work.printed_by
     assert_nil updated_work.printed_at
 
-    assert_difference('WorkLand.count') do
+    assert_no_difference('WorkLand.count') do
       get :update, params: {id: works(:work_not_fixed), work_lands: [land_id: 1, display_order: 3], regist_lands: true}
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
@@ -166,8 +166,14 @@ class WorksControllerTest < ActionController::TestCase
   end
 
   test "作業削除" do
-    assert_difference('Work.count', -1) do
-      delete :destroy, params: {id: works(:work_not_fixed)}
+    assert_difference('WorkWorkType.count', -1) do
+      assert_difference('WorkResult.count', -1) do
+        assert_difference('WorkLand.count', -1) do
+          assert_difference('Work.count', -1) do
+            delete :destroy, params: {id: works(:work_not_fixed)}
+          end
+        end
+      end
     end
     assert_redirected_to works_path
 
