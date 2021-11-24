@@ -22,6 +22,7 @@ require 'date'
 require 'securerandom'
 class WorkResult < ApplicationRecord
   belongs_to :work
+  belongs_to :health
   belongs_to :worker, -> {with_deleted}
   has_one    :home, -> {with_deleted}, {through: :worker}
   has_one    :work_type, -> {with_deleted}, {through: :work}

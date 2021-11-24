@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: healths
+#
+#  id                    :bigint           not null, primary key
+#  code(コード)          :string(1)        not null
+#  deleted_at            :datetime
+#  display_order(表示順) :integer          default(0), not null
+#  name(原価種別名称)    :string(10)       not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value
