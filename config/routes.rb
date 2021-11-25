@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   resources :total_costs, only: [:index, :create]
   namespace :total_costs do
     resources :machines, only: [:index]
+    resources :work_results, only: [:index]
   end
   resources :land_places, except: [:show]
   resources :cost_types, except: [:show]
