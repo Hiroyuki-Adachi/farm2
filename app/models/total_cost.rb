@@ -46,6 +46,9 @@ class TotalCost < ApplicationRecord
       .where(term: term)
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
+  scope :for_worker, ->(term) {
+    where(total_cost_type_id: [TotalCostType::WORKWORKER.id, TotalCostType::WORKINDIRECT.id])
+  }
 
   scope :direct, -> {where(total_cost_type_id: 10..101)}
   scope :sales, -> {where(total_cost_type_id: 200..299)}
