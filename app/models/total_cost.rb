@@ -35,7 +35,7 @@ class TotalCost < ApplicationRecord
   belongs_to :seedling_home, optional: true
   belongs_to :wcs_land, {class_name: "WholeCropLand", foreign_key: "whole_crop_land_id", optional: true}
   belongs_to :land, optional: true
-  belongs_to :total_cost_type
+  belongs_to :total_cost_type, optional: true
 
   has_many :total_cost_details, {dependent: :destroy}
 
@@ -47,7 +47,7 @@ class TotalCost < ApplicationRecord
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
   scope :for_worker, ->(term) {
-    where(total_cost_type_id: [TotalCostType::WORKWORKER.id, TotalCostType::WORKINDIRECT.id])
+    where(term: term, total_cost_type_id: [TotalCostType::WORKWORKER.id, TotalCostType::WORKINDIRECT.id])
   }
 
   scope :direct, -> {where(total_cost_type_id: 10..101)}
