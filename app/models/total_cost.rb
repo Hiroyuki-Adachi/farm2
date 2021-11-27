@@ -53,6 +53,13 @@ class TotalCost < ApplicationRecord
   scope :direct, -> {where(total_cost_type_id: 10..101)}
   scope :sales, -> {where(total_cost_type_id: 200..299)}
 
+  def self.sum_work_results(term)
+    return for_worker(term)
+      .joins(:total_cost_details)
+      .group("total_costs.cost_type_id", "total_cost_details.work_type_id")
+      .sum("total_cost_details.cost")
+  end
+
   def self.make(term, organization, fixed_on)
     TotalCost.where(term: term).destroy_all
     sys = System.find_by(term: term, organization_id: organization.id)
@@ -126,7 +133,7 @@ class TotalCost < ApplicationRecord
       cost_type_id: work.work_kind.cost_type_id,
       member_flag: true
     )
-    if work.work_type&.cost_flag || work.work_lands.exists?
+    if work.work_type.cost_flag || work.work_lands.exists?
       make_work_details(work, total_cost)
     else
       make_details_for_indirect(total_cost.id, work.worked_at)
