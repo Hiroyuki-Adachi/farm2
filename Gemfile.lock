@@ -1,7 +1,7 @@
 GIT
-  remote: https://github.com/zilkey/active_hash
-  revision: 1c95f992af3ec94c07e19846f042e12bd0b11dd1
-  branch: master
+  remote: git@github.com:gazayas/active_hash.git
+  revision: 01ff08fe4b06bc3b0f82b501d53121bbcd49c26f
+  branch: fixes/address-keyword-argument-issue
   specs:
     active_hash (3.1.0)
       activesupport (>= 5.0.0)
