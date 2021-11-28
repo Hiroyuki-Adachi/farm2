@@ -1,31 +1,21 @@
 <div id="content_machines" class="content">
-  <div class="sub_title">※機械・オペレーター</div>
   <table id="detail_machines">
     <thead>
     <tr>
-      <% xx = 2; yy = (([current_organization.machines_count, @machines.count].max - 1) / xx + 1) %>
-      <% xx.times do %>
-      <th style="width:175px;">機械名</th>
-      <th style="width:35px;">稼働</th>
-      <th style="width:150px;">オペレーター</th>
-      <% end %>
+      <% machine_count = [current_organization.machines_count, @machines.count].max %>
+      <th style="width:180px;">機械名</th>
+      <th style="width:60px;">稼働</th>
+      <th style="width:180px;">オペレーター</th>
+      <th style="width:300px;">備考</th>
     </tr>
     </thead>
     <tbody>
-      <% yy.times do |i| %>
+      <% machine_count.times do |i| %>
       <tr>
-        <% xx.times do |x| %>
-          <% j = i + yy * x %>
-          <% if @machines[j] %>
-            <td class="machine"><%=h @machines[j].usual_name %></td>
-            <td class="machine numeric"><%=h @machines[j].hours(@results.object) %></td>
-            <td class="machine"><%=h @machines[j].operators(@work) %></td>
-          <%  else %>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          <% end %>
-        <% end %>
+        <td class="machine"><%= @machines[i] ? @machines[i].usual_name : "" %></td>
+        <td class="machine numeric"><%=@machines[i] ? @machines[i].hours(@results.object) : "" %></td>
+        <td class="machine"><%= @machines[i] ? @machines[i].operators(@work) : "" %></td>
+        <td class="machine"><%= @machines[i] ? @machines[i].remarks : "" %></td>
       </tr>
       <% end %>
     </tbody>

@@ -1,24 +1,30 @@
-<% xx = 2; yy = (([current_organization.workers_count, @results.count].max - 1) / xx + 1) %>
+<% worker_count = [current_organization.workers_count, @results.count].max %>
 <div id="content_workers" class="content">
-  <div class="sub_title">※作業者</div>
   <table id="detail_workers">
     <thead>
     <tr>
-      <% xx.times do %>
-      <th style="width:50px;">&nbsp;</th>
+      <th style="width:40px;">&nbsp;</th>
       <th style="width:230px;">作業者名</th>
       <th style="width:80px;">時間</th>
-      <% end %>
+      <th style="width:40px;">体調</th>
+      <th colspan="2">備 考</th>
     </tr>
     </thead>
     <tbody>
-      <% yy.times do |i| %>
+      <% worker_count.times do |i| %>
       <tr>
-        <% xx.times do |x| %>
-          <% j = i + yy * x %>
-          <td class="numeric"><%= j + 1 %></td>
-          <td><%=raw @results[j] ? @results[j].worker_name(current_organization) : "&nbsp;" %></td>
-          <td class="numeric"><%=raw @results[j] ? @results[j].hours : "&nbsp;" %></td>
+        <td class="numeric"><%= i + 1 %></td>
+        <td><%=raw @results[i] ? @results[i].worker_name(current_organization) : "" %></td>
+        <td class="numeric"><%=raw @results[i] ? @results[i].hours : "" %></td>
+        <td class="center"><%= @results[i] ? @results[i].health.code : "" %></td>
+        <td style="width:240px;"><%= @results[i] ? @results[i].remarks : "" %></td>
+        <% if i.zero? %>
+        <td class="remarks" rowspan="<%= worker_count%>" style="width:90px;">
+        体調欄に該当する番号を記入する<br/><br/>
+        <% @healths.each do |health| %>
+        <%= health.code %>:<%= health.name %><br />
+        <% end %>
+        </td>
         <% end %>
       </tr>
       <% end %>

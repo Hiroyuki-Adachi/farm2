@@ -145,6 +145,7 @@ class WorksController < ApplicationController
 
   def set_results
     @results = WorkResultDecorator.decorate_collection(@work.work_results.includes(:worker) || [])
+    @healths = Health.usual
   end
 
   def set_lands

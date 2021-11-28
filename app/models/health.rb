@@ -12,4 +12,6 @@
 #
 class Health < ApplicationRecord
   acts_as_paranoid
+
+  scope :usual, -> {order(:display_order)}
 end
