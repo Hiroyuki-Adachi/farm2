@@ -8,7 +8,7 @@ global.jQuery = global.$ = jQuery;
 import "bootstrap";
 import "chart.js";
 
-const bootbox = require('bootbox');
+import bootbox from 'bootbox';
 window.bootbox = bootbox;
 global.bootbox = bootbox;
 

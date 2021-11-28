@@ -109,6 +109,7 @@ ja:
         display_order: "表示順"
         bg_color: "背景色"
         land_flag: "土地利用"
+        cost_flag: "原価"
         icon: "アイコン"
 
       worker: 

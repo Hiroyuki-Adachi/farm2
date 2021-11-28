@@ -630,6 +630,7 @@ ActiveRecord::Schema.define(version: 2021_11_24_110841) do
     t.integer "display_order", default: 0, null: false, comment: "並び順"
     t.integer "whole_crop_land_id", comment: "WCS土地"
     t.integer "machine_id", comment: "機械"
+    t.integer "cost_type_id", comment: "原価種別"
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
   end
 
@@ -760,6 +761,7 @@ ActiveRecord::Schema.define(version: 2021_11_24_110841) do
     t.boolean "land_flag", default: true, null: false, comment: "土地利用"
     t.string "icon_name", limit: 40, comment: "アイコン名"
     t.binary "icon", comment: "アイコン"
+    t.boolean "cost_flag", default: false, null: false, comment: "原価フラグ"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
   end
 
