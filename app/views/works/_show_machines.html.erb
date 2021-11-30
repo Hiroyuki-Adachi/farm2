@@ -2,15 +2,14 @@
   <table id="detail_machines">
     <thead>
     <tr>
-      <% machine_count = [current_organization.machines_count, @machines.count].max %>
       <th style="width:180px;">機械名</th>
       <th style="width:60px;">稼働</th>
       <th style="width:180px;">オペレーター</th>
-      <th style="width:300px;">備考</th>
+      <th style="width:300px;">備考(ヒヤリ・ハット含む)</th>
     </tr>
     </thead>
     <tbody>
-      <% machine_count.times do |i| %>
+      <% [current_organization.machines_count, @machines.count].max.times do |i| %>
       <tr>
         <td class="machine"><%= @machines[i] ? @machines[i].usual_name : "" %></td>
         <td class="machine numeric"><%=@machines[i] ? @machines[i].hours(@results.object) : "" %></td>
