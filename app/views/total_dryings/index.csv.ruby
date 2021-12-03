@@ -11,7 +11,7 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
         drying.model.carried_on,
         drying.model.shipped_on,
         drying.drying_type_name(home.id),
-        drying.shipped_weight(current_system) / Drying::KG_PER_BAG_RICE,
+        drying.harvest_weight(current_system) / Drying::KG_PER_BAG_RICE,
         drying.price(current_system, home.id),
         drying.amount(current_system, home.id)
       ]
