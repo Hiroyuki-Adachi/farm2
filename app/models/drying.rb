@@ -62,7 +62,7 @@ class Drying < ApplicationRecord
     return adjustment&.rice_weight(system) || 0
   end
 
-  def waste_weight(system)
+  def waste_weight
     return 0 if drying_type == DryingType::COUNTRY
     return adjustment&.waste_weight || 0
   end
@@ -87,6 +87,14 @@ class Drying < ApplicationRecord
 
   def amount(system, home_id)
     harvest_weight(system) / KG_PER_BAG_RICE * price(system, home_id)
+  end
+
+  def waste_amount(system)
+    waste_weight / KG_PER_BAG_WASTE * system.waste_price
+  end
+
+  def total_amount(system, home_id)
+    amount(system, home_id) + waste_amount(system)
   end
 
   def self.calc_total(dryings, home, system)
