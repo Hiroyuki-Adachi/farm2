@@ -47,6 +47,7 @@ function change_enabled() {
         $(".dry-input").prop("disabled", true);
         return;
     }
+
     $(".dry-input").prop("disabled", false);
     $("input.dry-country, input.dry-another, input.dry-self").prop("readonly", true);
     $("select.dry-country, select.dry-another, select.dry-self").removeAttr("disabled");
@@ -70,6 +71,12 @@ function change_enabled() {
           $("input.dry-another").prop("readonly", false);
           $("#drying_adjustment_attributes_home_id option[value='" + $("#drying_home_id").val() + "']").remove();
           break;
+    }
+
+    if (document.getElementById("drying_shipped_on").value == "") {
+        let carryOn = new Date(document.getElementById("carried_on").value);
+        carryOn.setDate(carryOn.getDate() + 1);
+        document.getElementById("drying_shipped_on").value = `${carryOn.getFullYear()}-${("0" + (carryOn.getMonth() + 1)).slice(-2)}-${("0" + carryOn.getDate()).slice(-2)}`;
     }
 }
 
