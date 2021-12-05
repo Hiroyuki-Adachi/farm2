@@ -135,7 +135,7 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
           <div class="row">
             <div class="col-md-6 form-inline field form-group">
               <label class="col-form-label-lg">くず米：</label>
-              <%= fa.number_field :waste_weight, {min: 0, max: 999, step: 1, required: false, class: "form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
+              <%= fa.number_field :waste_weight, {min: 0, max: 2475, step: 1, required: false, class: "form-control dry-input dry-self dry-another", style: "width: 100px;"} %>
               <label class="col-form-label-lg">kg</label>
             </div>
             <div class="col-md-6 form-inline field form-group">
@@ -175,4 +175,5 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
   </div>
 <% end %>
 <%= hidden_field_tag "kg_per_bag_waste", Drying::KG_PER_BAG_WASTE %>
+<%= hidden_field_tag "carried_on", @drying.model.carried_on %>
 <%= javascript_pack_tag 'edit-dryings' %>
