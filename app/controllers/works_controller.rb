@@ -140,7 +140,7 @@ class WorksController < ApplicationController
   private
 
   def set_work
-    @work = Work.find(params[:id]).decorate
+    @work = Work.find(params[:work_id] || params[:id]).decorate
   end
 
   def set_results
