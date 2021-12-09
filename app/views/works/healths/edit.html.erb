@@ -1,0 +1,33 @@
+<h1>作業日報(健康)登録</h1>
+<%= error_print(@work) %>
+
+<%= form_for(@work.model, url: {action: :update}, html: {method: :put}) do |f| %>
+  <%= render(:partial => 'show_work', :locals => {:f => f}) %>
+  <table id="tbl_workers" class="table table-sm">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>作業者名</th>
+        <th>時間</th>
+        <th>体調</th>
+        <th>備考</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @results.each_with_index do |result, i| %>
+        <tr>
+          <td class="numeric"><%= i + 1 %></td>
+          <td><%= result.worker.name %></td>
+          <td class="numeric"><%= result.hours %></td>
+          <td>
+            <%= select_tag("results[#{result.id}][health_id]", options_from_collection_for_select(Health.usual, :id, :name), {class: "form-control"}) %>
+          </td>
+          <td>
+            <%= text_field_tag "results[#{result.id}][remarks]", result.remarks, {:id => nil, maxlength: 20, class: "form-control"} %>
+          </td>
+        </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+<% end %>

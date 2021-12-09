@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :works do
+    get 'healths/edit'
+  end
   namespace :plans do
     resources :lands, only: [:new, :create, :destroy]
     resources :seedlings, only: [:new, :create, :index]
