@@ -16,12 +16,12 @@
         <td class="numeric"><%= i + 1 %></td>
         <td><%=raw @results[i] ? @results[i].worker_name(current_organization) : "" %></td>
         <td class="numeric"><%=raw @results[i] ? @results[i].hours : "" %></td>
-        <td class="center"><%= @results[i] ? @results[i].health.code : "" %></td>
+        <td class="center"><%= @results[i] ? @results[i].health&.code : "" %></td>
         <td style="width:240px;"><%= @results[i] ? @results[i].remarks : "" %></td>
         <% if i.zero? %>
         <td class="remarks" rowspan="<%= worker_count%>" style="width:90px;">
         体調欄に該当する番号を記入する<br/><br/>
-        <% @healths.each do |health| %>
+        <% Health.usual.each do |health| %>
         <%= health.code %>:<%= health.name %><br />
         <% end %>
         </td>
@@ -30,5 +30,5 @@
       <% end %>
     </tbody>
   </table>
-  <div id="cover_workers" class="cover" onclick="location.href='<%=raw edit_workers_work_path(id: @work) %>'"></div>
+  <div id="cover_workers" class="cover" onclick="location.href='<%=raw new_work_worker_path(work_id: @work) %>'"></div>
 </div>
