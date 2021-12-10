@@ -7,8 +7,8 @@ class Works::HealthsController < WorksController
   end
 
   def create
-    binding.pry
-    WorkResult.regist_health(@work, params[:results])
+    WorkResult.regist_health(@work, params.require(:results))
+    redirect_to work_path(@work)
   end
 
   def menu_name

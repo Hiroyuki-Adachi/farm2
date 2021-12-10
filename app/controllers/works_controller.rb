@@ -112,7 +112,6 @@ class WorksController < ApplicationController
       end
     end
 
-    @work.regist_results(params[:results]) if params[:regist_workers]
     @work.regist_lands(params[:work_lands] || []) if params[:regist_lands]
     @work.regist_machines(params[:machine_hours] || []) if params[:regist_machines]
     @work.regist_chemicals(params[:chemicals]) if params[:regist_chemicals]
