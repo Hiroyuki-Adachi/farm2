@@ -1,0 +1,69 @@
+<h1>作業日報(作業者)登録</h1>
+<%= javascript_pack_tag 'work-workers' %>
+<%= error_print(@work) %>
+
+<%= form_for(@work.model, url: {action: :create}, html: {method: :post}) do |f| %>
+  <%= render(:partial => 'show_work', :locals => {:f => f}) %>
+
+  <h2>作業者</h2>
+  <div class="clearfix">
+    <div class="float-left">
+    <table id="tbl_workers" class="table table-sm">
+      <thead>
+        <tr>
+          <th style="width:20px;">No.</th>
+          <th style="width:120px;">作業者名</th>
+          <th style="width:85px;">時間</th>
+          <th style="width:60px;">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody id="tbody_workers">
+      <% @results.each_with_index do |result, i| %>
+        <tr id="worker_<%= result.worker_id %>">
+          <td class="numeric"><%= i + 1 %></td>
+          <td><%= result.worker.name %></td>
+          <td><%= number_field_tag "results[][hours]", result.hours, {id: nil, max: 99, min: 0, step: 0.5, required: true, class: "form-control form-control-sm", style: "width: 75px;"} %></td>
+          <td>
+              <%= tag(:input, {type: :button, value: "削除", class: "btn btn-outline-dark btn-sm remove-worker", data: {worker: result.worker_id}}) %>
+              <%= hidden_field_tag "results[][worker_id]", result.worker_id, {:id => nil} %>
+              <%= hidden_field_tag "results[][display_order]", i + 1, {:id => nil} %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    </div>
+    <div class="float-left" style="margin-left: 40px; ">
+      <div class="row">
+        <% Section.usual.pluck(:name, :id).unshift(['すべて', 0]).each do |section| %>
+          <div class="form-check">
+            <%= radio_button_tag :section, section[1] %>
+            <%= label_tag "section_#{section[1]}", section[0] %>
+          </div>
+        <% end %>
+      </div>
+      <div class="row" style="width: 350px; height:300px; overflow:auto; border-style:double;overflow-x:hidden;">
+        <table id="master_workers" class="table table-sm">
+          <tbody>
+            <% Worker.usual.each do |worker| %>
+            <tr id="master_worker_<%= worker.id %>">
+              <td><%= tag(:input, {type: :button, id: "add_button_#{worker.id}", class: "btn btn-outline-dark btn-sm add-worker", value: "←追加", data: {worker: worker.id, name: worker.name} }) %></td>
+              <td style="width:80px;"><%= worker.home.name %></td>
+              <td style="width:120px;"><%= worker.name %></td>
+              <td style="display: none;"><%= worker.home.section_id %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= f.submit '登録', :name => 'regist_workers', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', work_path(@work.model), {class: "btn btn-outline-dark"} %>
+    </div>
+  </div>
+<% end %>

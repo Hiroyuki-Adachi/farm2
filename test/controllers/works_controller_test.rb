@@ -59,14 +59,6 @@ class WorksControllerTest < ActionController::TestCase
     assert_response :error
   end
 
-  test "作業変更(作業者)(表示)" do
-    get :edit_workers, params: {id: works(:work_not_fixed)}
-    assert_response :success
-
-    get :edit_workers, params: {id: works(:work_fixed)}
-    assert_redirected_to works_path
-  end
-
   test "作業変更(土地)(表示)" do
     get :edit_lands, params: {id: works(:work_not_fixed)}
     assert_response :success
@@ -104,14 +96,6 @@ class WorksControllerTest < ActionController::TestCase
     get :update, params: {id: works(:work_fixed), work: @update, regist: true}
     assert_redirected_to works_path
     assert_equal Work.find(works(:work_fixed).id).name, works(:work_fixed).name
-
-    assert_no_difference('WorkResult.count') do
-      get :update, params: {id: works(:work_not_fixed), results: [worker_id: 1, hours: 1, display_order: 1], regist_workers: true}
-    end
-    assert_redirected_to work_path(id: works(:work_not_fixed))
-    updated_work = Work.find(works(:work_not_fixed).id)
-    assert_nil updated_work.printed_by
-    assert_nil updated_work.printed_at
 
     assert_no_difference('WorkLand.count') do
       get :update, params: {id: works(:work_not_fixed), work_lands: [land_id: 1, display_order: 3], regist_lands: true}

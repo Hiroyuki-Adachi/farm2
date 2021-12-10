@@ -2,15 +2,15 @@ require 'date'
 
 class WorksController < ApplicationController
   include WorksHelper
-  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :edit_whole_crop, :show, :update, :destroy, :map]
-  before_action :set_results, only: [:show, :edit_workers, :edit_machines]
+  before_action :set_work, only: [:edit, :edit_lands, :edit_machines, :edit_chemicals, :edit_whole_crop, :show, :update, :destroy, :map]
+  before_action :set_results, only: [:show, :edit_machines]
   before_action :set_lands, only: [:show, :edit_lands]
   before_action :set_broccoli, only: [:show]
   before_action :set_masters, only: [:new, :create, :edit, :update]
-  before_action :check_fixed, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
+  before_action :check_fixed, only: [:edit, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
   before_action :clear_cache, only: [:update, :create, :destroy]
   before_action :permit_not_visitor, except: [:index, :show]
-  before_action :permit_checkable_or_self, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
+  before_action :permit_checkable_or_self, only: [:edit, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
   before_action :permit_visitor, only: :show
   before_action :set_work_types, only: :index
   before_action :permit_this_term, only: [:edit, :update, :destroy]
@@ -66,7 +66,7 @@ class WorksController < ApplicationController
     @work = Work.new(work_params)
     @work.created_by = current_user.worker.id
     if @work.save
-      redirect_to(edit_workers_work_path(@work.id))
+      redirect_to(new_work_worker_path(work_id: @work))
     else
       render action: :new
     end
@@ -81,10 +81,6 @@ class WorksController < ApplicationController
 
   def edit
     @work_kinds = WorkKind.by_type(@work.work_type) || []
-  end
-
-  def edit_workers
-    @sections = Section.usual.pluck(:name, :id).unshift(['すべて', 0])
   end
 
   def edit_lands
