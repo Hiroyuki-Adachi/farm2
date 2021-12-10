@@ -116,9 +116,8 @@ class WorkResult < ApplicationRecord
   end
 
   def self.regist_health(work, results)
-    results.each do |result|
-      work.work_results.where(id: result[:id])
-      .update(remarks: result[:remarks], health_id: result[:health_id])
+    results.each do |id, result|
+      work.work_results.where(id: id).update(result.permit(:health_id, :remarks))
     end
   end
 end
