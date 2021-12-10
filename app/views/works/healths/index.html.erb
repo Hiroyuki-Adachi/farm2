@@ -14,13 +14,14 @@
       </tr>
     </thead>
     <tbody>
+      <% healths = Health.usual %>
       <% @results.each_with_index do |result, i| %>
         <tr>
           <td class="numeric"><%= i + 1 %></td>
           <td><%= result.worker.name %></td>
           <td class="numeric"><%= result.hours %></td>
           <td>
-            <%= select_tag("results[#{result.id}][health_id]", options_from_collection_for_select(Health.usual, :id, :name), {class: "form-control"}) %>
+            <%= select_tag("results[#{result.id}][health_id]", options_from_collection_for_select(healths, :id, :name, result.health_id), {class: "form-control"}) %>
           </td>
           <td>
             <%= text_field_tag "results[#{result.id}][remarks]", result.remarks, {:id => nil, maxlength: 20, class: "form-control"} %>
