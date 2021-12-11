@@ -2,15 +2,15 @@ require 'date'
 
 class WorksController < ApplicationController
   include WorksHelper
-  before_action :set_work, only: [:edit, :edit_chemicals, :edit_whole_crop, :show, :update, :destroy, :map]
+  before_action :set_work, only: [:edit, :edit_whole_crop, :show, :update, :destroy, :map]
   before_action :set_results, only: [:show]
   before_action :set_lands, only: [:show]
   before_action :set_broccoli, only: [:show]
   before_action :set_masters, only: [:new, :create, :edit, :update]
-  before_action :check_fixed, only: [:edit, :edit_chemicals, :update, :destroy]
+  before_action :check_fixed, only: [:edit, :update, :destroy]
   before_action :clear_cache, only: [:update, :create, :destroy]
   before_action :permit_not_visitor, except: [:index, :show]
-  before_action :permit_checkable_or_self, only: [:edit, :edit_chemicals, :update, :destroy]
+  before_action :permit_checkable_or_self, only: [:edit, :update, :destroy]
   before_action :permit_visitor, only: :show
   before_action :set_work_types, only: :index
   before_action :permit_this_term, only: [:edit, :update, :destroy]
@@ -83,10 +83,6 @@ class WorksController < ApplicationController
     @work_kinds = WorkKind.by_type(@work.work_type) || []
   end
 
-  def edit_chemicals
-    @chemicals = Chemical.usual(@work.model)
-  end
-
   def edit_whole_crop
     @whole_crop = @work.whole_crop || WorkWholeCrop.new
   end
@@ -103,7 +99,6 @@ class WorksController < ApplicationController
       end
     end
 
-    @work.regist_chemicals(params[:chemicals]) if params[:regist_chemicals]
     WorkWholeCrop.regist(@work, params.require(:whole_crop)) if params[:regist_whole_crop]
 
     redirect_to(work_path(@work))
