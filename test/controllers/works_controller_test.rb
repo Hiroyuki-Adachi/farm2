@@ -59,14 +59,6 @@ class WorksControllerTest < ActionController::TestCase
     assert_response :error
   end
 
-  test "作業変更(薬品)(表示)" do
-    get :edit_chemicals, params: {id: works(:work_not_fixed)}
-    assert_response :success
-
-    get :edit_chemicals, params: {id: works(:work_fixed)}
-    assert_redirected_to works_path
-  end
-
   test "作業変更(WCS)(表示)" do
     get :edit_whole_crop, params: {id: works(:work_wcs)}
     assert_response :success
@@ -80,16 +72,6 @@ class WorksControllerTest < ActionController::TestCase
     get :update, params: {id: works(:work_fixed), work: @update, regist: true}
     assert_redirected_to works_path
     assert_equal Work.find(works(:work_fixed).id).name, works(:work_fixed).name
-
-    assert_difference('WorkChemical.count') do
-      get :update, params: {
-        id: works(:work_not_fixed), chemicals: { 4 => { 1 => {
-            aqueous_flag: true, magnification: 10, dilution_amount: 10, quantity: 10
-           }}},
-        regist_chemicals: true
-      }
-    end
-    assert_redirected_to work_path(id: works(:work_not_fixed))
 
     assert_not_empty WorkVerification.where(work_id: works(:work_not_fixed), worker_id: User.find(session[:user_id]).worker_id)
   end
