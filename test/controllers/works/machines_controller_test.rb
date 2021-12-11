@@ -21,6 +21,6 @@ class Works::MachinesControllerTest < ActionController::TestCase
         machine_hours: { 4 => { WorkResult.last.id => 5 }}
       }
     end
-    assert_redirected_to work_path(id: works(:work_not_fixed))
+    assert_redirected_to new_work_remark_path(work_id: works(:work_not_fixed))
   end
 end

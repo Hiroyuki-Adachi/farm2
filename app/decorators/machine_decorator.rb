@@ -28,6 +28,6 @@ class MachineDecorator < Draper::Decorator
   end
 
   def remarks(work)
-    return MachineRemark.find_by(machine_id: model.id, work_id: work)&.remark || ''
+    return MachineRemark.find_by(machine_id: model.id, work_id: work)
   end
 end
