@@ -16,4 +16,11 @@
 class MachineRemark < ApplicationRecord
   belongs_to  :machine, -> {with_deleted}
   belongs_to  :work
+
+  def self.regist(work, remarks)
+    work.machine_remarks.destroy_all
+    remarks.each do |id, remark|
+      MachineRemark.create(remark.permit(:work_id, :machine_id, :remarks)) if remark[:remarks].present?
+    end
+  end
 end

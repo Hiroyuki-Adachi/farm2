@@ -141,6 +141,7 @@ Rails.application.routes.draw do
     resources :workers, controller: "works/workers", only: [:new, :create]
     resources :lands, controller: "works/lands", only: [:new, :create]
     resources :machines, controller: "works/machines", only: [:new, :create]
+    resources :remarks, controller: "works/remarks", only: [:new, :create]
     collection do
       get :work_type_select
       get :autocomplete_for_land_place

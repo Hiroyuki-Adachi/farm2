@@ -3,7 +3,7 @@ class CreateMachineRemarks < ActiveRecord::Migration[6.1]
     create_table :machine_remarks, {comment: "作業機械備考"} do |t|
       t.integer :work_id,     {null: false, comment: "作業"}
       t.integer :machine_id,  {null: false, comment: "機械"}
-      t.string  :remarks,     {limit: 20, null: false, default: "", comment: "備考"}
+      t.string  :remarks,     {limit: 30, null: false, default: "", comment: "備考"}
 
       t.timestamps
     end

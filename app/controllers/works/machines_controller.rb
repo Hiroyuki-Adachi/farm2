@@ -12,6 +12,6 @@ class Works::MachinesController < WorksController
 
   def create
     @work.regist_machines(params[:machine_hours] || [])
-    redirect_to(work_path(@work))
+    redirect_to new_work_remark_path(work_id: @work)
   end
 end
