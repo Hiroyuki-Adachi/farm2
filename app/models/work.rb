@@ -46,6 +46,7 @@ class Work < ApplicationRecord
   has_many :work_chemicals, dependent: :destroy
   has_many :work_verifications, -> {order('work_verifications.id')}, {dependent: :destroy}
   has_many :work_work_types, dependent: :destroy
+  has_many :machine_remarks, dependent: :destroy
   has_one :broccoli, {class_name: "WorkBroccoli", dependent: :destroy}
   has_one :whole_crop, {class_name: "WorkWholeCrop", dependent: :destroy}
 

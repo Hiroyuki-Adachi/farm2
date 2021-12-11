@@ -59,14 +59,6 @@ class WorksControllerTest < ActionController::TestCase
     assert_response :error
   end
 
-  test "作業変更(機械)(表示)" do
-    get :edit_machines, params: {id: works(:work_not_fixed)}
-    assert_response :success
-
-    get :edit_machines, params: {id: works(:work_fixed)}
-    assert_redirected_to works_path
-  end
-
   test "作業変更(薬品)(表示)" do
     get :edit_chemicals, params: {id: works(:work_not_fixed)}
     assert_response :success
@@ -88,11 +80,6 @@ class WorksControllerTest < ActionController::TestCase
     get :update, params: {id: works(:work_fixed), work: @update, regist: true}
     assert_redirected_to works_path
     assert_equal Work.find(works(:work_fixed).id).name, works(:work_fixed).name
-
-    assert_difference('MachineResult.count') do
-      get :update, params: {id: works(:work_not_fixed), machine_hours: { 4 => { WorkResult.last.id => 5 }}, regist_machines: true}
-    end
-    assert_redirected_to work_path(id: works(:work_not_fixed))
 
     assert_difference('WorkChemical.count') do
       get :update, params: {

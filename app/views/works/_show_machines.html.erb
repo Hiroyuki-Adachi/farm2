@@ -14,10 +14,10 @@
         <td class="machine"><%= @machines[i] ? @machines[i].usual_name : "" %></td>
         <td class="machine numeric"><%=@machines[i] ? @machines[i].hours(@results.object) : "" %></td>
         <td class="machine"><%= @machines[i] ? @machines[i].operators(@work) : "" %></td>
-        <td class="machine"><%= @machines[i] ? @machines[i].remarks : "" %></td>
+        <td class="machine"><%= @machines[i] ? @machines[i].remarks(@work) : "" %></td>
       </tr>
       <% end %>
     </tbody>
   </table>
-  <div id="cover_machines" class="cover" onclick="location.href='<%=raw edit_machines_work_path(@work) %>'"></div>
+  <div id="cover_machines" class="cover" onclick="location.href='<%=raw new_work_machine_path(work_id: @work) %>'"></div>
 </div>
