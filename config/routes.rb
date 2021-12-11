@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  namespace :works do
-    get 'workers/new'
-    get 'workers/create'
-  end
   namespace :plans do
     resources :lands, only: [:new, :create, :destroy]
     resources :seedlings, only: [:new, :create, :index]
@@ -143,12 +139,12 @@ Rails.application.routes.draw do
     resources :print, controller: "works/print", only: [:create, :destroy]
     resources :healths, controller: "works/healths", only: [:new, :create]
     resources :workers, controller: "works/workers", only: [:new, :create]
+    resources :lands, controller: "works/lands", only: [:new, :create]
     collection do
       get :work_type_select
       get :autocomplete_for_land_place
     end
     member do
-      get :edit_lands
       get :edit_machines
       get :edit_chemicals
       get :edit_whole_crop
