@@ -1,12 +1,12 @@
 require "test_helper"
 
-class Works::LandsControllerTest < ActionController::TestCase
+class Works::MachinesControllerTest < ActionController::TestCase
   setup do
     setup_ip
     @user = users(:users1)
   end
 
-  test "作業変更(土地)(表示)" do
+  test "作業変更(機械)(表示)" do
     get :new, params: {work_id: works(:work_not_fixed)}
     assert_response :success
 
@@ -14,9 +14,12 @@ class Works::LandsControllerTest < ActionController::TestCase
     assert_redirected_to works_path
   end
 
-  test "作業変更(土地)(変更)" do
-    assert_no_difference('WorkLand.count') do
-      post :create, params: {work_id: works(:work_not_fixed), work_lands: [land_id: 1, display_order: 3]}
+  test "作業変更(機械)(変更)" do
+    assert_difference('MachineResult.count') do
+      post :create, params: {
+        work_id: works(:work_not_fixed),
+        machine_hours: { 4 => { WorkResult.last.id => 5 }}
+      }
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_03_113852) do
+ActiveRecord::Schema.define(version: 2021_12_11_032607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -386,6 +386,15 @@ ActiveRecord::Schema.define(version: 2021_12_03_113852) do
     t.index ["validated_at", "machine_id", "machine_type_id"], name: "machine_price_headers_2nd_key", unique: true
   end
 
+  create_table "machine_remarks", comment: "作業機械備考", force: :cascade do |t|
+    t.integer "work_id", null: false, comment: "作業"
+    t.integer "machine_id", null: false, comment: "機械"
+    t.string "remarks", limit: 20, default: "", null: false, comment: "備考"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["work_id", "machine_id"], name: "machine_remarks_2nd", unique: true
+  end
+
   create_table "machine_results", id: { type: :serial, comment: "機械稼動データ" }, comment: "機械稼動データ", force: :cascade do |t|
     t.integer "machine_id", comment: "機械"
     t.integer "work_result_id", comment: "作業結果データ"
@@ -398,7 +407,6 @@ ActiveRecord::Schema.define(version: 2021_12_03_113852) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal "fuel_usage", precision: 5, scale: 2, default: "0.0", null: false, comment: "燃料使用量"
-    t.string "remarks", limit: 20, default: "", null: false, comment: "備考"
     t.index ["machine_id", "work_result_id"], name: "index_machine_results_on_machine_id_and_work_result_id", unique: true
   end
 

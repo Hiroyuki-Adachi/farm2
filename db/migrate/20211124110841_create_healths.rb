@@ -15,6 +15,5 @@ class CreateHealths < ActiveRecord::Migration[6.1]
 
     add_column :work_results, :health_id, :integer, {null: false, default: 0, comment: "健康"}
     add_column :work_results, :remarks, :string, {null: false, limit: 20, default: "", comment: "備考"}
-    add_column :machine_results, :remarks, :string, {null: false, limit: 20, default: "", comment: "備考"}
   end
 end
