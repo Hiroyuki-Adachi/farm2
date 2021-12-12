@@ -389,7 +389,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_032607) do
   create_table "machine_remarks", comment: "作業機械備考", force: :cascade do |t|
     t.integer "work_id", null: false, comment: "作業"
     t.integer "machine_id", null: false, comment: "機械"
-    t.string "remarks", limit: 20, default: "", null: false, comment: "備考"
+    t.string "remarks", limit: 30, default: "", null: false, comment: "備考"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["work_id", "machine_id"], name: "machine_remarks_2nd", unique: true
@@ -407,6 +407,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_032607) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal "fuel_usage", precision: 5, scale: 2, default: "0.0", null: false, comment: "燃料使用量"
+    t.string "remarks", limit: 20, default: "", null: false, comment: "備考"
     t.index ["machine_id", "work_result_id"], name: "index_machine_results_on_machine_id_and_work_result_id", unique: true
   end
 
