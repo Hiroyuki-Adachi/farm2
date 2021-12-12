@@ -10,8 +10,4 @@ class Works::HealthsController < WorksController
     WorkResult.regist_health(@work, params.require(:results))
     redirect_to work_path(@work)
   end
-
-  def menu_name
-    return :works
-  end
 end

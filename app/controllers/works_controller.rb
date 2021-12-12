@@ -2,7 +2,7 @@ require 'date'
 
 class WorksController < ApplicationController
   include WorksHelper
-  before_action :set_work, only: [:edit, :edit_whole_crop, :show, :update, :destroy, :map]
+  before_action :set_work, only: [:edit, :show, :update, :destroy, :map]
   before_action :set_results, only: [:show]
   before_action :set_lands, only: [:show]
   before_action :set_broccoli, only: [:show]
@@ -83,10 +83,6 @@ class WorksController < ApplicationController
     @work_kinds = WorkKind.by_type(@work.work_type) || []
   end
 
-  def edit_whole_crop
-    @whole_crop = @work.whole_crop || WorkWholeCrop.new
-  end
-
   def update
     redirect_to(work_path(@work)) if params[:cancel]
 
@@ -98,8 +94,6 @@ class WorksController < ApplicationController
         render action: :edit
       end
     end
-
-    WorkWholeCrop.regist(@work, params.require(:whole_crop)) if params[:regist_whole_crop]
 
     redirect_to(work_path(@work))
   end
@@ -233,5 +227,9 @@ class WorksController < ApplicationController
 
   def permit_this_term
     to_error_path unless @work.present? && @work.term == current_term
+  end
+
+  def menu_name
+    return :works
   end
 end

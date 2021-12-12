@@ -143,12 +143,12 @@ Rails.application.routes.draw do
     resources :machines, controller: "works/machines", only: [:new, :create]
     resources :remarks, controller: "works/remarks", only: [:new, :create]
     resources :chemicals, controller: "works/chemicals", only: [:new, :create], as: :use_chemicals
+    resources :whole_crops, controller: "works/whole_crops", only: [:new, :create]
     collection do
       get :work_type_select
       get :autocomplete_for_land_place
     end
     member do
-      get :edit_whole_crop
       get :map
     end
   end
