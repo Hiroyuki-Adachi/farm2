@@ -28,11 +28,10 @@
             <th>種別</th>
             <th>名称</th>
             <% group_count.times do |index| %>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">使用量</th>
             <th class="col-data" data-index="<%= index%>" style="display:none;">希釈</th>
             <th class="col-data" data-index="<%= index%>" style="display:none;">希釈倍率</th>
-            <th class="col-data" data-index="<%= index%>" style="display:none;">使用量</th>
-            <th class="col-data" data-index="<%= index%>" style="display:none;"></th>
-            <th class="col-data" data-index="<%= index%>" style="display:none;">成分</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">希釈水量(&#8467;)</th>
             <th class="col-data" data-index="<%= index%>" style="display:none;">10a当</th>
             <th class="col-data" data-index="<%= index%>" style="display:none;"></th>
             <th class="col-data" data-index="<%= index%>" style="display:none;">備考</th>
@@ -43,10 +42,16 @@
         <tbody>
         <% @chemicals.each do |chemical| %>
         <tr>
-          <td><%= chemical.name %></td>
           <td><%= chemical.chemical_type.name %></td>
+          <td><%= chemical.name %></td>
           <% group_count.times do |index| %>
             <% work_chemical = @work.work_chemicals.find_by(chemical_id: chemical.id, chemical_group_no: index + 1) %>
+
+            <td class="col-data" data-index="<%= index%>" style="display:none;">
+              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][quantity]", work_chemical&.quantity,
+                {readonly: work_chemical&.aqueous_flag, min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
+                data: {id: chemical.id, index: index + 1}} %>
+            </td>
             <td class="text-center col-data" data-index="<%= index%>" style="display:none;">
               <%= hidden_field_tag "chemicals[#{chemical.id}][#{index + 1}][aqueous_flag]", false, {id: nil} %>
               <%= check_box_tag "chemicals[#{chemical.id}][#{index + 1}][aqueous_flag]", true, work_chemical&.aqueous_flag, 
@@ -62,12 +67,6 @@
               <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_amount]", work_chemical&.dilution_amount,
                 {disabled: !work_chemical&.aqueous_flag, min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
                 data: {id: chemical.id, index: index + 1, unit: chemical.unit_scale}} %>
-            </td>
-            <td class="col-data" data-index="<%= index%>" style="display:none;">&#8467;</td>
-            <td class="col-data" data-index="<%= index%>" style="display:none;">
-              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][quantity]", work_chemical&.quantity,
-                {readonly: work_chemical&.aqueous_flag, min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
-                data: {id: chemical.id, index: index + 1}} %>
             </td>
             <td class="col-data numeric" data-index="<%= index%>" style="display:none;" id="chemicals_<%= chemical.id %>_<%= index + 1 %>_quantity10">
               <%= work_chemical&.quantity10 %>
