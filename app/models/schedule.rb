@@ -23,10 +23,10 @@ class Schedule < ApplicationRecord
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
 
-  has_many :schedule_workers, -> {order('schedule_workers.display_order')}, {dependent: :destroy}
-  has_many :workers, -> {with_deleted}, {through: :schedule_workers}
+  has_many :schedule_workers, -> {order('schedule_workers.display_order')}, dependent: :destroy
+  has_many :workers, -> {with_deleted}, through: :schedule_workers
 
-  has_one :minute, {dependent: :destroy}
+  has_one :minute, dependent: :destroy
 
   scope :usual, -> {
       where(["worked_at >= current_date"])

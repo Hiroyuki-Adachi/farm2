@@ -40,8 +40,8 @@ class Worker < ApplicationRecord
   before_create :set_token
 
   belongs_to :home, -> {with_deleted}
-  belongs_to :gender
-  belongs_to :position
+  belongs_to_active_hash :position
+  belongs_to_active_hash :gender
 
   has_many :work_results
   has_many :works, -> {order(:worked_at)}, through: :work_results

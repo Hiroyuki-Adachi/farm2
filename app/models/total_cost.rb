@@ -33,11 +33,11 @@ class TotalCost < ApplicationRecord
   belongs_to :depreciation, optional: true
   belongs_to :work_chemical, optional: true
   belongs_to :seedling_home, optional: true
-  belongs_to :wcs_land, {class_name: "WholeCropLand", foreign_key: "whole_crop_land_id", optional: true}
+  belongs_to :wcs_land, class_name: "WholeCropLand", foreign_key: "whole_crop_land_id", optional: true
   belongs_to :land, optional: true
-  belongs_to :total_cost_type, optional: true
+  belongs_to_active_hash :total_cost_type, optional: true
 
-  has_many :total_cost_details, {dependent: :destroy}
+  has_many :total_cost_details, dependent: :destroy
 
   delegate :name, to: :total_cost_type, prefix: true
 

@@ -19,11 +19,14 @@
 #  work_chemicals_2nd_key  (work_id,chemical_id,chemical_group_no) UNIQUE
 #
 class WorkChemical < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
   belongs_to :chemical
   belongs_to :work
-  has_one    :chemical_type, {through: :chemical}
-  has_one    :work_type, -> {with_deleted}, {through: :work}
-  has_one    :work_kind, -> {with_deleted}, {through: :work}
+  belongs_to_active_hash :dilution
+  has_one    :chemical_type, through: :chemical
+  has_one    :work_type, -> {with_deleted}, through: :work
+  has_one    :work_kind, -> {with_deleted}, through: :work
 
   validates_presence_of :quantity
   validates_numericality_of :quantity, if: proc { |x| x.quantity.present?}

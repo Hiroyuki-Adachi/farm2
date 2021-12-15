@@ -22,7 +22,7 @@ class WorkType < ApplicationRecord
   acts_as_paranoid
   before_save :update_cost_flag
 
-  has_one :plan, {class_name: "PlanWorkType", dependent: :destroy}
+  has_one :plan, class_name: "PlanWorkType", dependent: :destroy
 
   scope :categories, -> {where(category_flag: true).order(display_order: :ASC, id: :ASC)}
   scope :usual, -> {order(category_flag: :ASC, display_order: :ASC, id: :ASC)}

@@ -18,7 +18,7 @@ class Works::ChemicalsControllerTest < ActionController::TestCase
     assert_difference('WorkChemical.count') do
       post :create, params: {
         work_id: @work, chemicals: { 4 => { 1 => {
-            aqueous_flag: true, magnification: 10, dilution_amount: 10, quantity: 10
+          dilution_id: 1, magnification: 10, dilution_amount: 10, quantity: 10
            }}}
       }
     end

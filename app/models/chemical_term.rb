@@ -13,7 +13,7 @@
 #
 class ChemicalTerm < ApplicationRecord
   belongs_to :chemical, -> {with_deleted}
-  has_many :chemical_work_types, {dependent: :delete_all}
+  has_many :chemical_work_types, dependent: :delete_all
   
   scope :usual, -> (term) {
     joins(chemical: :chemical_type)

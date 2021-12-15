@@ -18,10 +18,10 @@
 class MachinePriceDetail < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
-  belongs_to :header, {class_name: :MachinePriceHeader}
+  belongs_to :header, class_name: :MachinePriceHeader
   belongs_to :work_kind
-  belongs_to :adjust
-  belongs_to :lease
+  belongs_to_active_hash :lease
+  belongs_to_active_hash :adjust
 
   validates :price, presence: true
   validates :price, numericality: true, if: proc { |x| x.price.present?}
