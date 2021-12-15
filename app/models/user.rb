@@ -26,7 +26,7 @@ class User < ApplicationRecord
 
   belongs_to :worker
   belongs_to :organization
-  belongs_to :permission
+  belongs_to_active_hash :permission
 
   has_many :calendar_work_kinds, dependent: :destroy
 

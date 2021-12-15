@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_11_032607) do
+ActiveRecord::Schema.define(version: 2021_12_14_123000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -389,7 +389,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_032607) do
   create_table "machine_remarks", comment: "作業機械備考", force: :cascade do |t|
     t.integer "work_id", null: false, comment: "作業"
     t.integer "machine_id", null: false, comment: "機械"
-    t.string "remarks", limit: 30, default: "", null: false, comment: "備考"
+    t.string "remarks", limit: 20, default: "", null: false, comment: "備考"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["work_id", "machine_id"], name: "machine_remarks_2nd", unique: true
@@ -407,7 +407,6 @@ ActiveRecord::Schema.define(version: 2021_12_11_032607) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal "fuel_usage", precision: 5, scale: 2, default: "0.0", null: false, comment: "燃料使用量"
-    t.string "remarks", limit: 20, default: "", null: false, comment: "備考"
     t.index ["machine_id", "work_result_id"], name: "index_machine_results_on_machine_id_and_work_result_id", unique: true
   end
 
@@ -697,10 +696,10 @@ ActiveRecord::Schema.define(version: 2021_12_11_032607) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "chemical_group_no", default: 1, null: false, comment: "薬剤グループ番号"
-    t.boolean "aqueous_flag", default: false, null: false, comment: "水溶フラグ"
     t.boolean "area_flag", default: false, null: false, comment: "10a当たり入力"
     t.decimal "magnification", precision: 5, scale: 1, comment: "水溶液(リットル)"
     t.text "remarks", default: "", null: false, comment: "備考"
+    t.integer "dilution_id", default: 0, null: false, comment: "希釈"
     t.index ["work_id", "chemical_id", "chemical_group_no"], name: "work_chemicals_2nd_key", unique: true
   end
 

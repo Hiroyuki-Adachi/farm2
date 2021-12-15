@@ -21,6 +21,6 @@ class BroccoliHarvest < ApplicationRecord
   validates :inspection, presence: true
 
   belongs_to :work_broccoli
-  belongs_to :rank, {class_name: "BroccoliRank", foreign_key: :broccoli_rank_id}
-  belongs_to :size, {class_name: "BroccoliSize", foreign_key: :broccoli_size_id}
+  belongs_to :rank, class_name: "BroccoliRank", foreign_key: :broccoli_rank_id
+  belongs_to :size, class_name: "BroccoliSize", foreign_key: :broccoli_size_id
 end

@@ -29,8 +29,8 @@ class Chemical < ApplicationRecord
   after_save :save_term
 
   belongs_to :chemical_type
-  belongs_to :base_unit
-  has_many :chemical_terms, {dependent: :delete_all}
+  belongs_to_active_hash :base_unit
+  has_many :chemical_terms, dependent: :delete_all
 
   validates :name,          presence: true
   validates :display_order, presence: true
