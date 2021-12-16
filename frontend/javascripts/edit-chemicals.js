@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", (event) => {
+window.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[data-index='0']").forEach((element) => {
     element.style.display = "table-cell";
   });
@@ -20,7 +20,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
       changeQuantity(event.target);
     });
   });
-  document.querySelectorAll("input[name$='aqueous_flag]']").forEach((element) => {
+  document.querySelectorAll("input[name$='dilution_id]']").forEach((element) => {
     element.addEventListener("click", (event) => {
       const index = event.target.dataset.index;
       const id = event.target.dataset.id;

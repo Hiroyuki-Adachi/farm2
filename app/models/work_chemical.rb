@@ -54,6 +54,22 @@ class WorkChemical < ApplicationRecord
   end
 
   def dilution_amount
-    return aqueous_flag && chemical.unit_scale.positive? ? quantity * magnification / chemical.unit_scale : quantity
+    return dilution? && chemical.unit_scale.positive? ? quantity * magnification / chemical.unit_scale : quantity
+  end
+
+  def dilution?
+    return dilution.dilution
+  end
+
+  def dilution_none?
+    return dilution == Dilution::NONE
+  end
+
+  def dilution_l?
+    return dilution == Dilution::L
+  end
+
+  def dilution_mag?
+    return dilution == Dilution::MAG
   end
 end

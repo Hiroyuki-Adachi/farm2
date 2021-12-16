@@ -1,9 +1,12 @@
 - id: 0
   code: NONE
   name: "無"
+  dilution: false
 - id: 1
   code: L
   name: "ℓ"
+  dilution: true
 - id: 2
   code: MAG
   name: "倍"
+  dilution: true
