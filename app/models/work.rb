@@ -428,6 +428,6 @@ SQL
   private
 
   def quantity_params(quantity, add_params)
-    quantity.permit(:quantity, :aqueous_flag, :magnification, :remarks).merge(add_params)
+    quantity.permit(:quantity, :dilution_id, :magnification, :remarks).merge(add_params)
   end
 end
