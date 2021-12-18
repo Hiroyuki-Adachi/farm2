@@ -15,10 +15,21 @@ module WorksHelper
     return sprintf("%.2f", area_quantity) + chemical.base_unit.name
   end
 
-  def chemical_dilution(work_chemical)
-    case work_chemical.dilution
-    when Dilution::L then work_chemical.dilution_amount.to_s(:delimited, delimiter: ',') + "&#8467;"
-    when Dilution::MAG then work_chemical.magnification.to_s(:delimited, delimiter: ',') + "倍"
+  def chemical_dilution(work_chemicals, chemical_id)
+    dilution = work_chemicals.where(chemical_id: chemical_id).order(:chemical_group_no).first.dilution
+    counter = work_chemicals.where(chemical_id: chemical_id).count
+    amount = 0
+    unit = ""
+    work_chemicals.where(chemical_id: chemical_id).each do |work_chemical|
+      case dilution
+        when Dilution::L
+          unit = "ℓ"
+          amount += work_chemical.dilution_amount
+        when Dilution::MAG 
+          unit = "倍"
+          amount += work_chemical.magnification
+      end
     end
+    return (amount.zero? || counter.zero?) ? "" : (amount / counter).to_s(:delimited, delimiter: ',') + unit
   end
 end
