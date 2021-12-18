@@ -57,7 +57,7 @@
               <% Dilution.all.each do |dilution| %>
                 <label style="display: inline-block; cursor: pointer;">
                   <%= radio_button_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_id]", dilution.id, 
-                  work_chemical&.dilution_id || Dilution::NONE.id == dilution.id,
+                  work_chemical&.dilution_id == dilution.id,
                   {id: nil, class: "form-control", disabled: !chemical.aqueous_flag, data: {id: chemical.id, group: index + 1}} %>
                   <%= dilution.name %>
                 </label>
