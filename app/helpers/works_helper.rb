@@ -14,4 +14,11 @@ module WorksHelper
     end
     return sprintf("%.2f", area_quantity) + chemical.base_unit.name
   end
+
+  def chemical_dilution(work_chemical)
+    case work_chemical.dilution
+    when Dilution::L then work_chemical.dilution_amount.to_s(:delimited, delimiter: ',') + "&#8467;"
+    when Dilution::MAG then work_chemical.magnification.to_s(:delimited, delimiter: ',') + "倍"
+    end
+  end
 end
