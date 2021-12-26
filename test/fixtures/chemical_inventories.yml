@@ -1,0 +1,15 @@
+# == Schema Information
+#
+# Table name: chemical_inventories
+#
+#  id                 :bigint           not null, primary key
+#  checked_on(確認日) :date             not null
+#  name(棚卸名称)     :string(40)       default(""), not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
