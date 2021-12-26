@@ -11,6 +11,8 @@
 #  display_order(表示順)      :integer          default(0), not null
 #  name(薬剤名称)             :string(20)       not null
 #  phonetic(薬剤ふりがな)     :string(40)       default(""), not null
+#  stock_quantity(在庫数)     :decimal(6, )     default(0), not null
+#  stock_unit(在庫単位)       :string(2)        default(""), not null
 #  unit(単位)                 :string(2)        default("袋"), not null
 #  created_at                 :datetime
 #  updated_at                 :datetime
