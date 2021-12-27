@@ -9,6 +9,7 @@ class CreateChemicalStocks < ActiveRecord::Migration[6.1]
       t.decimal   :stored,    {null: false, precision: 5, scale: 1, default: 0, comment: "入庫量"}
       t.decimal   :shipping,  {null: false, precision: 5, scale: 1, default: 0, comment: "出庫量"}
       t.decimal   :stock,     {null: false, precision: 7, scale: 1, default: 0, comment: "在庫量"}
+      t.decimal   :inventory, {null: false, precision: 7, scale: 1, default: 0, comment: "棚卸量"}
       t.timestamps
     end
 

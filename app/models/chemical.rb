@@ -14,6 +14,7 @@
 #  stock_quantity(在庫数)     :decimal(6, )     default(0), not null
 #  stock_unit(在庫単位)       :string(2)        default(""), not null
 #  unit(単位)                 :string(2)        default("袋"), not null
+#  url(URL)                   :string(255)      default(""), not null
 #  created_at                 :datetime
 #  updated_at                 :datetime
 #  base_unit_id(基本単位)     :integer          default(0), not null
