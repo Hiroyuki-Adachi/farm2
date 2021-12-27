@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 2021_12_27_115519) do
     t.decimal "stored", precision: 5, scale: 1, default: "0.0", null: false, comment: "入庫量"
     t.decimal "shipping", precision: 5, scale: 1, default: "0.0", null: false, comment: "出庫量"
     t.decimal "stock", precision: 7, scale: 1, default: "0.0", null: false, comment: "在庫量"
+    t.decimal "inventory", precision: 7, scale: 1, default: "0.0", null: false, comment: "棚卸量"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
