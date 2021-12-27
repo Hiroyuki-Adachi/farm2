@@ -75,7 +75,11 @@ ORDER
   }
 
   def this_term_flag
-    chemical_terms.where(term: @term).exists?
+    this_term?(@term)
+  end
+
+  def this_term?(term)
+    chemical_terms.where(term: term).exists?
   end
 
   def base_unit_name

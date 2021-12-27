@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_26_060827) do
+ActiveRecord::Schema.define(version: 2021_12_27_115519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,6 +156,7 @@ ActiveRecord::Schema.define(version: 2021_12_26_060827) do
     t.boolean "aqueous_flag", default: false, null: false, comment: "水溶フラグ"
     t.string "stock_unit", limit: 2, default: "", null: false, comment: "在庫単位"
     t.decimal "stock_quantity", precision: 6, default: "0", null: false, comment: "在庫数"
+    t.string "url", limit: 255, default: "", null: false, comment: "URL"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
   end
 
