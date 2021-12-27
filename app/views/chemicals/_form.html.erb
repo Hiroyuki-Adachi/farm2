@@ -51,6 +51,20 @@
     </div>
   </div>
   <div class="row">
+    <div class="field form-group col-md-3">
+      <%= f.label :stock_unit, class: "col-form-label-lg" %>
+      <%= f.collection_select :stock_unit, Unit.all, :code, :name %>
+    </div>
+    <div class="field form-group col-md-3">
+      <%= f.label :stock_quantity, class: "col-form-label-lg" %>
+      <%= f.number_field :stock_quantity, {required: true, class: "form-control", max: 999999, min: 0 } %>
+    </div>
+    <div class="field form-group col-md-6">
+      <%= f.label :url, class: "col-form-label-lg" %>
+      <%= f.url_field :url, {maxlength: 255, required: false, class: "form-control"} %>
+    </div>
+  </div>
+  <div class="row">
     <div class="btn-toolbar">
       <div class="btn-group mr-2">
         <%= f.submit '登録', class: "btn btn-warning" %>
