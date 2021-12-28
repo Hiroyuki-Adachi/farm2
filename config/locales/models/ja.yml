@@ -28,6 +28,7 @@ ja:
       system: "システム"
       owned_rice_price: "保有米(単価)"
       cost_type: "原価種別"
+      chemical_inventory: "農薬棚卸"
 
     attributes:
       chemical:
@@ -294,6 +295,10 @@ ja:
         name: "名称"
         phonetic: "名称(ふりがな)" 
         display_order: "表示順"
+
+      chemical_inventory:
+        name: "名称"
+        checked_on: "日付"
 
   status:
     organization:

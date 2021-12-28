@@ -10,6 +10,12 @@
 #  chemical_adjust_type_id(在庫調整種別) :integer          default(0), not null
 #
 class ChemicalInventory < ApplicationRecord
-  belongs_to :adjust_type, class_name: :ChemicalAdjustType
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
+  belongs_to_active_hash :adjust_type, class_name: "ChemicalAdjustType"
   has_many :stocks, class_name: :ChemicalStock, dependent: :destroy
+  accepts_nested_attributes_for :stocks, allow_destroy: true
+
+  scope :inventories, -> {where(chemical_adjust_type_id: ChemicalAdjustType::INVENTORY).order(:checked_on)}
+  scope :stores, -> {where(chemical_adjust_type_id: ChemicalAdjustType::STORED).order(:checked_on)}
 end
