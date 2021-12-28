@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 2021_12_27_115519) do
 
   create_table "chemical_inventories", comment: "農薬棚卸", force: :cascade do |t|
     t.date "checked_on", null: false, comment: "確認日"
+    t.integer "chemical_adjust_type_id", default: 0, null: false, comment: "在庫調整種別"
     t.string "name", limit: 40, default: "", null: false, comment: "棚卸名称"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -108,12 +109,14 @@ ActiveRecord::Schema.define(version: 2021_12_27_115519) do
     t.date "stock_on", null: false, comment: "在庫日"
     t.integer "chemical_id", null: false, comment: "薬剤"
     t.integer "work_chemical_id", comment: "薬剤使用"
-    t.integer "chemical_inventory_id", comment: "薬剤使用"
+    t.integer "chemical_inventory_id", comment: "薬剤棚卸"
     t.string "name", limit: 40, default: "", null: false, comment: "在庫名称"
     t.decimal "stored", precision: 5, scale: 1, default: "0.0", null: false, comment: "入庫量"
     t.decimal "shipping", precision: 5, scale: 1, default: "0.0", null: false, comment: "出庫量"
-    t.decimal "stock", precision: 7, scale: 1, default: "0.0", null: false, comment: "在庫量"
+    t.decimal "using", precision: 5, scale: 1, default: "0.0", null: false, comment: "使用量"
     t.decimal "inventory", precision: 7, scale: 1, default: "0.0", null: false, comment: "棚卸量"
+    t.decimal "stock", precision: 7, scale: 1, default: "0.0", null: false, comment: "在庫量"
+    t.decimal "adjust", precision: 5, scale: 1, default: "0.0", null: false, comment: "調整量"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

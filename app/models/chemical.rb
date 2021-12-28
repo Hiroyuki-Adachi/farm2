@@ -33,8 +33,8 @@ class Chemical < ApplicationRecord
 
   belongs_to :chemical_type
   belongs_to :base_unit
-  has_many :chemical_terms, dependent: :delete_all
-  has_many :stocks, class_name: :ChemicalStock, dependent: :delete_all
+  has_many :chemical_terms, dependent: :destroy
+  has_many :stocks, class_name: :ChemicalStock, dependent: :destroy
 
   validates :name,          presence: true
   validates :display_order, presence: true
