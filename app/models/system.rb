@@ -34,4 +34,8 @@ class System < ApplicationRecord
   validates :target_to,   presence: true
 
   validates :term, numericality: {only_integer: true, greater_than: 2000, less_than: 2100}
+
+  def self.get_system(date)
+    System.find_by("start_date <= ? AND end_date >= ?", date, date)
+  end
 end

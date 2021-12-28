@@ -102,6 +102,9 @@ Rails.application.routes.draw do
       get :tab3
     end
   end
+  namespace :chemicals do
+    resources :inventories, except: [:show]
+  end
   resources :monthly_reports, only: [:index, :show, :edit, :update]
   resources :fixes, param: "fixed_at", except: [:edit, :update]
   resources :personal_informations, param: "token", only: [:show] do
