@@ -19,6 +19,8 @@ class ChemicalStock < ApplicationRecord
   belongs_to :work_chemical
   belongs_to :chemical_inventory
 
+  validates :chemical_id, uniqueness: { scope: :chemical_inventory}
+
   before_save :save_inventory
 
   def save_inventory

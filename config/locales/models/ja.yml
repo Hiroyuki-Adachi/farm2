@@ -29,6 +29,7 @@ ja:
       owned_rice_price: "保有米(単価)"
       cost_type: "原価種別"
       chemical_inventory: "農薬棚卸"
+      chemical_stock: "農薬在庫"
 
     attributes:
       chemical:
@@ -299,6 +300,12 @@ ja:
       chemical_inventory:
         name: "名称"
         checked_on: "日付"
+        stocks: "在庫"
+
+      chemical_stock:
+        name: "名称"
+        stock_on: "日付"
+        chemical_id: "薬剤"
 
   status:
     organization:
