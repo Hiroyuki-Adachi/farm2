@@ -104,6 +104,7 @@ Rails.application.routes.draw do
   end
   namespace :chemicals do
     resources :inventories, except: [:show]
+    resources :stores, except: [:show]
   end
   resources :monthly_reports, only: [:index, :show, :edit, :update]
   resources :fixes, param: "fixed_at", except: [:edit, :update]

@@ -1,8 +1,8 @@
-<h1>棚卸情報更新</h1>
+<h1>納品情報更新</h1>
 <%= error_print(@inventory) %>
 <% chemical_types = ChemicalType.usual %>
 <% stock_system = System.get_system(@inventory.checked_on) %>
-<%= form_with model: @inventory, url: chemicals_inventory_path(@inventory) do |f| %>
+<%= form_with model: @inventory, url: chemicals_store_path(@inventory) do |f| %>
  <div class="row">
     <div class="field form-group col-md-3">
       <%= f.label :checked_on, class: "col-form-label-lg" %>
@@ -47,7 +47,7 @@
               %>
             </td>
             <td>
-              <%= fs.number_field :inventory, {min: 0, max: 999999.9, step: 1, required: true, class: "form-control"} %>
+              <%= fs.number_field :stored, {min: 0, max: 999999.9, step: 1, required: true, class: "form-control"} %>
             </td>
             <td>
               <%= fs.hidden_field :id %>
@@ -65,10 +65,10 @@
         <%= f.submit '登録', class: "btn btn-warning" %>
       </div>
       <div class="btn-group mr-2">
-        <%= link_to '削除', chemicals_inventory_path(@inventory), {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
+        <%= link_to '削除', chemicals_store_path(@inventory), {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
       </div>
       <div class="btn-group mr-2">
-        <%= link_to "戻る", chemicals_inventories_path, {class: "btn btn-outline-dark"}%>
+        <%= link_to "戻る", chemicals_stores_path, {class: "btn btn-outline-dark"}%>
       </div>
     </div>
   </div>

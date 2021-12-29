@@ -1,9 +1,9 @@
-class Chemicals::InventoriesController < ApplicationController
+class Chemicals::StoresController < ApplicationController
   include PermitManager
   before_action :set_inventory, only: [:edit, :update, :destroy]
 
   def index
-    @inventories = ChemicalInventory.inventories
+    @inventories = ChemicalInventory.stores
   end
 
   def new
@@ -13,7 +13,7 @@ class Chemicals::InventoriesController < ApplicationController
   def create
     @inventory = ChemicalInventory.new(inventory_params)
     if @inventory.save
-      redirect_to edit_chemicals_inventory_path(@inventory)
+      redirect_to edit_chemicals_store_path(@inventory)
     else
       render action: :new
     end
@@ -25,7 +25,7 @@ class Chemicals::InventoriesController < ApplicationController
 
   def update
     if @inventory.update(inventory_params)
-      redirect_to edit_chemicals_inventory_path(@inventory)
+      redirect_to edit_chemicals_store_path(@inventory)
     else
       render action: :edit
     end
@@ -33,14 +33,13 @@ class Chemicals::InventoriesController < ApplicationController
 
   def destroy
     @inventory.destroy
-    redirect_to chemicals_inventories_path
+    redirect_to chemicals_stores_path
   end
 
   private
 
   def set_inventory
     @inventory = ChemicalInventory.find(params[:id])
-    to_error_path unless @inventory.inventory?
   end
 
   def inventory_params
@@ -49,8 +48,8 @@ class Chemicals::InventoriesController < ApplicationController
       .permit(
         :name,
         :checked_on,
-        stocks_attributes: [:inventory, :chemical_id, :_destroy, :id]
+        stocks_attributes: [:stored, :chemical_id, :_destroy, :id]
       )
-      .merge(chemical_adjust_type_id: ChemicalAdjustType::INVENTORY.id)
+      .merge(chemical_adjust_type_id: ChemicalAdjustType::STORED.id)
   end
 end
