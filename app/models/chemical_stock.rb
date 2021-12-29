@@ -17,5 +17,14 @@
 class ChemicalStock < ApplicationRecord
   belongs_to :chemical
   belongs_to :work_chemical
-  belongs_to :inventory, class_name: :ChemicalInventory
+  belongs_to :chemical_inventory
+
+  before_save :save_inventory
+
+  def save_inventory
+    if chemical_inventory_id
+      self.name = chemical_inventory.name
+      self.stock_on = chemical_inventory.checked_on
+    end
+  end
 end

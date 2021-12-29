@@ -23,6 +23,14 @@ class ChemicalTerm < ApplicationRecord
 SQL
   }
 
+  scope :by_type, -> (term, chemical_type_id) {
+    joins(:chemical)
+      .where(term: term)
+      .where("chemicals.chemical_type_id = ?", chemical_type_id)
+      .order("chemicals.phonetic, chemicals.display_order, chemicals.id")
+      .select("chemicals.*")
+  }
+
   scope :land, ->{joins(:chemical).where(<<SQL)}
   EXISTS (SELECT * FROM chemical_kinds WHERE chemical_kinds.chemical_type_id = chemicals.chemical_type_id)
 SQL

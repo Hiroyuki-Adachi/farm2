@@ -6,10 +6,10 @@ class CreateChemicalStocks < ActiveRecord::Migration[6.1]
       t.integer   :work_chemical_id,      {null: true, comment: "薬剤使用"}
       t.integer   :chemical_inventory_id, {null: true, comment: "薬剤棚卸"}
       t.string    :name,      {limit: 40, null: false, default: "", comment: "在庫名称"}
-      t.decimal   :stored,    {null: false, precision: 5, scale: 1, default: 0, comment: "入庫量"}
-      t.decimal   :shipping,  {null: false, precision: 5, scale: 1, default: 0, comment: "出庫量"}
-      t.decimal   :using,     {null: false, precision: 5, scale: 1, default: 0, comment: "使用量"}
-      t.decimal   :inventory, {null: false, precision: 7, scale: 1, default: 0, comment: "棚卸量"}
+      t.decimal   :stored,    {null: true,  precision: 5, scale: 1, comment: "入庫量"}
+      t.decimal   :shipping,  {null: true,  precision: 5, scale: 1, comment: "出庫量"}
+      t.decimal   :using,     {null: true,  precision: 5, scale: 1, comment: "使用量"}
+      t.decimal   :inventory, {null: true,  precision: 7, scale: 1, comment: "棚卸量"}
       t.decimal   :stock,     {null: false, precision: 7, scale: 1, default: 0, comment: "在庫量"}
       t.decimal   :adjust,    {null: false, precision: 5, scale: 1, default: 0, comment: "調整量"}
       t.timestamps
