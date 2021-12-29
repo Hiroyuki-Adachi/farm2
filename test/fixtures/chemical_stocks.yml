@@ -19,3 +19,9 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+stock_inventory:
+  chemical_id: '3'
+  chemical_inventory: inventory1
+  stock_on: '2015-12-15'
+  name: '年末棚卸'
+  inventory: 200

@@ -14,3 +14,7 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+
+inventory1:
+  checked_on: '2015-12-15'
+  name: '年末棚卸'
