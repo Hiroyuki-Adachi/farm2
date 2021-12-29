@@ -18,3 +18,9 @@
 inventory1:
   checked_on: '2015-12-15'
   name: '年末棚卸'
+  chemical_adjust_type_id: 1
+
+store1:
+  checked_on: '2015-12-16'
+  name: '年末納品'
+  chemical_adjust_type_id: 1

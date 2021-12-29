@@ -57,6 +57,7 @@
   <div aria-labelledby="navbarStock" style="display:none;">
     <span class="h5">在庫管理</span>
     <%= link_to '棚卸処理', chemicals_inventories_path, {class: "dropdown-item", data: {controller: :inventories}} %>
+    <%= link_to '納品処理', chemicals_stores_path, {class: "dropdown-item", data: {controller: :stores}} %>
   </div>
   <div aria-labelledby="navbarCost" style="display:none;">
     <span class="h5">原価管理</span>

@@ -25,3 +25,10 @@ stock_inventory:
   stock_on: '2015-12-15'
   name: '年末棚卸'
   inventory: 200
+
+stock_store:
+  chemical_id: '3'
+  chemical_inventory: store1
+  stock_on: '2015-12-16'
+  name: '年末納品'
+  inventory: 300

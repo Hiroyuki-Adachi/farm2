@@ -18,4 +18,12 @@ class ChemicalInventory < ApplicationRecord
 
   scope :inventories, -> {where(chemical_adjust_type_id: ChemicalAdjustType::INVENTORY).order(:checked_on)}
   scope :stores, -> {where(chemical_adjust_type_id: ChemicalAdjustType::STORED).order(:checked_on)}
+
+  def inventory?
+    chemical_adjust_type_id == ChemicalAdjustType::INVENTORY.id
+  end
+
+  def stored?
+    chemical_adjust_type_id == ChemicalAdjustType::STORED.id
+  end
 end
