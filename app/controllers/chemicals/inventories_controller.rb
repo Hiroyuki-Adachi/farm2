@@ -13,13 +13,27 @@ class Chemicals::InventoriesController < ApplicationController
   def create
     @inventory = ChemicalInventory.new(inventory_params)
     if @inventory.save
-      redirect_to chemicals_inventories_path
+      redirect_to edit_chemicals_inventory_path(@inventory)
     else
       render action: :new
     end
   end
 
   def edit
+    @inventory.stocks.build
+  end
+
+  def update
+    if @inventory.update(inventory_params)
+      redirect_to edit_chemicals_inventory_path(@inventory)
+    else
+      render action: :edit
+    end
+  end
+
+  def destroy
+    @inventory.destroy
+    redirect_to chemicals_inventories_path
   end
 
   private
@@ -34,7 +48,7 @@ class Chemicals::InventoriesController < ApplicationController
       .permit(
         :name,
         :checked_on,
-        stocks_attributes: [:stock, :chemical_id]
+        stocks_attributes: [:inventory, :chemical_id, :_destroy, :id]
       )
       .merge(chemical_adjust_type_id: ChemicalAdjustType::INVENTORY.id)
   end
