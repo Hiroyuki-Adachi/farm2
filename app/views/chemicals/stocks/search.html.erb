@@ -1,0 +1,41 @@
+<h2><%= chemical_name(@chemical_term.chemical) %></h2>
+<table class="table table-sm table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th>日付</th>
+      <th>種別</th>
+      <th class="numeric">入庫量</th>
+      <th class="numeric">出庫量</th>
+      <th class="numeric">増減量</th>
+      <th class="numeric">在庫量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @target_system.start_date %></td>
+      <td>期首在庫</td>
+      <td class="numeric"></td>
+      <td class="numeric"></td>
+      <td class="numeric"></td>
+      <td class="numeric"></td>
+    </tr>
+    <% @stocks.each do |stock| %>
+      <tr>
+        <td><%= stock.stock_on %></td>
+        <td><%= stock.long_name %></td>
+        <td class="numeric"><%= stock.stored_format %></td>
+        <td class="numeric"><%= stock.shipping_format %></td>
+        <td class="numeric"><%= stock.adjust_format %></td>
+        <td class="numeric"><%= stock.stock_format %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td><%= @target_system.end_date %></td>
+      <td>期末在庫</td>
+      <td class="numeric"></td>
+      <td class="numeric"></td>
+      <td class="numeric"></td>
+      <td class="numeric"></td>
+    </tr>
+  </tbody>
+</table>

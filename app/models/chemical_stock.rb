@@ -21,6 +21,11 @@ class ChemicalStock < ApplicationRecord
 
   validates :chemical_id, uniqueness: { scope: :chemical_inventory}
 
+  scope :usual, -> (chemical_id) {
+    where(chemical_id: chemical_id)
+    .order(:stock_on, :id)
+  }
+
   before_save :save_inventory
 
   def save_inventory

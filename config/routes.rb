@@ -93,7 +93,22 @@ Rails.application.routes.draw do
   resources :homes, except: [:show]
   resources :workers, except: [:show]
   resources :machines, except: [:show]
-  resources :chemicals, except: [:show]
+  resources :chemicals, except: [:show] do
+    resources :stocks, controller: "chemicals/stocks", except: [:show, :index] do
+      collection do
+        get :search
+      end
+    end
+  end
+  namespace :chemicals do
+    resources :inventories, except: [:show]
+    resources :stores, except: [:show]
+    resources :stocks, only: [:index] do
+      collection do
+        get :load
+      end
+    end
+  end
   resources :sections, except: [:show]
   resources :statistics, only: [:index] do
     collection do
@@ -101,10 +116,6 @@ Rails.application.routes.draw do
       get :tab2
       get :tab3
     end
-  end
-  namespace :chemicals do
-    resources :inventories, except: [:show]
-    resources :stores, except: [:show]
   end
   resources :monthly_reports, only: [:index, :show, :edit, :update]
   resources :fixes, param: "fixed_at", except: [:edit, :update]
