@@ -12,7 +12,7 @@
 class ChemicalInventory < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
-  belongs_to_active_hash :adjust_type, class_name: "ChemicalAdjustType"
+  belongs_to_active_hash :chemical_adjust_type
   has_many :stocks, class_name: :ChemicalStock, dependent: :destroy
   accepts_nested_attributes_for :stocks, allow_destroy: true
 

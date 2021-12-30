@@ -28,7 +28,7 @@ SQL
       .where(term: term)
       .where("chemicals.chemical_type_id = ?", chemical_type_id)
       .order("chemicals.phonetic, chemicals.display_order, chemicals.id")
-      .select("chemicals.*")
+      .select("chemicals.*, chemical_terms.id AS chemical_term_id")
   }
 
   scope :land, ->{joins(:chemical).where(<<SQL)}

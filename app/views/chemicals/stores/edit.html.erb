@@ -1,7 +1,7 @@
 <h1>納品情報更新</h1>
 <%= error_print(@inventory) %>
 <% chemical_types = ChemicalType.usual %>
-<% stock_system = System.get_system(@inventory.checked_on) %>
+<% stock_system = System.get_system(@inventory.checked_on, current_organization) %>
 <%= form_with model: @inventory, url: chemicals_store_path(@inventory) do |f| %>
  <div class="row">
     <div class="field form-group col-md-3">
