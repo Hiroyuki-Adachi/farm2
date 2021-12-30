@@ -1,3 +1,4 @@
+import { Modal } from "bootstrap";
 
 window.addEventListener("load", () => {
     loadChemical(document.getElementById("term").value, document.getElementById("chemical_type").value);
@@ -10,6 +11,16 @@ window.addEventListener("load", () => {
     });
     document.getElementById("search").addEventListener("click", (event) => {
         search(document.getElementById("chemical_id").value);
+    });
+    document.getElementById("new_button").addEventListener("click", (event) => {
+        fetch(document.getElementById("new_path").value)
+        .then((data) => data.text())
+        .then((html) => {
+            const modalForm = document.getElementById("modal_form");
+            modalForm.innerHTML = html;
+            const popup = new Modal(modalForm);
+            popup.show();
+        });
     });
 });
 
@@ -28,5 +39,16 @@ function search(chemicalTerm)
     .then((data) => data.text())
     .then((html) => {
         document.getElementById("search_result").innerHTML = html;
+        document.getElementById("new_button").disabled = false;
+        addEventForEdit();
+    });
+}
+
+function addEventForEdit()
+{
+    document.querySelectorAll(".edit-button").forEach((element) => {
+        element.addEventListener("click", (event) => {
+
+        });
     });
 }

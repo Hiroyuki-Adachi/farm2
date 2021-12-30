@@ -306,6 +306,10 @@ ja:
         name: "名称"
         stock_on: "日付"
         chemical_id: "薬剤"
+        stock: "在庫量"
+        stored: "入庫量"
+        shipping: "出庫量"
+        inventory: "棚卸量"
 
   status:
     organization:

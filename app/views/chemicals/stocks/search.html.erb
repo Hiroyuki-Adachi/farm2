@@ -8,17 +8,10 @@
       <th class="numeric">出庫量</th>
       <th class="numeric">増減量</th>
       <th class="numeric">在庫量</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><%= @target_system.start_date %></td>
-      <td>期首在庫</td>
-      <td class="numeric"></td>
-      <td class="numeric"></td>
-      <td class="numeric"></td>
-      <td class="numeric"></td>
-    </tr>
     <% @stocks.each do |stock| %>
       <tr>
         <td><%= stock.stock_on %></td>
@@ -27,15 +20,19 @@
         <td class="numeric"><%= stock.shipping_format %></td>
         <td class="numeric"><%= stock.adjust_format %></td>
         <td class="numeric"><%= stock.stock_format %></td>
+        <td>
+          <div class="btn-group">
+            <%= button_tag class: "btn btn-success btn-sm edit-button", disabled: !stock.editable?, type: :button,
+              data: {path: edit_chemical_stock_path(chemical_id: @chemical_term.id, id: stock.id)} do %>
+              修正
+            <% end %>
+            <%= link_to "日報",
+              work_path(stock&.work_chemical&.work_id || 0),
+              {target: :_blank, class: "btn btn-outline-success btn-sm #{stock.work_chemical_id.nil? ? "disabled" : ""}"} %>
+          </div>
+        </td>
       </tr>
     <% end %>
-    <tr>
-      <td><%= @target_system.end_date %></td>
-      <td>期末在庫</td>
-      <td class="numeric"></td>
-      <td class="numeric"></td>
-      <td class="numeric"></td>
-      <td class="numeric"></td>
-    </tr>
   </tbody>
 </table>
+<%= hidden_field_tag :new_path, new_chemical_stock_path(chemical_id: @chemical_term.id) %>

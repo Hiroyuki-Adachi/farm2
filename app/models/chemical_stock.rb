@@ -53,15 +53,28 @@ class ChemicalStock < ApplicationRecord
   end
 
   def self.from_work(chemical_id, start_date)
-    ChemicalStock.where(chemical_id: chemical_id).where.not(work_chemical_id: nil).destroy_all
+    ChemicalStock.where(chemical_id: chemical_id).where.not(work_chemical_id: nil).update_all("\"using\" = 0")
     WorkChemical.for_stock(chemical_id, start_date).each do |work_chemical|
-      ChemicalStock.create(
-        work_chemical_id: work_chemical.id,
-        chemical_id: chemical_id,
-        stock_on: work_chemical.work.worked_at,
-        name: "#{work_chemical.work.work_type.name}(#{work_chemical.work.work_kind.name})",
-        using: work_chemical.quantity_for_stock
-      )
+      stock = ChemicalStock.find_by(work_chemical_id: work_chemical.id)
+      if stock
+        stock.stock_on = work_chemical.work.worked_at
+        stock.name = "#{work_chemical.work.work_type.name}(#{work_chemical.work.work_kind.name})"
+        stock.using = work_chemical.quantity_for_stock
+        stock.save!
+      else
+        ChemicalStock.create(
+          work_chemical_id: work_chemical.id,
+          chemical_id: chemical_id,
+          stock_on: work_chemical.work.worked_at,
+          name: "#{work_chemical.work.work_type.name}(#{work_chemical.work.work_kind.name})",
+          using: work_chemical.quantity_for_stock
+        )
+      end
     end
+    ChemicalStock.where(chemical_id: chemical_id).where.not(work_chemical_id: nil).where(using: 0).destroy_all
+  end
+
+  def editable?
+    work_chemical_id.nil? && inventory.nil?
   end
 end
