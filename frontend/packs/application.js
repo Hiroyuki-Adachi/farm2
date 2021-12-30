@@ -5,7 +5,7 @@ const jQuery = require('jquery');
 window.jQuery = window.$ = jQuery;
 global.jQuery = global.$ = jQuery;
 
-import "bootstrap";
+import { Modal } from "bootstrap";
 import "chart.js";
 
 import bootbox from 'bootbox';
