@@ -24,7 +24,7 @@ class MachineResult < ApplicationRecord
 
   belongs_to  :machine, -> {with_deleted}
   belongs_to  :work_result
-  belongs_to_active_hash  :fixed_adjust, {class_name: "Adjust"}
+  belongs_to_active_hash  :fixed_adjust, class_name: "Adjust"
 
   has_one :work, through: :work_result
   has_one :owner, -> {with_deleted}, through: :machine

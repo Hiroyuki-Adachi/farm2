@@ -1,5 +1,4 @@
 <div id="content_lands" class="content">
-  <div class="sub_title">※作業田</div>
   <table id="detail_lands">
     <thead>
     <tr>
@@ -31,5 +30,5 @@
       <% end %>
     </tbody>
   </table>
-  <div id="cover_lands" class="cover" onclick="location.href='<%=raw edit_lands_work_path(@work) %>'"></div>
+  <div id="cover_lands" class="cover" onclick="location.href='<%=raw new_work_land_path(work_id: @work) %>'"></div>
 </div>

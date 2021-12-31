@@ -11,7 +11,6 @@ class ChemicalDecorator < Draper::Decorator
   #   end
 
   def this_term_flag(term)
-    model.term = term
-    return model.this_term_flag ? "●" : h.raw("&nbsp;")
+    model.this_term?(term) ? "●" : ""
   end
 end

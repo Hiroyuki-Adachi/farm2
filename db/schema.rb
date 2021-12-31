@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_03_110852) do
+ActiveRecord::Schema.define(version: 2021_12_27_115519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,10 +91,34 @@ ActiveRecord::Schema.define(version: 2021_11_03_110852) do
     t.index ["user_id", "work_kind_id"], name: "calendar_work_kind_index", unique: true
   end
 
+  create_table "chemical_inventories", comment: "農薬棚卸", force: :cascade do |t|
+    t.date "checked_on", null: false, comment: "確認日"
+    t.integer "chemical_adjust_type_id", default: 0, null: false, comment: "在庫調整種別"
+    t.string "name", limit: 40, default: "", null: false, comment: "棚卸名称"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "chemical_kinds", id: { type: :serial, comment: "作業種別薬剤種別利用マスタ" }, comment: "作業種別薬剤種別利用マスタ", force: :cascade do |t|
     t.integer "chemical_type_id", null: false, comment: "薬剤種別"
     t.integer "work_kind_id", null: false, comment: "作業種別"
     t.index ["chemical_type_id", "work_kind_id"], name: "index_chemical_kinds_on_chemical_type_id_and_work_kind_id", unique: true
+  end
+
+  create_table "chemical_stocks", comment: "農薬在庫", force: :cascade do |t|
+    t.date "stock_on", null: false, comment: "在庫日"
+    t.integer "chemical_id", null: false, comment: "薬剤"
+    t.integer "work_chemical_id", comment: "薬剤使用"
+    t.integer "chemical_inventory_id", comment: "薬剤棚卸"
+    t.string "name", limit: 40, default: "", null: false, comment: "在庫名称"
+    t.decimal "stored", precision: 5, scale: 1, comment: "入庫量"
+    t.decimal "shipping", precision: 5, scale: 1, comment: "出庫量"
+    t.decimal "using", precision: 5, scale: 1, comment: "使用量"
+    t.decimal "inventory", precision: 7, scale: 1, comment: "棚卸量"
+    t.decimal "stock", precision: 7, scale: 1, default: "0.0", null: false, comment: "在庫量"
+    t.decimal "adjust", precision: 5, scale: 1, default: "0.0", null: false, comment: "調整量"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "chemical_terms", id: :serial, comment: "薬剤年度別利用マスタ", force: :cascade do |t|
@@ -134,6 +158,9 @@ ActiveRecord::Schema.define(version: 2021_11_03_110852) do
     t.string "carton_unit", limit: 2, default: "", null: false, comment: "購買単位"
     t.decimal "carton_quantity", precision: 6, default: "0", null: false, comment: "購買数"
     t.boolean "aqueous_flag", default: false, null: false, comment: "水溶フラグ"
+    t.string "stock_unit", limit: 2, default: "", null: false, comment: "在庫単位"
+    t.decimal "stock_quantity", precision: 6, default: "0", null: false, comment: "在庫数"
+    t.string "url", limit: 255, default: "", null: false, comment: "URL"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
   end
 
@@ -276,6 +303,15 @@ ActiveRecord::Schema.define(version: 2021_11_03_110852) do
     t.integer "fixed_by", comment: "確定者"
   end
 
+  create_table "healths", comment: "健康", force: :cascade do |t|
+    t.string "name", limit: 10, null: false, comment: "原価種別名称"
+    t.string "code", limit: 1, null: false, comment: "コード"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
+  end
+
   create_table "homes", id: { type: :serial, comment: "世帯マスタ" }, comment: "世帯マスタ", force: :cascade do |t|
     t.string "phonetic", limit: 15, comment: "世帯名(よみ)"
     t.string "name", limit: 10, comment: "世帯名"
@@ -375,6 +411,15 @@ ActiveRecord::Schema.define(version: 2021_11_03_110852) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["validated_at", "machine_id", "machine_type_id"], name: "machine_price_headers_2nd_key", unique: true
+  end
+
+  create_table "machine_remarks", comment: "作業機械備考", force: :cascade do |t|
+    t.integer "work_id", null: false, comment: "作業"
+    t.integer "machine_id", null: false, comment: "機械"
+    t.string "remarks", limit: 30, default: "", null: false, comment: "備考"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["work_id", "machine_id"], name: "machine_remarks_2nd", unique: true
   end
 
   create_table "machine_results", id: { type: :serial, comment: "機械稼動データ" }, comment: "機械稼動データ", force: :cascade do |t|
@@ -584,8 +629,8 @@ ActiveRecord::Schema.define(version: 2021_11_03_110852) do
     t.decimal "adjust_price", precision: 4, default: "0", null: false, comment: "基準額(調整のみ)"
     t.decimal "dry_adjust_price", precision: 4, default: "0", null: false, comment: "基準額(乾燥調整)"
     t.boolean "half_sum_flag", default: false, null: false, comment: "半端米集計フラグ"
-    t.boolean "waste_sum_flag", default: false, null: false, comment: "くず米集計フラグ"
     t.decimal "relative_price", precision: 5, default: "0", null: false, comment: "縁故米加算額"
+    t.decimal "waste_price", precision: 4, default: "0", null: false, comment: "くず米金額"
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
     t.index ["term"], name: "index_systems_on_term", unique: true
   end
@@ -620,6 +665,7 @@ ActiveRecord::Schema.define(version: 2021_11_03_110852) do
     t.integer "display_order", default: 0, null: false, comment: "並び順"
     t.integer "whole_crop_land_id", comment: "WCS土地"
     t.integer "machine_id", comment: "機械"
+    t.integer "cost_type_id", comment: "原価種別"
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
   end
 
@@ -677,10 +723,10 @@ ActiveRecord::Schema.define(version: 2021_11_03_110852) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "chemical_group_no", default: 1, null: false, comment: "薬剤グループ番号"
-    t.boolean "aqueous_flag", default: false, null: false, comment: "水溶フラグ"
     t.boolean "area_flag", default: false, null: false, comment: "10a当たり入力"
     t.decimal "magnification", precision: 5, scale: 1, comment: "水溶液(リットル)"
     t.text "remarks", default: "", null: false, comment: "備考"
+    t.integer "dilution_id", default: 0, null: false, comment: "希釈"
     t.index ["work_id", "chemical_id", "chemical_group_no"], name: "work_chemicals_2nd_key", unique: true
   end
 
@@ -735,6 +781,8 @@ ActiveRecord::Schema.define(version: 2021_11_03_110852) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "uuid", limit: 36, comment: "UUID(カレンダー用)"
+    t.integer "health_id", default: 0, null: false, comment: "健康"
+    t.string "remarks", limit: 20, default: "", null: false, comment: "備考"
     t.index ["work_id", "worker_id"], name: "index_work_results_on_work_id_and_worker_id", unique: true
   end
 
@@ -748,6 +796,7 @@ ActiveRecord::Schema.define(version: 2021_11_03_110852) do
     t.boolean "land_flag", default: true, null: false, comment: "土地利用"
     t.string "icon_name", limit: 40, comment: "アイコン名"
     t.binary "icon", comment: "アイコン"
+    t.boolean "cost_flag", default: false, null: false, comment: "原価フラグ"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
   end
 

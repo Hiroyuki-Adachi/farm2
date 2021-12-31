@@ -19,7 +19,7 @@
 #  expense_type_id(経費種別)    :integer          default(0), not null
 #
 class Expense < ApplicationRecord
-  has_many :expense_work_types, dependent: :delete_all
+  has_many :expense_work_types, dependent: :destroy
   has_many :work_types, -> {order(:display_order)}, through: :expense_work_types
   belongs_to :expense_type
   belongs_to :chemical_type, optional: true

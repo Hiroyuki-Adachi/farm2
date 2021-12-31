@@ -27,7 +27,6 @@ class Drying < ApplicationRecord
   belongs_to :work_type, -> {with_deleted}
   belongs_to :home, -> {with_deleted}
   belongs_to_active_hash :drying_type
-
   has_many   :drying_moths, dependent: :destroy
   has_many   :drying_lands, dependent: :destroy
   has_one    :adjustment,   dependent: :destroy
@@ -63,8 +62,9 @@ class Drying < ApplicationRecord
     return adjustment&.rice_weight(system) || 0
   end
 
-  def shipped_weight(system)
-    harvest_weight(system) + (system.waste_sum_flag? ? (adjustment&.waste_weight || 0) : 0)
+  def waste_weight
+    return 0 if drying_type == DryingType::COUNTRY
+    return adjustment&.waste_weight || 0
   end
 
   def adjust_only?(home_id)
@@ -86,7 +86,15 @@ class Drying < ApplicationRecord
   end
 
   def amount(system, home_id)
-    shipped_weight(system) / KG_PER_BAG_RICE * price(system, home_id)
+    harvest_weight(system) / KG_PER_BAG_RICE * price(system, home_id)
+  end
+
+  def waste_amount(system)
+    waste_weight / KG_PER_BAG_WASTE * system.waste_price
+  end
+
+  def total_amount(system, home_id)
+    amount(system, home_id) + waste_amount(system)
   end
 
   def self.calc_total(dryings, home, system)
@@ -108,16 +116,16 @@ class Drying < ApplicationRecord
       if drying.adjust_only?(home.id)
         rice_totals[DryingType::ADJUST.id] += drying.adjustment.rice_weight(system) || 0
         waste_totals[DryingType::ADJUST.id] += drying.adjustment.waste_weight || 0
-        shipped_totals[DryingType::ADJUST.id] += drying.shipped_weight(system)
+        shipped_totals[DryingType::ADJUST.id] += drying.harvest_weight(system)
         next
       end
       if drying.drying_type == DryingType::SELF
         rice_totals[DryingType::SELF.id] += drying.adjustment.rice_weight(system) || 0
         waste_totals[DryingType::SELF.id] += drying.adjustment.waste_weight || 0
-        shipped_totals[DryingType::SELF.id] += drying.shipped_weight(system)
+        shipped_totals[DryingType::SELF.id] += drying.harvest_weight(system)
       else
         rice_totals[DryingType::COUNTRY.id] += drying.drying_moths.sum(:rice_weight) || 0
-        shipped_totals[DryingType::COUNTRY.id] += drying.shipped_weight(system)
+        shipped_totals[DryingType::COUNTRY.id] += drying.harvest_weight(system)
       end
     end
     return rice_totals, waste_totals, shipped_totals

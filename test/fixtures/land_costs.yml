@@ -4,7 +4,6 @@
 #
 #  id(土地原価)           :integer          not null, primary key
 #  activated_on(有効日)   :date             default(Mon, 01 Jan 1900), not null
-#  cost(原価)             :decimal(7, 1)    default(0.0), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  land_id(土地)          :integer          not null

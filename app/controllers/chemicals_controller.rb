@@ -65,7 +65,10 @@ class ChemicalsController < ApplicationController
             :carton_quantity,
             :carton_unit,
             :base_unit_id,
-            :aqueous_flag
+            :aqueous_flag,
+            :stock_quantity,
+            :stock_unit,
+            :url
           )
           .merge(term: @term)
   end

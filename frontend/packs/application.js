@@ -1,14 +1,17 @@
 require("@rails/ujs").start();
 window.Rails = require("@rails/ujs");
 
-const jQuery = require('jquery');
-window.jQuery = window.$ = jQuery;
-global.jQuery = global.$ = jQuery;
+import { $ } from 'jquery';
+window.jQuery = window.$ = $;
+global.jQuery = global.$ = $;
 
-import "bootstrap";
+import Modal from "bootstrap";
+window.Modal = Modal;
+global.Modal = Modal;
+
 import "chart.js";
 
-const bootbox = require('bootbox');
+import bootbox from 'bootbox';
 window.bootbox = bootbox;
 global.bootbox = bootbox;
 
