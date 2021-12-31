@@ -51,6 +51,10 @@ s2015:
   default_fee: 15000
   light_oil_price: 120
   relative_price: 1000
+  dry_price: 1000
+  dry_adjust_price: 1300
+  adjust_price: 400
+  waste_price: 300
 
 s2016:
   term: 2016

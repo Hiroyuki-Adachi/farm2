@@ -1,0 +1,31 @@
+<h1>棚卸一覧</h1>
+<% if @inventories.count > 0 %>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>日付</th>
+      <th>名称</th>
+      <th>薬剤(代表)</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @inventories.each do |inventory| %>
+      <tr>
+        <td><%= inventory.checked_on %></td>
+        <td><%= inventory.name %></td>
+        <td><%= inventory.stocks.order(:id).first&.chemical&.name %></td>
+        <td><%= link_to '修正', edit_chemicals_inventory_path(inventory), {class: "btn btn-success btn-sm"} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to '新規棚卸', new_chemicals_inventory_path, class: "btn btn-success" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>

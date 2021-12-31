@@ -29,7 +29,7 @@ class SystemsController < ApplicationController
       :adjust_price,
       :dry_adjust_price,
       :half_sum_flag,
-      :waste_sum_flag,
+      :waste_price,
       :relative_price
     )
   end

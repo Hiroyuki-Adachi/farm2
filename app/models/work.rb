@@ -28,7 +28,7 @@ class Work < ApplicationRecord
   before_create :set_term
 
   validates :worked_at, presence: true
-  validates :weather,   presence: true
+  validates :weather_id,   presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
   validates :work_type_id, presence: true
   validates :work_kind_id, presence: true
@@ -36,8 +36,8 @@ class Work < ApplicationRecord
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
   belongs_to :fix, class_name: "Fix", foreign_key: [:term, :fixed_at], primary_key: [:term, :fixed_at]
-  belongs_to :creator, -> {with_deleted}, {class_name: "Worker", foreign_key: "created_by"}
-  belongs_to :printer, -> {with_deleted}, {class_name: "Worker", foreign_key: "printed_by"}
+  belongs_to :creator, -> {with_deleted}, class_name: "Worker", foreign_key: "created_by"
+  belongs_to :printer, -> {with_deleted}, class_name: "Worker", foreign_key: "printed_by"
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
   belongs_to_active_hash :weather
 
@@ -46,6 +46,7 @@ class Work < ApplicationRecord
   has_many :work_chemicals, dependent: :destroy
   has_many :work_verifications, -> {order('work_verifications.id')}, dependent: :destroy
   has_many :work_work_types, dependent: :destroy
+  has_many :machine_remarks, dependent: :destroy
   has_one :broccoli, class_name: "WorkBroccoli", dependent: :destroy
   has_one :whole_crop, class_name: "WorkWholeCrop", dependent: :destroy
 
@@ -53,7 +54,7 @@ class Work < ApplicationRecord
   has_many :lands, -> {with_deleted}, through: :work_lands
   has_many :chemicals, -> {with_deleted}, through: :work_chemicals
   has_many :machine_results, through: :work_results
-  has_many :checkers, ->  {with_deleted}, through: :work_verifications, source: :worker
+  has_many :checkers, -> {with_deleted}, through: :work_verifications, source: :worker
   has_many :work_types, through: :work_work_types
 
   scope :no_fixed, ->(term){
@@ -427,6 +428,6 @@ SQL
   private
 
   def quantity_params(quantity, add_params)
-    quantity.permit(:quantity, :aqueous_flag, :magnification, :remarks).merge(add_params)
+    quantity.permit(:quantity, :dilution_id, :magnification, :remarks).merge(add_params)
   end
 end

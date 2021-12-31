@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   resources :total_costs, only: [:index, :create]
   namespace :total_costs do
     resources :machines, only: [:index]
+    resources :work_results, only: [:index]
   end
   resources :land_places, except: [:show]
   resources :cost_types, except: [:show]
@@ -92,7 +93,22 @@ Rails.application.routes.draw do
   resources :homes, except: [:show]
   resources :workers, except: [:show]
   resources :machines, except: [:show]
-  resources :chemicals, except: [:show]
+  resources :chemicals, except: [:show] do
+    resources :stocks, controller: "chemicals/stocks", except: [:show, :index] do
+      collection do
+        get :search
+      end
+    end
+  end
+  namespace :chemicals do
+    resources :inventories, except: [:show]
+    resources :stores, except: [:show]
+    resources :stocks, only: [:index] do
+      collection do
+        get :load
+      end
+    end
+  end
   resources :sections, except: [:show]
   resources :statistics, only: [:index] do
     collection do
@@ -136,16 +152,18 @@ Rails.application.routes.draw do
 
   resources :works do
     resources :print, controller: "works/print", only: [:create, :destroy]
+    resources :healths, controller: "works/healths", only: [:new, :create]
+    resources :workers, controller: "works/workers", only: [:new, :create]
+    resources :lands, controller: "works/lands", only: [:new, :create]
+    resources :machines, controller: "works/machines", only: [:new, :create]
+    resources :remarks, controller: "works/remarks", only: [:new, :create]
+    resources :chemicals, controller: "works/chemicals", only: [:new, :create], as: :use_chemicals
+    resources :whole_crops, controller: "works/whole_crops", only: [:new, :create]
     collection do
       get :work_type_select
       get :autocomplete_for_land_place
     end
     member do
-      get :edit_workers
-      get :edit_lands
-      get :edit_machines
-      get :edit_chemicals
-      get :edit_whole_crop
       get :map
     end
   end

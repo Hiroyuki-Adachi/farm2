@@ -13,7 +13,7 @@
 #
 class ChemicalTerm < ApplicationRecord
   belongs_to :chemical, -> {with_deleted}
-  has_many :chemical_work_types, dependent: :delete_all
+  has_many :chemical_work_types, dependent: :destroy
   
   scope :usual, -> (term) {
     joins(chemical: :chemical_type)
@@ -21,6 +21,14 @@ class ChemicalTerm < ApplicationRecord
       .order(Arel.sql(<<SQL))
         chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id
 SQL
+  }
+
+  scope :by_type, -> (term, chemical_type_id) {
+    joins(:chemical)
+      .where(term: term)
+      .where("chemicals.chemical_type_id = ?", chemical_type_id)
+      .order("chemicals.phonetic, chemicals.display_order, chemicals.id")
+      .select("chemicals.*, chemical_terms.id AS chemical_term_id")
   }
 
   scope :land, ->{joins(:chemical).where(<<SQL)}

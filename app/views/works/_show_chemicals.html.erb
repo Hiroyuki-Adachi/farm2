@@ -1,13 +1,14 @@
 <div class="pagebreak"></div>
 <div id="content_chemicals" class="content">
   <div class="sub_title">※使用薬剤</div>
-  <table id="detail_chemicals" style="width:720px;">
+  <table id="detail_chemicals">
     <thead>
     <tr>
       <th style="width:100px;">種別</th>
-      <th style="width:380px;">名称</th>
-      <th style="width:70px;">使用量</th>
-      <th style="width:70px;">(10a当)</th>
+      <th style="width:320px;">名称</th>
+      <th style="width:100px;">使用量</th>
+      <th style="width:100px;">(10a当)</th>
+      <th style="width:100px;">希釈</th>
     </tr>
     </thead>
     <tbody>
@@ -18,7 +19,9 @@
           <td class="chemical"><%= chemical.name %></td>
           <td class="chemical numeric"><%= @chemicals[i][1] %><%= chemical.unit %></td>
           <td class="chemical numeric"><%= chemical_per_area(@work.sum_areas, @chemicals[i][1], chemical) %></td>
+          <td class="chemical numeric"><%= chemical_dilution(@work.work_chemicals, @chemicals[i][0])%></td>
         <%  else %>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>
@@ -28,5 +31,5 @@
       <% end %>
     </tbody>
   </table>
-  <div id="cover_chemicals" class="cover" onclick="location.href='<%=raw edit_chemicals_work_path(@work) %>'"></div>
+  <div id="cover_chemicals" class="cover" onclick="location.href='<%=raw new_work_use_chemical_path(work_id: @work) %>'"></div>
 </div>
