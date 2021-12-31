@@ -26,9 +26,9 @@ class Chemicals::StocksController < ApplicationController
   def create
     @stock = ChemicalStock.new(stock_params)
     if @stock.save
-      render status: 200
+      render json: nil, status: 200
     else
-      render status: 500
+      render json: nil, status: 500
     end
   end
 
@@ -38,15 +38,15 @@ class Chemicals::StocksController < ApplicationController
 
   def update
     if @stock.update(stock_params)
-      render status: 200
+      render json: nil, status: 200
     else
-      render status: 500
+      render json: nil, status: 500
     end
   end
 
   def destroy
     @stock.destroy
-    render status: 200
+    render json: nil, status: 200
   end
 
   private

@@ -31,4 +31,10 @@ stock_store:
   chemical_inventory: store1
   stock_on: '2015-12-16'
   name: '年末納品'
-  inventory: 300
+  stored: 300
+
+stock_edit:
+  chemical_id: '3'
+  stock_on: '2015-12-17'
+  name: '手入力'
+  stored: 500
