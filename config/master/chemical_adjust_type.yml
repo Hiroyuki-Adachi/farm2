@@ -3,7 +3,7 @@
   name: "棚卸"
 - id: 2
   code: STORED
-  name: "入庫"
+  name: "納品"
 - id: 3
   code: SHIPPING
   name: "出庫"

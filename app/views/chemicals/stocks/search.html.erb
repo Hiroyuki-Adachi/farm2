@@ -13,7 +13,7 @@
   </thead>
   <tbody>
     <% @stocks.each do |stock| %>
-      <tr>
+      <tr class="<%= stock.tr_class %>">
         <td><%= stock.stock_on %></td>
         <td><%= stock.long_name %></td>
         <td class="numeric"><%= stock.stored_format %></td>

@@ -21,4 +21,16 @@ class ChemicalStockDecorator < Draper::Decorator
   def adjust_format
     h.number_to_currency(model.adjust, precision: 1, format: "+%n%u", negative_format: "-%n%u", unit: model.chemical.stock_unit)
   end
+
+  def tr_class
+    if model.chemical_inventory_id.present? && model.chemical_inventory.inventory?
+      "table-warning"
+    elsif model.chemical_inventory_id.present? && model.chemical_inventory.stored?
+      "table-primary"
+    elsif model.work_chemical_id.present?
+      "table-danger"
+    else
+      ""
+    end
+  end
 end
