@@ -1,6 +1,6 @@
 class Chemicals::StocksController < ApplicationController
   include PermitManager
-  before_action :set_chemical_term, only: [:search, :new, :edit]
+  before_action :set_chemical_term, only: [:search, :new, :edit, :create, :update]
   before_action :set_stock, only: [:edit, :update, :destroy]
 
   def index
@@ -24,18 +24,42 @@ class Chemicals::StocksController < ApplicationController
   end
 
   def create
+    @stock = ChemicalStock.new(stock_params)
+    if @stock.save
+      render status: 200
+    else
+      render status: 500
+    end
   end
 
   def edit
+    render :form, layout: false
   end
 
   def update
+    if @stock.update(stock_params)
+      render status: 200
+    else
+      render status: 500
+    end
   end
 
   def destroy
   end
 
   private
+
+  def stock_params
+    params
+      .require(:chemical_stock)
+      .permit(
+        :stock_on,
+        :name,
+        :stored,
+        :shipping
+      )
+      .merge(chemical_id: @chemical_term.chemical_id)
+  end
 
   def set_chemical_term
     @chemical_term = ChemicalTerm.find(params[:chemical_id])

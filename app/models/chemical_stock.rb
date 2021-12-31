@@ -19,7 +19,7 @@ class ChemicalStock < ApplicationRecord
   belongs_to :work_chemical
   belongs_to :chemical_inventory
 
-  validates :chemical_id, uniqueness: {scope: :chemical_inventory}
+  validates :chemical_id, uniqueness: {scope: :chemical_inventory}, if: :valid_chemical_id?
 
   scope :usual, -> (chemical_id) {
     where(chemical_id: chemical_id)
@@ -76,5 +76,9 @@ class ChemicalStock < ApplicationRecord
 
   def editable?
     work_chemical_id.nil? && inventory.nil?
+  end
+
+  def valid_chemical_id?
+    chemical_inventory_id.present?
   end
 end

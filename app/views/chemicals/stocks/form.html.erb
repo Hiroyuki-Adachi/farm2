@@ -5,7 +5,9 @@
     </div>
     <div class="modal-body">
       <div class="container-fluid">
-        <%= form_with model: @stock do |f| %>
+        <%= form_with model: @stock, 
+            url: @stock.new_record? ? chemical_stocks_path(chemical_id: @chemical_term) : chemical_stock_path(chemical_id: @chemical_term, id: @stock.id),
+            id: :update_form do |f| %>
           <div class="row">
             <div class="col-md-4">
                 <%= f.label :stock_on, class: "col-form-label-lg" %>
@@ -50,9 +52,9 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-warning">登録</button>
+      <button type="button" class="btn btn-warning" id="update_button">登録</button>
       <% unless @stock.new_record? %>
-      <button type="button" class="btn btn-danger">削除</button>
+      <button type="button" class="btn btn-danger" id="delete_button">削除</button>
       <% end %>
       <button type="button" class="btn btn-outline-dark" data-dismiss="modal">閉じる</button>
     </div>

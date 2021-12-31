@@ -10,7 +10,7 @@ window.addEventListener("load", () => {
         loadChemical(document.getElementById("term").value, event.target.value);
     });
     document.getElementById("search").addEventListener("click", (event) => {
-        search(document.getElementById("chemical_id").value);
+        doSearch();
     });
     document.getElementById("new_button").addEventListener("click", (event) => {
         fetch(document.getElementById("new_path").value)
@@ -18,8 +18,7 @@ window.addEventListener("load", () => {
         .then((html) => {
             const modalForm = document.getElementById("modal_form");
             modalForm.innerHTML = html;
-            const popup = new Modal(modalForm);
-            popup.show();
+            popupModal(modalForm);
         });
     });
 });
@@ -33,14 +32,16 @@ function loadChemical(term, chemicalType)
     });
 }
 
-function search(chemicalTerm)
+function doSearch()
 {
-    fetch(document.getElementById("search_path").value.replace('0', chemicalTerm))
+    loading.disp("検索中");
+    fetch(document.getElementById("search_path").value.replace('0', document.getElementById("chemical_id").value))
     .then((data) => data.text())
     .then((html) => {
         document.getElementById("search_result").innerHTML = html;
         document.getElementById("new_button").disabled = false;
         addEventForEdit();
+        loading.remove();
     });
 }
 
@@ -48,7 +49,37 @@ function addEventForEdit()
 {
     document.querySelectorAll(".edit-button").forEach((element) => {
         element.addEventListener("click", (event) => {
-
+            fetch(event.target.dataset.path)
+            .then((data) => data.text())
+            .then((html) => {
+                const modalForm = document.getElementById("modal_form");
+                modalForm.innerHTML = html;
+                popupModal(modalForm);
+            });
         });
     });
+}
+
+function popupModal(modalForm)
+{
+    const popup = new Modal(modalForm);
+    popup.show();
+
+    document.getElementById("update_button").addEventListener("click", (event) => {
+        const form = document.getElementById("update_form");
+        fetch(form.action, {
+            method: "POST",
+            body: new FormData(form)
+        })
+        .then((res) => {
+            popup.hide();
+            doSearch();
+        });
+    });
+
+    if (document.getElementById("delete_button") != null) {
+        document.getElementById("delete_button").addEventListener("click", (event) => {
+            bootbox.alert("AAA");
+        });
+    }
 }
