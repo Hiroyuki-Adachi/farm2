@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_14_123000) do
+ActiveRecord::Schema.define(version: 2021_12_27_115519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,10 +91,34 @@ ActiveRecord::Schema.define(version: 2021_12_14_123000) do
     t.index ["user_id", "work_kind_id"], name: "calendar_work_kind_index", unique: true
   end
 
+  create_table "chemical_inventories", comment: "農薬棚卸", force: :cascade do |t|
+    t.date "checked_on", null: false, comment: "確認日"
+    t.integer "chemical_adjust_type_id", default: 0, null: false, comment: "在庫調整種別"
+    t.string "name", limit: 40, default: "", null: false, comment: "棚卸名称"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "chemical_kinds", id: { type: :serial, comment: "作業種別薬剤種別利用マスタ" }, comment: "作業種別薬剤種別利用マスタ", force: :cascade do |t|
     t.integer "chemical_type_id", null: false, comment: "薬剤種別"
     t.integer "work_kind_id", null: false, comment: "作業種別"
     t.index ["chemical_type_id", "work_kind_id"], name: "index_chemical_kinds_on_chemical_type_id_and_work_kind_id", unique: true
+  end
+
+  create_table "chemical_stocks", comment: "農薬在庫", force: :cascade do |t|
+    t.date "stock_on", null: false, comment: "在庫日"
+    t.integer "chemical_id", null: false, comment: "薬剤"
+    t.integer "work_chemical_id", comment: "薬剤使用"
+    t.integer "chemical_inventory_id", comment: "薬剤棚卸"
+    t.string "name", limit: 40, default: "", null: false, comment: "在庫名称"
+    t.decimal "stored", precision: 5, scale: 1, comment: "入庫量"
+    t.decimal "shipping", precision: 5, scale: 1, comment: "出庫量"
+    t.decimal "using", precision: 5, scale: 1, comment: "使用量"
+    t.decimal "inventory", precision: 7, scale: 1, comment: "棚卸量"
+    t.decimal "stock", precision: 7, scale: 1, default: "0.0", null: false, comment: "在庫量"
+    t.decimal "adjust", precision: 5, scale: 1, default: "0.0", null: false, comment: "調整量"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "chemical_terms", id: :serial, comment: "薬剤年度別利用マスタ", force: :cascade do |t|
@@ -134,6 +158,9 @@ ActiveRecord::Schema.define(version: 2021_12_14_123000) do
     t.string "carton_unit", limit: 2, default: "", null: false, comment: "購買単位"
     t.decimal "carton_quantity", precision: 6, default: "0", null: false, comment: "購買数"
     t.boolean "aqueous_flag", default: false, null: false, comment: "水溶フラグ"
+    t.string "stock_unit", limit: 2, default: "", null: false, comment: "在庫単位"
+    t.decimal "stock_quantity", precision: 6, default: "0", null: false, comment: "在庫数"
+    t.string "url", limit: 255, default: "", null: false, comment: "URL"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
   end
 
