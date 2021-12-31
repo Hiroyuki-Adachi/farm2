@@ -19,9 +19,9 @@ require 'securerandom'
 class ScheduleWorker < ApplicationRecord
   belongs_to :schedule
   belongs_to :worker, -> {with_deleted}
-  has_one    :home, -> {with_deleted}, {through: :worker}
-  has_one    :work_type, -> {with_deleted}, {through: :schedule}
-  has_one    :work_kind, -> {with_deleted}, {through: :schedule}
+  has_one    :home, -> {with_deleted}, through: :worker
+  has_one    :work_type, -> {with_deleted}, through: :schedule
+  has_one    :work_kind, -> {with_deleted}, through: :schedule
 
   before_create :set_uuid
 

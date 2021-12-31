@@ -1,0 +1,106 @@
+<h1>作業日報(作業機械)登録</h1>
+<%= error_print(@work) %>
+<%= form_for(@work, url: {action: :create}, html: {method: :post}) do |f| %>
+<%= render(:partial => 'show_work', :locals => {:f => f}) %>
+  <% if @results.count == 0 %>
+  <h2>作業者を先に登録してください。</h2>
+  <% else %>
+    <% if @company_machines.count > 0 %>
+      <h2>機械・オペレーター(営農組合)</h2>
+      <table class="list">
+        <thead>
+          <tr>
+            <% machine_type_ids = @company_machines.pluck(:machine_type_id).uniq %>
+            <th rowspan="2">作業者</th>
+            <% machine_type_ids.each do |machine_type_id| %>
+              <th colspan="<%= @company_machines.where(machine_type_id: machine_type_id).count %>"><%= MachineType.find(machine_type_id).name %></th>
+            <% end %>
+          </tr>
+          <tr>
+            <% @company_machines.each do |machine| %>
+              <th><%= machine.name %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @results.each do |result| %>
+            <tr>
+              <td><%= result.worker.name %></td>
+                <% @company_machines.each do |machine| %>
+                  <% machine_result = result.machine_results.where(machine_id: machine).first %>
+                  <td><%= number_field_tag "machine_hours[#{machine.id}][#{result.id}]", machine_result ? machine_result.hours : 0, {step:0.5, min: 0, max: 99, class: "form-control", style: "width: 80px;"} %></td>
+                <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    <% if @owner_machines.count > 0 %>
+      <h2>機械・オペレーター(オペレータ付)</h2>
+      <table class="list">
+        <thead>
+          <tr>
+            <% machine_type_ids = @owner_machines.pluck(:machine_type_id).uniq %>
+            <th>作業者</th>
+            <% machine_type_ids.each do |machine_type_id| %>
+              <th><%= MachineType.find(machine_type_id).name %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% home_ids = @owner_machines.pluck(:home_id).uniq %>
+          <% owner_results = @results.select {|result| home_ids.include?(result.worker.home_id)} %>
+          <% owner_results.each do |result| %>
+            <tr>
+              <td><%= result.worker.name %></td>
+                <% machine_type_ids.each do |machine_type_id| %>
+                  <% machines = @owner_machines.where(home_id: result.worker.home_id, machine_type_id: machine_type_id) %>
+                  <% if machines.exists? %>
+                  <%   machine = machines.first %>
+                  <%   machine_results = result.machine_results.where(machine_id: machine) %>
+                  <td><%= number_field_tag "machine_hours[#{machine.id}][#{result.id}]", machine_results.exists? ? machine_results.first.hours : 0, {step:0.5, min: 0, max: 99, class: "form-control form-control-sm", style: "width: 80px;"} %></td>
+                  <% else %>
+                  <td>&nbsp;</td>
+                  <% end %>
+                <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    <% if @lease_machines.count > 0 %>
+      <h2>機械・オペレーター(リース)</h2>
+      <table class="list">
+        <thead>
+          <tr>
+            <th>作業者</th>
+            <% @lease_machines.each do |machine| %>
+              <th><%= machine.usual_name %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @results.each do |result| %>
+            <tr>
+              <td><%= result.worker.name %></td>
+                <% @lease_machines.each do |machine| %>
+                  <% machine_result = result.machine_results.where(machine_id: machine).first %>
+                  <td>
+                    <%= number_field_tag "machine_hours[#{machine.id}][#{result.id}]", machine_result ? machine_result.hours : 0, {step:0.5, min: 0, max: 99, class: "form-control form-control-sm", style: "width: 80px;"} %>
+                  </td>
+                <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= f.submit '登録', :name => 'regist_machines', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', work_path(@work.model), {class: "btn btn-outline-dark"} %>
+    </div>
+  </div>
+<% end %>
