@@ -45,6 +45,8 @@ class Chemicals::StocksController < ApplicationController
   end
 
   def destroy
+    @stock.destroy
+    render status: 200
   end
 
   private

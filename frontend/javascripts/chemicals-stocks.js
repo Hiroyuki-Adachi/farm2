@@ -79,7 +79,17 @@ function popupModal(modalForm)
 
     if (document.getElementById("delete_button") != null) {
         document.getElementById("delete_button").addEventListener("click", (event) => {
-            bootbox.alert("AAA");
+            let deleteForm = new FormData(document.getElementById("update_form"));
+            deleteForm.append("_method", "delete");
+
+            fetch(document.getElementById("update_form").action, {
+                method: "DELETE",
+                body: deleteForm
+            })
+            .then((res) => {
+                popup.hide();
+                doSearch();
+            });
         });
     }
 }
