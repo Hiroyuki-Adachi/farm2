@@ -2,15 +2,15 @@ require 'date'
 
 class WorksController < ApplicationController
   include WorksHelper
-  before_action :set_work, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :edit_whole_crop, :show, :update, :destroy, :map]
-  before_action :set_results, only: [:show, :edit_workers, :edit_machines]
-  before_action :set_lands, only: [:show, :edit_lands]
+  before_action :set_work, only: [:edit, :show, :update, :destroy, :map]
+  before_action :set_results, only: [:show]
+  before_action :set_lands, only: [:show]
   before_action :set_broccoli, only: [:show]
   before_action :set_masters, only: [:new, :create, :edit, :update]
-  before_action :check_fixed, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
+  before_action :check_fixed, only: [:edit, :update, :destroy]
   before_action :clear_cache, only: [:update, :create, :destroy]
   before_action :permit_not_visitor, except: [:index, :show]
-  before_action :permit_checkable_or_self, only: [:edit, :edit_workers, :edit_lands, :edit_machines, :edit_chemicals, :update, :destroy]
+  before_action :permit_checkable_or_self, only: [:edit, :update, :destroy]
   before_action :permit_visitor, only: :show
   before_action :set_work_types, only: :index
   before_action :permit_this_term, only: [:edit, :update, :destroy]
@@ -66,7 +66,7 @@ class WorksController < ApplicationController
     @work = Work.new(work_params)
     @work.created_by = current_user.worker.id
     if @work.save
-      redirect_to(edit_workers_work_path(@work.id))
+      redirect_to(new_work_worker_path(work_id: @work))
     else
       render action: :new
     end
@@ -83,27 +83,6 @@ class WorksController < ApplicationController
     @work_kinds = WorkKind.by_type(@work.work_type) || []
   end
 
-  def edit_workers
-    @sections = Section.usual.pluck(:name, :id).unshift(['すべて', 0])
-  end
-
-  def edit_lands
-  end
-
-  def edit_machines
-    @company_machines = Machine.by_work(@work.model).of_company
-    @owner_machines = Machine.by_work(@work.model).of_owners(@work.model)
-    @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select {|m| m.leasable?(@work.model.worked_at)}
-  end
-
-  def edit_chemicals
-    @chemicals = Chemical.usual(@work.model)
-  end
-
-  def edit_whole_crop
-    @whole_crop = @work.whole_crop || WorkWholeCrop.new
-  end
-
   def update
     redirect_to(work_path(@work)) if params[:cancel]
 
@@ -115,12 +94,6 @@ class WorksController < ApplicationController
         render action: :edit
       end
     end
-
-    @work.regist_results(params[:results]) if params[:regist_workers]
-    @work.regist_lands(params[:work_lands] || []) if params[:regist_lands]
-    @work.regist_machines(params[:machine_hours] || []) if params[:regist_machines]
-    @work.regist_chemicals(params[:chemicals]) if params[:regist_chemicals]
-    WorkWholeCrop.regist(@work, params.require(:whole_crop)) if params[:regist_whole_crop]
 
     redirect_to(work_path(@work))
   end
@@ -140,11 +113,12 @@ class WorksController < ApplicationController
   private
 
   def set_work
-    @work = Work.find(params[:id]).decorate
+    @work = Work.find(params[:work_id] || params[:id]).decorate
   end
 
   def set_results
     @results = WorkResultDecorator.decorate_collection(@work.work_results.includes(:worker) || [])
+    @healths = Health.usual
   end
 
   def set_lands
@@ -253,5 +227,9 @@ class WorksController < ApplicationController
 
   def permit_this_term
     to_error_path unless @work.present? && @work.term == current_term
+  end
+
+  def menu_name
+    return :works
   end
 end

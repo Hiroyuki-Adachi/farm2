@@ -1,7 +1,7 @@
 <h1>作業日報(薬剤)登録</h1>
 <%= error_print(@work) %>
 
-<%= form_for(@work.model, url: {action: :update }, html: {method: :put}) do |f| %>
+<%= form_for(@work.model, url: {action: :create}, html: {method: :post}) do |f| %>
   <%= render(:partial => 'show_work', :locals => {:f => f}) %>
   <% group_count = [@work.work_chemicals.maximum(:chemical_group_no).to_i, current_organization.chemical_group_count].max %>
   <div class="row">
@@ -13,7 +13,7 @@
     <div class="col-md-8 form-group">
       <% group_count.times do |index| %>
         <div class="form-check-inline">
-          <%= radio_button_tag "col_group", index, index == 0, {class: "form-check-input", onchange: "changeGroup(#{index})"} %>
+          <%= radio_button_tag "col_group", index, index == 0, {class: "form-check-input change-group", data: {group: index}} %>
           <%= label_tag "col_group_#{index}", "#{index + 1}グループ", {class: "form-check-label"} %>
         </div>
       <% end %>
@@ -28,11 +28,10 @@
             <th>種別</th>
             <th>名称</th>
             <% group_count.times do |index| %>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">使用量</th>
             <th class="col-data" data-index="<%= index%>" style="display:none;">希釈</th>
             <th class="col-data" data-index="<%= index%>" style="display:none;">希釈倍率</th>
-            <th class="col-data" data-index="<%= index%>" style="display:none;">使用量</th>
-            <th class="col-data" data-index="<%= index%>" style="display:none;"></th>
-            <th class="col-data" data-index="<%= index%>" style="display:none;">成分</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">希釈水量(&#8467;)</th>
             <th class="col-data" data-index="<%= index%>" style="display:none;">10a当</th>
             <th class="col-data" data-index="<%= index%>" style="display:none;"></th>
             <th class="col-data" data-index="<%= index%>" style="display:none;">備考</th>
@@ -43,37 +42,42 @@
         <tbody>
         <% @chemicals.each do |chemical| %>
         <tr>
-          <td><%= chemical.name %></td>
           <td><%= chemical.chemical_type.name %></td>
+          <td><%= chemical.name %></td>
           <% group_count.times do |index| %>
             <% work_chemical = @work.work_chemicals.find_by(chemical_id: chemical.id, chemical_group_no: index + 1) %>
-            <td class="text-center col-data" data-index="<%= index%>" style="display:none;">
-              <%= hidden_field_tag "chemicals[#{chemical.id}][#{index + 1}][aqueous_flag]", false, {id: nil} %>
-              <%= check_box_tag "chemicals[#{chemical.id}][#{index + 1}][aqueous_flag]", true, work_chemical&.aqueous_flag, 
-                {disabled: !chemical.aqueous_flag, class: "form-check-input",
-                data: {id: chemical.id, index: index + 1}} %>
-            </td>
-            <td class="col-data"  data-index="<%= index%>" style="display:none;">
-              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][magnification]", work_chemical&.magnification,
-                {disabled: !work_chemical&.aqueous_flag, min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
-                data: {id: chemical.id, index: index + 1, unit: chemical.unit_scale}} %>
-            </td>
-            <td class="col-data" data-index="<%= index%>" style="display:none;">
-              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_amount]", work_chemical&.dilution_amount,
-                {disabled: !work_chemical&.aqueous_flag, min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
-                data: {id: chemical.id, index: index + 1, unit: chemical.unit_scale}} %>
-            </td>
-            <td class="col-data" data-index="<%= index%>" style="display:none;">&#8467;</td>
-            <td class="col-data" data-index="<%= index%>" style="display:none;">
+
+            <td class="col-data" data-index="<%= index %>" style="display:none;">
               <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][quantity]", work_chemical&.quantity,
-                {readonly: work_chemical&.aqueous_flag, min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
+                {min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
                 data: {id: chemical.id, index: index + 1}} %>
             </td>
-            <td class="col-data numeric" data-index="<%= index%>" style="display:none;" id="chemicals_<%= chemical.id %>_<%= index + 1 %>_quantity10">
+            <td class="text-center col-data" data-index="<%= index %>" style="display:none; white-space: nowrap;">
+              <%= hidden_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_id]", Dilution::NONE.id %>
+              <% Dilution.all.each do |dilution| %>
+                <label style="display: inline-block; cursor: pointer;">
+                  <%= radio_button_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_id]", dilution.id, 
+                  work_chemical&.dilution_id == dilution.id,
+                  {id: nil, class: "form-control", disabled: !chemical.aqueous_flag, data: {id: chemical.id, group: index + 1}} %>
+                  <%= dilution.name %>
+                </label>
+              <% end %>
+            </td>
+            <td class="col-data" data-index="<%= index %>" style="display:none;">
+              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][magnification]", work_chemical&.magnification,
+                {readonly: !work_chemical&.dilution_mag?, min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
+                data: {id: chemical.id, group: index + 1, unit: chemical.unit_scale}} %>
+            </td>
+            <td class="col-data" data-index="<%= index %>" style="display:none;">
+              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_amount]", work_chemical&.dilution_amount,
+                {readonly: !work_chemical&.dilution_l?, min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
+                data: {id: chemical.id, group: index + 1, unit: chemical.unit_scale}} %>
+            </td>
+            <td class="col-data numeric" data-index="<%= index %>" style="display:none;" id="chemicals_<%= chemical.id %>_<%= index + 1 %>_quantity10">
               <%= work_chemical&.quantity10 %>
             </td>
-            <td class="col-data" data-index="<%= index%>" style="display:none;"><%= chemical.unit %></td>
-            <td class="col-data" data-index="<%= index%>" style="display:none;">
+            <td class="col-data" data-index="<%= index %>" style="display:none;"><%= chemical.unit %></td>
+            <td class="col-data" data-index="<%= index %>" style="display:none;">
             <%= text_field_tag "chemicals[#{chemical.id}][#{index + 1}][remarks]", work_chemical&.remarks, class: "form-control form-control-sm" %>
             </td>
           <% end %>
@@ -92,4 +96,7 @@
     </div>
   </div>
 <% end %>
+<input type="hidden" id="dilution_none" value="<%= Dilution::NONE.id %>" />
+<input type="hidden" id="dilution_l" value="<%= Dilution::L.id %>" />
+<input type="hidden" id="dilution_mag" value="<%= Dilution::MAG.id %>" />
 <%= javascript_pack_tag 'edit-chemicals' %>

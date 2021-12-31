@@ -21,7 +21,7 @@ class MachinePriceHeader < ApplicationRecord
 
   after_save :save_details
 
-  has_many :details, {class_name: "MachinePriceDetail", dependent: :destroy}
+  has_many :details, class_name: "MachinePriceDetail", dependent: :destroy
 
   scope :show_type, -> (machine_type, base_date){where("machine_type_id = ? AND validated_at <= ?" , machine_type, base_date).order("validated_at DESC")}
   scope :show_machine, -> (machine, base_date){where("machine_id = ? AND validated_at <= ?" , machine, base_date).order("validated_at DESC")}
