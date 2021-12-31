@@ -1,7 +1,6 @@
 GIT
   remote: git@github.com:gazayas/active_hash.git
-  revision: 01ff08fe4b06bc3b0f82b501d53121bbcd49c26f
-  branch: fixes/address-keyword-argument-issue
+  revision: 0351383fa58850a2bb018101b7aaeb055c7b8023
   specs:
     active_hash (3.1.0)
       activesupport (>= 5.0.0)
@@ -47,8 +46,6 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    activejob (6.1.4.1)
-      activesupport (= 6.1.4.1)
     activejob (6.1.4.4)
       activesupport (= 6.1.4.4)
       globalid (>= 0.3.6)
