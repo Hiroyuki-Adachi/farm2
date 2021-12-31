@@ -1,0 +1,91 @@
+<h1>棚卸情報更新</h1>
+<%= error_print(@inventory) %>
+<% chemical_types = ChemicalType.usual %>
+<% stock_system = System.get_system(@inventory.checked_on, current_organization) %>
+<%= form_with model: @inventory, url: chemicals_inventory_path(@inventory) do |f| %>
+ <div class="row">
+    <div class="field form-group col-md-3">
+      <%= f.label :checked_on, class: "col-form-label-lg" %>
+      <%= f.date_field :checked_on, {
+          required: true, min: stock_system.start_date, max: stock_system.end_date, class: "form-control"}
+    %>
+    </div>
+    <div class="field form-group col-md-6">
+      <%= f.label :name, class: "col-form-label-lg" %>
+      <%= f.text_field :name, {required: true, maxlength: 20, class: "form-control"} %>
+    </div>
+  </div>
+  <h2>薬剤</h2>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-sm table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>薬品種別</th>
+            <th>薬品</th>
+            <th>在庫量</th>
+            <th>削除</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= f.fields_for :stocks do |fs| %>
+          <tr>
+            <td>
+              <%= select_tag(
+                "chemical_type#{fs.index}",
+                options_from_collection_for_select(chemical_types, :id, :name, fs.object&.chemical&.chemical_type_id),
+                {class: "form-control chemical_types", data: {index: fs.index}}
+                )
+              %>
+            </td>
+            <td>
+              <%= fs.select :chemical_id, 
+                options_from_collection_for_select(
+                  ChemicalTerm.by_type(stock_system.term, fs.object&.chemical&.chemical_type_id || chemical_types.first.id),
+                  :id, :name, fs.object&.chemical_id), {},
+                class: "form-control chemical", data: {index: fs.index}
+              %>
+            </td>
+            <td>
+              <%= fs.number_field :inventory, {min: 0, max: 999999.9, step: 1, required: true, class: "form-control"} %>
+            </td>
+            <td>
+              <%= fs.hidden_field :id %>
+              <%= fs.check_box :_destroy %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="btn-toolbar">
+      <div class="btn-group mr-2">
+        <%= f.submit '登録', class: "btn btn-warning" %>
+      </div>
+      <div class="btn-group mr-2">
+        <%= link_to '削除', chemicals_inventory_path(@inventory), {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
+      </div>
+      <div class="btn-group mr-2">
+        <%= link_to "戻る", chemicals_inventories_path, {class: "btn btn-outline-dark"}%>
+      </div>
+    </div>
+  </div>
+<% end %>
+<% ChemicalTerm.usual(stock_system.term).each do |chemical_term| %>
+<%= hidden_field_tag nil, chemical_term.chemical.name, data: {chemical_type: chemical_term.chemical.chemical_type_id, id: chemical_term.chemical_id} %>
+<% end %>
+<script>
+document.querySelectorAll(".chemical_types").forEach((element) => {
+  element.addEventListener("change", event => {
+    let options = [];
+    document.querySelectorAll(`input[type="hidden"][data-chemical-type="${event.target.value}"]`).forEach(hidden => {
+      options.push(`<option value="${hidden.dataset.id}">${hidden.value}</option>`)
+    });
+    const chemical = document.querySelector(`select[data-index="${event.target.dataset.index}"].chemical`);
+    chemical.innerHTML = options.join();
+    chemical.options[0].selected = true;
+  });
+});
+</script>

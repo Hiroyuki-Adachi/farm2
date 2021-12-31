@@ -11,7 +11,10 @@
 #  display_order(表示順)      :integer          default(0), not null
 #  name(薬剤名称)             :string(20)       not null
 #  phonetic(薬剤ふりがな)     :string(40)       default(""), not null
+#  stock_quantity(在庫数)     :decimal(6, )     default(0), not null
+#  stock_unit(在庫単位)       :string(2)        default(""), not null
 #  unit(単位)                 :string(2)        default("袋"), not null
+#  url(URL)                   :string(255)      default(""), not null
 #  created_at                 :datetime
 #  updated_at                 :datetime
 #  base_unit_id(基本単位)     :integer          default(0), not null
@@ -29,8 +32,9 @@ class Chemical < ApplicationRecord
   after_save :save_term
 
   belongs_to :chemical_type
-  belongs_to_active_hash :base_unit
-  has_many :chemical_terms, dependent: :delete_all
+  belongs_to :base_unit
+  has_many :chemical_terms, dependent: :destroy
+  has_many :stocks, class_name: :ChemicalStock, dependent: :destroy
 
   validates :name,          presence: true
   validates :display_order, presence: true
@@ -72,7 +76,11 @@ ORDER
   }
 
   def this_term_flag
-    chemical_terms.where(term: @term).exists?
+    this_term?(@term)
+  end
+
+  def this_term?(term)
+    chemical_terms.where(term: term).exists?
   end
 
   def base_unit_name

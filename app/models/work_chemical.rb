@@ -24,6 +24,7 @@ class WorkChemical < ApplicationRecord
   belongs_to :chemical
   belongs_to :work
   belongs_to_active_hash :dilution
+  has_one    :stock, dependent: :destroy, class_name: :ChemicalStock
   has_one    :chemical_type, through: :chemical
   has_one    :work_type, -> {with_deleted}, through: :work
   has_one    :work_kind, -> {with_deleted}, through: :work
@@ -42,6 +43,13 @@ class WorkChemical < ApplicationRecord
       .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
       .where("systems.term = ?", term)
       .order("works.worked_at, works.id, chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
+  }
+
+  scope :for_stock, -> (chemical_id, start_date) {
+    joins(:work)
+    .includes(:chemical)
+    .where("works.worked_at >= ? AND work_chemicals.chemical_id = ?", start_date, chemical_id)
+    .order("works.worked_at, works.id")
   }
 
   def chemical_display_order
@@ -71,5 +79,9 @@ class WorkChemical < ApplicationRecord
 
   def dilution_mag?
     return dilution == Dilution::MAG
+  end
+
+  def quantity_for_stock
+    return chemical.stock_quantity.zero? ? quantity : quantity * chemical.base_quantity / chemical.stock_quantity
   end
 end

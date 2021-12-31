@@ -1,0 +1,42 @@
+<%= javascript_pack_tag 'chemicals-stocks'%>
+<h1>在庫一覧</h1>
+<div class="row">
+  <div class="col-md-3">
+    <div class="form-inline">
+      <label for="term" class="h5">年度</label>
+      <%= select_tag(:term, options_for_select(WorkDecorator.terms, selected: current_term), {class: "form-control"}) %>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <%= select_tag(
+      :chemical_type,
+      options_from_collection_for_select(ChemicalType.usual, :id, :name),
+      {class: "form-control"}
+      )
+      %>
+    </div>
+  <div class="col-md-3">
+      <%= select_tag(:chemical_id, nil, {class: "form-control"}) %>
+  </div>
+  <div class="col-md-3">
+    <%= button_tag "検索", id: :search, class: "btn btn-primary" %>
+  </div>
+</div>
+<hr />
+<div id="search_result" class="row">
+</div>
+<hr />
+<div class="row">
+  <div class="col-md-4">
+    <div class="btn-toolbar">
+      <%= button_tag type: :button, id: :new_button, class: "btn btn-success", disabled: true do %>
+      新規作成
+      <% end %>
+      <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+    </div>
+  </div>
+</div>
+<%= hidden_field_tag :load_path, load_chemicals_stocks_path %>
+<%= hidden_field_tag :search_path, search_chemical_stocks_path(0) %>
+<div class="modal fade" id="modal_form" tabindex="-1" role="dialog" aria-hidden="true">
+</div>
