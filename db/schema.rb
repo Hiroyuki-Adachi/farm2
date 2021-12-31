@@ -434,7 +434,6 @@ ActiveRecord::Schema.define(version: 2021_12_27_115519) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal "fuel_usage", precision: 5, scale: 2, default: "0.0", null: false, comment: "燃料使用量"
-    t.string "remarks", limit: 20, default: "", null: false, comment: "備考"
     t.index ["machine_id", "work_result_id"], name: "index_machine_results_on_machine_id_and_work_result_id", unique: true
   end
 
