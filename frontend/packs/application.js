@@ -1,9 +1,9 @@
 require("@rails/ujs").start();
 window.Rails = require("@rails/ujs");
 
-import { $ } from 'jquery';
-window.jQuery = window.$ = $;
-global.jQuery = global.$ = $;
+import jQuery from 'jquery/src/jquery';
+window.jQuery = window.$ = jQuery;
+global.jQuery = global.$ = jQuery;
 
 import Modal from "bootstrap";
 window.Modal = Modal;
