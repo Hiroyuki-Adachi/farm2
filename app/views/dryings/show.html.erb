@@ -138,9 +138,11 @@
   </div>
 </div>
 <script>
-$(function() {
-    $("#drying-detail td").click(function() {
-        location.href = $(this).data("drying");
+window.addEventListener("load", () => {
+    document.querySelectorAll("#drying-detail td").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            location.href = event.target.dataset.drying;
+        });
     });
 });
 </script>
