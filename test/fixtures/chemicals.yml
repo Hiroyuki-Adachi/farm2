@@ -60,6 +60,12 @@ chemicals3:
   phonetic: 'こめそだちいっぱつ'
   display_order: '0'
   chemical_type_id: '3'
+  carton_unit: "袋"
+  carton_quantity: 20000
+  base_unit: "袋"
+  base_quantity: 20000
+  stock_unit: "袋"
+  stock_quantity: 20000
   created_at: '2012-03-12 13:12:22.070992'
   updated_at: '2012-03-12 13:12:22.070992'
   deleted_at: 
