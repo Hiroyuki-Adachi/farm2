@@ -5,9 +5,7 @@ import jQuery from 'jquery/src/jquery';
 window.jQuery = window.$ = jQuery;
 global.jQuery = global.$ = jQuery;
 
-import Modal from "bootstrap";
-window.Modal = Modal;
-global.Modal = Modal;
+import "bootstrap";
 
 import "chart.js";
 
