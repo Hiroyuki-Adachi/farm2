@@ -1,13 +1,13 @@
 require("@rails/ujs").start();
 window.Rails = require("@rails/ujs");
 
-const jQuery = require('jquery');
+import jQuery from 'jquery';
 window.jQuery = window.$ = jQuery;
 global.jQuery = global.$ = jQuery;
 
-import Modal from "bootstrap";
-window.Modal = Modal;
-global.Modal = Modal;
+import bootstrap from "bootstrap";
+window.bootstrap = bootstrap;
+global.bootstrap = bootstrap;
 
 import "chart.js";
 
@@ -25,12 +25,8 @@ import Decimal from 'decimal.js';
 window.Decimal = Decimal;
 
 require('jquery-ui');
-require('jquery-ui/ui/widgets/sortable');
-require('jquery-ui/ui/widgets/autocomplete');
 require('jquery-ui/themes/base/all.css');
-
 require('jquery-ui-touch-punch');
-
 require('floatthead');
 
 import "../javascripts/jquery.selection";
