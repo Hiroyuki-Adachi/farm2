@@ -81,4 +81,12 @@ class ChemicalStock < ApplicationRecord
   def valid_chemical_id?
     chemical_inventory_id.present?
   end
+
+  def stored_stock
+    stored * chemical.carton_quantity / chemical.stock_quantity
+  end
+
+  def stored_stock=(value)
+    stored = value.to_f * chemical.stock_quantity / chemical.carton_quantity
+  end
 end

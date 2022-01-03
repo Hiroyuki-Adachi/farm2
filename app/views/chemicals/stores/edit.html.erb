@@ -23,7 +23,7 @@
           <tr>
             <th>薬品種別</th>
             <th>薬品</th>
-            <th>在庫量</th>
+            <th>納入数</th>
             <th>削除</th>
           </tr>
         </thead>
@@ -47,7 +47,7 @@
               %>
             </td>
             <td>
-              <%= fs.number_field :stored, {min: 0, max: 999999.9, step: 1, required: true, class: "form-control"} %>
+              <%= fs.number_field :stored_stock, {min: 0, max: 999999.9, step: 1, required: true, class: "form-control"} %>
             </td>
             <td>
               <%= fs.hidden_field :id %>
@@ -74,7 +74,9 @@
   </div>
 <% end %>
 <% ChemicalTerm.usual(stock_system.term).each do |chemical_term| %>
-<%= hidden_field_tag nil, chemical_term.chemical.name, data: {chemical_type: chemical_term.chemical.chemical_type_id, id: chemical_term.chemical_id} %>
+<%= hidden_field_tag nil,
+  "#{chemical_term.chemical.name}(#{chemical_term.chemical.carton_base_quantity}#{chemical_term.chemical.carton_unit_name})",
+  data: {chemical_type: chemical_term.chemical.chemical_type_id, id: chemical_term.chemical_id} %>
 <% end %>
 <script>
 document.querySelectorAll(".chemical_types").forEach((element) => {

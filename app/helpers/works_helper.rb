@@ -6,13 +6,7 @@ module WorksHelper
   def chemical_per_area(areas, chemical_quantity, chemical)
     area_quantity = areas.zero? ? 0 : (chemical_quantity / areas * 10)
     area_quantity *= chemical.base_quantity
-    if (area_quantity > 1000000)
-      return sprintf("%.2f", area_quantity / 1000000) + chemical.base_unit.mega_name
-    end
-    if (area_quantity > 1000)
-      return sprintf("%.2f", area_quantity / 1000) + chemical.base_unit.kilo_name
-    end
-    return sprintf("%.2f", area_quantity) + chemical.base_unit.name
+    return sprintf("%.2f", chemical.unit_quantity(area_quantity)) + chemical.unit_name(area_quantity)
   end
 
   def chemical_dilution(work_chemicals, chemical_id)

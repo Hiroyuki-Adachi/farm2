@@ -83,16 +83,43 @@ ORDER
   end
 
   def base_unit_name
-    return base_unit.name if base_quantity < 1000
-    return case base_unit when BaseUnit::WEIGHT then "kg" when BaseUnit::VOLUME then "ℓ" else "" end
+    unit_name(base_quantity)
   end
 
   def base_base_quantity
-    return base_quantity < 1000 ? base_quantity : (base_quantity / 1000)
+    unit_quantity(base_quantity)
+  end
+
+  def carton_unit_name
+    unit_name(carton_quantity)
+  end
+
+  def carton_base_quantity
+    unit_quantity(carton_quantity)
+  end
+
+  def stock_unit_name
+    unit_name(stock_quantity)
+  end
+
+  def stock_base_quantity
+    unit_quantity(stock_quantity)
   end
 
   def unit_scale
     return Unit.find_by(code: unit).scale
+  end
+
+  def unit_name(quantity)
+    return base_unit.mega_name if quantity >= 1_000_000
+    return base_unit.kilo_name if quantity >= 1_000
+    return base_unit.name
+  end
+
+  def unit_quantity(quantity)
+    return (quantity / 1_000_000) if quantity >= 1_000_000
+    return (quantity / 1_000) if quantity >= 1_000
+    return quantity
   end
 
   attr_writer :this_term_flag
