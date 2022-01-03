@@ -1,4 +1,5 @@
-const { default: Decimal } = require("decimal.js");
+import "jquery-ui/ui/widgets/sortable";
+import "jquery-ui/ui/widgets/autocomplete";
 
 function removeLand(landId)
 {

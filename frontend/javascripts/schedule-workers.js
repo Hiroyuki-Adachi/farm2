@@ -1,3 +1,5 @@
+import "jquery-ui/ui/widgets/sortable";
+
 function add_worker(worker_id)
 {
     if(document.getElementById("worker_" + worker_id) != null) return;  // 既に存在する場合、追加は無効

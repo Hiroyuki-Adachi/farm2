@@ -1,3 +1,6 @@
+import "jquery-ui/ui/widgets/sortable";
+import "jquery-ui/ui/widgets/autocomplete";
+
 function remove_land(land_id)
 {
     document.getElementById("tbody_lands").deleteRow(document.getElementById("land_" + land_id.toString()).rowIndex - 1);
