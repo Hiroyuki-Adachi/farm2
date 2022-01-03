@@ -27,11 +27,18 @@ class ChemicalStock < ApplicationRecord
   }
 
   before_save :save_inventory
+  before_save :save_stored
 
   def save_inventory
     if chemical_inventory_id
       self.name = chemical_inventory.name
       self.stock_on = chemical_inventory.checked_on
+    end
+  end
+
+  def save_stored
+    if @stored_stock_value
+      self.stored = (chemical.carton_quantity.zero? ? @stored_stock_value : @stored_stock_value.to_f * chemical.carton_quantity / chemical.stock_quantity)
     end
   end
 
@@ -83,10 +90,12 @@ class ChemicalStock < ApplicationRecord
   end
 
   def stored_stock
-    stored * chemical.carton_quantity / chemical.stock_quantity
+    return nil if stored.nil?
+    chemical.stock_quantity.zero? ? stored : stored * chemical.stock_quantity / chemical.carton_quantity
   end
 
   def stored_stock=(value)
-    stored = value.to_f * chemical.stock_quantity / chemical.carton_quantity
+    self.stored = 0
+    @stored_stock_value = value
   end
 end

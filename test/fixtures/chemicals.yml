@@ -56,13 +56,15 @@ chemicals2:
 
 chemicals3:
   id: '4'
+  unit: 
   name: 米育ち一発024号
   phonetic: 'こめそだちいっぱつ'
   display_order: '0'
   chemical_type_id: '3'
   carton_unit: "袋"
   carton_quantity: 20000
-  base_unit: "袋"
+  unit: "袋"
+  base_unit_id: 1
   base_quantity: 20000
   stock_unit: "袋"
   stock_quantity: 20000
