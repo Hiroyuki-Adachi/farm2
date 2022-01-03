@@ -43,7 +43,7 @@
         <% @chemicals.each do |chemical| %>
         <tr>
           <td><%= chemical.chemical_type.name %></td>
-          <td><%= chemical.name %></td>
+          <td><%= chemical_name(chemical) %>(<%= chemical.base_base_quantity %><%= chemical.base_unit_name %>)</td>
           <% group_count.times do |index| %>
             <% work_chemical = @work.work_chemicals.find_by(chemical_id: chemical.id, chemical_group_no: index + 1) %>
 

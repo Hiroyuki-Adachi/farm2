@@ -74,7 +74,9 @@
   </div>
 <% end %>
 <% ChemicalTerm.usual(stock_system.term).each do |chemical_term| %>
-<%= hidden_field_tag nil, chemical_term.chemical.name, data: {chemical_type: chemical_term.chemical.chemical_type_id, id: chemical_term.chemical_id} %>
+<%= hidden_field_tag nil, 
+  "#{chemical_term.chemical.name}(#{chemical_term.chemical.stock_base_quantity}#{chemical_term.chemical.stock_unit_name})",
+  data: {chemical_type: chemical_term.chemical.chemical_type_id, id: chemical_term.chemical_id} %>
 <% end %>
 <script>
 document.querySelectorAll(".chemical_types").forEach((element) => {
