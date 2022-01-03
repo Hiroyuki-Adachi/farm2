@@ -1,7 +1,7 @@
 require("@rails/ujs").start();
 window.Rails = require("@rails/ujs");
 
-import jQuery from 'jquery/src/jquery';
+const jQuery = require('jquery');
 window.jQuery = window.$ = jQuery;
 global.jQuery = global.$ = jQuery;
 
