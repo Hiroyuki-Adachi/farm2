@@ -41,8 +41,8 @@
             <td>
               <%= fs.select :chemical_id, 
                 options_from_collection_for_select(
-                  ChemicalTerm.by_type(stock_system.term, fs.object&.chemical&.chemical_type_id || chemical_types.first.id),
-                  :id, :name, fs.object&.chemical_id), {},
+                  ChemicalDecorator.decorate_collection(Chemical.by_term(stock_system.term).by_type(fs.object&.chemical&.chemical_type_id || chemical_types.first.id)),
+                  :id, :stored_name, fs.object&.chemical_id), {},
                 class: "form-control chemical", data: {index: fs.index}
               %>
             </td>
@@ -73,10 +73,9 @@
     </div>
   </div>
 <% end %>
-<% ChemicalTerm.usual(stock_system.term).each do |chemical_term| %>
-<%= hidden_field_tag nil,
-  "#{chemical_term.chemical.name}(#{chemical_term.chemical.carton_base_quantity}#{chemical_term.chemical.carton_unit_name})",
-  data: {chemical_type: chemical_term.chemical.chemical_type_id, id: chemical_term.chemical_id} %>
+<% ChemicalDecorator.decorate_collection(Chemical.by_term(stock_system.term)).each do |chemical| %>
+<%= hidden_field_tag nil, chemical.stored_name, 
+  data: {chemical_type: chemical.chemical_type_id, id: chemical.id} %>
 <% end %>
 <script>
 document.querySelectorAll(".chemical_types").forEach((element) => {

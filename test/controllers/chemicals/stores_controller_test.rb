@@ -41,12 +41,13 @@ class Chemicals::StoresControllerTest < ActionController::TestCase
           checked_on: '2015-12-01',
           name: "期末納品",
           stocks_attributes: [
-            {chemical_id: 4, inventory: 100.2},
+            {chemical_id: 4, stored_stock: 100.2},
           ]
         }
       }
     end
     assert_redirected_to edit_chemicals_store_path(chemical_inventories(:store1))
+    assert_equal 100.2, ChemicalStock.find_by(chemical_inventory_id: chemical_inventories(:store1).id, chemical_id: 4).stored_stock
   end
 
   test "農薬納品編集(削除)" do
