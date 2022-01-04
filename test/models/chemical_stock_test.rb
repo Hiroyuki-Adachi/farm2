@@ -53,4 +53,16 @@ class ChemicalStockTest < ActiveSupport::TestCase
     assert_equal stock6.inventory, stock6.stock
     assert_equal stock6.inventory - stock5.stock, stock6.adjust
   end
+
+  test "納品" do
+    stock_quantity = 4
+    stock_for_test = chemical_stocks(:stock_for_test)
+    chemical = Chemical.find(stock_for_test.chemical_id)
+    stock = ChemicalStock.find(stock_for_test.id)
+    stock.stored_stock = stock_quantity
+    stock.save!
+
+    stock = ChemicalStock.find(stock_for_test.id)
+    assert_equal stock_quantity * chemical.carton_quantity / chemical.stock_quantity, stock.stored
+  end
 end
