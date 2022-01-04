@@ -71,3 +71,8 @@ stock_model6:
   chemical_inventory: inventory22
   stock_on: '2015-12-31'
   inventory: 20
+
+stock_for_test:
+  chemical_id: '5'
+  stock_on: '2015-12-16'
+  name: '年末納品'
