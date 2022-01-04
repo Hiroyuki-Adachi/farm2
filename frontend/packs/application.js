@@ -1,5 +1,6 @@
-require("@rails/ujs").start();
-window.Rails = require("@rails/ujs");
+import Rails from '@rails/ujs';
+window.Rails = Rails;
+Rails.start();
 
 import jQuery from 'jquery';
 window.jQuery = window.$ = jQuery;
@@ -16,7 +17,8 @@ window.bootbox = bootbox;
 global.bootbox = bootbox;
 
 const images = require.context('../images', true);
-window.moment = require('moment');
+import moment from 'moment';
+window.moment = moment;
 
 import I18n from 'i18n-js';
 window.I18n = I18n;
