@@ -19,15 +19,17 @@
     <%= f.label :bg_color, class: "col-form-label-lg" %>
     <%= f.color_field(:bg_color, {class: "form-control"}) %>
   </div>
+</div>
+<div class="form-row">
   <div class="field form-group col-md-2">
     <%= f.label :land_flag, class: "col-form-label-lg" %>
     <div class="form-check">
       <%= f.radio_button :land_flag, true %>
-      <label for="work_type_land_flag_true" class="form-check-label">土地を割り当てる</label>
+      <label for="work_type_land_flag_true" class="form-check-label">割り当てる</label>
     </div>
     <div class="form-check">
       <%= f.radio_button :land_flag, false %>
-      <label for="work_type_land_flag_false" class="form-check-label">土地を割り当てない</label>
+      <label for="work_type_land_flag_false" class="form-check-label">割り当てない</label>
     </div>
   </div>
   <div class="field form-group col-md-2">
@@ -39,6 +41,28 @@
     <div class="form-check">
       <%= f.radio_button :cost_flag, false %>
       <label for="work_type_cost_flag_false" class="form-check-label">原価にはしない</label>
+    </div>
+  </div>
+  <div class="field form-group col-md-2">
+    <%= f.label :work_flag, class: "col-form-label-lg" %>
+    <div class="form-check">
+      <%= f.radio_button :work_flag, true %>
+      <label for="work_type_work_flag_true" class="form-check-label">日報に表示する</label>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :work_flag, false %>
+      <label for="work_type_work_flag_false" class="form-check-label">日報に表示しない</label>
+    </div>
+  </div>
+  <div class="field form-group col-md-2">
+    <%= f.label :map_flag, class: "col-form-label-lg" %>
+    <div class="form-check">
+      <%= f.radio_button :map_flag, true %>
+      <label for="work_type_map_flag_true" class="form-check-label">地図に表示する</label>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :map_flag, false %>
+      <label for="work_type_map_flag_false" class="form-check-label">地図に表示しない</label>
     </div>
   </div>
 </div>
