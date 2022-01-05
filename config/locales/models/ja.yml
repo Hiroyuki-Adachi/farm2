@@ -115,6 +115,8 @@ ja:
         bg_color: "背景色"
         land_flag: "土地利用"
         cost_flag: "原価"
+        work_flag: "日報表示"
+        map_flag: "地図表示"
         icon: "アイコン"
 
       worker: 
