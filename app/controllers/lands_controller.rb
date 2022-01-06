@@ -74,7 +74,9 @@ class LandsController < ApplicationController
             :land_place_id,
             :reg_area,
             :broccoli_mark,
-            :region
+            :region,
+            :start_on,
+            :end_on
           )
   end
 end
