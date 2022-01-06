@@ -798,7 +798,6 @@ ActiveRecord::Schema.define(version: 2022_01_05_132055) do
     t.binary "icon", comment: "アイコン"
     t.boolean "cost_flag", default: false, null: false, comment: "原価フラグ"
     t.boolean "work_flag", default: true, null: false, comment: "日報フラグ"
-    t.boolean "map_flag", default: true, null: false, comment: "地図フラグ"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
   end
 
