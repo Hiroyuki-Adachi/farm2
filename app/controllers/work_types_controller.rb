@@ -71,7 +71,6 @@ class WorkTypesController < ApplicationController
       :land_flag,
       :cost_flag,
       :work_flag,
-      :map_flag,
       :icon
     )
   end
