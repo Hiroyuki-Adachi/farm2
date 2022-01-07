@@ -161,10 +161,10 @@ Rails.application.routes.draw do
     resources :whole_crops, controller: "works/whole_crops", only: [:new, :create]
     collection do
       get :work_type_select
-      get :autocomplete_for_land_place
     end
     member do
       get :map
+      get :autocomplete_for_land_place
     end
   end
 

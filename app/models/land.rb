@@ -49,6 +49,8 @@ class Land < ApplicationRecord
   scope :for_finance1, -> {where("owner_id = manager_id").where(target_flag: true)}
   scope :for_finance2, -> {where("owner_id <> manager_id").where(target_flag: true)}
   scope :regionable, -> {where.not(region: nil).where(target_flag: true, group_id: nil)}
+  scope :expiry, -> (target) {where("? BETWEEN start_on AND end_on", target)}
+  scope :for_place, -> (place) {where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order)}
 
   validates :place, presence: true
   validates :area, presence: true
@@ -77,9 +79,9 @@ class Land < ApplicationRecord
     land_place ? land_place.name : ""
   end
 
-  def self.autocomplete(place)
+  def self.to_autocomplete(search_results)
     results = []
-    Land.where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order).limit(15).each do |land|
+    search_results.limit(15).each do |land|
       results << {label: land.place + "(#{land.area})", value: land.id, details: {place: land.place, id: land.id, owner: land&.owner&.name || "", area: land.area}}
     end
     return results.to_json
@@ -159,5 +161,9 @@ class Land < ApplicationRecord
 
   def land_fee(term)
     LandFee.find_by(term: term, land_id: self.id)
+  end
+
+  def expiry?(date = Date.today)
+    self.start_on <= date && date <= self.end_on
   end
 end

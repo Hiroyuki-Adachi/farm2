@@ -2,7 +2,7 @@ require 'date'
 
 class WorksController < ApplicationController
   include WorksHelper
-  before_action :set_work, only: [:edit, :show, :update, :destroy, :map]
+  before_action :set_work, only: [:edit, :show, :update, :destroy, :map, :autocomplete_for_land_place]
   before_action :set_results, only: [:show]
   before_action :set_lands, only: [:show]
   before_action :set_broccoli, only: [:show]
@@ -104,7 +104,7 @@ class WorksController < ApplicationController
   end
 
   def autocomplete_for_land_place
-    render json: Land.autocomplete(params[:term])
+    render json: Land.to_autocomplete(Land.for_place(params[:term]).expiry(@work.model.worked_at))
   end
 
   def map
