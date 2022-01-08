@@ -89,7 +89,7 @@ function setTableWrapperHeight() {
 }
 
 function execImport() {
-    if(bootbox.confirm("単価を上書きしてもよろしいですか？", function(result) {
+    if(popupConfirm("単価を上書きしてもよろしいですか？", function(result) {
         if(result) {
             $.get("<%= import_chemical_costs_path %>", function(data) {
                 for(chemical_id in data) {

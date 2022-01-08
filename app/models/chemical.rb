@@ -66,6 +66,13 @@ ORDER
       .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 
+  scope :for_stock, ->(term) {
+    joins(:chemical_type)
+      .with_deleted
+      .where("chemicals.id IN (?)", ChemicalTerm.where(term: term).pluck("chemical_id"))
+      .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
+  }
+
   scope :by_type, ->(chemical_type_id) {where(chemical_type_id: chemical_type_id).order(:phonetic, :display_order, :id)}
 
   scope :by_work_kind, ->(work_kind_id) {

@@ -12,10 +12,6 @@ global.bootstrap = bootstrap;
 
 import "chart.js";
 
-import bootbox from 'bootbox';
-window.bootbox = bootbox;
-global.bootbox = bootbox;
-
 const images = require.context('../images', true);
 import moment from 'moment';
 window.moment = moment;

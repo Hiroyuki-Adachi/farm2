@@ -1,5 +1,5 @@
 window.execPrint = function(url) {
-    if(bootbox.confirm("印刷を実行した場合、印刷した日報が原紙となります。印刷しますか？", function(result) {
+    if(popupConfirm("印刷を実行した場合、印刷した日報が原紙となります。印刷しますか？", function(result) {
         if(result) {
             $.ajax({
                 url: url,
@@ -8,14 +8,14 @@ window.execPrint = function(url) {
             }).done(function(html) {
                 $("#print_stamp").html(html);
                 window.print();
-                bootbox.alert("印刷した日報を原紙として保管してください。");
+                popupAlert("印刷した日報を原紙として保管してください。");
             });
         }
     }));
 };
 
 window.cancelPrint = function(url) {
-    if(bootbox.confirm("印刷を情報を削除してもよろしいですか？", function(result) {
+    if(popupConfirm("印刷を情報を削除してもよろしいですか？", function(result) {
         if(result) {
             $.ajax({
                 url: url,
@@ -23,7 +23,7 @@ window.cancelPrint = function(url) {
                 dataType: "html"
             }).done(function(html) {
                 $("#print_stamp").html(html);
-                bootbox.alert("印刷情報を削除しました。");
+                popupAlert("印刷情報を削除しました。");
             });
         }
     }));
