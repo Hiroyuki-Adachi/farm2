@@ -1,3 +1,25 @@
+import { Modal } from "bootstrap";
+
+window.popupAlert = (message) => {
+    document.getElementById("popup_alert_message").innerText = message;
+    const popupForm = new Modal(document.getElementById("popup_alert"));
+    popupForm.show();
+};
+
+window.popupConfirm = (message, callback) => {
+    document.getElementById("popup_confirm_message").innerText = message;
+    const popupForm = new Modal(document.getElementById("popup_confirm"));
+    document.getElementById("popup_confirm_yes").onclick = () => {
+        popupForm.hide();
+        callback(true);
+    };
+    document.getElementById("popup_confirm_no").onclick = () => {
+        popupForm.hide();
+        callback(false);
+    };
+    popupForm.show();
+}
+
 $(document).on("change", "div.form-check-inline input[type='checkbox']", function(e) {
     if($(this).prop('checked')) {
         $(this).parent().css("color", "red");
@@ -26,7 +48,6 @@ $(function() {
     });
 });
 
-// bootbox-rails
 $(function() {
   const handleConfirm = function(element) {
     if (!allowAction(this)) {
@@ -52,23 +73,9 @@ $(function() {
 
   const showConfirmationDialog = function(element) {
     const message = element.getAttribute('data-confirm');
-    const opts = {
-      message: message,
-      buttons: {
-          confirm: {
-              label: 'はい',
-              className: 'btn-success'
-          },
-          cancel: {
-              label: 'いいえ',
-              className: 'btn-danger'
-          }
-      },
-      callback: function(result) {
+    popupConfirm(message, function(result) {
         confirmed(element, {value: result});
-      }
-    };
-    bootbox.confirm(opts);
+    });
   }
   
   $("a[data-confirm]").on('click',handleConfirm);
