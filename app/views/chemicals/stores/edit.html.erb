@@ -41,7 +41,7 @@
             <td>
               <%= fs.select :chemical_id, 
                 options_from_collection_for_select(
-                  ChemicalDecorator.decorate_collection(Chemical.by_term(stock_system.term).by_type(fs.object&.chemical&.chemical_type_id || chemical_types.first.id)),
+                  ChemicalDecorator.decorate_collection(Chemical.for_stock(stock_system.term).by_type(fs.object&.chemical&.chemical_type_id || chemical_types.first.id)),
                   :id, :stored_name, fs.object&.chemical_id), {},
                 class: "form-control chemical", data: {index: fs.index}
               %>
@@ -73,7 +73,7 @@
     </div>
   </div>
 <% end %>
-<% ChemicalDecorator.decorate_collection(Chemical.by_term(stock_system.term)).each do |chemical| %>
+<% ChemicalDecorator.decorate_collection(Chemical.for_stock(stock_system.term)).each do |chemical| %>
 <%= hidden_field_tag nil, chemical.stored_name, 
   data: {chemical_type: chemical.chemical_type_id, id: chemical.id} %>
 <% end %>
