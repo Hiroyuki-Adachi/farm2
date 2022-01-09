@@ -13,7 +13,7 @@ gem 'pg'
 # gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 #gem 'therubyracer', platforms: :ruby
-gem 'mini_racer', '0.1.14'
+gem "mini_racer"
 
 gem 'delayed_job_active_record'
 
@@ -86,11 +86,11 @@ gem 'puma'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  # gem 'byebug'
   # debase is a fast implementation of the standard Ruby debugger debug.rb for Ruby 2.0
-  gem 'debase'
+  # gem 'debase'
   # An interface which glues ruby-debug to IDEs
-  gem 'ruby-debug-ide', '~> 0.6'
+  # gem 'ruby-debug-ide', '~> 0.6'
 
   #gem 'pry-byebug'
   #gem 'pry-doc'
@@ -115,3 +115,4 @@ group :test do
   # This gem is only useful once assigns and assert_template have been removed from Rails.
   gem 'rails-controller-testing'
 end
+
