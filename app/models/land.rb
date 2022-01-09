@@ -42,7 +42,7 @@ class Land < ApplicationRecord
   has_many :members, ->{order(:group_order, :display_order, :id)}, dependent: :nullify, foreign_key: :group_id, class_name: :Land
   has_many :land_fees
   has_many :plan_lands
-  has_many :land_homes
+  has_many :land_homes, dependent: :destroy
 
   has_many :owners, -> { where.not(owner_id: nil) }, through: :land_homes, source: :owner
   has_many :managers, -> { where.not(manager_id: nil) }, through: :land_homes, source: :manager
@@ -64,6 +64,7 @@ class Land < ApplicationRecord
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
 
   accepts_nested_attributes_for :land_costs, allow_destroy: true, reject_if: :reject_land_costs
+  accepts_nested_attributes_for :land_homes, allow_destroy: true
 
   def owner_name
     owner.member_flag ? owner_holder.name : owner.name
