@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_06_114019) do
+ActiveRecord::Schema.define(version: 2022_01_09_113542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -355,6 +355,17 @@ ActiveRecord::Schema.define(version: 2022_01_06_114019) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["term", "land_id"], name: "land_fees_2nd", unique: true
+  end
+
+  create_table "land_homes", comment: "土地管理", force: :cascade do |t|
+    t.integer "land_id", null: false, comment: "土地"
+    t.integer "owner_id", comment: "所有世帯"
+    t.integer "manager_id", comment: "管理世帯"
+    t.decimal "reg_area", precision: 5, scale: 2, null: false, comment: "登記面積"
+    t.decimal "area", precision: 5, scale: 2, null: false, comment: "耕作面積"
+    t.string "place", limit: 15, null: false, comment: "番地"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "land_places", id: { type: :serial, comment: "場所マスタ" }, comment: "場所マスタ", force: :cascade do |t|
