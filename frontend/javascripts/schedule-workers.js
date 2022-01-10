@@ -136,8 +136,6 @@ $(function() {
     }
   });
 
-  $("#tbody_workers").disableSelection();
-
   $(".add-worker").on('click', function() {
     add_worker($(this).data("worker"));
   });
