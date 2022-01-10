@@ -1,3 +1,4 @@
+import { Modal } from "bootstrap";
 let landRegion;
 
 function initMap(){
@@ -51,9 +52,9 @@ function initMap(){
   google.maps.event.addListener(drawingManager, 'polygoncomplete', function(arg) {
     let polygon = [];
     arg.getPath().getArray().forEach(function(path) {
-      polygon.push("(" + path.lat() + "," + path.lng() + ")");
+      polygon.push(`(${path.lat()},${path.lng()})`);
     });
-    $("#land_region").val("(" + polygon.join(",") + ")");
+    document.getElementById("land_region").value = `(${polygon.join(",")})`;
   });
 }
 
@@ -69,13 +70,60 @@ function convertRegion(region) {
   return results;
 }
 
-window.addEventListener('load', (event) => {
+window.addEventListener('load', () => {
   document.getElementById("clear_region").addEventListener("click", function() {
     if(landRegion) {
       landRegion.setMap(null);
       document.getElementById("land_region").value = "";
     }
   });
-   
+
+  let popForm = null;
+  document.querySelectorAll(".edit-homes").forEach((element) => {
+    element.addEventListener("click", (event) => {
+      popForm = new Modal(document.getElementById("popup_edit"));
+      document.getElementById("destroy_path").value = event.target.dataset.updatePath;
+      document.getElementById("index_path").value = event.target.dataset.path;
+      popupModal(event.target.dataset.path, () => {
+        popForm.show();
+        popForm._isTransitioning= false;
+      });
+    });
+  });
+
+  document.getElementById("popup_update").addEventListener("click", () => {
+    fetch(document.getElementById("index_path").value, {
+      method: "POST",
+      body: new FormData(document.getElementById("update_form"))
+    })
+    .then(() => {
+      popupModal(document.getElementById("index_path").value)
+    });
+
+  });
+  document.getElementById("popup_close").addEventListener("click", () => {
+    popForm.hide();
+  });
+  document.getElementById("popup_delete").addEventListener("click", () => {
+    popupConfirm("表示中のデータを削除してもよろしいですか？", (result) => {
+      if (result) {
+        popForm.hide();
+      }
+    });
+  });
+
   initMap();
 });
+
+
+function popupModal(action, callback) {
+  fetch(action)
+  .then((data) => data.text())
+  .then((html) => {
+      document.getElementById("popup_content").innerHTML = html;
+
+      if (callback) {
+        callback();
+      }
+  });
+}

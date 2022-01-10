@@ -44,9 +44,6 @@ class Land < ApplicationRecord
   has_many :plan_lands
   has_many :land_homes, dependent: :destroy
 
-  has_many :owners, -> { where.not(owner_id: nil) }, through: :land_homes, source: :owner
-  has_many :managers, -> { where.not(manager_id: nil) }, through: :land_homes, source: :manager
-
   scope :usual, -> {where(target_flag: true).order(:place, :display_order)}
   scope :list, -> {where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
   scope :group_list, -> {where(group_flag: true).includes(:land_place, :members).order(Arel.sql("place, lands.display_order, lands.id"))}
