@@ -90,8 +90,8 @@ Rails.application.routes.draw do
     resources :fees, only: [:index, :create, :edit, :update]
   end
   resources :lands, except: [:show] do
-    resources :owners, controller: "lands/owners", only: [:index, :create]
-    resources :managers, controller: "lands/managers", only: [:index, :create]
+    resources :owners, controller: "lands/owners", only: [:index, :create, :destroy]
+    resources :managers, controller: "lands/managers", only: [:index, :create, :destroy]
   end
   resources :homes, except: [:show]
   resources :workers, except: [:show]

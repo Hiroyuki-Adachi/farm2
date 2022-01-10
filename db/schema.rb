@@ -359,10 +359,10 @@ ActiveRecord::Schema.define(version: 2022_01_09_113542) do
 
   create_table "land_homes", comment: "土地管理", force: :cascade do |t|
     t.integer "land_id", null: false, comment: "土地"
-    t.integer "owner_id", comment: "所有世帯"
-    t.integer "manager_id", comment: "管理世帯"
-    t.decimal "reg_area", precision: 5, scale: 2, null: false, comment: "登記面積"
-    t.decimal "area", precision: 5, scale: 2, null: false, comment: "耕作面積"
+    t.integer "home_id", comment: "世帯"
+    t.boolean "manager_flag", comment: "管理者フラグ"
+    t.boolean "owner_flag", comment: "所有者フラグ"
+    t.decimal "area", precision: 5, scale: 2, null: false, comment: "面積"
     t.string "place", limit: 15, null: false, comment: "番地"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
