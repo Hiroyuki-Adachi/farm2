@@ -7,19 +7,29 @@
       <tr>
         <th>機械名</th>
         <th>オペレーター</th>
-        <th>備考(ヒヤリ・ハット含む)</th>
+        <th>備考(ヒヤリ・ハット)</th>
+        <th>備考(保守)</th>
+        <th>備考(その他)</th>
       </tr>
     </thead>
     <tbody>
       <% @machines.each do |machine| %>
       <tr>
         <% remark = @remarks.find_by(machine_id: machine) %>
-        <td><%= machine.usual_name %></td>
-        <td><%= machine.operators(@work) %></td>
         <td>
+          <%= machine.usual_name %>
           <%= hidden_field_tag "machine_remarks[#{machine.id}][work_id]", @work.id %>
           <%= hidden_field_tag "machine_remarks[#{machine.id}][machine_id]", machine.id %>
-          <%= text_field_tag "machine_remarks[#{machine.id}][remarks]", remark&.remarks, {class: "form-control", maxlength: 30} %>
+        </td>
+        <td><%= machine.operators(@work) %></td>
+        <td>
+          <%= text_field_tag "machine_remarks[#{machine.id}][danger_remarks]", remark&.danger_remarks, {class: "form-control", maxlength: 30} %>
+        </td>
+        <td>
+          <%= text_field_tag "machine_remarks[#{machine.id}][care_remarks]", remark&.care_remarks, {class: "form-control", maxlength: 30} %>
+        </td>
+        <td>
+          <%= text_field_tag "machine_remarks[#{machine.id}][other_remarks]", remark&.other_remarks, {class: "form-control", maxlength: 30} %>
         </td>
       </tr>
       <% end %>
