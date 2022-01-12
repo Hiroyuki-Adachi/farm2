@@ -22,8 +22,8 @@ require 'test_helper'
 class ChemicalStockTest < ActiveSupport::TestCase
   test "在庫計算" do
     chemical_id = 4
-    assert_difference('ChemicalStock.count') do
-      ChemicalStock.refresh(chemical_id)
+    assert_difference('ChemicalStock.count', 3) do
+      ChemicalStock.refresh(1, chemical_id)
     end
     work_chemical = work_chemicals(:work_chemical_stock)
     work_stock = ChemicalStock.find_by(work_chemical_id: work_chemical.id)
