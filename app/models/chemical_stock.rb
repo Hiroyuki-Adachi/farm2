@@ -42,9 +42,10 @@ class ChemicalStock < ApplicationRecord
     end
   end
 
-  def self.refresh(chemical_id)
+  def self.refresh(organization_id, chemical_id)
     start_date = ChemicalStock.where(chemical_id: chemical_id).minimum(:stock_on)
     from_work(chemical_id, start_date)
+    create_begin(organization_id, chemical_id, start_date)
     tmp_stock = 0
     ChemicalStock.usual(chemical_id).each do |stock|
       if stock.inventory.nil?
@@ -56,6 +57,18 @@ class ChemicalStock < ApplicationRecord
       end
       stock.save!
       tmp_stock = stock.stock
+    end
+  end
+
+  def self.create_begin(organization_id, chemical_id, start_date)
+    System.where("start_date > ? AND organization_id = ?", start_date, organization_id).order(:start_date).each do |sys|
+      unless ChemicalStock.where("chemical_id = ? AND stock_on = ?", chemical_id, sys.start_date).exists?
+        ChemicalStock.create(
+          name: "期首在庫",
+          stock_on: sys.start_date,
+          chemical_id: chemical_id
+        )
+      end
     end
   end
 

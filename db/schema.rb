@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_09_113542) do
+ActiveRecord::Schema.define(version: 2022_01_11_112332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -429,9 +429,11 @@ ActiveRecord::Schema.define(version: 2022_01_09_113542) do
   create_table "machine_remarks", comment: "作業機械備考", force: :cascade do |t|
     t.integer "work_id", null: false, comment: "作業"
     t.integer "machine_id", null: false, comment: "機械"
-    t.string "remarks", limit: 30, default: "", null: false, comment: "備考"
+    t.string "other_remarks", limit: 30, default: "", null: false, comment: "備考"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "danger_remarks", limit: 30, default: "", null: false, comment: "備考(危険)"
+    t.string "care_remarks", limit: 30, default: "", null: false, comment: "備考(保守)"
     t.index ["work_id", "machine_id"], name: "machine_remarks_2nd", unique: true
   end
 
