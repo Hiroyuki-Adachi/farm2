@@ -18,7 +18,7 @@ class Works::RemarksControllerTest < ActionController::TestCase
   test "作業変更(ヒヤリ)(変更)" do
     machine = machines(:taueki_1)
     assert_difference('MachineRemark.count') do
-      post :create, params: {work_id: @work, :machine_remarks => {machine.id => {work_id: @work, machine_id: machine.id, remarks: "TEST"}}}
+      post :create, params: {work_id: @work, :machine_remarks => {machine.id => {work_id: @work, machine_id: machine.id, other_remarks: "TEST"}}}
     end
     assert_redirected_to work_path(id: @work)
   end
