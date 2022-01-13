@@ -134,7 +134,6 @@ ORDER
   private
 
   def save_term
-    @term ||= Organization.first.term
     if ActiveRecord::Type::Boolean.new.cast(@this_term_flag)
       ChemicalTerm.create(term: @term, chemical_id: id) unless chemical_terms.where(term: @term).exists?
     else
