@@ -15,7 +15,7 @@ gem 'pg'
 #gem 'therubyracer', platforms: :ruby
 gem 'mini_racer', '0.4'
 
-gem 'delayed_job_active_record'
+gem 'delayed_job_active_record', :git => 'git@github.com:collectiveidea/delayed_job_active_record.git'
 
 gem 'webpacker', '~> 5.2'
 
