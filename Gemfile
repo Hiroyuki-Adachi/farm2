@@ -13,7 +13,7 @@ gem 'pg'
 # gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 #gem 'therubyracer', platforms: :ruby
-gem 'mini_racer', '0.1.14'
+gem 'mini_racer', '0.4'
 
 gem 'delayed_job_active_record'
 

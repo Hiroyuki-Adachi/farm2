@@ -12,7 +12,7 @@ class Chemicals::StocksController < ApplicationController
   end
 
   def search
-    ChemicalStock.refresh(@chemical_term.chemical_id)
+    ChemicalStock.refresh(current_organization.id, @chemical_term.chemical_id)
     @stocks = ChemicalStock.usual(@chemical_term.chemical_id).where(stock_on: @target_system.start_date..@target_system.end_date)
     @stocks = ChemicalStockDecorator.decorate_collection(@stocks)
     render action: :search, layout: false

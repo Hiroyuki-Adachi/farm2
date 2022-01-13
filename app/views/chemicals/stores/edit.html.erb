@@ -47,7 +47,7 @@
               %>
             </td>
             <td>
-              <%= fs.number_field :stored_stock, {min: 0, max: 999999.9, step: 1, required: true, class: "form-control"} %>
+              <%= fs.number_field :stored_stock, {min: 0, max: 999999.9, step: 0.1, required: true, class: "form-control"} %>
             </td>
             <td>
               <%= fs.hidden_field :id %>
