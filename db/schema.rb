@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_11_112332) do
+ActiveRecord::Schema.define(version: 2022_01_15_050932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -251,7 +251,8 @@ ActiveRecord::Schema.define(version: 2022_01_11_112332) do
     t.decimal "fixed_amount", precision: 7, comment: "確定額"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["carried_on", "home_id"], name: "dryings_secondary", unique: true
+    t.integer "copy_flag", limit: 2, default: 0, null: false, comment: "複写フラグ"
+    t.index ["carried_on", "home_id", "copy_flag"], name: "dryings_secondary", unique: true
   end
 
   create_table "expense_types", comment: "経費種別", force: :cascade do |t|

@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   resources :owned_rice_prices, only: [:index, :create, :edit, :update, :destroy]
   resources :harvest_whole_crops, only: [:index]
   resources :harvest_rices, only: [:index]
-  resources :dryings, except: [:new]
+  resources :dryings, except: [:new] do
+    member do
+      post :copy
+    end
+  end
   resources :calendar_work_kinds, only: [:index, :create]
   resources :calendars, only: [:index]
   namespace :calendars do

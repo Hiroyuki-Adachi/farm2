@@ -4,6 +4,7 @@
 #
 #  id                       :bigint           not null, primary key
 #  carried_on(搬入日)       :date             not null
+#  copy_flag(複写フラグ)    :integer          default(0), not null
 #  fixed_amount(確定額)     :decimal(7, )
 #  shipped_on(出荷日)       :date
 #  term(年度(期))           :integer          not null
@@ -16,7 +17,7 @@
 #
 # Indexes
 #
-#  dryings_secondary  (carried_on,home_id) UNIQUE
+#  dryings_secondary  (carried_on,home_id,copy_flag) UNIQUE
 #
 require 'test_helper'
 
