@@ -143,6 +143,22 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
               <label class="col-form-label-lg">袋</label>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-6 form-inline field form-group">
+              <label class="col-form-label-lg">くず米出荷：</label>
+              <%= fa.date_field :waste_date, {min: @drying.model.carried_on, class: "form-control dry-input dry-self dry-another"} %>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-md-4 form-inline field form-group">
+              <label class="col-form-label-lg" for="drying_adjustment_attributes_container_flag" class="form-check-input">フレコン</label>
+              <%= fa.check_box :container_flag, {class: "form-control form-check-input dry-input dry-self dry-another"}, true, false %>
+            </div>
+            <div class="col-md-8 form-inline field form-group">
+              <%= number_field_tag :contaier_weight, fa.object.container_weight, {min: 0, max: 9999, step: 1, class: "form-control dry-input dry-self dry-another"} %>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>
@@ -178,5 +194,6 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
   </div>
 <% end %>
 <%= hidden_field_tag "kg_per_bag_waste", Drying::KG_PER_BAG_WASTE %>
+<%= hidden_field_tag "kg_per_bag_rice", Drying::KG_PER_BAG_RICE %>
 <%= hidden_field_tag "carried_on", @drying.model.carried_on %>
 <%= javascript_pack_tag 'edit-dryings' %>
