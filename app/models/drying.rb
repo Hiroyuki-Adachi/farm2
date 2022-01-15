@@ -68,6 +68,11 @@ class Drying < ApplicationRecord
     return adjustment&.waste_weight || 0
   end
 
+  def waste_date
+    return adjustment&.waste_date if adjustment&.waste_date.present?
+    return shipped_on
+  end
+
   def adjust_only?(home_id)
     return drying_type == DryingType::ANOTHER && adjustment&.home_id == home_id
   end
