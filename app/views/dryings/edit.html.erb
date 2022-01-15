@@ -169,6 +169,9 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
       <%= link_to '削除', @drying, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
     </div>
     <div class="btn-group mr-2">
+      <%= link_to '複写', copy_drying_path(@drying), {action: :copy, method: :post, data: {confirm: "表示しているデータを複写しますか?"}, class: "btn btn-warning"} %>
+    </div>
+    <div class="btn-group mr-2">
       <%= link_to '戻る', drying_path(@drying.home), class: "btn btn-outline-dark" %>
     </div>
     <input type="hidden" id="adjustment_home_sql" value="">

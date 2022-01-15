@@ -1,7 +1,7 @@
 class DryingsController < ApplicationController
   include PermitManager
 
-  before_action :set_drying, only: [:edit, :update, :destroy]
+  before_action :set_drying, only: [:edit, :update, :destroy, :copy]
   before_action :set_homes, only: [:index, :edit]
   before_action :set_lands, only: [:edit]
   before_action :set_work_types, only: [:edit]
@@ -43,6 +43,11 @@ class DryingsController < ApplicationController
   def destroy
     @drying.destroy
     redirect_to dryings_path
+  end
+
+  def copy
+    @drying.copy
+    redirect_to drying_path(@drying.home)
   end
 
   private
