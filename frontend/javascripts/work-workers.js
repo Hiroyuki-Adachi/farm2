@@ -1,3 +1,5 @@
+import "jquery-ui/ui/widgets/sortable";
+
 function add_worker(worker_id, worker_name)
 {
     var tbody_workers = document.getElementById("tbody_workers");

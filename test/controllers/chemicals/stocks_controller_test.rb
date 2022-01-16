@@ -63,6 +63,7 @@ class Chemicals::StocksControllerTest < ActionController::TestCase
       }}
     end
     assert_response :success
+    assert_equal 1, ChemicalStock.find(@stock.id).stored
   end
 
   test "農薬在庫削除(実行)" do

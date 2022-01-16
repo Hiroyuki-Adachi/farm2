@@ -38,3 +38,41 @@ stock_edit:
   stock_on: '2015-12-17'
   name: '手入力'
   stored: 500
+
+stock_model1:
+  chemical_id: '4'
+  stock_on: '2015-01-01'
+  chemical_inventory: inventory21
+  name: '初期在庫'
+  inventory: 60
+
+stock_model2:
+  chemical_id: '4'
+  chemical_inventory: store2
+  stock_on: '2015-03-01'
+  name: '納品1'
+  stored: 20
+
+stock_model4:
+  chemical_id: '4'
+  name: '手入力入庫'
+  stock_on: '2015-04-01'
+  stored: 15
+
+stock_model5:
+  chemical_id: '4'
+  name: '手入力出庫'
+  stock_on: '2015-05-01'
+  shipping: 20
+
+stock_model6:
+  chemical_id: '4'
+  name: '年末棚卸'
+  chemical_inventory: inventory22
+  stock_on: '2015-12-31'
+  inventory: 20
+
+stock_for_test:
+  chemical_id: '5'
+  stock_on: '2015-12-16'
+  name: '年末納品'

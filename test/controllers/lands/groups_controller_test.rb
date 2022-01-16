@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Lands::GroupsControllerTest <  ActionController::TestCase
+class Lands::GroupsControllerTest < ActionController::TestCase
   setup do
     setup_ip
     @member = lands(:lands1)

@@ -4,7 +4,7 @@ class Plans::LandsController < ApplicationController
   helper GmapHelper
 
   def new
-    @lands = Land.for_plan(current_user.id).includes(:owner)
+    @lands = Land.for_plan(current_user.id).expiry(Date.today).includes(:owner)
     @work_types = WorkType.land
   end
 

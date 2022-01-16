@@ -27,6 +27,7 @@ class ChemicalStock < ApplicationRecord
   }
 
   before_save :save_inventory
+  before_save :save_stored
 
   def save_inventory
     if chemical_inventory_id
@@ -35,9 +36,16 @@ class ChemicalStock < ApplicationRecord
     end
   end
 
-  def self.refresh(chemical_id)
+  def save_stored
+    if @stored_stock_value
+      self.stored = (chemical.carton_quantity.zero? ? @stored_stock_value : @stored_stock_value.to_f * chemical.carton_quantity / chemical.stock_quantity)
+    end
+  end
+
+  def self.refresh(organization_id, chemical_id)
     start_date = ChemicalStock.where(chemical_id: chemical_id).minimum(:stock_on)
     from_work(chemical_id, start_date)
+    create_begin(organization_id, chemical_id, start_date)
     tmp_stock = 0
     ChemicalStock.usual(chemical_id).each do |stock|
       if stock.inventory.nil?
@@ -49,6 +57,18 @@ class ChemicalStock < ApplicationRecord
       end
       stock.save!
       tmp_stock = stock.stock
+    end
+  end
+
+  def self.create_begin(organization_id, chemical_id, start_date)
+    System.where("start_date > ? AND organization_id = ?", start_date, organization_id).order(:start_date).each do |sys|
+      unless ChemicalStock.where("chemical_id = ? AND stock_on = ?", chemical_id, sys.start_date).exists?
+        ChemicalStock.create(
+          name: "期首在庫",
+          stock_on: sys.start_date,
+          chemical_id: chemical_id
+        )
+      end
     end
   end
 
@@ -80,5 +100,15 @@ class ChemicalStock < ApplicationRecord
 
   def valid_chemical_id?
     chemical_inventory_id.present?
+  end
+
+  def stored_stock
+    return nil if stored.nil?
+    chemical.stock_quantity.zero? ? stored : stored * chemical.stock_quantity / chemical.carton_quantity
+  end
+
+  def stored_stock=(value)
+    self.stored = 0
+    @stored_stock_value = value
   end
 end

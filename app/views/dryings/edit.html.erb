@@ -143,6 +143,22 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
               <label class="col-form-label-lg">袋</label>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-6 form-inline field form-group">
+              <label class="col-form-label-lg">くず米出荷：</label>
+              <%= fa.date_field :waste_date, {min: @drying.model.carried_on, class: "form-control dry-input dry-self dry-another"} %>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-md-4 form-inline field form-group">
+              <label class="col-form-label-lg" for="drying_adjustment_attributes_container_flag" class="form-check-input">フレコン</label>
+              <%= fa.check_box :container_flag, {class: "form-control form-check-input dry-input dry-self dry-another"}, true, false %>
+            </div>
+            <div class="col-md-8 form-inline field form-group">
+              <%= number_field_tag :contaier_weight, fa.object.container_weight, {min: 0, max: 9999, step: 1, class: "form-control dry-input dry-self dry-another"} %>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>
@@ -169,11 +185,15 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
       <%= link_to '削除', @drying, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
     </div>
     <div class="btn-group mr-2">
+      <%= link_to '複写', copy_drying_path(@drying), {action: :copy, method: :post, data: {confirm: "表示しているデータを複写しますか?"}, class: "btn btn-warning"} %>
+    </div>
+    <div class="btn-group mr-2">
       <%= link_to '戻る', drying_path(@drying.home), class: "btn btn-outline-dark" %>
     </div>
     <input type="hidden" id="adjustment_home_sql" value="">
   </div>
 <% end %>
 <%= hidden_field_tag "kg_per_bag_waste", Drying::KG_PER_BAG_WASTE %>
+<%= hidden_field_tag "kg_per_bag_rice", Drying::KG_PER_BAG_RICE %>
 <%= hidden_field_tag "carried_on", @drying.model.carried_on %>
 <%= javascript_pack_tag 'edit-dryings' %>

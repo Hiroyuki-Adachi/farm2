@@ -39,19 +39,22 @@
   </div>
 <% end %>
 <script>
-$(function() {
-    $(".rice").on('change keyup click', function() {
-        dispSum();
+window.addEventListener("load", () => {
+    ("change keyup click".split(" ")).forEach((event) => {
+        document.querySelectorAll(".rice").forEach((element) => {
+            element.addEventListener(event, () => {
+                dispSum();
+            });
+        });
     });
-
     dispSum();
 });
 
 function dispSum() {
     let owned_rice = 0;
-    $(".owned-rice").each(function() {
-        owned_rice += parseInt($(this).val());
+    document.querySelectorAll(".owned-rice").forEach((element) => {
+        owned_rice += parseInt(element.value);
     });
-    $("#sum_owned_rice").text(owned_rice);
+    document.getElementById("sum_owned_rice").innerText = owned_rice;
 }
 </script>

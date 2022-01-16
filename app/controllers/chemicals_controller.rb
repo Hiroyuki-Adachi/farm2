@@ -41,7 +41,7 @@ class ChemicalsController < ApplicationController
 
   def set_chemical
     @chemical = Chemical.find(params[:id])
-    @chemical.term = @term
+    @chemical.term = current_term
   end
 
   def set_base_units
@@ -70,6 +70,6 @@ class ChemicalsController < ApplicationController
             :stock_unit,
             :url
           )
-          .merge(term: @term)
+          .merge(term: current_term)
   end
 end

@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   resources :owned_rice_prices, only: [:index, :create, :edit, :update, :destroy]
   resources :harvest_whole_crops, only: [:index]
   resources :harvest_rices, only: [:index]
-  resources :dryings, except: [:new]
+  resources :dryings, except: [:new] do
+    member do
+      post :copy
+    end
+  end
   resources :calendar_work_kinds, only: [:index, :create]
   resources :calendars, only: [:index]
   namespace :calendars do
@@ -89,7 +93,10 @@ Rails.application.routes.draw do
     end
     resources :fees, only: [:index, :create, :edit, :update]
   end
-  resources :lands, except: [:show]
+  resources :lands, except: [:show] do
+    resources :owners, controller: "lands/owners", only: [:index, :create, :destroy]
+    resources :managers, controller: "lands/managers", only: [:index, :create, :destroy]
+  end
   resources :homes, except: [:show]
   resources :workers, except: [:show]
   resources :machines, except: [:show]
@@ -161,10 +168,10 @@ Rails.application.routes.draw do
     resources :whole_crops, controller: "works/whole_crops", only: [:new, :create]
     collection do
       get :work_type_select
-      get :autocomplete_for_land_place
     end
     member do
       get :map
+      get :autocomplete_for_land_place
     end
   end
 
