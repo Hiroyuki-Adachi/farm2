@@ -360,6 +360,17 @@ ActiveRecord::Schema.define(version: 2022_01_15_053918) do
     t.index ["term", "land_id"], name: "land_fees_2nd", unique: true
   end
 
+  create_table "land_homes", comment: "土地管理", force: :cascade do |t|
+    t.integer "land_id", null: false, comment: "土地"
+    t.integer "home_id", comment: "世帯"
+    t.boolean "manager_flag", comment: "管理者フラグ"
+    t.boolean "owner_flag", comment: "所有者フラグ"
+    t.decimal "area", precision: 5, scale: 2, null: false, comment: "面積"
+    t.string "place", limit: 15, null: false, comment: "番地"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "land_places", id: { type: :serial, comment: "場所マスタ" }, comment: "場所マスタ", force: :cascade do |t|
     t.string "name", limit: 40, null: false, comment: "場所名称"
     t.text "remarks", comment: "備考"
@@ -386,6 +397,8 @@ ActiveRecord::Schema.define(version: 2022_01_15_053918) do
     t.boolean "group_flag", default: false, null: false, comment: "グループフラグ"
     t.integer "group_id", comment: "グループID"
     t.integer "group_order", default: 0, null: false, comment: "グループ内並び順"
+    t.date "start_on", default: "1900-01-01", null: false, comment: "有効期間(自)"
+    t.date "end_on", default: "2999-12-31", null: false, comment: "有効期間(至)"
     t.index ["deleted_at"], name: "index_lands_on_deleted_at"
     t.index ["place"], name: "index_lands_on_place"
   end
@@ -802,6 +815,7 @@ ActiveRecord::Schema.define(version: 2022_01_15_053918) do
     t.string "icon_name", limit: 40, comment: "アイコン名"
     t.binary "icon", comment: "アイコン"
     t.boolean "cost_flag", default: false, null: false, comment: "原価フラグ"
+    t.boolean "work_flag", default: true, null: false, comment: "日報フラグ"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
   end
 
