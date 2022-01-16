@@ -56,10 +56,18 @@ chemicals2:
 
 chemicals3:
   id: '4'
+  unit: 
   name: 米育ち一発024号
   phonetic: 'こめそだちいっぱつ'
   display_order: '0'
   chemical_type_id: '3'
+  carton_unit: "袋"
+  carton_quantity: 20000
+  unit: "袋"
+  base_unit_id: 1
+  base_quantity: 20000
+  stock_unit: "袋"
+  stock_quantity: 20000
   created_at: '2012-03-12 13:12:22.070992'
   updated_at: '2012-03-12 13:12:22.070992'
   deleted_at: 
@@ -71,6 +79,11 @@ chemicals4:
   phonetic: 'いずもいなさくめいじん'
   display_order: '0'
   chemical_type_id: '3'
+  carton_unit: "本"
+  carton_quantity: 250
+  stock_unit: "g"
+  stock_quantity: 1
+  base_unit_id: 1
   created_at: '2012-03-12 13:12:34.018633'
   updated_at: '2014-04-27 01:25:29.11066'
   deleted_at: 

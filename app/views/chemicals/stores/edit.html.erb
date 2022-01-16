@@ -23,7 +23,7 @@
           <tr>
             <th>薬品種別</th>
             <th>薬品</th>
-            <th>在庫量</th>
+            <th>納入数</th>
             <th>削除</th>
           </tr>
         </thead>
@@ -41,13 +41,13 @@
             <td>
               <%= fs.select :chemical_id, 
                 options_from_collection_for_select(
-                  ChemicalTerm.by_type(stock_system.term, fs.object&.chemical&.chemical_type_id || chemical_types.first.id),
-                  :id, :name, fs.object&.chemical_id), {},
+                  ChemicalDecorator.decorate_collection(Chemical.for_stock(stock_system.term).by_type(fs.object&.chemical&.chemical_type_id || chemical_types.first.id)),
+                  :id, :stored_name, fs.object&.chemical_id), {},
                 class: "form-control chemical", data: {index: fs.index}
               %>
             </td>
             <td>
-              <%= fs.number_field :stored, {min: 0, max: 999999.9, step: 1, required: true, class: "form-control"} %>
+              <%= fs.number_field :stored_stock, {min: 0, max: 999999.9, step: 0.1, required: true, class: "form-control"} %>
             </td>
             <td>
               <%= fs.hidden_field :id %>
@@ -73,8 +73,9 @@
     </div>
   </div>
 <% end %>
-<% ChemicalTerm.usual(stock_system.term).each do |chemical_term| %>
-<%= hidden_field_tag nil, chemical_term.chemical.name, data: {chemical_type: chemical_term.chemical.chemical_type_id, id: chemical_term.chemical_id} %>
+<% ChemicalDecorator.decorate_collection(Chemical.for_stock(stock_system.term)).each do |chemical| %>
+<%= hidden_field_tag nil, chemical.stored_name, 
+  data: {chemical_type: chemical.chemical_type_id, id: chemical.id} %>
 <% end %>
 <script>
 document.querySelectorAll(".chemical_types").forEach((element) => {

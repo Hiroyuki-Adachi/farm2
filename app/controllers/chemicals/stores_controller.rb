@@ -48,7 +48,7 @@ class Chemicals::StoresController < ApplicationController
       .permit(
         :name,
         :checked_on,
-        stocks_attributes: [:stored, :chemical_id, :_destroy, :id]
+        stocks_attributes: [:stored_stock, :chemical_id, :_destroy, :id]
       )
       .merge(chemical_adjust_type_id: ChemicalAdjustType::STORED.id)
   end

@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="popup_edit_title">土地(<%= @land.place %>)</h5>
+</div>
+<div class="modal-body">
+  <%= form_with model: @land, method: :post, id: :update_form do |f| %>
+    <table class="table table-sm table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>対象者</th>
+          <th>名称</th>
+          <th>面積</th>
+          <th>削除</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= f.fields_for :land_homes do |fs| %>
+        <tr>
+          <td>
+          <%= fs.select(:home_id, options_from_collection_for_select(Home.landable.includes(:holder), :id, :owner_name), {}, {class: "form-control"}) %>
+          </td>
+          <td>
+          <%= fs.text_field :place, {maxlength: 15, required: true, class: "form-control"} %>
+          </td>
+          <td>
+            <%= fs.number_field :area, {step: 0.01, max: 999.99, min: 0.01, size: 6, required: true, class: "form-control"} %>
+          </td>
+          <td>
+            <%= fs.hidden_field :id %>
+            <%= fs.hidden_field :owner_flag, value: @owner_flag || false %>
+            <%= fs.hidden_field :manager_flag, value: @manager_flag || false %>
+            <%= fs.check_box :_destroy %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
