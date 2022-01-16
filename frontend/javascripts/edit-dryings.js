@@ -1,18 +1,40 @@
-$(function() {
+window.addEventListener("load", () => {
     document.getElementById("adjustment_home_sql").value = document.getElementById("drying_adjustment_attributes_home_id").innerHTML;
-    $('input[type="number"][name$="[moth_weight]"], input[type="number"][name$="[rice_weight]"]').change(function() {
-        calc_sum();
-    });
-    $('input[name="drying[drying_type_id]"]').change(function() {
-        change_enabled();
+
+    document.querySelectorAll('input[type="number"][name$="[moth_weight]"], input[type="number"][name$="[rice_weight]"]').forEach((element) => {
+        element.addEventListener("change", () => {
+            calc_sum();
+        });
     });
 
-    $("#drying_adjustment_attributes_waste_weight").blur(function() {
+    document.querySelectorAll('input[name="drying[drying_type_id]"]').forEach((element) => {
+        element.addEventListener("change", () => {
+            change_enabled();
+        });
+    });
+
+    document.getElementById("drying_adjustment_attributes_waste_weight").addEventListener("blur", () => {
         wasteWeight2Bag();
     });
 
-    $("#waste_weight_bag").blur(function() {
+    document.getElementById("waste_weight_bag").addEventListener("blur", () => {
         wasteBag2Weight();
+    });
+
+    document.getElementById("drying_adjustment_attributes_rice_bag").addEventListener("blur", () => {
+        rice2Container();
+    });
+
+    document.getElementById("drying_adjustment_attributes_half_weight").addEventListener("blur", () => {
+        rice2Container();
+    });
+
+    document.getElementById("contaier_weight").addEventListener("blur", (event) => {
+        const fleconWeight = new Decimal(event.target.value == "" ? 0 : event.target.value);
+        const perBag = new Decimal(document.getElementById("kg_per_bag_rice").value);
+    
+        document.getElementById("drying_adjustment_attributes_rice_bag").value = fleconWeight.div(perBag).toFixed(0);
+        document.getElementById("drying_adjustment_attributes_half_weight").value = fleconWeight.mod(perBag).toFixed(0);
     });
 
     calc_sum();
@@ -130,4 +152,15 @@ function wasteBag2Weight() {
     const waste_bag = parseInt($("#waste_weight_bag").val(), 10);
     const KG_PER_BAG_WASTE = parseInt(document.getElementById("kg_per_bag_waste").value, 10);
     $("#drying_adjustment_attributes_waste_weight").val(isNaN(waste_bag) ? 0 : waste_bag * KG_PER_BAG_WASTE);
+}
+
+function rice2Container()
+{
+    const riceBagValue = document.getElementById("drying_adjustment_attributes_rice_bag").value;
+    const riceBag = new Decimal(riceBagValue == "" ? 0 : riceBagValue);
+    const halfWeightValue = document.getElementById("drying_adjustment_attributes_half_weight").value;
+    const halfWeight = new Decimal(halfWeightValue == "" ? 0 : halfWeightValue);
+    const perBag = new Decimal(document.getElementById("kg_per_bag_rice").value);
+
+    document.getElementById("contaier_weight").value = riceBag.mul(perBag).plus(halfWeight).toFixed(0);
 }

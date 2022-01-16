@@ -1,7 +1,7 @@
 class DryingsController < ApplicationController
   include PermitManager
 
-  before_action :set_drying, only: [:edit, :update, :destroy]
+  before_action :set_drying, only: [:edit, :update, :destroy, :copy]
   before_action :set_homes, only: [:index, :edit]
   before_action :set_lands, only: [:edit]
   before_action :set_work_types, only: [:edit]
@@ -45,6 +45,11 @@ class DryingsController < ApplicationController
     redirect_to dryings_path
   end
 
+  def copy
+    @drying.copy
+    redirect_to drying_path(@drying.home)
+  end
+
   private
 
   def drying_params
@@ -55,7 +60,7 @@ class DryingsController < ApplicationController
         :moth_count, :moth_no, :water_content, :moth_weight, :rice_weight, :id
       ],
       adjustment_attributes: [
-        :home_id, :carried_on, :shipped_on, :id, :rice_bag, :half_weight, :waste_weight
+        :home_id, :carried_on, :shipped_on, :id, :rice_bag, :half_weight, :waste_weight, :container_flag, :waste_date
       ],
       drying_lands_attributes: [
         :land_id, :display_order, :id
