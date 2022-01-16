@@ -109,4 +109,10 @@ class DryingsControllerTest < ActionController::TestCase
     end
     assert_redirected_to dryings_path
   end
+
+  test "乾燥複写" do
+    assert_difference('Drying.count') do
+      post :copy, params: {id: dryings(:drying1).id}
+    end
+  end
 end
