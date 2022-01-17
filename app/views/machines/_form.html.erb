@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-3 form-group">
       <%= f.label :machine_type_id, class: "col-form-label-lg" %>
-      <%= f.select(:machine_type_id, @machine_types.map {|machine_type| [machine_type.name, machine_type.id]}, {}, {class: "form-control"}) %>
+      <%= f.select(:machine_type_id, @machine_types.map {|machine_type| [machine_type.name, machine_type.id]}, {}, {class: "form-select"}) %>
     </div>
     <div class="col-md-3 form-group">
       <%= f.label :name, class: "col-form-label-lg" %>
@@ -24,7 +24,7 @@
   <div class="row">
     <div class="col-md-3 form-group">
       <%= f.label :home_id, class: "col-form-label-lg" %>
-      <%= f.select(:home_id, @homes.map {|home| [home.name, home.id]}, {}, {class: "form-control"}) %>
+      <%= f.select(:home_id, @homes.map {|home| [home.name, home.id]}, {}, {class: "form-select"}) %>
     </div>
     <div class="col-md-2 form-group">
       <%= f.label :display_order, class: "col-form-label-lg" %>

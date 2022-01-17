@@ -53,3 +53,7 @@ th.numeric {
     display: none;
   }
 }
+
+input[type=date].form-control {
+  width: 200px;
+}

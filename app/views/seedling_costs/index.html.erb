@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-md-3 form-group">
       <label for="system_seedling_chemical_id">種別</label>
-      <%= select_tag("system[seedling_chemical_id]", options_from_collection_for_select(@chemical_terms, :chemical_id, :chemical_name, current_system.seedling_chemical_id), {class: "form-control"}) %>
+      <%= select_tag("system[seedling_chemical_id]", options_from_collection_for_select(@chemical_terms, :chemical_id, :chemical_name, current_system.seedling_chemical_id), {class: "form-select"}) %>
     </div>
     <div class="col-md-3 form-group">
       <label for="chemical_price">価格</label>

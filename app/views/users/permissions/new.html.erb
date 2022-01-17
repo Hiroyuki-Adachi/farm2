@@ -6,7 +6,7 @@
   <div class="col-md-3">
     <div class="field form-group">
       <%= f.label :permission_id, class: "col-form-label-lg" %>
-      <%= f.select(:permission_id, @permissions.map {|permission| [permission.name, permission.id]}, {}, class: "form-control") %>
+      <%= f.select(:permission_id, @permissions.map {|permission| [permission.name, permission.id]}, {}, class: "form-select") %>
     </div>
   </div>
 </div>

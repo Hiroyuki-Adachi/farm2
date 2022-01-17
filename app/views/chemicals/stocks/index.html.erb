@@ -4,19 +4,19 @@
   <div class="col-md-3">
     <div class="form-inline">
       <label for="term" class="h5">年度</label>
-      <%= select_tag(:term, options_for_select(WorkDecorator.terms, selected: current_term), {class: "form-control"}) %>
+      <%= select_tag(:term, options_for_select(WorkDecorator.terms, selected: current_term), {class: "form-select"}) %>
     </div>
   </div>
   <div class="col-md-3">
     <%= select_tag(
       :chemical_type,
       options_from_collection_for_select(ChemicalType.usual, :id, :name),
-      {class: "form-control"}
+      {class: "form-select"}
       )
       %>
     </div>
   <div class="col-md-3">
-      <%= select_tag(:chemical_id, nil, {class: "form-control"}) %>
+      <%= select_tag(:chemical_id, nil, {class: "form-select"}) %>
   </div>
   <div class="col-md-3">
     <%= button_tag "検索", id: :search, class: "btn btn-primary" %>

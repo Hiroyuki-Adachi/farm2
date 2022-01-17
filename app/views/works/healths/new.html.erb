@@ -21,7 +21,7 @@
           <td><%= result.worker.name %></td>
           <td class="numeric"><%= result.hours %></td>
           <td>
-            <%= select_tag("results[#{result.id}][health_id]", options_from_collection_for_select(healths, :id, :name, result.health_id), {id: nil, class: "form-control"}) %>
+            <%= select_tag("results[#{result.id}][health_id]", options_from_collection_for_select(healths, :id, :name, result.health_id), {id: nil, class: "form-select"}) %>
           </td>
           <td>
             <%= text_field_tag "results[#{result.id}][remarks]", result.remarks, {id: nil, maxlength: 20, class: "form-control"} %>

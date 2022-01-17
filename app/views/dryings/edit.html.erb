@@ -21,7 +21,7 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
     </div>
     <div class="col-md-3 form-inline field form-group">
       <label class="col-form-label-lg">品種</label>
-      <%= fd.select(:work_type_id, @work_types.map {|w| [w.name, w.id]}, {}, {class: "form-control dry-input"}) %>
+      <%= fd.select(:work_type_id, @work_types.map {|w| [w.name, w.id]}, {}, {class: "form-select dry-input"}) %>
     </div>
   </div>
   <div class="row">
@@ -108,7 +108,7 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
           <div class="row">
             <div class="col-md-12 form-inline field form-group">
               <label class="col-form-label-lg">調整担当：</label>
-              <%= fa.select(:home_id, @homes.map {|h| [h.owner_name, h.id]}, {include_blank: true}, {class: "form-control dry-input dry-another"}) %>
+              <%= fa.select(:home_id, @homes.map {|h| [h.owner_name, h.id]}, {include_blank: true}, {class: "form-select dry-input dry-another"}) %>
               <%= fa.hidden_field :id %>
             </div>
           </div>
@@ -168,7 +168,7 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
         <%= fd.fields_for :drying_lands do |fl| %>
           <div class="row">
             <div class="col-md-12 form-inline field form-group">
-              <%= fl.select(:land_id, @lands.map {|l| [l.place, l.id]}, {include_blank: true}, {class: "form-control dry-input"}) %>
+              <%= fl.select(:land_id, @lands.map {|l| [l.place, l.id]}, {include_blank: true}, {class: "form-select dry-input"}) %>
               <%= fl.hidden_field :id %>
               <%= fl.hidden_field :display_order %>
             </div>

@@ -3,7 +3,7 @@
     <h1>土地マスタ一覧</h1>
   </div>
   <div class="col-md-4">
-    <%= select_tag(:month, options_for_select(@homes, @home_id), :onChange => "change_home(this);", class: "form-control") %>
+    <%= select_tag(:month, options_for_select(@homes, @home_id), :onChange => "change_home(this);", class: "form-select") %>
   </div>
 </div>
 <% if @lands.count > 0 %>

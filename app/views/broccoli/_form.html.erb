@@ -5,7 +5,7 @@
   </div>
   <div class="form-group col-md-2">
     <%= f.label :broccoli_box_id, '', class: "col-form-label-lg" %>
-    <%= f.select(:broccoli_box_id, @boxes.map {|box| [box.display_name, box.id]}, {}, {class: "form-control"}) %>
+    <%= f.select(:broccoli_box_id, @boxes.map {|box| [box.display_name, box.id]}, {}, {class: "form-select"}) %>
   </div>
   <div class="form-group col-md-2">
     <%= f.label :rest, '', class: "col-form-label-lg" %>

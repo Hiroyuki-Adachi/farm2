@@ -21,7 +21,7 @@
   </div>
   <div class="field form-group col-md-2">
     <%= f.label :home_id, class: "col-form-label-lg" %>
-    <%= f.select(:home_id, @homes.map {|home| [home.name, home.id]}, {}, class: "form-control") %>
+    <%= f.select(:home_id, @homes.map {|home| [home.name, home.id]}, {}, class: "form-select") %>
     <div class="form-check">
       <%= check_box_tag :holder, true, @worker.home ? (@worker.id == @worker.home.worker_id) : false, {class: "form-check-input"} %>
       <%= label_tag :holder, '代表', class: "form-check-label"%>
@@ -29,7 +29,7 @@
   </div>
   <div class="field form-group col-md-2">
     <%= f.label :gender_id, class: "col-form-label-lg" %>
-    <%= f.select(:gender_id, @genders.map {|gender| [gender.name, gender.id]}, {}, class: "form-control") %>
+    <%= f.select(:gender_id, @genders.map {|gender| [gender.name, gender.id]}, {}, class: "form-select") %>
   </div>
   <div class="field form-group col-md-2">
     <%= f.label :display_order, class: "col-form-label-lg" %>
@@ -47,7 +47,7 @@
   </div>
   <div class="field form-group col-md-2">
     <%= f.label :position_id, class: "col-form-label-lg" %>
-    <%= f.select(:position_id, @positions.map {|position| [position.name, position.id]}, {}, class: "form-control") %>
+    <%= f.select(:position_id, @positions.map {|position| [position.name, position.id]}, {}, class: "form-select") %>
   </div>
   <div class="field form-group col-md-2">
     <%= f.label :broccoli_mark, class: "col-form-label-lg" %>

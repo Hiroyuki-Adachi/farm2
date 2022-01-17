@@ -6,7 +6,7 @@
   <div class="col-md-3">
     <div class="form-inline">
       <label for="term" class="h5">年度</label>
-      <%= select_tag(:term, options_for_select(@terms, selected: @term), {class: "form-control"}) %>
+      <%= select_tag(:term, options_for_select(@terms, selected: @term), {class: "form-select"}) %>
     </div>
   </div>
   <div class="col-md-6">
@@ -23,13 +23,13 @@
   <div class="col-md-3">
     <div class="form-inline">
       <label for="work_type_id" class="h5">分類</label>
-      <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name, @work_type_id), {include_blank: true, class: "form-control"}) %>
+      <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name, @work_type_id), {include_blank: true, class: "form-select"}) %>
     </div>
   </div>
   <div class="col-md-4">
     <div class="form-inline">
       <label for="work_work_kind_id" class="h5">種別</label>
-      <%= select_tag(:work_kind_id, options_from_collection_for_select(@work_kinds, :id, :name, @work_kind_id), {id: "work_work_kind_id", include_blank: true, class: "form-control"}) %>
+      <%= select_tag(:work_kind_id, options_from_collection_for_select(@work_kinds, :id, :name, @work_kind_id), {id: "work_work_kind_id", include_blank: true, class: "form-select"}) %>
     </div>
   </div>
   <div class="col-md-2">

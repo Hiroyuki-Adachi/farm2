@@ -19,13 +19,13 @@
         <tr>
           <td><%= srf.check_box :_destroy, {id: nil} %></td>
           <td>
-            <%= srf.select(:work_id, @works.map {|work| [work.worked_at, work.id]}, {include_blank: true}, {class: "form-control work_select", id: nil, style: "width: 150px;", data: {index: srf.index}}) %>
+            <%= srf.select(:work_id, @works.map {|work| [work.worked_at, work.id]}, {include_blank: true}, {class: "form-select work_select", id: nil, style: "width: 150px;", data: {index: srf.index}}) %>
           </td>
           <td>
             <%= srf.number_field :quantity, {class: "form-control", min: 0, max: 999, style: "width: 100px;", id: nil} %>
           </td>
           <td>
-            <%= srf.select(:work_result_id, work_results.map {|work_result| [work_result.worker_name, work_result.id]}, {include_blank: true}, class: "form-control", style: "width: 150px;", id: "work_result_id_#{srf.index}") %>
+            <%= srf.select(:work_result_id, work_results.map {|work_result| [work_result.worker_name, work_result.id]}, {include_blank: true}, class: "form-select", style: "width: 150px;", id: "work_result_id_#{srf.index}") %>
           </td>
           <td>
             <%= srf.check_box :disposal_flag %>

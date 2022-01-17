@@ -7,7 +7,7 @@
   </div>
   <div class="form-group col-md-2">
     <%= f.label :expense_type_id, class: "col-form-label-lg" %>
-    <%= f.select(:expense_type_id, @expense_types.map {|expense_type| [expense_type.name, expense_type.id]}, {}, {class: "form-control"}) %>
+    <%= f.select(:expense_type_id, @expense_types.map {|expense_type| [expense_type.name, expense_type.id]}, {}, {class: "form-select"}) %>
   </div>
   <div class="form-group col-md-4">
     <%= f.label :content, class: "col-form-label-lg" %>
@@ -25,11 +25,11 @@
 <div class="form-row">
   <div class="form-group col-md-2">
     <%= f.label :chemical_type_id, class: "col-form-label-lg" %>
-    <%= f.select(:chemical_type_id, @chemical_types.map {|chemical_type| [chemical_type.name, chemical_type.id]}, {include_blank: true}, {class: "form-control"}) %>
+    <%= f.select(:chemical_type_id, @chemical_types.map {|chemical_type| [chemical_type.name, chemical_type.id]}, {include_blank: true}, {class: "form-select"}) %>
   </div>
   <div class="form-group col-md-2">
     <%= f.label :chemical_id, class: "col-form-label-lg" %>
-    <%= f.select(:chemical_id, @chemicals.map {|chemical| [chemical.name, chemical.id]}, {include_blank: true}, {class: "form-control"}) %>
+    <%= f.select(:chemical_id, @chemicals.map {|chemical| [chemical.name, chemical.id]}, {include_blank: true}, {class: "form-select"}) %>
   </div>
 </div>
 <div class="form-row">
