@@ -2,7 +2,7 @@
 <%= form_tag(action: :create) do %>
   <div class="row">
     <div class="col-md-2">
-      <%= select_tag(:calendar_term, options_for_select(@terms, selected: current_user.calendar_term), {class: "form-control"}) %>
+      <%= select_tag(:calendar_term, options_for_select(@terms, selected: current_user.calendar_term), {class: "form-select"}) %>
     </div>
   </div>
   <% rep = 4 %>

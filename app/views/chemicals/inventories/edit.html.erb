@@ -34,7 +34,7 @@
               <%= select_tag(
                 "chemical_type#{fs.index}",
                 options_from_collection_for_select(chemical_types, :id, :name, fs.object&.chemical&.chemical_type_id),
-                {class: "form-control chemical_types", data: {index: fs.index}}
+                {class: "form-select chemical_types", data: {index: fs.index}}
                 )
               %>
             </td>
@@ -43,7 +43,7 @@
                 options_from_collection_for_select(
                   ChemicalDecorator.decorate_collection(Chemical.for_stock(stock_system.term).by_type(fs.object&.chemical&.chemical_type_id || chemical_types.first.id)),
                   :id, :stock_name, fs.object&.chemical_id), {},
-                class: "form-control chemical", data: {index: fs.index}
+                class: "form-select chemical", data: {index: fs.index}
               %>
             </td>
             <td>

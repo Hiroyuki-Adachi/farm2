@@ -7,7 +7,7 @@
   </div>
   <div class="field form-group col-md-2">
     <%= f.label :genre, class: "col-form-label-lg" %>
-    <%= f.select(:genre, @categories.map {|category| [category.name, category.genre]}, {}, {class: "form-control"}) %>
+    <%= f.select(:genre, @categories.map {|category| [category.name, category.genre]}, {}, {class: "form-select"}) %>
   </div>
 </div>
 <div class="form-row">

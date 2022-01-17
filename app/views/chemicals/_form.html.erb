@@ -7,7 +7,7 @@
     </div>
     <div class="field form-group col-md-3">
       <%= f.label :chemical_type_id, class: "col-form-label-lg" %>
-      <%= f.select(:chemical_type_id, @chemical_types.map {|chemical_type| [chemical_type.name, chemical_type.id]}, {}, {class: "form-control"}) %>
+      <%= f.select(:chemical_type_id, @chemical_types.map {|chemical_type| [chemical_type.name, chemical_type.id]}, {}, {class: "form-select"}) %>
     </div>
     <div class="field form-group col-md-3 form-check form-check-inline">
       <%= f.check_box(:aqueous_flag, {class: "form-check-input"}, true, false) %>
@@ -28,7 +28,7 @@
     <div class="field form-group col-md-6">
       <div class="form-check form-check-inline">
         <%= f.label :base_unit_id, class: "col-form-label-lg" %><br />
-        <%= f.select(:base_unit_id, @base_units.map {|base_unit| [base_unit.name, base_unit.id]}, {}, {class: "form-control"}) %>
+        <%= f.select(:base_unit_id, @base_units.map {|base_unit| [base_unit.name, base_unit.id]}, {}, {class: "form-select"}) %>
       </div>
     </div>
   </div>

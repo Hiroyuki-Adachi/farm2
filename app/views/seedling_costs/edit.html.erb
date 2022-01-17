@@ -16,7 +16,7 @@
         <tr>
           <td><%= shf.check_box :_destroy %></td>
           <td>
-            <%= shf.select(:home_id, @homes.map {|home| [home.name, home.id]}, {include_blank: true}, class: "form-control") %>
+            <%= shf.select(:home_id, @homes.map {|home| [home.name, home.id]}, {include_blank: true}, class: "form-select") %>
           </td>
           <td>
             <%= shf.date_field :sowed_on, {class: "form-control", min: current_system.start_date, max: current_system.end_date} %>

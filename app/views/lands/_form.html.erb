@@ -7,7 +7,7 @@
   </div>
   <div class="field form-group col-md-2">
     <%= f.label :land_place_id, class: "col-form-label-lg" %>
-    <%= f.select(:land_place_id, @places.map {|place| [place.name, place.id]}, {}, {class: "form-control"}) %>
+    <%= f.select(:land_place_id, @places.map {|place| [place.name, place.id]}, {}, {class: "form-select"}) %>
   </div>
   <div class="col-md-8">
   <%= render(partial: "map", :locals => {:f => f}) %>
@@ -17,12 +17,12 @@
   <div class="field form-group col-md-2">
     <%= button_tag "所有者", type: :button, class: "btn btn-success edit-homes", style: "margin-bottom: 20px;", disabled: @land.new_record?,
       data: {path: land_owners_path(land_id: @land&.id || 0), "destroy-path" => land_owner_path(land_id: @land&.id || 0, id: 0)} %>
-    <%= f.select(:owner_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-control"}) %>
+    <%= f.select(:owner_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-select"}) %>
   </div>
   <div class="field form-group col-md-2">
     <%= button_tag "管理者", type: :button, class: "btn btn-success edit-homes", style: "margin-bottom: 20px;", disabled: @land.new_record?,
       data: {path: land_managers_path(land_id: @land&.id || 0), "destroy-path" => land_manager_path(land_id: @land&.id || 0, id: 0)} %>
-    <%= f.select(:manager_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-control"}) %>
+    <%= f.select(:manager_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-select"}) %>
   </div>
   <div class="field form-group col-md-2">
     <%= f.label :area, class: "col-form-label-lg" %>

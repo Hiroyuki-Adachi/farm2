@@ -16,7 +16,7 @@
         <%= f.fields_for :land_homes do |fs| %>
         <tr>
           <td>
-          <%= fs.select(:home_id, options_from_collection_for_select(Home.landable.includes(:holder), :id, :owner_name), {}, {class: "form-control"}) %>
+          <%= fs.select(:home_id, options_from_collection_for_select(Home.landable.includes(:holder), :id, :owner_name), {}, {class: "form-select"}) %>
           </td>
           <td>
           <%= fs.text_field :place, {maxlength: 15, required: true, class: "form-control"} %>

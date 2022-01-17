@@ -3,7 +3,7 @@
 <%= form_for(@system, url: {controller: :menu, action: :update }, html: {method: :put}) do |f| %>
   <div class="row">
     <div class="col-md-2">
-      <%= f.select(:term, @terms, {}, {class: "form-control"}) %>
+      <%= f.select(:term, @terms, {}, {class: "form-select"}) %>
     </div>
   </div>
   <div class="btn-toolbar">

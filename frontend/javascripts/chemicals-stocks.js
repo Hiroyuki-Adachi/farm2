@@ -72,8 +72,10 @@ function popupModal(modalForm)
             body: new FormData(form)
         })
         .then((res) => {
-            popup.hide();
-            doSearch();
+            if (res.ok) {
+                popup.hide();
+                doSearch();
+            }
         });
     });
 
@@ -87,8 +89,10 @@ function popupModal(modalForm)
                 body: deleteForm
             })
             .then((res) => {
-                popup.hide();
-                doSearch();
+                if (res.ok) {
+                    popup.hide();
+                    doSearch();
+                }
             });
         });
     }
