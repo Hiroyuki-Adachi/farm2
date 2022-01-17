@@ -49,7 +49,7 @@
 <div class="form-row">
   <div class="form-group col-md-4">
     <%= f.label :work_kind_id, '', class: "col-form-label-lg" %>
-    <%= f.collection_select(:work_kind_id, @work_kinds, :id, :name, {}, {class: "form-control", id: :work_work_kind_id}) %>
+    <%= f.collection_select(:work_kind_id, @work_kinds, :id, :name, {}, {class: "form-select", id: :work_work_kind_id}) %>
   </div>
   <div class="form-group col-md-4">
     <%= f.label :name, '', class: "col-form-label-lg" %>
