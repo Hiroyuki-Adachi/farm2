@@ -2,7 +2,7 @@
 <% work_kinds = @machine_price.work_kinds %>
 <%= form_for(@machine_price) do |f| %>
   <div class="field form-group">
-    <%= f.label :validated_at, class: "col-form-label-lg" %>
+    <%= f.label :validated_at, class: "col-form-label-lg form-label" %>
     <%= f.date_field(:validated_at, {required: true, class: "form-control"}) %><br />
   </div>
   <table class="list">

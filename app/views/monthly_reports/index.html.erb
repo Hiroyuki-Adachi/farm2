@@ -2,7 +2,7 @@
 <%= form_tag({:action => 'show', :id => 0}, {:method => :get}) do %>
   <div class="form-row">
     <div class="form-group col-md-4">
-      <label>対象月</label>
+      <label class="form-label">対象月</label>
       <%= date_select :report, :target_at, {:order => [:year, :month, :day], :discard_day => true, :use_month_numbers => true}, class: "form-control bootstrap-date" %>
     </div>
     <div class="form-group col-md-4">

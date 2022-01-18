@@ -4,11 +4,11 @@
 <%= form_with model: @inventory, url: chemicals_inventories_path  do |f| %>
  <div class="row">
     <div class="field form-group col-md-3">
-      <%= f.label :checked_on, class: "col-form-label-lg" %>
+      <%= f.label :checked_on, class: "col-form-label-lg form-label" %>
       <%= f.date_field :checked_on, {required: true, class: "form-control"} %>
     </div>
     <div class="field form-group col-md-6">
-      <%= f.label :name, class: "col-form-label-lg" %>
+      <%= f.label :name, class: "col-form-label-lg form-label" %>
       <%= f.text_field :name, {required: true, maxlength: 20, class: "form-control"} %>
     </div>
   </div>

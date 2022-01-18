@@ -4,47 +4,47 @@
 <%= form_for(@system) do |f| %>
   <div class="row">
     <div class="col-md-2 form-group">
-      <%= f.label :start_date, class: "col-form-label-lg" %>
+      <%= f.label :start_date, class: "col-form-label-lg form-label" %>
       <%= f.date_field :start_date, {required: true, class: "form-control"} %>
     </div>
     <div class="col-md-2 form-group">
-      <%= f.label :end_date, class: "col-form-label-lg" %>
+      <%= f.label :end_date, class: "col-form-label-lg form-label" %>
       <%= f.date_field :end_date, {required: true, class: "form-control"} %>
     </div>
   </div>
   <div class="row">
     <div class="col-md-2 form-group">
-      <%= f.label :default_price, class: "col-form-label-lg" %>
+      <%= f.label :default_price, class: "col-form-label-lg form-label" %>
       <%= f.number_field :default_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
     </div>
     <div class="col-md-2 form-group">
-      <%= f.label :default_fee, class: "col-form-label-lg" %>
+      <%= f.label :default_fee, class: "col-form-label-lg form-label" %>
       <%= f.number_field :default_fee, {min: 0, max: 99999, required: true, class: "form-control"} %>
     </div>
     <div class="col-md-2 form-group">
-      <%= f.label :relative_price, class: "col-form-label-lg" %>
+      <%= f.label :relative_price, class: "col-form-label-lg form-label" %>
       <%= f.number_field :relative_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
     </div>
   </div>
   <div class="row">
     <div class="col-md-2 form-group">
-      <%= f.label :dry_price, class: "col-form-label-lg" %>
+      <%= f.label :dry_price, class: "col-form-label-lg form-label" %>
       <%= f.number_field :dry_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
     </div>
     <div class="col-md-2 form-group">
-      <%= f.label :adjust_price, class: "col-form-label-lg" %>
+      <%= f.label :adjust_price, class: "col-form-label-lg form-label" %>
       <%= f.number_field :adjust_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
     </div>
     <div class="col-md-2 form-group">
-      <%= f.label :dry_adjust_price, class: "col-form-label-lg" %>
+      <%= f.label :dry_adjust_price, class: "col-form-label-lg form-label" %>
       <%= f.number_field :dry_adjust_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
     </div>
     <div class="col-md-2 form-group">
-      <%= f.label :waste_price, class: "col-form-label-lg" %>
+      <%= f.label :waste_price, class: "col-form-label-lg form-label" %>
       <%= f.number_field :waste_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
     </div>
     <div class="col-md-2 form-group">
-      <%= f.label :half_sum_flag, class: "col-form-label-lg" %>
+      <%= f.label :half_sum_flag, class: "col-form-label-lg form-label" %>
       <%= f.check_box :half_sum_flag, {class: "form-control"}, 1, 0 %>
     </div>
   </div>

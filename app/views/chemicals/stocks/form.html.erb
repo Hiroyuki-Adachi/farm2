@@ -10,7 +10,7 @@
             id: :update_form do |f| %>
           <div class="row">
             <div class="col-md-4">
-                <%= f.label :stock_on, class: "col-form-label-lg" %>
+                <%= f.label :stock_on, class: "col-form-label-lg form-label" %>
             </div>
             <div class="col-md-8">
                 <%= f.date_field :stock_on, {
@@ -20,7 +20,7 @@
           </div>
           <div class="row">
             <div class="col-md-4">
-                <%= f.label :name, class: "col-form-label-lg" %>
+                <%= f.label :name, class: "col-form-label-lg form-label" %>
             </div>
             <div class="col-md-8">
                 <%= f.text_field :name, {
@@ -30,7 +30,7 @@
           </div>
           <div class="row">
             <div class="col-md-4">
-                <%= f.label :stored, class: "col-form-label-lg" %>
+                <%= f.label :stored, class: "col-form-label-lg form-label" %>
             </div>
             <div class="col-md-8">
                 <%= f.number_field :stored, {
@@ -40,7 +40,7 @@
           </div>
           <div class="row">
             <div class="col-md-4">
-                <%= f.label :shipping, class: "col-form-label-lg" %>
+                <%= f.label :shipping, class: "col-form-label-lg form-label" %>
             </div>
             <div class="col-md-8">
                 <%= f.number_field :shipping, {

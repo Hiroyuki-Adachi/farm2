@@ -2,20 +2,20 @@
 <h1>作付履歴</h1>
 <div class="row">
   <div class="col-md-2 form-inline">
-    <label>地番：</label>
-    <label><%= @land.place %></label>
+    <label class="form-label">地番：</label>
+    <label class="form-label"><%= @land.place %></label>
   </div>
   <div class="col-md-2 form-inline">
-    <label>面積(α)：</label>
-    <label><%= @land.area %></label>
+    <label class="form-label">面積(α)：</label>
+    <label class="form-label"><%= @land.area %></label>
   </div>
   <div class="col-md-2 form-inline">
-    <label>所有者：</label>
-    <label><%= @land.owner_name %></label>
+    <label class="form-label">所有者：</label>
+    <label class="form-label"><%= @land.owner_name %></label>
   </div>
   <div class="col-md-2 form-inline">
-    <label>管理者：</label>
-    <label><%= @land.manager_name %></label>
+    <label class="form-label">管理者：</label>
+    <label class="form-label"><%= @land.manager_name %></label>
   </div>
 </div>
 <%= form_for(@land, url: {controller: :land_costs, action: :update}) do |lf| %>
@@ -37,7 +37,7 @@
             <% @work_types.each do |work_type| %>
               <div class="form-check form-check-inline">
                 <%= lcf.radio_button :work_type_id, work_type.id, {id: "work_type_#{lcf.index}_#{work_type.id}", class: "form-check-input", onclick: "worktype_select(this)"} %>
-                <%= label_tag "work_type_#{lcf.index}_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+                <%= label_tag "work_type_#{lcf.index}_#{work_type.id}", work_type.name, {class: "form-check-label form-label"} %>
               </div>
             <% end %>
           </td>

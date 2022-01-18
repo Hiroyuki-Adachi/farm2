@@ -2,37 +2,37 @@
 <%= form_for(@work_kind) do |f| %>
   <div class="row">
     <div class="field form-group col-md-4">
-        <%= f.label :name, class: "col-form-label-lg" %>
+        <%= f.label :name, class: "col-form-label-lg form-label" %>
         <%= f.text_field :name, {maxlength: 40, size: 20, required: true, class: "form-control"} %>
     </div>
     <div class="field form-group col-md-2">
-        <%= f.label :display_order, class: "col-form-label-lg" %>
+        <%= f.label :display_order, class: "col-form-label-lg form-label" %>
         <%= f.number_field :display_order, {min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
     </div>
     <div class="field form-group col-md-2">
-        <%= f.label :price, class: "col-form-label-lg" %>
+        <%= f.label :price, class: "col-form-label-lg form-label" %>
         <%= f.number_field :price, {min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
     </div>
     <div class="field form-group col-md-2">
-      <%= f.label :broccoli_mark, class: "col-form-label-lg" %>
+      <%= f.label :broccoli_mark, class: "col-form-label-lg form-label" %>
       <%= f.text_field :broccoli_mark, {maxlength: 1, class: "form-control"} %>
     </div>
   </div>
   <div class="row">
     <div class="field form-group col-md-4">
-      <%= f.label :phonetic, class: "col-form-label-lg" %>
+      <%= f.label :phonetic, class: "col-form-label-lg form-label" %>
       <%= f.text_field :phonetic, {maxlength: 40, size: 40, pattern: "[\u3041-\u3096\uFF21-\uFF3A\d]*", required: true, class: "form-control"} %>
     </div>
     <div class="field form-group col-md-2">
       <% if current_organization.lands_count > 0 %>
-        <%= f.label :land_flag, class: "col-form-label-lg" %>
+        <%= f.label :land_flag, class: "col-form-label-lg form-label" %>
         <%= f.check_box :land_flag %>
       <% else %>
         <%= f.hidden_field land_flag, false %>
       <% end %>
     </div>
     <div class="field form-group col-md-2">
-      <%= f.label :cost_type_id, class: "col-form-label-lg" %>
+      <%= f.label :cost_type_id, class: "col-form-label-lg form-label" %>
       <%= f.select(:cost_type_id, @cost_types.map {|cost_type| [cost_type.name, cost_type.id]}, {include_blank: true}, {class: "form-select"}) %>
     </div>
   </div>
@@ -43,7 +43,7 @@
         <% @work_types.each do |work_type| %>
           <div class="form-check form-check-inline">
             <%= check_box_tag "work_types[]", work_type.id, @work_kind.work_types.include?(work_type), {id: "work_type_#{work_type.id}", class: "form-check-input"} %>
-            <%= label_tag "work_type_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+            <%= label_tag "work_type_#{work_type.id}", work_type.name, {class: "form-check-label form-label"} %>
           </div>
         <% end %>
       </fieldset>
@@ -57,7 +57,7 @@
         <% @machine_types.each do |machine_type| %>
           <div class="form-check form-check-inline">
             <%= check_box_tag "machine_types[]", machine_type.id, @work_kind.machine_types.include?(machine_type), {id: "machine_type_#{machine_type.id}", class: "form-check-input"} %>
-            <%= label_tag "machine_type_#{machine_type.id}", machine_type.name, {class: "form-check-label"} %>
+            <%= label_tag "machine_type_#{machine_type.id}", machine_type.name, {class: "form-check-label form-label"} %>
           </div>
         <% end %>
         </fieldset>
@@ -72,7 +72,7 @@
           <% @chemical_types.each do |chemical_type| %>
             <div class="form-check form-check-inline">
               <%= check_box_tag "chemical_types[]", chemical_type.id, @work_kind.chemical_types.include?(chemical_type), {id: "chemical_type_#{chemical_type.id}", class: "form-check-input"} %>
-              <%= label_tag "chemical_type_#{chemical_type.id}", chemical_type.name, {class: "form-check-label"} %>
+              <%= label_tag "chemical_type_#{chemical_type.id}", chemical_type.name, {class: "form-check-label form-label"} %>
             </div>
           <% end %>
         </fieldset>
