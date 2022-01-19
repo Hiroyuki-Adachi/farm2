@@ -20,6 +20,12 @@ GIT
     active_hash (3.1.0)
       activesupport (>= 5.0.0)
 
+GIT
+  remote: git@github.com:holiday-jp/holiday_jp-ruby.git
+  revision: 99285bfb2718adc24cc9a36bece9f776edd11ce7
+  specs:
+    holiday_jp (0.8.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -101,14 +107,10 @@ GEM
     bootsnap (1.10.1)
       msgpack (~> 1.2)
     builder (3.2.4)
-    byebug (11.1.3)
     chunky_png (1.4.0)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
     daemons (1.4.1)
-    debase (0.2.4.1)
-      debase-ruby_core_source (>= 0.10.2)
-    debase-ruby_core_source (0.10.14)
     delayed_job (4.1.10)
       activesupport (>= 3.0, < 8.0)
     digest (3.1.0)
@@ -123,7 +125,6 @@ GEM
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    holiday_jp (0.8.0)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     i18n-js (3.9.0)
@@ -147,7 +148,7 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    libv8-node (15.14.0.1)
+    libv8-node (16.10.0.0-x86_64-linux)
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -159,9 +160,8 @@ GEM
     marcel (1.0.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.7.1)
-    mini_racer (0.4.0)
-      libv8-node (~> 15.14.0.0)
+    mini_racer (0.6.2)
+      libv8-node (~> 16.10.0.0)
     minitest (5.15.0)
     msgpack (1.4.2)
     net-imap (0.2.3)
@@ -180,8 +180,7 @@ GEM
       net-protocol
       timeout
     nio4r (2.5.8)
-    nokogiri (1.13.1)
-      mini_portile2 (~> 2.7.0)
+    nokogiri (1.13.1-x86_64-linux)
       racc (~> 1.4)
     parallel (1.21.0)
     paranoia (2.5.0)
@@ -251,8 +250,6 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.15.1)
       parser (>= 3.0.1.1)
-    ruby-debug-ide (0.7.3)
-      rake (>= 0.8.1)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyXL (3.4.20)
@@ -286,7 +283,7 @@ GEM
     zeitwerk (2.5.3)
 
 PLATFORMS
-  ruby
+  x86_64-linux
 
 DEPENDENCIES
   active_hash!
@@ -294,21 +291,19 @@ DEPENDENCIES
   annotate
   bcrypt (~> 3.1.7)
   bootsnap
-  byebug
   chunky_png
   composite_primary_keys!
   daemons
-  debase
   delayed_job_active_record!
   draper
-  holiday_jp
+  holiday_jp!
   i18n-js
   icalendar
   jbuilder (~> 2.0)
   kaminari
   listen
   loofah (>= 2.3.1)
-  mini_racer (= 0.4)
+  mini_racer
   paranoia
   pg
   puma
@@ -316,7 +311,6 @@ DEPENDENCIES
   rails-controller-testing
   rqrcode
   rubocop
-  ruby-debug-ide (~> 0.6)
   rubyXL
   spring
   tzinfo-data
@@ -325,4 +319,4 @@ DEPENDENCIES
   webpacker (~> 5.2)
 
 BUNDLED WITH
-   2.2.32
+   2.3.4
