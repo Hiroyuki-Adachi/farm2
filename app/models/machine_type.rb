@@ -2,12 +2,13 @@
 #
 # Table name: machine_types
 #
-#  id(機械種別マスタ)    :integer          not null, primary key
-#  display_order(表示順) :integer          default(1), not null
-#  name(機械種別名称)    :string(10)       not null
-#  created_at            :datetime
-#  updated_at            :datetime
+#  id            :integer          not null, primary key
+#  name          :string(10)       not null
+#  display_order :integer          default("1"), not null
+#  created_at    :datetime
+#  updated_at    :datetime
 #
+
 class MachineType < ApplicationRecord
   has_many :machines, -> {order("machines.display_order, machines.id")}, dependent: :restrict_with_exception 
 

@@ -2,16 +2,17 @@
 #
 # Table name: fixes
 #
-#  fixed_at(確定日)                :date             not null, primary key
-#  fixed_by(確定者)                :integer
-#  hours(合計作業工数)             :integer          not null
-#  machines_amount(合計機械利用料) :decimal(8, )     not null
-#  term(年度(期))                  :integer          default(0), not null, primary key
-#  works_amount(合計作業日当)      :decimal(8, )     not null
-#  works_count(合計作業数)         :integer          not null
-#  created_at                      :datetime         not null
-#  updated_at                      :datetime         not null
+#  term            :integer          default("0"), not null, primary key
+#  fixed_at        :date             not null, primary key
+#  works_count     :integer          not null
+#  hours           :integer          not null
+#  works_amount    :decimal(8, )     not null
+#  machines_amount :decimal(8, )     not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  fixed_by        :integer
 #
+
 class Fix < ApplicationRecord
   self.primary_keys = [:term, :fixed_at]
   before_destroy :clear_fix

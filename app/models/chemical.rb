@@ -2,28 +2,29 @@
 #
 # Table name: chemicals
 #
-#  id(薬剤マスタ)             :integer          not null, primary key
-#  aqueous_flag(水溶フラグ)   :boolean          default(FALSE), not null
-#  base_quantity(消費数)      :decimal(6, )     default(0), not null
-#  carton_quantity(購買数)    :decimal(6, )     default(0), not null
-#  carton_unit(購買単位)      :string(2)        default(""), not null
-#  deleted_at                 :datetime
-#  display_order(表示順)      :integer          default(0), not null
-#  name(薬剤名称)             :string(20)       not null
-#  phonetic(薬剤ふりがな)     :string(40)       default(""), not null
-#  stock_quantity(在庫数)     :decimal(6, )     default(0), not null
-#  stock_unit(在庫単位)       :string(2)        default(""), not null
-#  unit(単位)                 :string(2)        default("袋"), not null
-#  url(URL)                   :string(255)      default(""), not null
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#  base_unit_id(基本単位)     :integer          default(0), not null
-#  chemical_type_id(薬剤種別) :integer          not null
+#  id               :integer          not null, primary key
+#  name             :string(20)       not null
+#  display_order    :integer          default("0"), not null
+#  chemical_type_id :integer          not null
+#  created_at       :datetime
+#  updated_at       :datetime
+#  deleted_at       :datetime
+#  unit             :string(2)        default("袋"), not null
+#  phonetic         :string(40)       default(""), not null
+#  base_unit_id     :integer          default("0"), not null
+#  base_quantity    :decimal(6, )     default("0.0"), not null
+#  carton_unit      :string(2)        default(""), not null
+#  carton_quantity  :decimal(6, )     default("0.0"), not null
+#  aqueous_flag     :boolean          default("false"), not null
+#  stock_unit       :string(2)        default(""), not null
+#  stock_quantity   :decimal(6, )     default("0.0"), not null
+#  url              :string(255)      default(""), not null
 #
 # Indexes
 #
 #  index_chemicals_on_deleted_at  (deleted_at)
 #
+
 class Chemical < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   acts_as_paranoid

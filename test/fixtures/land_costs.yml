@@ -2,17 +2,18 @@
 #
 # Table name: land_costs
 #
-#  id(土地原価)           :integer          not null, primary key
-#  activated_on(有効日)   :date             default(Mon, 01 Jan 1900), not null
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  land_id(土地)          :integer          not null
-#  work_type_id(作業分類) :integer          not null
+#  id           :integer          not null, primary key
+#  land_id      :integer          not null
+#  work_type_id :integer          not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  activated_on :date             default("1900-01-01"), not null
 #
 # Indexes
 #
 #  index_land_costs_on_activated_on_and_land_id  (activated_on,land_id) UNIQUE
 #
+
 cost1:
   activated_on: '2015-01-01'
   land: land_land_cost1

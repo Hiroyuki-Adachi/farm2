@@ -2,17 +2,18 @@
 #
 # Table name: machine_price_headers
 #
-#  id(機械利用単価マスタ(ヘッダ)) :integer          not null, primary key
-#  validated_at(起点日)           :date             not null
-#  created_at                     :datetime         not null
-#  updated_at                     :datetime         not null
-#  machine_id(機械)               :integer          default(0), not null
-#  machine_type_id(機械種別)      :integer          default(0), not null
+#  id              :integer          not null, primary key
+#  validated_at    :date             not null
+#  machine_id      :integer          default("0"), not null
+#  machine_type_id :integer          default("0"), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 # Indexes
 #
 #  machine_price_headers_2nd_key  (validated_at,machine_id,machine_type_id) UNIQUE
 #
+
 machine_price_header_t:
   id: '4'
   validated_at: '2001-01-01'

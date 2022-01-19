@@ -2,23 +2,24 @@
 #
 # Table name: dryings
 #
-#  id                       :bigint           not null, primary key
-#  carried_on(搬入日)       :date             not null
-#  copy_flag(複写フラグ)    :integer          default(0), not null
-#  fixed_amount(確定額)     :decimal(7, )
-#  shipped_on(出荷日)       :date
-#  term(年度(期))           :integer          not null
-#  water_content(水分)      :decimal(3, 1)
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  drying_type_id(乾燥種別) :integer          default(0), not null
-#  home_id(担当世帯)        :integer          default(0), not null
-#  work_type_id(作業分類)   :integer
+#  id             :integer          not null, primary key
+#  term           :integer          not null
+#  work_type_id   :integer
+#  home_id        :integer          default("0"), not null
+#  drying_type_id :integer          default("0"), not null
+#  carried_on     :date             not null
+#  shipped_on     :date
+#  water_content  :decimal(3, 1)
+#  fixed_amount   :decimal(7, )
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  copy_flag      :integer          default("0"), not null
 #
 # Indexes
 #
 #  dryings_secondary  (carried_on,home_id,copy_flag) UNIQUE
 #
+
 require 'test_helper'
 
 class DryingTest < ActiveSupport::TestCase

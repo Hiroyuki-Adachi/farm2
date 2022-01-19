@@ -2,17 +2,18 @@
 #
 # Table name: expense_work_types
 #
-#  id(経費作業種別)       :integer          not null, primary key
-#  rate(割合)             :decimal(5, 2)    default(0.0), not null
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  expense_id(経費)       :integer
-#  work_type_id(作業分類) :integer
+#  id           :integer          not null, primary key
+#  expense_id   :integer
+#  work_type_id :integer
+#  rate         :decimal(5, 2)    default("0"), not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
 #
 # Indexes
 #
 #  index_expense_work_types_on_expense_id_and_work_type_id  (expense_id,work_type_id) UNIQUE
 #
+
 expence_upd1:
   expense: expense_upd
   work_type: work_type_koshi

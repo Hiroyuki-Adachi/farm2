@@ -2,17 +2,18 @@
 #
 # Table name: depreciations
 #
-#  id(減価償却)     :integer          not null, primary key
-#  cost(減価償却費) :decimal(9, )     default(0), not null
-#  term(年度(期))   :integer          not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  machine_id(機械) :integer
+#  id         :integer          not null, primary key
+#  term       :integer          not null
+#  machine_id :integer
+#  cost       :decimal(9, )     default("0"), not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Indexes
 #
 #  index_depreciations_on_term_and_machine_id  (term,machine_id) UNIQUE
 #
+
 depreciation1:
   term: 2015
   machine_id: machines(:taueki_1).id

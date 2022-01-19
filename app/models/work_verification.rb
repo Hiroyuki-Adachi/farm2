@@ -2,16 +2,17 @@
 #
 # Table name: work_verifications
 #
-#  id(日報検証)      :integer          not null, primary key
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  work_id(作業)     :integer
-#  worker_id(作業者) :integer
+#  id         :integer          not null, primary key
+#  work_id    :integer
+#  worker_id  :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Indexes
 #
 #  index_work_verifications_on_work_id_and_worker_id  (work_id,worker_id) UNIQUE
 #
+
 class WorkVerification < ApplicationRecord
   belongs_to :work
   belongs_to :worker, -> {with_deleted}
