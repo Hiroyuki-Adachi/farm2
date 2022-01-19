@@ -90,6 +90,8 @@ ja:
         target_flag: "管理"
         reg_area: "登記面積"
         broccoli_mark: "ブロッコリ記号"
+        start_on: "有効期間(開始)"
+        end_on: "有効期間(終了)"
 
       work: 
         year: "年度"  #g
@@ -115,6 +117,8 @@ ja:
         bg_color: "背景色"
         land_flag: "土地利用"
         cost_flag: "原価"
+        work_flag: "日報表示"
+        map_flag: "地図表示"
         icon: "アイコン"
 
       worker: 

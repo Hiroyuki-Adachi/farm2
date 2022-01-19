@@ -22,12 +22,12 @@ class WorkLand < ApplicationRecord
   has_one    :work_kind, -> {with_deleted}, through: :work
   has_one    :wcs_land, class_name: "WholeCropLand", dependent: :destroy
 
-  scope :for_personal, ->(home, worked_at) {
+  scope :for_personal, ->(home, term) {
     joins(:work).includes(work: :work_kind)
       .joins(:land).includes(:land)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id")
-      .where("works.worked_at >= ?", worked_at)
-      .where("lands.manager_id = ?", home.id)
+      .where("works.term = ?", term)
+      .where("(lands.manager_id = ? OR EXISTS (SELECT * FROM land_homes WHERE lands.id = land_homes.land_id AND home_id = ? AND manager_flag = true))", home.id, home.id)
       .order("lands.display_order, lands.id, works.worked_at")
   }
 

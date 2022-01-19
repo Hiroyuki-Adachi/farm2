@@ -42,6 +42,7 @@ class Land < ApplicationRecord
   has_many :members, ->{order(:group_order, :display_order, :id)}, dependent: :nullify, foreign_key: :group_id, class_name: :Land
   has_many :land_fees
   has_many :plan_lands
+  has_many :land_homes, dependent: :destroy
 
   scope :usual, -> {where(target_flag: true).order(:place, :display_order)}
   scope :list, -> {where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
@@ -49,6 +50,8 @@ class Land < ApplicationRecord
   scope :for_finance1, -> {where("owner_id = manager_id").where(target_flag: true)}
   scope :for_finance2, -> {where("owner_id <> manager_id").where(target_flag: true)}
   scope :regionable, -> {where.not(region: nil).where(target_flag: true, group_id: nil)}
+  scope :expiry, -> (target) {where("? BETWEEN start_on AND end_on", target)}
+  scope :for_place, -> (place) {where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order)}
 
   validates :place, presence: true
   validates :area, presence: true
@@ -58,6 +61,7 @@ class Land < ApplicationRecord
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
 
   accepts_nested_attributes_for :land_costs, allow_destroy: true, reject_if: :reject_land_costs
+  accepts_nested_attributes_for :land_homes, allow_destroy: true
 
   def owner_name
     owner.member_flag ? owner_holder.name : owner.name
@@ -77,9 +81,9 @@ class Land < ApplicationRecord
     land_place ? land_place.name : ""
   end
 
-  def self.autocomplete(place)
+  def self.to_autocomplete(search_results)
     results = []
-    Land.where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order).limit(15).each do |land|
+    search_results.limit(15).each do |land|
       results << {label: land.place + "(#{land.area})", value: land.id, details: {place: land.place, id: land.id, owner: land&.owner&.name || "", area: land.area}}
     end
     return results.to_json
@@ -159,5 +163,9 @@ class Land < ApplicationRecord
 
   def land_fee(term)
     LandFee.find_by(term: term, land_id: self.id)
+  end
+
+  def expiry?(date = Date.today)
+    self.start_on <= date && date <= self.end_on
   end
 end

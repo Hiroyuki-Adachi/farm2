@@ -4,6 +4,7 @@
 #
 #  id                       :bigint           not null, primary key
 #  carried_on(搬入日)       :date             not null
+#  copy_flag(複写フラグ)    :integer          default(0), not null
 #  fixed_amount(確定額)     :decimal(7, )
 #  shipped_on(出荷日)       :date
 #  term(年度(期))           :integer          not null
@@ -16,7 +17,7 @@
 #
 # Indexes
 #
-#  dryings_secondary  (carried_on,home_id) UNIQUE
+#  dryings_secondary  (carried_on,home_id,copy_flag) UNIQUE
 #
 class Drying < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
@@ -65,6 +66,11 @@ class Drying < ApplicationRecord
   def waste_weight
     return 0 if drying_type == DryingType::COUNTRY
     return adjustment&.waste_weight || 0
+  end
+
+  def waste_date
+    return adjustment&.waste_date if adjustment&.waste_date.present?
+    return shipped_on
   end
 
   def adjust_only?(home_id)
@@ -129,5 +135,14 @@ class Drying < ApplicationRecord
       end
     end
     return rice_totals, waste_totals, shipped_totals
+  end
+
+  def copy
+    Drying.create(
+      carried_on: self.carried_on,
+      term: self.term,
+      home_id: self.home_id,
+      copy_flag: Drying.where(carried_on: self.carried_on, home_id: self.home_id).maximum(:copy_flag) + 1
+    )
   end
 end
