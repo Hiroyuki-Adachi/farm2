@@ -4,18 +4,16 @@
      <h1>作業一覧</h1>
   </div>
   <div class="col-md-3">
-    <div class="form-inline">
-      <label for="term" class="h5 form-label">年度</label>
-      <%= select_tag(:term, options_for_select(@terms, selected: @term), {class: "form-select"}) %>
-    </div>
+    <label for="term" class="h5 form-label">年度</label>
+    <%= select_tag(:term, options_for_select(@terms, selected: @term), {class: "form-select"}) %>
   </div>
-  <div class="col-md-6">
-    <div class="form-inline">
-      <label for="month" class="h5 form-label">作業日</label>
-      <%= date_field_tag :worked_at1, @worked_at1, {class: "form-control"} %>
-      ～
-      <%= date_field_tag :worked_at2, @worked_at2, {class: "form-control"} %>
-    </div>
+  <div class="col-md-3">
+    <label for="month" class="h5 form-label">作業日(自)</label>
+    <%= date_field_tag :worked_at1, @worked_at1, {class: "form-control"} %>
+  </div>
+  <div class="col-md-3">
+    <label for="month" class="h5 form-label">作業日(至)</label>
+    <%= date_field_tag :worked_at2, @worked_at2, {class: "form-control"} %>
   </div>
 </div>
 <div class="row">
@@ -33,7 +31,7 @@
     </div>
   </div>
   <div class="col-md-2">
-    <%= button_tag "検索", type: :submit, name: "search", class: "btn btn-primary" %>
+    <%= button_tag "検索", type: :submit, name: "search", class: "btn btn-primary mt-4" %>
   </div>
 </div>
 <input type="hidden" name="page" value="1" />
