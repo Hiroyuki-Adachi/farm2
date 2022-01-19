@@ -13,7 +13,7 @@
       <tr>
         <th><%= cost_type.name %></th>
         <% @work_types.each do |work_type| %>
-          <td class="numeric"><%= @total_costs[[cost_type.id, work_type.id]].to_i.to_s(:delimited) %></td>
+          <td class="numeric"><%= @total_costs[[cost_type.id, work_type.id]].to_i.to_formatted_s(:delimited) %></td>
         <% end %>
       </tr>
     <% end %>

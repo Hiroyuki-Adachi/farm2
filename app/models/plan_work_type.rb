@@ -2,24 +2,25 @@
 #
 # Table name: plan_work_types
 #
-#  id                       :bigint           not null, primary key
-#  area(面積(α))            :decimal(7, 2)    default(0.0), not null
-#  bag_weight1(大袋(kg))    :decimal(3, 1)    default(0.0), not null
-#  bag_weight2(小袋(kg))    :decimal(3, 1)    default(0.0), not null
-#  between_stocks(株間(cm)) :decimal(2, )     default(0), not null
-#  month(開始月)            :integer          default(0), not null
-#  quantity(枚数)           :decimal(5, )     default(0), not null
-#  seeds(種子(1枚当g))      :decimal(3, )     default(0), not null
-#  soils(育苗土(1枚当袋))   :decimal(4, 2)    default(0.0), not null
-#  unit(枚数(10a当))        :decimal(3, 1)    default(0.0), not null
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  work_type_id(作業分類)   :integer          not null
+#  id             :integer          not null, primary key
+#  work_type_id   :integer          not null
+#  area           :decimal(7, 2)    default("0.0"), not null
+#  month          :integer          default("0"), not null
+#  unit           :decimal(3, 1)    default("0.0"), not null
+#  quantity       :decimal(5, )     default("0.0"), not null
+#  between_stocks :decimal(2, )     default("0.0"), not null
+#  seeds          :decimal(3, )     default("0.0"), not null
+#  soils          :decimal(4, 2)    default("0.0"), not null
+#  bag_weight1    :decimal(3, 1)    default("0.0"), not null
+#  bag_weight2    :decimal(3, 1)    default("0.0"), not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
 #
 # Indexes
 #
 #  plan_work_types_2nd  (work_type_id) UNIQUE
 #
+
 class PlanWorkType < ApplicationRecord
   belongs_to :work_type, -> {with_deleted}
 

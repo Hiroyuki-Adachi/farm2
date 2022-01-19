@@ -2,19 +2,20 @@
 #
 # Table name: machine_remarks
 #
-#  id                         :bigint           not null, primary key
-#  care_remarks(備考(保守))   :string(30)       default(""), not null
-#  danger_remarks(備考(危険)) :string(30)       default(""), not null
-#  other_remarks(備考)        :string(30)       default(""), not null
-#  created_at                 :datetime         not null
-#  updated_at                 :datetime         not null
-#  machine_id(機械)           :integer          not null
-#  work_id(作業)              :integer          not null
+#  id             :integer          not null, primary key
+#  work_id        :integer          not null
+#  machine_id     :integer          not null
+#  other_remarks  :string(30)       default(""), not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  danger_remarks :string(30)       default(""), not null
+#  care_remarks   :string(30)       default(""), not null
 #
 # Indexes
 #
 #  machine_remarks_2nd  (work_id,machine_id) UNIQUE
 #
+
 class MachineRemark < ApplicationRecord
   belongs_to  :machine, -> {with_deleted}
   belongs_to  :work

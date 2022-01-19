@@ -18,8 +18,8 @@
             <td></td>
             <td>縁故米</td>
             <td class="numeric"><%= @home_relatives[old_home_id] %></td>
-            <td class="numeric"><%= current_system.relative_price.to_s(:delimited) %></td>
-            <td class="numeric"><%= (@home_relatives[old_home_id] * current_system.relative_price).to_s(:delimited) %></td>
+            <td class="numeric"><%= current_system.relative_price.to_formatted_s(:delimited) %></td>
+            <td class="numeric"><%= (@home_relatives[old_home_id] * current_system.relative_price).to_formatted_s(:delimited) %></td>
           </tr>
         <% end %>
         <% old_home_id = owned_rice.home_id %>
@@ -28,15 +28,15 @@
           <td></td>
           <td class="numeric"><%= @home_totals[old_home_id][:owned_count] %></td>
           <td></td>
-          <td class="numeric"><%= @home_totals[old_home_id][:owned_price].to_s(:delimited) %></td>
+          <td class="numeric"><%= @home_totals[old_home_id][:owned_price].to_formatted_s(:delimited) %></td>
         </tr>
       <% end %>
       <tr class="detail" data-home="<%= old_home_id %>">
         <td></td>
         <td><%= owned_rice.owned_rice_price.name %></td>
         <td class="numeric"><%= owned_rice.owned_count %></td>
-        <td class="numeric"><%= owned_rice.owned_rice_price.owned_price.to_s(:delimited) %></td>
-        <td class="numeric"><%= owned_rice.owned_price.to_s(:delimited) %></td>
+        <td class="numeric"><%= owned_rice.owned_rice_price.owned_price.to_formatted_s(:delimited) %></td>
+        <td class="numeric"><%= owned_rice.owned_price.to_formatted_s(:delimited) %></td>
       </tr>
     <% end %>
     <% if @home_relatives[old_home_id] %>
@@ -44,8 +44,8 @@
         <td></td>
         <td>縁故米</td>
         <td class="numeric"><%= @home_relatives[old_home_id] %></td>
-        <td class="numeric"><%= current_system.relative_price.to_s(:delimited) %></td>
-        <td class="numeric"><%= (@home_relatives[old_home_id] * current_system.relative_price).to_s(:delimited) %></td>
+        <td class="numeric"><%= current_system.relative_price.to_formatted_s(:delimited) %></td>
+        <td class="numeric"><%= (@home_relatives[old_home_id] * current_system.relative_price).to_formatted_s(:delimited) %></td>
       </tr>
     <% end %>
   </tbody>

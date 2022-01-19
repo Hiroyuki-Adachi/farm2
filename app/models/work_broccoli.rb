@@ -2,20 +2,21 @@
 #
 # Table name: work_broccolis
 #
-#  id(ブロッコリー作業) :integer          not null, primary key
-#  cost(販売経費)       :decimal(6, )
-#  rest(残数)           :decimal(3, )     default(0), not null
-#  sale(販売金額)       :decimal(6, )
-#  shipped_on(出荷日)   :date             not null
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  broccoli_box_id(箱)  :integer
-#  work_id(作業)        :integer          not null
+#  id              :integer          not null, primary key
+#  work_id         :integer          not null
+#  broccoli_box_id :integer
+#  shipped_on      :date             not null
+#  rest            :decimal(3, )     default("0"), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  sale            :decimal(6, )
+#  cost            :decimal(6, )
 #
 # Indexes
 #
 #  index_work_broccolis_on_work_id  (work_id) UNIQUE
 #
+
 class WorkBroccoli < ApplicationRecord
   require 'ostruct'
 

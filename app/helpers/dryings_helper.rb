@@ -1,6 +1,6 @@
 module DryingsHelper
   def format_weight(weight)
-    weight.to_s(:delimited)
+    weight.to_formatted_s(:delimited)
   end
 
   def format_bag(weight)
