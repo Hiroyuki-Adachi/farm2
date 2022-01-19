@@ -54,7 +54,7 @@ class LandCostsController < ApplicationController
 
   def map
     @target = params[:target].present? ? params[:target] : Time.zone.today
-    @costs = LandCost.usual(Land.regionable, @target).includes(land: :owner).includes(:work_type)
+    @costs = LandCost.usual(Land.regionable.expiry(@target), @target).includes(land: :owner).includes(:work_type)
     @work_types = WorkType.land
   end
 

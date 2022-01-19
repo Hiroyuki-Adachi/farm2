@@ -22,7 +22,7 @@
   </thead>
   <tbody>
   <% @lands.each do |land| %>
-    <tr style="<%= 'background-color:darkgray' unless land.target_flag %>">
+    <tr class="<%= 'bg-secondary text-light' unless land.target_flag && land.expiry? %>">
       <td><%= land.place_name %></td>
       <td><%= land.place %></td>
       <td><%= land.group&.place %></td>

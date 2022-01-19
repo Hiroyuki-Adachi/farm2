@@ -23,7 +23,7 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
           home&.name,
           drying.work_type&.name,
           drying.model.carried_on,
-          drying.model.shipped_on,
+          drying.model.waste_date,
           "くず米",
           drying.waste_weight / Drying::KG_PER_BAG_WASTE,
           current_system.waste_price,
