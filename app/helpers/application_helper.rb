@@ -35,6 +35,6 @@ module ApplicationHelper
   end
 
   def chemical_name(chemical)
-    chemical.url.present? ? link_to(chemical.name, chemical.url, target: :_blank) : chemical.name
+    chemical.url.present? ? link_to(chemical.name, chemical.url, target: :_blank, rel: "noopener noreferrer") : chemical.name
   end
 end

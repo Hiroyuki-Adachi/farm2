@@ -2,18 +2,22 @@
 #
 # Table name: chemical_stocks
 #
-#  id                              :bigint           not null, primary key
-#  name(在庫名称)                  :string(40)       default(""), not null
-#  shipping(出庫量)                :decimal(5, 1)    default(0.0), not null
-#  stock(在庫量)                   :decimal(7, 1)    default(0.0), not null
-#  stock_on(在庫日)                :date             not null
-#  stored(入庫量)                  :decimal(5, 1)    default(0.0), not null
-#  created_at                      :datetime         not null
-#  updated_at                      :datetime         not null
-#  chemical_id(薬剤)               :integer          not null
-#  chemical_inventory_id(薬剤使用) :integer
-#  work_chemical_id(薬剤使用)      :integer
+#  id                    :integer          not null, primary key
+#  stock_on              :date             not null
+#  chemical_id           :integer          not null
+#  work_chemical_id      :integer
+#  chemical_inventory_id :integer
+#  name                  :string(40)       default(""), not null
+#  stored                :decimal(5, 1)
+#  shipping              :decimal(5, 1)
+#  using                 :decimal(5, 1)
+#  inventory             :decimal(7, 1)
+#  stock                 :decimal(7, 1)    default("0.0"), not null
+#  adjust                :decimal(5, 1)    default("0.0"), not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
 #
+
 class ChemicalStock < ApplicationRecord
   belongs_to :chemical
   belongs_to :work_chemical

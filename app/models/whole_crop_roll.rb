@@ -2,13 +2,14 @@
 #
 # Table name: whole_crop_rolls
 #
-#  id                          :bigint           not null, primary key
-#  display_order(番号)         :integer          default(0), not null
-#  weight(重量)                :decimal(4, 1)    default(0.0), not null
-#  created_at                  :datetime         not null
-#  updated_at                  :datetime         not null
-#  whole_crop_land_id(WCS土地) :integer          default(0), not null
+#  id                 :integer          not null, primary key
+#  whole_crop_land_id :integer          default("0"), not null
+#  display_order      :integer          default("0"), not null
+#  weight             :decimal(4, 1)    default("0"), not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
 #
+
 class WholeCropRoll < ApplicationRecord
   MAX_ROLLS = 5
 

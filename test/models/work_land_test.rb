@@ -2,19 +2,20 @@
 #
 # Table name: work_lands
 #
-#  id(作業地データ)         :integer          not null, primary key
-#  display_order(表示順)    :integer          default(0), not null
-#  fixed_cost(確定作業原価) :decimal(6, )
-#  created_at               :datetime
-#  updated_at               :datetime
-#  land_id(土地)            :integer
-#  work_id(作業)            :integer
-#  work_type_id(作業分類)   :integer
+#  id            :integer          not null, primary key
+#  work_id       :integer
+#  land_id       :integer
+#  display_order :integer          default("0"), not null
+#  created_at    :datetime
+#  updated_at    :datetime
+#  fixed_cost    :decimal(6, )
+#  work_type_id  :integer
 #
 # Indexes
 #
 #  index_work_lands_on_work_id_and_land_id  (work_id,land_id) UNIQUE
 #
+
 require 'test_helper'
 
 class WorkLandTest < ActiveSupport::TestCase

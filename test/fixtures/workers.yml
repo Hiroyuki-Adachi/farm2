@@ -2,35 +2,36 @@
 #
 # Table name: workers
 #
-#  id(作業者マスタ)                  :integer          not null, primary key
-#  account_number(口座番号)          :string(7)        default("0000000"), not null
-#  bank_code(口座(金融機関))         :string(4)        default("0000"), not null
-#  birthday(誕生日)                  :date
-#  branch_code(口座(支店))           :string(3)        default("000"), not null
-#  broccoli_mark(ブロッコリ記号)     :string(1)
-#  deleted_at                        :datetime
-#  display_order(表示順)             :integer
-#  family_name(姓)                   :string(10)       not null
-#  family_phonetic(姓(ﾌﾘｶﾞﾅ))   :string(15)       not null
-#  first_name(名)                    :string(10)       not null
-#  first_phonetic(名(ﾌﾘｶﾞﾅ))    :string(15)       not null
-#  mobile(携帯番号)                  :string(15)
-#  mobile_mail(メールアドレス(携帯)) :string(50)
-#  pc_mail(メールアドレス(PC))       :string(50)
-#  token(アクセストークン)           :string(36)       default(""), not null
-#  work_flag(作業フラグ)             :boolean          default(TRUE), not null
-#  created_at                        :datetime
-#  updated_at                        :datetime
-#  account_type_id(口座種別)         :integer          default(0), not null
-#  gender_id(性別)                   :integer          default(0), not null
-#  home_id(世帯)                     :integer
-#  position_id(役職)                 :integer          default(0), not null
+#  id              :integer          not null, primary key
+#  family_phonetic :string(15)       not null
+#  family_name     :string(10)       not null
+#  first_phonetic  :string(15)       not null
+#  first_name      :string(10)       not null
+#  birthday        :date
+#  home_id         :integer
+#  mobile          :string(15)
+#  mobile_mail     :string(50)
+#  pc_mail         :string(50)
+#  display_order   :integer
+#  work_flag       :boolean          default("true"), not null
+#  gender_id       :integer          default("0"), not null
+#  bank_code       :string(4)        default("0000"), not null
+#  branch_code     :string(3)        default("000"), not null
+#  account_type_id :integer          default("0"), not null
+#  account_number  :string(7)        default("0000000"), not null
+#  created_at      :datetime
+#  updated_at      :datetime
+#  deleted_at      :datetime
+#  token           :string(36)       default(""), not null
+#  position_id     :integer          default("0"), not null
+#  broccoli_mark   :string(1)
 #
 # Indexes
 #
 #  index_workers_on_deleted_at  (deleted_at)
 #  index_workers_on_token       (token) UNIQUE
 #
+
 worker1:
   id: 1
   family_phonetic: ごとう

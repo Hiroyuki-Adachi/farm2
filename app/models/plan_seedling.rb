@@ -2,17 +2,18 @@
 #
 # Table name: plan_seedlings
 #
-#  id                          :bigint           not null, primary key
-#  quantity(枚数)              :decimal(4, )     default(0), not null
-#  created_at                  :datetime         not null
-#  updated_at                  :datetime         not null
-#  home_id(世帯)               :integer
-#  plan_work_type_id(作業計画) :integer          not null
+#  id                :integer          not null, primary key
+#  plan_work_type_id :integer          not null
+#  home_id           :integer
+#  quantity          :decimal(4, )     default("0.0"), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 # Indexes
 #
 #  plan_seedlings_2nd  (plan_work_type_id,home_id) UNIQUE
 #
+
 class PlanSeedling < ApplicationRecord
   belongs_to :home
   belongs_to :plan, class_name: "PlanWorkType", foreign_key: "plan_work_type_id"

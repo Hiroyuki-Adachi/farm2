@@ -108,6 +108,7 @@ class WorksController < ApplicationController
   end
 
   def map
+    render layout: false
   end
 
   private
