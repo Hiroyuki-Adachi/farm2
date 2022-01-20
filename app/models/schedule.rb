@@ -2,18 +2,19 @@
 #
 # Table name: schedules
 #
-#  id(作業予定)           :integer          not null, primary key
-#  end_at(終了予定時刻)   :datetime         default(Thu, 01 Jan 1970 17:00:00.000000000 JST +09:00), not null
-#  name(作業名称)         :string(40)       not null
-#  start_at(開始予定時刻) :datetime         default(Thu, 01 Jan 1970 08:00:00.000000000 JST +09:00), not null
-#  term(年度(期))         :integer          not null
-#  work_flag(作業フラグ)  :boolean          default(TRUE), not null
-#  worked_at(作業予定日)  :date             not null
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  work_kind_id(作業種別) :integer          default(0), not null
-#  work_type_id(作業分類) :integer
+#  id           :integer          not null, primary key
+#  term         :integer          not null
+#  worked_at    :date             not null
+#  work_type_id :integer
+#  work_kind_id :integer          default("0"), not null
+#  name         :string(40)       not null
+#  work_flag    :boolean          default("true"), not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  start_at     :datetime         default("1970-01-01 08:00:00"), not null
+#  end_at       :datetime         default("1970-01-01 17:00:00"), not null
 #
+
 class Schedule < ApplicationRecord
   validates :worked_at, presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}

@@ -2,23 +2,25 @@
 #
 # Table name: adjustments
 #
-#  id                             :bigint           not null, primary key
-#  carried_on(搬入日)             :date
-#  container_flag(フレコンフラグ) :boolean          default(FALSE), not null
-#  fixed_amount(確定額)           :decimal(7, )
-#  half_weight(半端米(kg))        :decimal(3, 1)
-#  rice_bag(調整米(袋))           :decimal(3, )
-#  shipped_on(出荷日)             :date
-#  waste_weight(くず米(kg))       :decimal(5, 1)
-#  created_at                     :datetime         not null
-#  updated_at                     :datetime         not null
-#  drying_id(乾燥)                :integer          default(0), not null
-#  home_id(担当世帯)              :integer
+#  id             :integer          not null, primary key
+#  drying_id      :integer          default("0"), not null
+#  home_id        :integer
+#  carried_on     :date
+#  shipped_on     :date
+#  rice_bag       :decimal(3, )
+#  half_weight    :decimal(3, 1)
+#  waste_weight   :decimal(5, 1)
+#  fixed_amount   :decimal(7, )
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  container_flag :boolean          default("false"), not null
+#  waste_date     :date
 #
 # Indexes
 #
 #  adjustments_secondary  (drying_id) UNIQUE
 #
+
 class Adjustment < ApplicationRecord
   belongs_to :drying
   belongs_to :home, -> {with_deleted}

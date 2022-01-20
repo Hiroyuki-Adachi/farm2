@@ -2,13 +2,14 @@
 #
 # Table name: chemical_inventories
 #
-#  id                                    :bigint           not null, primary key
-#  checked_on(確認日)                    :date             not null
-#  name(棚卸名称)                        :string(40)       default(""), not null
-#  created_at                            :datetime         not null
-#  updated_at                            :datetime         not null
-#  chemical_adjust_type_id(在庫調整種別) :integer          default(0), not null
+#  id                      :integer          not null, primary key
+#  checked_on              :date             not null
+#  chemical_adjust_type_id :integer          default("0"), not null
+#  name                    :string(40)       default(""), not null
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
 #
+
 class ChemicalInventory < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 

@@ -2,18 +2,19 @@
 #
 # Table name: work_whole_crops
 #
-#  id                   :bigint           not null, primary key
-#  article_name(品名)   :string(15)       default(""), not null
-#  tax_rate(消費税率)   :decimal(3, 1)    default(0.0), not null
-#  unit_price(標準単価) :decimal(5, 2)    default(0.0), not null
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
-#  work_id(作業)        :integer          not null
+#  id           :integer          not null, primary key
+#  work_id      :integer          not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  unit_price   :decimal(5, 2)    default("0"), not null
+#  tax_rate     :decimal(3, 1)    default("0"), not null
+#  article_name :string(15)       default(""), not null
 #
 # Indexes
 #
 #  index_work_whole_crops_on_work_id  (work_id) UNIQUE
 #
+
 class WorkWholeCrop < ApplicationRecord
   belongs_to :work
 

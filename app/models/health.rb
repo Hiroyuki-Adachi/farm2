@@ -2,14 +2,15 @@
 #
 # Table name: healths
 #
-#  id                    :bigint           not null, primary key
-#  code(コード)          :string(1)        not null
-#  deleted_at            :datetime
-#  display_order(表示順) :integer          default(0), not null
-#  name(原価種別名称)    :string(10)       not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
+#  id            :integer          not null, primary key
+#  name          :string(10)       not null
+#  code          :string(1)        not null
+#  display_order :integer          default("0"), not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  deleted_at    :datetime
 #
+
 class Health < ApplicationRecord
   acts_as_paranoid
 

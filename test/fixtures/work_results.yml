@@ -2,22 +2,25 @@
 #
 # Table name: work_results
 #
-#  id(作業結果データ)         :integer          not null, primary key
-#  display_order(表示順)      :integer          default(0), not null
-#  fixed_amount(確定作業日当) :decimal(7, )
-#  fixed_hours(確定作業時間)  :decimal(5, 1)
-#  fixed_price(確定作業単価)  :decimal(5, )
-#  hours(作業時間)            :decimal(5, 1)    default(0.0), not null
-#  uuid(UUID(カレンダー用))   :string(36)
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#  work_id(作業)              :integer
-#  worker_id(作業者)          :integer
+#  id            :integer          not null, primary key
+#  work_id       :integer
+#  worker_id     :integer
+#  hours         :decimal(5, 1)    default("0"), not null
+#  display_order :integer          default("0"), not null
+#  fixed_hours   :decimal(5, 1)
+#  fixed_price   :decimal(5, )
+#  fixed_amount  :decimal(7, )
+#  created_at    :datetime
+#  updated_at    :datetime
+#  uuid          :string(36)
+#  health_id     :integer          default("0"), not null
+#  remarks       :string(20)       default(""), not null
 #
 # Indexes
 #
 #  index_work_results_on_work_id_and_worker_id  (work_id,worker_id) UNIQUE
 #
+
 work_results0:
   id: '5209'
   work_id: '1478'

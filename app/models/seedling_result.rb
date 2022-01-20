@@ -2,15 +2,16 @@
 #
 # Table name: seedling_results
 #
-#  id(育苗結果)               :integer          not null, primary key
-#  display_order(表示順)      :integer          default(0), not null
-#  disposal_flag(廃棄フラグ)  :boolean          default(FALSE), not null
-#  quantity(苗箱数)           :decimal(3, )     default(0), not null
-#  created_at                 :datetime         not null
-#  updated_at                 :datetime         not null
-#  seedling_home_id(育苗担当) :integer
-#  work_result_id(作業結果)   :integer
+#  id               :integer          not null, primary key
+#  seedling_home_id :integer
+#  work_result_id   :integer
+#  display_order    :integer          default("0"), not null
+#  quantity         :decimal(3, )     default("0"), not null
+#  disposal_flag    :boolean          default("false"), not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
 #
+
 class SeedlingResult < ActiveRecord::Base
   belongs_to :seedling_home
   belongs_to :work_result

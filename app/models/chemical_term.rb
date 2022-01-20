@@ -2,15 +2,16 @@
 #
 # Table name: chemical_terms
 #
-#  id                :integer          not null, primary key
-#  price(価格)       :decimal(6, )     default(0), not null
-#  term(年度(期))    :integer          not null
-#  chemical_id(薬剤) :integer          not null
+#  chemical_id :integer          not null
+#  term        :integer          not null
+#  id          :integer          not null, primary key
+#  price       :decimal(6, )     default("0"), not null
 #
 # Indexes
 #
 #  index_chemical_terms_on_chemical_id_and_term  (chemical_id,term) UNIQUE
 #
+
 class ChemicalTerm < ApplicationRecord
   belongs_to :chemical, -> {with_deleted}
   has_many :chemical_work_types, dependent: :destroy

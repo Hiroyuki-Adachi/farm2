@@ -35,7 +35,7 @@
             <th><%= tc.total_cost_type_name %></th>
             <td colspan="2"></td>
             <% @work_types.each do |work_type| %>
-            <td class="numeric"><%= @group1_directs[old_group1_id][work_type.id]&.to_s(:delimited) %></td>
+            <td class="numeric"><%= @group1_directs[old_group1_id][work_type.id]&.to_formatted_s(:delimited) %></td>
             <% end %>
           </tr>
         <% end %>
@@ -46,7 +46,7 @@
             <th><%= tc.kind_name %></th>
             <th></th>
             <% @work_types.each do |work_type| %>
-            <td class="numeric"><%= @group2_directs[old_group1_id][old_group2_id][work_type.id]&.to_s(:delimited) %></td>
+            <td class="numeric"><%= @group2_directs[old_group1_id][old_group2_id][work_type.id]&.to_formatted_s(:delimited) %></td>
             <% end %>
           </tr>
         <% end %>
@@ -56,14 +56,14 @@
           <th><%= tc.detail_name %></th>
           <% @work_types.each do |work_type| %>
           <% tcd = tc.total_cost_details.find {|tcd| tcd.work_type_id == work_type.id } %>
-          <td class="numeric"><%= tcd&.cost&.to_s(:delimited) %></td>
+          <td class="numeric"><%= tcd&.cost&.to_formatted_s(:delimited) %></td>
           <% end %>
         </tr>
       <% end %>
       <tr>
         <th colspan="3">直接原価合計</th>
         <% @work_types.each do |work_type| %>
-        <td class="numeric"><%= @sum_directs[work_type.id]&.to_s(:delimited) %></td>
+        <td class="numeric"><%= @sum_directs[work_type.id]&.to_formatted_s(:delimited) %></td>
         <% end %>
       </tr>
       <% old_group1_id = 0 %>
@@ -75,7 +75,7 @@
             <th><%= tc.total_cost_type_name %></th>
             <td colspan="2"></td>
             <% @work_types.each do |work_type| %>
-            <td class="numeric"><%= @group1_sales[old_group1_id][work_type.id]&.to_s(:delimited) %></td>
+            <td class="numeric"><%= @group1_sales[old_group1_id][work_type.id]&.to_formatted_s(:delimited) %></td>
             <% end %>
           </tr>
         <% end %>
@@ -86,7 +86,7 @@
             <th><%= tc.kind_name %></th>
             <th></th>
             <% @work_types.each do |work_type| %>
-            <td class="numeric"><%= @group2_sales[old_group1_id][old_group2_id][work_type.id]&.to_s(:delimited) %></td>
+            <td class="numeric"><%= @group2_sales[old_group1_id][old_group2_id][work_type.id]&.to_formatted_s(:delimited) %></td>
             <% end %>
           </tr>
         <% end %>
@@ -96,7 +96,7 @@
           <th><%= tc.detail_name %></th>
           <% @work_types.each do |work_type| %>
           <% tcd = tc.total_cost_details.find {|tcd| tcd.work_type_id == work_type.id } %>
-          <td class="numeric"><%= tcd&.cost&.to_s(:delimited) %></td>
+          <td class="numeric"><%= tcd&.cost&.to_formatted_s(:delimited) %></td>
           <% end %>
         </tr>
       <% end %>
