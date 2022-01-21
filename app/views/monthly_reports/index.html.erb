@@ -1,6 +1,6 @@
 <h1>作業月報選択</h1>
 <%= form_tag({:action => 'show', :id => 0}, {:method => :get}) do %>
-  <div class="form-row">
+  <div class="row">
     <div class="mb-3 col-md-4">
       <label class="form-label">対象月</label>
       <%= date_select :report, :target_at, {:order => [:year, :month, :day], :discard_day => true, :use_month_numbers => true}, class: "form-control bootstrap-date" %>

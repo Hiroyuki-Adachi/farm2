@@ -1,7 +1,7 @@
 <h1>集計対象期間変更</h1>
 <%= error_print(@system) %>
 <%= form_for(@system, url: {controller: :menu, action: :update }, html: {method: :put}) do |f| %>
-  <div class="form-row">
+  <div class="row">
     <div class="mb-3 col-md-2">
       <%= f.month_field :target_from, {required: true, class: "form-control bootstrap-date"} %>
     </div>

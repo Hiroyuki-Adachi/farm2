@@ -1,6 +1,6 @@
 <%= error_print(@land) %>
 <%= form_with(model: @land, url: @land.new_record? ? lands_groups_path : lands_group_path(@land)) do |f| %>
-<div class="form-row">
+<div class="row">
   <div class="field mb-3 col-md-2">
     <%= f.label :place, class: "col-form-label-lg form-label" %>
     <%= f.text_field :place, {maxlength: 15, size: 20, required: true, class: "form-control"} %>
@@ -13,7 +13,7 @@
   <%= render(partial: "lands/map", :locals => {:f => f}) %>
   </div>
 </div>
-<div class="form-row">
+<div class="row">
   <div class="field mb-3 col-md-2">
     <%= f.label :display_order, class: "col-form-label-lg form-label" %>
     <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
@@ -30,7 +30,7 @@
     <input type="button" class="btn btn-primary" value="計算" id="re_calc" />
   </div>
 </div>
-<div class="form-row">
+<div class="row">
   <div class="col-md-6">
     <table id="tbl_lands" class="table table-sm">
       <thead>
