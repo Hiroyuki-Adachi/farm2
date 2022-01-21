@@ -1,11 +1,11 @@
 <%= error_print(@land) %>
 <%= form_for(@land) do |f| %>
 <div class="form-row">
-  <div class="field form-group col-md-2">
+  <div class="field mb-3 col-md-2">
     <%= f.label :place, class: "col-form-label-lg form-label" %>
     <%= f.text_field :place, {maxlength: 15, size: 20, required: true, class: "form-control"} %>
   </div>
-  <div class="field form-group col-md-2">
+  <div class="field mb-3 col-md-2">
     <%= f.label :land_place_id, class: "col-form-label-lg form-label" %>
     <%= f.select(:land_place_id, @places.map {|place| [place.name, place.id]}, {}, {class: "form-select"}) %>
   </div>
@@ -14,27 +14,27 @@
   </div>
 </div>
 <div class="form-row">
-  <div class="field form-group col-md-2">
+  <div class="field mb-3 col-md-2">
     <%= button_tag "所有者", type: :button, class: "btn btn-success edit-homes", style: "margin-bottom: 20px;", disabled: @land.new_record?,
       data: {path: land_owners_path(land_id: @land&.id || 0), "destroy-path" => land_owner_path(land_id: @land&.id || 0, id: 0)} %>
     <%= f.select(:owner_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-select"}) %>
   </div>
-  <div class="field form-group col-md-2">
+  <div class="field mb-3 col-md-2">
     <%= button_tag "管理者", type: :button, class: "btn btn-success edit-homes", style: "margin-bottom: 20px;", disabled: @land.new_record?,
       data: {path: land_managers_path(land_id: @land&.id || 0), "destroy-path" => land_manager_path(land_id: @land&.id || 0, id: 0)} %>
     <%= f.select(:manager_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-select"}) %>
   </div>
-  <div class="field form-group col-md-2">
+  <div class="field mb-3 col-md-2">
     <%= f.label :area, class: "col-form-label-lg form-label" %>
     <%= f.number_field(:area, {step: 0.01, max: 999.99, min: 0.01, size: 6, required: true, class: "form-control"}) %>
   </div>
-  <div class="field form-group col-md-2">
+  <div class="field mb-3 col-md-2">
     <%= f.label :reg_area, class: "col-form-label-lg form-label" %>
     <%= f.number_field(:reg_area, {step: 0.01, max: 999.99, min: 0, size: 6, class: "form-control"}) %>
   </div>
 </div>
 <div class="form-row">
-  <div class="field form-group col-md-2">
+  <div class="field mb-3 col-md-2">
     <%= f.label :target_flag, class: "col-form-label-lg" %>
     <div class="form-check">
       <%= f.radio_button :target_flag, true %>
@@ -45,19 +45,19 @@
       <label for="land_target_flag_false" class="form-check-label form-label">個人管理</label>
     </div>
   </div>
-  <div class="field form-group col-md-2">
+  <div class="field mb-3 col-md-2">
     <%= f.label :display_order, class: "col-form-label-lg form-label" %>
     <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
   </div>
-  <div class="field form-group col-md-2">
+  <div class="field mb-3 col-md-2">
     <%= f.label :broccoli_mark, class: "col-form-label-lg form-label" %>
     <%= f.text_field :broccoli_mark, {maxlength: 1, class: "form-control"} %>
   </div>
-  <div class="field form-group col-md-2">
+  <div class="field mb-3 col-md-2">
     <%= f.label :start_on, class: "col-form-label-lg form-label" %>
     <%= f.date_field :start_on, {class: "form-control"} %>
   </div>
-  <div class="field form-group col-md-2">
+  <div class="field mb-3 col-md-2">
     <%= f.label :end_on, class: "col-form-label-lg form-label" %>
     <%= f.date_field :end_on, {class: "form-control"} %>
   </div>

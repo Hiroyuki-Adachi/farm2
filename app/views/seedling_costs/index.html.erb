@@ -2,15 +2,15 @@
 <h2>単価</h2>
 <%= form_tag(action: :create) do  %>
   <div class="row">
-    <div class="col-md-3 form-group">
+    <div class="col-md-3 mb-3">
       <label for="system_seedling_chemical_id" class="form-label">種別</label>
       <%= select_tag("system[seedling_chemical_id]", options_from_collection_for_select(@chemical_terms, :chemical_id, :chemical_name, current_system.seedling_chemical_id), {class: "form-select"}) %>
     </div>
-    <div class="col-md-3 form-group">
+    <div class="col-md-3 mb-3">
       <label for="chemical_price" class="form-label">価格</label>
       <%= number_field_tag "chemical[price]", @chemical_price, {required: true, class: "form-control", min: 0, max: 999999} %>
     </div>
-    <div class="col-md-3 form-group">
+    <div class="col-md-3 mb-3">
       <label for="system_seedling_price" class="form-label">育苗費</label>
       <%= number_field_tag "system[seedling_price]", current_system.seedling_price, {required: true, class: "form-control", min: 0, max: 9999} %>
     </div>
