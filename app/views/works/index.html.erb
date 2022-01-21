@@ -52,13 +52,14 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
+<%= form_with url: work_type_select_works_path, method: :get, id: :work_type_select_form, local: false do |f| %>
+<%= f.hidden_field :work_type_id, id: :select_work_type_id %>
+<% end %>
 <script type="text/javascript">
-$(function() {
-    $('#work_type_id').change(function(){
-        $.get("<%= work_type_select_works_path %>", {work_type_id: $(this).val()}, function() {
-            $("#work_work_kind_id").prepend("<option value='' />")
-            $("#work_work_kind_id").val("");
-        });
+window.addEventListener("load", () => {
+    document.getElementById("work_type_id").addEventListener("change", (event) => {
+        document.getElementById("select_work_type_id").value = event.target.value;
+        Rails.fire(document.getElementById("work_type_select_form"), "submit");
     });
 });
 </script>
