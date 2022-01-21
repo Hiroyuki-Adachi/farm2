@@ -7,7 +7,7 @@
 
   <h2>作業者</h2>
   <div class="clearfix">
-    <div class="float-left">
+    <div class="float-start">
     <table id="tbl_workers" class="table table-sm">
       <thead>
         <tr>
@@ -33,7 +33,7 @@
       </tbody>
     </table>
     </div>
-    <div class="float-left" style="margin-left: 40px; ">
+    <div class="float-start" style="margin-left: 40px; ">
       <div class="row">
         <% Section.usual.pluck(:name, :id).unshift(['すべて', 0]).each do |section| %>
           <div class="form-check">

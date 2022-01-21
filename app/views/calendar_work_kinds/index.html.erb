@@ -14,9 +14,9 @@
           <div class="col-md-3">
             <% work_kind_id = @work_kinds[base * j + i].id %>
             <% calendar_work_kind = @calendar_work_kinds.find {|c| c.work_kind_id == work_kind_id} %>
-            <%= check_box_tag "work_kind_id[]", work_kind_id, !calendar_work_kind.nil?, {data: {kind: "#{work_kind_id}"}, class: "form-check-input float-left", id: "work_kind_id_#{work_kind_id}"} %>
+            <%= check_box_tag "work_kind_id[]", work_kind_id, !calendar_work_kind.nil?, {data: {kind: "#{work_kind_id}"}, class: "form-check-input float-start", id: "work_kind_id_#{work_kind_id}"} %>
             <%= label_tag "work_kind_id_#{work_kind_id}", @work_kinds[base * j + i].name %>
-            <%= color_field_tag "text_color[#{work_kind_id}]", calendar_work_kind&.text_color, {data: {kind: "#{work_kind_id}"}, class: "form-control float-right", style: "width:100px;"} %>
+            <%= color_field_tag "text_color[#{work_kind_id}]", calendar_work_kind&.text_color, {data: {kind: "#{work_kind_id}"}, class: "form-control float-end", style: "width:100px;"} %>
           </div>
         <% end %>
       <% end %>
