@@ -1,6 +1,6 @@
 <%= error_print(@land) %>
 <%= form_for(@land) do |f| %>
-<div class="form-row">
+<div class="row">
   <div class="field mb-3 col-md-2">
     <%= f.label :place, class: "col-form-label-lg form-label" %>
     <%= f.text_field :place, {maxlength: 15, size: 20, required: true, class: "form-control"} %>
@@ -13,7 +13,7 @@
   <%= render(partial: "map", :locals => {:f => f}) %>
   </div>
 </div>
-<div class="form-row">
+<div class="row">
   <div class="field mb-3 col-md-2">
     <%= button_tag "所有者", type: :button, class: "btn btn-success edit-homes", style: "margin-bottom: 20px;", disabled: @land.new_record?,
       data: {path: land_owners_path(land_id: @land&.id || 0), "destroy-path" => land_owner_path(land_id: @land&.id || 0, id: 0)} %>
@@ -33,7 +33,7 @@
     <%= f.number_field(:reg_area, {step: 0.01, max: 999.99, min: 0, size: 6, class: "form-control"}) %>
   </div>
 </div>
-<div class="form-row">
+<div class="row">
   <div class="field mb-3 col-md-2">
     <%= f.label :target_flag, class: "col-form-label-lg" %>
     <div class="form-check">

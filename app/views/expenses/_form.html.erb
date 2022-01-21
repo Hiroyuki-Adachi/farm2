@@ -1,6 +1,6 @@
 <%= error_print(@expense) %>
 <%= form_for(@expense) do |f| %>
-<div class="form-row">
+<div class="row">
   <div class="mb-3 col-md-2">
     <%= f.label :payed_on, class: "col-form-label-lg form-label" %>
     <%= f.date_field :payed_on, {required: true, class: "form-control", min: current_system.start_date, max: current_system.end_date} %>
@@ -22,7 +22,7 @@
     <%= f.number_field :quantity, {min: 0, max: 9999, required: false, class: "form-control"} %>
   </div>
 </div>
-<div class="form-row">
+<div class="row">
   <div class="mb-3 col-md-2">
     <%= f.label :chemical_type_id, class: "col-form-label-lg form-label" %>
     <%= f.select(:chemical_type_id, @chemical_types.map {|chemical_type| [chemical_type.name, chemical_type.id]}, {include_blank: true}, {class: "form-select"}) %>
@@ -32,7 +32,7 @@
     <%= f.select(:chemical_id, @chemicals.map {|chemical| [chemical.name, chemical.id]}, {include_blank: true}, {class: "form-select"}) %>
   </div>
 </div>
-<div class="form-row">
+<div class="row">
   <div class="mb-3 col-md-2">
     <%= f.label :discount, class: "col-form-label-lg form-label" %>
     <%= f.number_field :discount, {min: 0, max: 9999999, step: 1, required: false, class: "form-control"} %>
@@ -58,7 +58,7 @@
   </div>
 </div>
 <%= f.hidden_field :term, {value: current_term} %>
-<div class="form-row">
+<div class="row">
   <div class="field mb-3">
     <fieldset>
       <legend>原価対象</legend>
