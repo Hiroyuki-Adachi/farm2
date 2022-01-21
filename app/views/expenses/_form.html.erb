@@ -1,51 +1,51 @@
 <%= error_print(@expense) %>
 <%= form_for(@expense) do |f| %>
 <div class="form-row">
-  <div class="form-group col-md-2">
+  <div class="mb-3 col-md-2">
     <%= f.label :payed_on, class: "col-form-label-lg form-label" %>
     <%= f.date_field :payed_on, {required: true, class: "form-control", min: current_system.start_date, max: current_system.end_date} %>
   </div>
-  <div class="form-group col-md-2">
+  <div class="mb-3 col-md-2">
     <%= f.label :expense_type_id, class: "col-form-label-lg form-label" %>
     <%= f.select(:expense_type_id, @expense_types.map {|expense_type| [expense_type.name, expense_type.id]}, {}, {class: "form-select"}) %>
   </div>
-  <div class="form-group col-md-4">
+  <div class="mb-3 col-md-4">
     <%= f.label :content, class: "col-form-label-lg form-label" %>
     <%= f.text_field :content, {:maxlength => 40, :size => 40, class: "form-control"} %>
   </div>
-  <div class="form-group col-md-2">
+  <div class="mb-3 col-md-2">
     <%= f.label :amount, class: "col-form-label-lg form-label" %>
     <%= f.number_field :amount, {min: 1, max: 9999999, step: 1, required: true, class: "form-control"} %>
   </div>
-  <div class="form-group col-md-2">
+  <div class="mb-3 col-md-2">
     <%= f.label :quantity, class: "col-form-label-lg form-label" %>
     <%= f.number_field :quantity, {min: 0, max: 9999, required: false, class: "form-control"} %>
   </div>
 </div>
 <div class="form-row">
-  <div class="form-group col-md-2">
+  <div class="mb-3 col-md-2">
     <%= f.label :chemical_type_id, class: "col-form-label-lg form-label" %>
     <%= f.select(:chemical_type_id, @chemical_types.map {|chemical_type| [chemical_type.name, chemical_type.id]}, {include_blank: true}, {class: "form-select"}) %>
   </div>
-  <div class="form-group col-md-2">
+  <div class="mb-3 col-md-2">
     <%= f.label :chemical_id, class: "col-form-label-lg form-label" %>
     <%= f.select(:chemical_id, @chemicals.map {|chemical| [chemical.name, chemical.id]}, {include_blank: true}, {class: "form-select"}) %>
   </div>
 </div>
 <div class="form-row">
-  <div class="form-group col-md-2">
+  <div class="mb-3 col-md-2">
     <%= f.label :discount, class: "col-form-label-lg form-label" %>
     <%= f.number_field :discount, {min: 0, max: 9999999, step: 1, required: false, class: "form-control"} %>
   </div>
-  <div class="form-group col-md-2">
+  <div class="mb-3 col-md-2">
     <%= f.label :discount_numor, class: "col-form-label-lg form-label" %>
     <%= f.number_field :discount_numor, {min: 0, max: 9999999, step: 1, required: false, class: "form-control"} %>
   </div>
-  <div class="form-group col-md-2">
+  <div class="mb-3 col-md-2">
     <%= f.label :discount_denom, class: "col-form-label-lg form-label" %>
     <%= f.number_field :discount_denom, {min: 0, max: 9999999, step: 1, required: false, class: "form-control"} %>
   </div>
-  <div class="form-group col-md-4">
+  <div class="mb-3 col-md-4">
     <%= f.label :cost_flag, class: "col-form-label-lg form-label" %>
     <div class="form-check">
       <%= f.radio_button :cost_flag, true %>
@@ -59,7 +59,7 @@
 </div>
 <%= f.hidden_field :term, {value: current_term} %>
 <div class="form-row">
-  <div class="field form-group">
+  <div class="field mb-3">
     <fieldset>
       <legend>原価対象</legend>
       <% @work_types.each do |work_type| %>

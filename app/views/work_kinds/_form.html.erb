@@ -1,29 +1,29 @@
 <%= error_print(@work_kind) %>
 <%= form_for(@work_kind) do |f| %>
   <div class="row">
-    <div class="field form-group col-md-4">
+    <div class="field mb-3 col-md-4">
         <%= f.label :name, class: "col-form-label-lg form-label" %>
         <%= f.text_field :name, {maxlength: 40, size: 20, required: true, class: "form-control"} %>
     </div>
-    <div class="field form-group col-md-2">
+    <div class="field mb-3 col-md-2">
         <%= f.label :display_order, class: "col-form-label-lg form-label" %>
         <%= f.number_field :display_order, {min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
     </div>
-    <div class="field form-group col-md-2">
+    <div class="field mb-3 col-md-2">
         <%= f.label :price, class: "col-form-label-lg form-label" %>
         <%= f.number_field :price, {min: 0, max: 9999, step: 1, required: true, class: "form-control"} %>
     </div>
-    <div class="field form-group col-md-2">
+    <div class="field mb-3 col-md-2">
       <%= f.label :broccoli_mark, class: "col-form-label-lg form-label" %>
       <%= f.text_field :broccoli_mark, {maxlength: 1, class: "form-control"} %>
     </div>
   </div>
   <div class="row">
-    <div class="field form-group col-md-4">
+    <div class="field mb-3 col-md-4">
       <%= f.label :phonetic, class: "col-form-label-lg form-label" %>
       <%= f.text_field :phonetic, {maxlength: 40, size: 40, pattern: "[\u3041-\u3096\uFF21-\uFF3A\d]*", required: true, class: "form-control"} %>
     </div>
-    <div class="field form-group col-md-2">
+    <div class="field mb-3 col-md-2">
       <% if current_organization.lands_count > 0 %>
         <%= f.label :land_flag, class: "col-form-label-lg form-label" %>
         <%= f.check_box :land_flag %>
@@ -31,13 +31,13 @@
         <%= f.hidden_field land_flag, false %>
       <% end %>
     </div>
-    <div class="field form-group col-md-2">
+    <div class="field mb-3 col-md-2">
       <%= f.label :cost_type_id, class: "col-form-label-lg form-label" %>
       <%= f.select(:cost_type_id, @cost_types.map {|cost_type| [cost_type.name, cost_type.id]}, {include_blank: true}, {class: "form-select"}) %>
     </div>
   </div>
   <div class="row">
-    <div class="field form-group col-md-12">
+    <div class="field mb-3 col-md-12">
       <fieldset>
         <legend>該当作業</legend>
         <% @work_types.each do |work_type| %>
@@ -52,7 +52,7 @@
   <% if current_organization.machines_count > 0 %>
     <div class="row">
       <div class="field col-md-12">
-        <fieldset class="form-group">
+        <fieldset class="mb-3">
           <legend>使用機械種別</legend>
         <% @machine_types.each do |machine_type| %>
           <div class="form-check form-check-inline">
@@ -67,7 +67,7 @@
   <% if current_organization.chemicals_count > 0 %>
     <div class="row">
       <div class="field col-md-12">
-        <fieldset class="form-group">
+        <fieldset class="mb-3">
           <legend>使用薬品種別</legend>
           <% @chemical_types.each do |chemical_type| %>
             <div class="form-check form-check-inline">

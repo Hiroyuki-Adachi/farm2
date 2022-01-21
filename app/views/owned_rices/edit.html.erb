@@ -17,7 +17,7 @@
   <div class="row">
     <% @owned_prices.each do |owned_price| %>
       <% owned_rice = @owned_rices.find {|o| o.owned_rice_price_id == owned_price.id} %>
-      <div class="col-md-2 form-group">
+      <div class="col-md-2 mb-3">
         <%= label_tag "owned_rices_#{owned_price.id}", owned_price.name, class: "col-form-label-lg" %>
         <%= number_field_tag "owned_rices[#{owned_price.id}][owned_count]", owned_rice&.owned_count || 0, {id: "owned_rices_#{owned_price.id}", class: "form-control form-control-sm owned-rice rice", required: true, min: 0, max: 999} %>
         <%= hidden_field_tag "owned_rices[#{owned_price.id}][owned_rice_price_id]", owned_price.id %>

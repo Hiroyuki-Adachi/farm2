@@ -10,7 +10,7 @@
       <%= @work.sum_areas %>a
       <%= hidden_field_tag :sum_areas, @work.sum_areas %>
     </div>
-    <div class="col-md-8 form-group">
+    <div class="col-md-8 mb-3">
       <% group_count.times do |index| %>
         <div class="form-check-inline">
           <%= radio_button_tag "col_group", index, index == 0, {class: "form-check-input change-group", data: {group: index}} %>
