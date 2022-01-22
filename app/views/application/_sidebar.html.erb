@@ -1,6 +1,7 @@
-<nav id="mySidebar" style="padding-left: 15px;">
+<button type="button" id="my_side_close" class="btn-close float-end"></button>
+<nav id="my_sidebar" class="ps-2">
   <div aria-labelledby="navbarDaily">
-    <span class="h5">日報管理</span><button type="button" id="sideClose" class="close" onclick="closeSide()">&times;</button>
+    <span class="h5">日報管理</span>
     <% unless current_user.visitor? %>
       <%= link_to '日報入力', new_work_path, {class: "dropdown-item", data: {controller: :works, actions: [:new, :edit, :show]}} %>
     <% end %>
