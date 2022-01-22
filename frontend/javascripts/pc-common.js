@@ -1,4 +1,4 @@
-import { Modal } from "bootstrap";
+import { Modal, Collapse } from "bootstrap";
 
 window.popupAlert = (message) => {
     document.getElementById("popup_alert_message").innerText = message;
@@ -28,12 +28,13 @@ $(document).on("change", "div.form-check-inline input[type='checkbox']", functio
     }
 });
 
-$(function() {
+window.addEventListener("DOMContentLoaded", () => {
     $("div.form-check-inline input[type='checkbox']").trigger("change");
+    const mySideCollapse = new Collapse(document.getElementById("my_side_wrapper"), {toggle: false});
 
     // for sidebar
-    var controller = $("#current_controller").val();
-    var action = $("#current_action").val();
+    const controller = document.getElementById("current_controller").value;
+    const action = document.getElementById("current_action").value;
     if(controller == "menu" && action == "index") {
         return;
     }
@@ -46,39 +47,68 @@ $(function() {
             }
         }
     });
-});
 
-$(function() {
-  const handleConfirm = function(element) {
-    if (!allowAction(this)) {
-      Rails.stopEverything(element);
+    const handleConfirm = function(element) {
+        if (!allowAction(this)) {
+            Rails.stopEverything(element);
+        }
     }
-  }
 	
-  const allowAction = function(element) {
-    if (element.getAttribute('data-confirm') === null) {
-      return true;
+    const allowAction = function(element) {
+        if (element.getAttribute('data-confirm') === null) {
+            return true;
+        }
+        showConfirmationDialog(element);
+            return false;
     }
-    showConfirmationDialog(element);
-    return false;
-  }
 
-  const confirmed = function(element, result) {
-    if (result.value) {
-      // User clicked confirm button
-      element.removeAttribute('data-confirm')
-      element.click()
+    const confirmed = function(element, result) {
+        if (result.value) {
+            element.removeAttribute('data-confirm')
+            element.click()
+        }
     }
-  }
 
-  const showConfirmationDialog = function(element) {
-    const message = element.getAttribute('data-confirm');
-    popupConfirm(message, function(result) {
-        confirmed(element, {value: result});
+    const showConfirmationDialog = function(element) {
+        const message = element.getAttribute('data-confirm');
+        popupConfirm(message, function(result) {
+            confirmed(element, {value: result});
+        });
+    }
+
+    document.getElementById("my_side_close").addEventListener("click", () => {
+        const myContent = document.getElementById("my_content");
+        const openButton = document.getElementById("my_side_open");
+        mySideCollapse.hide();
+
+        myContent.classList.remove("col-md-10");
+        myContent.classList.add("col-md-12");
+
+        openButton.classList.remove("d-none");
+        openButton.classList.add("d-block");
+
+        sessionStorage.setItem("my_side", "hide");
     });
-  }
-  
-  $("a[data-confirm]").on('click',handleConfirm);
+
+    document.getElementById("my_side_open").addEventListener("click", () => {
+        const myContent = document.getElementById("my_content");
+        const openButton = document.getElementById("my_side_open");
+        mySideCollapse.show();
+
+        myContent.classList.remove("col-md-12");
+        myContent.classList.add("col-md-10");
+
+        openButton.classList.remove("d-block");
+        openButton.classList.add("d-none");
+
+        sessionStorage.setItem("my_side", "show");
+    });
+
+    $("a[data-confirm]").on('click', handleConfirm);
+
+    if (sessionStorage.getItem("my_side") == "hide") {
+        document.getElementById("my_side_close").click();
+    }
 });
 
 // for side-bar
@@ -87,19 +117,4 @@ function activeBar(e) {
     e.style.backgroundColor = "White";
     navdiv.show();
     $("#" + navdiv.attr("aria-labelledby")).addClass("active");
-}
-
-window.addEventListener("load", () => {
-    document.getElementById("my_side_close").addEventListener("click", (event) => {
-
-    });
-});
-
-function closeSide() {
-    $("#side_wrapper").hide("slow");
-    $("#myContent").removeClass("col-md-10");
-    $("#myContent").addClass("col-md-12");
-    setTimeout(function(){
-        $(window).trigger('resize');
-    }, 1000);
 }
