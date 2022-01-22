@@ -22,10 +22,13 @@
 <div class="container-fluid">
 <% if session[:user_id] %>
   <div class="row">
-    <div id="side_wrapper" class="col-md-2 bg-info">
+    <div id="my_side_wrapper" class="col-md-2 bg-info collapse show">
       <%= render 'sidebar' %>
     </div>
-    <div id="myContent" class="col-md-10">
+    <div id="my_content" class="col-md-10">
+    <button type="button" id="my_side_open" class="btn btn-sm btn-info float-begin d-none d-print-none">
+      <i class="far fa-window-restore"></i>
+    </button>
 <% end %>
       <div class="container-fluid">
 <%= yield %>
