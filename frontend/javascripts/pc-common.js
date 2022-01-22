@@ -37,7 +37,7 @@ $(function() {
     if(controller == "menu" && action == "index") {
         return;
     }
-    $("#mySidebar").find("a[data-controller]").each(function(_i, e) {
+    $("#my_sidebar").find("a[data-controller]").each(function(_i, e) {
         if(e.dataset.controller == controller) {
             if($("a[data-controller='" + controller + "']").length <= 1) {
                 activeBar(e);
@@ -89,8 +89,14 @@ function activeBar(e) {
     $("#" + navdiv.attr("aria-labelledby")).addClass("active");
 }
 
+window.addEventListener("load", () => {
+    document.getElementById("my_side_close").addEventListener("click", (event) => {
+
+    });
+});
+
 function closeSide() {
-    $("#sideWrapper").hide("slow");
+    $("#side_wrapper").hide("slow");
     $("#myContent").removeClass("col-md-10");
     $("#myContent").addClass("col-md-12");
     setTimeout(function(){

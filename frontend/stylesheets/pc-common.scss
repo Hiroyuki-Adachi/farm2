@@ -18,7 +18,7 @@ th.numeric {
   width: auto;
 }
 
-#sideWrapper {
+#side_wrapper {
   @media (min-width: 767.98px) {
     padding-right: 0;
     max-width: 200px;
@@ -49,7 +49,7 @@ th.numeric {
 }
 
 @media print {
-  #mySidebar {
+  #my_sidebar {
     display: none;
   }
 }
