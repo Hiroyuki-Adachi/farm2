@@ -125,9 +125,11 @@ ORDER
   end
 
   def unit_quantity(quantity)
-    return (quantity / 1_000_000) if quantity >= 1_000_000
-    return (quantity / 1_000) if quantity >= 1_000
-    return quantity
+    return (quantity / 1_000_000) if quantity > 1_000_000
+    return "" if quantity == 1_000_000
+    return (quantity / 1_000) if quantity > 1_000
+    return "" if quantity == 1_000
+    return quantity == 1 ? "" : quantity
   end
 
   attr_writer :this_term_flag

@@ -3,7 +3,7 @@
 <div class="row">
   <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
     <table id="tbl_list" class="table table-sm">
-      <thead style="background-color:white;">
+      <thead>
         <tr>
           <th rowspan="2">種別</th>
           <th rowspan="2">名称</th>
@@ -22,7 +22,7 @@
         <% @chemical_terms.each do |chemical_term| %>
         <tr>
           <th><%= chemical_term.chemical.chemical_type.name %></th>
-          <th><%= chemical_term.chemical.name %></th>
+          <th><%= chemical_name(chemical_term.chemical) %>(<%= chemical_term.chemical.base_base_quantity %><%= chemical_term.chemical.base_unit_name %>)</th>
           <td>
             <%= number_field_tag "chemical_terms[][price]", chemical_term.price, {id: nil, class: "form-control form-control-sm", min: 0, max: 999999, style: "width: 100px;", data: {chemical: chemical_term.chemical.id}} %>
             <%= hidden_field_tag "chemical_terms[][id]", chemical_term.id, {id: nil} %>
