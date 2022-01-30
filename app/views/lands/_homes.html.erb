@@ -14,9 +14,9 @@
       </thead>
       <tbody>
         <%= f.fields_for :land_homes do |fs| %>
-        <tr>
+        <tr style="visibility: <%= ((@owner_flag && fs.object.owner_flag) || (@manager_flag && fs.object.manager_flag)) ? 'visible' : 'collapse' %>">
           <td>
-          <%= fs.select(:home_id, options_from_collection_for_select(Home.landable.includes(:holder), :id, :owner_name), {}, {class: "form-select"}) %>
+          <%= fs.select(:home_id, options_from_collection_for_select(Home.landable.includes(:holder), :id, :owner_name, fs.object.home_id), {}, {class: "form-select"}) %>
           </td>
           <td>
           <%= fs.text_field :place, {maxlength: 15, required: true, class: "form-control"} %>
@@ -26,8 +26,8 @@
           </td>
           <td>
             <%= fs.hidden_field :id %>
-            <%= fs.hidden_field :owner_flag, value: @owner_flag || false %>
-            <%= fs.hidden_field :manager_flag, value: @manager_flag || false %>
+            <%= fs.hidden_field :owner_flag, value: @owner_flag %>
+            <%= fs.hidden_field :manager_flag, value: @manager_flag %>
             <%= fs.check_box :_destroy %>
           </td>
         </tr>

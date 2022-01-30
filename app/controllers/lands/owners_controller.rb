@@ -3,7 +3,7 @@ class Lands::OwnersController < ApplicationController
   before_action :set_land, only: [:index, :create]
 
   def index
-    @land.land_homes.build
+    @land.land_homes.where(owner_flag: true).build
     render partial: "lands/homes"
   end
 
@@ -20,6 +20,7 @@ class Lands::OwnersController < ApplicationController
   def set_land
     @land = Land.find(params[:land_id])
     @owner_flag = true
+    @manager_flag = false
   end
 
   def owners_params
