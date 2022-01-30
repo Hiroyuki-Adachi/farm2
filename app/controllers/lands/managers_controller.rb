@@ -20,6 +20,7 @@ class Lands::ManagersController < ApplicationController
   def set_land
     @land = Land.find(params[:land_id])
     @manager_flag = true
+    @owner_flag = false
   end
 
   def managers_params
