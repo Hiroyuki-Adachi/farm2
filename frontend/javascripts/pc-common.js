@@ -104,11 +104,21 @@ window.addEventListener("DOMContentLoaded", () => {
         sessionStorage.setItem("my_side", "show");
     });
 
-    $("a[data-confirm]").on('click', handleConfirm);
-
     if (sessionStorage.getItem("my_side") == "hide") {
-        document.getElementById("my_side_close").click();
+        const mySideWrapper = document.getElementById("my_side_wrapper");
+        const myContent = document.getElementById("my_content");
+        const openButton = document.getElementById("my_side_open");
+    
+        mySideWrapper.classList.remove("show");
+    
+        myContent.classList.remove("col-md-10");
+        myContent.classList.add("col-md-12");
+    
+        openButton.classList.remove("d-none");
+        openButton.classList.add("d-block");
     }
+    
+    $("a[data-confirm]").on('click', handleConfirm);
 });
 
 // for side-bar
