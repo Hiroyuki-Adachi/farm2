@@ -18,9 +18,9 @@
 </div>
 <div class="row">
   <% @work_types.each_with_index do |work_type, i| %>
-    <div class="btn-group" style="background-color: <%= work_type.bg_color%>;">
-      <span id="work_type_<%= work_type.id %>" style="width:100px;"><%= work_type.name %></span>
-      <span id="land_area_<%= work_type.id %>" class="label text-right area-sum" style="width: 50px;">0.0</span>
+    <div class="col" style="background-color: <%= work_type.bg_color%>;">
+      <div id="work_type_<%= work_type.id %>"><%= work_type.name %></div>
+      <div id="land_area_<%= work_type.id %>" class="label text-right area-sum">0.0</div>
     </div>
   <% end %>
 </div>
