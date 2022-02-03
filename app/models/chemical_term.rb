@@ -52,4 +52,16 @@ SQL
       ChemicalTerm.create(term: term, chemical_id: chemical_id)
     end
   end
+
+  def self.annual_update(old_term, new_term)
+    ChemicalTerm.where(term: old_term).each do |chemical_term|
+      unless ChemicalTerm.where(term: new_term, chemical_id: chemical_term.chemical_id).exists?
+        ChemicalTerm.create(
+          chemical_id: chemical_term.chemical_id,
+          term: new_term,
+          price: chemical_term.price
+        )
+      end
+    end
+  end
 end

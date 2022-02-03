@@ -1,5 +1,5 @@
 import { Modal, Collapse } from "bootstrap";
-
+import Rails from "@rails/ujs";
 window.popupAlert = (message) => {
     document.getElementById("popup_alert_message").innerText = message;
     const popupForm = new Modal(document.getElementById("popup_alert"));
@@ -59,7 +59,7 @@ window.addEventListener("DOMContentLoaded", () => {
             return true;
         }
         showConfirmationDialog(element);
-            return false;
+        return false;
     }
 
     const confirmed = function(element, result) {
@@ -117,8 +117,8 @@ window.addEventListener("DOMContentLoaded", () => {
         openButton.classList.remove("d-none");
         openButton.classList.add("d-block");
     }
-    
-    $("a[data-confirm]").on('click', handleConfirm);
+
+    $("a[data-confirm], input[data-confirm], button[data-confirm]").on('click', handleConfirm);
 });
 
 // for side-bar
