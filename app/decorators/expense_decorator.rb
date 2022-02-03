@@ -23,7 +23,7 @@ class ExpenseDecorator < Draper::Decorator
   end
 
   def work_types
-    model.expense_work_types.includes(:work_type).reject{ |ewt| ewt.rate.zero?}.map{ |ewt| ewt.work_type_name}&.join(",")
+    model.expense_work_types.includes(:work_type).reject{ |ewt| ewt.rate.zero?}.map{ |ewt| ewt.work_type_name}&.to_sentence
   end
 
   def content

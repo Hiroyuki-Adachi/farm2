@@ -24,7 +24,7 @@ class MachineDecorator < Draper::Decorator
       operators << WorkerDecorator.decorate(result.worker).short_name if model.work_results.include?(result)
     end
 
-    return operators.join(',')
+    return operators.to_sentence
   end
 
   def remarks(work)

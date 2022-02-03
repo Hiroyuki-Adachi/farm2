@@ -38,7 +38,7 @@ class ScheduleDecorator < Draper::Decorator
     workers.each do |worker|
       results << worker.home_name
     end
-    return results.join(", ")
+    return results.to_sentence
   end
 
   def work_flag

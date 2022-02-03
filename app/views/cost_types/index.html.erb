@@ -13,7 +13,7 @@
       <tr>
         <td><%= cost_type.name %></td>
         <td><%= link_to '修正', edit_cost_type_path(cost_type), {class: "btn btn-success btn-sm"} %></td>
-        <td><%= cost_type.work_kinds.order(:phonetic).pluck(:name).join(", ") %></td>
+        <td><%= cost_type.work_kinds.order(:phonetic).pluck(:name).to_sentence %></td>
       </tr>
     <% end %>
   </tbody>
