@@ -27,6 +27,9 @@
     <%= link_to '新規登録', new_chemical_path, class: "btn btn-success" %>
   </div>
   <div class="btn-group mr-2">
+    <%= button_to '昨年度取込', chemicals_annuals_path, method: :post, data: {confirm: "実行してもよろしいですか？"}, class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>

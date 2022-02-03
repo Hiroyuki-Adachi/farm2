@@ -115,6 +115,7 @@ Rails.application.routes.draw do
         get :load
       end
     end
+    resources :annuals, only: [:create]
   end
   resources :sections, except: [:show]
   resources :statistics, only: [:index] do

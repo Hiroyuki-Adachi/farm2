@@ -58,7 +58,10 @@ WHERE
         chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id
 ORDER
   }
-  scope :list, ->{includes(:chemical_type).order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))}
+  scope :list, ->{
+    includes(:chemical_type)
+    .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
+  }
 
   scope :by_term, ->(term) {
     joins(:chemical_type)
