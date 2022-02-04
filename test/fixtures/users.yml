@@ -80,3 +80,21 @@ user31:
   permission_id: 0
   term: 2015
   calendar_term: 2014
+
+user2017:
+  worker_id: 32
+  login_name: '2017'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 9
+  term: 2017
+  calendar_term: 2014
+
+user2017c:
+  worker_id: 33
+  login_name: '2017c'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 2
+  term: 2017
+  calendar_term: 2014
