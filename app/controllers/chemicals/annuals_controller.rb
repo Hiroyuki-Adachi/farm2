@@ -1,5 +1,6 @@
 class Chemicals::AnnualsController < ApplicationController
   include PermitManager
+  include PermitLastTerm
 
   def create
     ActiveRecord::Base.transaction do
