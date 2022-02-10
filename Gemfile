@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0'
+gem 'rails', '7.0.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -17,7 +17,7 @@ gem "mini_racer"
 
 gem 'delayed_job_active_record', :git => 'git@github.com:collectiveidea/delayed_job_active_record.git'
 
-gem 'webpacker', '~> 5.2'
+gem 'webpacker'
 
 gem 'daemons'
 
