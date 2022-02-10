@@ -98,9 +98,9 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    annotate (2.6.5)
-      activerecord (>= 2.3.0)
-      rake (>= 0.8.7)
+    annotate (3.2.0)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
     ast (2.4.2)
     bcrypt (3.1.16)
     bindex (0.8.1)
@@ -127,7 +127,7 @@ GEM
       activesupport (>= 5.0)
     i18n (1.9.1)
       concurrent-ruby (~> 1.0)
-    i18n-js (3.9.0)
+    i18n-js (3.9.1)
       i18n (>= 0.6.6)
     icalendar (2.7.1)
       ice_cube (~> 0.16)
@@ -228,7 +228,7 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
-    rb-fsevent (0.11.0)
+    rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.2.0)
@@ -307,7 +307,7 @@ DEPENDENCIES
   paranoia
   pg
   puma
-  rails (~> 7.0)
+  rails (= 7.0.1)
   rails-controller-testing
   rqrcode
   rubocop
@@ -316,7 +316,7 @@ DEPENDENCIES
   tzinfo-data
   wareki
   web-console (~> 4.0)
-  webpacker (~> 5.2)
+  webpacker
 
 BUNDLED WITH
    2.3.4
