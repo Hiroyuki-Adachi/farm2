@@ -3,12 +3,12 @@
 #
 # Table name: plan_seedlings
 #
-#  id                :integer          not null, primary key
-#  plan_work_type_id :integer          not null
-#  home_id           :integer
-#  quantity          :decimal(4, )     default("0.0"), not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id                          :bigint           not null, primary key
+#  quantity(枚数)              :decimal(4, )     default(0), not null
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  home_id(世帯)               :integer
+#  plan_work_type_id(作業計画) :integer          not null
 #
 # Indexes
 #

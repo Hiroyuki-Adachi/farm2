@@ -2,17 +2,17 @@
 #
 # Table name: work_chemicals
 #
-#  id                :integer          not null, primary key
-#  work_id           :integer          not null
-#  chemical_id       :integer          not null
-#  quantity          :decimal(5, 1)    default("0"), not null
-#  created_at        :datetime
-#  updated_at        :datetime
-#  chemical_group_no :integer          default("1"), not null
-#  area_flag         :boolean          default("false"), not null
-#  magnification     :decimal(5, 1)
-#  remarks           :text             default(""), not null
-#  dilution_id       :integer          default("0"), not null
+#  id(薬剤使用データ)                  :integer          not null, primary key
+#  area_flag(10a当たり入力)            :boolean          default(FALSE), not null
+#  chemical_group_no(薬剤グループ番号) :integer          default(1), not null
+#  magnification(水溶液(リットル))     :decimal(5, 1)
+#  quantity(使用量)                    :decimal(5, 1)    default(0.0), not null
+#  remarks(備考)                       :text             default(""), not null
+#  created_at                          :datetime
+#  updated_at                          :datetime
+#  chemical_id(薬剤)                   :integer          not null
+#  dilution_id(希釈)                   :integer          default(0), not null
+#  work_id(作業)                       :integer          not null
 #
 # Indexes
 #

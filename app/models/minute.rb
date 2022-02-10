@@ -2,12 +2,12 @@
 #
 # Table name: minutes
 #
-#  id          :integer          not null, primary key
-#  schedule_id :integer          default("0"), not null
-#  pdf_name    :string(50)
-#  pdf         :binary
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id                      :bigint           not null, primary key
+#  pdf(PDF)                :binary
+#  pdf_name(PDFファイル名) :string(50)
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  schedule_id(作業予定)   :integer          default(0), not null
 #
 # Indexes
 #

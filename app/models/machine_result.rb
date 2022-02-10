@@ -2,18 +2,18 @@
 #
 # Table name: machine_results
 #
-#  id              :integer          not null, primary key
-#  machine_id      :integer
-#  work_result_id  :integer
-#  display_order   :integer          default("1"), not null
-#  hours           :decimal(3, 1)    default("0"), not null
-#  fixed_quantity  :decimal(6, 2)
-#  fixed_adjust_id :integer
-#  fixed_price     :decimal(5, )
-#  fixed_amount    :decimal(7, )
-#  created_at      :datetime
-#  updated_at      :datetime
-#  fuel_usage      :decimal(5, 2)    default("0"), not null
+#  id(機械稼動データ)             :integer          not null, primary key
+#  display_order(表示順)          :integer          default(1), not null
+#  fixed_amount(確定使用料)       :decimal(7, )
+#  fixed_price(確定稼動単価)      :decimal(5, )
+#  fixed_quantity(確定稼動量)     :decimal(6, 2)
+#  fuel_usage(燃料使用量)         :decimal(5, 2)    default(0.0), not null
+#  hours(稼動時間)                :decimal(3, 1)    default(0.0), not null
+#  created_at                     :datetime
+#  updated_at                     :datetime
+#  fixed_adjust_id(確定稼動単位)  :integer
+#  machine_id(機械)               :integer
+#  work_result_id(作業結果データ) :integer
 #
 # Indexes
 #

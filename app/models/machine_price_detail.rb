@@ -2,14 +2,14 @@
 #
 # Table name: machine_price_details
 #
-#  id                      :integer          not null, primary key
-#  machine_price_header_id :integer          not null
-#  lease_id                :integer          not null
-#  work_kind_id            :integer          default("0"), not null
-#  adjust_id               :integer
-#  price                   :decimal(5, )     default("0"), not null
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
+#  id(機械利用単価マスタ(明細))        :integer          not null, primary key
+#  price(単価)                         :decimal(5, )     default(0), not null
+#  created_at                          :datetime         not null
+#  updated_at                          :datetime         not null
+#  adjust_id(単位)                     :integer
+#  lease_id(リース)                    :integer          not null
+#  machine_price_header_id(単価ヘッダ) :integer          not null
+#  work_kind_id(作業種別)              :integer          default(0), not null
 #
 # Indexes
 #

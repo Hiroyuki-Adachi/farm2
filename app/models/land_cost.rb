@@ -2,12 +2,12 @@
 #
 # Table name: land_costs
 #
-#  id           :integer          not null, primary key
-#  land_id      :integer          not null
-#  work_type_id :integer          not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  activated_on :date             default("1900-01-01"), not null
+#  id(土地原価)           :integer          not null, primary key
+#  activated_on(有効日)   :date             default(Mon, 01 Jan 1900), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  land_id(土地)          :integer          not null
+#  work_type_id(作業分類) :integer          not null
 #
 # Indexes
 #

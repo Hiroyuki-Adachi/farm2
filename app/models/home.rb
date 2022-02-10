@@ -2,29 +2,29 @@
 #
 # Table name: homes
 #
-#  id                  :integer          not null, primary key
-#  phonetic            :string(15)
-#  name                :string(10)
-#  worker_id           :integer
-#  zip_code            :string(7)
-#  address1            :string(50)
-#  address2            :string(50)
-#  telephone           :string(15)
-#  fax                 :string(15)
-#  section_id          :integer
-#  display_order       :integer
-#  member_flag         :boolean          default("true"), not null
-#  worker_payment_flag :boolean          default("false"), not null
-#  company_flag        :boolean          default("false"), not null
-#  created_at          :datetime
-#  updated_at          :datetime
-#  deleted_at          :datetime
-#  owner_flag          :boolean          default("false"), not null
-#  finance_order       :integer
-#  drying_order        :integer
-#  owned_rice_order    :integer
-#  seedling_order      :integer
-#  location            :point
+#  id(世帯マスタ)                      :integer          not null, primary key
+#  address1(住所1)                     :string(50)
+#  address2(住所2)                     :string(50)
+#  company_flag(営農組合フラグ)        :boolean          default(FALSE), not null
+#  deleted_at                          :datetime
+#  display_order(表示順)               :integer
+#  drying_order(出力順(乾燥調整用))    :integer
+#  fax(FAX番号)                        :string(15)
+#  finance_order(出力順(会計用))       :integer
+#  location(位置)                      :point
+#  member_flag(組合員フラグ)           :boolean          default(TRUE), not null
+#  name(世帯名)                        :string(10)
+#  owned_rice_order(出力順(保有米))    :integer
+#  owner_flag(所有者フラグ)            :boolean          default(FALSE), not null
+#  phonetic(世帯名(よみ))              :string(15)
+#  seedling_order(出力順(育苗用))      :integer
+#  telephone(電話番号)                 :string(15)
+#  worker_payment_flag(個人支払フラグ) :boolean          default(FALSE), not null
+#  zip_code(郵便番号)                  :string(7)
+#  created_at                          :datetime
+#  updated_at                          :datetime
+#  section_id(班／町内)                :integer
+#  worker_id(世帯主(代表者))           :integer
 #
 # Indexes
 #

@@ -2,12 +2,12 @@
 #
 # Table name: work_kind_prices
 #
-#  id           :integer          not null, primary key
-#  term         :integer          not null
-#  work_kind_id :integer          not null
-#  price        :decimal(5, )     default("1000"), not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id(作業単価マスタ)     :integer          not null, primary key
+#  price(単価)            :decimal(5, )     default(1000), not null
+#  term(年度(期))         :integer          not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  work_kind_id(作業種別) :integer          not null
 #
 # Indexes
 #

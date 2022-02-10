@@ -2,20 +2,20 @@
 #
 # Table name: chemical_stocks
 #
-#  id                    :integer          not null, primary key
-#  stock_on              :date             not null
-#  chemical_id           :integer          not null
-#  work_chemical_id      :integer
-#  chemical_inventory_id :integer
-#  name                  :string(40)       default(""), not null
-#  stored                :decimal(5, 1)
-#  shipping              :decimal(5, 1)
-#  using                 :decimal(5, 1)
-#  inventory             :decimal(7, 1)
-#  stock                 :decimal(7, 1)    default("0.0"), not null
-#  adjust                :decimal(5, 1)    default("0.0"), not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
+#  id                              :bigint           not null, primary key
+#  adjust(調整量)                  :decimal(5, 1)    default(0.0), not null
+#  inventory(棚卸量)               :decimal(7, 1)
+#  name(在庫名称)                  :string(40)       default(""), not null
+#  shipping(出庫量)                :decimal(5, 1)
+#  stock(在庫量)                   :decimal(7, 1)    default(0.0), not null
+#  stock_on(在庫日)                :date             not null
+#  stored(入庫量)                  :decimal(5, 1)
+#  using(使用量)                   :decimal(5, 1)
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  chemical_id(薬剤)               :integer          not null
+#  chemical_inventory_id(薬剤棚卸) :integer
+#  work_chemical_id(薬剤使用)      :integer
 #
 
 # This model initially had no columns defined. If you add columns to the

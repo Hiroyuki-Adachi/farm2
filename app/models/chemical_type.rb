@@ -2,11 +2,11 @@
 #
 # Table name: chemical_types
 #
-#  id            :integer          not null, primary key
-#  name          :string(20)       not null
-#  display_order :integer          default("1"), not null
-#  created_at    :datetime
-#  updated_at    :datetime
+#  id(薬剤種別マスタ)    :integer          not null, primary key
+#  display_order(表示順) :integer          default(1), not null
+#  name(薬剤種別名称)    :string(20)       not null
+#  created_at            :datetime
+#  updated_at            :datetime
 #
 
 class ChemicalType < ApplicationRecord

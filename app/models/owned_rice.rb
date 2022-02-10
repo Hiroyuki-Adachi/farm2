@@ -2,12 +2,12 @@
 #
 # Table name: owned_rices
 #
-#  id                  :integer          not null, primary key
-#  home_id             :integer          default("0"), not null
-#  owned_rice_price_id :integer          default("0"), not null
-#  owned_count         :decimal(3, )     default("0"), not null
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
+#  id                              :bigint           not null, primary key
+#  owned_count(保有米数)           :decimal(3, )     default(0), not null
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  home_id(購入世帯)               :integer          default(0), not null
+#  owned_rice_price_id(保有米単価) :integer          default(0), not null
 #
 # Indexes
 #

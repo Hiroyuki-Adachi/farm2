@@ -2,13 +2,13 @@
 #
 # Table name: land_fees
 #
-#  id          :integer          not null, primary key
-#  term        :integer          not null
-#  land_id     :integer          not null
-#  manage_fee  :decimal(7, 1)    default("0.0"), not null
-#  peasant_fee :decimal(7, 1)    default("0.0"), not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id                  :bigint           not null, primary key
+#  manage_fee(管理料)  :decimal(7, 1)    default(0.0), not null
+#  peasant_fee(小作料) :decimal(7, 1)    default(0.0), not null
+#  term(年度(期))      :integer          not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  land_id(土地)       :integer          not null
 #
 # Indexes
 #

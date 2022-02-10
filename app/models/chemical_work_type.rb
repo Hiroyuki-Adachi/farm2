@@ -2,12 +2,12 @@
 #
 # Table name: chemical_work_types
 #
-#  id               :integer          not null, primary key
-#  chemical_term_id :integer
-#  work_type_id     :integer
-#  quantity         :decimal(5, 1)    default("0"), not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id                         :integer          not null, primary key
+#  quantity(使用量)           :decimal(5, 1)    default(0.0), not null
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#  chemical_term_id(薬剤利用) :integer
+#  work_type_id(作業分類)     :integer
 #
 # Indexes
 #

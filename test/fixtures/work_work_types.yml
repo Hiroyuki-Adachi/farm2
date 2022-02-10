@@ -2,10 +2,10 @@
 #
 # Table name: work_work_types
 #
-#  work_id      :integer          not null, primary key
-#  work_type_id :integer          not null, primary key
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  work_id(作業)          :integer          not null, primary key
+#  work_type_id(作業分類) :integer          not null, primary key
 #
 # Indexes
 #

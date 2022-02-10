@@ -2,10 +2,10 @@
 #
 # Table name: chemical_terms
 #
-#  chemical_id :integer          not null
-#  term        :integer          not null
-#  id          :integer          not null, primary key
-#  price       :decimal(6, )     default("0"), not null
+#  id                :integer          not null, primary key
+#  price(価格)       :decimal(6, )     default(0), not null
+#  term(年度(期))    :integer          not null
+#  chemical_id(薬剤) :integer          not null
 #
 # Indexes
 #

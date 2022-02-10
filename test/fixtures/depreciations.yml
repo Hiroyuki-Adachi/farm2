@@ -2,12 +2,12 @@
 #
 # Table name: depreciations
 #
-#  id         :integer          not null, primary key
-#  term       :integer          not null
-#  machine_id :integer
-#  cost       :decimal(9, )     default("0"), not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id(減価償却)     :integer          not null, primary key
+#  cost(減価償却費) :decimal(9, )     default(0), not null
+#  term(年度(期))   :integer          not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  machine_id(機械) :integer
 #
 # Indexes
 #

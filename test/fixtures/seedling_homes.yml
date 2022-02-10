@@ -2,13 +2,13 @@
 #
 # Table name: seedling_homes
 #
-#  id          :integer          not null, primary key
-#  seedling_id :integer
-#  home_id     :integer
-#  quantity    :decimal(4, )     default("0"), not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  sowed_on    :date
+#  id(育苗担当世帯)  :integer          not null, primary key
+#  quantity(苗箱数)  :decimal(4, )     default(0), not null
+#  sowed_on(播種日)  :date
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  home_id(世帯)     :integer
+#  seedling_id(育苗) :integer
 #
 # Indexes
 #

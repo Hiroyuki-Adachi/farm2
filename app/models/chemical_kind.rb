@@ -2,9 +2,9 @@
 #
 # Table name: chemical_kinds
 #
-#  id               :integer          not null, primary key
-#  chemical_type_id :integer          not null
-#  work_kind_id     :integer          not null
+#  id(作業種別薬剤種別利用マスタ) :integer          not null, primary key
+#  chemical_type_id(薬剤種別)     :integer          not null
+#  work_kind_id(作業種別)         :integer          not null
 #
 # Indexes
 #

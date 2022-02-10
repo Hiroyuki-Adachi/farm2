@@ -2,11 +2,11 @@
 #
 # Table name: depreciation_types
 #
-#  id              :integer          not null, primary key
-#  depreciation_id :integer
-#  work_type_id    :integer          not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id(減価償却分類)          :integer          not null, primary key
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  depreciation_id(減価償却) :integer
+#  work_type_id(作業分類)    :integer          not null
 #
 # Indexes
 #

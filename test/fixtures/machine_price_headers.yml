@@ -2,12 +2,12 @@
 #
 # Table name: machine_price_headers
 #
-#  id              :integer          not null, primary key
-#  validated_at    :date             not null
-#  machine_id      :integer          default("0"), not null
-#  machine_type_id :integer          default("0"), not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id(機械利用単価マスタ(ヘッダ)) :integer          not null, primary key
+#  validated_at(起点日)           :date             not null
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  machine_id(機械)               :integer          default(0), not null
+#  machine_type_id(機械種別)      :integer          default(0), not null
 #
 # Indexes
 #

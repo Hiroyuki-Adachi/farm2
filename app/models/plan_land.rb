@@ -2,11 +2,11 @@
 #
 # Table name: plan_lands
 #
-#  land_id      :integer          not null
-#  work_type_id :integer          not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  user_id      :integer          default("0"), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  land_id(土地)          :integer          not null
+#  user_id(利用者)        :integer          default(0), not null
+#  work_type_id(作業分類) :integer          not null
 #
 # Indexes
 #

@@ -2,13 +2,13 @@
 #
 # Table name: drying_lands
 #
-#  id            :integer          not null, primary key
-#  drying_id     :integer          default("0"), not null
-#  land_id       :integer
-#  display_order :integer          default("0"), not null
-#  percentage    :decimal(4, 1)    default("100"), not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id                    :bigint           not null, primary key
+#  display_order(表示順) :integer          default(0), not null
+#  percentage(割合)      :decimal(4, 1)    default(100.0), not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  drying_id(乾燥調整)   :integer          default(0), not null
+#  land_id(作業地)       :integer
 #
 # Indexes
 #
