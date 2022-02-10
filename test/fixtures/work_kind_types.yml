@@ -2,9 +2,9 @@
 #
 # Table name: work_kind_types
 #
-#  id           :integer          not null, primary key
-#  work_kind_id :integer
-#  work_type_id :integer
+#  id(作業種別分類対応マスタ) :integer          not null, primary key
+#  work_kind_id(作業種別)     :integer
+#  work_type_id(作業分類)     :integer
 #
 # Indexes
 #

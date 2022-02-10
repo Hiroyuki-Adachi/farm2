@@ -2,18 +2,18 @@
 #
 # Table name: work_types
 #
-#  id            :integer          not null, primary key
-#  genre         :integer          not null
-#  name          :string(10)       not null
-#  category_flag :boolean          default("false")
-#  display_order :integer          default("0"), not null
-#  deleted_at    :datetime
-#  bg_color      :string(8)
-#  land_flag     :boolean          default("true"), not null
-#  icon_name     :string(40)
-#  icon          :binary
-#  cost_flag     :boolean          default("false"), not null
-#  work_flag     :boolean          default("true"), not null
+#  id(作業分類マスタ)              :integer          not null, primary key
+#  bg_color(背景色)                :string(8)
+#  category_flag(カテゴリーフラグ) :boolean          default(FALSE)
+#  cost_flag(原価フラグ)           :boolean          default(FALSE), not null
+#  deleted_at                      :datetime
+#  display_order(表示順)           :integer          default(0), not null
+#  genre(作業ジャンル)             :integer          not null
+#  icon(アイコン)                  :binary
+#  icon_name(アイコン名)           :string(40)
+#  land_flag(土地利用)             :boolean          default(TRUE), not null
+#  name(作業分類名称)              :string(10)       not null
+#  work_flag(日報フラグ)           :boolean          default(TRUE), not null
 #
 # Indexes
 #

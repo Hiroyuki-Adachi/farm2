@@ -2,13 +2,13 @@
 #
 # Table name: whole_crop_lands
 #
-#  id                 :integer          not null, primary key
-#  work_whole_crop_id :integer          default("0"), not null
-#  work_land_id       :integer          default("0"), not null
-#  display_order      :integer          default("0"), not null
-#  rolls              :decimal(3, )     default("0"), not null
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  id                          :bigint           not null, primary key
+#  display_order(番号)         :integer          default(0), not null
+#  rolls(ロール数)             :decimal(3, )     default(0), not null
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  work_land_id(作業地)        :integer          default(0), not null
+#  work_whole_crop_id(WCS作業) :integer          default(0), not null
 #
 # Indexes
 #

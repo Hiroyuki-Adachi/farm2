@@ -2,13 +2,13 @@
 #
 # Table name: schedule_workers
 #
-#  id            :integer          not null, primary key
-#  schedule_id   :integer
-#  worker_id     :integer
-#  display_order :integer          default("0"), not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  uuid          :string(36)
+#  id(作業予定作業者)       :integer          not null, primary key
+#  display_order(表示順)    :integer          default(0), not null
+#  uuid(UUID(カレンダー用)) :string(36)
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  schedule_id(作業予定)    :integer
+#  worker_id(作業者)        :integer
 #
 # Indexes
 #

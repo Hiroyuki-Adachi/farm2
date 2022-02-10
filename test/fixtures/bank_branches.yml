@@ -2,17 +2,17 @@
 #
 # Table name: bank_branches
 #
-#  bank_code  :string(4)        not null, primary key
-#  code       :string(3)        not null, primary key
-#  name       :string(40)       not null
-#  phonetic   :string(40)       not null
-#  zip_code   :string(7)
-#  address1   :string(50)
-#  address2   :string(50)
-#  telephone  :string(15)
-#  fax        :string(15)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  address1(住所1)                :string(50)
+#  address2(住所2)                :string(50)
+#  bank_code(金融機関コード)      :string(4)        not null, primary key
+#  code(支店コード)               :string(3)        not null, primary key
+#  fax(FAX番号)                   :string(15)
+#  name(支店名称)                 :string(40)       not null
+#  phonetic(支店名称(ﾌﾘｶﾞﾅ)) :string(40)       not null
+#  telephone(電話番号)            :string(15)
+#  zip_code(郵便番号)             :string(7)
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
 #
 
 branch1_1:

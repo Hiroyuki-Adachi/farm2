@@ -2,13 +2,13 @@
 #
 # Table name: seedlings
 #
-#  id            :integer          not null, primary key
-#  term          :integer          not null
-#  work_type_id  :integer
-#  soil_quantity :decimal(4, )     default("0"), not null
-#  seed_cost     :decimal(6, )     default("0"), not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id(育苗)                :integer          not null, primary key
+#  seed_cost(種子原価)     :decimal(6, )     default(0), not null
+#  soil_quantity(育苗土数) :decimal(4, )     default(0), not null
+#  term(年度(期))          :integer          not null
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  work_type_id(作業分類)  :integer
 #
 # Indexes
 #

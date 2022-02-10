@@ -2,11 +2,11 @@
 #
 # Table name: work_verifications
 #
-#  id         :integer          not null, primary key
-#  work_id    :integer
-#  worker_id  :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id(日報検証)      :integer          not null, primary key
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  work_id(作業)     :integer
+#  worker_id(作業者) :integer
 #
 # Indexes
 #

@@ -2,22 +2,22 @@
 #
 # Table name: works
 #
-#  id           :integer          not null, primary key
-#  term         :integer          not null
-#  worked_at    :date             not null
-#  weather_id   :integer
-#  work_type_id :integer
-#  name         :string(40)       not null
-#  remarks      :text
-#  start_at     :datetime         not null
-#  end_at       :datetime         not null
-#  fixed_at     :date
-#  work_kind_id :integer          default("0"), not null
-#  created_at   :datetime
-#  updated_at   :datetime
-#  created_by   :integer
-#  printed_at   :datetime
-#  printed_by   :integer
+#  id(作業データ)         :integer          not null, primary key
+#  created_by(作成者)     :integer
+#  end_at(終了時刻)       :datetime         not null
+#  fixed_at(確定日)       :date
+#  name(作業名称)         :string(40)       not null
+#  printed_at(印刷日時)   :datetime
+#  printed_by(印刷者)     :integer
+#  remarks(備考)          :text
+#  start_at(開始時刻)     :datetime         not null
+#  term(年度(期))         :integer          not null
+#  worked_at(作業日)      :date             not null
+#  created_at             :datetime
+#  updated_at             :datetime
+#  weather_id(天気)       :integer
+#  work_kind_id(作業種別) :integer          default(0), not null
+#  work_type_id(作業分類) :integer
 #
 
 class Work < ApplicationRecord

@@ -2,13 +2,13 @@
 #
 # Table name: sections
 #
-#  id            :integer          not null, primary key
-#  name          :string(40)       not null
-#  display_order :integer          default("1"), not null
-#  work_flag     :boolean          default("true"), not null
-#  created_at    :datetime
-#  updated_at    :datetime
-#  deleted_at    :datetime
+#  id(班／町内マスタ)      :integer          not null, primary key
+#  deleted_at              :datetime
+#  display_order(表示順)   :integer          default(1), not null
+#  name(班名称)            :string(40)       not null
+#  work_flag(作業班フラグ) :boolean          default(TRUE), not null
+#  created_at              :datetime
+#  updated_at              :datetime
 #
 # Indexes
 #
