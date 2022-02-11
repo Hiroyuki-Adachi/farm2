@@ -117,7 +117,22 @@ window.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll("a.nav-link").forEach((element) => {
         element.addEventListener("click", () => {
-            location.href = element.dataset.url;
+            if (sessionStorage.getItem("my_side") == "hide") {
+                const my_menu = document.getElementById("menu_dropdown");
+                my_menu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
+                my_menu.querySelector("span").remove();
+                my_menu.dataset.id = element.id;
+                my_menu.style.display = "block";
+
+                let left = 0;
+                do {
+                    left += element.offsetLeft || 0;
+                    element = element.offsetParent;
+                } while(element);
+                my_menu.style.left = left + "px";
+            } else {
+                location.href = element.dataset.url;
+            }
         });
     });
 
@@ -127,6 +142,13 @@ window.addEventListener("DOMContentLoaded", () => {
         });
         element.parentElement.style.color = element.checked ? "red" : "black";
     });
+});
+
+window.addEventListener("click", (event) => {
+    const my_menu = document.getElementById("menu_dropdown");
+    if (!event.target.matches('.nav-link')) {
+        my_menu.style.display = "none";
+    }
 });
 
 function activeBar(element) {
