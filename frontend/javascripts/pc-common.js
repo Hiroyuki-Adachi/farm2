@@ -35,18 +35,18 @@ window.addEventListener("DOMContentLoaded", () => {
     // for sidebar
     const controller = document.getElementById("current_controller").value;
     const action = document.getElementById("current_action").value;
-    if(controller == "menu" && action == "index") {
-        return;
-    }
-    $("#my_sidebar").find("a[data-controller]").each(function(_i, e) {
-        if(e.dataset.controller == controller) {
-            if($("a[data-controller='" + controller + "']").length <= 1) {
-                activeBar(e);
-            } else if(JSON.parse(e.dataset.actions).indexOf(action) >= 0) {
-                activeBar(e);
+
+    if(controller != "menu" || action != "index") {
+        document.getElementById("my_sidebar").querySelectorAll("a[data-controller]").forEach((element) => {
+            if(element.dataset.controller == controller) {
+                if(document.getElementById("my_sidebar").querySelectorAll(`a[data-controller="${controller}"]`).length <= 1) {
+                    activeBar(element);
+                } else if(JSON.parse(element.dataset.actions).indexOf(action) >= 0) {
+                    activeBar(element);
+                }
             }
-        }
-    });
+        });
+    }
 
     const handleConfirm = function(element) {
         if (!allowAction(this)) {
@@ -119,12 +119,17 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     $("a[data-confirm], input[data-confirm], button[data-confirm]").on('click', handleConfirm);
+
+    document.querySelectorAll("a.nav-link").forEach((element) => {
+        element.addEventListener("click", () => {
+            location.href = element.dataset.url;
+        });
+    });
 });
 
-// for side-bar
-function activeBar(e) {
-    var navdiv = $(e).parent("div");
-    e.style.backgroundColor = "White";
-    navdiv.show();
-    $("#" + navdiv.attr("aria-labelledby")).addClass("active");
+function activeBar(element) {
+    const navdiv = element.closest("div");
+    element.style.backgroundColor = "White";
+    navdiv.style.display = "block";
+    document.getElementById(navdiv.getAttribute("aria-labelledby")).classList.add("active");
 }
