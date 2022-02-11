@@ -48,12 +48,12 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const handleConfirm = function(element) {
-        if (!allowAction(this)) {
-            Rails.stopEverything(element);
+    const handleConfirm = function(event) {
+        if (!allowAction(event.target)) {
+            Rails.stopEverything(event);
         }
     }
-	
+
     const allowAction = function(element) {
         if (element.getAttribute('data-confirm') === null) {
             return true;
@@ -118,7 +118,11 @@ window.addEventListener("DOMContentLoaded", () => {
         openButton.classList.add("d-block");
     }
 
-    $("a[data-confirm], input[data-confirm], button[data-confirm]").on('click', handleConfirm);
+    document.querySelectorAll("a[data-confirm], input[data-confirm], button[data-confirm]").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            handleConfirm(event);
+        })
+    })
 
     document.querySelectorAll("a.nav-link").forEach((element) => {
         element.addEventListener("click", () => {
