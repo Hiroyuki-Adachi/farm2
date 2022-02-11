@@ -20,16 +20,7 @@ window.popupConfirm = (message, callback) => {
     popupForm.show();
 }
 
-$(document).on("change", "div.form-check-inline input[type='checkbox']", function(e) {
-    if($(this).prop('checked')) {
-        $(this).parent().css("color", "red");
-    } else {
-        $(this).parent().css("color", "black");
-    }
-});
-
 window.addEventListener("DOMContentLoaded", () => {
-    $("div.form-check-inline input[type='checkbox']").trigger("change");
     const mySideCollapse = new Collapse(document.getElementById("my_side_wrapper"), {toggle: false});
 
     // for sidebar
@@ -128,6 +119,13 @@ window.addEventListener("DOMContentLoaded", () => {
         element.addEventListener("click", () => {
             location.href = element.dataset.url;
         });
+    });
+
+    document.querySelectorAll("div.form-check-inline input[type='checkbox']").forEach((element) => {
+        element.addEventListener("change", () => {
+            element.parentElement.style.color = element.checked ? "red" : "black";
+        });
+        element.parentElement.style.color = element.checked ? "red" : "black";
     });
 });
 
