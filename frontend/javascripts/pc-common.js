@@ -146,7 +146,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("click", (event) => {
     const my_menu = document.getElementById("menu_dropdown");
-    if (!event.target.matches('.nav-link')) {
+    if (!event.target.matches('.nav-link') && (my_menu != null)) {
         my_menu.style.display = "none";
     }
 });
