@@ -11,8 +11,4 @@ class Works::WorkersController < WorksController
     @work.regist_results(params[:results])
     redirect_to new_work_health_path(@work)
   end
-
-  def menu_name
-    return :works
-  end
 end
