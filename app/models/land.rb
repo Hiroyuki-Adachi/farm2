@@ -174,7 +174,7 @@ class Land < ApplicationRecord
 
   def self.totals(work_kinds, sys)
     sql = []
-    sql << "SELECT L.place, MAX(L.area) AS area, MAX(HO.name) AS _owner_name, MAX(WT.name) AS work_type_name"
+    sql << "SELECT L.place, MAX(L.area) AS area, MAX(HO.name) AS _owner_name, COALESCE(MAX(WT.name), '') AS work_type_name"
     work_kinds.each_with_index do |work_kind, index|
       sql << ", MIN(W#{index}.worked_at) AS w#{index}_date"
     end
@@ -193,7 +193,7 @@ class Land < ApplicationRecord
     sql << "        AND activated_on <= '#{sys.start_date}' "
     sql << "    HAVING MAX(activated_on) = LC.activated_on"
     sql << ") "
-    sql << "INNER JOIN work_types WT"
+    sql << "LEFT OUTER JOIN work_types WT"
     sql << "ON LC.work_type_id = WT.id"
     work_kinds.each_with_index do |work_kind, index|
       sql << "LEFT OUTER JOIN works W#{index} ON WL.work_id = W#{index}.id AND W#{index}.work_kind_id = #{work_kind} AND W#{index}.term = #{sys.term}"
