@@ -11,7 +11,7 @@
   </thead>
   <tbody>
     <% @works.each do |work| %>
-      <tr style="cursor:pointer;" data-url="<%= work_path(work) %>">
+      <tr style="cursor:pointer;" data-url="<%= work_path(work) %>" onclick="showWork(this)">
         <td><%= work.worked_at %></td>
         <td><%= work.work_time %></td>
         <td><%= work.genre_name %></td>
@@ -37,10 +37,3 @@
   </tfoot>
 </table>
 <%= paginate @works, remote: true %>
-<script type="text/javascript">
-$(function () {
-  $("#list table tbody tr").click(function() {
-    location.href = $(this).data("url");
-  });
-});
-</script>

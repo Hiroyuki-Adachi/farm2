@@ -55,11 +55,4 @@
 <%= form_with url: work_type_select_works_path, method: :get, id: :work_type_select_form, local: false do |f| %>
 <%= f.hidden_field :work_type_id, id: :select_work_type_id %>
 <% end %>
-<script type="text/javascript">
-window.addEventListener("load", () => {
-    document.getElementById("work_type_id").addEventListener("change", (event) => {
-        document.getElementById("select_work_type_id").value = event.target.value;
-        Rails.fire(document.getElementById("work_type_select_form"), "submit");
-    });
-});
-</script>
+<%= javascript_pack_tag 'work-index' %>
