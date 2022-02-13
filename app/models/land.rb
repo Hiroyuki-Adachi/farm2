@@ -171,4 +171,44 @@ class Land < ApplicationRecord
   def expiry?(date = Date.today)
     self.start_on <= date && date <= self.end_on
   end
+
+  def self.totals(work_kinds, sys)
+    sql = []
+    sql << "SELECT L.place, MAX(L.area) AS area, MAX(HO.name) AS _owner_name, MAX(WT.name) AS work_type_name"
+    work_kinds.each_with_index do |work_kind, index|
+      sql << ", MIN(W#{index}.worked_at) AS w#{index}_date"
+    end
+    sql << " FROM lands L"
+    sql << "INNER JOIN work_lands WL ON L.id = WL.land_id"
+    sql << "LEFT OUTER JOIN homes HO ON L.owner_id = HO.id"
+    sql << "LEFT OUTER JOIN land_costs LC "
+    sql << "ON LC.land_id = L.id "
+    sql << "AND EXISTS ( "
+    sql << "    SELECT"
+    sql << "       MAX(activated_on) "
+    sql << "    FROM"
+    sql << "        land_costs LC2 "
+    sql << "    WHERE"
+    sql << "        LC2.land_id = L.id "
+    sql << "        AND activated_on <= '#{sys.start_date}' "
+    sql << "    HAVING MAX(activated_on) = LC.activated_on"
+    sql << ") "
+    sql << "INNER JOIN work_types WT"
+    sql << "ON LC.work_type_id = WT.id"
+    work_kinds.each_with_index do |work_kind, index|
+      sql << "LEFT OUTER JOIN works W#{index} ON WL.work_id = W#{index}.id AND W#{index}.work_kind_id = #{work_kind} AND W#{index}.term = #{sys.term}"
+    end
+    sql << "WHERE L.start_on <= '#{sys.end_date}' AND L.end_on >= '#{sys.start_date}'"
+    sql << "GROUP BY L.place "
+    sql << "HAVING"
+    having = []
+    work_kinds.each_with_index do |work_kind, index|
+      having << "(MIN(W#{index}.worked_at) IS NOT NULL)"
+    end
+    sql << having.join(" AND ")
+    sql << "ORDER BY"
+    sql << "MAX(HO.display_order), L.place"
+
+    return Land.find_by_sql(sql.join("\n"))
+  end
 end
