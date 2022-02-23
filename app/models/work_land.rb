@@ -109,7 +109,7 @@ class WorkLand < ApplicationRecord
       next if denom.zero?
       results.push({
         chemical: work_chemical.chemical,
-        quantity: work_chemical.quantity * numer / denom / same_areas * 10 * work_chemical.chemical.base_base_quantity,
+        quantity: work_chemical.quantity * numer / denom / same_areas * 10 * work_chemical.chemical.base_base_quantity.to_f,
         standard: chemical_work_type.quantity
       })
     end

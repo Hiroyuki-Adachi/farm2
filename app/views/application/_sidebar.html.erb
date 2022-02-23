@@ -32,7 +32,7 @@
   <div aria-labelledby="navbarTotal" style="display:none;">
     <span class="h5">集計処理</span>
     <% if current_user.checkable? %>
-      <%= link_to '統計照会', statistics_path, {class: "dropdown-item", data: {controller: :statistics}} %>
+      <!-- <%= link_to '統計照会', statistics_path, {class: "dropdown-item", data: {controller: :statistics}} %> -->
       <%= link_to '土地カルテ', lands_cards_path, {class: "dropdown-item", data: {controller: :cards}} %>
       <%= link_to '土地集計', lands_totals_path, {class: "dropdown-item", data: {controller: :totals}} %>
       <%= link_to 'ブロッコリー月報', broccoli_reports_path, {class: "dropdown-item", data: {controller: "broccoli_reports"}} %>
