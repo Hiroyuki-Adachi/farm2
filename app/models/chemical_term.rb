@@ -38,7 +38,7 @@ SQL
 
   def self.regist_price(params)
     params.each do |param|
-      ChemicalTerm.find(param[:id]).update(price: param[:price])
+      ChemicalTerm.find(param[:id]).update(price: param[:price] || 0)
     end
   end
 
