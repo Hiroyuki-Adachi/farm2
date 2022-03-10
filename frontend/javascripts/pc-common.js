@@ -115,7 +115,7 @@ window.addEventListener("DOMContentLoaded", () => {
         })
     })
 
-    document.querySelectorAll("a.nav-link").forEach((element) => {
+    document.querySelectorAll("#navbarFarm2 a.nav-link").forEach((element) => {
         element.addEventListener("click", () => {
             if (sessionStorage.getItem("my_side") == "hide") {
                 const my_menu = document.getElementById("menu_dropdown");

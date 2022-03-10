@@ -1,6 +1,5 @@
 document.getElementById("tab").innerHTML = "<%= escape_javascript(render(partial: "tab3")) %>";
-const ctx = document.getElementById("chart").getContext('2d');
-const chart = new Chart(ctx, {
+new Chart(document.getElementById("chart").getContext('2d'), {
     type: 'bar',
     data: {
       labels: <%= @total_all.map {|ta| ta[0] }.to_json.html_safe %>,
