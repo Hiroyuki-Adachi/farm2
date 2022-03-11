@@ -5,13 +5,13 @@ const colors = ['rgba(99, 200, 132, 1.0)', 'rgba(99, 132, 200, 1.0)', 'rgba(200,
 
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <%= link_to "全作業時間", tab1_statistics_path, {remote: true, data: {"bs-toggle": "tab"}, class: "nav-link"} %>
+    <%= link_to "全作業時間", tab1_statistics_path, {data: {"bs-toggle": "tab"}, remote: true, class: "nav-link"} %>
   </li>
   <li class="nav-item">
-    <%= link_to "作業種別別時間", tab2_statistics_path, {remote: true, data: {"bs-toggle": "tab"}, class: "nav-link"} %>
+    <%= link_to "作業種別別時間", tab2_statistics_path, {data: {"bs-toggle": "tab"}, remote: true, class: "nav-link"} %>
   </li>
   <li class="nav-item">
-    <%= link_to "世代別時間", tab3_statistics_path, {remote: true, data: {"bs-toggle": "tab"}, class: "nav-link"} %>
+    <%= link_to "世代別時間", tab3_statistics_path, {data: {"bs-toggle": "tab"}, remote: true, class: "nav-link"} %>
   </li>
 </ul>
 
