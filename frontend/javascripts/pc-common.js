@@ -1,5 +1,6 @@
 import { Modal, Collapse } from "bootstrap";
-import Rails from "@rails/ujs";
+import "@hotwired/turbo-rails";
+
 window.popupAlert = (message) => {
     document.getElementById("popup_alert_message").innerText = message;
     const popupForm = new Modal(document.getElementById("popup_alert"));
@@ -41,7 +42,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const handleConfirm = function(event) {
         if (!allowAction(event.target)) {
-            Rails.stopEverything(event);
+            // Rails.stopEverything(event);
         }
     }
 
