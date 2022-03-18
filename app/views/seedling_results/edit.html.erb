@@ -47,7 +47,7 @@
   </div>
 <% end %>
 <script>
-$(function() {
+document.addEventListener("turbo:load", function() {
     $(".work_select").change(function() {
         var index = $(this).data("index");
         if($(this).val() == "") {

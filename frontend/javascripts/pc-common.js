@@ -21,7 +21,7 @@ window.popupConfirm = (message, callback) => {
     popupForm.show();
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("turbo:load", () => {
     const mySideCollapse = new Collapse(document.getElementById("my_side_wrapper"), {toggle: false});
 
     // for sidebar
@@ -145,10 +145,10 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-window.addEventListener("click", (event) => {
-    const my_menu = document.getElementById("menu_dropdown");
-    if (!event.target.matches('.nav-link') && (my_menu != null)) {
-        my_menu.style.display = "none";
+document.addEventListener("turbo:load", (event) => {
+    const myMenu = document.getElementById("menu_dropdown");
+    if (!event.target.matches('.nav-link') && (myMenu != null)) {
+        myMenu.style.display = "none";
     }
 });
 

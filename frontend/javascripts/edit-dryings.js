@@ -1,4 +1,4 @@
-window.addEventListener("load", () => {
+document.addEventListener("turbo:load", () => {
     document.getElementById("adjustment_home_sql").value = document.getElementById("drying_adjustment_attributes_home_id").innerHTML;
 
     document.querySelectorAll('input[type="number"][name$="[moth_weight]"], input[type="number"][name$="[rice_weight]"]').forEach((element) => {

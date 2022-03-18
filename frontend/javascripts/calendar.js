@@ -1,4 +1,4 @@
-window.addEventListener("load", () => {
+document.addEventListener("turbo:load", () => {
     $(window).on("resize", function() {
         initSize();
     });

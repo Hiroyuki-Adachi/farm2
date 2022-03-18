@@ -138,7 +138,7 @@
   </div>
 </div>
 <script>
-window.addEventListener("load", () => {
+document.addEventListener("turbo:load", () => {
     document.querySelectorAll("#drying-detail td").forEach((element) => {
         element.addEventListener("click", (event) => {
             location.href = event.target.dataset.drying;

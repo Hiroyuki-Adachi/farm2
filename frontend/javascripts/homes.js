@@ -20,6 +20,6 @@ function initMap(){
     });
 }
 
-window.addEventListener('load', (event) => {
+document.addEventListener("turbo:load", () => {
   initMap();
 });
