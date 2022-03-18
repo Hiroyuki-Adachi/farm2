@@ -23,7 +23,7 @@
         <% if drying %>
           <% if drying.drying_type_id == 0 %>
             <td>
-              <%= link_to '○', drying, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}} %>
+              <%= link_to '○', drying, {data: {confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}} %>
             </td>
           <% else %>
             <td>●</td>

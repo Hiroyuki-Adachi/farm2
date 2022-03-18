@@ -13,7 +13,7 @@
         <td><%=h section.name %></td>
         <td style="text-align:center;"><%=h section.work_flag ? "●" : "" %></td>
         <td><%= link_to '修正', edit_section_path(section), {class: "btn btn-success btn-sm"} %></td>
-        <td><%= link_to '削除', section, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
+        <td><%= link_to '削除', section, {data: {confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger btn-sm"} %></td>
       </tr>
     <% end %>
   </tbody>

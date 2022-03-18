@@ -16,7 +16,7 @@
           <% if schedule.minute %>
           <td></td>
           <td><%= link_to '照会', minute_path(schedule.minute.id), {class: "btn btn-success btn-sm", target: :_blank, data: {turbolinks: false}} %></td>
-          <td><%= link_to '削除', minute_path(id: schedule.minute.id), {method: :delete, data: {confirm: "議事録を削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
+          <td><%= link_to '削除', minute_path(id: schedule.minute.id), {data: {confirm: "議事録を削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger btn-sm"} %></td>
           <% else %>
           <td><%= button_tag "作成", {id: nil, type: :button, class: "btn btn-success btn-sm", onclick: "createPDF(#{schedule.id})"} %></td>
           <td></td>

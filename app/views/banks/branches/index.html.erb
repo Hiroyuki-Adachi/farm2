@@ -14,7 +14,7 @@
         <td><%= branch.code %></td>
         <td><%= branch.name %></td>
         <td><%= link_to '修正', edit_bank_branch_path(bank_code: @bank.code, code: branch.code) %></td>
-        <td><%= link_to '削除', bank_branch_path(bank_code: @bank.code, code: branch.code), method: :delete, data: { confirm: '本当に削除してもよろしいですか?' } %></td>
+        <td><%= link_to '削除', bank_branch_path(bank_code: @bank.code, code: branch.code), data: { confirm: '本当に削除してもよろしいですか?', turbo_method: :delete } %></td>
       </tr>
     <% end %>
   </tbody>

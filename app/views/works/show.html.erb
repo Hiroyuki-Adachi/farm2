@@ -35,7 +35,7 @@
   <%= render partial: "show_broccoli" %>
 <% end %>
 <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
-<%= link_to '削除',raw(work_path(id: @work)), method: :delete, class: "btn btn-danger", data: {confirm: "本当に削除してもよろしいですか?"} %>
+<%= link_to '削除',raw(work_path(id: @work)), class: "btn btn-danger", data: {confirm: "本当に削除してもよろしいですか?", turbo_method: :delete} %>
 <% end %>
 <% if !current_user.visitor? && @work.term == current_term %><%= button_tag "新規登録",  type: :button, class: "btn btn-success", onclick: raw("location.href = '" + new_work_path + "';") %><% end %>
 <% if updatable_work(current_user, @work) %>

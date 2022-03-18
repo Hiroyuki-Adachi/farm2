@@ -53,7 +53,7 @@
       <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
     </div>
     <div class="btn-group mr-2">
-      <%= link_to '初期化', plans_land_path(0), {method: :delete, data: {confirm: "本当に初期化してもよろしいですか?"}, class: "btn btn-danger"} %>
+      <%= link_to '初期化', plans_land_path(0), {data: {confirm: "本当に初期化してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
     </div>
     <div class="btn-group mr-2">
       <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
