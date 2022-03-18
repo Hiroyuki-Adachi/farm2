@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to users_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -28,13 +28,13 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to current_user.id == @user.id ? menu_index_path : users_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @user.destroy
-    redirect_to users_path
+    redirect_to users_path, status: :see_other
   end
 
   private

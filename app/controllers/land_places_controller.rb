@@ -19,7 +19,7 @@ class LandPlacesController < ApplicationController
     if @land_place.save
       redirect_to land_places_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -27,13 +27,13 @@ class LandPlacesController < ApplicationController
     if @land_place.update(land_place_params)
       redirect_to land_places_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @land_place.destroy
-    redirect_to land_places_path
+    redirect_to land_places_path, status: :see_other
   end
 
   private
