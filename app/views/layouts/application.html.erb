@@ -4,10 +4,10 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
-  <%= javascript_pack_tag 'application' %>
-  <%= stylesheet_pack_tag 'application' %>
-  <%= javascript_pack_tag 'pc-common' %>
-  <%= stylesheet_pack_tag 'pc-common' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'pc-common', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_pack_tag 'pc-common', 'data-turbolinks-track': 'reload' %>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
    const language = "<%= I18n.locale %>";
