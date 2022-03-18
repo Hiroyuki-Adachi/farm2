@@ -21,7 +21,7 @@ class MachineTypesController < ApplicationController
       update_work_kinds
       redirect_to machine_types_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -30,13 +30,13 @@ class MachineTypesController < ApplicationController
       update_work_kinds
       redirect_to machine_types_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @machine_type.destroy
-    redirect_to machine_types_path
+    redirect_to machine_types_path, status: :see_other
   end
 
   private

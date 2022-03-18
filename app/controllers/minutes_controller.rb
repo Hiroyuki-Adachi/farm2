@@ -23,7 +23,7 @@ class MinutesController < ApplicationController
 
   def destroy
     @minute.destroy
-    redirect_to minutes_path
+    redirect_to minutes_path, status: :see_other
   end
 
   private

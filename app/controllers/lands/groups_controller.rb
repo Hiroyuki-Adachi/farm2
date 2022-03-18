@@ -24,7 +24,7 @@ class Lands::GroupsController < ApplicationController
       Land.update_members(@land.id, params[:members])
       redirect_to lands_groups_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -33,13 +33,13 @@ class Lands::GroupsController < ApplicationController
       Land.update_members(@land.id, params[:members])
       redirect_to lands_groups_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @land.destroy
-    redirect_to lands_groups_path
+    redirect_to lands_groups_path, status: :see_other
   end
 
   def autocomplete

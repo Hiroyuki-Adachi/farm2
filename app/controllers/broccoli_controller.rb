@@ -13,13 +13,13 @@ class BroccoliController < ApplicationController
       @broccoli.regist_harvests(params[:harvests])
       redirect_to(broccoli_work_path)
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @broccoli.destroy
-    redirect_to(broccoli_work_path)
+    redirect_to broccoli_work_path, status: :see_other
   end
 
   private

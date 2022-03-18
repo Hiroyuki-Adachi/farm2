@@ -25,7 +25,7 @@ class BanksController < ApplicationController
     if @bank.save
       redirect_to banks_path
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -33,7 +33,7 @@ class BanksController < ApplicationController
     if @bank.update(bank_params)
       redirect_to banks_path
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -41,7 +41,7 @@ class BanksController < ApplicationController
   # DELETE /banks/1.json
   def destroy
     @bank.destroy
-    redirect_to banks_path
+    redirect_to banks_path, status: :see_other
   end
 
   private

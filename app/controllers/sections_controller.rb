@@ -18,7 +18,7 @@ class SectionsController < ApplicationController
     if @section.save
       redirect_to sections_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -26,13 +26,13 @@ class SectionsController < ApplicationController
     if @section.update(section_params)
       redirect_to sections_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @section.destroy
-    redirect_to sections_path
+    redirect_to sections_path, status: :see_other
   end
 
   private

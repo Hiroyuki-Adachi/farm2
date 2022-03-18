@@ -17,7 +17,7 @@ class ExpensesController < ApplicationController
     if @expense.save
       redirect_to expenses_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -28,13 +28,13 @@ class ExpensesController < ApplicationController
     if @expense.update(expense_params)
       redirect_to expenses_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @expense.destroy
-    redirect_to expenses_path
+    redirect_to expenses_path, status: :see_other
   end
 
   def chemical_type_select
