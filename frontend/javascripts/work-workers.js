@@ -123,7 +123,7 @@ function change_section(section) {
     }
 }
 
-$(function() {
+document.addEventListener("turbo:load", function() {
   set_add_buttons();
 
   $("#tbody_workers tr").hover(function() {

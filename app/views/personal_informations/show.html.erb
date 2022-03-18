@@ -29,7 +29,7 @@
   <% end %>
 <% end %>
 <script>
-$(function(){
+document.addEventListener("turbo:load", function() {
     $('#personal_table tr').click(function(){
         window.location = $(this).data('href');
         return false;

@@ -16,7 +16,7 @@
 <% end %>
 <%= render partial: "works/show_stamp"%>
 <script>
-$(function() {
+document.addEventListener("turbo:load", function() {
     $(".stamp").each(function() {
         $(this).offset({top: $(this).offset().top + 48});
     });

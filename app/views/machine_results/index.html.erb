@@ -48,7 +48,7 @@
   </div>
 </div>
 <script>
-$(function() {
+document.addEventListener("turbo:load", function() {
     $(".owner-total").click(function() {
         var s = $(".detail[data-owner='" + $(this).data("owner") + "']");
         if(s.is(":visible")) {

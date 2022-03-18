@@ -52,7 +52,7 @@
   </div>
 </div>
 <script>
-$(function() {
+document.addEventListener("turbo:load", function() {
     $(".chemical-total").click(function() {
         var s = $(".detail[data-chemical='" + $(this).data("chemical") + "']");
         if(s.is(":visible")) {

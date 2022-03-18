@@ -32,7 +32,7 @@
   </div>
 <% end %>
 <script>
-window.addEventListener("load", (w) => {
+document.addEventListener("turbo:load", (w) => {
     document.querySelectorAll("input[type='color']").forEach((element) => {
         element.addEventListener("change", (event) => {
             const id = `work_kind_id_${event.target.dataset.kind}`;

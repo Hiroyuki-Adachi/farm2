@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("turbo:load", () => {
   document.querySelectorAll("[data-index='0']").forEach((element) => {
     element.style.display = "table-cell";
   });

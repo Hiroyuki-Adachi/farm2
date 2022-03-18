@@ -58,7 +58,7 @@
   </div>
 <% end %>
 <script>
-window.addEventListener('load', (event) => {
+document.addEventListener("turbo:load", () => {
   Array.from(document.getElementsByClassName("sum-quantity")).forEach(function(ctrl) {
     calcQuantity(ctrl.dataset.id);
   });

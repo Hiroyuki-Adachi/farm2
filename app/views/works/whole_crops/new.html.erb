@@ -80,7 +80,7 @@
 <% end %>
 <script>
 import "jquery-ui/ui/widgets/sortable";
-$(function() {
+document.addEventListener("turbo:load", function() {
     $("#tbody_lands").sortable({
         cursor: "move",
         update: function(e, ui) {

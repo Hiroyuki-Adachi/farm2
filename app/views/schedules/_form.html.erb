@@ -58,7 +58,7 @@
 </div>
 <%= f.hidden_field :term %>
 <script type="text/javascript">
-$(function() {
+document.addEventListener("turbo:load", function() {
   $('input[name="schedule[work_type_id]"]:radio').change(function(){
     $.get("<%= work_type_select_works_path %>", {work_type_id: $(this).val()});
   });

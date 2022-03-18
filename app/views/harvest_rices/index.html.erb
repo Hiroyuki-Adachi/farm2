@@ -71,7 +71,7 @@
   </div>
 </div>
 <script>
-$(function() {
+document.addEventListener("turbo:load", function() {
     $(".work-type-total").click(function() {
         var s = $(".carried-on-total[data-work_type='" + $(this).data("work_type") + "']");
         if(s.is(":visible")) {

@@ -53,7 +53,7 @@
   </div>
 </div>
 <script>
-$(function() {
+document.addEventListener("turbo:load", function() {
     $(".home-total").click(function() {
         var s = $(".work-total[data-home='" + $(this).data("home") + "']");
         if(s.is(":visible")) {

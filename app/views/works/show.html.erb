@@ -49,7 +49,7 @@
 <%= render partial: "show_stamp"%>
 <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
 <script type="text/javascript">
-$(function() {
+document.addEventListener("turbo:load", function() {
   $("#cover_work").height($("#content_work").height()).width($("#content_work").width());
   $("#cover_workers").height($("#content_workers").height()).width($("#content_workers").width());
   $("#cover_lands").height($("#content_lands").height()).width($("#content_lands").width());
