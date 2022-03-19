@@ -63,7 +63,7 @@ function changeTarget(target) {
    location.href = target.dataset.url + "?target=" + target.value;
 }
 
-document.addEventListener("turbo:load", () => {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
     document.getElementById("target").addEventListener("change", function() {
         location.href = target.dataset.url + "?target=" + this.value;
     });

@@ -58,10 +58,10 @@
   </div>
 <% end %>
 <script>
-document.addEventListener("turbo:load", () => {
-  Array.from(document.getElementsByClassName("sum-quantity")).forEach(function(ctrl) {
-    calcQuantity(ctrl.dataset.id);
-  });
+window.addEventListener('DOMContentLoaded turbo:load', () => {
+    Array.from(document.getElementsByClassName("sum-quantity")).forEach(function(ctrl) {
+        calcQuantity(ctrl.dataset.id);
+    });
 });
 
 function calcQuantity(work_type_id) {

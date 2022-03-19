@@ -43,7 +43,7 @@
   <%= f.hidden_field(:carried_on) %>
 <% end %>
 <script>
-document.addEventListener("turbo:load", () => {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
     document.querySelectorAll(".drying-data").forEach((element) => {
         element.addEventListener("click", (event) => {
             document.getElementById("drying_home_id").value = element.dataset.home;

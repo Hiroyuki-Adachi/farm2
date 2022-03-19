@@ -1,6 +1,6 @@
 import { Modal } from 'bootstrap';
 
-document.addEventListener("turbo:load", function() {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
     $("#tbl_list").floatThead({
         position: 'absolute',
         scrollContainer:true,

@@ -49,12 +49,12 @@
 <%= render partial: "show_stamp"%>
 <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
 <script type="text/javascript">
-document.addEventListener("turbo:load", function() {
-  $("#cover_work").height($("#content_work").height()).width($("#content_work").width());
-  $("#cover_workers").height($("#content_workers").height()).width($("#content_workers").width());
-  $("#cover_lands").height($("#content_lands").height()).width($("#content_lands").width());
-  $("#cover_machines").height($("#content_machines").height()).width($("#content_machines").width());
-  $("#cover_chemicals").height($("#content_chemicals").height()).width($("#content_chemicals").width());
+window.addEventListener('DOMContentLoaded turbo:load', () => {
+    $("#cover_work").height($("#content_work").height()).width($("#content_work").width());
+    $("#cover_workers").height($("#content_workers").height()).width($("#content_workers").width());
+    $("#cover_lands").height($("#content_lands").height()).width($("#content_lands").width());
+    $("#cover_machines").height($("#content_machines").height()).width($("#content_machines").width());
+    $("#cover_chemicals").height($("#content_chemicals").height()).width($("#content_chemicals").width());
 });
 </script>
 <% end %>

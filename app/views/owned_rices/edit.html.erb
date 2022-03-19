@@ -39,7 +39,7 @@
   </div>
 <% end %>
 <script>
-document.addEventListener("turbo:load", () => {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
     ("change keyup click".split(" ")).forEach((event) => {
         document.querySelectorAll(".rice").forEach((element) => {
             element.addEventListener(event, () => {
