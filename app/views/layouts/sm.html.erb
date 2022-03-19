@@ -100,16 +100,16 @@
 </div>
 <script>
 var startPos = 0,winScrollTop = 0;
-document.addEventListener("turbo:load", function() {
-  $(window).on('scroll',function(){
-      winScrollTop = $(this).scrollTop();
-      if (winScrollTop >= startPos) {
-          $('#site-header').hide("slow");
-      } else {
-          $('#site-header').show("slow");
-      }
-      startPos = winScrollTop;
-  });
+window.addEventListener('DOMContentLoaded turbo:load', () => {
+    $(window).on('scroll',function(){
+        winScrollTop = $(this).scrollTop();
+        if (winScrollTop >= startPos) {
+            $('#site-header').hide("slow");
+        } else {
+            $('#site-header').show("slow");
+        }
+        startPos = winScrollTop;
+    });
 });
 </script>
 </body>

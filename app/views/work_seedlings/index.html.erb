@@ -42,7 +42,7 @@
   </div>
 </div>
 <script>
-document.addEventListener("turbo:load", function() {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
     $(".work-type-total").click(function() {
         var s = $(".detail[data-work-type='" + $(this).data("work-type") + "']");
         if(s.is(":visible")) {

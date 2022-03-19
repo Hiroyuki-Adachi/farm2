@@ -70,7 +70,7 @@ function convertRegion(region) {
   return results;
 }
 
-document.addEventListener("turbo:load", () => {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
   document.getElementById("clear_region").addEventListener("click", function() {
     if(landRegion) {
       landRegion.setMap(null);

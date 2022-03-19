@@ -58,7 +58,7 @@
   </div>
 </div>
 <script>
-document.addEventListener("turbo:load", function() {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
     $(".work-type-total").click(function() {
         var s = $(".worked-at-total[data-work_type='" + $(this).data("work_type") + "']");
         if(s.is(":visible")) {

@@ -1,5 +1,5 @@
 import { Modal, Collapse } from "bootstrap";
-import "@hotwired/turbo-rails";
+import { Turbo } from '@hotwired/turbo-rails'
 
 window.popupAlert = (message) => {
     document.getElementById("popup_alert_message").innerText = message;
@@ -21,7 +21,7 @@ window.popupConfirm = (message, callback) => {
     popupForm.show();
 }
 
-document.addEventListener("turbo:load", () => {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
     const mySideCollapse = new Collapse(document.getElementById("my_side_wrapper"), {toggle: false});
 
     // for sidebar
@@ -42,7 +42,7 @@ document.addEventListener("turbo:load", () => {
 
     const handleConfirm = function(event) {
         if (!allowAction(event.target)) {
-            // Rails.stopEverything(event);
+            Turbo.stopEverything(event);
         }
     }
 
@@ -145,7 +145,7 @@ document.addEventListener("turbo:load", () => {
     });
 });
 
-document.addEventListener("turbo:load", (event) => {
+window.addEventListener('DOMContentLoaded turbo:load', (event) => {
     const myMenu = document.getElementById("menu_dropdown");
     if (!event.target.matches('.nav-link') && (myMenu != null)) {
         myMenu.style.display = "none";

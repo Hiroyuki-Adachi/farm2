@@ -42,7 +42,7 @@ function initMap(){
     });
 }
 
-document.addEventListener("turbo:load", () => {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
     initMap();
 });
   

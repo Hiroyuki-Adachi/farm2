@@ -50,7 +50,7 @@
 <script>
 var colors = <%=raw @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>;
 
-document.addEventListener("turbo:load", function() {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
     $("#tbl_list").floatThead({
         position: 'absolute',
         scrollContainer:true,

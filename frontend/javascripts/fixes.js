@@ -35,7 +35,7 @@ function checkAll(val)
     calc_total();
 }
 
-document.addEventListener("turbo:load", function() {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
     $("#tbl_list").floatThead({
         position: 'absolute',
         scrollContainer:true,

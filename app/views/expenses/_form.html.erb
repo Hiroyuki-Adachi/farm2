@@ -109,7 +109,7 @@
   </div>
 </div>
 <script>
-document.addEventListener("turbo:load", function() {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
     $("input[type='checkbox'][id^='expense_work_types_rate_']").click(function() {
         $("#" + $(this).data("id")).val($(this).prop("checked") ? $(this).val() : 0);
     });

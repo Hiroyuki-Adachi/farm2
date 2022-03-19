@@ -61,7 +61,7 @@
   </div>
 </div>
 <script>
-document.addEventListener("turbo:load", function() {
+window.addEventListener('DOMContentLoaded turbo:load', () => {
     $(".home-total").click(function() {
         var s = $(".worker-total[data-home='" + $(this).data("home") + "']");
         if(s.is(":visible")) {

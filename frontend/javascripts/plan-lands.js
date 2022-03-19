@@ -86,12 +86,12 @@ function dispSum() {
   document.getElementById("land_area_sum").innerText = sumArea.toFixed(1);
 }
 
-document.addEventListener("turbo:load", () => {
-  Array.from(document.getElementsByClassName("work-type")).forEach(function(wt) {
-    wt.addEventListener('click', function() {
-      clickWorkType(this.dataset.id);
+window.addEventListener('DOMContentLoaded turbo:load', () => {
+    Array.from(document.getElementsByClassName("work-type")).forEach(function(wt) {
+        wt.addEventListener('click', function() {
+            clickWorkType(this.dataset.id);
+        });
     });
-  });
-  
-  initMap();
+    
+    initMap();
 });
