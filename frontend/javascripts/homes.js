@@ -20,6 +20,6 @@ function initMap(){
     });
 }
 
-window.addEventListener('DOMContentLoaded turbo:load', () => {
+document.addEventListener('turbo:load', () => {
     initMap();
 });

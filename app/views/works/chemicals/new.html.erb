@@ -99,4 +99,4 @@
 <input type="hidden" id="dilution_none" value="<%= Dilution::NONE.id %>" />
 <input type="hidden" id="dilution_l" value="<%= Dilution::L.id %>" />
 <input type="hidden" id="dilution_mag" value="<%= Dilution::MAG.id %>" />
-<%= javascript_pack_tag 'edit-chemicals' %>
+<%= javascript_pack_tag 'edit-chemicals', 'data-turbo-track': 'reload' %>
