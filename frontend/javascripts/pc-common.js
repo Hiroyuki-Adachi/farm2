@@ -1,5 +1,4 @@
 import { Modal, Collapse } from "bootstrap";
-import { Turbo } from '@hotwired/turbo-rails'
 
 window.popupAlert = (message) => {
     document.getElementById("popup_alert_message").innerText = message;
@@ -21,23 +20,27 @@ window.popupConfirm = (message, callback) => {
     popupForm.show();
 }
 
-window.addEventListener('DOMContentLoaded turbo:load', () => {
-    const mySideCollapse = new Collapse(document.getElementById("my_side_wrapper"), {toggle: false});
-
+document.addEventListener('turbo:load', () => {
     // for sidebar
     const controller = document.getElementById("current_controller").value;
     const action = document.getElementById("current_action").value;
+    const myMenu = document.getElementById("menu_dropdown");
+    const mySideClose = document.getElementById("my_side_close");
+    const mySideOpen = document.getElementById("my_side_open");
 
     if(controller != "menu" || action != "index") {
-        document.getElementById("my_sidebar").querySelectorAll("a[data-controller]").forEach((element) => {
-            if(element.dataset.controller == controller) {
-                if(document.getElementById("my_sidebar").querySelectorAll(`a[data-controller="${controller}"]`).length <= 1) {
-                    activeBar(element);
-                } else if(JSON.parse(element.dataset.actions).indexOf(action) >= 0) {
-                    activeBar(element);
+        const mySidebar = document.getElementById("my_sidebar");
+        if (mySidebar != null) {
+            mySidebar.querySelectorAll("a[data-controller]").forEach((element) => {
+                if(element.dataset.controller == controller) {
+                    if(mySidebar.querySelectorAll(`a[data-controller="${controller}"]`).length <= 1) {
+                        activeBar(element);
+                    } else if(JSON.parse(element.dataset.actions).indexOf(action) >= 0) {
+                        activeBar(element);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     const handleConfirm = function(event) {
@@ -68,46 +71,47 @@ window.addEventListener('DOMContentLoaded turbo:load', () => {
         });
     }
 
-    document.getElementById("my_side_close").addEventListener("click", () => {
-        const myContent = document.getElementById("my_content");
-        const openButton = document.getElementById("my_side_open");
-        mySideCollapse.hide();
+    if (mySideClose != null) {
+        mySideClose.addEventListener("click", () => {
+            const myContent = document.getElementById("my_content");
+            mySideCollapse.hide();
+    
+            myContent.classList.remove("col-md-10");
+            myContent.classList.add("col-md-12");
+    
+            mySideOpen.classList.remove("d-none");
+            mySideOpen.classList.add("d-block");
+    
+            sessionStorage.setItem("my_side", "hide");
+        });
+    }
 
-        myContent.classList.remove("col-md-10");
-        myContent.classList.add("col-md-12");
-
-        openButton.classList.remove("d-none");
-        openButton.classList.add("d-block");
-
-        sessionStorage.setItem("my_side", "hide");
-    });
-
-    document.getElementById("my_side_open").addEventListener("click", () => {
-        const myContent = document.getElementById("my_content");
-        const openButton = document.getElementById("my_side_open");
-        mySideCollapse.show();
-
-        myContent.classList.remove("col-md-12");
-        myContent.classList.add("col-md-10");
-
-        openButton.classList.remove("d-block");
-        openButton.classList.add("d-none");
-
-        sessionStorage.setItem("my_side", "show");
-    });
+    if (mySideOpen != null) {
+        mySideOpen.addEventListener("click", () => {
+            const myContent = document.getElementById("my_content");
+            mySideCollapse.show();
+    
+            myContent.classList.remove("col-md-12");
+            myContent.classList.add("col-md-10");
+    
+            mySideOpen.classList.remove("d-block");
+            mySideOpen.classList.add("d-none");
+    
+            sessionStorage.setItem("my_side", "show");
+        });
+    }
 
     if (sessionStorage.getItem("my_side") == "hide") {
         const mySideWrapper = document.getElementById("my_side_wrapper");
         const myContent = document.getElementById("my_content");
-        const openButton = document.getElementById("my_side_open");
     
         mySideWrapper.classList.remove("show");
     
         myContent.classList.remove("col-md-10");
         myContent.classList.add("col-md-12");
     
-        openButton.classList.remove("d-none");
-        openButton.classList.add("d-block");
+        mySideOpen.classList.remove("d-none");
+        mySideOpen.classList.add("d-block");
     }
 
     document.querySelectorAll("a[data-confirm], input[data-confirm], button[data-confirm]").forEach((element) => {
@@ -119,20 +123,19 @@ window.addEventListener('DOMContentLoaded turbo:load', () => {
     document.querySelectorAll("#navbarFarm2 a.nav-link").forEach((element) => {
         element.addEventListener("click", () => {
             if (sessionStorage.getItem("my_side") == "hide") {
-                const my_menu = document.getElementById("menu_dropdown");
-                my_menu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
-                my_menu.querySelector("span").remove();
-                my_menu.dataset.id = element.id;
-                my_menu.style.display = "block";
+                myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
+                myMenu.querySelector("span").remove();
+                myMenu.dataset.id = element.id;
+                myMenu.style.display = "block";
 
                 let left = 0;
                 do {
                     left += element.offsetLeft || 0;
                     element = element.offsetParent;
                 } while(element);
-                my_menu.style.left = left + "px";
+                myMenu.style.left = left + "px";
             } else {
-                location.href = element.dataset.url;
+                Turbo.visit(element.dataset.url);
             }
         });
     });
@@ -145,7 +148,7 @@ window.addEventListener('DOMContentLoaded turbo:load', () => {
     });
 });
 
-window.addEventListener('DOMContentLoaded turbo:load', (event) => {
+window.addEventListener("click", (event) => {
     const myMenu = document.getElementById("menu_dropdown");
     if (!event.target.matches('.nav-link') && (myMenu != null)) {
         myMenu.style.display = "none";
