@@ -4,7 +4,7 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
-  <%= javascript_pack_tag 'application' %>
+  <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
   <%= stylesheet_pack_tag 'application' %>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
@@ -26,7 +26,6 @@
 <% @work.lands.regionable.each do |land| %>
   <%= hidden_field_tag :regions, land.region, {id: "land_#{land.id}", data: {id: land.id, place: land.place, area: land.area, owner: land.owner.name}} %>
 <% end %>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" async defer></script>
-<%= javascript_pack_tag 'work-map' %>
+<%= javascript_pack_tag 'work-map', 'data-turbo-track': 'reload' %>
 </body>
 </html>
