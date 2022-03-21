@@ -57,3 +57,8 @@ th.numeric {
 input[type=date].form-control {
   width: 200px;
 }
+
+div.form-check-inline input[type='checkbox']:checked + label {
+  color: red;
+  font-weight: bold;
+}

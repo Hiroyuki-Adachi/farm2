@@ -139,13 +139,6 @@ document.addEventListener('turbo:load', () => {
             }
         });
     });
-
-    document.querySelectorAll("div.form-check-inline input[type='checkbox']").forEach((element) => {
-        element.addEventListener("change", () => {
-            element.parentElement.style.color = element.checked ? "red" : "black";
-        });
-        element.parentElement.style.color = element.checked ? "red" : "black";
-    });
 });
 
 window.addEventListener("click", (event) => {
