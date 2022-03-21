@@ -7,4 +7,6 @@
 <%= hidden_field_tag "other_lands", land.region, {id: nil} %>
 <% end %>
 <%= hidden_field_tag "location", "[#{land_location(@land)}]" %>
+<% content_for :head do %>
 <%= javascript_pack_tag 'lands', 'data-turbo-track': 'reload' %>
+<% end %>

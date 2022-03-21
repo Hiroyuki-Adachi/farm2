@@ -1,5 +1,3 @@
-<%= javascript_pack_tag 'work-show', 'data-turbo-track': 'reload' %>
-<%= stylesheet_pack_tag 'work-show', :media => 'all' %>
 <%= render partial: "works/show_base" %>
 <% if @whole_crop || current_organization.whole_crop_work_kind_id == @work.work_kind_id %>
 <%= render partial: "works/show_whole_crop" %>
@@ -15,6 +13,9 @@
   <%= render partial: "works/show_chemicals" %>
 <% end %>
 <%= render partial: "works/show_stamp"%>
+<% content_for :head do %>
+<%= javascript_pack_tag 'work-show', 'data-turbo-track': 'reload' %>
+<%= stylesheet_pack_tag 'work-show', :media => 'all' %>
 <script>
 window.addEventListener('DOMContentLoaded turbo:load', () => {
     $(".stamp").each(function() {
@@ -23,3 +24,4 @@ window.addEventListener('DOMContentLoaded turbo:load', () => {
     $("#work_id").offset({top: $("#work_id").offset().top + 48});
 });
 </script>
+<% end %>

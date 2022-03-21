@@ -28,6 +28,7 @@
     </table>
   <% end %>
 <% end %>
+<% content_for :head do %>
 <script>
 window.addEventListener('DOMContentLoaded turbo:load', () => {
     $('#personal_table tr').click(function(){
@@ -36,3 +37,4 @@ window.addEventListener('DOMContentLoaded turbo:load', () => {
     });
 });
 </script>
+<% end %>

@@ -46,6 +46,7 @@
     </div>
   </div>
 <% end %>
+<% content_for :head do %>
 <script>
 window.addEventListener('DOMContentLoaded turbo:load', () => {
     $(".work_select").change(function() {
@@ -61,3 +62,4 @@ window.addEventListener('DOMContentLoaded turbo:load', () => {
     });
 })
 </script>
+<% end %>

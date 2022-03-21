@@ -57,6 +57,7 @@
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"} %>
   </div>
 </div>
+<% content_for :head do %>
 <script>
 window.addEventListener('DOMContentLoaded turbo:load', () => {
     $(".work-type-total").click(function() {
@@ -80,3 +81,4 @@ window.addEventListener('DOMContentLoaded turbo:load', () => {
     $(".worked-at-total, .detail").hide();
 });
 </script>
+<% end %>

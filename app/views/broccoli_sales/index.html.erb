@@ -41,6 +41,7 @@
   </div>
 </div>
 <% end %>
+<% content_for :head do %>
 <script>
 window.addEventListener('DOMContentLoaded turbo:load', function() {
     $("#tbl_list").floatThead({
@@ -69,3 +70,4 @@ function setTableWrapperHeight() {
     }
 }
 </script>
+<% end %>

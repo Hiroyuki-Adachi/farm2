@@ -78,6 +78,7 @@
     </div>
   </div>
 <% end %>
+<% content_for :head do %>
 <script>
 import "jquery-ui/ui/widgets/sortable";
 window.addEventListener('DOMContentLoaded turbo:load', () => {
@@ -98,3 +99,4 @@ function renumberLands() {
     });
 }
 </script>
+<% end %>
