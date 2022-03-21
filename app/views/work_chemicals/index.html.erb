@@ -51,6 +51,7 @@
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
+<% content_for :head do %>
 <script>
 $(function() {
     $(".chemical-total").click(function() {
@@ -65,3 +66,4 @@ $(function() {
     $(".detail").hide();
 });
 </script>
+<% end %>

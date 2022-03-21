@@ -1,3 +1,4 @@
+<% content_for :head do %>
 <script type="text/javascript">
 $(function() {
     set_disabled();
@@ -78,7 +79,7 @@ function calc_total_hours()
     $$("total_hours").innerHTML = total_hours.toFixed(1);
 }
 </script>
-
+<% end %>
 <h1>作業月報修正</h1>
 <h2><%= @target_from.strftime('%Y年%m月') %>：<%= @worker.name + "(#{@worker.home.name})" %></h2>
 <%= form_with url: monthly_report_path(@worker), method: :put do |f| %>

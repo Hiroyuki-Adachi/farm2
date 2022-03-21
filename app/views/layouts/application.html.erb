@@ -4,10 +4,12 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
-  <%= javascript_pack_tag 'application' %>
-  <%= stylesheet_pack_tag 'application' %>
-  <%= javascript_pack_tag 'pc-common' %>
-  <%= stylesheet_pack_tag 'pc-common' %>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" async defer></script>
+  <%= javascript_packs_with_chunks_tag 'application', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_pack_tag 'application', 'data-turbo-track': 'reload' %>
+  <%= javascript_packs_with_chunks_tag 'pc-common', 'data-turbo-track': 'reload' %>
+  <%= yield :head %>
+  <%= stylesheet_pack_tag 'pc-common', 'data-turbo-track': 'reload' %>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
    const language = "<%= I18n.locale %>";

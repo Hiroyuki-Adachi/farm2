@@ -23,5 +23,6 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" async defer></script>
-<%= javascript_pack_tag 'lands-cards' %>
+<% content_for :head do %>
+<%= javascript_pack_tag 'lands-cards', 'data-turbo-track': 'reload' %>
+<% end %>

@@ -84,6 +84,7 @@
     </div>
   </div>
 <% end %>
+<% content_for :head do %>
 <script>
 window.addEventListener('load', (event) => {
   Array.from(document.getElementsByClassName("work-type-months")).forEach(function(sel) {
@@ -143,3 +144,4 @@ function calcQuantity(work_type_id) {
   document.getElementById(`quantity_${work_type_id}`).innerText = unit.times(area).div(10).ceil().toFixed(0);
 }
 </script>
+<% end %>
