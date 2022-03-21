@@ -58,6 +58,7 @@
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
+<% content_for :head do %>
 <script>
 window.addEventListener('DOMContentLoaded turbo:load', () => {
     $(".home-total").click(function() {
@@ -72,3 +73,4 @@ window.addEventListener('DOMContentLoaded turbo:load', () => {
     $(".detail").hide();
 });
 </script>
+<% end %>

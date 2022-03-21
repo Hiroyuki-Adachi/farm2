@@ -108,6 +108,7 @@
     </div>
   </div>
 </div>
+<% content_for :head do %>
 <script>
 window.addEventListener('DOMContentLoaded turbo:load', () => {
     $("input[type='checkbox'][id^='expense_work_types_rate_']").click(function() {
@@ -172,3 +173,4 @@ function change_chemical_type(chemical_type) {
     $.get("<%= chemical_select_expenses_path %>", {chemical_type_id: chemical_type.val()});
 }
 </script>
+<% end %>

@@ -64,11 +64,6 @@
     <%= image_tag qrcode_tag personal_information_path(@worker.token) %>
   </div>
 </div>
-<script>
-window.addEventListener('DOMContentLoaded turbo:load', () => {
-    $("#token_info").slideToggle();
-});
-</script>
 <% end %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
@@ -88,4 +83,11 @@ window.addEventListener('DOMContentLoaded turbo:load', () => {
     <%= link_to '戻る', workers_path, {class: "btn btn-outline-dark"} %>
   </div>
 </div>
+<% end %>
+<% content_for :head do %>
+<script>
+window.addEventListener('DOMContentLoaded turbo:load', () => {
+    $("#token_info").slideToggle();
+});
+</script>
 <% end %>

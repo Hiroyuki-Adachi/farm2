@@ -112,6 +112,7 @@
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
+<% content_for :head do %>
 <script>
 window.addEventListener('DOMContentLoaded turbo:load', () => {
     $("#tbl_list").floatThead({
@@ -152,3 +153,4 @@ function setTableWrapperHeight() {
     }
 }
 </script>
+<% end %>

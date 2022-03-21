@@ -60,4 +60,6 @@
     </div>
   </div>
 <% end %>
+<% content_for :head do %>
 <%= javascript_pack_tag 'plan-lands', 'data-turbo-track': 'reload' %>
+<% end %>

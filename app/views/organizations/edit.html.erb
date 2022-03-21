@@ -82,4 +82,6 @@
     </div>
   </div>
 <% end %>
+<% content_for :head do %>
 <%= javascript_pack_tag 'organizations', 'data-turbo-track': 'reload' %>
+<% end %>

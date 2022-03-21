@@ -1,5 +1,4 @@
 <h1>作業日報(作業田)登録</h1>
-<%= javascript_pack_tag 'work-lands', 'data-turbo-track': 'reload' %>
 <%= error_print(@work) %>
 
 <%= form_for(@work.model, url: {action: :create}, html: {method: :post}) do |f| %>
@@ -57,3 +56,6 @@
 </div>
 <% end %>
 <%= hidden_field_tag "autocomplete_for_land_place_works_path", autocomplete_for_land_place_work_path(@work) %>
+<% content_for :head do %>
+<%= javascript_pack_tag 'work-lands', 'data-turbo-track': 'reload' %>
+<% end %>

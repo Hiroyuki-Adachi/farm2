@@ -38,6 +38,7 @@
     </div>
   </div>
 <% end %>
+<% content_for :head do %>
 <script>
 window.addEventListener('DOMContentLoaded turbo:load', () => {
     ("change keyup click".split(" ")).forEach((event) => {
@@ -58,3 +59,4 @@ function dispSum() {
     document.getElementById("sum_owned_rice").innerText = owned_rice;
 }
 </script>
+<% end %>

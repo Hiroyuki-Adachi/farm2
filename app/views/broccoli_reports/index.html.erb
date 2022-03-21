@@ -35,6 +35,7 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
+<% content_for :head do %>
 <script>
 window.addEventListener('DOMContentLoaded turbo:load', function() {
     $("#worked_at").change(function() {
@@ -42,3 +43,4 @@ window.addEventListener('DOMContentLoaded turbo:load', function() {
     });
 });
 </script>
+<% end %>
