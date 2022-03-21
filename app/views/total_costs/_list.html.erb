@@ -112,6 +112,7 @@
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
+<% content_for :head do %>
 <script>
 $(function() {
     $(".group1-total").click(function() {
@@ -135,3 +136,4 @@ $(function() {
     $(".group2-total, .detail").hide();
 });
 </script>
+<% end %>

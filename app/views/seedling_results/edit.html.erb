@@ -46,6 +46,7 @@
     </div>
   </div>
 <% end %>
+<% content_for :head do %>
 <script>
 $(function() {
     $(".work_select").change(function() {
@@ -61,3 +62,4 @@ $(function() {
     });
 })
 </script>
+<% end %>
