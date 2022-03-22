@@ -8,7 +8,7 @@
       <%= f.submit '登録', :name => 'regist', class: "btn btn-warning" %>
     </div>
     <div class="btn-group mr-2">
-      <%= link_to '削除', schedule_path(id: @schedule), class: "btn btn-danger", data: {confirm: "本当に削除してもよろしいですか?", turbo_method: :delete} %>
+      <%= link_to '削除', schedule_path(id: @schedule), class: "btn btn-danger", data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete} %>
     </div>
     <div class="btn-group mr-2">
       <%= link_to "戻る", schedules_path, {class: "btn btn-outline-dark"}%>
