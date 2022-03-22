@@ -65,7 +65,7 @@
         <%= f.submit '登録', class: "btn btn-warning" %>
       </div>
       <div class="btn-group mr-2">
-        <%= link_to '削除', chemicals_store_path(@inventory), {data: {confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+        <%= link_to '削除', chemicals_store_path(@inventory), {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
       </div>
       <div class="btn-group mr-2">
         <%= link_to "戻る", chemicals_stores_path, {class: "btn btn-outline-dark"}%>

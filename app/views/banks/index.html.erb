@@ -16,7 +16,7 @@
         <td><%= bank.name %></td>
         <td><%= link_to '修正', edit_bank_path(bank) %></td>
         <td><%= link_to '支店', bank_branches_path(bank_code: bank.code) %></td>
-        <td><%= link_to '削除', bank, data: { confirm: '本当に削除してもよろしいですか?', turbo_method: :delete } %></td>
+        <td><%= link_to '削除', bank, data: { turbo_confirm: '本当に削除してもよろしいですか?', turbo_method: :delete } %></td>
       </tr>
     <% end %>
   </tbody>
