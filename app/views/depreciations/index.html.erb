@@ -1,7 +1,7 @@
 <h1>減価償却費登録</h1>
 <%= form_tag(action: :create) do  %>
-  <div id="table_wrapper" class="row wrapper small" style="overflow-y: scroll; overflow-x: hidden;">
-    <table id="tbl_list" class="table table-sm">
+  <div id="table_wrapper" class="row wrapper small float-head-wrapper">
+    <table id="tbl_list" class="table table-sm float-head">
       <thead>
         <tr>
           <th>機械</th>
@@ -40,21 +40,3 @@
     </div>
   </div>
 <% end %>
-<script>
-$(function() {
-    $("#tbl_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
-    setTableWrapperHeight();
-});
-function setTableWrapperHeight() {
-    if($("#table_wrapper")[0]) {
-        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 50);
-    }
-}
-</script>

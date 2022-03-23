@@ -1,8 +1,8 @@
 <h1>薬剤原価登録</h1>
 <%= form_tag(action: :create) do  %>
 <div class="row">
-  <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
-    <table id="tbl_list" class="table table-sm">
+  <div id="table_wrapper" class="wrapper small float-head-wrapper">
+    <table id="tbl_list" class="table table-sm float-head">
       <thead>
         <tr>
           <th rowspan="2">種別</th>
@@ -52,15 +52,6 @@
 <% end %>
 <script>
 $(function() {
-    $("#tbl_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
-
     $(".zero-gray").change(function() {
         if($(this).prop('value') == 0) {
             $(this).css({
@@ -74,15 +65,7 @@ $(function() {
             });
         }
     });
-
-    setTableWrapperHeight();
 });
-
-function setTableWrapperHeight() {
-    if($("#table_wrapper")[0]) {
-        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
-    }
-}
 
 function execImport() {
     if(popupConfirm("単価を上書きしてもよろしいですか？", function(result) {
