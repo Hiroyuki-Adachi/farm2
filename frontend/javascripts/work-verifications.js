@@ -1,15 +1,6 @@
 import { Modal } from 'bootstrap';
 
 $(function() {
-    $("#tbl_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
-
     $("#print_self").on('change', function() {
         changePrint($(this)[0]);
     });
@@ -17,20 +8,12 @@ $(function() {
     $("#list").on('click', ".show-work", function() {
         execShow($(this).data("url"));
     });
-
-    setTableWrapperHeight();
 });
 
 $(window).on('load', function() {
     $("#print_self").attr("checked", true);
     changePrint($("#print_self")[0]);
 });
-
-function setTableWrapperHeight() {
-    if($("#list")[0]) {
-        $("#list").height($(window).height() - $("#list").offset().top - $("#btn_toolbar").height() - 15);
-    }
-}
 
 function execCreate(url) {
     verificationModal.hide();
