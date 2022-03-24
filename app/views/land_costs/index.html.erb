@@ -19,9 +19,9 @@
   </div>
 </div>
 <%= form_tag(action: :create) do  %>
-  <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
-    <table id="tbl_list" class="table table-sm">
-      <thead style="background-color:white;">
+  <div id="table_wrapper" class="wrapper small float-head-wrapper">
+    <table id="tbl_list" class="table table-sm float-head">
+      <thead>
         <tr>
           <th>番地</th>
           <th class="text-nowrap">面積</th>
@@ -47,49 +47,30 @@
     </div>
   </div>
 <% end %>
+<%= hidden_field_tag :colors, @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>
 <% content_for :head do %>
 <script>
-var colors = <%=raw @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>;
-
-window.addEventListener('DOMContentLoaded turbo:load', () => {
-    $("#tbl_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
-
-    all_worktypes_select();
+let colors = null;
+document.addEventListener('turbo:load', () => {
+    allWorktypesSelect();
 
     $("input[type='radio'][id^='land_place']").bind("ajax:complete", function(xhr, response, status) {
         if(status == "success"){
             $('#land_place_id').val($(this).val());
-            all_worktypes_select();
+            allWorktypesSelect();
         }
     });
 
-    setTableWrapperHeight();
+    colors = JSON.parse(document.getElementById("colors").value);
 });
 
-function setTableWrapperHeight() {
-    if($("#table_wrapper")[0]) {
-        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
-    }
-}
-
-function cost_keydown(elm, area, fee) {
-    elm.value = area * (fee / 10);
-}
-
-function all_worktypes_select() {
+function allWorktypesSelect() {
     $("input[type='radio'][id^='work_type']:checked").each(function() {
-        worktype_select($(this)[0]);
+        worktypeSelect($(this)[0]);
     });
 }
 
-function worktype_select(elm) {
+function worktypeSelect(elm) {
     $(elm).parents("tr").css("background-color", colors[elm.value]);
 }
 </script>

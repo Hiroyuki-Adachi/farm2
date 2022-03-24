@@ -1,6 +1,6 @@
 <h1>作業予定(議事録)一覧</h1>
-<div id="list" class="wrapper" style="overflow-y: scroll; width: 100%;">
-  <table id="minutes_list" class="table table-sm">
+<div id="list" class="wrapper float-head-wrapper">
+  <table id="minutes_list" class="table table-sm float-head">
     <thead>
       <tr>
         <th>開催(予定)日</th>
@@ -38,28 +38,11 @@
 </div>
 <% content_for :head do %>
 <script type="text/javascript">
-window.addEventListener('DOMContentLoaded turbo:load', () => {
-    $("#minutes_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
-
+document.addEventListener('turbo:load', () => {
     $("#minute_pdf").change(function() {
         $(this).closest("form").submit();
     });
-
-    setTableWrapperHeight();
 });
-
-function setTableWrapperHeight() {
-    if($("#table_wrapper")[0]) {
-        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
-    }
-}
 
 function createPDF(schedule_id) {
     $("#minute_schedule_id").val(schedule_id);
