@@ -43,33 +43,27 @@ document.addEventListener('turbo:load', () => {
         }
     }
 
-    const handleConfirm = function(event) {
-        if (!allowAction(event.target)) {
-            Turbo.stopEverything(event);
+    const newConfirmMethod = async (message, element) => {
+        try {
+            const result = await promiseConfirm(message);
+            if (result != null) {
+                return result;
+            }
+        } finally {
+            return false;
         }
-    }
+    };
 
-    const allowAction = function(element) {
-        if (element.getAttribute('data-confirm') === null) {
-            return true;
-        }
-        showConfirmationDialog(element);
-        return false;
-    }
-
-    const confirmed = function(element, result) {
-        if (result.value) {
-            element.removeAttribute('data-confirm')
-            element.click()
-        }
-    }
-
-    const showConfirmationDialog = function(element) {
-        const message = element.getAttribute('data-confirm');
-        popupConfirm(message, function(result) {
-            confirmed(element, {value: result});
+    const promiseConfirm = (message) => {
+        return new Promise((resolve) => {
+            popupConfirm(message, function(result) {
+                return resolve(result);
+            });
         });
-    }
+    };
+
+    Turbo.setConfirmMethod(newConfirmMethod);
+    window.newConfirmMethod = newConfirmMethod;
 
     if (mySideClose != null) {
         mySideClose.addEventListener("click", () => {
