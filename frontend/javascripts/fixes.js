@@ -35,29 +35,11 @@ function checkAll(val)
     calc_total();
 }
 
-window.addEventListener('DOMContentLoaded turbo:load', () => {
-    $("#tbl_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-
-    $(".all-check").on('click', function() {
+document.addEventListener('turbo:load', () => {
+    document.querySelector(".all-check").addEventListener('click', () => {
         checkAll(true);
     });
-    $(".all-cancel").on('click', function() {
+    document.querySelector(".all-cancel").addEventListener('click', () => {
         checkAll(false);
     });
-
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
-
-    setTableWrapperHeight();
 });
-
-function setTableWrapperHeight() {
-    if($("#table_wrapper")[0]) {
-        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
-    }
-}

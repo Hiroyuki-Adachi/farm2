@@ -1,9 +1,9 @@
 <h1>ブロッコリー売上</h1>
 <%= form_tag(action: :create) do %>
 <div class="row">
-  <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll; width: auto;">
-    <table id="tbl_list" class="table table-sm">
-      <thead style="background-color:white;">
+  <div id="table_wrapper" class="wrapper small float-head-wrapper">
+    <table id="tbl_list" class="table table-sm float-head">
+      <thead>
         <tr>
           <th>収穫日</th>
           <th>出荷日</th>
@@ -43,15 +43,7 @@
 <% end %>
 <% content_for :head do %>
 <script>
-window.addEventListener('DOMContentLoaded turbo:load', function() {
-    $("#tbl_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
+document.addEventListener('turbo:load', function() {
     $('form').submit(function(){
         loading.disp("計算中");
     });
@@ -59,15 +51,7 @@ window.addEventListener('DOMContentLoaded turbo:load', function() {
     $("input[name$='[sale]'").change(function() {
         $("input[name$='[cost]'][data-work='" + $(this).data("work") + "']").attr("max", $(this).val());
     });
-
-    setTableWrapperHeight();
     loading.remove();
 });
-
-function setTableWrapperHeight() {
-    if($("#table_wrapper")[0]) {
-        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
-    }
-}
 </script>
 <% end %>

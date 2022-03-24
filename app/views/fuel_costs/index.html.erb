@@ -9,9 +9,9 @@
   </div>
 </div>
 <div class="row">
-  <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
-    <table id="tbl_list" class="table table-sm">
-      <thead style="background-color:white;">
+  <div id="table_wrapper" class="wrapper small float-head-wrapper">
+    <table id="tbl_list" class="table table-sm float-head">
+      <thead>
         <tr>
           <th rowspan="2">日付</th>
           <% @machines.each do |machine| %>
@@ -53,25 +53,4 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
-<% end %>
-<% content_for :head do %>
-<script>
-window.addEventListener('DOMContentLoaded turbo:load', () => {
-    $("#tbl_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
-    setTableWrapperHeight();
-});
-
-function setTableWrapperHeight() {
-    if($("#table_wrapper")[0]) {
-        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
-    }
-}
-</script>
 <% end %>
