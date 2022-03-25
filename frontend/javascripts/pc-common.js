@@ -43,19 +43,12 @@ document.addEventListener('turbo:load', () => {
         }
     }
 
-    const newConfirmMethod = async (message, element) => {
-        try {
-            const result = await promiseConfirm(message);
-            if (result != null) {
-                return result;
-            }
-        } finally {
-            return false;
-        }
+    const newConfirmMethod = (message, element) => {
+        return promiseConfirm(message);
     };
 
     const promiseConfirm = (message) => {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             popupConfirm(message, function(result) {
                 return resolve(result);
             });
