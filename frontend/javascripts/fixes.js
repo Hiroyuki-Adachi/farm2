@@ -36,28 +36,10 @@ function checkAll(val)
 }
 
 $(function() {
-    $("#tbl_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-
     $(".all-check").on('click', function() {
         checkAll(true);
     });
     $(".all-cancel").on('click', function() {
         checkAll(false);
     });
-
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
-
-    setTableWrapperHeight();
 });
-
-function setTableWrapperHeight() {
-    if($("#table_wrapper")[0]) {
-        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
-    }
-}

@@ -57,3 +57,22 @@ th.numeric {
 input[type=date].form-control {
   width: 200px;
 }
+
+div.form-check-inline input[type='checkbox']:checked + label {
+  color: red;
+  font-weight: bold;
+}
+
+table.float-head {
+	position: relative;
+}
+table.float-head th {
+	position: sticky;
+  background-color: white;
+  z-index: 1;
+	top: 0;
+}
+div.float-head-wrapper {
+  overflow-y: scroll;
+  height: calc(100vh - 400px);
+}

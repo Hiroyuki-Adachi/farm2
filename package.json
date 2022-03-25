@@ -7,7 +7,6 @@
     "bootstrap": "^5",
     "chart.js": "^2.9.3",
     "decimal.js": "~10",
-    "floatthead": "^2.1.4",
     "i18n-js": "^3.5.1",
     "jquery": "~3.5",
     "jquery-ui": "^1.12.1",

@@ -7,9 +7,9 @@
 <hr />
 <% old_group1_id = 0 %>
 <% old_group2_id = 0 %>
-<div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
-  <table id="tbl_list" class="table table-sm">
-    <thead style="background-color:white;">
+<div id="table_wrapper" class="wrapper small float-head-wrapper">
+  <table id="tbl_list" class="table table-sm float-head">
+    <thead>
       <tr>
         <th colspan="3"></th>
         <% @work_types.each do |work_type| %>
@@ -114,15 +114,6 @@
 </div>
 <script>
 $(function() {
-    $("#tbl_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
-
     $(".group1-total").click(function() {
         var s = $(".group2-total[data-group1='" + $(this).data("group1") + "']");
         if(s.is(":visible")) {
@@ -142,13 +133,5 @@ $(function() {
     });
   
     $(".group2-total, .detail").hide();
-
-    setTableWrapperHeight();
 });
-
-function setTableWrapperHeight() {
-    if($("#table_wrapper")[0]) {
-        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
-    }
-}
 </script>
