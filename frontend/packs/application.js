@@ -20,7 +20,6 @@ window.Decimal = Decimal;
 require('jquery-ui');
 require('jquery-ui/themes/base/all.css');
 require('jquery-ui-touch-punch');
-require('floatthead');
 
 import '@fortawesome/fontawesome-free/js/all'
 import "../javascripts/jquery.selection";
