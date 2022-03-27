@@ -68,8 +68,7 @@ class WorkKind < ApplicationRecord
     if Rails.cache.exist?(cache_key)
       price_value = Rails.cache.read(cache_key)
     else
-      work_kind_price = WorkKindPrice.by_term(self, term).first
-      price_value = work_kind_price ? work_kind_price.price : 0
+      price_value =  WorkKindPrice.price(self, term)
       Rails.cache.write(cache_key, price_value, expires_in: 1.hour)
     end
     return price_value
