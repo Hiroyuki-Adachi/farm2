@@ -48,7 +48,7 @@ s2015:
   start_date: 2015-01-01
   end_date: 2015-12-31
   organization_id: 1
-  default_price: 1000
+  default_price: 1100
   default_fee: 15000
   light_oil_price: 120
   relative_price: 1000
