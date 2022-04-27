@@ -12,7 +12,7 @@
     </tr>
     </thead>
     <tbody>
-      <% ([current_organization.chemicals_count, @chemicals.count].max - 1).times do |i| %>
+      <% [current_organization.chemicals_count, @chemicals.count].max.times do |i| %>
         <% if @chemicals[i] %>
           <% chemical = Chemical.find(@chemicals[i][0]) %>
           <td class="chemical"><%= chemical.chemical_type.name %></td>
