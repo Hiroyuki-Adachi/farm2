@@ -1,4 +1,10 @@
 class SessionsController < ApplicationController
+
+  def index
+    log_out
+    redirect_to root_path
+  end
+
   def new
     log_out
   end
@@ -13,10 +19,5 @@ class SessionsController < ApplicationController
       flash.now[:danger] = 'IDまたはpasswordが間違っています。'
       render :new
     end
-  end
-
-  def destroy
-    log_out
-    redirect_to root_path
   end
 end
