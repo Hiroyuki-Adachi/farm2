@@ -26,7 +26,7 @@ class SessionsControllerTest < ActionController::TestCase
 
   test "ログアウト" do
     session[:user_id] = @user.id
-    post :destroy, params: {id: @user}
+    get :index
     assert_redirected_to root_path
     assert_nil session[:user_id]
   end

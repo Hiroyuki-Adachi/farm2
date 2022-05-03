@@ -46,6 +46,9 @@
 <% if @broccoli && false %>
   <%= render partial: "show_broccoli" %>
 <% end %>
+<% if @work.work_kind_id == current_organization.rice_planting_id %>
+  <%= render partial: "show_seedlings" %>
+<% end %>
 <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
 <%= link_to '削除',raw(work_path(id: @work)), class: "btn btn-danger", data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete} %>
 <% end %>

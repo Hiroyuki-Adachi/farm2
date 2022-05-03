@@ -36,7 +36,7 @@ function addLand(landId, landPlace, landOwner, landArea)
 {
     if(document.getElementById("land_" + landId))
     {
-        bootbox.alert("既に存在しています(" + landPlace + ")");
+        popupAlert("既に存在しています(" + landPlace + ")");
         document.getElementById("land_place").value = "";
         return;
     }
