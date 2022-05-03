@@ -1,5 +1,6 @@
 class SeedlingResultsController < ApplicationController
   include PermitChecker
+  helper TotalSeedlingsHelper
   before_action :set_seedling_home, only: [:edit, :update]
   before_action :set_works, only: [:edit]
 

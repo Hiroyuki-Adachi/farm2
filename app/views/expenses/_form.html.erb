@@ -117,7 +117,7 @@ window.addEventListener('DOMContentLoaded turbo:load', () => {
 
     $("#showProportionModal").click(function() {
         if($("input[type='checkbox'][id^='expense_work_types_rate_']:checked").length < 2) {
-            bootbox.alert("按分設定は複数の項目にチェックされている場合のみ可能です。")
+            popupAlert("按分設定は複数の項目にチェックされている場合のみ可能です。")
             return;
         }
         $("#proportionModalBody").html("");

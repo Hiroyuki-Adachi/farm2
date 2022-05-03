@@ -11,7 +11,7 @@
     <% @work_kinds.each do |work_kind| %>
       <tr>
         <td><%=h work_kind.name %></td>
-        <td class="numeric"><%=h number_to_currency(work_kind.price, unit: '') %></td>
+        <td class="numeric"><%=h number_to_currency(work_kind.term_price(current_term), unit: '') %></td>
         <td><%= link_to '修正', edit_work_kind_path(work_kind), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>
