@@ -75,7 +75,7 @@ Rails.application.routes.draw do
     resources :workers, controller: "schedules/workers", only: [:new, :create]
   end
   resources :broccoli, param: "work_id", only: [:edit, :update, :destroy]
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions, only: [:new, :create, :index]
   resources :machine_types, except: [:show]
   resources :chemical_types, except: [:show]
   resources :work_kinds, except: [:show]
