@@ -1,0 +1,43 @@
+<div id="content_seedlings" class="content">
+  <div class="sub_title">※育苗</div>
+  <table id="detail_seedlings">
+    <thead>
+    <tr>
+      <th style="width:40px;"></th>
+      <th style="width:100px;">品種</th>
+      <th style="width:60px;">担当</th>
+      <th style="width:60px;">数量</th>
+      <th style="width:100px;">運搬</th>
+      <th style="width:40px;"></th>
+      <th style="width:100px;">品種</th>
+      <th style="width:60px;">担当</th>
+      <th style="width:60px;">数量</th>
+      <th style="width:100px;">運搬</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% i = 0 %>
+      <% @work.work_results.each do |work_result| %>
+        <% work_result.seedling_results.each do |seedling| %>
+          <%=raw i.even? ? '<tr>' : '' %>
+            <td class="numeric"><%= i + 1 %></td>
+            <td><%= seedling.seedling_home.seedling.work_type.name %></td>
+            <td><%= seedling.seedling_home.home.name %></td>
+            <td class="numeric"><%= seedling.quantity %></td>
+            <td><%= work_result.worker.name %></td>
+          <% i += 1 %>
+          <%=raw i.even? ? '</tr>' : '' %>
+        <% end %>
+      <% end %>
+      <% unless i.even? %>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div id="cover_seedlings" class="cover" onclick="location.href='<%=raw new_work_machine_path(work_id: @work) %>'"></div>
+</div>
