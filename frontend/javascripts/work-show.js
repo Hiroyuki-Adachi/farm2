@@ -31,5 +31,5 @@ window.cancelPrint = function(url) {
 
 window.addEventListener("load", () => {
     $("#cover_broccoli").height($("#content_broccoli").height()).width($("#content_broccoli").width());
-    $("#cover_whole_crop").height($("#content_whole_crop").height()).width($("#content_whole_crop").width());
+    $("#cover_whole_crops").height($("#content_whole_crops").height()).width($("#content_whole_crops").width());
 });
