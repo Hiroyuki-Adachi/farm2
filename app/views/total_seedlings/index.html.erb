@@ -19,9 +19,9 @@
         <td><%= seedling_home.work_type_name %></td>
         <td class="numeric"><%= seedling_home.quantity.to_formatted_s(:delimited) %></td>
         <td class="numeric"><%= (@seedling_result_quantities[seedling_home.id].to_i || 0).to_formatted_s(:delimited) %></td>
-        <td><%= seedling_status(seedling_home) %></td>
+        <td><%= seedling_status(seedling_home, @seedling_result_quantities) %></td>
         <td class="numeric"><%= sprintf("%d", @seedling_price) %></td>
-        <td class="numeric"><%= seedling_amount(seedling_home).to_formatted_s(:delimited) %></td>
+        <td class="numeric"><%= seedling_amount(seedling_home, @seedling_result_quantities, @seedling_price).to_formatted_s(:delimited) %></td>
       </tr>
     <% end %>
   </tbody>

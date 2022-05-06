@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git@github.com:composite-primary-keys/composite_primary_keys.git
-  revision: 1e9ea1ea9ee25598e25f7ffdb140852b19298247
+  revision: 1b4115d6e4a5509b0ff08c03f5879a54348606b8
   specs:
     composite_primary_keys (14.0.4)
       activerecord (~> 7.0.2)
@@ -149,7 +149,7 @@ GEM
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.16.0)
+    loofah (2.17.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -175,7 +175,7 @@ GEM
       net-protocol
       timeout
     nio4r (2.5.8)
-    nokogiri (1.13.4-x86_64-linux)
+    nokogiri (1.13.5-x86_64-linux)
       racc (~> 1.4)
     parallel (1.22.1)
     paranoia (2.6.0)
