@@ -2,6 +2,7 @@ class PersonalInformations::WorksController < PersonalInformationsController
   before_action :set_work, only: [:show]
   before_action :set_results, only: [:show]
   before_action :set_lands, only: [:show]
+  helper WorksHelper
 
   def show
     to_error_path unless @work.work_results.exists?(worker_id: @worker.id)
