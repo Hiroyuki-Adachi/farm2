@@ -30,9 +30,6 @@
 <body>
 
 <%= render partial: "show_base" %>
-<% if @whole_crop || current_organization.whole_crop_work_kind_id == @work.work_kind_id %>
-<%= render partial: "show_whole_crop" %>
-<% end %>
 <%= render partial: "show_workers" %>
 <% if (@work_lands.count > 0 || @work.work_kind.land_flag) && current_organization.lands_count > 0 %>
   <%= render partial: "show_lands" %>
@@ -49,6 +46,10 @@
 <% if @work.work_kind_id == current_organization.rice_planting_id %>
   <%= render partial: "show_seedlings" %>
 <% end %>
+<% if @whole_crop || current_organization.whole_crop_work_kind_id == @work.work_kind_id %>
+  <%= render partial: "show_whole_crops" %>
+<% end %>
+
 <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
 <%= link_to '削除',raw(work_path(id: @work)), class: "btn btn-danger", data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete} %>
 <% end %>
