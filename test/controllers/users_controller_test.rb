@@ -37,7 +37,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "ユーザ変更(実行)" do
     patch :update, params: {id: @user, user: {login_name: @user.login_name, password: "AAAA", password_confirmation: "AAA"}}
-    assert_response :success
+    assert_response :unprocessable_entity
 
     patch :update, params: {id: @user, user: {login_name: @user.login_name, password: "AAAA", password_confirmation: "AAAA"}}
     assert_redirected_to menu_index_path
