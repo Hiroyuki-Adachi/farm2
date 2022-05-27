@@ -20,6 +20,28 @@ window.popupConfirm = (message, callback) => {
     popupForm.show();
 }
 
+const newConfirmMethod = async (message, formElement) => {
+    document.getElementById("popup_confirm_message").innerText = message;
+    const popupForm = new Modal(document.getElementById("popup_confirm"));
+    popupForm.show();
+  
+    return new Promise((resolve, reject) => {
+      const confirmButton = document.getElementById("popup_confirm_yes");
+      const cancelButton = document.getElementById("popup_confirm_no");
+      confirmButton.addEventListener('click', () => {
+        popupForm.hide();
+         resolve(true)
+      });
+  
+      cancelButton.addEventListener('click', () => {
+        popupForm.hide();
+        resolve(false)
+      });
+    });
+  };
+
+Turbo.setConfirmMethod(newConfirmMethod);
+
 document.addEventListener('turbo:load', () => {
     // for sidebar
     const controller = document.getElementById("current_controller").value;
@@ -42,21 +64,6 @@ document.addEventListener('turbo:load', () => {
             });
         }
     }
-
-    const newConfirmMethod = (message, element) => {
-        return promiseConfirm(message);
-    };
-
-    const promiseConfirm = (message) => {
-        return new Promise((resolve, reject) => {
-            popupConfirm(message, function(result) {
-                return resolve(result);
-            });
-        });
-    };
-
-    Turbo.setConfirmMethod(newConfirmMethod);
-    window.newConfirmMethod = newConfirmMethod;
 
     if (mySideClose != null) {
         mySideClose.addEventListener("click", () => {
