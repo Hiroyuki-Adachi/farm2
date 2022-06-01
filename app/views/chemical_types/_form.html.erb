@@ -1,5 +1,5 @@
 <%= error_print(@chemical_type) %>
-<%= form_for(@chemical_type) do |f| %>
+<%= form_with(model: @chemical_type) do |f| %>
   <div class="row">
     <div class="field mb-3 col-md-2">
       <%= f.label :name, class: "col-form-label-lg form-label" %>

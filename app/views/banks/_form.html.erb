@@ -1,5 +1,5 @@
 <%= error_print(@bank) %>
-<%= form_for(@bank) do |f| %>
+<%= form_with(model: @bank) do |f| %>
   <div class="field">
     <%= f.label :code %><br>
     <%= f.text_field :code, {size: 5, maxlength: 4, pattern: "^[0-9]{4}$", required: true} %>

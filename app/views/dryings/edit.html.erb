@@ -3,7 +3,7 @@
 td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
 </style>
 <h1>乾燥／調整登録</h1>
-<%= form_for(@drying.model, url: {controller: :dryings, action: :update}) do |fd| %>
+<%= form_with(model: @drying.model, url: {controller: :dryings, action: :update}) do |fd| %>
   <div class="row">
     <div class="col-md-5">
       <div class="input-group">

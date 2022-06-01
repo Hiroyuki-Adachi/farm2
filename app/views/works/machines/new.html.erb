@@ -1,6 +1,6 @@
 <h1>作業日報(作業機械)登録</h1>
 <%= error_print(@work) %>
-<%= form_for(@work, url: {action: :create}, html: {method: :post}) do |f| %>
+<%= form_with(model: @work, url: {action: :create}, html: {method: :post}) do |f| %>
 <%= render(:partial => 'show_work', :locals => {:f => f}) %>
   <% if @results.count == 0 %>
   <h2>作業者を先に登録してください。</h2>
