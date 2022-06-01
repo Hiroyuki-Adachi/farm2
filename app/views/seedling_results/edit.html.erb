@@ -1,7 +1,7 @@
 <%= error_print(@seedling_home) %>
 <h1>育苗使用</h1>
 <h4><%= @seedling_home.home_name %>(<%= @seedling_home.work_type_name %>)</h4>
-<%= form_for(@seedling_home, url: {controller: :seedling_results, action: :update}) do |shf| %>
+<%= form_with(model: @seedling_home, url: {controller: :seedling_results, action: :update}) do |shf| %>
   <div class="row">
     <table class="table table-sm" style="width:auto;">
       <thead>

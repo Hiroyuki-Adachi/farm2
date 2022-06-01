@@ -1,6 +1,6 @@
 <%= error_print(@machine_price) %>
 <% work_kinds = @machine_price.work_kinds %>
-<%= form_for(@machine_price) do |f| %>
+<%= form_with(model: @machine_price) do |f| %>
   <div class="field mb-3">
     <%= f.label :validated_at, class: "col-form-label-lg form-label" %>
     <%= f.date_field(:validated_at, {required: true, class: "form-control"}) %><br />
