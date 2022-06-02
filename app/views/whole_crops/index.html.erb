@@ -1,6 +1,6 @@
 <h1>WCS一覧</h1>
 <% if @whole_crops.count > 0 %>
-<%= form_tag(whole_crops_path, {method: :post}) do %>
+<%= form_with url: whole_crops_path, method: :post do |f| %>
 <table class="table table-sm" style="width:auto;">
   <thead>
     <tr>
