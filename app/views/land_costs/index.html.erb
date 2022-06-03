@@ -18,7 +18,7 @@
     <% end %>
   </div>
 </div>
-<%= form_tag(action: :create) do  %>
+<%= form_with url: land_costs_path, method: :post do |f|  %>
   <div id="table_wrapper" class="wrapper small float-head-wrapper">
     <table id="tbl_list" class="table table-sm float-head">
       <thead>

@@ -1,4 +1,4 @@
-<%= form_tag lands_totals_path, {method: :get, id: :search_form} do %>
+<%= form_with url: lands_totals_path, method: :get, id: :search_form do |f| %>
   <div class="row">
     <div class="col-md-4">
       <h1>土地統計一覧</h1>

@@ -1,6 +1,6 @@
 <h1>育苗原価</h1>
 <h2>単価</h2>
-<%= form_tag(action: :create) do  %>
+<%= form_with url: seedling_costs_path, method: :post do |f|  %>
   <div class="row">
     <div class="col-md-3 mb-3">
       <label for="system_seedling_chemical_id" class="form-label">種別</label>

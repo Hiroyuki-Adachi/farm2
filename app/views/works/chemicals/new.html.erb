@@ -1,7 +1,7 @@
 <h1>作業日報(薬剤)登録</h1>
 <%= error_print(@work) %>
 
-<%= form_for(@work.model, url: {action: :create}, html: {method: :post}) do |f| %>
+<%= form_with(model: @work.model, url: {action: :create}, html: {method: :post}) do |f| %>
   <%= render(:partial => 'show_work', :locals => {:f => f}) %>
   <% group_count = [@work.work_chemicals.maximum(:chemical_group_no).to_i, current_organization.chemical_group_count].max %>
   <div class="row">

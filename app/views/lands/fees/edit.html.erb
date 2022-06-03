@@ -1,5 +1,5 @@
 <h1>土地原価修正(<%= @home.name %>)</h1>
-<%= form_tag lands_fee_path, {method: :put, id: @home.id} do  %>
+<%= form_with url: lands_fee_path, method: :put, id: @home.id do |f| %>
 <table class="table table-sm">
   <thead>
     <th>番地</th>

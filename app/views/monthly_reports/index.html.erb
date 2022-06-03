@@ -1,5 +1,5 @@
 <h1>作業月報選択</h1>
-<%= form_tag({:action => 'show', :id => 0}, {:method => :get}) do %>
+<%= form_with url: monthly_report_path(0), method: :get do |f| %>
   <div class="row">
     <div class="mb-3 col-md-4">
       <label class="form-label">対象月</label>
