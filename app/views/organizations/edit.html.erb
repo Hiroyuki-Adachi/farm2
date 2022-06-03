@@ -1,6 +1,6 @@
 <h1>管理情報変更</h1>
 <%= error_print(@organization) %>
-<%= form_for(@organization) do |f| %>
+<%= form_with(model: @organization) do |f| %>
   <div class="row">
     <div class="field mb-3 col-md-3">
         <%= f.label :name, class: "col-form-label-lg form-label" %>

@@ -1,7 +1,7 @@
 <h1>作業日報(健康)登録</h1>
 <%= error_print(@work) %>
 
-<%= form_for(@work.model, url: {action: :create}, html: {method: :post}) do |f| %>
+<%= form_with(model: @work.model, url: {action: :create}, html: {method: :post}) do |f| %>
   <%= render(:partial => 'show_work', :locals => {:f => f}) %>
   <table id="tbl_workers" class="table table-sm">
     <thead>

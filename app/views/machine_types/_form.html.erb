@@ -1,5 +1,5 @@
 <%= error_print(@machine_type) %>
-<%= form_for(@machine_type) do |f| %>
+<%= form_with(model: @machine_type) do |f| %>
  <div class="field mb-3">
     <%= f.label :name, class: "col-form-label-lg form-label" %>
     <%= f.text_field :name, {maxlength: 20, size: 20, required: true, class: "form-control"} %>

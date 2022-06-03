@@ -1,7 +1,7 @@
 <h1>システム保守</h1>
 
 <%= error_print(@system) %>
-<%= form_for(@system) do |f| %>
+<%= form_with(model: @system) do |f| %>
   <div class="row">
     <div class="col-md-2 mb-3">
       <%= f.label :start_date, class: "col-form-label-lg form-label" %>
