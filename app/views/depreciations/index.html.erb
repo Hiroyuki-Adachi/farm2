@@ -1,5 +1,5 @@
 <h1>減価償却費登録</h1>
-<%= form_tag(action: :create) do  %>
+<%= form_with url: depreciations_path, method: :post do |f|  %>
   <div id="table_wrapper" class="row wrapper small float-head-wrapper">
     <table id="tbl_list" class="table table-sm float-head">
       <thead>

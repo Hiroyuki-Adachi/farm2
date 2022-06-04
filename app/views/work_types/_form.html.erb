@@ -1,5 +1,5 @@
 <%= error_print(@work_type) %>
-<%= form_for(@work_type, {:multipart => true }) do |f| %>
+<%= form_with(model: @work_type, html: {multipart: true}) do |f| %>
 <div class="row">
   <div class="mb-3 col-md-2">
     <%= f.label :name, class: "col-form-label-lg form-label" %>

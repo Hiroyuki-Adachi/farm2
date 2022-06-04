@@ -12,7 +12,7 @@
               <h3 class="mb-0">ログイン</h3>
             </div>
             <div class="card-body">
-              <%= form_tag(action: :create) do %>
+              <%= form_with url: sessions_path, method: :post do |f| %>
                 <div class="mb-3">
                   <label for="uname1" class="h5 form-label">ユーザID</label>
                   <%= text_field_tag :login_name, "", {maxlength: 12, required: true, class: "form-control form-control-lg rounded-0", placeholder: "初期値は携帯番号です。" } %>

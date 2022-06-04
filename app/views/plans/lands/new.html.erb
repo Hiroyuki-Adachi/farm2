@@ -34,7 +34,7 @@
 <div id="land_area_sum" class="label text-right font-weight-bold" style="width: 150px;">0.0</div>
 <%= hidden_field_tag :location, "[#{current_location}]" %>
 <%= hidden_field_tag :organization_name, current_organization.name %>
-<%= form_tag(action: :create) do %>
+<%= form_with url: plans_lands_path, method: :post do |f| %>
   <div id="lands">
     <% @lands.each do |land| %>
       <%= hidden_field_tag "land[#{land.id}]", land.work_type_id, {data: {id: land.id, place: land.place, area: land.area, region: land.region, owner: land.owner.name}} %>

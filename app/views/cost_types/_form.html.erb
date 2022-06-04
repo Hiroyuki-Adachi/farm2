@@ -4,7 +4,7 @@
   color: blue;
 }
 </style>
-<%= form_for(@cost_type) do |f| %>
+<%= form_with(model: @cost_type) do |f| %>
   <div class="row">
     <div class="field mb-3 col-md-2">
       <%= f.label :name, class: "col-form-label-lg form-label" %>

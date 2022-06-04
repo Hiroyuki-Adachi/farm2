@@ -1,5 +1,5 @@
 <h1>燃料原価登録</h1>
-<%= form_tag(action: :create) do  %>
+<%= form_with url: fuel_costs_path, method: :post do |f| %>
 <div class="row">
   <div class="col-md-4">
     <div class="form-inline">

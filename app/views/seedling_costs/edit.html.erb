@@ -1,6 +1,6 @@
 <%= error_print(@seedling) %>
 <h1><%= @seedling.work_type_name %> 育苗担当</h1>
-<%= form_for(@seedling, url: {controller: :seedling_costs, action: :update}) do |sf| %>
+<%= form_with(model: @seedling, url: {controller: :seedling_costs, action: :update}) do |sf| %>
   <div class="row">
     <table class="table table-sm" style="width:auto;">
       <thead>
