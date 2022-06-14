@@ -25,16 +25,12 @@ const newConfirmMethod = async (message, formElement) => {
     const popupForm = new Modal(document.getElementById("popup_confirm"));
     popupForm.show();
   
-    return new Promise((resolve, reject) => {
-      const confirmButton = document.getElementById("popup_confirm_yes");
-      const cancelButton = document.getElementById("popup_confirm_no");
-      confirmButton.addEventListener('click', () => {
-        popupForm.hide();
-         resolve(true)
+    return new Promise(resolve => {
+      document.getElementById("popup_confirm_yes").addEventListener('click', () => {
+        resolve(true)
       });
   
-      cancelButton.addEventListener('click', () => {
-        popupForm.hide();
+      document.getElementById("popup_confirm_no").addEventListener('click', () => {
         resolve(false)
       });
     });
