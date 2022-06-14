@@ -37,7 +37,7 @@
     <% end %>
   </tbody>
 </table>
-<%= form_for(@new_drying) do |f| %>
+<%= form_with(model: @new_drying) do |f| %>
   <%= f.hidden_field(:term) %>
   <%= f.hidden_field(:home_id) %>
   <%= f.hidden_field(:carried_on) %>

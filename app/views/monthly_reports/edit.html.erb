@@ -82,7 +82,7 @@ function calc_total_hours()
 <% end %>
 <h1>作業月報修正</h1>
 <h2><%= @target_from.strftime('%Y年%m月') %>：<%= @worker.name + "(#{@worker.home.name})" %></h2>
-<%= form_tag({:action => :update, :id => @worker}, {:method => :put}) do %>
+<%= form_with url: monthly_report_path(@worker), method: :put do |f| %>
 <table class="table table-sm">
   <thead>
     <tr>

@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git@github.com:composite-primary-keys/composite_primary_keys.git
-  revision: 1b4115d6e4a5509b0ff08c03f5879a54348606b8
+  revision: 51646d0841d8d09b2f6bac42aa70ae9218888474
   specs:
     composite_primary_keys (14.0.4)
       activerecord (~> 7.0.2)
@@ -186,7 +186,7 @@ GEM
     puma (5.6.4)
       nio4r (~> 2.0)
     racc (1.6.0)
-    rack (2.2.3)
+    rack (2.2.3.1)
     rack-proxy (0.7.2)
       rack
     rack-test (1.1.0)
@@ -212,7 +212,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.2)
+    rails-html-sanitizer (1.4.3)
       loofah (~> 2.3)
     railties (7.0.3)
       actionpack (= 7.0.3)
@@ -226,7 +226,7 @@ GEM
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    regexp_parser (2.4.0)
+    regexp_parser (2.5.0)
     request_store (1.5.1)
       rack (>= 1.4)
     rexml (3.2.5)
@@ -234,7 +234,7 @@ GEM
       chunky_png (~> 1.0)
       rqrcode_core (~> 1.0)
     rqrcode_core (1.2.0)
-    rubocop (1.30.0)
+    rubocop (1.30.1)
       parallel (~> 1.10)
       parser (>= 3.1.0.0)
       rainbow (>= 2.2.2, < 4.0)

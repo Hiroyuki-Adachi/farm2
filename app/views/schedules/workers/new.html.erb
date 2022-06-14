@@ -4,7 +4,7 @@
 <h1 class="page-header">作業予定者設定</h1>
 <%= error_print(@schedule) %>
 
-<%= form_tag(schedule_workers_path(schedule_id: @schedule.model), method: :post) do %>
+<%= form_with url: schedule_workers_path(schedule_id: @schedule.model), method: :post do |f| %>
   <%= render(:partial => 'schedule') %>
   <hr />
   <%= render(:partial => 'form') %>

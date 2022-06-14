@@ -27,7 +27,7 @@
     </tbody>
   </table>
 </div>
-<%= form_for(Minute.new) do |f| %>
+<%= form_with(model: Minute.new) do |f| %>
   <%= f.hidden_field(:schedule_id) %>
   <%= f.file_field(:pdf, {style: "display: none;"}) %>
 <% end %>

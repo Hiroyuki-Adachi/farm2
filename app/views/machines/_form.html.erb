@@ -1,5 +1,5 @@
 <%= error_print(@machine) %>
-<%= form_for(@machine) do |f| %>
+<%= form_with(model: @machine) do |f| %>
   <div class="row">
     <div class="col-md-3 mb-3">
       <%= f.label :machine_type_id, class: "col-form-label-lg form-label" %>

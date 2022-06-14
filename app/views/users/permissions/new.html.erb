@@ -1,7 +1,7 @@
 <h1>権限登録</h1>
 <%= error_print(@user) %>
 <h2><%= @user.worker.family_name %><%= @user.worker.first_name %></h2>
-<%= form_for(@user, url: user_permissions_path(user_id: @user.id), method: :post) do |f| %>
+<%= form_with(model: @user, url: user_permissions_path(user_id: @user.id), method: :post) do |f| %>
 <div class="row">
   <div class="col-md-3">
     <div class="field mb-3">
