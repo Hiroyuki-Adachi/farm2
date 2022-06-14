@@ -1,7 +1,7 @@
 <h1>作業日報(WCS)登録</h1>
 <%= error_print(@work) %>
 <% updatable = @work.fixed_at.nil? && updatable_work(current_user, @work) %>
-<%= form_for(@work, url: {action: :create}, html: {method: :post}) do |f| %>
+<%= form_with(model: @work, url: {action: :create}, html: {method: :post}) do |f| %>
   <table class="table table-sm">
     <thead>
       <tr>

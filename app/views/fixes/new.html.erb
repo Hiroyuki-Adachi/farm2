@@ -3,7 +3,7 @@
 <% end %>
 <h1>新規確定</h1>
 <h2>確定月</h2>
-<%= form_tag(action: :create) do %>
+<%= form_with url: fixes_path, method: :post do |f| %>
 <%= select_tag('fixed_at', options_for_select(@terms), {class: "form-select"}) %>
 
 <h2>確定対象作業</h2>

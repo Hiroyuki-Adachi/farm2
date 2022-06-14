@@ -26,7 +26,7 @@
     </div>
   </div>
 </div>
-<%= form_for(@land, url: {controller: :land_costs, action: :update}) do |lf| %>
+<%= form_with(model: @land, url: {controller: :land_costs, action: :update}) do |lf| %>
   <div class="row">
     <table class="table table-sm">
       <thead>

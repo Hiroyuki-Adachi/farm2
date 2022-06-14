@@ -1,5 +1,5 @@
 <h1>カレンダー制御</h1>
-<%= form_tag(action: :create) do %>
+<%= form_with url: calendar_work_kinds_path, method: :post do |f| %>
   <div class="row">
     <div class="col-md-2">
       <%= select_tag(:calendar_term, options_for_select(@terms, selected: current_user.calendar_term), {class: "form-select"}) %>

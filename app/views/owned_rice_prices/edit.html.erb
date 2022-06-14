@@ -1,6 +1,6 @@
 <h1>保有米単価マスタ(<%= current_term %>年度)(<%= @owned_rice_price.work_type.name %>)</h1>
 <%= error_print(@owned_rice_price) %>
-<%= form_for(@owned_rice_price) do |f| %>
+<%= form_with(model: @owned_rice_price) do |f| %>
   <div class="row">
     <div class="col-md-3 mb-3">
       <%= f.label :name, class: "col-form-label-lg form-label" %>

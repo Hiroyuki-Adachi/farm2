@@ -13,7 +13,7 @@
 <% end %>
 <h2><%= current_term %>年度</h2>
 <h3>保有米</h3>
-<%= form_tag(owned_rice_path(id: @home.id), method: :put) do %>
+<%= form_with url: owned_rice_path(id: @home.id), method: :put do |f| %>
   <div class="row">
     <% @owned_prices.each do |owned_price| %>
       <% owned_rice = @owned_rices.find {|o| o.owned_rice_price_id == owned_price.id} %>

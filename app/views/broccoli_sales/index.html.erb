@@ -1,5 +1,5 @@
 <h1>ブロッコリー売上</h1>
-<%= form_tag(action: :create) do %>
+<%= form_with url: broccoli_sales_path, method: :post do |f| %>
 <div class="row">
   <div id="table_wrapper" class="wrapper small float-head-wrapper">
     <table id="tbl_list" class="table table-sm float-head">

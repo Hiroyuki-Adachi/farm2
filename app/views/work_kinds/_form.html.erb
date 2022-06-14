@@ -1,5 +1,5 @@
 <%= error_print(@work_kind) %>
-<%= form_for(@work_kind) do |f| %>
+<%= form_with(model: @work_kind) do |f| %>
   <div class="row">
     <div class="field mb-3 col-md-4">
         <%= f.label :name, class: "col-form-label-lg form-label" %>
