@@ -1,12 +1,12 @@
-<%= form_tag broccoli_surveys_path, {id: "search_form", method: :get} do %>
+<%= form_with url: broccoli_surveys_path, id: "search_form", method: :get do |f| %>
   <div class="row">
     <div class="col-md-5">
         <h1>ブロッコリー労働時間調査</h1>
     </div>
     <div class="col-md-3">
         <div class="form-inline">
-        <label for="worked_at" class="h5">年月</label>
-        <%= select_tag(:worked_at, options_for_select(@months, selected: @month), {class: "form-control"}) %>
+        <label for="worked_at" class="h5 form-label">年月</label>
+        <%= select_tag(:worked_at, options_for_select(@months, selected: @month), {class: "form-select"}) %>
         </div>
     </div>
   </div>

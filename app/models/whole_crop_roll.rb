@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: whole_crop_rolls # WCSロール
+# Table name: whole_crop_rolls
 #
 #  id                          :bigint           not null, primary key
 #  display_order(番号)         :integer          default(0), not null
@@ -9,12 +9,13 @@
 #  updated_at                  :datetime         not null
 #  whole_crop_land_id(WCS土地) :integer          default(0), not null
 #
+
 class WholeCropRoll < ApplicationRecord
   MAX_ROLLS = 5
 
   scope :valid, -> {where("weight > ?", 0)}
 
-  belongs_to :wcs_land, {class_name: "WholeCropLand", foreign_key: "whole_crop_land_id"}
+  belongs_to :wcs_land, class_name: "WholeCropLand", foreign_key: "whole_crop_land_id"
 
   def self.regist(wcs_land, params)
     params.each do |param|

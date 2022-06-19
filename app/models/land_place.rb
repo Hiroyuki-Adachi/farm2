@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: land_places # 場所マスタ
+# Table name: land_places
 #
 #  id(場所マスタ)        :integer          not null, primary key
 #  deleted_at            :datetime
@@ -10,6 +10,7 @@
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #
+
 class LandPlace < ApplicationRecord
   acts_as_paranoid
 

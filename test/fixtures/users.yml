@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: users # 利用者マスタ
+# Table name: users
 #
 #  id(利用者マスタ)              :integer          not null, primary key
 #  calendar_term(期(カレンダー)) :integer          default(2018), not null
@@ -21,6 +21,7 @@
 #  index_users_on_login_name  (login_name) UNIQUE
 #  index_users_on_worker_id   (worker_id) UNIQUE
 #
+
 users1:
   id: 1
   worker_id: 1
@@ -78,4 +79,22 @@ user31:
   organization_id: 1
   permission_id: 0
   term: 2015
+  calendar_term: 2014
+
+user2017:
+  worker_id: 32
+  login_name: '2017'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 9
+  term: 2017
+  calendar_term: 2014
+
+user2017c:
+  worker_id: 33
+  login_name: '2017c'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 2
+  term: 2017
   calendar_term: 2014

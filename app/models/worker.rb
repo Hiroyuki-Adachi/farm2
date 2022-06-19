@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: workers # 作業者マスタ
+# Table name: workers
 #
 #  id(作業者マスタ)                  :integer          not null, primary key
 #  account_number(口座番号)          :string(7)        default("0000000"), not null
@@ -31,6 +31,7 @@
 #  index_workers_on_deleted_at  (deleted_at)
 #  index_workers_on_token       (token) UNIQUE
 #
+
 require 'securerandom'
 
 class Worker < ApplicationRecord
@@ -40,8 +41,8 @@ class Worker < ApplicationRecord
   before_create :set_token
 
   belongs_to :home, -> {with_deleted}
-  belongs_to :gender
-  belongs_to :position
+  belongs_to_active_hash :position
+  belongs_to_active_hash :gender
 
   has_many :work_results
   has_many :works, -> {order(:worked_at)}, through: :work_results

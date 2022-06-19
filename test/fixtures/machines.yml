@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: machines # 機械マスタ
+# Table name: machines
 #
 #  id(機械マスタ)                    :integer          not null, primary key
 #  deleted_at                        :datetime
@@ -14,6 +14,7 @@
 #  home_id(所有者)                   :integer          default(0), not null
 #  machine_type_id(機械種別)         :integer          default(0), not null
 #
+
 taueki_1:
   id: 2
   name: 8条(旧NSU87)

@@ -1,19 +1,24 @@
 # == Schema Information
 #
-# Table name: work_chemicals # 薬剤使用データ
+# Table name: work_chemicals
 #
 #  id(薬剤使用データ)                  :integer          not null, primary key
+#  area_flag(10a当たり入力)            :boolean          default(FALSE), not null
 #  chemical_group_no(薬剤グループ番号) :integer          default(1), not null
+#  magnification(水溶液(リットル))     :decimal(5, 1)
 #  quantity(使用量)                    :decimal(5, 1)    default(0.0), not null
+#  remarks(備考)                       :text             default(""), not null
 #  created_at                          :datetime
 #  updated_at                          :datetime
 #  chemical_id(薬剤)                   :integer          not null
+#  dilution_id(希釈)                   :integer          default(0), not null
 #  work_id(作業)                       :integer          not null
 #
 # Indexes
 #
 #  work_chemicals_2nd_key  (work_id,chemical_id,chemical_group_no) UNIQUE
 #
+
 work_chemical1:
   work_id: 1478
   chemical_id: 3
@@ -26,6 +31,14 @@ work_chemical_genka:
   work: work_genka
   chemical: chemical_genka
   quantity: 5
+  created_at: '2015-07-15 14:03:52'
+  updated_at: '2015-07-15 14:03:52'
+  chemical_group_no: 1
+
+work_chemical_stock:
+  work_id: 1486
+  chemical_id: 4
+  quantity: 35
   created_at: '2015-07-15 14:03:52'
   updated_at: '2015-07-15 14:03:52'
   chemical_group_no: 1

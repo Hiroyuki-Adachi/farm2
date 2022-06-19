@@ -1,6 +1,12 @@
+- id: 1
+  code: Area
+  name: "土地(面積)"
 - id: 10
   code: Land
-  name: "土地管理"
+  name: "土地(管理)"
+- id: 15
+  code: Peasant
+  name: "土地(小作)"
 - id: 20
   code: Depreciation
   name: "減価償却"
@@ -40,3 +46,6 @@
 - id: 210
   code: Subsidy
   name: "助成金"
+- id: 300
+  code: Machine
+  name: "機械稼働"

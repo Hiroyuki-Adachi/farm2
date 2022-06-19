@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: calendar_work_kinds # カレンダー作業種別
+# Table name: calendar_work_kinds
 #
 #  id                     :bigint           not null, primary key
 #  text_color(文字色)     :string(8)        default("#000000"), not null
@@ -13,6 +13,7 @@
 #
 #  calendar_work_kind_index  (user_id,work_kind_id) UNIQUE
 #
+
 class CalendarWorkKind < ApplicationRecord
   belongs_to :user
   belongs_to :work_kind
@@ -35,5 +36,9 @@ class CalendarWorkKind < ApplicationRecord
       end
     end
     CalendarWorkKind.where(user_id: user_id).where.not(work_kind_id: work_kinds).find_each(&:destroy)
+  end
+
+  def excel_color
+    text_color.gsub(/#/, '')
   end
 end

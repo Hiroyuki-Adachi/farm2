@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: machine_price_headers # 機械利用単価マスタ(ヘッダ)
+# Table name: machine_price_headers
 #
 #  id(機械利用単価マスタ(ヘッダ)) :integer          not null, primary key
 #  validated_at(起点日)           :date             not null
@@ -13,6 +13,7 @@
 #
 #  machine_price_headers_2nd_key  (validated_at,machine_id,machine_type_id) UNIQUE
 #
+
 class MachinePriceHeader < ApplicationRecord
   require "ostruct"
 
@@ -21,7 +22,7 @@ class MachinePriceHeader < ApplicationRecord
 
   after_save :save_details
 
-  has_many :details, {class_name: "MachinePriceDetail", dependent: :destroy}
+  has_many :details, class_name: "MachinePriceDetail", dependent: :destroy
 
   scope :show_type, -> (machine_type, base_date){where("machine_type_id = ? AND validated_at <= ?" , machine_type, base_date).order("validated_at DESC")}
   scope :show_machine, -> (machine, base_date){where("machine_id = ? AND validated_at <= ?" , machine, base_date).order("validated_at DESC")}

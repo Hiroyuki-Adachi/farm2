@@ -14,9 +14,17 @@ Rails.application.routes.draw do
   resources :owned_rice_prices, only: [:index, :create, :edit, :update, :destroy]
   resources :harvest_whole_crops, only: [:index]
   resources :harvest_rices, only: [:index]
-  resources :dryings, except: [:new]
+  resources :dryings, except: [:new] do
+    member do
+      post :copy
+    end
+  end
   resources :calendar_work_kinds, only: [:index, :create]
   resources :calendars, only: [:index]
+  namespace :calendars do
+    resources :excels, only: [:index]
+    resources :year_excels, only: [:index]
+  end
   resources :contracts, only: [:index]
   resources :expense_types, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :broccoli_surveys, only: [:index]
@@ -48,7 +56,12 @@ Rails.application.routes.draw do
   resources :fuel_costs, only: [:index, :create]
   resources :depreciations, only: [:index, :create]
   resources :total_costs, only: [:index, :create]
+  namespace :total_costs do
+    resources :machines, only: [:index]
+    resources :work_results, only: [:index]
+  end
   resources :land_places, except: [:show]
+  resources :cost_types, except: [:show]
   resources :organizations, param: nil, only: [:edit, :update]
   resources :systems, param: nil, only: [:edit, :update]
   resources :land_costs, param: "land_id", only: [:index, :create, :edit, :update] do
@@ -65,7 +78,7 @@ Rails.application.routes.draw do
     resources :workers, controller: "schedules/workers", only: [:new, :create]
   end
   resources :broccoli, param: "work_id", only: [:edit, :update, :destroy]
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions, only: [:new, :create, :index]
   resources :machine_types, except: [:show]
   resources :chemical_types, except: [:show]
   resources :work_kinds, except: [:show]
@@ -81,12 +94,33 @@ Rails.application.routes.draw do
         get :autocomplete
       end
     end
+    resources :fees, only: [:index, :create, :edit, :update]
+    resources :totals, only: [:index]
   end
-  resources :lands, except: [:show]
+  resources :lands, except: [:show] do
+    resources :owners, controller: "lands/owners", only: [:index, :create, :destroy]
+    resources :managers, controller: "lands/managers", only: [:index, :create, :destroy]
+  end
   resources :homes, except: [:show]
   resources :workers, except: [:show]
   resources :machines, except: [:show]
-  resources :chemicals, except: [:show]
+  resources :chemicals, except: [:show] do
+    resources :stocks, controller: "chemicals/stocks", except: [:show, :index] do
+      collection do
+        get :search
+      end
+    end
+  end
+  namespace :chemicals do
+    resources :inventories, except: [:show]
+    resources :stores, except: [:show]
+    resources :stocks, only: [:index] do
+      collection do
+        get :load
+      end
+    end
+    resources :annuals, only: [:create]
+  end
   resources :sections, except: [:show]
   resources :statistics, only: [:index] do
     collection do
@@ -130,17 +164,19 @@ Rails.application.routes.draw do
 
   resources :works do
     resources :print, controller: "works/print", only: [:create, :destroy]
+    resources :healths, controller: "works/healths", only: [:new, :create]
+    resources :workers, controller: "works/workers", only: [:new, :create]
+    resources :lands, controller: "works/lands", only: [:new, :create]
+    resources :machines, controller: "works/machines", only: [:new, :create]
+    resources :remarks, controller: "works/remarks", only: [:new, :create]
+    resources :chemicals, controller: "works/chemicals", only: [:new, :create], as: :use_chemicals
+    resources :whole_crops, controller: "works/whole_crops", only: [:new, :create]
     collection do
       get :work_type_select
-      get :autocomplete_for_land_place
     end
     member do
-      get :edit_workers
-      get :edit_lands
-      get :edit_machines
-      get :edit_chemicals
-      get :edit_whole_crop
       get :map
+      get :autocomplete_for_land_place
     end
   end
 

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: expense_types # 経費種別
+# Table name: expense_types
 #
 #  id                        :bigint           not null, primary key
 #  chemical_flag(薬剤フラグ) :boolean          default(FALSE), not null
@@ -12,6 +12,7 @@
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #
+
 class ExpenseType < ApplicationRecord
   acts_as_paranoid
 

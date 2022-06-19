@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: total_costs # 集計原価
+# Table name: total_costs
 #
 #  id                               :bigint           not null, primary key
 #  amount(原価額)                   :decimal(9, )     not null
@@ -11,9 +11,11 @@
 #  term(年度(期))                   :integer          not null
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
+#  cost_type_id(原価種別)           :integer
 #  depreciation_id(減価償却)        :integer
 #  expense_id(経費)                 :integer
 #  land_id(土地)                    :integer
+#  machine_id(機械)                 :integer
 #  seedling_home_id(育苗担当)       :integer
 #  total_cost_type_id(集計原価種別) :integer          not null
 #  whole_crop_land_id(WCS土地)      :integer
@@ -24,6 +26,7 @@
 #
 #  index_total_costs_on_term_and_occurred_on  (term,occurred_on)
 #
+
 class TotalCost < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
@@ -32,11 +35,11 @@ class TotalCost < ApplicationRecord
   belongs_to :depreciation, optional: true
   belongs_to :work_chemical, optional: true
   belongs_to :seedling_home, optional: true
-  belongs_to :wcs_land, {class_name: "WholeCropLand", foreign_key: "whole_crop_land_id", optional: true}
+  belongs_to :wcs_land, class_name: "WholeCropLand", foreign_key: "whole_crop_land_id", optional: true
   belongs_to :land, optional: true
-  belongs_to :total_cost_type
+  belongs_to_active_hash :total_cost_type, optional: true
 
-  has_many :total_cost_details, {dependent: :destroy}
+  has_many :total_cost_details, dependent: :destroy
 
   delegate :name, to: :total_cost_type, prefix: true
 
@@ -45,21 +48,31 @@ class TotalCost < ApplicationRecord
       .where(term: term)
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
+  scope :for_worker, ->(term) {
+    where(term: term, total_cost_type_id: [TotalCostType::WORKWORKER.id, TotalCostType::WORKINDIRECT.id])
+  }
 
-  scope :direct, -> {where(total_cost_type_id: 0..99)}
+  scope :direct, -> {where(total_cost_type_id: 10..101)}
   scope :sales, -> {where(total_cost_type_id: 200..299)}
 
-  def self.make(term, organization)
+  def self.sum_work_results(term)
+    return for_worker(term)
+      .joins(:total_cost_details)
+      .group("total_costs.cost_type_id", "total_cost_details.work_type_id")
+      .sum("total_cost_details.cost")
+  end
+
+  def self.make(term, organization, fixed_on)
     TotalCost.where(term: term).destroy_all
     sys = System.find_by(term: term, organization_id: organization.id)
-    make_work(term, sys)
+    make_work(term, fixed_on)
     make_seedling(term, sys)
     make_lands(term, sys)
-    make_expenses(term)
-    make_depreciation(term, sys)
+    make_machines(term, fixed_on)
+    # make_expenses(term)
+    # make_depreciation(term, sys)
     make_details(term)
-
-    make_sales(term)
+    # make_sales(term)
   end
 
   def self.created_at(term)
@@ -67,6 +80,8 @@ class TotalCost < ApplicationRecord
   end
 
   def cost(work_type_id)
+    work_type = WorkType.find(work_type_id)
+    return amount if work_type.cost_only?
     return nil unless total_cost_details.where(work_type_id: work_type_id).exists?
     return amount * rate(work_type_id)
   end
@@ -74,6 +89,7 @@ class TotalCost < ApplicationRecord
   def base_cost(work_type_id)
     cost = cost(work_type_id)
     sum_area = LandCost.sum_area_by_work_type(occurred_on, work_type_id)
+    return 0 if sum_area.zero?
     return cost && !sum_area.zero? ? cost / sum_area * 10 : 0
   end
 
@@ -88,14 +104,13 @@ class TotalCost < ApplicationRecord
     return numer / denom
   end
 
-  def self.make_work(term, sys)
-    Work.by_term(term).each do |work|
+  def self.make_work(term, fixed_on)
+    Work.by_term(term).where("worked_at <= ?", fixed_on) .each do |work|
       make_work_worker(term, work)
-      next unless work.work_type.land_flag
 
-      make_work_machine(term, work)
-      make_work_chemical(term, work)
-      make_work_fuel(term, work, sys)
+      # make_work_machine(term, work)
+      # make_work_chemical(term, work)
+      # make_work_fuel(term, work, sys)
     end
   end
 
@@ -117,13 +132,36 @@ class TotalCost < ApplicationRecord
       work_id: work.id,
       amount: work.sum_workers_amount,
       display_order: work.work_kind_order,
+      cost_type_id: work.work_kind.cost_type_id,
       member_flag: true
     )
-    if work.work_type&.land_flag
+    if work.work_type.cost_flag || work.work_lands.exists?
       make_work_details(work, total_cost)
     else
       make_details_for_indirect(total_cost.id, work.worked_at)
     end
+  end
+
+  def self.make_machines(term, fixed_on)
+    Work.by_term(term).machinable.where("worked_at <= ?", fixed_on) .each do |work|
+      work.machine_results.each do |machine_result|
+        make_machine(work, machine_result)
+      end
+    end
+  end
+
+  def self.make_machine(work, machine_result)
+    total_cost = TotalCost.create(
+      term: work.term,
+      total_cost_type_id: TotalCostType::MACHINE.id,
+      occurred_on: work.worked_at,
+      work_id: work.id,
+      machine_id: machine_result.machine_id,
+      amount: machine_result.hours * 60,
+      display_order: work.work_kind_order,
+      member_flag: false
+    )
+    make_work_details(work, total_cost)
   end
 
   def self.make_work_machine(term, work)
@@ -179,7 +217,13 @@ class TotalCost < ApplicationRecord
   end
 
   def self.make_work_details(work, total_cost)
-    if (work.work_lands&.count || 0).positive?
+    if work.work_type.cost_only?
+      TotalCostDetail.create(
+        total_cost_id: total_cost.id,
+        work_type_id: work.work_type_id,
+        area: 0
+      )
+    elsif (work.work_lands&.count || 0).positive?
       LandCost.sum_area_by_lands(work.worked_at, work.lands.ids).each do |k, v|
         TotalCostDetail.create(
           total_cost_id: total_cost.id,
@@ -242,25 +286,34 @@ class TotalCost < ApplicationRecord
   def self.make_lands(term, sys)
     Land.usual.each do |land|
       cost, results = land.costs(sys.start_date, sys.end_date)
-      next if cost.zero?
-      total_cost = TotalCost.create(
-        term: term,
-        total_cost_type_id: TotalCostType::LAND.id,
-        occurred_on: sys.end_date,
-        land_id: land.id,
-        amount: cost,
-        member_flag: true,
-        display_order: land.manager.home_display_order,
-        fiscal_flag: true
+      next if cost.nil?
+
+      make_lands_sub(term, TotalCostType::AREA.id, land, results, land.area * 100, sys.end_date)
+      make_lands_sub(term, TotalCostType::LAND.id, land, results, cost.manage_fee, sys.end_date)
+      make_lands_sub(term, TotalCostType::PEASANT.id, land, results, cost.peasant_fee, sys.end_date)
+    end
+  end
+
+  def self.make_lands_sub(term, cost_type_id, land, results, fee, end_date)
+    return unless fee.positive?
+
+    total_cost = TotalCost.create(
+      term: term,
+      total_cost_type_id: cost_type_id,
+      occurred_on: end_date,
+      land_id: land.id,
+      amount: fee,
+      member_flag: true,
+      display_order: land.manager.home_display_order,
+      fiscal_flag: true
+    )
+    results.each do |k, v|
+      TotalCostDetail.create(
+        total_cost_id: total_cost.id,
+        work_type_id: k,
+        rate: v,
+        area: land.area
       )
-      results.each do |k, v|
-        TotalCostDetail.create(
-          total_cost_id: total_cost.id,
-          work_type_id: k,
-          rate: v,
-          area: land.area
-        )
-      end
     end
   end
 

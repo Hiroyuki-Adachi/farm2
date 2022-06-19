@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: depreciation_types # 減価償却分類
+# Table name: depreciation_types
 #
 #  id(減価償却分類)          :integer          not null, primary key
 #  created_at                :datetime         not null
@@ -12,6 +12,7 @@
 #
 #  index_depreciation_types_on_depreciation_id_and_work_type_id  (depreciation_id,work_type_id) UNIQUE
 #
+
 class DepreciationType < ApplicationRecord
   belongs_to :depreciation
   belongs_to :work_type

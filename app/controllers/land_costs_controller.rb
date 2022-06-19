@@ -54,7 +54,7 @@ class LandCostsController < ApplicationController
 
   def map
     @target = params[:target].present? ? params[:target] : Time.zone.today
-    @costs = LandCost.usual(Land.regionable, @target).includes(land: :owner).includes(:work_type)
+    @costs = LandCost.usual(Land.regionable.expiry(@target), @target).includes(land: :owner).includes(:work_type)
     @work_types = WorkType.land
   end
 
@@ -74,11 +74,11 @@ class LandCostsController < ApplicationController
   end
 
   def land_cost_params(params)
-    params.permit(:work_type_id, :cost, :land_id, :activated_on)
+    params.permit(:work_type_id, :land_id, :activated_on)
   end
 
   def land_params(params)
-    params.require(:land).permit(land_costs_attributes: [:id, :activated_on, :work_type_id, :cost, :_destroy])
+    params.require(:land).permit(land_costs_attributes: [:id, :activated_on, :work_type_id, :_destroy])
   end
 
   def clear_session

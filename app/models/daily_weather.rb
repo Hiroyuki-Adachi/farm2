@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: daily_weathers # 気象
+# Table name: daily_weathers
 #
 #  height(最高気温)     :float
 #  humidity(湿度)       :float
@@ -15,6 +15,7 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #
+
 class DailyWeather < ApplicationRecord
   scope :usual, ->(year) {
     where(target_date: [Date.new(year, 1, 1)..Date.new(year, 12, 31)])

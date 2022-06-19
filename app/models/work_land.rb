@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_lands # 作業地データ
+# Table name: work_lands
 #
 #  id(作業地データ)         :integer          not null, primary key
 #  display_order(表示順)    :integer          default(0), not null
@@ -15,19 +15,20 @@
 #
 #  index_work_lands_on_work_id_and_land_id  (work_id,land_id) UNIQUE
 #
+
 class WorkLand < ApplicationRecord
   belongs_to :work
   belongs_to :land, -> {with_deleted}
   belongs_to :work_type, -> {with_deleted}
-  has_one    :work_kind, -> {with_deleted}, {through: :work}
-  has_one    :wcs_land, {class_name: "WholeCropLand", dependent: :destroy}
+  has_one    :work_kind, -> {with_deleted}, through: :work
+  has_one    :wcs_land, class_name: "WholeCropLand", dependent: :destroy
 
-  scope :for_personal, ->(home, worked_at) {
+  scope :for_personal, ->(home, term) {
     joins(:work).includes(work: :work_kind)
       .joins(:land).includes(:land)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id")
-      .where("works.worked_at >= ?", worked_at)
-      .where("lands.manager_id = ?", home.id)
+      .where("works.term = ?", term)
+      .where("(lands.manager_id = ? OR EXISTS (SELECT * FROM land_homes WHERE lands.id = land_homes.land_id AND home_id = ? AND manager_flag = true))", home.id, home.id)
       .order("lands.display_order, lands.id, works.worked_at")
   }
 
@@ -108,7 +109,7 @@ class WorkLand < ApplicationRecord
       next if denom.zero?
       results.push({
         chemical: work_chemical.chemical,
-        quantity: work_chemical.quantity * numer / denom / same_areas * 10 * work_chemical.chemical.base_base_quantity,
+        quantity: work_chemical.quantity * numer / denom / same_areas * 10 * work_chemical.chemical.base_base_quantity.to_f,
         standard: chemical_work_type.quantity
       })
     end

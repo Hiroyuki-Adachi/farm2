@@ -3,7 +3,7 @@
     <h1>土地マスタ一覧</h1>
   </div>
   <div class="col-md-4">
-    <%= select_tag(:month, options_for_select(@homes, @home_id), :onChange => "change_home(this);", class: "form-control") %>
+    <%= select_tag(:month, options_for_select(@homes, @home_id), :onChange => "change_home(this);", class: "form-select") %>
   </div>
 </div>
 <% if @lands.count > 0 %>
@@ -22,7 +22,7 @@
   </thead>
   <tbody>
   <% @lands.each do |land| %>
-    <tr style="<%= 'background-color:darkgray' unless land.target_flag %>">
+    <tr class="<%= 'bg-secondary text-light' unless land.target_flag && land.expiry? %>">
       <td><%= land.place_name %></td>
       <td><%= land.place %></td>
       <td><%= land.group&.place %></td>

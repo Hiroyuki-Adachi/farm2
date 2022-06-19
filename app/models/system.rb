@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: systems # システムマスタ
+# Table name: systems
 #
 #  id(システムマスタ)                 :integer          not null, primary key
 #  adjust_price(基準額(調整のみ))     :decimal(4, )     default(0), not null
@@ -17,7 +17,7 @@
 #  target_from(開始年月)              :date
 #  target_to(終了年月)                :date
 #  term(年度(期))                     :integer          not null
-#  waste_sum_flag(くず米集計フラグ)   :boolean          default(FALSE), not null
+#  waste_price(くず米金額)            :decimal(4, )     default(0), not null
 #  created_at                         :datetime
 #  updated_at                         :datetime
 #  organization_id(組織)              :integer          default(0), not null
@@ -28,10 +28,15 @@
 #  index_systems_on_term                      (term) UNIQUE
 #  index_systems_on_term_and_organization_id  (term,organization_id) UNIQUE
 #
+
 class System < ApplicationRecord
   validates :term,        presence: true
   validates :target_from, presence: true
   validates :target_to,   presence: true
 
   validates :term, numericality: {only_integer: true, greater_than: 2000, less_than: 2100}
+
+  def self.get_system(date, organization_id)
+    System.find_by("start_date <= ? AND end_date >= ? AND organization_id = ?", date, date, organization_id)
+  end
 end

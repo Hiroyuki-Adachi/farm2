@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: expenses # 経費
+# Table name: expenses
 #
 #  id(経費)                     :integer          not null, primary key
 #  amount(支払金額)             :decimal(7, )     default(0), not null
@@ -18,6 +18,7 @@
 #  chemical_type_id(薬剤種別)   :integer          default(0)
 #  expense_type_id(経費種別)    :integer          default(0), not null
 #
+
 expense_upd:
   term: 2015
   payed_on: "2015-02-02"

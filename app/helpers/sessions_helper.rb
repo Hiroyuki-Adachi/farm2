@@ -16,7 +16,7 @@ module SessionsHelper
   end
 
   def current_system
-    @current_system ||= System.find_by(term: current_organization.term, organization_id: current_user.organization_id)
+    @current_system ||= System.find_by(term: current_user.term, organization_id: current_user.organization_id)
   end
 
   def current_term
@@ -27,6 +27,10 @@ module SessionsHelper
     current_term - 1
   end
 
+  def last_term?
+    !System.where("term > ? AND organization_id = ?", current_user.term, current_user.organization_id).exists?
+  end
+
   def now_system
     organization_id = current_user.organization_id
     @now_system ||= System.find_by(["organization_id = ? AND (current_date BETWEEN start_date AND end_date)", organization_id])
@@ -34,7 +38,7 @@ module SessionsHelper
   end
 
   def current_name
-    current_user.worker.family_name + " " + current_user.worker.first_name
+    @current_name ||= current_user.worker.family_name + " " + current_user.worker.first_name
   end
 
   def log_out

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_verifications # 日報検証
+# Table name: work_verifications
 #
 #  id(日報検証)      :integer          not null, primary key
 #  created_at        :datetime         not null
@@ -12,6 +12,7 @@
 #
 #  index_work_verifications_on_work_id_and_worker_id  (work_id,worker_id) UNIQUE
 #
+
 class WorkVerification < ApplicationRecord
   belongs_to :work
   belongs_to :worker, -> {with_deleted}

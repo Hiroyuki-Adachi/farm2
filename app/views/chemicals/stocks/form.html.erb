@@ -1,0 +1,62 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">在庫<%= @stock.new_record? ? "登録" : "編集" %></h5>
+    </div>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <%= form_with model: @stock, 
+            url: @stock.new_record? ? chemical_stocks_path(chemical_id: @chemical_term) : chemical_stock_path(chemical_id: @chemical_term, id: @stock.id),
+            id: :update_form do |f| %>
+          <div class="row">
+            <div class="col-md-4">
+                <%= f.label :stock_on, class: "col-form-label-lg form-label" %>
+            </div>
+            <div class="col-md-8">
+                <%= f.date_field :stock_on, {
+                    max: @target_system.end_date, min: @target_system.start_date, required: true, class: "form-control"
+                    } %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+                <%= f.label :name, class: "col-form-label-lg form-label" %>
+            </div>
+            <div class="col-md-8">
+                <%= f.text_field :name, {
+                    maxlength: 40, required: true, class: "form-control"
+                    } %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+                <%= f.label :stored, class: "col-form-label-lg form-label" %>
+            </div>
+            <div class="col-md-8">
+                <%= f.number_field :stored, {
+                    max: 9999.9, min: 0, step: 0.1, class: "form-control"
+                    } %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+                <%= f.label :shipping, class: "col-form-label-lg form-label" %>
+            </div>
+            <div class="col-md-8">
+                <%= f.number_field :shipping, {
+                    max: 9999.9, min: 0, step: 0.1, class: "form-control"
+                 } %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-warning" id="update_button">登録</button>
+      <% unless @stock.new_record? %>
+      <button type="button" class="btn btn-danger" id="delete_button">削除</button>
+      <% end %>
+      <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">閉じる</button>
+    </div>
+  </div>
+</div>

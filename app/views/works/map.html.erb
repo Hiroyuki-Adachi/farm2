@@ -1,20 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="content-language" content="ja" />
+  <title>作業日報管理システム(V2)</title>
+  <%= javascript_pack_tag 'application' %>
+  <%= stylesheet_pack_tag 'application' %>
+  <%= csrf_meta_tags %>
+  <script type="text/javascript">
+   const language = "<%= I18n.locale %>";
+   I18n.translations = <%== I18n::JS.filtered_translations.to_json %>;
+  </script>
+</head>
+<body>
 <h1>作業地図</h1>
-<div class="row">
-  <div class="col-md-12">
-    <div id="map" class="embed-responsive embed-responsive-16by9"></div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-11">
-    <h3 id="land_info"></h3>
-  </div>
-  <div class="col-md-1">
-    <h3>&nbsp;</h3>
-  </div>
-</div>
-<div id="btn_toolbar" class="btn-toolbar">
-  <div class="btn-group mr-2">
-    <%= link_to '戻る', work_path(@work), class: "btn btn-outline-dark" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div id="map" class="ratio ratio-16x9"></div>
+    </div>
   </div>
 </div>
 <%= hidden_field_tag :location, "[#{current_location}]" %>
@@ -24,3 +28,5 @@
 <% end %>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" async defer></script>
 <%= javascript_pack_tag 'work-map' %>
+</body>
+</html>

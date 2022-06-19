@@ -1,8 +1,8 @@
 <h1>カレンダー制御</h1>
-<%= form_tag(action: :create) do %>
+<%= form_with url: calendar_work_kinds_path, method: :post do |f| %>
   <div class="row">
     <div class="col-md-2">
-      <%= select_tag(:calendar_term, options_for_select(@terms, selected: current_user.calendar_term), {class: "form-control"}) %>
+      <%= select_tag(:calendar_term, options_for_select(@terms, selected: current_user.calendar_term), {class: "form-select"}) %>
     </div>
   </div>
   <% rep = 4 %>
@@ -14,9 +14,9 @@
           <div class="col-md-3">
             <% work_kind_id = @work_kinds[base * j + i].id %>
             <% calendar_work_kind = @calendar_work_kinds.find {|c| c.work_kind_id == work_kind_id} %>
-            <%= check_box_tag "work_kind_id[]", work_kind_id, !calendar_work_kind.nil?, {data: {kind: "#{work_kind_id}"}, class: "form-check-input float-left", id: "work_kind_id_#{work_kind_id}"} %>
+            <%= check_box_tag "work_kind_id[]", work_kind_id, !calendar_work_kind.nil?, {data: {kind: "#{work_kind_id}"}, class: "form-check-input float-start", id: "work_kind_id_#{work_kind_id}"} %>
             <%= label_tag "work_kind_id_#{work_kind_id}", @work_kinds[base * j + i].name %>
-            <%= color_field_tag "text_color[#{work_kind_id}]", calendar_work_kind&.text_color, {data: {kind: "#{work_kind_id}"}, class: "form-control float-right", style: "width:100px;"} %>
+            <%= color_field_tag "text_color[#{work_kind_id}]", calendar_work_kind&.text_color, {data: {kind: "#{work_kind_id}"}, class: "form-control float-end", style: "width:100px;"} %>
           </div>
         <% end %>
       <% end %>
@@ -32,23 +32,26 @@
   </div>
 <% end %>
 <script>
-$(function() {
-    $("input[type='color']").change(function() {
-        const id = "work_kind_id_" + $(this).data("kind");
-        $("#" + id).prop("checked", true);
-        $("label[for='" + id + "']").css("color", $(this).val());
+window.addEventListener("load", (w) => {
+    document.querySelectorAll("input[type='color']").forEach((element) => {
+        element.addEventListener("change", (event) => {
+            const id = `work_kind_id_${event.target.dataset.kind}`;
+            document.getElementById(id).checked = true;
+            document.querySelector(`label[for="${id}"]`).style.color = event.target.value;
+        });
     });
 
-    $("input[type='color']").each(function(i, e) {
-        const id = "work_kind_id_" + $(this).data("kind");
-        $("label[for='" + id + "']").css("color", $(this).val());
+    document.querySelectorAll("[id^='work_kind_id'").forEach((element) => {
+        element.addEventListener("change", (event) => {
+            if (!event.target.checked) {
+                document.querySelector(`label[for="${event.target.id}"]`).style.color = "";
+                document.getElementById(`text_color_${event.target.dataset.kind}`).value = "";
+            }
+        });
     });
 
-    $("[id^='work_kind_id'").change(function() {
-        if(!$(this).prop("checked")) {
-            $("label[for='" + $(this).prop("id") + "']").css("color", "");
-            $("#text_color_" + $(this).data("kind")).val("");
-        }
+    document.querySelectorAll("input[type='color']").forEach((element) => {
+        document.querySelector(`label[for="work_kind_id_${element.dataset.kind}"]`).style.color = element.value;
     });
 });
 </script>

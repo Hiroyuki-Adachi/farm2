@@ -1,28 +1,31 @@
 # == Schema Information
 #
-# Table name: adjustments # 調整
+# Table name: adjustments
 #
-#  id                       :bigint           not null, primary key
-#  carried_on(搬入日)       :date
-#  fixed_amount(確定額)     :decimal(7, )
-#  half_weight(半端米(kg))  :decimal(3, 1)
-#  rice_bag(調整米(袋))     :decimal(3, )
-#  shipped_on(出荷日)       :date
-#  waste_weight(くず米(kg)) :decimal(5, 1)
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
-#  drying_id(乾燥)          :integer          default(0), not null
-#  home_id(担当世帯)        :integer
+#  id                             :bigint           not null, primary key
+#  carried_on(搬入日)             :date
+#  container_flag(フレコンフラグ) :boolean          default(FALSE), not null
+#  fixed_amount(確定額)           :decimal(7, )
+#  half_weight(半端米(kg))        :decimal(3, 1)
+#  rice_bag(調整米(袋))           :decimal(3, )
+#  shipped_on(出荷日)             :date
+#  waste_date(くず米出荷日)       :date
+#  waste_weight(くず米(kg))       :decimal(5, 1)
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  drying_id(乾燥)                :integer          default(0), not null
+#  home_id(担当世帯)              :integer
 #
 # Indexes
 #
 #  adjustments_secondary  (drying_id) UNIQUE
 #
+
 adjustment1:
   drying: drying2
   home_id: 30
   rice_bag: 70
   half_weight: 20
-  waste_weight: 10
+  waste_weight: 25
   created_at: '2015-09-16 01:57:00.617803'
   updated_at: '2015-09-16 01:57:00.617803'

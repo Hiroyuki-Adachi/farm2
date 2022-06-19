@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: chemical_terms # 薬剤年度別利用マスタ
+# Table name: chemical_terms
 #
 #  id                :integer          not null, primary key
 #  price(価格)       :decimal(6, )     default(0), not null
@@ -11,9 +11,10 @@
 #
 #  index_chemical_terms_on_chemical_id_and_term  (chemical_id,term) UNIQUE
 #
+
 class ChemicalTerm < ApplicationRecord
   belongs_to :chemical, -> {with_deleted}
-  has_many :chemical_work_types, {dependent: :delete_all}
+  has_many :chemical_work_types, dependent: :destroy
   
   scope :usual, -> (term) {
     joins(chemical: :chemical_type)
@@ -23,13 +24,21 @@ class ChemicalTerm < ApplicationRecord
 SQL
   }
 
+  scope :by_type, -> (term, chemical_type_id) {
+    joins(:chemical)
+      .where(term: term)
+      .where("chemicals.chemical_type_id = ?", chemical_type_id)
+      .order("chemicals.phonetic, chemicals.display_order, chemicals.id")
+      .select("chemicals.*, chemical_terms.id AS chemical_term_id")
+  }
+
   scope :land, ->{joins(:chemical).where(<<SQL)}
   EXISTS (SELECT * FROM chemical_kinds WHERE chemical_kinds.chemical_type_id = chemicals.chemical_type_id)
 SQL
 
   def self.regist_price(params)
     params.each do |param|
-      ChemicalTerm.find(param[:id]).update(price: param[:price])
+      ChemicalTerm.find(param[:id]).update(price: param[:price] || 0)
     end
   end
 
@@ -41,6 +50,18 @@ SQL
     ChemicalTerm.destroy_all
     params[:chemicals].each do |chemical_id|
       ChemicalTerm.create(term: term, chemical_id: chemical_id)
+    end
+  end
+
+  def self.annual_update(old_term, new_term)
+    ChemicalTerm.where(term: old_term).each do |chemical_term|
+      unless ChemicalTerm.where(term: new_term, chemical_id: chemical_term.chemical_id).exists?
+        ChemicalTerm.create(
+          chemical_id: chemical_term.chemical_id,
+          term: new_term,
+          price: chemical_term.price
+        )
+      end
     end
   end
 end

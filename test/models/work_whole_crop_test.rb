@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_whole_crops # WCS作業
+# Table name: work_whole_crops
 #
 #  id                   :bigint           not null, primary key
 #  article_name(品名)   :string(15)       default(""), not null
@@ -14,6 +14,7 @@
 #
 #  index_work_whole_crops_on_work_id  (work_id) UNIQUE
 #
+
 require 'test_helper'
 
 class WorkWholeCropTest < ActiveSupport::TestCase

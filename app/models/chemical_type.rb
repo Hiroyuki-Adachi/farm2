@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: chemical_types # 薬剤種別マスタ
+# Table name: chemical_types
 #
 #  id(薬剤種別マスタ)    :integer          not null, primary key
 #  display_order(表示順) :integer          default(1), not null
@@ -8,6 +8,7 @@
 #  created_at            :datetime
 #  updated_at            :datetime
 #
+
 class ChemicalType < ApplicationRecord
   has_many :chemicals, -> {order("chemicals.display_order")}, dependent: :restrict_with_exception
   has_many :chemical_kinds

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: schedule_workers # 作業予定作業者
+# Table name: schedule_workers
 #
 #  id(作業予定作業者)       :integer          not null, primary key
 #  display_order(表示順)    :integer          default(0), not null
@@ -14,14 +14,15 @@
 #
 #  index_schedule_workers_on_schedule_id_and_worker_id  (schedule_id,worker_id) UNIQUE
 #
+
 require 'date'
 require 'securerandom'
 class ScheduleWorker < ApplicationRecord
   belongs_to :schedule
   belongs_to :worker, -> {with_deleted}
-  has_one    :home, -> {with_deleted}, {through: :worker}
-  has_one    :work_type, -> {with_deleted}, {through: :schedule}
-  has_one    :work_kind, -> {with_deleted}, {through: :schedule}
+  has_one    :home, -> {with_deleted}, through: :worker
+  has_one    :work_type, -> {with_deleted}, through: :schedule
+  has_one    :work_kind, -> {with_deleted}, through: :schedule
 
   before_create :set_uuid
 

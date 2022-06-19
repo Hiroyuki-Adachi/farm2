@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: fixes # 確定データ
+# Table name: fixes
 #
 #  fixed_at(確定日)                :date             not null, primary key
 #  fixed_by(確定者)                :integer
@@ -12,11 +12,12 @@
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
 #
+
 class Fix < ApplicationRecord
   self.primary_keys = [:term, :fixed_at]
   before_destroy :clear_fix
 
-  belongs_to :fixer, -> {with_deleted}, {class_name: "Worker", foreign_key: "fixed_by"}
+  belongs_to :fixer, -> {with_deleted}, class_name: "Worker", foreign_key: "fixed_by"
 
   scope :usual, ->(term) {where(term: term).order(fixed_at: :ASC)}
 
@@ -32,8 +33,8 @@ class Fix < ApplicationRecord
 
     Work.find(works_ids).each do |work|
       work.work_results.each do |result|
-        amount = result.hours * work.work_kind.price
-        result.update(fixed_hours: result.hours, fixed_price: work.work_kind.price, fixed_amount: amount)
+        amount = result.hours * work.work_kind.term_price(term)
+        result.update(fixed_hours: result.hours, fixed_price: work.work_kind.term_price(term), fixed_amount: amount)
         works_amount += amount
         hours += result.hours
       end

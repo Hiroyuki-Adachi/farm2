@@ -4,17 +4,17 @@ class Plans::LandsController < ApplicationController
   helper GmapHelper
 
   def new
-    @lands = Land.regionable.includes(:plan_land, :owner)
+    @lands = Land.for_plan(current_user.id).expiry(Date.today).includes(:owner)
     @work_types = WorkType.land
   end
 
   def create
-    PlanLand.create_all(params["land"])
+    PlanLand.create_all(current_user.id, params["land"])
     redirect_to new_plans_land_path
   end
 
   def destroy
-    PlanLand.clear_all(Date.today)
+    PlanLand.clear_all(current_user.id, Date.today)
     redirect_to new_plans_land_path
   end
 

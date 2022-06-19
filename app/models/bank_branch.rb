@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: bank_branches # 支店マスタ
+# Table name: bank_branches
 #
 #  address1(住所1)                :string(50)
 #  address2(住所2)                :string(50)
@@ -14,10 +14,11 @@
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
 #
+
 class BankBranch < ApplicationRecord
   self.primary_keys = :bank_code, :code
 
-  belongs_to :bank, {foreign_key: :bank_code}
+  belongs_to :bank, foreign_key: :bank_code
 
   validates :bank_code, presence: true
   validates :code,      presence: true

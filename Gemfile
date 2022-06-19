@@ -2,10 +2,9 @@ source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0'
-
+gem 'rails', '>= 7.0'
 # Use postgresql as the database for Active Record
-gem 'pg', '0.19'
+gem 'pg'
 # Use SCSS for stylesheets
 # gem 'sassc-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -14,23 +13,23 @@ gem 'pg', '0.19'
 # gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 #gem 'therubyracer', platforms: :ruby
-gem 'mini_racer', '0.1.14'
+gem "mini_racer"
 
-gem 'delayed_job_active_record'
+gem 'delayed_job_active_record', :git => 'git@github.com:collectiveidea/delayed_job_active_record.git'
 
-gem 'webpacker', '~> 5.0'
+gem 'webpacker'
 
 gem 'daemons'
 
 # Use bootstrap4
 # gem 'bootstrap', '>= 4.0'
 # Japan Holiday
-gem 'holiday_jp'
+gem 'holiday_jp', :git => 'git@github.com:holiday-jp/holiday_jp-ruby.git'
 
 # In the Loofah gem for Ruby through v2.3.0 unsanitized JavaScript may occur in sanitized output when a crafted SVG element is republished.
 gem "loofah", ">= 2.3.1"
 
-gem 'bootsnap', require: false
+# gem 'bootsnap'
 
 gem 'wareki'
 
@@ -47,7 +46,7 @@ gem 'i18n-js'
 # This gem provides XML serialization for your Active Model objects and Active Record models.
 gem 'activemodel-serializers-xml'
 # ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource for an ActiveRecord-like model.
-gem 'active_hash'
+gem 'active_hash', :git => 'git@github.com:gazayas/active_hash.git'
 # TZInfo::Data is the public domain IANA Time Zone Database packaged as a set of Ruby modules for use with TZInfo.
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 # Paranoia is a re-implementation of acts_as_paranoid for Rails 3/4/5.
@@ -55,11 +54,11 @@ gem 'paranoia'
 # A paginator for modern web app frameworks and ORMs
 gem 'kaminari'
 # Draper adds an object-oriented layer of presentation logic to your Rails application.
-gem 'draper', '>= 3.1.0'
+gem 'draper'
 # ActiveRecords infamously doesn't support composite primary keys.
-gem 'composite_primary_keys', '~> 12'
+gem 'composite_primary_keys', :git => 'git@github.com:composite-primary-keys/composite_primary_keys.git'
 # Comments for migrations
-gem 'migration_comments'
+# gem 'migration_comments'
 
 # Library for encoding QR Codes in Ruby.
 gem 'rqrcode'
@@ -68,6 +67,9 @@ gem 'chunky_png'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+
+# This gem supports operating on xlsx files (Open XML format).
+gem 'rubyXL'
 
 # Ruby library for dealing with iCalendar files
 gem 'icalendar'
@@ -84,22 +86,22 @@ gem 'puma'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  # gem 'byebug'
   # debase is a fast implementation of the standard Ruby debugger debug.rb for Ruby 2.0
-  gem 'debase'
+  # gem 'debase'
   # An interface which glues ruby-debug to IDEs
-  gem 'ruby-debug-ide', '0.6.0'
+  # gem 'ruby-debug-ide', '~> 0.6'
 
-  gem 'pry-byebug'
-  gem 'pry-doc'
-  gem 'pry-rails'
-  gem 'pry-stack_explorer'
+  #gem 'pry-byebug'
+  #gem 'pry-doc'
+  #gem 'pry-rails'
+  #gem 'pry-stack_explorer'
 end
 
 group :development do
-  gem 'listen', '~> 3.1.5'
+  gem 'listen'
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 4.0'
   # Add a comment summarizing the current schema to the top or bottom of each informations.
   gem 'annotate'
   # RuboCop is a Ruby static code analyzer.
@@ -113,3 +115,4 @@ group :test do
   # This gem is only useful once assigns and assert_template have been removed from Rails.
   gem 'rails-controller-testing'
 end
+

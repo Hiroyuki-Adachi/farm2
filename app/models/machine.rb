@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: machines # 機械マスタ
+# Table name: machines
 #
 #  id(機械マスタ)                    :integer          not null, primary key
 #  deleted_at                        :datetime
@@ -14,6 +14,7 @@
 #  home_id(所有者)                   :integer          default(0), not null
 #  machine_type_id(機械種別)         :integer          default(0), not null
 #
+
 class Machine < ApplicationRecord
   acts_as_paranoid
 
@@ -22,9 +23,9 @@ class Machine < ApplicationRecord
 
   belongs_to :machine_type
   has_many :machine_kinds, through: :machine_type
-  has_many :price_headers, -> {order("machine_price_headers.validated_at DESC")}, {class_name: :MachinePriceHeader, dependent: :destroy}
+  has_many :price_headers, -> {order("machine_price_headers.validated_at DESC")}, class_name: :MachinePriceHeader, dependent: :destroy
 
-  belongs_to :owner, -> {with_deleted}, {class_name: :Home, foreign_key: :home_id}
+  belongs_to :owner, -> {with_deleted}, class_name: :Home, foreign_key: :home_id
 
   validates :validity_start_at, presence: true
   validates :validity_end_at, presence: true

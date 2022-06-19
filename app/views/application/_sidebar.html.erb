@@ -1,6 +1,9 @@
-<nav id="mySidebar" style="padding-left: 15px;">
+<button type="button" id="my_side_close" class="btn btn-sm btn-info float-end">
+  <i class="far fa-window-close"></i>
+</button>
+<nav id="my_sidebar" class="ps-2">
   <div aria-labelledby="navbarDaily">
-    <span class="h5">日報管理</span><button type="button" id="sideClose" class="close" onclick="closeSide()">&times;</button>
+    <span class="h5">日報管理</span>
     <% unless current_user.visitor? %>
       <%= link_to '日報入力', new_work_path, {class: "dropdown-item", data: {controller: :works, actions: [:new, :edit, :show]}} %>
     <% end %>
@@ -31,6 +34,7 @@
     <% if current_user.checkable? %>
       <%= link_to '統計照会', statistics_path, {class: "dropdown-item", data: {controller: :statistics}} %>
       <%= link_to '土地カルテ', lands_cards_path, {class: "dropdown-item", data: {controller: :cards}} %>
+      <%= link_to '土地集計', lands_totals_path, {class: "dropdown-item", data: {controller: :totals}} %>
       <%= link_to 'ブロッコリー月報', broccoli_reports_path, {class: "dropdown-item", data: {controller: "broccoli_reports"}} %>
       <%= link_to 'ブロッコリー調査', broccoli_surveys_path, {class: "dropdown-item", data: {controller: "broccoli_surveys"}} %>
     <% end %>
@@ -54,19 +58,27 @@
     <%= link_to '組合内受託一覧', contracts_path, {class: "dropdown-item", data: {controller: "contracts"}} %>
     <%= link_to '保有米一覧', total_owned_rices_path, {class: "dropdown-item", data: {controller: :total_owned_rices}} %>
   </div>
+  <div aria-labelledby="navbarStock" style="display:none;">
+    <span class="h5">在庫管理</span>
+    <%= link_to '棚卸処理', chemicals_inventories_path, {class: "dropdown-item", data: {controller: :inventories}} %>
+    <%= link_to '納品処理', chemicals_stores_path, {class: "dropdown-item", data: {controller: :stores}} %>
+    <%= link_to '在庫確認', chemicals_stocks_path, {class: "dropdown-item", data: {controller: :stocks}} %>
+  </div>
   <div aria-labelledby="navbarCost" style="display:none;">
     <span class="h5">原価管理</span>
-    <!-- <%= link_to '原価一覧', total_costs_path, {class: "dropdown-item", data: {controller: "total_costs"}} %> -->
     <!-- <%= link_to '減価償却', depreciations_path, {class: "dropdown-item", data: {controller: :depreciations}} %> -->
-    <%= link_to '土地原価', land_costs_path, {class: "dropdown-item", data: {controller: "land_costs"}} %>
     <!-- <%= link_to '燃料原価', fuel_costs_path, {class: "dropdown-item", data: {controller: "fuel_costs"}} %> -->
     <%= link_to '薬剤原価', chemical_costs_path, {class: "dropdown-item", data: {controller: "chemical_costs"}} %>
     <%= link_to '育苗原価', seedling_costs_path, {class: "dropdown-item", data: {controller: "seedling_costs"}} %>
+    <%= link_to '原価一覧', total_costs_path, {class: "dropdown-item", data: {controller: "total_costs"}} %>
+    <%= link_to '土地管理料', lands_fees_path, {class: "dropdown-item", data: {controller: "fees"}} %>
+    <%= link_to '機械稼働時間', total_costs_machines_path, {class: "dropdown-item", data: {controller: :machine_minutes}} %>
     <!-- <%= link_to '原価経費', expenses_path, {class: "dropdown-item", data: {controller: "expenses"}} %> -->
   </div>
   <div aria-labelledby="navbarPlan" style="display:none;">
     <span class="h5">生産計画</span>
     <%= link_to '作付計画', new_plans_land_path, {class: "dropdown-item", data: {controller: :plan_lands}} %>
+    <%= link_to '作付明細', land_costs_path, {class: "dropdown-item", data: {controller: "land_costs"}} %>
     <!-- <%= link_to '育苗計画', new_plans_work_type_path, {class: "dropdown-item", data: {controller: :plan_seedlings}} %> -->
     <!-- <%= link_to '薬剤計画', new_plans_chemical_path, {class: "dropdown-item", data: {controller: :plan_chemicals}} %> -->
   </div>
@@ -77,13 +89,14 @@
     <%= link_to '世帯マスタ', homes_path, {class: "dropdown-item", data: {controller: :homes}} %>
     <%= link_to '作業者マスタ', workers_path, {class: "dropdown-item", data: {controller: :workers}} %>
     <%= link_to '土地マスタ', lands_path, {class: "dropdown-item", data: {controller: :lands}} %>
-    <%= link_to '土地グループ', lands_groups_path, {class: "dropdown-item", data: {controller: :groups}} %>
+    <!-- <%= link_to '土地グループ', lands_groups_path, {class: "dropdown-item", data: {controller: :groups}} %> -->
     <%= link_to '作業種別マスタ', work_kinds_path, {class: "dropdown-item", data: {controller: "work_kinds"}} %>
     <%= link_to '機械種別マスタ', machine_types_path, {class: "dropdown-item", data: {controller: "machine_types"}} %>
     <%= link_to '機械マスタ', machines_path, {class: "dropdown-item", data: {controller: :machines}} %>
     <%= link_to '薬剤種別マスタ', chemical_types_path, {class: "dropdown-item", data: {controller: "chemical_types"}} %>
     <%= link_to '薬剤マスタ', chemicals_path, {class: "dropdown-item", data: {controller: :chemicals}} %>
     <% if current_user.manageable? %>
+      <%= link_to '原価種別マスタ', cost_types_path, {class: "dropdown-item", data: {controller: "cost_types"}} %>
       <%= link_to '保有米単価マスタ', owned_rice_prices_path, {class: "dropdown-item", data: {controller: :owned_rice_prices}} %>
       <%= link_to '場所マスタ', land_places_path, {class: "dropdown-item", data: {controller: "land_places"}} %>
       <%= link_to '作業分類マスタ', work_types_path, {class: "dropdown-item", data: {controller: "work_types", actions: [:index, :edit]}} %>

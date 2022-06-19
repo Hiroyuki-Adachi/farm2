@@ -1,0 +1,41 @@
+# == Schema Information
+#
+# Table name: chemical_inventories
+#
+#  id                                    :bigint           not null, primary key
+#  checked_on(確認日)                    :date             not null
+#  name(棚卸名称)                        :string(40)       default(""), not null
+#  created_at                            :datetime         not null
+#  updated_at                            :datetime         not null
+#  chemical_adjust_type_id(在庫調整種別) :integer          default(0), not null
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+inventory1:
+  checked_on: '2015-12-15'
+  name: '年末棚卸'
+  chemical_adjust_type_id: 1
+
+store1:
+  checked_on: '2015-12-16'
+  name: '年末納品'
+  chemical_adjust_type_id: 2
+
+inventory21:
+  checked_on: '2015-01-01'
+  name: '初期在庫'
+  chemical_adjust_type_id: 1
+
+store2:
+  checked_on: '2015-03-01'
+  name: '納品1'
+  chemical_adjust_type_id: 2
+
+inventory22:
+  checked_on: '2015-12-31'
+  name: '年末棚卸'
+  chemical_adjust_type_id: 1

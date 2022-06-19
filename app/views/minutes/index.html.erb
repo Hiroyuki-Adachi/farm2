@@ -1,6 +1,6 @@
 <h1>作業予定(議事録)一覧</h1>
-<div id="list" class="wrapper" style="overflow-y: scroll; width: 100%;">
-  <table id="minutes_list" class="table table-sm">
+<div id="list" class="wrapper float-head-wrapper" style="height: calc(100vh - 150px)">
+  <table id="minutes_list" class="table table-sm float-head">
     <thead>
       <tr>
         <th>開催(予定)日</th>
@@ -27,7 +27,7 @@
     </tbody>
   </table>
 </div>
-<%= form_for(Minute.new) do |f| %>
+<%= form_with(model: Minute.new) do |f| %>
   <%= f.hidden_field(:schedule_id) %>
   <%= f.file_field(:pdf, {style: "display: none;"}) %>
 <% end %>
@@ -38,27 +38,10 @@
 </div>
 <script type="text/javascript">
 $(function() {
-    $("#minutes_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
-
     $("#minute_pdf").change(function() {
         $(this).closest("form").submit();
     });
-
-    setTableWrapperHeight();
 });
-
-function setTableWrapperHeight() {
-    if($("#table_wrapper")[0]) {
-        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
-    }
-}
 
 function createPDF(schedule_id) {
     $("#minute_schedule_id").val(schedule_id);

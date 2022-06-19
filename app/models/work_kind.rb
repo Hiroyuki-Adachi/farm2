@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_kinds # 作業種別マスタ
+# Table name: work_kinds
 #
 #  id(作業種別マスタ)            :integer          not null, primary key
 #  broccoli_mark(ブロッコリ記号) :string(1)
@@ -12,15 +12,19 @@
 #  phonetic(作業種別ふりがな)    :string(40)       default(""), not null
 #  created_at                    :datetime
 #  updated_at                    :datetime
+#  cost_type_id(原価種別)        :integer
 #
 # Indexes
 #
 #  index_work_kinds_on_deleted_at  (deleted_at)
 #
+
 class WorkKind < ApplicationRecord
   acts_as_paranoid
 
   after_save :save_price
+
+  belongs_to :cost_type
 
   has_many :machine_kinds, dependent: :destroy
   has_many :machine_types, -> {order("machine_types.display_order")}, through: :machine_kinds 
@@ -64,8 +68,7 @@ class WorkKind < ApplicationRecord
     if Rails.cache.exist?(cache_key)
       price_value = Rails.cache.read(cache_key)
     else
-      work_kind_price = WorkKindPrice.by_term(self, term).first
-      price_value = work_kind_price ? work_kind_price.price : 0
+      price_value =  WorkKindPrice.price(self, term)
       Rails.cache.write(cache_key, price_value, expires_in: 1.hour)
     end
     return price_value

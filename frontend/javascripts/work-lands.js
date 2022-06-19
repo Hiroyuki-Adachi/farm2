@@ -1,3 +1,6 @@
+import "jquery-ui/ui/widgets/sortable";
+import "jquery-ui/ui/widgets/autocomplete";
+
 function remove_land(land_id)
 {
     document.getElementById("tbody_lands").deleteRow(document.getElementById("land_" + land_id.toString()).rowIndex - 1);
@@ -35,7 +38,7 @@ function add_land(land_id, land_place, land_area)
 {
     if(document.getElementById("land_" + land_id))
     {
-        bootbox.alert("既に存在しています(" + land_place + ")");
+        popupAlert("既に存在しています(" + land_place + ")");
         document.getElementById("land_place").value = "";
         return;
     }
