@@ -1,0 +1,42 @@
+<div class="pagebreak"></div>
+<div id="content_whole_crops" class="content">
+  <div class="sub_title">※WCS</div>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th rowspan="2" style="width:60px;"></th>
+        <th rowspan="2" style="width:100px;">巻数</th>
+        <th rowspan="2" style="width:150px;">地番</th>
+        <th colspan="<%= WholeCropRoll::MAX_ROLLS %>">重量</th>
+      </tr>
+      <tr>
+        <% WholeCropRoll::MAX_ROLLS.times do |i| %>
+        <th style="width:<%= 410 / WholeCropRoll::MAX_ROLLS %>px;"><%= i + 1 %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <% if @work.whole_crop %>
+      <tbody>
+        <% @work.whole_crop.wcs_lands.each_with_index do |wcs_land, i| %>
+          <tr>
+            <td class="numeric"><%= i + 1 %></td>
+            <td class="numeric"><%= wcs_land.rolls %></td>
+            <td><%= wcs_land.work_land.land.place %></td>
+            <% WholeCropRoll::MAX_ROLLS.times do |i| %>
+              <td class="numeric"><%= wcs_land.wcs_rolls[i]&.weight.to_i.zero? ? "" : sprintf("%.1f", wcs_land.wcs_rolls[i].weight) %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    <% end %>
+    <tfoot>
+      <tr>
+        <td>合計</td>
+        <td class="numeric"><%= @work&.whole_crop&.rolls %></td>
+        <td class="numeric"><%= @work&.whole_crop&.weight %>kg/本</td>
+        <td colspan="<%= WholeCropRoll::MAX_ROLLS %>"></td>
+      </tr>
+    </tfoot>
+  </table>
+  <div id="cover_whole_crops" class="cover" onclick="location.href='<%= new_work_whole_crop_path(work_id: @work) %>'"></div>
+</div>

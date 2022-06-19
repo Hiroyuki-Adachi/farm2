@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: plan_seedlings # 育苗計画
+# Table name: plan_seedlings
 #
 #  id                          :bigint           not null, primary key
 #  quantity(枚数)              :decimal(4, )     default(0), not null
@@ -13,6 +13,7 @@
 #
 #  plan_seedlings_2nd  (plan_work_type_id,home_id) UNIQUE
 #
+
 class PlanSeedling < ApplicationRecord
   belongs_to :home
   belongs_to :plan, class_name: "PlanWorkType", foreign_key: "plan_work_type_id"

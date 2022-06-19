@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark ps-1" role="navigation">
     <%= link_to '作業日報管理', menu_index_path, {class: "navbar-brand"} %>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarFarm2" aria-controls="navbarFarm2" aria-expanded="false" aria-label="ナビゲーションの切替">
       <span class="navbar-toggler-icon"></span>
@@ -6,42 +6,47 @@
     <div class="collapse navbar-collapse" id="navbarFarm2">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <%= link_to '日報管理', works_path, {class: "nav-link", id: :navbarDaily} %>
+            <%= link_to '日報管理', "#", {class: "nav-link", id: :navbarDaily, data: {url: works_path}} %>
           </li>
           <li class="nav-item">
-            <%= link_to '予定管理', schedules_path, {class: "nav-link", id: :navbarSchedule} %>
+            <%= link_to '予定管理', "#", {class: "nav-link", id: :navbarSchedule, data: {url: schedules_path}} %>
           </li>
           <% if current_user.checkable? %>
           <li class="nav-item">
-            <%= link_to '収穫管理', seedling_results_path, {class: "nav-link", id: :navbarHarvest} %>
+            <%= link_to '収穫管理', "#", {class: "nav-link", id: :navbarHarvest, data: {url: seedling_results_path}} %>
           </li>
           <li class="nav-item">
-            <%= link_to '集計処理', statistics_path, {class: "nav-link", id: :navbarTotal} %>
+            <%= link_to '集計処理', "#", {class: "nav-link", id: :navbarTotal, data: {url: lands_cards_path}} %>
           </li>
           <% end %>
           <% if current_user.manageable? %>
           <li class="nav-item">
-            <%= link_to '会計処理', fixes_path, {class: "nav-link", id: :navbarFix} %>
+            <%= link_to '会計処理', "#", {class: "nav-link", id: :navbarFix, data: {url: fixes_path}} %>
           </li>
           <li class="nav-item">
-            <%= link_to '原価管理', land_costs_path, {class: "nav-link", id: :navbarCost} %>
+            <%= link_to '在庫管理', "#", {class: "nav-link", id: :navbarStock, data: {url: chemicals_stocks_path}} %>
           </li>
           <li class="nav-item">
-            <%= link_to '生産計画', new_plans_land_path, {class: "nav-link", id: :navbarPlan} %>
+            <%= link_to '原価管理', "#", {class: "nav-link", id: :navbarCost, data: {url: chemical_costs_path}} %>
+          </li>
+          <li class="nav-item">
+            <%= link_to '生産計画', "#", {class: "nav-link", id: :navbarPlan, data: {url: new_plans_land_path}} %>
           </li>
           <% end %>
           <% if current_user.checkable? %>
           <li class="nav-item">
-            <%= link_to 'マスタ保守', homes_path, {class: "nav-link", id: :navbarMaster} %>
+            <%= link_to 'マスタ保守', "#", {class: "nav-link", id: :navbarMaster, data: {url: homes_path}} %>
           </li>
           <% end %>
           <li class="nav-item">
-            <%= link_to '管理', edit_user_path(current_user), {class: "nav-link", id: :navbarManagement} %>
+            <%= link_to '管理', "#", {class: "nav-link", id: :navbarManagement, data: {url: edit_user_path(current_user)}} %>
           </li>
           <li class="nav-item">
-            <%= link_to 'ログアウト', session_path(current_user.id), {method: :delete, class: "nav-link"} %>
+            <%= link_to 'ログアウト', "#", {class: "nav-link", data: {url: sessions_path}} %>
           </li>
         </ul>
         <span class="navbar-text ml-auto"><%= current_name %>さん</span>
     </div>
 </nav>
+<div id="menu_dropdown" class="dropdown-menu">
+</div>

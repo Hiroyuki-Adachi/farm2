@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: drying_lands # 乾燥調整場所
+# Table name: drying_lands
 #
 #  id                    :bigint           not null, primary key
 #  display_order(表示順) :integer          default(0), not null
@@ -14,6 +14,7 @@
 #
 #  drying_lands_3rd  (drying_id,display_order) UNIQUE
 #
+
 class DryingLand < ApplicationRecord
   belongs_to :drying
   belongs_to :land

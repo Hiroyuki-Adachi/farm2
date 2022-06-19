@@ -35,7 +35,7 @@ class DryingDecorator < Draper::Decorator
   end
 
   def dry_rice_weight
-    model.rice_weight&.positive? ? model.rice_weight.to_s(:delimited) : ""
+    model.rice_weight&.positive? ? model.rice_weight.to_formatted_s(:delimited) : ""
   end
 
   def all_rice_weight(sys)

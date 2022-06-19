@@ -13,6 +13,7 @@
 #
 #  index_chemical_work_types_on_chemical_term_id_and_work_type_id  (chemical_term_id,work_type_id) UNIQUE
 #
+
 class ChemicalWorkType < ActiveRecord::Base
   belongs_to :chemical_term
   belongs_to :work_type

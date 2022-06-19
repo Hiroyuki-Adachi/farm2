@@ -1,0 +1,46 @@
+<h1>作業日報(ひやりハット))登録</h1>
+<%= error_print(@work) %>
+<%= form_with(model: @work, url: {action: :create}, html: {method: :post}) do |f| %>
+<%= render(:partial => 'show_work', :locals => {:f => f}) %>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th>機械名</th>
+        <th>オペレーター</th>
+        <th>備考(ヒヤリ・ハット)</th>
+        <th>備考(保守)</th>
+        <th>備考(その他)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @machines.each do |machine| %>
+      <tr>
+        <% remark = @remarks.find_by(machine_id: machine) %>
+        <td>
+          <%= machine.usual_name %>
+          <%= hidden_field_tag "machine_remarks[#{machine.id}][work_id]", @work.id %>
+          <%= hidden_field_tag "machine_remarks[#{machine.id}][machine_id]", machine.id %>
+        </td>
+        <td><%= machine.operators(@work) %></td>
+        <td>
+          <%= text_field_tag "machine_remarks[#{machine.id}][danger_remarks]", remark&.danger_remarks, {class: "form-control", maxlength: 30} %>
+        </td>
+        <td>
+          <%= text_field_tag "machine_remarks[#{machine.id}][care_remarks]", remark&.care_remarks, {class: "form-control", maxlength: 30} %>
+        </td>
+        <td>
+          <%= text_field_tag "machine_remarks[#{machine.id}][other_remarks]", remark&.other_remarks, {class: "form-control", maxlength: 30} %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= f.submit '登録', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', new_work_machine_path(work_id: @work), {class: "btn btn-outline-dark"} %>
+    </div>
+  </div>
+<% end %>

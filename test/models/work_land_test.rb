@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_lands # 作業地データ
+# Table name: work_lands
 #
 #  id(作業地データ)         :integer          not null, primary key
 #  display_order(表示順)    :integer          default(0), not null
@@ -15,6 +15,7 @@
 #
 #  index_work_lands_on_work_id_and_land_id  (work_id,land_id) UNIQUE
 #
+
 require 'test_helper'
 
 class WorkLandTest < ActiveSupport::TestCase

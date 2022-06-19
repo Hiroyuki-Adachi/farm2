@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: schedule_workers # 作業予定作業者
+# Table name: schedule_workers
 #
 #  id(作業予定作業者)       :integer          not null, primary key
 #  display_order(表示順)    :integer          default(0), not null
@@ -14,6 +14,7 @@
 #
 #  index_schedule_workers_on_schedule_id_and_worker_id  (schedule_id,worker_id) UNIQUE
 #
+
 schedule_worker1:
   schedule_id: 1
   worker_id: 1

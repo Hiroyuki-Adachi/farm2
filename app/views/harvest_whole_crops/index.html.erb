@@ -41,7 +41,7 @@
     <tr class="detail" data-work_type="<%= old_work_type_id %>" data-worked_at="<%= old_worked_at %>">
       <td></td>
       <td><%= whole_crop.work.worked_at %></td>
-      <td class="numeric"><%= whole_crop.weight.to_s(:delimited) %></td>
+      <td class="numeric"><%= whole_crop.weight.to_formatted_s(:delimited) %></td>
       <td class="numeric"><%= format_rolls(whole_crop.rolls) %></td>
       <td class="numeric"><%= format_area(whole_crop.work.sum_areas) %></td>
       <td class="numeric"><%= format_rolls(whole_crop.rolls / whole_crop.work.sum_areas * 10) %></td>
@@ -50,6 +50,9 @@
   </tbody>
 </table>
 <div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "CSV出力", harvest_whole_crops_path(format: :csv), {class: "btn btn-outline-success"} %>
+  </div>
   <div class="btn-group mr-2">
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"} %>
   </div>

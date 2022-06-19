@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: plan_work_types # 作業計画
+# Table name: plan_work_types
 #
 #  id                       :bigint           not null, primary key
 #  area(面積(α))            :decimal(7, 2)    default(0.0), not null
@@ -20,6 +20,7 @@
 #
 #  plan_work_types_2nd  (work_type_id) UNIQUE
 #
+
 class PlanWorkType < ApplicationRecord
   belongs_to :work_type, -> {with_deleted}
 

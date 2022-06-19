@@ -68,7 +68,7 @@
       <tr>
         <th>くず米</th>
         <% @dryings.each do |drying| %>
-          <td class="numeric" data-drying="<%= edit_drying_path(drying) %>"><%= drying.adjust_waste_weight %>kg</td>
+          <td class="numeric" data-drying="<%= edit_drying_path(drying) %>"><%= drying.adjust_waste_bag %>袋</td>
         <% end %>
       </tr>
     </tbody>
@@ -81,7 +81,6 @@
       <tr>
         <th>種類</th>
         <th>合計(kg)</th>
-        <th>くず米(kg)</th>
         <th>合計(袋)</th>
         <th>単価(円)</th>
         <th>金額(円)</th>
@@ -92,7 +91,6 @@
       <tr>
         <th>乾籾出荷</th>
         <td class="numeric"><%= format_weight(@total_dryings[DryingType::COUNTRY.id]) %></td>
-        <td class="text-center">-</td>
         <td class="numeric"><%= format_bag(@shipped_totals[DryingType::COUNTRY.id]) %></td>
         <td class="numeric"><%= number_to_currency(current_system.dry_price, {precision: 0, unit: ""}) %></td>
         <td class="numeric"><%= format_amount(@shipped_totals[DryingType::COUNTRY.id], current_system.dry_price) %></td>
@@ -101,7 +99,6 @@
       <tr>
         <th>調整出荷</th>
         <td class="numeric"><%= format_weight(@total_dryings[DryingType::SELF.id]) %></td>
-        <td class="numeric"><%= format_weight(@waste_totals[DryingType::SELF.id]) %></td>
         <td class="numeric"><%= format_bag(@shipped_totals[DryingType::SELF.id]) %></td>
         <td class="numeric"><%= number_to_currency(current_system.dry_adjust_price, {precision: 0, unit: ""}) %></td>
         <td class="numeric"><%= format_amount(@shipped_totals[DryingType::SELF.id], current_system.dry_adjust_price) %></td>
@@ -110,15 +107,23 @@
       <tr>
         <th>調整のみ</th>
         <td class="numeric"><%= format_weight(@total_dryings[DryingType::ADJUST.id]) %></td>
-        <td class="numeric"><%= format_weight(@waste_totals[DryingType::ADJUST.id]) %></td>
         <td class="numeric"><%= format_bag(@shipped_totals[DryingType::ADJUST.id]) %></td>
         <td class="numeric"><%= number_to_currency(current_system.adjust_price, {precision: 0, unit: ""}) %></td>
         <td class="numeric"><%= format_amount(@shipped_totals[DryingType::ADJUST.id], current_system.adjust_price) %></td>
         <% total_amount += calc_amount(@shipped_totals[DryingType::ADJUST.id], current_system.adjust_price) %>
       </tr>
+      <% if current_system.waste_price.positive? %>
+      <tr>
+        <th>くず米</th>
+        <td class="numeric"><%= format_weight(@waste_totals[DryingType::SELF.id]) %></td>
+        <td class="numeric"><%= format_waste_bag(@waste_totals[DryingType::SELF.id]) %></td>
+        <td class="numeric"><%= number_to_currency(current_system.waste_price, {precision: 0, unit: ""}) %></td>
+        <td class="numeric"><%= format_waste_amount(@waste_totals[DryingType::SELF.id], current_system.waste_price) %></td>
+        <% total_amount += calc_waste_amount(@waste_totals[DryingType::SELF.id], current_system.waste_price) %>
+      </tr>
+      <% end %>
       <tr>
         <th>合 計</th>
-        <td class="text-center">-</td>
         <td class="text-center">-</td>
         <td class="text-center">-</td>
         <td class="text-center">-</td>
@@ -133,9 +138,11 @@
   </div>
 </div>
 <script>
-$(function() {
-    $("#drying-detail td").click(function() {
-        location.href = $(this).data("drying");
+window.addEventListener("load", () => {
+    document.querySelectorAll("#drying-detail td").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            location.href = event.target.dataset.drying;
+        });
     });
 });
 </script>

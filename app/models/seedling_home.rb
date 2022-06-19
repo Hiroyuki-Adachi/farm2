@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: seedling_homes # 育苗担当世帯
+# Table name: seedling_homes
 #
 #  id(育苗担当世帯)  :integer          not null, primary key
 #  quantity(苗箱数)  :decimal(4, )     default(0), not null
@@ -14,10 +14,11 @@
 #
 #  index_seedling_homes_on_seedling_id_and_home_id  (seedling_id,home_id) UNIQUE
 #
+
 class SeedlingHome < ActiveRecord::Base
   belongs_to :home, -> {with_deleted}
   belongs_to :seedling
-  has_many :seedling_results, {dependent: :destroy}
+  has_many :seedling_results, dependent: :destroy
 
   accepts_nested_attributes_for :seedling_results, allow_destroy: true, reject_if: :reject_seedling_results
 

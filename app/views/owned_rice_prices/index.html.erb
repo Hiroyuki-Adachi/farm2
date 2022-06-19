@@ -16,7 +16,7 @@
         <td><%= work_type.name %></td>
         <td><%= owned_rice_price&.name %>(<%= owned_rice_price&.short_name %>)</td>
         <td class="numeric"><%= owned_rice_price&.display_order %></td>
-        <td class="numeric"><%= owned_rice_price&.owned_price&.to_s(:delimited) %></td>
+        <td class="numeric"><%= owned_rice_price&.owned_price&.to_formatted_s(:delimited) %></td>
         <td><%= link_to '修正', edit_owned_rice_price_path(id: work_type.id), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>

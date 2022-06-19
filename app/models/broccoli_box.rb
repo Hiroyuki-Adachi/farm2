@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: broccoli_boxes # ブロッコリ箱マスタ
+# Table name: broccoli_boxes
 #
 #  id(ブロッコリ箱マスタ) :integer          not null, primary key
 #  display_name(表示名)   :string(10)       default(""), not null
@@ -9,6 +9,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
+
 class BroccoliBox < ApplicationRecord
   scope :usual, -> {order("display_order")}
 end

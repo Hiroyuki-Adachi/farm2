@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8">
-    <h1>土地利用地図</h1>
+    <h1>作付地図</h1>
   </div>
   <div class="col-md-2">
     <%= date_field_tag :target, @target, {class: "form-control", data: {url: map_land_costs_path}, onchange: "changeTarget(this)"} %>
@@ -8,7 +8,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <div id="map" class="embed-responsive embed-responsive-16by9"></div>
+    <div id="map" class="ratio ratio-16x9"></div>
   </div>
 </div>
 <div class="row">
@@ -18,9 +18,9 @@
 </div>
 <div class="row">
   <% @work_types.each_with_index do |work_type, i| %>
-    <div class="btn-group" style="background-color: <%= work_type.bg_color%>;">
-      <span id="work_type_<%= work_type.id %>" style="width:100px;"><%= work_type.name %></span>
-      <span id="land_area_<%= work_type.id %>" class="label text-right area-sum" style="width: 50px;">0.0</span>
+    <div class="col" style="background-color: <%= work_type.bg_color%>;">
+      <div id="work_type_<%= work_type.id %>"><%= work_type.name %></div>
+      <div id="land_area_<%= work_type.id %>" class="label text-right area-sum">0.0</div>
     </div>
   <% end %>
 </div>

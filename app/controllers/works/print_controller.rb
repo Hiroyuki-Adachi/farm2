@@ -1,5 +1,6 @@
 class Works::PrintController < ApplicationController
   include WorksHelper
+  protect_from_forgery :except => [:create, :destroy]
 
   before_action :set_work
   before_action :permit_checkable_or_self

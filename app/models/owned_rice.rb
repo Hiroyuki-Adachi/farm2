@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: owned_rices # 保有米
+# Table name: owned_rices
 #
 #  id                              :bigint           not null, primary key
 #  owned_count(保有米数)           :decimal(3, )     default(0), not null
@@ -13,6 +13,7 @@
 #
 #  owned_rices_2nd  (home_id,owned_rice_price_id) UNIQUE
 #
+
 class OwnedRice < ApplicationRecord
   belongs_to :owned_rice_price
   belongs_to :home

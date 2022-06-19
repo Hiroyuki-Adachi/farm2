@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: works # 作業データ
+# Table name: works
 #
 #  id(作業データ)         :integer          not null, primary key
 #  created_by(作成者)     :integer
@@ -19,6 +19,7 @@
 #  work_kind_id(作業種別) :integer          default(0), not null
 #  work_type_id(作業分類) :integer
 #
+
 class Work < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
@@ -28,32 +29,33 @@ class Work < ApplicationRecord
   before_create :set_term
 
   validates :worked_at, presence: true
-  validates :weather,   presence: true
+  validates :weather_id,   presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
   validates :work_type_id, presence: true
   validates :work_kind_id, presence: true
 
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
-  belongs_to :weather
-  belongs_to :fix, {class_name: "Fix", foreign_key: [:term, :fixed_at], primary_key: [:term, :fixed_at]}
-  belongs_to :creator, -> {with_deleted}, {class_name: "Worker", foreign_key: "created_by"}
-  belongs_to :printer, -> {with_deleted}, {class_name: "Worker", foreign_key: "printed_by"}
-  belongs_to :daily_weather, {class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date}
+  belongs_to :fix, class_name: "Fix", foreign_key: [:term, :fixed_at], primary_key: [:term, :fixed_at]
+  belongs_to :creator, -> {with_deleted}, class_name: "Worker", foreign_key: "created_by"
+  belongs_to :printer, -> {with_deleted}, class_name: "Worker", foreign_key: "printed_by"
+  belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
+  belongs_to_active_hash :weather
 
-  has_many :work_lands, -> {order('work_lands.display_order')}, {dependent: :destroy}
-  has_many :work_results, -> {order('work_results.display_order')}, {dependent: :destroy}
+  has_many :work_lands, -> {order('work_lands.display_order')}, dependent: :destroy
+  has_many :work_results, -> {order('work_results.display_order')}, dependent: :destroy
   has_many :work_chemicals, dependent: :destroy
-  has_many :work_verifications, -> {order('work_verifications.id')}, {dependent: :destroy}
+  has_many :work_verifications, -> {order('work_verifications.id')}, dependent: :destroy
   has_many :work_work_types, dependent: :destroy
-  has_one :broccoli, {class_name: "WorkBroccoli", dependent: :destroy}
-  has_one :whole_crop, {class_name: "WorkWholeCrop", dependent: :destroy}
+  has_many :machine_remarks, dependent: :destroy
+  has_one :broccoli, class_name: "WorkBroccoli", dependent: :destroy
+  has_one :whole_crop, class_name: "WorkWholeCrop", dependent: :destroy
 
-  has_many :workers, -> {with_deleted}, {through: :work_results}
-  has_many :lands, -> {with_deleted}, {through: :work_lands}
-  has_many :chemicals, -> {with_deleted}, {through: :work_chemicals}
-  has_many :machine_results, {through: :work_results}
-  has_many :checkers, -> {with_deleted}, {through: :work_verifications, source: :worker}
+  has_many :workers, -> {with_deleted}, through: :work_results
+  has_many :lands, -> {with_deleted}, through: :work_lands
+  has_many :chemicals, -> {with_deleted}, through: :work_chemicals
+  has_many :machine_results, through: :work_results
+  has_many :checkers, -> {with_deleted}, through: :work_verifications, source: :worker
   has_many :work_types, through: :work_work_types
 
   scope :no_fixed, ->(term){
@@ -132,7 +134,13 @@ SQL
       .where(worked_at: Date.new(w_at.year, w_at.month, 1)..Date.new(w_at.year, w_at.month, -1))
   }
 
-  scope :exists_lands, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
+  scope :landable, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
+  scope :machinable, -> {where(<<SQL)}
+  EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND EXISTS (
+    SELECT * FROM machine_results WHERE work_results.id = machine_results.work_result_id
+  ))
+SQL
+ 
   scope :by_target, ->(term) {
     joins("INNER JOIN systems ON systems.term = works.term")
      .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
@@ -152,6 +160,7 @@ SQL
       .select("min(works.id) AS id, works.worked_at, works.work_kind_id, works.work_type_id")
       .includes(:work_kind, :work_type)
       .where(term: term, work_kind_id: work_kinds)
+      .order(:worked_at)
   }
 
   scope :for_drying, ->(term, organization) {
@@ -269,16 +278,16 @@ SQL
       chemical_id = chemical_id.to_i
       chemicals.each do |chemical_group_no, quantity|
         chemical_group_no = chemical_group_no.to_i
-        quantity = quantity.to_f
         work_chemical = work_chemicals.find_by(chemical_id: chemical_id, chemical_group_no: chemical_group_no)
         if work_chemical
-          if quantity.positive?
-            work_chemical.update(quantity: quantity) unless work_chemical.quantity == quantity
+          if quantity[:quantity].to_f.positive?
+            work_chemical.update(quantity_params(quantity, {}))
           else
             work_chemical.destroy
           end
         else
-          WorkChemical.create(work_id: id, chemical_id: chemical_id, chemical_group_no: chemical_group_no, quantity: quantity) if quantity > 0
+          add_params = {work_id: id, chemical_id: chemical_id, chemical_group_no:chemical_group_no}
+          WorkChemical.create(quantity_params(quantity, add_params)) if quantity[:quantity].to_f.positive?
         end
       end
     end
@@ -415,5 +424,11 @@ SQL
     wts.compact.uniq.each do |wt|
       work_work_types.create(work_type_id: wt.id)
     end
+  end
+
+  private
+
+  def quantity_params(quantity, add_params)
+    quantity.permit(:quantity, :dilution_id, :magnification, :remarks).merge(add_params)
   end
 end

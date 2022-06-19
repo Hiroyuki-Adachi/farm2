@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: users # 利用者マスタ
+# Table name: users
 #
 #  id(利用者マスタ)              :integer          not null, primary key
 #  calendar_term(期(カレンダー)) :integer          default(2018), not null
@@ -21,12 +21,13 @@
 #  index_users_on_login_name  (login_name) UNIQUE
 #  index_users_on_worker_id   (worker_id) UNIQUE
 #
+
 class User < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   belongs_to :worker
   belongs_to :organization
-  belongs_to :permission
+  belongs_to_active_hash :permission
 
   has_many :calendar_work_kinds, dependent: :destroy
 

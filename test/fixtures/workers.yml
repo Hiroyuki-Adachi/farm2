@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: workers # 作業者マスタ
+# Table name: workers
 #
 #  id(作業者マスタ)                  :integer          not null, primary key
 #  account_number(口座番号)          :string(7)        default("0000000"), not null
@@ -31,6 +31,7 @@
 #  index_workers_on_deleted_at  (deleted_at)
 #  index_workers_on_token       (token) UNIQUE
 #
+
 worker1:
   id: 1
   family_phonetic: ごとう

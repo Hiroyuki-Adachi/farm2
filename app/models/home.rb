@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: homes # 世帯マスタ
+# Table name: homes
 #
 #  id(世帯マスタ)                      :integer          not null, primary key
 #  address1(住所1)                     :string(50)
@@ -11,6 +11,7 @@
 #  drying_order(出力順(乾燥調整用))    :integer
 #  fax(FAX番号)                        :string(15)
 #  finance_order(出力順(会計用))       :integer
+#  location(位置)                      :point
 #  member_flag(組合員フラグ)           :boolean          default(TRUE), not null
 #  name(世帯名)                        :string(10)
 #  owned_rice_order(出力順(保有米))    :integer
@@ -29,16 +30,17 @@
 #
 #  index_homes_on_deleted_at  (deleted_at)
 #
+
 class Home < ApplicationRecord
   acts_as_paranoid
 
   REG_PHONE = /\A\d{2,4}-\d{2,4}-\d{4}\z/
 
   has_many :workers, -> {order(:display_order)}
-  has_many :owned_lands,    -> {order(:place)}, {class_name: :Land, foreign_key: :owner_id}
-  has_many :managed_lands,  -> {order(:place)}, {class_name: :Land, foreign_key: :manager_id}
+  has_many :owned_lands,    -> {order(:place)}, class_name: :Land, foreign_key: :owner_id
+  has_many :managed_lands,  -> {order(:place)}, class_name: :Land, foreign_key: :manager_id
 
-  belongs_to :holder,  -> {with_deleted}, {class_name: :Worker, foreign_key: :worker_id, optional: true}
+  belongs_to :holder,  -> {with_deleted}, class_name: :Worker, foreign_key: :worker_id, optional: true
   belongs_to :section, -> {with_deleted}
 
   scope :usual, -> {
@@ -52,7 +54,7 @@ class Home < ApplicationRecord
       .order(Arel.sql("sections.display_order, homes.display_order, homes.id"))
   }
   scope :landable, -> {
-    joins(:section)
+    joins(:section).includes(:section)
       .order(Arel.sql("homes.company_flag, sections.display_order, homes.display_order, homes.id"))
   }
   scope :machine_owners, -> {where(owner_flag: true).order(Arel.sql("company_flag DESC, display_order, id"))}
@@ -64,6 +66,7 @@ class Home < ApplicationRecord
       .order(owned_rice_order: :ASC, display_order: :ASC, id: :ASC)
   }
   scope :for_seedling, -> {where.not(seedling_order: nil).order(seedling_order: :ASC, id: :ASC)}
+  scope :for_fee, -> {where("EXISTS (SELECT 1 FROM lands WHERE homes.id = lands.owner_id AND lands.deleted_at IS NULL AND lands.target_flag = TRUE)")}
 
   validates :phonetic,      presence: true
   validates :name,          presence: true
@@ -114,5 +117,21 @@ class Home < ApplicationRecord
 
   def total_price(system)
     owned_price(system) + relative_price(system)
+  end
+
+  def total_area
+    owned_lands.where(target_flag: true).sum(:area)
+  end
+
+  def total_area_reg
+    owned_lands.where(target_flag: true).sum(:reg_area)
+  end
+
+  def total_manage_fee(term)
+    LandFee.where(term: term, land_id: owned_lands.ids).sum(:manage_fee)
+  end
+
+  def total_peasant_fee(term)
+    LandFee.where(term: term, land_id: owned_lands.ids).sum(:peasant_fee)
   end
 end

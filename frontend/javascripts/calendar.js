@@ -1,29 +1,28 @@
-$(function() {
+window.addEventListener("load", () => {
     $(window).on("resize", function() {
         initSize();
     });
-    $(".check-weather").change(function() {
-        checkWeather($(this));
+    document.querySelectorAll(".check-weather").forEach((element) => {
+        element.addEventListener("change", (event) => {
+            checkWeather(event.target);
+        });
     });
 
     initSize();
-    checkWeather($("#check_temprature"));
-    checkWeather($("#check_water"));
-    checkWeather($("#check_wind"));
-    checkWeather($("#check_other"));
+    checkWeather(document.getElementById("check_temprature"));
+    checkWeather(document.getElementById("check_water"));
+    checkWeather(document.getElementById("check_wind"));
+    checkWeather(document.getElementById("check_other"));
 });
 
 function initSize() {
-    const off = $("#calendar-wrapper").offset();
+    const wrapper = document.getElementById("calendar-wrapper");
 
-    $("#calendar-wrapper").height($(window).height() - off.top - $("#btn_toolbar").height());
-    $("#calendar-wrapper").width($(window).width() - off.left);
+    wrapper.style.height = window.innerHeight - wrapper.offsetTop - document.getElementById("btn_toolbar").offsetHeight + "px";
 }
 
 function checkWeather(checkbox) {
-    if(checkbox.prop("checked")) {
-        $(checkbox.data("css")).show();
-    } else {
-        $(checkbox.data("css")).hide();
-    }
+    document.querySelectorAll(checkbox.dataset.css).forEach((element) => {
+        element.style.display = checkbox.checked ? "block" : "none";
+    });
 }

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: works # 作業データ
+# Table name: works
 #
 #  id(作業データ)         :integer          not null, primary key
 #  created_by(作成者)     :integer
@@ -19,6 +19,7 @@
 #  work_kind_id(作業種別) :integer          default(0), not null
 #  work_type_id(作業分類) :integer
 #
+
 work_fixed:
   id: '1477'
   term: '2015'

@@ -1,75 +1,79 @@
 <%= error_print(@home) %>
-<%= form_for(@home) do |f| %>
+<%= form_with(model: @home) do |f| %>
   <div class="row">
-    <div class="col-md-3 field form-group">
-      <%= f.label :name, class: "col-form-label-lg" %>
+    <div class="col-md-3 field mb-3">
+      <%= f.label :name, class: "col-form-label-lg form-label" %>
       <%= f.text_field :name, {maxlength: 10, size: 15, required: true, class: "form-control"} %>
     </div>
-    <div class="col-md-3 field form-group">
-      <%= f.label :phonetic, class: "col-form-label-lg" %>
+    <div class="col-md-3 field mb-3">
+      <%= f.label :phonetic, class: "col-form-label-lg form-label" %>
       <%= f.text_field :phonetic, {maxlength: 10, size: 15, required: true, class: "form-control"} %>
+    </div>
+    <div class="col-md-6">
+      <div id="map" class="ratio ratio-4x3"></div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3 field form-group">
-      <%= f.label :telephone, class: "col-form-label-lg" %>
+    <div class="col-md-3 field mb-3">
+      <%= f.label :telephone, class: "col-form-label-lg form-label" %>
       <%= f.telephone_field :telephone, {maxlength: 15, size: 15, class: "form-control"} %>
     </div>
-    <div class="col-md-3 field form-group">
-      <%= f.label :fax, class: "col-form-label-lg" %>
+    <div class="col-md-3 field mb-3">
+      <%= f.label :fax, class: "col-form-label-lg form-label" %>
       <%= f.telephone_field :fax, {maxlength: 15, size: 15, class: "form-control"} %>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3 field form-group">
-      <%= f.label :section_id, class: "col-form-label-lg" %>
-      <%= f.select(:section_id, @sections.map {|section| [section.name, section.id]}, {}, {class: "form-control"}) %>
+    <div class="col-md-3 field mb-3">
+      <%= f.label :section_id, class: "col-form-label-lg form-label" %>
+      <%= f.select(:section_id, @sections.map {|section| [section.name, section.id]}, {}, {class: "form-select"}) %>
     </div>
-    <div class="col-md-2 field form-group">
-      <%= f.label :member_flag, class: "col-form-label-lg" %>
+    <div class="col-md-2 field mb-3">
+      <%= f.label :member_flag, class: "col-form-label-lg form-label" %>
       <div class="form-check">
         <%= f.radio_button :member_flag, true, {class: "form-check-input"} %>
-        <label for="home_member_flag_true" class="form-check-label">営農組合会員</label>
+        <label for="home_member_flag_true" class="form-check-label form-label">営農組合会員</label>
       </div>
       <div class="form-check">
         <%= f.radio_button :member_flag, false, {class: "form-check-input"} %>
-        <label for="home_member_flag_false" class="form-check-label">外部委託</label>
+        <label for="home_member_flag_false" class="form-check-label form-label">外部委託</label>
       </div>
     </div>
-    <div class="col-md-2 field form-group">
-      <%= f.label :owner_flag, class: "col-form-label-lg" %>
+    <div class="col-md-2 field mb-3">
+      <%= f.label :owner_flag, class: "col-form-label-lg form-label" %>
       <div class="form-check">
         <%= f.radio_button :owner_flag, true, {class: "form-check-input"} %>
-        <label for="home_owner_flag_true" class="form-check-label">可</label>
+        <label for="home_owner_flag_true" class="form-check-label form-label">可</label>
       </div>
       <div class="form-check">
         <%= f.radio_button :owner_flag, false, {class: "form-check-input"} %>
-        <label for="home_owner_flag_false" class="form-check-label">不可</label>
+        <label for="home_owner_flag_false" class="form-check-label form-label">不可</label>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-2 field form-group">
-      <%= f.label :display_order, class: "col-form-label-lg" %>
+    <div class="col-md-2 field mb-3">
+      <%= f.label :display_order, class: "col-form-label-lg form-label" %>
       <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
     </div>
-    <div class="col-md-2 field form-group">
-      <%= f.label :finance_order, class: "col-form-label-lg" %>
+    <div class="col-md-2 field mb-3">
+      <%= f.label :finance_order, class: "col-form-label-lg form-label" %>
       <%= f.number_field(:finance_order, {maxlength: 4, size: 4, required: false, class: "form-control"}) %>
     </div>
-    <div class="col-md-2 field form-group">
-      <%= f.label :drying_order, class: "col-form-label-lg" %>
+    <div class="col-md-2 field mb-3">
+      <%= f.label :drying_order, class: "col-form-label-lg form-label" %>
       <%= f.number_field(:drying_order, {maxlength: 4, size: 4, min: 1, required: false, class: "form-control"}) %>
     </div>
-    <div class="col-md-2 field form-group">
-      <%= f.label :owned_rice_order, class: "col-form-label-lg" %>
+    <div class="col-md-2 field mb-3">
+      <%= f.label :owned_rice_order, class: "col-form-label-lg form-label" %>
       <%= f.number_field(:owned_rice_order, {maxlength: 4, size: 4, min: 1, required: false, class: "form-control"}) %>
     </div>
-    <div class="col-md-2 field form-group">
-      <%= f.label :seedling_order, class: "col-form-label-lg" %>
+    <div class="col-md-2 field mb-3">
+      <%= f.label :seedling_order, class: "col-form-label-lg form-label" %>
       <%= f.number_field(:seedling_order, {maxlength: 4, size: 4, min: 1, required: false, class: "form-control"}) %>
     </div>
   </div>
+  <%= f.hidden_field :location, {value: "(#{@home.location ? @home.location.x : current_organization.location.x},#{@home.location ? @home.location.y : current_organization.location.y})"} %>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
       <%= f.submit '登録', class: "btn btn-warning" %>
@@ -84,3 +88,5 @@
     </div>
   </div>
 <% end %>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" async defer></script>
+<%= javascript_pack_tag 'homes' %>

@@ -63,7 +63,16 @@ class WorkTypesController < ApplicationController
   end
 
   def work_type_params
-    return params.require(:work_type).permit(:name, :display_order, :genre, :bg_color, :land_flag, :icon)
+    return params.require(:work_type).permit(
+      :name,
+      :display_order,
+      :genre,
+      :bg_color,
+      :land_flag,
+      :cost_flag,
+      :work_flag,
+      :icon
+    )
   end
 
   def permit_manager

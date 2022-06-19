@@ -12,9 +12,9 @@
   <tbody>
     <% @chemicals.each do |chemical| %>
       <tr>
-        <td><%=h chemical.name %></td>
+        <td><%= chemical_name(chemical) %></td>
         <td><%=h chemical.chemical_type.name %></td>
-        <td class="center"><%=h chemical.this_term_flag(@term) %></td>
+        <td class="center"><%=h chemical.this_term_flag(current_term) %></td>
         <td><%= link_to '修正', edit_chemical_path(chemical), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>
@@ -22,9 +22,12 @@
 </table>
 <%= paginate(@chemicals) %>
 <% end %>
-<div class="btn-toolbar">
+<div class="btn-toolbar mb-2">
   <div class="btn-group mr-2">
     <%= link_to '新規登録', new_chemical_path, class: "btn btn-success" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= button_to '昨年度取込', chemicals_annuals_path, method: :post, data: {confirm: "実行してもよろしいですか？"}, class: "btn btn-warning", disabled: !last_term? %>
   </div>
   <div class="btn-group mr-2">
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>

@@ -1,40 +1,45 @@
 <table id="work_list" class="table table-sm table-hover">
   <thead>
   <tr>
+    <th>No.</th>
     <th>作業日</th>
     <th>時刻</th>
     <th>分類</th>
     <th>内容</th>
-    <th>人数</th>
-    <th>工数</th>
+    <th class="numeric">人数</th>
+    <th class="numeric">工数</th>
+    <th class="numeric">(分)</th>
   </tr>
   </thead>
   <tbody>
     <% @works.each do |work| %>
-      <tr style="cursor:pointer;" data-url="<%= work_path(work) %>">
+      <tr style="cursor:pointer;" data-url="<%= work_path(work) %>" onclick="showWork(this)">
+        <td><%= work.id %></td>
         <td><%= work.worked_at %></td>
         <td><%= work.work_time %></td>
         <td><%= work.genre_name %></td>
         <td><%= work.name %></td>
         <td class="numeric"><%= @count_workers[work.id] || 0 %></td>
         <td class="numeric"><%= @sum_hours[work.id] || 0 %></td>
+        <td class="numeric"><%= ((@sum_hours[work.id] || 0) * 60).to_i.to_formatted_s(:delimited) %></td>
       </tr>
     <% end %>
   </tbody>
   <tfoot>
     <tr>
-      <th colspan="3">合計</th>
+      <th colspan="4">合計</th>
       <td class="numeric"><%= @works_count %>件</td>
       <td class="numeric"><%= @total_workers %></td>
       <td class="numeric"><%= @total_hours %></td>
+      <td class="numeric"><%= (@total_hours * 60).to_i.to_formatted_s(:delimited) %></td>
     </tr>
+    <% unless @total_hours_member == @total_hours %>
+    <tr>
+      <th colspan="6">組合員のみ</th>
+      <td class="numeric"><%= sprintf("%.1f", @total_hours_member) %></td>
+      <td class="numeric"><%= (@total_hours_member * 60).to_i.to_formatted_s(:delimited) %></td>
+    </tr>
+    <% end %>
   </tfoot>
 </table>
 <%= paginate @works, remote: true %>
-<script type="text/javascript">
-$(function () {
-  $("#list table tbody tr").click(function() {
-    location.href = $(this).data("url");
-  });
-});
-</script>

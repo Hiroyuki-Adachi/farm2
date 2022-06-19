@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: seedlings # 育苗
+# Table name: seedlings
 #
 #  id(育苗)                :integer          not null, primary key
 #  seed_cost(種子原価)     :decimal(6, )     default(0), not null
@@ -14,9 +14,10 @@
 #
 #  index_seedlings_on_term_and_work_type_id  (term,work_type_id) UNIQUE
 #
+
 class Seedling < ActiveRecord::Base
   belongs_to :work_type, -> {with_deleted}
-  has_many :seedling_homes, {dependent: :destroy}
+  has_many :seedling_homes, dependent: :destroy
 
   scope :usual, ->(term, work_types) {where(term: term, work_type_id: work_types.ids)}
   scope :by_term, ->(term) {where(term: term)}

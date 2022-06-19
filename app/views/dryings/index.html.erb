@@ -37,25 +37,19 @@
     <% end %>
   </tbody>
 </table>
-<%= form_for(@new_drying) do |f| %>
+<%= form_with(model: @new_drying) do |f| %>
   <%= f.hidden_field(:term) %>
   <%= f.hidden_field(:home_id) %>
   <%= f.hidden_field(:carried_on) %>
 <% end %>
 <script>
-$(function() {
-    $(".drying-data").click(function() {
-        createData($(this));
+window.addEventListener("load", () => {
+    document.querySelectorAll(".drying-data").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            document.getElementById("drying_home_id").value = element.dataset.home;
+            document.getElementById("drying_carried_on").value = element.dataset.worked_at;
+            document.getElementById("new_drying").submit();
+        });
     });
 });
-
-function createData(ctl) {
-    if(bootbox.confirm("指定データを作成しますか？", function(result) {
-        if(result) {
-            $("#drying_home_id").val(ctl.data("home"));
-            $("#drying_carried_on").val(ctl.data("worked_at"));
-            $("#new_drying").submit();
-        }
-    }));
-}
 </script>

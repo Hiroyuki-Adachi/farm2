@@ -14,6 +14,12 @@
 <% if (@chemicals.count > 0 || @work.work_kind.chemical_kinds.count > 0) && current_organization.chemicals_count > 0 %>
   <%= render partial: "works/show_chemicals" %>
 <% end %>
+<% if @work.work_kind_id == current_organization.rice_planting_id %>
+  <%= render partial: "works/show_seedlings" %>
+<% end %>
+<% if @whole_crop || current_organization.whole_crop_work_kind_id == @work.work_kind_id %>
+  <%= render partial: "works/show_whole_crops" %>
+<% end %>
 <%= render partial: "works/show_stamp"%>
 <script>
 $(function() {

@@ -61,7 +61,7 @@ class WorkDecorator < Draper::Decorator
     model.work_chemicals.each do |work_chemical|
       result << work_chemical.chemical.name + "(" + work_chemical.chemical.chemical_type.name + "):" + work_chemical.quantity.to_s
     end
-    return result.join(", ")
+    return result.to_sentence
   end
 
   def genre_name
@@ -120,7 +120,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def checker_short_names
-    model.checkers.map { |checker| checker.decorate.short_name}.join(", ")
+    model.checkers.map { |checker| checker.decorate.short_name}.to_sentence
   end
 
   def exists_workers
@@ -140,15 +140,15 @@ class WorkDecorator < Draper::Decorator
   end
 
   def machine_names
-    model.machine_results.map(&:machine).flatten.uniq.map(&:type_name).join("、")
+    model.machine_results.map(&:machine).flatten.uniq.map(&:type_name).to_sentence
   end
 
   def broccoli_worker_names
-    model.workers.map { |worker| worker.broccoli_mark.presence || worker.name}.sort.join(", ")
+    model.workers.map { |worker| worker.broccoli_mark.presence || worker.name}.sort.to_sentence
   end
 
   def broccoli_land_places
-    model.lands.map { |land| land.broccoli_mark.presence || land.place}.sort.join(", ")
+    model.lands.map { |land| land.broccoli_mark.presence || land.place}.sort.to_sentence
   end
 
   def broccoli_work_kind_name
@@ -156,6 +156,6 @@ class WorkDecorator < Draper::Decorator
   end
 
   def exact_work_type_name
-    model.exact_work_types.map(&:name).join("、")
+    model.exact_work_types.map(&:name).to_sentence
   end
 end

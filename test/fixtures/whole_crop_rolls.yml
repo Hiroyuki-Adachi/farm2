@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: whole_crop_rolls # WCSロール
+# Table name: whole_crop_rolls
 #
 #  id                          :bigint           not null, primary key
 #  display_order(番号)         :integer          default(0), not null
@@ -9,6 +9,7 @@
 #  updated_at                  :datetime         not null
 #  whole_crop_land_id(WCS土地) :integer          default(0), not null
 #
+
 wcs_roll11:
   wcs_land: wcs_land1
   display_order: 1

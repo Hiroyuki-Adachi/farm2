@@ -1,23 +1,23 @@
 <h1>保有米単価マスタ(<%= current_term %>年度)(<%= @owned_rice_price.work_type.name %>)</h1>
 <%= error_print(@owned_rice_price) %>
-<%= form_for(@owned_rice_price) do |f| %>
+<%= form_with(model: @owned_rice_price) do |f| %>
   <div class="row">
-    <div class="col-md-3 form-group">
-      <%= f.label :name, class: "col-form-label-lg" %>
+    <div class="col-md-3 mb-3">
+      <%= f.label :name, class: "col-form-label-lg form-label" %>
       <%= f.text_field :name, {maxlength: 10, size: 20, class: "form-control"} %>
     </div>
-    <div class="col-md-2 form-group">
-      <%= f.label :short_name, class: "col-form-label-lg" %>
+    <div class="col-md-2 mb-3">
+      <%= f.label :short_name, class: "col-form-label-lg form-label" %>
       <%= f.text_field :short_name, {maxlength: 5, size: 10, class: "form-control"} %>
     </div>
-    <div class="col-md-2 form-group">
-      <%= f.label :display_order, class: "col-form-label-lg" %>
+    <div class="col-md-2 mb-3">
+      <%= f.label :display_order, class: "col-form-label-lg form-label" %>
       <%= f.number_field :display_order, {maxlength: 3, size: 3, required: true, min: 0, max: 999, class: "form-control"} %>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-2 form-group">
-      <%= f.label :owned_price, class: "col-form-label-lg" %>
+    <div class="col-md-2 mb-3">
+      <%= f.label :owned_price, class: "col-form-label-lg form-label" %>
       <%= f.number_field :owned_price, {step: 1, max: 99999, min: 0, size: 5, required: true, class: "form-control"} %>
     </div>
   </div>

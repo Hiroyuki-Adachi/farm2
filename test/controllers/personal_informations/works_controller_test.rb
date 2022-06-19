@@ -7,7 +7,7 @@ class PersonalInformations::WorksControllerTest < ActionController::TestCase
 
   test "個人情報(日報)" do
     session[:user_id] = nil
-    get :show, params: {personal_information_token: @worker.token, id: 1504}
+    get :show, params: {personal_information_token: @worker.token, id: 1478}
     assert_response :success
   end
 end

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: machine_results # 機械稼動データ
+# Table name: machine_results
 #
 #  id(機械稼動データ)             :integer          not null, primary key
 #  display_order(表示順)          :integer          default(1), not null
@@ -19,18 +19,19 @@
 #
 #  index_machine_results_on_machine_id_and_work_result_id  (machine_id,work_result_id) UNIQUE
 #
+
 class MachineResult < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   belongs_to  :machine, -> {with_deleted}
   belongs_to  :work_result
-  belongs_to  :fixed_adjust, {class_name: "Adjust"}
+  belongs_to_active_hash  :fixed_adjust, class_name: "Adjust"
 
-  has_one :work, {through: :work_result}
-  has_one :owner, -> {with_deleted}, {through: :machine}
-  has_one :work_type, -> {with_deleted}, {through: :work}
-  has_one :machine_type, -> {with_deleted}, {through: :machine}
-  has_one :work_kind, -> {with_deleted}, {through: :work}
+  has_one :work, through: :work_result
+  has_one :owner, -> {with_deleted}, through: :machine
+  has_one :work_type, -> {with_deleted}, through: :work
+  has_one :machine_type, -> {with_deleted}, through: :machine
+  has_one :work_kind, -> {with_deleted}, through: :work
 
   scope :by_home, ->(term) {
      joins(:machine).eager_load(:machine)

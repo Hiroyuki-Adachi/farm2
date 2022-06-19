@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: sections # 班／町内マスタ
+# Table name: sections
 #
 #  id(班／町内マスタ)      :integer          not null, primary key
 #  deleted_at              :datetime
@@ -14,6 +14,7 @@
 #
 #  index_sections_on_deleted_at  (deleted_at)
 #
+
 class Section < ApplicationRecord
   acts_as_paranoid
 

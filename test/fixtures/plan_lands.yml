@@ -1,16 +1,19 @@
 # == Schema Information
 #
-# Table name: plan_lands # 作付計画
+# Table name: plan_lands
 #
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  land_id(土地)          :integer          not null
+#  user_id(利用者)        :integer          default(0), not null
 #  work_type_id(作業分類) :integer          not null
 #
 # Indexes
 #
-#  plan_lands_2nd  (land_id) UNIQUE
+#  plan_lands_2nd  (user_id,land_id) UNIQUE
 #
+
 plan_land1:
   work_type_id: 4
+  user_id: 2
   land_id: 2

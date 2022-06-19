@@ -1,10 +1,9 @@
 # == Schema Information
 #
-# Table name: land_costs # 土地原価
+# Table name: land_costs
 #
 #  id(土地原価)           :integer          not null, primary key
 #  activated_on(有効日)   :date             default(Mon, 01 Jan 1900), not null
-#  cost(原価)             :decimal(7, 1)    default(0.0), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  land_id(土地)          :integer          not null
@@ -14,11 +13,11 @@
 #
 #  index_land_costs_on_activated_on_and_land_id  (activated_on,land_id) UNIQUE
 #
+
 cost1:
   activated_on: '2015-01-01'
   land: land_land_cost1
   work_type_id: 8
-  cost: 100
   created_at: '2015-07-11 12:12:12'
   updated_at: '2015-07-11 12:12:12'
 
@@ -26,7 +25,6 @@ land_cost_genka1:
   activated_on: '2015-01-01'
   land: land_genka1
   work_type_id: 6
-  cost: 20000
   created_at: '2015-07-11 12:12:12'
   updated_at: '2015-07-11 12:12:12'
 
@@ -34,7 +32,6 @@ land_cost_genka21:
   activated_on: '2015-01-01'
   land: land_genka2
   work_type_id: 5
-  cost: 40000
   created_at: '2015-07-11 12:12:12'
   updated_at: '2015-07-11 12:12:12'
 
@@ -42,6 +39,5 @@ land_cost_genka22:
   activated_on: '2017-12-01'
   land: land_genka2
   work_type_id: 8
-  cost: 40000
   created_at: '2015-07-11 12:12:12'
   updated_at: '2015-07-11 12:12:12'

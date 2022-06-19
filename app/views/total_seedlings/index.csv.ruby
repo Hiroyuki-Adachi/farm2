@@ -9,9 +9,9 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
       seedling_home.work_type_name,
       seedling_home.quantity,
       @seedling_result_quantities[seedling_home.id],
-      seedling_status(seedling_home),
+      seedling_status(seedling_home, @seedling_result_quantities),
       @seedling_price,
-      seedling_amount(seedling_home)
+      seedling_amount(seedling_home, @seedling_result_quantities, @seedling_price)
     ]
   end
 end

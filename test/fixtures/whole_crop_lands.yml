@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: whole_crop_lands # WCS土地
+# Table name: whole_crop_lands
 #
 #  id                          :bigint           not null, primary key
 #  display_order(番号)         :integer          default(0), not null
@@ -14,6 +14,7 @@
 #
 #  index_whole_crop_lands_on_work_whole_crop_id_and_work_land_id  (work_whole_crop_id,work_land_id) UNIQUE
 #
+
 wcs_land1:
   work_whole_crop: whole_crop1
   work_land_id: 5849

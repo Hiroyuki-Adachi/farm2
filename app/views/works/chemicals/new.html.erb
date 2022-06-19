@@ -1,0 +1,102 @@
+<h1>作業日報(薬剤)登録</h1>
+<%= error_print(@work) %>
+
+<%= form_with(model: @work.model, url: {action: :create}, html: {method: :post}) do |f| %>
+  <%= render(:partial => 'show_work', :locals => {:f => f}) %>
+  <% group_count = [@work.work_chemicals.maximum(:chemical_group_no).to_i, current_organization.chemical_group_count].max %>
+  <div class="row">
+    <div class="col-md-2 h3">総面積</div>
+    <div class="col-md-2 h3">
+      <%= @work.sum_areas %>a
+      <%= hidden_field_tag :sum_areas, @work.sum_areas %>
+    </div>
+    <div class="col-md-8 mb-3">
+      <% group_count.times do |index| %>
+        <div class="form-check-inline">
+          <%= radio_button_tag "col_group", index, index == 0, {class: "form-check-input change-group", data: {group: index}} %>
+          <%= label_tag "col_group_#{index}", "#{index + 1}グループ", {class: "form-check-label"} %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <h2>薬剤</h2>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>種別</th>
+            <th>名称</th>
+            <% group_count.times do |index| %>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">使用量</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">希釈</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">希釈倍率</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">希釈水量(&#8467;)</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">10a当</th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;"></th>
+            <th class="col-data" data-index="<%= index%>" style="display:none;">備考</th>
+            <% end %>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @chemicals.each do |chemical| %>
+        <tr>
+          <td><%= chemical.chemical_type.name %></td>
+          <td><%= chemical_name(chemical) %>(<%= chemical.base_base_quantity %><%= chemical.base_unit_name %>)</td>
+          <% group_count.times do |index| %>
+            <% work_chemical = @work.work_chemicals.find_by(chemical_id: chemical.id, chemical_group_no: index + 1) %>
+
+            <td class="col-data" data-index="<%= index %>" style="display:none;">
+              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][quantity]", work_chemical&.quantity,
+                {min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
+                data: {id: chemical.id, index: index + 1}} %>
+            </td>
+            <td class="text-center col-data" data-index="<%= index %>" style="display:none; white-space: nowrap;">
+              <%= hidden_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_id]", Dilution::NONE.id %>
+              <% Dilution.all.each do |dilution| %>
+                <label style="display: inline-block; cursor: pointer;" class="form-label">
+                  <%= radio_button_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_id]", dilution.id, 
+                  work_chemical&.dilution_id == dilution.id,
+                  {id: nil, class: "form-control", disabled: !chemical.aqueous_flag, data: {id: chemical.id, group: index + 1}} %>
+                  <%= dilution.name %>
+                </label>
+              <% end %>
+            </td>
+            <td class="col-data" data-index="<%= index %>" style="display:none;">
+              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][magnification]", work_chemical&.magnification,
+                {readonly: !work_chemical&.dilution_mag?, min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
+                data: {id: chemical.id, group: index + 1, unit: chemical.unit_scale}} %>
+            </td>
+            <td class="col-data" data-index="<%= index %>" style="display:none;">
+              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_amount]", work_chemical&.dilution_amount,
+                {readonly: !work_chemical&.dilution_l?, min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
+                data: {id: chemical.id, group: index + 1, unit: chemical.unit_scale}} %>
+            </td>
+            <td class="col-data numeric" data-index="<%= index %>" style="display:none;" id="chemicals_<%= chemical.id %>_<%= index + 1 %>_quantity10">
+              <%= work_chemical&.quantity10 %>
+            </td>
+            <td class="col-data" data-index="<%= index %>" style="display:none;"><%= chemical.unit %></td>
+            <td class="col-data" data-index="<%= index %>" style="display:none;">
+            <%= text_field_tag "chemicals[#{chemical.id}][#{index + 1}][remarks]", work_chemical&.remarks, class: "form-control form-control-sm" %>
+            </td>
+          <% end %>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= f.submit '登録', :name => 'regist_chemicals', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', work_path(@work.model), {class: "btn btn-outline-dark"} %>
+    </div>
+  </div>
+<% end %>
+<input type="hidden" id="dilution_none" value="<%= Dilution::NONE.id %>" />
+<input type="hidden" id="dilution_l" value="<%= Dilution::L.id %>" />
+<input type="hidden" id="dilution_mag" value="<%= Dilution::MAG.id %>" />
+<%= javascript_pack_tag 'edit-chemicals' %>

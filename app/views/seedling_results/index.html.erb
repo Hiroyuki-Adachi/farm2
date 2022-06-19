@@ -13,16 +13,12 @@
   </thead>
   <tbody>
     <% @seedling_homes.each do |seedling_home| %>
-      <tr>
+      <tr <%= seedling_status_danger?(seedling_home, @seedling_result_quantities) ? 'class=table-danger' : ''%>>
         <td><%= seedling_home.home_name %></td>
         <td><%= seedling_home.work_type_name %></td>
         <td class="numeric"><%= seedling_home.quantity %></td>
         <td class="numeric"><%= sprintf("%d", @seedling_result_quantities[seedling_home.id] || 0) %></td>
-        <td>
-          <% if seedling_home.quantity > (@seedling_result_quantities[seedling_home.id] || 0) %>
-          <%= seedling_home.dispose? ? "廃棄" : "不足" %>
-          <% end %>
-        </td>
+        <td><%= seedling_status(seedling_home, @seedling_result_quantities) %></td>
         <td>
           <%= link_to '使用', edit_seedling_result_path(seedling_home_id: seedling_home.id), {class: "btn btn-success btn-sm"} %>
         </td>

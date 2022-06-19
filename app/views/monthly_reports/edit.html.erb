@@ -81,7 +81,7 @@ function calc_total_hours()
 
 <h1>作業月報修正</h1>
 <h2><%= @target_from.strftime('%Y年%m月') %>：<%= @worker.name + "(#{@worker.home.name})" %></h2>
-<%= form_tag({:action => :update, :id => @worker}, {:method => :put}) do %>
+<%= form_with url: monthly_report_path(@worker), method: :put do |f| %>
 <table class="table table-sm">
   <thead>
     <tr>
@@ -109,14 +109,14 @@ function calc_total_hours()
         <td style="text-align: right;"><%=h d + 1 %></td>
         <td style="text-align: center;"><%=h WorkDecorator::WDAY[target_at.wday] %></td>
         <td><%= select_tag("data[#{d}][weather]", 
-            options_for_select(Weather.all.map {|weather| [weather.name, weather.id]}, work ? work.weather : Weather.first), {class: "form-control"}) %></td>
+            options_for_select(Weather.all.map {|weather| [weather.name, weather.id]}, work ? work.weather : Weather.first), {class: "form-select"}) %></td>
         <td><%= select_time(work ? work.start_at : Time.parse("8:00") , {:minute_step => 30, :prefix => "data[#{d}][start_at]"}, {onchange: "calc_hours(" + d.to_s + ")", class: "form-control bootstrap-date"}) %></td>
         <td style="text-align: center;">～</td>
         <td><%= select_time(work ? work.end_at : Time.parse("8:00"), {:minute_step => 30, :prefix => "data[#{d}][end_at]"}, {onchange: "calc_hours(" + d.to_s + ")", class: "form-control bootstrap-date"}) %></td>
         <td><%= number_field_tag "data[#{d}][hours]", result ? sprintf("%.1f", result.hours) : "0.0", 
           {max: 24, min: 0, step: 0.5, onchange: "calc_total_hours()", class: "form-control"} %></td>
         <td><%= select_tag("data[#{d}][work_type_id]",
-            options_from_collection_for_select(WorkType.indexes, :id, :name, work ? work.work_type_id : 1), {class: "form-control"}) %></td>
+            options_from_collection_for_select(WorkType.indexes, :id, :name, work ? work.work_type_id : 1), {class: "form-select"}) %></td>
         <td><%= text_field_tag "data[#{d}][name]", work ? work.name : "", {:maxlength => 40, :size => 30, class: "form-control"} %></td>
       <% else %>
         <td>&nbsp;</td>

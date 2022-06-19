@@ -1,59 +1,65 @@
 <%= error_print(@land) %>
-<%= form_for(@land) do |f| %>
-<div class="form-row">
-  <div class="field form-group col-md-2">
-    <%= f.label :place, class: "col-form-label-lg" %>
+<%= form_with(model: @land) do |f| %>
+<div class="row">
+  <div class="field mb-3 col-md-2">
+    <%= f.label :place, class: "col-form-label-lg form-label" %>
     <%= f.text_field :place, {maxlength: 15, size: 20, required: true, class: "form-control"} %>
   </div>
-  <div class="field form-group col-md-2">
-    <%= f.label :land_place_id, class: "col-form-label-lg" %>
-    <%= f.select(:land_place_id, @places.map {|place| [place.name, place.id]}, {}, {class: "form-control"}) %>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :land_place_id, class: "col-form-label-lg form-label" %>
+    <%= f.select(:land_place_id, @places.map {|place| [place.name, place.id]}, {}, {class: "form-select"}) %>
   </div>
   <div class="col-md-8">
   <%= render(partial: "map", :locals => {:f => f}) %>
   </div>
 </div>
-<div class="form-row">
-  <div class="field form-group col-md-2">
-    <%= f.label :owner_id, class: "col-form-label-lg" %>
-    <%= f.select(:owner_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-control"}) %>
+<div class="row">
+  <div class="field mb-3 col-md-2">
+    <%= button_tag "所有者", type: :button, class: "btn btn-success edit-homes", style: "margin-bottom: 20px;", disabled: @land.new_record?,
+      data: {path: land_owners_path(land_id: @land&.id || 0), "destroy-path" => land_owner_path(land_id: @land&.id || 0, id: 0)} %>
+    <%= f.select(:owner_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-select"}) %>
   </div>
-  <div class="field form-group col-md-2">
-    <%= f.label :manager_id, class: "col-form-label-lg" %>
-    <%= f.select(:manager_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-control"}) %>
+  <div class="field mb-3 col-md-2">
+    <%= button_tag "管理者", type: :button, class: "btn btn-success edit-homes", style: "margin-bottom: 20px;", disabled: @land.new_record?,
+      data: {path: land_managers_path(land_id: @land&.id || 0), "destroy-path" => land_manager_path(land_id: @land&.id || 0, id: 0)} %>
+    <%= f.select(:manager_id, @homes.map {|h| [h.owner_name, h.id]}, {}, {class: "form-select"}) %>
   </div>
-  <div class="field form-group col-md-2">
-    <%= f.label :area, class: "col-form-label-lg" %>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :area, class: "col-form-label-lg form-label" %>
     <%= f.number_field(:area, {step: 0.01, max: 999.99, min: 0.01, size: 6, required: true, class: "form-control"}) %>
   </div>
-  <div class="field form-group col-md-2">
-    <%= f.label :reg_area, class: "col-form-label-lg" %>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :reg_area, class: "col-form-label-lg form-label" %>
     <%= f.number_field(:reg_area, {step: 0.01, max: 999.99, min: 0, size: 6, class: "form-control"}) %>
   </div>
-  <div class="col-md-2">
-    <input type="button" value="クリア" id="clear_region"  class="btn btn-danger mt-5" />
-  </div>
 </div>
-<div class="form-row">
-  <div class="field form-group col-md-2">
+<div class="row">
+  <div class="field mb-3 col-md-2">
     <%= f.label :target_flag, class: "col-form-label-lg" %>
     <div class="form-check">
       <%= f.radio_button :target_flag, true %>
-      <label for="land_target_flag_true" class="form-check-label">営農組合会員</label>
+      <label for="land_target_flag_true" class="form-check-label form-label">営農組合会員</label>
     </div>
     <div class="form-check">
       <%= f.radio_button :target_flag, false %>
-      <label for="land_target_flag_false" class="form-check-label">個人管理</label>
+      <label for="land_target_flag_false" class="form-check-label form-label">個人管理</label>
     </div>
   </div>
-  <div class="field form-group col-md-2">
-    <%= f.label :display_order, class: "col-form-label-lg" %>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :display_order, class: "col-form-label-lg form-label" %>
     <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
   </div>
-  <div class="field form-group col-md-2">
-    <%= f.label :broccoli_mark, class: "col-form-label-lg" %>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :broccoli_mark, class: "col-form-label-lg form-label" %>
     <%= f.text_field :broccoli_mark, {maxlength: 1, class: "form-control"} %>
-    <%= f.hidden_field :region %>
+  </div>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :start_on, class: "col-form-label-lg form-label" %>
+    <%= f.date_field :start_on, {class: "form-control"} %>
+  </div>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :end_on, class: "col-form-label-lg form-label" %>
+    <%= f.date_field :end_on, {class: "form-control"} %>
   </div>
 </div>
 <div class="btn-toolbar">
@@ -70,3 +76,18 @@
   </div>
 </div>
 <% end %>
+<div class="modal fade bd-example-modal-lg" id="popup_edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div id="popup_content">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" id="popup_update">登録</button>
+        <button type="button" class="btn btn-danger" id="popup_delete">全削除</button>
+        <button type="button" class="btn btn-outline-dark" id="popup_close">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" id="destroy_path" value="" />
+<input type="hidden" id="index_path" value="" />

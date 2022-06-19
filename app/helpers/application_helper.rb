@@ -33,4 +33,8 @@ module ApplicationHelper
   def work_type_icon_tag(work_type)
     image_tag(work_type.icon ? show_icon_work_type_path(work_type) : "/images/works/default.png", size: "48x48")
   end
+
+  def chemical_name(chemical)
+    chemical.url.present? ? link_to(chemical.name, chemical.url, target: :_blank, rel: "noopener noreferrer") : chemical.name
+  end
 end

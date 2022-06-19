@@ -1,8 +1,8 @@
 <%= error_print(@machine_price) %>
 <% work_kinds = @machine_price.work_kinds %>
-<%= form_for(@machine_price) do |f| %>
-  <div class="field form-group">
-    <%= f.label :validated_at, class: "col-form-label-lg" %>
+<%= form_with(model: @machine_price) do |f| %>
+  <div class="field mb-3">
+    <%= f.label :validated_at, class: "col-form-label-lg form-label" %>
     <%= f.date_field(:validated_at, {required: true, class: "form-control"}) %><br />
   </div>
   <table class="list">
@@ -19,7 +19,7 @@
         <tr>
           <th><%=h lease.name %></th>
           <% work_kinds.each do |work_kind| %>
-            <td><%= select_tag("details_form[#{lease.id}][#{work_kind.id}][adjust_id]", options_from_collection_for_select(@adjusts, :id, :name, @machine_price.details_form[lease.id][work_kind.id][:adjust_id]), {class: "form-control"}) %></td>
+            <td><%= select_tag("details_form[#{lease.id}][#{work_kind.id}][adjust_id]", options_from_collection_for_select(@adjusts, :id, :name, @machine_price.details_form[lease.id][work_kind.id][:adjust_id]), {class: "form-select"}) %></td>
             <td><%= number_field_tag("details_form[#{lease.id}][#{work_kind.id}][price]", @machine_price.details_form[lease.id][work_kind.id][:price], {min: 0, max: 99999, required: true, step: 1, class: "form-control"}) %></td>
           <% end %>
         </tr>

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: depreciations # 減価償却
+# Table name: depreciations
 #
 #  id(減価償却)     :integer          not null, primary key
 #  cost(減価償却費) :decimal(9, )     default(0), not null
@@ -13,11 +13,12 @@
 #
 #  index_depreciations_on_term_and_machine_id  (term,machine_id) UNIQUE
 #
+
 class Depreciation < ApplicationRecord
   belongs_to :machine
-  has_one :machine_type, {through: :machine}
-  has_many :depreciation_types, {dependent: :destroy}
-  has_many :work_types, {through: :depreciation_types}
+  has_one :machine_type, through: :machine
+  has_many :depreciation_types, dependent: :destroy
+  has_many :work_types, through: :depreciation_types
 
   scope :usual, ->(term) {joins(:machine, :machine_type).where(["depreciations.term = ?", term])}
 

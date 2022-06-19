@@ -1,6 +1,9 @@
 input[type=number] {
   text-align: right;
 }
+input[type=number].narrow {
+  width: 100px;
+}
   
 td.numeric {
   text-align: right;
@@ -15,7 +18,7 @@ th.numeric {
   width: auto;
 }
 
-#sideWrapper {
+#my_side_wrapper {
   @media (min-width: 767.98px) {
     padding-right: 0;
     max-width: 200px;
@@ -41,8 +44,35 @@ th.numeric {
   background: url("../images/loading.gif") center center no-repeat;
 }
 
+.form-check-input, .form-check-label {
+  cursor: pointer;
+}
+
 @media print {
-  #mySidebar {
+  #my_sidebar {
     display: none;
   }
+}
+
+input[type=date].form-control {
+  width: 200px;
+}
+
+div.form-check-inline input[type='checkbox']:checked + label {
+  color: red;
+  font-weight: bold;
+}
+
+table.float-head {
+	position: relative;
+}
+table.float-head th {
+	position: sticky;
+  background-color: white;
+  z-index: 1;
+	top: 0;
+}
+div.float-head-wrapper {
+  overflow-y: scroll;
+  height: calc(100vh - 400px);
 }

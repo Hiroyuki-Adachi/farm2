@@ -1,0 +1,81 @@
+# == Schema Information
+#
+# Table name: chemical_stocks
+#
+#  id                              :bigint           not null, primary key
+#  adjust(調整量)                  :decimal(5, 1)    default(0.0), not null
+#  inventory(棚卸量)               :decimal(7, 1)
+#  name(在庫名称)                  :string(40)       default(""), not null
+#  shipping(出庫量)                :decimal(5, 1)
+#  stock(在庫量)                   :decimal(7, 1)    default(0.0), not null
+#  stock_on(在庫日)                :date             not null
+#  stored(入庫量)                  :decimal(5, 1)
+#  using(使用量)                   :decimal(5, 1)
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  chemical_id(薬剤)               :integer          not null
+#  chemical_inventory_id(薬剤棚卸) :integer
+#  work_chemical_id(薬剤使用)      :integer
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+stock_inventory:
+  chemical_id: '3'
+  chemical_inventory: inventory1
+  stock_on: '2015-12-15'
+  name: '年末棚卸'
+  inventory: 200
+
+stock_store:
+  chemical_id: '3'
+  chemical_inventory: store1
+  stock_on: '2015-12-16'
+  name: '年末納品'
+  stored: 300
+
+stock_edit:
+  chemical_id: '3'
+  stock_on: '2015-12-17'
+  name: '手入力'
+  stored: 500
+
+stock_model1:
+  chemical_id: '4'
+  stock_on: '2015-01-01'
+  chemical_inventory: inventory21
+  name: '初期在庫'
+  inventory: 60
+
+stock_model2:
+  chemical_id: '4'
+  chemical_inventory: store2
+  stock_on: '2015-03-01'
+  name: '納品1'
+  stored: 20
+
+stock_model4:
+  chemical_id: '4'
+  name: '手入力入庫'
+  stock_on: '2015-04-01'
+  stored: 15
+
+stock_model5:
+  chemical_id: '4'
+  name: '手入力出庫'
+  stock_on: '2015-05-01'
+  shipping: 20
+
+stock_model6:
+  chemical_id: '4'
+  name: '年末棚卸'
+  chemical_inventory: inventory22
+  stock_on: '2015-12-31'
+  inventory: 20
+
+stock_for_test:
+  chemical_id: '5'
+  stock_on: '2015-12-16'
+  name: '年末納品'

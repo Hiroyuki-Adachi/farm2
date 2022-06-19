@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: organizations # 組織(体系)マスタ
+# Table name: organizations
 #
 #  id(組織(体系)マスタ)                      :integer          not null, primary key
 #  account_number(口座番号)                  :string(7)        default("0000000"), not null
@@ -28,6 +28,7 @@
 #  rice_planting_id(田植作業種別)            :integer
 #  whole_crop_work_kind_id(WCS収穫分類)      :integer
 #
+
 org:
   id: 1
   name: "てすと営農組合"

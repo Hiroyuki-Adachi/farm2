@@ -1,17 +1,17 @@
 <h1>燃料原価登録</h1>
-<%= form_tag(action: :create) do  %>
+<%= form_with url: fuel_costs_path, method: :post do |f| %>
 <div class="row">
   <div class="col-md-4">
     <div class="form-inline">
-      <label for="light_oil_price" class="col-form-label">標準単価</label>
+      <label for="light_oil_price" class="col-form-label form-label">標準単価</label>
       <%= number_field_tag :light_oil_price, current_system.light_oil_price, {class: "form-control", min: 0, max: 999, style: "width: 100px;"} %>
     </div>
   </div>
 </div>
 <div class="row">
-  <div id="table_wrapper" class="wrapper small" style="overflow-y: scroll;">
-    <table id="tbl_list" class="table table-sm">
-      <thead style="background-color:white;">
+  <div id="table_wrapper" class="wrapper small float-head-wrapper">
+    <table id="tbl_list" class="table table-sm float-head">
+      <thead>
         <tr>
           <th rowspan="2">日付</th>
           <% @machines.each do |machine| %>
@@ -54,22 +54,3 @@
   </div>
 </div>
 <% end %>
-<script>
-$(function() {
-    $("#tbl_list").floatThead({
-        position: 'absolute',
-        scrollContainer:true,
-        zIndex: 999
-    });
-    $(window).resize(function() {
-        setTableWrapperHeight();
-    });
-    setTableWrapperHeight();
-});
-
-function setTableWrapperHeight() {
-    if($("#table_wrapper")[0]) {
-        $("#table_wrapper").height($(window).height() - $("#table_wrapper").offset().top - $("#btn_toolbar").height() - 10);
-    }
-}
-</script>

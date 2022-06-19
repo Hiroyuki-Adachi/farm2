@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_results # 作業結果データ
+# Table name: work_results
 #
 #  id(作業結果データ)         :integer          not null, primary key
 #  display_order(表示順)      :integer          default(0), not null
@@ -8,9 +8,11 @@
 #  fixed_hours(確定作業時間)  :decimal(5, 1)
 #  fixed_price(確定作業単価)  :decimal(5, )
 #  hours(作業時間)            :decimal(5, 1)    default(0.0), not null
+#  remarks(備考)              :string(20)       default(""), not null
 #  uuid(UUID(カレンダー用))   :string(36)
 #  created_at                 :datetime
 #  updated_at                 :datetime
+#  health_id(健康)            :integer          default(0), not null
 #  work_id(作業)              :integer
 #  worker_id(作業者)          :integer
 #
@@ -18,20 +20,22 @@
 #
 #  index_work_results_on_work_id_and_worker_id  (work_id,worker_id) UNIQUE
 #
+
 require 'date'
 require 'securerandom'
 class WorkResult < ApplicationRecord
   belongs_to :work
+  belongs_to :health
   belongs_to :worker, -> {with_deleted}
-  has_one    :home, -> {with_deleted}, {through: :worker}
-  has_one    :work_type, -> {with_deleted}, {through: :work}
-  has_one    :work_kind, -> {with_deleted}, {through: :work}
+  has_one    :home, -> {with_deleted}, through: :worker
+  has_one    :work_type, -> {with_deleted}, through: :work
+  has_one    :work_kind, -> {with_deleted}, through: :work
 
   before_create :set_uuid
 
-  has_many  :machine_results, {dependent: :destroy}
-  has_many  :machines, {through: :machine_results}
-  has_many  :seedling_results, {dependent: :destroy}
+  has_many  :machine_results, dependent: :destroy
+  has_many  :machines, through: :machine_results
+  has_many  :seedling_results, dependent: :destroy
 
   validates :hours, presence: true
   validates :hours, numericality: true, :if => proc{|x| x.hours.present?}
@@ -101,5 +105,20 @@ class WorkResult < ApplicationRecord
 
   def sum_seedlings(work_type_id)
     seedling_results.where(disposal_flag: false).sum(:quantity)
+  end
+
+  def self.sum_hours_for_member(works)
+    WorkResult.includes(:work)
+      .joins(:worker)
+      .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
+      .where(work_id: works)
+      .where(["homes.member_flag = ?", true])
+      .sum(:hours)
+  end
+
+  def self.regist_health(work, results)
+    results.each do |id, result|
+      work.work_results.where(id: id).update(result.permit(:health_id, :remarks))
+    end
   end
 end

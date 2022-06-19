@@ -60,7 +60,8 @@ class HomesController < ApplicationController
         :finance_order,
         :drying_order,
         :owned_rice_order,
-        :seedling_order
+        :seedling_order,
+        :location
       )
   end
 end

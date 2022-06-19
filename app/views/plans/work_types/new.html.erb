@@ -1,5 +1,5 @@
 <h1>育苗計画(品種別)</h1>
-<%= form_tag(action: :create) do %>
+<%= form_with url: plans_work_types_path, method: :post do |f| %>
   <div class="row">
     <table class="table table-sm">
       <tr>
@@ -11,7 +11,7 @@
       <tr>
         <th class="text-nowrap">田植月</th>
         <% @work_types.each do |work_type| %>
-          <td><%= select_tag("work_types[#{work_type.id}][month]", options_for_select([['対象外', 0], ['4月', 4], ['5月', 5]], work_type.plan&.month || 0), {class: "form-control work-type-months", onchange: "changeMonth(this)", data: {id: work_type.id}}) %></td>
+          <td><%= select_tag("work_types[#{work_type.id}][month]", options_for_select([['対象外', 0], ['4月', 4], ['5月', 5]], work_type.plan&.month || 0), {class: "form-select work-type-months", onchange: "changeMonth(this)", data: {id: work_type.id}}) %></td>
         <% end %>
       </tr>
       <tr>

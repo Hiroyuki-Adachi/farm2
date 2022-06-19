@@ -1,19 +1,19 @@
-<%= form_tag works_path, {method: :get, id: :search_form} do %>
+<%= form_with url: works_path, method: :get, id: :search_form do |f| %>
 <div class="row">
   <div class="col-md-3">
      <h1>作業一覧</h1>
   </div>
   <div class="col-md-3">
-    <div class="form-inline">
-      <label for="term" class="h5">年度</label>
-      <%= select_tag(:term, options_for_select(@terms, selected: @term), {class: "form-control"}) %>
+    <div class="input-group">
+      <label for="term" class="h5 form-label">年度</label>
+      <%= select_tag(:term, options_for_select(@terms, selected: @term), {class: "form-select"}) %>
     </div>
   </div>
   <div class="col-md-6">
-    <div class="form-inline">
-      <label for="month" class="h5">作業日</label>
+    <div class="input-group">
+      <label for="month" class="h5 form-label">作業日</label>
       <%= date_field_tag :worked_at1, @worked_at1, {class: "form-control"} %>
-      ～
+      <span class="input-group-text">～</span>
       <%= date_field_tag :worked_at2, @worked_at2, {class: "form-control"} %>
     </div>
   </div>
@@ -21,15 +21,15 @@
 <div class="row">
   <div class="col-md-3"></div>
   <div class="col-md-3">
-    <div class="form-inline">
-      <label for="work_type_id" class="h5">分類</label>
-      <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name, @work_type_id), {include_blank: true, class: "form-control"}) %>
+    <div class="input-group">
+      <label for="work_type_id" class="h5 form-label">分類</label>
+      <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name, @work_type_id), {include_blank: true, class: "form-select"}) %>
     </div>
   </div>
   <div class="col-md-4">
-    <div class="form-inline">
-      <label for="work_work_kind_id" class="h5">種別</label>
-      <%= select_tag(:work_kind_id, options_from_collection_for_select(@work_kinds, :id, :name, @work_kind_id), {id: "work_work_kind_id", include_blank: true, class: "form-control"}) %>
+    <div class="input-group">
+      <label for="work_work_kind_id" class="h5 form-label">種別</label>
+      <%= select_tag(:work_kind_id, options_from_collection_for_select(@work_kinds, :id, :name, @work_kind_id), {id: "work_work_kind_id", include_blank: true, class: "form-select"}) %>
     </div>
   </div>
   <div class="col-md-2">
@@ -52,13 +52,7 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
-<script type="text/javascript">
-$(function() {
-    $('#work_type_id').change(function(){
-        $.get("<%= work_type_select_works_path %>", {work_type_id: $(this).val()}, function() {
-            $("#work_work_kind_id").prepend("<option value='' />")
-            $("#work_work_kind_id").val("");
-        });
-    });
-});
-</script>
+<%= form_with url: work_type_select_works_path, method: :get, id: :work_type_select_form, local: false do |f| %>
+<%= f.hidden_field :work_type_id, id: :select_work_type_id %>
+<% end %>
+<%= javascript_pack_tag 'work-index' %>

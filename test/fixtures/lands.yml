@@ -1,17 +1,19 @@
 # == Schema Information
 #
-# Table name: lands # 土地マスタ
+# Table name: lands
 #
 #  id(土地マスタ)                :integer          not null, primary key
 #  area(面積(α))                 :decimal(5, 2)    not null
 #  broccoli_mark(ブロッコリ記号) :string(1)
 #  deleted_at                    :datetime
 #  display_order(表示順)         :integer
+#  end_on(有効期間(至))          :date             default(Tue, 31 Dec 2999), not null
 #  group_flag(グループフラグ)    :boolean          default(FALSE), not null
 #  group_order(グループ内並び順) :integer          default(0), not null
 #  place(番地)                   :string(15)       not null
 #  reg_area(登記面積)            :decimal(5, 2)
 #  region(領域)                  :polygon
+#  start_on(有効期間(自))        :date             default(Mon, 01 Jan 1900), not null
 #  target_flag(管理対象フラグ)   :boolean          default(TRUE), not null
 #  created_at                    :datetime
 #  updated_at                    :datetime
@@ -25,6 +27,7 @@
 #  index_lands_on_deleted_at  (deleted_at)
 #  index_lands_on_place       (place)
 #
+
 lands0:
   id: '1'
   place: 5386-ﾛ
@@ -444,6 +447,7 @@ lands31:
   owner_id: '5'
   manager_id: '5'
   area: '34.50'
+  reg_area: '35.50'
   display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
@@ -483,6 +487,7 @@ lands34:
   owner_id: '5'
   manager_id: '5'
   area: '23.70'
+  reg_area: 24
   display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
@@ -496,6 +501,7 @@ lands35:
   owner_id: '5'
   manager_id: '5'
   area: '29.40'
+  reg_area: 30
   display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
@@ -509,6 +515,7 @@ lands36:
   owner_id: '5'
   manager_id: '5'
   area: '15.20'
+  reg_area: 16
   display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
@@ -821,6 +828,7 @@ lands60:
   owner_id: '5'
   manager_id: '5'
   area: '9.70'
+  reg_area: 10
   display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
@@ -3044,6 +3052,7 @@ lands231:
   owner_id: '5'
   manager_id: '5'
   area: '31.40'
+  reg_area: 32
   display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:45:07.81524'
@@ -3057,6 +3066,7 @@ lands232:
   owner_id: '5'
   manager_id: '5'
   area: '29.40'
+  reg_area: 30
   display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:45:40.933709'
@@ -3070,6 +3080,7 @@ lands233:
   owner_id: '5'
   manager_id: '5'
   area: '29.40'
+  reg_area: 30
   display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:46:37.501499'
@@ -3083,6 +3094,7 @@ lands234:
   owner_id: '5'
   manager_id: '5'
   area: '29.40'
+  reg_area: 30
   display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:47:08.121628'
@@ -3252,6 +3264,7 @@ lands247:
   owner_id: '5'
   manager_id: '5'
   area: '16.00'
+  reg_area: 17.0
   display_order: '1'
   target_flag: t
   created_at: '2010-08-20 23:40:01.492837'
@@ -3263,6 +3276,7 @@ land_genka1:
   owner_id: '5'
   manager_id: '5'
   area: 20.0
+  reg_area: 21.0
   display_order: '1'
   target_flag: t
   created_at: '2010-08-20 23:40:01.492837'
@@ -3274,6 +3288,7 @@ land_genka2:
   owner_id: '5'
   manager_id: '5'
   area: 40.0
+  reg_area: 41.0
   display_order: '1'
   target_flag: t
   created_at: '2010-08-20 23:40:01.492837'

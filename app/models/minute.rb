@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: minutes # 議事録
+# Table name: minutes
 #
 #  id                      :bigint           not null, primary key
 #  pdf(PDF)                :binary
@@ -13,6 +13,7 @@
 #
 #  index_minutes_on_schedule_id  (schedule_id) UNIQUE
 #
+
 class Minute < ApplicationRecord
   belongs_to :schedule
 
