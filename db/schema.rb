@@ -657,8 +657,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_15_053918) do
     t.string "code31", limit: 1, null: false, comment: "コード3-1"
     t.decimal "amount3", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額3"
     t.string "remark4", limit: 50, null: false, comment: "備考4"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["term", "line", "detail"], name: "sorimachi_journals_2nd", unique: true
   end
 

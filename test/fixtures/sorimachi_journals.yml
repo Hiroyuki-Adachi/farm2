@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: sorimachi_journals # ソリマチ仕訳
+# Table name: sorimachi_journals
 #
 #  id                   :bigint           not null, primary key
 #  accounted_on(仕訳日) :date
