@@ -20,23 +20,17 @@ window.popupConfirm = (message, callback) => {
     popupForm.show();
 }
 
-const newConfirmMethod = async (message, formElement) => {
-    document.getElementById("popup_confirm_message").innerText = message;
-    const popupForm = new Modal(document.getElementById("popup_confirm"));
-    popupForm.show();
+Turbo.setConfirmMethod((message, element) => {
+    const popupForm = document.getElementById("turbo_confirm");
+    popupForm.querySelector("p").textContent = message;
+    popupForm.showModal();
   
-    return new Promise(resolve => {
-      document.getElementById("popup_confirm_yes").addEventListener('click', () => {
-        resolve(true)
-      });
-  
-      document.getElementById("popup_confirm_no").addEventListener('click', () => {
-        resolve(false)
-      });
+    return new Promise((resolve, reject) => {
+        popupForm.addEventListener("close", () => {
+            resolve(dialog.returnValue == "confirm")
+        }, {once: true});
     });
-  };
-
-Turbo.setConfirmMethod(newConfirmMethod);
+});
 
 document.addEventListener('turbo:load', () => {
     // for sidebar
