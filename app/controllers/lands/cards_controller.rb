@@ -4,7 +4,7 @@ class Lands::CardsController < ApplicationController
   helper GmapHelper
 
   def index
-    @costs = LandCost.usual(Land.regionable, Time.zone.today).includes(land: :owner).includes(:work_type)
+    @costs = LandCost.usual(Land.regionable.expiry(Time.zone.today), Time.zone.today).includes(land: :owner).includes(:work_type)
   end
 
   def show
