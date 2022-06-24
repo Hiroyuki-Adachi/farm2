@@ -1,4 +1,4 @@
-import '@hotwired/turbo-rails';
+import '@hotwired/turbo';
 
 import jQuery from 'jquery';
 window.jQuery = window.$ = jQuery;
