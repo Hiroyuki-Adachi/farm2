@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_01_15_053918) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_22_110036) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -912,8 +912,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_15_053918) do
     t.integer "work_type_id", comment: "作業分類"
     t.string "name", limit: 40, null: false, comment: "作業名称"
     t.text "remarks", comment: "備考"
-    t.datetime "start_at", precision: nil, null: false, comment: "開始時刻"
-    t.datetime "end_at", precision: nil, null: false, comment: "終了時刻"
+    t.time "start_at", null: false, comment: "開始時刻"
+    t.time "end_at", null: false, comment: "終了時刻"
     t.date "fixed_at", comment: "確定日"
     t.integer "work_kind_id", default: 0, null: false, comment: "作業種別"
     t.datetime "created_at", precision: nil
