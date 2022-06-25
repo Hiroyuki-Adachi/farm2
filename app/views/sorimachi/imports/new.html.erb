@@ -1,4 +1,7 @@
 <h1>ソリマチインポート</h1>
+<% if @error %>
+<div class="alert alert-danger" role="alert"><%= @error %></div>
+<% end %>
 <%= form_with(url: sorimachi_imports_path, html: {multipart: true}) do |f| %>
   <div class="row">
     <div class="col-md-4 form-group">
