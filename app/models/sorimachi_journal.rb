@@ -41,6 +41,9 @@ require 'csv'
 #  sorimachi_journals_2nd  (term,line,detail) UNIQUE
 #
 class SorimachiJournal < ApplicationRecord
+
+  validate :term_check
+
   def self.import(term, file)
     SorimachiJournal.where(term: term).destroy_all
     
@@ -51,11 +54,18 @@ class SorimachiJournal < ApplicationRecord
     end
   end
 
+private
   def self.updatable_attributes
     ['line', 'detail', 'accounted_on',
       'code01', 'code02', 'code03', 'code04', 'code05', 'code06', 'code07', 'amount1', 
       'code11', 'code12', 'code13', 'code14', 'code15', 'code16', 'code17', 'code18', 'amount2', 
       'code21', 'remark1', 'remark2', 'remark3', 'code31', 'amount3', 'remark4'
     ]
+  end
+
+  def term_check
+    if self.accounted_on.present? && self.accounted_on.year != self.term
+      errors.add(:term, "の対応に誤りがあります。")
+    end
   end
 end
