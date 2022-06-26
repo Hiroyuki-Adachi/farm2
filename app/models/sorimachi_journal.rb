@@ -41,6 +41,7 @@ require 'csv'
 #  sorimachi_journals_2nd  (term,line,detail) UNIQUE
 #
 class SorimachiJournal < ApplicationRecord
+  scope :usual, ->(term) {where(term: term, detail: 1).order(:line)}
 
   validate :term_check
 

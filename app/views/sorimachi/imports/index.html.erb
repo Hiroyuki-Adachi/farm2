@@ -2,6 +2,31 @@
 <% if @error %>
 <div class="alert alert-danger" role="alert"><%= @error %></div>
 <% end %>
+<% if @journals.count > 0 %>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>行番号</th>
+      <th>仕訳日</th>
+      <th>コード</th>
+      <th class="numeric">金額</th>
+      <th>備考</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @journals.each do |journal| %>
+    <tr>
+      <td><%= journal.line %></td>
+      <td><%= journal.accounted_on || "決算" %></td>
+      <td><%= journal.code01 %></td>
+      <td class="numeric"><%= number_to_currency(journal.amount1, {precision: 0, unit: ""}) %></td>
+      <td><%= journal.remark1 %>／<%= journal.remark3 %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= paginate(@journals) %>
+<% end %>
 <%= form_with(url: sorimachi_imports_path, html: {multipart: true}) do |f| %>
   <div class="row">
     <div class="col-md-4 form-group">
