@@ -2,6 +2,7 @@ class Sorimachi::ImportsController < ApplicationController
   include PermitManager
 
   def index
+    @journals = SorimachiJournal.usual(current_term).page(params[:page])
   end
 
   def create
