@@ -1,16 +1,16 @@
 class Sorimachi::ImportsController < ApplicationController
   include PermitManager
 
-  def new
+  def index
   end
 
   def create
     SorimachiJournal.transaction do
       SorimachiJournal.import(current_term, params[:import_file])
     end
-    redirect_to new_sorimachi_import_path
+    redirect_to sorimachi_imports_path
   rescue => e
     @error = e.message
-    render action: :new, status: :internal_server_error
+    render action: :index, status: :internal_server_error
   end
 end
