@@ -6,22 +6,41 @@
 <table class="table table-sm">
   <thead>
     <tr>
-      <th>行番号</th>
+      <th class="numeric">行番号</th>
+      <th class="numeric">明細番号</th>
       <th>仕訳日</th>
-      <th>コード</th>
-      <th class="numeric">金額</th>
+      <th>借方科目</th>
+      <th class="numeric">借方金額</th>
+      <th>貸方科目</th>
+      <th class="numeric">貸方金額</th>
       <th>備考</th>
     </tr>
   </thead>
   <tbody>
   <% @journals.each do |journal| %>
-    <tr>
-      <td><%= journal.line %></td>
+    <% details = @details.where(line: journal.line) %>
+    <tr data-line="<%= journal.line %>" data-details="false" class="<%= details.count > 0 ? 'bg-primary text-white has-details' : 'bg-light' %>" style="cursor:<%= details.count > 0 ? 'pointer' : 'hand' %>">
+      <td class="numeric"><%= journal.line %></td>
+      <td class="numeric">1</td>
       <td><%= journal.accounted_on || "決算" %></td>
       <td><%= journal.code01 %></td>
       <td class="numeric"><%= number_to_currency(journal.amount1, {precision: 0, unit: ""}) %></td>
+      <td><%= journal.code11 %></td>
+      <td class="numeric"><%= number_to_currency(journal.amount2, {precision: 0, unit: ""}) %></td>
       <td><%= journal.remark1 %>／<%= journal.remark3 %></td>
     </tr>
+    <% details.each do |detail| %>
+      <tr data-detail-line="<%= detail.line %>" style="display:none;" class="bg-info">
+        <td class="numeric"><%= detail.line %></td>
+        <td class="numeric"><%= detail.detail %></td>
+        <td></td>
+        <td><%= detail.code01 %></td>
+        <td class="numeric"><%= number_to_currency(detail.amount1, {precision: 0, unit: ""}) %></td>
+        <td><%= detail.code11 %></td>
+        <td class="numeric"><%= number_to_currency(detail.amount2, {precision: 0, unit: ""}) %></td>
+        <td><%= detail.remark1 %><%= detail.remark3.present? ? "／#{detail.remark3}" : "" %></td>
+      </tr>
+    <% end %>
   <% end %>
   </tbody>
 </table>
@@ -43,3 +62,16 @@
     </div>
   </div>
 <% end %>
+<script>
+window.addEventListener("load", () => {
+  document.querySelectorAll("tr.has-details").forEach((element) => {
+    element.addEventListener("click", (event) => {
+      const dispFlag = (element.dataset.details != "true");
+      element.dataset.details = dispFlag.toString();
+      document.querySelectorAll(`[data-detail-line="${element.dataset.line}"]`).forEach((detail) => {
+        detail.style.display = dispFlag ? "table-row" : "none";
+      });
+    });
+  });
+});
+</script>

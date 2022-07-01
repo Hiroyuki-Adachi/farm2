@@ -55,6 +55,13 @@ class SorimachiJournal < ApplicationRecord
     end
   end
 
+  def self.details(journals)
+    SorimachiJournal.where(term: journals.first.term)
+      .where(line: journals.map{|j| j.line})
+      .where("detail > 1")
+      .order(:detail)
+  end
+
 private
   def self.updatable_attributes
     ['line', 'detail', 'accounted_on',
