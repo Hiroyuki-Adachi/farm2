@@ -3,7 +3,7 @@ class Sorimachi::ImportsController < ApplicationController
 
   def index
     @journals = SorimachiJournal.usual(current_term).page(params[:page])
-    @details = SorimachiJournal.details(@journals)
+    @details = SorimachiJournal.details(@journals).to_a
   end
 
   def create

@@ -18,7 +18,7 @@
   </thead>
   <tbody>
   <% @journals.each do |journal| %>
-    <% details = @details.where(line: journal.line) %>
+    <% details = @details.select {|detail| detail.line == journal.line} %>
     <tr data-line="<%= journal.line %>" data-details="false" class="<%= details.count > 0 ? 'bg-primary text-white has-details' : 'bg-light' %>" style="cursor:<%= details.count > 0 ? 'pointer' : 'hand' %>">
       <td class="numeric"><%= journal.line %></td>
       <td class="numeric">1</td>
