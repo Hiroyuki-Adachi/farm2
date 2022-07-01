@@ -56,6 +56,7 @@ class SorimachiJournal < ApplicationRecord
   end
 
   def self.details(journals)
+    return [] unless journals.exists?
     SorimachiJournal.where(term: journals.first.term)
       .where(line: journals.map{|j| j.line})
       .where("detail > 1")

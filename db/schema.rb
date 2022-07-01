@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_22_110036) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_01_134319) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -628,29 +628,38 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_22_110036) do
     t.index ["term", "work_type_id"], name: "index_seedlings_on_term_and_work_type_id", unique: true
   end
 
+  create_table "sorimachi_accounts", comment: "ソリマチ勘定科目", force: :cascade do |t|
+    t.integer "term", null: false, comment: "年度(期)"
+    t.integer "code", default: 0, null: false, comment: "科目コード"
+    t.string "name", default: "", null: false, comment: "名称"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["term", "code"], name: "sorimachi_accounts_2nd", unique: true
+  end
+
   create_table "sorimachi_journals", comment: "ソリマチ仕訳", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.integer "line", null: false, comment: "行番号"
     t.integer "detail", null: false, comment: "明細番号"
     t.date "accounted_on", comment: "仕訳日"
-    t.string "code01", limit: 4, null: false, comment: "コード0-1"
-    t.string "code02", limit: 4, null: false, comment: "コード0-2"
-    t.string "code03", limit: 4, null: false, comment: "コード0-3"
-    t.string "code04", limit: 4, null: false, comment: "コード0-4"
-    t.string "code05", limit: 4, null: false, comment: "コード0-5"
-    t.string "code06", limit: 4, null: false, comment: "コード0-6"
-    t.string "code07", limit: 4, null: false, comment: "コード0-7"
+    t.integer "code01", null: false, comment: "コード0-1"
+    t.integer "code02", null: false, comment: "コード0-2"
+    t.integer "code03", null: false, comment: "コード0-3"
+    t.integer "code04", null: false, comment: "コード0-4"
+    t.integer "code05", null: false, comment: "コード0-5"
+    t.integer "code06", null: false, comment: "コード0-6"
+    t.integer "code07", null: false, comment: "コード0-7"
     t.decimal "amount1", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額1"
-    t.string "code11", limit: 6, null: false, comment: "コード1-1"
-    t.string "code12", limit: 6, null: false, comment: "コード1-2"
-    t.string "code13", limit: 6, null: false, comment: "コード1-3"
-    t.string "code14", limit: 6, null: false, comment: "コード1-4"
-    t.string "code15", limit: 6, null: false, comment: "コード1-5"
-    t.string "code16", limit: 6, null: false, comment: "コード1-6"
-    t.string "code17", limit: 6, null: false, comment: "コード1-7"
-    t.string "code18", limit: 6, null: false, comment: "コード1-8"
+    t.bigint "code11", null: false, comment: "コード1-1"
+    t.bigint "code12", null: false, comment: "コード1-2"
+    t.bigint "code13", null: false, comment: "コード1-3"
+    t.bigint "code14", null: false, comment: "コード1-4"
+    t.bigint "code15", null: false, comment: "コード1-5"
+    t.bigint "code16", null: false, comment: "コード1-6"
+    t.bigint "code17", null: false, comment: "コード1-7"
+    t.bigint "code18", null: false, comment: "コード1-8"
     t.decimal "amount2", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額2"
-    t.string "code21", limit: 1, null: false, comment: "コード2-1"
+    t.integer "code21", limit: 2, null: false, comment: "コード2-1"
     t.string "remark1", limit: 50, null: false, comment: "備考1"
     t.string "remark2", limit: 50, null: false, comment: "備考2"
     t.string "remark3", limit: 50, null: false, comment: "備考3"

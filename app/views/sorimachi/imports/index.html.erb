@@ -2,7 +2,7 @@
 <% if @error %>
 <div class="alert alert-danger" role="alert"><%= @error %></div>
 <% end %>
-<% if @journals.count > 0 %>
+<% if @journals && @journals.count > 0 %>
 <table class="table table-sm">
   <thead>
     <tr>
@@ -23,9 +23,9 @@
       <td class="numeric"><%= journal.line %></td>
       <td class="numeric">1</td>
       <td><%= journal.accounted_on || "決算" %></td>
-      <td><%= journal.code01 %></td>
+      <td><%= @accounts[journal.code01] || journal.code01 %></td>
       <td class="numeric"><%= number_to_currency(journal.amount1, {precision: 0, unit: ""}) %></td>
-      <td><%= journal.code11 %></td>
+      <td><%= @accounts[journal.code12] || journal.code12 %></td>
       <td class="numeric"><%= number_to_currency(journal.amount2, {precision: 0, unit: ""}) %></td>
       <td><%= journal.remark1 %>／<%= journal.remark3 %></td>
     </tr>
@@ -34,9 +34,9 @@
         <td class="numeric"><%= detail.line %></td>
         <td class="numeric"><%= detail.detail %></td>
         <td></td>
-        <td><%= detail.code01 %></td>
+        <td><%= @accounts[detail.code01] || detail.code01 %></td>
         <td class="numeric"><%= number_to_currency(detail.amount1, {precision: 0, unit: ""}) %></td>
-        <td><%= detail.code11 %></td>
+        <td><%= @accounts[detail.code12] || detail.code12 %></td>
         <td class="numeric"><%= number_to_currency(detail.amount2, {precision: 0, unit: ""}) %></td>
         <td><%= detail.remark1 %><%= detail.remark3.present? ? "／#{detail.remark3}" : "" %></td>
       </tr>
