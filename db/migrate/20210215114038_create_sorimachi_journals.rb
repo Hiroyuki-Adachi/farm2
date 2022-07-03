@@ -31,7 +31,8 @@ class CreateSorimachiJournals < ActiveRecord::Migration[6.0]
       t.decimal  :amount3, null: false, default: 0, scale: 2, precision: 11, comment: "金額3"
       t.string   :remark4, null: false, limit: 50, comment: "備考4"
 
-      t.boolean  :cost_flag, null: false, default: false, comment: "原価フラグ"
+      t.boolean  :cost0_flag, null: false, default: false, comment: "原価フラグ(借方)"
+      t.boolean  :cost1_flag, null: false, default: false, comment: "原価フラグ(貸方)"
 
       t.timestamps
     end

@@ -1,0 +1,18 @@
+<td>
+<% if has_details %>
+<button class="btn btn-sm btn-info has-details" data-line="<%= detail.line %>" data-details="false">明細</button>
+<% end %>
+</td>
+<td class="numeric"><%= detail.line %>-<%= detail.detail %></td>
+<td>
+  <% if detail.detail == 1 %>
+  <%= detail.accounted_on ? detail.accounted_on.strftime('%m月%d日') : "決算" %>
+  <% end %>
+</td>
+<td></td>
+<td class="<%= detail.cost0_flag ? "text-primary" : "text-dark" %>"><%= @accounts[detail.code01] || detail.code01 %></td>
+<td class="numeric <%= detail.cost0_flag ? "text-primary" : "text-dark" %>"><%= number_to_currency(detail.amount1, {precision: 0, unit: ""}) %></td>
+<td></td>
+<td class="<%= detail.cost1_flag ? "text-primary" : "text-dark" %>"><%= @accounts[detail.code12] || detail.code12 %></td>
+<td class="numeric <%= detail.cost1_flag ? "text-primary" : "text-dark" %>"><%= number_to_currency(detail.amount2, {precision: 0, unit: ""}) %></td>
+<td><%= detail.remark1 %><%= detail.remark3.present? ? "／#{detail.remark3}" : "" %></td>
