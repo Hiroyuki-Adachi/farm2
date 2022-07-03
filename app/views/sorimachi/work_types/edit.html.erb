@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <div class="row">
+    <h6><%= @journal.accounted_on.strftime('%m月%d日') %>：<%= @journal.remark1 %></h6>
+  </div>
+  <hr>
+  <div class="row">
+    <form>
+      <% @work_types.each do |work_type| %>
+        <div class="form-check form-check-inline">
+          <%= check_box_tag "sorimachi[work_types][]", work_type.id, false, {id: "sorimachi_work_type_#{work_type.id}", class: "form-check-input"} %>
+          <%= label_tag "sorimachi_work_type_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+        </div>
+      <% end %>
+    </form>
+  </div>
+</div>

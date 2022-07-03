@@ -45,6 +45,9 @@ require 'csv'
 class SorimachiJournal < ApplicationRecord
   scope :usual, ->(term) {where(term: term, detail: 1).order(:line)}
 
+  has_many :sorimachi_work_types, dependent: :destroy
+  has_many :work_types, through: :sorimachi_work_types
+
   validate :term_check
 
   def self.import(term, file)
