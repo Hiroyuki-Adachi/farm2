@@ -20,537 +20,537 @@
 #
 
 sorimachi_accounts0:
-  term: 2021
+  term: 0
   code: 700
   name: 給料手当②
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts1:
-  term: 2021
+  term: 0
   code: 702
   name: 役員報酬
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts2:
-  term: 2021
+  term: 0
   code: 704
   name: 雑給②
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts3:
-  term: 2021
+  term: 0
   code: 706
   name: 賞与②
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts4:
-  term: 2021
+  term: 0
   code: 708
   name: 退職金
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts5:
-  term: 2021
+  term: 0
   code: 710
   name: 法定福費②
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts6:
-  term: 2021
+  term: 0
   code: 712
   name: 福利厚費②
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts7:
-  term: 2021
+  term: 0
   code: 714
   name: 通信費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts8:
-  term: 2021
+  term: 0
   code: 719
   name: 消耗品費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts9:
-  term: 2021
+  term: 0
   code: 720
   name: 荷造運賃
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts10:
-  term: 2021
+  term: 0
   code: 722
   name: 販売手数料
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts11:
-  term: 2021
+  term: 0
   code: 724
   name: 委託手数料
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts12:
-  term: 2021
+  term: 0
   code: 730
   name: 旅費交通費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts13:
-  term: 2021
+  term: 0
   code: 732
   name: 車両費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts14:
-  term: 2021
+  term: 0
   code: 734
   name: 会議費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts15:
-  term: 2021
+  term: 0
   code: 736
   name: 広告宣伝費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts16:
-  term: 2021
+  term: 0
   code: 740
   name: 交際費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts17:
-  term: 2021
+  term: 0
   code: 742
   name: 研修費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts18:
-  term: 2021
+  term: 0
   code: 744
   name: 新聞図書費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts19:
-  term: 2021
+  term: 0
   code: 750
   name: 地代賃料②
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts20:
-  term: 2021
+  term: 0
   code: 752
   name: 支払保険料
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts21:
-  term: 2021
+  term: 0
   code: 754
   name: 租税公課②
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts22:
-  term: 2021
+  term: 0
   code: 756
   name: 諸会費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts23:
-  term: 2021
+  term: 0
   code: 758
   name: 寄付金
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts24:
-  term: 2021
+  term: 0
   code: 760
   name: 支払手数料
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts25:
-  term: 2021
+  term: 0
   code: 762
   name: 支払報酬
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts26:
-  term: 2021
+  term: 0
   code: 770
   name: 減価償費②
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts27:
-  term: 2021
+  term: 0
   code: 772
   name: 修繕費②
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts28:
-  term: 2021
+  term: 0
   code: 774
   name: 貸倒引当繰
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts29:
-  term: 2021
+  term: 0
   code: 776
   name: 貸倒損失
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts30:
-  term: 2021
+  term: 0
   code: 780
   name: 雑費②
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts31:
-  term: 2021
+  term: 0
   code: 800
   name: 期首材棚卸
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts32:
-  term: 2021
+  term: 0
   code: 810
   name: 種苗費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts33:
-  term: 2021
+  term: 0
   code: 812
   name: 素畜費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts34:
-  term: 2021
+  term: 0
   code: 814
   name: 肥料費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts35:
-  term: 2021
+  term: 0
   code: 816
   name: 飼料費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts36:
-  term: 2021
+  term: 0
   code: 817
   name: 飼料補収入
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts37:
-  term: 2021
+  term: 0
   code: 818
   name: 敷料費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts38:
-  term: 2021
+  term: 0
   code: 820
   name: 農薬費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts39:
-  term: 2021
+  term: 0
   code: 822
   name: 諸材料費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts40:
-  term: 2021
+  term: 0
   code: 824
   name: 材料仕入高
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts41:
-  term: 2021
+  term: 0
   code: 830
   name: 給料手当①
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts42:
-  term: 2021
+  term: 0
   code: 832
   name: 雑給①
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts43:
-  term: 2021
+  term: 0
   code: 833
   name: 賞与①
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts44:
-  term: 2021
+  term: 0
   code: 844
   name: 法定福費①
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts45:
-  term: 2021
+  term: 0
   code: 846
   name: 福利厚費①
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts46:
-  term: 2021
+  term: 0
   code: 848
   name: 作業衣料費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts47:
-  term: 2021
+  term: 0
   code: 850
   name: 作業委託費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts48:
-  term: 2021
+  term: 0
   code: 851
   name: 委託加工費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts49:
-  term: 2021
+  term: 0
   code: 852
   name: 診療衛生費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts50:
-  term: 2021
+  term: 0
   code: 856
   name: 預託料
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts51:
-  term: 2021
+  term: 0
   code: 857
   name: ヘルパー料
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts52:
-  term: 2021
+  term: 0
   code: 860
   name: 動力光熱費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts53:
-  term: 2021
+  term: 0
   code: 870
   name: 農具費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts54:
-  term: 2021
+  term: 0
   code: 872
   name: 修繕費①
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts55:
-  term: 2021
+  term: 0
   code: 874
   name: リース料
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts56:
-  term: 2021
+  term: 0
   code: 876
   name: 共済掛金
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts57:
-  term: 2021
+  term: 0
   code: 878
   name: とも補拠出
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts58:
-  term: 2021
+  term: 0
   code: 880
   name: 賃借料①
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts59:
-  term: 2021
+  term: 0
   code: 882
   name: 支払小作料
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts60:
-  term: 2021
+  term: 0
   code: 884
   name: 土地改良費
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts61:
-  term: 2021
+  term: 0
   code: 886
   name: 租税公課①
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts62:
-  term: 2021
+  term: 0
   code: 890
   name: 特許使用料
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts63:
-  term: 2021
+  term: 0
   code: 892
   name: 減価償費①
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts64:
-  term: 2021
+  term: 0
   code: 894
   name: 雑費①
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts65:
-  term: 2021
+  term: 0
   code: 898
   name: 首仕掛棚卸
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts66:
-  term: 2021
+  term: 0
   code: 899
   name: 末仕掛棚卸
-  created_at: 2022-07-01 00:00:00.000000000 +09:00
-  updated_at: 2022-07-01 00:00:00.000000000 +09:00
+  created_at: '2022-07-01 00:00:00'
+  updated_at: '2022-07-01 00:00:00'
 

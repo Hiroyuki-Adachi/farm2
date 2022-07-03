@@ -666,6 +666,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_01_134319) do
     t.string "code31", limit: 1, null: false, comment: "コード3-1"
     t.decimal "amount3", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額3"
     t.string "remark4", limit: 50, null: false, comment: "備考4"
+    t.boolean "cost_flag", default: false, null: false, comment: "原価フラグ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["term", "line", "detail"], name: "sorimachi_journals_2nd", unique: true
