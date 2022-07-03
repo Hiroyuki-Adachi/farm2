@@ -4,7 +4,7 @@ class Sorimachi::ImportsController < ApplicationController
   def index
     @journals = SorimachiJournal.usual(current_term).page(params[:page])
     @details = SorimachiJournal.details(@journals).to_a
-    @accounts = SorimachiAccount.where(term: current_term).map {|a| [a.code, a.name]}.to_h
+    @accounts = SorimachiAccount.to_h(current_term)
   end
 
   def create
