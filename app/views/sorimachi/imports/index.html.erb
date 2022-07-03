@@ -6,6 +6,7 @@
 <table class="table table-sm">
   <thead>
     <tr>
+      <th></th>
       <th class="numeric">行番号</th>
       <th class="numeric">明細番号</th>
       <th>仕訳日</th>
@@ -19,7 +20,12 @@
   <tbody>
   <% @journals.each do |journal| %>
     <% details = @details.select {|detail| detail.line == journal.line} %>
-    <tr data-line="<%= journal.line %>" data-details="false" class="<%= details.count > 0 ? 'bg-primary text-white has-details' : 'bg-light' %>" style="cursor:<%= details.count > 0 ? 'pointer' : 'hand' %>">
+    <tr>
+      <td>
+        <% if details.count.positive? %>
+        <button class="btn btn-sm btn-info has-details" data-line="<%= journal.line %>" data-details="false">明細</button>
+        <% end %>
+      </td>
       <td class="numeric"><%= journal.line %></td>
       <td class="numeric">1</td>
       <td><%= journal.accounted_on || "決算" %></td>
@@ -30,7 +36,8 @@
       <td><%= journal.remark1 %>／<%= journal.remark3 %></td>
     </tr>
     <% details.each do |detail| %>
-      <tr data-detail-line="<%= detail.line %>" style="display:none;" class="bg-info">
+      <tr data-detail-line="<%= detail.line %>" style="display:none;" class="bg-light">
+        <td></td>
         <td class="numeric"><%= detail.line %></td>
         <td class="numeric"><%= detail.detail %></td>
         <td></td>
@@ -49,13 +56,15 @@
 <%= form_with(url: sorimachi_imports_path, html: {multipart: true}) do |f| %>
   <div class="row">
     <div class="col-md-4 form-group">
-      <%= file_field_tag :import_file, {class: "custom-file-input", data: {buttonText: "ファイル選択"}} %>
-      <%= label_tag :import_file, "インポートファイル", {class: "custom-file-label"} %>
+      <%= file_field_tag :import_file, {class: "form-control-file custom-file-input", data: {buttonText: "ファイル選択"}} %>
     </div>
   </div>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
-      <%= submit_tag '実行', class: "btn btn-danger" %>
+      <%= submit_tag 'インポート', class: "btn btn-danger" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to "科目初期化", new_sorimachi_account_path, {class: "btn btn-danger"} %>
     </div>
     <div class="btn-group mr-2">
       <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
@@ -64,7 +73,7 @@
 <% end %>
 <script>
 window.addEventListener("load", () => {
-  document.querySelectorAll("tr.has-details").forEach((element) => {
+  document.querySelectorAll("button.has-details").forEach((element) => {
     element.addEventListener("click", (event) => {
       const dispFlag = (element.dataset.details != "true");
       element.dataset.details = dispFlag.toString();

@@ -31,6 +31,8 @@ class CreateSorimachiJournals < ActiveRecord::Migration[6.0]
       t.decimal  :amount3, null: false, default: 0, scale: 2, precision: 11, comment: "金額3"
       t.string   :remark4, null: false, limit: 50, comment: "備考4"
 
+      t.boolean  :cost_flag, null: false, default: false, comment: "原価フラグ"
+
       t.timestamps
     end
     add_index :sorimachi_journals, [:term, :line, :detail], unique: true, name: "sorimachi_journals_2nd"
