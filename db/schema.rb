@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_01_134319) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_03_071715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -671,6 +671,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_01_134319) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["term", "line", "detail"], name: "sorimachi_journals_2nd", unique: true
+  end
+
+  create_table "sorimachi_work_types", comment: "ソリマチ作業分類", force: :cascade do |t|
+    t.integer "sorimachi_journal_id", default: 0, null: false, comment: "ソリマチ仕訳"
+    t.integer "work_type_id", default: 0, null: false, comment: "作業分類"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sorimachi_journal_id", "work_type_id"], name: "sorimachi_work_types_2nd", unique: true
   end
 
   create_table "systems", id: { type: :serial, comment: "システムマスタ" }, comment: "システムマスタ", force: :cascade do |t|
