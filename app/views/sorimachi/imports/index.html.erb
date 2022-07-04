@@ -20,11 +20,11 @@
   <tbody>
   <% @journals.each do |journal| %>
     <% details = @details.select {|detail| detail.line == journal.line} %>
-    <tr>
+    <tr id="tr_<%= journal.id %>">
       <%= render(:partial => 'detail', :locals => {detail: journal, has_details: details.count.positive?}) %>
     </tr>
     <% details.each do |detail| %>
-      <tr data-detail-line="<%= detail.line %>" style="display:none;" class="bg-light">
+      <tr data-detail-line="<%= detail.line %>" style="display:none;" class="bg-light" id="tr_<%= detail.id %>">
         <%= render(:partial => 'detail', :locals => {detail: detail, has_details: false}) %>
       </tr>
     <% end %>
@@ -41,8 +41,8 @@
   </div>
   <div class="btn-toolbar" role="toolbar">
     <div class="btn-group mr-2" role="group">
-      <%= submit_tag 'インポート', class: "btn btn-danger" %>
-      <%= link_to "科目初期化", new_sorimachi_account_path, {class: "btn btn-warning"} %>
+      <%= submit_tag 'インポート', class: "btn btn-danger", data: {confirm: "取り込みを実行してもよろしいですか？"} %>
+      <%= link_to "科目初期化", new_sorimachi_account_path, {class: "btn btn-warning", data: {confirm: "勘定科目を初期化してもよろしいですか？"}} %>
     </div>
     <div class="btn-group mr-2" role="group">
       <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
@@ -60,6 +60,7 @@
       </div>
       <div class="modal-footer">
         <button id="kamoku_entry" type="button" class="btn btn-primary">登録</button>
+        <button id="kamoku_delete" type="button" class="btn btn-danger">削除</button>
         <button id="kamoku_close" type="button" class="btn btn-secondary">閉じる</button>
       </div>
     </div>

@@ -676,6 +676,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_071715) do
   create_table "sorimachi_work_types", comment: "ソリマチ作業分類", force: :cascade do |t|
     t.integer "sorimachi_journal_id", default: 0, null: false, comment: "ソリマチ仕訳"
     t.integer "work_type_id", default: 0, null: false, comment: "作業分類"
+    t.decimal "amount", precision: 7, comment: "内訳金額"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sorimachi_journal_id", "work_type_id"], name: "sorimachi_work_types_2nd", unique: true
