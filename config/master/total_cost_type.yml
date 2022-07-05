@@ -30,7 +30,7 @@
   name: "乾燥・調整"
 - id: 90
   code: ExpenseDirect
-  name: "経費(直接)"
+  name: "生産原価"
 - id: 95
   code: SaleCost
   name: "販売経費"
@@ -39,7 +39,7 @@
   name: "作業(間接)"
 - id: 110
   code: ExpenseIndirect
-  name: "経費(間接)"
+  name: "一般管理費"
 - id: 200
   code: Sales
   name: "売上"

@@ -75,6 +75,10 @@ class SorimachiJournal < ApplicationRecord
     end
   end
 
+  def cost_amount
+    self.cost0_flag ? amount1 : amount2
+  end
+
 private
   def self.updatable_attributes
     ['line', 'detail', 'accounted_on',
