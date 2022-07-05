@@ -4,7 +4,8 @@
       <h6><%= @journal.accounted_on.strftime('%m月%d日') %>：<%= @journal.remark1 %></h6>
     </div>
     <div class="col-md-6">
-      <span><%= number_to_currency(@journal.amount1, {precision: 0, unit: ""}) %>円</span>
+      <span><%= number_to_currency(@journal.cost_amount, {precision: 0, unit: ""}) %>円</span>
+      <%= hidden_field_tag "sorimachi_cost_amount", @journal.cost_amount %>
     </div>
   </div>
   <hr>
@@ -19,7 +20,7 @@
           </div>
         </div>
         <div class="col-md-6">
-          <%= number_field_tag "sorimachi[amount][#{work_type.id}]", {min: 0, max: 9999999, step: 1, required: true, class: "form-control"} %>
+          <%= number_field_tag "sorimachi[amount][#{work_type.id}]", 0, {min: -9999999, max: 9999999, step: 1, required: true, class: "form-control", disabled: true} %>
         </div>
       </div>
     <% end %>
