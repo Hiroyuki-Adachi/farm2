@@ -11,6 +11,7 @@ class Sorimachi::ImportsController < ApplicationController
     SorimachiJournal.transaction do
       SorimachiJournal.import(current_term, params[:import_file])
       SorimachiJournal.update_cost_flag(current_term)
+      SorimachiJournal.refresh(current_term)
     end
     redirect_to sorimachi_imports_path
   rescue => e
