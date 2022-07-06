@@ -48,6 +48,9 @@ class SorimachiJournal < ApplicationRecord
   has_many :sorimachi_work_types, dependent: :destroy
   has_many :work_types, through: :sorimachi_work_types
 
+  belongs_to :account1, foreign_key: [:term, :code01], class_name: 'SorimachiAccount', primary_key: [:term, :code]
+  belongs_to :account2, foreign_key: [:term, :code12], class_name: 'SorimachiAccount', primary_key: [:term, :code]
+
   validate :term_check
 
   def self.import(term, file)
@@ -75,8 +78,30 @@ class SorimachiJournal < ApplicationRecord
     end
   end
 
+  def self.refresh(term)
+    accounts = SorimachiAccount.where(term: term).map{|a| [a.code, a.total_cost_type]}.to_h
+    SorimachiJournal.where(term: term).each do |journal|
+      if [TotalCostType::EXPENSEDIRECT, TotalCostType::EXPENSEINDIRECT].include?(accounts[journal.code12]) || accounts[journal.code01] == TotalCostType::SALES
+        journal.swap
+        journal.save!
+      end
+    end
+  end
+
   def cost_amount
     self.cost0_flag ? amount1 : amount2
+  end
+
+  def swap
+    self.amount1, self.amount2 = -self.amount2, -self.amount1
+    self.code01, self.code12 = self.code12, self.code01
+    self.code02, self.code13 = self.code13, self.code02
+    self.code03, self.code14 = self.code14, self.code03
+    self.code04, self.code15 = self.code15, self.code04
+    self.code05, self.code16 = self.code16, self.code05
+    self.code06, self.code17 = self.code17, self.code06
+    self.code07, self.code18 = self.code18, self.code07
+    self.cost0_flag, self.cost1_flag = self.cost1_flag, self.cost0_flag
   end
 
 private
