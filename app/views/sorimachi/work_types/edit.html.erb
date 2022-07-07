@@ -6,6 +6,7 @@
     <div class="col-md-6">
       <span><%= number_to_currency(@journal.cost_amount, {precision: 0, unit: ""}) %>円</span>
       <%= hidden_field_tag "sorimachi_cost_amount", @journal.cost_amount %>
+      <%= hidden_field_tag "sorimachi_id", @journal.id %>
     </div>
   </div>
   <hr>

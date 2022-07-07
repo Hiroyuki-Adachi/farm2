@@ -47,6 +47,7 @@ class SorimachiJournal < ApplicationRecord
 
   has_many :sorimachi_work_types, dependent: :destroy
   has_many :work_types, through: :sorimachi_work_types
+  has_many :details, foreign_key: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term , :line]
 
   belongs_to :account1, foreign_key: [:term, :code01], class_name: 'SorimachiAccount', primary_key: [:term, :code]
   belongs_to :account2, foreign_key: [:term, :code12], class_name: 'SorimachiAccount', primary_key: [:term, :code]
@@ -90,6 +91,11 @@ class SorimachiJournal < ApplicationRecord
 
   def cost_amount
     self.cost0_flag ? amount1 : amount2
+  end
+
+  def clear_flags
+    self.update(cost0_flag: false, cost1_flag: false)
+    self.sorimachi_work_types.destroy_all
   end
 
   def swap
