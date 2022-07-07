@@ -93,6 +93,16 @@ class SorimachiJournal < ApplicationRecord
     self.cost0_flag ? amount1 : amount2
   end
 
+  def update_flags
+    if self.account1.present?
+      self.cost0_flag = true
+      self.save!
+    elsif self.account2.present?
+      self.cost1_flag = true
+      self.save!
+    end
+  end
+
   def clear_flags
     self.update(cost0_flag: false, cost1_flag: false)
     self.sorimachi_work_types.destroy_all
