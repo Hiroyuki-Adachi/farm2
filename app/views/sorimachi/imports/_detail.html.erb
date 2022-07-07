@@ -1,5 +1,5 @@
 <td>
-<% if has_details %>
+<% if detail.detail > 1 ? false : (detail.details.count - 1).positive? %>
 <button class="btn btn-sm btn-info has-details" data-line="<%= detail.line %>" data-details="false">明細</button>
 <% end %>
 </td>

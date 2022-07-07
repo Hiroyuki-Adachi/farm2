@@ -25,8 +25,7 @@ class Sorimachi::ImportsController < ApplicationController
     @accounts = SorimachiAccount.to_h(current_term)
     render partial: 'detail',
       locals: {
-        detail: @journal,
-        has_details: @journal.detail > 1 ? false : (@journal.details.count - 1).positive?
+        detail: @journal
       }
   end
 
