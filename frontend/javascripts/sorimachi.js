@@ -1,4 +1,5 @@
 import { Modal } from "bootstrap";
+import Decimal from "decimal.js";
 
 window.addEventListener("load", () => {
   const popupForm = new Modal(document.getElementById("kamoku_modal"));
@@ -20,7 +21,18 @@ window.addEventListener("load", () => {
         return response.text();
       })
       .then((data) => {
-        document.getElementById("kamoku_body").innerHTML = data;
+        const kamokuBody = document.getElementById("kamoku_body");
+        kamokuBody.innerHTML = data;
+        kamokuBody.querySelectorAll(".sorimachi-work-type").forEach((element) => {
+          element.addEventListener("change", () => {
+            const sorimachiAmount = document.getElementById(`sorimachi_amount_${element.dataset.work}`);
+            if (!element.checked) {
+              sorimachiAmount.value = 0;
+            }
+            sorimachiAmount.disabled = !element.checked;
+            resetAmounts();
+          });
+        });
         popupForm.show();
       });
     });
@@ -47,6 +59,34 @@ window.addEventListener("load", () => {
     });
   };
 
+  const resetAmounts = () => {
+    let sumArea = new Decimal(0);
+    let maxArea = 0.0;
+    let maxWorkType = "";
+    const amount = new Decimal(document.getElementById("sorimachi_cost_amount").value);
+
+    document.querySelectorAll(".sorimachi-work-type:checked").forEach((element) => {
+      sumArea = sumArea.plus(new Decimal(element.dataset.area));
+      if (maxArea < parseFloat(element.dataset.area)) {
+        maxArea = parseFloat(element.dataset.area);
+        maxWorkType = element.dataset.work;
+      }
+    });
+    if (!sumArea.eq(0)) {
+      let calcSumAmount = new Decimal(0);
+      document.querySelectorAll(".sorimachi-work-type:checked").forEach((element) => {
+        const area = new Decimal(element.dataset.area);
+        document.getElementById(`sorimachi_amount_${element.dataset.work}`).value = amount.mul(area).div(sumArea).round();
+        calcSumAmount = calcSumAmount.plus(amount.mul(area).div(sumArea).round());
+      });
+
+      if(!calcSumAmount.eq(amount)) {
+        const maxAmount = document.getElementById(`sorimachi_amount_${maxWorkType}`);
+        maxAmount.value = new Decimal(maxAmount.value).plus(amount).minus(calcSumAmount);
+      }
+    }
+  };
+
   document.querySelectorAll("button.has-details").forEach((element) => {
     element.addEventListener("click", (event) => {
       const dispFlag = (element.dataset.details != "true");
@@ -69,9 +109,13 @@ window.addEventListener("load", () => {
     popupForm.hide();
   });
 
+  document.getElementById("kamoku_reset").addEventListener("click", () => {
+    resetAmounts();
+  });
+
   document.getElementById("kamoku_delete").addEventListener("click", (event) => {
-    const journal_id = document.getElementById("sorimachi_id").value;
-    fetch(event.target.dataset.url.replace("@", journal_id), {
+    const journalId = document.getElementById("sorimachi_id").value;
+    fetch(event.target.dataset.url.replace("@", journalId), {
       method: "DELETE",
       headers: {
         'X-CSRF-Token': getCsrfToken()
@@ -81,7 +125,7 @@ window.addEventListener("load", () => {
       return response.text();
     })
     .then((data) => {
-      const journalTr = document.getElementById(`tr_${journal_id}`);
+      const journalTr = document.getElementById(`tr_${journalId}`);
       journalTr.innerHTML = data;
       journalTr.querySelectorAll("button.update-flag").forEach((element) => {
         addEventUpdateFlag(element);
