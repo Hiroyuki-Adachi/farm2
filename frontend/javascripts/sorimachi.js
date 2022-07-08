@@ -17,8 +17,10 @@ window.addEventListener("load", () => {
   const addEventEditWorkTypes = (element) => {
     element.addEventListener("click", () => {
       fetch(element.dataset.url)
-      .then((response) => {
-        return response.text();
+      .then((res) => {
+        if (res.ok) {
+          return res.text();
+        }
       })
       .then((data) => {
         const kamokuBody = document.getElementById("kamoku_body");
@@ -46,8 +48,10 @@ window.addEventListener("load", () => {
           'X-CSRF-Token': getCsrfToken()
         }
       })
-      .then((response) => {
-        return response.text();
+      .then((res) => {
+        if (res.ok) {
+          return res.text();
+        }
       })
       .then((data) => {
         const journalTr = document.getElementById(`tr_${element.dataset.id}`);
@@ -67,28 +71,30 @@ window.addEventListener("load", () => {
 
     document.querySelectorAll(".sorimachi-work-type:checked").forEach((element) => {
       sumArea = sumArea.plus(new Decimal(element.dataset.area));
-      if (maxArea < parseFloat(element.dataset.area)) {
+      if (maxArea <= parseFloat(element.dataset.area)) {
         maxArea = parseFloat(element.dataset.area);
         maxWorkType = element.dataset.work;
       }
     });
-    if (!sumArea.eq(0)) {
-      let calcSumAmount = new Decimal(0);
+    let calcSumAmount = new Decimal(0);
+    if (sumArea.eq(0)) {
+      document.getElementById("sorimachi_total").innerText = 0;
+    } else {
       document.querySelectorAll(".sorimachi-work-type:checked").forEach((element) => {
         const area = new Decimal(element.dataset.area);
         document.getElementById(`sorimachi_amount_${element.dataset.work}`).value = amount.mul(area).div(sumArea).round();
         calcSumAmount = calcSumAmount.plus(amount.mul(area).div(sumArea).round());
       });
-
-      if(!calcSumAmount.eq(amount)) {
-        const maxAmount = document.getElementById(`sorimachi_amount_${maxWorkType}`);
-        maxAmount.value = new Decimal(maxAmount.value).plus(amount).minus(calcSumAmount);
-      }
+      document.getElementById("sorimachi_total").innerText = calcSumAmount.toNumber().toLocaleString();
+    }
+    if(!calcSumAmount.eq(amount)) {
+      const maxAmount = document.getElementById(`sorimachi_amount_${maxWorkType}`);
+      maxAmount.value = new Decimal(maxAmount.value).plus(amount).minus(calcSumAmount);
     }
   };
 
   document.querySelectorAll("button.has-details").forEach((element) => {
-    element.addEventListener("click", (event) => {
+    element.addEventListener("click", () => {
       const dispFlag = (element.dataset.details != "true");
       element.dataset.details = dispFlag.toString();
       document.querySelectorAll(`[data-detail-line="${element.dataset.line}"]`).forEach((detail) => {
@@ -113,6 +119,31 @@ window.addEventListener("load", () => {
     resetAmounts();
   });
 
+  document.getElementById("kamoku_update").addEventListener("click", () => {
+    const form = document.getElementById("sorimachi_form");
+    const journalId = form.dataset.id;
+    fetch(form.action, {
+      method: "PUT",
+      headers: {
+        'X-CSRF-Token': getCsrfToken()
+      },
+      body: new FormData(form)
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.text();
+      }
+    })
+    .then((data) => {
+      const journalTr = document.getElementById(`tr_${journalId}`);
+      journalTr.innerHTML = data;
+      journalTr.querySelectorAll("button.edit-work-types").forEach((element) => {
+        addEventEditWorkTypes(element);
+      });
+      popupForm.hide();
+    });
+  });
+
   document.getElementById("kamoku_delete").addEventListener("click", (event) => {
     const journalId = document.getElementById("sorimachi_id").value;
     fetch(event.target.dataset.url.replace("@", journalId), {
@@ -121,8 +152,10 @@ window.addEventListener("load", () => {
         'X-CSRF-Token': getCsrfToken()
       }
     })
-    .then((response) => {
-      return response.text();
+    .then((res) => {
+      if (res.ok) {
+        return res.text();
+      }
     })
     .then((data) => {
       const journalTr = document.getElementById(`tr_${journalId}`);

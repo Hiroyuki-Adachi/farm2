@@ -15,4 +15,16 @@
 class SorimachiWorkType < ApplicationRecord
   belongs_to :sorimachi_journal
   belongs_to :work_type
+
+  def self.refresh(journal_id, params)
+    SorimachiWorkType.where(sorimachi_journal_id: journal_id).destroy_all
+    return unless params.present?
+    params[:amounts].each do |key, value|
+      SorimachiWorkType.create({
+        sorimachi_journal_id: journal_id,
+        work_type_id: key,
+        amount: value
+      })
+    end
+  end
 end
