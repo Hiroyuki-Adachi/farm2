@@ -16,12 +16,14 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-check form-check-inline">
-            <%= check_box_tag "sorimachi[work_types][#{work_type.id}]", work_type.id, false, {id: "sorimachi_work_type_#{work_type.id}", class: "form-check-input", data: {area: land_costs[work_type.id].to_f}} %>
+            <%= check_box_tag "sorimachi[work_types][#{work_type.id}]", work_type.id, false, 
+              {id: "sorimachi_work_type_#{work_type.id}", class: "form-check-input sorimachi-work-type", data: {area: land_costs[work_type.id].to_f, work: work_type.id}} %>
             <%= label_tag "sorimachi_work_type_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
           </div>
         </div>
         <div class="col-md-6">
-          <%= number_field_tag "sorimachi[amount][#{work_type.id}]", 0, {min: -9999999, max: 9999999, step: 1, required: true, class: "form-control", disabled: true} %>
+          <%= number_field_tag "sorimachi[amount][#{work_type.id}]", 0, 
+            {id: "sorimachi_amount_#{work_type.id}", min: -9999999, max: 9999999, step: 1, required: true, class: "form-control sorimachi-amounts", disabled: true} %>
         </div>
       </div>
     <% end %>
