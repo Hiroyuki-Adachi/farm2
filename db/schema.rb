@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_03_071715) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_09_114659) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -633,6 +633,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_071715) do
     t.integer "code", default: 0, null: false, comment: "科目コード"
     t.string "name", default: "", null: false, comment: "名称"
     t.integer "total_cost_type_id", default: 0, null: false, comment: "原価種別"
+    t.integer "auto_code", comment: "自動設定コード"
+    t.integer "auto_work_type_id", comment: "自動設定作業分類"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["term", "code"], name: "sorimachi_accounts_2nd", unique: true
@@ -724,7 +726,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_071715) do
     t.integer "total_cost_type_id", null: false, comment: "集計原価種別"
     t.date "occurred_on", null: false, comment: "発生日"
     t.integer "work_id", comment: "作業"
-    t.integer "expense_id", comment: "経費"
     t.integer "depreciation_id", comment: "減価償却"
     t.integer "work_chemical_id", comment: "薬剤使用"
     t.decimal "amount", precision: 9, default: -> { "(0)::numeric" }, null: false, comment: "原価額"
@@ -738,6 +739,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_071715) do
     t.integer "whole_crop_land_id", comment: "WCS土地"
     t.integer "machine_id", comment: "機械"
     t.integer "cost_type_id", comment: "原価種別"
+    t.integer "sorimachi_journal_id", comment: "ソリマチ仕訳"
+    t.integer "sorimachi_account_id", comment: "ソリマチ勘定科目"
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
   end
 

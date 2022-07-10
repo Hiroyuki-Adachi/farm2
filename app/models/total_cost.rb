@@ -2,25 +2,26 @@
 #
 # Table name: total_costs
 #
-#  id                               :bigint           not null, primary key
-#  amount(原価額)                   :decimal(9, )     not null
-#  display_order(並び順)            :integer          default(0), not null
-#  fiscal_flag(決算期フラグ)        :boolean          default(FALSE), not null
-#  member_flag(組合員支払フラグ)    :boolean          default(FALSE), not null
-#  occurred_on(発生日)              :date             not null
-#  term(年度(期))                   :integer          not null
-#  created_at                       :datetime         not null
-#  updated_at                       :datetime         not null
-#  cost_type_id(原価種別)           :integer
-#  depreciation_id(減価償却)        :integer
-#  expense_id(経費)                 :integer
-#  land_id(土地)                    :integer
-#  machine_id(機械)                 :integer
-#  seedling_home_id(育苗担当)       :integer
-#  total_cost_type_id(集計原価種別) :integer          not null
-#  whole_crop_land_id(WCS土地)      :integer
-#  work_chemical_id(薬剤使用)       :integer
-#  work_id(作業)                    :integer
+#  id                                     :bigint           not null, primary key
+#  amount(原価額)                         :decimal(9, )     not null
+#  display_order(並び順)                  :integer          default(0), not null
+#  fiscal_flag(決算期フラグ)              :boolean          default(FALSE), not null
+#  member_flag(組合員支払フラグ)          :boolean          default(FALSE), not null
+#  occurred_on(発生日)                    :date             not null
+#  term(年度(期))                         :integer          not null
+#  created_at                             :datetime         not null
+#  updated_at                             :datetime         not null
+#  cost_type_id(原価種別)                 :integer
+#  depreciation_id(減価償却)              :integer
+#  land_id(土地)                          :integer
+#  machine_id(機械)                       :integer
+#  seedling_home_id(育苗担当)             :integer
+#  sorimachi_account_id(ソリマチ勘定科目) :integer
+#  sorimachi_journal_id(ソリマチ仕訳)     :integer
+#  total_cost_type_id(集計原価種別)       :integer          not null
+#  whole_crop_land_id(WCS土地)            :integer
+#  work_chemical_id(薬剤使用)             :integer
+#  work_id(作業)                          :integer
 #
 # Indexes
 #
@@ -72,7 +73,6 @@ class TotalCost < ApplicationRecord
     # make_expenses(term)
     # make_depreciation(term, sys)
     make_details(term)
-    # make_sales(term)
   end
 
   def self.created_at(term)
@@ -365,79 +365,6 @@ class TotalCost < ApplicationRecord
         )
       end
     end
-  end
-
-  def self.make_sales(term)
-    make_sales_wcs(term)
-    make_sales_broccoli(term)
-  end
-
-  def self.make_sales_wcs(term)
-    WholeCropLand.for_sales(term).each do |wcs_land|
-      next if wcs_land.price.zero?
-      land = wcs_land.work_land.land
-      work = wcs_land.work_whole_crop.work
-      total_cost = TotalCost.create(
-        term: term,
-        total_cost_type_id: TotalCostType::SALES.id,
-        occurred_on: work.worked_at,
-        land_id: land.id,
-        whole_crop_land_id: wcs_land.id,
-        amount: wcs_land.price,
-        display_order: land.manager.home_display_order
-      )
-      TotalCostDetail.create(
-        total_cost_id: total_cost.id,
-        work_type_id: work.work_type_id,
-        cost: wcs_land.price,
-        base_cost: wcs_land.price / land.area,
-        rate: 1,
-        area: land.area
-      )
-    end
-  end
-
-  def self.make_sales_broccoli(term)
-    WorkBroccoli.for_sales(term).each do |broccoli|
-      sum_area = LandCost.sum_area_by_work_type(broccoli.shipped_on, broccoli.work.work_type_id)
-      LandCost.by_work_type(broccoli.work.work_type_id, broccoli.shipped_on).each do |land_cost|
-        amount = broccoli.sale * land_cost.land.area / sum_area
-        total_cost = TotalCost.create(
-          term: term,
-          total_cost_type_id: TotalCostType::SALES.id,
-          land_id: land_cost.land.id,
-          occurred_on: broccoli.shipped_on,
-          amount: amount,
-          display_order: land_cost.land.manager.home_display_order
-        )
-        TotalCostDetail.create(
-          total_cost_id: total_cost.id,
-          work_type_id: broccoli.work.work_type_id,
-          cost: amount,
-          rate: 1,
-          area: land_cost.land.area
-        )
-      end
-      make_cost_broccoli(term, broccoli, sum_area) if broccoli.cost&.positive?
-    end
-  end
-
-  def self.make_cost_broccoli(term, broccoli, sum_area)
-    total_cost = TotalCost.create(
-      term: term,
-      work_id: broccoli.work.id,
-      total_cost_type_id: TotalCostType::SALECOST.id,
-      occurred_on: broccoli.shipped_on,
-      amount: broccoli.cost,
-      display_order: 0
-    )
-    TotalCostDetail.create(
-      total_cost_id: total_cost.id,
-      work_type_id: broccoli.work.work_type_id,
-      cost: broccoli.cost,
-      rate: 1,
-      area: sum_area
-    )
   end
 
   def self.make_details_for_indirect(total_cost_id, occurred_on)
