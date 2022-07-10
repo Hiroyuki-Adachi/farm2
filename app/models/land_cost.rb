@@ -42,7 +42,11 @@ SQL
   end
 
   def self.sum_area_by_work_type(target, work_type_id)
-    LandCost.by_work_type(work_type_id, target).joins(:land).sum(:area)
+    LandCost.by_work_type(work_type_id, target)
+    .joins(:land)
+    .where("lands.deleted_at IS NULL")
+    .where("? BETWEEN lands.start_on AND lands.end_on", target)
+    .sum(:area)
   end
 
   def self.sum_area_for_harvest(worked_at, work_kind_id)

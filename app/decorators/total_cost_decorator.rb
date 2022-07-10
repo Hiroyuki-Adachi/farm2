@@ -6,8 +6,8 @@ class TotalCostDecorator < Draper::Decorator
       work_chemical.chemical.name
     elsif work.present?
       work.work_kind.name
-    elsif expense.present?
-      expense.expense_type.name
+    elsif sorimachi_account.present?
+      sorimachi_account.name
     elsif depreciation.present?
       depreciation.machine.machine_type.name
     elsif seedling_home.present?
