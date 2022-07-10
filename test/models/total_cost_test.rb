@@ -2,25 +2,26 @@
 #
 # Table name: total_costs
 #
-#  id                               :bigint           not null, primary key
-#  amount(原価額)                   :decimal(9, )     not null
-#  display_order(並び順)            :integer          default(0), not null
-#  fiscal_flag(決算期フラグ)        :boolean          default(FALSE), not null
-#  member_flag(組合員支払フラグ)    :boolean          default(FALSE), not null
-#  occurred_on(発生日)              :date             not null
-#  term(年度(期))                   :integer          not null
-#  created_at                       :datetime         not null
-#  updated_at                       :datetime         not null
-#  cost_type_id(原価種別)           :integer
-#  depreciation_id(減価償却)        :integer
-#  expense_id(経費)                 :integer
-#  land_id(土地)                    :integer
-#  machine_id(機械)                 :integer
-#  seedling_home_id(育苗担当)       :integer
-#  total_cost_type_id(集計原価種別) :integer          not null
-#  whole_crop_land_id(WCS土地)      :integer
-#  work_chemical_id(薬剤使用)       :integer
-#  work_id(作業)                    :integer
+#  id                                     :bigint           not null, primary key
+#  amount(原価額)                         :decimal(9, )     not null
+#  display_order(並び順)                  :integer          default(0), not null
+#  fiscal_flag(決算期フラグ)              :boolean          default(FALSE), not null
+#  member_flag(組合員支払フラグ)          :boolean          default(FALSE), not null
+#  occurred_on(発生日)                    :date             not null
+#  term(年度(期))                         :integer          not null
+#  created_at                             :datetime         not null
+#  updated_at                             :datetime         not null
+#  cost_type_id(原価種別)                 :integer
+#  depreciation_id(減価償却)              :integer
+#  land_id(土地)                          :integer
+#  machine_id(機械)                       :integer
+#  seedling_home_id(育苗担当)             :integer
+#  sorimachi_account_id(ソリマチ勘定科目) :integer
+#  sorimachi_journal_id(ソリマチ仕訳)     :integer
+#  total_cost_type_id(集計原価種別)       :integer          not null
+#  whole_crop_land_id(WCS土地)            :integer
+#  work_chemical_id(薬剤使用)             :integer
+#  work_id(作業)                          :integer
 #
 # Indexes
 #

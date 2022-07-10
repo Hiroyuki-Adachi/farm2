@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6">
-      <h6><%= @journal.accounted_on.strftime('%m月%d日') %>：<%= @journal.remark1 %></h6>
+      <h6><%= @journal.accounted_on&.strftime('%m月%d日') || '決算' %>：<%= @journal.remark1 %></h6>
     </div>
     <div class="col-md-6">
       <span><%= number_to_currency(@journal.cost_amount, {precision: 0, unit: ""}) %>円</span>

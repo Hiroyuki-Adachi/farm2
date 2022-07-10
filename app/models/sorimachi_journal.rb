@@ -86,6 +86,13 @@ class SorimachiJournal < ApplicationRecord
         journal.swap
         journal.save!
       end
+      if journal.cost1_flag && journal.code13 == journal.account2.auto_code
+        work_type_id = journal.account2.auto_work_type_id
+        SorimachiWorkType.where(sorimachi_journal_id: journal.id, work_type_id: work_type_id).first_or_create
+        journal.details.each do |detail|
+          SorimachiWorkType.where(sorimachi_journal_id: detail.id, work_type_id: work_type_id).first_or_create if detail.cost0_flag
+        end
+      end
     end
   end
 
