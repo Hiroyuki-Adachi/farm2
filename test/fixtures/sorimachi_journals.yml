@@ -45,3 +45,64 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+journal1:
+  term: 2015
+  line: 1
+  detail: 1
+  accounted_on: "2015-01-04"
+  code01: 754
+  code02: 0
+  code03: 0
+  code04: 0
+  code05: 0
+  code06: 3
+  code07: 10
+  amount1: 5399
+  code11: 0
+  code12: 20
+  code13: 21
+  code14: 0
+  code15: 0
+  code16: 0
+  code17: 3
+  code18: 10
+  amount2: 5399
+  code21: 0
+  code31: "0"
+  remark1: "備考１１"
+  remark2: "備考１２"
+  remark3: ""
+  remark4: ""
+  cost0_flag: true
+  cost1_flag: false
+
+journal2:
+  term: 2015
+  line: 13
+  detail: 1
+  accounted_on: "2015-01-15"
+  code01: 720
+  code02: 0
+  code03: 0
+  code04: 0
+  code05: 0
+  code06: 3
+  code07: 10
+  amount1: 13196
+  code11: 0
+  code12: 0
+  code13: 0
+  code14: 0
+  code15: 0
+  code16: 0
+  code17: 3
+  code18: 10
+  amount2: 13196
+  code21: 0
+  code31: "0"
+  remark1: "備考２１"
+  remark2: "備考２２"
+  remark3: ""
+  remark4: ""
+  cost0_flag: false
+  cost1_flag: false

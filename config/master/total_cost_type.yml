@@ -31,9 +31,6 @@
 - id: 90
   code: ExpenseDirect
   name: "生産原価"
-- id: 95
-  code: SaleCost
-  name: "販売経費"
 - id: 101
   code: WorkIndirect
   name: "作業(間接)"
