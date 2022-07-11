@@ -104,7 +104,7 @@ sorimachi_accounts8:
 
 
 sorimachi_accounts9:
-  term: 0
+  term: 2015
   code: 720
   total_cost_type_id: 110
   name: 荷造運賃

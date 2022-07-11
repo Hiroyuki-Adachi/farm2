@@ -54,7 +54,7 @@ class TotalCost < ApplicationRecord
     where(term: term, total_cost_type_id: [TotalCostType::WORKWORKER.id, TotalCostType::WORKINDIRECT.id])
   }
 
-  scope :direct, -> {where(total_cost_type_id: 10..101)}
+  scope :direct, -> {where(total_cost_type_id: 10..110)}
   scope :sales, -> {where(total_cost_type_id: 200..299)}
 
   def self.sum_work_results(term)
