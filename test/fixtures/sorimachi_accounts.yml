@@ -27,8 +27,6 @@ sorimachi_accounts0:
   code: 700
   total_cost_type_id: 110
   name: 給料手当②
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts1:
@@ -36,8 +34,6 @@ sorimachi_accounts1:
   code: 702
   total_cost_type_id: 110
   name: 役員報酬
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts2:
@@ -45,8 +41,6 @@ sorimachi_accounts2:
   code: 704
   total_cost_type_id: 110
   name: 雑給②
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts3:
@@ -54,8 +48,6 @@ sorimachi_accounts3:
   code: 706
   total_cost_type_id: 110
   name: 賞与②
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts4:
@@ -63,8 +55,6 @@ sorimachi_accounts4:
   code: 708
   total_cost_type_id: 110
   name: 退職金
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts5:
@@ -72,8 +62,6 @@ sorimachi_accounts5:
   code: 710
   total_cost_type_id: 110
   name: 法定福費②
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts6:
@@ -81,8 +69,6 @@ sorimachi_accounts6:
   code: 712
   total_cost_type_id: 110
   name: 福利厚費②
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts7:
@@ -90,8 +76,6 @@ sorimachi_accounts7:
   code: 714
   total_cost_type_id: 110
   name: 通信費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts8:
@@ -99,8 +83,6 @@ sorimachi_accounts8:
   code: 719
   total_cost_type_id: 110
   name: 消耗品費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts9:
@@ -108,8 +90,7 @@ sorimachi_accounts9:
   code: 720
   total_cost_type_id: 110
   name: 荷造運賃
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts10:
@@ -117,8 +98,7 @@ sorimachi_accounts10:
   code: 722
   total_cost_type_id: 110
   name: 販売手数料
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts11:
@@ -126,8 +106,7 @@ sorimachi_accounts11:
   code: 724
   total_cost_type_id: 110
   name: 委託手数料
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts12:
@@ -135,8 +114,6 @@ sorimachi_accounts12:
   code: 730
   total_cost_type_id: 110
   name: 旅費交通費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts13:
@@ -144,8 +121,7 @@ sorimachi_accounts13:
   code: 732
   total_cost_type_id: 110
   name: 車両費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts14:
@@ -153,8 +129,6 @@ sorimachi_accounts14:
   code: 734
   total_cost_type_id: 110
   name: 会議費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts15:
@@ -162,8 +136,6 @@ sorimachi_accounts15:
   code: 736
   total_cost_type_id: 110
   name: 広告宣伝費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts16:
@@ -171,8 +143,6 @@ sorimachi_accounts16:
   code: 740
   total_cost_type_id: 110
   name: 交際費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts17:
@@ -180,8 +150,6 @@ sorimachi_accounts17:
   code: 742
   total_cost_type_id: 110
   name: 研修費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts18:
@@ -189,8 +157,6 @@ sorimachi_accounts18:
   code: 744
   total_cost_type_id: 110
   name: 新聞図書費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts19:
@@ -198,8 +164,6 @@ sorimachi_accounts19:
   code: 750
   total_cost_type_id: 110
   name: 地代賃料②
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts20:
@@ -207,8 +171,6 @@ sorimachi_accounts20:
   code: 752
   total_cost_type_id: 110
   name: 支払保険料
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts21:
@@ -216,8 +178,6 @@ sorimachi_accounts21:
   code: 754
   total_cost_type_id: 110
   name: 租税公課②
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts22:
@@ -225,8 +185,6 @@ sorimachi_accounts22:
   code: 756
   total_cost_type_id: 110
   name: 諸会費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts23:
@@ -234,8 +192,6 @@ sorimachi_accounts23:
   code: 758
   total_cost_type_id: 110
   name: 寄付金
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts24:
@@ -243,8 +199,6 @@ sorimachi_accounts24:
   code: 760
   total_cost_type_id: 110
   name: 支払手数料
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts25:
@@ -252,8 +206,6 @@ sorimachi_accounts25:
   code: 762
   total_cost_type_id: 110
   name: 支払報酬
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts26:
@@ -261,8 +213,6 @@ sorimachi_accounts26:
   code: 770
   total_cost_type_id: 110
   name: 減価償費②
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts27:
@@ -270,8 +220,7 @@ sorimachi_accounts27:
   code: 772
   total_cost_type_id: 110
   name: 修繕費②
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts28:
@@ -279,8 +228,6 @@ sorimachi_accounts28:
   code: 774
   total_cost_type_id: 110
   name: 貸倒引当繰
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts29:
@@ -288,8 +235,6 @@ sorimachi_accounts29:
   code: 776
   total_cost_type_id: 110
   name: 貸倒損失
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts30:
@@ -297,8 +242,6 @@ sorimachi_accounts30:
   code: 780
   total_cost_type_id: 110
   name: 雑費②
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts31:
@@ -306,8 +249,6 @@ sorimachi_accounts31:
   code: 800
   total_cost_type_id: 90
   name: 期首材棚卸
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts32:
@@ -315,8 +256,7 @@ sorimachi_accounts32:
   code: 810
   total_cost_type_id: 90
   name: 種苗費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts33:
@@ -324,8 +264,7 @@ sorimachi_accounts33:
   code: 812
   total_cost_type_id: 90
   name: 素畜費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts34:
@@ -333,8 +272,7 @@ sorimachi_accounts34:
   code: 814
   total_cost_type_id: 90
   name: 肥料費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts35:
@@ -342,8 +280,7 @@ sorimachi_accounts35:
   code: 816
   total_cost_type_id: 90
   name: 飼料費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts36:
@@ -351,8 +288,7 @@ sorimachi_accounts36:
   code: 817
   total_cost_type_id: 90
   name: 飼料補収入
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts37:
@@ -360,8 +296,6 @@ sorimachi_accounts37:
   code: 818
   total_cost_type_id: 90
   name: 敷料費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts38:
@@ -369,8 +303,7 @@ sorimachi_accounts38:
   code: 820
   total_cost_type_id: 90
   name: 農薬費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts39:
@@ -378,8 +311,7 @@ sorimachi_accounts39:
   code: 822
   total_cost_type_id: 90
   name: 諸材料費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts40:
@@ -387,8 +319,7 @@ sorimachi_accounts40:
   code: 824
   total_cost_type_id: 90
   name: 材料仕入高
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts41:
@@ -396,8 +327,6 @@ sorimachi_accounts41:
   code: 830
   total_cost_type_id: 90
   name: 給料手当①
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts42:
@@ -405,8 +334,6 @@ sorimachi_accounts42:
   code: 832
   total_cost_type_id: 90
   name: 雑給①
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts43:
@@ -414,8 +341,6 @@ sorimachi_accounts43:
   code: 833
   total_cost_type_id: 90
   name: 賞与①
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts44:
@@ -423,8 +348,6 @@ sorimachi_accounts44:
   code: 844
   total_cost_type_id: 90
   name: 法定福費①
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts45:
@@ -432,8 +355,6 @@ sorimachi_accounts45:
   code: 846
   total_cost_type_id: 90
   name: 福利厚費①
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts46:
@@ -441,8 +362,7 @@ sorimachi_accounts46:
   code: 848
   total_cost_type_id: 90
   name: 作業衣料費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts47:
@@ -450,8 +370,7 @@ sorimachi_accounts47:
   code: 850
   total_cost_type_id: 90
   name: 作業委託費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts48:
@@ -459,8 +378,7 @@ sorimachi_accounts48:
   code: 851
   total_cost_type_id: 90
   name: 委託加工費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts49:
@@ -468,8 +386,6 @@ sorimachi_accounts49:
   code: 852
   total_cost_type_id: 90
   name: 診療衛生費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts50:
@@ -477,8 +393,7 @@ sorimachi_accounts50:
   code: 856
   total_cost_type_id: 90
   name: 預託料
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
+  cost_flag: true
 
 
 sorimachi_accounts51:
@@ -486,8 +401,6 @@ sorimachi_accounts51:
   code: 857
   total_cost_type_id: 90
   name: ヘルパー料
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts52:
@@ -495,8 +408,6 @@ sorimachi_accounts52:
   code: 860
   total_cost_type_id: 90
   name: 動力光熱費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts53:
@@ -504,8 +415,6 @@ sorimachi_accounts53:
   code: 870
   total_cost_type_id: 90
   name: 農具費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts54:
@@ -513,8 +422,6 @@ sorimachi_accounts54:
   code: 872
   total_cost_type_id: 90
   name: 修繕費①
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts55:
@@ -522,8 +429,6 @@ sorimachi_accounts55:
   code: 874
   total_cost_type_id: 90
   name: リース料
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts56:
@@ -531,8 +436,6 @@ sorimachi_accounts56:
   code: 876
   total_cost_type_id: 90
   name: 共済掛金
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts57:
@@ -540,8 +443,6 @@ sorimachi_accounts57:
   code: 878
   total_cost_type_id: 90
   name: とも補拠出
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts58:
@@ -549,8 +450,6 @@ sorimachi_accounts58:
   code: 880
   total_cost_type_id: 90
   name: 賃借料①
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts59:
@@ -558,8 +457,6 @@ sorimachi_accounts59:
   code: 882
   total_cost_type_id: 90
   name: 支払小作料
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts60:
@@ -567,8 +464,6 @@ sorimachi_accounts60:
   code: 884
   total_cost_type_id: 90
   name: 土地改良費
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts61:
@@ -576,8 +471,6 @@ sorimachi_accounts61:
   code: 886
   total_cost_type_id: 90
   name: 租税公課①
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts62:
@@ -585,8 +478,6 @@ sorimachi_accounts62:
   code: 890
   total_cost_type_id: 90
   name: 特許使用料
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts63:
@@ -594,8 +485,6 @@ sorimachi_accounts63:
   code: 892
   total_cost_type_id: 90
   name: 減価償費①
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts64:
@@ -603,8 +492,6 @@ sorimachi_accounts64:
   code: 894
   total_cost_type_id: 90
   name: 雑費①
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts65:
@@ -612,8 +499,6 @@ sorimachi_accounts65:
   code: 898
   total_cost_type_id: 90
   name: 首仕掛棚卸
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_accounts66:
@@ -621,8 +506,6 @@ sorimachi_accounts66:
   code: 899
   total_cost_type_id: 90
   name: 末仕掛棚卸
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_sales1:
@@ -632,8 +515,6 @@ sorimachi_sales1:
   auto_code: 504
   auto_work_type_id: 27
   name: 製品売上高
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'
 
 
 sorimachi_sales2:
@@ -641,5 +522,3 @@ sorimachi_sales2:
   code: 520
   total_cost_type_id: 200
   name: 商品売上高
-  created_at: '2022-07-01 00:00:00'
-  updated_at: '2022-07-01 00:00:00'

@@ -43,6 +43,7 @@ require 'csv'
 #  sorimachi_journals_2nd  (term,line,detail) UNIQUE
 #
 class SorimachiJournal < ApplicationRecord
+  after_update :clear_work_types
   scope :usual, ->(term) {where(term: term, detail: 1).order(:line)}
   scope :cost, ->(term) {where(term: term, cost0_flag: true).order(:line, :detail)}
 
@@ -75,8 +76,8 @@ class SorimachiJournal < ApplicationRecord
 
   def self.update_cost_flag(term)
     SorimachiAccount.where(term: term).each do |account|
-      SorimachiJournal.where(term: term, code01: account.code).update_all(cost0_flag: true)
-      SorimachiJournal.where(term: term, code12: account.code).update_all(cost1_flag: true)
+      SorimachiJournal.where(term: term, code01: account.code).update_all(cost0_flag: account.cost_flag)
+      SorimachiJournal.where(term: term, code12: account.code).update_all(cost1_flag: account.cost_flag)
     end
   end
 
@@ -113,7 +114,6 @@ class SorimachiJournal < ApplicationRecord
 
   def clear_flags
     self.update(cost0_flag: false, cost1_flag: false)
-    self.sorimachi_work_types.destroy_all
   end
 
   def swap
@@ -141,5 +141,9 @@ private
     if self.accounted_on.present? && self.accounted_on.year != self.term
       errors.add(:term, "の対応に誤りがあります。")
     end
+  end
+
+  def clear_work_types
+    self.sorimachi_work_types.destroy_all if !self.cost0_flag && !self.cost1_flag
   end
 end

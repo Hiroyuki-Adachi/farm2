@@ -7,6 +7,7 @@ class CreateSorimachiAccounts < ActiveRecord::Migration[7.0]
       t.integer :total_cost_type_id, null: false, default: 0, comment: "原価種別"
       t.integer :auto_code, null: true, comment: "自動設定コード"
       t.integer :auto_work_type_id, null: true, comment: "自動設定作業分類"
+      t.boolean :cost_flag, null: false, default: false, comment: "原価計上フラグ"
 
       t.timestamps
     end

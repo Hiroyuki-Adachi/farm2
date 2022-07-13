@@ -26,9 +26,7 @@ class SorimachiAccount < ApplicationRecord
     accounts.each do |key, value|
       account = SorimachiAccount.find_by(term: term, code: value['code'])
       if account
-        account.name = value['name']
-        account.auto_code = value['auto_code']
-        account.auto_work_type_id = value['auto_work_type_id']
+        account.attributes = value
       else
         account = SorimachiAccount.new(value)
         account.term = term
