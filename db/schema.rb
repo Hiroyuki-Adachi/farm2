@@ -635,6 +635,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_09_114659) do
     t.integer "total_cost_type_id", default: 0, null: false, comment: "原価種別"
     t.integer "auto_code", comment: "自動設定コード"
     t.integer "auto_work_type_id", comment: "自動設定作業分類"
+    t.boolean "cost_flag", default: false, null: false, comment: "原価計上フラグ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["term", "code"], name: "sorimachi_accounts_2nd", unique: true
