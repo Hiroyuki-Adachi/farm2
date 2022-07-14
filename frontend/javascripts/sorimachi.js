@@ -2,7 +2,8 @@ import { Modal } from "bootstrap";
 import Decimal from "decimal.js";
 
 window.addEventListener("load", () => {
-  const popupForm = new Modal(document.getElementById("kamoku_modal"));
+  const kamokuForm = new Modal(document.getElementById("kamoku_modal"));
+  const totalForm = new Modal(document.getElementById("total_modal"));
 
   const getCsrfToken = () => {
     const metas = document.getElementsByTagName('meta');
@@ -35,7 +36,7 @@ window.addEventListener("load", () => {
             resetAmounts();
           });
         });
-        popupForm.show();
+        kamokuForm.show();
       });
     });
   };
@@ -112,7 +113,11 @@ window.addEventListener("load", () => {
   });
 
   document.getElementById("kamoku_close").addEventListener("click", () => {
-    popupForm.hide();
+    kamokuForm.hide();
+  });
+
+  document.getElementById("total_close").addEventListener("click", () => {
+    totalForm.hide();
   });
 
   document.getElementById("kamoku_reset").addEventListener("click", () => {
@@ -140,7 +145,7 @@ window.addEventListener("load", () => {
       journalTr.querySelectorAll("button.edit-work-types").forEach((element) => {
         addEventEditWorkTypes(element);
       });
-      popupForm.hide();
+      kamokuForm.hide();
     });
   });
 
@@ -163,7 +168,20 @@ window.addEventListener("load", () => {
       journalTr.querySelectorAll("button.update-flag").forEach((element) => {
         addEventUpdateFlag(element);
       });
-      popupForm.hide();
+      kamokuForm.hide();
     });
   });
+
+  document.getElementById("total_button").addEventListener("click", (event) => {
+    fetch(event.target.dataset.url)
+    .then((res) => {
+      if (res.ok) {
+        return res.text();
+      }
+    })
+    .then((data) => {
+      document.getElementById("total_body").innerHTML = data;
+      totalForm.show();
+    })
+  })
 });

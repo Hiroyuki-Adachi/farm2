@@ -20,11 +20,13 @@ class SorimachiWorkType < ApplicationRecord
     SorimachiWorkType.where(sorimachi_journal_id: journal_id).destroy_all
     return unless params.present?
     params[:amounts].each do |key, value|
-      SorimachiWorkType.create({
-        sorimachi_journal_id: journal_id,
-        work_type_id: key,
-        amount: value
-      })
+      unless value.to_f.zero?
+        SorimachiWorkType.create({
+          sorimachi_journal_id: journal_id,
+          work_type_id: key,
+          amount: value
+        })
+      end
     end
   end
 end

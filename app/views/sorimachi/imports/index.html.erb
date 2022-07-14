@@ -45,6 +45,7 @@
     <div class="btn-group mr-2" role="group">
       <%= submit_tag 'インポート', class: "btn btn-danger", data: {confirm: "取り込みを実行してもよろしいですか？"} %>
       <%= link_to "科目初期化", new_sorimachi_account_path, {class: "btn btn-warning", data: {confirm: "勘定科目を初期化してもよろしいですか？"}} %>
+      <%= button_tag "簡易集計", type: :button, id: :total_button, class: "btn btn-info", data: {url: sorimachi_totals_path } %>
     </div>
     <div class="btn-group mr-2" role="group">
       <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
@@ -65,6 +66,20 @@
         <button id="kamoku_reset" type="button" class="btn btn-warning">リセット</button>
         <button id="kamoku_delete" type="button" class="btn btn-danger" data-url="<%= sorimachi_import_path("@") %>">削除</button>
         <button id="kamoku_close" type="button" class="btn btn-secondary">閉じる</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="total_modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">科目別簡易集計</h5>
+      </div>
+      <div class="modal-body" id="total_body">
+      </div>
+      <div class="modal-footer">
+        <button id="total_close" type="button" class="btn btn-secondary">閉じる</button>
       </div>
     </div>
   </div>
