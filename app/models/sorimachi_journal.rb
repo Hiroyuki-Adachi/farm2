@@ -58,12 +58,18 @@ class SorimachiJournal < ApplicationRecord
   validate :term_check
 
   def self.import(term, file)
-    SorimachiJournal.where(term: term).destroy_all
-    
     CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: /^\/\//) do |row|
-      sorimachi = SorimachiJournal.new([updatable_attributes, row].transpose.to_h)
-      sorimachi.term = term
-      sorimachi.save!
+      sorimachi_new = SorimachiJournal.new([updatable_attributes, row].transpose.to_h)
+      journal = SorimachiJournal.find_by(term: term, line: row[0], detail: row[1])
+      if journal.nil?
+        journal = sorimachi_new
+        journal.term = term
+      else
+        next if journal == sorimachi_new
+        journal.sorimachi_work_types.destroy_all
+        journal.import_value(sorimachi_new)
+      end
+      journal.save!
     end
   end
 
@@ -127,6 +133,21 @@ class SorimachiJournal < ApplicationRecord
     self.code06, self.code17 = self.code17, self.code06
     self.code07, self.code18 = self.code18, self.code07
     self.cost0_flag, self.cost1_flag = self.cost1_flag, self.cost0_flag
+  end
+
+  def import_value(value)
+    my_attributes = SorimachiJournal.updatable_attributes
+    my_attributes.delete_if{|v| ['line', 'detail'].include?(v)}
+    my_attributes.each do |key|
+      self.attributes = {key => value.send(key)}
+    end
+  end
+
+  def ==(value)
+    return self.amount1 == value.amount1 &&
+      self.amount2 == value.amount2 && 
+      self.code01 == value.code01 &&
+      self.code12 == value.code12
   end
 
 private
