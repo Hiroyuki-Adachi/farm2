@@ -26,6 +26,7 @@ class SorimachiAccount < ApplicationRecord
     accounts.each do |key, value|
       account = SorimachiAccount.find_by(term: term, code: value['code'])
       if account
+        value.delete_if {|v| ['term', 'code'].include?(v) }
         account.attributes = value
       else
         account = SorimachiAccount.new(value)
@@ -37,5 +38,9 @@ class SorimachiAccount < ApplicationRecord
 
   def self.to_h(term)
     SorimachiAccount.where(term: term).map {|a| [a.code, a.name]}.to_h
+  end
+
+  def sales?
+    self.total_cost_type == TotalCostType::SALES
   end
 end
