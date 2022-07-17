@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <h6><%= @journal.accounted_on&.strftime('%m月%d日') || '決算' %>：<%= @journal.remark1 %></h6>
+    </div>
+    <div class="col-md-6">
+      <span><%= number_to_currency(@journal.cost_amount, {precision: 0, unit: ""}) %>円</span>
+      <%= hidden_field_tag "sorimachi_cost_amount", @journal.cost_amount %>
+      <%= hidden_field_tag "sorimachi_id", @journal.id %>
+    </div>
+  </div>
+  <hr>
+  <% land_costs = LandCost.total(@journal.accounted_on) %>
+  <form id="sorimachi_form" action="<%= sorimachi_work_type_path(sorimachi_journal_id: @journal) %>" data-id="<%= @journal.id %>">
+    <% total_amount = 0 %>
+    <% @work_types.each do |work_type| %>
+      <% total_amount += (@amounts[work_type.id] || 0) %>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-check form-check-inline">
+            <%= check_box_tag "sorimachi[work_types][#{work_type.id}]", work_type.id, @amounts[work_type.id].present?, 
+              {id: "sorimachi_work_type_#{work_type.id}", class: "form-check-input sorimachi-work-type", data: {area: land_costs[work_type.id].to_f, work: work_type.id}} %>
+            <%= label_tag "sorimachi_work_type_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= number_field_tag "sorimachi[amounts][#{work_type.id}]", @amounts[work_type.id] || 0, 
+            {id: "sorimachi_amount_#{work_type.id}", min: -9999999, max: 9999999, step: 1, required: true, class: "form-control sorimachi-amounts", disabled: @amounts[work_type.id].nil?} %>
+        </div>
+      </div>
+    <% end %>
+      <div class="row">
+        <div class="col-md-6"><h6>合計</h6></div>
+        <div class="col-md-6">
+          <div class="float-end" id="sorimachi_total"><%= number_to_currency(total_amount, {precision: 0, unit: ""}) %></div>
+        </div>
+      </div>
+  </form>
+</div>

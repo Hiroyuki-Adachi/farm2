@@ -2,25 +2,26 @@
 #
 # Table name: total_costs
 #
-#  id                               :bigint           not null, primary key
-#  amount(原価額)                   :decimal(9, )     not null
-#  display_order(並び順)            :integer          default(0), not null
-#  fiscal_flag(決算期フラグ)        :boolean          default(FALSE), not null
-#  member_flag(組合員支払フラグ)    :boolean          default(FALSE), not null
-#  occurred_on(発生日)              :date             not null
-#  term(年度(期))                   :integer          not null
-#  created_at                       :datetime         not null
-#  updated_at                       :datetime         not null
-#  cost_type_id(原価種別)           :integer
-#  depreciation_id(減価償却)        :integer
-#  expense_id(経費)                 :integer
-#  land_id(土地)                    :integer
-#  machine_id(機械)                 :integer
-#  seedling_home_id(育苗担当)       :integer
-#  total_cost_type_id(集計原価種別) :integer          not null
-#  whole_crop_land_id(WCS土地)      :integer
-#  work_chemical_id(薬剤使用)       :integer
-#  work_id(作業)                    :integer
+#  id                                     :bigint           not null, primary key
+#  amount(原価額)                         :decimal(9, )     not null
+#  display_order(並び順)                  :integer          default(0), not null
+#  fiscal_flag(決算期フラグ)              :boolean          default(FALSE), not null
+#  member_flag(組合員支払フラグ)          :boolean          default(FALSE), not null
+#  occurred_on(発生日)                    :date             not null
+#  term(年度(期))                         :integer          not null
+#  created_at                             :datetime         not null
+#  updated_at                             :datetime         not null
+#  cost_type_id(原価種別)                 :integer
+#  depreciation_id(減価償却)              :integer
+#  land_id(土地)                          :integer
+#  machine_id(機械)                       :integer
+#  seedling_home_id(育苗担当)             :integer
+#  sorimachi_account_id(ソリマチ勘定科目) :integer
+#  sorimachi_journal_id(ソリマチ仕訳)     :integer
+#  total_cost_type_id(集計原価種別)       :integer          not null
+#  whole_crop_land_id(WCS土地)            :integer
+#  work_chemical_id(薬剤使用)             :integer
+#  work_id(作業)                          :integer
 #
 # Indexes
 #
@@ -31,7 +32,8 @@ class TotalCost < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   belongs_to :work, optional: true
-  belongs_to :expense, optional: true
+  belongs_to :sorimachi_account, optional: true
+  belongs_to :sorimachi_journal, optional: true
   belongs_to :depreciation, optional: true
   belongs_to :work_chemical, optional: true
   belongs_to :seedling_home, optional: true
@@ -44,7 +46,7 @@ class TotalCost < ApplicationRecord
   delegate :name, to: :total_cost_type, prefix: true
 
   scope :usual, ->(term) {
-    includes(:total_cost_details, :expense, land: :manager, work: :work_kind, work_chemical: :chemical, seedling_home: :home)
+    includes(:total_cost_details, :sorimachi_journal, :sorimachi_account, land: :manager, work: :work_kind, work_chemical: :chemical, seedling_home: :home)
       .where(term: term)
       .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
   }
@@ -52,7 +54,7 @@ class TotalCost < ApplicationRecord
     where(term: term, total_cost_type_id: [TotalCostType::WORKWORKER.id, TotalCostType::WORKINDIRECT.id])
   }
 
-  scope :direct, -> {where(total_cost_type_id: 10..101)}
+  scope :direct, -> {where(total_cost_type_id: 10..110)}
   scope :sales, -> {where(total_cost_type_id: 200..299)}
 
   def self.sum_work_results(term)
@@ -69,10 +71,9 @@ class TotalCost < ApplicationRecord
     make_seedling(term, sys)
     make_lands(term, sys)
     make_machines(term, fixed_on)
-    # make_expenses(term)
+    make_sorimachi(term, sys)
     # make_depreciation(term, sys)
     make_details(term)
-    # make_sales(term)
   end
 
   def self.created_at(term)
@@ -83,7 +84,15 @@ class TotalCost < ApplicationRecord
     work_type = WorkType.find(work_type_id)
     return amount if work_type.cost_only?
     return nil unless total_cost_details.where(work_type_id: work_type_id).exists?
-    return amount * rate(work_type_id)
+    return dif_amount * rate(work_type_id)
+  end
+
+  def dif_amount
+    detail_amount = 0
+    total_cost_details.each do |tcd|
+      detail_amount += tcd.cost if tcd.rate.zero?
+    end
+    return amount - detail_amount
   end
 
   def base_cost(work_type_id)
@@ -97,6 +106,7 @@ class TotalCost < ApplicationRecord
     numer = 0
     denom = 0
     total_cost_details.each do |tcd|
+      next if tcd.rate.zero?
       denom += (tcd.rate * tcd.area)
       numer = tcd.rate * tcd.area if tcd.work_type_id == work_type_id
     end
@@ -117,6 +127,7 @@ class TotalCost < ApplicationRecord
   def self.make_details(term)
     TotalCost.where(term: term).find_each do |tc|
       tc.total_cost_details.each do |tcd|
+        next if tcd.rate.zero?
         tcd.cost = tc.cost(tcd.work_type_id)
         tcd.base_cost = tc.base_cost(tcd.work_type_id)
         tcd.save!
@@ -317,28 +328,44 @@ class TotalCost < ApplicationRecord
     end
   end
 
-  def self.make_expenses(term)
-    Expense.cost(term).each do |expense|
+  def self.make_sorimachi(term, sys)
+    SorimachiJournal.cost(term).each do |journal|
+      occurred_on = journal.accounted_on || sys.end_date
+      account = journal.account1
       total_cost = TotalCost.create(
         term: term,
-        total_cost_type_id: expense.cost_type,
-        occurred_on: expense.payed_on,
-        expense_id: expense.id,
-        amount: expense.discount_amount,
-        display_order: expense.expense_type_id
+        total_cost_type_id: account.total_cost_type_id,
+        occurred_on: occurred_on,
+        sorimachi_journal_id: journal.id,
+        sorimachi_account_id: account.id,
+        amount: journal.amount1,
+        display_order: journal.code01
       )
-      if expense.direct?
-        expense.expense_work_types.each do |expense_work_type|
-          next if expense_work_type.rate.zero?
-          TotalCostDetail.create(
-            total_cost_id: total_cost.id,
-            work_type_id: expense_work_type.work_type_id,
-            rate: expense_work_type.rate,
-            area: LandCost.sum_area_by_work_type(expense.payed_on, expense_work_type.work_type_id)
-          )
-        end
-      else
-        make_details_for_indirect(total_cost.id, expense.payed_on)
+      sum_amount = 0
+      work_types = []
+      journal.sorimachi_work_types.each do |sorimachi_work_type|
+        work_types << sorimachi_work_type.work_type_id
+        next if sorimachi_work_type.amount.zero?
+        sum_amount += sorimachi_work_type.amount
+        TotalCostDetail.create(
+          total_cost_id: total_cost.id,
+          work_type_id: sorimachi_work_type.work_type_id,
+          cost: sorimachi_work_type.amount,
+          rate: 0,
+          area: LandCost.sum_area_by_work_type(occurred_on, sorimachi_work_type.work_type_id)
+        )
+      end
+      next if sum_amount == journal.amount1
+      WorkType.land.each do |work_type|
+        next if work_types.include?(work_type.id)
+        area = LandCost.sum_area_by_work_type(occurred_on, work_type.id)
+        next if area.zero?
+        TotalCostDetail.create(
+          total_cost_id: total_cost.id,
+          work_type_id: work_type.id,
+          rate: 1,
+          area: area
+        )
       end
     end
   end
@@ -365,79 +392,6 @@ class TotalCost < ApplicationRecord
         )
       end
     end
-  end
-
-  def self.make_sales(term)
-    make_sales_wcs(term)
-    make_sales_broccoli(term)
-  end
-
-  def self.make_sales_wcs(term)
-    WholeCropLand.for_sales(term).each do |wcs_land|
-      next if wcs_land.price.zero?
-      land = wcs_land.work_land.land
-      work = wcs_land.work_whole_crop.work
-      total_cost = TotalCost.create(
-        term: term,
-        total_cost_type_id: TotalCostType::SALES.id,
-        occurred_on: work.worked_at,
-        land_id: land.id,
-        whole_crop_land_id: wcs_land.id,
-        amount: wcs_land.price,
-        display_order: land.manager.home_display_order
-      )
-      TotalCostDetail.create(
-        total_cost_id: total_cost.id,
-        work_type_id: work.work_type_id,
-        cost: wcs_land.price,
-        base_cost: wcs_land.price / land.area,
-        rate: 1,
-        area: land.area
-      )
-    end
-  end
-
-  def self.make_sales_broccoli(term)
-    WorkBroccoli.for_sales(term).each do |broccoli|
-      sum_area = LandCost.sum_area_by_work_type(broccoli.shipped_on, broccoli.work.work_type_id)
-      LandCost.by_work_type(broccoli.work.work_type_id, broccoli.shipped_on).each do |land_cost|
-        amount = broccoli.sale * land_cost.land.area / sum_area
-        total_cost = TotalCost.create(
-          term: term,
-          total_cost_type_id: TotalCostType::SALES.id,
-          land_id: land_cost.land.id,
-          occurred_on: broccoli.shipped_on,
-          amount: amount,
-          display_order: land_cost.land.manager.home_display_order
-        )
-        TotalCostDetail.create(
-          total_cost_id: total_cost.id,
-          work_type_id: broccoli.work.work_type_id,
-          cost: amount,
-          rate: 1,
-          area: land_cost.land.area
-        )
-      end
-      make_cost_broccoli(term, broccoli, sum_area) if broccoli.cost&.positive?
-    end
-  end
-
-  def self.make_cost_broccoli(term, broccoli, sum_area)
-    total_cost = TotalCost.create(
-      term: term,
-      work_id: broccoli.work.id,
-      total_cost_type_id: TotalCostType::SALECOST.id,
-      occurred_on: broccoli.shipped_on,
-      amount: broccoli.cost,
-      display_order: 0
-    )
-    TotalCostDetail.create(
-      total_cost_id: total_cost.id,
-      work_type_id: broccoli.work.work_type_id,
-      cost: broccoli.cost,
-      rate: 1,
-      area: sum_area
-    )
   end
 
   def self.make_details_for_indirect(total_cost_id, occurred_on)

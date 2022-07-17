@@ -1,0 +1,33 @@
+<td>
+<% if detail.detail > 1 ? false : (detail.details.count - 1).positive? %>
+<button class="btn btn-sm btn-info has-details" data-line="<%= detail.line %>" data-details="false">明細</button>
+<% end %>
+</td>
+<td class="numeric"><%= detail.line %>-<%= detail.detail %></td>
+<td>
+  <% if detail.detail == 1 %>
+  <%= detail.accounted_on ? detail.accounted_on.strftime('%m月%d日') : "決算" %>
+  <% end %>
+</td>
+<td>
+<% if detail.cost0_flag %>
+<button class="btn btn-sm btn-primary edit-work-types" data-url="<%= edit_sorimachi_work_type_path(sorimachi_journal_id: detail.id) %>">内訳</button>
+<% elsif detail.account1.present? %>
+<button class="btn btn-sm btn-warning update-flag" data-url="<%= sorimachi_import_path(detail) %>" data-id="<%= detail.id %>">計上</button>
+<% end %>
+</td>
+<td class="<%= detail.cost0_flag ? "text-danger" : "text-dark" %>"><%= @accounts[detail.code01] || detail.code01 %></td>
+<td class="numeric <%= detail.cost0_flag ? "text-danger" : "text-dark" %>"><%= number_to_currency(detail.amount1, {precision: 0, unit: ""}) %></td>
+<td>
+<% if detail.cost1_flag %>
+<button class="btn btn-sm btn-primary edit-work-types" data-url="<%= edit_sorimachi_work_type_path(sorimachi_journal_id: detail.id) %>">内訳</button>
+<% elsif detail.account2.present? %>
+<button class="btn btn-sm btn-warning update-flag" data-url="<%= sorimachi_import_path(detail) %>" data-id="<%= detail.id %>">計上</button>
+<% end %>
+</td>
+<td class="<%= detail.cost1_flag ? "text-primary" : "text-dark" %>"><%= @accounts[detail.code12] || detail.code12 %></td>
+<td class="numeric <%= detail.cost1_flag ? "text-primary" : "text-dark" %>"><%= number_to_currency(detail.amount2, {precision: 0, unit: ""}) %></td>
+<td><%= detail.remark1 %><%= detail.remark3.present? ? "／#{detail.remark3}" : "" %></td>
+<td>
+  <%= detail.work_types.pluck(:name).join(', ') %>
+</td>

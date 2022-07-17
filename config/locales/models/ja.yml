@@ -30,6 +30,7 @@ ja:
       cost_type: "原価種別"
       chemical_inventory: "農薬棚卸"
       chemical_stock: "農薬在庫"
+      sorimachi_journal: "ソリマチ農業簿記"
 
     attributes:
       chemical:
@@ -314,6 +315,9 @@ ja:
         stored: "入庫量"
         shipping: "出庫量"
         inventory: "棚卸量"
+
+      sorimachi_journal:
+        term: "年度"
 
   status:
     organization:
