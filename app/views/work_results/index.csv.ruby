@@ -8,7 +8,7 @@ CSV.generate(encoding: "windows-31J") do |csv|
       result.worker.home.name,
       result.worker.name,
       result.work.worked_at,
-      result.work.work_type.genre_name + "(#{result.work.work_type.name})",
+      result.work.work_type.name,
       result.work.work_kind.name + (result.work.name.present? ? "(#{result.work.name})" : ""),
       result.hours,
       result.price,

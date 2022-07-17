@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_22_110036) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_09_114659) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -628,6 +628,64 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_22_110036) do
     t.index ["term", "work_type_id"], name: "index_seedlings_on_term_and_work_type_id", unique: true
   end
 
+  create_table "sorimachi_accounts", comment: "ソリマチ勘定科目", force: :cascade do |t|
+    t.integer "term", null: false, comment: "年度(期)"
+    t.integer "code", default: 0, null: false, comment: "科目コード"
+    t.string "name", default: "", null: false, comment: "名称"
+    t.integer "total_cost_type_id", default: 0, null: false, comment: "原価種別"
+    t.integer "auto_code", comment: "自動設定コード"
+    t.integer "auto_work_type_id", comment: "自動設定作業分類"
+    t.boolean "cost_flag", default: false, null: false, comment: "原価計上フラグ"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["term", "code"], name: "sorimachi_accounts_2nd", unique: true
+  end
+
+  create_table "sorimachi_journals", comment: "ソリマチ仕訳", force: :cascade do |t|
+    t.integer "term", null: false, comment: "年度(期)"
+    t.integer "line", null: false, comment: "行番号"
+    t.integer "detail", null: false, comment: "明細番号"
+    t.date "accounted_on", comment: "仕訳日"
+    t.integer "code01", null: false, comment: "コード0-1"
+    t.integer "code02", null: false, comment: "コード0-2"
+    t.integer "code03", null: false, comment: "コード0-3"
+    t.integer "code04", null: false, comment: "コード0-4"
+    t.integer "code05", null: false, comment: "コード0-5"
+    t.integer "code06", null: false, comment: "コード0-6"
+    t.integer "code07", null: false, comment: "コード0-7"
+    t.decimal "amount1", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額1"
+    t.integer "code11", null: false, comment: "コード1-1"
+    t.integer "code12", null: false, comment: "コード1-2"
+    t.integer "code13", null: false, comment: "コード1-3"
+    t.integer "code14", null: false, comment: "コード1-4"
+    t.integer "code15", null: false, comment: "コード1-5"
+    t.integer "code16", null: false, comment: "コード1-6"
+    t.integer "code17", null: false, comment: "コード1-7"
+    t.integer "code18", null: false, comment: "コード1-8"
+    t.decimal "amount2", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額2"
+    t.integer "code21", limit: 2, null: false, comment: "コード2-1"
+    t.string "remark1", limit: 50, null: false, comment: "備考1"
+    t.string "remark2", limit: 50, null: false, comment: "備考2"
+    t.string "remark3", limit: 50, null: false, comment: "備考3"
+    t.string "code31", limit: 1, null: false, comment: "コード3-1"
+    t.decimal "amount3", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額3"
+    t.string "remark4", limit: 50, null: false, comment: "備考4"
+    t.boolean "cost0_flag", default: false, null: false, comment: "原価フラグ(借方)"
+    t.boolean "cost1_flag", default: false, null: false, comment: "原価フラグ(貸方)"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["term", "line", "detail"], name: "sorimachi_journals_2nd", unique: true
+  end
+
+  create_table "sorimachi_work_types", comment: "ソリマチ作業分類", force: :cascade do |t|
+    t.integer "sorimachi_journal_id", default: 0, null: false, comment: "ソリマチ仕訳"
+    t.integer "work_type_id", default: 0, null: false, comment: "作業分類"
+    t.decimal "amount", precision: 7, default: "0", null: false, comment: "内訳金額"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sorimachi_journal_id", "work_type_id"], name: "sorimachi_work_types_2nd", unique: true
+  end
+
   create_table "systems", id: { type: :serial, comment: "システムマスタ" }, comment: "システムマスタ", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.date "target_from", comment: "開始年月"
@@ -669,7 +727,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_22_110036) do
     t.integer "total_cost_type_id", null: false, comment: "集計原価種別"
     t.date "occurred_on", null: false, comment: "発生日"
     t.integer "work_id", comment: "作業"
-    t.integer "expense_id", comment: "経費"
     t.integer "depreciation_id", comment: "減価償却"
     t.integer "work_chemical_id", comment: "薬剤使用"
     t.decimal "amount", precision: 9, default: -> { "(0)::numeric" }, null: false, comment: "原価額"
@@ -683,6 +740,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_22_110036) do
     t.integer "whole_crop_land_id", comment: "WCS土地"
     t.integer "machine_id", comment: "機械"
     t.integer "cost_type_id", comment: "原価種別"
+    t.integer "sorimachi_journal_id", comment: "ソリマチ仕訳"
+    t.integer "sorimachi_account_id", comment: "ソリマチ勘定科目"
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
   end
 

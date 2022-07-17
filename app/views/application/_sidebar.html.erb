@@ -35,8 +35,6 @@
       <%= link_to '統計照会', statistics_path, {class: "dropdown-item", data: {controller: :statistics}} %>
       <%= link_to '土地カルテ', lands_cards_path, {class: "dropdown-item", data: {controller: :cards}} %>
       <%= link_to '土地集計', lands_totals_path, {class: "dropdown-item", data: {controller: :totals}} %>
-      <%= link_to 'ブロッコリー月報', broccoli_reports_path, {class: "dropdown-item", data: {controller: "broccoli_reports"}} %>
-      <%= link_to 'ブロッコリー調査', broccoli_surveys_path, {class: "dropdown-item", data: {controller: "broccoli_surveys"}} %>
     <% end %>
     <% if current_user.manageable? %>
       <%= link_to '集計対象期間変更', edit_menu_path(current_system), {class: "dropdown-item", data: {controller: :menu, actions: [:edit]}} %>
@@ -73,7 +71,7 @@
     <%= link_to '原価一覧', total_costs_path, {class: "dropdown-item", data: {controller: "total_costs"}} %>
     <%= link_to '土地管理料', lands_fees_path, {class: "dropdown-item", data: {controller: "fees"}} %>
     <%= link_to '機械稼働時間', total_costs_machines_path, {class: "dropdown-item", data: {controller: :machine_minutes}} %>
-    <!-- <%= link_to '原価経費', expenses_path, {class: "dropdown-item", data: {controller: "expenses"}} %> -->
+    <%= link_to '農業簿記', sorimachi_imports_path, {class: "dropdown-item", data: {controller: :imports}} %>
   </div>
   <div aria-labelledby="navbarPlan" style="display:none;">
     <span class="h5">生産計画</span>
@@ -100,7 +98,6 @@
       <%= link_to '保有米単価マスタ', owned_rice_prices_path, {class: "dropdown-item", data: {controller: :owned_rice_prices}} %>
       <%= link_to '場所マスタ', land_places_path, {class: "dropdown-item", data: {controller: "land_places"}} %>
       <%= link_to '作業分類マスタ', work_types_path, {class: "dropdown-item", data: {controller: "work_types", actions: [:index, :edit]}} %>
-      <%= link_to '経費種別マスタ', expense_types_path, {class: "dropdown-item", data: {controller: "expense_types"}} %>
       <%= link_to '班マスタ', sections_path, {class: "dropdown-item", data: {controller: :sections}} %>
     <% end %>
   </div>
