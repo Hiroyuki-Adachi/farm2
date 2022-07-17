@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :sorimachi do
+    resources :imports, only: [:index, :create, :update, :destroy]
+    resources :accounts, only: [:new]
+    resources :totals, only: [:index]
+    resources :work_types, param: "sorimachi_journal_id", only: [:edit, :update]
+  end
   namespace :plans do
     resources :lands, only: [:new, :create, :destroy]
     resources :seedlings, only: [:new, :create, :index]
@@ -23,10 +29,6 @@ Rails.application.routes.draw do
     resources :year_excels, only: [:index]
   end
   resources :contracts, only: [:index]
-  resources :expense_types, only: [:index, :new, :create, :edit, :update, :destroy]
-  resources :broccoli_surveys, only: [:index]
-  resources :broccoli_reports, only: [:index]
-  resources :broccoli_sales, only: [:index, :create]
   resources :minutes, only: [:index, :create, :show, :destroy]
   resources :whole_crops, only: [:index, :create]
   resources :total_seedlings, only: [:index]
@@ -36,12 +38,6 @@ Rails.application.routes.draw do
   resources :seedling_results, param: "seedling_home_id", only: [:index, :edit, :update] do
     collection do
       get :work_results
-    end
-  end
-  resources :expenses, except: [:show] do
-    collection do
-      get :chemical_type_select
-      get :chemical_select
     end
   end
   resources :seedling_costs, param: "seedling_id", only: [:index, :create, :edit, :update]
