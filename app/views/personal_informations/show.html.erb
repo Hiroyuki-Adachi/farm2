@@ -5,12 +5,12 @@
       <tbody>
         <% results.each do |result| %>
           <tr data-href="<%=raw personal_information_work_path(personal_information_token: params[:token], id: result.model.work.id) %>">
-            <td><%= work_type_icon_tag(result.work.work_type) %></td>
-            <td>
+            <td class="px-0"><%= work_type_icon_tag(result.work.work_type) %></td>
+            <td class="px-0">
               <div><%= result.worked_at_short %></div>
               <div class="small"><%= result.model.work.start_at.strftime("%H:%M") %>〜<%= result.model.work.end_at.strftime("%H:%M") %></div>
             </td>
-            <td>
+            <td class="px-0">
               <div><%= result.work_kind_short_name %></div>
               <div class="small"><%= result.work_short_name  %></div>
             </td>
