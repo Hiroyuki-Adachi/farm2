@@ -2,6 +2,8 @@ class Sorimachi::AccountsController < ApplicationController
   include PermitManager
 
   def index
+    @journals = SorimachiJournal.accounts(current_term)
+    @accounts = SorimachiAccount.to_h(current_term)
   end
 
   def new
@@ -14,5 +16,6 @@ class Sorimachi::AccountsController < ApplicationController
 
   def create
     SorimachiAccount.import(current_term)
+    redirect_to sorimachi_accounts_path
   end
 end
