@@ -5,4 +5,6 @@ class TotalCostType < ActiveYaml::Base
   set_filename "total_cost_type"
 
   enum_accessor :code
+
+  scope :accountable, -> {where.not(account: nil).order(:id)}
 end

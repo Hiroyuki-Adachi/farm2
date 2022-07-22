@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :sorimachi do
     resources :imports, only: [:index, :create, :update, :destroy]
-    resources :accounts, param: "account_code"
+    resources :accounts, param: "account_code", except: [:show]
     resources :totals, only: [:index]
     resources :work_types, param: "sorimachi_journal_id", only: [:edit, :update]
   end
