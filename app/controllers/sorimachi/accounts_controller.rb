@@ -18,4 +18,9 @@ class Sorimachi::AccountsController < ApplicationController
     SorimachiAccount.import(current_term)
     redirect_to sorimachi_accounts_path
   end
+
+  def edit
+    @account = SorimachiAccount.find_by(term: current_term, code: params[:code])
+    @account = SorimachiAccount.new(term: current_term, code: params[:code]) unless @account
+  end
 end

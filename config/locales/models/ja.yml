@@ -31,6 +31,7 @@ ja:
       chemical_inventory: "農薬棚卸"
       chemical_stock: "農薬在庫"
       sorimachi_journal: "ソリマチ農業簿記"
+      sorimachi_account: "ソリマチ勘定科目"
 
     attributes:
       chemical:
@@ -318,6 +319,12 @@ ja:
 
       sorimachi_journal:
         term: "年度"
+
+      sorimachi_account:
+        term: "年度"
+        code: "科目コード"
+        name: "科目名称"
+        cost_flag: "原価計上フラグ"
 
   status:
     organization:

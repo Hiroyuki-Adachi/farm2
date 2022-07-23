@@ -13,11 +13,13 @@
     <tbody>
       <% @journals.each do |key, value| %>
         <tr>
-        <td class="numeric"><%= key %></th>
-        <td><%= @accounts[key] %></td>
-        <td class="numeric"><%= number_to_currency(value[0], {precision: 0, unit: ""}) %></td>
-        <td class="numeric"><%= number_to_currency(value[1], {precision: 0, unit: ""}) %></td>
-        <td></td>
+          <td class="numeric"><%= key %></th>
+          <td><%= @accounts[key] %></td>
+          <td class="numeric"><%= number_to_currency(value[0], {precision: 0, unit: ""}) %></td>
+          <td class="numeric"><%= number_to_currency(value[1], {precision: 0, unit: ""}) %></td>
+          <td>
+            <%= link_to '編集', edit_sorimachi_account_path(code: key), {class: "btn btn-success btn-sm"} %>
+          </td>
         </tr>
       <% end %>
     </tbody>
