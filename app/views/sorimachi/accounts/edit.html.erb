@@ -1,0 +1,29 @@
+<h1>勘定科目編集</h1>
+<%= form_with(model: @account) do |f| %>
+<div class="row">
+  <div class="col-md-6">
+    <%= f.label :code, class: "col-form-label-lg form-label" %>
+    <%= f.text_field :code, {class: "form-control", readonly: true} %>
+    <%= f.hidden_field :id %>
+    <%= f.hidden_field :term %>
+  </div>
+  <div class="col-md-6">
+    <%= f.label :name, class: "col-form-label-lg form-label" %>
+    <%= f.text_field :name, {maxlength: 6, required: true, class: "form-control"} %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <%= f.label :cost_flag, class: "col-form-label-lg form-label" %>
+    <%= f.check_box :cost_flag, {class: "form-check-input"}, true, false %>
+  </div>
+</div>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= f.submit '登録', class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', sorimachi_accounts_path, {class: "btn btn-outline-dark"} %>
+  </div>
+</div>
+<% end %>
