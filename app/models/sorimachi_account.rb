@@ -18,6 +18,7 @@
 #
 class SorimachiAccount < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+  before_destroy :clear_journals
 
   belongs_to_active_hash :total_cost_type, optional: true
 
@@ -42,5 +43,13 @@ class SorimachiAccount < ApplicationRecord
 
   def sales?
     self.total_cost_type == TotalCostType::SALES
+  end
+
+  private
+
+  def clear_journals
+    SorimachiJournal.where("term = ? AND (code01 = ? OR code12 = ?)", self.term, self.code, self.code).each do |journal|
+      journal.clear_flags
+    end
   end
 end
