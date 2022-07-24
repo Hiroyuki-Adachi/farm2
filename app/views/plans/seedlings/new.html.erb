@@ -6,25 +6,25 @@
         <tr>
           <th>品種</th>
           <% @plans.each do |plan| %>
-            <th class="text-center" style="background-color: <%= plan.work_type.bg_color %>"><%= plan.work_type.name %></th>
+            <th class="text-center" style="background-color: <%= plan.work_type.bg_color %>; color:<%= plan.work_type.fg_color %>;"><%= plan.work_type.name %></th>
           <% end %>
         </tr>
         <tr>
           <th class="text-nowrap">田植え月</th>
           <% @plans.each do |plan| %>
-            <td class="text-center" style="background-color: <%= plan.work_type.bg_color %>"><%= plan.month %>月</td>
+            <td class="text-center" style="background-color: <%= plan.work_type.bg_color %>; color:<%= plan.work_type.fg_color %>;"><%= plan.month %>月</td>
           <% end %>
         </tr>
         <tr>
           <th class="text-nowrap">圃場面積</th>
           <% @plans.each do |plan| %>
-            <td class="numeric" style="background-color: <%= plan.work_type.bg_color %>"><%= number_with_precision(plan.area, precision: 1) %></td>
+            <td class="numeric" style="background-color: <%= plan.work_type.bg_color %>; color:<%= plan.work_type.fg_color %>;"><%= number_with_precision(plan.area, precision: 1) %></td>
           <% end %>
         </tr>
         <tr>
           <th class="text-nowrap">苗箱枚数</th>
           <% @plans.each do |plan| %>
-            <td class="numeric" id="base_<%= plan.work_type_id %>" style="background-color: <%= plan.work_type.bg_color %>"><%= number_with_precision(plan.quantity, precision: 0) %></td>
+            <td class="numeric" id="base_<%= plan.work_type_id %>" style="background-color: <%= plan.work_type.bg_color %>; color:<%= plan.work_type.fg_color %>;"><%= number_with_precision(plan.quantity, precision: 0) %></td>
           <% end %>
         </tr>
       </thead>
