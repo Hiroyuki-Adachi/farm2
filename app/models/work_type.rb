@@ -56,4 +56,19 @@ class WorkType < ApplicationRecord
   def update_cost_flag
     self.cost_flag = true if self.land_flag
   end
+
+  def fg_color
+    rgb = {r: 255, g: 255, b: 255 }
+    lum = 135
+  
+    if self.bg_color[0, 1] == '#' && self.bg_color.length == 7
+      rgb[:r] = self.bg_color[1, 2].to_i(16)
+      rgb[:g] = self.bg_color[3, 2].to_i(16)
+      rgb[:b] = self.bg_color[5, 2].to_i(16)
+    end
+
+    yuv = 0.299 * rgb[:r] + 0.587 * rgb[:g] + 0.114 * rgb[:b];
+  
+    return yuv >= lum ? 'black' : 'white'
+  end
 end
