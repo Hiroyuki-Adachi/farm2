@@ -325,6 +325,9 @@ ja:
         code: "科目コード"
         name: "科目名称"
         cost_flag: "原価計上フラグ"
+        total_cost_type_id: "科目種別"
+        auto_code: "自動設定コード"
+        auto_work_type_id: "自動設定原価"
 
   status:
     organization:

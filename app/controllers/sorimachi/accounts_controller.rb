@@ -50,7 +50,10 @@ class Sorimachi::AccountsController < ApplicationController
         :term,
         :code,
         :name,
-        :cost_flag
+        :cost_flag,
+        :auto_code,
+        :auto_work_type_id,
+        :total_cost_type_id
       )
   end
 end
