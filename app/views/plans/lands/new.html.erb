@@ -27,7 +27,7 @@
 </div>
 <% @work_types.each_with_index do |work_type, i| %>
   <div class="btn-group">
-    <%= tag(:input, {type: :button, value: work_type.name, class: "btn work-type", style: "background-color: #{work_type.bg_color}; width:100px;", data: {id: work_type.id}}) %>
+    <%= tag(:input, {type: :button, value: work_type.name, class: "btn work-type", style: "background-color: #{work_type.bg_color}; color: #{work_type.fg_color}; width:100px;", data: {id: work_type.id}}) %>
     <span id="land_area_<%= work_type.id %>" class="label text-right area-sum" style="width: 50px;">0.0</span>
   </div>
 <% end %>
