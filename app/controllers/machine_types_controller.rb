@@ -46,7 +46,7 @@ class MachineTypesController < ApplicationController
   end
 
   def set_work_kinds
-    @work_kinds = WorkKind.all.order(:display_order)
+    @work_kinds = WorkKind.usual
   end
 
   def machine_type_params
