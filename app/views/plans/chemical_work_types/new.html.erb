@@ -8,12 +8,12 @@
           <th rowspan="2">名称</th>
           <th rowspan="2">単位</th>
           <% @plan_work_types.each do |pwt| %>
-            <th style="background-color: <%= pwt.work_type.bg_color %>"><%= pwt.work_type.name %></th>
+            <th style="background-color: <%= pwt.work_type.bg_color %>; color: <%= pwt.work_type.fg_color %>;"><%= pwt.work_type.name %></th>
           <% end %>
         </tr>
         <tr>
           <% @plan_work_types.each do |pwt| %>
-            <th class="numeric" style="background-color: <%= pwt.work_type.bg_color %>"><%= number_with_precision(pwt.area, precision: 1) %></th>
+            <th class="numeric" style="background-color: <%= pwt.work_type.bg_color %>; color: <%= pwt.work_type.fg_color %>;"><%= number_with_precision(pwt.area, precision: 1) %></th>
           <% end %>
         </tr>
       </thead>

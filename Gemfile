@@ -42,7 +42,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
 # Internationalization and localization solution
-gem 'i18n-js'
+gem 'i18n-js', '~> 3'
 # This gem provides XML serialization for your Active Model objects and Active Record models.
 gem 'activemodel-serializers-xml'
 # ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource for an ActiveRecord-like model.

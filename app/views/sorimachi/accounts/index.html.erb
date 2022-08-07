@@ -1,0 +1,37 @@
+<h1>ソリマチ勘定科目(<%= current_term %>)</h1>
+<div class="wrapper small float-head-wrapper" style="height: calc(100vh - 200px)">
+  <table class="table float-head">
+    <thead>
+      <tr>
+        <th class="numeric">コード</th>
+        <th>名称</th>
+        <th class="numeric">借方合計金額</th>
+        <th class="numeric">貸方合計金額</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @journals.each do |key, value| %>
+        <tr>
+          <td class="numeric"><%= key %></th>
+          <td><%= @accounts[key] %></td>
+          <td class="numeric"><%= number_to_currency(value[0], {precision: 0, unit: ""}) %></td>
+          <td class="numeric"><%= number_to_currency(value[1], {precision: 0, unit: ""}) %></td>
+          <td>
+            <%= link_to '編集', edit_sorimachi_account_path(code: key), {class: "btn btn-success btn-sm"} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="btn-toolbar" role="toolbar">
+  <div class="btn-group mr-2" role="group">
+    <%= form_with(url: sorimachi_accounts_path) do %>
+      <%= submit_tag 'インポート', class: "btn btn-danger", data: {confirm: "取り込みを実行してもよろしいですか？"} %>
+    <% end %>
+  </div>
+  <div class="btn-group mr-2" role="group">
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
+  </div>
+</div>
