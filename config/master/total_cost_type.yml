@@ -31,15 +31,18 @@
 - id: 90
   code: ExpenseDirect
   name: "生産原価"
+  account: true
 - id: 101
   code: WorkIndirect
   name: "作業(間接)"
 - id: 110
   code: ExpenseIndirect
   name: "一般管理費"
+  account: true
 - id: 200
   code: Sales
   name: "売上"
+  account: false
 - id: 210
   code: Subsidy
   name: "助成金"

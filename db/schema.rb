@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_09_114659) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_23_025151) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -631,7 +631,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_09_114659) do
   create_table "sorimachi_accounts", comment: "ソリマチ勘定科目", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.integer "code", default: 0, null: false, comment: "科目コード"
-    t.string "name", default: "", null: false, comment: "名称"
+    t.string "name", limit: 10, default: "", null: false, comment: "名称"
     t.integer "total_cost_type_id", default: 0, null: false, comment: "原価種別"
     t.integer "auto_code", comment: "自動設定コード"
     t.integer "auto_work_type_id", comment: "自動設定作業分類"

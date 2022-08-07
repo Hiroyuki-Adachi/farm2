@@ -18,7 +18,7 @@
 </div>
 <div class="row">
   <% @work_types.each_with_index do |work_type, i| %>
-    <div class="col" style="background-color: <%= work_type.bg_color%>;">
+    <div class="col" style="background-color: <%= work_type.bg_color %>; color: <%= work_type.fg_color %>;">
       <div id="work_type_<%= work_type.id %>"><%= work_type.name %></div>
       <div id="land_area_<%= work_type.id %>" class="label text-right area-sum">0.0</div>
     </div>
