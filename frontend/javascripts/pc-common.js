@@ -21,14 +21,16 @@ window.popupConfirm = (message, callback) => {
 }
 
 Turbo.setConfirmMethod((message, element) => {
-    const popupForm = document.getElementById("turbo_confirm");
-    popupForm.querySelector("p").textContent = message;
+    document.getElementById("popup_confirm_message").innerText = message;
+    const popupForm = document.getElementById("popup_confirm");
     popupForm.showModal();
   
     return new Promise((resolve, reject) => {
-        popupForm.addEventListener("close", () => {
-            resolve(dialog.returnValue == "confirm")
-        }, {once: true});
+        popupForm.querySelectorAll(".confirm-button").forEach((button) => {
+            button.addEventListener("click", () => {
+                resolve(button.value == "true");
+            }, {once: true});
+        });
     });
 });
 
