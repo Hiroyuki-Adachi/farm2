@@ -23,8 +23,10 @@
 class WorkType < ApplicationRecord
   acts_as_paranoid
   before_save :update_cost_flag
+  after_save :save_work_type_term
 
   has_one :plan, class_name: "PlanWorkType", dependent: :destroy
+  has_many :work_type_terms
 
   scope :categories, -> {where(category_flag: true).order(display_order: :ASC, id: :ASC)}
   scope :usual, -> {where(work_flag: true).order(category_flag: :ASC, display_order: :ASC, id: :ASC)}
@@ -32,6 +34,8 @@ class WorkType < ApplicationRecord
   scope :land, -> {where(land_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
   scope :cost, -> {where(cost_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
   scope :select_category, -> (category) {where(category_flag: false, work_flag: true, genre: category[:genre]).order(display_order: :ASC, id: :ASC)}
+
+  attr_accessor :term
 
   def genre_id
     Rails.cache.fetch("genre_id_#{self[:genre]}", expires_in: 1.hour) do
@@ -53,8 +57,8 @@ class WorkType < ApplicationRecord
     genre_name + "(#{name})"
   end
 
-  def update_cost_flag
-    self.cost_flag = true if self.land_flag
+  def bg_color(term = nil)
+    return work_type_terms.find_by(term: term || @term)&.bg_color || self.bg_color
   end
 
   def fg_color
@@ -70,5 +74,21 @@ class WorkType < ApplicationRecord
     yuv = 0.299 * rgb[:r] + 0.587 * rgb[:g] + 0.114 * rgb[:b];
   
     return yuv >= lum ? 'black' : 'white'
+  end
+
+  private
+
+  def update_cost_flag
+    self.cost_flag = true if self.land_flag
+  end
+
+  def save_work_type_term
+    term = WorkTypeTerm.find_by(term: @term, work_type_id: self.id)
+    if term
+      term.bg_color = self.bg_color
+    else
+      term = WorkTypeTerm.new(term: @term, work_type_id: self.id, bg_color: self.bg_color)
+    end
+    term.save!
   end
 end

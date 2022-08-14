@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_23_025151) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_13_090011) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -860,6 +860,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_23_025151) do
     t.integer "health_id", default: 0, null: false, comment: "健康"
     t.string "remarks", limit: 20, default: "", null: false, comment: "備考"
     t.index ["work_id", "worker_id"], name: "index_work_results_on_work_id_and_worker_id", unique: true
+  end
+
+  create_table "work_type_terms", comment: "作業分類年度別マスタ", force: :cascade do |t|
+    t.integer "term", null: false, comment: "年度(期)"
+    t.integer "work_type_id", null: false, comment: "作業分類"
+    t.string "bg_color", limit: 8, comment: "背景色"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["term", "work_type_id"], name: "work_type_terms_2nd", unique: true
   end
 
   create_table "work_types", id: { type: :serial, comment: "作業分類マスタ" }, comment: "作業分類マスタ", force: :cascade do |t|
