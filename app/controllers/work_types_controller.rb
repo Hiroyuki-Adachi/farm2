@@ -73,6 +73,7 @@ class WorkTypesController < ApplicationController
       :work_flag,
       :icon
     )
+    .merge(term: current_term)
   end
 
   def permit_manager
