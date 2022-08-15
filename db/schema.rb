@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_23_025151) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_15_013642) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -112,12 +112,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_23_025151) do
     t.integer "work_chemical_id", comment: "薬剤使用"
     t.integer "chemical_inventory_id", comment: "薬剤棚卸"
     t.string "name", limit: 40, default: "", null: false, comment: "在庫名称"
-    t.decimal "stored", precision: 5, scale: 1, comment: "入庫量"
-    t.decimal "shipping", precision: 5, scale: 1, comment: "出庫量"
-    t.decimal "using", precision: 5, scale: 1, comment: "使用量"
-    t.decimal "inventory", precision: 7, scale: 1, comment: "棚卸量"
-    t.decimal "stock", precision: 7, scale: 1, default: "0.0", null: false, comment: "在庫量"
-    t.decimal "adjust", precision: 5, scale: 1, default: "0.0", null: false, comment: "調整量"
+    t.decimal "stored", precision: 7, scale: 1, comment: "入庫量"
+    t.decimal "shipping", precision: 7, scale: 1, comment: "出庫量"
+    t.decimal "using", precision: 7, scale: 1, comment: "使用量"
+    t.decimal "inventory", precision: 8, scale: 1, comment: "棚卸量"
+    t.decimal "stock", precision: 8, scale: 1, default: "0.0", null: false, comment: "在庫量"
+    t.decimal "adjust", precision: 7, scale: 1, default: "0.0", null: false, comment: "調整量"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
