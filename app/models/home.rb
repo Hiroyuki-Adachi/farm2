@@ -39,6 +39,7 @@ class Home < ApplicationRecord
   has_many :workers, -> {order(:display_order)}
   has_many :owned_lands,    -> {order(:place)}, class_name: :Land, foreign_key: :owner_id
   has_many :managed_lands,  -> {order(:place)}, class_name: :Land, foreign_key: :manager_id
+  has_many :sub_lands,    -> {order(:place)}, class_name: :LandHome
 
   belongs_to :holder,  -> {with_deleted}, class_name: :Worker, foreign_key: :worker_id, optional: true
   belongs_to :section, -> {with_deleted}
@@ -91,12 +92,26 @@ class Home < ApplicationRecord
     finance_order ? finance_order.to_s.insert(1, "-") : ""
   end
 
-  def owned_area
-    owned_lands.where(target_flag: true).sum(:reg_area)
+  def owned_area(term)
+    area = 0
+
+    area += owned_lands
+      .where(target_flag: true)
+      .where("NOT EXISTS (SELECT * FROM land_homes LH WHERE LH.land_id = lands.id)")
+      .where("? BETWEEN peasant_start_term AND peasant_end_term", term)
+      .sum(:reg_area)
+
+    area += sub_lands
+      .joins(:land)
+      .where(owner_flag: true)
+      .where("? BETWEEN lands.peasant_start_term AND lands.peasant_end_term", term)
+      .sum(:area)
+
+      return area
   end
 
-  def owned_rice_limit
-    (owned_area / 10).ceil * OwnedRice::OWNED_RICE_COUNT
+  def owned_rice_limit(term)
+    (owned_area(term) / 10).ceil * OwnedRice::OWNED_RICE_COUNT
   end
 
   def owned_count(system)
