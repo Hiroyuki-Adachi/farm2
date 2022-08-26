@@ -36,8 +36,8 @@ class TotalOwnedRicesController < ApplicationController
   def set_relatives(totals)
     results = {}
     totals.each do |k,v|
-      if v[:owned_count] > Home.find(k).owned_rice_limit
-        results[k] = v[:owned_count] - Home.find(k).owned_rice_limit
+      if v[:owned_count] > Home.find(k).owned_rice_limit(current_term)
+        results[k] = v[:owned_count] - Home.find(k).owned_rice_limit(current_term)
         totals[k][:owned_price] += results[k] * current_system.relative_price
       end
     end
