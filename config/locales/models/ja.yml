@@ -92,8 +92,10 @@ ja:
         target_flag: "管理"
         reg_area: "登記面積"
         broccoli_mark: "ブロッコリ記号"
-        start_on: "有効期間(開始)"
-        end_on: "有効期間(終了)"
+        start_on: "有効期間(自)"
+        end_on: "有効期間(至)"
+        peasant_start_term: "小作料有効年度(自)"
+        peasant_end_term: "小作料有効年度(至)"
 
       work: 
         year: "年度"  #g

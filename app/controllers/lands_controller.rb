@@ -76,7 +76,9 @@ class LandsController < ApplicationController
             :broccoli_mark,
             :region,
             :start_on,
-            :end_on
+            :end_on,
+            :peasant_start_term,
+            :peasant_end_term
           )
   end
 end
