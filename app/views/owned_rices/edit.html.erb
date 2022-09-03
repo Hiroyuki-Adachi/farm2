@@ -1,11 +1,11 @@
 <h1>保有米登録(<%= @home.name %>)</h1>
 <div class="row">
   <div class="col-md-3">
-    <span class="h4">保有農地：<%= @home.owned_area.floor(1) %>a</span>
+    <span class="h4">保有農地：<%= @home.owned_area(current_term).floor(1) %>a</span>
   </div>
   <div class="col-md-3">
-    <span class="h4">最大保有米：<%= @home.owned_rice_limit %>袋</span>
-    <%= hidden_field_tag "owned_limit", @home.owned_rice_limit %>
+    <span class="h4">最大保有米：<%= @home.owned_rice_limit(current_term) %>袋</span>
+    <%= hidden_field_tag "owned_limit", @home.owned_rice_limit(current_term) %>
   </div>
 </div>
 <% if @p_owned_prices.size > 0 %>
