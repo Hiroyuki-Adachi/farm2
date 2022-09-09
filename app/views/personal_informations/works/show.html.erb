@@ -1,5 +1,5 @@
-<%= javascript_pack_tag 'work-show'%>
-<%= stylesheet_pack_tag 'work-show', :media => 'all' %>
+<%= javascript_include_tag 'controllers/work-show'%>
+<%= stylesheet_link_tag 'work-show', :media => 'all' %>
 <%= render partial: "works/show_base" %>
 <% if @whole_crop || current_organization.whole_crop_work_kind_id == @work.work_kind_id %>
 <%= render partial: "works/show_whole_crop" %>

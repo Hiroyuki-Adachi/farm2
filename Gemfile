@@ -17,7 +17,11 @@ gem "mini_racer"
 
 gem 'delayed_job_active_record', :git => 'git@github.com:collectiveidea/delayed_job_active_record.git'
 
-gem 'webpacker'
+#gem 'webpacker'
+
+gem 'importmap-rails'
+gem 'propshaft'
+gem 'bootstrap'
 
 gem 'daemons'
 

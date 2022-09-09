@@ -1,5 +1,5 @@
 <h1>作業日報(作業者)登録</h1>
-<%= javascript_pack_tag 'work-workers' %>
+<%= javascript_include_tag 'controllers/work-workers' %>
 <%= error_print(@work) %>
 
 <%= form_with(model: @work.model, url: {action: :create}, html: {method: :post}) do |f| %>

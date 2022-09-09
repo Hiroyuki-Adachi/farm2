@@ -83,4 +83,4 @@
   </div>
 <% end %>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" async defer></script>
-<%= javascript_pack_tag 'organizations' %>
+<%= javascript_include_tag 'controllers/organizations' %>
