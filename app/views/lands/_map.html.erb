@@ -8,4 +8,4 @@
 <% end %>
 <%= hidden_field_tag "location", "[#{land_location(@land)}]" %>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&libraries=drawing" async defer></script>
-<%= javascript_pack_tag 'lands' %>
+<%= javascript_include_tag 'controllers/lands' %>
