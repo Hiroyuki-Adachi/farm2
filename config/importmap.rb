@@ -19,3 +19,4 @@ pin "buffer", to: "https://ga.jspm.io/npm:@jspm/core@2.0.0-beta.26/nodelibs/brow
 pin "process", to: "https://ga.jspm.io/npm:@jspm/core@2.0.0-beta.26/nodelibs/browser/process-production.js"
 pin "randombytes", to: "https://ga.jspm.io/npm:randombytes@2.1.0/browser.js"
 pin "safe-buffer", to: "https://ga.jspm.io/npm:safe-buffer@5.2.1/index.js"
+pin_all_from "app/javascript/i18n-js", under: "i18n-js"
