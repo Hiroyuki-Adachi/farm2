@@ -70,6 +70,7 @@
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"} %>
   </div>
 </div>
+<% content_for :head do %>
 <script>
 $(function() {
     $(".work-type-total").click(function() {
@@ -93,3 +94,4 @@ $(function() {
     $(".carried-on-total, .detail").hide();
 });
 </script>
+<% end %>

@@ -210,4 +210,6 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
 <%= hidden_field_tag "kg_per_bag_waste", Drying::KG_PER_BAG_WASTE %>
 <%= hidden_field_tag "kg_per_bag_rice", Drying::KG_PER_BAG_RICE %>
 <%= hidden_field_tag "carried_on", @drying.model.carried_on %>
-<%= javascript_pack_tag 'edit-dryings' %>
+<% content_for :head do %>
+<%= javascript_pack_tag 'edit-dryings', 'data-turbo-track': 'reload' %>
+<% end %>

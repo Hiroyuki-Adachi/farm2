@@ -9,6 +9,7 @@
     <canvas id="chart2" />
   </div>
 </div>
+<% content_for :head do %>
 <script>
 const ctx1 = document.getElementById("chart1").getContext('2d');
 const ctx2 = document.getElementById("chart2").getContext('2d');
@@ -71,3 +72,4 @@ const chart2 = new Chart(ctx2, {
   }
 });
 </script>
+<% end %>

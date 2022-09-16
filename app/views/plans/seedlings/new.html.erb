@@ -57,6 +57,7 @@
     </div>
   </div>
 <% end %>
+<% content_for :head do %>
 <script>
 window.addEventListener('load', (event) => {
   Array.from(document.getElementsByClassName("sum-quantity")).forEach(function(ctrl) {
@@ -78,3 +79,4 @@ function calcQuantity(work_type_id) {
   }
 }
 </script>
+<% end %>

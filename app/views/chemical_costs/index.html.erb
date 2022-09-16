@@ -50,6 +50,7 @@
   </div>
 </div>
 <% end %>
+<% content_for :head do %>
 <script>
 $(function() {
     $(".zero-gray").change(function() {
@@ -80,3 +81,4 @@ function execImport() {
 }
 
 </script>
+<% end %>

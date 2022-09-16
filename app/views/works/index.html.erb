@@ -55,4 +55,6 @@
 <%= form_with url: work_type_select_works_path, method: :get, id: :work_type_select_form, local: false do |f| %>
 <%= f.hidden_field :work_type_id, id: :select_work_type_id %>
 <% end %>
-<%= javascript_pack_tag 'work-index' %>
+<% content_for :head do %>
+<%= javascript_pack_tag 'work-index', 'data-turbo-track': 'reload' %>
+<% end %>
