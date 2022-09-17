@@ -13,15 +13,11 @@ import "chart.js";
 import moment from 'moment';
 window.moment = moment;
 
-import I18n from 'i18n-js';
+import I18n from 'i18n-js/translations';
 window.I18n = I18n;
 
 import Decimal from 'decimal.js';
 window.Decimal = Decimal;
-
-require('jquery-ui');
-require('jquery-ui/themes/base/all.css');
-require('jquery-ui-touch-punch');
 
 import '@fortawesome/fontawesome-free/js/all'
 import "/javascripts/jquery.selection";
