@@ -31,6 +31,7 @@
     </div>
   </div>
 <% end %>
+<% content_for :head do %>
 <script>
 window.addEventListener("load", (w) => {
     document.querySelectorAll("input[type='color']").forEach((element) => {
@@ -55,3 +56,4 @@ window.addEventListener("load", (w) => {
     });
 });
 </script>
+<% end %>

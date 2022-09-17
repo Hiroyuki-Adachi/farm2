@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 <%= javascript_include_tag 'controllers/chemicals-stocks'%>
+=======
+<% content_for :head do %>
+<%= javascript_pack_tag 'chemicals-stocks', 'data-turbo-track': 'reload' %>
+<% end %>
+>>>>>>> develop
 <h1>在庫一覧</h1>
 <div class="row">
   <div class="col-md-3">

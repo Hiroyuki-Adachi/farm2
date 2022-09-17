@@ -1,5 +1,8 @@
 <h1>作業日報(作業者)登録</h1>
+<<<<<<< HEAD
 <%= javascript_include_tag 'controllers/work-workers' %>
+=======
+>>>>>>> develop
 <%= error_print(@work) %>
 
 <%= form_with(model: @work.model, url: {action: :create}, html: {method: :post}) do |f| %>
@@ -68,4 +71,7 @@
       <%= link_to '戻る', work_path(@work.model), {class: "btn btn-outline-dark"} %>
     </div>
   </div>
+<% end %>
+<% content_for :head do %>
+<%= javascript_pack_tag 'work-workers', 'data-turbo-track': 'reload' %>
 <% end %>

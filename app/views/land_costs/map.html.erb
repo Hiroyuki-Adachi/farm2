@@ -34,5 +34,11 @@
 <% @costs.each do |cost| %>
   <%= hidden_field_tag :regions, cost.land.region, {id: "land_#{cost.land.id}", data: {id: cost.land.id, place: cost.land.place, area: cost.land.area, owner: cost.land.owner.name, color: cost.work_type.bg_color, "work-type" => cost.work_type_id}} %>
 <% end %>
+<<<<<<< HEAD
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" async defer></script>
 <%= javascript_include_tag 'controllers/lands-maps' %>
+=======
+<% content_for :head do %>
+<%= javascript_pack_tag 'lands-maps', 'data-turbo-track': 'reload' %>
+<% end %>
+>>>>>>> develop

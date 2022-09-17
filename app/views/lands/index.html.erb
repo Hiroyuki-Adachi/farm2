@@ -50,12 +50,15 @@
     <%= link_to '戻る', menu_index_path, {class: "btn btn-outline-dark"} %>
   </div>
 </div>
+<input type="hidden" id="lands_path" value="<%= lands_path %>" />
+<% content_for :head do %>
 <script type="text/javascript">
 function change_home(sender) {
     if(sender.value == "") {
-        document.location.href = "<%= lands_path %>";
+        Turbo.visit(document.getElementById("lands_path").value)
     } else {
-        document.location.href = "<%= lands_path %>?home_id=" + sender.value;
+        Turbo.visit(`${document.getElementById("lands_path").value}?home_id=${sender.value}`)
     }
 }
 </script>
+<% end %>

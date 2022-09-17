@@ -12,8 +12,25 @@
    I18n.defaultLocale = "<%= I18n.default_locale %>";
    I18n.locale = "<%= I18n.locale %>";
   </script>
+<<<<<<< HEAD
   <%= javascript_include_tag 'controllers/work-show'%>
   <%= stylesheet_link_tag 'work-show', :media => 'all' %>
+=======
+  <%= javascript_pack_tag 'work-show'%>
+  <%= stylesheet_pack_tag 'work-show', :media => 'all' %>
+
+  <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
+      <script type="text/javascript">
+      window.addEventListener('DOMContentLoaded turbo:load', () => {
+          $("#cover_work").height($("#content_work").height()).width($("#content_work").width());
+          $("#cover_workers").height($("#content_workers").height()).width($("#content_workers").width());
+          $("#cover_lands").height($("#content_lands").height()).width($("#content_lands").width());
+          $("#cover_machines").height($("#content_machines").height()).width($("#content_machines").width());
+          $("#cover_chemicals").height($("#content_chemicals").height()).width($("#content_chemicals").width());
+      });
+      </script>
+  <% end %>
+>>>>>>> develop
 </head>
 <body>
 
@@ -53,17 +70,6 @@
 <%= button_tag "戻る",  type: :button, class: "btn btn-default", :onclick => raw("location.href = '" + (session[:work_referer] ? session[:work_referer] : works_path) + "';") %>
 <% end %>
 <%= render partial: "show_stamp"%>
-<% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
-<script type="text/javascript">
-$(function() {
-  $("#cover_work").height($("#content_work").height()).width($("#content_work").width());
-  $("#cover_workers").height($("#content_workers").height()).width($("#content_workers").width());
-  $("#cover_lands").height($("#content_lands").height()).width($("#content_lands").width());
-  $("#cover_machines").height($("#content_machines").height()).width($("#content_machines").width());
-  $("#cover_chemicals").height($("#content_chemicals").height()).width($("#content_chemicals").width());
-});
-</script>
-<% end %>
 <%= render 'application/popup' %>
 </body>
 </html>

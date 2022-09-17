@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 <%= javascript_include_tag 'controllers/calendar'%>
 <%= stylesheet_link_tag 'calendar', media: 'all' %>
+=======
+<% content_for :head do %>
+<%= javascript_pack_tag 'calendar', 'data-turbo-track': 'reload' %>
+<%= stylesheet_pack_tag 'calendar', media: 'all' %>
+<% end %>
+>>>>>>> develop
 <h1>カレンダー</h1>
 <style>
 <% @calendar_work_kinds.each do |calendar_work_kind| %>
