@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<%= javascript_include_tag 'controllers/work-show'%>
-<%= stylesheet_link_tag 'work-show', :media => 'all' %>
-=======
->>>>>>> develop
 <%= render partial: "works/show_base" %>
 <% if @whole_crop || current_organization.whole_crop_work_kind_id == @work.work_kind_id %>
 <%= render partial: "works/show_whole_crop" %>
@@ -25,10 +20,10 @@
 <% end %>
 <%= render partial: "works/show_stamp"%>
 <% content_for :head do %>
-<%= javascript_pack_tag 'work-show', 'data-turbo-track': 'reload' %>
-<%= stylesheet_pack_tag 'work-show', :media => 'all' %>
+<%= javascript_include_tag 'controllers/work-show'%>
+<%= stylesheet_link_tag 'work-show', :media => 'all' %>
 <script>
-window.addEventListener('DOMContentLoaded turbo:load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     $(".stamp").each(function() {
         $(this).offset({top: $(this).offset().top + 48});
     });

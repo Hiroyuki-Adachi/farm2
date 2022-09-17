@@ -7,11 +7,6 @@
 <%= hidden_field_tag "other_lands", land.region, {id: nil} %>
 <% end %>
 <%= hidden_field_tag "location", "[#{land_location(@land)}]" %>
-<<<<<<< HEAD
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&libraries=drawing" async defer></script>
-<%= javascript_include_tag 'controllers/lands' %>
-=======
 <% content_for :head do %>
-<%= javascript_pack_tag 'lands', 'data-turbo-track': 'reload' %>
+<%= javascript_include_tag 'controllers/lands' %>
 <% end %>
->>>>>>> develop

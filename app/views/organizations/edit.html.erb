@@ -82,11 +82,6 @@
     </div>
   </div>
 <% end %>
-<<<<<<< HEAD
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" async defer></script>
-<%= javascript_include_tag 'controllers/organizations' %>
-=======
 <% content_for :head do %>
-<%= javascript_pack_tag 'organizations', 'data-turbo-track': 'reload' %>
+<%= javascript_include_tag 'controllers/organizations' %>
 <% end %>
->>>>>>> develop
