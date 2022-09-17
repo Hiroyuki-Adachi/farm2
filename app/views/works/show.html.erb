@@ -12,16 +12,12 @@
    I18n.defaultLocale = "<%= I18n.default_locale %>";
    I18n.locale = "<%= I18n.locale %>";
   </script>
-<<<<<<< HEAD
   <%= javascript_include_tag 'controllers/work-show'%>
   <%= stylesheet_link_tag 'work-show', :media => 'all' %>
-=======
-  <%= javascript_pack_tag 'work-show'%>
-  <%= stylesheet_pack_tag 'work-show', :media => 'all' %>
 
   <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
       <script type="text/javascript">
-      window.addEventListener('DOMContentLoaded turbo:load', () => {
+      window.addEventListener('DOMContentLoaded', () => {
           $("#cover_work").height($("#content_work").height()).width($("#content_work").width());
           $("#cover_workers").height($("#content_workers").height()).width($("#content_workers").width());
           $("#cover_lands").height($("#content_lands").height()).width($("#content_lands").width());
@@ -30,7 +26,6 @@
       });
       </script>
   <% end %>
->>>>>>> develop
 </head>
 <body>
 
