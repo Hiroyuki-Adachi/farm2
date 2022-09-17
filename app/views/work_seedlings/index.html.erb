@@ -41,6 +41,7 @@
     <%= link_to "戻る", (params[:fixed_at] ? fixes_path : menu_index_path), {class: "btn btn-outline-dark"} %>
   </div>
 </div>
+<% content_for :head do %>
 <script>
 $(function() {
     $(".work-type-total").click(function() {
@@ -55,3 +56,4 @@ $(function() {
     $(".detail").hide();
 });
 </script>
+<% end %>

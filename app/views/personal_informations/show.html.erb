@@ -28,6 +28,7 @@
     </table>
   <% end %>
 <% end %>
+<% content_for :head do %>
 <script>
 $(function(){
     $('#personal_table tr').click(function(){
@@ -36,3 +37,4 @@ $(function(){
     });
 });
 </script>
+<% end %>

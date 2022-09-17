@@ -57,6 +57,7 @@
   </div>
 </div>
 <%= f.hidden_field :term %>
+<% content_for :head do %>
 <script type="text/javascript">
 $(function() {
   $('input[name="schedule[work_type_id]"]:radio').change(function(){
@@ -64,3 +65,4 @@ $(function() {
   });
 });
 </script>
+<% end %>
