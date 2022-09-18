@@ -21,7 +21,7 @@ gem 'delayed_job_active_record', :git => 'git@github.com:collectiveidea/delayed_
 
 gem 'importmap-rails'
 gem 'propshaft'
-gem 'bootstrap'
+gem 'bootstrap', '~> 5.2.0'
 
 gem 'daemons'
 
