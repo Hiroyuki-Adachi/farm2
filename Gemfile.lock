@@ -312,7 +312,7 @@ DEPENDENCIES
   activemodel-serializers-xml
   annotate
   bcrypt (~> 3.1.7)
-  bootstrap
+  bootstrap (~> 5.2.0)
   byebug
   chunky_png
   composite_primary_keys!
