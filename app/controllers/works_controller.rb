@@ -6,7 +6,6 @@ class WorksController < ApplicationController
   before_action :set_work, only: [:edit, :show, :update, :destroy, :map, :autocomplete_for_land_place]
   before_action :set_results, only: [:show]
   before_action :set_lands, only: [:show]
-  before_action :set_broccoli, only: [:show]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :check_fixed, only: [:edit, :update, :destroy]
   before_action :clear_cache, only: [:update, :create, :destroy]

@@ -6,6 +6,7 @@
   <title>作業日報管理システム(V2)</title>
   <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
   <%= stylesheet_pack_tag 'application' %>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" async defer></script>
   <%= javascript_pack_tag 'work-map', 'data-turbo-track': 'reload' %>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
