@@ -22,13 +22,14 @@ window.popupConfirm = (message, callback) => {
 
 Turbo.setConfirmMethod((message, element) => {
     document.getElementById("popup_confirm_message").innerText = message;
-    const popupForm = document.getElementById("popup_confirm");
-    popupForm.showModal();
+    const popupForm = new Modal(document.getElementById("popup_confirm"));
+    popupForm.show();
   
     return new Promise((resolve, reject) => {
-        popupForm.querySelectorAll(".confirm-button").forEach((button) => {
+        popupForm._element.querySelectorAll(".confirm-button").forEach((button) => {
             button.addEventListener("click", () => {
                 resolve(button.value == "true");
+                popupForm.hide();
             }, {once: true});
         });
     });
