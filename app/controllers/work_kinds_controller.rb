@@ -52,7 +52,8 @@ class WorkKindsController < ApplicationController
       :price,
       :land_flag,
       :broccoli_mark,
-      :phonetic
+      :phonetic,
+      :cost_type_id
     )
   end
 

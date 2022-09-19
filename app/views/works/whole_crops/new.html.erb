@@ -27,13 +27,17 @@
             <%= hidden_field_tag "whole_crop[wcs_lands][][id]", wcs_land.id %>
             <%= hidden_field_tag "whole_crop[wcs_lands][][display_order]", wcs_land.display_order %>
             <%= hidden_field_tag "whole_crop[wcs_lands][][work_land_id]", wcs_land.work_land_id %>
-            <%= number_field_tag "whole_crop[wcs_lands][][rolls]", wcs_land.rolls, {max: 999, min: 0, step: 1, required: true, readonly: !updatable, class: "form-control form-control-sm", style: "width: 100px;"} %>
+            <%= number_field_tag "whole_crop[wcs_lands][][rolls]", wcs_land.rolls, {
+                max: 999, min: 0, step: 1, required: true, readonly: !updatable, class: "form-control form-control-sm", style: "width: 100px;", tabindex: i + 1
+              } %>
           </td>
           <td><%= wcs_land.work_land.land.place %></td>
           <% WholeCropRoll::MAX_ROLLS.times do |j| %>
             <td>
               <%= hidden_field_tag "whole_crop[wcs_lands][][wcs_rolls][][id]", wcs_land.wcs_rolls[j]&.id %>
-              <%= number_field_tag "whole_crop[wcs_lands][][wcs_rolls][][weight]", wcs_land.wcs_rolls[j]&.weight || 0, {max: 999.9, min: 0, readonly: !updatable, step: 0.1, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
+              <%= number_field_tag "whole_crop[wcs_lands][][wcs_rolls][][weight]", wcs_land.wcs_rolls[j]&.weight || 0, {
+                  max: 999.9, min: 0, readonly: !updatable, step: 0.1, required: true, class: "form-control form-control-sm", style: "width: 100px;", tabindex: 100 + i * 5 + j
+                } %>
               <%= hidden_field_tag "whole_crop[wcs_lands][][wcs_rolls][][display_order]", j + 1 %>
             </td>
           <% end %>
@@ -47,12 +51,16 @@
           <td class="land_info">
             <%= hidden_field_tag "whole_crop[wcs_lands][][display_order]", i %>
             <%= hidden_field_tag "whole_crop[wcs_lands][][work_land_id]", work_land.id %>
-            <%= number_field_tag "whole_crop[wcs_lands][][rolls]", 0, {max: 999, min: 0, step: 1, required: true, readonly: !updatable, class: "form-control form-control-sm", style: "width: 100px;"} %>
+            <%= number_field_tag "whole_crop[wcs_lands][][rolls]", 0, {
+              max: 999, min: 0, step: 1, required: true, readonly: !updatable, class: "form-control form-control-sm", style: "width: 100px;", tabindex: 50 + i
+            } %>
           </td>
           <td><%= work_land.land.place %></td>
           <% WholeCropRoll::MAX_ROLLS.times do |j| %>
             <td>
-              <%= number_field_tag "whole_crop[wcs_lands][][wcs_rolls][][weight]", 0, {max: 999.9, min: 0, step: 0.1, readonly: !updatable, required: true, class: "form-control form-control-sm", style: "width: 100px;"} %>
+              <%= number_field_tag "whole_crop[wcs_lands][][wcs_rolls][][weight]", 0, {
+                max: 999.9, min: 0, step: 0.1, readonly: !updatable, required: true, class: "form-control form-control-sm", style: "width: 100px;", tabindex: 200 + i * 5 + j
+              }%>
               <%= hidden_field_tag "whole_crop[wcs_lands][][wcs_rolls][][display_order]", j + 1 %>
             </td>
           <% end %>
@@ -66,14 +74,14 @@
     <div class="btn-toolbar">
 <% if updatable %>
       <div class="btn-group mr-2">
-        <%= f.submit '登録', :name => 'regist_whole_crop', class: "btn btn-warning" %>
+        <%= f.submit '登録', :name => 'regist_whole_crop', class: "btn btn-warning", tabindex: "-1" %>
       </div>
 <% end %>
       <div class="btn-group mr-2">
-        <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: raw("window.print();") %>
+        <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: raw("window.print();"), tabindex: "-1" %>
       </div>
       <div class="btn-group mr-2">
-        <%= link_to '戻る', work_path(@work.model), {class: "btn btn-outline-dark"} %>
+        <%= link_to '戻る', work_path(@work.model), {class: "btn btn-outline-dark", tabindex: "-1"} %>
       </div>
     </div>
   </div>
