@@ -122,7 +122,7 @@ document.addEventListener('turbo:load', () => {
                 } while(element);
                 myMenu.style.left = left + "px";
             } else {
-                Turbo.visit(element.dataset.url);
+                Turbo.visit(element.dataset.url, {action: 'replace'});
             }
         });
     });
