@@ -21,22 +21,24 @@ window.popupConfirm = (message, callback) => {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    const mySideCollapse = new Collapse(document.getElementById("my_side_wrapper"), {toggle: false});
-
     // for sidebar
-    const controller = document.getElementById("current_controller").value;
-    const action = document.getElementById("current_action").value;
-
-    if(controller != "menu" || action != "index") {
-        document.getElementById("my_sidebar").querySelectorAll("a[data-controller]").forEach((element) => {
-            if(element.dataset.controller == controller) {
-                if(document.getElementById("my_sidebar").querySelectorAll(`a[data-controller="${controller}"]`).length <= 1) {
-                    activeBar(element);
-                } else if(JSON.parse(element.dataset.actions).indexOf(action) >= 0) {
-                    activeBar(element);
+    const currentController = document.getElementById("current_controller");
+    const currentAction = document.getElementById("current_action");
+    if (currentController != null || currentAction != null) {
+        const controllerValue = currentController.value;
+        const actionValue = currentAction.value;
+    
+        if(controllerValue != "menu" || actionValue != "index") {
+            document.getElementById("my_sidebar").querySelectorAll("a[data-controller]").forEach((element) => {
+                if(element.dataset.controller == controllerValue) {
+                    if(document.getElementById("my_sidebar").querySelectorAll(`a[data-controller="${controllerValue}"]`).length <= 1) {
+                        activeBar(element);
+                    } else if(JSON.parse(element.dataset.actions).indexOf(actionValue) >= 0) {
+                        activeBar(element);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     const handleConfirm = function(event) {
@@ -75,27 +77,27 @@ window.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll("#navbarFarm2 a.nav-link").forEach((element) => {
         element.addEventListener("click", () => {
-            const my_menu = document.getElementById("menu_dropdown");
-            my_menu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
-            my_menu.querySelector("span").remove();
-            my_menu.dataset.id = element.id;
-            my_menu.style.display = "block";
+            const myMenu = document.getElementById("menu_dropdown");
+            myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
+            myMenu.querySelector("span").remove();
+            myMenu.dataset.id = element.id;
+            myMenu.style.display = "block";
 
             let left = 0;
             do {
                 left += element.offsetLeft || 0;
                 element = element.offsetParent;
             } while(element);
-            my_menu.style.left = left + "px";
+            myMenu.style.left = left + "px";
         });
     });
-});
 
-window.addEventListener("click", (event) => {
-    const my_menu = document.getElementById("menu_dropdown");
-    if (!event.target.matches('.nav-link') && (my_menu != null)) {
-        my_menu.style.display = "none";
-    }
+    window.addEventListener("click", (event) => {
+        const myMenu = document.getElementById("menu_dropdown");
+        if (!event.target.matches('.nav-link') && (myMenu != null)) {
+            myMenu.style.display = "none";
+        }
+    });
 });
 
 function activeBar(element) {
