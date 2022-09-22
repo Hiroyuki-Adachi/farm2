@@ -58,47 +58,26 @@ document.addEventListener('turbo:load', () => {
         }
     }
 
-    if (mySideClose != null) {
-        mySideClose.addEventListener("click", () => {
-            const myContent = document.getElementById("my_content");
-            mySideCollapse.hide();
-    
-            myContent.classList.remove("col-md-10");
-            myContent.classList.add("col-md-12");
-    
-            mySideOpen.classList.remove("d-none");
-            mySideOpen.classList.add("d-block");
-    
-            sessionStorage.setItem("my_side", "hide");
-        });
+    const allowAction = function(element) {
+        if (element.getAttribute('data-confirm') === null) {
+            return true;
+        }
+        showConfirmationDialog(element);
+        return false;
     }
 
-    if (mySideOpen != null) {
-        mySideOpen.addEventListener("click", () => {
-            const myContent = document.getElementById("my_content");
-            mySideCollapse.show();
-    
-            myContent.classList.remove("col-md-12");
-            myContent.classList.add("col-md-10");
-    
-            mySideOpen.classList.remove("d-block");
-            mySideOpen.classList.add("d-none");
-    
-            sessionStorage.setItem("my_side", "show");
-        });
+    const confirmed = function(element, result) {
+        if (result.value) {
+            element.removeAttribute('data-confirm')
+            element.click()
+        }
     }
 
-    if (sessionStorage.getItem("my_side") == "hide") {
-        const mySideWrapper = document.getElementById("my_side_wrapper");
-        const myContent = document.getElementById("my_content");
-    
-        mySideWrapper.classList.remove("show");
-    
-        myContent.classList.remove("col-md-10");
-        myContent.classList.add("col-md-12");
-    
-        mySideOpen.classList.remove("d-none");
-        mySideOpen.classList.add("d-block");
+    const showConfirmationDialog = function(element) {
+        const message = element.getAttribute('data-confirm');
+        popupConfirm(message, function(result) {
+            confirmed(element, {value: result});
+        });
     }
 
     document.querySelectorAll("a[data-confirm], input[data-confirm], button[data-confirm]").forEach((element) => {
@@ -109,21 +88,18 @@ document.addEventListener('turbo:load', () => {
 
     document.querySelectorAll("#navbarFarm2 a.nav-link").forEach((element) => {
         element.addEventListener("click", () => {
-            if (sessionStorage.getItem("my_side") == "hide") {
-                myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
-                myMenu.querySelector("span").remove();
-                myMenu.dataset.id = element.id;
-                myMenu.style.display = "block";
+            const my_menu = document.getElementById("menu_dropdown");
+            my_menu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
+            my_menu.querySelector("span").remove();
+            my_menu.dataset.id = element.id;
+            my_menu.style.display = "block";
 
-                let left = 0;
-                do {
-                    left += element.offsetLeft || 0;
-                    element = element.offsetParent;
-                } while(element);
-                myMenu.style.left = left + "px";
-            } else {
-                Turbo.visit(element.dataset.url, {action: 'replace'});
-            }
+            let left = 0;
+            do {
+                left += element.offsetLeft || 0;
+                element = element.offsetParent;
+            } while(element);
+            my_menu.style.left = left + "px";
         });
     });
 });
