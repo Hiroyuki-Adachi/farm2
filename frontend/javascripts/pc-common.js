@@ -88,27 +88,25 @@ document.addEventListener('turbo:load', () => {
 
     document.querySelectorAll("#navbarFarm2 a.nav-link").forEach((element) => {
         element.addEventListener("click", () => {
-            const my_menu = document.getElementById("menu_dropdown");
-            my_menu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
-            my_menu.querySelector("span").remove();
-            my_menu.dataset.id = element.id;
-            my_menu.style.display = "block";
+            myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
+            myMenu.querySelector("span").remove();
+            myMenu.dataset.id = element.id;
+            myMenu.style.display = "block";
 
             let left = 0;
             do {
                 left += element.offsetLeft || 0;
                 element = element.offsetParent;
             } while(element);
-            my_menu.style.left = left + "px";
+            myMenu.style.left = left + "px";
         });
     });
-});
 
-window.addEventListener("click", (event) => {
-    const myMenu = document.getElementById("menu_dropdown");
-    if (!event.target.matches('.nav-link') && (myMenu != null)) {
-        myMenu.style.display = "none";
-    }
+    window.addEventListener("click", (event) => {
+        if (!event.target.matches('.nav-link') && (myMenu != null)) {
+            myMenu.style.display = "none";
+        }
+    });
 });
 
 function activeBar(element) {
