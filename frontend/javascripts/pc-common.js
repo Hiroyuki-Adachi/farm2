@@ -67,48 +67,6 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    document.getElementById("my_side_close").addEventListener("click", () => {
-        const myContent = document.getElementById("my_content");
-        const openButton = document.getElementById("my_side_open");
-        mySideCollapse.hide();
-
-        myContent.classList.remove("col-md-10");
-        myContent.classList.add("col-md-12");
-
-        openButton.classList.remove("d-none");
-        openButton.classList.add("d-block");
-
-        sessionStorage.setItem("my_side", "hide");
-    });
-
-    document.getElementById("my_side_open").addEventListener("click", () => {
-        const myContent = document.getElementById("my_content");
-        const openButton = document.getElementById("my_side_open");
-        mySideCollapse.show();
-
-        myContent.classList.remove("col-md-12");
-        myContent.classList.add("col-md-10");
-
-        openButton.classList.remove("d-block");
-        openButton.classList.add("d-none");
-
-        sessionStorage.setItem("my_side", "show");
-    });
-
-    if (sessionStorage.getItem("my_side") == "hide") {
-        const mySideWrapper = document.getElementById("my_side_wrapper");
-        const myContent = document.getElementById("my_content");
-        const openButton = document.getElementById("my_side_open");
-    
-        mySideWrapper.classList.remove("show");
-    
-        myContent.classList.remove("col-md-10");
-        myContent.classList.add("col-md-12");
-    
-        openButton.classList.remove("d-none");
-        openButton.classList.add("d-block");
-    }
-
     document.querySelectorAll("a[data-confirm], input[data-confirm], button[data-confirm]").forEach((element) => {
         element.addEventListener("click", (event) => {
             handleConfirm(event);
@@ -117,22 +75,18 @@ window.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll("#navbarFarm2 a.nav-link").forEach((element) => {
         element.addEventListener("click", () => {
-            if (sessionStorage.getItem("my_side") == "hide") {
-                const my_menu = document.getElementById("menu_dropdown");
-                my_menu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
-                my_menu.querySelector("span").remove();
-                my_menu.dataset.id = element.id;
-                my_menu.style.display = "block";
+            const my_menu = document.getElementById("menu_dropdown");
+            my_menu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
+            my_menu.querySelector("span").remove();
+            my_menu.dataset.id = element.id;
+            my_menu.style.display = "block";
 
-                let left = 0;
-                do {
-                    left += element.offsetLeft || 0;
-                    element = element.offsetParent;
-                } while(element);
-                my_menu.style.left = left + "px";
-            } else {
-                location.href = element.dataset.url;
-            }
+            let left = 0;
+            do {
+                left += element.offsetLeft || 0;
+                element = element.offsetParent;
+            } while(element);
+            my_menu.style.left = left + "px";
         });
     });
 });
