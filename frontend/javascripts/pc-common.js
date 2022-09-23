@@ -37,24 +37,30 @@ Turbo.setConfirmMethod((message, element) => {
 
 document.addEventListener('turbo:load', () => {
     // for sidebar
-    const controller = document.getElementById("current_controller").value;
-    const action = document.getElementById("current_action").value;
+    const currentController = document.getElementById("current_controller");
+    const currentAction = document.getElementById("current_action");
     const myMenu = document.getElementById("menu_dropdown");
-    const mySideClose = document.getElementById("my_side_close");
-    const mySideOpen = document.getElementById("my_side_open");
 
-    if(controller != "menu" || action != "index") {
-        const mySidebar = document.getElementById("my_sidebar");
-        if (mySidebar != null) {
-            mySidebar.querySelectorAll("a[data-controller]").forEach((element) => {
-                if(element.dataset.controller == controller) {
-                    if(mySidebar.querySelectorAll(`a[data-controller="${controller}"]`).length <= 1) {
+    if (currentController != null || currentAction != null) {
+        const controllerValue = currentController.value;
+        const actionValue = currentAction.value;
+    
+        if(controllerValue != "menu" || actionValue != "index") {
+            document.getElementById("my_sidebar").querySelectorAll("a[data-controller]").forEach((element) => {
+                if(element.dataset.controller == controllerValue) {
+                    if(document.getElementById("my_sidebar").querySelectorAll(`a[data-controller="${controllerValue}"]`).length <= 1) {
                         activeBar(element);
-                    } else if(JSON.parse(element.dataset.actions).indexOf(action) >= 0) {
+                    } else if(JSON.parse(element.dataset.actions).indexOf(actionValue) >= 0) {
                         activeBar(element);
                     }
                 }
             });
+        }
+    }
+
+    const handleConfirm = function(event) {
+        if (!allowAction(event.target)) {
+            Rails.stopEverything(event);
         }
     }
 
