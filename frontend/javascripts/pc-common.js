@@ -40,15 +40,16 @@ document.addEventListener('turbo:load', () => {
     const currentController = document.getElementById("current_controller");
     const currentAction = document.getElementById("current_action");
     const myMenu = document.getElementById("menu_dropdown");
+    const mySidebar = document.getElementById("my_sidebar");
 
     if (currentController != null || currentAction != null) {
         const controllerValue = currentController.value;
         const actionValue = currentAction.value;
     
         if(controllerValue != "menu" || actionValue != "index") {
-            document.getElementById("my_sidebar").querySelectorAll("a[data-controller]").forEach((element) => {
+            mySidebar.querySelectorAll("a[data-controller]").forEach((element) => {
                 if(element.dataset.controller == controllerValue) {
-                    if(document.getElementById("my_sidebar").querySelectorAll(`a[data-controller="${controllerValue}"]`).length <= 1) {
+                    if(mySidebar.querySelectorAll(`a[data-controller="${controllerValue}"]`).length <= 1) {
                         activeBar(element);
                     } else if(JSON.parse(element.dataset.actions).indexOf(actionValue) >= 0) {
                         activeBar(element);
@@ -93,7 +94,7 @@ document.addEventListener('turbo:load', () => {
     })
 
     document.querySelectorAll("#navbarFarm2 a.nav-link").forEach((element) => {
-        element.addEventListener("click", () => {
+        element.addEventListener("click", (event) => {
             myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
             myMenu.querySelector("span").remove();
             myMenu.dataset.id = element.id;
@@ -105,12 +106,14 @@ document.addEventListener('turbo:load', () => {
                 element = element.offsetParent;
             } while(element);
             myMenu.style.left = left + "px";
+            event.stopPropagation();
         });
     });
 
     window.addEventListener("click", (event) => {
         if (!event.target.matches('.nav-link') && (myMenu != null)) {
             myMenu.style.display = "none";
+            event.stopPropagation();
         }
     });
 });
