@@ -1,6 +1,6 @@
 import { Modal } from "bootstrap";
 
-window.addEventListener('DOMContentLoaded turbo:load', () => {
+window.addEventListener('turbo:load', () => {
     loadChemical(document.getElementById("term").value, document.getElementById("chemical_type").value);
 
     document.getElementById("term").addEventListener("change", (event) => {

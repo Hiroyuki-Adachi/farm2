@@ -30,7 +30,7 @@
 <% end %>
 <% content_for :head do %>
 <script>
-window.addEventListener('DOMContentLoaded turbo:load', () => {
+window.addEventListener('turbo:load', () => {
     $('#personal_table tr').click(function(){
         window.location = $(this).data('href');
         return false;

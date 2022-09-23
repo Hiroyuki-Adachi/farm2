@@ -59,7 +59,7 @@
 <% end %>
 <% content_for :head do %>
 <script>
-window.addEventListener('DOMContentLoaded turbo:load', () => {
+window.addEventListener('turbo:load', () => {
     Array.from(document.getElementsByClassName("sum-quantity")).forEach(function(ctrl) {
         calcQuantity(ctrl.dataset.id);
     });

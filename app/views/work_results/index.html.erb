@@ -62,7 +62,7 @@
 </div>
 <% content_for :head do %>
 <script>
-window.addEventListener('DOMContentLoaded turbo:load', () => {
+window.addEventListener('turbo:load', () => {
     $(".home-total").click(function() {
         var s = $(".worker-total[data-home='" + $(this).data("home") + "']");
         if(s.is(":visible")) {

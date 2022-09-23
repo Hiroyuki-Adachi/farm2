@@ -139,7 +139,7 @@
 </div>
 <% content_for :head do %>
 <script>
-window.addEventListener('DOMContentLoaded turbo:load', () => {
+window.addEventListener('turbo:load', () => {
     document.querySelectorAll("#drying-detail td").forEach((element) => {
         element.addEventListener("click", (event) => {
             location.href = event.target.dataset.drying;
