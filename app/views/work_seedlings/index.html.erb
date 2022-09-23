@@ -43,7 +43,7 @@
 </div>
 <% content_for :head do %>
 <script>
-window.addEventListener('DOMContentLoaded turbo:load', () => {
+window.addEventListener('turbo:load', () => {
     $(".work-type-total").click(function() {
         var s = $(".detail[data-work-type='" + $(this).data("work-type") + "']");
         if(s.is(":visible")) {

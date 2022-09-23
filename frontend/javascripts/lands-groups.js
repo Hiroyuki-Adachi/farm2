@@ -83,7 +83,7 @@ function addLand(landId, landPlace, landOwner, landArea)
     $("#land").val("");
 }
 
-window.addEventListener('DOMContentLoaded turbo:load', () => {
+window.addEventListener('turbo:load', () => {
   $("#tbody_lands tr").hover(function() {
     $(this).css("cursor", "crosshair");
   }, function() {

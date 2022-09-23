@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded turbo:load', () => {
+window.addEventListener('turbo:load', () => {
     document.getElementById("work_type_id").addEventListener("change", (event) => {
         document.getElementById("select_work_type_id").value = event.target.value;
         Rails.fire(document.getElementById("work_type_select_form"), "submit");

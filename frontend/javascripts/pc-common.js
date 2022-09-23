@@ -46,7 +46,7 @@ document.addEventListener('turbo:load', () => {
         const controllerValue = currentController.value;
         const actionValue = currentAction.value;
     
-        if(controllerValue != "menu" || actionValue != "index") {
+        if(mySidebar != null && (controllerValue != "menu" || actionValue != "index")) {
             mySidebar.querySelectorAll("a[data-controller]").forEach((element) => {
                 if(element.dataset.controller == controllerValue) {
                     if(mySidebar.querySelectorAll(`a[data-controller="${controllerValue}"]`).length <= 1) {
