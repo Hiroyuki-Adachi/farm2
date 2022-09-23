@@ -111,8 +111,6 @@ document.addEventListener('turbo:load', () => {
       }
     });
   });
-
-  initMap();
 });
 
 
@@ -127,3 +125,5 @@ function popupModal(action, callback) {
       }
   });
 }
+
+google.maps.event.addDomListener(window, 'load', initMap);
