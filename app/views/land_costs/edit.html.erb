@@ -72,7 +72,7 @@
 window.addEventListener('turbo:load', () => {
     const colors = JSON.parse(document.getElementById("work_colors").value);
     document.querySelectorAll("input[type='radio'][id^='work_type']:checked").forEach((element) => {
-        element.closest("tr").style.backgroundColor = colors[elm.value];
+        element.closest("tr").style.backgroundColor = colors[element.value];
     });
 });
 </script>
