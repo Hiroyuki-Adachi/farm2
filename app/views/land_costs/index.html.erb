@@ -52,6 +52,7 @@
 <script>
 let colors = null;
 document.addEventListener('turbo:load', () => {
+    colors = JSON.parse(document.getElementById("colors").value);
     allWorktypesSelect();
 
     $("input[type='radio'][id^='land_place']").bind("ajax:complete", function(xhr, response, status) {
@@ -60,18 +61,16 @@ document.addEventListener('turbo:load', () => {
             allWorktypesSelect();
         }
     });
-
-    colors = JSON.parse(document.getElementById("colors").value);
 });
 
 function allWorktypesSelect() {
-    $("input[type='radio'][id^='work_type']:checked").each(function() {
-        worktypeSelect($(this)[0]);
+    document.querySelectorAll("input[type='radio'][id^='work_type']:checked").forEach((element) => {
+        worktypeSelect(element);
     });
 }
 
-function worktypeSelect(elm) {
-    $(elm).parents("tr").css("background-color", colors[elm.value]);
+function worktypeSelect(element) {
+    element.closest("tr").style.backgroundColor = colors[element.value];
 }
 </script>
 <% end %>

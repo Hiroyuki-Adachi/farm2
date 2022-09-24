@@ -93,18 +93,19 @@ document.addEventListener('turbo:load', () => {
         })
     })
 
-    document.querySelectorAll("#navbarFarm2 a.nav-link").forEach((element) => {
+    document.querySelectorAll("#navbarFarm2 a.farm2-navi").forEach((element) => {
         element.addEventListener("click", (event) => {
-            myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
+            myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${event.target.id}"]`).innerHTML;
             myMenu.querySelector("span").remove();
-            myMenu.dataset.id = element.id;
+            myMenu.dataset.id = event.target.id;
             myMenu.style.display = "block";
 
             let left = 0;
+            let elm = event.target;
             do {
-                left += element.offsetLeft || 0;
-                element = element.offsetParent;
-            } while(element);
+                left += elm.offsetLeft || 0;
+                elm = elm.offsetParent;
+            } while(elm);
             myMenu.style.left = left + "px";
             event.stopPropagation();
         });
