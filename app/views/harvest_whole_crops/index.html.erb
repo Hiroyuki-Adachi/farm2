@@ -60,25 +60,26 @@
 <% content_for :head do %>
 <script>
 window.addEventListener('turbo:load', () => {
-    $(".work-type-total").click(function() {
-        var s = $(".worked-at-total[data-work_type='" + $(this).data("work_type") + "']");
-        if(s.is(":visible")) {
-            s.hide();
-            $(".detail[data-work_type='" + $(this).data("work_type") + "']").hide();
-        } else {
-            s.show();
-        }
+    Array.from(document.getElementsByClassName("work-type-total")).forEach((element) => {
+        element.addEventListener("click", (event) => {
+            document.querySelectorAll(`.worked-at-total[data-work_type="${event.target.closest("tr").dataset.work_type}"]`).forEach((tr) => {
+                tr.style.display = (tr.style.display == "none") ? "table-row" : "none";
+            });
+        });
     });
-    $(".worked-at-total").click(function() {
-        var s = $(".detail[data-work_type='" + $(this).data("work_type") + "'][data-worked_at='" + $(this).data("worked_at") + "']");
-        if(s.is(":visible")) {
-            s.hide();
-        } else {
-            s.show();
-        }
+
+    Array.from(document.getElementsByClassName("worked-at-total")).forEach((element) => {
+        element.addEventListener("click", (event) => {
+            const element = event.target.closest("tr");
+            document.querySelectorAll(`.detail[data-work_type="${element.dataset.work_type}"][data-worked_at="${element.dataset.worked_at}"]`).forEach((tr) => {
+                tr.style.display = (tr.style.display == "none") ? "table-row" : "none";
+            });
+        });
     });
-  
-    $(".worked-at-total, .detail").hide();
+
+    document.querySelectorAll(".worked-at-total, .detail").forEach((element) => {
+        element.style.display = "none";
+    });
 });
 </script>
 <% end %>

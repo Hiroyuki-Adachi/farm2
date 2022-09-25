@@ -49,36 +49,38 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
+<%= hidden_field_tag :import_url, import_chemical_costs_path %>
 <% end %>
 <% content_for :head do %>
 <script>
 document.addEventListener('turbo:load', () => {
-    $(".zero-gray").change(function() {
-        if($(this).prop('value') == 0) {
-            $(this).css({
-              color: "gainsboro",
-              "background-color": "white"
-            });
-        } else {
-            $(this).css({
-              color: "black",
-              "background-color": "yellow"
-            });
-        }
+    Array.from(document.getElementsByClassName("zero-gray")).forEach((element) => {
+        element.addEventListener("change", (event) => {
+            if(parseInt(event.target.value) == 0) {
+                event.target.style.color = "gainsboro";
+                event.target.style.backgroundColor = "white";
+            } else {
+                event.target.style.color = "black";
+                event.target.style.backgroundColor = "yellow";
+            }
+        });
     });
 });
 
 function execImport() {
     if(popupConfirm("単価を上書きしてもよろしいですか？", function(result) {
         if(result) {
-            $.get("<%= import_chemical_costs_path %>", function(data) {
-                for(chemical_id in data) {
-                    $("[data-chemical=" + chemical_id + "]").val(data[chemical_id]);
+            fetch(document.getElementById("import_url").value)
+            .then((res) => {
+                res.json();
+            })
+            .then((json) => {
+                for(chemicalId in data) {
+                  document.querySelector(`[data-chemical=${chemicalId}]`).value = data[chemicalId];
                 }
             });
         }
     }));
 }
-
 </script>
 <% end %>
