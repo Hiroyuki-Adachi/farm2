@@ -1,5 +1,5 @@
 <h1>薬剤原価登録</h1>
-<%= form_with url: chemical_costs_path, method: :post do |f|  %>
+<%= form_with url: chemical_costs_path, method: :post, id: :chemical_cost_form do |f|  %>
 <div class="row">
   <div id="table_wrapper" class="wrapper small float-head-wrapper" style="height: calc(100vh - 200px)">
     <table id="tbl_list" class="table table-sm float-head">
@@ -64,6 +64,10 @@ document.addEventListener('turbo:load', () => {
                 event.target.style.backgroundColor = "yellow";
             }
         });
+    });
+
+    document.getElementById("chemical_cost_form").addEventListener("submit", (event) => {
+        loading.disp("更新中");
     });
 });
 
