@@ -28,11 +28,13 @@
     </table>
   <% end %>
 <% end %>
+<% content_for :head do %>
 <script>
-$(function(){
+window.addEventListener('turbo:load', () => {
     $('#personal_table tr').click(function(){
         window.location = $(this).data('href');
         return false;
     });
 });
 </script>
+<% end %>

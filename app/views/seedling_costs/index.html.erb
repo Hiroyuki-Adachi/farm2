@@ -88,8 +88,9 @@
     </div>
   </div>
 <% end %>
+<% content_for :head do %>
 <script>
-$(function() {
+window.addEventListener('turbo:load', () => {
     $("#prorate").click(function() {
         var total_area = 0;
         var total_soil = parseFloat($("#soil_quantity_sum").val());
@@ -128,3 +129,4 @@ $(function() {
     });
 });
 </script>
+<% end %>

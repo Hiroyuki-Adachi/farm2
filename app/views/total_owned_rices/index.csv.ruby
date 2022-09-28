@@ -7,14 +7,14 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
   @owned_rices.each do |owned_rice|
     old_home = owned_rice.home unless old_home
     if owned_rice.home_id != old_home.id
-      if total_count > old_home.owned_rice_limit
+      if total_count > old_home.owned_rice_limit(current_term)
         csv << [
           old_home.finance_code,
           old_home.name,
           "縁故米",
-          total_count - old_home.owned_rice_limit,
+          total_count - old_home.owned_rice_limit(current_term),
           current_system.relative_price,
-          (total_count - old_home.owned_rice_limit) * current_system.relative_price
+          (total_count - old_home.owned_rice_limit(current_term)) * current_system.relative_price
         ]
       end
       old_home = owned_rice.home
@@ -30,14 +30,14 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
     ]
     total_count += owned_rice.owned_count
   end
-  if total_count > old_home.owned_rice_limit
+  if total_count > old_home.owned_rice_limit(current_term)
     csv << [
       old_home.finance_code,
       old_home.name,
       "縁故米",
-      total_count - old_home.owned_rice_limit,
+      total_count - old_home.owned_rice_limit(current_term),
       current_system.relative_price,
-      (total_count - old_home.owned_rice_limit) * current_system.relative_price
+      (total_count - old_home.owned_rice_limit(current_term)) * current_system.relative_price
     ]
   end
 end

@@ -137,8 +137,9 @@
     <%= link_to '戻る', dryings_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
+<% content_for :head do %>
 <script>
-window.addEventListener("load", () => {
+window.addEventListener('turbo:load', () => {
     document.querySelectorAll("#drying-detail td").forEach((element) => {
         element.addEventListener("click", (event) => {
             location.href = event.target.dataset.drying;
@@ -146,3 +147,4 @@ window.addEventListener("load", () => {
     });
 });
 </script>
+<% end %>

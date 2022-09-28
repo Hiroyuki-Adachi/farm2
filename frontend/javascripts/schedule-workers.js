@@ -120,7 +120,7 @@ function add_positions(positions) {
     }
 }
 
-$(function() {
+window.addEventListener('turbo:load', () => {
   set_add_buttons();
 
   $("#tbody_workers tr").hover(function() {

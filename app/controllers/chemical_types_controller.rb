@@ -22,7 +22,7 @@ class ChemicalTypesController < ApplicationController
       update_work_kinds
       redirect_to chemical_types_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -31,13 +31,13 @@ class ChemicalTypesController < ApplicationController
       update_work_kinds
       redirect_to chemical_types_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @chemical_type.destroy
-    redirect_to chemical_types_path
+    redirect_to chemical_types_path, status: :see_other
   end
 
   private

@@ -31,8 +31,9 @@
     </div>
   </div>
 <% end %>
+<% content_for :head do %>
 <script>
-window.addEventListener("load", (w) => {
+window.addEventListener('turbo:load', () => {
     document.querySelectorAll("input[type='color']").forEach((element) => {
         element.addEventListener("change", (event) => {
             const id = `work_kind_id_${event.target.dataset.kind}`;
@@ -55,3 +56,4 @@ window.addEventListener("load", (w) => {
     });
 });
 </script>
+<% end %>

@@ -35,11 +35,11 @@ function checkAll(val)
     calc_total();
 }
 
-$(function() {
-    $(".all-check").on('click', function() {
+document.addEventListener('turbo:load', () => {
+    document.querySelector(".all-check").addEventListener('click', () => {
         checkAll(true);
     });
-    $(".all-cancel").on('click', function() {
+    document.querySelector(".all-cancel").addEventListener('click', () => {
         checkAll(false);
     });
 });

@@ -57,10 +57,12 @@
   </div>
 </div>
 <%= f.hidden_field :term %>
+<% content_for :head do %>
 <script type="text/javascript">
-$(function() {
-  $('input[name="schedule[work_type_id]"]:radio').change(function(){
-    $.get("<%= work_type_select_works_path %>", {work_type_id: $(this).val()});
-  });
+window.addEventListener('turbo:load', () => {
+    $('input[name="schedule[work_type_id]"]:radio').change(function(){
+        $.get("<%= work_type_select_works_path %>", {work_type_id: $(this).val()});
+    });
 });
 </script>
+<% end %>

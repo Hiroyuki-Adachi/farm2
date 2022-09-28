@@ -21,10 +21,10 @@
         <th>合計</th>
         <td class="text-right"><%= sum_owned_count %></td>
       </tr>
-      <% if @worker.home.owned_rice_limit < sum_owned_count %>
+      <% if @worker.home.owned_rice_limit(current_term) < sum_owned_count %>
       <tr>
         <th>うち縁故米</th>
-        <td class="text-right"><%= sum_owned_count - @worker.home.owned_rice_limit %></td>
+        <td class="text-right"><%= sum_owned_count - @worker.home.owned_rice_limit(current_term) %></td>
       </tr>
       <% end %>
     </tfoot>

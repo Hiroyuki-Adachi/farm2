@@ -36,13 +36,13 @@ class DryingsController < ApplicationController
     if @drying.update(drying_params)
       redirect_to drying_path(@drying.home)
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @drying.destroy
-    redirect_to dryings_path
+    redirect_to dryings_path, status: :see_other
   end
 
   def copy

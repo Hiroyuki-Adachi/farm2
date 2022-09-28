@@ -6,7 +6,6 @@ class WorksController < ApplicationController
   before_action :set_work, only: [:edit, :show, :update, :destroy, :map, :autocomplete_for_land_place]
   before_action :set_results, only: [:show]
   before_action :set_lands, only: [:show]
-  before_action :set_broccoli, only: [:show]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :check_fixed, only: [:edit, :update, :destroy]
   before_action :clear_cache, only: [:update, :create, :destroy]
@@ -69,7 +68,7 @@ class WorksController < ApplicationController
     if @work.save
       redirect_to(new_work_worker_path(work_id: @work))
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -92,7 +91,7 @@ class WorksController < ApplicationController
       if @work.update(work_params)
         @work.refresh_broccoli(current_organization)
       else
-        render action: :edit
+        render action: :edit, status: :unprocessable_entity
       end
     end
 
@@ -101,7 +100,7 @@ class WorksController < ApplicationController
 
   def destroy
     @work.destroy
-    redirect_to(works_path)
+    redirect_to works_path, status: :see_other
   end
 
   def autocomplete_for_land_place
