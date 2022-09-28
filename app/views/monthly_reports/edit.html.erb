@@ -1,14 +1,15 @@
+<% content_for :head do %>
 <script type="text/javascript">
-$(function() {
-    set_disabled();
-    calc_total_hours();
+window.addEventListener('turbo:load', () => {
+    setDisabled();
+    calcTotalHours();
 });
 
 function $$(id) {
     return document.getElementById(id);
 }
 
-function set_disabled() {
+function setDisabled() {
     for(var d = 0; d < 31; d++) {
         var cb = $$("data_" + d + "_check");
         if(cb != null) {
@@ -63,10 +64,10 @@ function calc_hours(d)
 
     $$("data_" + d + "_hours").value = (end_hour - start_hour).toFixed(1);
 
-    calc_total_hours();
+    calcTotalHours();
 }
 
-function calc_total_hours()
+function calcTotalHours()
 {
     var total_hours = 0.0;
     for(var d = 0; d < 31; d++) {
@@ -78,7 +79,7 @@ function calc_total_hours()
     $$("total_hours").innerHTML = total_hours.toFixed(1);
 }
 </script>
-
+<% end %>
 <h1>作業月報修正</h1>
 <h2><%= @target_from.strftime('%Y年%m月') %>：<%= @worker.name + "(#{@worker.home.name})" %></h2>
 <%= form_with url: monthly_report_path(@worker), method: :put do |f| %>
@@ -102,7 +103,7 @@ function calc_total_hours()
         <% work = Work.array_by_worked_at(@works, target_at)  %>
         <% result = WorkResult.by_worker_and_work(@worker, work)[0] %>
         <td style="text-align: center;">
-          <%= check_box_tag "data[#{d}][check]", d, work.present?, {onchange: "set_disabled()", class: "form-check-label"}  %>
+          <%= check_box_tag "data[#{d}][check]", d, work.present?, {onchange: "setDisabled()", class: "form-check-label"}  %>
           <%= hidden_field_tag "data[#{d}][id]", work ? work.id : 0 %>
           <%= hidden_field_tag "data[#{d}][worked_at]", Date::new(@target_from.year, @target_from.month, d + 1) %>
         </td>
@@ -114,7 +115,7 @@ function calc_total_hours()
         <td style="text-align: center;">～</td>
         <td><%= select_time(work ? work.end_at : Time.parse("8:00"), {:minute_step => 30, :prefix => "data[#{d}][end_at]"}, {onchange: "calc_hours(" + d.to_s + ")", class: "form-control bootstrap-date"}) %></td>
         <td><%= number_field_tag "data[#{d}][hours]", result ? sprintf("%.1f", result.hours) : "0.0", 
-          {max: 24, min: 0, step: 0.5, onchange: "calc_total_hours()", class: "form-control"} %></td>
+          {max: 24, min: 0, step: 0.5, onchange: "calcTotalHours()", class: "form-control"} %></td>
         <td><%= select_tag("data[#{d}][work_type_id]",
             options_from_collection_for_select(WorkType.indexes, :id, :name, work ? work.work_type_id : 1), {class: "form-select"}) %></td>
         <td><%= text_field_tag "data[#{d}][name]", work ? work.name : "", {:maxlength => 40, :size => 30, class: "form-control"} %></td>

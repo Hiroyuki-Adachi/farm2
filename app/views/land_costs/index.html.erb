@@ -47,31 +47,30 @@
     </div>
   </div>
 <% end %>
+<%= hidden_field_tag :colors, @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>
+<% content_for :head do %>
 <script>
-var colors = <%=raw @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>;
-
-$(function() {
-    all_worktypes_select();
+let colors = null;
+document.addEventListener('turbo:load', () => {
+    colors = JSON.parse(document.getElementById("colors").value);
+    allWorktypesSelect();
 
     $("input[type='radio'][id^='land_place']").bind("ajax:complete", function(xhr, response, status) {
         if(status == "success"){
             $('#land_place_id').val($(this).val());
-            all_worktypes_select();
+            allWorktypesSelect();
         }
     });
 });
 
-function cost_keydown(elm, area, fee) {
-    elm.value = area * (fee / 10);
-}
-
-function all_worktypes_select() {
-    $("input[type='radio'][id^='work_type']:checked").each(function() {
-        worktype_select($(this)[0]);
+function allWorktypesSelect() {
+    document.querySelectorAll("input[type='radio'][id^='work_type']:checked").forEach((element) => {
+        worktypeSelect(element);
     });
 }
 
-function worktype_select(elm) {
-    $(elm).parents("tr").css("background-color", colors[elm.value]);
+function worktypeSelect(element) {
+    element.closest("tr").style.backgroundColor = colors[element.value];
 }
 </script>
+<% end %>

@@ -21,7 +21,7 @@ class WorkKindsController < ApplicationController
       update_others
       redirect_to work_kinds_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -30,13 +30,13 @@ class WorkKindsController < ApplicationController
       update_others
       redirect_to work_kinds_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @work_kind.destroy
-    redirect_to work_kinds_path
+    redirect_to work_kinds_path, status: :see_other
   end
 
   private
@@ -52,7 +52,8 @@ class WorkKindsController < ApplicationController
       :price,
       :land_flag,
       :broccoli_mark,
-      :phonetic
+      :phonetic,
+      :cost_type_id
     )
   end
 

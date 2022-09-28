@@ -66,16 +66,14 @@
     </div>
   </div>
 <% end %>
+<%= hidden_field_tag :work_colors, @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>
+<% content_for :head do %>
 <script>
-var colors = <%=raw @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>;
-
-$(function() {
-    $("input[type='radio'][id^='work_type']:checked").each(function() {
-        worktype_select($(this)[0]);
+window.addEventListener('turbo:load', () => {
+    const colors = JSON.parse(document.getElementById("work_colors").value);
+    document.querySelectorAll("input[type='radio'][id^='work_type']:checked").forEach((element) => {
+        element.closest("tr").style.backgroundColor = colors[element.value];
     });
 });
-
-function worktype_select(elm) {
-    $(elm).parents("tr").css("background-color", colors[elm.value]);
-}
 </script>
+<% end %>

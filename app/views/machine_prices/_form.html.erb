@@ -37,7 +37,7 @@
         <%= link_to '履歴', machine_price_headers_path(id: @machine_price.id), class: "btn btn-success" %>
       </div>
       <div class="btn-group mr-2">
-        <%= link_to '削除', @machine_price, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
+        <%= link_to '削除', @machine_price, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
       </div>
     <% end %>
     <% if @machine_price.machine_id == 0 %>

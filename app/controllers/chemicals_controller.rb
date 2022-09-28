@@ -20,7 +20,7 @@ class ChemicalsController < ApplicationController
     if @chemical.save
       redirect_to chemicals_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -28,13 +28,13 @@ class ChemicalsController < ApplicationController
     if @chemical.update(chemical_params)
       redirect_to chemicals_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @chemical.destroy
-    redirect_to chemicals_path
+    redirect_to chemicals_path, status: :see_other
   end
 
   private

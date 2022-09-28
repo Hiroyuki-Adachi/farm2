@@ -15,7 +15,7 @@ class Plans::LandsController < ApplicationController
 
   def destroy
     PlanLand.clear_all(current_user.id, Date.today)
-    redirect_to new_plans_land_path
+    redirect_to new_plans_land_path, status: :see_other
   end
 
   private

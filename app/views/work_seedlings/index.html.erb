@@ -41,8 +41,9 @@
     <%= link_to "戻る", (params[:fixed_at] ? fixes_path : menu_index_path), {class: "btn btn-outline-dark"} %>
   </div>
 </div>
+<% content_for :head do %>
 <script>
-$(function() {
+window.addEventListener('turbo:load', () => {
     $(".work-type-total").click(function() {
         var s = $(".detail[data-work-type='" + $(this).data("work-type") + "']");
         if(s.is(":visible")) {
@@ -55,3 +56,4 @@ $(function() {
     $(".detail").hide();
 });
 </script>
+<% end %>

@@ -23,7 +23,7 @@
         <% if drying %>
           <% if drying.drying_type_id == 0 %>
             <td>
-              <%= link_to '○', drying, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}} %>
+              <%= link_to '○', drying, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}} %>
             </td>
           <% else %>
             <td>●</td>
@@ -42,8 +42,9 @@
   <%= f.hidden_field(:home_id) %>
   <%= f.hidden_field(:carried_on) %>
 <% end %>
+<% content_for :head do %>
 <script>
-window.addEventListener("load", () => {
+window.addEventListener('turbo:load', () => {
     document.querySelectorAll(".drying-data").forEach((element) => {
         element.addEventListener("click", (event) => {
             document.getElementById("drying_home_id").value = element.dataset.home;
@@ -53,3 +54,4 @@ window.addEventListener("load", () => {
     });
 });
 </script>
+<% end %>

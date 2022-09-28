@@ -26,7 +26,7 @@ class LandsController < ApplicationController
     if @land.save
       redirect_to lands_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -34,13 +34,13 @@ class LandsController < ApplicationController
     if @land.update(land_params)
       redirect_to lands_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @land.destroy
-    redirect_to lands_path
+    redirect_to lands_path, status: :see_other
   end
 
   private
@@ -76,7 +76,9 @@ class LandsController < ApplicationController
             :broccoli_mark,
             :region,
             :start_on,
-            :end_on
+            :end_on,
+            :peasant_start_term,
+            :peasant_end_term
           )
   end
 end

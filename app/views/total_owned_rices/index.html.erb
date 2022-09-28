@@ -58,8 +58,9 @@
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
+<% content_for :head do %>
 <script>
-$(function() {
+window.addEventListener('turbo:load', () => {
     $(".home-total").click(function() {
         var s = $(".detail[data-home='" + $(this).data("home") + "']");
         if(s.is(":visible")) {
@@ -72,3 +73,4 @@ $(function() {
     $(".detail").hide();
 });
 </script>
+<% end %>

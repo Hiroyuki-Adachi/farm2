@@ -28,7 +28,7 @@
           <% total_owned_count[owned_price.id] = (total_owned_count[owned_price.id] ? total_owned_count[owned_price.id] : 0) + (owned_rice&.owned_count || 0) %>
         <% end %>
         <td class="numeric"><%= total_count %></td>
-        <td class="numeric"><%= total_count > home.owned_rice_limit ? total_count - home.owned_rice_limit : "" %></td>
+        <td class="numeric"><%= total_count > home.owned_rice_limit(current_term) ? total_count - home.owned_rice_limit(current_term) : "" %></td>
         <td><%= link_to '修正', edit_owned_rice_path(id: home.id), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>
