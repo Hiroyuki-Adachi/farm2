@@ -55,25 +55,25 @@
 <% content_for :head do %>
 <script>
 window.addEventListener('turbo:load', () => {
-    $(".home-total").click(function() {
-        var s = $(".work-total[data-home='" + $(this).data("home") + "']");
-        if(s.is(":visible")) {
-            s.hide();
-            $(".detail[data-home='" + $(this).data("home") + "']").hide();
-        } else {
-            s.show();
-        }
+    Array.from(document.getElementsByClassName("home-total")).forEach((element) => {
+        element.addEventListener("click", (event) => {
+            document.querySelectorAll(`.work-total[data-home="${event.target.closest("tr").dataset.home}"]`).forEach((tr) => {
+                tr.style.display = (tr.style.display == "none") ? "table-row" : "none";
+            });
+        });
     });
-    $(".work-total").click(function() {
-        var s = $(".detail[data-work='" + $(this).data("work") + "'][data-home='" + $(this).data("home") + "']");
-        if(s.is(":visible")) {
-            s.hide();
-        } else {
-            s.show();
-        }
+    Array.from(document.getElementsByClassName("work-total")).forEach((element) => {
+        element.addEventListener("click", (event) => {
+            const workTotalTr = event.target.closest("tr");
+            document.querySelectorAll(`.detail[data-work="${workTotalTr.dataset.work}"][data-home="${workTotalTr.dataset.home}"]`).forEach((tr) => {
+                tr.style.display = (tr.style.display == "none") ? "table-row" : "none";
+            });
+        });
     });
-  
-    $(".work-total, .detail").hide();
+
+    document.querySelectorAll(".worked-at-total, .detail").forEach((element) => {
+        element.style.display = "none";
+    });
 });
 </script>
 <% end %>
