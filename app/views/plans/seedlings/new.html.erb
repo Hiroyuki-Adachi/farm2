@@ -59,10 +59,10 @@
 <% end %>
 <% content_for :head do %>
 <script>
-window.addEventListener('load', (event) => {
-  Array.from(document.getElementsByClassName("sum-quantity")).forEach(function(ctrl) {
-    calcQuantity(ctrl.dataset.id);
-  });
+window.addEventListener('turbo:load', () => {
+    Array.from(document.getElementsByClassName("sum-quantity")).forEach(function(ctrl) {
+        calcQuantity(ctrl.dataset.id);
+    });
 });
 
 function calcQuantity(work_type_id) {

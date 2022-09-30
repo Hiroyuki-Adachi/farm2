@@ -86,10 +86,10 @@
 <% end %>
 <% content_for :head do %>
 <script>
-window.addEventListener('load', (event) => {
-  Array.from(document.getElementsByClassName("work-type-months")).forEach(function(sel) {
-    changeMonth(sel);
-  });
+window.addEventListener('turbo:load', () => {
+    Array.from(document.getElementsByClassName("work-type-months")).forEach(function(sel) {
+        changeMonth(sel);
+    });
 });
 
 function setAreas()

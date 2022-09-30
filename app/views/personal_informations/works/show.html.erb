@@ -23,7 +23,7 @@
 <%= javascript_pack_tag 'work-show', 'data-turbo-track': 'reload' %>
 <%= stylesheet_pack_tag 'work-show', :media => 'all' %>
 <script>
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('turbo:load', () => {
     $(".stamp").each(function() {
         $(this).offset({top: $(this).offset().top + 48});
     });

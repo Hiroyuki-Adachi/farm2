@@ -1,5 +1,5 @@
 import { Modal, Collapse } from "bootstrap";
-import Rails from "@rails/ujs";
+
 window.popupAlert = (message) => {
     document.getElementById("popup_alert_message").innerText = message;
     const popupForm = new Modal(document.getElementById("popup_alert"));
@@ -20,18 +20,36 @@ window.popupConfirm = (message, callback) => {
     popupForm.show();
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+Turbo.setConfirmMethod((message, element) => {
+    document.getElementById("popup_confirm_message").innerText = message;
+    const popupForm = new Modal(document.getElementById("popup_confirm"));
+    popupForm.show();
+  
+    return new Promise((resolve, reject) => {
+        popupForm._element.querySelectorAll(".confirm-button").forEach((button) => {
+            button.addEventListener("click", () => {
+                resolve(button.value == "true");
+                popupForm.hide();
+            }, {once: true});
+        });
+    });
+});
+
+document.addEventListener('turbo:load', () => {
     // for sidebar
     const currentController = document.getElementById("current_controller");
     const currentAction = document.getElementById("current_action");
+    const myMenu = document.getElementById("menu_dropdown");
+    const mySidebar = document.getElementById("my_sidebar");
+
     if (currentController != null || currentAction != null) {
         const controllerValue = currentController.value;
         const actionValue = currentAction.value;
     
-        if(controllerValue != "menu" || actionValue != "index") {
-            document.getElementById("my_sidebar").querySelectorAll("a[data-controller]").forEach((element) => {
+        if(mySidebar != null && (controllerValue != "menu" || actionValue != "index")) {
+            mySidebar.querySelectorAll("a[data-controller]").forEach((element) => {
                 if(element.dataset.controller == controllerValue) {
-                    if(document.getElementById("my_sidebar").querySelectorAll(`a[data-controller="${controllerValue}"]`).length <= 1) {
+                    if(mySidebar.querySelectorAll(`a[data-controller="${controllerValue}"]`).length <= 1) {
                         activeBar(element);
                     } else if(JSON.parse(element.dataset.actions).indexOf(actionValue) >= 0) {
                         activeBar(element);
@@ -75,27 +93,28 @@ window.addEventListener("DOMContentLoaded", () => {
         })
     })
 
-    document.querySelectorAll("#navbarFarm2 a.nav-link").forEach((element) => {
-        element.addEventListener("click", () => {
-            const myMenu = document.getElementById("menu_dropdown");
-            myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
+    document.querySelectorAll("#navbarFarm2 a.farm2-navi").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${event.target.id}"]`).innerHTML;
             myMenu.querySelector("span").remove();
-            myMenu.dataset.id = element.id;
+            myMenu.dataset.id = event.target.id;
             myMenu.style.display = "block";
 
             let left = 0;
+            let elm = event.target;
             do {
-                left += element.offsetLeft || 0;
-                element = element.offsetParent;
-            } while(element);
+                left += elm.offsetLeft || 0;
+                elm = elm.offsetParent;
+            } while(elm);
             myMenu.style.left = left + "px";
+            event.stopPropagation();
         });
     });
 
     window.addEventListener("click", (event) => {
-        const myMenu = document.getElementById("menu_dropdown");
         if (!event.target.matches('.nav-link') && (myMenu != null)) {
             myMenu.style.display = "none";
+            event.stopPropagation();
         }
     });
 });

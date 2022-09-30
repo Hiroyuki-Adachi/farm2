@@ -23,7 +23,7 @@ class SchedulesController < ApplicationController
     if @schedule.save
       redirect_to(new_schedule_worker_path(schedule_id: @schedule))
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -34,13 +34,13 @@ class SchedulesController < ApplicationController
     if @schedule.update(schedule_params)
       redirect_to(schedules_path)
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @schedule.destroy
-    redirect_to(schedules_path)
+    redirect_to schedules_path, status: :see_other
   end
 
   private

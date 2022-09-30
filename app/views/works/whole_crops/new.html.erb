@@ -89,7 +89,7 @@
 <% content_for :head do %>
 <script>
 import "jquery-ui/ui/widgets/sortable";
-$(function() {
+window.addEventListener('turbo:load', () => {
     $("#tbody_lands").sortable({
         cursor: "move",
         update: function(e, ui) {

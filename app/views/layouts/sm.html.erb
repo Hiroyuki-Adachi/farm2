@@ -101,16 +101,16 @@
 </div>
 <script>
 var startPos = 0,winScrollTop = 0;
-$(function() {
-  $(window).on('scroll',function(){
-      winScrollTop = $(this).scrollTop();
-      if (winScrollTop >= startPos) {
-          $('#site-header').hide("slow");
-      } else {
-          $('#site-header').show("slow");
-      }
-      startPos = winScrollTop;
-  });
+window.addEventListener('turbo:load', () => {
+    $(window).on('scroll',function(){
+        winScrollTop = $(this).scrollTop();
+        if (winScrollTop >= startPos) {
+            $('#site-header').hide("slow");
+        } else {
+            $('#site-header').show("slow");
+        }
+        startPos = winScrollTop;
+    });
 });
 </script>
 </body>

@@ -25,7 +25,7 @@ class WorkTypesController < ApplicationController
     if @work_type.save
       redirect_to work_types_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -39,13 +39,13 @@ class WorkTypesController < ApplicationController
     if @work_type.save
       redirect_to work_types_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @work_type.destroy
-    redirect_to work_types_path
+    redirect_to work_types_path, status: :see_other
   end
 
   def show_icon
