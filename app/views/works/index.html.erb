@@ -23,13 +23,13 @@
   <div class="col-md-3">
     <div class="input-group">
       <label for="work_type_id" class="h5 form-label">分類</label>
-      <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name, @work_type_id), {include_blank: true, class: "form-select"}) %>
+      <%= render 'work_types' %>
     </div>
   </div>
   <div class="col-md-4">
     <div class="input-group">
       <label for="work_work_kind_id" class="h5 form-label">種別</label>
-      <%= select_tag(:work_kind_id, options_from_collection_for_select(@work_kinds, :id, :name, @work_kind_id), {id: "work_work_kind_id", include_blank: true, class: "form-select"}) %>
+      <%= render 'work_kinds' %>
     </div>
   </div>
   <div class="col-md-2">
@@ -40,10 +40,12 @@
 <% end %>
 <hr />
 <% if @works.count > 0 %>
-<div id="list">
-  <%= render partial: "list" %>
-</div>
+  <%= turbo_frame_tag 'list' do %>
+    <%= render partial: "list" %>
+  <% end %>
 <% end %>
+<%= hidden_field_tag :work_types_works_path, work_types_works_path %>
+<%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= link_to 'CSV出力', works_path(format: :csv), class: "btn btn-primary" %>
@@ -52,9 +54,6 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
-<%= form_with url: work_type_select_works_path, method: :get, id: :work_type_select_form, local: false do |f| %>
-<%= f.hidden_field :work_type_id, id: :select_work_type_id %>
-<% end %>
 <% content_for :head do %>
 <%= javascript_pack_tag 'work-index', 'data-turbo-track': 'reload' %>
 <% end %>

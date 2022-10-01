@@ -1,0 +1,3 @@
+<%= turbo_frame_tag 'work_types' do %>
+  <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name, @work_type_id), {include_blank: true, class: "form-select"}) %>
+<% end %>
