@@ -12,9 +12,9 @@ class WorksController < ApplicationController
   before_action :permit_not_visitor, except: [:index, :show]
   before_action :permit_checkable_or_self, only: [:edit, :update, :destroy]
   before_action :permit_visitor, only: :show
+  before_action :set_term, only: :index
   before_action :set_work_types, only: :index
   before_action :permit_this_term, only: [:edit, :update, :destroy]
-  before_action :set_term, only: :index
 
   helper GmapHelper
 
@@ -72,13 +72,6 @@ class WorksController < ApplicationController
     end
   end
 
-  def work_type_select
-    @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
-    respond_to do |format|
-      format.js {render action: :work_type_select}
-    end
-  end
-
   def edit
     @work_kinds = WorkKind.by_type(@work.work_type) || []
   end
@@ -101,6 +94,16 @@ class WorksController < ApplicationController
   def destroy
     @work.destroy
     redirect_to works_path, status: :see_other
+  end
+
+  def work_types
+    @work_types = params[:term].present? ? WorkType.by_term(params[:term]).indexes : WorkType.indexes
+    render turbo_stream: turbo_stream.replace('work_types', partial: 'work_types')
+  end
+
+  def work_kinds
+    @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
+    render turbo_stream: turbo_stream.replace('work_kinds', partial: 'work_kinds')
   end
 
   def autocomplete_for_land_place
@@ -210,7 +213,7 @@ class WorksController < ApplicationController
   end
 
   def set_work_types
-    @work_types = WorkType.indexes
+    @work_types = WorkType.by_term(@term).indexes
     @work_kinds = WorkKind.usual
   end
 
