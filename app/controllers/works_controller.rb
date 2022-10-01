@@ -98,12 +98,12 @@ class WorksController < ApplicationController
 
   def work_types
     @work_types = params[:term].present? ? WorkType.by_term(params[:term]).indexes : WorkType.indexes
-    render turbo_stream: turbo_stream.replace('work_types', partial: 'work_types')
+    render layout: false, partial: 'work_types', content_type: 'text/vnd.turbo-stream.html'
   end
 
   def work_kinds
     @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
-    render turbo_stream: turbo_stream.replace('work_kinds', partial: 'work_kinds')
+    render layout: false, partial: 'work_kinds', content_type: 'text/vnd.turbo-stream.html'
   end
 
   def autocomplete_for_land_place
