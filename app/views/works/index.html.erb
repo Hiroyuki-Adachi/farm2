@@ -23,13 +23,13 @@
   <div class="col-md-3">
     <div class="input-group">
       <label for="work_type_id" class="h5 form-label">分類</label>
-      <%= render 'work_types' %>
+      <%= select_tag(:work_type_id, nil, {include_blank: true, class: "form-select"}) %>
     </div>
   </div>
   <div class="col-md-4">
     <div class="input-group">
-      <label for="work_work_kind_id" class="h5 form-label">種別</label>
-      <%= render 'work_kinds' %>
+      <label for="work_kind_id" class="h5 form-label">種別</label>
+      <%= select_tag(:work_kind_id, nil, {include_blank: true, class: "form-select"}) %>
     </div>
   </div>
   <div class="col-md-2">

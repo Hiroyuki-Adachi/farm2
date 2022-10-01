@@ -1,3 +1,4 @@
-<%= turbo_frame_tag 'work_kinds' do %>
-  <%= select_tag(:work_kind_id, options_from_collection_for_select(@work_kinds, :id, :name, @work_kind_id), {id: "work_work_kind_id", include_blank: true, class: "form-select"}) %>
+<%= turbo_stream.update 'work_kind_id' do %>
+  <option value=""></option>
+  <%= options_from_collection_for_select(@work_kinds, :id, :name, @work_kind_id) %>
 <% end %>
