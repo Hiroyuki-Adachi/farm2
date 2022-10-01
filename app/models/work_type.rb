@@ -68,8 +68,8 @@ SQL
     genre_name + "(#{name})"
   end
 
-  def bg_color(term = nil)
-    return work_type_terms.find_by(term: term || @term)&.bg_color || self.bg_color
+  def bg_color_term(term)
+    return work_type_terms.find_by(term: term)&.bg_color || self.bg_color
   end
 
   def fg_color
