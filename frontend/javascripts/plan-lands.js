@@ -92,6 +92,6 @@ window.addEventListener('turbo:load', () => {
             clickWorkType(this.dataset.id);
         });
     });
-});
 
-google.maps.event.addDomListener(window, 'load', initMap);
+    initMap();
+});

@@ -1,16 +1,3 @@
-<style>
-@media print {
-  html, body {
-    width: 420mm;
-    height: 297mm;
-  }
-  h1 {display: none;}
-  #map div > img {
-    position: absolute;
-  }
-  .btn-toolbar {display: none;}
-}
-</style>
 <h1>作付計画</h1>
 <div class="row">
   <div class="col-md-12">
@@ -49,17 +36,32 @@
     <div class="btn-group mr-2">
       <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: "window.print();" %>
     </div>
+    <% if @current_date == Date.today %>
     <div class="btn-group mr-2">
       <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
     </div>
     <div class="btn-group mr-2">
       <%= link_to '初期化', plans_land_path(0), {data: {turbo_confirm: "本当に初期化してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
     </div>
+    <% end %>
     <div class="btn-group mr-2">
       <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
     </div>
   </div>
 <% end %>
 <% content_for :head do %>
+<style>
+@media print {
+  html, body {
+    width: 420mm;
+    height: 297mm;
+  }
+  h1 {display: none;}
+  #map div > img {
+    position: absolute;
+  }
+  .btn-toolbar {display: none;}
+}
+</style>
 <%= javascript_pack_tag 'plan-lands', 'data-turbo-track': 'reload', defer: true %>
 <% end %>
