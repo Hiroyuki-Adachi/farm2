@@ -99,7 +99,7 @@ class WorksController < ApplicationController
   end
 
   def work_kinds
-    @work_kind_id = params[:work_type_id]
+    @work_kind_id = params[:work_kind_id]
     @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
     render layout: false, partial: 'work_kinds', content_type: 'text/vnd.turbo-stream.html'
   end
