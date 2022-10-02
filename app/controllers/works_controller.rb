@@ -25,19 +25,15 @@ class WorksController < ApplicationController
     @sum_hours = sum_hours(@term)
     @count_workers = count_workers(@term)
     set_pager
-    if request.xhr?
-      respond_to do |format|
+    respond_to do |format|
+      format.turbo_stream do
         @works = WorkDecorator.decorate_collection(@works.page(@page))
-        format.js
       end
-    else
-      respond_to do |format|
-        format.html do
-          @works = WorkDecorator.decorate_collection(@works.page(@page))
-        end
-        format.csv do
-          render :content_type => 'text/csv; charset=cp943'
-        end
+      format.html do
+        @works = WorkDecorator.decorate_collection(@works.page(@page))
+      end
+      format.csv do
+        render :content_type => 'text/csv; charset=cp943'
       end
     end
   end
@@ -97,11 +93,13 @@ class WorksController < ApplicationController
   end
 
   def work_types
+    @work_type_id = params[:work_type_id]
     @work_types = params[:term].present? ? WorkType.by_term(params[:term]).indexes : WorkType.indexes
     render layout: false, partial: 'work_types', content_type: 'text/vnd.turbo-stream.html'
   end
 
   def work_kinds
+    @work_kind_id = params[:work_type_id]
     @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
     render layout: false, partial: 'work_kinds', content_type: 'text/vnd.turbo-stream.html'
   end

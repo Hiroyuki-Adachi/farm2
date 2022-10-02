@@ -1,4 +1,4 @@
-<%= form_with url: works_path, method: :get, id: :search_form do |f| %>
+<%= form_with url: works_path, method: :get, data: {turbo_frame: :list}, id: :search_form do |f| %>
 <div class="row">
   <div class="col-md-3">
      <h1>作業一覧</h1>
