@@ -19,6 +19,10 @@
     <%= f.label :bg_color, class: "col-form-label-lg form-label" %>
     <%= f.color_field(:bg_color, {class: "form-control"}) %>
   </div>
+  <div class="field mb-3 col-md-2">
+    <%= f.check_box(:term_flag, {class: "form-check-input"}, true, false) %>
+    <%= f.label :term_flag, class: "form-check-label" %>
+  </div>
 </div>
 <div class="row">
   <div class="field mb-3 col-md-2">
