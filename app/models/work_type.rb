@@ -47,6 +47,7 @@ SQL
   }
 
   attr_accessor :term
+  attr_accessor :term_flag
 
   def genre_id
     Rails.cache.fetch("genre_id_#{self[:genre]}", expires_in: 1.hour) do
@@ -94,12 +95,13 @@ SQL
   end
 
   def save_work_type_term
-    term = WorkTypeTerm.find_by(term: @term, work_type_id: self.id)
-    if term
-      term.bg_color = self.bg_color
+    work_term = WorkTypeTerm.find_by(term: @term, work_type_id: self.id)
+    if @term_flag
+      work_term = WorkTypeTerm.new(term: @term, work_type_id: self.id) unless work_term
+      work_term.bg_color = self.bg_color
+      work_term.save!
     else
-      term = WorkTypeTerm.new(term: @term, work_type_id: self.id, bg_color: self.bg_color)
+      work_term.destroy if work_term
     end
-    term.save!
   end
 end
