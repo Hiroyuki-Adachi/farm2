@@ -74,18 +74,11 @@ SQL
   end
 
   def fg_color
-    rgb = {r: 255, g: 255, b: 255 }
-    lum = 135
-  
-    if self.bg_color[0, 1] == '#' && self.bg_color.length == 7
-      rgb[:r] = self.bg_color[1, 2].to_i(16)
-      rgb[:g] = self.bg_color[3, 2].to_i(16)
-      rgb[:b] = self.bg_color[5, 2].to_i(16)
-    end
+    return WorkType.to_fg_color(self.bg_color)
+  end
 
-    yuv = 0.299 * rgb[:r] + 0.587 * rgb[:g] + 0.114 * rgb[:b];
-  
-    return yuv >= lum ? 'black' : 'white'
+  def fg_color_term(term)
+    return WorkType.to_fg_color(self.bg_color_term(term))
   end
 
   private
@@ -103,5 +96,20 @@ SQL
     else
       work_term.destroy if work_term
     end
+  end
+
+  def self.to_fg_color(bg_color)
+    rgb = {r: 255, g: 255, b: 255 }
+    lum = 135
+  
+    if bg_color[0, 1] == '#' && bg_color.length == 7
+      rgb[:r] = bg_color[1, 2].to_i(16)
+      rgb[:g] = bg_color[3, 2].to_i(16)
+      rgb[:b] = bg_color[5, 2].to_i(16)
+    end
+
+    yuv = 0.299 * rgb[:r] + 0.587 * rgb[:g] + 0.114 * rgb[:b];
+  
+    return yuv >= lum ? 'black' : 'white'
   end
 end

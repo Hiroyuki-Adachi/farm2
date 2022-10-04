@@ -64,4 +64,8 @@ class Organization < ApplicationRecord
   def get_system(date)
     System.get_system(date, self.id)
   end
+
+  def get_term(date)
+    get_system(date).term
+  end
 end
