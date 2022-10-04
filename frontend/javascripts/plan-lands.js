@@ -79,8 +79,11 @@ function dispSum() {
   });
   let sumArea = new Decimal(0);
   Object.keys(landAreas).forEach(function(key) {
-    document.getElementById("land_area_" + key).innerText = landAreas[key].toFixed(1);
-    sumArea = sumArea.plus(landAreas[key]);
+    const landArea = document.getElementById(`land_area_${key}`);
+    if (landArea != null) {
+      landArea.innerText = landAreas[key].toFixed(1);
+      sumArea = sumArea.plus(landAreas[key]);
+    }
   });
 
   document.getElementById("land_area_sum").innerText = sumArea.toFixed(1);
