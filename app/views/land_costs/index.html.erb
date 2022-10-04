@@ -47,12 +47,15 @@
     </div>
   </div>
 <% end %>
-<%= hidden_field_tag :colors, @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>
+<%= hidden_field_tag :bg_colors, @work_types.map {|work_type| [work_type.id, work_type.bg_color_term(current_term)] }.to_h.to_json %>
+<%= hidden_field_tag :fg_colors, @work_types.map {|work_type| [work_type.id, work_type.fg_color_term(current_term)] }.to_h.to_json %>
 <% content_for :head do %>
 <script>
-let colors = null;
+let bgColors = null;
+let fgColors = null;
 document.addEventListener('turbo:load', () => {
-    colors = JSON.parse(document.getElementById("colors").value);
+    bgColors = JSON.parse(document.getElementById("bg_colors").value);
+    fgColors = JSON.parse(document.getElementById("fg_colors").value);
     allWorktypesSelect();
 
     $("input[type='radio'][id^='land_place']").bind("ajax:complete", function(xhr, response, status) {
@@ -70,7 +73,8 @@ function allWorktypesSelect() {
 }
 
 function worktypeSelect(element) {
-    element.closest("tr").style.backgroundColor = colors[element.value];
+    element.closest("tr").style.backgroundColor = bgColors[element.value];
+    element.closest("tr").style.color = fgColors[element.value];
 }
 </script>
 <% end %>
