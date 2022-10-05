@@ -13,14 +13,9 @@ class LandCostsController < ApplicationController
     @land_place_id = (params[:land_place_id] || @land_places.first.id).to_i
     @lands = Land.where(land_place_id: @land_place_id).usual
     @costs = LandCost.usual(@lands, Time.zone.today)
-    if request.xhr?
-      respond_to do |format|
-        format.js
-      end
-    else
-      respond_to do |format|
-        format.html
-      end
+    respond_to do |format|
+      format.turbo_stream
+      format.html
     end
   end
 
