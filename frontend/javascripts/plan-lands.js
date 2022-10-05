@@ -19,7 +19,7 @@ function initMap(){
 
   const workTypes = {};
   Array.from(document.getElementById("work_types").getElementsByTagName("input")).forEach(function(workType) {
-    workTypes[workType.dataset.id] = workType.dataset.color;
+    workTypes[workType.dataset.id] = workType.dataset.bgColor;
   });
 
   const landRegions = {};
@@ -42,8 +42,8 @@ function initMap(){
 
     landRegions[land.dataset.id].addListener("click", function(arg) {
       this.setOptions({
-        strokeColor: selectedWorkType.dataset.color,
-        fillColor: selectedWorkType.dataset.color
+        strokeColor: selectedWorkType.dataset.bgColor,
+        fillColor: selectedWorkType.dataset.bgColor
       });
       document.getElementById("land_" + this.landId).value = selectedWorkType.dataset.id;
       dispSum();
@@ -65,7 +65,8 @@ function initMap(){
 function clickWorkType(workTypeId) {
   selectedWorkType = document.getElementById("work_type_" + workTypeId);
   const workTypeName = document.getElementById("work_type_name");
-  workTypeName.style.backgroundColor = selectedWorkType.dataset.color;
+  workTypeName.style.backgroundColor = selectedWorkType.dataset.bgColor;
+  workTypeName.style.color = selectedWorkType.dataset.fgColor;
   workTypeName.innerText = selectedWorkType.value;
 }
 

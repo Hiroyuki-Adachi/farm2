@@ -29,7 +29,7 @@
   </div>
   <div id="work_types">
     <% @work_types.each do |work_type| %>
-      <%= hidden_field_tag "work_type_#{work_type.id}", work_type.name, {name: nil, data: {id: work_type.id, color: work_type.bg_color}} %>
+      <%= hidden_field_tag "work_type_#{work_type.id}", work_type.name, {name: nil, data: {id: work_type.id, bg_color: work_type.bg_color_term(current_term), fg_color: work_type.fg_color_term(current_term)}} %>
     <% end %>
   </div>
   <div id="btn_toolbar" class="btn-toolbar">
