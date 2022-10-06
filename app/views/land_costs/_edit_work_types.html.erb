@@ -1,0 +1,6 @@
+<% @work_types.each do |work_type| %>
+  <div class="form-check form-check-inline">
+    <%= lcf.radio_button :work_type_id, work_type.id, {id: "work_type_#{lcf.index}_#{work_type.id}", class: "form-check-input", onclick: "worktype_select(this)"} %>
+    <%= label_tag "work_type_#{lcf.index}_#{work_type.id}", work_type.name, {class: "form-check-label form-label"} %>
+  </div>
+<% end %>

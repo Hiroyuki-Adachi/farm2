@@ -70,5 +70,6 @@ window.addEventListener('turbo:load', () => {
     document.getElementById("target").addEventListener("change", function() {
         location.href = target.dataset.url + "?target=" + this.value;
     });
+
+    initMap();
 });
-google.maps.event.addDomListener(window, 'load', initMap);
