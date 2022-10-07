@@ -42,6 +42,4 @@ function initMap(){
     });
 }
 
-window.addEventListener("turbo:load", () => {
-    initMap();
-});
+document.addEventListener('DOMContentLoaded', initMap);
