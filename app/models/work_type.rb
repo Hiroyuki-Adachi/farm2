@@ -73,12 +73,20 @@ SQL
     return work_type_terms.find_by(term: term)&.bg_color || self.bg_color
   end
 
+  def bg_color_date(organization, date)
+    return bg_color_term(organization.get_term(date))
+  end
+
   def fg_color
     return WorkType.to_fg_color(self.bg_color)
   end
 
   def fg_color_term(term)
     return WorkType.to_fg_color(self.bg_color_term(term))
+  end
+
+  def fg_color_date(organization, date)
+    return fg_color_term(organization.get_term(date))
   end
 
   private
