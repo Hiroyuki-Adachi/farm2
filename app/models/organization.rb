@@ -66,6 +66,6 @@ class Organization < ApplicationRecord
   end
 
   def get_term(date)
-    get_system(date).term
+    get_system(date || Date.today)&.term
   end
 end

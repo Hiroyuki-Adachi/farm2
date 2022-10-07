@@ -43,7 +43,7 @@
           <td><%= lcf.date_field :activated_on, {class: "form-control"} %></td>
           <td>
             <%= turbo_frame_tag 'work_types' do %>
-              <%= render partial: 'edit_work_types', locals: {lcf: lcf} %>
+              <%= render partial: 'edit_work_types', locals: {lcf: lcf, activate_date: lcf.object.activated_on} %>
             <% end %>
           </td>
           <td>
@@ -63,14 +63,18 @@
     </div>
   </div>
 <% end %>
-<%= hidden_field_tag :work_colors, @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>
 <% content_for :head do %>
 <script>
 window.addEventListener('turbo:load', () => {
-    const colors = JSON.parse(document.getElementById("work_colors").value);
     document.querySelectorAll("input[type='radio'][id^='work_type']:checked").forEach((element) => {
-        element.closest("tr").style.backgroundColor = colors[element.value];
+        element.closest("tr").style.backgroundColor = element.dataset.bgColor;
+        element.closest("tr").style.color = element.dataset.fgColor;
     });
 });
+
+window.selectWorktype = (element) => {
+    element.closest("tr").style.backgroundColor = element.dataset.bgColor;
+    element.closest("tr").style.color = element.dataset.fgColor;
+};
 </script>
 <% end %>
