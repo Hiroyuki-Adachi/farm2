@@ -41,7 +41,7 @@ class LandCostsController < ApplicationController
 
   def update
     if @land.update(land_params(params))
-      redirect_to land_costs_path(land_place_id: @land.land_place)
+      redirect_to land_costs_path(land_place_id: @land.land_place, format: :html)
     else
       render action: :edit
     end

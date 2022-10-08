@@ -40,10 +40,10 @@
         <%= lf.fields_for :land_costs do |lcf| %>
         <tr>
           <td><%= lcf.check_box :_destroy %></td>
-          <td><%= lcf.date_field :activated_on, {class: "form-control"} %></td>
+          <td><%= lcf.date_field :activated_on, {class: "form-control", data: {index: lcf.index}} %></td>
           <td>
             <%= turbo_frame_tag 'work_types' do %>
-              <%= render partial: 'edit_work_types', locals: {lcf: lcf, activate_date: lcf.object.activated_on} %>
+              <%= render partial: 'edit_work_types', locals: {data_index: lcf.index, activate_date: lcf.object.activated_on, work_type_id: lcf.object.work_type_id} %>
             <% end %>
           </td>
           <td>
