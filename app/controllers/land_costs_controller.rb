@@ -53,6 +53,13 @@ class LandCostsController < ApplicationController
     @work_types = WorkType.land.by_term(current_organization.get_term(@target))
   end
 
+  def work_types
+    render turbo_stream: turbo_stream.replace(
+      "work_types_#{params[:index]}", partial: 'work_types', 
+        locals: {data_index: params[:index], activate_date: params[:date], work_type_id: params[:work_type_id]
+      })
+  end
+
   private
 
   def set_work_types
