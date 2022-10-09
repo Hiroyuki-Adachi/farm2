@@ -20,4 +20,6 @@ function initMap(){
     });
 }
 
-google.maps.event.addDomListener(window, 'load', initMap);
+window.addEventListener('turbo:load', () => {
+  initMap();
+});

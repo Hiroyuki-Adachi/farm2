@@ -6,6 +6,7 @@ class WorkTypesController < ApplicationController
 
   def index
     @work_types = WorkTypeDecorator.decorate_collection(WorkType.indexes)
+    @work_type_terms = WorkTypeTerm.where(work_type_id: @work_types.object.ids, term: current_term).pluck(:work_type_id)
   end
 
   def new
@@ -56,6 +57,7 @@ class WorkTypesController < ApplicationController
 
   def set_work_type
     @work_type = WorkType.find(params[:id])
+    @work_type.term_flag = WorkTypeTerm.exists?(term: current_term, work_type_id: @work_type.id)
   end
 
   def set_category
@@ -71,8 +73,10 @@ class WorkTypesController < ApplicationController
       :land_flag,
       :cost_flag,
       :work_flag,
-      :icon
+      :icon,
+      :term_flag
     )
+    .merge(term: current_term)
   end
 
   def permit_manager

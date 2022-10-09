@@ -6,7 +6,7 @@
   <title>作業日報管理システム(V2)</title>
   <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
   <%= stylesheet_pack_tag 'application' %>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" defer="defer" async="async" data-turbolinks-eval="false"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>" defer="defer" data-turbolinks-eval="false"></script>
   <%= javascript_pack_tag 'work-map', 'data-turbo-track': 'reload' %>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
@@ -20,6 +20,11 @@
   <div class="row">
     <div class="col-md-12">
       <div id="map" class="ratio ratio-16x9"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2 id="land_info"></h2>
     </div>
   </div>
 </div>

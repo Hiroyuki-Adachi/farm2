@@ -21,7 +21,7 @@
 <% if session[:user_id] %>
 <%= render 'navbar' %>
 <% end %>
-<div class="container-fluid">
+<main class="container-fluid">
 <% if session[:user_id] %>
   <div class="row">
     <div id="my_side_wrapper" class="col-md-2 bg-info collapse show">
@@ -39,7 +39,7 @@
     </div>
   </div>
 <% end %>
-</div>
+</main>
 <input type="hidden" id="current_controller" value="<%= menu_name %>">
 <input type="hidden" id="current_action" value="<%= controller.action_name %>">
 <%= render 'application/popup' %>
