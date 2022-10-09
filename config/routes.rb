@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   resources :land_costs, param: "land_id", only: [:index, :create, :edit, :update] do
     collection do
       get :map
+      get :work_types
     end
   end
 
