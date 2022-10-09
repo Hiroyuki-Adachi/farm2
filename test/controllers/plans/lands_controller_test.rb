@@ -7,8 +7,10 @@ class Plans::LandsControllerTest < ActionController::TestCase
   end
 
   test "作付計画(表示)" do
+    travel_to(Date.new(2015, 1, 1))
     get :new
     assert_response :success
+    travel_back
   end
 
   test "作付計画(表示)(管理者以外)" do

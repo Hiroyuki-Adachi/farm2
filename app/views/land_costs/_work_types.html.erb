@@ -1,0 +1,13 @@
+<%= turbo_frame_tag "work_types_#{data_index}" do %>
+  <% WorkType.land.by_term(current_organization.get_term(activate_date)).each do |work_type| %>
+    <div class="form-check form-check-inline">
+      <%= radio_button_tag "land[land_costs_attributes][#{data_index}][work_type_id]", work_type.id, work_type_id == work_type.id, {
+        id: "work_type_#{data_index}_#{work_type.id}", class: "form-check-input", onclick: "selectWorktype(this)",
+        data: {bg_color: work_type.bg_color_date(current_organization, activate_date),
+          fg_color: work_type.fg_color_date(current_organization, activate_date)
+        }
+        } %>
+      <%= label_tag "work_type_#{data_index}_#{work_type.id}", work_type.name, {class: "form-check-label form-label"} %>
+    </div>
+  <% end %>
+<% end %>

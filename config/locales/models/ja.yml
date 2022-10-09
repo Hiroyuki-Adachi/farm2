@@ -124,6 +124,7 @@ ja:
         work_flag: "日報表示"
         map_flag: "地図表示"
         icon: "アイコン"
+        term_flag: "今年度使用する"
 
       worker: 
         family_phonetic: "姓(ふりがな)"  #g

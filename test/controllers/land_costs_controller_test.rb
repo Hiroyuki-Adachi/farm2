@@ -67,14 +67,14 @@ class LandCostsControllerTest < ActionController::TestCase
     assert_difference('LandCost.count') do
       patch :update, params: {land_id: lands(:land_land_cost1), land: @land_update}
     end
-    assert_redirected_to land_costs_path
+    assert_redirected_to land_costs_path(format: :html)
   end
 
   test "土地原価履歴(更新:削除)" do
     assert_difference('LandCost.count', -1) do
       patch :update, params: {land_id: lands(:land_land_cost1), land: @land_delete}
     end
-    assert_redirected_to land_costs_path
+    assert_redirected_to land_costs_path(format: :html)
   end
 
   test "土地原価管理(地図)" do
