@@ -7,11 +7,8 @@
         <%= radio_button_tag :land_place_id, land_place.id, land_place.id == @land_place_id, {
           id: "land_place_#{land_place.id}", class: "form-check-input",
           data: {
-            url: land_costs_path(land_place_id: land_place.id),
-            method: :get,
-            remote: true
-          },
-          onclick: "$('#land_place_id').val(" + land_place.id.to_s + ")"
+            url: land_costs_path(land_place_id: land_place.id)
+          }
         } %>
         <%= label_tag "land_place_#{land_place.id}", land_place.name, {class: "form-check-label"} %>
       </div>        
@@ -20,19 +17,9 @@
 </div>
 <%= form_with url: land_costs_path, method: :post do |f|  %>
   <div id="table_wrapper" class="wrapper small float-head-wrapper">
-    <table id="tbl_list" class="table table-sm float-head">
-      <thead>
-        <tr>
-          <th>番地</th>
-          <th class="text-nowrap">面積</th>
-          <th>作付</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="list">
-        <%= render partial: "list" %>
-      </tbody>
-    </table>
+    <%= turbo_frame_tag 'list' do %>
+      <%= render partial: "list" %>
+    <% end %>
   </div>
   <%= hidden_field_tag :land_place_id, params[:land_place_id] %>
   <div id="btn_toolbar" class="btn-toolbar">
@@ -47,7 +34,9 @@
     </div>
   </div>
 <% end %>
-<%= hidden_field_tag :colors, @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>
+<%= hidden_field_tag :colors, @work_types.map { |work_type|
+    [work_type.id, {bg: work_type.bg_color_term(current_term), fg: work_type.fg_color_term(current_term)}]
+  }.to_h.to_json %>
 <% content_for :head do %>
 <script>
 let colors = null;
@@ -55,22 +44,26 @@ document.addEventListener('turbo:load', () => {
     colors = JSON.parse(document.getElementById("colors").value);
     allWorktypesSelect();
 
-    $("input[type='radio'][id^='land_place']").bind("ajax:complete", function(xhr, response, status) {
-        if(status == "success"){
-            $('#land_place_id').val($(this).val());
+    document.querySelectorAll("input[type='radio'][id^='land_place']").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            Turbo.visit(event.target.dataset.url);
             allWorktypesSelect();
-        }
+        });
     });
 });
 
 function allWorktypesSelect() {
     document.querySelectorAll("input[type='radio'][id^='work_type']:checked").forEach((element) => {
-        worktypeSelect(element);
+        element.closest("tr").style.backgroundColor = colors[element.value].bg;
+        element.closest("tr").style.color = colors[element.value].fg;
     });
 }
 
 function worktypeSelect(element) {
-    element.closest("tr").style.backgroundColor = colors[element.value];
+    element.closest("tr").style.backgroundColor = colors[element.value].bg;
+    element.closest("tr").style.color = colors[element.value].fg;
 }
+
+window.worktypeSelect = worktypeSelect;
 </script>
 <% end %>

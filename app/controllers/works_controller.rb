@@ -12,9 +12,9 @@ class WorksController < ApplicationController
   before_action :permit_not_visitor, except: [:index, :show]
   before_action :permit_checkable_or_self, only: [:edit, :update, :destroy]
   before_action :permit_visitor, only: :show
+  before_action :set_term, only: :index
   before_action :set_work_types, only: :index
   before_action :permit_this_term, only: [:edit, :update, :destroy]
-  before_action :set_term, only: :index
 
   helper GmapHelper
 
@@ -25,19 +25,15 @@ class WorksController < ApplicationController
     @sum_hours = sum_hours(@term)
     @count_workers = count_workers(@term)
     set_pager
-    if request.xhr?
-      respond_to do |format|
+    respond_to do |format|
+      format.turbo_stream do
         @works = WorkDecorator.decorate_collection(@works.page(@page))
-        format.js
       end
-    else
-      respond_to do |format|
-        format.html do
-          @works = WorkDecorator.decorate_collection(@works.page(@page))
-        end
-        format.csv do
-          render :content_type => 'text/csv; charset=cp943'
-        end
+      format.html do
+        @works = WorkDecorator.decorate_collection(@works.page(@page))
+      end
+      format.csv do
+        render :content_type => 'text/csv; charset=cp943'
       end
     end
   end
@@ -72,13 +68,6 @@ class WorksController < ApplicationController
     end
   end
 
-  def work_type_select
-    @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
-    respond_to do |format|
-      format.js {render action: :work_type_select}
-    end
-  end
-
   def edit
     @work_kinds = WorkKind.by_type(@work.work_type) || []
   end
@@ -101,6 +90,18 @@ class WorksController < ApplicationController
   def destroy
     @work.destroy
     redirect_to works_path, status: :see_other
+  end
+
+  def work_types
+    @work_type_id = params[:work_type_id]
+    @work_types = params[:term].present? ? WorkType.by_term(params[:term]).indexes : WorkType.indexes
+    render layout: false, partial: 'work_types', content_type: 'text/vnd.turbo-stream.html'
+  end
+
+  def work_kinds
+    @work_kind_id = params[:work_kind_id]
+    @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
+    render layout: false, partial: 'work_kinds', content_type: 'text/vnd.turbo-stream.html'
   end
 
   def autocomplete_for_land_place
@@ -210,7 +211,7 @@ class WorksController < ApplicationController
   end
 
   def set_work_types
-    @work_types = WorkType.indexes
+    @work_types = WorkType.by_term(@term).indexes
     @work_kinds = WorkKind.usual
   end
 

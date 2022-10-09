@@ -126,4 +126,6 @@ function popupModal(action, callback) {
   });
 }
 
-google.maps.event.addDomListener(window, 'load', initMap);
+window.addEventListener('turbo:load', () => {
+  initMap();
+});

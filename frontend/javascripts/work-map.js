@@ -42,4 +42,4 @@ function initMap(){
     });
 }
 
-google.maps.event.addDomListener(window, 'load', initMap);
+document.addEventListener('DOMContentLoaded', initMap);
