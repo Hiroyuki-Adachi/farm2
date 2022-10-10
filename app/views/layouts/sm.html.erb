@@ -12,7 +12,7 @@
 </head>
 <% token = params[:token] || params[:personal_information_token] %>
 <body style="padding-top:64px;">
-<div class="container-fluid">
+<main class="container-fluid">
 <div id="site-header">
 <nav class="navbar navbar-dark bg-success fixed-top" role="navigation">
   <%= link_to "作業日報(#{current_name})", personal_information_path(token: token), {class: "navbar-brand"} %>
@@ -94,19 +94,19 @@
 </nav>
 </div>
 <%= yield %>
-</div>
+</main>
 <script>
 var startPos = 0,winScrollTop = 0;
-$(function() {
-  $(window).on('scroll',function(){
-      winScrollTop = $(this).scrollTop();
-      if (winScrollTop >= startPos) {
-          $('#site-header').hide("slow");
-      } else {
-          $('#site-header').show("slow");
-      }
-      startPos = winScrollTop;
-  });
+window.addEventListener('turbo:load', () => {
+    $(window).on('scroll',function(){
+        winScrollTop = $(this).scrollTop();
+        if (winScrollTop >= startPos) {
+            $('#site-header').hide("slow");
+        } else {
+            $('#site-header').show("slow");
+        }
+        startPos = winScrollTop;
+    });
 });
 </script>
 </body>

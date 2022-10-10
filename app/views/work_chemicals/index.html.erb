@@ -53,7 +53,7 @@
 </div>
 <% content_for :head do %>
 <script>
-$(function() {
+window.addEventListener('turbo:load', () => {
     $(".chemical-total").click(function() {
         var s = $(".detail[data-chemical='" + $(this).data("chemical") + "']");
         if(s.is(":visible")) {

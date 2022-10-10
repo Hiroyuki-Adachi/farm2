@@ -46,6 +46,6 @@ function initMap(){
     });
 }
   
-window.addEventListener('load', (event) => {
-    initMap();
+window.addEventListener('turbo:load', () => {
+  initMap();
 });

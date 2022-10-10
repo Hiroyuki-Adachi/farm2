@@ -1,5 +1,5 @@
 <h1>薬剤原価登録</h1>
-<%= form_with url: chemical_costs_path, method: :post do |f|  %>
+<%= form_with url: chemical_costs_path, method: :post, id: :chemical_cost_form do |f|  %>
 <div class="row">
   <div id="table_wrapper" class="wrapper small float-head-wrapper" style="height: calc(100vh - 200px)">
     <table id="tbl_list" class="table table-sm float-head">
@@ -49,36 +49,42 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
+<%= hidden_field_tag :import_url, import_chemical_costs_path %>
 <% end %>
 <% content_for :head do %>
 <script>
-$(function() {
-    $(".zero-gray").change(function() {
-        if($(this).prop('value') == 0) {
-            $(this).css({
-              color: "gainsboro",
-              "background-color": "white"
-            });
-        } else {
-            $(this).css({
-              color: "black",
-              "background-color": "yellow"
-            });
-        }
+document.addEventListener('turbo:load', () => {
+    Array.from(document.getElementsByClassName("zero-gray")).forEach((element) => {
+        element.addEventListener("change", (event) => {
+            if(parseInt(event.target.value) == 0) {
+                event.target.style.color = "gainsboro";
+                event.target.style.backgroundColor = "white";
+            } else {
+                event.target.style.color = "black";
+                event.target.style.backgroundColor = "yellow";
+            }
+        });
+    });
+
+    document.getElementById("chemical_cost_form").addEventListener("submit", (event) => {
+        loading.disp("更新中");
     });
 });
 
 function execImport() {
     if(popupConfirm("単価を上書きしてもよろしいですか？", function(result) {
         if(result) {
-            $.get("<%= import_chemical_costs_path %>", function(data) {
-                for(chemical_id in data) {
-                    $("[data-chemical=" + chemical_id + "]").val(data[chemical_id]);
+            fetch(document.getElementById("import_url").value)
+            .then((res) => {
+                res.json();
+            })
+            .then((json) => {
+                for(chemicalId in data) {
+                  document.querySelector(`[data-chemical=${chemicalId}]`).value = data[chemicalId];
                 }
             });
         }
     }));
 }
-
 </script>
 <% end %>

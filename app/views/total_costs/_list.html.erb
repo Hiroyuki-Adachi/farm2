@@ -114,7 +114,7 @@
 </div>
 <% content_for :head do %>
 <script>
-$(function() {
+document.addEventListener('turbo:load', () => {
     $(".group1-total").click(function() {
         var s = $(".group2-total[data-group1='" + $(this).data("group1") + "']");
         if(s.is(":visible")) {

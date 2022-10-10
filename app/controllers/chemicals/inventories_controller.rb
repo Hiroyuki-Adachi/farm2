@@ -15,7 +15,7 @@ class Chemicals::InventoriesController < ApplicationController
     if @inventory.save
       redirect_to edit_chemicals_inventory_path(@inventory)
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -27,13 +27,13 @@ class Chemicals::InventoriesController < ApplicationController
     if @inventory.update(inventory_params)
       redirect_to edit_chemicals_inventory_path(@inventory)
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @inventory.destroy
-    redirect_to chemicals_inventories_path
+    redirect_to chemicals_inventories_path, status: :see_other
   end
 
   private

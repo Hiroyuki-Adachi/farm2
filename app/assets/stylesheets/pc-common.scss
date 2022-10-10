@@ -63,6 +63,10 @@ div.form-check-inline input[type='checkbox']:checked + label {
   font-weight: bold;
 }
 
+div.form-check-inline input[type='radio']:checked + label {
+  font-weight: bold;
+}
+
 table.float-head {
 	position: relative;
 }

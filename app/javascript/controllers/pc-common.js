@@ -1,5 +1,5 @@
 import { Modal, Collapse } from "bootstrap";
-import Rails from "@rails/ujs";
+
 window.popupAlert = (message) => {
     document.getElementById("popup_alert_message").innerText = message;
     const popupForm = new Modal(document.getElementById("popup_alert"));
@@ -20,23 +20,43 @@ window.popupConfirm = (message, callback) => {
     popupForm.show();
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-    const mySideCollapse = new Collapse(document.getElementById("my_side_wrapper"), {toggle: false});
-
-    // for sidebar
-    const controller = document.getElementById("current_controller").value;
-    const action = document.getElementById("current_action").value;
-
-    if(controller != "menu" || action != "index") {
-        document.getElementById("my_sidebar").querySelectorAll("a[data-controller]").forEach((element) => {
-            if(element.dataset.controller == controller) {
-                if(document.getElementById("my_sidebar").querySelectorAll(`a[data-controller="${controller}"]`).length <= 1) {
-                    activeBar(element);
-                } else if(JSON.parse(element.dataset.actions).indexOf(action) >= 0) {
-                    activeBar(element);
-                }
-            }
+Turbo.setConfirmMethod((message, element) => {
+    document.getElementById("popup_confirm_message").innerText = message;
+    const popupForm = new Modal(document.getElementById("popup_confirm"));
+    popupForm.show();
+  
+    return new Promise((resolve, reject) => {
+        popupForm._element.querySelectorAll(".confirm-button").forEach((button) => {
+            button.addEventListener("click", () => {
+                resolve(button.value == "true");
+                popupForm.hide();
+            }, {once: true});
         });
+    });
+});
+
+document.addEventListener('turbo:load', () => {
+    // for sidebar
+    const currentController = document.getElementById("current_controller");
+    const currentAction = document.getElementById("current_action");
+    const myMenu = document.getElementById("menu_dropdown");
+    const mySidebar = document.getElementById("my_sidebar");
+
+    if (currentController != null || currentAction != null) {
+        const controllerValue = currentController.value;
+        const actionValue = currentAction.value;
+    
+        if(mySidebar != null && (controllerValue != "menu" || actionValue != "index")) {
+            mySidebar.querySelectorAll("a[data-controller]").forEach((element) => {
+                if(element.dataset.controller == controllerValue) {
+                    if(mySidebar.querySelectorAll(`a[data-controller="${controllerValue}"]`).length <= 1) {
+                        activeBar(element);
+                    } else if(JSON.parse(element.dataset.actions).indexOf(actionValue) >= 0) {
+                        activeBar(element);
+                    }
+                }
+            });
+        }
     }
 
     const handleConfirm = function(event) {
@@ -67,81 +87,36 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    document.getElementById("my_side_close").addEventListener("click", () => {
-        const myContent = document.getElementById("my_content");
-        const openButton = document.getElementById("my_side_open");
-        mySideCollapse.hide();
-
-        myContent.classList.remove("col-md-10");
-        myContent.classList.add("col-md-12");
-
-        openButton.classList.remove("d-none");
-        openButton.classList.add("d-block");
-
-        sessionStorage.setItem("my_side", "hide");
-    });
-
-    document.getElementById("my_side_open").addEventListener("click", () => {
-        const myContent = document.getElementById("my_content");
-        const openButton = document.getElementById("my_side_open");
-        mySideCollapse.show();
-
-        myContent.classList.remove("col-md-12");
-        myContent.classList.add("col-md-10");
-
-        openButton.classList.remove("d-block");
-        openButton.classList.add("d-none");
-
-        sessionStorage.setItem("my_side", "show");
-    });
-
-    if (sessionStorage.getItem("my_side") == "hide") {
-        const mySideWrapper = document.getElementById("my_side_wrapper");
-        const myContent = document.getElementById("my_content");
-        const openButton = document.getElementById("my_side_open");
-    
-        mySideWrapper.classList.remove("show");
-    
-        myContent.classList.remove("col-md-10");
-        myContent.classList.add("col-md-12");
-    
-        openButton.classList.remove("d-none");
-        openButton.classList.add("d-block");
-    }
-
     document.querySelectorAll("a[data-confirm], input[data-confirm], button[data-confirm]").forEach((element) => {
         element.addEventListener("click", (event) => {
             handleConfirm(event);
         })
     })
 
-    document.querySelectorAll("#navbarFarm2 a.nav-link").forEach((element) => {
-        element.addEventListener("click", () => {
-            if (sessionStorage.getItem("my_side") == "hide") {
-                const my_menu = document.getElementById("menu_dropdown");
-                my_menu.innerHTML = document.querySelector(`div[aria-labelledby="${element.id}"]`).innerHTML;
-                my_menu.querySelector("span").remove();
-                my_menu.dataset.id = element.id;
-                my_menu.style.display = "block";
+    document.querySelectorAll("#navbarFarm2 a.farm2-navi").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${event.target.id}"]`).innerHTML;
+            myMenu.querySelector("span").remove();
+            myMenu.dataset.id = event.target.id;
+            myMenu.style.display = "block";
 
-                let left = 0;
-                do {
-                    left += element.offsetLeft || 0;
-                    element = element.offsetParent;
-                } while(element);
-                my_menu.style.left = left + "px";
-            } else {
-                location.href = element.dataset.url;
-            }
+            let left = 0;
+            let elm = event.target;
+            do {
+                left += elm.offsetLeft || 0;
+                elm = elm.offsetParent;
+            } while(elm);
+            myMenu.style.left = left + "px";
+            event.stopPropagation();
         });
     });
-});
 
-window.addEventListener("click", (event) => {
-    const my_menu = document.getElementById("menu_dropdown");
-    if (!event.target.matches('.nav-link') && (my_menu != null)) {
-        my_menu.style.display = "none";
-    }
+    window.addEventListener("click", (event) => {
+        if (!event.target.matches('.nav-link') && (myMenu != null)) {
+            myMenu.style.display = "none";
+            event.stopPropagation();
+        }
+    });
 });
 
 function activeBar(element) {

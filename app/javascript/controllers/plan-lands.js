@@ -19,7 +19,7 @@ function initMap(){
 
   const workTypes = {};
   Array.from(document.getElementById("work_types").getElementsByTagName("input")).forEach(function(workType) {
-    workTypes[workType.dataset.id] = workType.dataset.color;
+    workTypes[workType.dataset.id] = workType.dataset.bgColor;
   });
 
   const landRegions = {};
@@ -42,8 +42,8 @@ function initMap(){
 
     landRegions[land.dataset.id].addListener("click", function(arg) {
       this.setOptions({
-        strokeColor: selectedWorkType.dataset.color,
-        fillColor: selectedWorkType.dataset.color
+        strokeColor: selectedWorkType.dataset.bgColor,
+        fillColor: selectedWorkType.dataset.bgColor
       });
       document.getElementById("land_" + this.landId).value = selectedWorkType.dataset.id;
       dispSum();
@@ -65,7 +65,8 @@ function initMap(){
 function clickWorkType(workTypeId) {
   selectedWorkType = document.getElementById("work_type_" + workTypeId);
   const workTypeName = document.getElementById("work_type_name");
-  workTypeName.style.backgroundColor = selectedWorkType.dataset.color;
+  workTypeName.style.backgroundColor = selectedWorkType.dataset.bgColor;
+  workTypeName.style.color = selectedWorkType.dataset.fgColor;
   workTypeName.innerText = selectedWorkType.value;
 }
 
@@ -79,19 +80,25 @@ function dispSum() {
   });
   let sumArea = new Decimal(0);
   Object.keys(landAreas).forEach(function(key) {
-    document.getElementById("land_area_" + key).innerText = landAreas[key].toFixed(1);
-    sumArea = sumArea.plus(landAreas[key]);
+    const landArea = document.getElementById(`land_area_${key}`);
+    if (landArea != null) {
+      landArea.innerText = landAreas[key].toFixed(1);
+      sumArea = sumArea.plus(landAreas[key]);
+    }
   });
 
   document.getElementById("land_area_sum").innerText = sumArea.toFixed(1);
 }
 
-window.addEventListener('load', (event) => {
-  Array.from(document.getElementsByClassName("work-type")).forEach(function(wt) {
-    wt.addEventListener('click', function() {
-      clickWorkType(this.dataset.id);
+document.addEventListener('DOMContentLoaded', loadEvent);
+document.addEventListener('turbo:load', loadEvent);
+
+function loadEvent(event) {
+    document.removeEventListener('DOMContentLoaded', loadEvent);
+    Array.from(document.getElementsByClassName("work-type")).forEach(function(wt) {
+        wt.addEventListener('click', function() {
+            clickWorkType(this.dataset.id);
+        });
     });
-  });
-  
-  initMap();
-});
+    initMap();
+}

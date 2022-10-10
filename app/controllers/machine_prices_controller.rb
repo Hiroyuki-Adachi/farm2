@@ -36,7 +36,7 @@ class MachinePricesController < ApplicationController
         redirect_to show_type_machine_price_headers_path(machine_type_id: @machine_price.machine_type_id)
       end
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -52,7 +52,7 @@ class MachinePricesController < ApplicationController
         redirect_to show_type_machine_price_headers_path(machine_type_id: @machine_price.machine_type_id)
       end
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
@@ -60,11 +60,11 @@ class MachinePricesController < ApplicationController
     if @machine_price.machine?
       machine_id = @machine_price.machine_id
       @machine_price.destroy
-      redirect_to show_machine_machine_price_headers_path(machine_id: machine_id)
+      redirect_to show_machine_machine_price_headers_path(machine_id: machine_id), status: :see_other
     else
       machine_type_id = @machine_price.machine_type_id
       @machine_price.destroy
-      redirect_to show_type_machine_price_headers_path(machine_type_id: machine_type_id)
+      redirect_to show_type_machine_price_headers_path(machine_type_id: machine_type_id), status: :see_other
     end
   end
 

@@ -48,7 +48,7 @@
 <% end %>
 <% content_for :head do %>
 <script>
-$(function() {
+window.addEventListener('turbo:load', () => {
     $(".work_select").change(function() {
         var index = $(this).data("index");
         if($(this).val() == "") {

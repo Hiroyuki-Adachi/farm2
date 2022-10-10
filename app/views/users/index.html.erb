@@ -31,7 +31,7 @@
         </td>
         <td>
           <% if worker.user %>
-            <%= link_to '削除', worker.user, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %>
+            <%= link_to '削除', worker.user, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger btn-sm"} %>
           <% end %>
         </td>
       </tr>

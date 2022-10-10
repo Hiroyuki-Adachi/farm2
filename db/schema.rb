@@ -864,6 +864,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_120508) do
     t.index ["work_id", "worker_id"], name: "index_work_results_on_work_id_and_worker_id", unique: true
   end
 
+  create_table "work_type_terms", comment: "作業分類年度別マスタ", force: :cascade do |t|
+    t.integer "term", null: false, comment: "年度(期)"
+    t.integer "work_type_id", null: false, comment: "作業分類"
+    t.string "bg_color", limit: 8, comment: "背景色"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["term", "work_type_id"], name: "work_type_terms_2nd", unique: true
+  end
+
   create_table "work_types", id: { type: :serial, comment: "作業分類マスタ" }, comment: "作業分類マスタ", force: :cascade do |t|
     t.integer "genre", null: false, comment: "作業ジャンル"
     t.string "name", limit: 10, null: false, comment: "作業分類名称"

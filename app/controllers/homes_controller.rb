@@ -19,7 +19,7 @@ class HomesController < ApplicationController
     if @home.save
       redirect_to homes_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -27,13 +27,13 @@ class HomesController < ApplicationController
     if @home.update(home_params)
       redirect_to homes_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @home.destroy
-    redirect_to homes_path
+    redirect_to homes_path, status: :see_other
   end
 
   private

@@ -84,4 +84,6 @@
     </div>
   </div>
 </div>
-<%= javascript_include_tag 'controllers/sorimachi' %>
+<% content_for :head do %>
+<%= javascript_include_tag 'controllers/sorimachi', 'data-turbo-track': 'reload' %>
+<% end %>

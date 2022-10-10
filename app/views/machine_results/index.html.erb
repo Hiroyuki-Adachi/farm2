@@ -49,7 +49,7 @@
 </div>
 <% content_for :head do %>
 <script>
-$(function() {
+window.addEventListener('turbo:load', () => {
     $(".owner-total").click(function() {
         var s = $(".detail[data-owner='" + $(this).data("owner") + "']");
         if(s.is(":visible")) {

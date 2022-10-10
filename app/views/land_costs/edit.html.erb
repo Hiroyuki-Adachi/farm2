@@ -40,14 +40,9 @@
         <%= lf.fields_for :land_costs do |lcf| %>
         <tr>
           <td><%= lcf.check_box :_destroy %></td>
-          <td><%= lcf.date_field :activated_on, {class: "form-control"} %></td>
+          <td><%= lcf.date_field :activated_on, {class: "form-control date-activated", data: {url: work_types_land_costs_path, index: lcf.index, name: "land[land_costs_attributes][#{lcf.index}][work_type_id]" }} %></td>
           <td>
-            <% @work_types.each do |work_type| %>
-              <div class="form-check form-check-inline">
-                <%= lcf.radio_button :work_type_id, work_type.id, {id: "work_type_#{lcf.index}_#{work_type.id}", class: "form-check-input", onclick: "worktype_select(this)"} %>
-                <%= label_tag "work_type_#{lcf.index}_#{work_type.id}", work_type.name, {class: "form-check-label form-label"} %>
-              </div>
-            <% end %>
+            <%= render partial: 'work_types', locals: {data_index: lcf.index, activate_date: lcf.object.activated_on, work_type_id: lcf.object.work_type_id} %>
           </td>
           <td>
             <%= lcf.hidden_field :id %>
@@ -68,16 +63,23 @@
 <% end %>
 <% content_for :head do %>
 <script>
-var colors = <%=raw @work_types.map {|work_type| [work_type.id, work_type.bg_color] }.to_h.to_json %>;
+window.addEventListener('turbo:load', () => {
+    document.querySelectorAll("input[type='radio'][id^='work_type']:checked").forEach((element) => {
+        element.closest("tr").style.backgroundColor = element.dataset.bgColor;
+        element.closest("tr").style.color = element.dataset.fgColor;
+    });
 
-$(function() {
-    $("input[type='radio'][id^='work_type']:checked").each(function() {
-        worktype_select($(this)[0]);
+    Array.from(document.getElementsByClassName("date-activated")).forEach((element) => {
+        element.addEventListener("blur", (event) => {
+            const work_type_id = document.querySelector(`input[name="${event.target.dataset.name}"]:checked`).value;
+            Turbo.visit(`${event.target.dataset.url}?date=${event.target.value}&index=${event.target.dataset.index}&work_type_id=${work_type_id}`);
+        });
     });
 });
 
-function worktype_select(elm) {
-    $(elm).parents("tr").css("background-color", colors[elm.value]);
-}
+window.selectWorktype = (element) => {
+    element.closest("tr").style.backgroundColor = element.dataset.bgColor;
+    element.closest("tr").style.color = element.dataset.fgColor;
+};
 </script>
 <% end %>
