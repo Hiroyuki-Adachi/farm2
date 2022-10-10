@@ -16,7 +16,7 @@ class OwnedRicePricesController < ApplicationController
     if @owned_rice_price.save
       redirect_to owned_rice_prices_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
@@ -25,13 +25,13 @@ class OwnedRicePricesController < ApplicationController
     if @owned_rice_price.update(owned_rice_price_params)
       redirect_to owned_rice_prices_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     OwnedRicePrice.find(params[:id]).destroy
-    redirect_to owned_rice_prices_path
+    redirect_to owned_rice_prices_path, status: :see_other
   end
 
   private

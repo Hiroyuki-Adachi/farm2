@@ -1,26 +1,38 @@
-<% @lands.each_with_index do |land, i| %>
-  <% cost = @costs.find{|c| c.land_id == land.id} %>
-  <tr>
-    <td class="text-nowrap"><%= land.place %></td>
-    <td class="numeric">
-      <%= land.area %>
-      <%= hidden_field_tag "lands[#{i}][area]", land.area %>
-    </td>
-    <td>
-      <% @work_types.each do |work_type| %>
-        <div class="form-check form-check-inline">
-          <%= radio_button_tag "land_costs[#{i}][work_type_id]", work_type.id, cost&.work_type_id == work_type.id, {id: "work_type_#{land.id}_#{work_type.id}", class: "form-check-input", onclick: "worktype_select(this)"} %>
-          <%= label_tag "work_type_#{land.id}_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
-        </div>
-      <% end %>
-    </td>
-    <td>
-      <%= hidden_field_tag "land_costs[#{i}][id]", cost&.id %>
-      <%= hidden_field_tag "land_costs[#{i}][land_id]", land.id %>
-      <%= hidden_field_tag "land_costs[#{i}][activated_on]", cost&.activated_on || current_system.start_date %>
-    </td>
-    <td>
-      <%= link_to '修正', edit_land_cost_path(land_id: land), {class: "btn btn-success btn-sm"} %>
-    </td>
-  </tr>
-<% end %>
+<table id="tbl_list" class="table table-sm float-head">
+  <thead>
+    <tr>
+      <th>番地</th>
+      <th class="text-nowrap">面積</th>
+      <th>作付</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @lands.each_with_index do |land, i| %>
+      <% cost = @costs.find{|c| c.land_id == land.id} %>
+      <tr>
+        <td class="text-nowrap"><%= land.place %></td>
+        <td class="numeric">
+          <%= land.area %>
+          <%= hidden_field_tag "lands[#{i}][area]", land.area %>
+        </td>
+        <td>
+          <% @work_types.each do |work_type| %>
+            <div class="form-check form-check-inline">
+              <%= radio_button_tag "land_costs[#{i}][work_type_id]", work_type.id, cost&.work_type_id == work_type.id, {id: "work_type_#{land.id}_#{work_type.id}", class: "form-check-input", onclick: "worktypeSelect(this)"} %>
+              <%= label_tag "work_type_#{land.id}_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+            </div>
+          <% end %>
+        </td>
+        <td>
+          <%= hidden_field_tag "land_costs[#{i}][id]", cost&.id %>
+          <%= hidden_field_tag "land_costs[#{i}][land_id]", land.id %>
+          <%= hidden_field_tag "land_costs[#{i}][activated_on]", cost&.activated_on || current_system.start_date %>
+        </td>
+        <td>
+          <%= link_to '修正', edit_land_cost_path(land_id: land), {class: "btn btn-success btn-sm"} %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,4 @@
+<%= turbo_stream.update 'work_type_id' do %>
+  <option value=""></option>
+  <%= options_from_collection_for_select(@work_types, :id, :name, @work_type_id) %>
+<% end %>

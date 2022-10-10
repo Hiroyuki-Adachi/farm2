@@ -54,19 +54,18 @@ function dispSum() {
     });
     let sumArea = new Decimal(0);
     Object.keys(landAreas).forEach(function(key) {
-      document.getElementById("land_area_" + key).innerText = landAreas[key].toFixed(1);
-      sumArea = sumArea.plus(landAreas[key]);
+      const landArea = document.getElementById(`land_area_${key}`);
+      if (landArea != null) {
+        landArea.innerText = landAreas[key].toFixed(1);
+        sumArea = sumArea.plus(landAreas[key]);
+      }
     });
 }
   
-function changeTarget(target) {
-   location.href = target.dataset.url + "?target=" + target.value;
-}
-
-window.addEventListener('load', (event) => {
-    document.getElementById("target").addEventListener("change", function() {
-        location.href = target.dataset.url + "?target=" + this.value;
+window.addEventListener('turbo:load', () => {
+    document.getElementById("target").addEventListener("blur", function() {
+        Turbo.visit(`${target.dataset.url}?target=${this.value}`);
     });
-     
+
     initMap();
 });

@@ -60,4 +60,12 @@ class Organization < ApplicationRecord
   def save_term
     Rails.cache.write(:organization_term, term, expires_in: 1.hour)
   end
+
+  def get_system(date)
+    System.get_system(date, self.id)
+  end
+
+  def get_term(date)
+    get_system(date || Date.today)&.term
+  end
 end

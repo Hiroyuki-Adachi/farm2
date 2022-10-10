@@ -23,7 +23,7 @@
 <%= javascript_include_tag 'controllers/work-show'%>
 <%= stylesheet_link_tag 'work-show', :media => 'all' %>
 <script>
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('turbo:load', () => {
     $(".stamp").each(function() {
         $(this).offset({top: $(this).offset().top + 48});
     });

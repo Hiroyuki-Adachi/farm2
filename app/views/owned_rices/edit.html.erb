@@ -40,7 +40,7 @@
 <% end %>
 <% content_for :head do %>
 <script>
-window.addEventListener("load", () => {
+window.addEventListener('turbo:load', () => {
     ("change keyup click".split(" ")).forEach((event) => {
         document.querySelectorAll(".rice").forEach((element) => {
             element.addEventListener(event, () => {

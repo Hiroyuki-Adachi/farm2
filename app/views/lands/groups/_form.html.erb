@@ -69,7 +69,7 @@
   </div>
   <% unless @land.new_record? %>
     <div class="btn-group mr-2">
-      <%= link_to '削除', lands_group_path(@land), {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger"} %>
+      <%= link_to '削除', lands_group_path(@land), {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
     </div>
   <% end %>
   <div class="btn-group mr-2">
@@ -78,4 +78,6 @@
 </div>
 <% end %>
 <%= hidden_field_tag "autocomplete_lands_groups_path", autocomplete_lands_groups_path %>
-<%= javascript_include_tag 'controllers/lands-groups' %>
+<% content_for :head do %>
+<%= javascript_include_tag 'controllers/lands-groups', 'data-turbo-track': 'reload' %>
+<% end %>

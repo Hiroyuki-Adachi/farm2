@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   resources :land_costs, param: "land_id", only: [:index, :create, :edit, :update] do
     collection do
       get :map
+      get :work_types
     end
   end
 
@@ -165,7 +166,8 @@ Rails.application.routes.draw do
     resources :chemicals, controller: "works/chemicals", only: [:new, :create], as: :use_chemicals
     resources :whole_crops, controller: "works/whole_crops", only: [:new, :create]
     collection do
-      get :work_type_select
+      get :work_types
+      get :work_kinds
     end
     member do
       get :map

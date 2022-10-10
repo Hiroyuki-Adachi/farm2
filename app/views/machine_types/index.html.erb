@@ -14,7 +14,7 @@
         <td><%= link_to '修正', edit_machine_type_path(machine_type), {class: "btn btn-success btn-sm"} %></td>
         <td><%= link_to '料金設定', show_type_machine_price_headers_path(machine_type_id: machine_type), {class: "btn btn-success btn-sm"} %></td>
         <% if machine_type.machines.count == 0 %>
-        <td><%= link_to '削除', machine_type, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
+        <td><%= link_to '削除', machine_type, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger btn-sm"} %></td>
         <% else %>
         <td>&nbsp;</td>
         <% end %>

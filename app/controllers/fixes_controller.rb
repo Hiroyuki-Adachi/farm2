@@ -43,7 +43,7 @@ class FixesController < ApplicationController
 
   def destroy
     @fix.destroy
-    redirect_to fixes_path
+    redirect_to fixes_path, status: :see_other
   end
 
   private

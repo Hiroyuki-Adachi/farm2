@@ -1,6 +1,6 @@
 import { Modal } from 'bootstrap';
 
-$(function() {
+document.addEventListener('turbo:load', () => {
     $("#print_self").on('change', function() {
         changePrint($(this)[0]);
     });
@@ -8,9 +8,7 @@ $(function() {
     $("#list").on('click', ".show-work", function() {
         execShow($(this).data("url"));
     });
-});
 
-$(window).on('load', function() {
     $("#print_self").attr("checked", true);
     changePrint($("#print_self")[0]);
 });

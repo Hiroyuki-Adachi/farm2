@@ -19,7 +19,7 @@ class MachinesController < ApplicationController
     if @machine.save
       redirect_to machines_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_entity
     end
   end
 
@@ -27,13 +27,13 @@ class MachinesController < ApplicationController
     if @machine.update(machine_params)
       redirect_to machines_path
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @machine.destroy
-    redirect_to machines_path
+    redirect_to machines_path, status: :see_other
   end
 
   private

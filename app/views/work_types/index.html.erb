@@ -6,6 +6,7 @@
         <th></th>
         <th>カテゴリー</th>
         <th>名称</th>
+        <th>今年度</th>
         <th colspan="2">&nbsp;</th>
       </tr>
     </thead>
@@ -15,8 +16,9 @@
           <td><%= work_type_icon_tag(work_type) %></td>
           <td style="background-color: <%= work_type.bg_color %>; color:<%= work_type.fg_color %>;"><%= work_type.genre_name %></td>
           <td style="background-color: <%= work_type.bg_color %>; color:<%= work_type.fg_color %>;"><%= work_type.name %></td>
+          <td><%= @work_type_terms.include?(work_type.id) ? '●' : '' %></td>
           <td><%= link_to '修正', edit_work_type_path(work_type), {class: "btn btn-success btn-sm"} %></td>
-          <td><%= link_to '削除', work_type, {method: :delete, data: {confirm: "本当に削除してもよろしいですか?"}, class: "btn btn-danger btn-sm"} %></td>
+          <td><%= link_to '削除', work_type, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger btn-sm"} %></td>
         </tr>
       <% end %>
     </tbody>

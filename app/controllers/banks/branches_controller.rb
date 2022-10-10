@@ -24,7 +24,7 @@ class Banks::BranchesController < ApplicationController
     if @branch.save
       redirect_to bank_branches_path(bank_code: params[:bank_code])
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -32,7 +32,7 @@ class Banks::BranchesController < ApplicationController
     if @branch.update(branch_params)
       redirect_to bank_branches_path(bank_code: params[:bank_code])
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -40,7 +40,7 @@ class Banks::BranchesController < ApplicationController
   # DELETE /banks/1.json
   def destroy
     @branch.destroy
-    redirect_to bank_branches_path(bank_code: params[:bank_code])
+    redirect_to bank_branches_path(bank_code: params[:bank_code]), status: :see_other
   end
 
   private

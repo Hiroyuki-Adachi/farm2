@@ -1,6 +1,4 @@
-import Rails from '@rails/ujs';
-window.Rails = Rails;
-Rails.start();
+import '@hotwired/turbo';
 
 import jQuery from 'jquery';
 window.jQuery = window.$ = jQuery;
