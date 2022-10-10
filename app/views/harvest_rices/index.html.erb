@@ -73,25 +73,25 @@
 <% content_for :head do %>
 <script>
 window.addEventListener('turbo:load', () => {
-    $(".work-type-total").click(function() {
-        var s = $(".carried-on-total[data-work_type='" + $(this).data("work_type") + "']");
-        if(s.is(":visible")) {
-            s.hide();
-            $(".detail[data-work_type='" + $(this).data("work_type") + "']").hide();
-        } else {
-            s.show();
-        }
+    Array.from(document.getElementsByClassName("work-type-total")).forEach((element) => {
+        element.addEventListener("click", (event) => {
+            document.querySelectorAll(`.carried-on-total[data-work_type="${event.target.closest("tr").dataset.work_type}"]`).forEach((tr) => {
+                tr.style.display = (tr.style.display == "none") ? "table-row" : "none";
+            });
+        });
     });
-    $(".carried-on-total").click(function() {
-        var s = $(".detail[data-work_type='" + $(this).data("work_type") + "'][data-carried_on='" + $(this).data("carried_on") + "']");
-        if(s.is(":visible")) {
-            s.hide();
-        } else {
-            s.show();
-        }
+    Array.from(document.getElementsByClassName("carried-on-total")).forEach((element) => {
+        element.addEventListener("click", (event) => {
+            const parentTr = event.target.closest("tr");
+            document.querySelectorAll(`.detail[data-work_type="${parentTr.dataset.work_type}"][data-carried_on="${parentTr.dataset.carried_on}"]`).forEach((tr) => {
+                tr.style.display = (tr.style.display == "none") ? "table-row" : "none";
+            });
+        });
     });
-  
-    $(".carried-on-total, .detail").hide();
+
+    document.querySelectorAll(".carried-on-total, .detail").forEach((element) => {
+        element.style.display = "none";
+    });
 });
 </script>
 <% end %>
