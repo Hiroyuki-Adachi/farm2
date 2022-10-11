@@ -24,7 +24,7 @@
       <% old_work_type_id = drying.work_type_id %>
       <% old_carried_on = nil %>
       <% sum_area = LandCost.sum_area_by_work_type(current_system.start_date, old_work_type_id) %>
-      <tr class="work-type-total table-primary" data-work_type="<%= old_work_type_id %>">
+      <tr class="tr-total1 table-primary" data-code1="<%= old_work_type_id %>">
         <td><%= drying.work_type.name %></td>
         <td colspan="3"></td>
         <td class="numeric"><%= format_weight(@work_type_totals[old_work_type_id][:rice_weight]) %></td>
@@ -36,7 +36,7 @@
     <% end %>
     <% if drying.carried_on != old_carried_on %>
       <% old_carried_on = drying.carried_on %>
-      <tr class="carried-on-total table-secondary" data-work_type="<%= old_work_type_id %>" data-carried_on="<%= old_carried_on %>">
+      <tr class="tr-total2 table-secondary" data-code1="<%= old_work_type_id %>" data-code2="<%= old_carried_on %>">
         <td></td>
         <td><%= old_carried_on %></td>
         <td colspan="2"></td>
@@ -47,7 +47,7 @@
         <td class="numeric"><%=  @areas[old_carried_on][old_work_type_id] || 0 == 0 ? "" : format_bag(@carried_on_totals[old_work_type_id][old_carried_on][:rice_weight] / @areas[old_carried_on][old_work_type_id] * 10) %></td>
       </tr>
     <% end %>
-    <tr class="detail" data-work_type="<%= old_work_type_id %>" data-carried_on="<%= old_carried_on %>">
+    <tr class="tr-detail" data-code1="<%= old_work_type_id %>" data-code2="<%= old_carried_on %>">
       <td></td>
       <td></td>
       <td><%= drying.home.name %></td>
@@ -70,28 +70,3 @@
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"} %>
   </div>
 </div>
-<% content_for :head do %>
-<script>
-window.addEventListener('turbo:load', () => {
-    Array.from(document.getElementsByClassName("work-type-total")).forEach((element) => {
-        element.addEventListener("click", (event) => {
-            document.querySelectorAll(`.carried-on-total[data-work_type="${event.target.closest("tr").dataset.work_type}"]`).forEach((tr) => {
-                tr.style.display = (tr.style.display == "none") ? "table-row" : "none";
-            });
-        });
-    });
-    Array.from(document.getElementsByClassName("carried-on-total")).forEach((element) => {
-        element.addEventListener("click", (event) => {
-            const parentTr = event.target.closest("tr");
-            document.querySelectorAll(`.detail[data-work_type="${parentTr.dataset.work_type}"][data-carried_on="${parentTr.dataset.carried_on}"]`).forEach((tr) => {
-                tr.style.display = (tr.style.display == "none") ? "table-row" : "none";
-            });
-        });
-    });
-
-    document.querySelectorAll(".carried-on-total, .detail").forEach((element) => {
-        element.style.display = "none";
-    });
-});
-</script>
-<% end %>
