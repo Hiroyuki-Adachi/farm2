@@ -78,4 +78,6 @@
 </div>
 <% end %>
 <%= hidden_field_tag "autocomplete_lands_groups_path", autocomplete_lands_groups_path %>
+<% content_for :head do %>
 <%= javascript_pack_tag 'lands-groups', 'data-turbo-track': 'reload' %>
+<% end %>
