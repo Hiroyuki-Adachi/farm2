@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_16_120508) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_16_065246) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -398,6 +398,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_120508) do
     t.integer "group_order", default: 0, null: false, comment: "グループ内並び順"
     t.date "start_on", default: "1900-01-01", null: false, comment: "有効期間(自)"
     t.date "end_on", default: "2999-12-31", null: false, comment: "有効期間(至)"
+    t.date "peasant_start_on", default: "1900-01-01", null: false, comment: "小作料期間(自)"
+    t.date "peasant_end_on", default: "2999-12-31", null: false, comment: "小作料期間(至)"
     t.integer "peasant_start_term", default: 0, null: false, comment: "小作料期間(自)"
     t.integer "peasant_end_term", default: 9999, null: false, comment: "小作料期間(至)"
     t.index ["deleted_at"], name: "index_lands_on_deleted_at"
@@ -845,6 +847,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_120508) do
     t.datetime "updated_at", precision: nil
     t.decimal "fixed_cost", precision: 6, comment: "確定作業原価"
     t.integer "work_type_id", comment: "作業分類"
+    t.integer "chemical_group_no", default: 0, null: false, comment: "薬剤グループ番号"
     t.index ["work_id", "land_id"], name: "index_work_lands_on_work_id_and_land_id", unique: true
   end
 
