@@ -398,8 +398,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_065246) do
     t.integer "group_order", default: 0, null: false, comment: "グループ内並び順"
     t.date "start_on", default: "1900-01-01", null: false, comment: "有効期間(自)"
     t.date "end_on", default: "2999-12-31", null: false, comment: "有効期間(至)"
-    t.date "peasant_start_on", default: "1900-01-01", null: false, comment: "小作料期間(自)"
-    t.date "peasant_end_on", default: "2999-12-31", null: false, comment: "小作料期間(至)"
     t.integer "peasant_start_term", default: 0, null: false, comment: "小作料期間(自)"
     t.integer "peasant_end_term", default: 9999, null: false, comment: "小作料期間(至)"
     t.index ["deleted_at"], name: "index_lands_on_deleted_at"
@@ -960,6 +958,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_16_065246) do
     t.integer "created_by", comment: "作成者"
     t.datetime "printed_at", precision: nil, comment: "印刷日時"
     t.integer "printed_by", comment: "印刷者"
+    t.boolean "chemical_group_flag", default: false, null: false, comment: "薬剤グループフラグ"
   end
 
 end
