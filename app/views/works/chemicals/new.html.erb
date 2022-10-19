@@ -19,6 +19,19 @@
       <% end %>
     </div>
   </div>
+  <div id="lands" style="display: block;">
+    <h2>土地</h2>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-check-inline">
+          <% @work.work_lands.each do |work_land| %>
+          <%= check_box_tag "work_land_id[#{work_land.id}]", 1, work_land.chemical_group_no == 1, {data: {group: work_land.chemical_group_no}, class: "form-check-input ms-3", id: "work_land_#{work_land.id}"} %>
+          <%= label_tag "work_land_#{work_land.id}", work_land.land.place, {class: "form-check-label"} %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
   <h2>薬剤</h2>
   <div class="row">
     <div class="col-md-12">
