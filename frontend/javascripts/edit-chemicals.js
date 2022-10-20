@@ -76,4 +76,7 @@ window.addEventListener('turbo:load', () => {
       });
     });
   });
+  document.getElementById("work_chemical_group_flag").addEventListener("change", (event) => {
+    document.getElementById("lands").style.display = event.target.checked ? "block" : "none";
+  });
 });
