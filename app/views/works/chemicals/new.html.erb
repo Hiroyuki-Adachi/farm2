@@ -31,7 +31,9 @@
       <div class="col-md-12">
         <div class="form-check-inline">
           <% @work.work_lands.each do |work_land| %>
-          <%= check_box_tag "work_land_id[#{work_land.id}]", 1, work_land.chemical_group_no == 1, {data: {group: work_land.chemical_group_no}, class: "form-check-input ms-3", id: "work_land_#{work_land.id}"} %>
+          <%= check_box_tag "work_land_id[#{work_land.id}]", 1, work_land.chemical_group_no == 1, 
+            {data: {group: work_land.chemical_group_no, work_type_id: work_land.cost.work_type_id, area: work_land.land.area },
+             class: "form-check-input ms-3", id: "work_land_#{work_land.id}"} %>
           <%= label_tag "work_land_#{work_land.id}", work_land.land.place, {class: "form-check-label"} %>
           <% end %>
         </div>
