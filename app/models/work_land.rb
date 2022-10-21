@@ -117,4 +117,8 @@ class WorkLand < ApplicationRecord
     results.push({chemical: nil, quantity: nil}) if results.count.zero?
     return results
   end
+
+  def cost
+    land.cost(work.worked_at)
+  end
 end
