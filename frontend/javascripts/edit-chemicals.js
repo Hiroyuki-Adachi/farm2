@@ -66,17 +66,26 @@ window.addEventListener('turbo:load', () => {
     });
   });
   document.querySelectorAll(".change-group").forEach((e) => {
-    e.addEventListener("change", (event) => {
-      const group = event.target.dataset.group;
-      document.querySelectorAll(".col-data").forEach((element) => {
-        element.style.display = "none";
+      e.addEventListener("change", (event) => {
+          const group = parseInt(event.target.dataset.group);
+          document.querySelectorAll(".col-data").forEach((element) => {
+              element.style.display = "none";
+          });
+          document.querySelectorAll(`[data-index="${group}"]`).forEach((element) => {
+              element.style.display = "table-cell";
+          });
+          Array.from(document.getElementsByClassName("chemical-land")).forEach((element) => {
+              element.value = group + 1;
+              element.checked = (element.dataset.group == group + 1);
+          });
       });
-      document.querySelectorAll(`[data-index="${group}"]`).forEach((element) => {
-        element.style.display = "table-cell";
-      });
-    });
   });
   document.getElementById("work_chemical_group_flag").addEventListener("change", (event) => {
-    document.getElementById("lands").style.display = event.target.checked ? "block" : "none";
+      document.getElementById("lands").style.display = event.target.checked ? "block" : "none";
+  });
+  Array.from(document.getElementsByClassName("chemical-land")).forEach((element) => {
+      element.addEventListener("change", (event) => {
+          event.target.dataset.group = event.target.checked ? event.target.value : 0;
+      });
   });
 });
