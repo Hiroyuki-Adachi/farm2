@@ -76,7 +76,7 @@ window.addEventListener('turbo:load', () => {
           });
           Array.from(document.getElementsByClassName("chemical-land")).forEach((element) => {
               element.value = group + 1;
-              element.checked = (element.dataset.group == group + 1);
+              element.checked = (document.getElementById(element.dataset.id).value == group + 1);
           });
       });
   });
@@ -85,7 +85,7 @@ window.addEventListener('turbo:load', () => {
   });
   Array.from(document.getElementsByClassName("chemical-land")).forEach((element) => {
       element.addEventListener("change", (event) => {
-          event.target.dataset.group = event.target.checked ? event.target.value : 0;
+          document.getElementById(event.target.dataset.id).value = event.target.checked ? event.target.value : 0;
       });
   });
 });
