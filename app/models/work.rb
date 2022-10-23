@@ -28,6 +28,7 @@ class Work < ApplicationRecord
 
   ENOUGH = WorkVerification::ENOUGH
   before_create :set_term
+  after_save :set_chemical_group_no
 
   validates :worked_at, presence: true
   validates :weather_id,   presence: true
@@ -431,5 +432,12 @@ SQL
 
   def quantity_params(quantity, add_params)
     quantity.permit(:quantity, :dilution_id, :magnification, :remarks).merge(add_params)
+  end
+
+  def set_chemical_group_no
+    return if self.chemical_group_flag
+    self.work_lands.each do |work_land|
+      work_land.update(chemical_group_no: 0)
+    end
   end
 end
