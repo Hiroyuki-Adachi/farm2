@@ -184,8 +184,12 @@ SQL
     work_results.sum(:hours)
   end
 
-  def sum_areas
-    lands.sum(:area) || 0
+  def sum_areas(group = nil)
+    if group
+      Land.where(id: work_lands.where(chemical_group_no: group).pluck(:land_id)).sum(:area) || 0
+    else
+      lands.sum(:area) || 0
+    end
   end
 
   def price

@@ -1,3 +1,5 @@
+const { default: Decimal } = require("decimal.js");
+
 window.addEventListener('turbo:load', () => {
   document.querySelectorAll("[data-index='0']").forEach((element) => {
     element.style.display = "table-cell";
@@ -65,8 +67,8 @@ window.addEventListener('turbo:load', () => {
       }
     });
   });
-  document.querySelectorAll(".change-group").forEach((e) => {
-      e.addEventListener("change", (event) => {
+  document.querySelectorAll(".change-group").forEach((group) => {
+    group.addEventListener("change", (event) => {
           const group = parseInt(event.target.dataset.group);
           document.querySelectorAll(".col-data").forEach((element) => {
               element.style.display = "none";
@@ -82,10 +84,27 @@ window.addEventListener('turbo:load', () => {
   });
   document.getElementById("work_chemical_group_flag").addEventListener("change", (event) => {
       document.getElementById("lands").style.display = event.target.checked ? "block" : "none";
+      calcGroupAreas();
   });
   Array.from(document.getElementsByClassName("chemical-land")).forEach((element) => {
       element.addEventListener("change", (event) => {
           document.getElementById(event.target.dataset.id).value = event.target.checked ? event.target.value : 0;
+          calcGroupAreas();
       });
   });
 });
+
+function calcGroupAreas()
+{
+    if (document.getElementById("work_chemical_group_flag").checked) {
+        let groupAreas = new Decimal(0);
+        const group = parseInt(document.querySelector(".change-group:checked").value) + 1;
+        document.querySelectorAll(".chemical-land:checked").forEach((element) => {
+            groupAreas = groupAreas.plus(new Decimal(element.dataset.area));
+        });
+        document.getElementById(`group_areas_${group}`).value = groupAreas.toFixed(1);
+        document.getElementById("group_areas_span").innerText = document.getElementById(`group_areas_${group}`).value;
+      } else {
+        document.getElementById("group_areas_span").innerText = document.getElementById("sum_areas").value;
+    }
+}
