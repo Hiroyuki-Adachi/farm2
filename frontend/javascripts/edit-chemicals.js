@@ -30,9 +30,7 @@ window.addEventListener('turbo:load', () => {
   });
   document.querySelectorAll("input[name$='quantity]']").forEach((element) => {
     element.addEventListener("change", (event) => {
-      const sumArea = new Decimal(document.getElementById("sum_areas").value);
-      const quantity = new Decimal(event.target.value);
-      document.getElementById(`chemicals_${event.target.dataset.id}_${event.target.dataset.index}_quantity10`).innerText = quantity.mul(10).div(sumArea).toFixed(1);
+      calcQuantity10(event.target);
     });
   });
   document.querySelectorAll("input[name$='dilution_id]']").forEach((element) => {
@@ -80,16 +78,20 @@ window.addEventListener('turbo:load', () => {
               element.value = group + 1;
               element.checked = (document.getElementById(element.dataset.id).value == group + 1);
           });
+          calcGroupAreas();
+          calcAllQuantity10();
       });
   });
   document.getElementById("work_chemical_group_flag").addEventListener("change", (event) => {
       document.getElementById("lands").style.display = event.target.checked ? "block" : "none";
       calcGroupAreas();
+      calcAllQuantity10();
   });
   Array.from(document.getElementsByClassName("chemical-land")).forEach((element) => {
       element.addEventListener("change", (event) => {
           document.getElementById(event.target.dataset.id).value = event.target.checked ? event.target.value : 0;
           calcGroupAreas();
+          calcAllQuantity10();
       });
   });
 });
@@ -107,4 +109,30 @@ function calcGroupAreas()
       } else {
         document.getElementById("group_areas_span").innerText = document.getElementById("sum_areas").value;
     }
+}
+
+function calcQuantity10(element)
+{
+    const target = document.getElementById(`chemicals_${element.dataset.id}_${element.dataset.index}_quantity10`);
+    if (element.value == "") {
+        target.innerText = "";
+        return;
+    }
+    let sumArea = null;
+    if (document.getElementById("work_chemical_group_flag").checked) {
+        const group = parseInt(document.querySelector(".change-group:checked").value) + 1;
+        sumArea = new Decimal(document.getElementById(`group_areas_${group}`).value);
+    } else {
+        sumArea = new Decimal(document.getElementById("sum_areas").value);
+    }
+    const quantity = new Decimal(element.value);
+    target.innerText = sumArea.isZero() ? "" : quantity.mul(10).div(sumArea).toFixed(1);
+}
+
+function calcAllQuantity10()
+{
+  const group = parseInt(document.querySelector(".change-group:checked").value) + 1;
+    document.querySelectorAll(`input[name$="quantity]"][data-index="${group}"]`).forEach((element) => {
+        calcQuantity10(element);
+    });
 }
