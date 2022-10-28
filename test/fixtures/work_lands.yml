@@ -2,14 +2,15 @@
 #
 # Table name: work_lands
 #
-#  id(作業地データ)         :integer          not null, primary key
-#  display_order(表示順)    :integer          default(0), not null
-#  fixed_cost(確定作業原価) :decimal(6, )
-#  created_at               :datetime
-#  updated_at               :datetime
-#  land_id(土地)            :integer
-#  work_id(作業)            :integer
-#  work_type_id(作業分類)   :integer
+#  id(作業地データ)                    :integer          not null, primary key
+#  chemical_group_no(薬剤グループ番号) :integer          default(0), not null
+#  display_order(表示順)               :integer          default(0), not null
+#  fixed_cost(確定作業原価)            :decimal(6, )
+#  created_at                          :datetime
+#  updated_at                          :datetime
+#  land_id(土地)                       :integer
+#  work_id(作業)                       :integer
+#  work_type_id(作業分類)              :integer
 #
 # Indexes
 #
@@ -34,10 +35,19 @@ work_lands1:
   updated_at: '2015-03-21 00:40:16.775223'
 
 
-work_lands_not_fixed:
+work_lands_not_fixed1:
   work_id: '1495'
   land_id: '89'
+  work_type_id: 1
   display_order: '1'
+  created_at: '2015-03-21 00:40:16.775223'
+  updated_at: '2015-03-21 00:40:16.775223'
+
+work_lands_not_fixed2:
+  work_id: '1495'
+  land_id: '90'
+  display_order: '2'
+  work_type_id: 1
   created_at: '2015-03-21 00:40:16.775223'
   updated_at: '2015-03-21 00:40:16.775223'
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_16_120508) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_16_065246) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -845,6 +845,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_120508) do
     t.datetime "updated_at", precision: nil
     t.decimal "fixed_cost", precision: 6, comment: "確定作業原価"
     t.integer "work_type_id", comment: "作業分類"
+    t.integer "chemical_group_no", default: 0, null: false, comment: "薬剤グループ番号"
     t.index ["work_id", "land_id"], name: "index_work_lands_on_work_id_and_land_id", unique: true
   end
 
@@ -957,6 +958,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_120508) do
     t.integer "created_by", comment: "作成者"
     t.datetime "printed_at", precision: nil, comment: "印刷日時"
     t.integer "printed_by", comment: "印刷者"
+    t.boolean "chemical_group_flag", default: false, null: false, comment: "薬剤グループフラグ"
   end
 
 end

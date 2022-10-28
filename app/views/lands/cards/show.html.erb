@@ -30,7 +30,7 @@
         <td <%=raw rowspan%>><%= link_to "作業日報", work_path(work_land.work_id), {class: "btn btn-outline-success btn-sm"} %></td>
         <td><%= chemicals[0][:chemical]&.chemical_type&.name %></td>
         <td><%= chemicals[0][:chemical]&.name %></td>
-        <td><%= number_with_precision(chemicals[0][:quantity], precision: 2) %></td>
+        <td class="numeric"><%= number_with_precision(chemicals[0][:quantity], precision: 1) %></td>
         <td><%= chemicals[0][:chemical]&.base_unit_name %></td>
         <td>(<%= number_with_precision(chemicals[0][:standard], precision: 2) %>)</td>
       </tr>
@@ -38,7 +38,7 @@
           <tr>
             <td><%= chemical[:chemical].chemical_type&.name%></td>
             <td><%= chemical[:chemical].name %></td>
-            <td><%= number_with_precision(chemical[:quantity], precision: 2) %></td>
+            <td class="numeric"><%= number_with_precision(chemical[:quantity], precision: 1) %></td>
             <td><%= chemical[:chemical].base_unit_name %></td>
             <td>(<%= number_with_precision(chemical[:standard], precision: 2) %>)</td>
           </tr>

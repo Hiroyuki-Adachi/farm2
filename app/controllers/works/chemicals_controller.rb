@@ -8,7 +8,17 @@ class Works::ChemicalsController < WorksController
   end
 
   def create
-    @work.regist_chemicals(params[:chemicals])
+    ActiveRecord::Base.transaction do
+      WorkLand.regist_chemical_group_no(params[:work_lands]) if params[:work_lands]
+      @work.regist_chemicals(params[:chemicals])
+      @work.update(work_params)
+    end
     redirect_to work_path(@work)
+  end
+
+  private
+
+  def work_params
+    params.require(:work).permit(:chemical_group_flag) 
   end
 end
