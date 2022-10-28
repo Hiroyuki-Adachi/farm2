@@ -76,12 +76,16 @@ class WorkLand < ApplicationRecord
     return lands.flatten.uniq
   end
 
-  def self.sum_areas(work_id, work_type_id)
-    WorkLand.joins(:land).where(work_id: work_id, work_type_id: work_type_id).sum("lands.area")
+  def self.sum_areas(work_id, work_type_id, group = 0)
+    if group.zero?
+      WorkLand.joins(:land).where(work_id: work_id, work_type_id: work_type_id).sum("lands.area")
+    else
+      WorkLand.joins(:land).where(work_id: work_id, work_type_id: work_type_id, chemical_group_no: group).sum("lands.area")
+    end
   end
 
   def same_areas
-    return WorkLand.sum_areas(work_id, work_type_id)
+    return WorkLand.sum_areas(work_id, work_type_id, work.chemical_group_flag ? chemical_group_no : 0)
   end
 
   def total_areas
@@ -110,7 +114,7 @@ class WorkLand < ApplicationRecord
       next if denom.zero?
       results.push({
         chemical: work_chemical.chemical,
-        quantity: work_chemical.quantity * numer / denom / same_areas * 10 * work_chemical.chemical.base_base_quantity.to_f,
+        quantity: work_chemical.quantity10,
         standard: chemical_work_type.quantity
       })
     end
@@ -118,7 +122,7 @@ class WorkLand < ApplicationRecord
     return results
   end
 
-  def cost
+  def land_cost
     land.cost(work.worked_at)
   end
 
