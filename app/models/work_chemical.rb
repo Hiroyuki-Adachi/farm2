@@ -58,7 +58,7 @@ class WorkChemical < ApplicationRecord
   end
 
   def quantity10
-    sum_area = work.sum_areas
+    sum_area = work.chemical_group_flag ? work.sum_areas(chemical_group_no) : work.sum_areas
     return sum_area == 0 ? 0 : (quantity / sum_area * 10).round(1)
   end
 
