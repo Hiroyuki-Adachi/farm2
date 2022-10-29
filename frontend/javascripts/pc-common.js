@@ -59,40 +59,6 @@ document.addEventListener('turbo:load', () => {
         }
     }
 
-    const handleConfirm = function(event) {
-        if (!allowAction(event.target)) {
-            Rails.stopEverything(event);
-        }
-    }
-
-    const allowAction = function(element) {
-        if (element.getAttribute('data-confirm') === null) {
-            return true;
-        }
-        showConfirmationDialog(element);
-        return false;
-    }
-
-    const confirmed = function(element, result) {
-        if (result.value) {
-            element.removeAttribute('data-confirm')
-            element.click()
-        }
-    }
-
-    const showConfirmationDialog = function(element) {
-        const message = element.getAttribute('data-confirm');
-        popupConfirm(message, function(result) {
-            confirmed(element, {value: result});
-        });
-    }
-
-    document.querySelectorAll("a[data-confirm], input[data-confirm], button[data-confirm]").forEach((element) => {
-        element.addEventListener("click", (event) => {
-            handleConfirm(event);
-        })
-    })
-
     document.querySelectorAll("#navbarFarm2 a.farm2-navi").forEach((element) => {
         element.addEventListener("click", (event) => {
             myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${event.target.id}"]`).innerHTML;
@@ -142,6 +108,14 @@ document.addEventListener('turbo:load', () => {
 
     document.querySelectorAll(".tr-total2, .tr-detail").forEach((element) => {
         element.style.display = "none";
+    });
+
+    window.addEventListener("turbo:click", () => {
+        loading.disp("しばらくお待ちください");
+    });
+
+    window.addEventListener("turbo:loading", () => {
+        loading.remove();
     });
 });
 
