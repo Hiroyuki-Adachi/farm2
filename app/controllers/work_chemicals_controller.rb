@@ -39,6 +39,7 @@ class WorkChemicalsController < ApplicationController
       @work_types[work_chemical.work_id].each do |work_type|
         numer = work_rate_numer[work_chemical.work_id][work_chemical.chemical_id]
         next unless numer.present?
+        work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type.id] = 0 if work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type.id] == {}
         quantity = work_chemical.quantity * work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type.id] / numer
         @work_chemicals["#{work_chemical.work_id},#{work_type.id},#{work_chemical.chemical_id}"] = quantity
         @total_chemicals[work_chemical.chemical_id] ||= 0
