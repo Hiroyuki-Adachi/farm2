@@ -113,6 +113,7 @@ ja:
         sum_hours: "工数"
         work_type_id: "作業分類"
         work_kind_id: "作業種別"
+        chemical_group_flag: "土地単位に薬剤を入力する"
 
       work_type:
         name: "名称"

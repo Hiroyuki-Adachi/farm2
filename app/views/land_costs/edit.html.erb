@@ -71,8 +71,12 @@ window.addEventListener('turbo:load', () => {
 
     Array.from(document.getElementsByClassName("date-activated")).forEach((element) => {
         element.addEventListener("blur", (event) => {
-            const work_type_id = document.querySelector(`input[name="${event.target.dataset.name}"]:checked`).value;
-            Turbo.visit(`${event.target.dataset.url}?date=${event.target.value}&index=${event.target.dataset.index}&work_type_id=${work_type_id}`);
+            const work_type = document.querySelector(`input[name="${event.target.dataset.name}"]:checked`);
+            if (work_type == null) {
+                Turbo.visit(`${event.target.dataset.url}?date=${event.target.value}&index=${event.target.dataset.index}`);
+            } else {
+                Turbo.visit(`${event.target.dataset.url}?date=${event.target.value}&index=${event.target.dataset.index}&work_type_id=${work_type.value}`);
+            }
         });
     });
 });

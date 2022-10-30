@@ -207,7 +207,7 @@ class Land < ApplicationRecord
     work_kinds.each_with_index do |work_kind, index|
       having << "(MIN(W#{index}.worked_at) IS NOT NULL)"
     end
-    sql << having.join(" AND ")
+    sql << having.join(" OR ")
     sql << "ORDER BY"
     sql << "MAX(HO.display_order), L.place"
 

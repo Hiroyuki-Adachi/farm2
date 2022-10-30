@@ -1,7 +1,7 @@
 class WorkTypesController < ApplicationController
   skip_before_action :restrict_remote_ip, only: [:show_icon]
   before_action :permit_manager, except: [:show_icon]
-  before_action :set_work_type, only: [:edit, :update, :destroy, :show_icon]
+  before_action :set_work_type, only: [:edit, :update, :destroy]
   before_action :set_category, only: [:new, :create, :edit, :update]
 
   def index
@@ -50,6 +50,7 @@ class WorkTypesController < ApplicationController
   end
 
   def show_icon
+    @work_type = WorkType.find(params[:id])
     send_data @work_type.icon, :disposition => 'inline'
   end
 

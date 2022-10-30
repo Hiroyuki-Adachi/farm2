@@ -19,7 +19,7 @@
   <% @whole_crops.each do |whole_crop| %>
     <% if whole_crop.work.work_type_id != old_work_type_id %>
       <% old_work_type_id = whole_crop.work.work_type_id %>
-      <tr class="work-type-total table-primary" data-work_type="<%= old_work_type_id %>">
+      <tr class="tr-total1 table-primary" data-code1="<%= old_work_type_id %>">
         <td><%= whole_crop.work.work_type.name %></td>
         <td colspan="2"></td>
         <td class="numeric"><%= format_rolls(@work_type_totals[old_work_type_id][:rolls]) %></td>
@@ -29,7 +29,7 @@
     <% end %>
     <% if whole_crop.work.model.worked_at.beginning_of_month != old_worked_at %>
       <% old_worked_at = whole_crop.work.model.worked_at.beginning_of_month %>
-      <tr class="worked-at-total table-secondary" data-work_type="<%= old_work_type_id %>" data-worked_at="<%= old_worked_at %>">
+      <tr class="tr-total2 table-secondary" data-code1="<%= old_work_type_id %>" data-code2="<%= old_worked_at %>">
         <td></td>
         <td><%= old_worked_at.strftime("%Y年 %m月") %></td>
         <td></td>
@@ -38,7 +38,7 @@
         <td class="numeric"><%= format_rolls(@worked_at_totals[old_work_type_id][old_worked_at][:rolls] / @worked_at_totals[old_work_type_id][old_worked_at][:areas] * 10) %></td>
       </tr>
     <% end %>
-    <tr class="detail" data-work_type="<%= old_work_type_id %>" data-worked_at="<%= old_worked_at %>">
+    <tr class="tr-detail" data-code1="<%= old_work_type_id %>" data-code2="<%= old_worked_at %>">
       <td></td>
       <td><%= whole_crop.work.worked_at %></td>
       <td class="numeric"><%= whole_crop.weight.to_formatted_s(:delimited) %></td>
@@ -57,29 +57,3 @@
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"} %>
   </div>
 </div>
-<% content_for :head do %>
-<script>
-window.addEventListener('turbo:load', () => {
-    Array.from(document.getElementsByClassName("work-type-total")).forEach((element) => {
-        element.addEventListener("click", (event) => {
-            document.querySelectorAll(`.worked-at-total[data-work_type="${event.target.closest("tr").dataset.work_type}"]`).forEach((tr) => {
-                tr.style.display = (tr.style.display == "none") ? "table-row" : "none";
-            });
-        });
-    });
-
-    Array.from(document.getElementsByClassName("worked-at-total")).forEach((element) => {
-        element.addEventListener("click", (event) => {
-            const element = event.target.closest("tr");
-            document.querySelectorAll(`.detail[data-work_type="${element.dataset.work_type}"][data-worked_at="${element.dataset.worked_at}"]`).forEach((tr) => {
-                tr.style.display = (tr.style.display == "none") ? "table-row" : "none";
-            });
-        });
-    });
-
-    document.querySelectorAll(".worked-at-total, .detail").forEach((element) => {
-        element.style.display = "none";
-    });
-});
-</script>
-<% end %>

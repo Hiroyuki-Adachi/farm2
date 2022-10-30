@@ -18,14 +18,14 @@
     <% @results.each do |result| %>
       <% if old_owner_id != result.owner.id %>
         <% old_owner_id = result.owner.id %>
-        <tr class="owner-total table-primary" data-owner="<%= old_owner_id %>" style="cursor: pointer;">
+        <tr class="tr-total2 table-primary" data-code2="<%= old_owner_id %>" data-code1="">
           <td><%= result.owner.name %></td>
           <td colspan="6"></td>
           <td class="numeric"><%= @owner_totals[old_owner_id][:count] %></td>
           <td class="numeric"><%= number_to_currency(@owner_totals[old_owner_id][:amount], {precision: 0, unit: ""}) %></td>
         </tr>
       <% end %>
-      <tr class="detail" data-owner="<%= old_owner_id %>">
+      <tr class="tr-detail" data-code2="<%= old_owner_id %>" data-code1="">
         <td></td>
         <td><%= result.machine.machine_type.name %></td>
         <td><%= result.worked_at %></td>
@@ -47,19 +47,3 @@
     <%= link_to "戻る", (params[:fixed_at] ? fixes_path : menu_index_path), {class: "btn btn-outline-dark"} %>
   </div>
 </div>
-<% content_for :head do %>
-<script>
-window.addEventListener('turbo:load', () => {
-    $(".owner-total").click(function() {
-        var s = $(".detail[data-owner='" + $(this).data("owner") + "']");
-        if(s.is(":visible")) {
-            s.hide();
-        } else {
-            s.show();
-        }
-    });
-  
-    $(".detail").hide();
-});
-</script>
-<% end %>

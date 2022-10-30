@@ -74,7 +74,7 @@ class WorksControllerTest < ActionController::TestCase
   test "作業削除" do
     assert_difference('WorkWorkType.count', -1) do
       assert_difference('WorkResult.count', -1) do
-        assert_difference('WorkLand.count', -1) do
+        assert_difference('WorkLand.count', -2) do
           assert_difference('Work.count', -1) do
             delete :destroy, params: {id: works(:work_not_fixed)}
           end
