@@ -1,0 +1,6 @@
+<%= turbo_frame_tag "work_results_#{data_index}" do %>
+  <%= select_tag "seedling_home[seedling_results_attributes][#{data_index}][work_result_id]", 
+  options_from_collection_for_select(work_results, :id, :worker_name, work_result_id),
+   {include_blank: true, class: "form-select", style: "width: 150px;", id: "work_result_id_#{data_index}"}
+   %>
+<% end %>

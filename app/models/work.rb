@@ -2,22 +2,23 @@
 #
 # Table name: works
 #
-#  id(作業データ)         :integer          not null, primary key
-#  created_by(作成者)     :integer
-#  end_at(終了時刻)       :datetime         not null
-#  fixed_at(確定日)       :date
-#  name(作業名称)         :string(40)       not null
-#  printed_at(印刷日時)   :datetime
-#  printed_by(印刷者)     :integer
-#  remarks(備考)          :text
-#  start_at(開始時刻)     :datetime         not null
-#  term(年度(期))         :integer          not null
-#  worked_at(作業日)      :date             not null
-#  created_at             :datetime
-#  updated_at             :datetime
-#  weather_id(天気)       :integer
-#  work_kind_id(作業種別) :integer          default(0), not null
-#  work_type_id(作業分類) :integer
+#  id(作業データ)                          :integer          not null, primary key
+#  chemical_group_flag(薬剤グループフラグ) :boolean          default(FALSE), not null
+#  created_by(作成者)                      :integer
+#  end_at(終了時刻)                        :time             not null
+#  fixed_at(確定日)                        :date
+#  name(作業名称)                          :string(40)       not null
+#  printed_at(印刷日時)                    :datetime
+#  printed_by(印刷者)                      :integer
+#  remarks(備考)                           :text
+#  start_at(開始時刻)                      :time             not null
+#  term(年度(期))                          :integer          not null
+#  worked_at(作業日)                       :date             not null
+#  created_at                              :datetime
+#  updated_at                              :datetime
+#  weather_id(天気)                        :integer
+#  work_kind_id(作業種別)                  :integer          default(0), not null
+#  work_type_id(作業分類)                  :integer
 #
 
 class Work < ApplicationRecord
@@ -27,6 +28,7 @@ class Work < ApplicationRecord
 
   ENOUGH = WorkVerification::ENOUGH
   before_create :set_term
+  after_save :set_chemical_group_no
 
   validates :worked_at, presence: true
   validates :weather_id,   presence: true
@@ -182,8 +184,12 @@ SQL
     work_results.sum(:hours)
   end
 
-  def sum_areas
-    lands.sum(:area) || 0
+  def sum_areas(group = nil)
+    if group
+      Land.where(id: work_lands.where(chemical_group_no: group).pluck(:land_id)).sum(:area) || 0
+    else
+      lands.sum(:area) || 0
+    end
   end
 
   def price
@@ -430,5 +436,12 @@ SQL
 
   def quantity_params(quantity, add_params)
     quantity.permit(:quantity, :dilution_id, :magnification, :remarks).merge(add_params)
+  end
+
+  def set_chemical_group_no
+    return if self.chemical_group_flag
+    self.work_lands.each do |work_land|
+      work_land.update(chemical_group_no: 0)
+    end
   end
 end

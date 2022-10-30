@@ -15,7 +15,7 @@ class Works::LandsControllerTest < ActionController::TestCase
   end
 
   test "作業変更(土地)(変更)" do
-    assert_no_difference('WorkLand.count') do
+    assert_difference('WorkLand.count', -1) do
       post :create, params: {work_id: works(:work_not_fixed), work_lands: [land_id: 1, display_order: 3], regist_lands: true}
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))

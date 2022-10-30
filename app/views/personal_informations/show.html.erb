@@ -31,9 +31,11 @@
 <% content_for :head do %>
 <script>
 window.addEventListener('turbo:load', () => {
-    $('#personal_table tr').click(function(){
-        window.location = $(this).data('href');
-        return false;
+    document.querySelectorAll("#personal_table tr").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            Turbo.visit(event.target.closest("tr").dataset.href);
+            return false;
+        });
     });
 });
 </script>
