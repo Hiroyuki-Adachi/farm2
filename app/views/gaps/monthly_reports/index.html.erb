@@ -1,0 +1,51 @@
+<%= form_with url: gaps_monthly_reports_path, id: "search_form", method: :get do |f| %>
+  <div class="row">
+    <div class="col-md-4">
+      <h1>作業月毎記録表(for GAP)</h1>
+    </div>
+    <div class="col-md-3">
+      <div class="form-inline">
+        <label for="worked_at" class="h5 form-label">作業</label>
+        <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name), {class: "form-select"}) %>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-inline">
+        <label for="worked_at" class="h5 form-label">年月</label>
+        <%= select_tag(:worked_at, options_for_select(@months), {class: "form-select"}) %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="row">
+  <div class="col-md-12">
+    <table id="tbl_list" class="table table-sm">
+      <thead>
+        <tr>
+          <th>作業日</th>
+          <th>作業者</th>
+          <th>場所</th>
+          <th>作業内容</th>
+          <th>備考</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="list">
+        <%= render partial: "list" %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-4">
+  </div>
+</div>
+<div id="btn_toolbar" class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>

@@ -143,15 +143,15 @@ class WorkDecorator < Draper::Decorator
     model.machine_results.map(&:machine).flatten.uniq.map(&:type_name).to_sentence
   end
 
-  def broccoli_worker_names
+  def gap_worker_names
     model.workers.map { |worker| worker.broccoli_mark.presence || worker.name}.sort.to_sentence
   end
 
-  def broccoli_land_places
+  def gap_land_places
     model.lands.map { |land| land.broccoli_mark.presence || land.place}.sort.to_sentence
   end
 
-  def broccoli_work_kind_name
+  def gap_work_kind_name
     model.work_kind.broccoli_mark.presence || model.work_kind.name
   end
 
