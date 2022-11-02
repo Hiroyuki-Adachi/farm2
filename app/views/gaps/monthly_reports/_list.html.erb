@@ -1,0 +1,10 @@
+<% @works.each do |work| %>
+  <tr>
+    <td><%= work.worked_at %></td>
+    <td><%= work.gap_worker_names %></td>
+    <td><%= work.gap_land_places %></td>
+    <td><%= work.gap_work_kind_name %></td>
+    <td><%= work.remarks %></td>
+    <td><%= link_to "作業日報", work_path(work), {target: :_blank, class: "btn btn-outline-success btn-sm"} %></td>
+  </tr>
+<% end %>
