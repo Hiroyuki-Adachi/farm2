@@ -13,7 +13,11 @@ Rails.application.routes.draw do
     resources :chemical_work_types, only: [:new, :create, :index]
   end
   namespace :gaps do
-    resources :monthly_reports, only: [:index]
+    resources :monthly_reports, only: [:index] do
+      member do
+        get :months
+      end
+    end
   end
   resources :work_seedlings, only: [:index]
   resources :owned_rices, only: [:index, :edit, :update]
