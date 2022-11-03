@@ -6,13 +6,13 @@
     <div class="col-md-3">
       <div class="form-inline">
         <label for="worked_at" class="h5 form-label">作業</label>
-        <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name), {class: "form-select"}) %>
+        <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name), include_blank: true, class: "form-select") %>
       </div>
     </div>
     <div class="col-md-3">
       <div class="form-inline">
         <label for="worked_at" class="h5 form-label">年月</label>
-        <%= select_tag(:worked_at, options_for_select(@months), {class: "form-select"}) %>
+        <%= select_tag(:worked_at,nil, class: "form-select") %>
       </div>
     </div>
   </div>
@@ -49,3 +49,11 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
+<%= hidden_field_tag :monthly_report_path, months_gaps_monthly_report_path(":work_type_id") %>
+<script>
+window.addEventListener('turbo:load', () => {
+  document.getElementById("work_type_id").addEventListener("change", (event) => {
+      Turbo.visit(document.getElementById("monthly_report_path").value.replace(":work_type_id", event.target.value));
+  });
+});
+</script>

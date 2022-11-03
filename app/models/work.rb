@@ -131,9 +131,9 @@ SQL
       )
   }
 
-  scope :broccoli_reports, ->(organization, w_at) {
-    where(work_type_id: organization.broccoli_work_type_id)
-      .where(worked_at: Date.new(w_at.year, w_at.month, 1)..Date.new(w_at.year, w_at.month, -1))
+  scope :monthly_reports, ->(work_type_id, worked_at) {
+    where(work_type_id: work_type_id)
+      .where(worked_at: Date.new(worked_at.year, worked_at.month, 1)..Date.new(worked_at.year, worked_at.month, -1))
   }
 
   scope :landable, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
