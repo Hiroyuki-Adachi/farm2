@@ -7485,3 +7485,10 @@ work_land2_for_work_type_cache:
   display_order: 2
   created_at: '2017-12-23 05:30:12.608622'
   updated_at: '2017-12-23 05:30:12.608622'
+
+work_lands:
+  work_id: '1478'
+  land_id: '90'
+  display_order: 1
+  created_at: '2015-03-21 00:40:16.781636'
+  updated_at: '2015-03-21 00:40:16.781636'
