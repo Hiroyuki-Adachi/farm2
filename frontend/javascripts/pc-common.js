@@ -117,6 +117,9 @@ document.addEventListener('turbo:load', () => {
     window.addEventListener("turbo:loading", () => {
         loading.remove();
     });
+    window.addEventListener("turbo:frame-load", () => {
+        loading.remove();
+    });
 });
 
 function activeBar(element) {
