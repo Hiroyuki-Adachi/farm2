@@ -1,7 +1,7 @@
-<%= form_with url: gaps_monthly_reports_path, id: "search_form", method: :get do |f| %>
+<%= form_with url: gaps_monthly_reports_path, method: :get, data: {turbo_frame: :list}, id: :search_form do |f| %>
   <div class="row">
     <div class="col-md-4">
-      <h1>作業月毎記録表(for GAP)</h1>
+      <h1>作業月毎記録表</h1>
     </div>
     <div class="col-md-3">
       <div class="form-inline">
@@ -19,21 +19,9 @@
 <% end %>
 <div class="row">
   <div class="col-md-12">
-    <table id="tbl_list" class="table table-sm">
-      <thead>
-        <tr>
-          <th>作業日</th>
-          <th>作業者</th>
-          <th>場所</th>
-          <th>作業内容</th>
-          <th>備考</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="list">
-        <%= render partial: "list" %>
-      </tbody>
-    </table>
+    <%= turbo_frame_tag 'list' do %>
+      <%= render partial: "list" %>
+    <% end %>
   </div>
 </div>
 <div class="row">
@@ -50,10 +38,16 @@
   </div>
 </div>
 <%= hidden_field_tag :monthly_report_path, months_gaps_monthly_report_path(":work_type_id") %>
+<%= hidden_field_tag :index_path, gaps_monthly_reports_path %>
 <script>
 window.addEventListener('turbo:load', () => {
-  document.getElementById("work_type_id").addEventListener("change", (event) => {
-      Turbo.visit(document.getElementById("monthly_report_path").value.replace(":work_type_id", event.target.value));
-  });
+    document.getElementById("work_type_id").addEventListener("change", (event) => {
+        Turbo.visit(document.getElementById("monthly_report_path").value.replace(":work_type_id", event.target.value));
+    });
+    document.getElementById("worked_at").addEventListener("change", (event) => {
+        if (event.target.value != "") {
+            document.getElementById("search_form").requestSubmit();
+        }
+    });
 });
 </script>

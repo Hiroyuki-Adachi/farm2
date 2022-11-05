@@ -26,9 +26,6 @@ class WorksController < ApplicationController
     @count_workers = count_workers(@term)
     set_pager
     respond_to do |format|
-      format.turbo_stream do
-        @works = WorkDecorator.decorate_collection(@works.page(@page))
-      end
       format.html do
         @works = WorkDecorator.decorate_collection(@works.page(@page))
       end
