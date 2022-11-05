@@ -2,6 +2,9 @@ class Gaps::MonthlyReportsController < GapsController
   def index
     @work_types = WorkType.land
     @works = []
+    if params[:work_type_id].present? && params[:worked_at].present?
+      @works = WorkDecorator.decorate_collection(Work.monthly_reports(params[:work_type_id], params[:worked_at].to_date))
+    end
   end
 
   def months
