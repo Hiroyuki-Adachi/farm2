@@ -25,11 +25,41 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-2">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>記号</th>
+          <th>作業内容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% WorkKind.gaps.each do |work_kind| %>
+          <tr>
+            <td><%= work_kind.broccoli_mark %></td>
+            <td><%= work_kind.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-  <div class="col-md-4">
-  </div>
-  <div class="col-md-4">
+  <div class="col-md-2">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>記号</th>
+          <th>作業者</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% Worker.gaps.each do |worker| %>
+          <tr>
+            <td><%= worker.broccoli_mark %></td>
+            <td><%= worker.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
 <div id="btn_toolbar" class="btn-toolbar">
@@ -45,9 +75,7 @@ window.addEventListener('turbo:load', () => {
         Turbo.visit(document.getElementById("monthly_report_path").value.replace(":work_type_id", event.target.value));
     });
     document.getElementById("worked_at").addEventListener("change", (event) => {
-        if (event.target.value != "") {
-            document.getElementById("search_form").requestSubmit();
-        }
+        document.getElementById("search_form").requestSubmit();
     });
 });
 </script>
