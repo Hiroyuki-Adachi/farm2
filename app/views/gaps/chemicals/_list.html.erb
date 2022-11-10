@@ -1,0 +1,29 @@
+<% if @chemicals.present? %>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th>農薬名</th>
+        <th>容量</th>
+        <th>在庫管理</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @chemicals.each do |chemical| %>
+        <tr>
+          <td rowspan="4"></td>
+          <td rowspan="4"></td>
+          <th>日付</th>
+        </tr>
+        <tr class="table-primary">
+          <th>入庫</th>
+        </tr>
+        <tr class="table-danger">
+          <th>出庫</th>
+        </tr>
+        <tr class="table-success">
+          <th>在庫</th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

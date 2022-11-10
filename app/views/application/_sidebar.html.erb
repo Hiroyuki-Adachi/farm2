@@ -80,7 +80,8 @@
   </div>
   <div aria-labelledby="navbar_gap" class="mt-2" style="display:none;">
     <span class="h5">GAP関連</span>
-    <%= link_to '作業月毎記録表', gaps_monthly_reports_path, {class: "dropdown-item ms-2", data: {controller: :monthly_reports}} %>
+    <%= link_to '作業月毎記録表', gaps_monthly_reports_path, {class: "dropdown-item ms-2", data: {controller: :gaps_monthly_reports}} %>
+    <%= link_to '農薬肥料台帳', gaps_chemicals_path, {class: "dropdown-item ms-2", data: {controller: :gaps_chemicals}} %>
   </div>
   <% end %>
   <% if current_user.checkable? %>
