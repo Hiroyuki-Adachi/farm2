@@ -9,6 +9,7 @@
       <th></th>
     </tr>
   </thead>
+  <% if @works.present? %>
   <tbody>
     <% @works.each do |work| %>
       <tr>
@@ -21,4 +22,5 @@
       </tr>
     <% end %>
   </tbody>
+  <% end %>
 </table>

@@ -1,0 +1,22 @@
+<%= form_with url: gaps_chemicals_path, method: :get, data: {turbo_frame: :list}, id: :search_form do |f| %>
+  <div class="row">
+    <div class="col-md-4">
+      <h1>農薬肥料台帳</h1>
+    </div>
+    <div class="col-md-3">
+      <div class="form-inline">
+        <label for="worked_at" class="h5 form-label">種別</label>
+        <%= select_tag(:chemical_type_id, 
+            options_from_collection_for_select(ChemicalType.usual, :id, :name), include_blank: true, class: "form-select"
+        ) %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="row">
+  <div class="col-md-12">
+    <%= turbo_frame_tag 'list' do %>
+      <%= render partial: "list" %>
+    <% end %>
+  </div>
+</div>

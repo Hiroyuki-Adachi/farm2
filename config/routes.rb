@@ -18,6 +18,7 @@ Rails.application.routes.draw do
         get :months
       end
     end
+    resources :chemicals, only: [:index]
   end
   resources :work_seedlings, only: [:index]
   resources :owned_rices, only: [:index, :edit, :update]

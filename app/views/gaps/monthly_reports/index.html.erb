@@ -6,7 +6,7 @@
     <div class="col-md-3">
       <div class="form-inline">
         <label for="worked_at" class="h5 form-label">作業</label>
-        <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name), include_blank: true, class: "form-select") %>
+        <%= select_tag(:work_type_id, options_from_collection_for_select(WorkType.land, :id, :name), include_blank: true, class: "form-select") %>
       </div>
     </div>
     <div class="col-md-3">
