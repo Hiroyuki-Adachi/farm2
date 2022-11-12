@@ -68,13 +68,12 @@
   </div>
 </div>
 <%= hidden_field_tag :monthly_report_path, months_gaps_monthly_report_path(":work_type_id") %>
-<%= hidden_field_tag :index_path, gaps_monthly_reports_path %>
 <script>
 window.addEventListener('turbo:load', () => {
     document.getElementById("work_type_id").addEventListener("change", (event) => {
         Turbo.visit(document.getElementById("monthly_report_path").value.replace(":work_type_id", event.target.value));
     });
-    document.getElementById("worked_at").addEventListener("change", (event) => {
+    document.getElementById("worked_at").addEventListener("change", () => {
         document.getElementById("search_form").requestSubmit();
     });
 });

@@ -5,7 +5,7 @@
     </div>
     <div class="col-md-3">
       <div class="form-inline">
-        <label for="worked_at" class="h5 form-label">種別</label>
+        <label for="chemical_type_id" class="h5 form-label">種別</label>
         <%= select_tag(:chemical_type_id, 
             options_from_collection_for_select(ChemicalType.usual, :id, :name), include_blank: true, class: "form-select"
         ) %>
@@ -20,3 +20,11 @@
     <% end %>
   </div>
 </div>
+<script>
+window.addEventListener('turbo:load', () => {
+    document.getElementById("chemical_type_id").addEventListener("change", () => {
+        loading.disp("計算中");
+        document.getElementById("search_form").requestSubmit();
+    });
+});
+</script>
