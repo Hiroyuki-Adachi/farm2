@@ -5,6 +5,7 @@
     <tr>
       <th>種別</th>
       <th>名称</th>
+      <th>機械NO</th>
       <th>所有者</th>
       <th>運用開始日</th>
       <th>運用終了(予定)日</th>
@@ -16,6 +17,7 @@
       <tr>
         <td><%=h machine.type_name %></td>
         <td><%=h machine.name %></td>
+        <td><%= machine.code %></td>
         <td><%=h machine.owner.name %></td>
         <td><%=h machine.validity_start_at %></td>
         <td><%=h machine.validity_end_at %></td>

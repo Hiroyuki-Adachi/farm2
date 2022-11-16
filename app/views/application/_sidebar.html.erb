@@ -106,7 +106,7 @@
     <% end %>
   </div>
   <% end %>
-  <div aria-labelledby="navbarManagement" class="mt-2" style="display:none;">
+  <div aria-labelledby="navbar_management" class="mt-2" style="display:none;">
     <span class="h5">管理</span>
     <% if current_user.admin? %>
       <%= link_to '利用者マスタ保守', users_path, {class: "dropdown-item ms-2", data: {controller: :users, actions: [:new, :index]}} %>
