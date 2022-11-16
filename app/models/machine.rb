@@ -103,4 +103,8 @@ class Machine < ApplicationRecord
     result = (result * Machine.maximum(:display_order) + display_order) * max_machine + id
     return result
   end
+
+  def code
+    machine_type.code.present? && number.present? ? "#{machine_type.code}-#{number}" : ""
+  end
 end

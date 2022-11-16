@@ -68,6 +68,10 @@
       <%= f.collection_select(:contract_work_type_id, @work_types, :id, :name, {include_blank: true}, {class: "form-select"}) %>
     </div>
     <div class="field mb-3 col-md-3">
+      <%= f.label :maintenance_id, class: "col-form-label-lg form-label" %>
+      <%= f.collection_select(:maintenance_id, @work_kinds, :id, :name, {include_blank: true}, {class: "form-select"}) %>
+    </div>
+    <div class="field mb-3 col-md-3">
       <%= f.label :harvesting_work_kind_id, class: "col-form-label-lg form-label" %>
       <%= f.collection_select(:harvesting_work_kind_id, @work_kinds, :id, :name, {include_blank: true}, {class: "form-select"}) %>
       <%= f.hidden_field :location, {value: "(#{current_location})"} %>

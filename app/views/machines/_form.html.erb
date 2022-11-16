@@ -28,7 +28,11 @@
     </div>
     <div class="col-md-2 mb-3">
       <%= f.label :display_order, class: "col-form-label-lg form-label" %>
-      <%= f.number_field :display_order, {maxlength: 3, size: 3, required: true, min: 0, max: 9999, class: "form-control"} %>
+      <%= f.number_field :display_order, {required: true, min: 0, max: 9999, class: "form-control"} %>
+    </div>
+    <div class="col-md-2 mb-3">
+      <%= f.label :number, class: "col-form-label-lg form-label" %>
+      <%= f.number_field :number, {required: false, min: 1, max: 99, class: "form-control"} %>
     </div>
   </div>
   <div class="row">

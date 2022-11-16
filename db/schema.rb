@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_13_100706) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_16_112046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -463,6 +463,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_13_100706) do
     t.integer "display_order", default: 1, null: false, comment: "表示順"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+    t.string "code", limit: 1, default: "", null: false, comment: "種別コード"
   end
 
   create_table "machines", id: { type: :serial, comment: "機械マスタ" }, comment: "機械マスタ", force: :cascade do |t|
@@ -476,6 +477,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_13_100706) do
     t.datetime "updated_at", precision: nil
     t.datetime "deleted_at", precision: nil
     t.boolean "diesel_flag", default: false, null: false, comment: "ディーゼル"
+    t.integer "number", comment: "番号"
   end
 
   create_table "minutes", comment: "議事録", force: :cascade do |t|
@@ -512,6 +514,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_13_100706) do
     t.integer "contract_work_type_id", comment: "受託作業分類"
     t.integer "harvesting_work_kind_id", comment: "稲刈作業種別"
     t.point "location", default: [35.0, 135.0], null: false, comment: "位置"
+    t.integer "maintenance_id", comment: "機械保守id"
   end
 
   create_table "owned_rice_prices", comment: "保有米単価", force: :cascade do |t|
