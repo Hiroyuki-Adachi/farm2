@@ -83,6 +83,7 @@
     <%= link_to '作業月毎記録表', gaps_monthly_reports_path, {class: "dropdown-item ms-2", data: {controller: :gaps_monthly_reports}} %>
     <%= link_to '農薬肥料台帳', gaps_chemicals_path, {class: "dropdown-item ms-2", data: {controller: :gaps_chemicals}} %>
     <%= link_to '体調確認表', gaps_health_index_path, {class: "dropdown-item ms-2", data: {controller: :gaps_health}} %>
+    <%= link_to '整備記録表', gaps_maintenances_path, {class: "dropdown-item ms-2", data: {controller: :gaps_maintenances}} %>
   </div>
   <% end %>
   <% if current_user.checkable? %>
