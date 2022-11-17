@@ -432,6 +432,16 @@ SQL
     end
   end
 
+  def machine_types
+    MachineType.joins(:machines).where("machines.id" => machine_results.pluck(:machine_id).uniq).usual.uniq
+  end
+
+  def maintenances
+    results = [name, remarks]
+    results << machine_remarks.pluck(:care_remarks)
+    return results.flatten.uniq.delete_if {|v| v.empty? }
+  end
+
   private
 
   def quantity_params(quantity, add_params)
