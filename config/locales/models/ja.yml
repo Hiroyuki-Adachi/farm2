@@ -155,10 +155,12 @@ ja:
         validity_start_at: 運用開始日
         validity_end_at: 運用終了日
         diesel_flag: "燃料"
+        number: "番号"
 
       machine_type:
         name: 名称
         display_order: 表示順
+        code: "コード"
         
       machine_price_header:
         validated_at: 起算日
@@ -228,6 +230,8 @@ ja:
         whole_crop_work_kind_id: "WCS収穫を選択"
         contract_work_type_id: "受託作業を選択"
         harvesting_work_kind_id: "稲刈りを選択"
+        maintenance_id: "機械保守を選択"
+        cleaning_id: "清掃作業を選択"
 
       section:
         name: 名称

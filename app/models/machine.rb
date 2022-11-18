@@ -7,6 +7,7 @@
 #  diesel_flag(ディーゼル)           :boolean          default(FALSE), not null
 #  display_order(表示順)             :integer          not null
 #  name(機械名称)                    :string(40)       not null
+#  number(番号)                      :integer
 #  validity_end_at(稼動終了(予定)日) :date
 #  validity_start_at(稼動開始日)     :date
 #  created_at                        :datetime
@@ -102,5 +103,9 @@ class Machine < ApplicationRecord
     result = machine_type.machine_type_order
     result = (result * Machine.maximum(:display_order) + display_order) * max_machine + id
     return result
+  end
+
+  def code
+    machine_type&.code.present? && number.present? ? "#{machine_type.code}-#{number}" : ""
   end
 end
