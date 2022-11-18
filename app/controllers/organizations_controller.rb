@@ -43,6 +43,7 @@ class OrganizationsController < ApplicationController
       :contract_work_type_id,
       :harvesting_work_kind_id,
       :maintenance_id,
+      :cleaning_id,
       :location
     )
   end

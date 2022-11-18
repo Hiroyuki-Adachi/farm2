@@ -231,6 +231,7 @@ ja:
         contract_work_type_id: "受託作業を選択"
         harvesting_work_kind_id: "稲刈りを選択"
         maintenance_id: "機械保守を選択"
+        cleaning_id: "清掃作業を選択"
 
       section:
         name: 名称
