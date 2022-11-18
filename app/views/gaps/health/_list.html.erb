@@ -1,0 +1,22 @@
+<% if @healths.present? %>
+  <table class="table table-sm table-bordered">
+    <thead>
+      <tr>
+        <th>年月</th>
+        <% @workers.each do |worker| %>
+        <th class="text-center"><%= worker.family_name %><br /><%= worker.first_name %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @healths.each do |health_date, health| %>
+        <tr>
+          <td class="text-center"><%= health_date.strftime('%m/%d') %></td>
+          <% @workers.each do |worker| %>
+          <td class="text-center"><%= health[worker.id] %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
