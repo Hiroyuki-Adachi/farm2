@@ -107,6 +107,12 @@ class WorkResult < ApplicationRecord
     seedling_results.where(disposal_flag: false).sum(:quantity)
   end
 
+  def health_mark
+    return '◯' if self.health.well_flag
+    return self.remarks if self.health.other_flag
+    return self.health.name
+  end
+
   def self.sum_hours_for_member(works)
     WorkResult.includes(:work)
       .joins(:worker)
@@ -120,5 +126,19 @@ class WorkResult < ApplicationRecord
     results.each do |id, result|
       work.work_results.where(id: id).update(result.permit(:health_id, :remarks))
     end
+  end
+
+  def self.all_health(term, work_type_id)
+    results = {}
+    workers = []
+    Work.where(term: term, work_type_id: work_type_id).order(:worked_at, :id).each do |work|
+      result = results[work.worked_at] || {}
+      work.work_results.each do |work_result|
+        result[work_result.worker_id] = work_result.health_mark
+        workers << work_result.worker_id
+      end
+      results[work.worked_at] = result
+    end
+    return results, workers.uniq
   end
 end

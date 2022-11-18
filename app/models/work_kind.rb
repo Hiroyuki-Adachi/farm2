@@ -54,6 +54,7 @@ class WorkKind < ApplicationRecord
       .where(["work_kind_types.work_type_id = ?", work_type.genre_id])
       .order("work_kinds.other_flag, work_kinds.phonetic, work_kinds.display_order, work_kinds.id")
   }
+  scope :gaps, -> {where.not(broccoli_mark: [nil, ""]).group(:broccoli_mark).order(:broccoli_mark).select("broccoli_mark, MAX(name) AS name")}
 
   def price
     new_record? ? @p_price : term_price(Organization.term)

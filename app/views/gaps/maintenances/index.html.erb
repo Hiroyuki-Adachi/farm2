@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-4">
+    <h1>整備記録表</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>日付</th>
+          <th>機械</th>
+          <th>機械NO</th>
+          <th>担当</th>
+          <th>実施内容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @works.each do |work| %>
+          <tr>
+            <td class="text-right"><%= work.worked_at.strftime('%m月%d日') %></td>
+            <td><%= work.machine_types.pluck(:name).join('、') %></td>
+            <td></td>
+            <td><%= work.workers.map(&:name).join('、') %></td>
+            <td><%= work.maintenances.join('、') %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
