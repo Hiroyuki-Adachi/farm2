@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_16_112046) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_13_100706) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -515,6 +515,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_112046) do
     t.integer "harvesting_work_kind_id", comment: "稲刈作業種別"
     t.point "location", default: [35.0, 135.0], null: false, comment: "位置"
     t.integer "maintenance_id", comment: "機械保守id"
+    t.integer "cleaning_id", comment: "清掃id"
   end
 
   create_table "owned_rice_prices", comment: "保有米単価", force: :cascade do |t|
