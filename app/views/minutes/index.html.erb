@@ -39,8 +39,8 @@
 <% content_for :head do %>
 <script type="text/javascript">
 document.addEventListener('turbo:load', () => {
-    $("#minute_pdf").change(function() {
-        $(this).closest("form").submit();
+    document.getElementById("minute_pdf").addEventListener("change", (event) => {
+        event.target.closest("form").requestSubmit();
     });
 });
 
