@@ -1,0 +1,29 @@
+<h1>施設マスタ一覧</h1>
+<% if @institutions.count > 0 %>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>施設名</th>
+      <th>有効</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @institutions.each do |institution| %>
+      <tr>
+        <td><%= institution.name %></td>
+        <td><%= institution.enable?(current_term) %></td>
+        <td><%= link_to '修正', edit_institution_path(institution), {class: "btn btn-success btn-sm"} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to '新規登録', new_institution_path, class: "btn btn-success" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>

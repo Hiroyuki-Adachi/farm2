@@ -106,6 +106,7 @@ Rails.application.routes.draw do
     resources :managers, controller: "lands/managers", only: [:index, :create, :destroy]
   end
   resources :homes, except: [:show]
+  resources :institutions, except: [:show]
   resources :workers, except: [:show]
   resources :machines, except: [:show]
   resources :chemicals, except: [:show] do
