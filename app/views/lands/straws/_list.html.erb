@@ -1,0 +1,22 @@
+<table class="table table-sm">
+   <thead>
+    <tr>
+        <th>品種</th>
+        <th class="numeric">面積(ha)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @work_types.each do |work_type| %>
+        <tr>
+            <td><%= work_type.name %></td>
+            <td class="numeric"><%= sprintf("%.2f", @straws[work_type.id] / 100) %></td>
+        </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+        <td>合計</td>
+        <td class="numeric"><%= sprintf("%.2f", @straws.values.sum / 100) %></td>
+    </tr>
+  </tfoot>
+</table>
