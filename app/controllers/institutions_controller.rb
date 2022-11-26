@@ -8,14 +8,14 @@ class InstitutionsController < ApplicationController
   end
 
   def new
-    @institution = Land.new
+    @institution = Institution.new
   end
 
   def edit
   end
 
   def create
-    @institution = Land.new(institution_params)
+    @institution = Institution.new(institution_params)
     if @institution.save
       redirect_to institutions_path
     else

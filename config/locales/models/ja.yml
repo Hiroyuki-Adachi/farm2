@@ -32,6 +32,7 @@ ja:
       chemical_stock: "農薬在庫"
       sorimachi_journal: "ソリマチ農業簿記"
       sorimachi_account: "ソリマチ勘定科目"
+      institution: "施設"
 
     attributes:
       chemical:
@@ -337,6 +338,12 @@ ja:
         total_cost_type_id: "科目種別"
         auto_code: "自動設定コード"
         auto_work_type_id: "自動設定原価"
+
+      institution:
+        name: "施設名称"
+        display_order: "表示順"
+        start_term: "提供開始年度"
+        end_term: "提供終了年度"
 
   status:
     organization:

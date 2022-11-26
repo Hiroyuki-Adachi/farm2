@@ -12,7 +12,7 @@
     <% @institutions.each do |institution| %>
       <tr>
         <td><%= institution.name %></td>
-        <td><%= institution.enable?(current_term) %></td>
+        <td><%= institution.enable?(current_term) ? "◯" : "" %></td>
         <td><%= link_to '修正', edit_institution_path(institution), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>
