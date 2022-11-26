@@ -13,4 +13,6 @@
 #  cleaning_institutions_2nd  (cleaning_id,institution_id) UNIQUE
 #
 class CleaningInstitution < ApplicationRecord
+  belongs_to :cleaning
+  belongs_to :institution
 end

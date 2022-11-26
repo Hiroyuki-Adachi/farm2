@@ -174,4 +174,8 @@ class WorkDecorator < Draper::Decorator
   def worker_names
     model.workers.map(&:name).join('、') 
   end
+
+  def worker_members
+    model.workers.count == 1 ? model.workers[0].name : "#{model.workers.count}名"
+  end
 end
