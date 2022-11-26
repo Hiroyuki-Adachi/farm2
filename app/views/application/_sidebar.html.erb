@@ -85,6 +85,7 @@
     <%= link_to '農薬肥料台帳', gaps_chemicals_path, {class: "dropdown-item ms-2", data: {controller: :gaps_chemicals}} %>
     <%= link_to '体調確認表', gaps_health_index_path, {class: "dropdown-item ms-2", data: {controller: :gaps_health}} %>
     <%= link_to '整備記録表', gaps_maintenances_path, {class: "dropdown-item ms-2", data: {controller: :gaps_maintenances}} %>
+    <%= link_to '清掃記録表', gaps_cleanings_path, {class: "dropdown-item ms-2", data: {controller: :gaps_cleanings}} %>
   </div>
   <% end %>
   <% if current_user.checkable? %>

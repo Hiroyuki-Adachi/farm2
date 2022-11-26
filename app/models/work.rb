@@ -52,6 +52,7 @@ class Work < ApplicationRecord
   has_many :machine_remarks, dependent: :destroy
   has_one :broccoli, class_name: "WorkBroccoli", dependent: :destroy
   has_one :whole_crop, class_name: "WorkWholeCrop", dependent: :destroy
+  has_one :cleaning, dependent: :destroy
 
   has_many :workers, -> {with_deleted}, through: :work_results
   has_many :lands, -> {with_deleted}, through: :work_lands
@@ -63,11 +64,11 @@ class Work < ApplicationRecord
 
   scope :no_fixed, ->(term){
     includes(:work_type, :work_kind)
-      .where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)
+      .where(term: term, fixed_at: nil).order(worked_at: :ASC, start_at: :ASC, id: :ASC)
   }
-  scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}
-  scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, id: :DESC)}
-  scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, id: :ASC).order(worked_at: :ASC, id: :ASC)}
+  scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
+  scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :ASC, id: :DESC)}
+  scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
   scope :by_creator, ->(worker) {where(["works.created_by IS NULL OR works.created_by <> ?", worker.id])}
   scope :by_work_kind_type, ->(term, work_kind_id, work_type_id) {
     joins(:work_lands)
@@ -85,7 +86,7 @@ class Work < ApplicationRecord
           HAVING MAX(lc2.activated_on) = lc1.activated_on
     ))
 SQL
-      .order(worked_at: :ASC, id: :ASC)
+      .order(worked_at: :ASC, start_at: :ASC, id: :ASC)
   }
   scope :enough_check, ->(worker) {where([<<SQL, worker.id, worker.position == Position::DIRECTOR ? ENOUGH + 1 : ENOUGH])}
       NOT EXISTS (

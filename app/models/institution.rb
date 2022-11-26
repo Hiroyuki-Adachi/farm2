@@ -12,6 +12,8 @@
 #  updated_at               :datetime         not null
 #
 class Institution < ApplicationRecord
+  has_many :cleaning_institutions, dependent: :destroy
+
   scope :usual, -> {order(display_order: :asc)}
 
   def enable?(term)

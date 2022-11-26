@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :chemicals, only: [:index]
     resources :health, only: [:index]
     resources :maintenances, only: [:index]
+    resources :cleanings, only: [:index, :edit, :update]
   end
   resources :work_seedlings, only: [:index]
   resources :owned_rices, only: [:index, :edit, :update]

@@ -13,4 +13,7 @@
 #  work_id(作業ID)             :integer          default(0), not null
 #
 class Cleaning < ApplicationRecord
+  belongs_to :work
+  has_many :cleaning_institutions, dependent: :destroy
+  has_many :institutions, through: :cleaning_institutions
 end
