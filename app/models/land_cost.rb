@@ -76,6 +76,15 @@ SQL
     end
   end
 
+  def self.for_straws(term, work_type_id)
+    LandCost.newest(Date.new(term.to_i,4,1)).joins(:land).where([<<SQL, work_type_id, term]).group("land_costs.work_type_id").sum("lands.area")
+      EXISTS (SELECT * FROM work_lands 
+        INNER JOIN works ON works.id = work_lands.work_id AND works.work_type_id = ? AND works.term = ?
+        WHERE lands.id = work_lands.land_id
+      )
+SQL
+  end
+
   def update_work_type(params, start_date)
     return if work_type_id == params[:work_type_id].to_i 
 

@@ -158,4 +158,20 @@ class WorkDecorator < Draper::Decorator
   def exact_work_type_name
     model.exact_work_types.map(&:name).to_sentence
   end
+
+  def machine_numbers
+    results = []
+    model.machine_numbers.each do |key, value|
+      results << "#{key}-#{value.sort.join(',')}"
+    end
+    return results.join('、')
+  end
+
+  def machine_type_names
+    model.machine_types.pluck(:name).join('、')
+  end
+
+  def worker_names
+    model.workers.map(&:name).join('、') 
+  end
 end

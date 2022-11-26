@@ -232,6 +232,7 @@ ja:
         harvesting_work_kind_id: "稲刈りを選択"
         maintenance_id: "機械保守を選択"
         cleaning_id: "清掃作業を選択"
+        straw_id: "稲わらを選択"
 
       section:
         name: 名称

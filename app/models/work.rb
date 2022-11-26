@@ -59,6 +59,7 @@ class Work < ApplicationRecord
   has_many :machine_results, through: :work_results
   has_many :checkers, -> {with_deleted}, through: :work_verifications, source: :worker
   has_many :work_types, through: :work_work_types
+  has_many :machines, through: :machine_results
 
   scope :no_fixed, ->(term){
     includes(:work_type, :work_kind)
@@ -440,6 +441,19 @@ SQL
     results = [name, remarks]
     results << machine_remarks.pluck(:care_remarks)
     return results.flatten.uniq.delete_if {|v| v.empty? }
+  end
+
+  def machine_numbers
+    results = {}
+    machines.includes(:machine_type).each do |machine|
+      next if machine.machine_type.nil? || machine.machine_type.code.nil? || machine.number.nil?
+      if results.key?(machine.machine_type.code)
+        results[machine.machine_type.code.intern] << machine.number
+      else
+        results[machine.machine_type.code.intern] = [machine.number]
+      end
+    end
+    return results
   end
 
   private
