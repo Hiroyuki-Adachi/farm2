@@ -16,8 +16,14 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+jimusho: 
+  name: "事務所"
+  start_term: 2010
+  end_term: 9999
+  display_order: 1
+
+kakunoko: 
+  name: "格納庫"
+  start_term: 2015
+  end_term: 9999
+  display_order: 2
