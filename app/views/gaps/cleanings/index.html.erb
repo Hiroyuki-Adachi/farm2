@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="col-md-4">
-    <h1>清掃(動物・害虫駆除)記録表</h1>
+  <div class="col-md-12">
+    <h1>清掃(動物・害虫駆除)記録一覧</h1>
   </div>
 </div>
 <div class="row">
@@ -21,13 +21,13 @@
         <% @works.each do |work| %>
           <tr>
             <td class="text-right"><%= work.worked_at %></td>
-            <td><%= work.name %></td>
+            <td><%= work.model.name %></td>
             <td><%= work.cleaning&.cleaning_flag ? "清掃" : "" %></td>
             <td><%= work.cleaning&.animal_flag ? "動物駆除" : "" %></td>
             <td><%= work.cleaning&.pest_flag ? "害虫駆除" : "" %></td>
             <td><%= work.cleaning&.target %></td>
             <td><%= work.cleaning&.method %></td>
-            <td></td>
+            <td><%= work.cleaning&.institutions&.pluck(:name)&.join('、') %></td>
             <td><%= work.worker_members %></td>
             <td><%= link_to '修正', edit_gaps_cleaning_path(work.id), {class: "btn btn-success btn-sm"} %></td>
           </tr>

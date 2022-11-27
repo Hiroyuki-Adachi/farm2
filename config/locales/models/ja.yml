@@ -33,6 +33,7 @@ ja:
       sorimachi_journal: "ソリマチ農業簿記"
       sorimachi_account: "ソリマチ勘定科目"
       institution: "施設"
+      cleaning: "清掃"
 
     attributes:
       chemical:
@@ -344,6 +345,13 @@ ja:
         display_order: "表示順"
         start_term: "提供開始年度"
         end_term: "提供終了年度"
+
+      cleaning:
+        target: "駆除対象動物・害虫名"
+        method: "清掃・駆除方法"
+        cleaning_flag: "清掃"
+        animal_flag: "動物駆除"
+        pest_flag: "害虫駆除"
 
   status:
     organization:
