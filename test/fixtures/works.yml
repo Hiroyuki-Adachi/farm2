@@ -5337,6 +5337,15 @@ work_broccoli:
   fixed_at: '2015-06-01'
   work_kind: work_kind_broccoli
 
+work_cleaning:
+  term: 2015
+  worked_at: '2015-05-30'
+  work_type_id: 13
+  name: "清掃作業テスト"
+  start_at: '14:00:00'
+  end_at: '16:00:00'
+  work_kind_id: 21
+
 work_genka:
   term: 2017
   worked_at: "2017-02-16"

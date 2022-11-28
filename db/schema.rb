@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_25_110506) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_123845) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -165,6 +165,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_25_110506) do
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
   end
 
+  create_table "cleaning_cleaning_targets", comment: "清掃対象", force: :cascade do |t|
+    t.bigint "cleaning_id", comment: "清掃"
+    t.integer "cleaning_target_id", comment: "清掃対象ID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cleaning_id"], name: "index_cleaning_cleaning_targets_on_cleaning_id"
+  end
+
   create_table "cleaning_institutions", comment: "清掃施設", force: :cascade do |t|
     t.integer "cleaning_id", null: false, comment: "清掃ID"
     t.integer "institution_id", null: false, comment: "施設ID"
@@ -173,13 +181,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_25_110506) do
     t.index ["cleaning_id", "institution_id"], name: "cleaning_institutions_2nd", unique: true
   end
 
+  create_table "cleaning_targets", comment: "清掃種別マスタ", force: :cascade do |t|
+    t.string "name", limit: 10, default: "", null: false, comment: "名称"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "cleanings", comment: "清掃", force: :cascade do |t|
-    t.integer "work_id", default: 0, null: false, comment: "作業ID"
+    t.integer "work_id", null: false, comment: "作業ID"
     t.string "target", limit: 20, default: "", null: false, comment: "駆除対象"
     t.string "method", limit: 20, default: "", null: false, comment: "清掃方法"
-    t.boolean "cleaning_flag", default: false, null: false, comment: "清掃フラグ"
-    t.boolean "animal_flag", default: false, null: false, comment: "動物駆除フラグ"
-    t.boolean "pest_flag", default: false, null: false, comment: "害虫駆除フラグ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -14,7 +14,8 @@
 class Institution < ApplicationRecord
   has_many :cleaning_institutions, dependent: :destroy
 
-  scope :usual, -> {order(display_order: :asc)}
+  scope :usual, -> {order(display_order: :ASC, id: :ASC)}
+  scope :by_term, -> (term) {where("? BETWEEN start_term AND end_term", term)}
 
   def enable?(term)
     return self.start_term <= term && self.end_term >= term

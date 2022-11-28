@@ -86,7 +86,7 @@ class Work < ApplicationRecord
           HAVING MAX(lc2.activated_on) = lc1.activated_on
     ))
 SQL
-      .order(worked_at: :ASC, start_at: :ASC, id: :ASC)
+      .order(worked_at: :ASC, id: :ASC)
   }
   scope :enough_check, ->(worker) {where([<<SQL, worker.id, worker.position == Position::DIRECTOR ? ENOUGH + 1 : ENOUGH])}
       NOT EXISTS (
