@@ -29,9 +29,8 @@ class Gaps::CleaningsController < GapsController
           .permit(
             :target, 
             :method,
-            :cleaning_flag,
-            :animal_flag,
-            :pest_flag
+            cleaning_target_ids: [],
+            institution_ids: []
           )
           .merge(work_id: params[:id])
   end

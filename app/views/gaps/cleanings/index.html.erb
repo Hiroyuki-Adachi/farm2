@@ -9,7 +9,8 @@
       <thead>
         <tr>
           <th>実施日</th>
-          <th colspan="4">内容</th>
+          <th>作業</th>
+          <th>内容</th>
           <th>駆除対象動物・害虫名</th>
           <th>清掃・駆除方法</th>
           <th>対象施設</th>
@@ -22,9 +23,7 @@
           <tr>
             <td class="text-right"><%= work.worked_at %></td>
             <td><%= work.model.name %></td>
-            <td><%= work.cleaning&.cleaning_flag ? "清掃" : "" %></td>
-            <td><%= work.cleaning&.animal_flag ? "動物駆除" : "" %></td>
-            <td><%= work.cleaning&.pest_flag ? "害虫駆除" : "" %></td>
+            <td><%= work.cleaning&.cleaning_target_names&.join('、') %></td>
             <td><%= work.cleaning&.target %></td>
             <td><%= work.cleaning&.method %></td>
             <td><%= work.cleaning&.institutions&.pluck(:name)&.join('、') %></td>

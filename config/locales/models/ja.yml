@@ -349,9 +349,8 @@ ja:
       cleaning:
         target: "駆除対象動物・害虫名"
         method: "清掃・駆除方法"
-        cleaning_flag: "清掃"
-        animal_flag: "動物駆除"
-        pest_flag: "害虫駆除"
+        cleaning_targets: "種別"
+        institutions: "施設"
 
   status:
     organization:
