@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_123845) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_29_123023) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -793,6 +793,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_123845) do
     t.integer "sorimachi_journal_id", comment: "ソリマチ仕訳"
     t.integer "sorimachi_account_id", comment: "ソリマチ勘定科目"
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
+  end
+
+  create_table "trainings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: { type: :serial, comment: "利用者マスタ" }, comment: "利用者マスタ", force: :cascade do |t|
