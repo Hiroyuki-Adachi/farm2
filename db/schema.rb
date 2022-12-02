@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_13_100706) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_123845) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -163,6 +163,37 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_13_100706) do
     t.decimal "stock_quantity", precision: 6, default: "0", null: false, comment: "在庫数"
     t.string "url", limit: 255, default: "", null: false, comment: "URL"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
+  end
+
+  create_table "cleaning_cleaning_targets", comment: "清掃対象", force: :cascade do |t|
+    t.bigint "cleaning_id", comment: "清掃"
+    t.integer "cleaning_target_id", comment: "清掃対象ID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cleaning_id"], name: "index_cleaning_cleaning_targets_on_cleaning_id"
+  end
+
+  create_table "cleaning_institutions", comment: "清掃施設", force: :cascade do |t|
+    t.integer "cleaning_id", null: false, comment: "清掃ID"
+    t.integer "institution_id", null: false, comment: "施設ID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cleaning_id", "institution_id"], name: "cleaning_institutions_2nd", unique: true
+  end
+
+  create_table "cleaning_targets", comment: "清掃種別マスタ", force: :cascade do |t|
+    t.string "name", limit: 10, default: "", null: false, comment: "名称"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cleanings", comment: "清掃", force: :cascade do |t|
+    t.integer "work_id", null: false, comment: "作業ID"
+    t.string "target", limit: 20, default: "", null: false, comment: "駆除対象"
+    t.string "method", limit: 20, default: "", null: false, comment: "清掃方法"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cost_types", comment: "原価種別", force: :cascade do |t|
@@ -342,6 +373,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_13_100706) do
     t.index ["deleted_at"], name: "index_homes_on_deleted_at"
   end
 
+  create_table "institutions", comment: "施設マスタ", force: :cascade do |t|
+    t.string "name", limit: 40, null: false, comment: "施設名称"
+    t.integer "start_term", default: 0, null: false, comment: "稼動開始年度"
+    t.integer "end_term", default: 9999, null: false, comment: "稼動終了年度"
+    t.integer "display_order", null: false, comment: "表示順"
+    t.point "location", comment: "位置"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "land_costs", id: { type: :serial, comment: "土地原価" }, comment: "土地原価", force: :cascade do |t|
     t.integer "land_id", null: false, comment: "土地"
     t.integer "work_type_id", null: false, comment: "作業分類"
@@ -516,6 +557,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_13_100706) do
     t.point "location", default: [35.0, 135.0], null: false, comment: "位置"
     t.integer "maintenance_id", comment: "機械保守id"
     t.integer "cleaning_id", comment: "清掃id"
+    t.integer "straw_id", comment: "稲わらid"
   end
 
   create_table "owned_rice_prices", comment: "保有米単価", force: :cascade do |t|

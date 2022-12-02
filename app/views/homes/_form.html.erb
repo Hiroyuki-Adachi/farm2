@@ -73,7 +73,7 @@
       <%= f.number_field(:seedling_order, {maxlength: 4, size: 4, min: 1, required: false, class: "form-control"}) %>
     </div>
   </div>
-  <%= f.hidden_field :location, {value: "(#{@home.location ? @home.location.x : current_organization.location.x},#{@home.location ? @home.location.y : current_organization.location.y})"} %>
+  <%= f.hidden_field :location, {value: home_location(@home)} %>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
       <%= f.submit '登録', class: "btn btn-warning" %>

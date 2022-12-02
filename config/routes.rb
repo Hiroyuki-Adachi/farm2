@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :chemicals, only: [:index]
     resources :health, only: [:index]
     resources :maintenances, only: [:index]
+    resources :cleanings, only: [:index, :edit, :update]
   end
   resources :work_seedlings, only: [:index]
   resources :owned_rices, only: [:index, :edit, :update]
@@ -100,12 +101,14 @@ Rails.application.routes.draw do
     end
     resources :fees, only: [:index, :create, :edit, :update]
     resources :totals, only: [:index]
+    resources :straws, only: [:index]
   end
   resources :lands, except: [:show] do
     resources :owners, controller: "lands/owners", only: [:index, :create, :destroy]
     resources :managers, controller: "lands/managers", only: [:index, :create, :destroy]
   end
   resources :homes, except: [:show]
+  resources :institutions, except: [:show]
   resources :workers, except: [:show]
   resources :machines, except: [:show]
   resources :chemicals, except: [:show] do

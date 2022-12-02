@@ -44,6 +44,7 @@ class OrganizationsController < ApplicationController
       :harvesting_work_kind_id,
       :maintenance_id,
       :cleaning_id,
+      :straw_id,
       :location
     )
   end
