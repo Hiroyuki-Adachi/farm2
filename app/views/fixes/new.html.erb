@@ -1,10 +1,15 @@
 <% content_for :head do %>
 <%= javascript_pack_tag 'fixes', 'data-turbo-track': 'reload' %>
 <% end %>
+<h1>確定一覧</h1>
+<% if Delayed::Job.exists? %>
+<hr />
+<h2>計算中です。しばらくお待ち下さい。</h2>
+<% else %>
 <h1>新規確定</h1>
 <h2>確定月</h2>
 <%= form_with url: fixes_path, method: :post do |f| %>
-<%= select_tag('fixed_at', options_for_select(@terms), {class: "form-select"}) %>
+<%= select_tag('fixed_at', options_for_select(@terms, selected: @terms.last), {class: "form-select"}) %>
 
 <h2>確定対象作業</h2>
 
@@ -35,7 +40,7 @@
     <tbody id="tbody_works">
       <% @works.each do |work| %>
         <tr>
-          <td><%= check_box_tag "fixed_works[]", work.id, false, {:id => nil, :onchange => 'calc_total();'} %></td>
+          <td><%= check_box_tag "fixed_works[]", work.id, false, {:id => nil} %></td>
           <td><%=h work.worked_at %></td>
           <td><%=h work.genre_name %></td>
           <td><%=h work.name %></td>
@@ -77,4 +82,4 @@
   </div>
 </div>
 <% end %>
-
+<% end %>
