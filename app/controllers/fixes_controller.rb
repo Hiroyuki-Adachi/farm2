@@ -11,7 +11,6 @@ class FixesController < ApplicationController
   SHOW2_MONTH = 11
 
   def index
-    @making_flag = Delayed::Job.exists?
     @fixes = FixDecorator.decorate_collection(Fix.usual(current_term))
   end
 
