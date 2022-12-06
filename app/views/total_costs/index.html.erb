@@ -1,5 +1,5 @@
 <h1>原価一覧</h1>
-<% if @making_flag %>
+<% if Delayed::Job.exists? %>
 <hr />
 <h2>計算中です。しばらくお待ち下さい。</h2>
 <div id="btn_toolbar" class="btn-toolbar">

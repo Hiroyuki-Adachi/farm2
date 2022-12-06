@@ -1,20 +1,21 @@
-function calc_total()
-{
-    var total_hours = 0.0;
-    var total_amount = 0;
-    var total_machine = 0;
-    var id;
+const { default: Decimal } = require("decimal.js");
 
-    $("input[name^='fixed_works']:checked").each(function(i, e) {
-        id = e.value;
-        total_hours += parseFloat($("#hours_" + id).html());
-        total_amount += parseInt($("#amount_" + id).html().replace(/,/g, ""));
-        total_machine += parseInt($("#machine_" + id).html().replace(/,/g, ""));
+function calcTotal()
+{
+    let totalHours = new Decimal(0);
+    let totalAmount = new Decimal(0);
+    let totalMachine = new Decimal(0);
+
+    document.querySelectorAll("input[name^='fixed_works']:checked").forEach((element) => {
+        const id = element.value;
+        totalHours      = totalHours.plus(new Decimal(document.getElementById(`hours_${id}`).innerHTML));
+        totalAmount     = totalAmount.plus(new Decimal(document.getElementById(`amount_${id}`).innerHTML.replace(/,/g, "") ));
+        totalMachine    = totalMachine.plus(new Decimal(document.getElementById(`machine_${id}`).innerHTML.replace(/,/g, "")));
     });
 
-    $("#total_hours").html(total_hours.toFixed(1));
-    $("#total_amount").html(insertComma(total_amount));
-    $("#total_machine").html(insertComma(total_machine));
+    document.getElementById("total_hours").innerHTML = totalHours.toFixed(1);
+    document.getElementById("total_amount").innerHTML = insertComma(totalAmount);
+    document.getElementById("total_machine").innerHTML = insertComma(totalMachine);
 }
 
 function insertComma(num)
@@ -30,9 +31,11 @@ function insertComma(num)
 
 function checkAll(val)
 {
-    $("input[name^='fixed_works']").prop("checked", val);
+    document.querySelectorAll("input[name^='fixed_works']").forEach((element) => {
+        element.checked = val;
+    });
 
-    calc_total();
+    calcTotal();
 }
 
 document.addEventListener('turbo:load', () => {
@@ -41,5 +44,10 @@ document.addEventListener('turbo:load', () => {
     });
     document.querySelector(".all-cancel").addEventListener('click', () => {
         checkAll(false);
+    });
+    document.querySelectorAll("input[name^='fixed_works']").forEach(element => {
+        element.addEventListener("change", () => {
+            calcTotal();
+        });
     });
 });
