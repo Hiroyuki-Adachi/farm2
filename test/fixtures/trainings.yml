@@ -1,4 +1,17 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# == Schema Information
+#
+# Table name: trainings
+#
+#  id                        :bigint           not null, primary key
+#  content(内容)             :string(20)       default(""), not null
+#  document(資料)            :string(40)       default(""), not null
+#  place(場所)               :string(20)       default(""), not null
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  schedule_id(訓練ID)       :integer          not null
+#  work_id(作業ID)           :integer          not null
+#  worker_id(講師(作業者ID)) :integer          not null
+#
 
 # This model initially had no columns defined. If you add columns to the
 # model remove the "{}" from the fixture names and add the columns immediately

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_29_123023) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_06_122756) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -561,6 +561,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_123023) do
     t.integer "maintenance_id", comment: "機械保守id"
     t.integer "cleaning_id", comment: "清掃id"
     t.integer "straw_id", comment: "稲わらid"
+    t.integer "training_id", comment: "訓練id"
   end
 
   create_table "owned_rice_prices", comment: "保有米単価", force: :cascade do |t|
@@ -798,7 +799,29 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_29_123023) do
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
   end
 
-  create_table "trainings", force: :cascade do |t|
+  create_table "training_training_types", comment: "訓練訓練種別", force: :cascade do |t|
+    t.integer "training_id", null: false, comment: "訓練ID"
+    t.integer "training_type_id", null: false, comment: "訓練訓練ID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["training_id", "training_type_id"], name: "training_training_types_2nd", unique: true
+  end
+
+  create_table "training_types", comment: "訓練種別", force: :cascade do |t|
+    t.string "name", limit: 10, null: false, comment: "名称"
+    t.integer "display_order", null: false, comment: "表示順"
+    t.boolean "other_flag", default: false, null: false, comment: "その他フラグ"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "trainings", comment: "訓練", force: :cascade do |t|
+    t.integer "work_id", null: false, comment: "作業ID"
+    t.integer "schedule_id", null: false, comment: "訓練ID"
+    t.integer "worker_id", null: false, comment: "講師(作業者ID)"
+    t.string "content", limit: 20, default: "", null: false, comment: "内容"
+    t.string "document", limit: 40, default: "", null: false, comment: "資料"
+    t.string "place", limit: 20, default: "", null: false, comment: "場所"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

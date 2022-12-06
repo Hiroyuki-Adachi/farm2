@@ -235,6 +235,7 @@ ja:
         maintenance_id: "機械保守を選択"
         cleaning_id: "清掃作業を選択"
         straw_id: "稲わらを選択"
+        training_id: "講習会・研修を選択"
 
       section:
         name: 名称

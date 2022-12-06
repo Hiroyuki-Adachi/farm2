@@ -86,6 +86,10 @@
       <%= f.label :straw_id, class: "col-form-label-lg form-label" %>
       <%= f.collection_select(:straw_id, @work_types, :id, :name, {include_blank: true}, {class: "form-select"}) %>
     </div>
+    <div class="field mb-3 col-md-3">
+      <%= f.label :training_id, class: "col-form-label-lg form-label" %>
+      <%= f.collection_select(:training_id, @work_kinds, :id, :name, {include_blank: true}, {class: "form-select"}) %>
+    </div>
   </div>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
