@@ -189,12 +189,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_122756) do
   end
 
   create_table "cleanings", comment: "清掃", force: :cascade do |t|
-    t.integer "work_id", default: 0, null: false, comment: "作業ID"
+    t.integer "work_id", null: false, comment: "作業ID"
     t.string "target", limit: 20, default: "", null: false, comment: "駆除対象"
     t.string "method", limit: 20, default: "", null: false, comment: "清掃方法"
-    t.boolean "cleaning_flag", default: false, null: false, comment: "清掃フラグ"
-    t.boolean "animal_flag", default: false, null: false, comment: "動物駆除フラグ"
-    t.boolean "pest_flag", default: false, null: false, comment: "害虫駆除フラグ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
