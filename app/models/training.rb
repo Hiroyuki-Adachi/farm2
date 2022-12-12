@@ -15,4 +15,12 @@
 class Training < ApplicationRecord
   has_many :training_training_types, dependent: :destroy
   has_many :training_types, through: :training_training_types
+
+  belongs_to :work
+  belongs_to :teacher, class_name: "Worker"
+  belongs_to :study, class_name: "Schedule"
+
+  def studyed_on
+    self.study&.worked_at
+  end
 end

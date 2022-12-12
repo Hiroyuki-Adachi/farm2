@@ -178,4 +178,12 @@ class WorkDecorator < Draper::Decorator
   def worker_members
     model.workers.count == 1 ? model.workers[0].name : "#{model.workers.count}名"
   end
+
+  def training_name
+    model.training ? model.training.content : model.name
+  end
+
+  def training_studyed_on
+    model.training && model.training.studyed_on ? model.training.studyed_on.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})" : ""
+  end
 end
