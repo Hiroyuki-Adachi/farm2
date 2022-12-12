@@ -8,15 +8,29 @@
     <table class="table table-sm">
       <thead>
         <tr>
-          <th>日付</th>
+          <th>受講日</th>
           <th>内容</th>
+          <th>場所</th>
+          <th>参加者</th>
+          <th>教育日</th>
+          <th>実施内容</th>
+          <th>参加人数</th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <% @works.each do |work| %>
           <tr>
             <td class="text-right"><%= work.worked_at %></td>
-            <td><%= work.model.name %></td>
+            <td><%= work.training_name %></td>
+            <td><%= work.worker_names %></td>
+            <td><%= work.training_studyed_on %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
         <% end %>
       </tbody>
