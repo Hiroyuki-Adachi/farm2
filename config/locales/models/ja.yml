@@ -34,6 +34,7 @@ ja:
       sorimachi_account: "ソリマチ勘定科目"
       institution: "施設"
       cleaning: "清掃"
+      training: "研修"
 
     attributes:
       chemical:
@@ -352,6 +353,9 @@ ja:
         method: "清掃・駆除方法"
         cleaning_targets: "種別"
         institutions: "施設"
+
+      training:
+        training_place: "研修受講場所"
 
   status:
     organization:

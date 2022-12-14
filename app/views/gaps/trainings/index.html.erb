@@ -16,7 +16,6 @@
           <th>実施内容</th>
           <th>参加人数</th>
           <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -24,13 +23,18 @@
           <tr>
             <td class="text-right"><%= work.worked_at %></td>
             <td><%= work.training_name %></td>
+            <td><%= work.training&.training_place %></td>
             <td><%= work.worker_names %></td>
             <td><%= work.training_studyed_on %></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <% if work.training %>
+              <%= link_to '参照', gaps_training_path(work.id), {class: "btn btn-info btn-sm"} %>
+              <% else %>
+              <%= link_to '作成', edit_gaps_training_path(work.id), {class: "btn btn-success btn-sm"} %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
