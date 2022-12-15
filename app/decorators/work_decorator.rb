@@ -180,7 +180,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def training_name
-    model.training ? model.training.content : model.name
+    model.training && model.training.content.present? ? model.training.content : model.name
   end
 
   def training_studyed_on
