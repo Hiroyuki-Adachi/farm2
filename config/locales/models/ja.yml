@@ -356,6 +356,10 @@ ja:
 
       training:
         training_place: "研修受講場所"
+        studying_place: "勉強会開催場所"
+        worker_id: "講師"
+        document: "資料"
+        content: "受講内容"
 
   status:
     organization:

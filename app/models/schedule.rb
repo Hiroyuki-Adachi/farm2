@@ -51,6 +51,12 @@ SQL
       .where("schedules.worked_at BETWEEN systems.start_date AND systems.end_date")
   }
 
+  scope :for_training, ->(work) {
+    where("schedules.worked_at >= ?", work.worked_at)
+    .where("work_flag = FALSE")
+    .order(worked_at: :ASC, id: :ASC)
+  }
+
   def regist_workers(params)
     workers = []
     params.each do |param|
