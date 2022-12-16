@@ -54,6 +54,7 @@ SQL
   scope :for_training, ->(work) {
     where("schedules.worked_at >= ?", work.worked_at)
     .where("work_flag = FALSE")
+    .includes(:work_kind, :schedule_workers)
     .order(worked_at: :ASC, id: :ASC)
   }
 

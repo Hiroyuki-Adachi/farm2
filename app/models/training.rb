@@ -20,7 +20,11 @@ class Training < ApplicationRecord
   belongs_to :teacher, class_name: "Worker"
   belongs_to :study, class_name: "Schedule"
 
-  def studyed_on
+  def studied_on
     self.study&.worked_at
+  end
+
+  def studied?
+    !self.worker_id.nil?
   end
 end

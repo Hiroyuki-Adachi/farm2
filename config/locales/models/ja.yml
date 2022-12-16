@@ -360,6 +360,9 @@ ja:
         worker_id: "講師"
         document: "資料"
         content: "受講内容"
+        remarks: "摘要"
+        schedule_id: "勉強会"
+        training_types: "研修種別"
 
   status:
     organization:

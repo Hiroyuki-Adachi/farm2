@@ -806,6 +806,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_122756) do
 
   create_table "training_types", comment: "訓練種別", force: :cascade do |t|
     t.string "name", limit: 10, null: false, comment: "名称"
+    t.string "short_name", limit: 2, null: false, comment: "名称(略称)"
     t.integer "display_order", null: false, comment: "表示順"
     t.boolean "other_flag", default: false, null: false, comment: "その他フラグ"
     t.datetime "created_at", null: false
@@ -815,7 +816,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_122756) do
   create_table "trainings", comment: "訓練", force: :cascade do |t|
     t.integer "work_id", null: false, comment: "作業ID"
     t.integer "schedule_id", comment: "訓練ID"
-    t.integer "worker_id", null: false, comment: "講師(作業者ID)"
+    t.integer "worker_id", comment: "講師(作業者ID)"
     t.string "content", limit: 20, default: "", null: false, comment: "内容"
     t.string "document", limit: 40, default: "", null: false, comment: "資料"
     t.string "training_place", limit: 20, default: "", null: false, comment: "研修場所"

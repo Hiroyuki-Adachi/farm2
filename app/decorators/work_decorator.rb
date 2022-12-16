@@ -183,7 +183,7 @@ class WorkDecorator < Draper::Decorator
     model.training && model.training.content.present? ? model.training.content : model.name
   end
 
-  def training_studyed_on
-    model.training && model.training.studyed_on ? model.training.studyed_on.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})" : ""
+  def training_studied_on
+    model.training && model.training.studied_on ? model.training.studied_on.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})" : ""
   end
 end
