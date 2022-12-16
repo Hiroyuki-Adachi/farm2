@@ -10,4 +10,5 @@
 #  updated_at               :datetime         not null
 #
 class TrainingType < ApplicationRecord
+  scope :usual, -> { order(other_flag: :ASC, display_order: :ASC, id: :ASC) }
 end

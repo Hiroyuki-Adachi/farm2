@@ -13,6 +13,6 @@
 #  training_training_types_2nd  (training_id,training_type_id) UNIQUE
 #
 class TrainingTrainingType < ApplicationRecord
-  belongs_to :traning_type
-  belongs_to :traning
+  belongs_to :training_type
+  belongs_to :training
 end
