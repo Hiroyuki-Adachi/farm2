@@ -17,8 +17,8 @@ class Training < ApplicationRecord
   has_many :training_types, through: :training_training_types
 
   belongs_to :work
-  belongs_to :teacher, class_name: "Worker"
-  belongs_to :study, class_name: "Schedule"
+  belongs_to :teacher, class_name: "Worker", foreign_key: 'worker_id'
+  belongs_to :study, class_name: "Schedule", foreign_key: 'schedule_id'
 
   def studied_on
     self.study&.worked_at
