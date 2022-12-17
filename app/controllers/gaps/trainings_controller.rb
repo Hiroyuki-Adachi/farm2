@@ -24,6 +24,8 @@ class Gaps::TrainingsController < GapsController
   end
 
   def destroy
+    @training.destroy
+    redirect_to gaps_trainings_path, status: :see_other
   end
 
   private
