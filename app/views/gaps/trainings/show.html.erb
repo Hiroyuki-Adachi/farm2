@@ -52,13 +52,13 @@
     </div>
     <div class="col-md-3">
       <%= label_tag :teacher_id, Training.human_attribute_name(:worker_id), class: "col-form-label-lg form-label" %>
-      <div class="h4"><%= @training.teacher.name %></div>
+      <div class="h5"><%= @training.teacher.name %></div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
       <%= label_tag :studied_members, Training.human_attribute_name(:studied_members), class: "col-form-label-lg form-label" %>
-      <div class="h5"><%= @training.study.workers.map(&:name).join('、') %></div>
+      <div class="h6"><%= @training.study.workers.map(&:name).join('、') %></div>
     </div>
   </div>
   <div class="row">

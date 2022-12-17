@@ -85,13 +85,5 @@
   </div>
 <% end %>
 <% content_for :head do %>
-<script>
-window.addEventListener('turbo:load', () => {
-    document.getElementById("study").addEventListener("change", (event) => {
-        document.querySelectorAll(".studies").forEach((element) => {
-            element.disabled = !event.target.checked;
-        });
-    });
-});
-</script>
+<%= javascript_pack_tag 'gap-trainings', 'data-turbo-track': 'reload' %>
 <% end %>
