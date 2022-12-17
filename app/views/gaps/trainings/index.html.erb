@@ -12,22 +12,22 @@
           <th>内容</th>
           <th>場所</th>
           <th>参加者</th>
-          <th>教育日</th>
-          <th>実施内容</th>
-          <th>参加人数</th>
+          <th>内容</th>
+          <th>勉強会日</th>
+          <th class="numeric">勉強会参加</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <% @works.each do |work| %>
-          <tr>
+          <tr class="<%= work.training && work.training.studied? ? "table-light" : "table-secondary" %>">
             <td class="text-right"><%= work.worked_at %></td>
             <td><%= work.training_name %></td>
             <td><%= work.training&.training_place %></td>
             <td><%= work.worker_names %></td>
+            <td><%= work.training&.training_types&.pluck(:short_name)&.join(',') %></td>
             <td><%= work.training_studied_on %></td>
-            <td></td>
-            <td></td>
+            <td class="numeric"><%= work.training && work.training.studied? ? "#{work.training.study.workers.count}名" : "" %></td>
             <td>
               <% if work.training %>
               <%= link_to '参照', gaps_training_path(work.id), {class: "btn btn-info btn-sm"} %>

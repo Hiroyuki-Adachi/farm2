@@ -363,6 +363,8 @@ ja:
         remarks: "摘要"
         schedule_id: "勉強会"
         training_types: "研修種別"
+        studied_on: "勉強会開催日"
+        studied_members: "勉強会参加者"
 
   status:
     organization:
