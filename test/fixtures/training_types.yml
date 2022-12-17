@@ -14,3 +14,15 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+training_type1:
+  id: 1
+  name: "TEST"
+  short_name: "試験"
+  display_order: 1
+  other_flag: false
+
+training_type_other:
+  name: "その他"
+  short_name: "他"
+  display_order: 99
+  other_flag: true

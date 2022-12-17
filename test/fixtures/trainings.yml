@@ -17,3 +17,9 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+training1:
+  work_id: 1488
+  document: "TEST"
+  worker_id: 15
+  study: schedule_meeting
+  content: "TEST"

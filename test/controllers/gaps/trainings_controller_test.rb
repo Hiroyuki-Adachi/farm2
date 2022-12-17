@@ -1,28 +1,45 @@
 require "test_helper"
 
-class Gaps::TrainingsControllerTest < ActionDispatch::IntegrationTest
-  test "should get index" do
-    get gaps_trainings_index_url
+class Gaps::TrainingsControllerTest <  ActionController::TestCase
+  setup do
+    setup_ip
+    @work1 = works(:work_study_create)
+    @work2 = works(:work_study_edit)
+  end
+
+  test "GAP研修記録表(一覧)" do
+    get :index
     assert_response :success
   end
 
-  test "should get show" do
-    get gaps_trainings_show_url
+  test "GAP研修記録表(照会)" do
+    get :show, params: {id: @work2}
     assert_response :success
   end
 
-  test "should get edit" do
-    get gaps_trainings_edit_url
+  test "GAP研修記録表(編集)" do
+    get :edit, params: {id: @work1}
     assert_response :success
   end
 
-  test "should get update" do
-    get gaps_trainings_update_url
-    assert_response :success
+  test "GAP研修記録表(更新)" do
+    assert_difference('TrainingTrainingType.count') do
+      assert_difference('Training.count') do
+        put :update, params: {id: @work1, training: {
+          document: "document1",
+          training_type_ids: [1]
+        }}
+      end
+    end
+    assert_redirected_to gaps_trainings_path
   end
 
-  test "should get destroy" do
-    get gaps_trainings_destroy_url
-    assert_response :success
+  test "GAP研修記録表(削除)" do
+    assert_difference('TrainingTrainingType.count', -1) do
+      assert_difference('Training.count', -1) do
+        delete :destroy, params: {id: @work2}
+      end
+    end
+    assert_redirected_to gaps_trainings_path
   end
 end
