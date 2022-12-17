@@ -22,11 +22,11 @@
   <div class="row">
     <div class="col-md-3">
       <%= label_tag :training_content, Training.human_attribute_name(:content), class: "col-form-label-lg form-label" %>
-      <div class="h4"><%= @training.content %></div>
+      <div class="h5"><%= @training.content %></div>
     </div>
     <div class="col-md-3">
       <%= label_tag :training_place, Training.human_attribute_name(:training_place), class: "col-form-label-lg form-label" %>
-      <div class="h4"><%= @training.training_place %></div>
+      <div class="h5"><%= @training.training_place %></div>
     </div>
     <div class="col-md-6">
       <%= label_tag :training_document, Training.human_attribute_name(:document), class: "col-form-label-lg form-label" %>
@@ -41,16 +41,16 @@
   </div>
 <% if @training.studied? %>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <%= label_tag :studied_on, Training.human_attribute_name(:studied_on), class: "col-form-label-lg form-label" %>
       <div class="h4"><%= @work.training_studied_on %></div>
       <div class="h4"><%= @training.study.start_at.strftime("%H:%M") %>～<%= @training.study.end_at.strftime("%H:%M") %></div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <%= label_tag :studying_place, Training.human_attribute_name(:studying_place), class: "col-form-label-lg form-label" %>
       <div class="h4"><%= @training.studying_place %></div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <%= label_tag :teacher_id, Training.human_attribute_name(:worker_id), class: "col-form-label-lg form-label" %>
       <div class="h4"><%= @training.teacher.name %></div>
     </div>
@@ -58,7 +58,7 @@
   <div class="row">
     <div class="col-md-12">
       <%= label_tag :studied_members, Training.human_attribute_name(:studied_members), class: "col-form-label-lg form-label" %>
-      <div class="h4"><%= @training.study.workers.map(&:name).join('、') %></div>
+      <div class="h5"><%= @training.study.workers.map(&:name).join('、') %></div>
     </div>
   </div>
   <div class="row">
