@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_06_122756) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_18_073759) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accidents", comment: "ヒヤリハット", force: :cascade do |t|
+    t.integer "investigator_id", default: 0, null: false, comment: "調査責任者ID"
+    t.string "informant_name", limit: 40, default: "", null: false, comment: "情報提供者"
+    t.integer "accident_type_id", default: 0, null: false, comment: "ヒヤリハット種別ID"
+    t.integer "work_id", null: false, comment: "対象日報"
+    t.integer "audience_id", default: 0, null: false, comment: "対象者ID"
+    t.point "location", comment: "場所"
+    t.text "content", default: "", null: false, comment: "内容"
+    t.text "problem", default: "", null: false, comment: "問題点の考察"
+    t.text "solving", default: "", null: false, comment: "問題解決の考察"
+    t.text "result", default: "", null: false, comment: "改善の結果"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "adjustments", comment: "調整", force: :cascade do |t|
     t.integer "drying_id", default: 0, null: false, comment: "乾燥"
