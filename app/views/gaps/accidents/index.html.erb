@@ -8,9 +8,25 @@
     <table class="table table-sm">
       <thead>
         <tr>
+          <th>作業日</th>
+          <th>作業内容</th>
+          <th>内容</th>
+          <th>調査日</th>
+          <th>調査責任者</th>
+          <th>情報提供者</th>
         </tr>
       </thead>
       <tbody>
+        <% @accidents.each do |accident| %>
+          <tr>
+            <td><%= accident.work.worked_at %></td>
+            <td><%= accident.work.name %></td>
+            <td><%= accident.accident_type.name %></td>
+            <td><%= accident.investigated_on %></td>
+            <td><%= accident.investigator.name %></td>
+            <td><%= accident.informant_name %></td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>

@@ -16,6 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_073759) do
 
   create_table "accidents", comment: "ヒヤリハット", force: :cascade do |t|
     t.integer "investigator_id", default: 0, null: false, comment: "調査責任者ID"
+    t.date "investigated_on", null: false, comment: "調査日"
     t.string "informant_name", limit: 40, default: "", null: false, comment: "情報提供者"
     t.integer "accident_type_id", default: 0, null: false, comment: "ヒヤリハット種別ID"
     t.integer "work_id", null: false, comment: "対象日報"

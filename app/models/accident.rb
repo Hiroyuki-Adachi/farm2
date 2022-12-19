@@ -20,4 +20,11 @@ class Accident < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   belongs_to_active_hash :accident_type
+  belongs_to :work
+  belongs_to :investigator, class_name: "Worker"
+  belongs_to :audience, class_name: "Worker"
+
+  scope :usual, ->(term) {
+    joins(:work).where("works.term = ?", term).order("works.worked_at ASC, works.start_at ASC. accidents.id")
+  }
 end

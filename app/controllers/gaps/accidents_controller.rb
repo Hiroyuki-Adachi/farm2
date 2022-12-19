@@ -1,5 +1,6 @@
 class Gaps::AccidentsController < GapsController
   def index
+    @accidents = Accident.usual(current_term)
   end
 
   def show
