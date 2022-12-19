@@ -2,6 +2,7 @@ class CreateAccidents < ActiveRecord::Migration[7.0]
   def change
     create_table :accidents, comment: 'ヒヤリハット' do |t|
       t.integer :investigator_id, null: false, default: 0, comment: "調査責任者ID"
+      t.date    :investigated_on, null: false, comment: "調査日"
       t.string  :informant_name, null: false, limit: 40, default: "", comment: "情報提供者"
       t.integer :accident_type_id, null: false, default: 0, comment: "ヒヤリハット種別ID"
       t.integer :work_id, null: false, comment: "対象日報"
