@@ -35,6 +35,7 @@ ja:
       institution: "施設"
       cleaning: "清掃"
       training: "研修"
+      accident: "ヒヤリハット"
 
     attributes:
       chemical:
@@ -365,6 +366,20 @@ ja:
         training_types: "研修種別"
         studied_on: "勉強会開催日"
         studied_members: "勉強会参加者"
+
+      accident:
+        worked_at: "作業日"
+        investigator_id: "調査責任者"
+        investigated_on: "調査日"
+        informant_name: "情報提供者"
+        accident_type_id: "種別"
+        work_id: "対象作業"
+        location: "場所"
+        location_name: "場所(名称)"
+        content: "何をしたのか／何があったのか"
+        problem: "問題点の考察"
+        solving: "問題解決の考察"
+        result: "改善の結果"
 
   status:
     organization:
