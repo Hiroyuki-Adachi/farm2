@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_073759) do
     t.integer "work_id", null: false, comment: "対象日報"
     t.integer "audience_id", default: 0, null: false, comment: "対象者ID"
     t.point "location", comment: "場所"
+    t.string "location_name", limit: 40, default: "", null: false, comment: "場所名称"
     t.text "content", default: "", null: false, comment: "内容"
     t.text "problem", default: "", null: false, comment: "問題点の考察"
     t.text "solving", default: "", null: false, comment: "問題解決の考察"

@@ -25,6 +25,6 @@ class Accident < ApplicationRecord
   belongs_to :audience, class_name: "Worker"
 
   scope :usual, ->(term) {
-    joins(:work).where("works.term = ?", term).order("works.worked_at ASC, works.start_at ASC. accidents.id")
+    joins(:work).where("works.term = ?", term).order("works.worked_at, works.start_at, accidents.id")
   }
 end

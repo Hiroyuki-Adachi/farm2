@@ -1,0 +1,32 @@
+<%= error_print(@accident) %>
+<%= form_with model: @accident, url: @accident.new_record? ? gaps_accidents_path : gaps_accident_path(@accident)  do |f| %>
+  <div class="row">
+    <div class="col-md-3 mb-3">
+      <%= f.label :investigator_id, class: "col-form-label-lg form-label" %>
+      <%= f.select :investigator_id, options_from_collection_for_select(Worker.usual.where(position_id: Position::DIRECTOR.id) , :id, :name, f.object.investigator_id), {}, {class: "form-select"} %>
+    </div>
+    <div class="col-md-3 mb-3">
+      <%= f.label :investigated_on, class: "col-form-label-lg form-label" %>
+      <%= f.date_field :investigated_on, {class: "form-control", min: current_system.start_date} %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 mb-3">
+      <%= f.label :worked_at, class: "col-form-label-lg form-label" %>
+      <%= date_field_tag :worked_at, @accident.work&.worked_at, {class: "form-control", min: current_system.start_date, max: current_system.end_date} %>
+    </div>
+  </div>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= f.submit '登録', class: "btn btn-warning" %>
+    </div>
+    <% unless @accident.new_record? %>
+      <div class="btn-group mr-2">
+        <%= link_to '削除', @accident, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+      </div>
+    <% end %>
+    <div class="btn-group mr-2">
+      <%= link_to "戻る", gaps_accidents_path, {class: "btn btn-outline-dark"}%>
+    </div>
+  </div>
+<% end %>
