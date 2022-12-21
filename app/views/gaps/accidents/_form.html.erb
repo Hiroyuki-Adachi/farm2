@@ -15,7 +15,17 @@
       <%= f.label :worked_at, class: "col-form-label-lg form-label" %>
       <%= date_field_tag :worked_at, @accident.work&.worked_at, {class: "form-control", min: current_system.start_date, max: current_system.end_date} %>
     </div>
+    <div class="col-md-3 mb-3">
+      <%= f.label :work_id, class: "col-form-label-lg form-label" %>
+      <%= f.select :work_id, [], {}, {class: "form-select"} %>
+    </div>
+    <div class="col-md-3 mb-3">
+      <%= f.label :audience_id, class: "col-form-label-lg form-label" %>
+      <%= f.select :audience_id, [], {}, {class: "form-select"} %>
+    </div>
   </div>
+  <%= hidden_field_tag :works_gaps_accident_path, works_gaps_accident_path(id: params[:id] || 0, worked_at: ':worked_at') %>
+  <%= hidden_field_tag :audiences_gaps_accident_path, audiences_gaps_accident_path(id: params[:id] || 0, work_id: ':work_id') %>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
       <%= f.submit '登録', class: "btn btn-warning" %>
@@ -29,4 +39,16 @@
       <%= link_to "戻る", gaps_accidents_path, {class: "btn btn-outline-dark"}%>
     </div>
   </div>
+<% end %>
+<% content_for :head do %>
+<script>
+window.addEventListener('turbo:load', () => {
+    document.getElementById("worked_at").addEventListener("blur", (event) => {
+        Turbo.visit(document.getElementById("works_gaps_accident_path").value.replace(":worked_at", event.target.value));
+    });
+    document.getElementById("accident_work_id").addEventListener("change", () => {
+        Turbo.visit(document.getElementById("audiences_gaps_accident_path").value.replace(":work_id", event.target.value));
+    });
+});
+</script>
 <% end %>

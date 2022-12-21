@@ -186,4 +186,8 @@ class WorkDecorator < Draper::Decorator
   def training_studied_on
     model.training && model.training.studied_on ? model.training.studied_on.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})" : ""
   end
+
+  def type_and_kind_name
+    return "#{model.work_type&.name}:#{self.name}"
+  end
 end

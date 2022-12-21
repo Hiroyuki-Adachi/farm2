@@ -374,6 +374,7 @@ ja:
         informant_name: "情報提供者"
         accident_type_id: "種別"
         work_id: "対象作業"
+        audience_id: "対象者"
         location: "場所"
         location_name: "場所(名称)"
         content: "何をしたのか／何があったのか"
