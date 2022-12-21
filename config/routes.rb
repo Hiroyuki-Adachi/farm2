@@ -23,7 +23,12 @@ Rails.application.routes.draw do
     resources :maintenances, only: [:index]
     resources :cleanings, only: [:index, :edit, :update]
     resources :trainings, only: [:index, :show, :edit, :update, :destroy]
-    resources :accidents
+    resources :accidents do
+      member do
+        get 'works/:worked_at', to: 'accidents#works', as: 'works'
+        get 'audiences/:work_id', to: 'accidents#audiences', as: 'audiences'
+      end
+    end
   end
   resources :work_seedlings, only: [:index]
   resources :owned_rices, only: [:index, :edit, :update]
