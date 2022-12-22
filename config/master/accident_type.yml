@@ -1,9 +1,9 @@
-- id: 0
-  code: None
-  name: ""
 - id: 1
   code: Rule
   name: "ルール違反"
 - id: 2
   code: Hiyari
   name: "ヒヤリハット"
+- id: 9
+  code: Other
+  name: "その他"
