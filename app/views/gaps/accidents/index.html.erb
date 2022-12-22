@@ -14,17 +14,22 @@
           <th>調査日</th>
           <th>調査責任者</th>
           <th>情報提供者</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <% @accidents.each do |accident| %>
           <tr>
             <td><%= accident.work.worked_at %></td>
-            <td><%= accident.work.name %></td>
+            <td><%= accident.work.work_type.name %>/<%= accident.work.work_kind.name %></td>
             <td><%= accident.accident_type.name %></td>
             <td><%= accident.investigated_on %></td>
             <td><%= accident.investigator.name %></td>
             <td><%= accident.informant_name %></td>
+            <td>
+              <%= link_to "照会", gaps_accident_path(accident), class: "btn btn-info btn-sm" %>
+              <%= link_to "修正", edit_gaps_accident_path(accident), class: "btn btn-success btn-sm" %>
+            </td>
           </tr>
         <% end %>
       </tbody>
