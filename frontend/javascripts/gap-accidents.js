@@ -1,16 +1,23 @@
 window.addEventListener('turbo:load', () => {
     initMap();
 
-    document.getElementById("worked_at").addEventListener("blur", (event) => {
-        Turbo.visit(document.getElementById("works_gaps_accident_path").value.replace(":worked_at", event.target.value));
-    });
-    document.getElementById("accident_work_id").addEventListener("change", () => {
-        Turbo.visit(document.getElementById("audiences_gaps_accident_path").value.replace(":work_id", event.target.value));
-    });
+    if (document.getElementById("worked_at") != null) {
+        document.getElementById("worked_at").addEventListener("blur", (event) => {
+            Turbo.visit(document.getElementById("works_gaps_accident_path").value.replace(":worked_at", event.target.value));
+        });
+    }
+    if (document.getElementById("accident_work_id") != null) {
+        document.getElementById("accident_work_id").addEventListener("change", () => {
+            Turbo.visit(document.getElementById("audiences_gaps_accident_path").value.replace(":work_id", event.target.value));
+        });
+    }
 });
 
 function initMap(){
     const location = document.getElementById("accident_location");
+    if (location == null) {
+        return;
+    }
     const home = JSON.parse(location.value.replace("(", "[").replace(")", "]"));
     const pos = new google.maps.LatLng(home[0], home[1])
   

@@ -368,14 +368,14 @@ ja:
         studied_members: "勉強会参加者"
 
       accident:
-        worked_at: "作業日"
+        worked_at: "いつ"
         investigator_id: "調査責任者"
         investigated_on: "調査日"
         informant_name: "情報提供者"
         accident_type_id: "種別"
         work_id: "対象作業"
-        audience_id: "対象者"
-        location: "場所"
+        audience_id: "誰が"
+        location: "どこで"
         location_name: "場所(名称)"
         content: "何をしたのか／何があったのか"
         problem: "問題点の考察"
