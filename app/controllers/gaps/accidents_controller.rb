@@ -7,6 +7,7 @@ class Gaps::AccidentsController < GapsController
   end
 
   def show
+    @accident = @accident.decorate
   end
 
   def new
@@ -54,6 +55,8 @@ class Gaps::AccidentsController < GapsController
 
   def set_accident
     @accident = Accident.find(params[:id])
+    @works = WorkDecorator.decorate_collection(Work.usual(@accident.work.term).where(worked_at: @accident.work.worked_at))
+    @workers = WorkerDecorator.decorate_collection(@accident.work.workers)
   end
 
   def accident_params
