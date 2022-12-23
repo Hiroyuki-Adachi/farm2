@@ -3,9 +3,9 @@
 # Table name: schedules
 #
 #  id(作業予定)           :integer          not null, primary key
-#  end_at(終了予定時刻)   :datetime         default(Thu, 01 Jan 1970 17:00:00.000000000 JST +09:00), not null
+#  end_at(終了予定時刻)   :time             default(Sat, 01 Jan 2000 17:00:00.000000000 JST +09:00), not null
 #  name(作業名称)         :string(40)       not null
-#  start_at(開始予定時刻) :datetime         default(Thu, 01 Jan 1970 08:00:00.000000000 JST +09:00), not null
+#  start_at(開始予定時刻) :time             default(Sat, 01 Jan 2000 08:00:00.000000000 JST +09:00), not null
 #  term(年度(期))         :integer          not null
 #  work_flag(作業フラグ)  :boolean          default(TRUE), not null
 #  worked_at(作業予定日)  :date             not null

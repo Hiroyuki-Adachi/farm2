@@ -1,19 +1,4 @@
 GIT
-  remote: git@github.com:collectiveidea/delayed_job_active_record.git
-  revision: 97f26a3e1b82b338cd8270aad988c75b82ea5c86
-  specs:
-    delayed_job_active_record (4.1.7)
-      activerecord (>= 3.0, < 8.0)
-      delayed_job (>= 3.0, < 5)
-
-GIT
-  remote: git@github.com:composite-primary-keys/composite_primary_keys.git
-  revision: af6e821b5d50b7d65f35cb4c78b866fc6c88958f
-  specs:
-    composite_primary_keys (14.0.4)
-      activerecord (~> 7.0.2)
-
-GIT
   remote: git@github.com:gazayas/active_hash.git
   revision: 0351383fa58850a2bb018101b7aaeb055c7b8023
   specs:
@@ -107,12 +92,17 @@ GEM
     builder (3.2.4)
     byebug (11.1.3)
     chunky_png (1.4.0)
+    composite_primary_keys (14.0.4)
+      activerecord (~> 7.0.2)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     daemons (1.4.1)
-    date (3.3.2)
+    date (3.3.3)
     delayed_job (4.1.11)
       activesupport (>= 3.0, < 8.0)
+    delayed_job_active_record (4.1.7)
+      activerecord (>= 3.0, < 8.0)
+      delayed_job (>= 3.0, < 5)
     draper (4.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -120,7 +110,7 @@ GEM
       activesupport (>= 5.0)
       request_store (>= 1.0)
       ruby2_keywords
-    erubi (1.11.0)
+    erubi (1.12.0)
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -165,7 +155,7 @@ GEM
     mini_racer (0.6.3)
       libv8-node (~> 16.10.0.0)
     minitest (5.16.3)
-    net-imap (0.3.2)
+    net-imap (0.3.4)
       date
       net-protocol
     net-pop (0.1.2)
@@ -183,9 +173,9 @@ GEM
     parser (3.1.3.0)
       ast (~> 2.4.1)
     pg (1.4.5)
-    puma (6.0.0)
+    puma (6.0.1)
       nio4r (~> 2.0)
-    racc (1.6.1)
+    racc (1.6.2)
     rack (2.2.4)
     rack-proxy (0.7.4)
       rack
@@ -234,7 +224,7 @@ GEM
       chunky_png (~> 1.0)
       rqrcode_core (~> 1.0)
     rqrcode_core (1.2.0)
-    rubocop (1.40.0)
+    rubocop (1.41.1)
       json (~> 2.3)
       parallel (~> 1.10)
       parser (>= 3.1.2.1)
@@ -291,9 +281,9 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   byebug
   chunky_png
-  composite_primary_keys!
+  composite_primary_keys
   daemons
-  delayed_job_active_record!
+  delayed_job_active_record
   draper
   holiday_jp!
   i18n-js (~> 3)
