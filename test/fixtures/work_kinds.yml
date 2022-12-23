@@ -308,8 +308,8 @@ work_kinds25:
 
 work_kinds26:
   id: '27'
-  name: "免税軽油申請書作成"
-  phonetic: 'めんぜいけいゆしんせいしょさくせい'
+  name: "勉強会"
+  phonetic: "べんきょうかい"
   display_order: '5'
   other_flag: f
   created_at: '2014-04-02 09:31:26.87329'

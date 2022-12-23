@@ -10,9 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_123845) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_23_115732) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accidents", comment: "ヒヤリハット", force: :cascade do |t|
+    t.integer "investigator_id", default: 0, null: false, comment: "調査責任者ID"
+    t.date "investigated_on", null: false, comment: "調査日"
+    t.string "informant_name", limit: 40, default: "", null: false, comment: "情報提供者"
+    t.integer "accident_type_id", default: 0, null: false, comment: "ヒヤリハット種別ID"
+    t.integer "work_id", null: false, comment: "対象日報"
+    t.integer "audience_id", default: 0, null: false, comment: "対象者ID"
+    t.point "location", comment: "場所"
+    t.string "location_name", limit: 40, default: "", null: false, comment: "場所名称"
+    t.text "content", default: "", null: false, comment: "内容"
+    t.text "problem", default: "", null: false, comment: "問題点の考察"
+    t.text "solving", default: "", null: false, comment: "問題解決の考察"
+    t.text "result", default: "", null: false, comment: "改善の結果"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "adjustments", comment: "調整", force: :cascade do |t|
     t.integer "drying_id", default: 0, null: false, comment: "乾燥"
@@ -189,12 +206,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_123845) do
   end
 
   create_table "cleanings", comment: "清掃", force: :cascade do |t|
-    t.integer "work_id", default: 0, null: false, comment: "作業ID"
+    t.integer "work_id", null: false, comment: "作業ID"
     t.string "target", limit: 20, default: "", null: false, comment: "駆除対象"
     t.string "method", limit: 20, default: "", null: false, comment: "清掃方法"
-    t.boolean "cleaning_flag", default: false, null: false, comment: "清掃フラグ"
-    t.boolean "animal_flag", default: false, null: false, comment: "動物駆除フラグ"
-    t.boolean "pest_flag", default: false, null: false, comment: "害虫駆除フラグ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -561,6 +575,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_123845) do
     t.integer "maintenance_id", comment: "機械保守id"
     t.integer "cleaning_id", comment: "清掃id"
     t.integer "straw_id", comment: "稲わらid"
+    t.integer "training_id", comment: "訓練id"
   end
 
   create_table "owned_rice_prices", comment: "保有米単価", force: :cascade do |t|
@@ -637,8 +652,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_123845) do
     t.boolean "work_flag", default: true, null: false, comment: "作業フラグ"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.datetime "start_at", precision: nil, default: "1970-01-01 08:00:00", null: false, comment: "開始予定時刻"
-    t.datetime "end_at", precision: nil, default: "1970-01-01 17:00:00", null: false, comment: "終了予定時刻"
+    t.time "start_at", default: "2000-01-01 08:00:00", null: false, comment: "開始予定時刻"
+    t.time "end_at", default: "2000-01-01 17:00:00", null: false, comment: "終了予定時刻"
   end
 
   create_table "sections", id: { type: :serial, comment: "班／町内マスタ" }, comment: "班／町内マスタ", force: :cascade do |t|
@@ -796,6 +811,36 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_123845) do
     t.integer "sorimachi_journal_id", comment: "ソリマチ仕訳"
     t.integer "sorimachi_account_id", comment: "ソリマチ勘定科目"
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
+  end
+
+  create_table "training_training_types", comment: "訓練訓練種別", force: :cascade do |t|
+    t.integer "training_id", null: false, comment: "訓練ID"
+    t.integer "training_type_id", null: false, comment: "訓練訓練ID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["training_id", "training_type_id"], name: "training_training_types_2nd", unique: true
+  end
+
+  create_table "training_types", comment: "訓練種別", force: :cascade do |t|
+    t.string "name", limit: 10, null: false, comment: "名称"
+    t.string "short_name", limit: 2, null: false, comment: "名称(略称)"
+    t.integer "display_order", null: false, comment: "表示順"
+    t.boolean "other_flag", default: false, null: false, comment: "その他フラグ"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "trainings", comment: "訓練", force: :cascade do |t|
+    t.integer "work_id", null: false, comment: "作業ID"
+    t.integer "schedule_id", comment: "訓練ID"
+    t.integer "worker_id", comment: "講師(作業者ID)"
+    t.string "content", limit: 20, default: "", null: false, comment: "内容"
+    t.string "document", limit: 40, default: "", null: false, comment: "資料"
+    t.string "training_place", limit: 20, default: "", null: false, comment: "研修場所"
+    t.string "studying_place", limit: 20, default: "", null: false, comment: "学習場所"
+    t.text "remarks", default: "", null: false, comment: "備考"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: { type: :serial, comment: "利用者マスタ" }, comment: "利用者マスタ", force: :cascade do |t|

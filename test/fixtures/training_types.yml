@@ -1,0 +1,28 @@
+# == Schema Information
+#
+# Table name: training_types
+#
+#  id                       :bigint           not null, primary key
+#  display_order(表示順)    :integer          not null
+#  name(名称)               :string(10)       not null
+#  other_flag(その他フラグ) :boolean          default(FALSE), not null
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+training_type1:
+  id: 1
+  name: "TEST"
+  short_name: "試験"
+  display_order: 1
+  other_flag: false
+
+training_type_other:
+  name: "その他"
+  short_name: "他"
+  display_order: 99
+  other_flag: true

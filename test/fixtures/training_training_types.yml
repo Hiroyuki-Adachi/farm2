@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: training_training_types
+#
+#  id                           :bigint           not null, primary key
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
+#  training_id(訓練ID)          :integer          not null
+#  training_type_id(訓練訓練ID) :integer          not null
+#
+# Indexes
+#
+#  training_training_types_2nd  (training_id,training_type_id) UNIQUE
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+training_training_type1:
+  training: training1
+  training_type_id: 1

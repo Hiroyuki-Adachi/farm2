@@ -183,7 +183,7 @@ works9:
   updated_at: '2015-03-21 00:58:10.865125'
 
 
-works10:
+work_study_create:
   id: '1487'
   term: '2015'
   worked_at: '2015-03-21'
@@ -199,7 +199,7 @@ works10:
   updated_at: '2015-03-23 08:43:44.105428'
 
 
-works11:
+work_study_edit:
   id: '1488'
   term: '2015'
   worked_at: '2015-03-20'

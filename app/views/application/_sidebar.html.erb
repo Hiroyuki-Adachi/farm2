@@ -86,6 +86,8 @@
     <%= link_to '体調確認表', gaps_health_index_path, {class: "dropdown-item ms-2", data: {controller: :gaps_health}} %>
     <%= link_to '整備記録表', gaps_maintenances_path, {class: "dropdown-item ms-2", data: {controller: :gaps_maintenances}} %>
     <%= link_to '清掃記録表', gaps_cleanings_path, {class: "dropdown-item ms-2", data: {controller: :gaps_cleanings}} %>
+    <%= link_to '研修記録表', gaps_trainings_path, {class: "dropdown-item ms-2", data: {controller: :gaps_trainings}} %>
+    <%= link_to 'ヒヤリハット', gaps_accidents_path, {class: "dropdown-item ms-2", data: {controller: :gaps_accidents}} %>
   </div>
   <% end %>
   <% if current_user.checkable? %>

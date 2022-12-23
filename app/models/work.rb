@@ -53,6 +53,8 @@ class Work < ApplicationRecord
   has_one :broccoli, class_name: "WorkBroccoli", dependent: :destroy
   has_one :whole_crop, class_name: "WorkWholeCrop", dependent: :destroy
   has_one :cleaning, dependent: :destroy
+  has_one :training, dependent: :destroy
+  has_one :accident, dependent: :destroy
 
   has_many :workers, -> {with_deleted}, through: :work_results
   has_many :lands, -> {with_deleted}, through: :work_lands
