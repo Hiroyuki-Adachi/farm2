@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_18_073759) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_23_115732) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -652,8 +652,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_073759) do
     t.boolean "work_flag", default: true, null: false, comment: "作業フラグ"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.datetime "start_at", precision: nil, default: "1970-01-01 08:00:00", null: false, comment: "開始予定時刻"
-    t.datetime "end_at", precision: nil, default: "1970-01-01 17:00:00", null: false, comment: "終了予定時刻"
+    t.time "start_at", default: "2000-01-01 08:00:00", null: false, comment: "開始予定時刻"
+    t.time "end_at", default: "2000-01-01 17:00:00", null: false, comment: "終了予定時刻"
   end
 
   create_table "sections", id: { type: :serial, comment: "班／町内マスタ" }, comment: "班／町内マスタ", force: :cascade do |t|
