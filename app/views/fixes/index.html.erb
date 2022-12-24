@@ -1,5 +1,5 @@
 <h1>確定一覧</h1>
-<% if @making_flag %>
+<% if Delayed::Job.exists? %>
 <hr />
 <h2>計算中です。しばらくお待ち下さい。</h2>
 <% else %>

@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-md-4">
+    <h1>研修記録表</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>受講日</th>
+          <th>内容</th>
+          <th>場所</th>
+          <th>参加者</th>
+          <th>内容</th>
+          <th>勉強会日</th>
+          <th class="numeric">勉強会参加</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @works.each do |work| %>
+          <tr class="<%= work.training && work.training.studied? ? "table-light" : "table-secondary" %>">
+            <td class="text-right"><%= work.worked_at %></td>
+            <td><%= work.training_name %></td>
+            <td><%= work.training&.training_place %></td>
+            <td><%= work.worker_names %></td>
+            <td><%= work.training&.training_types&.pluck(:short_name)&.join(',') %></td>
+            <td><%= work.training_studied_on %></td>
+            <td class="numeric"><%= work.training && work.training.studied? ? "#{work.training.study.workers.count}名" : "" %></td>
+            <td>
+              <% if work.training %>
+              <%= link_to '参照', gaps_training_path(work.id), {class: "btn btn-info btn-sm"} %>
+              <% else %>
+              <%= link_to '作成', edit_gaps_training_path(work.id), {class: "btn btn-success btn-sm"} %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="btn_toolbar" class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>

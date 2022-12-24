@@ -1,0 +1,19 @@
+# == Schema Information
+#
+# Table name: cleaning_institutions
+#
+#  id                     :bigint           not null, primary key
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  cleaning_id(清掃ID)    :integer          not null
+#  institution_id(施設ID) :integer          not null
+#
+# Indexes
+#
+#  cleaning_institutions_2nd  (cleaning_id,institution_id) UNIQUE
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#

@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>ヒヤリハット調査票一覧</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>作業日</th>
+          <th>作業内容</th>
+          <th>内容</th>
+          <th>調査日</th>
+          <th>調査責任者</th>
+          <th>情報提供者</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @accidents.each do |accident| %>
+          <tr>
+            <td><%= accident.work.worked_at %></td>
+            <td><%= accident.work.work_type.name %>/<%= accident.work.work_kind.name %></td>
+            <td><%= accident.accident_type.name %></td>
+            <td><%= accident.investigated_on %></td>
+            <td><%= accident.investigator.name %></td>
+            <td><%= accident.informant_name %></td>
+            <td>
+              <%= link_to "照会", gaps_accident_path(accident), class: "btn btn-info btn-sm" %>
+              <%= link_to "修正", edit_gaps_accident_path(accident), class: "btn btn-success btn-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="btn_toolbar" class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "新規登録", new_gaps_accident_path, {class: "btn btn-success"}%>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>

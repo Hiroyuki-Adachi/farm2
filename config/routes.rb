@@ -12,6 +12,24 @@ Rails.application.routes.draw do
     resources :chemicals, only: [:new, :create]
     resources :chemical_work_types, only: [:new, :create, :index]
   end
+  namespace :gaps do
+    resources :monthly_reports, only: [:index] do
+      member do
+        get :months
+      end
+    end
+    resources :chemicals, only: [:index]
+    resources :health, only: [:index]
+    resources :maintenances, only: [:index]
+    resources :cleanings, only: [:index, :edit, :update]
+    resources :trainings, only: [:index, :show, :edit, :update, :destroy]
+    resources :accidents do
+      member do
+        get 'works/:worked_at', to: 'accidents#works', as: 'works'
+        get 'audiences/:work_id', to: 'accidents#audiences', as: 'audiences'
+      end
+    end
+  end
   resources :work_seedlings, only: [:index]
   resources :owned_rices, only: [:index, :edit, :update]
   resources :owned_rice_prices, only: [:index, :create, :edit, :update, :destroy]
@@ -90,12 +108,14 @@ Rails.application.routes.draw do
     end
     resources :fees, only: [:index, :create, :edit, :update]
     resources :totals, only: [:index]
+    resources :straws, only: [:index]
   end
   resources :lands, except: [:show] do
     resources :owners, controller: "lands/owners", only: [:index, :create, :destroy]
     resources :managers, controller: "lands/managers", only: [:index, :create, :destroy]
   end
   resources :homes, except: [:show]
+  resources :institutions, except: [:show]
   resources :workers, except: [:show]
   resources :machines, except: [:show]
   resources :chemicals, except: [:show] do

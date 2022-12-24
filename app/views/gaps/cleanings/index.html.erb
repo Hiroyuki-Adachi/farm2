@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>清掃(動物・害虫駆除)記録一覧</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>実施日</th>
+          <th>作業</th>
+          <th>内容</th>
+          <th>駆除対象動物・害虫名</th>
+          <th>清掃・駆除方法</th>
+          <th>対象施設</th>
+          <th>作業者(人数)</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @works.each do |work| %>
+          <tr>
+            <td class="text-right"><%= work.worked_at %></td>
+            <td><%= work.model.name %></td>
+            <td><%= work.cleaning&.cleaning_target_names&.join('、') %></td>
+            <td><%= work.cleaning&.target %></td>
+            <td><%= work.cleaning&.method %></td>
+            <td><%= work.cleaning&.institutions&.pluck(:name)&.join('、') %></td>
+            <td><%= work.worker_members %></td>
+            <td><%= link_to '修正', edit_gaps_cleaning_path(work.id), {class: "btn btn-success btn-sm"} %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="btn_toolbar" class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>

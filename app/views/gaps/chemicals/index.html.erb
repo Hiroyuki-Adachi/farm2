@@ -1,0 +1,35 @@
+<%= form_with url: gaps_chemicals_path, method: :get, data: {turbo_frame: :list}, id: :search_form do |f| %>
+  <div class="row">
+    <div class="col-md-4">
+      <h1>農薬肥料台帳</h1>
+    </div>
+    <div class="col-md-3">
+      <div class="form-inline">
+        <label for="chemical_type_id" class="h5 form-label">種別</label>
+        <%= select_tag(:chemical_type_id, 
+            options_from_collection_for_select(ChemicalType.usual, :id, :name), include_blank: true, class: "form-select"
+        ) %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="row">
+  <div class="col-md-12">
+    <%= turbo_frame_tag 'list' do %>
+      <%= render partial: "list" %>
+    <% end %>
+  </div>
+</div>
+<div id="btn_toolbar" class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>
+<script>
+window.addEventListener('turbo:load', () => {
+    document.getElementById("chemical_type_id").addEventListener("change", () => {
+        loading.disp("計算中");
+        document.getElementById("search_form").requestSubmit();
+    });
+});
+</script>

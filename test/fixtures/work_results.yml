@@ -13773,3 +13773,9 @@ work_results_add:
   fixed_amount: 
   created_at: '2015-03-21 00:36:54.072555'
   updated_at: '2015-03-21 00:36:54.072555'
+
+work_result_cleaning:
+  work: work_cleaning
+  worker_id: 1
+  hours: 6
+  display_order: 1

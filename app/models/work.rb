@@ -52,6 +52,9 @@ class Work < ApplicationRecord
   has_many :machine_remarks, dependent: :destroy
   has_one :broccoli, class_name: "WorkBroccoli", dependent: :destroy
   has_one :whole_crop, class_name: "WorkWholeCrop", dependent: :destroy
+  has_one :cleaning, dependent: :destroy
+  has_one :training, dependent: :destroy
+  has_one :accident, dependent: :destroy
 
   has_many :workers, -> {with_deleted}, through: :work_results
   has_many :lands, -> {with_deleted}, through: :work_lands
@@ -59,14 +62,15 @@ class Work < ApplicationRecord
   has_many :machine_results, through: :work_results
   has_many :checkers, -> {with_deleted}, through: :work_verifications, source: :worker
   has_many :work_types, through: :work_work_types
+  has_many :machines, through: :machine_results
 
   scope :no_fixed, ->(term){
     includes(:work_type, :work_kind)
-      .where(term: term, fixed_at: nil).order(worked_at: :ASC, id: :ASC)
+      .where(term: term, fixed_at: nil).order(worked_at: :ASC, start_at: :ASC, id: :ASC)
   }
-  scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, id: :ASC)}
-  scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, id: :DESC)}
-  scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, id: :ASC).order(worked_at: :ASC, id: :ASC)}
+  scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
+  scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :ASC, id: :DESC)}
+  scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
   scope :by_creator, ->(worker) {where(["works.created_by IS NULL OR works.created_by <> ?", worker.id])}
   scope :by_work_kind_type, ->(term, work_kind_id, work_type_id) {
     joins(:work_lands)
@@ -131,9 +135,9 @@ SQL
       )
   }
 
-  scope :broccoli_reports, ->(organization, w_at) {
-    where(work_type_id: organization.broccoli_work_type_id)
-      .where(worked_at: Date.new(w_at.year, w_at.month, 1)..Date.new(w_at.year, w_at.month, -1))
+  scope :monthly_reports, ->(work_type_id, worked_at) {
+    where(work_type_id: work_type_id)
+      .where(worked_at: Date.new(worked_at.year, worked_at.month, 1)..Date.new(worked_at.year, worked_at.month, -1))
   }
 
   scope :landable, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
@@ -430,6 +434,29 @@ SQL
     wts.compact.uniq.each do |wt|
       work_work_types.create(work_type_id: wt.id)
     end
+  end
+
+  def machine_types
+    MachineType.joins(:machines).where("machines.id" => machine_results.pluck(:machine_id).uniq).usual.uniq
+  end
+
+  def maintenances
+    results = [name, remarks]
+    results << machine_remarks.pluck(:care_remarks)
+    return results.flatten.uniq.delete_if {|v| v.empty? }
+  end
+
+  def machine_numbers
+    results = {}
+    machines.includes(:machine_type).each do |machine|
+      next if machine.machine_type.nil? || machine.machine_type.code.nil? || machine.number.nil?
+      if results.key?(machine.machine_type.code)
+        results[machine.machine_type.code.intern] << machine.number
+      else
+        results[machine.machine_type.code.intern] = [machine.number]
+      end
+    end
+    return results
   end
 
   private

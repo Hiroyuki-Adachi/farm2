@@ -71,6 +71,7 @@ function execShow(url) {
         $("#work_cancel").on('click', function() {
             execDestroy($(this).data("url"));
         });
+        loading.remove();
     });
     return false;
 }

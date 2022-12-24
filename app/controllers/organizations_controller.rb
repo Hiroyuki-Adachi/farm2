@@ -1,11 +1,10 @@
 class OrganizationsController < ApplicationController
   before_action :permit_admin, only: [:edit, :update]
+  before_action :set_masters, only: [:edit]
   before_action :set_organization
   helper GmapHelper
 
   def edit
-    @work_kinds = WorkKind.usual
-    @work_types = WorkType.usual
   end
 
   def update
@@ -20,6 +19,11 @@ class OrganizationsController < ApplicationController
 
   def set_organization
     @organization = Organization.find_by(id: current_user.organization_id).decorate
+  end
+
+  def set_masters
+    @work_kinds = WorkKind.usual
+    @work_types = WorkType.usual
   end
 
   def organization_params
@@ -38,6 +42,10 @@ class OrganizationsController < ApplicationController
       :whole_crop_work_kind_id,
       :contract_work_type_id,
       :harvesting_work_kind_id,
+      :maintenance_id,
+      :cleaning_id,
+      :straw_id,
+      :training_id,
       :location
     )
   end
