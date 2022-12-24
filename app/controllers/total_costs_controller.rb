@@ -3,7 +3,6 @@ class TotalCostsController < ApplicationController
 
   def index
     @fixes = Fix.usual(current_term)
-    @making_flag = Delayed::Job.exists?
     @work_types = WorkType.cost
     @lands = TotalCostDetail.areas(current_term, current_system.end_date - current_system.start_date + 1)
     @total_directs = TotalCostDecorator.decorate_collection(TotalCost.usual(current_term).direct)

@@ -28,7 +28,6 @@
   <% end %>
 </head>
 <body>
-
 <%= render partial: "show_base" %>
 <%= render partial: "show_workers" %>
 <% if (@work_lands.count > 0 || @work.work_kind.land_flag) && current_organization.lands_count > 0 %>
@@ -37,11 +36,9 @@
 <% if (@machines.count > 0 || @work.work_kind.machine_kinds.count > 0) && current_organization.machines_count > 0 %>
   <%= render partial: "show_machines" %>
 <% end %>
+<span style="page-break-after: always;"></span>
 <% if (@chemicals.count > 0 || @work.work_kind.chemical_kinds.count > 0) && current_organization.chemicals_count > 0 %>
   <%= render partial: "show_chemicals" %>
-<% end %>
-<% if @broccoli && false %>
-  <%= render partial: "show_broccoli" %>
 <% end %>
 <% if @work.work_kind_id == current_organization.rice_planting_id %>
   <%= render partial: "show_seedlings" %>

@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-3">
+    <label class="col-form-label-lg form-label">受講日</label>
+    <div class="h4"><%= @work.worked_at %></div>
+    <div class="h4"><%= @work.start_at %>～<%= @work.end_at %></div>
+  </div>
+  <div class="col-md-6">
+    <label class="col-form-label-lg form-label">概要</label>
+    <div class="h4"><%= @work.name %></div>
+  </div>
+  <div class="col-md-3">
+    <label class="col-form-label-lg form-label">受講者</label>
+    <div class="h5"><%= @work.worker_names %></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <label class="col-form-label-lg form-label">摘要</label>
+    <div><%=hbr @work.remarks %></div>
+  </div>
+</div>

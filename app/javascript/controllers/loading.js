@@ -22,5 +22,7 @@ module.exports.disp = function disp(msg){
 Loading イメージ削除関数
 ------------------------------ */
 module.exports.remove = function remove(){
-    document.getElementById("loading").remove();
+    if (document.getElementById("loading") != null) {
+        document.getElementById("loading").remove();
+    }
 }

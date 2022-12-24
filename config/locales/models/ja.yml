@@ -32,6 +32,10 @@ ja:
       chemical_stock: "農薬在庫"
       sorimachi_journal: "ソリマチ農業簿記"
       sorimachi_account: "ソリマチ勘定科目"
+      institution: "施設"
+      cleaning: "清掃"
+      training: "研修"
+      accident: "ヒヤリハット"
 
     attributes:
       chemical:
@@ -155,10 +159,12 @@ ja:
         validity_start_at: 運用開始日
         validity_end_at: 運用終了日
         diesel_flag: "燃料"
+        number: "番号"
 
       machine_type:
         name: 名称
         display_order: 表示順
+        code: "コード"
         
       machine_price_header:
         validated_at: 起算日
@@ -228,6 +234,10 @@ ja:
         whole_crop_work_kind_id: "WCS収穫を選択"
         contract_work_type_id: "受託作業を選択"
         harvesting_work_kind_id: "稲刈りを選択"
+        maintenance_id: "機械保守を選択"
+        cleaning_id: "清掃作業を選択"
+        straw_id: "稲わらを選択"
+        training_id: "講習会・研修を選択"
 
       section:
         name: 名称
@@ -332,6 +342,45 @@ ja:
         total_cost_type_id: "科目種別"
         auto_code: "自動設定コード"
         auto_work_type_id: "自動設定原価"
+
+      institution:
+        name: "施設名称"
+        display_order: "表示順"
+        start_term: "提供開始年度"
+        end_term: "提供終了年度"
+
+      cleaning:
+        target: "駆除対象動物・害虫名"
+        method: "清掃・駆除方法"
+        cleaning_targets: "種別"
+        institutions: "施設"
+
+      training:
+        training_place: "研修受講場所"
+        studying_place: "勉強会開催場所"
+        worker_id: "講師"
+        document: "資料"
+        content: "受講内容"
+        remarks: "摘要"
+        schedule_id: "勉強会"
+        training_types: "研修種別"
+        studied_on: "勉強会開催日"
+        studied_members: "勉強会参加者"
+
+      accident:
+        worked_at: "いつ"
+        investigator_id: "調査責任者"
+        investigated_on: "調査日"
+        informant_name: "情報提供者"
+        accident_type_id: "種別"
+        work_id: "対象作業"
+        audience_id: "誰が"
+        location: "どこで"
+        location_name: "場所(名称)"
+        content: "何をしたのか／何があったのか"
+        problem: "問題点の考察"
+        solving: "問題解決の考察"
+        result: "改善の結果"
 
   status:
     organization:

@@ -15,7 +15,7 @@ gem 'pg'
 #gem 'therubyracer', platforms: :ruby
 gem "mini_racer"
 
-gem 'delayed_job_active_record', :git => 'git@github.com:collectiveidea/delayed_job_active_record.git'
+gem 'delayed_job_active_record'
 
 #gem 'webpacker'
 
@@ -60,7 +60,7 @@ gem 'kaminari'
 # Draper adds an object-oriented layer of presentation logic to your Rails application.
 gem 'draper'
 # ActiveRecords infamously doesn't support composite primary keys.
-gem 'composite_primary_keys', :git => 'git@github.com:composite-primary-keys/composite_primary_keys.git'
+gem 'composite_primary_keys'
 # Comments for migrations
 # gem 'migration_comments'
 

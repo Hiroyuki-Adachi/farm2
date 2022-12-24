@@ -1,0 +1,4 @@
+<%= turbo_stream.update 'accident_audience_id' do %>
+  <option value=""></option>
+  <%= options_from_collection_for_select(@workers, :id, :name, @worker_id) %>
+<% end %>

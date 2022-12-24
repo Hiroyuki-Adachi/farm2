@@ -2,6 +2,7 @@ class HomesController < ApplicationController
   include PermitChecker
   before_action :set_home, only: [:edit, :update, :destroy]
   before_action :set_sections, only: [:new, :create, :edit, :update]
+  helper GmapHelper
 
   def index
     @homes = Home.list.page(params[:page])

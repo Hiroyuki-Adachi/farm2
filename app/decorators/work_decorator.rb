@@ -143,19 +143,51 @@ class WorkDecorator < Draper::Decorator
     model.machine_results.map(&:machine).flatten.uniq.map(&:type_name).to_sentence
   end
 
-  def broccoli_worker_names
+  def gap_worker_names
     model.workers.map { |worker| worker.broccoli_mark.presence || worker.name}.sort.to_sentence
   end
 
-  def broccoli_land_places
+  def gap_land_places
     model.lands.map { |land| land.broccoli_mark.presence || land.place}.sort.to_sentence
   end
 
-  def broccoli_work_kind_name
+  def gap_work_kind_name
     model.work_kind.broccoli_mark.presence || model.work_kind.name
   end
 
   def exact_work_type_name
     model.exact_work_types.map(&:name).to_sentence
+  end
+
+  def machine_numbers
+    results = []
+    model.machine_numbers.each do |key, value|
+      results << "#{key}-#{value.sort.join(',')}"
+    end
+    return results.join('、')
+  end
+
+  def machine_type_names
+    model.machine_types.pluck(:name).join('、')
+  end
+
+  def worker_names
+    model.workers.map(&:name).join('、') 
+  end
+
+  def worker_members
+    model.workers.count == 1 ? model.workers[0].name : "#{model.workers.count}名"
+  end
+
+  def training_name
+    model.training && model.training.content.present? ? model.training.content : model.name
+  end
+
+  def training_studied_on
+    model.training && model.training.studied_on ? model.training.studied_on.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})" : ""
+  end
+
+  def type_and_kind_name
+    return "#{model.work_type&.name}:#{self.name}"
   end
 end

@@ -1,0 +1,41 @@
+<% if @chemicals.present? %>
+  <table class="table table-sm table-bordered">
+    <thead>
+      <tr>
+        <th>農薬名</th>
+        <th>在庫管理</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% max_stocks = @stocks.max_by {|key, value| value.count}[1].count %>
+      <% @chemicals.each do |chemical| %>
+        <% next unless @stocks[chemical.id] %>
+        <tr>
+          <td rowspan="4"><%= chemical.name %></td>
+          <th>日付</th>
+          <% max_stocks.times do |i| %>
+          <td class="text-center"><%= @stocks[chemical.id][i] ? @stocks[chemical.id][i].stock_on.strftime('%m/%d') : "" %></td>
+          <% end %>
+        </tr>
+        <tr class="table-primary">
+          <th>入庫</th>
+          <% max_stocks.times do |i| %>
+          <td class="numeric"><%= @stocks[chemical.id][i] ? @stocks[chemical.id][i].stored_format : "" %></td>
+          <% end %>
+        </tr>
+        <tr class="table-danger">
+          <th>出庫</th>
+          <% max_stocks.times do |i| %>
+          <td class="numeric"><%= @stocks[chemical.id][i] ? @stocks[chemical.id][i].shipping_format : "" %></td>
+          <% end %>
+        </tr>
+        <tr class="table-success">
+          <th>在庫</th>
+          <% max_stocks.times do |i| %>
+          <td class="numeric"><%= @stocks[chemical.id][i] ? @stocks[chemical.id][i].stock_format : "" %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
