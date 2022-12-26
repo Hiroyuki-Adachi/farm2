@@ -21,7 +21,7 @@ gem 'delayed_job_active_record'
 
 gem 'importmap-rails'
 gem 'propshaft'
-gem 'bootstrap', '~> 5.2.0'
+gem "cssbundling-rails"
 
 gem 'daemons'
 

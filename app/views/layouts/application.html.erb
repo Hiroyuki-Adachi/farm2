@@ -5,8 +5,8 @@
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
   <%= javascript_importmap_tags %>
-  <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
   <%= javascript_include_tag 'controllers/pc-common', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag 'pc-common', 'data-turbo-track': 'reload' %>
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&libraries=drawing" defer="defer" async="async" data-turbolinks-eval="false"></script>
   <%= yield :head %>
