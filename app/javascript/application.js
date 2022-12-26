@@ -24,3 +24,4 @@ import "/javascripts/jquery.selection";
 
 import loading from "/javascripts/loading";
 window.loading = loading;
+import * as bootstrap from "bootstrap"
