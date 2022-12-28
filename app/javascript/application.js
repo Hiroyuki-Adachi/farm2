@@ -1,13 +1,10 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import Rails from '@rails/ujs';
-window.Rails = Rails;
-Rails.start();
+import Turbo from '@hotwired/turbo';
 
 import jQuery from 'jquery';
 window.jQuery = window.$ = jQuery;
 global.jQuery = global.$ = jQuery;
 
-import "bootstrap";
 import "chart.js";
 
 import moment from 'moment';

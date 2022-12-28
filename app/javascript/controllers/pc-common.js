@@ -1,4 +1,5 @@
 import { Modal, Collapse } from "bootstrap";
+import Turbo from '@hotwired/turbo';
 
 window.popupAlert = (message) => {
     document.getElementById("popup_alert_message").innerText = message;
