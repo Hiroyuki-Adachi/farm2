@@ -1,3 +1,5 @@
+import Turbo from '@hotwired/turbo';
+
 window.addEventListener('turbo:load', () => {
     document.getElementById("term").addEventListener("change", (event) => {
         Turbo.visit(`${document.getElementById("work_types_works_path").value}?term=${event.target.value}`);

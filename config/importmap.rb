@@ -1,9 +1,9 @@
 # Pin npm packages by running ./bin/importmap
 
 pin "application", preload: true
+pin "@hotwired/turbo", to: "https://ga.jspm.io/npm:@hotwired/turbo@7.2.4/dist/turbo.es2017-esm.js"
 pin "@fortawesome/fontawesome-free", to: "https://ga.jspm.io/npm:@fortawesome/fontawesome-free@6.2.0/js/fontawesome.js"
 pin "@popperjs/core", to: "https://ga.jspm.io/npm:@popperjs/core@2.11.6/lib/index.js"
-pin "@rails/ujs", to: "https://ga.jspm.io/npm:@rails/ujs@7.0.3-1/lib/assets/compiled/rails-ujs.js"
 pin "bootstrap", to: "https://ga.jspm.io/npm:bootstrap@5.2.3/dist/js/bootstrap.esm.js"
 pin "chart.js", to: "https://ga.jspm.io/npm:chart.js@3.9.1/dist/chart.mjs"
 pin "decimal.js", to: "https://ga.jspm.io/npm:decimal.js@10.4.0/decimal.mjs"
