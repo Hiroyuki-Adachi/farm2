@@ -34,14 +34,14 @@ function loadChemical(term, chemicalType)
 
 function doSearch()
 {
-    loading.disp("検索中");
+    loadingStart("検索中");
     fetch(document.getElementById("search_path").value.replace('0', document.getElementById("chemical_id").value))
     .then((data) => data.text())
     .then((html) => {
         document.getElementById("search_result").innerHTML = html;
         document.getElementById("new_button").disabled = false;
         addEventForEdit();
-        loading.remove();
+        loadingEnd();
     });
 }
 

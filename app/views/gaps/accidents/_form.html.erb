@@ -93,5 +93,5 @@
   </div>
 <% end %>
 <% content_for :head do %>
-<%= javascript_pack_tag 'gap-accidents', 'data-turbo-track': 'reload' %>
+<%= javascript_include_tag 'controllers/gap-accidents', 'data-turbo-track': 'reload' %>
 <% end %>
