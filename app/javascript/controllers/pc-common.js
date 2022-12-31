@@ -1,5 +1,4 @@
-import { Modal, Collapse } from "bootstrap";
-import Turbo from '@hotwired/turbo';
+import { Turbo } from "@hotwired/turbo-rails";
 
 window.popupAlert = (message) => {
     document.getElementById("popup_alert_message").innerText = message;
@@ -112,14 +111,14 @@ document.addEventListener('turbo:load', () => {
     });
 
     window.addEventListener("turbo:click", () => {
-        loading.disp("しばらくお待ちください");
+        loadingStart("しばらくお待ちください");
     });
 
     window.addEventListener("turbo:loading", () => {
-        loading.remove();
+        loadingEnd();
     });
     window.addEventListener("turbo:frame-load", () => {
-        loading.remove();
+        loadingEnd();
     });
 });
 
@@ -129,3 +128,17 @@ function activeBar(element) {
     navdiv.style.display = "block";
     document.getElementById(navdiv.getAttribute("aria-labelledby")).classList.add("active");
 }
+
+function loadingStart(message)
+{
+    document.getElementById("loading_message").innerText = message;
+    document.getElementById("loading").classList.remove("d-none");
+}
+
+function loadingEnd()
+{
+    document.getElementById("loading").classList.add("d-none");
+}
+
+window.loadingStart = loadingStart;
+window.loadingEnd = loadingEnd;

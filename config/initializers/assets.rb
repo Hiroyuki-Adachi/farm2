@@ -5,7 +5,7 @@ Rails.application.config.assets.version = "1.0"
 
 # Add additional assets to the asset load path.
 # Rails.application.config.assets.paths << Emoji.images_path
-Rails.application.config.assets.paths << Rails.root.join("controllers")
+Rails.application.config.assets.paths << Rails.root.join("javascript/controllers")
 Rails.application.config.assets.paths << Rails.root.join("node_modules/bootstrap-icons/font")
 
 # Precompile additional assets.
@@ -13,4 +13,3 @@ Rails.application.config.assets.paths << Rails.root.join("node_modules/bootstrap
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 Rails.application.config.assets.precompile += %w( *.js )
-Rails.application.config.assets.precompile += %w( bootstrap.min.js popper.js )
