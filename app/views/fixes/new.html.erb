@@ -1,5 +1,5 @@
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/fixes' %>
+<%= javascript_include_tag 'controllers/fixes', 'data-turbo-track': 'reload', type: :module %>
 <% end %>
 <h1>確定一覧</h1>
 <% if Delayed::Job.exists? %>
