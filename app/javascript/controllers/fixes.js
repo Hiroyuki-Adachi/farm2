@@ -1,4 +1,4 @@
-const { default: Decimal } = require("decimal.js");
+import { Decimal } from "decimal.js";
 
 function calcTotal()
 {
@@ -39,11 +39,15 @@ function checkAll(val)
 }
 
 document.addEventListener('turbo:load', () => {
-    document.querySelector(".all-check").addEventListener('click', () => {
-        checkAll(true);
+    document.querySelectorAll(".all-check").forEach((element) => {
+        element.addEventListener("click", () => {
+            checkAll(true);
+        });
     });
-    document.querySelector(".all-cancel").addEventListener('click', () => {
-        checkAll(false);
+    document.querySelectorAll(".all-cancel").forEach((element) => {
+        element.addEventListener("click", () => {
+            checkAll(false);
+        });
     });
     document.querySelectorAll("input[name^='fixed_works']").forEach(element => {
         element.addEventListener("change", () => {
