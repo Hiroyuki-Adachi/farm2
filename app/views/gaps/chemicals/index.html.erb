@@ -28,7 +28,7 @@
 <script>
 window.addEventListener('turbo:load', () => {
     document.getElementById("chemical_type_id").addEventListener("change", () => {
-        loading.disp("計算中");
+        loadingStart("計算中");
         document.getElementById("search_form").requestSubmit();
     });
 });

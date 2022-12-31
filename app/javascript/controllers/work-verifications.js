@@ -1,35 +1,49 @@
 import { Modal } from 'bootstrap';
 
 document.addEventListener('turbo:load', () => {
-    $("#print_self").on('change', function() {
-        changePrint($(this)[0]);
+    document.getElementById("print_self").addEventListener("change", (event) => {
+        changePrint(event.target);
     });
 
-    $("#list").on('click', ".show-work", function() {
-        execShow($(this).data("url"));
+    document.querySelectorAll(".show-work").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            execShow(event.target.dataset.url);
+        });
     });
 
-    $("#print_self").attr("checked", true);
-    changePrint($("#print_self")[0]);
+    document.getElementById("print_self").checked = true;
+    changePrint(document.getElementById("print_self"));
 });
 
-function execCreate(url) {
+const getCsrfToken = () => {
+  const metas = document.getElementsByTagName('meta');
+  for (let meta of metas) {
+    if (meta.getAttribute('name') === 'csrf-token') {
+      return meta.getAttribute('content');
+    }
+  }
+  return '';
+};
+
+  function execCreate(url) {
     verificationModal.hide();
     verificationModal = null;
 
-    loading.disp("承認中...");
-    $.ajax({
-        url: url,
-        type: "PUT",
+    loadingStart("承認中...");
+
+    fetch(url, {
+        method: "PUT",
         headers: {
-            'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
-        },
-        dataType: "html"
-    }).done(function(html) {
-        $("#list").html(html);
-    }).always(function() {
-        loading.remove();
-        changePrint($("#print_self")[0]);
+            'X-CSRF-Token': getCsrfToken()
+        }
+    })
+    .then((data) => data.text())
+    .then((html) => {
+        document.getElementById("list").innerHTML = html;
+    })
+    .then(() => {
+        loadingEnd();
+        changePrint(document.getElementById("print_self"));
     });
     return false;
 }
@@ -37,49 +51,58 @@ function execCreate(url) {
 function execDestroy(url) {
     verificationModal.hide();
     verificationModal = null;
-    loading.disp("取消中...");
-    $.ajax({
-        url: url,
-        type: "DELETE",
+    loadingStart("取消中...");
+
+    fetch(url, {
+        method: "DELETE",
         headers: {
-            'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
-        },
-        dataType: "html"
-    }).done(function(html) {
-        $("#list").html(html);
-    }).always(function() {
-        loading.remove();
-        changePrint($("#print_self")[0]);
+            'X-CSRF-Token': getCsrfToken()
+        }
+    })
+    .then((data) => data.text())
+    .then((html) => {
+        document.getElementById("list").innerHTML = html;
+    })
+    .then(() => {
+        loadingEnd();
+        changePrint(document.getElementById("print_self"));
     });
     return false;
 }
 
 let verificationModal = null;
 function execShow(url) {
-    $.ajax({
-        url: url,
-        type: "GET",
-        dataType: "html"
-    }).done(function(html) {
-        $("#show_work_content").html(html);
+    fetch(url, {
+        method: "GET"
+    })
+    .then((data) => data.text())
+    .then((html) => {
+        document.getElementById("show_work_content").innerHTML = html;
         verificationModal = new Modal(document.getElementById("show_work"));
         verificationModal.show();
-    }).always(function() {
-        $("#work_exec").on('click', function() {
-            execCreate($(this).data("url"), $(this).data("work"));
-        });
-        $("#work_cancel").on('click', function() {
-            execDestroy($(this).data("url"));
-        });
-        loading.remove();
-    });
+        if (document.getElementById("work_exec") != null) {
+            document.getElementById("work_exec").addEventListener("click", (event) => {
+                execCreate(event.target.dataset.url, event.target.dataset.work);
+            });
+        }
+        if (document.getElementById("work_cancel") != null) {
+            document.getElementById("work_cancel").addEventListener("click", (event) => {
+                execDestroy(event.target.dataset.url);
+            });
+        }
+        loadingEnd();
+    })
     return false;
 }
 
 function changePrint(checkbox) {
     if(checkbox.checked) {
-        $("[name='self_flag']").closest("tr").hide();
+        document.querySelectorAll("input[name='self_flag']").forEach((element) => {
+            element.closest("tr").style.display = "none";
+        });
     } else {
-        $("#tbl_list").find("tr").show();
+        document.querySelectorAll("#tbl_list tr").forEach((element) => {
+            element.style.display = "table-row";
+        });
     }
 }
