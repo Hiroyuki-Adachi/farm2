@@ -1,5 +1,5 @@
 window.addEventListener('turbo:load', () => {
-    $(window).on("resize", function() {
+    window.addEventListener("resize", () => {
         initSize();
     });
     document.querySelectorAll(".check-weather").forEach((element) => {
