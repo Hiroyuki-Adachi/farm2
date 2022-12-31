@@ -55,5 +55,5 @@
   </div>
 </div>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/work-index' %>
+<%= javascript_include_tag 'controllers/work-index', "data-turbo-track": "reload", type: :module %>
 <% end %>

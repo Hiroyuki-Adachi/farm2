@@ -1,9 +1,11 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import Turbo from '@hotwired/turbo';
+import { Modal, Collapse } from "bootstrap";
+import { Turbo } from "@hotwired/turbo-rails"
 
-import jQuery from 'jquery';
+import { jQuery } from 'jquery';
 window.jQuery = window.$ = jQuery;
 global.jQuery = global.$ = jQuery;
+
 
 import "chart.js";
 
@@ -15,10 +17,3 @@ window.I18n = I18n;
 
 import Decimal from 'decimal.js';
 window.Decimal = Decimal;
-
-import '@fortawesome/fontawesome-free/js/all'
-import "/javascripts/jquery.selection";
-
-import loading from "/javascripts/loading";
-window.loading = loading;
-import * as bootstrap from "bootstrap"
