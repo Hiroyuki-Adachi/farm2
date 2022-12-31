@@ -90,8 +90,14 @@ document.addEventListener('turbo:load', () => {
             document.querySelectorAll(`.tr-total2[data-code1="${totalTr.dataset.code1}"]`).forEach((tr) => {
                 tr.style.display = (tr.style.display == "none") ? "table-row" : "none";
             });
+            if (document.querySelectorAll(`.tr-total2[data-code1="${totalTr.dataset.code1}"]`).length == 0) {
+                document.querySelectorAll(`.tr-detail[data-code1="${totalTr.dataset.code1}"]`).forEach((tr) => {
+                    tr.style.display = (tr.style.display == "none") ? "table-row" : "none";
+                });
+            }
             document.querySelectorAll(`.tr-detail[data-code1="${totalTr.dataset.code1}"]`).forEach((tr) => {
-                if (document.querySelector(`.tr-total2[data-code1="${tr.dataset.code1}"][data-code2="${tr.dataset.code2}"]`).style.display == "none") {
+                const total2 = document.querySelector(`.tr-total2[data-code1="${tr.dataset.code1}"][data-code2="${tr.dataset.code2}"]`);
+                if ((total2 != null) && (total2.style.display == "none")) {
                     tr.style.display = "none";
                 }
             });
