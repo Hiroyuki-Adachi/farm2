@@ -85,7 +85,7 @@
   </div>
 <% end %>
 <% content_for :head do %>
-<script>
+<script data-turbo-track="reload">
 window.addEventListener('turbo:load', () => {
     Array.from(document.getElementsByClassName("work-type-months")).forEach(function(sel) {
         changeMonth(sel);

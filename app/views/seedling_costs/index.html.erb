@@ -89,7 +89,7 @@
   </div>
 <% end %>
 <% content_for :head do %>
-<script>
+<script data-turbo-track="reload">
 window.addEventListener('turbo:load', () => {
     $("#prorate").click(function() {
         var total_area = 0;

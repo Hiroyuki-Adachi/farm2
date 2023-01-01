@@ -37,7 +37,7 @@
   </div>
 </div>
 <% content_for :head do %>
-<script type="text/javascript">
+<script type="text/javascript" data-turbo-track="reload">
 document.addEventListener('turbo:load', () => {
     document.getElementById("minute_pdf").addEventListener("change", (event) => {
         event.target.closest("form").requestSubmit();

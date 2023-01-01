@@ -59,7 +59,7 @@
 <%= f.hidden_field :term %>
 <%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
 <% content_for :head do %>
-<script type="text/javascript">
+<script type="text/javascript" data-turbo-track="reload">
 window.addEventListener('turbo:load', () => {
     document.querySelectorAll('input[name="schedule[work_type_id]"]').forEach((element) => {
         element.addEventListener("change", (event) => {

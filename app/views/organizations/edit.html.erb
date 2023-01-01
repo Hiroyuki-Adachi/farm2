@@ -101,5 +101,5 @@
   </div>
 <% end %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/organizations' %>
+<%= javascript_include_tag 'controllers/organizations', 'data-turbo-track': 'reload' %>
 <% end %>

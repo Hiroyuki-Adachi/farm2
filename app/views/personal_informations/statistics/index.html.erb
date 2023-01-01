@@ -15,7 +15,7 @@
 <%= hidden_field_tag :chart2_data1, @total_month1.map {|ta| ta.to_f}.to_json.html_safe %>
 <%= hidden_field_tag :chart2_data2, @total_month2.map {|ta| ta.to_f}.to_json.html_safe %>
 <% content_for :head do %>
-<script>
+<script data-turbo-track="reload">
 window.addEventListener('turbo:load', () => {
   const ctx1 = document.getElementById("chart1").getContext('2d');
   const ctx2 = document.getElementById("chart2").getContext('2d');

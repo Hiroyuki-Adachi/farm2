@@ -16,10 +16,10 @@ function initMap(){
     });
   
     marker.addListener("dragend", function(arg) {
-      location.value = arg.latLng.toString();
+        location.value = arg.latLng.toString();
     });
 }
 
 window.addEventListener('turbo:load', () => {
-  initMap();
+    initMap();
 });

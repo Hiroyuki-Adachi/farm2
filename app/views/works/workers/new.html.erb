@@ -69,5 +69,5 @@
   </div>
 <% end %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/work-workers' %>
+<%= javascript_include_tag 'controllers/work-workers', "data-turbo-track": "reload" %>
 <% end %>

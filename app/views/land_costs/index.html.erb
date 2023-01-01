@@ -38,7 +38,7 @@
     [work_type.id, {bg: work_type.bg_color_term(current_term), fg: work_type.fg_color_term(current_term)}]
   }.to_h.to_json %>
 <% content_for :head do %>
-<script>
+<script data-turbo-track="reload">
 let colors = null;
 document.addEventListener('turbo:load', () => {
     colors = JSON.parse(document.getElementById("colors").value);
