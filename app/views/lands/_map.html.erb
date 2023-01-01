@@ -8,5 +8,5 @@
 <% end %>
 <%= hidden_field_tag "location", "[#{land_location(@land)}]" %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/lands' %>
+<%= javascript_include_tag 'controllers/lands', 'data-turbo-track': 'reload' %>
 <% end %>

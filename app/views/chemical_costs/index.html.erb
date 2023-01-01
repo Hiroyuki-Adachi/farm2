@@ -52,7 +52,7 @@
 <%= hidden_field_tag :import_url, import_chemical_costs_path %>
 <% end %>
 <% content_for :head do %>
-<script>
+<script data-turbo-track="reload">
 document.addEventListener('turbo:load', () => {
     Array.from(document.getElementsByClassName("zero-gray")).forEach((element) => {
         element.addEventListener("change", (event) => {

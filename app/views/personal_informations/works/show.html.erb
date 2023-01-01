@@ -22,7 +22,7 @@
 <% content_for :head do %>
 <%= javascript_include_tag 'controllers/work-show'%>
 <%= stylesheet_link_tag 'work-show', :media => 'all' %>
-<script>
+<script data-turbo-track="reload">
 window.addEventListener('turbo:load', () => {
     $(".stamp").each(function() {
         $(this).offset({top: $(this).offset().top + 48});
