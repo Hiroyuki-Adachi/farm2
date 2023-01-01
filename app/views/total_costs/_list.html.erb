@@ -29,7 +29,7 @@
       <% @total_directs.each do |tc| %>
         <% if tc.total_cost_type_id != old_group1_id %>
           <% old_group1_id = tc.total_cost_type_id %>
-          <tr class="group1-total table-primary" data-group1="<%= old_group1_id %>" style="cursor: pointer;">
+          <tr class="tr-total1 table-primary" data-code1="<%= old_group1_id %>">
             <th><%= tc.total_cost_type_name %></th>
             <td colspan="2"></td>
             <% @work_types.each do |work_type| %>
@@ -39,7 +39,7 @@
         <% end %>
         <% if tc.display_order != old_group2_id %>
           <% old_group2_id = tc.display_order %>
-          <tr class="group2-total table-secondary" data-group1="<%= old_group1_id %>" data-group2="<%= old_group2_id %>" style="cursor: pointer;">
+          <tr class="tr-total2 table-secondary" data-code1="<%= old_group1_id %>" data-code2="<%= old_group2_id %>">
             <th><%= tc.total_cost_type_name %></th>
             <th><%= tc.kind_name %></th>
             <th></th>
@@ -48,7 +48,7 @@
             <% end %>
           </tr>
         <% end %>
-        <tr class="detail <%= tc.member_flag ? 'text-success' : 'text-body' %>" data-group1="<%= old_group1_id %>" data-group2="<%= old_group2_id %>">
+        <tr class="tr-detail <%= tc.member_flag ? 'text-success' : 'text-body' %>" data-code1="<%= old_group1_id %>" data-code2="<%= old_group2_id %>">
           <th><%= tc.total_cost_type_name %></th>
           <th><%= tc.kind_name %></th>
           <th><%= tc.detail_name %></th>
@@ -69,7 +69,7 @@
       <% @total_sales.each do |tc| %>
         <% if tc.total_cost_type_id != old_group1_id %>
           <% old_group1_id = tc.total_cost_type_id %>
-          <tr class="group1-total table-primary" data-group1="<%= old_group1_id %>" style="cursor: pointer;">
+          <tr class="tr-total1 table-primary" data-code1="<%= old_group1_id %>" style="cursor: pointer;">
             <th><%= tc.total_cost_type_name %></th>
             <td colspan="2"></td>
             <% @work_types.each do |work_type| %>
@@ -79,7 +79,7 @@
         <% end %>
         <% if tc.display_order != old_group2_id %>
           <% old_group2_id = tc.display_order %>
-          <tr class="group2-total table-secondary" data-group1="<%= old_group1_id %>" data-group2="<%= old_group2_id %>" style="cursor: pointer;">
+          <tr class="tr-total2 table-secondary" data-code1="<%= old_group1_id %>" data-code2="<%= old_group2_id %>" style="cursor: pointer;">
             <th><%= tc.total_cost_type_name %></th>
             <th><%= tc.kind_name %></th>
             <th></th>
@@ -88,7 +88,7 @@
             <% end %>
           </tr>
         <% end %>
-        <tr class="detail <%= tc.member_flag ? 'text-success' : 'text-body' %>" data-group1="<%= old_group1_id %>" data-group2="<%= old_group2_id %>">
+        <tr class="tr-detail <%= tc.member_flag ? 'text-success' : 'text-body' %>" data-code1="<%= old_group1_id %>" data-code2="<%= old_group2_id %>">
           <th><%= tc.total_cost_type_name %></th>
           <th><%= tc.kind_name %></th>
           <th><%= tc.detail_name %></th>
@@ -112,28 +112,3 @@
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
-<% content_for :head do %>
-<script>
-document.addEventListener('turbo:load', () => {
-    $(".group1-total").click(function() {
-        var s = $(".group2-total[data-group1='" + $(this).data("group1") + "']");
-        if(s.is(":visible")) {
-            s.hide();
-            $(".detail[data-group1='" + $(this).data("group1") + "']").hide();
-        } else {
-            s.show();
-        }
-    });
-    $(".group2-total").click(function() {
-        var s = $(".detail[data-group1='" + $(this).data("group1") + "'][data-group2='" + $(this).data("group2") + "']");
-        if(s.is(":visible")) {
-            s.hide();
-        } else {
-            s.show();
-        }
-    });
-  
-    $(".group2-total, .detail").hide();
-});
-</script>
-<% end %>
