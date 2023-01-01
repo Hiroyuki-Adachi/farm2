@@ -15,7 +15,7 @@
   </thead>
   <tbody>
     <% @chemicals.each do |chemical| %>
-      <tr class="chemical-total table-primary" data-chemical="<%= chemical.id %>" style="cursor: pointer;">
+      <tr class="tr-total1 table-primary" data-code1="<%= chemical.id %>">
         <td><%= chemical.chemical_type.name %></td>
         <td><%= chemical.name %></td>
         <td colspan="3"></td>
@@ -27,8 +27,8 @@
       <% @works.each do |work| %>
         <% @work_types[work.id].each do |work_type| %>
           <% work_chemical = @work_chemicals["#{work.id},#{work_type.id},#{chemical.id}"] %>
-          <% next if work_chemical.to_i.zero? %>
-          <tr class="detail" data-chemical="<%= chemical.id %>">
+          <% next if work_chemical.nil? || work_chemical.zero? %>
+          <tr class="tr-detail" data-code1="<%= chemical.id %>">
             <td colspan="2"></td>
             <td><%= work.worked_at %></td>
             <td><%= work_type.name %></td>
@@ -51,19 +51,3 @@
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
-<% content_for :head do %>
-<script>
-window.addEventListener('turbo:load', () => {
-    $(".chemical-total").click(function() {
-        var s = $(".detail[data-chemical='" + $(this).data("chemical") + "']");
-        if(s.is(":visible")) {
-            s.hide();
-        } else {
-            s.show();
-        }
-    });
-  
-    $(".detail").hide();
-});
-</script>
-<% end %>
