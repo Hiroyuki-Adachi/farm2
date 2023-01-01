@@ -26,6 +26,6 @@ class Plans::LandsController < ApplicationController
   end
 
   def set_current_date
-    @current_date = current_term == current_organization.get_system(Date.today).term ? Date.today : current_system.start_date
+    @current_date = current_term == current_organization.get_system(Date.today)&.term ? Date.today : current_system.start_date
   end
 end
