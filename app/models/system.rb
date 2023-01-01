@@ -39,4 +39,12 @@ class System < ApplicationRecord
   def self.get_system(date, organization_id)
     System.find_by("start_date <= ? AND end_date >= ? AND organization_id = ?", date, date, organization_id)
   end
+
+  def self.min_date(organization_id)
+    System.where(organization_id: organization_id).minimum(:start_date)
+  end
+
+  def self.max_date(organization_id)
+    System.where(organization_id: organization_id).maximum(:end_date)
+  end
 end

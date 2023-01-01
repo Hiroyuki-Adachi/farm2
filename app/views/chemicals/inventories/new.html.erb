@@ -5,7 +5,9 @@
  <div class="row">
     <div class="field mb-3 col-md-3">
       <%= f.label :checked_on, class: "col-form-label-lg form-label" %>
-      <%= f.date_field :checked_on, {required: true, class: "form-control"} %>
+      <%= f.date_field :checked_on, {
+        required: true, max: System.max_date(current_organization), min: System.min_date(current_organization), class: "form-control"
+        } %>
     </div>
     <div class="field mb-3 col-md-6">
       <%= f.label :name, class: "col-form-label-lg form-label" %>

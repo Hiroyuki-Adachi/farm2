@@ -14,7 +14,7 @@
     <% @owned_rices.each do |owned_rice| %>
       <% if owned_rice.home_id != old_home_id %>
         <% if @home_relatives[old_home_id] %>
-          <tr class="detail" data-home="<%= old_home_id %>">
+          <tr class="tr-detail" data-code1="<%= old_home_id %>">
             <td></td>
             <td>縁故米</td>
             <td class="numeric"><%= @home_relatives[old_home_id] %></td>
@@ -23,7 +23,7 @@
           </tr>
         <% end %>
         <% old_home_id = owned_rice.home_id %>
-        <tr class="home-total table-primary" data-home="<%= old_home_id %>" style="cursor: pointer;">
+        <tr class="tr-total1 table-primary" data-code1="<%= old_home_id %>">
           <td><%= owned_rice.home.name %></td>
           <td></td>
           <td class="numeric"><%= @home_totals[old_home_id][:owned_count] %></td>
@@ -31,7 +31,7 @@
           <td class="numeric"><%= @home_totals[old_home_id][:owned_price].to_formatted_s(:delimited) %></td>
         </tr>
       <% end %>
-      <tr class="detail" data-home="<%= old_home_id %>">
+      <tr class="tr-detail" data-code1="<%= old_home_id %>">
         <td></td>
         <td><%= owned_rice.owned_rice_price.name %></td>
         <td class="numeric"><%= owned_rice.owned_count %></td>
@@ -40,7 +40,7 @@
       </tr>
     <% end %>
     <% if @home_relatives[old_home_id] %>
-      <tr class="detail" data-home="<%= old_home_id %>">
+      <tr class="tr-detail" data-code1="<%= old_home_id %>">
         <td></td>
         <td>縁故米</td>
         <td class="numeric"><%= @home_relatives[old_home_id] %></td>
@@ -58,19 +58,3 @@
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
-<% content_for :head do %>
-<script>
-window.addEventListener('turbo:load', () => {
-    $(".home-total").click(function() {
-        var s = $(".detail[data-home='" + $(this).data("home") + "']");
-        if(s.is(":visible")) {
-            s.hide();
-        } else {
-            s.show();
-        }
-    });
-  
-    $(".detail").hide();
-});
-</script>
-<% end %>
