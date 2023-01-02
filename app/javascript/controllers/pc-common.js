@@ -116,8 +116,10 @@ document.addEventListener('turbo:load', () => {
         element.style.display = "none";
     });
 
-    window.addEventListener("turbo:click", () => {
-        loadingStart("しばらくお待ちください");
+    window.addEventListener("turbo:click", (event) => {
+        if (event.target.dataset.wait) {
+            loadingStart("しばらくお待ちください");
+        }
     });
 
     window.addEventListener("turbo:loading", () => {
