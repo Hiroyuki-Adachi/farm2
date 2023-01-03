@@ -18,7 +18,7 @@
           <td><%= link_to '照会', minute_path(schedule.minute.id), {class: "btn btn-info btn-sm", target: :_blank, data: {turbolinks: false}} %></td>
           <td><%= link_to '削除', minute_path(id: schedule.minute.id), {data: {turbo_confirm: "議事録を削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger btn-sm"} %></td>
           <% else %>
-          <td><%= button_tag "作成", {id: nil, type: :button, class: "btn btn-success btn-sm", onclick: "createPDF(#{schedule.id})"} %></td>
+          <td><%= button_tag "作成", {id: nil, type: :button, class: "btn btn-success btn-sm create-pdf", data: {schedule: schedule.id}} %></td>
           <td></td>
           <td></td>
           <% end %>
@@ -42,11 +42,13 @@ document.addEventListener('turbo:load', () => {
     document.getElementById("minute_pdf").addEventListener("change", (event) => {
         event.target.closest("form").requestSubmit();
     });
-});
 
-function createPDF(schedule_id) {
-    $("#minute_schedule_id").val(schedule_id);
-    $("#minute_pdf").click();
-}
+    document.querySelectorAll(".create-pdf").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            document.getElementById("minute_schedule_id").value = event.target.dataset.schedule;
+            document.getElementById("minute_pdf").click();
+        });
+    })
+});
 </script>
 <% end %>
