@@ -89,44 +89,5 @@
   </div>
 <% end %>
 <% content_for :head do %>
-<script data-turbo-track="reload">
-window.addEventListener('turbo:load', () => {
-    $("#prorate").click(function() {
-        var total_area = 0;
-        var total_soil = parseFloat($("#soil_quantity_sum").val());
-        var sum_soil = 0;
-        var max_work_type = 0;
-        var max_area = 0;
-        var max_soil = 0;
-        $('[name="check_soil"]:checked').each(function() {
-            var cur_work_type = $(this).val();
-            var cur_area = parseFloat($("#land_" + cur_work_type).val());
-
-            total_area += cur_area;
-            if(max_area < cur_area) {
-                max_area = cur_area;
-                max_work_type = cur_work_type;
-            }
-        });
-
-        if((total_area > 0) && (total_soil > 0)) {
-            $('[name="seedlings[][soil_quantity]"').val(0);
-            $('[name="check_soil"]:checked').each(function() {
-                var cur_work_type = $(this).val();
-                var cur_area = parseFloat($("#land_" + cur_work_type).val());
-                var cur_soil = Math.round(total_soil * cur_area / total_area);
-
-                sum_soil += cur_soil;
-                $("#soil_quantity_" + cur_work_type).val(cur_soil);
-                if(cur_work_type == max_work_type) {
-                    max_soil = cur_soil;
-                }
-            });
-            if(sum_soil != total_soil) {
-                $("#soil_quantity_" + max_work_type).val(max_soil + (total_soil - sum_soil));
-            }
-        }
-    });
-});
-</script>
+<%= javascript_include_tag 'controllers/seedling-costs', 'data-turbo-track': 'reload', type: :module %>
 <% end %>
