@@ -12,7 +12,7 @@
   <tbody>
     <% @work_types.each do |work_type| %>
       <% next if @work_areas[work_type.id].blank? %>
-      <tr class="work-type-total table-primary" data-work-type="<%= work_type.id %>" style="cursor: pointer;">
+      <tr class="tr-total1 table-primary" data-code1="<%= work_type.id %>">
         <td><%= work_type.name %></td>
         <td></td>
         <td class="numeric"><%= @work_areas[work_type.id].values.inject(:+) %></td>
@@ -22,7 +22,7 @@
       <% @work_areas[work_type.id].keys.each do |work_id| %>
         <% work = Work.find_by(id: work_id) %>
         <% next if work.blank? %>
-        <tr class="detail" data-work-type="<%= work_type.id %>">
+        <tr class="tr-detail" data-code1="<%= work_type.id %>">
           <td></td>
           <td><%= work.worked_at %></td>
           <td class="numeric"><%= @work_areas[work_type.id][work.id] %></td>
@@ -41,19 +41,3 @@
     <%= link_to "戻る", (params[:fixed_at] ? fixes_path : menu_index_path), {class: "btn btn-outline-dark"} %>
   </div>
 </div>
-<% content_for :head do %>
-<script>
-window.addEventListener('turbo:load', () => {
-    $(".work-type-total").click(function() {
-        var s = $(".detail[data-work-type='" + $(this).data("work-type") + "']");
-        if(s.is(":visible")) {
-            s.hide();
-        } else {
-            s.show();
-        }
-    });
-  
-    $(".detail").hide();
-});
-</script>
-<% end %>

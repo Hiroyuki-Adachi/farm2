@@ -36,9 +36,9 @@
     <% end %>
     <% if current_user.manageable? %>
       <%= link_to '集計対象期間変更', edit_menu_path(current_system), {class: "dropdown-item ms-2", data: {controller: :menu, actions: [:edit]}} %>
-      <%= link_to '日当一覧', work_results_path, {class: "dropdown-item ms-2", data: {controller: "work_results"}} %>
+      <%= link_to '日当一覧', work_results_path, {class: "dropdown-item ms-2", data: {controller: "work_results", wait: true}} %>
       <%= link_to '機械利用料', machine_results_path, {class: "dropdown-item ms-2", data: {controller: "machine_results"}} %>
-      <%= link_to '薬剤使用量一覧', work_chemicals_path, {class: "dropdown-item ms-2", data: {controller: "work_chemicals"}} %>
+      <%= link_to '薬剤使用量一覧', work_chemicals_path, {class: "dropdown-item ms-2", data: {controller: "work_chemicals", wait: true}} %>
       <%= link_to '苗使用量一覧', work_seedlings_path, {class: "dropdown-item ms-2", data: {controller: "work_seedlings"}} %>
       <%= link_to 'カレンダー', calendars_path, {class: "dropdown-item ms-2", data: {controller: "calendars"}} %>
     <% end %>
@@ -46,7 +46,7 @@
   <% if current_user.manageable? %>
   <div aria-labelledby="navbar_fix" class="mt-2" style="display:none;">
     <span class="h5">会計処理</span>
-    <%= link_to '新規確定', new_fix_path, {class: "dropdown-item ms-2", data: {controller: :fixes, actions: [:new]}} %>
+    <%= link_to '新規確定', new_fix_path, {class: "dropdown-item ms-2", data: {controller: :fixes, actions: [:new], wait: true}} %>
     <%= link_to '確定一覧', fixes_path, {class: "dropdown-item ms-2", data: {controller: :fixes, actions: [:index, :show]}} %>
     <%= link_to '育苗集計', total_seedlings_path, {class: "dropdown-item ms-2", data: {controller: :total_seedlings}} %>
     <%= link_to '乾燥調整一覧', total_dryings_path, {class: "dropdown-item ms-2", data: {controller: :total_dryings}} %>
@@ -64,7 +64,7 @@
     <span class="h5">原価管理</span>
     <!-- <%= link_to '減価償却', depreciations_path, {class: "dropdown-item", data: {controller: :depreciations}} %> -->
     <!-- <%= link_to '燃料原価', fuel_costs_path, {class: "dropdown-item", data: {controller: "fuel_costs"}} %> -->
-    <%= link_to '薬剤原価', chemical_costs_path, {class: "dropdown-item ms-2", data: {controller: "chemical_costs"}} %>
+    <%= link_to '薬剤原価', chemical_costs_path, {class: "dropdown-item ms-2", data: {controller: "chemical_costs", wait: true}} %>
     <%= link_to '育苗原価', seedling_costs_path, {class: "dropdown-item ms-2", data: {controller: "seedling_costs"}} %>
     <%= link_to '原価一覧', total_costs_path, {class: "dropdown-item ms-2", data: {controller: "total_costs"}} %>
     <%= link_to '土地管理料', lands_fees_path, {class: "dropdown-item ms-2", data: {controller: "fees"}} %>

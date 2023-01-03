@@ -4,16 +4,16 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
-  <%= javascript_pack_tag    'application', 'data-turbo-track': 'reload' %>
-  <%= javascript_pack_tag    'pc-common', 'data-turbo-track': 'reload' %>
-  <%= stylesheet_pack_tag 'pc-common' %>
+  <%= javascript_importmap_tags %>
+  <%= javascript_include_tag 'controllers/pc-common', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag 'pc-common' %>
   <%= csrf_meta_tags %>
+  <%= javascript_include_tag 'controllers/work-show', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag 'work-show', :media => 'all' %>
   <script type="text/javascript">
    I18n.defaultLocale = "<%= I18n.default_locale %>";
    I18n.locale = "<%= I18n.locale %>";
   </script>
-  <%= javascript_pack_tag 'work-show', 'data-turbo-track': 'reload' %>
-  <%= stylesheet_pack_tag 'work-show', :media => 'all' %>
 
   <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
       <script type="text/javascript">

@@ -47,6 +47,10 @@ config/secrets.yml
 *.bowerrc
 bower.json
 
+# I18n
+/app/javascript/i18n-js/*
+!/app/javascript/i18n-js/.keep
+
 # Ignore pow environment settings
 .powenv
 
@@ -59,3 +63,6 @@ yarn-debug.log*
 
 /config/master.key
 .byebug_history
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

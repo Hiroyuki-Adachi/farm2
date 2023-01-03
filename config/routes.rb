@@ -143,7 +143,6 @@ Rails.application.routes.draw do
       get :tab3
     end
   end
-  resources :monthly_reports, only: [:index, :show, :edit, :update]
   resources :fixes, param: "fixed_at", except: [:edit, :update]
   resources :personal_informations, param: "token", only: [:show] do
     resources :works, controller: "personal_informations/works", only: [:show]

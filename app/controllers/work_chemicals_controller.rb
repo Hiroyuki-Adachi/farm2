@@ -2,7 +2,7 @@ class WorkChemicalsController < ApplicationController
   include PermitManager
 
   def index
-    @works = WorkDecorator.decorate_collection(Work.by_chemical(@term))
+    @works = WorkDecorator.decorate_collection(Work.by_chemical(@term).includes(:work_kind))
     @chemicals = Chemical.by_term(@term)
     calc_work_chemicals
     respond_to do |format|

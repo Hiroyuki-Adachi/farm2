@@ -39,7 +39,7 @@
   </div>
 <% end %>
 <% content_for :head do %>
-<script>
+<script data-turbo-track="reload">
 window.addEventListener('turbo:load', () => {
     ("change keyup click".split(" ")).forEach((event) => {
         document.querySelectorAll(".rice").forEach((element) => {

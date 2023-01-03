@@ -64,5 +64,5 @@
 </div>
 <% end %>
 <% content_for :head do %>
-<%= javascript_pack_tag 'land-fees', 'data-turbo-track': 'reload' %>
+<%= javascript_include_tag 'controllers/land-fees', 'data-turbo-track': 'reload' %>
 <% end %>

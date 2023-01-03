@@ -50,7 +50,7 @@
   </div>
 <% end %>
 <% content_for :head do %>
-<style>
+<style data-turbo-track="reload">
 @media print {
   html, body {
     width: 420mm;
@@ -63,5 +63,5 @@
   .btn-toolbar {display: none;}
 }
 </style>
-<%= javascript_pack_tag 'plan-lands', 'data-turbo-track': 'reload', defer: true %>
+<%= javascript_include_tag 'controllers/plan-lands', 'data-turbo-track': 'reload', defer: true %>
 <% end %>

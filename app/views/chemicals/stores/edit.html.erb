@@ -78,7 +78,7 @@
   data: {chemical_type: chemical.chemical_type_id, id: chemical.id} %>
 <% end %>
 <% content_for :head do %>
-<script>
+<script data-turbo-track="reload">
 document.addEventListener("turbo:load", () => {
     document.querySelectorAll(".chemical_types").forEach((element) => {
         element.addEventListener("change", event => {
