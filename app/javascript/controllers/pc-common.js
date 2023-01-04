@@ -1,4 +1,5 @@
 import { Turbo } from "@hotwired/turbo-rails";
+import { Modal } from "bootstrap";
 
 window.popupAlert = (message) => {
     document.getElementById("popup_alert_message").innerText = message;

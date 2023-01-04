@@ -28,8 +28,3 @@ window.cancelPrint = function(url) {
         }
     }));
 };
-
-window.addEventListener('turbo:load', () => {
-    $("#cover_broccoli").height($("#content_broccoli").height()).width($("#content_broccoli").width());
-    $("#cover_whole_crops").height($("#content_whole_crops").height()).width($("#content_whole_crops").width());
-});
