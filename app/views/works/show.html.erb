@@ -23,8 +23,12 @@
 
       function layCover(coverName)
       {
-          document.getElementById(`cover_${coverName}`).style.height = `${document.getElementById(`content_${coverName}`).clientHeight}px`;
-          document.getElementById(`cover_${coverName}`).style.width  = `${document.getElementById(`content_${coverName}`).clientWidth}px`;
+          const coverElm = document.getElementById(`cover_${coverName}`);
+          const conteElm = document.getElementById(`content_${coverName}`);
+          if ((coverElm != null) && (conteElm != null)) {
+              coverElm.style.height = `${conteElm.clientHeight}px`;
+              coverElm.style.width  = `${conteElm.clientWidth}px`;
+          }
       }
       </script>
   <% end %>
