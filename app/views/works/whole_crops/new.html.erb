@@ -87,24 +87,5 @@
   </div>
 <% end %>
 <% content_for :head do %>
-<script data-turbo-track="reload">
-import "jquery-ui/ui/widgets/sortable";
-window.addEventListener('turbo:load', () => {
-    $("#tbody_lands").sortable({
-        cursor: "move",
-        update: function(e, ui) {
-          renumberLands();
-        }
-    });
-
-    renumberLands();
-});
-
-function renumberLands() {
-    $("#tbody_lands tr").each(function(index, elm) {
-        $(elm).find(".lineNo").text(index + 1);
-        $(elm).find(".land_info").find("input[id$='display_order']").val(index + 1);
-    });
-}
-</script>
+<%= javascript_include_tag 'controllers/work-whole-crops', "data-turbo-track": "reload", type: :module %>
 <% end %>
