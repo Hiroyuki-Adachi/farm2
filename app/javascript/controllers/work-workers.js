@@ -97,14 +97,12 @@ function setAddButtons()
     const masterWorkers = document.getElementById("master_workers");
     const tbodyWorkers = document.getElementById("tbody_workers");
 
-    for(let i = 0; i < masterWorkers.rows.length; i++)
-    {
+    for(let i = 0; i < masterWorkers.rows.length; i++) {
         masterWorkers.rows[i].cells[0].children[0].disabled = false;
         masterWorkers.rows[i].style.backgroundColor = "White";
     }
 
-    for(let i = 0; i < tbodyWorkers.rows.length; i++)
-    {
+    for(let i = 0; i < tbodyWorkers.rows.length; i++) {
         const workerId = tbodyWorkers.rows[i].cells[3].children[1].value;
         document.getElementById(`add_button_${workerId}`).disabled = true;
         document.getElementById(`master_worker_${workerId}`).style.backgroundColor = "lightgrey";

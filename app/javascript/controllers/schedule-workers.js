@@ -1,161 +1,154 @@
-import "jquery-ui/ui/widgets/sortable";
+import Sortable from "sortablejs";
 
-function add_worker(worker_id)
+function addWorker(workerId)
 {
-    if(document.getElementById("worker_" + worker_id) != null) return;  // 既に存在する場合、追加は無効
+    if(document.getElementById(`worker_${workerId}`) != null) return;  // 既に存在する場合、追加は無効
 
-    var tbody_workers = document.getElementById("tbody_workers");
-    var row = tbody_workers.insertRow(tbody_workers.rows.length);
+    const tbodyWorkers = document.getElementById("tbody_workers");
+    const row = tbodyWorkers.insertRow(tbodyWorkers.rows.length);
 
-    row.id = "worker_" + worker_id.toString();
+    row.id = `worker_${workerId}`;
 
-    var cell_no = row.insertCell(0);
-    var cell_name = row.insertCell(1);
-    var cell_del = row.insertCell(2);
+    const cellNo = row.insertCell(0);
+    const cellName = row.insertCell(1);
+    const cellDel = row.insertCell(2);
 
-    var display_order = tbody_workers.rows.length ;
+    const displayOrder = tbodyWorkers.rows.length ;
 
-    cell_no.className = "numeric";
-    cell_no.innerHTML = display_order;
-    cell_name.innerHTML = document.getElementById("master_worker_" + worker_id).cells[2].innerText;
+    cellNo.className = "numeric";
+    cellNo.innerHTML = displayOrder;
+    cellName.innerHTML = document.getElementById(`master_worker_${workerId}`).cells[2].innerText;
 
-    var elem_button = document.createElement("input")
-    elem_button.type = "button";
-    elem_button.value = "\u524a\u9664"; // 削除
-    elem_button.className = "btn btn-outline-dark btn-sm remove-worker";
-    elem_button.dataset.worker = worker_id;
-    cell_del.appendChild(elem_button);
+    const elemButton = document.createElement("input")
+    elemButton.type = "button";
+    elemButton.value = "\u524a\u9664"; // 削除
+    elemButton.className = "btn btn-outline-dark btn-sm remove-worker";
+    elemButton.dataset.worker = workerId;
+    cellDel.appendChild(elemButton);
+    elemButton.addEventListener("click", (event) => {
+        removeWorker(event.target.dataset.worker);
+    });
 
-    var elem_worker = document.createElement("input");
-    elem_worker.type = "hidden";
-    elem_worker.name = "schedule_workers[][worker_id]";
-    elem_worker.value = worker_id;
-    cell_del.appendChild(elem_worker);
+    const elemWorker = document.createElement("input");
+    elemWorker.type = "hidden";
+    elemWorker.name = "schedule_workers[][worker_id]";
+    elemWorker.value = workerId;
+    cellDel.appendChild(elemWorker);
 
-    var elem_order = document.createElement("input");
-    elem_order.type = "hidden";
-    elem_order.name = "schedule_workers[][display_order]";
-    elem_order.value = display_order;
-    cell_del.appendChild(elem_order);
+    const elemOrder = document.createElement("input");
+    elemOrder.type = "hidden";
+    elemOrder.name = "schedule_workers[][display_order]";
+    elemOrder.value = displayOrder;
+    cellDel.appendChild(elemOrder);
 
-    set_add_buttons();
+    setAddButtons();
 }
 
-function remove_worker(worker_id)
+function removeWorker(workerId)
 {
-    var tbl_workers = document.getElementById("tbl_workers");
-    var tr_worker = document.getElementById("worker_" + worker_id.toString());
+    const tblWorkers = document.getElementById("tbl_workers");
+    const trWorker = document.getElementById(`worker_${workerId}`);
 
-    tbl_workers.deleteRow(tr_worker.rowIndex);
-    renumber_worker();
-    set_add_buttons();
+    tblWorkers.deleteRow(trWorker.rowIndex);
+    renumberWorker();
+    setAddButtons();
 }
 
-function renumber_worker()
+function renumberWorker()
 {
-    var tbody_workers = document.getElementById("tbody_workers");
-    var row_worker;
-    for(var i = 0; i < tbody_workers.rows.length; i++)
-    {
-        row_worker = tbody_workers.rows[i];
+    const tbodyWorkers = document.getElementById("tbody_workers");
+    for(let i = 0; i < tbodyWorkers.rows.length; i++) {
+        const row_worker = tbodyWorkers.rows[i];
         row_worker.cells[0].innerHTML = i + 1;
         row_worker.cells[2].children[2].value = i + 1;
     }
 }
 
-function set_add_buttons()
+function setAddButtons()
 {
-    var master_workers = document.getElementById("master_workers");
-    var tbody_workers = document.getElementById("tbody_workers");
-    var i;
+    const masterWorkers = document.getElementById("master_workers");
+    const tbodyWorkers = document.getElementById("tbody_workers");
 
-    for(i = 0; i < master_workers.rows.length; i++)
-    {
-        master_workers.rows[i].cells[0].children[0].disabled = false;
-        master_workers.rows[i].style.backgroundColor = "White";
+    for(let i = 0; i < masterWorkers.rows.length; i++) {
+        masterWorkers.rows[i].cells[0].children[0].disabled = false;
+        masterWorkers.rows[i].style.backgroundColor = "White";
     }
 
-    for(i = 0; i < tbody_workers.rows.length; i++)
-    {
-        var worker_id = tbody_workers.rows[i].cells[2].children[1].value;
-        document.getElementById("add_button_" + worker_id).disabled = true;
-        document.getElementById("master_worker_" + worker_id).style.backgroundColor = "lightgrey";
+    for(let i = 0; i < tbodyWorkers.rows.length; i++) {
+        const workerId = tbodyWorkers.rows[i].cells[2].children[1].value;
+        document.getElementById(`add_button_${workerId}`).disabled = true;
+        document.getElementById(`master_worker_${workerId}`).style.backgroundColor = "lightgrey";
     }
 }
 
-function change_section(section) {
-    var workers = document.getElementById("master_workers");
-    var worker_tr;
+function changeSection(section) {
+    const workers = document.getElementById("master_workers");
 
-    for(var i = 0; i < workers.rows.length; i++) {
-        worker_tr = master_workers.rows[i];
-        worker_tr.style.display = "";
-        if(parseInt(section.value) != 0 && parseInt(worker_tr.cells[3].innerText) != parseInt(section.value)) {
-            worker_tr.style.display = "none";
+    for(let i = 0; i < workers.rows.length; i++) {
+        const workerTr = workers.rows[i];
+        workerTr.style.display = "";
+        if(parseInt(section.value) != 0 && parseInt(workerTr.cells[3].innerText) != parseInt(section.value)) {
+            workerTr.style.display = "none";
         }
     }
 }
 
-function add_section(section_id) {
-    var workers = document.getElementById("master_workers");
-    var worker_tr;
+function addSection(sectionId) {
+    const workers = document.getElementById("master_workers");
 
-    for(var i = 0; i < workers.rows.length; i++) {
-        worker_tr = master_workers.rows[i];
-        if((parseInt(worker_tr.cells[3].innerText) == section_id) && (worker_tr.cells[4].innerText != "None")) {
-            add_worker(worker_tr.id.replace("master_worker_", ""));
+    for(let i = 0; i < workers.rows.length; i++) {
+        const workerTr = master_workers.rows[i];
+        if((parseInt(workerTr.cells[3].innerText) == sectionId) && (workerTr.cells[4].innerText != "None")) {
+            addWorker(workerTr.id.replace("master_worker_", ""));
         }
     }
 }
 
-function add_positions(positions) {
-    var workers = document.getElementById("master_workers");
-    var worker_tr;
+function addPositions(positions) {
+    const workers = document.getElementById("master_workers");
 
     for(var i = 0; i < workers.rows.length; i++) {
-        worker_tr = master_workers.rows[i];
-        if(positions.indexOf(worker_tr.cells[4].innerText) >= 0) {
-            add_worker(worker_tr.id.replace("master_worker_", ""));
+        const workerTr = workers.rows[i];
+        if(positions.indexOf(workerTr.cells[4].innerText) >= 0) {
+            addWorker(workerTr.id.replace("master_worker_", ""));
         }
     }
 }
 
 window.addEventListener('turbo:load', () => {
-  set_add_buttons();
+    setAddButtons();
 
-  $("#tbody_workers tr").hover(function() {
-    $(this).css("cursor", "crosshair");
-  }, function() {
-    $(this).css("cursor", "default");
-  });
-    
-  $("#tbody_workers").sortable({
-    cursor: "move",
-    update: function(e, ui) {
-      renumber_worker();
-    }
-  });
+    Sortable.create(document.getElementById("tbody_workers"), {
+        onSort: renumberWorker
+    });
 
-  $(".add-worker").on('click', function() {
-    add_worker($(this).data("worker"));
-  });
-  $("#tbody_workers").on('click', ".remove-worker", function() {
-    remove_worker($(this).data("worker"));
-  });
-  $("#add_director").on('click', function() {
-    add_positions(["Director"]);
-  });
-  $("#add_leader").on('click', function() {
-    add_positions(["Director", "Leader"]);
-  });
-  $("#add_member").on('click', function() {
-    add_positions(["Director", "Leader", "Member"]);
-  });
-  $(".add-section").on('click', function() {
-    add_section($(this).data("section"));
-  });
+    document.querySelectorAll("input[type='radio'][name='section']").forEach((element) => {
+        element.addEventListener("change", (event) => {
+            changeSection(event.target);
+        });
+    });
 
-  $("input[type='radio'][name='section']").change(function() {
-    change_section($(this)[0])
-  });
+    document.querySelectorAll(".add-worker").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            addWorker(event.target.dataset.worker);
+        });
+    });
+
+    document.querySelectorAll(".remove-worker").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            removeWorker(event.target.dataset.worker);
+        });
+    });
+
+    document.querySelectorAll(".add-members").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            addPositions(JSON.parse(event.target.dataset.positions));
+        });
+    });
+
+    document.querySelectorAll(".add-section").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            addSection(event.target.dataset.section);
+        });
+    });
 });

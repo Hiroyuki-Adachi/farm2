@@ -63,9 +63,9 @@
   </div>
   <div class="row">
     <div class="btn-group" role="group">
-      <%= tag(:input, {type: :button, id: "add_director", value: "←理事", class: "btn btn-outline-dark"})%>
-      <%= tag(:input, {type: :button, id: "add_leader", value: "←役員", class: "btn btn-outline-dark"})%>
-      <%= tag(:input, {type: :button, id: "add_member", value: "←全組合員", class: "btn btn-outline-dark"})%>
+      <%= tag(:input, {type: :button, id: "add_director", value: "←理事", class: "btn btn-outline-dark add-members", data: {positions: ["Director"]}})%>
+      <%= tag(:input, {type: :button, id: "add_leader", value: "←役員", class: "btn btn-outline-dark add-members", data: {positions: ["Director","Leader"]}})%>
+      <%= tag(:input, {type: :button, id: "add_member", value: "←全組合員", class: "btn btn-outline-dark add-members", data: {positions: ["Director","Leader","Member"]}})%>
     </div>
   </div>
 </div>
