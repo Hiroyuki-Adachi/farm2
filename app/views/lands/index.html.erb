@@ -52,7 +52,9 @@
 </div>
 <input type="hidden" id="lands_path" value="<%= lands_path %>" />
 <% content_for :head do %>
-<script type="text/javascript" data-turbo-track="reload">
+<script type="module" data-turbo-track="reload">
+import { Turbo } from "@hotwired/turbo-rails";
+
 function change_home(sender) {
     if(sender.value == "") {
         Turbo.visit(document.getElementById("lands_path").value)

@@ -1,3 +1,5 @@
+import { Turbo } from "@hotwired/turbo-rails";
+
 window.addEventListener('turbo:load', () => {
     initMap();
 
