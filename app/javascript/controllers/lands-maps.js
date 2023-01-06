@@ -1,3 +1,5 @@
+import { Turbo } from "@hotwired/turbo-rails";
+
 function initMap(){
     const org = JSON.parse(document.getElementById("location").value);
     const pos = new google.maps.LatLng(org[0], org[1]);

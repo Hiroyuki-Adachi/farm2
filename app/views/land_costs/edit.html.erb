@@ -62,7 +62,9 @@
   </div>
 <% end %>
 <% content_for :head do %>
-<script data-turbo-track="reload">
+<script data-turbo-track="reload" type="module">
+import { Turbo } from "@hotwired/turbo-rails";
+
 window.addEventListener('turbo:load', () => {
     document.querySelectorAll("input[type='radio'][id^='work_type']:checked").forEach((element) => {
         element.closest("tr").style.backgroundColor = element.dataset.bgColor;

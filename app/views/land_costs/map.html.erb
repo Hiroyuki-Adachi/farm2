@@ -35,5 +35,5 @@
   <%= hidden_field_tag :regions, cost.land.region, {id: "land_#{cost.land.id}", data: {id: cost.land.id, place: cost.land.place, area: cost.land.area, owner: cost.land.owner.name, color: cost.work_type.bg_color, "work-type" => cost.work_type_id}} %>
 <% end %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/lands-maps', 'data-turbo-track': 'reload' %>
+<%= javascript_include_tag 'controllers/lands-maps', 'data-turbo-track': 'reload', type: :module %>
 <% end %>
