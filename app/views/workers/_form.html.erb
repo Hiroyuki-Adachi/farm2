@@ -74,20 +74,8 @@
       <%= link_to '削除', @worker, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
     </div>
   <% end %>
-  <% if @worker.token.present? && current_organization.try(:url).present? %>
-  <div class="btn-group mr-2">
-    <input type="button" class="btn btn-success" value="トークンを見る" onclick="$('#token_info').slideToggle();">
-  </div>
-  <% end %>
   <div class="btn-group mr-2">
     <%= link_to '戻る', workers_path, {class: "btn btn-outline-dark"} %>
   </div>
 </div>
-<% end %>
-<% content_for :head do %>
-<script data-turbo-track="reload">
-window.addEventListener('turbo:load', () => {
-    $("#token_info").slideToggle();
-});
-</script>
 <% end %>
