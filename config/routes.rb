@@ -179,7 +179,9 @@ Rails.application.routes.draw do
     resources :print, controller: "works/print", only: [:create, :destroy]
     resources :healths, controller: "works/healths", only: [:new, :create]
     resources :workers, controller: "works/workers", only: [:new, :create]
-    resources :lands, controller: "works/lands", only: [:new, :create]
+    resources :lands, controller: "works/lands", only: [:new, :create] do
+      get :autocomplete, on: :collection
+    end
     resources :machines, controller: "works/machines", only: [:new, :create]
     resources :remarks, controller: "works/remarks", only: [:new, :create]
     resources :chemicals, controller: "works/chemicals", only: [:new, :create], as: :use_chemicals
@@ -190,7 +192,6 @@ Rails.application.routes.draw do
     end
     member do
       get :map
-      get :autocomplete_for_land_place
     end
   end
 

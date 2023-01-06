@@ -3,7 +3,7 @@ require 'date'
 class WorksController < ApplicationController
   include WorksHelper
   protect_from_forgery except: :work_type_select
-  before_action :set_work, only: [:edit, :show, :update, :destroy, :map, :autocomplete_for_land_place]
+  before_action :set_work, only: [:edit, :show, :update, :destroy, :map]
   before_action :set_results, only: [:show]
   before_action :set_lands, only: [:show]
   before_action :set_masters, only: [:new, :create, :edit, :update]
@@ -99,10 +99,6 @@ class WorksController < ApplicationController
     @work_kind_id = params[:work_kind_id]
     @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
     render layout: false, partial: 'work_kinds', content_type: 'text/vnd.turbo-stream.html'
-  end
-
-  def autocomplete_for_land_place
-    render json: Land.to_autocomplete(Land.for_place(params[:term]).expiry(@work.model.worked_at))
   end
 
   def map

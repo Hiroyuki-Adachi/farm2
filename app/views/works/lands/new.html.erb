@@ -55,7 +55,7 @@
   </div>
 </div>
 <% end %>
-<%= hidden_field_tag "autocomplete_for_land_place_works_path", autocomplete_for_land_place_work_path(@work) %>
+<%= hidden_field_tag "autocomplete_work_lands_path", autocomplete_work_lands_path(work_id: @work) %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/work-lands', "data-turbo-track": "reload" %>
+<%= javascript_include_tag 'controllers/work-lands', "data-turbo-track": "reload", type: :module %>
 <% end %>
