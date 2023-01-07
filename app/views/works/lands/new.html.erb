@@ -42,7 +42,7 @@
   </div>
   <div id="land_pos" class="lands_search float-start">
     <div id="land_base" class="mb-3" style="magin-left:40px !important;">
-      <%= text_field_tag :land, '', {placeholder: "地番または面積(α)を入力してください。", size: 30, class: "form-control"}  %>
+      <%= text_field_tag :land, '', {placeholder: "地番または面積(α)を入力してください。", size: 30, autocomplete: :off, class: "form-control"}  %>
     </div>
   </div>
 </div>
@@ -57,5 +57,6 @@
 <% end %>
 <%= hidden_field_tag "autocomplete_work_lands_path", autocomplete_work_lands_path(work_id: @work) %>
 <% content_for :head do %>
+<%= stylesheet_link_tag 'auto-complete', 'data-turbo-track': 'reload' %>
 <%= javascript_include_tag 'controllers/work-lands', "data-turbo-track": "reload", type: :module %>
 <% end %>
