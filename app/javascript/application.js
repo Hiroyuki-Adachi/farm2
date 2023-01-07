@@ -1,6 +1,6 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import { Modal, Collapse } from "bootstrap";
-import { Turbo } from "@hotwired/turbo-rails"
+import "@hotwired/turbo-rails";
+import "bootstrap";
 
 import moment from 'moment';
 window.moment = moment;

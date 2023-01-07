@@ -1,21 +1,21 @@
 <% if @work.created_by %>
-<div class="stamp stamp-input" style="position:absolute; top:20px;left:20px">
+<div class="stamp stamp-input" style="position:absolute; top:<%= 20 + (defined?(top) ? top : 0) %>px;left:20px">
   <span class="date"><%= @work.created_at %></span>
   <span class="name"><%= @work.creator_short_name %></span>
 </div>
 <% end %>
 <div id="print_stamp">
-<%= render partial: "works/print/show_stamp_print" %>
+<%= render partial: "works/print/show_stamp_print", locals: {top: (defined?(top) ? top : 0)} %>
 </div>
 <% if @work.fixed_at %>
-<div class="stamp stamp-fix" style="position:absolute; top:20px;left:210px">
+<div class="stamp stamp-fix" style="position:absolute; top:<%= 20 + (defined?(top) ? top : 0) %>px;left:210px">
   <% fix = FixDecorator.decorate(@work.fix) %>
   <span class="date"><%= fix.fixed_at %></span>
   <span class="name"><%= fix.fixer_short_name %></span>
 </div>
 <% end %>
 <% @checkers.last(WorkVerification::ENOUGH + 1).each_with_index do |checker, index| %>
-<div class="stamp stamp-check" style="position:absolute; top:20px;left:<%= index * 95 + 460 %>px">
+<div class="stamp stamp-check" style="position:absolute; top:<%= 20 + (defined?(top) ? top : 0) %>px;left:<%= index * 95 + 460 %>px">
   <span class="date"><%= checker.updated_at %></span>
   <span class="name"><%= checker.short_name %></span>
 </div>
