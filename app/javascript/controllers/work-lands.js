@@ -111,12 +111,13 @@ window.addEventListener('turbo:load', () => {
         selector: "#land",
         threshold: 2,
         resultsList: {
-            maxResults: 15
+            maxResults: 20
         },
         resultItem: {
             element: (item, data) => {
                 item.innerHTML = `${data.value.place}(${data.value.owner})(${data.value.area})`;
-            }
+            },
+            highlight: true
         },
         events: {
             input: {
