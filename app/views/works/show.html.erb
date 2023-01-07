@@ -67,7 +67,7 @@
 <% unless params[:target] == 'blank' %>
 <%= button_tag "戻る",  type: :button, class: "btn btn-default", :onclick => raw("location.href = '" + (session[:work_referer] ? session[:work_referer] : works_path) + "';") %>
 <% end %>
-<%= render partial: "show_stamp"%>
+<%= render partial: "show_stamp" %>
 <%= render 'application/popup' %>
 </body>
 </html>
