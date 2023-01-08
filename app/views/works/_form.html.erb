@@ -55,7 +55,8 @@
   </div>
 </div>
 <%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
-<script type="text/javascript" type="module">
+<% content_for :head do %>
+<script data-turbo-track="reload" type="module">
 import { Turbo } from "@hotwired/turbo-rails";
 
 window.addEventListener('turbo:load', () => {
@@ -66,3 +67,4 @@ window.addEventListener('turbo:load', () => {
     });
 });
 </script>
+<% end %>

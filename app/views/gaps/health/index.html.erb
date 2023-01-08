@@ -23,7 +23,8 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
-<script>
+<% content_for :head do %>
+<script data-turbo-track="reload">
 window.addEventListener('turbo:load', () => {
     document.getElementById("work_type_id").addEventListener("change", () => {
         loadingStart("集計中");
@@ -31,3 +32,4 @@ window.addEventListener('turbo:load', () => {
     });
 });
 </script>
+<% end %>
