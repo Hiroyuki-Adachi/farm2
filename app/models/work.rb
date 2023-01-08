@@ -27,7 +27,6 @@ class Work < ApplicationRecord
   require 'ostruct'
 
   ENOUGH = WorkVerification::ENOUGH
-  before_create :set_term
   after_save :set_chemical_group_no
 
   validates :worked_at, presence: true
@@ -175,10 +174,6 @@ SQL
       .distinct
       .order("worked_at")
   }
-
-  def set_term
-    self.term = Organization.term
-  end
 
   def workers_count
     work_results.count
