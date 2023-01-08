@@ -56,8 +56,7 @@ class WorksController < ApplicationController
   end
 
   def create
-    @work = Work.new(work_params)
-    @work.created_by = current_user.worker.id
+    @work = Work.new(work_params.merge(created_by: current_user.worker.id, term: current_term))
     if @work.save
       redirect_to(new_work_worker_path(work_id: @work))
     else
