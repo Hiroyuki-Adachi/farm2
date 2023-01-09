@@ -1,4 +1,4 @@
-const { default: Decimal } = require("decimal.js");
+import { Decimal } from "decimal.js";
 
 window.addEventListener('turbo:load', () => {
   document.querySelectorAll("[data-index='0']").forEach((element) => {

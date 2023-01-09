@@ -55,7 +55,10 @@
   </div>
 </div>
 <%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
-<script type="text/javascript">
+<% content_for :head do %>
+<script data-turbo-track="reload" type="module">
+import { Turbo } from "@hotwired/turbo-rails";
+
 window.addEventListener('turbo:load', () => {
     document.querySelectorAll('input[name="work[work_type_id]"]').forEach((element) => {
         element.addEventListener("change", (event) => {
@@ -64,3 +67,4 @@ window.addEventListener('turbo:load', () => {
     });
 });
 </script>
+<% end %>

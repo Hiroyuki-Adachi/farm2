@@ -1,153 +1,148 @@
-import "jquery-ui/ui/widgets/sortable";
+import Sortable from "sortablejs";
+import Moment from "moment";
 
-function add_worker(worker_id, worker_name)
+function addWorker(workerId, worker_name)
 {
-    var tbody_workers = document.getElementById("tbody_workers");
-    var row = tbody_workers.insertRow(tbody_workers.rows.length);
+    const tbodyWorkers = document.getElementById("tbody_workers");
+    const row = tbodyWorkers.insertRow(tbodyWorkers.rows.length);
 
-    row.id = "worker_" + worker_id.toString();
+    row.id = `worker_${workerId}`;
 
-    var cell_no = row.insertCell(0);
-    var cell_name = row.insertCell(1);
-    var cell_time = row.insertCell(2);
-    var cell_del = row.insertCell(3);
+    const cellNo = row.insertCell(0);
+    const cellName = row.insertCell(1);
+    const cellTime = row.insertCell(2);
+    const cellDel = row.insertCell(3);
 
-    var display_order = tbody_workers.rows.length ;
+    const displayOrder = tbodyWorkers.rows.length ;
 
-    cell_no.className = "numeric";
-    cell_no.innerHTML = display_order;
-    cell_name.innerHTML = worker_name;
+    cellNo.className = "numeric";
+    cellNo.innerHTML = displayOrder;
+    cellName.innerHTML = worker_name;
 
-    var elem_time = document.createElement("input");
-    elem_time.type = "number";
-    elem_time.value = get_hours();
-    elem_time.name = "results[][hours]";
-    elem_time.max = 99;
-    elem_time.min = 0;
-    elem_time.required = true;
-    elem_time.step = 0.5;
-    elem_time.className = "form-control form-control-sm";
-    elem_time.style = "width: 75px;";
-    cell_time.appendChild(elem_time);
+    const elemTime = document.createElement("input");
+    elemTime.type = "number";
+    elemTime.value = getHours();
+    elemTime.name = "results[][hours]";
+    elemTime.max = 99;
+    elemTime.min = 0;
+    elemTime.required = true;
+    elemTime.step = 0.5;
+    elemTime.className = "form-control form-control-sm";
+    elemTime.style.width = "75px";
+    cellTime.appendChild(elemTime);
 
-    var elem_button = document.createElement("input")
-    elem_button.type = "button";
-    elem_button.value = "\u524a\u9664"; // 削除
-    elem_button.className = "btn btn-outline-dark btn-sm remove-worker";
-    elem_button.dataset.worker = worker_id;
-    cell_del.appendChild(elem_button);
+    const elemButton = document.createElement("input")
+    elemButton.type = "button";
+    elemButton.value = "\u524a\u9664"; // 削除
+    elemButton.className = "btn btn-outline-dark btn-sm remove-worker";
+    elemButton.dataset.worker = workerId;
+    cellDel.appendChild(elemButton);
+    elemButton.addEventListener("click", (event) => {
+        removeWorker(event.target.dataset.worker);
+    });
 
-    var elem_worker = document.createElement("input");
-    elem_worker.type = "hidden";
-    elem_worker.name = "results[][worker_id]";
-    elem_worker.value = worker_id;
-    cell_del.appendChild(elem_worker);
+    const elemWorker = document.createElement("input");
+    elemWorker.type = "hidden";
+    elemWorker.name = "results[][worker_id]";
+    elemWorker.value = workerId;
+    cellDel.appendChild(elemWorker);
 
-    var elem_order = document.createElement("input");
-    elem_order.type = "hidden";
-    elem_order.name = "results[][display_order]";
-    elem_order.value = display_order;
-    cell_del.appendChild(elem_order);
+    const elemOrder = document.createElement("input");
+    elemOrder.type = "hidden";
+    elemOrder.name = "results[][display_order]";
+    elemOrder.value = displayOrder;
+    cellDel.appendChild(elemOrder);
 
-    set_add_buttons();
+    setAddButtons();
 }
 
-function remove_worker(worker_id)
+function removeWorker(workerId)
 {
-    var tbl_workers = document.getElementById("tbl_workers");
-    var tr_worker = document.getElementById("worker_" + worker_id.toString());
+    const tblWorkers = document.getElementById("tbl_workers");
+    const trWorker = document.getElementById("worker_" + workerId.toString());
 
-    tbl_workers.deleteRow(tr_worker.rowIndex);
-    renumber_worker();
-    set_add_buttons();
+    tblWorkers.deleteRow(trWorker.rowIndex);
+    renumberWorker();
+    setAddButtons();
 }
 
-function renumber_worker()
+function renumberWorker()
 {
-    var tbody_workers = document.getElementById("tbody_workers");
-    var row_worker;
-    for(var i = 0; i < tbody_workers.rows.length; i++)
-    {
-        row_worker = tbody_workers.rows[i];
-        row_worker.cells[0].innerHTML = i + 1;
-        row_worker.cells[3].children[2].value = i + 1;
+    const tbodyWorkers = document.getElementById("tbody_workers");
+    for(let i = 0; i < tbodyWorkers.rows.length; i++) {
+        const rowWorker = tbodyWorkers.rows[i];
+        rowWorker.cells[0].innerHTML = i + 1;
+        rowWorker.cells[3].children[2].value = i + 1;
     }
 }
 
-function get_hours()
+function getHours()
 {
-    const start_time  = moment(document.getElementById("work_start_at").value.substring(0, 19), "yyyy-MM-dd HH:mm:ss").toDate();
-    const end_time    = moment(document.getElementById("work_end_at").value.substring(0, 19), "yyyy-MM-dd HH:mm:ss").toDate();
+    const startTime  = Moment(document.getElementById("work_start_at").value.substring(0, 19), "yyyy-MM-dd HH:mm:ss").toDate();
+    const endTime    = Moment(document.getElementById("work_end_at").value.substring(0, 19), "yyyy-MM-dd HH:mm:ss").toDate();
 
-    let start_hour = start_time.getHours();
-    start_hour += parseFloat(start_time.getMinutes()) / 60.0;
+    let startHour = startTime.getHours();
+    startHour += parseFloat(startTime.getMinutes()) / 60.0;
 
-    let end_hour = end_time.getHours();
-    end_hour += parseFloat(end_time.getMinutes()) / 60.0;
+    let endHour = endTime.getHours();
+    endHour += parseFloat(endTime.getMinutes()) / 60.0;
 
-    if((start_hour < 12) && (end_hour > 13)) end_hour-= 1.0;
+    if((startHour < 12) && (endHour > 13)) endHour -= 1.0;
 
-    return (end_hour - start_hour).toFixed(1);
+    return (endHour - startHour).toFixed(1);
 }
 
-function set_add_buttons()
+function setAddButtons()
 {
-    var master_workers = document.getElementById("master_workers");
-    var tbody_workers = document.getElementById("tbody_workers");
-    var i;
+    const masterWorkers = document.getElementById("master_workers");
+    const tbodyWorkers = document.getElementById("tbody_workers");
 
-    for(i = 0; i < master_workers.rows.length; i++)
-    {
-        master_workers.rows[i].cells[0].children[0].disabled = false;
-        master_workers.rows[i].style.backgroundColor = "White";
+    for(let i = 0; i < masterWorkers.rows.length; i++) {
+        masterWorkers.rows[i].cells[0].children[0].disabled = false;
+        masterWorkers.rows[i].style.backgroundColor = "White";
     }
 
-    for(i = 0; i < tbody_workers.rows.length; i++)
-    {
-        var worker_id = tbody_workers.rows[i].cells[3].children[1].value;
-        document.getElementById("add_button_" + worker_id).disabled = true;
-        document.getElementById("master_worker_" + worker_id).style.backgroundColor = "lightgrey";
+    for(let i = 0; i < tbodyWorkers.rows.length; i++) {
+        const workerId = tbodyWorkers.rows[i].cells[3].children[1].value;
+        document.getElementById(`add_button_${workerId}`).disabled = true;
+        document.getElementById(`master_worker_${workerId}`).style.backgroundColor = "lightgrey";
     }
 }
 
-function change_section(section) {
-    var workers = document.getElementById("master_workers");
-    var worker_tr;
+function changeSection(section) {
+    const masterWorkers = document.getElementById("master_workers");
 
-    for(var i = 0; i < workers.rows.length; i++) {
-        worker_tr = master_workers.rows[i];
-        worker_tr.style.display = "";
-        if(parseInt(section.value) != 0 && parseInt(worker_tr.cells[3].innerText) != parseInt(section.value)) {
-            worker_tr.style.display = "none";
+    for(let i = 0; i < masterWorkers.rows.length; i++) {
+        const trWorker = masterWorkers.rows[i];
+        trWorker.style.display = "";
+        if(parseInt(section.value) != 0 && parseInt(trWorker.cells[3].innerText) != parseInt(section.value)) {
+            trWorker.style.display = "none";
         }
     }
 }
 
 window.addEventListener('turbo:load', () => {
-  set_add_buttons();
+    setAddButtons();
 
-  $("#tbody_workers tr").hover(function() {
-    $(this).css("cursor", "crosshair");
-  }, function() {
-    $(this).css("cursor", "default");
-  });
-    
-  $("#tbody_workers").sortable({
-    cursor: "move",
-    update: function(e, ui) {
-      renumber_worker();
-    }
-  });
+    Sortable.create(document.getElementById("tbody_workers"), {
+        onSort: renumberWorker
+    });
 
-  $("input[type='radio'][name='section']").change(function() {
-    change_section($(this)[0])
-  });
+    document.querySelectorAll("input[type='radio'][name='section']").forEach((element) => {
+        element.addEventListener("change", (event) => {
+            changeSection(event.target);
+        });
+    });
 
-  $(".add-worker").on("click", function() {
-    add_worker($(this).data("worker"), $(this).data("name"));
-  });
+    document.querySelectorAll(".add-worker").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            addWorker(event.target.dataset.worker, event.target.dataset.name);
+        });
+    })
 
-  $("#tbody_workers").on("click", ".remove-worker", function() {
-    remove_worker($(this).data("worker"));
-  });
+    document.querySelectorAll(".remove-worker").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            removeWorker(event.target.dataset.worker);
+        });
+    });
 });

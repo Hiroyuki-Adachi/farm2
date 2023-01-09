@@ -5,25 +5,31 @@
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
   <%= javascript_importmap_tags %>
-  <%= javascript_include_tag 'controllers/pc-common', 'data-turbo-track': 'reload' %>
+  <%= javascript_include_tag 'controllers/pc-common', 'data-turbo-track': 'reload', type: :module %>
   <%= stylesheet_link_tag 'pc-common' %>
   <%= csrf_meta_tags %>
   <%= javascript_include_tag 'controllers/work-show', 'data-turbo-track': 'reload' %>
   <%= stylesheet_link_tag 'work-show', :media => 'all' %>
-  <script type="text/javascript">
-   I18n.defaultLocale = "<%= I18n.default_locale %>";
-   I18n.locale = "<%= I18n.locale %>";
-  </script>
-
   <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
-      <script type="text/javascript">
+      <script type="text/javascript" data-turbo-track="reload">
       window.addEventListener('turbo:load', () => {
-          $("#cover_work").height($("#content_work").height()).width($("#content_work").width());
-          $("#cover_workers").height($("#content_workers").height()).width($("#content_workers").width());
-          $("#cover_lands").height($("#content_lands").height()).width($("#content_lands").width());
-          $("#cover_machines").height($("#content_machines").height()).width($("#content_machines").width());
-          $("#cover_chemicals").height($("#content_chemicals").height()).width($("#content_chemicals").width());
+          layCover("work");
+          layCover("workers");
+          layCover("lands");
+          layCover("machines");
+          layCover("chemicals");
+          layCover("whole_crops");
       });
+
+      function layCover(coverName)
+      {
+          const coverElm = document.getElementById(`cover_${coverName}`);
+          const conteElm = document.getElementById(`content_${coverName}`);
+          if ((coverElm != null) && (conteElm != null)) {
+              coverElm.style.height = `${conteElm.clientHeight}px`;
+              coverElm.style.width  = `${conteElm.clientWidth}px`;
+          }
+      }
       </script>
   <% end %>
 </head>
@@ -61,7 +67,7 @@
 <% unless params[:target] == 'blank' %>
 <%= button_tag "戻る",  type: :button, class: "btn btn-default", :onclick => raw("location.href = '" + (session[:work_referer] ? session[:work_referer] : works_path) + "';") %>
 <% end %>
-<%= render partial: "show_stamp"%>
+<%= render partial: "show_stamp" %>
 <%= render 'application/popup' %>
 </body>
 </html>

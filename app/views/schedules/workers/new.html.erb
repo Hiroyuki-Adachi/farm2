@@ -1,5 +1,5 @@
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/schedule-workers' %>
+<%= javascript_include_tag 'controllers/schedule-workers', "data-turbo-track": "reload", type: :module %>
 <% end %>
 <h1 class="page-header">作業予定者設定</h1>
 <%= error_print(@schedule) %>

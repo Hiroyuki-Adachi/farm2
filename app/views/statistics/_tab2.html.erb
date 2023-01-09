@@ -1,23 +1,27 @@
-<div class="col-md-12">
-  <table class="table table-sm">
-    <thead>
-      <tr>
-          <th>年度</th>
-          <% @total_all.each do |ta| %>
-          <th class="numeric"><%= ta[0] %></th>
-          <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <% categories = WorkType.categories %>
-      <% categories.each do |category| %>
-      <tr>
-          <th><%= category.name %></th>
-          <% @total_all.each do |ta| %>
-          <td class="numeric"><%= sprintf("%.1f", @total_genre[[category.genre, ta[0]]] || 0) %></td>
-          <% end %>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<%= turbo_stream.update 'tab' do %>
+  <div class="col-md-12">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+            <th>年度</th>
+            <% @total_all.each do |ta| %>
+            <th class="numeric"><%= ta[0] %></th>
+            <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% categories = WorkType.categories %>
+        <% categories.each do |category| %>
+        <tr>
+            <th><%= category.name %></th>
+            <% @total_all.each do |ta| %>
+            <td class="numeric"><%= sprintf("%.1f", @total_genre[[category.genre, ta[0]]] || 0) %></td>
+            <% end %>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= hidden_field_tag :tab2_labels, labels(@total_all) %>
+  <%= hidden_field_tag :tab2_datasets, tab2_datasets(@total_all, @categories, @total_genre) %>
+<% end %>

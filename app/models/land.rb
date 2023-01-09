@@ -87,11 +87,9 @@ class Land < ApplicationRecord
   end
 
   def self.to_autocomplete(search_results)
-    results = []
-    search_results.limit(15).each do |land|
-      results << {label: land.place + "(#{land.area})", value: land.id, details: {place: land.place, id: land.id, owner: land&.owner&.name || "", area: land.area}}
-    end
-    return results.to_json
+    return search_results.map do |land|
+      {id: land.id, place: land.place, owner: land&.owner&.name || "", area: land.area}
+    end.to_json
   end
 
   def self.autocomplete_groups(place)

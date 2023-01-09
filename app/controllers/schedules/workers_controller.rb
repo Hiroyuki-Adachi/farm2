@@ -17,4 +17,8 @@ class Schedules::WorkersController < ApplicationController
     @schedule_workers = @schedule.model.schedule_workers
     @sections = Section.usual.pluck(:name, :id).unshift(['すべて', 0])
   end
+
+  def menu_name
+    return "schedules"
+  end
 end

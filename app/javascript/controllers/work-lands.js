@@ -1,125 +1,131 @@
-import "jquery-ui/ui/widgets/sortable";
-import "jquery-ui/ui/widgets/autocomplete";
+import AutoComplete from "@tarekraafat/autocomplete.js";
+import Decimal from "decimal.js";
+import Sortable from "sortablejs";
 
-function remove_land(land_id)
+function removeLand(landId)
 {
-    document.getElementById("tbody_lands").deleteRow(document.getElementById("land_" + land_id.toString()).rowIndex - 1);
+    document.getElementById("tbody_lands").deleteRow(document.getElementById(`land_${landId}`).rowIndex - 1);
 
-    renumber_land();
-    calc_total_area();
+    renumberLand();
+    calcTotalArea();
 }
 
-function renumber_land()
+function renumberLand()
 {
-    var tbody_lands = document.getElementById("tbody_lands");
-    var row_land;
-    for(var i = 0; i < tbody_lands.rows.length; i++)
+    const tbodyLands = document.getElementById("tbody_lands");
+    for(let i = 0; i < tbodyLands.rows.length; i++)
     {
-        row_land = tbody_lands.rows[i];
-        row_land.cells[0].innerHTML = i + 1;
-        row_land.cells[3].children[2].value = i + 1;
+        const rowLand = tbodyLands.rows[i];
+        rowLand.cells[0].innerHTML = i + 1;
+        rowLand.cells[3].children[2].value = i + 1;
     }
 }
 
-function calc_total_area()
+function calcTotalArea()
 {
-    var tbody_lands = document.getElementById("tbody_lands");
-    var total_area = 0.0;
+    const tbodyLands = document.getElementById("tbody_lands");
+    let totalArea = new Decimal(0);
 
-    for(var i = 0; i < tbody_lands.rows.length; i++)
-    {
-        total_area += parseFloat(tbody_lands.rows[i].cells[2].innerHTML);
+    for(let i = 0; i < tbodyLands.rows.length; i++) {
+      totalArea = totalArea.plus(new Decimal(tbodyLands.rows[i].cells[2].innerHTML));
     }
 
-    document.getElementById("total_area").innerHTML = total_area.toFixed(2);
+    document.getElementById("total_area").innerHTML = totalArea.toFixed(2);
 }
 
-function add_land(land_id, land_place, land_area)
+function addLand(landId, landPlace, landArea)
 {
-    if(document.getElementById("land_" + land_id))
+    if(document.getElementById(`land_${landId}`))
     {
-        popupAlert("既に存在しています(" + land_place + ")");
+        popupAlert(`既に存在しています(${landPlace})`);
         document.getElementById("land_place").value = "";
         return;
     }
 
-    var tbody_lands = document.getElementById("tbody_lands");
-    var row = tbody_lands.insertRow(tbody_lands.rows.length);
+    const tbodyLands = document.getElementById("tbody_lands");
+    const row = tbodyLands.insertRow(tbodyLands.rows.length);
 
-    row.id = "land_" + land_id.toString();
+    row.id = `land_${landId}`;
 
-    var cell_no     = row.insertCell(0);
-    var cell_place  = row.insertCell(1);
-    var cell_area   = row.insertCell(2);
-    var cell_del    = row.insertCell(3);
+    const cellNo    = row.insertCell(0);
+    const cellPlace = row.insertCell(1);
+    const cellArea  = row.insertCell(2);
+    const cellDel   = row.insertCell(3);
 
-    var display_order = tbody_lands.rows.length;
+    const displayOrder = tbodyLands.rows.length;
 
-    cell_no.className = "numeric";
-    cell_no.innerHTML = display_order;
+    cellNo.className = "numeric";
+    cellNo.innerHTML = displayOrder;
 
-    cell_place.innerHTML = land_place;
+    cellPlace.innerHTML = landPlace;
 
-    cell_area.className = "numeric";
-    cell_area.innerHTML = parseFloat(land_area).toFixed(2);
+    cellArea.className = "numeric";
+    cellArea.innerHTML = parseFloat(landArea).toFixed(2);
 
-    var elem_button = document.createElement("input")
-    elem_button.type = "button";
-    elem_button.className = "btn btn-outline-dark btn-sm remove-land";
-    elem_button.value = "削除";
-    elem_button.dataset.land = land_id;
-    cell_del.appendChild(elem_button);
+    const elemButton = document.createElement("input");
+    elemButton.type = "button";
+    elemButton.className = "btn btn-outline-dark btn-sm remove-land";
+    elemButton.value = "削除";
+    elemButton.dataset.land = landId;
+    elemButton.addEventListener("click", (event) => {
+        removeLand(event.target.dataset.land);
+    });
+    cellDel.appendChild(elemButton);
 
-    var elem_land = document.createElement("input");
-    elem_land.type = "hidden";
-    elem_land.name = "work_lands[][land_id]";
-    elem_land.value = land_id;
-    cell_del.appendChild(elem_land);
+    const elemLand = document.createElement("input");
+    elemLand.type = "hidden";
+    elemLand.name = "work_lands[][land_id]";
+    elemLand.value = landId;
+    cellDel.appendChild(elemLand);
 
-    var elem_order = document.createElement("input");
-    elem_order.type = "hidden";
-    elem_order.name = "work_lands[][display_order]";
-    elem_order.value = display_order;
-    cell_del.appendChild(elem_order);
+    const elemOrder = document.createElement("input");
+    elemOrder.type = "hidden";
+    elemOrder.name = "work_lands[][display_order]";
+    elemOrder.value = displayOrder;
+    cellDel.appendChild(elemOrder);
 
-    calc_total_area();
+    calcTotalArea();
 
-    $("#land").val("");
+    document.getElementById("land").value = "";
 }
 
 window.addEventListener('turbo:load', () => {
-  $("#tbody_lands tr").hover(function() {
-    $(this).css("cursor", "crosshair");
-  }, function() {
-    $(this).css("cursor", "default");
-  });
-    
-  $("#tbody_lands").sortable({
-    cursor: "move",
-    update: function(e, ui) {
-      renumber_land();
-    }
-  });
+    Sortable.create(document.getElementById("tbody_lands"), {
+        onSort: renumberLand
+    });
 
-  $("#tbody_lands").on("click", ".remove-land", function() {
-    remove_land($(this).data("land"));
-  });
+    document.querySelectorAll(".remove-land").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            removeLand(event.target.dataset.land);
+        });
+    });
 
-  calc_total_area();
+    calcTotalArea();
 
-  $("#land").autocomplete({
-    source : $("#autocomplete_for_land_place_works_path").val(),
-    minLength: 2,
-    select: function(e, ui) {
-      if(ui.item) {
-        add_land(ui.item.details.id, ui.item.details.place + "(" + ui.item.details.owner + ")", ui.item.details.area);
-      }
-      return false;
-    }
-  });
-
-  const land_base = jQuery("#land_base");
-  $(".ui-autocomplete").offset({top: land_base.offset().top + land_base.height(), left: land_base.offset().left})
-
-  // $("#tbody_lands").disableSelection();
+    const autoCompleteJs = new AutoComplete({
+        data: {
+            src: fetch(document.getElementById("autocomplete_work_lands_path").value).then(h=>h.json()),
+            keys: ["place", "area"],
+            cache: true
+        },
+        selector: "#land",
+        threshold: 2,
+        resultsList: {
+            maxResults: 20
+        },
+        resultItem: {
+            element: (item, data) => {
+                item.innerHTML = `${data.value.place}(${data.value.owner})(${data.value.area})`;
+            },
+            highlight: true
+        },
+        events: {
+            input: {
+                selection: (event) => {
+                    const target = event.detail.selection.value;
+                    addLand(target.id, `${target.place}(${target.owner})`, target.area);
+                }
+            }
+        }
+    });
 });
