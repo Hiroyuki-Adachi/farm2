@@ -3,7 +3,7 @@
     <h1>土地マスタ一覧</h1>
   </div>
   <div class="col-md-4">
-    <%= select_tag(:month, options_for_select(@homes, @home_id), :onChange => "change_home(this);", class: "form-select") %>
+    <%= select_tag(:home, options_for_select(@homes, @home_id), class: "form-select") %>
   </div>
 </div>
 <% if @lands.count > 0 %>
@@ -30,7 +30,7 @@
       <td><%= land.owner_id == land.manager_id ? "" : land.manager_name %></td>
       <td><%= land.region.present? ? "◯" : "" %></td>
       <td class="numeric"><%= land.area %></td>
-      <td><%= link_to '修正', edit_land_path(land), {class: "btn btn-success btn-sm"} %></td>
+      <td><%= link_to '修正', edit_land_path(land, home_id: params[:home_id]), {class: "btn btn-success btn-sm"} %></td>
     </tr>
   <% end %>
   </tbody>
@@ -55,12 +55,14 @@
 <script type="module" data-turbo-track="reload">
 import { Turbo } from "@hotwired/turbo-rails";
 
-function change_home(sender) {
-    if(sender.value == "") {
-        Turbo.visit(document.getElementById("lands_path").value)
-    } else {
-        Turbo.visit(`${document.getElementById("lands_path").value}?home_id=${sender.value}`)
-    }
-}
+document.addEventListener('turbo:load', () => {
+    document.getElementById("home").addEventListener("change", (event) => {
+        if(event.target.value == "") {
+            Turbo.visit(document.getElementById("lands_path").value);
+        } else {
+            Turbo.visit(`${document.getElementById("lands_path").value}?home_id=${event.target.value}`);
+        }
+    });
+});
 </script>
 <% end %>
