@@ -32,7 +32,7 @@ class LandsController < ApplicationController
 
   def update
     if @land.update(land_params)
-      redirect_to lands_path
+      redirect_to lands_path(home_id: params[:home_id].presence)
     else
       render action: :edit, status: :unprocessable_entity
     end
@@ -40,7 +40,7 @@ class LandsController < ApplicationController
 
   def destroy
     @land.destroy
-    redirect_to lands_path, status: :see_other
+    redirect_to lands_path(home_id: params[:home_id].presence), status: :see_other
   end
 
   private

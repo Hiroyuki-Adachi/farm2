@@ -126,6 +126,6 @@ function popupModal(action, callback) {
   });
 }
 
-window.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
   initMap();
 });
