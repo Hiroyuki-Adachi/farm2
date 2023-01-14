@@ -1,9 +1,7 @@
 <div id="container py-5" class="container">
   <div class="row">
     <div class="col-md-12">
-      <% if flash[:danger] %>
-        <div class="alert alert-danger"><%= h(flash[:danger]) %></div>
-      <% end %>
+      <div id="flash_message"></div>
       <h2 class="text-center text-white mb-4">ユーザーIDとパスワードを入力してください。</h2>
       <div class="row">
         <div class="col-md-6 mx-auto">
