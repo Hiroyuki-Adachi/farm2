@@ -3,7 +3,7 @@ class ChemicalCostsController < ApplicationController
 
   def index
     @chemical_terms = ChemicalTerm.land.usual(current_term)
-    @work_types = WorkType.land.by_term(current_term)
+    @work_types = WorkType.land.where(work_flag: true).by_term(current_term)
     @chemical_work_types = ChemicalWorkType.by_chemical_terms(@chemical_terms)
   end
 

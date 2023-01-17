@@ -17,7 +17,7 @@ class ChemicalTerm < ApplicationRecord
   has_many :chemical_work_types, dependent: :destroy
   
   scope :usual, -> (term) {
-    joins(chemical: :chemical_type)
+    joins(chemical: :chemical_type).includes(:chemical)
       .where(term: term)
       .order(Arel.sql(<<SQL))
         chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id

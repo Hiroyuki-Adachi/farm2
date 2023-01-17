@@ -19,7 +19,7 @@ class ChemicalWorkType < ActiveRecord::Base
   belongs_to :work_type
   delegate :chemical, to: :chemical_term
 
-  scope :by_chemical_terms, ->(chemical_terms) {where(chemical_term_id: chemical_terms.ids)}
+  scope :by_chemical_terms, ->(chemical_terms) {where(chemical_term_id: chemical_terms.ids).includes(:work_type, :chemical_term)}
   scope :usable, ->(chemical_term) {where(chemical_term_id: chemical_term).where("quantity > 0")}
   scope :by_work, -> (work) {
     joins(chemical_term: :chemical)

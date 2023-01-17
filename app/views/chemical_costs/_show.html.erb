@@ -1,0 +1,9 @@
+<th><%= chemical_term.chemical.chemical_type.name %></th>
+<th><%= chemical_name(chemical_term.chemical) %>(<%= chemical_term.chemical.base_base_quantity %><%= chemical_term.chemical.base_unit_name %>)</th>
+<% @work_types.each do |work_type| %>
+  <% chemical_work_type = @chemical_work_types.find{|ct| ct.chemical_term_id == chemical_term.id && ct.work_type_id == work_type.id} %>
+  <% quantlty = chemical_work_type&.quantity || 0 %>
+  <td class="numeric <%= quantlty.zero? ? "table-light" : "table-warning" %>"><%= quantlty.zero? ? "" : sprintf("%.1f", quantlty) %></td>
+<% end %>
+<td></td>
+<td></td>
