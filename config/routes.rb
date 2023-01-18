@@ -59,11 +59,7 @@ Rails.application.routes.draw do
     end
   end
   resources :seedling_costs, param: "seedling_id", only: [:index, :create, :edit, :update]
-  resources :chemical_costs, only: [:index, :create] do
-    collection do
-      get :import
-    end
-  end
+  resources :chemical_costs, only: [:index, :show, :edit, :update]
   resources :fuel_costs, only: [:index, :create]
   resources :depreciations, only: [:index, :create]
   resources :total_costs, only: [:index, :create]

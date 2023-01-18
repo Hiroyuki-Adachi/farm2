@@ -1,5 +1,4 @@
 <h1>薬剤原価登録</h1>
-<%= form_with url: chemical_costs_path, method: :post, id: :chemical_cost_form do |f|  %>
 <div class="row">
   <div id="table_wrapper" class="wrapper small float-head-wrapper" style="height: calc(100vh - 200px)">
     <table id="tbl_list" class="table table-sm float-head">
@@ -21,7 +20,7 @@
       </thead>
       <tbody id="list">
         <% @chemical_terms.each do |chemical_term| %>
-        <tr>
+        <tr id="chemical_<%= chemical_term.id %>">
           <%= render partial: "show", locals: {chemical_term: chemical_term} %>
         </tr>
         <% end %>
@@ -31,17 +30,9 @@
 </div>
 <div id="btn_toolbar" class="btn-toolbar">
   <div class="btn-group mr-2">
-    <%= button_tag '取込', name: 'import', class: "btn btn-success", id: "import", type: :button, onclick: "execImport();" %>
-  </div>
-  <div class="btn-group mr-2">
-    <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
-  </div>
-  <div class="btn-group mr-2">
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
-<%= hidden_field_tag :import_url, import_chemical_costs_path %>
-<% end %>
 <% content_for :head do %>
 <script data-turbo-track="reload">
 document.addEventListener('turbo:load', () => {
@@ -56,26 +47,6 @@ document.addEventListener('turbo:load', () => {
             }
         });
     });
-
-    document.getElementById("chemical_cost_form").addEventListener("submit", (event) => {
-        loadingStart("更新中");
-    });
 });
-
-function execImport() {
-    if(popupConfirm("単価を上書きしてもよろしいですか？", function(result) {
-        if(result) {
-            fetch(document.getElementById("import_url").value)
-            .then((res) => {
-                res.json();
-            })
-            .then((json) => {
-                for(chemicalId in data) {
-                  document.querySelector(`[data-chemical=${chemicalId}]`).value = data[chemicalId];
-                }
-            });
-        }
-    }));
-}
 </script>
 <% end %>

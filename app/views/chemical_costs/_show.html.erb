@@ -5,5 +5,5 @@
   <% quantlty = chemical_work_type&.quantity || 0 %>
   <td class="numeric <%= quantlty.zero? ? "table-light" : "table-warning" %>"><%= quantlty.zero? ? "" : sprintf("%.1f", quantlty) %></td>
 <% end %>
-<td></td>
+<td><%= button_to '編集', edit_chemical_cost_path(chemical_term), {class: "btn btn-outline-success btn-sm"} %></td>
 <td></td>
