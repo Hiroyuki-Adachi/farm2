@@ -12,9 +12,7 @@
         <div class="d-table-cell"></div>
       </div>
       <% @chemical_terms.each do |chemical_term| %>
-        <%= turbo_frame_tag "chemical_#{chemical_term.id}", class: "d-table-row row-hover" do %>
-          <%= render partial: "show", locals: {chemical_term: chemical_term} %>
-        <% end %>
+        <%= render partial: "show", locals: {chemical_term: chemical_term} %>
       <% end %>
     </div>
   </div>

@@ -1,10 +1,16 @@
 class ChemicalCostsController < ApplicationController
   include PermitManager
+  before_action :set_work_types, only: [:index, :edit]
+  before_action :set_chemical_term, only: [:edit]
 
   def index
     @chemical_terms = ChemicalTerm.land.usual(current_term)
-    @work_types = WorkType.land.where(work_flag: true).by_term(current_term)
     @chemical_work_types = ChemicalWorkType.by_chemical_terms(@chemical_terms)
+  end
+
+  def edit
+    @chemical_work_types = ChemicalWorkType.by_chemical_term(@chemical_term)
+    render layout: false, content_type: 'text/vnd.turbo-stream.html'
   end
 
   def create
@@ -17,5 +23,15 @@ class ChemicalCostsController < ApplicationController
 
   def import
     render json: Expense.chemical_prices(current_term)
+  end
+
+  private
+
+  def set_work_types
+    @work_types = WorkType.land.where(work_flag: true).by_term(current_term)
+  end
+
+  def set_chemical_term
+    @chemical_term = ChemicalTerm.find(params[:id])
   end
 end

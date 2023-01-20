@@ -1,11 +1,13 @@
-<div class="d-table-cell"><%= chemical_term.chemical.chemical_type.name %></div>
-<div class="d-table-cell"><%= chemical_name(chemical_term.chemical) %>(<%= chemical_term.chemical.base_base_quantity %><%= chemical_term.chemical.base_unit_name %>)</div>
-<% @work_types.each do |work_type| %>
-  <% chemical_work_type = @chemical_work_types.find{|ct| ct.chemical_term_id == chemical_term.id && ct.work_type_id == work_type.id} %>
-  <% quantlty = chemical_work_type&.quantity || 0 %>
-  <div class="d-table-cell numeric" style="<%= quantlty.zero? ? "" : "background-color: #{ work_type.bg_color_term(current_term)}; color: #{work_type.fg_color_term(current_term)};" %>">
-    <%= quantlty.zero? ? "" : sprintf("%.1f", quantlty) %>
-  </div>
+<%= turbo_frame_tag "chemical_#{chemical_term.id}", class: "d-table-row row-hover" do %>
+  <div class="d-table-cell"><%= chemical_term.chemical.chemical_type.name %></div>
+  <div class="d-table-cell"><%= chemical_name(chemical_term.chemical) %>(<%= chemical_term.chemical.base_base_quantity %><%= chemical_term.chemical.base_unit_name %>)</div>
+  <% @work_types.each do |work_type| %>
+    <% chemical_work_type = @chemical_work_types.find{|ct| ct.chemical_term_id == chemical_term.id && ct.work_type_id == work_type.id} %>
+    <% quantlty = chemical_work_type&.quantity || 0 %>
+    <div class="d-table-cell numeric" style="<%= quantlty.zero? ? "" : "background-color: #{ work_type.bg_color_term(current_term)}; color: #{work_type.fg_color_term(current_term)};" %>">
+      <%= quantlty.zero? ? "" : sprintf("%.1f", quantlty) %>
+    </div>
+  <% end %>
+  <div class="d-table-cell"><%= link_to '編集', edit_chemical_cost_path(chemical_term), {class: "btn btn-outline-success btn-sm", data: {turbo_frame: "chemical_#{chemical_term.id}"}} %></div>
+  <div class="d-table-cell"></div>
 <% end %>
-<div class="d-table-cell"><%= link_to '編集', edit_chemical_cost_path(chemical_term), {class: "btn btn-outline-success btn-sm"} %></div>
-<div class="d-table-cell"></div>
