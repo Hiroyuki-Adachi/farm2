@@ -14,7 +14,7 @@ class SessionsControllerTest < ActionController::TestCase
 
   test "ログイン実行(認証エラー)" do
     post :create, params: {login_name: @user.login_name, password: "hogehoge"}
-    assert_template :new
+    assert_template :_flash
     assert_nil session[:user_id]
   end
 
