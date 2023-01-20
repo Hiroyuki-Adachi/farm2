@@ -51,4 +51,19 @@ class ChemicalWorkType < ActiveRecord::Base
       AND chemical_terms.chemical_id = ?
 SQL
   end
+
+  def self.annual_update(old_term, new_term)
+    ChemicalWorkType.joins(:chemical_term).where("chemical_terms.term = ?", old_term).each do |chemical_work_type|
+      next if chemical_work_type.quantity.zero?
+      next unless WorkTypeTerm.where(term: new_term, work_type_id: chemical_work_type.work_type_id)
+      chemical_term = ChemicalTerm.find_by(chemical_id: chemical_work_type.chemical_term.chemical_id, term: new_term)
+      next if chemical_term.nil?
+      next if ChemicalWorkType.where(chemical_term_id: chemical_term, work_type_id: chemical_work_type.work_type_id).exists?
+      ChemicalWorkType.create(
+        chemical_term_id: chemical_term.id,
+        quantity: chemical_work_type.quantity,
+        work_type_id: chemical_work_type.work_type_id,
+      )
+    end
+  end
 end
