@@ -16,8 +16,7 @@ class SessionsController < ApplicationController
       Rails.application.config.access_logger.info "PC-#{user.worker.name}"
       redirect_to menu_index_path
     else
-      flash.now[:danger] = 'IDまたはpasswordが間違っています。'
-      render :new
+      render layout: false, partial: 'flash', content_type: 'text/vnd.turbo-stream.html', locals: {message: "IDまたはpasswordが間違っています。"}
     end
   end
 end
