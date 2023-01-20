@@ -1,0 +1,16 @@
+<%= turbo_stream.update "chemical_#{@chemical_term.id}", class: "d-table-row row-hover" do %>
+  <div class="d-table-cell"><%= @chemical_term.chemical.chemical_type.name %></div>
+  <div class="d-table-cell"><%= chemical_name(@chemical_term.chemical) %>(<%= @chemical_term.chemical.base_base_quantity %><%= @chemical_term.chemical.base_unit_name %>)</div>
+  <% @work_types.each do |work_type| %>
+    <% chemical_work_type = @chemical_work_types.find{|ct| ct.chemical_term_id == @chemical_term.id && ct.work_type_id == work_type.id} %>
+    <div class="d-table-cell">
+      <%= hidden_field_tag "chemical_terms[][id]", @chemical_term.id, {id: nil} %>
+      <%= number_field_tag "chemical_work_types[][quantity]", chemical_work_type&.quantity || 0, {id: nil, class: "form-control form-control-sm zero-gray", min: 0, max: 999.9, step: 0.1, style: "width: 70px; color:" + ((chemical_work_type&.quantity || 0).zero? ? "gainsboro" : "black")} %>
+      <%= hidden_field_tag "chemical_work_types[][work_type_id]", work_type.id, {id: nil} %>
+      <%= hidden_field_tag "chemical_work_types[][chemical_term_id]", @chemical_term.id, {id: nil} %>
+      <%= hidden_field_tag "chemical_work_types[][id]", chemical_work_type&.id, {id: nil} %>
+    </div>
+  <% end %>
+  <div class="d-table-cell"><%= button_to '更新', nil, class: "btn btn-sm btn-warning" %></div>
+  <div class="d-table-cell"><%= button_to '戻る', nil, class: "btn btn-sm btn-outline-dark" %></div>
+<% end %>
