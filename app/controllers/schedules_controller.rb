@@ -42,7 +42,7 @@ class SchedulesController < ApplicationController
     @schedule.destroy
     redirect_to schedules_path, status: :see_other
   end
-
+  
   private
 
   def set_schedule

@@ -59,7 +59,7 @@
 <%= f.hidden_field :term %>
 <%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
 <% content_for :head do %>
-<script type="text/javascript" data-turbo-track="reload">
+<script data-turbo-track="reload" type="module">
 import { Turbo } from "@hotwired/turbo-rails";
 
 window.addEventListener('turbo:load', () => {
