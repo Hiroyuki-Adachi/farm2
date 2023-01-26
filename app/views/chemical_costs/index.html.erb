@@ -2,12 +2,19 @@
 <div class="row">
   <div id="table_wrapper" class="wrapper small float-head-wrapper" style="height: calc(100vh - 200px)">
     <table class="table table-sm table-hover float-head">
+      <colgroup>
+        <col style="width: 100px;">
+        <col style="width: 220px;">
+        <% @work_types.count.times do %>
+          <col style="width: calc(calc(100% - 320px) / <%= @work_types.count%>);">
+        <% end %>
+      </colgroup>
       <thead class="fix-head">
         <tr>
           <th>種別</th>
-          <th>名称</th>
+          <th style="width: 220px;">名称</th>
           <% @work_types.each do |work_type| %>
-            <th class="numeric" style="background-color: <%= work_type.bg_color_term(current_term)%>; color: <%= work_type.fg_color_term(current_term)%>%"><%= work_type.name %></th>
+            <th class="numeric" style="background-color: <%= work_type.bg_color_term(current_term)%>; color: <%= work_type.fg_color_term(current_term)%>;"><%= work_type.name %></th>
           <% end %>
         </tr>
       </thead>
@@ -19,8 +26,8 @@
             <% @work_types.each do |work_type| %>
               <% chemical_work_type = @chemical_work_types.find{|ct| ct.chemical_term_id == chemical_term.id && ct.work_type_id == work_type.id} %>
               <% quantlty = chemical_work_type&.quantity || 0 %>
-              <td class="numeric" style="<%= quantlty.zero? ? "" : "background-color: #{ work_type.bg_color_term(current_term)}; color: #{work_type.fg_color_term(current_term)};" %>">
-                <%= quantlty.zero? ? "" : sprintf("%.1f", quantlty) %>
+              <td class="numeric" style="<%= quantlty.zero? ? "" : "background-color: #{ work_type.bg_color_term(current_term)}; color: #{work_type.fg_color_term(current_term)};" %>; cursor: pointer;">
+                <%= render partial: 'show', locals: {chemical_term: chemical_term, work_type: work_type, quantlty: quantlty} %>
               </td>
             <% end %>
           </tr>
