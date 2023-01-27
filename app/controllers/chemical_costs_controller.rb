@@ -5,7 +5,7 @@ class ChemicalCostsController < ApplicationController
 
   def index
     @chemical_terms = ChemicalTerm.land.usual(current_term)
-    @chemical_work_types = ChemicalWorkType.by_chemical_terms(@chemical_terms)
+    @chemical_work_types = ChemicalWorkType.by_chemical_terms(@chemical_terms).includes(:chemical_term, :work_type)
   end
 
   def edit
