@@ -1,3 +1,5 @@
-<%= turbo_frame_tag "chemical_#{chemical_term.id}_#{work_type.id}" do %>
-  <%= quantlty.zero? ? "" : sprintf("%.1f", quantlty) %>
+<%= turbo_frame_tag "chemical_#{chemical_work_type.chemical_term_id}_#{chemical_work_type.work_type_id}" do %>
+  <span style="cursor: pointer;" data-url="<%= chemical_work_type.id ? edit_chemical_cost_path(chemical_work_type) : new_chemical_cost_path %>">
+    <%= chemical_work_type.quantity.zero? ? "-" : sprintf("%.1f", chemical_work_type.quantity) %>
+  </span>
 <% end %>
