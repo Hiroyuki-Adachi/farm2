@@ -38,7 +38,7 @@ class SorimachiAccount < ApplicationRecord
   end
 
   def self.to_h(term)
-    SorimachiAccount.where(term: term).map {|a| [a.code, a.name]}.to_h
+    SorimachiAccount.where(term: term).order(:code).map {|a| [a.code, a.name]}.to_h
   end
 
   def sales?
