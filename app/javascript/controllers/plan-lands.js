@@ -1,3 +1,5 @@
+import { Decimal } from "decimal.js";
+
 let selectedWorkType;
 
 function initMap(){
