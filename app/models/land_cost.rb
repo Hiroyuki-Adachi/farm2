@@ -44,7 +44,7 @@ SQL
   def self.sum_area_by_work_type(target, work_type_id)
     LandCost.by_work_type(work_type_id, target)
     .joins(:land)
-    .where("lands.deleted_at IS NULL")
+    .where("lands.deleted_at IS NULL AND target_flag = true")
     .where("? BETWEEN lands.start_on AND lands.end_on", target)
     .sum(:area)
   end
@@ -83,6 +83,26 @@ SQL
         WHERE lands.id = work_lands.land_id
       )
 SQL
+  end
+
+  def self.all_sum_area_by_work_type(sys)
+    work_types = WorkType.by_term(sys.term).land
+    results = []
+    header = []
+    header << ""
+    work_types.each do |work_type|
+      header << work_type.name
+    end
+    results << header
+    (sys.start_date..sys.end_date).each do |day|
+      result = []
+      result << day
+      work_types.each do |work_type|
+        result << sum_area_by_work_type(day, work_type.id)
+      end
+      results << result
+    end
+    return results
   end
 
   def update_work_type(params, start_date)

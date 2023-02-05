@@ -357,6 +357,7 @@ class TotalCost < ApplicationRecord
       end
       next if sum_amount == journal.amount1
       WorkType.land.each do |work_type|
+        next unless work_type.cost_flag
         next if work_types.include?(work_type.id)
         area = LandCost.sum_area_by_work_type(occurred_on, work_type.id)
         next if area.zero?
@@ -396,6 +397,7 @@ class TotalCost < ApplicationRecord
 
   def self.make_details_for_indirect(total_cost_id, occurred_on)
     WorkType.land.each do |work_type|
+      next unless work_type.cost_flag
       area = LandCost.sum_area_by_work_type(occurred_on, work_type.id)
       next unless area.positive?
       TotalCostDetail.create(
