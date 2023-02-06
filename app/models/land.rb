@@ -57,6 +57,7 @@ class Land < ApplicationRecord
   scope :regionable, -> {where.not(region: nil).where(target_flag: true, group_id: nil)}
   scope :expiry, -> (target) {where("? BETWEEN start_on AND end_on", target)}
   scope :for_place, -> (place) {where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order)}
+  scope :by_term, -> (sys) {where(["start_on <= ? AND ? <= end_on", sys.end_date, sys.start_date])}
 
   validates :place, presence: true
   validates :area, presence: true
