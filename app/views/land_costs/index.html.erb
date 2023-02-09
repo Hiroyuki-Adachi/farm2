@@ -38,34 +38,5 @@
     [work_type.id, {bg: work_type.bg_color_term(current_term), fg: work_type.fg_color_term(current_term)}]
   }.to_h.to_json %>
 <% content_for :head do %>
-<script data-turbo-track="reload" type="module">
-import { Turbo } from "@hotwired/turbo-rails";
-
-let colors = null;
-document.addEventListener('turbo:load', () => {
-    colors = JSON.parse(document.getElementById("colors").value);
-    allWorktypesSelect();
-
-    document.querySelectorAll("input[type='radio'][id^='land_place']").forEach((element) => {
-        element.addEventListener("click", (event) => {
-            Turbo.visit(event.target.dataset.url);
-            allWorktypesSelect();
-        });
-    });
-});
-
-function allWorktypesSelect() {
-    document.querySelectorAll("input[type='radio'][id^='work_type']:checked").forEach((element) => {
-        element.closest("tr").style.backgroundColor = colors[element.value].bg;
-        element.closest("tr").style.color = colors[element.value].fg;
-    });
-}
-
-function worktypeSelect(element) {
-    element.closest("tr").style.backgroundColor = colors[element.value].bg;
-    element.closest("tr").style.color = colors[element.value].fg;
-}
-
-window.worktypeSelect = worktypeSelect;
-</script>
+<%= javascript_include_tag 'controllers/land-costs', 'data-turbo-track': 'reload', type: :module %>
 <% end %>
