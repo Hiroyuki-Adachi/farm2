@@ -143,6 +143,9 @@ Rails.application.routes.draw do
       get :tab3
     end
   end
+  namespace :statistics do
+    resources :work_days, only: [:index]
+  end
   resources :fixes, param: "fixed_at", except: [:edit, :update]
   resources :personal_informations, param: "token", only: [:show] do
     resources :works, controller: "personal_informations/works", only: [:show]
