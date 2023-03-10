@@ -1,0 +1,22 @@
+<h1>世帯別作業日数一覧</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>世帯</th>
+      <% 10.times do |i| %>
+        <th class="numeric"><%= current_term - (9 - i) %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @homes.each do |home| %>
+      <tr>
+        <th><%= home.name %></th>
+        <% 10.times do |i| %>
+          <td class="numeric"><%= @work_days[[current_term - (9 - i), home.id]] %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>

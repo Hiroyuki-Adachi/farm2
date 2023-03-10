@@ -454,6 +454,11 @@ SQL
     return results
   end
 
+  def self.work_days
+    Work.joins(:workers).group(Work.arel_table[:term], Worker.arel_table[:home_id])
+      .distinct.count(Work.arel_table[:worked_at])
+  end
+
   private
 
   def quantity_params(quantity, add_params)
