@@ -30,7 +30,7 @@
           <%= hidden_field_tag "land_costs[#{i}][activated_on]", cost&.activated_on || current_system.start_date %>
         </td>
         <td>
-          <%= link_to '修正', edit_land_cost_path(land_id: land), {class: "btn btn-success btn-sm"} %>
+          <%= link_to '修正', edit_land_cost_path(land_id: land), {class: "btn btn-success btn-sm", data: {turbo_frame: "_top"}} %>
         </td>
       </tr>
     <% end %>
