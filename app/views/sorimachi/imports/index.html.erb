@@ -35,7 +35,7 @@
 </table>
 <%= paginate(@journals) %>
 <% end %>
-<%= form_with(url: sorimachi_imports_path, html: {multipart: true}) do |f| %>
+<%= form_with(url: sorimachi_imports_path, data: {turbo_confirm: "取り込みを実行してもよろしいですか？"}, html: {multipart: true}) do |f| %>
   <div class="row">
     <div class="col-md-4 form-group">
       <%= file_field_tag :import_file, {class: "form-control-file custom-file-input", data: {buttonText: "ファイル選択"}} %>
@@ -43,7 +43,7 @@
   </div>
   <div class="btn-toolbar" role="toolbar">
     <div class="btn-group mr-2" role="group">
-      <%= submit_tag 'インポート', class: "btn btn-danger", data: {confirm: "取り込みを実行してもよろしいですか？", wait: true} %>
+      <%= submit_tag 'インポート', class: "btn btn-danger", data: {wait: true} %>
       <%= link_to "科目初期化", new_sorimachi_account_path, {class: "btn btn-warning", data: {confirm: "勘定科目を初期化してもよろしいですか？", wait: true}} %>
       <%= button_tag "簡易集計", type: :button, id: :total_button, class: "btn btn-info", data: {url: sorimachi_totals_path } %>
     </div>
