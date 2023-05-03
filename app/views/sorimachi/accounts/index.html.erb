@@ -27,8 +27,8 @@
 </div>
 <div class="btn-toolbar" role="toolbar">
   <div class="btn-group mr-2" role="group">
-    <%= form_with(url: sorimachi_accounts_path) do %>
-      <%= submit_tag 'インポート', class: "btn btn-danger", data: {confirm: "取り込みを実行してもよろしいですか？"} %>
+    <%= form_with url: sorimachi_accounts_path, data: {turbo_confirm: "取り込みを実行してもよろしいですか？"} do %>
+      <%= submit_tag 'インポート', class: "btn btn-danger" %>
     <% end %>
   </div>
   <div class="btn-group mr-2" role="group">

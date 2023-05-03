@@ -42,7 +42,7 @@
 <% if (@machines.count > 0 || @work.work_kind.machine_kinds.count > 0) && current_organization.machines_count > 0 %>
   <%= render partial: "show_machines" %>
 <% end %>
-<span style="page-break-after: always;"></span>
+<span style="break-after: always;"></span>
 <% if (@chemicals.count > 0 || @work.work_kind.chemical_kinds.count > 0) && current_organization.chemicals_count > 0 %>
   <%= render partial: "show_chemicals" %>
 <% end %>

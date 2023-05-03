@@ -21,7 +21,7 @@
       text-align: left;
       padding: 2px;
   }
-  .middle_header {page-break-before:always;}
+  .middle_header {break-before:always;}
 }
 @media screen {
   .middle_header {display: none; height: 0px;}

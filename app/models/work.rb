@@ -68,7 +68,7 @@ class Work < ApplicationRecord
       .where(term: term, fixed_at: nil).order(worked_at: :ASC, start_at: :ASC, id: :ASC)
   }
   scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
-  scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :ASC, id: :DESC)}
+  scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :DESC, id: :DESC)}
   scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
   scope :by_creator, ->(worker) {where(["works.created_by IS NULL OR works.created_by <> ?", worker.id])}
   scope :by_work_kind_type, ->(term, work_kind_id, work_type_id) {
@@ -452,6 +452,11 @@ SQL
       end
     end
     return results
+  end
+
+  def self.work_days
+    Work.joins(:workers).group(Work.arel_table[:term], Worker.arel_table[:home_id])
+      .distinct.count(Work.arel_table[:worked_at])
   end
 
   private
