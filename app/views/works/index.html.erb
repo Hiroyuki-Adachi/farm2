@@ -39,10 +39,8 @@
 <input type="hidden" name="page" value="1" />
 <% end %>
 <hr />
-<% if @works.count > 0 %>
-  <%= turbo_frame_tag 'list' do %>
-    <%= render partial: "list" %>
-  <% end %>
+<%= turbo_frame_tag 'list' do %>
+  <%= render partial: "list" %>
 <% end %>
 <%= hidden_field_tag :work_types_works_path, work_types_works_path %>
 <%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>

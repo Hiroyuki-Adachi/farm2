@@ -1,7 +1,7 @@
 import { Modal } from "bootstrap";
 import Decimal from "decimal.js";
 
-window.addEventListener("load", () => {
+window.addEventListener("turbo:load", () => {
   const kamokuForm = new Modal(document.getElementById("kamoku_modal"));
   const totalForm = new Modal(document.getElementById("total_modal"));
 

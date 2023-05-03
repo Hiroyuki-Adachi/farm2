@@ -22,7 +22,7 @@ class SorimachiAccount < ApplicationRecord
 
   belongs_to_active_hash :total_cost_type, optional: true
 
-  def self.import(term)
+  def self.import_old(term)
     accounts = open('test/fixtures/sorimachi_accounts.yml', 'r') {|f| YAML.load(f)}
     accounts.each do |key, value|
       account = SorimachiAccount.find_by(term: term, code: value['code'])
@@ -37,8 +37,19 @@ class SorimachiAccount < ApplicationRecord
     end
   end
 
+  def self.import(term)
+    SorimachiAccount.where(term: term - 1).each do |sorimachi_account|
+      account = SorimachiAccount.find_by(term: term, code: sorimachi_account.code)
+      next if account
+      account = SorimachiAccount.new(sorimachi_account.attributes)
+      account.term = term
+      account.id = nil
+      account.save!
+    end
+  end
+
   def self.to_h(term)
-    SorimachiAccount.where(term: term).map {|a| [a.code, a.name]}.to_h
+    SorimachiAccount.where(term: term).order(:code).map {|a| [a.code, a.name]}.to_h
   end
 
   def sales?

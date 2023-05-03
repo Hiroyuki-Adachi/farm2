@@ -4,7 +4,7 @@ class Sorimachi::WorkTypesController < ApplicationController
 
   def edit
     @amounts = SorimachiWorkType.where(sorimachi_journal_id: params[:sorimachi_journal_id]).map{|j| [j.work_type_id, j.amount]}.to_h
-    @work_types = WorkType.cost
+    @work_types = WorkType.cost.by_term(current_term)
     render layout: false
   end
 

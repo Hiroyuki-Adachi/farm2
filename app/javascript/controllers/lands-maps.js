@@ -1,4 +1,5 @@
 import { Turbo } from "@hotwired/turbo-rails";
+import { Decimal } from "decimal.js"
 
 function initMap(){
     const org = JSON.parse(document.getElementById("location").value);

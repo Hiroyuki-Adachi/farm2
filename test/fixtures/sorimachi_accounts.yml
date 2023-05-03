@@ -23,63 +23,63 @@
 #
 
 sorimachi_accounts0:
-  term: 0
+  term: 2014
   code: 700
   total_cost_type_id: 110
   name: 給料手当②
 
 
 sorimachi_accounts1:
-  term: 0
+  term: 2014
   code: 702
   total_cost_type_id: 110
   name: 役員報酬
 
 
 sorimachi_accounts2:
-  term: 0
+  term: 2014
   code: 704
   total_cost_type_id: 110
   name: 雑給②
 
 
 sorimachi_accounts3:
-  term: 0
+  term: 2014
   code: 706
   total_cost_type_id: 110
   name: 賞与②
 
 
 sorimachi_accounts4:
-  term: 0
+  term: 2014
   code: 708
   total_cost_type_id: 110
   name: 退職金
 
 
 sorimachi_accounts5:
-  term: 0
+  term: 2014
   code: 710
   total_cost_type_id: 110
   name: 法定福費②
 
 
 sorimachi_accounts6:
-  term: 0
+  term: 2014
   code: 712
   total_cost_type_id: 110
   name: 福利厚費②
 
 
 sorimachi_accounts7:
-  term: 0
+  term: 2014
   code: 714
   total_cost_type_id: 110
   name: 通信費
 
 
 sorimachi_accounts8:
-  term: 0
+  term: 2014
   code: 719
   total_cost_type_id: 110
   name: 消耗品費
@@ -94,7 +94,7 @@ sorimachi_accounts_2015:
 
 
 sorimachi_accounts10:
-  term: 0
+  term: 2014
   code: 722
   total_cost_type_id: 110
   name: 販売手数料
@@ -102,7 +102,7 @@ sorimachi_accounts10:
 
 
 sorimachi_accounts11:
-  term: 0
+  term: 2014
   code: 724
   total_cost_type_id: 110
   name: 委託手数料
@@ -110,14 +110,14 @@ sorimachi_accounts11:
 
 
 sorimachi_accounts12:
-  term: 0
+  term: 2014
   code: 730
   total_cost_type_id: 110
   name: 旅費交通費
 
 
 sorimachi_accounts13:
-  term: 0
+  term: 2014
   code: 732
   total_cost_type_id: 110
   name: 車両費
@@ -125,98 +125,98 @@ sorimachi_accounts13:
 
 
 sorimachi_accounts14:
-  term: 0
+  term: 2014
   code: 734
   total_cost_type_id: 110
   name: 会議費
 
 
 sorimachi_accounts15:
-  term: 0
+  term: 2014
   code: 736
   total_cost_type_id: 110
   name: 広告宣伝費
 
 
 sorimachi_accounts16:
-  term: 0
+  term: 2014
   code: 740
   total_cost_type_id: 110
   name: 交際費
 
 
 sorimachi_accounts17:
-  term: 0
+  term: 2014
   code: 742
   total_cost_type_id: 110
   name: 研修費
 
 
 sorimachi_accounts18:
-  term: 0
+  term: 2014
   code: 744
   total_cost_type_id: 110
   name: 新聞図書費
 
 
 sorimachi_accounts19:
-  term: 0
+  term: 2014
   code: 750
   total_cost_type_id: 110
   name: 地代賃料②
 
 
 sorimachi_accounts20:
-  term: 0
+  term: 2014
   code: 752
   total_cost_type_id: 110
   name: 支払保険料
 
 
 sorimachi_accounts21:
-  term: 0
+  term: 2014
   code: 754
   total_cost_type_id: 110
   name: 租税公課②
 
 
 sorimachi_accounts22:
-  term: 0
+  term: 2014
   code: 756
   total_cost_type_id: 110
   name: 諸会費
 
 
 sorimachi_accounts23:
-  term: 0
+  term: 2014
   code: 758
   total_cost_type_id: 110
   name: 寄付金
 
 
 sorimachi_accounts24:
-  term: 0
+  term: 2014
   code: 760
   total_cost_type_id: 110
   name: 支払手数料
 
 
 sorimachi_accounts25:
-  term: 0
+  term: 2014
   code: 762
   total_cost_type_id: 110
   name: 支払報酬
 
 
 sorimachi_accounts26:
-  term: 0
+  term: 2014
   code: 770
   total_cost_type_id: 110
   name: 減価償費②
 
 
 sorimachi_accounts27:
-  term: 0
+  term: 2014
   code: 772
   total_cost_type_id: 110
   name: 修繕費②
@@ -224,35 +224,35 @@ sorimachi_accounts27:
 
 
 sorimachi_accounts28:
-  term: 0
+  term: 2014
   code: 774
   total_cost_type_id: 110
   name: 貸倒引当繰
 
 
 sorimachi_accounts29:
-  term: 0
+  term: 2014
   code: 776
   total_cost_type_id: 110
   name: 貸倒損失
 
 
 sorimachi_accounts30:
-  term: 0
+  term: 2014
   code: 780
   total_cost_type_id: 110
   name: 雑費②
 
 
 sorimachi_accounts31:
-  term: 0
+  term: 2014
   code: 800
   total_cost_type_id: 90
   name: 期首材棚卸
 
 
 sorimachi_accounts32:
-  term: 0
+  term: 2014
   code: 810
   total_cost_type_id: 90
   name: 種苗費
@@ -260,7 +260,7 @@ sorimachi_accounts32:
 
 
 sorimachi_accounts33:
-  term: 0
+  term: 2014
   code: 812
   total_cost_type_id: 90
   name: 素畜費
@@ -268,7 +268,7 @@ sorimachi_accounts33:
 
 
 sorimachi_accounts34:
-  term: 0
+  term: 2014
   code: 814
   total_cost_type_id: 90
   name: 肥料費
@@ -276,7 +276,7 @@ sorimachi_accounts34:
 
 
 sorimachi_accounts35:
-  term: 0
+  term: 2014
   code: 816
   total_cost_type_id: 90
   name: 飼料費
@@ -284,7 +284,7 @@ sorimachi_accounts35:
 
 
 sorimachi_accounts36:
-  term: 0
+  term: 2014
   code: 817
   total_cost_type_id: 90
   name: 飼料補収入
@@ -292,14 +292,14 @@ sorimachi_accounts36:
 
 
 sorimachi_accounts37:
-  term: 0
+  term: 2014
   code: 818
   total_cost_type_id: 90
   name: 敷料費
 
 
 sorimachi_accounts38:
-  term: 0
+  term: 2014
   code: 820
   total_cost_type_id: 90
   name: 農薬費
@@ -307,7 +307,7 @@ sorimachi_accounts38:
 
 
 sorimachi_accounts39:
-  term: 0
+  term: 2014
   code: 822
   total_cost_type_id: 90
   name: 諸材料費
@@ -315,7 +315,7 @@ sorimachi_accounts39:
 
 
 sorimachi_accounts40:
-  term: 0
+  term: 2014
   code: 824
   total_cost_type_id: 90
   name: 材料仕入高
@@ -323,42 +323,42 @@ sorimachi_accounts40:
 
 
 sorimachi_accounts41:
-  term: 0
+  term: 2014
   code: 830
   total_cost_type_id: 90
   name: 給料手当①
 
 
 sorimachi_accounts42:
-  term: 0
+  term: 2014
   code: 832
   total_cost_type_id: 90
   name: 雑給①
 
 
 sorimachi_accounts43:
-  term: 0
+  term: 2014
   code: 833
   total_cost_type_id: 90
   name: 賞与①
 
 
 sorimachi_accounts44:
-  term: 0
+  term: 2014
   code: 844
   total_cost_type_id: 90
   name: 法定福費①
 
 
 sorimachi_accounts45:
-  term: 0
+  term: 2014
   code: 846
   total_cost_type_id: 90
   name: 福利厚費①
 
 
 sorimachi_accounts46:
-  term: 0
+  term: 2014
   code: 848
   total_cost_type_id: 90
   name: 作業衣料費
@@ -366,7 +366,7 @@ sorimachi_accounts46:
 
 
 sorimachi_accounts47:
-  term: 0
+  term: 2014
   code: 850
   total_cost_type_id: 90
   name: 作業委託費
@@ -374,7 +374,7 @@ sorimachi_accounts47:
 
 
 sorimachi_accounts48:
-  term: 0
+  term: 2014
   code: 851
   total_cost_type_id: 90
   name: 委託加工費
@@ -382,14 +382,14 @@ sorimachi_accounts48:
 
 
 sorimachi_accounts49:
-  term: 0
+  term: 2014
   code: 852
   total_cost_type_id: 90
   name: 診療衛生費
 
 
 sorimachi_accounts50:
-  term: 0
+  term: 2014
   code: 856
   total_cost_type_id: 90
   name: 預託料
@@ -397,119 +397,119 @@ sorimachi_accounts50:
 
 
 sorimachi_accounts51:
-  term: 0
+  term: 2014
   code: 857
   total_cost_type_id: 90
   name: ヘルパー料
 
 
 sorimachi_accounts52:
-  term: 0
+  term: 2014
   code: 860
   total_cost_type_id: 90
   name: 動力光熱費
 
 
 sorimachi_accounts53:
-  term: 0
+  term: 2014
   code: 870
   total_cost_type_id: 90
   name: 農具費
 
 
 sorimachi_accounts54:
-  term: 0
+  term: 2014
   code: 872
   total_cost_type_id: 90
   name: 修繕費①
 
 
 sorimachi_accounts55:
-  term: 0
+  term: 2014
   code: 874
   total_cost_type_id: 90
   name: リース料
 
 
 sorimachi_accounts56:
-  term: 0
+  term: 2014
   code: 876
   total_cost_type_id: 90
   name: 共済掛金
 
 
 sorimachi_accounts57:
-  term: 0
+  term: 2014
   code: 878
   total_cost_type_id: 90
   name: とも補拠出
 
 
 sorimachi_accounts58:
-  term: 0
+  term: 2014
   code: 880
   total_cost_type_id: 90
   name: 賃借料①
 
 
 sorimachi_accounts59:
-  term: 0
+  term: 2014
   code: 882
   total_cost_type_id: 90
   name: 支払小作料
 
 
 sorimachi_accounts60:
-  term: 0
+  term: 2014
   code: 884
   total_cost_type_id: 90
   name: 土地改良費
 
 
 sorimachi_accounts61:
-  term: 0
+  term: 2014
   code: 886
   total_cost_type_id: 90
   name: 租税公課①
 
 
 sorimachi_accounts62:
-  term: 0
+  term: 2014
   code: 890
   total_cost_type_id: 90
   name: 特許使用料
 
 
 sorimachi_accounts63:
-  term: 0
+  term: 2014
   code: 892
   total_cost_type_id: 90
   name: 減価償費①
 
 
 sorimachi_accounts64:
-  term: 0
+  term: 2014
   code: 894
   total_cost_type_id: 90
   name: 雑費①
 
 
 sorimachi_accounts65:
-  term: 0
+  term: 2014
   code: 898
   total_cost_type_id: 90
   name: 首仕掛棚卸
 
 
 sorimachi_accounts66:
-  term: 0
+  term: 2014
   code: 899
   total_cost_type_id: 90
   name: 末仕掛棚卸
 
 
 sorimachi_sales1:
-  term: 0
+  term: 2014
   code: 500
   total_cost_type_id: 200
   auto_code: 504
@@ -518,7 +518,7 @@ sorimachi_sales1:
 
 
 sorimachi_sales2:
-  term: 0
+  term: 2014
   code: 520
   total_cost_type_id: 200
   name: 商品売上高
