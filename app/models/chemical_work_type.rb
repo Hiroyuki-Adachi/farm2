@@ -18,6 +18,7 @@ class ChemicalWorkType < ActiveRecord::Base
   belongs_to :chemical_term
   belongs_to :work_type
   delegate :chemical, to: :chemical_term
+  after_save :save_for_zero
 
   scope :by_chemical_terms, ->(chemical_terms) {where(chemical_term_id: chemical_terms.ids).includes(:work_type, :chemical_term)}
   scope :by_chemical_term,  ->(chemical_term) {where(chemical_term_id: chemical_term).includes(:work_type, :chemical_term)}
@@ -66,5 +67,11 @@ SQL
         work_type_id: chemical_work_type.work_type_id,
       )
     end
+  end
+
+  private
+
+  def save_for_zero
+    self.destroy if self.quantity.zero?
   end
 end
