@@ -1,0 +1,5 @@
+<%= turbo_stream.update "td_#{@chemical_work_type.chemical_term_id}_#{@chemical_work_type.work_type_id}" do %>
+  <%= form_with url: chemical_cost_path(@chemical_work_type.id), model: @chemical_work_type, method: :put do |f| %>
+    <%= render partial: 'form', locals: {f: f} %>
+  <% end %>
+<% end %>
