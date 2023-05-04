@@ -5,17 +5,16 @@ input[type=number].narrow {
   width: 100px;
 }
   
-td.numeric {
-  text-align: right;
-}
-
-th.numeric {
+td.numeric, th.numeric, div.d-table-cell.numeric {
   text-align: right;
 }
 
 .bootstrap-date {
   display: inline-block;
   width: auto;
+}
+.d-table-row.row-hover:hover {
+  background-color: gainsboro;
 }
 
 #my_side_wrapper {
@@ -48,10 +47,10 @@ div.form-check-inline input[type='radio']:checked + label {
   font-weight: bold;
 }
 
-table.float-head {
+table.float-head, div.d-table.float-head {
 	position: relative;
 }
-table.float-head th {
+table.float-head th, div.d-table.float-head div.d-table-row.fix-head {
 	position: sticky;
   background-color: white;
   z-index: 1;

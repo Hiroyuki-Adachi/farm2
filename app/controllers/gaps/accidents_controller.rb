@@ -42,13 +42,13 @@ class Gaps::AccidentsController < GapsController
   def works
     @works = WorkDecorator.decorate_collection(Work.usual(current_term).where(worked_at: params[:worked_at]))
     @work_id = params[:id]
-    render layout: false, partial: 'works', content_type: 'text/vnd.turbo-stream.html'
+    respond_to { |format| format.turbo_stream }
   end
 
   def audiences
     @workers = WorkerDecorator.decorate_collection(Work.find(params[:work_id]).workers)
     @worker_id = params[:id]
-    render layout: false, partial: 'audiences', content_type: 'text/vnd.turbo-stream.html'
+    respond_to { |format| format.turbo_stream }
   end
 
   private
