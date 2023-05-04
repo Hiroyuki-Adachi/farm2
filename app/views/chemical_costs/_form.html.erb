@@ -1,0 +1,7 @@
+<%= f.number_field :quantity, {class: "form-control form-control-sm zero-gray", min: 0, max: 999.9, step: 0.1} %>
+<%= f.hidden_field :work_type_id %>
+<%= f.hidden_field :chemical_term_id %>
+<div class="d-flex justify-content-end">
+  <%= f.submit'更新', name: :regist, class: "btn btn-sm btn-warning" %>
+  <%= f.submit'戻る', name: :back, class: "btn btn-sm btn-outline-dark" %>
+</div>
