@@ -24,11 +24,8 @@
             <td><%= chemical_term.chemical.chemical_type.name %></td>
             <td><%= chemical_name(chemical_term.chemical) %>(<%= chemical_term.chemical.base_base_quantity %><%= chemical_term.chemical.base_unit_name %>)</td>
             <% @work_types.each do |work_type| %>
-              <% chemical_work_type = @chemical_work_types.find{|ct| ct.chemical_term_id == chemical_term.id && ct.work_type_id == work_type.id} || ChemicalWorkType.new(chemical_term_id: chemical_term, work_type_id: work_type, quantity: 0)%>
-              <% quantlty = chemical_work_type&.quantity || 0 %>
-              <td class="numeric" style="<%= quantlty.zero? ? "" : "background-color: #{ work_type.bg_color_term(current_term)}; color: #{work_type.fg_color_term(current_term)};" %>">
-                <%= render partial: 'show', locals: {chemical_work_type: chemical_work_type} %>
-              </td>
+              <% chemical_work_type = @chemical_work_types.find{|ct| ct.chemical_term_id == chemical_term.id && ct.work_type_id == work_type.id} || ChemicalWorkType.new(chemical_term_id: chemical_term.id, work_type_id: work_type.id, quantity: 0)%>
+              <%= render partial: 'show', locals: {chemical_work_type: chemical_work_type} %>
             <% end %>
           </tr>
         <% end %>
@@ -41,3 +38,6 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
+<% content_for :head do %>
+<%= javascript_include_tag 'controllers/chemical-costs', "data-turbo-track": "reload", type: :module %>
+<% end %>

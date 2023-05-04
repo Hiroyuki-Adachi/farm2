@@ -1,24 +1,51 @@
 class ChemicalCostsController < ApplicationController
   include PermitManager
-  before_action :set_work_types, only: [:index, :edit]
-  before_action :set_chemical_term, only: [:edit]
+  before_action :set_work_types, only: [:index]
+  before_action :set_chemical_work_type, only: [:edit, :update]
 
   def index
     @chemical_terms = ChemicalTerm.land.usual(current_term)
     @chemical_work_types = ChemicalWorkType.by_chemical_terms(@chemical_terms).includes(:chemical_term, :work_type)
   end
 
+  def new
+    @chemical_work_type = ChemicalWorkType.new(
+      chemical_term_id: params[:chemical_term_id],
+      work_type_id: params[:work_type_id],
+      quantity: 1
+    )
+  end
+
   def edit
-    @chemical_work_types = ChemicalWorkType.by_chemical_term(@chemical_term)
-    render layout: false, content_type: 'text/vnd.turbo-stream.html'
   end
 
   def create
-    ActiveRecord::Base.transaction do
-      ChemicalTerm.regist_price(params[:chemical_terms])
-      ChemicalWorkType.regist_quantity(params[:chemical_work_types])
+    @chemical_work_type = ChemicalWorkType.new(chemical_work_type_params)
+    if params[:regist]
+      @chemical_work_type.save! 
+    else
+      @chemical_work_type.quantity = 0
     end
-    redirect_to chemical_costs_path
+    respond_to do |format|
+      format.turbo_stream do 
+        render turbo_stream: turbo_stream.replace(
+          "td_#{@chemical_work_type.chemical_term_id}_#{@chemical_work_type.work_type_id}", 
+          partial: 'show', locals: {chemical_work_type: @chemical_work_type}
+        )
+      end
+    end
+  end
+
+  def update
+    @chemical_work_type.update(chemical_work_type_params) if params[:regist]
+    respond_to do |format|
+      format.turbo_stream do 
+        render turbo_stream: turbo_stream.replace(
+          "td_#{@chemical_work_type.chemical_term_id}_#{@chemical_work_type.work_type_id}", 
+          partial: 'show', locals: {chemical_work_type: @chemical_work_type}
+        )
+      end
+    end
   end
 
   def import
@@ -31,7 +58,15 @@ class ChemicalCostsController < ApplicationController
     @work_types = WorkType.land.where(work_flag: true).by_term(current_term)
   end
 
-  def set_chemical_term
-    @chemical_term = ChemicalTerm.find(params[:id])
+  def set_chemical_work_type
+    @chemical_work_type = ChemicalWorkType.find(params[:id])
+  end
+
+  def chemical_work_type_params
+    params.require(:chemical_work_type).permit(
+      :chemical_term_id,
+      :work_type_id,
+      :quantity
+    )
   end
 end

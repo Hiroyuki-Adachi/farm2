@@ -1,7 +1,0 @@
-<%= turbo_stream.update "chemical_#{chemical_term.id}_#{work_type.id}" do %>
-  <%= form_with model: @chemical_work_type do |f| %>
-    <%= f.number_field :quantity, quantity, {class: "form-control form-control-sm zero-gray", min: 0, max: 999.9, step: 0.1} %>
-    <%= f.submit'更新', class: "btn btn-sm btn-warning" %>
-    <%= button_to '戻る', nil, class: "btn btn-sm btn-outline-dark" %></div>
-  <% end %>
-<% end %>
