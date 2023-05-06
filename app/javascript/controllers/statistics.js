@@ -1,7 +1,7 @@
 import Chart from "chart.js/auto";
 
 window.addEventListener("turbo:load", () => {
-    const sleep = (second) => new Promise(resolve => setTimeout(resolve, second * 1000));
+    const sleep = () => new Promise(resolve => setTimeout(resolve, 100));
 
     document.querySelectorAll(".nav-link").forEach((element) => {
         element.addEventListener("turbo:click", async (event) => {
@@ -14,7 +14,7 @@ window.addEventListener("turbo:load", () => {
                 tab.classList.remove("active");
             });
             event.target.classList.add("active");
-            await sleep(1);
+            await sleep();
             switch(parseInt(event.target.dataset.tab)) {
                 case 1:
                     tab1();
