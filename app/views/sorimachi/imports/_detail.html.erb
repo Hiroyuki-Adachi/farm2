@@ -29,5 +29,10 @@
 <td class="numeric <%= detail.cost1_flag ? "text-primary" : "text-dark" %>"><%= number_to_currency(detail.amount2, {precision: 0, unit: ""}) %></td>
 <td><%= detail.remark1 %><%= detail.remark3.present? ? "／#{detail.remark3}" : "" %></td>
 <td>
+<% if detail.cost0_flag || detail.cost1_flag || detail.account1.present? || detail.account2.present? %>
+<button class="btn btn-sm btn-warning" data-id="<%= detail.id %>">複写</button>
+<% end %>
+</td>
+<td>
   <%= detail.work_types.pluck(:name).join(', ') %>
 </td>
