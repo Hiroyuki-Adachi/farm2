@@ -149,6 +149,11 @@ class SorimachiJournal < ApplicationRecord
     end
   end
 
+  def copy
+    copy_src = SorimachiJournal.where("term = ? AND id < ? AND (cost0_flag = true OR cost1_flag = true)", self.term, self.id).order(id: :desc).first
+    if return unless copy_src
+  end
+
   def ==(value)
     return self.amount1 == value.amount1 &&
       self.amount2 == value.amount2 && 
