@@ -64,6 +64,29 @@ window.addEventListener("turbo:load", () => {
     });
   };
 
+  const addEventCopy = (element) => {
+    element.addEventListener("click", () => {
+      fetch(element.dataset.url, {
+        method: "POST",
+        headers: {
+          'X-CSRF-Token': getCsrfToken()
+        }
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res.text();
+        }
+      })
+      .then((data) => {
+        const journalTr = document.getElementById(`tr_${element.dataset.id}`);
+        journalTr.innerHTML = data;
+        journalTr.querySelectorAll("button.edit-work-types").forEach((element) => {
+          addEventEditWorkTypes(element);
+        });
+      });
+    });
+  };
+
   const resetAmounts = () => {
     let sumArea = new Decimal(0);
     let maxArea = 0.0;
@@ -110,6 +133,10 @@ window.addEventListener("turbo:load", () => {
 
   document.querySelectorAll("button.update-flag").forEach((element) => {
     addEventUpdateFlag(element);
+  });
+
+  document.querySelectorAll("button.copy").forEach((element) => {
+    addEventCopy(element);
   });
 
   document.getElementById("kamoku_close").addEventListener("click", () => {
