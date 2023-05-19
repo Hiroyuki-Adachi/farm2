@@ -31,6 +31,7 @@ class Sorimachi::ImportsController < ApplicationController
   end
 
   def copy
+    @journal.copy(current_system)
     render partial: 'detail', locals: {detail: @journal}
   end
 
