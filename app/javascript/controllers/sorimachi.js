@@ -60,6 +60,35 @@ window.addEventListener("turbo:load", () => {
         journalTr.querySelectorAll("button.edit-work-types").forEach((element) => {
           addEventEditWorkTypes(element);
         });
+        journalTr.querySelectorAll("button.copy").forEach((element) => {
+          addEventCopy(element);
+        });
+      });
+    });
+  };
+
+  const addEventCopy = (element) => {
+    element.addEventListener("click", () => {
+      fetch(element.dataset.url, {
+        method: "POST",
+        headers: {
+          'X-CSRF-Token': getCsrfToken()
+        }
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res.text();
+        }
+      })
+      .then((data) => {
+        const journalTr = document.getElementById(`tr_${element.dataset.id}`);
+        journalTr.innerHTML = data;
+        journalTr.querySelectorAll("button.edit-work-types").forEach((element) => {
+          addEventEditWorkTypes(element);
+        });
+        journalTr.querySelectorAll("button.copy").forEach((element) => {
+          addEventCopy(element);
+        });
       });
     });
   };
@@ -110,6 +139,10 @@ window.addEventListener("turbo:load", () => {
 
   document.querySelectorAll("button.update-flag").forEach((element) => {
     addEventUpdateFlag(element);
+  });
+
+  document.querySelectorAll("button.copy").forEach((element) => {
+    addEventCopy(element);
   });
 
   document.getElementById("kamoku_close").addEventListener("click", () => {
