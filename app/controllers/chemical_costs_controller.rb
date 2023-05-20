@@ -2,6 +2,7 @@ class ChemicalCostsController < ApplicationController
   include PermitManager
   before_action :set_work_types, only: [:index]
   before_action :set_chemical_work_type, only: [:edit, :update]
+  before_action :destroy_chemical_work_type, only: [:create]
 
   def index
     @chemical_terms = ChemicalTerm.land.usual(current_term)
@@ -60,6 +61,13 @@ class ChemicalCostsController < ApplicationController
 
   def set_chemical_work_type
     @chemical_work_type = ChemicalWorkType.find(params[:id])
+  end
+
+  def destroy_chemical_work_type
+    ChemicalWorkType.where(
+      chemical_term_id: chemical_work_type_params[:chemical_term_id],
+      work_type_id: chemical_work_type_params[:work_type_id]
+    ).destroy_all
   end
 
   def chemical_work_type_params
