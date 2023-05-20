@@ -158,7 +158,8 @@ class SorimachiJournal < ApplicationRecord
     max_area = 0
     land_costs = LandCost.total(self.accounted_on || sys.end_date)
     land_costs.each do |land_cost|
-      sum_area += land_cost[1] if copy_src.work_types.ids.include?(land_cost[0])
+      next unless copy_src.work_types.ids.include?(land_cost[0])
+      sum_area += land_cost[1] 
       if max_area < land_cost[1]
         max_area = land_cost[1]
         max_work_type_id = land_cost[0]
@@ -167,21 +168,22 @@ class SorimachiJournal < ApplicationRecord
     sum_amount = 0
     unless sum_area.zero?
       land_costs.each do |land_cost|
+        next unless copy_src.work_types.ids.include?(land_cost[0])
         amount = (self.cost_amount * land_cost[1] / sum_area).round
-        unless amount.zero?
-          SorimachiWorkType.create(
-            sorimachi_journal_id: self.id, 
-            work_type_id: land_cost[0], 
-            amount: amount
-          )
-          sum_amount += amount
-        end
+        next if amount.zero?
+        SorimachiWorkType.create(
+          sorimachi_journal_id: self.id, 
+          work_type_id: land_cost[0], 
+          amount: amount
+        )
+        sum_amount += amount
       end
     end
     unless sum_amount == self.cost_amount
       sorimachi_work_type = SorimachiWorkType.where(sorimachi_journal_id: self.id, work_type_id: max_work_type_id).first
       sorimachi_work_type.increment!(:amount, self.cost_amount - sum_amount) if sorimachi_work_type
     end
+    return self
   end
 
   def ==(value)
