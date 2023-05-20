@@ -60,6 +60,9 @@ window.addEventListener("turbo:load", () => {
         journalTr.querySelectorAll("button.edit-work-types").forEach((element) => {
           addEventEditWorkTypes(element);
         });
+        journalTr.querySelectorAll("button.copy").forEach((element) => {
+          addEventCopy(element);
+        });
       });
     });
   };
@@ -82,6 +85,9 @@ window.addEventListener("turbo:load", () => {
         journalTr.innerHTML = data;
         journalTr.querySelectorAll("button.edit-work-types").forEach((element) => {
           addEventEditWorkTypes(element);
+        });
+        journalTr.querySelectorAll("button.copy").forEach((element) => {
+          addEventCopy(element);
         });
       });
     });

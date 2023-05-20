@@ -183,7 +183,7 @@ class SorimachiJournal < ApplicationRecord
       sorimachi_work_type = SorimachiWorkType.where(sorimachi_journal_id: self.id, work_type_id: max_work_type_id).first
       sorimachi_work_type.increment!(:amount, self.cost_amount - sum_amount) if sorimachi_work_type
     end
-    return self
+    self.reload
   end
 
   def ==(value)
