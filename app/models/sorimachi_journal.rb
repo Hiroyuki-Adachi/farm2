@@ -149,6 +149,43 @@ class SorimachiJournal < ApplicationRecord
     end
   end
 
+  def copy(sys)
+    copy_src = SorimachiJournal.where("term = ? AND id < ? AND (cost0_flag = true OR cost1_flag = true)", self.term, self.id).order(id: :desc).first
+    return unless copy_src
+    self.work_types.destroy_all
+    sum_area = 0
+    max_work_type_id = 0
+    max_area = 0
+    land_costs = LandCost.total(self.accounted_on || sys.end_date)
+    land_costs.each do |land_cost|
+      next unless copy_src.work_types.ids.include?(land_cost[0])
+      sum_area += land_cost[1] 
+      if max_area < land_cost[1]
+        max_area = land_cost[1]
+        max_work_type_id = land_cost[0]
+      end
+    end
+    sum_amount = 0
+    unless sum_area.zero?
+      land_costs.each do |land_cost|
+        next unless copy_src.work_types.ids.include?(land_cost[0])
+        amount = (self.cost_amount * land_cost[1] / sum_area).round
+        next if amount.zero?
+        SorimachiWorkType.create(
+          sorimachi_journal_id: self.id, 
+          work_type_id: land_cost[0], 
+          amount: amount
+        )
+        sum_amount += amount
+      end
+    end
+    unless sum_amount == self.cost_amount
+      sorimachi_work_type = SorimachiWorkType.where(sorimachi_journal_id: self.id, work_type_id: max_work_type_id).first
+      sorimachi_work_type.increment!(:amount, self.cost_amount - sum_amount) if sorimachi_work_type
+    end
+    self.reload
+  end
+
   def ==(value)
     return self.amount1 == value.amount1 &&
       self.amount2 == value.amount2 && 
