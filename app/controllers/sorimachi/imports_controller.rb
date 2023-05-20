@@ -1,7 +1,7 @@
 class Sorimachi::ImportsController < ApplicationController
   include PermitManager
-  before_action :set_sorimachi_journal, only: [:update, :destroy]
-  before_action :set_sorimachi_accounts, only: [:index, :update, :destroy]
+  before_action :set_sorimachi_journal, only: [:update, :destroy, :copy]
+  before_action :set_sorimachi_accounts, only: [:index, :update, :destroy, :copy]
 
   def index
     @journals = SorimachiJournal.usual(current_term).page(params[:page])
@@ -27,6 +27,11 @@ class Sorimachi::ImportsController < ApplicationController
 
   def destroy
     @journal.clear_flags
+    render partial: 'detail', locals: {detail: @journal}
+  end
+
+  def copy
+    @journal.copy(current_system)
     render partial: 'detail', locals: {detail: @journal}
   end
 
