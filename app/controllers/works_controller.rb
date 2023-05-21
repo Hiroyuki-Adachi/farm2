@@ -91,17 +91,13 @@ class WorksController < ApplicationController
   def work_types
     @work_type_id = params[:work_type_id]
     @work_types = params[:term].present? ? WorkType.by_term(params[:term]).indexes : WorkType.indexes
-    respond_to do |format|
-      format.turbo_stream
-    end
+    respond_to { |format| format.turbo_stream }
   end
 
   def work_kinds
     @work_kind_id = params[:work_kind_id]
     @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
-    respond_to do |format|
-      format.turbo_stream
-    end
+    respond_to { |format| format.turbo_stream }
   end
 
   def map
