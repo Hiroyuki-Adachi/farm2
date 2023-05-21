@@ -4,6 +4,11 @@ class Plans::LandsController < ApplicationController
 
   helper GmapHelper
 
+  def index
+    @plan_lands = PlanLand.usual(current_user)
+    respond_to { |format| format.csv { render :content_type => 'text/csv; charset=cp943' }}
+  end
+
   def new
     @lands = Land.for_plan(current_user.id).expiry(@current_date).includes(:owner)
     @work_types = WorkType.land.by_term(current_term)
