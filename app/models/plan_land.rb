@@ -18,7 +18,7 @@ class PlanLand < ApplicationRecord
   belongs_to :work_type
   belongs_to :user
 
-  scope :usual, -> (user){where(user_id: user.id).joins(:land).joins(:work_type).order("work_types.display_order, lands.place")}
+  scope :usual, -> (user){where(user_id: user.id).joins(:land).joins(:work_type).order("work_types.display_order, plan_lands.work_type_id, lands.place")}
 
   def self.create_all(user_id, params)
     PlanLand.where(user_id: user_id).delete_all
