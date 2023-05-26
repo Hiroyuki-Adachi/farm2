@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :work_types, param: "sorimachi_journal_id", only: [:edit, :update]
   end
   namespace :plans do
-    resources :lands, only: [:new, :create, :destroy]
+    resources :lands, only: [:index, :new, :create, :destroy]
     resources :seedlings, only: [:new, :create, :index]
     resources :work_types, only: [:new, :create]
     resources :chemicals, only: [:new, :create]
