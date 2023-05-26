@@ -36,6 +36,9 @@
     <div class="btn-group mr-2">
       <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: "window.print();" %>
     </div>
+    <div class="btn-group mr-2">
+      <%= link_to 'CSV出力', plans_lands_path(format: :csv), class: "btn btn-primary" %>
+    </div>
     <% if @current_date == Date.today %>
     <div class="btn-group mr-2">
       <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
