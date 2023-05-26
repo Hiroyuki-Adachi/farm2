@@ -59,15 +59,5 @@
 <%= f.hidden_field :term %>
 <%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
 <% content_for :head do %>
-<script data-turbo-track="reload" type="module">
-import { Turbo } from "@hotwired/turbo-rails";
-
-window.addEventListener('turbo:load', () => {
-    document.querySelectorAll('input[name="schedule[work_type_id]"]').forEach((element) => {
-        element.addEventListener("change", (event) => {
-            Turbo.visit(`${document.getElementById("work_kinds_works_path").value}?work_type_id=${event.target.value}`);
-        });
-    });
-});
-</script>
+<%= javascript_include_tag 'controllers/schedule', "data-turbo-track": "reload", type: :module %>
 <% end %>
