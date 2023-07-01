@@ -24,6 +24,7 @@
     <div class="input-group">
       <label for="work_type_id" class="h5 form-label">分類</label>
       <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name, @work_type_id), {include_blank: true, class: "form-select"}) %>
+      <label class="form-check-label form-label"><%= check_box_tag(:except, true, false, {class: "form-check-input"}) %>除外</label>
     </div>
   </div>
   <div class="col-md-4">
