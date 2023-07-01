@@ -2,8 +2,6 @@
 
 pin "application", preload: true
 pin "@fortawesome/fontawesome-free", to: "https://ga.jspm.io/npm:@fortawesome/fontawesome-free@6.2.1/js/fontawesome.js"
-pin "@popperjs/core", to: "https://ga.jspm.io/npm:@popperjs/core@2.11.6/lib/index.js"
-pin "bootstrap", to: "https://ga.jspm.io/npm:bootstrap@5.2.3/dist/js/bootstrap.esm.js"
 pin "moment", to: "https://ga.jspm.io/npm:moment@2.29.4/moment.js"
 pin "serialize-javascript", to: "https://ga.jspm.io/npm:serialize-javascript@6.0.0/index.js"
 pin "buffer", to: "https://ga.jspm.io/npm:@jspm/core@2.0.0-beta.26/nodelibs/browser/buffer.js"
@@ -36,3 +34,5 @@ pin "make-plural", to: "https://ga.jspm.io/npm:make-plural@7.0.0/plurals.mjs"
 pin "chart.js", to: "https://ga.jspm.io/npm:chart.js@4.3.0/dist/chart.js"
 pin "chart.js/auto", to: "https://ga.jspm.io/npm:chart.js@4.3.0/auto/auto.js"
 pin "@kurkle/color", to: "https://ga.jspm.io/npm:@kurkle/color@0.3.2/dist/color.esm.js"
+pin "bootstrap", to: "https://ga.jspm.io/npm:bootstrap@5.3.0/dist/js/bootstrap.esm.js"
+pin "@popperjs/core", to: "https://ga.jspm.io/npm:@popperjs/core@2.11.8/lib/index.js"
