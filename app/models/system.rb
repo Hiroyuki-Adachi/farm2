@@ -34,6 +34,8 @@ class System < ApplicationRecord
   validates :target_from, presence: true
   validates :target_to,   presence: true
 
+  after_save :cache_clear
+
   validates :term, numericality: {only_integer: true, greater_than: 2000, less_than: 2100}
 
   def self.get_system(date, organization_id)
@@ -46,5 +48,11 @@ class System < ApplicationRecord
 
   def self.max_date(organization_id)
     System.where(organization_id: organization_id).maximum(:end_date)
+  end
+
+  private
+
+  def cache_clear
+    Rails.cache.clear
   end
 end
