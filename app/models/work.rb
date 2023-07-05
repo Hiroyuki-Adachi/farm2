@@ -460,6 +460,16 @@ SQL
       .distinct.count(Work.arel_table[:worked_at])
   end
 
+  def self.search_for_work(works, work_search)
+    if work_search[:work_type_id].present?
+      works = work_search[:except] ? works.where.not(work_type_id: work_search[:work_type_id]) : works.where(work_type_id: work_search[:work_type_id]) 
+    end
+    works = works.where(work_kind_id: work_search[:work_kind_id])     if work_search[:work_kind_id].present?
+    works = works.where(["worked_at >= ?", work_search[:worked_at1]]) if work_search[:worked_at1].present?
+    works = works.where(["worked_at <= ?", work_search[:worked_at2]]) if work_search[:worked_at2].present?
+    return works
+  end
+
   private
 
   def quantity_params(quantity, add_params)
