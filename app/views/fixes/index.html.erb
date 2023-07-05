@@ -30,7 +30,7 @@
             <td><%= link_to '作業一覧', fix_path(fixed_at: fix), {class: "btn btn-success"} %></td>
             <td><%= link_to '作業日当', work_results_path(fixed_at: fix), {class: "btn btn-success"} %><%= link_to 'CSV出力', work_results_path(fixed_at: fix, format: :csv), {class: "btn btn-outline-success"} %></td>
             <td><%= link_to '機械利用料', machine_results_path(fixed_at: fix), {class: "btn btn-success"} %><%= link_to 'CSV出力', machine_results_path(fixed_at: fix, format: :csv), {class: "btn btn-outline-success"} %></td>
-            <td><%= link_to '確定取消', fix, {data: {turbo_confirm: "確定を取り消してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %></td>
+            <td><%= link_to '確定取消', fix, {data: {turbo_confirm: "確定を取り消してもよろしいですか?", turbo_method: :delete, wait: true}, class: "btn btn-danger"} %></td>
           </tr>
         <% sum_works_count += fix.model.works_count.to_i %>
         <% sum_hours += fix.hours.to_f %>
