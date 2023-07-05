@@ -29,6 +29,9 @@ Turbo.setConfirmMethod((message, element) => {
     return new Promise((resolve, reject) => {
         popupForm._element.querySelectorAll(".confirm-button").forEach((button) => {
             button.addEventListener("click", () => {
+                if (button.value == "true") {
+                    loadingStart("しばらくお待ちください");
+                }
                 resolve(button.value == "true");
                 popupForm.hide();
             }, {once: true});
