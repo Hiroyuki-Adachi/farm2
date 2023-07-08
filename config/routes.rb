@@ -163,6 +163,7 @@ Rails.application.routes.draw do
   resources :users, except: [:show] do
     resources :permissions, controller: "users/permissions", only: [:new, :create]
   end
+  resources :qr, path: "/users/qr", controller: "users/qr", only: [:index]
   resources :work_verifications, param: "work_id", only: [:index, :update, :destroy, :show]
 
   resources :menu, only: [:index, :edit, :update] do
