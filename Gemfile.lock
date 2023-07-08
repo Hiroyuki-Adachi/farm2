@@ -1,12 +1,12 @@
 GIT
-  remote: git@github.com:gazayas/active_hash.git
+  remote: https://github.com/gazayas/active_hash.git
   revision: 7a07bcc07abca9aca48b47186c23f85cf6ec7ced
   specs:
     active_hash (3.2.0)
       activesupport (>= 5.0.0)
 
 GIT
-  remote: git@github.com:holiday-jp/holiday_jp-ruby.git
+  remote: https://github.com/holiday-jp/holiday_jp-ruby.git
   revision: ef8f0370b1119dca348f8dc19ec0a7154f500d26
   specs:
     holiday_jp (0.8.1)
