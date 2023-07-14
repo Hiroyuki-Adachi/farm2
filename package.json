@@ -4,7 +4,10 @@
   "dependencies": {
     "@popperjs/core": "^2.11.2",
     "bootstrap": "^5.1.3",
-    "sass": "^1.48.0"
+    "sass": "^1.63.6",
+    "yarn": "^1.22.19"
   },
-  "scripts": { "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules" }
+  "scripts": {
+    "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+  }
 }

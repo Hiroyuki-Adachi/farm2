@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   helper_method :menu_name
 
-  PERMIT_ADDRESSES = ['127.0.0.1', '192.168.', '10.8.0.'].freeze
+  PERMIT_ADDRESSES = ['127.0.0.1', '192.168.', '172.', '10.'].freeze
 
   before_action :set_term, if: :user_present?
   before_action :restrict_remote_ip
