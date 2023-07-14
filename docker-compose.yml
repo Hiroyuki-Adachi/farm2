@@ -1,0 +1,49 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - type: volume
+        source: dbdata
+        target: /var/lib/postgresql/data
+        volume:
+          nocopy: true
+      - type: bind
+        source: ./tmp/farm2.sql
+        target: /docker-entrypoint-initdb.d/01_farm2.sql
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: farm2_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - type: bind
+        source: .
+        target: /farm2
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    entrypoint: ["./entrypoint.sh"]
+
+  worker:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: bundle exec rake jobs:work RAILS_ENV=development
+    volumes:
+      - type: bind
+        source: .
+        target: /farm2
+    depends_on:
+      - db
+
+volumes:
+   dbdata:

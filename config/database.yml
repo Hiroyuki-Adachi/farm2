@@ -23,7 +23,7 @@ default: &default
   username: postgres
   password: postgres
   template: template0
-  host: localhost
+  host: db
 
 development:
   <<: *default
@@ -86,3 +86,4 @@ production:
   <<: *default
   database: farm2_production
   username: postgres
+  host: localhost
