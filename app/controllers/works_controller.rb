@@ -155,37 +155,26 @@ class WorksController < ApplicationController
 
   def set_search_info
     path = Rails.application.routes.recognize_path(request.referer)
+    @work_search = {}
     if path[:controller] == "menu" || session[:work_search].nil?
       session.delete(:work_search)
-      @month = ""
-      @work_type_id = ""
-      @work_kind_id = ""
-      @except = false
-      @page = 1
+      @work_search = {page: 1}
     elsif path[:controller] == "works" && path[:action] == "index" && params[:format] != "csv"
-      @work_type_id = params[:work_type_id] || ""
-      @work_kind_id = params[:work_kind_id] || ""
-      @worked_at1 = params[:worked_at1]
-      @worked_at2 = params[:worked_at2]
-      @except = params[:except]
-      @page = params[:page] || 1
+      @work_search = {
+        work_type_id: params[:work_type_id],
+        work_kind_id: params[:work_kind_id],
+        worked_at1: params[:worked_at1],
+        worked_at2: params[:worked_at2],
+        except: params[:except],
+        page: params[:page] || 1,
+      }
     else
-      @work_type_id = session[:work_search]["work_type_id"]
-      @work_kind_id = session[:work_search]["work_kind_id"]
-      @worked_at1 = session[:work_search]["worked_at1"]
-      @worked_at2 = session[:work_search]["worked_at2"]
-      @except = session[:work_search]["except"]
-      @page = session[:work_search]["page"] || 1
+      @work_search = session[:work_search]
     end
   end
 
   def do_search
-    if @work_type_id.present?
-      @works = @except ? @works.where.not(work_type_id: @work_type_id) : @works.where(work_type_id: @work_type_id) 
-    end
-    @works = @works.where(work_kind_id: @work_kind_id) if @work_kind_id.present?
-    @works = @works.where(["worked_at >= ?", @worked_at1]) if @worked_at1.present?
-    @works = @works.where(["worked_at <= ?", @worked_at2]) if @worked_at2.present?
+    @works = Work.search_for_work(@works, @work_search)
     @works_count = @works.count
     @total_hours = @works.inject(0) { |a, e| a + (@sum_hours[e.id] || 0)}
     @total_workers = @works.inject(0) { |a, e| a + (@count_workers[e.id] || 0)}
@@ -193,10 +182,7 @@ class WorksController < ApplicationController
   end
 
   def set_session
-    session[:work_search] = {
-      page: @page, work_type_id: @work_type_id, work_kind_id: @work_kind_id,
-      worked_at1: @worked_at1, worked_at2: @worked_at2, term: @term, except: @except
-    }
+    session[:work_search] = @work_search
   end
 
   def set_broccoli
