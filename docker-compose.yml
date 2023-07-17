@@ -27,6 +27,13 @@ services:
       - type: bind
         source: .
         target: /farm2
+        consistency: delegated
+      - type: tmpfs
+        target: /farm2/tmp
+      - type: tmpfs
+        target: /farm2/log
+      - type: tmpfs
+        target: /farm2/node_modules
     ports:
       - "3000:3000"
     depends_on:
