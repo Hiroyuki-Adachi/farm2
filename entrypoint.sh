@@ -7,6 +7,7 @@ set -e
 rm -f /farm2/tmp/pids/server.pid
 
 # CSSを監視
+yarn install
 yarn build:css --watch &
 
 # コマンドを実行
