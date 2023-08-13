@@ -27,7 +27,7 @@ class WorksController < ApplicationController
     set_pager
     respond_to do |format|
       format.html do
-        @works = WorkDecorator.decorate_collection(@works.page(@page))
+        @works = WorkDecorator.decorate_collection(@works.page(@work_search[:page]))
       end
       format.csv do
         render :content_type => 'text/csv; charset=cp943'
