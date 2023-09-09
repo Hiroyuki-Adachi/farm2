@@ -8,4 +8,10 @@
 #  updated_at   :datetime         not null
 #
 class DesticideMaker < ApplicationRecord
+
+  def self.find_or_create(name)
+    maker = DesticideMaker.find_by(name: name)
+    maker = DesticideMaker.create(name: name) if maker.nil?
+    return maker.id
+  end
 end

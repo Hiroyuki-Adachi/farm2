@@ -14,4 +14,22 @@
 #  purpose_id(用途)        :integer          not null
 #
 class Desticide < ApplicationRecord
+  has_many :ingredients, -> {order(:no)}, class_name: :DesticideIngredient, dependent: :destroy
+
+  def self.import(file)
+    CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: /^\/\//) do |row|
+      desticide = Desticide.find_by(id: row[0])
+      desticide = Desticide.new if desticide.nil?
+      desticide.set_row(row)
+      desticide.save!
+    end
+  end
+
+  def set_row(row)
+    self.id         = row[0]
+    self.type_name  = row[1].unicode_normalize(:nfkc)
+    self.name       = row[2].unicode_normalize(:nfkc)
+    self.maker_id   = DesticideMaker.find_or_create(row[3].unicode_normalize(:nfkc))
+
+  end
 end

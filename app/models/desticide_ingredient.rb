@@ -13,4 +13,5 @@
 #  desticide_id(登録番号)                       :integer          not null
 #
 class DesticideIngredient < ApplicationRecord
+  belongs_to :desticide
 end

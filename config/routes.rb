@@ -134,6 +134,7 @@ Rails.application.routes.draw do
       end
     end
     resources :annuals, only: [:create]
+    resources :desticides, only: [:create, :index, :show]
   end
   resources :sections, except: [:show]
   resources :statistics, only: [:index] do

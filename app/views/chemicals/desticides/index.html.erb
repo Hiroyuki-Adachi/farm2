@@ -1,0 +1,18 @@
+<h1>農薬マスタ</h1>
+<div class="btn-toolbar mb-2">
+  <%= form_with(url: chemicals_desticides_path, method: :post, data: {turbo_confirm: "取り込みを実行してもよろしいですか？"}, html: {multipart: true}) do |f| %>
+    <div class="row">
+      <div class="col-md-4 form-group">
+        <%= file_field_tag :import_file, {class: "form-control-file custom-file-input", data: {buttonText: "ファイル選択"}} %>
+      </div>
+    </div>
+    <div class="btn-toolbar" role="toolbar">
+      <div class="btn-group mr-2" role="group">
+        <%= submit_tag 'インポート', class: "btn btn-danger", data: {wait: true} %>
+      </div>
+      <div class="btn-group mr-2" role="group">
+        <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
+      </div>
+    </div>
+  <% end %>
+</div>
