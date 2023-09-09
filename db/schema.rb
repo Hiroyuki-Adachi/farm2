@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_23_115732) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_09_053310) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -265,6 +265,47 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_23_115732) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["term", "machine_id"], name: "index_depreciations_on_term_and_machine_id", unique: true
+  end
+
+  create_table "desticide_forms", comment: "剤型", force: :cascade do |t|
+    t.string "name", limit: 20, null: false, comment: "名称"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "desticide_ingredients", comment: "農薬有効成分", force: :cascade do |t|
+    t.integer "desticide_id", null: false, comment: "登録番号"
+    t.integer "no", null: false, comment: "有効成分番号"
+    t.string "ingredient", limit: 100, null: false, comment: "有効成分"
+    t.string "count_ingredient", limit: 100, null: false, comment: "総使用回数における有効成分"
+    t.string "concentration", limit: 50, null: false, comment: "濃度"
+    t.float "concentration_value", comment: "濃度(%)"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "desticide_makers", comment: "農薬製造販売元", force: :cascade do |t|
+    t.string "name", limit: 50, null: false, comment: "名称"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "desticide_purposes", comment: "農薬用途", force: :cascade do |t|
+    t.string "name", limit: 20, null: false, comment: "名称"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "desticides", id: :integer, default: nil, comment: "農薬", force: :cascade do |t|
+    t.string "type_name", limit: 100, null: false, comment: "種類"
+    t.string "name", limit: 100, null: false, comment: "名称"
+    t.integer "maker_id", null: false, comment: "製造元"
+    t.integer "mixed_count", null: false, comment: "混合数"
+    t.integer "purpose_id", null: false, comment: "用途"
+    t.integer "form_id", null: false, comment: "剤型"
+    t.date "registed_on", comment: "登録年月日"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "drying_lands", comment: "乾燥調整場所", force: :cascade do |t|
