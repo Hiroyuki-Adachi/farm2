@@ -26,10 +26,15 @@ class Desticide < ApplicationRecord
   end
 
   def set_row(row)
-    self.id         = row[0]
-    self.type_name  = row[1].unicode_normalize(:nfkc)
-    self.name       = row[2].unicode_normalize(:nfkc)
-    self.maker_id   = DesticideMaker.find_or_create(row[3].unicode_normalize(:nfkc))
-
+    self.id          = row[0]
+    self.type_name   = row[1].unicode_normalize(:nfkc)
+    self.name        = row[2].unicode_normalize(:nfkc)
+    self.maker_id    = DesticideMaker.find_or_create(row[3].unicode_normalize(:nfkc))
+    self.mixed_count = row[7]
+    self.purpose_id  = DesticidePurpose.find_or_create(row[8].unicode_normalize(:nfkc))
+    self.form_id     = DesticideForm.find_or_create(row[9].unicode_normalize(:nfkc))
+    row[7].times do |index|
+      DesticideIngredient.import_sub(row, index)
+    end
   end
 end

@@ -8,4 +8,9 @@
 #  updated_at   :datetime         not null
 #
 class DesticideForm < ApplicationRecord
+  def self.find_or_create(name)
+    form = DesticideForm.find_by(name: name)
+    form = DesticideForm.create(name: name) if form.nil?
+    return form.id
+  end
 end
