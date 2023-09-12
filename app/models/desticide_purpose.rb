@@ -9,8 +9,8 @@
 #
 class DesticidePurpose < ApplicationRecord
   def self.find_or_create(name)
-    purpose = DesticideForm.find_by(name: name)
-    purpose = DesticideForm.create(name: name) if purpose.nil?
+    purpose = DesticidePurpose.find_by(name: name)
+    purpose = DesticidePurpose.create(name: name) if purpose.nil?
     return purpose.id
   end
 end

@@ -1,3 +1,4 @@
+require 'csv'
 # == Schema Information
 #
 # Table name: desticides
@@ -17,7 +18,8 @@ class Desticide < ApplicationRecord
   has_many :ingredients, -> {order(:no)}, class_name: :DesticideIngredient, dependent: :destroy
 
   def self.import(file)
-    CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: /^\/\//) do |row|
+    CSV.foreach(file.path, encoding: "cp932", headers: true) do |row|
+      next unless row.length == 11
       desticide = Desticide.find_by(id: row[0])
       desticide = Desticide.new if desticide.nil?
       desticide.set_row(row)
@@ -33,8 +35,9 @@ class Desticide < ApplicationRecord
     self.mixed_count = row[7]
     self.purpose_id  = DesticidePurpose.find_or_create(row[8].unicode_normalize(:nfkc))
     self.form_id     = DesticideForm.find_or_create(row[9].unicode_normalize(:nfkc))
-    row[7].times do |index|
-      DesticideIngredient.import_sub(row, index)
+    self.registed_on = row[10]
+    row[7].to_i.times do |index|
+      DesticideIngredient.import_sub(row, index + 1)
     end
   end
 end

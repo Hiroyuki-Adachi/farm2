@@ -25,15 +25,15 @@ class DesticideIngredient < ApplicationRecord
     end
     unless ingredient.equal_row?(row)
       ingredient.ingredient = row[4].unicode_normalize(:nfkc)
-      ingredient.count_ingredient = row[5].unicode_normalize(:nfkc)
-      ingredient.concentration = row[6].unicode_normalize(:nfkc).trim
+      ingredient.count_ingredient = row[5] ? row[5].unicode_normalize(:nfkc) : ''
+      ingredient.concentration = row[6].unicode_normalize(:nfkc).strip
       ingredient.save
     end
   end
 
   def equal_row?(row)
     return  (self.ingredient == row[4].unicode_normalize(:nfkc)) && 
-            (self.count_ingredient == row[5].unicode_normalize(:nfkc)) && 
+            (self.count_ingredient == (row[5] ? row[5].unicode_normalize(:nfkc) : '')) && 
             (self.concentration == row[6].unicode_normalize(:nfkc))
   end
 
