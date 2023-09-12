@@ -18,6 +18,7 @@ class Desticide < ApplicationRecord
   has_many :ingredients, -> {order(:no)}, class_name: :DesticideIngredient, dependent: :destroy
 
   def self.import(file)
+    Desticide.update_all valid_flag: false
     CSV.foreach(file.path, encoding: "cp932", headers: true) do |row|
       next unless row.length == 11
       desticide = Desticide.find_by(id: row[0])
@@ -36,6 +37,7 @@ class Desticide < ApplicationRecord
     self.purpose_id  = DesticidePurpose.find_or_create(row[8].unicode_normalize(:nfkc))
     self.form_id     = DesticideForm.find_or_create(row[9].unicode_normalize(:nfkc))
     self.registed_on = row[10]
+    self.valid_flag  = true
     row[7].to_i.times do |index|
       DesticideIngredient.import_sub(row, index + 1)
     end

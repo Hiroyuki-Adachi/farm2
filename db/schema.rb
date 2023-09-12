@@ -303,7 +303,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_10_073937) do
     t.integer "mixed_count", null: false, comment: "混合数"
     t.integer "purpose_id", null: false, comment: "用途"
     t.integer "form_id", null: false, comment: "剤型"
-    t.date "registed_on", comment: "登録年月日"
+    t.boolean "valid_flag", default: true, null: false, comment: "有効フラグ"
+    t.date "registed_on", null: false, comment: "登録年月日"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

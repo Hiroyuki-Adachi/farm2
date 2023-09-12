@@ -8,8 +8,8 @@ class CreateDesticides < ActiveRecord::Migration[7.0]
       t.integer :mixed_count, null: false, comment: "混合数"
       t.integer :purpose_id, null: false, comment: "用途"
       t.integer :form_id, null: false, comment: "剤型"
-
-      t.date    :registed_on,  comment: "登録年月日"
+      t.boolean :valid_flag, null: false, default: true, comment: "有効フラグ"
+      t.date    :registed_on,  null: false, comment: "登録年月日"
       t.timestamps
     end
   end
