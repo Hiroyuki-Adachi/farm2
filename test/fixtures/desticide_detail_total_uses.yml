@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: desticide_detail_total_uses
+#
+#  id                     :bigint           not null, primary key
+#  no(有効成分番号)       :integer          not null
+#  total_uses(総使用回数) :string(50)       not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  desticide_id(登録番号) :integer          not null
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value
