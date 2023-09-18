@@ -273,7 +273,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_130105) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "desticide_detail_total_uses", force: :cascade do |t|
+  create_table "desticide_detail_total_uses", comment: "農薬明細使用回数", force: :cascade do |t|
     t.integer "desticide_id", null: false, comment: "登録番号"
     t.integer "no", null: false, comment: "有効成分番号"
     t.string "total_uses", limit: 50, null: false, comment: "総使用回数"
@@ -282,22 +282,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_130105) do
   end
 
   create_table "desticide_details", comment: "農薬明細", force: :cascade do |t|
+    t.integer "desticide_id", null: false, comment: "登録番号"
     t.integer "crop_id", null: false, comment: "作物"
-    t.string "place_name", limit: 50, null: false
+    t.text "place_name", null: false, comment: "適用場所"
     t.integer "pest_id", null: false, comment: "病害虫"
-    t.string "purpose", limit: 50, null: false, comment: "使用目的"
-    t.string "use_amount", limit: 50, null: false, comment: "使用量"
-    t.string "spread_amount", limit: 50, null: false, comment: "散布液料"
-    t.string "usage_period", limit: 50, null: false, comment: "使用時期"
-    t.string "total_uses", limit: 50, null: false, comment: "使用回数"
-    t.integer "use_id", null: false, comment: "使用方法"
-    t.string "fumigation_time", limit: 50, null: false, comment: "くん蒸時間"
-    t.string "fumigation_temp", limit: 50, null: false, comment: "くん蒸温度"
-    t.string "applicable_soil", limit: 50, null: false, comment: "適用土壌"
-    t.string "applicable_zone", limit: 50, null: false, comment: "適用地帯名"
-    t.string "applicable_pest", limit: 50, null: false, comment: "適用農薬名"
+    t.text "purpose", null: false, comment: "使用目的"
+    t.text "use_amount", null: false, comment: "使用量"
+    t.text "spread_amount", null: false, comment: "散布液料"
+    t.text "usage_period", null: false, comment: "使用時期"
+    t.text "total_uses", null: false, comment: "使用回数"
+    t.text "use", null: false, comment: "使用方法"
+    t.text "fumigation_time", null: false, comment: "くん蒸時間"
+    t.text "fumigation_temp", null: false, comment: "くん蒸温度"
+    t.text "applicable_soil", null: false, comment: "適用土壌"
+    t.text "applicable_zone", null: false, comment: "適用地帯名"
+    t.text "applicable_pest", null: false, comment: "適用農薬名"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["desticide_id", "crop_id", "pest_id"], name: "desticide_details_2nd_key", unique: true
   end
 
   create_table "desticide_forms", comment: "剤型", force: :cascade do |t|
@@ -324,19 +326,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_130105) do
   end
 
   create_table "desticide_pest_weeds", comment: "適用病害虫雑草", force: :cascade do |t|
-    t.string "name", limit: 50, null: false, comment: "適用病害虫雑草名"
+    t.string "name", limit: 100, null: false, comment: "適用病害虫雑草名"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "desticide_purposes", comment: "農薬用途", force: :cascade do |t|
     t.string "name", limit: 20, null: false, comment: "名称"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "desticide_uses", comment: "使用方法", force: :cascade do |t|
-    t.string "name", limit: 50, null: false, comment: "使用方法"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

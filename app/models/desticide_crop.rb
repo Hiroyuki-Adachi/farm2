@@ -9,6 +9,7 @@
 #
 class DesticideCrop < ApplicationRecord
   def self.find_or_create(name)
+    name = name[0, name.index('(') - 1] if name.index('(')
     crop = DesticideCrop.find_by(name: name)
     crop = DesticideCrop.create(name: name) if crop.nil?
     return crop.id

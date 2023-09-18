@@ -16,11 +16,12 @@ require 'csv'
 #
 class Desticide < ApplicationRecord
   has_many :ingredients, -> {order(:no)}, class_name: :DesticideIngredient, dependent: :destroy
+  COLUMN_COUNT = 11
 
   def self.import(file)
     Desticide.update_all valid_flag: false
     CSV.foreach(file.path, encoding: "cp932", headers: true) do |row|
-      next unless row.length == 11
+      next unless row.length == COLUMN_COUNT
       desticide = Desticide.find_by(id: row[0])
       desticide = Desticide.new if desticide.nil?
       desticide.set_row(row)

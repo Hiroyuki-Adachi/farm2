@@ -9,6 +9,7 @@
 #
 class DesticidePestWeed < ApplicationRecord
   def self.find_or_create(name)
+    name = name[0, name.index('(') - 1] if name.index('(')
     pest = DesticidePestWeed.find_by(name: name)
     pest = DesticidePestWeed.create(name: name) if pest.nil?
     return pest.id
