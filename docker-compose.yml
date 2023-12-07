@@ -38,7 +38,6 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    entrypoint: ["./entrypoint.sh"]
 
   worker:
     build:
@@ -51,6 +50,18 @@ services:
         target: /farm2
     depends_on:
       - db
+
+  sass:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: yarn build:css --watch
+    volumes:
+      - type: bind
+        source: .
+        target: /farm2
+    depends_on:
+      - web
 
 volumes:
    dbdata:
