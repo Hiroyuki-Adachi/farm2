@@ -13,24 +13,24 @@ module StatisticsHelper
   end
 
   def labels(total_all)
-    return total_all.map {|t| t[0]}.to_json
+    return total_all.map {|t| t[0]}
   end
 
   def tab1_data(total_all)
-    return total_all.map {|t| t[1].to_f}.to_json
+    return total_all.map {|t| t[1].to_f}
   end
 
   def tab2_datasets(total_all, categories, total_genre)
     results = []
     categories.each_with_index do |category, i|
       results << {
-        label: category.name.to_json,
+        label: category.name,
         data: total_all.map {|t| total_genre[[category.genre, t[0]]].to_f },
         backgroundColor: COLORS[i],
         fill: false
       }
     end
-    return results.to_json
+    return results
   end
 
   def tab3_datasets(total_all, total_age)
@@ -43,6 +43,6 @@ module StatisticsHelper
           fill: false
        }
     end
-    return results.to_json
+    return results
   end
 end
