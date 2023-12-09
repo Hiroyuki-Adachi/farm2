@@ -98,7 +98,7 @@ SQL
           HAVING COUNT(*) >= ?
       )
 SQL
-  scope :by_machines, ->(machines) {where([<<SQL, machines.ids])}
+  scope :by_machines, ->(machines) {where([<<SQL, machines.pluck(:id)])}
   EXISTS (
     SELECT * FROM work_results
       INNER JOIN machine_results ON work_results.id = machine_results.work_result_id 
