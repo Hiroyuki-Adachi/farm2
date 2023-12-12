@@ -41,6 +41,7 @@
       <%= link_to '薬剤使用量一覧', work_chemicals_path, {class: "dropdown-item ms-2", data: {controller: "work_chemicals", wait: true}} %>
       <%= link_to '苗使用量一覧', work_seedlings_path, {class: "dropdown-item ms-2", data: {controller: "work_seedlings"}} %>
       <%= link_to '作業日数一覧', statistics_work_days_path, {class: "dropdown-item ms-2", data: {controller: "work_days"}} %>
+      <%= link_to 'Z-GIS出力', zgis_path, {class: "dropdown-item ms-2", data: {controller: "zgis"}} %>
       <%= link_to 'カレンダー', calendars_path, {class: "dropdown-item ms-2", data: {controller: "calendars"}} %>
     <% end %>
   </div>

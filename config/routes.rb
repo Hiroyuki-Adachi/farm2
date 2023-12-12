@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :zgis, only: [:index, :create]
   resources :work_seedlings, only: [:index]
   resources :owned_rices, only: [:index, :edit, :update]
   resources :owned_rice_prices, only: [:index, :create, :edit, :update, :destroy]
