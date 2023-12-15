@@ -1,6 +1,6 @@
 class ZgisController < ApplicationController
   include PermitManager
-  def index
+  def new
   end
 
   def create
