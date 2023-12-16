@@ -5,6 +5,7 @@ require 'rubyXL/convenience_methods/worksheet'
 
 class ZgisExcelService
   include Workbook
+  TITLE_ROW = 1
   START_ROW = 2
 
   def self.call(land_costs)
@@ -15,6 +16,7 @@ class ZgisExcelService
     workbook = RubyXL::Parser.parse('app/views/zgis/excels/zgis.xlsx')
     setup_workbook(workbook)
 
+    fill_titles(workbook[0])
     fill_lands(workbook[0], land_costs)
 
     return workbook.stream.read
@@ -22,11 +24,14 @@ class ZgisExcelService
 
   private
 
+  def fill_titles(sheet)
+    sheet.add_cell(TITLE_ROW, 4).change_contents("作付")
+  end
+
   def fill_lands(sheet, land_costs)
     land_costs.each_with_index do |land_cost, index|
       row = START_ROW + index
-      cell = sheet.add_cell(row, 0)
-      cell.change_contents(zgis_polygon(land_cost.land))
+      sheet.add_cell(row, 0).change_contents(zgis_polygon(land_cost.land))
       sheet.add_cell(row, 1, land_cost.land_id)
       sheet.add_cell(row, 2, land_cost.land.place)
       sheet.add_cell(row, 3, land_cost.land.area.to_f)
