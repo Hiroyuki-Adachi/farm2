@@ -1,0 +1,11 @@
+<h1>Z-GISデータ出力</h1>
+<%= form_with model: @zgis, url: {action: :create, format: :xlsx} do |f| %>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= f.submit '出力', class: "btn btn-success" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', menu_index_path, {class: "btn btn-outline-dark"} %>
+    </div>
+  </div>
+<% end %>

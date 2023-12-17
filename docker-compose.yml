@@ -23,6 +23,8 @@ services:
       context: .
       dockerfile: ./Dockerfile
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    tty: true
+    stdin_open: true
     environment:
       - API_KEY=${GOOGLE_MAPS_API_KEY}
     volumes:
