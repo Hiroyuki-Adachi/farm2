@@ -11,11 +11,14 @@ module Farm2
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
-    config.time_zone = 'Tokyo'    
+    config.time_zone = 'Tokyo'
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.autoload_paths += Dir["#{config.root}/app/services/concerns"]
+    config.eager_load_paths += Dir["#{config.root}/lib/**/"]
 
     config.action_view.field_error_proc = proc { |html_tag, _instance| "<span class='field_with_errors'>#{html_tag}</span>".html_safe }
 
