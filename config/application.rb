@@ -12,13 +12,14 @@ module Farm2
     config.load_defaults 7.0
 
     config.time_zone = 'Tokyo'
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w(assets tasks))
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.autoload_paths += Dir["#{config.root}/app/services/concerns"]
     config.eager_load_paths += Dir["#{config.root}/lib/**/"]
 
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
     config.action_view.field_error_proc = proc { |html_tag, _instance| "<span class='field_with_errors'>#{html_tag}</span>".html_safe }
 
     config.i18n.default_locale = :ja
@@ -27,8 +28,6 @@ module Farm2
     config.active_record.default_timezone = :local
 
     config.action_controller.include_all_helpers = false
-
-    config.active_job.queue_adapter = :delayed_job
 
     config.update_logger = Logger.new('log/update_worker.log', 'monthly')
     config.update_logger.formatter = proc do |_severity, datetime, _progname, msg|

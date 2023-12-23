@@ -13,7 +13,7 @@
 #
 
 class WorkWorkType < ApplicationRecord
-  self.primary_keys = :work_id, :work_type_id
+  self.primary_key = [:work_id, :work_type_id]
 
   belongs_to :work
   belongs_to :work_type
