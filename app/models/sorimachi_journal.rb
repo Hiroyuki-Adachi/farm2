@@ -52,10 +52,17 @@ class SorimachiJournal < ApplicationRecord
   has_many :work_types, through: :sorimachi_work_types
   has_many :details, query_constraints: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term , :line]
 
-  belongs_to :account1, query_constraints: [:term, :code01], class_name: 'SorimachiAccount', primary_key: [:term, :code]
-  belongs_to :account2, query_constraints: [:term, :code12], class_name: 'SorimachiAccount', primary_key: [:term, :code]
-
   validate :term_check
+
+  # belongs_to :account1, foreign_key: [:term, :code01], class_name: 'SorimachiAccount', primary_key: [:term, :code]
+  def account1
+    SorimachiAccount.find_by(term: self.term, code: self.code01)
+  end
+
+  # belongs_to :account2, foreign_key: [:term, :code12], class_name: 'SorimachiAccount', primary_key: [:term, :code]
+  def account2
+    SorimachiAccount.find_by(term: self.term, code: self.code12)
+  end
 
   def self.import(term, file)
     CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: /^\/\//) do |row|
