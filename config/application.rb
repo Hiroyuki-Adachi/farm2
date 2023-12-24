@@ -13,6 +13,7 @@ module Farm2
 
     config.time_zone = 'Tokyo'
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.autoload_paths += Dir["#{config.root}/app/services/concerns"]
     config.eager_load_paths += Dir["#{config.root}/lib/**/"]
 
     # Settings in config/environments/* take precedence over those specified here.
