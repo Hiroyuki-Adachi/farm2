@@ -2,13 +2,13 @@
 
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <%= link_to "全作業時間", tab1_statistics_path, {class: "nav-link", data: {tab: 1}} %>
+    <%= link_to "全作業時間", "#", {class: "nav-link", data: {tab: 1, action: tab1_statistics_path}} %>
   </li>
   <li class="nav-item">
-    <%= link_to "作業種別別時間", tab2_statistics_path, {class: "nav-link", data: {tab: 2}} %>
+    <%= link_to "作業種別別時間", "#", {class: "nav-link", data: {tab: 2, action: tab2_statistics_path}} %>
   </li>
   <li class="nav-item">
-    <%= link_to "世代別時間", tab3_statistics_path, {class: "nav-link", data: {tab: 3}} %>
+    <%= link_to "世代別時間", "#", {class: "nav-link", data: {tab: 3, action: tab3_statistics_path}} %>
   </li>
 </ul>
 
