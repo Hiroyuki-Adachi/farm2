@@ -4,7 +4,7 @@ services:
     image: postgres:13
     volumes:
       - type: volume
-        source: dbdata
+        source: dbdata_production
         target: /var/lib/postgresql/data
         volume:
           nocopy: true
@@ -14,7 +14,7 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_DB: farm2_development
+      POSTGRES_DB: farm2_production
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
 
@@ -40,7 +40,7 @@ services:
       - type: tmpfs
         target: /farm2/node_modules
       - public-data:/farm2/public
-      - tmp-data:/farm/tmp
+      - tmp-data:/farm2/tmp
     depends_on:
       - db
 
@@ -56,6 +56,6 @@ services:
       - web
 
 volumes:
-  dbdata:
+  dbdata_production:
   public-data:
   tmp-data:
