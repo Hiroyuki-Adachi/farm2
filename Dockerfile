@@ -32,9 +32,9 @@ RUN apt-get update && apt-get install yarn
 RUN yarn add sass
 
 # Rubyのインストール
-RUN curl -O https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.2.tar.gz
-RUN tar -xzvf ruby-3.2.2.tar.gz
-WORKDIR /tmp/ruby-3.2.2
+RUN curl -O https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.0.tar.gz
+RUN tar -xzvf ruby-3.3.0.tar.gz
+WORKDIR /tmp/ruby-3.3.0
 RUN ./configure && make && make install
 
 # アプリケーションディレクトリを作成
@@ -50,5 +50,6 @@ COPY Gemfile.lock /farm2/Gemfile.lock
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # バンドルインストール
+RUN gem update --system
 RUN gem install bundler
 RUN bundle install
