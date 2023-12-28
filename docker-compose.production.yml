@@ -21,7 +21,9 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-production
+      args:
+        SECRET_KEY_BASE: ${SECRET_KEY_BASE}
     command: bundle exec puma -C config/puma.rb
     tty: true
     stdin_open: true
