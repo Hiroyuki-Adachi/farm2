@@ -37,7 +37,7 @@ class Work < ApplicationRecord
 
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
-  belongs_to :fix, class_name: "Fix", foreign_key: [:term, :fixed_at], primary_key: [:term, :fixed_at]
+  belongs_to :fix, class_name: "Fix", query_constraints: [:term, :fixed_at]
   belongs_to :creator, -> {with_deleted}, class_name: "Worker", foreign_key: "created_by"
   belongs_to :printer, -> {with_deleted}, class_name: "Worker", foreign_key: "printed_by"
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
@@ -98,7 +98,7 @@ SQL
           HAVING COUNT(*) >= ?
       )
 SQL
-  scope :by_machines, ->(machines) {where([<<SQL, machines.ids])}
+  scope :by_machines, ->(machines) {where([<<SQL, machines.pluck(:id)])}
   EXISTS (
     SELECT * FROM work_results
       INNER JOIN machine_results ON work_results.id = machine_results.work_result_id 

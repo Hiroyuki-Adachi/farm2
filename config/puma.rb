@@ -7,14 +7,15 @@
 threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
 threads threads_count, threads_count
 
-bind "unix:///tmp/puma_farm2.sock"
-pidfile "/tmp/puma_farm2.pid"
-state_path "/tmp/puma_farm2.state"
+app_root = File.expand_path("../..", __FILE__)
+bind "unix://#{app_root}/tmp/puma_farm2.sock"
+pidfile "#{app_root}/tmp/puma_farm2.pid"
+state_path "#{app_root}/tmp/puma_farm2.state"
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
 environment "production"
-
+stdout_redirect "#{app_root}/log/puma.stdout.log", "#{app_root}/log/puma.stderr.log", true
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
 # the concurrency of the application would be max `threads` * `workers`.

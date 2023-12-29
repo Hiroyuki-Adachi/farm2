@@ -20,7 +20,7 @@ class ChemicalWorkType < ActiveRecord::Base
   delegate :chemical, to: :chemical_term
   after_save :save_for_zero
 
-  scope :by_chemical_terms, ->(chemical_terms) {where(chemical_term_id: chemical_terms.ids).includes(:work_type, :chemical_term)}
+  scope :by_chemical_terms, ->(chemical_terms) {where(chemical_term_id: chemical_terms.pluck(:id)).includes(:work_type, :chemical_term)}
   scope :by_chemical_term,  ->(chemical_term) {where(chemical_term_id: chemical_term).includes(:work_type, :chemical_term)}
   scope :usable, ->(chemical_term) {where(chemical_term_id: chemical_term).where("quantity > 0")}
   scope :by_work, -> (work) {
