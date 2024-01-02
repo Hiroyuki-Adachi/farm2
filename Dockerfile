@@ -15,12 +15,14 @@ RUN apt-get update -qq && \
     apt-get install -y build-essential libpq-dev git curl tzdata \
     libsqlite3-dev sqlite3 zlib1g-dev libssl-dev libreadline-dev libyaml-dev \
     libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common \
-    libffi-dev
+    libffi-dev ca-certificates gnupg
 
 #最新版nodejsをインストール
+RUN mkdir -p /etc/apt/keyrings
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 WORKDIR /tmp
-RUN curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
-RUN bash nodesource_setup.sh
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+RUN apt-get update
 RUN apt-get install nodejs
 
 # 最新版yarnをインストール
