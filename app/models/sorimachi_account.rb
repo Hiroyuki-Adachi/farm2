@@ -18,6 +18,7 @@
 #
 class SorimachiAccount < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+  query_constraints :term, :code
   before_destroy :clear_journals
 
   belongs_to_active_hash :total_cost_type, optional: true
