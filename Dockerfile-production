@@ -1,6 +1,8 @@
 # ベースとなるイメージを指定
 FROM ubuntu:20.04
 
+ARG SECRET_KEY_BASE
+ENV SECRET_KEY_BASE=${SECRET_KEY_BASE}
 ENV DEBIAN_FRONTEND=noninteractive
 
 # タイムゾーンを設定（これをしないと、ビルド時にタイムゾーンの設定を求められる）
@@ -15,7 +17,7 @@ RUN apt-get update -qq && \
     apt-get install -y build-essential libpq-dev git curl tzdata \
     libsqlite3-dev sqlite3 zlib1g-dev libssl-dev libreadline-dev libyaml-dev \
     libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common \
-    libffi-dev ca-certificates gnupg
+    libffi-dev
 
 #最新版nodejsをインストール
 RUN mkdir -p /etc/apt/keyrings
@@ -41,16 +43,14 @@ RUN ./configure && make && make install
 
 # アプリケーションディレクトリを作成
 RUN mkdir /farm2
-
-# 作業ディレクトリを指定
 WORKDIR /farm2
 
 # ホストのGemfileとGemfile.lockをコピー
-COPY Gemfile /farm2/Gemfile
-COPY Gemfile.lock /farm2/Gemfile.lock
-
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # バンドルインストール
 RUN gem install bundler
+COPY Gemfile Gemfile.lock /farm2/
 RUN bundle install
+COPY . /farm2
+RUN RAILS_ENV=production bundle exec rake assets:precompile

@@ -86,4 +86,8 @@ production:
   <<: *default
   database: farm2_production
   username: postgres
+<<<<<<< HEAD
   host: localhost
+=======
+  host: <%= ENV["DB_HOST"] || 'localhost' %>
+>>>>>>> develop

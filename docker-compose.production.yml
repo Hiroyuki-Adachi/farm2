@@ -1,0 +1,60 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - type: volume
+        source: dbdata_production
+        target: /var/lib/postgresql/data
+        volume:
+          nocopy: true
+      - type: bind
+        source: ./tmp/farm2.sql
+        target: /docker-entrypoint-initdb.d/01_farm2.sql
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: farm2_production
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-production
+      args:
+        SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+    command: bundle exec puma -C config/puma.rb
+    tty: true
+    stdin_open: true
+    environment:
+      - API_KEY=${GOOGLE_MAPS_API_KEY}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - DB_HOST=${DB_HOST}
+    volumes:
+      - type: tmpfs
+        target: /farm2/tmp
+      - type: tmpfs
+        target: /farm2/log
+      - type: tmpfs
+        target: /farm2/node_modules
+      - public-data:/farm2/public
+      - tmp-data:/farm2/tmp
+    depends_on:
+      - db
+
+  nginx:
+    build:
+      context: containers/nginx
+    volumes:
+      - public-data:/farm2/public
+      - tmp-data:/farm2/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - web
+
+volumes:
+  dbdata_production:
+  public-data:
+  tmp-data:

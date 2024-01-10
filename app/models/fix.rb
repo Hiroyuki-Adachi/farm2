@@ -14,7 +14,7 @@
 #
 
 class Fix < ApplicationRecord
-  self.primary_keys = [:term, :fixed_at]
+  self.primary_key = [:term, :fixed_at]
   before_destroy :clear_fix
 
   belongs_to :fixer, -> {with_deleted}, class_name: "Worker", foreign_key: "fixed_by"
