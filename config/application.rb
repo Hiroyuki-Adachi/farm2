@@ -10,19 +10,6 @@ module Farm2
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
-<<<<<<< HEAD
-
-    config.time_zone = 'Tokyo'
-    config.autoload_paths += Dir["#{config.root}/lib/**/"]
-    config.autoload_paths += Dir["#{config.root}/app/services/concerns"]
-    config.eager_load_paths += Dir["#{config.root}/lib/**/"]
-
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
-    config.action_view.field_error_proc = proc { |html_tag, _instance| "<span class='field_with_errors'>#{html_tag}</span>".html_safe }
-
-=======
 
     config.time_zone = 'Tokyo'
     # Please, add to the `ignore` list any other `lib` subdirectories that do
@@ -35,7 +22,6 @@ module Farm2
 
     config.action_view.field_error_proc = proc { |html_tag, _instance| "<span class='field_with_errors'>#{html_tag}</span>".html_safe }
 
->>>>>>> develop
     config.i18n.default_locale = :ja
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
     config.active_record.belongs_to_required_by_default = false
@@ -43,11 +29,6 @@ module Farm2
 
     config.action_controller.include_all_helpers = false
 
-<<<<<<< HEAD
-    config.active_job.queue_adapter = :delayed_job
-
-=======
->>>>>>> develop
     config.update_logger = Logger.new('log/update_worker.log', 'monthly')
     config.update_logger.formatter = proc do |_severity, datetime, _progname, msg|
       "#{datetime}: #{msg}\n"
