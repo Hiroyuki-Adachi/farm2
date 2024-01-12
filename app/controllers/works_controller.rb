@@ -2,7 +2,6 @@ require 'date'
 
 class WorksController < ApplicationController
   include WorksHelper
-  protect_from_forgery except: :work_type_select
   before_action :set_work, only: [:edit, :show, :update, :destroy, :map]
   before_action :set_results, only: [:show]
   before_action :set_lands, only: [:show]
