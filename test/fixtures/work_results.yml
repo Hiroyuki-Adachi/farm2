@@ -13779,3 +13779,9 @@ work_result_cleaning:
   worker_id: 1
   hours: 6
   display_order: 1
+
+work_chemical_test_cleaning:
+  work: work_chemical_test
+  worker_id: 1
+  hours: 6
+  display_order: 1
