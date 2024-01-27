@@ -46,6 +46,11 @@ class WorksControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "作業照会(薬品)" do
+    get :show, params: {id: works(:work_chemical_test).id}
+    assert_response :success
+  end
+
   test "作業変更(表示)" do
     get :edit, params: {id: works(:work_not_fixed)}
     assert_response :success

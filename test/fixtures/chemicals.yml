@@ -232,3 +232,11 @@ chemical_genka:
   created_at: '2014-05-18 06:58:59.997245'
   updated_at: '2014-05-18 06:58:59.997245'
   deleted_at: 
+
+chemical_amistar:
+  name: "アミスターダミー"
+  phonetic: 'あみすたーだみー'
+  display_order: 0
+  chemical_type: chemical_type_amistar
+  created_at: '2014-05-18 06:58:59.997245'
+  updated_at: '2014-05-18 06:58:59.997245'

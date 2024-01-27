@@ -38,3 +38,9 @@ chemical_type_empty:
   display_order: '100'
   created_at: '2016-03-19 06:36:20.375905'
   updated_at: '2016-03-19 06:36:20.375905'
+
+chemical_type_amistar:
+  name: '殺菌剤'
+  display_order: 50
+  created_at: '2016-03-19 06:36:20.375905'
+  updated_at: '2016-03-19 06:36:20.375905'
