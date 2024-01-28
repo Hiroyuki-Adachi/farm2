@@ -7492,3 +7492,10 @@ work_lands:
   display_order: 1
   created_at: '2015-03-21 00:40:16.781636'
   updated_at: '2015-03-21 00:40:16.781636'
+
+work_chemical_test_land:
+  work: work_chemical_test
+  land_id: 7
+  display_order: 1
+  created_at: '2015-03-21 00:40:16.781636'
+  updated_at: '2015-03-21 00:40:16.781636'

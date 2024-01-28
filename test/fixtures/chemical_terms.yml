@@ -506,3 +506,8 @@ chemical_term_genka:
   chemical: chemical_genka
   term: 2017
   price: 600
+
+chemical_term_amistar:
+  chemical: chemical_amistar
+  term: 2016
+  price: 600
