@@ -143,13 +143,19 @@ function activeBar(element) {
 
 function loadingStart(message)
 {
-    document.getElementById("loading_message").innerText = message;
-    document.getElementById("loading").classList.remove("d-none");
+    if (document.getElementById("loading_message") != null) {
+        document.getElementById("loading_message").innerText = message;
+    }
+    if (document.getElementById("loading") != null) {
+        document.getElementById("loading").classList.remove("d-none");
+    }
 }
 
 function loadingEnd()
 {
-    document.getElementById("loading").classList.add("d-none");
+    if (document.getElementById("loading") != null) {
+        document.getElementById("loading").classList.add("d-none");
+    }
 }
 
 window.loadingStart = loadingStart;
