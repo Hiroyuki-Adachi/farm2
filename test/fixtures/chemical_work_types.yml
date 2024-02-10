@@ -35,3 +35,10 @@ chemical_work_type_genka3:
   quantity: 1
   created_at: '2014-05-06 06:07:42.918094'
   updated_at: '2014-05-06 06:07:42.918094'
+
+chemical_work_type_amistar:
+  chemical_term: chemical_term_amistar
+  work_type: work_type_broccoli
+  quantity: 1
+  created_at: '2014-05-06 06:07:42.918094'
+  updated_at: '2014-05-06 06:07:42.918094'
