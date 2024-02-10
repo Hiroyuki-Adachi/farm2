@@ -30,7 +30,7 @@ services:
     environment:
       - API_KEY=${GOOGLE_MAPS_API_KEY}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - DB_HOST=${DB_HOST}
+      - DB_HOST=db
     volumes:
       - type: tmpfs
         target: /farm2/tmp
