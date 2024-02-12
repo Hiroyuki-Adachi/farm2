@@ -1,16 +1,3 @@
-GIT
-  remote: https://github.com/gazayas/active_hash.git
-  revision: 7a07bcc07abca9aca48b47186c23f85cf6ec7ced
-  specs:
-    active_hash (3.2.0)
-      activesupport (>= 5.0.0)
-
-GIT
-  remote: https://github.com/holiday-jp/holiday_jp-ruby.git
-  revision: ef8f0370b1119dca348f8dc19ec0a7154f500d26
-  specs:
-    holiday_jp (0.8.1)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -63,6 +50,8 @@ GEM
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
+    active_hash (3.2.1)
+      activesupport (>= 5.0.0)
     activejob (7.1.3)
       activesupport (= 7.1.3)
       globalid (>= 0.3.6)
@@ -128,9 +117,9 @@ GEM
       ruby2_keywords
     erubi (1.12.0)
     ffi (1.16.3)
-    ffi (1.16.3-x64-mingw-ucrt)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    holiday_jp (0.8.1)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     i18n-js (3.9.2)
@@ -199,7 +188,6 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.4)
-    pg (1.5.4-x64-mingw-ucrt)
     propshaft (0.8.0)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
@@ -319,7 +307,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  active_hash!
+  active_hash
   activemodel-serializers-xml
   annotate
   bcrypt (~> 3.1.7)
@@ -329,7 +317,7 @@ DEPENDENCIES
   debug
   delayed_job_active_record
   draper
-  holiday_jp!
+  holiday_jp
   i18n-js (~> 3)
   icalendar
   importmap-rails
