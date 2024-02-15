@@ -55,3 +55,5 @@ RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN gem update --system
 RUN gem install bundler
 RUN bundle install
+RUN bundle exec rails db:migrate RAILS_ENV=development
+RUN bundle exec rails db:migrate RAILS_ENV=test
