@@ -54,3 +54,4 @@ COPY Gemfile Gemfile.lock /farm2/
 RUN bundle install
 COPY . /farm2
 RUN RAILS_ENV=production bundle exec rake assets:precompile
+RUN RAILS_ENV=production bundle exec rails db:migrate
