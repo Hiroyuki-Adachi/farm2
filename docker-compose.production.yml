@@ -43,6 +43,16 @@ services:
     depends_on:
       - db
 
+  https-portal:
+    image: steveltn/https-portal:1
+    environment:
+      STAGE: local
+      DOMAINS: 'localhost -> http://host.docker.internal'
+    ports:
+      - '443:443'
+    depends_on:
+      - web
+
   nginx:
     build:
       context: containers/nginx
