@@ -28,7 +28,7 @@ gem 'daemons'
 # Use bootstrap4
 # gem 'bootstrap', '>= 4.0'
 # Japan Holiday
-gem 'holiday_jp', :git => 'https://github.com/holiday-jp/holiday_jp-ruby.git'
+gem 'holiday_jp'
 
 # In the Loofah gem for Ruby through v2.3.0 unsanitized JavaScript may occur in sanitized output when a crafted SVG element is republished.
 gem "loofah", ">= 2.3.1"
@@ -50,7 +50,7 @@ gem 'i18n-js', '~> 3'
 # This gem provides XML serialization for your Active Model objects and Active Record models.
 gem 'activemodel-serializers-xml'
 # ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource for an ActiveRecord-like model.
-gem 'active_hash', :git => 'https://github.com/gazayas/active_hash.git'
+gem 'active_hash'
 # TZInfo::Data is the public domain IANA Time Zone Database packaged as a set of Ruby modules for use with TZInfo.
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 # Paranoia is a re-implementation of acts_as_paranoid for Rails 3/4/5.
