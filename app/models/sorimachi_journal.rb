@@ -139,6 +139,7 @@ class SorimachiJournal < ApplicationRecord
     self.code06, self.code17 = self.code17, self.code06
     self.code07, self.code18 = self.code18, self.code07
     self.cost0_flag, self.cost1_flag = self.cost1_flag, self.cost0_flag
+    self.tax01, self.tax11 = self.tax11, self.tax01
   end
 
   def import_value(value)
@@ -196,8 +197,8 @@ class SorimachiJournal < ApplicationRecord
 private
   def self.updatable_attributes
     ['line', 'detail', 'accounted_on',
-      'code01', 'code02', 'code03', 'code04', 'code05', 'code06', 'code07', 'amount1', 
-      'code11', 'code12', 'code13', 'code14', 'code15', 'code16', 'code17', 'code18', 'amount2', 
+      'code01', 'code02', 'code03', 'code04', 'tax01', 'code05', 'code06', 'code07', 'amount1', 
+      'code11', 'code12', 'code13', 'code14', 'code15', 'tax11', 'code16', 'code17', 'code18', 'amount2', 
       'code21', 'remark1', 'remark2', 'remark3', 'code31', 'amount3', 'remark4'
     ]
   end
