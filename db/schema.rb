@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_08_032209) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_12_074400) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -742,6 +742,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_08_032209) do
     t.boolean "cost1_flag", default: false, null: false, comment: "原価フラグ(貸方)"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "tax01", comment: "消費税0-1"
+    t.integer "tax11", comment: "消費税1-1"
     t.index ["term", "line", "detail"], name: "sorimachi_journals_2nd", unique: true
   end
 
