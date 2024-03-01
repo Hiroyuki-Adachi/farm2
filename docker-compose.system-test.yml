@@ -15,7 +15,17 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
 
-  app_test:
+  chrome:
+    image: browserless/chrome:latest
+    ports:
+      - "3333:3333"
+    volumes:
+      - .:/app:cached
+    environment:
+      PORT: 3333
+      CONNECTION_TIMEOUT: 600000
+
+  web:
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -24,15 +34,11 @@ services:
       - type: bind
         source: .
         target: /farm2
+    environment:
+      CHROME_URL: http://chrome:3333
     depends_on:
       - db
-
-  chrome:
-    image: browserless/chrome
-    ports:
-      - "3333:3333"
-    environment:
-      PORT: 3333
+      - chrome
 
 volumes:
    dbdata_test:
