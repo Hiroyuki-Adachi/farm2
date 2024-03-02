@@ -120,5 +120,7 @@ end
 group :test do
   # This gem is only useful once assigns and assert_template have been removed from Rails.
   gem 'rails-controller-testing'
-end
 
+  gem 'capybara'
+  gem 'cuprite'
+end
