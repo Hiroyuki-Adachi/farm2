@@ -1,5 +1,6 @@
 require "test_helper"
 require "capybara/cuprite"
+require "capybara/rails"
 
 REMOTE_CHROME_URL = ENV["CHROME_URL"]
 REMOTE_CHROME_HOST, REMOTE_CHROME_PORT =
