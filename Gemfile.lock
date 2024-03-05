@@ -138,8 +138,9 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     holiday_jp (0.8.1)
-    i18n (1.14.1)
+    i18n (1.14.3)
       concurrent-ruby (~> 1.0)
+      racc (~> 1.7)
     i18n-js (3.9.2)
       i18n (>= 0.6.6)
     icalendar (2.10.1)
@@ -181,7 +182,7 @@ GEM
       net-imap
       net-pop
       net-smtp
-    marcel (1.0.3)
+    marcel (1.0.4)
     matrix (0.4.2)
     mini_mime (1.1.5)
     minitest (5.22.2)
@@ -206,8 +207,7 @@ GEM
     parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
-    pg (1.5.5)
-    pg (1.5.5-x64-mingw-ucrt)
+    pg (1.5.6)
     propshaft (0.8.0)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
