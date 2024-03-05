@@ -15,7 +15,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
 
-  app_test:
+  web:
     build:
       context: .
       dockerfile: ./Dockerfile
