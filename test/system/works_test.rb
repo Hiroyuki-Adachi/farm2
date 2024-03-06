@@ -34,5 +34,8 @@ class WorksTest < ApplicationSystemTestCase
 
     click_button '登録'
     assert_selector 'table#detail_workers', text: '後藤 晴美'
+
+    find('#cover_lands').click
+    assert_selector 'h1', exact_text: '作業日報(作業田)登録'
   end
 end
