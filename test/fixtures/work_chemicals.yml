@@ -42,3 +42,14 @@ work_chemical_stock:
   created_at: '2015-07-15 14:03:52'
   updated_at: '2015-07-15 14:03:52'
   chemical_group_no: 1
+
+work_chemical_test:
+  work: work_chemical_test
+  chemical: chemical_amistar
+  quantity: 300
+  created_at: '2015-07-15 14:03:52'
+  updated_at: '2015-07-15 14:03:52'
+  chemical_group_no: 1
+  area_flag: false
+  magnification: 2000
+  dilution_id: 2
