@@ -36,6 +36,11 @@ module SessionsHelper
   def last_term?
     !System.where("term > ? AND organization_id = ?", current_user.term, current_user.organization_id).exists?
   end
+  
+  def this_term?
+    system System.find_by(term: current_term, organization_id: current_user.organization_id)
+    return system.present? && system.start_date <= Date.today && system.end_date >= Date.today
+  end
 
   def now_system
     organization_id = current_user.organization_id
