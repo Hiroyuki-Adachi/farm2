@@ -25,7 +25,6 @@
 #
 # Indexes
 #
-#  index_systems_on_term                      (term) UNIQUE
 #  index_systems_on_term_and_organization_id  (term,organization_id) UNIQUE
 #
 
@@ -48,6 +47,28 @@ class System < ApplicationRecord
 
   def self.max_date(organization_id)
     System.where(organization_id: organization_id).maximum(:end_date)
+  end
+
+  def self.init(organization_id, term, target_from, target_to)
+    if term
+      system = System.find_by(term: term, organization_id: organization_id)
+      pre_system = System.find_by(term: term.to_i - 1, organization_id: organization_id)
+      if pre_system && system.nil?
+        system = System.new(pre_system.attributes.except("id", "created_at", "updated_at"))
+        system.term = term
+        system.target_from = pre_system.start_date + 1.year
+        system.target_to   = pre_system.end_date + 1.year
+        system.start_date  = pre_system.start_date + 1.year
+        system.end_date    = pre_system.end_date + 1.year
+      end
+    else
+      system = System.find_by(term: term)
+      if system
+        system.target_from = Date.strptime(target_from, "%Y-%m")
+        system.target_to   = Date.strptime(target_to, "%Y-%m")
+      end
+    end
+    return system
   end
 
   private
