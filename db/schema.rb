@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_12_074400) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_18_133501) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -777,7 +777,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_12_074400) do
     t.decimal "relative_price", precision: 5, default: "0", null: false, comment: "縁故米加算額"
     t.decimal "waste_price", precision: 4, default: "0", null: false, comment: "くず米金額"
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
-    t.index ["term"], name: "index_systems_on_term", unique: true
   end
 
   create_table "total_cost_details", comment: "集計原価(明細)", force: :cascade do |t|
