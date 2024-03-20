@@ -4,13 +4,19 @@ class Plans::LandsControllerTest < ActionController::TestCase
   setup do
     setup_ip
     session[:user_id] = users(:user_manager).id
+    travel_to(Date.new(2015, 1, 1))
   end
 
   test "作付計画(表示)" do
-    travel_to(Date.new(2015, 1, 1))
     get :new
     assert_response :success
     travel_back
+  end
+
+  test "作付計画(表示)(日付不正)" do
+    travel_to(Date.new(2014, 1, 1))
+    get :new
+    assert_response :error
   end
 
   test "作付計画(表示)(管理者以外)" do

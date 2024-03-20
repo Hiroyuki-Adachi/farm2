@@ -1,6 +1,7 @@
 class Plans::LandsController < ApplicationController
   include PermitManager
   before_action :set_current_date, only: [:new]
+  before_action :permit_this_term
 
   helper GmapHelper
 
@@ -32,5 +33,9 @@ class Plans::LandsController < ApplicationController
 
   def set_current_date
     @current_date = current_term == current_organization.get_system(Date.today)&.term ? Date.today : current_system.start_date
+  end
+
+  def permit_this_term
+    to_error_path unless this_term?
   end
 end
