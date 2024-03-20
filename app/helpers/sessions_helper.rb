@@ -38,7 +38,7 @@ module SessionsHelper
   end
   
   def this_term?
-    system System.find_by(term: current_term, organization_id: current_user.organization_id)
+    system = System.find_by(term: current_term, organization_id: current_user.organization_id)
     return system.present? && system.start_date <= Date.today && system.end_date >= Date.today
   end
 
