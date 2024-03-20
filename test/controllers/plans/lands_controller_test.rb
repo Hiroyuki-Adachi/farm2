@@ -14,7 +14,7 @@ class Plans::LandsControllerTest < ActionController::TestCase
   end
 
   test "作付計画(表示)(日付不正)" do
-    travel_to(Date.new(2014, 1, 1))
+    travel_to(Date.new(2016, 1, 1))
     get :new
     assert_response :error
   end
