@@ -975,13 +975,6 @@ Style/PercentLiteralDelimiters:
     - 'config/application.rb'
     - 'config/initializers/assets.rb'
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-Style/Proc:
-  Exclude:
-    - 'app/models/bank.rb'
-    - 'app/models/bank_branch.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Style/RedundantConstantBase:

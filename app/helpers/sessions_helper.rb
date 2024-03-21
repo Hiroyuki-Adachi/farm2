@@ -21,6 +21,10 @@ module SessionsHelper
     @current_system ||= System.find_by(term: current_user.term, organization_id: current_user.organization_id)
   end
 
+  def next_system
+    System.find_by(term: next_term, organization_id: current_user.organization_id)
+  end
+
   def current_term
     current_user.term
   end
@@ -29,8 +33,16 @@ module SessionsHelper
     current_system.start_date.strftime('%Jy年')
   end 
 
+  def next_term_jp
+    next_system.start_date.strftime('%Jy年')
+  end 
+
   def previous_term
     current_term - 1
+  end
+
+  def next_term
+    current_term + 1
   end
 
   def last_term?
@@ -38,8 +50,7 @@ module SessionsHelper
   end
   
   def this_term?
-    system = System.find_by(term: current_term, organization_id: current_user.organization_id)
-    return system.present? && system.start_date <= Date.today && system.end_date >= Date.today
+    current_system.start_date <= Date.today && current_system.end_date >= Date.today
   end
 
   def now_system

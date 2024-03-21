@@ -49,7 +49,7 @@ class System < ApplicationRecord
     System.where(organization_id: organization_id).maximum(:end_date)
   end
 
-  def self.init(organization_id, term, target_from, target_to)
+  def self.init(organization_id, term, target_from = nil, target_to = nil)
     if term
       system = System.find_by(term: term, organization_id: organization_id)
       pre_system = System.find_by(term: term.to_i - 1, organization_id: organization_id)
