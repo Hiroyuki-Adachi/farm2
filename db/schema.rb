@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_18_133501) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_20_124655) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,27 +45,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_18_133501) do
     t.boolean "container_flag", default: false, null: false, comment: "フレコンフラグ"
     t.date "waste_date", comment: "くず米出荷日"
     t.index ["drying_id"], name: "adjustments_secondary", unique: true
-  end
-
-  create_table "bank_branches", primary_key: ["bank_code", "code"], comment: "支店マスタ", force: :cascade do |t|
-    t.string "bank_code", limit: 4, null: false, comment: "金融機関コード"
-    t.string "code", limit: 3, null: false, comment: "支店コード"
-    t.string "name", limit: 40, null: false, comment: "支店名称"
-    t.string "phonetic", limit: 40, null: false, comment: "支店名称(ﾌﾘｶﾞﾅ)"
-    t.string "zip_code", limit: 7, comment: "郵便番号"
-    t.string "address1", limit: 50, comment: "住所1"
-    t.string "address2", limit: 50, comment: "住所2"
-    t.string "telephone", limit: 15, comment: "電話番号"
-    t.string "fax", limit: 15, comment: "FAX番号"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-  end
-
-  create_table "banks", primary_key: "code", id: { type: :string, limit: 4, comment: "金融機関コード" }, comment: "金融機関マスタ", force: :cascade do |t|
-    t.string "name", limit: 40, null: false, comment: "金融機関名称"
-    t.string "phonetic", limit: 40, null: false, comment: "金融機関名称(ﾌﾘｶﾞﾅ)"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "broccoli_boxes", id: { type: :serial, comment: "ブロッコリ箱マスタ" }, comment: "ブロッコリ箱マスタ", force: :cascade do |t|
