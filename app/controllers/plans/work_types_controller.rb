@@ -1,20 +1,33 @@
 class Plans::WorkTypesController < ApplicationController
   include PermitManager
+  before_action :permit_this_term
+  before_action :save_system, only: [:new]
 
   def new
-    @work_types = WorkType.land.includes(:plan)
-    @plan_lands = PlanLand.group(:work_type_id).joins(:land).sum("lands.area")
+    @work_types = WorkType.land
   end
 
   def create
-    PlanWorkType.create_all(param_work_types)
-    redirect_to new_plans_seedling_path
+    WorkType.transaction do
+      params[:work_types].each do |key, value|
+        work_type = WorkType.find(key)
+        work_type.term = next_term
+        work_type.term_flag = value[:term_flag]
+        work_type.bg_color = value[:bg_color]
+        work_type.save!
+      end
+    end
+    redirect_to new_plans_work_type_path
   end
 
   private
 
   def menu_name
-    return :plan_seedlings
+    return :plan_work_types
+  end
+
+  def save_system
+    System.init(current_organization.id, current_term + 1).save!
   end
 
   def param_work_types

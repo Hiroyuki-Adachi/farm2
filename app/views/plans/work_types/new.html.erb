@@ -1,78 +1,25 @@
-<h1>育苗計画(品種別)</h1>
+<h1>作付予定(<%= next_term_jp %>)</h1>
 <%= form_with url: plans_work_types_path, method: :post do |f| %>
   <div class="row">
     <table class="table table-sm">
-      <tr>
-        <th>品種</th>
-        <% @work_types.each do |work_type| %>
-          <th style="background-color: <%= work_type.bg_color %>"><%= work_type.name %></th>
-        <% end %>
-      </tr>
-      <tr>
-        <th class="text-nowrap">田植月</th>
-        <% @work_types.each do |work_type| %>
-          <td><%= select_tag("work_types[#{work_type.id}][month]", options_for_select([['対象外', 0], ['4月', 4], ['5月', 5]], work_type.plan&.month || 0), {class: "form-select work-type-months", onchange: "changeMonth(this)", data: {id: work_type.id}}) %></td>
-        <% end %>
-      </tr>
-      <tr>
-        <th class="text-nowrap">作付面積</th>
-        <% @work_types.each do |work_type| %>
-          <td class="text-right work-type-areas" data-id="<%= work_type.id %>"><%= number_with_precision(@plan_lands[work_type.id] || 0, precision: 1) %></td>
-        <% end %>
-      </tr>
-      <tr>
-        <th class="text-nowrap"><input type="button" class="btn btn-primary" value="設定" onclick="setAreas();"></th>
-        <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][area]", work_type.plan&.area || 0, {class: "form-control form-control-sm", step: 0.1, min: 0, max: 9999.9, onchange: "calcQuantity(#{work_type.id})"} %></td>
-        <% end %>
-      </tr>
-      <tr>
-        <th class="text-nowrap">枚数(10a当)</th>
-        <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][unit]", work_type.plan&.unit.to_i || 0, {class: "form-control form-control-sm", required: true, step: 1, min: 0, max: 99, onchange: "calcQuantity(#{work_type.id})"} %></td>
-        <% end %>
-      </tr>
-      <tr>
-        <th class="text-nowrap">苗箱枚数</th>
-        <% @work_types.each do |work_type| %>
-          <td class="text-right work-type-quantities" id="quantity_<%= work_type.id %>" data-id="<%= work_type.id %>">0.0</td>
-        <% end %>
-      </tr>
-      <tr>
-        <th class="text-nowrap"><input type="button" class="btn btn-primary" value="設定" onclick="setQuantities();"></th>
-        <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][quantity]", work_type.plan&.quantity || 0, {class: "form-control form-control-sm", required: true,min: 0, max: 99999} %></td>
-        <% end %>
-      </tr>
-      <tr>
-        <th class="text-nowrap">株間(cm)</th>
-        <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][between_stocks]", work_type.plan&.between_stocks || 0, {class: "form-control form-control-sm", required: true,min: 0, max: 99} %></td>
-        <% end %>
-      </tr>
-      <tr>
-        <th class="text-nowrap">育苗土(kg/枚)</th>
-        <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][soils]", work_type.plan&.soils || 0, {class: "form-control form-control-sm", required: true,step: 0.01, min: 0, max: 9.99} %></td>
-        <% end %>
-      </tr>
-      <tr>
-        <th class="text-nowrap">種子(g/枚)</th>
-        <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][seeds]", work_type.plan&.seeds || 0, {class: "form-control form-control-sm", required: true, step: 1, min: 0, max: 999} %></td>
-        <% end %>
-      </tr>
-      <tr>
-        <th class="text-nowrap" rowspan="2">種子(kg/袋)</th>
-        <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][bag_weight1]", work_type.plan&.bag_weight1 || 0, {class: "form-control form-control-sm", required: true,step: 0.1, min: 0, max: 99.9} %></td>
-        <% end %>
-      </tr>
-      <tr>
-        <% @work_types.each do |work_type| %>
-          <td><%= number_field_tag "work_types[#{work_type.id}][bag_weight2]", work_type.plan&.bag_weight2 || 0, {class: "form-control form-control-sm", required: true, step: 0.1, min: 0, max: 99.9} %></td>
-        <% end %>
-      </tr>
+      <thead>
+        <tr>
+          <th>品種</th>
+          <th>作付有無</th>
+          <th>配色</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @work_types.each do |work_type| %>
+        <tr style="<%= work_type.exists_term?(next_term) ? "background-color: #{work_type.bg_color_term(next_term)}; color: #{work_type.fg_color_term(next_term)};" : "" %>">
+          <td><%= work_type.name %></td>
+          <td><%= check_box_tag "work_types[#{work_type.id}][term_flag]", true, work_type.exists_term?(next_term) %></td>
+          <td>
+            <%= color_field_tag "work_types[#{work_type.id}][bg_color]", work_type.bg_color_term(next_term) %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
     </table>
   </div>
   <div id="btn_toolbar" class="btn-toolbar">
@@ -80,68 +27,7 @@
       <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
     </div>
     <div class="btn-group mr-2">
-      <%= link_to '戻る', new_plans_land_path, class: "btn btn-outline-dark" %>
+      <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
     </div>
   </div>
-<% end %>
-<% content_for :head do %>
-<script data-turbo-track="reload">
-window.addEventListener('turbo:load', () => {
-    Array.from(document.getElementsByClassName("work-type-months")).forEach(function(sel) {
-        changeMonth(sel);
-    });
-});
-
-function setAreas()
-{
-  Array.from(document.getElementsByClassName("work-type-areas")).forEach(function(td) {
-    const work_type_id = td.dataset.id;
-    document.getElementById(`work_types_${work_type_id}_area`).value = td.innerText;
-    calcQuantity(work_type_id);
-  });
-}
-
-function setQuantities()
-{
-  Array.from(document.getElementsByClassName("work-type-quantities")).forEach(function(td) {
-    const work_type_id = td.dataset.id;
-    document.getElementById(`work_types_${work_type_id}_quantity`).value = td.innerText;
-  });
-}
-
-function changeMonth(month) {
-  const work_type_id = month.dataset.id;
-  if(month.value == 0) {
-    document.getElementById(`work_types_${work_type_id}_unit`).value = 0;
-    document.getElementById(`work_types_${work_type_id}_unit`).disabled = true;
-    document.getElementById(`work_types_${work_type_id}_quantity`).value = 0;
-    document.getElementById(`work_types_${work_type_id}_quantity`).disabled = true;
-    document.getElementById(`work_types_${work_type_id}_between_stocks`).value = 0;
-    document.getElementById(`work_types_${work_type_id}_between_stocks`).disabled = true;
-    document.getElementById(`work_types_${work_type_id}_soils`).value = 0;
-    document.getElementById(`work_types_${work_type_id}_soils`).disabled = true;
-    document.getElementById(`work_types_${work_type_id}_seeds`).value = 0;
-    document.getElementById(`work_types_${work_type_id}_seeds`).disabled = true;
-    document.getElementById(`work_types_${work_type_id}_bag_weight1`).value = 0;
-    document.getElementById(`work_types_${work_type_id}_bag_weight1`).disabled = true;
-    document.getElementById(`work_types_${work_type_id}_bag_weight2`).value = 0;
-    document.getElementById(`work_types_${work_type_id}_bag_weight2`).disabled = true;
-  } else {
-    document.getElementById(`work_types_${work_type_id}_unit`).disabled = false;
-    document.getElementById(`work_types_${work_type_id}_quantity`).disabled = false;
-    document.getElementById(`work_types_${work_type_id}_between_stocks`).disabled = false;
-    document.getElementById(`work_types_${work_type_id}_soils`).disabled = false;
-    document.getElementById(`work_types_${work_type_id}_seeds`).disabled = false;
-    document.getElementById(`work_types_${work_type_id}_bag_weight1`).disabled = false;
-    document.getElementById(`work_types_${work_type_id}_bag_weight2`).disabled = false;
-  }
-  calcQuantity(work_type_id);
-}
-
-function calcQuantity(work_type_id) {
-  const unit = new Decimal(document.getElementById(`work_types_${work_type_id}_unit`).value);
-  const area = new Decimal(document.getElementById(`work_types_${work_type_id}_area`).value);
-  document.getElementById(`quantity_${work_type_id}`).innerText = unit.times(area).div(10).ceil().toFixed(0);
-}
-</script>
 <% end %>
