@@ -34,7 +34,6 @@ class WorkTypeTest < ActiveSupport::TestCase
     end
 
     # 更新パターン
-    work_type = WorkType.find(work_types(:work_types17).id)
     work_type.term = 2015
     work_type.term_flag = true
 
@@ -43,12 +42,17 @@ class WorkTypeTest < ActiveSupport::TestCase
     end
 
     # 追加パターン
-    work_type = WorkType.find(work_types(:work_types17).id)
     work_type.term = 2016
     work_type.term_flag = true
 
     assert_difference 'WorkTypeTerm.count', 1 do
       work_type.save
     end
+  end
+
+  test "作業分類年度別マスタチェック" do
+    work_type = WorkType.find(work_types(:work_types17).id)
+    assert work_type.exists_term?(2015)
+    assert_not work_type.exists_term?(2016)
   end
 end
