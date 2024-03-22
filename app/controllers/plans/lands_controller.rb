@@ -20,7 +20,7 @@ class Plans::LandsController < PlansController
   end
 
   def destroy
-    PlanLand.clear_all(current_user.id, plan_term, Date.today)
+    PlanLand.clear_all(current_user.id, plan_term, current_date)
     redirect_to new_plans_land_path(mode: params[:mode]), status: :see_other
   end
 
