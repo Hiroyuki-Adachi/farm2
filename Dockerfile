@@ -33,11 +33,15 @@ RUN apt-get update && apt-get install yarn
 # sass をインストール
 RUN yarn add sass
 
+# Rustのインストール
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
 # Rubyのインストール
 RUN curl -O https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.0.tar.gz
 RUN tar -xzvf ruby-3.3.0.tar.gz
 WORKDIR /tmp/ruby-3.3.0
-RUN ./configure && make && make install
+RUN ./configure --enable-yjit && make && make install
 
 # アプリケーションディレクトリを作成
 RUN mkdir /farm2
@@ -50,6 +54,8 @@ COPY Gemfile /farm2/Gemfile
 COPY Gemfile.lock /farm2/Gemfile.lock
 
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+# YJIT有効化
+ENV RUBYOPT="--yjit"
 
 # バンドルインストール
 RUN gem update --system
