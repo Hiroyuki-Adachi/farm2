@@ -9,8 +9,9 @@ class Plans::LandsController < PlansController
   end
 
   def new
-    @lands = Land.for_plan(current_user.id, plan_term).expiry(current_date).includes(:owner)
-    @work_types = WorkType.land.by_term(plan_term)
+    @plan_term = plan_term
+    @lands = Land.for_plan(current_user.id, @plan_term).expiry(current_date).includes(:owner)
+    @work_types = WorkType.land.by_term(@plan_term)
   end
 
   def create

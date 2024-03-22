@@ -1,4 +1,16 @@
-<h1>作付計画(<%= params[:mode] == Plans::LandsController::TERM_MODES[:next] ? next_term_jp : current_term_jp %>度)</h1>
+<div class="row">
+  <div class="col-md-6 h1">
+    作付計画(<%= params[:mode] == Plans::LandsController::TERM_MODES[:next] ? next_term_jp : current_term_jp %>度)
+  </div>
+  <div class="col-md-6 btn-toolbar">
+    <div class="btn-group mb-2 ms-2 mt-2">
+      <%= link_to '今年度', new_plans_land_path(mode: Plans::LandsController::TERM_MODES[:current]), class: "btn btn-primary" %>
+    </div>
+    <div class="btn-group mb-2 ms-2 mt-2">
+      <%= link_to '来年度', new_plans_land_path(mode: Plans::LandsController::TERM_MODES[:next]), class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-12">
     <div id="map" class="ratio ratio-21x9"></div>
@@ -14,7 +26,7 @@
 </div>
 <% @work_types.each_with_index do |work_type, i| %>
   <div class="btn-group">
-    <%= tag(:input, {type: :button, value: work_type.name, class: "btn work-type", style: "background-color: #{work_type.bg_color}; color: #{work_type.fg_color}; width:100px;", data: {id: work_type.id}}) %>
+    <%= tag(:input, {type: :button, value: work_type.name, class: "btn work-type", style: "background-color: #{work_type.bg_color_term(@plan_term)}; color: #{work_type.fg_color_term(@plan_term)}; width:100px;", data: {id: work_type.id}}) %>
     <span id="land_area_<%= work_type.id %>" class="label text-right area-sum" style="width: 50px;">0.0</span>
   </div>
 <% end %>
