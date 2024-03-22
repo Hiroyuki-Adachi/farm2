@@ -73,9 +73,9 @@ class Land < ApplicationRecord
     owner.member_flag ? owner_holder.name : owner.name
   end
 
-  def self.for_plan(user_id)
+  def self.for_plan(user_id, term)
     self.regionable
-    .joins("LEFT OUTER JOIN plan_lands ON plan_lands.land_id = lands.id AND plan_lands.user_id = #{user_id}")
+    .joins("LEFT OUTER JOIN plan_lands ON plan_lands.land_id = lands.id AND plan_lands.user_id = #{user_id} AND plan_lands.term = #{term}")
     .select("lands.*, plan_lands.work_type_id")
   end
 
