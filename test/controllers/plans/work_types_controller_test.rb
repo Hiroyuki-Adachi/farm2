@@ -8,24 +8,24 @@ class Plans::WorkTypesControllerTest < ActionController::TestCase
     travel_to(Date.new(2015, 1, 1))
   end
 
-  test "育苗計画(品種)(表示)" do
+  test "作付予定(表示)" do
     get :new
     assert_response :success
   end
 
-  test "育苗計画(品種)(表示)(管理者以外)" do
+  test "作付予定(表示)(管理者以外)" do
     session[:user_id] = users(:user_checker).id
     get :new
     assert_response :error
   end
 
-  test "育苗計画(品種)(表示)(日付不正)" do
+  test "作付予定(表示)(日付不正)" do
     travel_to(Date.new(2016, 1, 1))
     get :new
     assert_response :error
   end
 
-  test "育苗計画(品種)(作成)" do
+  test "作付予定(作成)" do
     # 追加パターン
     assert_difference 'WorkTypeTerm.count', 1 do
       post :create, params: {work_types: {
