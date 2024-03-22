@@ -1,8 +1,4 @@
-class Plans::WorkTypesController < ApplicationController
-  include PermitManager
-  before_action :permit_this_term
-  before_action :save_system, only: [:new]
-
+class Plans::WorkTypesController < PlansController
   def new
     @work_types = WorkType.land
   end
@@ -24,9 +20,5 @@ class Plans::WorkTypesController < ApplicationController
 
   def menu_name
     return :plan_work_types
-  end
-
-  def save_system
-    System.init(current_organization.id, current_term + 1).save!
   end
 end
