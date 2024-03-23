@@ -4,7 +4,9 @@ class Plans::LandsController < PlansController
   TERM_MODES = { current: '0', next: '1' }.freeze
 
   def index
-    excel_data = ZgisExcelService.call(PlanLand.usual(current_user, plan_term))
+    work_types = WorkType.land.by_term(plan_term)
+    plan_lands = PlanLand.usual(current_user, plan_term)
+    excel_data = ZgisExcelService.call(plan_lands, work_types, plan_term)
 
     respond_to do |format|
       format.xlsx do
@@ -14,9 +16,8 @@ class Plans::LandsController < PlansController
   end
 
   def new
-    @plan_term = plan_term
-    @lands = Land.for_plan(current_user.id, @plan_term).expiry(current_date).includes(:owner)
-    @work_types = WorkType.land.by_term(@plan_term)
+    @lands = Land.for_plan(current_user.id, plan_term).expiry(current_date).includes(:owner)
+    @work_types = WorkType.land.by_term(plan_term)
   end
 
   def create
@@ -44,6 +45,6 @@ class Plans::LandsController < PlansController
   end
 
   def plan_term
-    params[:mode] == TERM_MODES[:next] ? next_term : current_term
+    @plan_term ||= (params[:mode] == TERM_MODES[:next] ? next_term : current_term)
   end
 end
