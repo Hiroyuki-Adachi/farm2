@@ -49,7 +49,7 @@
       <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: "window.print();" %>
     </div>
     <div class="btn-group mr-2">
-      <%= link_to 'CSV出力', plans_lands_path(format: :csv, mode: params[:mode]), class: "btn btn-primary" %>
+      <%= link_to 'Z-GIS出力', plans_lands_path(format: :xlsx, mode: params[:mode]), class: "btn btn-primary" %>
     </div>
     <div class="btn-group mr-2">
       <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
