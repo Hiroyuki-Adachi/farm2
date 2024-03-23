@@ -4,8 +4,13 @@ class Plans::LandsController < PlansController
   TERM_MODES = { current: '0', next: '1' }.freeze
 
   def index
-    @plan_lands = PlanLand.usual(current_user, plan_term)
-    respond_to { |format| format.csv { render :content_type => 'text/csv; charset=cp943' }}
+    excel_data = ZgisExcelService.call(PlanLand.usual(current_user, plan_term))
+
+    respond_to do |format|
+      format.xlsx do
+        send_data excel_data, filename: "zgis.xlsx".encode(Encoding::Windows_31J)
+      end
+    end
   end
 
   def new
