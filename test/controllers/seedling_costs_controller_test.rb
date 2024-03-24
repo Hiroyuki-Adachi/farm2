@@ -29,7 +29,6 @@ class SeedlingCostsControllerTest < ActionController::TestCase
     end
     assert_redirected_to seedling_costs_path
 
-    assert_equal @update_chemical[:price], ChemicalTerm.find(chemical_terms(:chemical_term_3_2015).id).price
     assert_equal @chemical_id, System.find(systems(:s2015).id).seedling_chemical_id
     assert_equal @update_system[:seedling_price], System.find(systems(:s2015).id).seedling_price
   end

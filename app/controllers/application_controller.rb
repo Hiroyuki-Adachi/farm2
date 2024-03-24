@@ -69,6 +69,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def permit_this_term
+    to_error_path unless this_term?
+  end
+
   def to_error_path
     render plain: 'Service Unavailable', status: 503
   end
