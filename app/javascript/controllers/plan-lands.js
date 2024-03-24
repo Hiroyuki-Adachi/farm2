@@ -51,6 +51,15 @@ const initMap = () => {
       dispSum();
     });
 
+    landRegions[land.dataset.id].addListener('rightclick', function () {
+      this.setOptions({
+        strokeColor: DEFAULT_COLOR,
+        fillColor: DEFAULT_COLOR,
+      });
+      document.getElementById(`land_${this.landId}`).value = "";
+      dispSum();
+    });
+
     landRegions[land.dataset.id].addListener("mouseover", function () {
       const land = document.getElementById(`land_${this.landId}`);
       document.getElementById("land_info").innerText = `${land.dataset.place}(${land.dataset.owner}):${land.dataset.area}a`;
