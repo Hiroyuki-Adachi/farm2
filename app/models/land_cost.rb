@@ -63,19 +63,6 @@ SQL
     return results
   end
 
-  def self.import_plans(base_date)
-    LandCost.newest(base_date).each do |cost|
-      plan = PlanLand.find_by(land_id: cost.land_id)
-      if plan && plan.work_type_id != cost.work_type_id
-        if cost.activated_on == base_date
-          cost.update(work_type_id: plan.work_type_id)
-        else
-          LandCost.create(land_id: plan.land_id, work_type_id: plan.work_type_id, activated_on: base_date)
-        end
-      end
-    end
-  end
-
   def self.for_straws(term, work_type_id)
     LandCost.newest(Date.new(term.to_i,4,1)).joins(:land).where([<<SQL, work_type_id, term]).group("land_costs.work_type_id").sum("lands.area")
       EXISTS (SELECT * FROM work_lands 

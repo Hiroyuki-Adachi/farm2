@@ -1,6 +1,7 @@
 class LandCostsController < ApplicationController
   include PermitManager
 
+  before_action :permit_this_term
   before_action :set_work_types, only: [:index]
   before_action :set_land_cost, only: [:index]
   before_action :set_land, only: [:edit, :update]

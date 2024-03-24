@@ -1,6 +1,0 @@
-<h1><%= @bank.name %>マスタ修正</h1>
-
-<%= error_print(@branch) %>
-<%= form_with(model: @branch, url: bank_branch_path(bank_code: @bank.code, code: @branch.code)) do |f| %>
-<%= render(:partial => 'form', :locals => {:f => f}) %>
-<% end %>

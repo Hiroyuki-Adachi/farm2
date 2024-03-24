@@ -21,11 +21,18 @@ class LandCostsControllerTest < ActionController::TestCase
     }
     @land_update = {land_costs_attributes: [{activated_on: Date.new(2015, 5, 5), work_type_id: work_types(:work_types1).id}]}
     @land_delete = {land_costs_attributes: [{id: @cost1.id, _destroy: 1}]}
+    travel_to(Date.new(2015, 1, 1))
   end
 
   test "土地原価(表示)" do
     get :index
     assert_response :success
+  end
+
+  test "土地原価(表示)(日付不正)" do
+    travel_to(Date.new(2016, 1, 1))
+    get :index
+    assert_response :error
   end
 
   test "土地原価(管理者以外)" do
