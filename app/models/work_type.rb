@@ -81,6 +81,10 @@ SQL
     return WorkType.to_fg_color(self.bg_color)
   end
 
+  def exists_term?(term)
+    return work_type_terms.exists?(term: term)
+  end
+
   def fg_color_term(term)
     return WorkType.to_fg_color(self.bg_color_term(term))
   end
@@ -98,7 +102,7 @@ SQL
   def save_work_type_term
     work_term = WorkTypeTerm.find_by(term: @term, work_type_id: self.id)
     if @term_flag
-      work_term = WorkTypeTerm.new(term: @term, work_type_id: self.id) unless work_term
+      work_term ||= WorkTypeTerm.new(term: @term, work_type_id: self.id)
       work_term.bg_color = self.bg_color
       work_term.save!
     else
