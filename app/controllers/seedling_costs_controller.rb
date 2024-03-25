@@ -3,9 +3,6 @@ class SeedlingCostsController < ApplicationController
   before_action :set_seedling, only: [:edit, :update]
 
   def index
-    chemical_term = ChemicalTerm.find_by(chemical_id: current_system.seedling_chemical_id, term: current_term)
-    @chemical_terms = ChemicalTerm.includes(:chemical).usual(current_term)
-    @chemical_price = chemical_term&.price
     @work_types = WorkType.land
     @seedlings = Seedling.usual(current_term, @work_types)
     @seedling_quantities = SeedlingHome.total(@seedlings)
@@ -13,10 +10,8 @@ class SeedlingCostsController < ApplicationController
   end
 
   def create
-    chemical_term = ChemicalTerm.find_by(chemical_id: system_params[:seedling_chemical_id], term: current_term)
     ActiveRecord::Base.transaction do
       current_system.update(system_params)
-      chemical_term.update(price: params[:chemical][:price])
       params[:seedlings].each do |seedling|
         if seedling[:id].present?
           Seedling.update(seedling[:id], seedling_params(seedling))

@@ -15,10 +15,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
 
-  app_test:
+  web:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-test
     command: bundle exec rake test
     volumes:
       - type: bind

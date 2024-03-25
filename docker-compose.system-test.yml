@@ -28,7 +28,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-test
     command: bundle exec rake test:system
     volumes:
       - type: bind
