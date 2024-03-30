@@ -229,17 +229,26 @@ SQL
   def regist_results(params)
     workers = []
     params.each do |param|
-      param = OpenStruct.new(param)
-      workers << param.worker_id.to_i
-      work_result = work_results.find_by(worker_id: param.worker_id)
+      worker_id = param[:worker_id].to_i
+      workers << worker_id
+      display_order = param[:display_order].to_i
+      hours = param[:hours].to_f
+      work_result = work_results.find_by(worker_id: worker_id)
       if work_result
-        Rails.application.config.update_logger.info "#{work_result.worker.name}:#{work_result.hours} -> #{param.hours}" if work_result.hours != param.hours.to_f 
-        work_result.update(display_order: param.display_order, hours: param.hours) if work_result.display_order != param.display_order.to_i or work_result.hours != param.hours.to_f 
+        # hoursが変更された場合にログを出力
+        Rails.application.config.update_logger.info "#{work_result.worker.name}:#{work_result.hours} -> #{hours}" if work_result.hours != hours
+        
+        # display_orderまたはhoursが異なる場合のみupdateを実行
+        work_result.update(display_order: display_order, hours: hours) if work_result.display_order != display_order || work_result.hours != hours
       else
-        WorkResult.create(work_id: id, worker_id: param.worker_id, display_order: param.display_order, hours: param.hours)
+        WorkResult.create(work_id: id, worker_id: worker_id, display_order: display_order, hours: hours)
       end
     end
-    work_results.where.not(worker_id: workers).each(&:destroy)
+    
+    # この作業に属さないworker_idを持つwork_resultsを削除
+    work_results.where.not(worker_id: workers).destroy_all
+    
+    # printed_atとprinted_byをリセット
     self.printed_at = nil
     self.printed_by = nil
     save!
@@ -248,16 +257,22 @@ SQL
   def regist_lands(params)
     lands = []
     params.each do |param|
-      param = OpenStruct.new(param)
-      lands << param.land_id
-      work_land = work_lands.find_by(land_id: param.land_id)
+      land_id = param[:land_id]
+      lands << land_id
+      display_order = param[:display_order].to_i
+  
+      work_land = work_lands.find_by(land_id: land_id)
       if work_land
-        work_land.update(display_order: param.display_order) if work_land.display_order != param.display_order.to_i 
+        work_land.update(display_order: display_order) if work_land.display_order != display_order
       else
-        WorkLand.create(work_id: id, land_id: param.land_id, display_order: param.display_order)
+        WorkLand.create(work_id: id, land_id: land_id, display_order: display_order)
       end
     end
-    work_lands.where.not(land_id: lands).each(&:destroy)
+  
+    # 提供されたland_idリストに含まれないwork_landsを削除
+    work_lands.where.not(land_id: lands).destroy_all
+  
+    # 必要に応じて追加の処理を呼び出し
     regist_work_work_types
   end
 

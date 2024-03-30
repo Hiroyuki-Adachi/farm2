@@ -952,13 +952,6 @@ Style/ObjectThen:
   Exclude:
     - 'test/application_system_test_case.rb'
 
-# Offense count: 5
-Style/OpenStructUse:
-  Exclude:
-    - 'app/models/machine_price_header.rb'
-    - 'app/models/schedule.rb'
-    - 'app/models/work.rb'
-
 # Offense count: 3
 # This cop supports safe autocorrection (--autocorrect).
 Style/OrAssignment:
