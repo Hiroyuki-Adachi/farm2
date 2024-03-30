@@ -37,9 +37,10 @@ class MachinePriceHeader < ApplicationRecord
   end
 
   def work_kinds
-    results = [OpenStruct.new(id: 0, name: "標準")]
+    work_kind_struct = Struct.new(:id, :name)
+    results = [work_kind_struct.new(0, "標準")]
     (machine? ? machine.machine_type.work_kinds : machine_type.work_kinds).each do |work_kind|
-      results << OpenStruct.new(id: work_kind.id, name: work_kind.name)
+      results << work_kind_struct.new(work_kind.id, work_kind.name)
     end
     return results
   end
