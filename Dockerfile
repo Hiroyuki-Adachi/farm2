@@ -8,7 +8,7 @@ ENV TZ=Asia/Tokyo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ENV LANG C.UTF-8
-ENV RUBY_VERSION 3.2.2
+ENV RUBY_VERSION 3.3.0
 
 # 必要なパッケージをインストール
 RUN apt-get update -qq && \
@@ -33,11 +33,15 @@ RUN apt-get update && apt-get install yarn
 # sass をインストール
 RUN yarn add sass
 
+# Rustのインストール
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
 # Rubyのインストール
-RUN curl -O https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.2.tar.gz
-RUN tar -xzvf ruby-3.2.2.tar.gz
-WORKDIR /tmp/ruby-3.2.2
-RUN ./configure && make && make install
+RUN curl -O https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.0.tar.gz
+RUN tar -xzvf ruby-3.3.0.tar.gz
+WORKDIR /tmp/ruby-3.3.0
+RUN ./configure --enable-yjit && make && make install
 
 # アプリケーションディレクトリを作成
 RUN mkdir /farm2
@@ -50,7 +54,16 @@ COPY Gemfile /farm2/Gemfile
 COPY Gemfile.lock /farm2/Gemfile.lock
 
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+# YJIT有効化
+ENV RUBYOPT="--yjit"
 
 # バンドルインストール
+RUN gem update --system
 RUN gem install bundler
 RUN bundle install
+# entrypoint.shをコピー
+COPY entrypoint.sh /usr/bin/entrypoint.sh
+# 実行権限を付与
+RUN chmod +x /usr/bin/entrypoint.sh
+# entrypoint.shをエントリーポイントとして設定
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]

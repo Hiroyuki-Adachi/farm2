@@ -10,11 +10,10 @@ Rails.application.routes.draw do
     resources :work_types, param: "sorimachi_journal_id", only: [:edit, :update]
   end
   namespace :plans do
-    resources :lands, only: [:index, :new, :create, :destroy]
-    resources :seedlings, only: [:new, :create, :index]
+    scope '/:mode' do
+      resources :lands, only: [:index, :new, :create, :destroy]
+    end
     resources :work_types, only: [:new, :create]
-    resources :chemicals, only: [:new, :create]
-    resources :chemical_work_types, only: [:new, :create, :index]
   end
   namespace :gaps do
     resources :monthly_reports, only: [:index] do
@@ -70,7 +69,6 @@ Rails.application.routes.draw do
   resources :total_costs, only: [:index, :create]
   namespace :total_costs do
     resources :machines, only: [:index]
-    resources :work_results, only: [:index]
   end
   resources :land_places, except: [:show]
   resources :cost_types, except: [:show]

@@ -5,96 +5,22 @@
   </div>
 <% end %>
 <hr />
-<% old_group1_id = 0 %>
-<% old_group2_id = 0 %>
 <div id="table_wrapper" class="wrapper small float-head-wrapper">
-  <table id="tbl_list" class="table table-sm float-head">
-    <thead>
+  <table id="tbl_list" class="table table-sm">
+    <thead style="background-color:white;">
       <tr>
-        <th colspan="3"></th>
+        <th></th>
         <% @work_types.each do |work_type| %>
-        <th style="text-align: right;"><%= work_type.name %></th>
-        <% end %>
-      </tr>
-      <tr>
-        <th>種類</th>
-        <th>内容</th>
-        <th>詳細</th>
-        <% @work_types.each do |work_type| %>
-        <td class="numeric"><%= sprintf("%.1f", @lands[work_type.id] || 0) %></td>
+          <th style="text-align: right;"><%= work_type.name %></th>
         <% end %>
       </tr>
     </thead>
     <tbody>
-      <% @total_directs.each do |tc| %>
-        <% if tc.total_cost_type_id != old_group1_id %>
-          <% old_group1_id = tc.total_cost_type_id %>
-          <tr class="tr-total1 table-primary" data-code1="<%= old_group1_id %>">
-            <th><%= tc.total_cost_type_name %></th>
-            <td colspan="2"></td>
-            <% @work_types.each do |work_type| %>
-            <td class="numeric"><%= @group1_directs[old_group1_id][work_type.id]&.to_formatted_s(:delimited) %></td>
-            <% end %>
-          </tr>
-        <% end %>
-        <% if tc.display_order != old_group2_id %>
-          <% old_group2_id = tc.display_order %>
-          <tr class="tr-total2 table-secondary" data-code1="<%= old_group1_id %>" data-code2="<%= old_group2_id %>">
-            <th><%= tc.total_cost_type_name %></th>
-            <th><%= tc.kind_name %></th>
-            <th></th>
-            <% @work_types.each do |work_type| %>
-            <td class="numeric"><%= @group2_directs[old_group1_id][old_group2_id][work_type.id]&.to_formatted_s(:delimited) %></td>
-            <% end %>
-          </tr>
-        <% end %>
-        <tr class="tr-detail <%= tc.member_flag ? 'text-success' : 'text-body' %>" data-code1="<%= old_group1_id %>" data-code2="<%= old_group2_id %>">
-          <th><%= tc.total_cost_type_name %></th>
-          <th><%= tc.kind_name %></th>
-          <th><%= tc.detail_name %></th>
+      <% @cost_types.each do |cost_type| %>
+        <tr>
+          <th><%= cost_type.name %></th>
           <% @work_types.each do |work_type| %>
-          <% tcd = tc.total_cost_details.find {|tcd| tcd.work_type_id == work_type.id } %>
-          <td class="numeric"><%= tcd&.cost&.to_formatted_s(:delimited) %></td>
-          <% end %>
-        </tr>
-      <% end %>
-      <tr>
-        <th colspan="3">直接原価合計</th>
-        <% @work_types.each do |work_type| %>
-        <td class="numeric"><%= @sum_directs[work_type.id]&.to_formatted_s(:delimited) %></td>
-        <% end %>
-      </tr>
-      <% old_group1_id = 0 %>
-      <% old_group2_id = 0 %>
-      <% @total_sales.each do |tc| %>
-        <% if tc.total_cost_type_id != old_group1_id %>
-          <% old_group1_id = tc.total_cost_type_id %>
-          <tr class="tr-total1 table-primary" data-code1="<%= old_group1_id %>" style="cursor: pointer;">
-            <th><%= tc.total_cost_type_name %></th>
-            <td colspan="2"></td>
-            <% @work_types.each do |work_type| %>
-            <td class="numeric"><%= @group1_sales[old_group1_id][work_type.id]&.to_formatted_s(:delimited) %></td>
-            <% end %>
-          </tr>
-        <% end %>
-        <% if tc.display_order != old_group2_id %>
-          <% old_group2_id = tc.display_order %>
-          <tr class="tr-total2 table-secondary" data-code1="<%= old_group1_id %>" data-code2="<%= old_group2_id %>" style="cursor: pointer;">
-            <th><%= tc.total_cost_type_name %></th>
-            <th><%= tc.kind_name %></th>
-            <th></th>
-            <% @work_types.each do |work_type| %>
-            <td class="numeric"><%= @group2_sales[old_group1_id][old_group2_id][work_type.id]&.to_formatted_s(:delimited) %></td>
-            <% end %>
-          </tr>
-        <% end %>
-        <tr class="tr-detail <%= tc.member_flag ? 'text-success' : 'text-body' %>" data-code1="<%= old_group1_id %>" data-code2="<%= old_group2_id %>">
-          <th><%= tc.total_cost_type_name %></th>
-          <th><%= tc.kind_name %></th>
-          <th><%= tc.detail_name %></th>
-          <% @work_types.each do |work_type| %>
-          <% tcd = tc.total_cost_details.find {|tcd| tcd.work_type_id == work_type.id } %>
-          <td class="numeric"><%= tcd&.cost&.to_formatted_s(:delimited) %></td>
+            <td class="numeric"><%= @total_costs[[cost_type.id, work_type.id]].to_i.to_formatted_s(:delimited) %></td>
           <% end %>
         </tr>
       <% end %>
@@ -102,12 +28,6 @@
   </table>
 </div>
 <div id="btn_toolbar" class="btn-toolbar">
-  <div class="btn-group mr-2">
-    <%= link_to "原価区分集計", total_costs_work_results_path, {class: "btn btn-success" }%>
-  </div>
-  <div class="btn-group mr-2">
-    <%= link_to "CSV出力", total_costs_path(format: :csv), {class: "btn btn-outline-success"} %>
-  </div>
   <div class="btn-group mr-2">
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>

@@ -30,7 +30,7 @@ services:
     environment:
       - API_KEY=${GOOGLE_MAPS_API_KEY}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - DB_HOST=${DB_HOST}
+      - DB_HOST=db
     volumes:
       - type: tmpfs
         target: /farm2/tmp
@@ -42,6 +42,16 @@ services:
       - tmp-data:/farm2/tmp
     depends_on:
       - db
+
+  https-portal:
+    image: steveltn/https-portal:1
+    environment:
+      STAGE: local
+      DOMAINS: 'localhost -> http://host.docker.internal'
+    ports:
+      - '443:443'
+    depends_on:
+      - web
 
   nginx:
     build:

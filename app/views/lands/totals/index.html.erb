@@ -5,7 +5,7 @@
     </div>
     <div class="col-md-6">
       <div class="input-group">
-        <% 3.times do |index| %>
+        <% 4.times do |index| %>
           <%= select_tag("work_kinds[]", options_from_collection_for_select(WorkKind.landable.usual, :id, :name, @work_kinds[index]), {include_blank: true, class: "form-select"}) %>
         <% end %>
       </div>

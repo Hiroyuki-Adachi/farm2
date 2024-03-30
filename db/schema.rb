@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_08_032209) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_22_084532) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,27 +45,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_08_032209) do
     t.boolean "container_flag", default: false, null: false, comment: "フレコンフラグ"
     t.date "waste_date", comment: "くず米出荷日"
     t.index ["drying_id"], name: "adjustments_secondary", unique: true
-  end
-
-  create_table "bank_branches", primary_key: ["bank_code", "code"], comment: "支店マスタ", force: :cascade do |t|
-    t.string "bank_code", limit: 4, null: false, comment: "金融機関コード"
-    t.string "code", limit: 3, null: false, comment: "支店コード"
-    t.string "name", limit: 40, null: false, comment: "支店名称"
-    t.string "phonetic", limit: 40, null: false, comment: "支店名称(ﾌﾘｶﾞﾅ)"
-    t.string "zip_code", limit: 7, comment: "郵便番号"
-    t.string "address1", limit: 50, comment: "住所1"
-    t.string "address2", limit: 50, comment: "住所2"
-    t.string "telephone", limit: 15, comment: "電話番号"
-    t.string "fax", limit: 15, comment: "FAX番号"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-  end
-
-  create_table "banks", primary_key: "code", id: { type: :string, limit: 4, comment: "金融機関コード" }, comment: "金融機関マスタ", force: :cascade do |t|
-    t.string "name", limit: 40, null: false, comment: "金融機関名称"
-    t.string "phonetic", limit: 40, null: false, comment: "金融機関名称(ﾌﾘｶﾞﾅ)"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "broccoli_boxes", id: { type: :serial, comment: "ブロッコリ箱マスタ" }, comment: "ブロッコリ箱マスタ", force: :cascade do |t|
@@ -605,7 +584,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_08_032209) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", default: 0, null: false, comment: "利用者"
-    t.index ["user_id", "land_id"], name: "plan_lands_2nd", unique: true
+    t.integer "term", default: 0, null: false, comment: "年度"
+    t.index ["user_id", "land_id", "term"], name: "plan_lands_2nd", unique: true
   end
 
   create_table "plan_seedlings", comment: "育苗計画", force: :cascade do |t|
@@ -742,6 +722,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_08_032209) do
     t.boolean "cost1_flag", default: false, null: false, comment: "原価フラグ(貸方)"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "tax01", comment: "消費税0-1"
+    t.integer "tax11", comment: "消費税1-1"
     t.index ["term", "line", "detail"], name: "sorimachi_journals_2nd", unique: true
   end
 
@@ -775,7 +757,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_08_032209) do
     t.decimal "relative_price", precision: 5, default: "0", null: false, comment: "縁故米加算額"
     t.decimal "waste_price", precision: 4, default: "0", null: false, comment: "くず米金額"
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
-    t.index ["term"], name: "index_systems_on_term", unique: true
   end
 
   create_table "total_cost_details", comment: "集計原価(明細)", force: :cascade do |t|

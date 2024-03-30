@@ -64,15 +64,9 @@ class TotalCost < ApplicationRecord
       .sum("total_cost_details.cost")
   end
 
-  def self.make(term, organization, fixed_on)
+  def self.make(term, fixed_on)
     TotalCost.where(term: term).destroy_all
-    sys = System.find_by(term: term, organization_id: organization.id)
     make_work(term, fixed_on)
-    make_seedling(term, sys)
-    make_lands(term, sys)
-    make_machines(term, fixed_on)
-    make_sorimachi(term, sys)
-    # make_depreciation(term, sys)
     make_details(term)
   end
 

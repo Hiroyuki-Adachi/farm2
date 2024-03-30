@@ -27,7 +27,8 @@ default: &default
 
 development:
   <<: *default
-  database: farm2_development
+  database: farm2_production
+  host: localhost
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.

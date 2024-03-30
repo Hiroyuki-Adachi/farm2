@@ -1,4 +1,16 @@
-<h1>作付計画</h1>
+<div class="row">
+  <div class="col-md-6 h1">
+    作付計画(<%= params[:mode] == Plans::LandsController::TERM_MODES[:next] ? next_term_jp : current_term_jp %>度)
+  </div>
+  <div class="col-md-6 btn-toolbar">
+    <div class="btn-group mb-2 ms-2 mt-2">
+      <%= link_to '今年度', new_plans_land_path(mode: Plans::LandsController::TERM_MODES[:current]), class: "btn btn-primary" %>
+    </div>
+    <div class="btn-group mb-2 ms-2 mt-2">
+      <%= link_to '来年度', new_plans_land_path(mode: Plans::LandsController::TERM_MODES[:next]), class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-12">
     <div id="map" class="ratio ratio-21x9"></div>
@@ -14,14 +26,14 @@
 </div>
 <% @work_types.each_with_index do |work_type, i| %>
   <div class="btn-group">
-    <%= tag(:input, {type: :button, value: work_type.name, class: "btn work-type", style: "background-color: #{work_type.bg_color}; color: #{work_type.fg_color}; width:100px;", data: {id: work_type.id}}) %>
+    <%= tag(:input, {type: :button, value: work_type.name, class: "btn work-type", style: "background-color: #{work_type.bg_color_term(@plan_term)}; color: #{work_type.fg_color_term(@plan_term)}; width:100px;", data: {id: work_type.id}}) %>
     <span id="land_area_<%= work_type.id %>" class="label text-right area-sum" style="width: 50px;">0.0</span>
   </div>
 <% end %>
 <div id="land_area_sum" class="label text-right font-weight-bold" style="width: 150px;">0.0</div>
 <%= hidden_field_tag :location, "[#{current_location}]" %>
 <%= hidden_field_tag :organization_name, current_organization.name %>
-<%= form_with url: plans_lands_path, method: :post do |f| %>
+<%= form_with url: plans_lands_path(mode: params[:mode]), method: :post do |f| %>
   <div id="lands">
     <% @lands.each do |land| %>
       <%= hidden_field_tag "land[#{land.id}]", land.work_type_id, {data: {id: land.id, place: land.place, area: land.area, region: land.region, owner: land.owner.name}} %>
@@ -37,16 +49,14 @@
       <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: "window.print();" %>
     </div>
     <div class="btn-group mr-2">
-      <%= link_to 'CSV出力', plans_lands_path(format: :csv), class: "btn btn-primary" %>
+      <%= link_to 'Z-GIS出力', plans_lands_path(format: :xlsx, mode: params[:mode]), class: "btn btn-primary" %>
     </div>
-    <% if @current_date == Date.today %>
     <div class="btn-group mr-2">
       <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
     </div>
     <div class="btn-group mr-2">
-      <%= link_to '初期化', plans_land_path(0), {data: {turbo_confirm: "本当に初期化してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+      <%= link_to '初期化', plans_land_path(id: 0, mode: params[:mode]), {data: {turbo_confirm: "本当に初期化してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
     </div>
-    <% end %>
     <div class="btn-group mr-2">
       <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
     </div>

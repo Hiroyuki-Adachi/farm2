@@ -30,12 +30,12 @@ class MenuController < ApplicationController
       redirect_to(menu_index_path, :notice => '設定を変更しました。')
       return
     end
-    @system = init_system(system_params[:term])
+    @organization = current_organization
+    @system = System.init(@organization.id, system_params[:term], system_params[:target_from], system_params[:target_to])
     if @system.valid?
       @system.save!
-      @organization = current_organization
-      @organization.update(term: @term)
-      User.update_all(term: @term, updated_at: DateTime.now)
+      @organization.update(term: @system.term)
+      User.update_all(term: @system.term, updated_at: DateTime.now)
       redirect_to(menu_index_path, :notice => '設定を変更しました。')
     elsif system_params[:term]
       render :action => :edit_term
@@ -56,22 +56,5 @@ class MenuController < ApplicationController
 
   def set_system
     @system = current_system
-  end
-
-  def init_system(param_term)
-    if param_term
-      @term = param_term.to_i
-      system = System.find_by(term: @term, organization_id: current_user.organization.id)
-      system ||= System.new(term: @term, organization_id: current_user.organization.id)
-      system.target_from = Date.new(@term, 1, 1)
-      system.target_to   = Date.new(@term, 12, 31)
-      system.start_date  = Date.new(@term, 1, 1)
-      system.end_date    = Date.new(@term, 12, 31)
-    else
-      system = System.find_by(term: @term)
-      system.target_from = Date.strptime(system_params['target_from'], "%Y-%m")
-      system.target_to   = Date.strptime(system_params['target_to'], "%Y-%m").end_of_month
-    end
-    return system
   end
 end
