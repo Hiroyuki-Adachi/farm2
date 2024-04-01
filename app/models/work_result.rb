@@ -103,7 +103,7 @@ class WorkResult < ApplicationRecord
     WorkResult.where(work_id: Work.fixed(term, fixed_at).ids).group(:worker_id).sum(:fixed_hours)
   end
 
-  def sum_seedlings(work_type_id)
+  def sum_seedlings(_work_type_id)
     seedling_results.where(disposal_flag: false).sum(:quantity)
   end
 
