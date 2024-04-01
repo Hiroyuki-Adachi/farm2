@@ -19,7 +19,7 @@ class Works::ChemicalsControllerTest < ActionController::TestCase
       post :create, params: {
         work_id: @work, chemicals: { 4 => { 1 => {
           dilution_id: 1, magnification: 10, dilution_amount: 10, quantity: 10
-           }}},
+        }}},
         work: {chemical_group_flag: false}
       }
     end
@@ -29,7 +29,7 @@ class Works::ChemicalsControllerTest < ActionController::TestCase
     post :create, params: {
       work_id: @work, chemicals: { 4 => { 1 => {
         dilution_id: 1, magnification: 10, dilution_amount: 10, quantity: 10
-         }}},
+      }}},
       work: {chemical_group_flag: true},
       work_lands: { work_lands_not_fixed1.id => 1}
     }
@@ -38,7 +38,7 @@ class Works::ChemicalsControllerTest < ActionController::TestCase
     post :create, params: {
       work_id: @work, chemicals: { 4 => { 1 => {
         dilution_id: 1, magnification: 10, dilution_amount: 10, quantity: 10
-         }}},
+      }}},
       work: {chemical_group_flag: false}
     }
     assert_equal WorkLand.find(work_lands_not_fixed1.id).chemical_group_no, 0

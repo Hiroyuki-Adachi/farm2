@@ -37,11 +37,11 @@ module StatisticsHelper
     results = []
     t("statistics.age").each_with_index do |age, i|
       results << {
-          label: age,
-          data: total_all.map {|t| total_age[[t[0], i]].to_f },
-          backgroundColor: COLORS[i],
-          fill: false
-       }
+        label: age,
+        data: total_all.map {|t| total_age[[t[0], i]].to_f },
+        backgroundColor: COLORS[i],
+        fill: false
+      }
     end
     return results
   end
