@@ -27,7 +27,7 @@ class ChemicalWorkType < ActiveRecord::Base
     joins(chemical_term: :chemical)
     .where(["chemical_work_types.work_type_id IN (?) AND chemical_work_types.quantity > 0 AND chemical_terms.term = ?",
             work.exact_work_types.map(&:id), work.term]
-    )
+          )
   }
 
   def self.regist_quantity(params)

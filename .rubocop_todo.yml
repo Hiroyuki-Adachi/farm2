@@ -12,12 +12,6 @@ Layout/ClosingHeredocIndentation:
   Exclude:
     - 'app/models/chemical.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/ClosingParenthesisIndentation:
-  Exclude:
-    - 'app/models/chemical_work_type.rb'
-
 # Offense count: 79
 # This cop supports safe autocorrection (--autocorrect).
 Layout/EmptyLineAfterGuardClause:
