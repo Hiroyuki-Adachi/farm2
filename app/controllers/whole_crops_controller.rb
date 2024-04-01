@@ -24,4 +24,3 @@ class WholeCropsController < ApplicationController
     param.permit(:id, :tax_rate, :unit_price, :article_name)
   end
 end
-
