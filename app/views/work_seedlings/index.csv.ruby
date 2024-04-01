@@ -6,7 +6,7 @@ CSV.generate(encoding: "Shift_JIS") do |csv|
     next if @work_areas[work_type.id].blank?
     @work_areas[work_type.id].keys.each do |work_id|
       work = Work.find_by(id: work_id)
-    　next if work.blank?
+      　next if work.blank?
       csv << [
         work_type.name,
         work.worked_at,

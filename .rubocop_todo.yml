@@ -23,15 +23,6 @@ Layout/EmptyLineAfterGuardClause:
 Layout/EndOfLine:
   Enabled: false
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: normal, indented_internal_methods
-Layout/IndentationConsistency:
-  Exclude:
-    - 'app/models/home.rb'
-    - 'app/views/work_seedlings/index.csv.ruby'
-
 # Offense count: 8
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Width, AllowedPatterns.
