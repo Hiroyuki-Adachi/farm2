@@ -15,7 +15,7 @@ csv_str = CSV.generate do |csv|
   }
   csv << cols.keys
   @results.each do |result|
-    csv << cols.map{|k, col| col.call(result)}
+    csv << cols.map{|_k, col| col.call(result)}
   end
 end
 
