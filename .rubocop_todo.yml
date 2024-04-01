@@ -40,13 +40,6 @@ Layout/MultilineMethodCallIndentation:
 Layout/SpaceBeforeBlockBraces:
   Enabled: false
 
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceBeforeComma:
-  Exclude:
-    - 'app/models/machine_price_header.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'test/models/total_cost_test.rb'
 
 # Offense count: 17
 # This cop supports safe autocorrection (--autocorrect).
