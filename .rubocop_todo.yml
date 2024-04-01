@@ -65,12 +65,6 @@ Layout/TrailingWhitespace:
 
 
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Naming/BinaryOperatorParameterName:
-  Exclude:
-    - 'app/models/sorimachi_journal.rb'
-
-# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyleForLeadingUnderscores.
 # SupportedStylesForLeadingUnderscores: disallowed, required, optional
