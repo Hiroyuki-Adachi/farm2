@@ -42,7 +42,7 @@ class SeedlingResultsController < ApplicationController
     params
       .require(:seedling_home)
       .permit(seedling_results_attributes: [
-        :id, :work_result_id, :display_order, :disposal_flag, :quantity, :_destroy
-      ])
+                :id, :work_result_id, :display_order, :disposal_flag, :quantity, :_destroy
+              ])
   end
 end
