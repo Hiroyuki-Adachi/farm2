@@ -24,7 +24,8 @@ class SeedlingResultsController < ApplicationController
   def work_results
     render turbo_stream: turbo_stream.replace(
       "work_results_#{params[:index]}", partial: 'work_results', 
-                                        locals: {data_index: params[:index], work_results: Work.find(params[:work_id]).work_results.includes(:worker), work_result_id: 0})
+                                        locals: {data_index: params[:index], work_results: Work.find(params[:work_id]).work_results.includes(:worker), work_result_id: 0}
+    )
   end
 
   private

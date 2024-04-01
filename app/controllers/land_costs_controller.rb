@@ -57,7 +57,8 @@ class LandCostsController < ApplicationController
   def work_types
     render turbo_stream: turbo_stream.replace(
       "work_types_#{params[:index]}", partial: 'work_types', 
-                                      locals: {data_index: params[:index], activate_date: params[:date], work_type_id: params[:work_type_id]})
+                                      locals: {data_index: params[:index], activate_date: params[:date], work_type_id: params[:work_type_id]}
+    )
   end
 
   private
