@@ -176,7 +176,7 @@ class Land < ApplicationRecord
   def self.totals(work_kinds, sys)
     sql = []
     sql << "SELECT L.place, MAX(L.area) AS area, MAX(HO.name) AS _owner_name, COALESCE(MAX(WT.name), '') AS work_type_name"
-    work_kinds.each_with_index do |work_kind, index|
+    work_kinds.each_with_index do |_work_kind, index|
       sql << ", MIN(W#{index}.worked_at) AS w#{index}_date"
     end
     sql << " FROM lands L"
@@ -203,7 +203,7 @@ class Land < ApplicationRecord
     sql << "GROUP BY L.place "
     sql << "HAVING"
     having = []
-    work_kinds.each_with_index do |work_kind, index|
+    work_kinds.each_with_index do |_work_kind, index|
       having << "(MIN(W#{index}.worked_at) IS NOT NULL)"
     end
     sql << having.join(" OR ")
