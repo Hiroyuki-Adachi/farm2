@@ -63,16 +63,6 @@ Layout/SpaceInsideHashLiteralBraces:
 Layout/TrailingWhitespace:
   Enabled: false
 
-# Offense count: 2
-Lint/FloatComparison:
-  Exclude:
-    - 'app/models/work.rb'
-
-# Offense count: 2
-Lint/IneffectiveAccessModifier:
-  Exclude:
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/models/work_type.rb'
 
 # Offense count: 7
 # This cop supports safe autocorrection (--autocorrect).
