@@ -19,12 +19,6 @@ Layout/EmptyLineAfterGuardClause:
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLineAfterMagicComment:
-  Exclude:
-    - 'lib/tasks/extract_fixtures.rake'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: around, only_before
 Layout/EmptyLinesAroundAccessModifier:
