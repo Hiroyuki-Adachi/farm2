@@ -23,7 +23,7 @@ class ChemicalWorkType < ActiveRecord::Base
   scope :by_chemical_terms, ->(chemical_terms) {where(chemical_term_id: chemical_terms.pluck(:id)).includes(:work_type, :chemical_term)}
   scope :by_chemical_term,  ->(chemical_term) {where(chemical_term_id: chemical_term).includes(:work_type, :chemical_term)}
   scope :usable, ->(chemical_term) {where(chemical_term_id: chemical_term).where("quantity > 0")}
-  scope :by_work, -> (work) {
+  scope :by_work, ->(work) {
     joins(chemical_term: :chemical)
     .where(["chemical_work_types.work_type_id IN (?) AND chemical_work_types.quantity > 0 AND chemical_terms.term = ?",
             work.exact_work_types.map(&:id), work.term])

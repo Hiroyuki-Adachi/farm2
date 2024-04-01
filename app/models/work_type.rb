@@ -33,7 +33,7 @@ class WorkType < ApplicationRecord
   scope :indexes, -> {where(category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
   scope :land, -> {where(land_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
   scope :cost, -> {where(cost_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
-  scope :select_category, -> (category) {where(category_flag: false, work_flag: true, genre: category[:genre]).order(display_order: :ASC, id: :ASC)}
+  scope :select_category, ->(category) {where(category_flag: false, work_flag: true, genre: category[:genre]).order(display_order: :ASC, id: :ASC)}
   scope :by_term, ->(term) {
     where("EXISTS (SELECT * FROM work_type_terms WTT WHERE work_types.id = WTT.work_type_id AND WTT.term = ?)", term)
     .with_deleted

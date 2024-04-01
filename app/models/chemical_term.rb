@@ -16,7 +16,7 @@ class ChemicalTerm < ApplicationRecord
   belongs_to :chemical, -> {with_deleted}
   has_many :chemical_work_types, dependent: :destroy
   
-  scope :usual, -> (term) {
+  scope :usual, ->(term) {
     joins(chemical: :chemical_type).includes(:chemical)
       .where(term: term)
       .order(Arel.sql(<<SQL))
@@ -24,7 +24,7 @@ class ChemicalTerm < ApplicationRecord
 SQL
   }
 
-  scope :by_type, -> (term, chemical_type_id) {
+  scope :by_type, ->(term, chemical_type_id) {
     joins(:chemical)
       .where(term: term)
       .where("chemicals.chemical_type_id = ?", chemical_type_id)
