@@ -64,15 +64,6 @@ Layout/TrailingWhitespace:
   Enabled: false
 
 
-# Offense count: 3
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AutoCorrect.
-Lint/UselessAssignment:
-  Exclude:
-    - 'app/models/plan_seedling.rb'
-    - 'app/models/plan_work_type.rb'
-    - 'app/models/work_land.rb'
-
 # Offense count: 1
 Naming/AccessorMethodName:
   Exclude:

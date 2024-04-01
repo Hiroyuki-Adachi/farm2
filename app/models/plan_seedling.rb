@@ -33,7 +33,7 @@ class PlanSeedling < ApplicationRecord
         if pl.present?
           pl.quantity = q[:quantity]
         else
-          pl = PlanSeedling.create(home_id: hid, plan_work_type_id: pid, quantity: q[:quantity])
+          PlanSeedling.create(home_id: hid, plan_work_type_id: pid, quantity: q[:quantity])
         end
       end
     end

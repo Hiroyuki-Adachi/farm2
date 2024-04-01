@@ -32,7 +32,7 @@ class PlanWorkType < ApplicationRecord
       if plan_work_type.present?
         plan_work_type.update(param)
       else
-        plan_work_type = PlanWorkType.create(param.merge(work_type_id: work_type_id))
+        PlanWorkType.create(param.merge(work_type_id: work_type_id))
       end
     end
     PlanWorkType.joins(:work_type).where("work_types.deleted_at IS NOT NULL").destroy_all
