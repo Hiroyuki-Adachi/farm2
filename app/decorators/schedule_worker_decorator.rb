@@ -16,7 +16,7 @@ class ScheduleWorkerDecorator < Draper::Decorator
                "一週間後"
              else
                (model.schedule.worked_at - Date.today).to_i.to_s + "日後"
-              end
+             end
     result += "(#{model.schedule.worked_at.strftime('%m月%d日')})(#{I18n.t('date.abbr_day_names')[model.schedule.worked_at.wday]})"
     result += " #{schedule.start_at_jp}"
     return result
