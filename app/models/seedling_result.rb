@@ -18,7 +18,7 @@ class SeedlingResult < ActiveRecord::Base
 
   scope :total, ->(seedling_homes) {where(seedling_home_id: seedling_homes.pluck(:id)).group(:seedling_home_id).sum(:quantity)}
 
-  scope :by_work_day, -> (seedling_home) {
+  scope :by_work_day, ->(seedling_home) {
     joins(work_result: :work)
     .where(seedling_home_id: seedling_home.id)
     .group("works.worked_at")

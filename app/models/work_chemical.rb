@@ -46,7 +46,7 @@ class WorkChemical < ApplicationRecord
       .order("works.worked_at, works.id, chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
   }
 
-  scope :for_stock, -> (chemical_id, start_date) {
+  scope :for_stock, ->(chemical_id, start_date) {
     joins(:work)
     .includes(:chemical)
     .where("works.worked_at >= ? AND work_chemicals.chemical_id = ?", start_date, chemical_id)

@@ -41,24 +41,6 @@ Layout/SpaceBeforeBlockBraces:
   Enabled: false
 
 
-# Offense count: 17
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: require_no_space, require_space
-Layout/SpaceInLambdaLiteral:
-  Exclude:
-    - 'app/models/chemical_stock.rb'
-    - 'app/models/chemical_term.rb'
-    - 'app/models/chemical_work_type.rb'
-    - 'app/models/institution.rb'
-    - 'app/models/land.rb'
-    - 'app/models/machine.rb'
-    - 'app/models/machine_price_header.rb'
-    - 'app/models/plan_land.rb'
-    - 'app/models/seedling_result.rb'
-    - 'app/models/work_chemical.rb'
-    - 'app/models/work_type.rb'
-
 # Offense count: 465
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
