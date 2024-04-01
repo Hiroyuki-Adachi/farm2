@@ -65,11 +65,6 @@ Layout/TrailingWhitespace:
 
 
 # Offense count: 1
-Naming/AccessorMethodName:
-  Exclude:
-    - 'app/controllers/total_owned_rices_controller.rb'
-
-# Offense count: 1
 # Configuration parameters: AsciiConstants.
 Naming/AsciiIdentifiers:
   Exclude:
