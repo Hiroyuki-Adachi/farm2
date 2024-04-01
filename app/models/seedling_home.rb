@@ -15,7 +15,7 @@
 #  index_seedling_homes_on_seedling_id_and_home_id  (seedling_id,home_id) UNIQUE
 #
 
-class SeedlingHome < ActiveRecord::Base
+class SeedlingHome < ApplicationRecord
   belongs_to :home, -> {with_deleted}
   belongs_to :seedling
   has_many :seedling_results, dependent: :destroy
