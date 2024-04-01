@@ -12,7 +12,7 @@
 #  work_result_id(作業結果)   :integer
 #
 
-class SeedlingResult < ActiveRecord::Base
+class SeedlingResult < ApplicationRecord
   belongs_to :seedling_home
   belongs_to :work_result
 
