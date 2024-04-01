@@ -138,7 +138,7 @@ class Land < ApplicationRecord
 
   def region_values
     return nil if region.empty?
-    return JSON.parse(region.gsub(/\(/, "[").gsub(/\)/, "]"))
+    return JSON.parse(region.tr('(', "[").tr(')', "]"))
   end
 
   def region_center
