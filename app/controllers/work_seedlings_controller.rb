@@ -6,8 +6,6 @@ class WorkSeedlingsController < ApplicationController
     @work_seedlings, @work_areas = calc_seedlings(Work.where(work_kind_id: current_organization.rice_planting_id).by_term(@term))
 
     respond_to do |format|
-      format.html do
-      end
       format.csv do
         render :content_type => 'text/csv; charset=cp943'
       end
