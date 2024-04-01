@@ -65,12 +65,6 @@ Layout/TrailingWhitespace:
 
 
 # Offense count: 1
-# Configuration parameters: AsciiConstants.
-Naming/AsciiIdentifiers:
-  Exclude:
-    - 'app/views/work_seedlings/index.csv.ruby'
-
-# Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Naming/BinaryOperatorParameterName:
   Exclude:
