@@ -17,8 +17,7 @@ class Sorimachi::WorkTypesControllerTest < ActionController::TestCase
                             sorimachi: {
                               work_types: {1 => 1},
                               amounts: {1 => 1000}
-                            }
-      }
+                            }}
     end
     assert_response :success
   end
