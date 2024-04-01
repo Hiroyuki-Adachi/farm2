@@ -12,7 +12,8 @@ class LandCostsControllerTest < ActionController::TestCase
       1 => {
         work_type_id: work_types(:work_types2).id, 
         land_id: lands(:lands2).id, activated_on: @cost1.activated_on
-      }}
+      }
+    }
     @land_costs2 = {
       0 => {
         work_type_id: work_types(:work_types1).id, id: @cost1.id,
