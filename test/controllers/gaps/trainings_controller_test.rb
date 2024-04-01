@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Gaps::TrainingsControllerTest <  ActionController::TestCase
+class Gaps::TrainingsControllerTest < ActionController::TestCase
   setup do
     setup_ip
     @work1 = works(:work_study_create)
