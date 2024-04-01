@@ -1,5 +1,6 @@
 
 # -*- coding: utf-8 -*-
+
 # DBからデータを取り出してYAMLにする。生成したYAMLはtmp/fixturesに保存される
 namespace :db do
   namespace :fixtures do
