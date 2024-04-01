@@ -22,10 +22,10 @@ class SorimachiWorkType < ApplicationRecord
     params[:amounts].each do |key, value|
       unless value.to_f.zero?
         SorimachiWorkType.create({
-          sorimachi_journal_id: journal_id,
-          work_type_id: key,
-          amount: value
-        })
+                                   sorimachi_journal_id: journal_id,
+                                   work_type_id: key,
+                                   amount: value
+                                 })
       end
     end
   end

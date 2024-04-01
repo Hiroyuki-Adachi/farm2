@@ -25,24 +25,6 @@ Layout/EndOfLine:
 
 # Offense count: 19
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_braces
-Layout/FirstHashElementIndentation:
-  Exclude:
-    - 'app/helpers/statistics_helper.rb'
-    - 'app/models/sorimachi_work_type.rb'
-    - 'app/models/work_land.rb'
-    - 'app/views/statistics/tab1.json.jbuilder'
-    - 'test/controllers/chemicals/inventories_controller_test.rb'
-    - 'test/controllers/chemicals/stocks_controller_test.rb'
-    - 'test/controllers/fuel_costs_controller_test.rb'
-    - 'test/controllers/land_costs_controller_test.rb'
-    - 'test/controllers/machines_controller_test.rb'
-    - 'test/controllers/workers_controller_test.rb'
-    - 'test/controllers/works/chemicals_controller_test.rb'
-
-# Offense count: 19
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowMultipleStyles, EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.
 # SupportedHashRocketStyles: key, separator, table
 # SupportedColonStyles: key, separator, table
