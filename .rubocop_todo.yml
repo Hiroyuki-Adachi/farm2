@@ -17,19 +17,6 @@ Layout/ClosingHeredocIndentation:
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
 
-# Offense count: 6
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines, beginning_only, ending_only
-Layout/EmptyLinesAroundClassBody:
-  Exclude:
-    - 'app/controllers/sessions_controller.rb'
-    - 'test/controllers/lands/managers_controller_test.rb'
-    - 'test/controllers/lands/owners_controller_test.rb'
-    - 'test/controllers/machine_prices_controller_test.rb'
-    - 'test/controllers/plans/chemical_work_types_controller_test.rb'
-    - 'test/controllers/work_seedlings_controller_test.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyleAlignWith, Severity.
