@@ -90,13 +90,6 @@ Performance/RedundantSplitRegexpArgument:
   Exclude:
     - 'lib/tasks/extract_fixtures.rake'
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-Performance/StringReplacement:
-  Exclude:
-    - 'app/models/calendar_work_kind.rb'
-    - 'app/models/land.rb'
-
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: OnlySumOrWithInitialValue.
