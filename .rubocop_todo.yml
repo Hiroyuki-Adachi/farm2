@@ -31,19 +31,6 @@ Layout/EndOfLine:
 Layout/MultilineMethodCallIndentation:
   Enabled: false
 
-
-# Offense count: 23
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceAfterComma:
-  Exclude:
-    - 'app/controllers/total_owned_rices_controller.rb'
-    - 'app/controllers/work_chemicals_controller.rb'
-    - 'app/controllers/work_seedlings_controller.rb'
-    - 'app/models/land_cost.rb'
-    - 'app/models/plan_seedling.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/models/work.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 Layout/SpaceAroundMethodCallOperator:

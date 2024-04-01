@@ -18,8 +18,8 @@ class WorkChemicalsController < ApplicationController
     @total_chemicals = {}
     @work_areas = {}
     @work_types = {}
-    work_rate_denom = Hash.new { |h,k| h[k] = Hash.new(&h.default_proc) }
-    work_rate_numer = Hash.new { |h,k| h[k] = {} }
+    work_rate_denom = Hash.new { |h, k| h[k] = Hash.new(&h.default_proc) }
+    work_rate_numer = Hash.new { |h, k| h[k] = {} }
     work_chemicals_temp = WorkChemical.by_term(@term)
     work_chemicals_temp.each do |work_chemical|
       next if (work_chemical.work.work_lands&.count || 0).zero?
