@@ -23,17 +23,6 @@ Layout/EmptyLineAfterGuardClause:
 Layout/EndOfLine:
   Enabled: false
 
-# Offense count: 8
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Width, AllowedPatterns.
-Layout/IndentationWidth:
-  Exclude:
-    - 'app/controllers/calendars/excels_controller.rb'
-    - 'app/controllers/zgis_controller.rb'
-    - 'app/models/machine_result.rb'
-    - 'app/models/work.rb'
-    - 'test/controllers/chemicals/inventories_controller_test.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Layout/LeadingEmptyLines:

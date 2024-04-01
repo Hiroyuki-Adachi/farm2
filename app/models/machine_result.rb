@@ -34,27 +34,27 @@ class MachineResult < ApplicationRecord
   has_one :work_kind, -> {with_deleted}, through: :work
 
   scope :by_home, ->(term) {
-     joins(:machine).eager_load(:machine)
-    .joins(:work_result).eager_load(:work_result)
-    .joins(:work_type).eager_load(:work_type)
-    .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
-    .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
-    .joins("INNER JOIN systems ON systems.term = works.term")
-    .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
-    .where("homes.company_flag = FALSE")
-    .where("systems.term = ?", term)
-    .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
+    joins(:machine).eager_load(:machine)
+   .joins(:work_result).eager_load(:work_result)
+   .joins(:work_type).eager_load(:work_type)
+   .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
+   .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
+   .joins("INNER JOIN systems ON systems.term = works.term")
+   .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
+   .where("homes.company_flag = FALSE")
+   .where("systems.term = ?", term)
+   .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
   }
 
   scope :by_home_for_fix, ->(term, fixed_at) {
-     joins(:machine).eager_load(:machine)
-    .joins(:work_result).eager_load(:work_result)
-    .joins(:work_type).eager_load(:work_type)
-    .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
-    .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
-    .where("homes.company_flag = FALSE AND works.term = ?", term)
-    .where("works.fixed_at = ? AND machine_results.fixed_price IS NOT NULL", fixed_at)
-    .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
+    joins(:machine).eager_load(:machine)
+   .joins(:work_result).eager_load(:work_result)
+   .joins(:work_type).eager_load(:work_type)
+   .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
+   .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
+   .where("homes.company_flag = FALSE AND works.term = ?", term)
+   .where("works.fixed_at = ? AND machine_results.fixed_price IS NOT NULL", fixed_at)
+   .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
   }
 
   scope :for_personal, ->(home, worked_at) {
@@ -144,11 +144,11 @@ class MachineResult < ApplicationRecord
     @price = price_detail.price
     @quantity = case @adjust
                 when Adjust::HOUR
-        sum_hours
+                  sum_hours
                 when Adjust::AREA
-        work.sum_areas / 10
+                  work.sum_areas / 10
                 when Adjust::DAY
-        1
+                  1
                 end
     @amount = @price * @quantity
   end

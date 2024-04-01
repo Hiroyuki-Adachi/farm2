@@ -337,7 +337,7 @@ SQL
     10.times.each {|i| results[term - (9 - i)] = 0}
     Work.joins(:work_results).where(["work_results.worker_id = ? AND works.term >= ?", worker.id, term - 9])
       .group(:term).order(:term).sum("work_results.hours").each do |k,v|
-        results[k.to_i] = v
+      results[k.to_i] = v
     end
     return results
   end
@@ -347,7 +347,7 @@ SQL
     10.times.each {|i| results[term - (9 - i)] = 0}
     Work.joins(work_results: :worker).where(["workers.home_id = ? AND work_results.worker_id <> ? AND works.term >= ?", worker.home_id, worker.id, term - 9])
       .group(:term).order(:term).sum("work_results.hours").each do |k,v|
-        results[k.to_i] = v
+      results[k.to_i] = v
     end
     return results
   end
@@ -356,7 +356,7 @@ SQL
     results = [0,0,0,0,0,0,0,0,0,0,0,0]
     Work.joins(:work_results).where(["work_results.worker_id = ? AND works.term = ?", worker.id, term])
       .group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k,v|
-        results[k.to_i - 1] = v
+      results[k.to_i - 1] = v
     end
     return results
   end
