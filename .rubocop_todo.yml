@@ -31,11 +31,6 @@ Layout/EndOfLine:
 Layout/MultilineMethodCallIndentation:
   Enabled: false
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceAroundMethodCallOperator:
-  Exclude:
-    - 'app/models/total_cost.rb'
 
 # Offense count: 6
 # This cop supports safe autocorrection (--autocorrect).

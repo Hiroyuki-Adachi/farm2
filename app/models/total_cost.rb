@@ -109,7 +109,7 @@ class TotalCost < ApplicationRecord
   end
 
   def self.make_work(term, fixed_on)
-    Work.by_term(term).where("worked_at <= ?", fixed_on) .each do |work|
+    Work.by_term(term).where("worked_at <= ?", fixed_on).each do |work|
       make_work_worker(term, work)
 
       # make_work_machine(term, work)
@@ -148,7 +148,7 @@ class TotalCost < ApplicationRecord
   end
 
   def self.make_machines(term, fixed_on)
-    Work.by_term(term).machinable.where("worked_at <= ?", fixed_on) .each do |work|
+    Work.by_term(term).machinable.where("worked_at <= ?", fixed_on).each do |work|
       work.machine_results.each do |machine_result|
         make_machine(work, machine_result)
       end
