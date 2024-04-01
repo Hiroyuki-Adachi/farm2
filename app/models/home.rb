@@ -107,7 +107,7 @@ class Home < ApplicationRecord
       .where("? BETWEEN lands.peasant_start_term AND lands.peasant_end_term", term)
       .sum(:area)
 
-      return area
+    return area
   end
 
   def owned_rice_limit(term)
