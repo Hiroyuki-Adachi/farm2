@@ -19,7 +19,7 @@ class PlanSeedling < ApplicationRecord
   belongs_to :plan, class_name: "PlanWorkType", foreign_key: "plan_work_type_id"
 
   def self.usual
-    results = Hash.new { |h,k| h[k] = {} }
+    results = Hash.new { |h, k| h[k] = {} }
     PlanSeedling.all.each do |seedling|
       results[seedling.home_id][seedling.plan_work_type_id] = seedling
     end

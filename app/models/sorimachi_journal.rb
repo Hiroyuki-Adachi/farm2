@@ -108,7 +108,7 @@ class SorimachiJournal < ApplicationRecord
   def self.accounts(term)
     t1 = SorimachiJournal.where(term: term).order(:code01).group(:code01).sum(:amount1)
     t2 = SorimachiJournal.where(term: term).order(:code12).group(:code12).sum(:amount2)
-    return t1.merge(t2).map {|k,v| [k, [t1[k] || 0, t2[k] || 0]]}.to_h
+    return t1.merge(t2).map {|k, v| [k, [t1[k] || 0, t2[k] || 0]]}.to_h
   end
 
   def cost_amount
