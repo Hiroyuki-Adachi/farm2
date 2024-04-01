@@ -32,20 +32,6 @@ Layout/MultilineMethodCallIndentation:
   Enabled: false
 
 
-# Offense count: 6
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowForAlignment, EnforcedStyleForExponentOperator, EnforcedStyleForRationalLiterals.
-# SupportedStylesForExponentOperator: space, no_space
-# SupportedStylesForRationalLiterals: space, no_space
-Layout/SpaceAroundOperators:
-  Exclude:
-    - 'app/decorators/work_decorator.rb'
-    - 'app/decorators/work_result_decorator.rb'
-    - 'app/models/base_unit.rb'
-    - 'app/models/work_kind.rb'
-    - 'test/controllers/gaps/health_controller_test.rb'
-    - 'test/controllers/gaps/trainings_controller_test.rb'
-
 # Offense count: 38
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.
