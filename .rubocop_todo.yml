@@ -32,12 +32,6 @@ Layout/MultilineMethodCallIndentation:
   Enabled: false
 
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceAfterColon:
-  Exclude:
-    - 'app/models/work.rb'
-
 # Offense count: 23
 # This cop supports safe autocorrection (--autocorrect).
 Layout/SpaceAfterComma:
