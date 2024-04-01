@@ -55,6 +55,6 @@ class PlanSeedling < ApplicationRecord
 
   def seed_bag2
     return 0 if plan&.bag_weight2.nil? || plan.bag_weight2.zero?
-    return ((seeds - seed_bag1 * plan.bag_weight1) / plan.bag_weight2).ceil
+    return ((seeds - (seed_bag1 * plan.bag_weight1)) / plan.bag_weight2).ceil
   end
 end

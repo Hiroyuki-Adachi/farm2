@@ -127,8 +127,8 @@ class Land < ApplicationRecord
   end
 
   def land_display_order
-    result = land_place.display_order * LandPlace.maximum(:id) + land_place_id
-    result = (result * Land.maximum(:display_order) + display_order) * Land.maximum(:id) + id
+    result = (land_place.display_order * LandPlace.maximum(:id)) + land_place_id
+    result = (((result * Land.maximum(:display_order)) + display_order) * Land.maximum(:id)) + id
     return result
   end
 

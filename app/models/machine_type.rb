@@ -28,6 +28,6 @@ class MachineType < ApplicationRecord
   end
 
   def machine_type_order
-    (display_order * MachineType.maximum(:id) + id) & 0x7fffffff
+    ((display_order * MachineType.maximum(:id)) + id) & 0x7fffffff
   end
 end

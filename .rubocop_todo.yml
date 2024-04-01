@@ -63,23 +63,6 @@ Layout/SpaceInsideHashLiteralBraces:
 Layout/TrailingWhitespace:
   Enabled: false
 
-# Offense count: 22
-# This cop supports safe autocorrection (--autocorrect).
-Lint/AmbiguousOperatorPrecedence:
-  Exclude:
-    - 'app/decorators/work_decorator.rb'
-    - 'app/models/adjustment.rb'
-    - 'app/models/home.rb'
-    - 'app/models/land.rb'
-    - 'app/models/machine.rb'
-    - 'app/models/machine_type.rb'
-    - 'app/models/plan_seedling.rb'
-    - 'app/models/work.rb'
-    - 'app/models/work_chemical.rb'
-    - 'app/models/work_type.rb'
-    - 'app/services/calendar_excel_month_service.rb'
-    - 'app/services/calendar_excel_year_service.rb'
-
 # Offense count: 1
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
 Lint/EmptyBlock:

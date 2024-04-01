@@ -85,7 +85,7 @@ class Home < ApplicationRecord
   end
 
   def home_display_order
-    display_order * 100 + id
+    (display_order * 100) + id
   end
 
   def finance_code

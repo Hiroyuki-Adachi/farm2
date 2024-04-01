@@ -26,11 +26,11 @@ class Adjustment < ApplicationRecord
   belongs_to :home, -> {with_deleted}
 
   def rice_weight(system)
-    (rice_bag || 0) * Drying::KG_PER_BAG_RICE + (system.half_sum_flag ? (half_weight || 0) : 0)
+    ((rice_bag || 0) * Drying::KG_PER_BAG_RICE) + (system.half_sum_flag ? (half_weight || 0) : 0)
   end
 
   def container_weight
-    (rice_bag || 0) * Drying::KG_PER_BAG_RICE + (half_weight || 0)
+    ((rice_bag || 0) * Drying::KG_PER_BAG_RICE) + (half_weight || 0)
   end
 
   def waste_bag
