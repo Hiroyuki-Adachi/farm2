@@ -72,12 +72,6 @@ Naming/MemoizedInstanceVariableName:
   Exclude:
     - 'app/controllers/owned_rice_prices_controller.rb'
 
-# Offense count: 1
-# Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
-# AllowedNames: as, at, by, cc, db, id, if, in, io, ip, of, on, os, pp, to
-Naming/MethodParameterName:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
 
 # Offense count: 1
 # Configuration parameters: MinSize.
