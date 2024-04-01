@@ -408,7 +408,7 @@ SQL
   end
 
   def work_kind_order
-    work_kind.display_order * 100 + work_kind_id
+    (work_kind.display_order * 100) + work_kind_id
   end
 
   def total_cost_type

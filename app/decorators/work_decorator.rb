@@ -59,7 +59,7 @@ class WorkDecorator < Draper::Decorator
   def chemicals
     result = []
     model.work_chemicals.each do |work_chemical|
-      result << work_chemical.chemical.name + "(" + work_chemical.chemical.chemical_type.name + "):" + work_chemical.quantity.to_s
+      result << (work_chemical.chemical.name + "(" + work_chemical.chemical.chemical_type.name + "):" + work_chemical.quantity.to_s)
     end
     return result.to_sentence
   end

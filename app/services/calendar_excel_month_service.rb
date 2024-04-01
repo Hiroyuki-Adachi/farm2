@@ -35,7 +35,7 @@ class CalendarExcelMonthService
   def fill_works(data_sheet, works, first_month)
     works.each do |work|
       break if work.model.worked_at.month - first_month >= MAX_MONTHS
-      work_cell = data_sheet[work.model.worked_at.day * 2 + 4][(work.model.worked_at.month - first_month) * 3 + 2]
+      work_cell = data_sheet[(work.model.worked_at.day * 2) + 4][((work.model.worked_at.month - first_month) * 3) + 2]
       work_cell.change_contents("#{work.exact_work_type_name}(#{work.sum_areas}a)")
     end
   end

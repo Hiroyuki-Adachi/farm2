@@ -120,7 +120,7 @@ SQL
       rgb[:b] = bg_color[5, 2].to_i(16)
     end
 
-    yuv = 0.2126 * rgb[:r] + 0.7152 * rgb[:g] + 0.0722 * rgb[:b];
+    yuv = (0.2126 * rgb[:r]) + (0.7152 * rgb[:g]) + (0.0722 * rgb[:b]);
   
     return yuv >= lum ? 'black' : 'white'
   end

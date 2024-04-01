@@ -54,7 +54,7 @@ class WorkChemical < ApplicationRecord
   }
 
   def chemical_display_order
-    chemical_type.display_order * 100_000 + chemical_type.id * 1000 + chemical.display_order * 100 + chemical_id
+    (chemical_type.display_order * 100_000) + (chemical_type.id * 1000) + (chemical.display_order * 100) + chemical_id
   end
 
   def quantity10
