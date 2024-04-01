@@ -195,6 +195,7 @@ class SorimachiJournal < ApplicationRecord
   end
 
   private
+
   def self.updatable_attributes
     ['line', 'detail', 'accounted_on',
      'code01', 'code02', 'code03', 'code04', 'tax01', 'code05', 'code06', 'code07', 'amount1', 
