@@ -57,7 +57,7 @@ class WorkResultDecorator < Draper::Decorator
   end
 
   def hours
-    return "%.1f"%model.hours
+    return "%.1f" % model.hours
   end
 
   def price
