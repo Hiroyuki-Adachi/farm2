@@ -31,13 +31,6 @@ Layout/EndOfLine:
 Layout/MultilineMethodCallIndentation:
   Enabled: false
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented
-Layout/MultilineOperationIndentation:
-  Exclude:
-    - 'app/models/sorimachi_journal.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
