@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-
   def index
     log_out
     redirect_to root_path

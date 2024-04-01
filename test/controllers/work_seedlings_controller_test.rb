@@ -4,5 +4,4 @@ class WorkSeedlingsControllerTest < ActionController::TestCase
   setup do
     setup_ip
   end
-
 end
