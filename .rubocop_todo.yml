@@ -23,18 +23,6 @@ Layout/EmptyLineAfterGuardClause:
 Layout/EndOfLine:
   Enabled: false
 
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_brackets
-Layout/FirstArrayElementIndentation:
-  Exclude:
-    - 'app/controllers/plans/work_types_controller.rb'
-    - 'app/controllers/seedling_results_controller.rb'
-    - 'app/helpers/statistics_helper.rb'
-    - 'app/views/plans/lands/index.csv.ruby'
-    - 'test/controllers/chemicals/inventories_controller_test.rb'
-
 # Offense count: 19
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, IndentationWidth.
