@@ -16,12 +16,12 @@ module WorksHelper
     unit = ""
     work_chemicals.where(chemical_id: chemical_id).each do |work_chemical|
       case dilution
-        when Dilution::L
-          unit = "ℓ"
-          amount += work_chemical.dilution_amount
-        when Dilution::MAG 
-          unit = "倍"
-          amount += work_chemical.magnification
+      when Dilution::L
+        unit = "ℓ"
+        amount += work_chemical.dilution_amount
+      when Dilution::MAG 
+        unit = "倍"
+        amount += work_chemical.magnification
       end
     end
     return (amount.zero? || counter.zero?) ? "" : (amount / counter).round(0).to_formatted_s(:delimited, delimiter: ',') + unit
