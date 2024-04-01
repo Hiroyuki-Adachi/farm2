@@ -108,8 +108,6 @@ SQL
     return yuv >= lum ? 'black' : 'white'
   end
 
-  private_class_method :to_fg_color
-
   private
 
   def update_cost_flag
