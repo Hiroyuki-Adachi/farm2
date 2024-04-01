@@ -23,16 +23,6 @@ Layout/EmptyLineAfterGuardClause:
 Layout/EndOfLine:
   Enabled: false
 
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowForAlignment, AllowBeforeTrailingComments, ForceEqualSignAlignment.
-Layout/ExtraSpacing:
-  Exclude:
-    - 'app/models/base_unit.rb'
-    - 'app/models/work_kind.rb'
-    - 'test/controllers/gaps/health_controller_test.rb'
-    - 'test/controllers/gaps/trainings_controller_test.rb'
-
 # Offense count: 7
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, IndentationWidth.
