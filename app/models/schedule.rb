@@ -30,10 +30,10 @@ class Schedule < ApplicationRecord
   has_one :minute, dependent: :destroy
 
   scope :usual, -> {
-      where(["worked_at >= current_date"])
-        .includes(:work_type, :work_kind, schedule_workers: [worker: :home])
-        .order(worked_at: :ASC, id: :ASC)
-    }
+                  where(["worked_at >= current_date"])
+                    .includes(:work_type, :work_kind, schedule_workers: [worker: :home])
+                    .order(worked_at: :ASC, id: :ASC)
+                }
 
   scope :by_worker, ->(worker) {where([<<SQL, worker.id])}
       EXISTS (SELECT * FROM schedule_workers
