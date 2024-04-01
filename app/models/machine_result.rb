@@ -149,7 +149,7 @@ class MachineResult < ApplicationRecord
         work.sum_areas / 10
                 when Adjust::DAY
         1
-    end
+                end
     @amount = @price * @quantity
   end
 
