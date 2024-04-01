@@ -63,12 +63,6 @@ Layout/SpaceInsideHashLiteralBraces:
 Layout/TrailingWhitespace:
   Enabled: false
 
-# Offense count: 1
-# Configuration parameters: AllowComments, AllowEmptyLambdas.
-Lint/EmptyBlock:
-  Exclude:
-    - 'app/controllers/work_seedlings_controller.rb'
-
 # Offense count: 2
 Lint/FloatComparison:
   Exclude:
