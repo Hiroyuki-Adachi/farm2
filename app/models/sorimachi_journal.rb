@@ -189,9 +189,9 @@ class SorimachiJournal < ApplicationRecord
 
   def ==(value)
     return self.amount1 == value.amount1 &&
-      self.amount2 == value.amount2 && 
-      self.code01 == value.code01 &&
-      self.code12 == value.code12
+           self.amount2 == value.amount2 && 
+           self.code01 == value.code01 &&
+           self.code12 == value.code12
   end
 
   private
