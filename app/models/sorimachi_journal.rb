@@ -187,11 +187,11 @@ class SorimachiJournal < ApplicationRecord
     self.reload
   end
 
-  def ==(value)
-    return self.amount1 == value.amount1 &&
-           self.amount2 == value.amount2 && 
-           self.code01 == value.code01 &&
-           self.code12 == value.code12
+  def ==(other)
+    return self.amount1 == other.amount1 &&
+           self.amount2 == other.amount2 && 
+           self.code01 == other.code01 &&
+           self.code12 == other.code12
   end
 
   def self.updatable_attributes
