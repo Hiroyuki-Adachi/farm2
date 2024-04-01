@@ -65,7 +65,7 @@ class WorkLand < ApplicationRecord
     return fixed_cost if fixed_cost
     local_cost = interim_cost
     return local_cost unless largest?
-    return local_cost + (work.sum_workers_amount - work.work_lands.map(&:interim_cost).sum)
+    return local_cost + (work.sum_workers_amount - work.work_lands.sum(&:interim_cost))
   end
 
   def self.by_worked_at(worked_at)
