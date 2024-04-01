@@ -194,14 +194,16 @@ class SorimachiJournal < ApplicationRecord
            self.code12 == value.code12
   end
 
-  private
-
   def self.updatable_attributes
     ['line', 'detail', 'accounted_on',
      'code01', 'code02', 'code03', 'code04', 'tax01', 'code05', 'code06', 'code07', 'amount1', 
      'code11', 'code12', 'code13', 'code14', 'code15', 'tax11', 'code16', 'code17', 'code18', 'amount2', 
      'code21', 'remark1', 'remark2', 'remark3', 'code31', 'amount3', 'remark4']
   end
+
+  private_class_method :updatable_attributes
+
+  private
 
   def term_check
     if self.accounted_on.present? && self.accounted_on.year != self.term

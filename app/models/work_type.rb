@@ -93,6 +93,23 @@ SQL
     return fg_color_term(organization.get_term(date))
   end
 
+  def self.to_fg_color(bg_color)
+    rgb = {r: 255, g: 255, b: 255 }
+    lum = 135
+  
+    if bg_color[0, 1] == '#' && bg_color.length == 7
+      rgb[:r] = bg_color[1, 2].to_i(16)
+      rgb[:g] = bg_color[3, 2].to_i(16)
+      rgb[:b] = bg_color[5, 2].to_i(16)
+    end
+
+    yuv = (0.2126 * rgb[:r]) + (0.7152 * rgb[:g]) + (0.0722 * rgb[:b]);
+  
+    return yuv >= lum ? 'black' : 'white'
+  end
+
+  private_class_method :to_fg_color
+
   private
 
   def update_cost_flag
@@ -108,20 +125,5 @@ SQL
     else
       work_term.destroy if work_term
     end
-  end
-
-  def self.to_fg_color(bg_color)
-    rgb = {r: 255, g: 255, b: 255 }
-    lum = 135
-  
-    if bg_color[0, 1] == '#' && bg_color.length == 7
-      rgb[:r] = bg_color[1, 2].to_i(16)
-      rgb[:g] = bg_color[3, 2].to_i(16)
-      rgb[:b] = bg_color[5, 2].to_i(16)
-    end
-
-    yuv = (0.2126 * rgb[:r]) + (0.7152 * rgb[:g]) + (0.0722 * rgb[:b]);
-  
-    return yuv >= lum ? 'black' : 'white'
   end
 end
