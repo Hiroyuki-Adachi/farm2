@@ -152,14 +152,22 @@ SQL
      .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
      .where("systems.term = ?", term)
   }
+
   scope :for_contract, ->(worker, worked_at, work_type_id) {
-    where("works.worked_at >= ? AND works.work_type_id = ?", worked_at, work_type_id)
-      .where([<<SQL, worker.home_id])}
-      EXISTS (SELECT * FROM work_lands
-        INNER JOIN lands ON work_lands.land_id = lands.id
-        WHERE work_lands.work_id = works.id
-          AND lands.manager_id = ?)
-SQL
+    basic_conditions = where("works.worked_at >= ? AND works.work_type_id = ?", worked_at, work_type_id)
+
+    work_lands_table = WorkLand.arel_table
+    lands_table = Land.arel_table
+
+    exists_subquery = work_lands_table
+                      .project(Arel.star)
+                      .join(lands_table).on(work_lands_table[:land_id].eq(lands_table[:id]))
+                      .where(work_lands_table[:work_id].eq(arel_table[:id]))
+                      .where(lands_table[:manager_id].eq(worker.home_id))
+                      .exists
+
+    basic_conditions.where(exists_subquery)
+  }
 
   scope :for_calendar, ->(term, work_kinds) {
     group(:worked_at, :work_kind_id, :work_type_id)
