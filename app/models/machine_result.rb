@@ -143,11 +143,11 @@ class MachineResult < ApplicationRecord
 
     @price = price_detail.price
     @quantity = case @adjust
-      when Adjust::HOUR
+                when Adjust::HOUR
         sum_hours
-      when Adjust::AREA
+                when Adjust::AREA
         work.sum_areas / 10
-      when Adjust::DAY
+                when Adjust::DAY
         1
     end
     @amount = @price * @quantity

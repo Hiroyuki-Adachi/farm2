@@ -6,16 +6,16 @@ class ScheduleWorkerDecorator < Draper::Decorator
 
   def worked_at
     result = case model.schedule.worked_at - Date.today
-              when 0
-                "今日"
-              when 1
-                "明日"
-              when 2
-                "明後日"
-              when 7
-                "一週間後"
-              else
-                (model.schedule.worked_at - Date.today).to_i.to_s + "日後"
+             when 0
+               "今日"
+             when 1
+               "明日"
+             when 2
+               "明後日"
+             when 7
+               "一週間後"
+             else
+               (model.schedule.worked_at - Date.today).to_i.to_s + "日後"
               end
     result += "(#{model.schedule.worked_at.strftime('%m月%d日')})(#{I18n.t('date.abbr_day_names')[model.schedule.worked_at.wday]})"
     result += " #{schedule.start_at_jp}"
