@@ -18,4 +18,4 @@ csv_str = CSV.generate do |csv|
   end
 end
 
-NKF::nkf('--sjis -Lw', csv_str)
+NKF.nkf('--sjis -Lw', csv_str)

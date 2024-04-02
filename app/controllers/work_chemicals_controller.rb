@@ -33,8 +33,6 @@ class WorkChemicalsController < ApplicationController
         work_rate_numer[work_chemical.work_id][work_chemical.chemical_id] ||= 0
         work_rate_numer[work_chemical.work_id][work_chemical.chemical_id] += denom
       end
-    end
-    work_chemicals_temp.each do |work_chemical|
       @work_types[work_chemical.work_id] = work_chemical.work.exact_work_types
       @work_types[work_chemical.work_id].each do |work_type|
         numer = work_rate_numer[work_chemical.work_id][work_chemical.chemical_id]

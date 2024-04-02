@@ -159,27 +159,6 @@ Rails/SkipsModelValidations:
     - 'app/models/work_verification.rb'
     - 'test/controllers/menu_controller_test.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, conditionals
-Style/AndOr:
-  Exclude:
-    - 'app/models/work.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Style/ColonMethodCall:
-  Exclude:
-    - 'app/views/machine_results/index.csv.ruby'
-    - 'app/views/works/index.csv.ruby'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/CombinableLoops:
-  Exclude:
-    - 'app/controllers/work_chemicals_controller.rb'
-
 # Offense count: 8
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, SingleLineConditionsOnly, IncludeTernaryExpressions.
