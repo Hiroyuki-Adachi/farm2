@@ -33,7 +33,7 @@ class Schedule < ApplicationRecord
                     .order(worked_at: :ASC, id: :ASC)
                 }
 
-  scope :by_worker, ->(worker) {where([<<SQL, worker.id])}
+  scope :by_worker, ->(worker) {where([<<SQL.squish, worker.id])}
       EXISTS (SELECT * FROM schedule_workers
             WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
 SQL

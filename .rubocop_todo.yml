@@ -159,18 +159,6 @@ Rails/SkipsModelValidations:
     - 'app/models/work_verification.rb'
     - 'test/controllers/menu_controller_test.rb'
 
-# Offense count: 16
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/SquishedSQLHeredocs:
-  Exclude:
-    - 'app/models/chemical_term.rb'
-    - 'app/models/chemical_work_type.rb'
-    - 'app/models/land_cost.rb'
-    - 'app/models/minute.rb'
-    - 'app/models/schedule.rb'
-    - 'app/models/work.rb'
-    - 'app/models/work_type.rb'
-
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.

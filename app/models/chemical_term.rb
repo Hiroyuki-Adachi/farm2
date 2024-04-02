@@ -19,7 +19,7 @@ class ChemicalTerm < ApplicationRecord
   scope :usual, ->(term) {
     joins(chemical: :chemical_type).includes(:chemical)
       .where(term: term)
-      .order(Arel.sql(<<SQL))
+      .order(Arel.sql(<<SQL.squish))
         chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id
 SQL
   }
@@ -32,7 +32,7 @@ SQL
       .select("chemicals.*, chemical_terms.id AS chemical_term_id")
   }
 
-  scope :land, ->{joins(:chemical).where(<<SQL)}
+  scope :land, ->{joins(:chemical).where(<<SQL.squish)}
   EXISTS (SELECT * FROM chemical_kinds WHERE chemical_kinds.chemical_type_id = chemicals.chemical_type_id)
 SQL
 
