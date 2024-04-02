@@ -42,9 +42,7 @@ SQL
     end
   end
 
-  def chemical_name
-    chemical.name
-  end
+  delegate :name, to: :chemical, prefix: true
 
   def self.create_for_plans(params, term)
     ChemicalTerm.destroy_all
