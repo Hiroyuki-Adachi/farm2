@@ -20,7 +20,7 @@ class PersonalCalendarsController < ApplicationController
   end
 
   def worked_from
-    Date.new(Date.today.year - 1, 1, 1)
+    Date.new(Time.zone.today.year - 1, 1, 1)
   end
 
   def make_calendar

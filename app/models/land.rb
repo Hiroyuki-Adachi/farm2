@@ -169,7 +169,7 @@ class Land < ApplicationRecord
     LandFee.find_by(term: term, land_id: self.id)
   end
 
-  def expiry?(date = Date.today)
+  def expiry?(date = Time.zone.today)
     self.start_on <= date && date <= self.end_on
   end
 

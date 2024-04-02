@@ -59,7 +59,7 @@ class LandsController < ApplicationController
   end
 
   def set_other_lands
-    @other_lands = Land.regionable.where.not(id: @land).expiry(Date.today)
+    @other_lands = Land.regionable.where.not(id: @land).expiry(Time.zone.today)
   end
 
   def land_params
