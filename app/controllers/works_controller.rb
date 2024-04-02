@@ -165,7 +165,7 @@ class WorksController < ApplicationController
         worked_at1: params[:worked_at1],
         worked_at2: params[:worked_at2],
         except: params[:except],
-        page: params[:page] || 1,
+        page: params[:page] || 1
       }
     else
       @work_search = session[:work_search]
