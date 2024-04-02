@@ -200,14 +200,6 @@ Style/RedundantLineContinuation:
   Exclude:
     - 'app/controllers/application_controller.rb'
 
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantRegexpArgument:
-  Exclude:
-    - 'app/models/calendar_work_kind.rb'
-    - 'app/models/land.rb'
-    - 'lib/tasks/extract_fixtures.rake'
-
 # Offense count: 197
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowMultipleReturnValues.
