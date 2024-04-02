@@ -30,8 +30,8 @@ class ImportJmaJob < ApplicationJob
   KIND_QUALITY = "品質"
   def perform(*years)
     if years.empty?
-      import(Date.today.year - 1)
-      import(Date.today.year)
+      import(Time.zone.today.year - 1)
+      import(Time.zone.today.year)
     else
       years.each do |y|
         import(y)

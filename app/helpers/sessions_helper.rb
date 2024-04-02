@@ -50,7 +50,7 @@ module SessionsHelper
   end
   
   def this_term?
-    current_system.start_date <= Date.today && current_system.end_date >= Date.today
+    current_system.start_date <= Time.zone.today && current_system.end_date >= Time.zone.today
   end
 
   def now_system

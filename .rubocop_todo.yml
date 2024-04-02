@@ -106,24 +106,6 @@ Rails/ActionOrder:
   Enabled: false
 
 
-# Offense count: 21
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, AllowToTime.
-# SupportedStyles: strict, flexible
-Rails/Date:
-  Exclude:
-    - 'app/controllers/lands_controller.rb'
-    - 'app/controllers/machine_prices_controller.rb'
-    - 'app/controllers/personal_calendars_controller.rb'
-    - 'app/controllers/plans/lands_controller.rb'
-    - 'app/decorators/schedule_worker_decorator.rb'
-    - 'app/helpers/sessions_helper.rb'
-    - 'app/jobs/import_jma_job.rb'
-    - 'app/models/land.rb'
-    - 'app/models/land_cost.rb'
-    - 'app/models/organization.rb'
-    - 'app/models/schedule_worker.rb'
-
 # Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforceForPrefixed.
