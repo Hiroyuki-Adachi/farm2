@@ -51,6 +51,6 @@ class ZgisExcelService
   def zgis_polygon(land)
     return "" if land.region.empty?
     polygons = land.region_values.map { |region| "#{region[1]} #{region[0]}" }
-    return "Polygon((#{polygons.join(",")}))"
+    return "Polygon((#{polygons.join(',')}))"
   end
 end
