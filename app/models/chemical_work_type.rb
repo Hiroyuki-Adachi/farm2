@@ -63,7 +63,7 @@ SQL
       ChemicalWorkType.create(
         chemical_term_id: chemical_term.id,
         quantity: chemical_work_type.quantity,
-        work_type_id: chemical_work_type.work_type_id,
+        work_type_id: chemical_work_type.work_type_id
       )
     end
   end
