@@ -190,14 +190,6 @@ Style/Lambda:
 Style/NumericLiterals:
   MinDigits: 6
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: then, yield_self
-Style/ObjectThen:
-  Exclude:
-    - 'test/application_system_test_case.rb'
-
 # Offense count: 3
 # This cop supports safe autocorrection (--autocorrect).
 Style/OrAssignment:
