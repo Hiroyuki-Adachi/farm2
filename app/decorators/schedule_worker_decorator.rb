@@ -26,7 +26,5 @@ class ScheduleWorkerDecorator < Draper::Decorator
     schedule.work_type.name + "(" + schedule_name + ")"
   end
 
-  def schedule_name
-    schedule.name
-  end
+  delegate :name, to: :schedule, prefix: true
 end

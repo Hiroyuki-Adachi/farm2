@@ -48,7 +48,5 @@ class SeedlingHome < ApplicationRecord
     return dispose? ? quantity : result_quantity
   end
 
-  def home_display_order
-    home.home_display_order
-  end
+  delegate :home_display_order, to: :home
 end
