@@ -196,12 +196,6 @@ Style/OrAssignment:
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
-Style/RedundantDoubleSplatHashBraces:
-  Exclude:
-    - 'test/application_system_test_case.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
 Style/RedundantFileExtensionInRequire:
   Exclude:
     - 'app/helpers/application_helper.rb'
