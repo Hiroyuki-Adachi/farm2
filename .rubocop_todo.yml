@@ -196,12 +196,6 @@ Style/OrAssignment:
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
-Style/RedundantConstantBase:
-  Exclude:
-    - 'config.ru'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
 Style/RedundantDoubleSplatHashBraces:
   Exclude:
     - 'test/application_system_test_case.rb'
