@@ -103,7 +103,7 @@ SQL
                                 AND work_results.work_id = works.id
       WHERE machine_results.machine_id IN (?))
 SQL
-  scope :by_types, ->(work_types) {where(["works.work_type_id IN (?)", work_types.ids])}
+  scope :by_types, ->(work_types) {where(works: { work_type_id: work_types.ids })}
 
   scope :by_worker, ->(worker) {where([<<SQL.squish, worker.id])}
     EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND work_results.worker_id = ?)
@@ -116,7 +116,7 @@ SQL
   scope :by_land, ->(land) {where("EXISTS (SELECT * FROM work_lands WHERE works.id = work_lands.work_id AND work_lands.land_id = ?)", land.id)}
 
   scope :by_chemical, ->(term) {
-    where("id IN (?)", WorkChemical.by_term(term).pluck("work_chemicals.work_id").uniq)
+    where(id: WorkChemical.by_term(term).pluck("work_chemicals.work_id").uniq)
       .order("worked_at, id")
   }
 
@@ -148,7 +148,7 @@ SQL
   scope :by_target, ->(term) {
     joins("INNER JOIN systems ON systems.term = works.term")
      .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
-     .where("systems.term = ?", term)
+     .where(systems: { term: term })
   }
 
   scope :for_contract, ->(worker, worked_at, work_type_id) {

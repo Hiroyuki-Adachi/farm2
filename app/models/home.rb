@@ -46,7 +46,7 @@ class Home < ApplicationRecord
 
   scope :usual, -> {
     includes(:section)
-      .where(["sections.work_flag = ?", true])
+      .where(sections: { work_flag: true })
       .order(Arel.sql("sections.display_order, homes.display_order, homes.id"))
   }
   scope :list, -> {

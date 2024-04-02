@@ -159,11 +159,6 @@ Rails/SkipsModelValidations:
     - 'app/models/work_verification.rb'
     - 'test/controllers/menu_controller_test.rb'
 
-# Offense count: 41
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/WhereEquals:
-  Enabled: false
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Rails/WhereNot:

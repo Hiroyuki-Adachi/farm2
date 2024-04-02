@@ -35,7 +35,7 @@ class Expense < ApplicationRecord
   scope :chemicals, ->(term) {
     joins(:expense_type)
       .where(term: term, cost_flag: false)
-      .where("expense_types.chemical_flag = ?", true)
+      .where(expense_types: { chemical_flag: true })
   }
 
   accepts_nested_attributes_for :expense_work_types, allow_destroy: true

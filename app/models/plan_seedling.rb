@@ -37,7 +37,7 @@ class PlanSeedling < ApplicationRecord
         end
       end
     end
-    PlanSeedling.joins(:home).where("homes.seedling_order IS NULL").destroy_all
+    PlanSeedling.joins(:home).where(homes: { seedling_order: nil }).destroy_all
   end
 
   def seeds

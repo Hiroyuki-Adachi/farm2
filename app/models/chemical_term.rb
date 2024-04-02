@@ -27,7 +27,7 @@ SQL
   scope :by_type, ->(term, chemical_type_id) {
     joins(:chemical)
       .where(term: term)
-      .where("chemicals.chemical_type_id = ?", chemical_type_id)
+      .where(chemicals: { chemical_type_id: chemical_type_id })
       .order("chemicals.phonetic, chemicals.display_order, chemicals.id")
       .select("chemicals.*, chemical_terms.id AS chemical_term_id")
   }

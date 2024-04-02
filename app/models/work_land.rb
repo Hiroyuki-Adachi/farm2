@@ -28,7 +28,7 @@ class WorkLand < ApplicationRecord
     joins(:work).includes(work: :work_kind)
       .joins(:land).includes(:land)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id")
-      .where("works.term = ?", term)
+      .where(works: { term: term })
       .where("(lands.manager_id = ? OR EXISTS (SELECT * FROM land_homes WHERE lands.id = land_homes.land_id AND home_id = ? AND manager_flag = true))", home.id, home.id)
       .order("lands.display_order, lands.id, works.worked_at")
   }
@@ -36,9 +36,9 @@ class WorkLand < ApplicationRecord
   scope :for_fix, ->(term, fixed_at, contract_id) {
     joins(:work)
       .joins(:land)
-      .where("works.work_type_id = ?", contract_id)
+      .where(works: { work_type_id: contract_id })
       .where("works.fixed_at = ? AND work_lands.fixed_cost IS NOT NULL", fixed_at)
-      .where("works.term = ?", term)
+      .where(works: { term: term })
   }
 
   scope :for_cards, ->(land_id, worked_at) {
@@ -46,7 +46,7 @@ class WorkLand < ApplicationRecord
       .joins(:land).includes(:land)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").includes(work: :work_kind)
       .where("works.worked_at >= ?", worked_at)
-      .where("lands.id = ?", land_id)
+      .where(lands: { id: land_id })
       .order("works.worked_at, works.id")
   }
 
