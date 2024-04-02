@@ -190,20 +190,6 @@ Style/NestedTernaryOperator:
   Exclude:
     - 'app/decorators/machine_result_decorator.rb'
 
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, MinBodyLength.
-# SupportedStyles: skip_modifier_ifs, always
-Style/Next:
-  Exclude:
-    - 'app/models/chemical_stock.rb'
-    - 'app/models/chemical_term.rb'
-    - 'app/models/machine_remark.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/models/sorimachi_work_type.rb'
-    - 'app/services/concerns/workbook.rb'
-    - 'app/views/total_dryings/index.csv.ruby'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: IncludeSemanticChanges.
