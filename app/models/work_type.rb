@@ -46,8 +46,7 @@ SQL
     .order(display_order: :ASC, id: :ASC)
   }
 
-  attr_accessor :term
-  attr_accessor :term_flag
+  attr_accessor :term, :term_flag
 
   def genre_id
     Rails.cache.fetch("genre_id_#{self[:genre]}", expires_in: 1.hour) do
