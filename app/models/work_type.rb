@@ -119,8 +119,8 @@ SQL
       work_term ||= WorkTypeTerm.new(term: @term, work_type_id: self.id)
       work_term.bg_color = self.bg_color
       work_term.save!
-    else
-      work_term.destroy if work_term
+    elsif work_term
+      work_term.destroy
     end
   end
 end

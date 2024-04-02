@@ -293,8 +293,8 @@ SQL
           else
             machine_result.destroy
           end
-        else
-          MachineResult.create(work_result_id: work_result_id, machine_id: machine_id, hours: hour) if hour > 0
+        elsif hour > 0
+          MachineResult.create(work_result_id: work_result_id, machine_id: machine_id, hours: hour)
         end
       end
     end

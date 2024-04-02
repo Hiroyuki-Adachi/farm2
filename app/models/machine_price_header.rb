@@ -77,10 +77,8 @@ class MachinePriceHeader < ApplicationRecord
           else
             detail.update(adjust_id: v2[:adjust_id], price: v2[:price])
           end
-        else
-          if v2[:adjust_id].to_i != Adjust::NONE.id
-            MachinePriceDetail.create(machine_price_header_id: id, lease_id: lease_id, work_kind_id: work_kind_id, adjust_id: v2[:adjust_id], price: v2[:price])
-          end
+        elsif v2[:adjust_id].to_i != Adjust::NONE.id
+          MachinePriceDetail.create(machine_price_header_id: id, lease_id: lease_id, work_kind_id: work_kind_id, adjust_id: v2[:adjust_id], price: v2[:price])
         end
       end
     end
