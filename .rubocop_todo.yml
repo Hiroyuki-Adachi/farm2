@@ -106,15 +106,6 @@ Rails/ActionOrder:
   Enabled: false
 
 
-# Offense count: 3
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: NilOrEmpty, NotPresent, UnlessPresent.
-Rails/Blank:
-  Exclude:
-    - 'app/controllers/lands/totals_controller.rb'
-    - 'app/controllers/work_chemicals_controller.rb'
-    - 'app/models/sorimachi_work_type.rb'
-
 # Offense count: 21
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, AllowToTime.

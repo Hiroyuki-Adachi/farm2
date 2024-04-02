@@ -18,7 +18,7 @@ class SorimachiWorkType < ApplicationRecord
 
   def self.refresh(journal_id, params)
     SorimachiWorkType.where(sorimachi_journal_id: journal_id).destroy_all
-    return unless params.present?
+    return if params.blank?
     params[:amounts].each do |key, value|
       unless value.to_f.zero?
         SorimachiWorkType.create({
