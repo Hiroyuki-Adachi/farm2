@@ -177,15 +177,6 @@ Style/ExpandPathArguments:
 Style/HashSyntax:
   Enabled: false
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowIfModifier.
-Style/IfInsideElse:
-  Exclude:
-    - 'app/models/machine_price_header.rb'
-    - 'app/models/work.rb'
-    - 'app/models/work_type.rb'
-
 # Offense count: 5
 # This cop supports safe autocorrection (--autocorrect).
 Style/IfUnlessModifier:
