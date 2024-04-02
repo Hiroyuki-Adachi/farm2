@@ -458,7 +458,7 @@ SQL
   def maintenances
     results = [name, remarks]
     results << machine_remarks.pluck(:care_remarks)
-    return results.flatten.uniq.delete_if {|v| v.empty? }
+    return results.flatten.uniq.delete_if(&:empty?)
   end
 
   def machine_numbers

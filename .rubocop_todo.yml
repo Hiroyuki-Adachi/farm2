@@ -219,17 +219,6 @@ Style/RescueStandardError:
   Exclude:
     - 'app/controllers/sorimachi/imports_controller.rb'
 
-# Offense count: 4
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowMethodsWithArguments, AllowedMethods, AllowedPatterns, AllowComments.
-# AllowedMethods: define_method, mail, respond_to
-Style/SymbolProc:
-  Exclude:
-    - 'app/models/land_cost.rb'
-    - 'app/models/sorimachi_account.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/models/work.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, AllowSafeAssignment.

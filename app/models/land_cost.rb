@@ -107,8 +107,6 @@ SQL
   end
 
   def regist_work_work_types
-    Work.where("worked_at BETWEEN ? AND ?", activated_on, next_land_cost&.activated_on || Time.zone.today).by_land(land).each do |w|
-      w.regist_work_work_types
-    end
+    Work.where("worked_at BETWEEN ? AND ?", activated_on, next_land_cost&.activated_on || Time.zone.today).by_land(land).each(&:regist_work_work_types)
   end
 end
