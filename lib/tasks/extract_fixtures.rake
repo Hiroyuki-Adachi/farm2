@@ -9,7 +9,7 @@ namespace :db do
       FileUtils.mkdir_p(fixtures_dir)
 
       table_names = if ENV['FIXTURES']
-                      ENV['FIXTURES'].split(/,/)
+                      ENV['FIXTURES'].split(",")
                     else
                       (ActiveRecord::Base.connection.tables - skip_tables)
                     end
