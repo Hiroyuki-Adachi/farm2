@@ -24,6 +24,6 @@ module WorksHelper
         amount += work_chemical.magnification
       end
     end
-    return (amount.zero? || counter.zero?) ? "" : (amount / counter).round(0).to_formatted_s(:delimited, delimiter: ',') + unit
+    return (amount.zero? || counter.zero?) ? "" : (amount / counter).round(0).to_fs(:delimited, delimiter: ',') + unit
   end
 end
