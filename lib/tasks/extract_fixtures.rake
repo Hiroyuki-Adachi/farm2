@@ -3,7 +3,7 @@ namespace :db do
   namespace :fixtures do
     desc "Extract database data to tmp/fixtures directory."
     task :extract => :environment do
-      fixtures_dir = "#{Rails.root}/tmp/fixtures/"
+      fixtures_dir = Rails.root.join("tmp/fixtures/").to_s
       skip_tables = ["schema_info", "schema_migrations", "sessions"]
       ActiveRecord::Base.establish_connection
       FileUtils.mkdir_p(fixtures_dir)
