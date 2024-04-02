@@ -36,7 +36,7 @@ class Land < ApplicationRecord
   belongs_to :owner, -> {with_deleted}, class_name: :Home, foreign_key: :owner_id
   belongs_to :manager, -> {with_deleted}, class_name: :Home, foreign_key: :manager_id
   belongs_to :land_place, -> {with_deleted}
-  belongs_to :group, class_name: :Land, foreign_key: :group_id
+  belongs_to :group, class_name: :Land
 
   has_one :owner_holder, -> {with_deleted}, through: :owner, source: :holder
   has_one :manager_holder, -> {with_deleted}, through: :manager, source: :holder
