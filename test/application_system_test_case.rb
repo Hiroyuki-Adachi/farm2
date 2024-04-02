@@ -2,7 +2,7 @@ require "test_helper"
 require "capybara/cuprite"
 require "capybara/rails"
 
-REMOTE_CHROME_URL = ENV["CHROME_URL"]
+REMOTE_CHROME_URL = ENV.fetch("CHROME_URL", nil)
 REMOTE_CHROME_HOST, REMOTE_CHROME_PORT =
   if REMOTE_CHROME_URL
     URI.parse(REMOTE_CHROME_URL).yield_self do |uri|
