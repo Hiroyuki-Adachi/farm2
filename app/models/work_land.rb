@@ -105,7 +105,7 @@ class WorkLand < ApplicationRecord
       chemical_term = ChemicalTerm.find_by(chemical_id: work_chemical.chemical_id, term: work_chemical.work.term)
       next unless chemical_term
       chemical_work_type = ChemicalWorkType.find_by(chemical_term_id: chemical_term, work_type_id: work_type_id)
-      next unless chemical_work_type && chemical_work_type.quantity.positive?
+      next unless chemical_work_type&.quantity&.positive?
       denom = 0
       ChemicalWorkType.usable(chemical_term).each do |cw|
         denom += (WorkLand.sum_areas(work_id, cw.work_type_id) * cw.quantity)
