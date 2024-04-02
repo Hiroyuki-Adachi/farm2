@@ -321,9 +321,7 @@ SQL
   end
 
   def refresh_broccoli(organization)
-    if work_type_id == organization.broccoli_work_type_id && work_kind_id == organization.broccoli_work_kind_id
-      broccoli.destroy if broccoli.present?
-    end
+    broccoli.destroy if work_type_id == organization.broccoli_work_type_id && work_kind_id == organization.broccoli_work_kind_id && broccoli.present?
   end
 
   def self.total_all
