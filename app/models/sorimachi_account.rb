@@ -60,8 +60,6 @@ class SorimachiAccount < ApplicationRecord
   private
 
   def clear_journals
-    SorimachiJournal.where("term = ? AND (code01 = ? OR code12 = ?)", self.term, self.code, self.code).find_each do |journal|
-      journal.clear_flags
-    end
+    SorimachiJournal.where("term = ? AND (code01 = ? OR code12 = ?)", self.term, self.code, self.code).find_each(&:clear_flags)
   end
 end
