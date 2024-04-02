@@ -147,19 +147,6 @@ Rails/OutputSafety:
   Exclude:
     - 'config/application.rb'
 
-# Offense count: 6
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowedReceivers.
-# AllowedReceivers: ActionMailer::Preview, ActiveSupport::TimeZone
-Rails/RedundantActiveRecordAllMethod:
-  Exclude:
-    - 'app/controllers/banks_controller.rb'
-    - 'app/controllers/chemical_types_controller.rb'
-    - 'app/controllers/chemicals_controller.rb'
-    - 'app/controllers/homes_controller.rb'
-    - 'app/controllers/machine_types_controller.rb'
-    - 'app/controllers/sections_controller.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 Rails/RedundantForeignKey:
