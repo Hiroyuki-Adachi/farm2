@@ -105,17 +105,6 @@ Rails/ActionControllerTestCase:
 Rails/ActionOrder:
   Enabled: false
 
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: slashes, arguments
-Rails/FilePath:
-  Exclude:
-    - 'config/application.rb'
-    - 'config/initializers/assets.rb'
-    - 'lib/tasks/extract_fixtures.rake'
-    - 'test/controllers/sorimachi/imports_controller_test.rb'
-
 # Offense count: 22
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowedMethods, AllowedPatterns.
