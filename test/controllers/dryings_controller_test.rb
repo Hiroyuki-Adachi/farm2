@@ -49,7 +49,7 @@ class DryingsControllerTest < ActionController::TestCase
               {moth_count: 1, moth_no: 1000, water_content: 14.1, moth_weight: 760, rice_weight: 529.2},
               {moth_count: 2, moth_no: 1001, water_content: 14.9, moth_weight: 688, rice_weight: 487.7},
               {moth_count: 3},
-              {moth_count: 4},
+              {moth_count: 4}
             ]
           }}
         end
