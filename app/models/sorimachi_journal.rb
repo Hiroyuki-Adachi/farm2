@@ -206,9 +206,7 @@ class SorimachiJournal < ApplicationRecord
   private
 
   def term_check
-    if self.accounted_on.present? && self.accounted_on.year != self.term
-      errors.add(:term, "の対応に誤りがあります。")
-    end
+    errors.add(:term, "の対応に誤りがあります。") if self.accounted_on.present? && self.accounted_on.year != self.term
   end
 
   def clear_work_types

@@ -31,9 +31,7 @@ namespace :db do
           objects.each_with_index do |obj, i|
             # not nullのカラムがnullになっていることがあるので、その場合は空文字列を入れておく
             model.columns.each do |col|
-              if !col.null && obj[col.name].nil?
-                obj[col.name] = ''
-              end
+              obj[col.name] = '' if !col.null && obj[col.name].nil?
             end
             file.write({"#{table_name}#{i}" => obj}.to_yaml.sub('---', ''))
             file.write "\n"
