@@ -194,13 +194,6 @@ Style/OrAssignment:
   Exclude:
     - 'app/controllers/sorimachi/accounts_controller.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/RedundantInterpolation:
-  Exclude:
-    - 'app/jobs/import_jma_job.rb'
-    - 'app/services/calendar_excel_month_service.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Style/RedundantLineContinuation:
