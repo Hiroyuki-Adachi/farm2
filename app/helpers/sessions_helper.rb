@@ -60,7 +60,7 @@ module SessionsHelper
   end
 
   def current_name
-    @current_name ||= current_user.worker.family_name + " " + current_user.worker.first_name
+    @current_name ||= "#{current_user.worker.family_name} #{current_user.worker.first_name}"
   end
 
   def log_out

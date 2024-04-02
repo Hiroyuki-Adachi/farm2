@@ -219,21 +219,6 @@ Style/RescueStandardError:
   Exclude:
     - 'app/controllers/sorimachi/imports_controller.rb'
 
-# Offense count: 18
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Mode.
-Style/StringConcatenation:
-  Exclude:
-    - 'app/decorators/schedule_decorator.rb'
-    - 'app/decorators/schedule_worker_decorator.rb'
-    - 'app/decorators/work_decorator.rb'
-    - 'app/decorators/work_result_decorator.rb'
-    - 'app/decorators/worker_decorator.rb'
-    - 'app/helpers/sessions_helper.rb'
-    - 'app/jobs/import_jma_job.rb'
-    - 'app/models/home.rb'
-    - 'app/models/worker.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.

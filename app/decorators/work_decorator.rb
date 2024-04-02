@@ -41,7 +41,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def work_time
-    start_at + '～' + end_at
+    "#{start_at}～#{end_at}"
   end
 
   def work_type_name
@@ -59,7 +59,7 @@ class WorkDecorator < Draper::Decorator
   def chemicals
     result = []
     model.work_chemicals.each do |work_chemical|
-      result << (work_chemical.chemical.name + "(" + work_chemical.chemical.chemical_type.name + "):" + work_chemical.quantity.to_s)
+      result << ("#{work_chemical.chemical.name}(#{work_chemical.chemical.chemical_type.name}):#{work_chemical.quantity}")
     end
     return result.to_sentence
   end
@@ -70,9 +70,9 @@ class WorkDecorator < Draper::Decorator
 
   def select_work_type(work_type)
     if work_type.id == model.work_type_id
-      return "●" + work_type.name
+      return "●#{work_type.name}"
     elsif model.work_types.ids.include?(work_type.id)
-      return "◯" + work_type.name
+      return "◯#{work_type.name}"
     end
     return h.raw("&nbsp;") + work_type.name
   end

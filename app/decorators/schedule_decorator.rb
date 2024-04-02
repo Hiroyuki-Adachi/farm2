@@ -46,7 +46,7 @@ class ScheduleDecorator < Draper::Decorator
   end
 
   def work_time
-    start_at + '～' + end_at
+    "#{start_at}～#{end_at}"
   end
 
   def start_at

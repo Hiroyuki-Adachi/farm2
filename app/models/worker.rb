@@ -75,11 +75,11 @@ class Worker < ApplicationRecord
   validates :broccoli_mark, uniqueness: true, :if => proc { |x| x.broccoli_mark.present?}
 
   def name
-    family_name + ' ' + first_name
+    "#{family_name} #{first_name}"
   end
 
   def phonetic
-    family_phonetic + ' ' + first_phonetic
+    "#{family_phonetic} #{first_phonetic}"
   end
 
   def payment
