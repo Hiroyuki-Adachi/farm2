@@ -143,13 +143,13 @@ class WorksController < ApplicationController
 
   def set_term
     path = Rails.application.routes.recognize_path(request.referer)
-    if path[:controller] == "menu" || session[:work_search].nil?
-      @term = current_term
-    elsif path[:controller] == "works" && path[:action] == "index"
-      @term = params[:term] || current_term
-    else
-      @term = session[:work_search]["term"] || current_term
-    end
+    @term = if path[:controller] == "menu" || session[:work_search].nil?
+              current_term
+            elsif path[:controller] == "works" && path[:action] == "index"
+              params[:term] || current_term
+            else
+              session[:work_search]["term"] || current_term
+            end
   end
 
   def set_search_info

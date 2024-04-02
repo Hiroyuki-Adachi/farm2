@@ -159,19 +159,6 @@ Rails/SkipsModelValidations:
     - 'app/models/work_verification.rb'
     - 'test/controllers/menu_controller_test.rb'
 
-# Offense count: 8
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, SingleLineConditionsOnly, IncludeTernaryExpressions.
-# SupportedStyles: assign_to_condition, assign_inside_condition
-Style/ConditionalAssignment:
-  Exclude:
-    - 'app/controllers/machine_prices_controller.rb'
-    - 'app/controllers/machine_results_controller.rb'
-    - 'app/controllers/work_results_controller.rb'
-    - 'app/controllers/works_controller.rb'
-    - 'app/models/machine_result.rb'
-    - 'lib/tasks/extract_fixtures.rake'
-
 # Offense count: 38
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AutoCorrect, EnforcedStyle.

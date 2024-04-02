@@ -18,11 +18,11 @@ class MachinePricesController < ApplicationController
   end
 
   def new
-    if params[:machine_id]
-      @machine_price = MachinePriceHeader.new(machine_id: params[:machine_id], machine_type_id: 0, validated_at: Time.zone.today)
-    else
-      @machine_price = MachinePriceHeader.new(machine_type_id: params[:machine_type_id], machine_id: 0, validated_at: Time.zone.today)
-    end
+    @machine_price = if params[:machine_id]
+                       MachinePriceHeader.new(machine_id: params[:machine_id], machine_type_id: 0, validated_at: Time.zone.today)
+                     else
+                       MachinePriceHeader.new(machine_type_id: params[:machine_type_id], machine_id: 0, validated_at: Time.zone.today)
+                     end
   end
 
   def create
