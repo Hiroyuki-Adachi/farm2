@@ -11,8 +11,7 @@ class MachineTypesController < ApplicationController
     @machine_type = MachineType.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @machine_type = MachineType.new(machine_type_params)

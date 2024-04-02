@@ -12,8 +12,7 @@ class ChemicalsController < ApplicationController
     @chemical = Chemical.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @chemical = Chemical.new(chemical_params)

@@ -10,8 +10,7 @@ class SectionsController < ApplicationController
     @section = Section.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @section = Section.new(section_params)

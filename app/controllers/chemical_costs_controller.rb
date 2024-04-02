@@ -17,8 +17,7 @@ class ChemicalCostsController < ApplicationController
     )
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @chemical_work_type = ChemicalWorkType.new(chemical_work_type_params)

@@ -8,11 +8,9 @@ class Gaps::TrainingsController < GapsController
     )
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     @training.attributes = traning_params

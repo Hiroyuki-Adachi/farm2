@@ -2,8 +2,7 @@ class SystemsController < ApplicationController
   before_action :permit_admin, only: [:edit, :update]
   before_action :set_system
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @system.update(system_params)

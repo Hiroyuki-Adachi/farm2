@@ -12,8 +12,7 @@ class HomesController < ApplicationController
     @home = Home.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @home = Home.new(home_params)
