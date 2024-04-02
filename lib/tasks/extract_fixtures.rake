@@ -8,11 +8,11 @@ namespace :db do
       ActiveRecord::Base.establish_connection
       FileUtils.mkdir_p(fixtures_dir)
 
-      if ENV['FIXTURES']
-        table_names = ENV['FIXTURES'].split(/,/)
-      else
-        table_names = (ActiveRecord::Base.connection.tables - skip_tables)
-      end
+      table_names = if ENV['FIXTURES']
+                      ENV['FIXTURES'].split(/,/)
+                    else
+                      (ActiveRecord::Base.connection.tables - skip_tables)
+                    end
 
       table_names.each do |table_name|
         begin
@@ -21,11 +21,11 @@ namespace :db do
           Object.const_set table_name.classify, Class.new(ApplicationModel)
           retry
         end
-        if model.columns.any?{|c| c.name == 'id'}
-          sql = "SELECT * FROM #{table_name} ORDER BY id ASC"
-        else
-          sql = "SELECT * FROM #{table_name}"
-        end
+        sql = if model.columns.any?{|c| c.name == 'id'}
+                "SELECT * FROM #{table_name} ORDER BY id ASC"
+              else
+                "SELECT * FROM #{table_name}"
+              end
         File.open("#{fixtures_dir}#{table_name}.yml", "w") do |file|
           objects = ActiveRecord::Base.connection.select_all(sql)
           objects.each_with_index do |obj, i|

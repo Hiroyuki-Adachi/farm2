@@ -2,11 +2,11 @@ class WorkResultsController < ApplicationController
   include PermitManager
 
   def index
-    if params[:fixed_at]
-      @results = WorkResult.by_home_for_fix(current_term, Date.strptime(params[:fixed_at], '%Y-%m-%d'))
-    else
-      @results = WorkResult.by_home(current_term)
-    end
+    @results = if params[:fixed_at]
+                 WorkResult.by_home_for_fix(current_term, Date.strptime(params[:fixed_at], '%Y-%m-%d'))
+               else
+                 WorkResult.by_home(current_term)
+               end
     @home_totals, @worker_totals = calc_totals(@results)
 
     respond_to do |format|

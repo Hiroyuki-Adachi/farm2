@@ -114,21 +114,21 @@ class MachineResult < ApplicationRecord
       return
     end
 
-    if owner.id == work_result.worker.home_id
-      price_details = price_details.where(lease_id: Lease::NORMAL.id)
-    else
-      price_details = price_details.where(lease_id: Lease::LEASE.id)
-    end
+    price_details = if owner.id == work_result.worker.home_id
+                      price_details.where(lease_id: Lease::NORMAL.id)
+                    else
+                      price_details.where(lease_id: Lease::LEASE.id)
+                    end
     unless price_details.exists?
       clear_amount
       return
     end
 
-    if price_details.exists?(work_kind_id: work.work_kind.id)
-      price_details = price_details.where(work_kind_id: work.work_kind.id)
-    else
-      price_details = price_details.where(work_kind_id: 0)
-    end
+    price_details = if price_details.exists?(work_kind_id: work.work_kind.id)
+                      price_details.where(work_kind_id: work.work_kind.id)
+                    else
+                      price_details.where(work_kind_id: 0)
+                    end
     unless price_details.exists?
       clear_amount
       return
