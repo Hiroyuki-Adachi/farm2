@@ -87,7 +87,7 @@ class ImportJmaJob < ApplicationJob
       "jikantaiFlag" => "0",
       "jikantaiList" => "[]",
       "ymdLiteral" => "1",
-      "PHPSESSID" => "#{sesid}"
+      "PHPSESSID" => sesid.to_s
     }
   end
 

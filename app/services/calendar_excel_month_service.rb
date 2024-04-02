@@ -26,7 +26,7 @@ class CalendarExcelMonthService
 
   def fill_title(data_sheet, calendar_work_kind, year, first_month)
     title_cell = data_sheet[3][0]
-    title_cell.change_contents("#{calendar_work_kind.work_kind.name}")
+    title_cell.change_contents(calendar_work_kind.work_kind.name.to_s)
 
     data_sheet[5][0].change_contents(year)
     data_sheet[5][2].change_contents(first_month)
