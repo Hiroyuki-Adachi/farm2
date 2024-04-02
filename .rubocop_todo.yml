@@ -184,14 +184,6 @@ Style/HashSyntax:
 Style/Lambda:
   Enabled: false
 
-# Offense count: 4
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/MapToHash:
-  Exclude:
-    - 'app/controllers/sorimachi/work_types_controller.rb'
-    - 'app/models/sorimachi_account.rb'
-    - 'app/models/sorimachi_journal.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Style/MultilineTernaryOperator:
