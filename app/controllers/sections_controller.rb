@@ -3,7 +3,7 @@ class SectionsController < ApplicationController
   before_action :set_section, only: [:edit, :update, :destroy]
 
   def index
-    @sections = Section.all.order(display_order: :ASC)
+    @sections = Section.order(display_order: :ASC)
   end
 
   def new
