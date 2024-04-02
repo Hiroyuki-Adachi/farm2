@@ -124,7 +124,7 @@ class MachineResult < ApplicationRecord
       return
     end
 
-    if price_details.where(work_kind_id: work.work_kind.id).exists?
+    if price_details.exists?(work_kind_id: work.work_kind.id)
       price_details = price_details.where(work_kind_id: work.work_kind.id)
     else
       price_details = price_details.where(work_kind_id: 0)

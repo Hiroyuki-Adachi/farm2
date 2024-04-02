@@ -66,7 +66,7 @@ class ChemicalStock < ApplicationRecord
 
   def self.create_begin(organization_id, chemical_id, start_date)
     System.where("start_date > ? AND organization_id = ?", start_date, organization_id).order(:start_date).each do |sys|
-      unless ChemicalStock.where("chemical_id = ? AND stock_on = ?", chemical_id, sys.start_date).exists?
+      unless ChemicalStock.exists?(["chemical_id = ? AND stock_on = ?", chemical_id, sys.start_date])
         ChemicalStock.create(
           name: "期首在庫",
           stock_on: sys.start_date,
