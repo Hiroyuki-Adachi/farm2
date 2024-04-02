@@ -11,7 +11,7 @@ class LandDecorator < Draper::Decorator
   #   end
 
   def area
-    return h.h(sprintf("%.2f", model.area))
+    return h.h(format("%.2f", model.area))
   end
 
   def self.homes

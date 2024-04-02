@@ -88,7 +88,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def sum_hours
-    "%.1f" % [model.sum_hours]
+    format("%.1f", model.sum_hours)
   end
 
   def sum_workers_amount
