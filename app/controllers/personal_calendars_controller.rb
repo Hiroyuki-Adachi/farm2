@@ -75,6 +75,6 @@ class PersonalCalendarsController < ApplicationController
   end
 
   def to_datetime(date, time)
-    Time.local(date.year, date.month, date.day, time.hour, time.min, 0)
+    Time.zone.local(date.year, date.month, date.day, time.hour, time.min, 0)
   end
 end
