@@ -46,7 +46,7 @@ class ChemicalWorkType < ApplicationRecord
 
   def self.by_work_chemical(work_chemical, work_type_id)
     joins(chemical_term: :chemical)
-    .find_by(<<SQL, work_type_id, work_chemical.work.term, work_chemical.chemical_id)
+    .find_by(<<SQL.squish, work_type_id, work_chemical.work.term, work_chemical.chemical_id)
           chemical_work_types.work_type_id = ? 
       AND chemical_terms.term = ?
       AND chemical_terms.chemical_id = ?

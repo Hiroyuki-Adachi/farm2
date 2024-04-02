@@ -72,7 +72,7 @@ class Work < ApplicationRecord
   scope :by_work_kind_type, ->(term, work_kind_id, work_type_id) {
     joins(:work_lands)
       .where(term: term, work_kind_id: work_kind_id)
-      .where([<<SQL, work_type_id]).select(:id, :worked_at).distinct
+      .where([<<SQL.squish, work_type_id]).select(:id, :worked_at).distinct
     EXISTS (
       SELECT * FROM land_costs lc1
       WHERE
@@ -87,7 +87,7 @@ class Work < ApplicationRecord
 SQL
       .order(worked_at: :ASC, id: :ASC)
   }
-  scope :enough_check, ->(worker) {where([<<SQL, worker.id, worker.position == Position::DIRECTOR ? ENOUGH + 1 : ENOUGH])}
+  scope :enough_check, ->(worker) {where([<<SQL.squish, worker.id, worker.position == Position::DIRECTOR ? ENOUGH + 1 : ENOUGH])}
       NOT EXISTS (
         SELECT work_verifications.work_id FROM work_verifications
           WHERE (work_verifications.work_id = works.id)
@@ -96,7 +96,7 @@ SQL
           HAVING COUNT(*) >= ?
       )
 SQL
-  scope :by_machines, ->(machines) {where([<<SQL, machines.pluck(:id)])}
+  scope :by_machines, ->(machines) {where([<<SQL.squish, machines.pluck(:id)])}
   EXISTS (
     SELECT * FROM work_results
       INNER JOIN machine_results ON work_results.id = machine_results.work_result_id 
@@ -105,11 +105,11 @@ SQL
 SQL
   scope :by_types, ->(work_types) {where(["works.work_type_id IN (?)", work_types.ids])}
 
-  scope :by_worker, ->(worker) {where([<<SQL, worker.id])}
+  scope :by_worker, ->(worker) {where([<<SQL.squish, worker.id])}
     EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND work_results.worker_id = ?)
 SQL
 
-  scope :not_printed, -> {where(<<SQL)}
+  scope :not_printed, -> {where(<<SQL.squish)}
       (works.printed_at IS NULL)
     OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)
 SQL
@@ -120,7 +120,7 @@ SQL
       .order("worked_at, id")
   }
 
-  scope :for_cost, ->(term) {where([<<SQL, term, WorkType.land.select(:id)])}
+  scope :for_cost, ->(term) {where([<<SQL.squish, term, WorkType.land.select(:id)])}
   works.term = ? AND (work_type_id IN (?))
 SQL
 
@@ -139,7 +139,7 @@ SQL
   }
 
   scope :landable, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
-  scope :machinable, -> {where(<<SQL)}
+  scope :machinable, -> {where(<<SQL.squish)}
   EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND EXISTS (
     SELECT * FROM machine_results WHERE work_results.id = machine_results.work_result_id
   ))

@@ -39,7 +39,7 @@ class WorkType < ApplicationRecord
     .with_deleted
   }
   scope :for_work, ->(category, work) {
-    where(<<SQL, category[:genre], work.term, work.work_type_id, category[:genre], work.work_type.genre_id)
+    where(<<SQL.squish, category[:genre], work.term, work.work_type_id, category[:genre], work.work_type.genre_id)
     (category_flag = FALSE AND work_flag = TRUE AND genre = ? AND EXISTS (SELECT * FROM work_type_terms WTT WHERE work_types.id = WTT.work_type_id AND WTT.term = ?)) OR (id = ? AND ? = ?)
 SQL
     .with_deleted
