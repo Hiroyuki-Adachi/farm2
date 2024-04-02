@@ -121,10 +121,10 @@ class ImportJmaJob < ApplicationJob
   end
 
   def csv_pos(type, place, kind = nil)
-    pos = @csv_places.index {|cp| cp && cp.start_with?(place)}
+    pos = @csv_places.index {|cp| cp&.start_with?(place)}
     @csv_types.each_with_index do |ct, i|
       next if i < pos
-      if ct && ct.start_with?(type)
+      if ct&.start_with?(type)
         pos = i
         break
       end
@@ -132,7 +132,7 @@ class ImportJmaJob < ApplicationJob
     return pos if kind.nil?
     @csv_kinds.each_with_index do |ck, i|
       next if i < pos
-      if ck && ck.start_with?(kind)
+      if ck&.start_with?(kind)
         pos = i
         break
       end

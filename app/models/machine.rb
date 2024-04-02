@@ -66,7 +66,7 @@ class Machine < ApplicationRecord
   def price_details(work)
     header = price_headers.where("validated_at <= ?", work.worked_at).order(validated_at: :DESC).first
     return header.details if header
-    return machine_type ? machine_type.price_details(work) : nil
+    return machine_type&.price_details(work)
   end
 
   def leasable?(worked_at)
