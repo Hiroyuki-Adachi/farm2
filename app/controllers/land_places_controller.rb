@@ -10,8 +10,7 @@ class LandPlacesController < ApplicationController
     @land_place = LandPlace.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @land_place = LandPlace.new(land_place_params)

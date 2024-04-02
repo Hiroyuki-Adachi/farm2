@@ -5,7 +5,5 @@ class ZgisForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  def export(term)
-    
-  end
+  def export(term); end
 end

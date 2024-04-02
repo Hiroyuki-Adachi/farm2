@@ -4,8 +4,7 @@ class OrganizationsController < ApplicationController
   before_action :set_organization
   helper GmapHelper
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @organization.update(organization_params)

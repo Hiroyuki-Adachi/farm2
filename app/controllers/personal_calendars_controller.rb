@@ -16,8 +16,7 @@ class PersonalCalendarsController < ApplicationController
 
   private
 
-  def restrict_remote_ip
-  end
+  def restrict_remote_ip; end
 
   def worked_from
     Date.new(Time.zone.today.year - 1, 1, 1)

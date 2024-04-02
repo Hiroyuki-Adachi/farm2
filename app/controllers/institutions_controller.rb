@@ -11,8 +11,7 @@ class InstitutionsController < ApplicationController
     @institution = Institution.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @institution = Institution.new(institution_params)

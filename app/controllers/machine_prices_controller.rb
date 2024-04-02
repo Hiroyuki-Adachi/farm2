@@ -40,8 +40,7 @@ class MachinePricesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     @machine_price.details_form = params[:details_form]

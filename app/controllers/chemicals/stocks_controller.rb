@@ -3,8 +3,7 @@ class Chemicals::StocksController < ApplicationController
   before_action :set_chemical_term, only: [:search, :new, :edit, :create, :update]
   before_action :set_stock, only: [:edit, :update, :destroy]
 
-  def index
-  end
+  def index; end
 
   def load
     @chemicals = ChemicalTerm.by_type(params[:term], params[:chemical_type_id])

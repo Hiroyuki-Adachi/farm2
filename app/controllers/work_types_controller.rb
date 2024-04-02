@@ -13,8 +13,7 @@ class WorkTypesController < ApplicationController
     @work_type = WorkType.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @work_type = WorkType.new(work_type_params)

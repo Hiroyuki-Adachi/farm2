@@ -18,8 +18,7 @@ class LandsController < ApplicationController
     @land = Land.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @land = Land.new(land_params)
