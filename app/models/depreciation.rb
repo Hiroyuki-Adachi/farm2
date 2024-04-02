@@ -24,9 +24,7 @@ class Depreciation < ApplicationRecord
 
   def regist_work_types(work_types)
     work_types.each do |work_type|
-      unless depreciation_types.find_by(work_type_id: work_type)
-        DepreciationType.create(depreciation_id: id, work_type_id: work_type)
-      end
+      DepreciationType.create(depreciation_id: id, work_type_id: work_type) unless depreciation_types.find_by(work_type_id: work_type)
     end
     depreciation_types.where.not(work_type_id: work_types).find_each(&:destroy)
   end
