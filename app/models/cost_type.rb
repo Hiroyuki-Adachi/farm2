@@ -22,9 +22,7 @@ class CostType < ApplicationRecord
 
   scope :usual, -> { order(display_order: :asc) }
 
-  def work_kind_ids=(value)
-    @work_kind_ids = value
-  end
+  attr_writer :work_kind_ids
 
   def save_work_kinds
     WorkKind.where(cost_type_id: self.id).update(cost_type_id: nil)
