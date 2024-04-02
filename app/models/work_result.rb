@@ -51,7 +51,7 @@ class WorkResult < ApplicationRecord
       .joins("INNER JOIN systems ON systems.term = works.term")
       .joins("INNER JOIN sections ON sections.id = homes.section_id")
       .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
-      .where("systems.term = ?", term)
+      .where(systems: { term: term })
       .order("sections.display_order, homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }
 
@@ -78,7 +78,7 @@ class WorkResult < ApplicationRecord
     joins(:work).includes(work: :work_kind).includes(work: :work_type)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id")
       .joins("INNER JOIN work_types ON works.work_type_id = work_types.id")
-      .where("works.term = ?", term)
+      .where(works: { term: term })
       .where(worker_id: worker)
       .order("works.worked_at DESC, work_results.id")
   }
@@ -116,7 +116,7 @@ class WorkResult < ApplicationRecord
       .joins(:worker)
       .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
       .where(work_id: works)
-      .where(["homes.member_flag = ?", true])
+      .where(homes: { member_flag: true })
       .sum(:hours)
   end
 

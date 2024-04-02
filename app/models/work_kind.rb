@@ -51,7 +51,7 @@ class WorkKind < ApplicationRecord
   scope :landable, ->{where(land_flag: true)}
   scope :by_type, ->(work_type) {
     joins(:work_kind_types)
-      .where(["work_kind_types.work_type_id = ?", work_type.genre_id])
+      .where(work_kind_types: { work_type_id: work_type.genre_id })
       .order("work_kinds.other_flag, work_kinds.phonetic, work_kinds.display_order, work_kinds.id")
   }
   scope :gaps, -> {where.not(broccoli_mark: [nil, ""]).group(:broccoli_mark).order(:broccoli_mark).select("broccoli_mark, MAX(name) AS name")}

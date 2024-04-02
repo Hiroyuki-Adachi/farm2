@@ -49,7 +49,7 @@ class Machine < ApplicationRecord
 
   scope :by_results, ->(results) {
     joins(:machine_results)
-      .where('machine_results.work_result_id in (?)', results.ids)
+      .where(machine_results: { work_result_id: results.ids })
       .order('machines.display_order')
       .distinct
   }

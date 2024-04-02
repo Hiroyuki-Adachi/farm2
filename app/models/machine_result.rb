@@ -42,7 +42,7 @@ class MachineResult < ApplicationRecord
    .joins("INNER JOIN systems ON systems.term = works.term")
    .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
    .where("homes.company_flag = FALSE")
-   .where("systems.term = ?", term)
+   .where(systems: { term: term })
    .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
   }
 
@@ -62,7 +62,7 @@ class MachineResult < ApplicationRecord
       .joins(:machine).eager_load(:machine)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
       .where("works.worked_at >= ?", worked_at)
-      .where("machines.home_id = ?", home.id)
+      .where(machines: { home_id: home.id })
       .order("works.worked_at, machines.display_order, machines.id")
   }
 
@@ -71,10 +71,10 @@ class MachineResult < ApplicationRecord
       .joins(:work_result)
       .joins(:work)
       .where("works.fixed_at = ? AND machine_results.fixed_price IS NOT NULL", fixed_at)
-      .where("works.term = ?", term)
+      .where(works: { term: term })
   }
 
-  scope :by_works, ->(works) {joins(:work_result).where(["work_results.work_id IN (?)", works.ids]).order("machine_results.id")}
+  scope :by_works, ->(works) {joins(:work_result).where(work_results: { work_id: works.ids }).order("machine_results.id")}
   scope :by_work_machine, ->(work, machine) {joins(:work_result).find_by(["machine_results.machine_id = ? AND work_results.work_id = ?", machine.id, work.id])}
 
   def sum_hours

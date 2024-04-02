@@ -42,7 +42,7 @@ class WorkChemical < ApplicationRecord
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
       .joins("INNER JOIN systems ON systems.term = works.term")
       .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
-      .where("systems.term = ?", term)
+      .where(systems: { term: term })
       .order("works.worked_at, works.id, chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
   }
 
