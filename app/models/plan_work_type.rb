@@ -35,6 +35,6 @@ class PlanWorkType < ApplicationRecord
         PlanWorkType.create(param.merge(work_type_id: work_type_id))
       end
     end
-    PlanWorkType.joins(:work_type).where("work_types.deleted_at IS NOT NULL").destroy_all
+    PlanWorkType.joins(:work_type).where.not(work_types: { deleted_at: nil }).destroy_all
   end
 end
