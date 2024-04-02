@@ -73,7 +73,7 @@ ORDER
   scope :for_stock, ->(term) {
     joins(:chemical_type)
       .with_deleted
-      .where("chemicals.id IN (?)", ChemicalTerm.where(term: term).pluck("chemical_id"))
+      .where("chemicals.id IN (?)", ChemicalTerm.where(term: term).select("chemical_id"))
       .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 

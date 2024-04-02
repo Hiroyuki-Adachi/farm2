@@ -98,7 +98,7 @@ class WorkResult < ApplicationRecord
   delegate :name, to: :worker, prefix: true
 
   def self.by_works(term, fixed_at)
-    WorkResult.where(work_id: Work.fixed(term, fixed_at).ids).group(:worker_id).sum(:fixed_hours)
+    WorkResult.where(work_id: Work.fixed(term, fixed_at).select(:id)).group(:worker_id).sum(:fixed_hours)
   end
 
   def sum_seedlings(_work_type_id)

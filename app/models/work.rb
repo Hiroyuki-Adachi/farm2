@@ -122,7 +122,7 @@ SQL
       .order("worked_at, id")
   }
 
-  scope :for_cost, ->(term) {where([<<SQL, term, WorkType.land.ids])}
+  scope :for_cost, ->(term) {where([<<SQL, term, WorkType.land.select(:id)])}
   works.term = ? AND (work_type_id IN (?))
 SQL
 
