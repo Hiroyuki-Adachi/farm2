@@ -61,7 +61,7 @@ class ImportJmaJob < ApplicationJob
   end
 
   def submit(year)
-    uri = URI.parse(JMA_URL + "show/table")
+    uri = URI.parse("#{JMA_URL}show/table")
     req = Net::HTTP::Post.new(uri)
     req.set_form_data(submit_params(year))
 

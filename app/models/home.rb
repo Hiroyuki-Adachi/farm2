@@ -81,7 +81,7 @@ class Home < ApplicationRecord
   end
 
   def owner_name
-    holder && !company_flag ? holder.name + '(' + name + ')' : name
+    holder && !company_flag ? "#{holder.name}(#{name})" : name
   end
 
   def home_display_order
