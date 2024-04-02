@@ -6,7 +6,7 @@ module StatisticsHelper
     'rgba(132, 132, 132, 1.0)',
     'rgba(99, 200, 200, 1.0)',
     'rgba(200, 132, 132, 1.0)'
-  ]
+  ].freeze
 
   def default_color
     return COLORS[0]
