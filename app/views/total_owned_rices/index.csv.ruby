@@ -5,7 +5,7 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
   old_home = nil
   total_count = 0
   @owned_rices.each do |owned_rice|
-    old_home = owned_rice.home unless old_home
+    old_home ||= owned_rice.home
     if owned_rice.home_id != old_home.id
       if total_count > old_home.owned_rice_limit(current_term)
         csv << [
