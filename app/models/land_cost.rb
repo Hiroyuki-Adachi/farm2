@@ -19,8 +19,6 @@ class LandCost < ApplicationRecord
   belongs_to :work_type, -> {with_deleted}
 
   validates :activated_on, presence: true
-  validates :land_id, presence: true
-  validates :work_type_id, presence: true
 
   scope :newest, ->(target) {where([<<SQL, target])}
   EXISTS (

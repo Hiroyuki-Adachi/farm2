@@ -20,7 +20,6 @@
 class WorkBroccoli < ApplicationRecord
   require 'ostruct'
 
-  validates :work_id, presence: true
   validates :shipped_on, presence: true
   validates :rest, presence: true
 
