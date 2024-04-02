@@ -51,7 +51,7 @@ SQL
 
   def self.sum_area_for_harvest(worked_at, work_kind_id)
     results = {}
-    Work.where(worked_at: worked_at, work_kind_id: work_kind_id).each do |work|
+    Work.where(worked_at: worked_at, work_kind_id: work_kind_id).find_each do |work|
       work.lands.each do |land|
         land_cost = land.cost(worked_at)
         next if land_cost.nil?

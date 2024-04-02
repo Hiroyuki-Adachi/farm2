@@ -105,27 +105,13 @@ Rails/ActionControllerTestCase:
 Rails/ActionOrder:
   Enabled: false
 
-# Offense count: 22
+# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowedMethods, AllowedPatterns.
 # AllowedMethods: order, limit, select, lock
 Rails/FindEach:
   Exclude:
-    - 'app/controllers/contracts_controller.rb'
-    - 'app/decorators/land_decorator.rb'
-    - 'app/helpers/works_helper.rb'
-    - 'app/jobs/init_work_type_cache_job.rb'
-    - 'app/models/chemical_term.rb'
-    - 'app/models/chemical_work_type.rb'
-    - 'app/models/depreciation.rb'
-    - 'app/models/land_cost.rb'
     - 'app/models/machine_price_header.rb'
-    - 'app/models/plan_seedling.rb'
-    - 'app/models/schedule.rb'
-    - 'app/models/sorimachi_account.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/models/total_cost.rb'
-    - 'app/models/work.rb'
 
 # Offense count: 17
 # Configuration parameters: Include.

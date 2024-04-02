@@ -417,7 +417,7 @@ SQL
 
   def self.types_by_worked_at(worked_at)
     wts = []
-    Work.where(worked_at: worked_at).each do |work|
+    Work.where(worked_at: worked_at).find_each do |work|
       work.lands.each do |land|
         wts << land.cost(worked_at)&.work_type
       end
@@ -467,7 +467,7 @@ SQL
 
   def machine_numbers
     results = {}
-    machines.includes(:machine_type).each do |machine|
+    machines.includes(:machine_type).find_each do |machine|
       next if machine.machine_type.nil? || machine.machine_type.code.nil? || machine.number.nil?
       if results.key?(machine.machine_type.code)
         results[machine.machine_type.code.intern] << machine.number

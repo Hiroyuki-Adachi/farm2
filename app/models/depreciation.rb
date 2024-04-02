@@ -28,6 +28,6 @@ class Depreciation < ApplicationRecord
         DepreciationType.create(depreciation_id: id, work_type_id: work_type)
       end
     end
-    depreciation_types.where.not(work_type_id: work_types).each(&:destroy)
+    depreciation_types.where.not(work_type_id: work_types).find_each(&:destroy)
   end
 end

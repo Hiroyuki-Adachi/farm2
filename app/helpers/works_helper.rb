@@ -14,7 +14,7 @@ module WorksHelper
     counter = work_chemicals.where(chemical_id: chemical_id).count
     amount = 0
     unit = ""
-    work_chemicals.where(chemical_id: chemical_id).each do |work_chemical|
+    work_chemicals.where(chemical_id: chemical_id).find_each do |work_chemical|
       case dilution
       when Dilution::L
         unit = "ℓ"
