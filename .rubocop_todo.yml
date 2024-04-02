@@ -184,12 +184,6 @@ Style/HashSyntax:
 Style/Lambda:
   Enabled: false
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/NestedTernaryOperator:
-  Exclude:
-    - 'app/decorators/machine_result_decorator.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: IncludeSemanticChanges.
