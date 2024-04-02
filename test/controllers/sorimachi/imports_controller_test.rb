@@ -31,6 +31,6 @@ class Sorimachi::ImportsControllerTest < ActionController::TestCase
     assert_no_difference('SorimachiJournal.count') do
       delete :destroy, params: {id: journal.id}
     end
-    assert !SorimachiJournal.find(journal.id).cost0_flag
+    assert_not SorimachiJournal.find(journal.id).cost0_flag
   end
 end
