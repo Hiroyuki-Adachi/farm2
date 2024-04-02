@@ -227,16 +227,6 @@ Style/TrailingCommaInArguments:
   Exclude:
     - 'app/models/chemical_work_type.rb'
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInArrayLiteral:
-  Exclude:
-    - 'test/controllers/chemicals/inventories_controller_test.rb'
-    - 'test/controllers/chemicals/stores_controller_test.rb'
-    - 'test/controllers/dryings_controller_test.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyleForMultiline.
