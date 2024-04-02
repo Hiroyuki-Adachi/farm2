@@ -23,7 +23,7 @@ class LandCostsController < ApplicationController
   def create
     redirect_to land_costs_path(land_place_id: params[:land_place_id]) unless params[:land_costs]
     LandCost.transaction do
-      params[:land_costs].each do |_, land_cost|
+      params[:land_costs].each_value do |land_cost|
         if land_cost[:id].present?
           @land_cost = LandCost.find(land_cost[:id])
           session[:land_cost] = @land_cost.attributes unless @land_cost.update_work_type(land_cost_params(land_cost), current_system.start_date)

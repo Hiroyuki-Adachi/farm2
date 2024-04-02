@@ -25,7 +25,7 @@ class SorimachiAccount < ApplicationRecord
 
   def self.import_old(term)
     accounts = open('test/fixtures/sorimachi_accounts.yml', 'r') {|f| YAML.load(f)}
-    accounts.each do |_key, value|
+    accounts.each_value do |value|
       account = SorimachiAccount.find_by(term: term, code: value['code'])
       if account
         value.delete_if {|v| ['term', 'code'].include?(v) }
