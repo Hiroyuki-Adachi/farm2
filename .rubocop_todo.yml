@@ -184,12 +184,6 @@ Style/HashSyntax:
 Style/Lambda:
   Enabled: false
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/MultilineTernaryOperator:
-  Exclude:
-    - 'app/decorators/chemical_stock_decorator.rb'
-
 # Offense count: 16
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
