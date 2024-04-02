@@ -18,8 +18,6 @@
 class Schedule < ApplicationRecord
   validates :worked_at, presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
-  validates :work_type_id, presence: true
-  validates :work_kind_id, presence: true
 
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
