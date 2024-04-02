@@ -22,7 +22,7 @@ class MachineRemark < ApplicationRecord
 
   def self.regist(work, remarks)
     work.machine_remarks.destroy_all
-    remarks.each do |_id, remark|
+    remarks.each_value do |remark|
       if remark[:care_remarks].present? || remark[:danger_remarks].present? || remark[:other_remarks].present?
         MachineRemark.create(
           remark.permit(:work_id, :machine_id, :care_remarks, :danger_remarks, :other_remarks)
