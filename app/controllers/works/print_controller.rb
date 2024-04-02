@@ -6,7 +6,7 @@ class Works::PrintController < ApplicationController
   before_action :permit_checkable_or_self
 
   def create
-    @work.update(printed_at: Time.now, printed_by: current_user.worker.id)
+    @work.update(printed_at: Time.zone.now, printed_by: current_user.worker.id)
     render partial: "show_stamp_print"
   end
 
