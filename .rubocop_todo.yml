@@ -147,12 +147,6 @@ Rails/OutputSafety:
   Exclude:
     - 'config/application.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Rails/Presence:
-  Exclude:
-    - 'app/controllers/land_costs_controller.rb'
-
 # Offense count: 6
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowedReceivers.
