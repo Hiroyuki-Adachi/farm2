@@ -77,7 +77,7 @@ class TotalCost < ApplicationRecord
   def cost(work_type_id)
     work_type = WorkType.find(work_type_id)
     return amount if work_type.cost_only?
-    return nil unless total_cost_details.where(work_type_id: work_type_id).exists?
+    return nil unless total_cost_details.exists?(work_type_id: work_type_id)
     return dif_amount * rate(work_type_id)
   end
 

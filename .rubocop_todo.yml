@@ -164,23 +164,6 @@ Rails/SkipsModelValidations:
 Rails/WhereEquals:
   Enabled: false
 
-# Offense count: 12
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: exists, where
-Rails/WhereExists:
-  Exclude:
-    - 'app/helpers/sessions_helper.rb'
-    - 'app/models/chemical.rb'
-    - 'app/models/chemical_stock.rb'
-    - 'app/models/chemical_term.rb'
-    - 'app/models/chemical_work_type.rb'
-    - 'app/models/machine.rb'
-    - 'app/models/machine_result.rb'
-    - 'app/models/seedling_home.rb'
-    - 'app/models/total_cost.rb'
-    - 'test/controllers/chemicals_controller_test.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Rails/WhereNot:

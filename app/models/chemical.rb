@@ -90,7 +90,7 @@ ORDER
   end
 
   def this_term?(term)
-    chemical_terms.where(term: term).exists?
+    chemical_terms.exists?(term: term)
   end
 
   def base_unit_name
@@ -141,7 +141,7 @@ ORDER
 
   def save_term
     if ActiveRecord::Type::Boolean.new.cast(@this_term_flag)
-      ChemicalTerm.create(term: @term, chemical_id: id) unless chemical_terms.where(term: @term).exists?
+      ChemicalTerm.create(term: @term, chemical_id: id) unless chemical_terms.exists?(term: @term)
     else
       chemical_terms.where(term: @term).destroy_all
     end

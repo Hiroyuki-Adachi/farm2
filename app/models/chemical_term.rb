@@ -53,7 +53,7 @@ SQL
 
   def self.annual_update(old_term, new_term)
     ChemicalTerm.where(term: old_term).find_each do |chemical_term|
-      unless ChemicalTerm.where(term: new_term, chemical_id: chemical_term.chemical_id).exists?
+      unless ChemicalTerm.exists?(term: new_term, chemical_id: chemical_term.chemical_id)
         ChemicalTerm.create(
           chemical_id: chemical_term.chemical_id,
           term: new_term,

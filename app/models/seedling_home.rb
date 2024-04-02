@@ -39,7 +39,7 @@ class SeedlingHome < ApplicationRecord
   end
 
   def dispose?
-    seedling_results.where(disposal_flag: true).exists?
+    seedling_results.exists?(disposal_flag: true)
   end
 
   def cost_quantity

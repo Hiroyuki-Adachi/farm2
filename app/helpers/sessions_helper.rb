@@ -46,7 +46,7 @@ module SessionsHelper
   end
 
   def last_term?
-    !System.where("term > ? AND organization_id = ?", current_user.term, current_user.organization_id).exists?
+    !System.exists?(["term > ? AND organization_id = ?", current_user.term, current_user.organization_id])
   end
   
   def this_term?
