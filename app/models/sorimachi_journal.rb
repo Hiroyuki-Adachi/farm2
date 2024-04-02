@@ -58,7 +58,7 @@ class SorimachiJournal < ApplicationRecord
   belongs_to :account2, query_constraints: [:term, :code12], class_name: 'SorimachiAccount'
 
   def self.import(term, file)
-    CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: /^\/\//) do |row|
+    CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: %r{^//}) do |row|
       sorimachi_new = SorimachiJournal.new([updatable_attributes, row].transpose.to_h)
       journal = SorimachiJournal.find_by(term: term, line: row[0], detail: row[1])
       if journal.nil?
