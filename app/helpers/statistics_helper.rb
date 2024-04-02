@@ -13,7 +13,7 @@ module StatisticsHelper
   end
 
   def labels(total_all)
-    return total_all.map {|t| t[0]}
+    return total_all.pluck(0)
   end
 
   def tab1_data(total_all)
