@@ -20,7 +20,7 @@ class PlanSeedling < ApplicationRecord
 
   def self.usual
     results = Hash.new { |h, k| h[k] = {} }
-    PlanSeedling.all.each do |seedling|
+    PlanSeedling.find_each do |seedling|
       results[seedling.home_id][seedling.plan_work_type_id] = seedling
     end
     return results

@@ -54,7 +54,7 @@ SQL
   end
 
   def self.annual_update(old_term, new_term)
-    ChemicalWorkType.joins(:chemical_term).where("chemical_terms.term = ?", old_term).each do |chemical_work_type|
+    ChemicalWorkType.joins(:chemical_term).where("chemical_terms.term = ?", old_term).find_each do |chemical_work_type|
       next if chemical_work_type.quantity.zero?
       next unless WorkTypeTerm.where(term: new_term, work_type_id: chemical_work_type.work_type_id)
       chemical_term = ChemicalTerm.find_by(chemical_id: chemical_work_type.chemical_term.chemical_id, term: new_term)
