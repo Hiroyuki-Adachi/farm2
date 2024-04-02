@@ -30,13 +30,13 @@ class ApplicationController < ActionController::Base
 
   def sum_hours(term)
     Rails.cache.fetch(sum_hours_key(term), expires_in: 1.hour) do
-      WorkResult.where(work_id: Work.usual(term).ids).group(:work_id).sum(:hours).to_h
+      WorkResult.where(work_id: Work.usual(term).select(:id)).group(:work_id).sum(:hours).to_h
     end
   end
 
   def count_workers(term)
     Rails.cache.fetch(count_workers_key(term), expires_in: 1.hour) do
-      WorkResult.where(work_id: Work.usual(term).ids).group(:work_id).count(:worker_id).to_h
+      WorkResult.where(work_id: Work.usual(term).select(:id)).group(:work_id).count(:worker_id).to_h
     end
   end
 
