@@ -59,7 +59,7 @@ class WorkChemical < ApplicationRecord
 
   def quantity10
     sum_area = work.chemical_group_flag ? work.sum_areas(chemical_group_no) : work.sum_areas
-    return sum_area == 0 ? 0 : (quantity / sum_area * 10).round(1)
+    return sum_area.zero? ? 0 : (quantity / sum_area * 10).round(1)
   end
 
   def dilution_amount

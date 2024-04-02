@@ -293,7 +293,7 @@ SQL
           else
             machine_result.destroy
           end
-        elsif hour > 0
+        elsif hour.positive?
           MachineResult.create(work_result_id: work_result_id, machine_id: machine_id, hours: hour)
         end
       end
