@@ -27,7 +27,7 @@ class WorkBroccoli < ApplicationRecord
   belongs_to :work
   belongs_to :box, class_name: "BroccoliBox", foreign_key: :broccoli_box_id
 
-  has_many :harvests, class_name: "BroccoliHarvest", foreign_key: :work_broccoli_id, dependent: :destroy
+  has_many :harvests, class_name: "BroccoliHarvest", dependent: :destroy
 
   scope :for_sales, ->(term) {
     joins(:work)

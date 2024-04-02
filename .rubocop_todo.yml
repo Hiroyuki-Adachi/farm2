@@ -147,13 +147,6 @@ Rails/OutputSafety:
   Exclude:
     - 'config/application.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Rails/RedundantForeignKey:
-  Exclude:
-    - 'app/models/land.rb'
-    - 'app/models/work_broccoli.rb'
-
 # Offense count: 7
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/RedundantPresenceValidationOnBelongsTo:
