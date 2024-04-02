@@ -1,4 +1,4 @@
-require 'sessions_helper.rb'
+require 'sessions_helper'
 
 module ApplicationHelper
   include SessionsHelper
