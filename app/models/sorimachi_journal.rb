@@ -89,7 +89,7 @@ class SorimachiJournal < ApplicationRecord
   end
 
   def self.refresh(term)
-    accounts = SorimachiAccount.where(term: term).map{|a| [a.code, a.total_cost_type]}.to_h
+    accounts = SorimachiAccount.where(term: term).to_h{|a| [a.code, a.total_cost_type]}
     SorimachiJournal.where(term: term).find_each do |journal|
       if [TotalCostType::EXPENSEDIRECT, TotalCostType::EXPENSEINDIRECT].include?(accounts[journal.code12]) || accounts[journal.code01] == TotalCostType::SALES
         journal.swap
@@ -108,7 +108,7 @@ class SorimachiJournal < ApplicationRecord
   def self.accounts(term)
     t1 = SorimachiJournal.where(term: term).order(:code01).group(:code01).sum(:amount1)
     t2 = SorimachiJournal.where(term: term).order(:code12).group(:code12).sum(:amount2)
-    return t1.merge(t2).map {|k, _v| [k, [t1[k] || 0, t2[k] || 0]]}.to_h
+    return t1.merge(t2).to_h {|k, _v| [k, [t1[k] || 0, t2[k] || 0]]}
   end
 
   def cost_amount
