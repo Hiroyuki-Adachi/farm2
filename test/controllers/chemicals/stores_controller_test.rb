@@ -41,7 +41,7 @@ class Chemicals::StoresControllerTest < ActionController::TestCase
           checked_on: '2015-12-01',
           name: "期末納品",
           stocks_attributes: [
-            {chemical_id: 4, stored_stock: 100.2},
+            {chemical_id: 4, stored_stock: 100.2}
           ]
         }
       }

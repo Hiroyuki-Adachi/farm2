@@ -68,16 +68,16 @@ class TotalCostTest < ActiveSupport::TestCase
     total_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::LAND.id)
     assert_equal 17500, total_cost.amount
     total_cost_detail = TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 5)
-    assert_in_delta total_cost.amount * (365 - 31) / 365 , total_cost_detail.cost, 1
+    assert_in_delta total_cost.amount * (365 - 31) / 365, total_cost_detail.cost, 1
     total_cost_detail = TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 8)
-    assert_in_delta total_cost.amount * 31 / 365 , total_cost_detail.cost, 1
+    assert_in_delta total_cost.amount * 31 / 365, total_cost_detail.cost, 1
 
     total_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::PEASANT.id)
     assert_equal 26250, total_cost.amount
     total_cost_detail = TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 5)
-    assert_in_delta total_cost.amount * (365 - 31) / 365 , total_cost_detail.cost, 1
+    assert_in_delta total_cost.amount * (365 - 31) / 365, total_cost_detail.cost, 1
     total_cost_detail = TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 8)
-    assert_in_delta total_cost.amount * 31 / 365 , total_cost_detail.cost, 1
+    assert_in_delta total_cost.amount * 31 / 365, total_cost_detail.cost, 1
   end
 
   test "原価計算_機械稼働時間" do

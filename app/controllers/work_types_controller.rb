@@ -13,13 +13,12 @@ class WorkTypesController < ApplicationController
     @work_type = WorkType.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @work_type = WorkType.new(work_type_params)
     icon = work_type_params[:icon]
-    if icon != nil
+    unless icon.nil?
       @work_type.icon = icon.read
       @work_type.icon_name = icon.original_filename
     end
@@ -33,7 +32,7 @@ class WorkTypesController < ApplicationController
   def update
     icon = work_type_params[:icon]
     @work_type.attributes = work_type_params
-    if icon != nil && icon.original_filename != @work_type.icon_name
+    if !icon.nil? && icon.original_filename != @work_type.icon_name
       @work_type.icon = icon.read
       @work_type.icon_name = icon.original_filename
     end

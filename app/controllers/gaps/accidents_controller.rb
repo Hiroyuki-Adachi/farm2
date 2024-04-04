@@ -23,8 +23,7 @@ class Gaps::AccidentsController < GapsController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @accident.update(accident_params)

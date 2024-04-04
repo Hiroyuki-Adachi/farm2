@@ -15,7 +15,7 @@ class OwnedRicesController < ApplicationController
   end
 
   def update
-    params.require(:owned_rices).each do |_k, v|
+    params.require(:owned_rices).each_value do |v|
       OwnedRice.regist(v[:id], v.permit(:home_id, :owned_rice_price_id, :owned_count))
     end
     redirect_to owned_rices_path

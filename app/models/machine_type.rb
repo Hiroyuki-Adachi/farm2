@@ -24,10 +24,10 @@ class MachineType < ApplicationRecord
 
   def price_details(work)
     header = price_headers.where("validated_at <= ?", work.worked_at).order(validated_at: :DESC).first
-    return header ? header.details : nil
+    return header&.details
   end
 
   def machine_type_order
-    (display_order * MachineType.maximum(:id) + id) & 0x7fffffff
+    ((display_order * MachineType.maximum(:id)) + id) & 0x7fffffff
   end
 end

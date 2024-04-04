@@ -46,11 +46,11 @@ module SessionsHelper
   end
 
   def last_term?
-    !System.where("term > ? AND organization_id = ?", current_user.term, current_user.organization_id).exists?
+    !System.exists?(["term > ? AND organization_id = ?", current_user.term, current_user.organization_id])
   end
   
   def this_term?
-    current_system.start_date <= Date.today && current_system.end_date >= Date.today
+    current_system.start_date <= Time.zone.today && current_system.end_date >= Time.zone.today
   end
 
   def now_system
@@ -60,7 +60,7 @@ module SessionsHelper
   end
 
   def current_name
-    @current_name ||= current_user.worker.family_name + " " + current_user.worker.first_name
+    @current_name ||= "#{current_user.worker.family_name} #{current_user.worker.first_name}"
   end
 
   def log_out

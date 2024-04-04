@@ -13,7 +13,7 @@ class Sorimachi::ImportsControllerTest < ActionController::TestCase
   test "農業簿記インポート(実行)" do
     SorimachiJournal.where(term: 2015).destroy_all
     assert_difference('SorimachiJournal.count', 2) do
-      post :create, params: {import_file: fixture_file_upload("#{Rails.root}/test/fixtures/files/sorimachi.csv", 'text/csv')}
+      post :create, params: {import_file: fixture_file_upload(Rails.root.join("test/fixtures/files/sorimachi.csv").to_s, 'text/csv')}
     end
     assert_redirected_to sorimachi_imports_path
   end
@@ -31,6 +31,6 @@ class Sorimachi::ImportsControllerTest < ActionController::TestCase
     assert_no_difference('SorimachiJournal.count') do
       delete :destroy, params: {id: journal.id}
     end
-    assert !SorimachiJournal.find(journal.id).cost0_flag
+    assert_not SorimachiJournal.find(journal.id).cost0_flag
   end
 end

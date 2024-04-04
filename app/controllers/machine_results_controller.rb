@@ -2,11 +2,11 @@ class MachineResultsController < ApplicationController
   include PermitManager
 
   def index
-    if params[:fixed_at]
-      @results = MachineResult.by_home_for_fix(@term, Date.strptime(params[:fixed_at], '%Y-%m-%d'))
-    else
-      @results = MachineResult.by_home(@term).to_a.uniq { |result| [result.work.id, result.machine_id]}
-    end
+    @results = if params[:fixed_at]
+                 MachineResult.by_home_for_fix(@term, Date.strptime(params[:fixed_at], '%Y-%m-%d'))
+               else
+                 MachineResult.by_home(@term).to_a.uniq { |result| [result.work.id, result.machine_id]}
+               end
     @owner_totals = calc_totals(@results)
 
     respond_to do |format|

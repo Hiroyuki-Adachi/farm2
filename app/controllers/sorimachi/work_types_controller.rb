@@ -3,7 +3,7 @@ class Sorimachi::WorkTypesController < ApplicationController
   before_action :set_sorimachi_journal, only: [:edit, :update]
 
   def edit
-    @amounts = SorimachiWorkType.where(sorimachi_journal_id: params[:sorimachi_journal_id]).map{|j| [j.work_type_id, j.amount]}.to_h
+    @amounts = SorimachiWorkType.where(sorimachi_journal_id: params[:sorimachi_journal_id]).to_h{|j| [j.work_type_id, j.amount]}
     @work_types = WorkType.cost.by_term(current_term)
     render layout: false
   end

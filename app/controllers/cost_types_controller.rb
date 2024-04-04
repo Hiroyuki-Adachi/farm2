@@ -28,8 +28,7 @@ class CostTypesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def destroy
     @cost_type.destroy

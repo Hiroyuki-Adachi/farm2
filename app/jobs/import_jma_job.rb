@@ -7,31 +7,31 @@ class ImportJmaJob < ApplicationJob
   queue_as :default
 
   START_YEAR = 2010
-  JMA_URL = "https://www.data.jma.go.jp/gmd/risk/obsdl/"
+  JMA_URL = "https://www.data.jma.go.jp/gmd/risk/obsdl/".freeze
   ROW_PLACE = 2
   ROW_TYPE = 3
   ROW_KIND = 5
   ROW_DATA = 6
 
-  PLACE_MATSUE = "松江"
-  PLACE_HIKAWA = "斐川"
-  PLACE_IZUMO = "出雲"
+  PLACE_MATSUE = "松江".freeze
+  PLACE_HIKAWA = "斐川".freeze
+  PLACE_IZUMO = "出雲".freeze
 
-  TYPE_HEIGHT = "最高気温"
-  TYPE_LOWEST = "最低気温"
-  TYPE_HUMIDITY = "平均湿度"
-  TYPE_SUNSHINE = "日照時間"
-  TYPE_RAIN = "降水量"
-  TYPE_SNOW = "降雪量"
-  TYPE_PRESSURE = "平均現地気圧"
-  TYPE_WIND_SPEED = "平均風速"
-  TYPE_WIND_DIRECTION = "最多風向"
+  TYPE_HEIGHT = "最高気温".freeze
+  TYPE_LOWEST = "最低気温".freeze
+  TYPE_HUMIDITY = "平均湿度".freeze
+  TYPE_SUNSHINE = "日照時間".freeze
+  TYPE_RAIN = "降水量".freeze
+  TYPE_SNOW = "降雪量".freeze
+  TYPE_PRESSURE = "平均現地気圧".freeze
+  TYPE_WIND_SPEED = "平均風速".freeze
+  TYPE_WIND_DIRECTION = "最多風向".freeze
 
-  KIND_QUALITY = "品質"
+  KIND_QUALITY = "品質".freeze
   def perform(*years)
     if years.empty?
-      import(Date.today.year - 1)
-      import(Date.today.year)
+      import(Time.zone.today.year - 1)
+      import(Time.zone.today.year)
     else
       years.each do |y|
         import(y)
@@ -61,7 +61,7 @@ class ImportJmaJob < ApplicationJob
   end
 
   def submit(year)
-    uri = URI.parse(JMA_URL + "show/table")
+    uri = URI.parse("#{JMA_URL}show/table")
     req = Net::HTTP::Post.new(uri)
     req.set_form_data(submit_params(year))
 
@@ -87,7 +87,7 @@ class ImportJmaJob < ApplicationJob
       "jikantaiFlag" => "0",
       "jikantaiList" => "[]",
       "ymdLiteral" => "1",
-      "PHPSESSID" => "#{sesid}"
+      "PHPSESSID" => sesid.to_s
     }
   end
 
@@ -121,10 +121,10 @@ class ImportJmaJob < ApplicationJob
   end
 
   def csv_pos(type, place, kind = nil)
-    pos = @csv_places.index {|cp| cp && cp.start_with?(place)}
+    pos = @csv_places.index {|cp| cp&.start_with?(place)}
     @csv_types.each_with_index do |ct, i|
       next if i < pos
-      if ct && ct.start_with?(type)
+      if ct&.start_with?(type)
         pos = i
         break
       end
@@ -132,7 +132,7 @@ class ImportJmaJob < ApplicationJob
     return pos if kind.nil?
     @csv_kinds.each_with_index do |ck, i|
       next if i < pos
-      if ck && ck.start_with?(kind)
+      if ck&.start_with?(kind)
         pos = i
         break
       end

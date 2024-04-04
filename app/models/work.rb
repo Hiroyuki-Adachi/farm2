@@ -32,8 +32,6 @@ class Work < ApplicationRecord
   validates :worked_at, presence: true
   validates :weather_id,   presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
-  validates :work_type_id, presence: true
-  validates :work_kind_id, presence: true
 
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
@@ -74,7 +72,7 @@ class Work < ApplicationRecord
   scope :by_work_kind_type, ->(term, work_kind_id, work_type_id) {
     joins(:work_lands)
       .where(term: term, work_kind_id: work_kind_id)
-      .where([<<SQL, work_type_id]).select(:id, :worked_at).distinct
+      .where([<<SQL.squish, work_type_id]).select(:id, :worked_at).distinct
     EXISTS (
       SELECT * FROM land_costs lc1
       WHERE
@@ -89,7 +87,7 @@ class Work < ApplicationRecord
 SQL
       .order(worked_at: :ASC, id: :ASC)
   }
-  scope :enough_check, ->(worker) {where([<<SQL, worker.id, worker.position == Position::DIRECTOR ? ENOUGH + 1 : ENOUGH])}
+  scope :enough_check, ->(worker) {where([<<SQL.squish, worker.id, worker.position == Position::DIRECTOR ? ENOUGH + 1 : ENOUGH])}
       NOT EXISTS (
         SELECT work_verifications.work_id FROM work_verifications
           WHERE (work_verifications.work_id = works.id)
@@ -98,31 +96,31 @@ SQL
           HAVING COUNT(*) >= ?
       )
 SQL
-  scope :by_machines, ->(machines) {where([<<SQL, machines.pluck(:id)])}
+  scope :by_machines, ->(machines) {where([<<SQL.squish, machines.pluck(:id)])}
   EXISTS (
     SELECT * FROM work_results
       INNER JOIN machine_results ON work_results.id = machine_results.work_result_id 
                                 AND work_results.work_id = works.id
       WHERE machine_results.machine_id IN (?))
 SQL
-  scope :by_types, ->(work_types) {where(["works.work_type_id IN (?)", work_types.ids])}
+  scope :by_types, ->(work_types) {where(works: { work_type_id: work_types.ids })}
 
-  scope :by_worker, ->(worker) {where([<<SQL, worker.id])}
+  scope :by_worker, ->(worker) {where([<<SQL.squish, worker.id])}
     EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND work_results.worker_id = ?)
 SQL
 
-  scope :not_printed, -> {where(<<SQL)}
+  scope :not_printed, -> {where(<<SQL.squish)}
       (works.printed_at IS NULL)
     OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)
 SQL
   scope :by_land, ->(land) {where("EXISTS (SELECT * FROM work_lands WHERE works.id = work_lands.work_id AND work_lands.land_id = ?)", land.id)}
 
   scope :by_chemical, ->(term) {
-    where("id IN (?)", WorkChemical.by_term(term).pluck("work_chemicals.work_id").uniq)
+    where(id: WorkChemical.by_term(term).pluck("work_chemicals.work_id").uniq)
       .order("worked_at, id")
   }
 
-  scope :for_cost, ->(term) {where([<<SQL, term, WorkType.land.ids])}
+  scope :for_cost, ->(term) {where([<<SQL.squish, term, WorkType.land.select(:id)])}
   works.term = ? AND (work_type_id IN (?))
 SQL
 
@@ -141,7 +139,7 @@ SQL
   }
 
   scope :landable, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
-  scope :machinable, -> {where(<<SQL)}
+  scope :machinable, -> {where(<<SQL.squish)}
   EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND EXISTS (
     SELECT * FROM machine_results WHERE work_results.id = machine_results.work_result_id
   ))
@@ -150,16 +148,24 @@ SQL
   scope :by_target, ->(term) {
     joins("INNER JOIN systems ON systems.term = works.term")
      .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
-     .where("systems.term = ?", term)
+     .where(systems: { term: term })
   }
+
   scope :for_contract, ->(worker, worked_at, work_type_id) {
-    where("works.worked_at >= ? AND works.work_type_id = ?", worked_at, work_type_id)
-      .where([<<SQL, worker.home_id])}
-      EXISTS (SELECT * FROM work_lands
-        INNER JOIN lands ON work_lands.land_id = lands.id
-        WHERE work_lands.work_id = works.id
-          AND lands.manager_id = ?)
-SQL
+    basic_conditions = where("works.worked_at >= ? AND works.work_type_id = ?", worked_at, work_type_id)
+
+    work_lands_table = WorkLand.arel_table
+    lands_table = Land.arel_table
+
+    exists_subquery = work_lands_table
+                      .project(Arel.star)
+                      .join(lands_table).on(work_lands_table[:land_id].eq(lands_table[:id]))
+                      .where(work_lands_table[:work_id].eq(arel_table[:id]))
+                      .where(lands_table[:manager_id].eq(worker.home_id))
+                      .exists
+
+    basic_conditions.where(exists_subquery)
+  }
 
   scope :for_calendar, ->(term, work_kinds) {
     group(:worked_at, :work_kind_id, :work_type_id)
@@ -219,7 +225,7 @@ SQL
     result = Work.where(term: term).maximum(:fixed_at)
     result = result ? result.to_date : Date.new(term, 1, 1)
     result = result.next.end_of_month.to_date
-    while result < Time.now.to_date
+    while result < Time.zone.now.to_date
       params << result
       result = result.next_month.end_of_month.to_date
     end
@@ -287,8 +293,8 @@ SQL
           else
             machine_result.destroy
           end
-        else
-          MachineResult.create(work_result_id: work_result_id, machine_id: machine_id, hours: hour) if hour > 0
+        elsif hour.positive?
+          MachineResult.create(work_result_id: work_result_id, machine_id: machine_id, hours: hour)
         end
       end
     end
@@ -307,7 +313,7 @@ SQL
             work_chemical.destroy
           end
         else
-          add_params = {work_id: id, chemical_id: chemical_id, chemical_group_no:chemical_group_no}
+          add_params = {work_id: id, chemical_id: chemical_id, chemical_group_no: chemical_group_no}
           WorkChemical.create(quantity_params(quantity, add_params)) if quantity[:quantity].to_f.positive?
         end
       end
@@ -315,9 +321,7 @@ SQL
   end
 
   def refresh_broccoli(organization)
-    if work_type_id == organization.broccoli_work_type_id && work_kind_id == organization.broccoli_work_kind_id
-      broccoli.destroy if broccoli.present?
-    end
+    broccoli.destroy if work_type_id == organization.broccoli_work_type_id && work_kind_id == organization.broccoli_work_kind_id && broccoli.present?
   end
 
   def self.total_all
@@ -328,8 +332,8 @@ SQL
     results = {}
     10.times.each {|i| results[term - (9 - i)] = 0}
     Work.joins(:work_results).where(["work_results.worker_id = ? AND works.term >= ?", worker.id, term - 9])
-      .group(:term).order(:term).sum("work_results.hours").each do |k,v|
-        results[k.to_i] = v
+      .group(:term).order(:term).sum("work_results.hours").each do |k, v|
+      results[k.to_i] = v
     end
     return results
   end
@@ -338,17 +342,17 @@ SQL
     results = {}
     10.times.each {|i| results[term - (9 - i)] = 0}
     Work.joins(work_results: :worker).where(["workers.home_id = ? AND work_results.worker_id <> ? AND works.term >= ?", worker.home_id, worker.id, term - 9])
-      .group(:term).order(:term).sum("work_results.hours").each do |k,v|
-        results[k.to_i] = v
+      .group(:term).order(:term).sum("work_results.hours").each do |k, v|
+      results[k.to_i] = v
     end
     return results
   end
 
   def self.total_by_month(worker, term)
-    results = [0,0,0,0,0,0,0,0,0,0,0,0]
+    results = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     Work.joins(:work_results).where(["work_results.worker_id = ? AND works.term = ?", worker.id, term])
-      .group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k,v|
-        results[k.to_i - 1] = v
+      .group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
+      results[k.to_i - 1] = v
     end
     return results
   end
@@ -400,7 +404,7 @@ SQL
   end
 
   def work_kind_order
-    work_kind.display_order * 100 + work_kind_id
+    (work_kind.display_order * 100) + work_kind_id
   end
 
   def total_cost_type
@@ -409,7 +413,7 @@ SQL
 
   def self.types_by_worked_at(worked_at)
     wts = []
-    Work.where(worked_at: worked_at).each do |work|
+    Work.where(worked_at: worked_at).find_each do |work|
       work.lands.each do |land|
         wts << land.cost(worked_at)&.work_type
       end
@@ -454,12 +458,12 @@ SQL
   def maintenances
     results = [name, remarks]
     results << machine_remarks.pluck(:care_remarks)
-    return results.flatten.uniq.delete_if {|v| v.empty? }
+    return results.flatten.uniq.delete_if(&:empty?)
   end
 
   def machine_numbers
     results = {}
-    machines.includes(:machine_type).each do |machine|
+    machines.includes(:machine_type).find_each do |machine|
       next if machine.machine_type.nil? || machine.machine_type.code.nil? || machine.number.nil?
       if results.key?(machine.machine_type.code)
         results[machine.machine_type.code.intern] << machine.number

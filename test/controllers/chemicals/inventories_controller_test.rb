@@ -35,16 +35,16 @@ class Chemicals::InventoriesControllerTest < ActionController::TestCase
 
   test "農薬棚卸編集(実行)" do
     assert_no_difference('ChemicalInventory.count') do
-        patch :update, params: {
-            id: chemical_inventories(:inventory1).id,
-            chemical_inventory: {
-                checked_on: '2015-12-25',
-                name: "期末在庫",
-                stocks_attributes: [
-                    {chemical_id: 4, inventory: 100.2},
-                ]
-            }
+      patch :update, params: {
+        id: chemical_inventories(:inventory1).id,
+        chemical_inventory: {
+          checked_on: '2015-12-25',
+          name: "期末在庫",
+          stocks_attributes: [
+            {chemical_id: 4, inventory: 100.2}
+          ]
         }
+      }
     end
     assert_redirected_to edit_chemicals_inventory_path(chemical_inventories(:inventory1))
   end

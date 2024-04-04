@@ -46,7 +46,7 @@ class Home < ApplicationRecord
 
   scope :usual, -> {
     includes(:section)
-      .where(["sections.work_flag = ?", true])
+      .where(sections: { work_flag: true })
       .order(Arel.sql("sections.display_order, homes.display_order, homes.id"))
   }
   scope :list, -> {
@@ -81,11 +81,11 @@ class Home < ApplicationRecord
   end
 
   def owner_name
-    holder && !company_flag ? holder.name + '(' + name + ')' : name
+    holder && !company_flag ? "#{holder.name}(#{name})" : name
   end
 
   def home_display_order
-    display_order * 100 + id
+    (display_order * 100) + id
   end
 
   def finance_code
@@ -107,7 +107,7 @@ class Home < ApplicationRecord
       .where("? BETWEEN lands.peasant_start_term AND lands.peasant_end_term", term)
       .sum(:area)
 
-      return area
+    return area
   end
 
   def owned_rice_limit(term)

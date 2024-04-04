@@ -6,99 +6,16 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: outdent, indent
-Layout/AccessModifierIndentation:
-  Exclude:
-    - 'app/models/sorimachi_journal.rb'
-
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: with_first_element, with_fixed_indentation
-Layout/ArrayAlignment:
-  Exclude:
-    - 'app/models/chemical_work_type.rb'
-    - 'app/models/sorimachi_journal.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleAlignWith.
-# SupportedStylesAlignWith: either, start_of_block, start_of_line
-Layout/BlockAlignment:
-  Exclude:
-    - 'app/models/schedule.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/BlockEndNewline:
-  Exclude:
-    - 'app/models/work.rb'
-
-# Offense count: 9
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentOneStep, IndentationWidth.
-# SupportedStyles: case, end
-Layout/CaseIndentation:
-  Exclude:
-    - 'app/decorators/schedule_worker_decorator.rb'
-    - 'app/helpers/works_helper.rb'
-    - 'app/models/machine_result.rb'
-
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
 Layout/ClosingHeredocIndentation:
   Exclude:
     - 'app/models/chemical.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/ClosingParenthesisIndentation:
-  Exclude:
-    - 'app/models/chemical_work_type.rb'
-
 # Offense count: 79
 # This cop supports safe autocorrection (--autocorrect).
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLineAfterMagicComment:
-  Exclude:
-    - 'lib/tasks/extract_fixtures.rake'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: around, only_before
-Layout/EmptyLinesAroundAccessModifier:
-  Exclude:
-    - 'app/models/sorimachi_journal.rb'
-
-# Offense count: 6
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines, beginning_only, ending_only
-Layout/EmptyLinesAroundClassBody:
-  Exclude:
-    - 'app/controllers/sessions_controller.rb'
-    - 'test/controllers/lands/managers_controller_test.rb'
-    - 'test/controllers/lands/owners_controller_test.rb'
-    - 'test/controllers/machine_prices_controller_test.rb'
-    - 'test/controllers/plans/chemical_work_types_controller_test.rb'
-    - 'test/controllers/work_seedlings_controller_test.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleAlignWith, Severity.
-# SupportedStylesAlignWith: keyword, variable, start_of_line
-Layout/EndAlignment:
-  Exclude:
-    - 'app/decorators/schedule_worker_decorator.rb'
-    - 'app/models/machine_result.rb'
 
 # Offense count: 30
 # Configuration parameters: EnforcedStyle.
@@ -106,122 +23,6 @@ Layout/EndAlignment:
 Layout/EndOfLine:
   Enabled: false
 
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowForAlignment, AllowBeforeTrailingComments, ForceEqualSignAlignment.
-Layout/ExtraSpacing:
-  Exclude:
-    - 'app/models/base_unit.rb'
-    - 'app/models/work_kind.rb'
-    - 'test/controllers/gaps/health_controller_test.rb'
-    - 'test/controllers/gaps/trainings_controller_test.rb'
-
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_brackets
-Layout/FirstArrayElementIndentation:
-  Exclude:
-    - 'app/controllers/plans/work_types_controller.rb'
-    - 'app/controllers/seedling_results_controller.rb'
-    - 'app/helpers/statistics_helper.rb'
-    - 'app/views/plans/lands/index.csv.ruby'
-    - 'test/controllers/chemicals/inventories_controller_test.rb'
-
-# Offense count: 19
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_braces
-Layout/FirstHashElementIndentation:
-  Exclude:
-    - 'app/helpers/statistics_helper.rb'
-    - 'app/models/sorimachi_work_type.rb'
-    - 'app/models/work_land.rb'
-    - 'app/views/statistics/tab1.json.jbuilder'
-    - 'test/controllers/chemicals/inventories_controller_test.rb'
-    - 'test/controllers/chemicals/stocks_controller_test.rb'
-    - 'test/controllers/fuel_costs_controller_test.rb'
-    - 'test/controllers/land_costs_controller_test.rb'
-    - 'test/controllers/machines_controller_test.rb'
-    - 'test/controllers/workers_controller_test.rb'
-    - 'test/controllers/works/chemicals_controller_test.rb'
-
-# Offense count: 19
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowMultipleStyles, EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.
-# SupportedHashRocketStyles: key, separator, table
-# SupportedColonStyles: key, separator, table
-# SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Layout/HashAlignment:
-  Exclude:
-    - 'app/controllers/land_costs_controller.rb'
-    - 'app/controllers/seedling_results_controller.rb'
-    - 'app/views/machine_results/index.csv.ruby'
-    - 'app/views/works/index.csv.ruby'
-    - 'test/controllers/sorimachi/work_types_controller_test.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: normal, indented_internal_methods
-Layout/IndentationConsistency:
-  Exclude:
-    - 'app/models/home.rb'
-    - 'app/views/work_seedlings/index.csv.ruby'
-
-# Offense count: 8
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Width, AllowedPatterns.
-Layout/IndentationWidth:
-  Exclude:
-    - 'app/controllers/calendars/excels_controller.rb'
-    - 'app/controllers/zgis_controller.rb'
-    - 'app/models/machine_result.rb'
-    - 'app/models/work.rb'
-    - 'test/controllers/chemicals/inventories_controller_test.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/LeadingEmptyLines:
-  Exclude:
-    - 'lib/tasks/extract_fixtures.rake'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: symmetrical, new_line, same_line
-Layout/MultilineArrayBraceLayout:
-  Exclude:
-    - 'app/models/sorimachi_journal.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/MultilineBlockLayout:
-  Exclude:
-    - 'app/models/work_whole_crop.rb'
-
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: symmetrical, new_line, same_line
-Layout/MultilineHashBraceLayout:
-  Exclude:
-    - 'app/controllers/land_costs_controller.rb'
-    - 'app/controllers/seedling_results_controller.rb'
-    - 'test/controllers/chemicals/stocks_controller_test.rb'
-    - 'test/controllers/fuel_costs_controller_test.rb'
-    - 'test/controllers/land_costs_controller_test.rb'
-    - 'test/controllers/sorimachi/work_types_controller_test.rb'
-
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: symmetrical, new_line, same_line
-Layout/MultilineMethodCallBraceLayout:
-  Exclude:
-    - 'app/controllers/land_costs_controller.rb'
-    - 'app/controllers/seedling_results_controller.rb'
-    - 'app/models/chemical_work_type.rb'
 
 # Offense count: 72
 # This cop supports safe autocorrection (--autocorrect).
@@ -230,51 +31,6 @@ Layout/MultilineMethodCallBraceLayout:
 Layout/MultilineMethodCallIndentation:
   Enabled: false
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented
-Layout/MultilineOperationIndentation:
-  Exclude:
-    - 'app/models/sorimachi_journal.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceAfterColon:
-  Exclude:
-    - 'app/models/work.rb'
-
-# Offense count: 23
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceAfterComma:
-  Exclude:
-    - 'app/controllers/total_owned_rices_controller.rb'
-    - 'app/controllers/work_chemicals_controller.rb'
-    - 'app/controllers/work_seedlings_controller.rb'
-    - 'app/models/land_cost.rb'
-    - 'app/models/plan_seedling.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/models/work.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceAroundMethodCallOperator:
-  Exclude:
-    - 'app/models/total_cost.rb'
-
-# Offense count: 6
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowForAlignment, EnforcedStyleForExponentOperator, EnforcedStyleForRationalLiterals.
-# SupportedStylesForExponentOperator: space, no_space
-# SupportedStylesForRationalLiterals: space, no_space
-Layout/SpaceAroundOperators:
-  Exclude:
-    - 'app/decorators/work_decorator.rb'
-    - 'app/decorators/work_result_decorator.rb'
-    - 'app/models/base_unit.rb'
-    - 'app/models/work_kind.rb'
-    - 'test/controllers/gaps/health_controller_test.rb'
-    - 'test/controllers/gaps/trainings_controller_test.rb'
 
 # Offense count: 38
 # This cop supports safe autocorrection (--autocorrect).
@@ -284,31 +40,6 @@ Layout/SpaceAroundOperators:
 Layout/SpaceBeforeBlockBraces:
   Enabled: false
 
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceBeforeComma:
-  Exclude:
-    - 'app/models/machine_price_header.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'test/models/total_cost_test.rb'
-
-# Offense count: 17
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: require_no_space, require_space
-Layout/SpaceInLambdaLiteral:
-  Exclude:
-    - 'app/models/chemical_stock.rb'
-    - 'app/models/chemical_term.rb'
-    - 'app/models/chemical_work_type.rb'
-    - 'app/models/institution.rb'
-    - 'app/models/land.rb'
-    - 'app/models/machine.rb'
-    - 'app/models/machine_price_header.rb'
-    - 'app/models/plan_land.rb'
-    - 'app/models/seedling_result.rb'
-    - 'app/models/work_chemical.rb'
-    - 'app/models/work_type.rb'
 
 # Offense count: 465
 # This cop supports safe autocorrection (--autocorrect).
@@ -326,112 +57,12 @@ Layout/SpaceInsideBlockBraces:
 Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceInsidePercentLiteralDelimiters:
-  Exclude:
-    - 'config/initializers/assets.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: final_newline, final_blank_line
-Layout/TrailingEmptyLines:
-  Exclude:
-    - 'app/controllers/whole_crops_controller.rb'
-    - 'config/initializers/draper.rb'
-
 # Offense count: 91
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowInHeredoc.
 Layout/TrailingWhitespace:
   Enabled: false
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Lint/AmbiguousOperator:
-  Exclude:
-    - 'test/models/chemical_stock_test.rb'
-
-# Offense count: 22
-# This cop supports safe autocorrection (--autocorrect).
-Lint/AmbiguousOperatorPrecedence:
-  Exclude:
-    - 'app/decorators/work_decorator.rb'
-    - 'app/models/adjustment.rb'
-    - 'app/models/home.rb'
-    - 'app/models/land.rb'
-    - 'app/models/machine.rb'
-    - 'app/models/machine_type.rb'
-    - 'app/models/plan_seedling.rb'
-    - 'app/models/work.rb'
-    - 'app/models/work_chemical.rb'
-    - 'app/models/work_type.rb'
-    - 'app/services/calendar_excel_month_service.rb'
-    - 'app/services/calendar_excel_year_service.rb'
-
-# Offense count: 1
-# Configuration parameters: AllowComments, AllowEmptyLambdas.
-Lint/EmptyBlock:
-  Exclude:
-    - 'app/controllers/work_seedlings_controller.rb'
-
-# Offense count: 2
-Lint/FloatComparison:
-  Exclude:
-    - 'app/models/work.rb'
-
-# Offense count: 2
-Lint/IneffectiveAccessModifier:
-  Exclude:
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/models/work_type.rb'
-
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AutoCorrect, IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'app/models/land.rb'
-    - 'app/models/machine_remark.rb'
-    - 'app/models/sorimachi_account.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/views/machine_results/index.csv.ruby'
-    - 'app/views/works/index.csv.ruby'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AutoCorrect, AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'app/models/land_fee.rb'
-    - 'app/models/work_result.rb'
-
-# Offense count: 3
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AutoCorrect.
-Lint/UselessAssignment:
-  Exclude:
-    - 'app/models/plan_seedling.rb'
-    - 'app/models/plan_work_type.rb'
-    - 'app/models/work_land.rb'
-
-# Offense count: 1
-Naming/AccessorMethodName:
-  Exclude:
-    - 'app/controllers/total_owned_rices_controller.rb'
-
-# Offense count: 1
-# Configuration parameters: AsciiConstants.
-Naming/AsciiIdentifiers:
-  Exclude:
-    - 'app/views/work_seedlings/index.csv.ruby'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Naming/BinaryOperatorParameterName:
-  Exclude:
-    - 'app/models/sorimachi_journal.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -441,12 +72,6 @@ Naming/MemoizedInstanceVariableName:
   Exclude:
     - 'app/controllers/owned_rice_prices_controller.rb'
 
-# Offense count: 1
-# Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
-# AllowedNames: as, at, by, cc, db, id, if, in, io, ip, of, on, os, pp, to
-Naming/MethodParameterName:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
 
 # Offense count: 1
 # Configuration parameters: MinSize.
@@ -465,20 +90,6 @@ Performance/RedundantSplitRegexpArgument:
   Exclude:
     - 'lib/tasks/extract_fixtures.rake'
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-Performance/StringReplacement:
-  Exclude:
-    - 'app/models/calendar_work_kind.rb'
-    - 'app/models/land.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: OnlySumOrWithInitialValue.
-Performance/Sum:
-  Exclude:
-    - 'app/models/work_land.rb'
-
 # Offense count: 103
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Include.
@@ -494,92 +105,13 @@ Rails/ActionControllerTestCase:
 Rails/ActionOrder:
   Enabled: false
 
-# Offense count: 4
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/ApplicationRecord:
-  Exclude:
-    - 'app/models/chemical_work_type.rb'
-    - 'app/models/seedling.rb'
-    - 'app/models/seedling_home.rb'
-    - 'app/models/seedling_result.rb'
-
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Include.
-# Include: **/test/**/*
-Rails/AssertNot:
-  Exclude:
-    - 'test/controllers/sorimachi/imports_controller_test.rb'
-
-# Offense count: 3
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: NilOrEmpty, NotPresent, UnlessPresent.
-Rails/Blank:
-  Exclude:
-    - 'app/controllers/lands/totals_controller.rb'
-    - 'app/controllers/work_chemicals_controller.rb'
-    - 'app/models/sorimachi_work_type.rb'
-
-# Offense count: 21
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, AllowToTime.
-# SupportedStyles: strict, flexible
-Rails/Date:
-  Exclude:
-    - 'app/controllers/lands_controller.rb'
-    - 'app/controllers/machine_prices_controller.rb'
-    - 'app/controllers/personal_calendars_controller.rb'
-    - 'app/controllers/plans/lands_controller.rb'
-    - 'app/decorators/schedule_worker_decorator.rb'
-    - 'app/helpers/sessions_helper.rb'
-    - 'app/jobs/import_jma_job.rb'
-    - 'app/models/land.rb'
-    - 'app/models/land_cost.rb'
-    - 'app/models/organization.rb'
-    - 'app/models/schedule_worker.rb'
-
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforceForPrefixed.
-Rails/Delegate:
-  Exclude:
-    - 'app/decorators/schedule_worker_decorator.rb'
-    - 'app/models/chemical_term.rb'
-    - 'app/models/seedling_home.rb'
-    - 'app/models/work_result.rb'
-
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: slashes, arguments
-Rails/FilePath:
-  Exclude:
-    - 'config/application.rb'
-    - 'config/initializers/assets.rb'
-    - 'lib/tasks/extract_fixtures.rake'
-    - 'test/controllers/sorimachi/imports_controller_test.rb'
-
-# Offense count: 22
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowedMethods, AllowedPatterns.
 # AllowedMethods: order, limit, select, lock
 Rails/FindEach:
   Exclude:
-    - 'app/controllers/contracts_controller.rb'
-    - 'app/decorators/land_decorator.rb'
-    - 'app/helpers/works_helper.rb'
-    - 'app/jobs/init_work_type_cache_job.rb'
-    - 'app/models/chemical_term.rb'
-    - 'app/models/chemical_work_type.rb'
-    - 'app/models/depreciation.rb'
-    - 'app/models/land_cost.rb'
     - 'app/models/machine_price_header.rb'
-    - 'app/models/plan_seedling.rb'
-    - 'app/models/schedule.rb'
-    - 'app/models/sorimachi_account.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/models/total_cost.rb'
-    - 'app/models/work.rb'
 
 # Offense count: 17
 # Configuration parameters: Include.
@@ -604,15 +136,6 @@ Rails/HelperInstanceVariable:
   Exclude:
     - 'app/helpers/sessions_helper.rb'
 
-# Offense count: 6
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: numeric, symbolic
-Rails/HttpStatus:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/chemicals/stocks_controller.rb'
-
 # Offense count: 60
 # Configuration parameters: IgnoreScopes, Include.
 # Include: app/models/**/*.rb
@@ -623,58 +146,6 @@ Rails/InverseOf:
 Rails/OutputSafety:
   Exclude:
     - 'config/application.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/Pluck:
-  Exclude:
-    - 'app/helpers/statistics_helper.rb'
-
-# Offense count: 5
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: conservative, aggressive
-Rails/PluckInWhere:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/models/chemical.rb'
-    - 'app/models/work.rb'
-    - 'app/models/work_result.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Rails/Presence:
-  Exclude:
-    - 'app/controllers/land_costs_controller.rb'
-
-# Offense count: 6
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowedReceivers.
-# AllowedReceivers: ActionMailer::Preview, ActiveSupport::TimeZone
-Rails/RedundantActiveRecordAllMethod:
-  Exclude:
-    - 'app/controllers/banks_controller.rb'
-    - 'app/controllers/chemical_types_controller.rb'
-    - 'app/controllers/chemicals_controller.rb'
-    - 'app/controllers/homes_controller.rb'
-    - 'app/controllers/machine_types_controller.rb'
-    - 'app/controllers/sections_controller.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Rails/RedundantForeignKey:
-  Exclude:
-    - 'app/models/land.rb'
-    - 'app/models/work_broccoli.rb'
-
-# Offense count: 7
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/RedundantPresenceValidationOnBelongsTo:
-  Exclude:
-    - 'app/models/land_cost.rb'
-    - 'app/models/schedule.rb'
-    - 'app/models/work.rb'
-    - 'app/models/work_broccoli.rb'
 
 # Offense count: 9
 # Configuration parameters: ForbiddenMethods, AllowedMethods.
@@ -688,161 +159,15 @@ Rails/SkipsModelValidations:
     - 'app/models/work_verification.rb'
     - 'test/controllers/menu_controller_test.rb'
 
-# Offense count: 16
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/SquishedSQLHeredocs:
-  Exclude:
-    - 'app/models/chemical_term.rb'
-    - 'app/models/chemical_work_type.rb'
-    - 'app/models/land_cost.rb'
-    - 'app/models/minute.rb'
-    - 'app/models/schedule.rb'
-    - 'app/models/work.rb'
-    - 'app/models/work_type.rb'
-
-# Offense count: 4
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: strict, flexible
-Rails/TimeZone:
-  Exclude:
-    - 'app/controllers/personal_calendars_controller.rb'
-    - 'app/controllers/works/print_controller.rb'
-    - 'app/models/work.rb'
-    - 'test/controllers/seedling_costs_controller_test.rb'
-
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: to_fs, to_formatted_s
-Rails/ToFormattedS:
-  Exclude:
-    - 'app/decorators/drying_decorator.rb'
-    - 'app/decorators/whole_crop_decorator.rb'
-    - 'app/helpers/dryings_helper.rb'
-    - 'app/helpers/works_helper.rb'
-
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/Validation:
-  Exclude:
-    - 'app/models/user.rb'
-    - 'app/models/work_chemical.rb'
-
-# Offense count: 41
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/WhereEquals:
-  Enabled: false
-
-# Offense count: 12
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: exists, where
-Rails/WhereExists:
-  Exclude:
-    - 'app/helpers/sessions_helper.rb'
-    - 'app/models/chemical.rb'
-    - 'app/models/chemical_stock.rb'
-    - 'app/models/chemical_term.rb'
-    - 'app/models/chemical_work_type.rb'
-    - 'app/models/machine.rb'
-    - 'app/models/machine_result.rb'
-    - 'app/models/seedling_home.rb'
-    - 'app/models/total_cost.rb'
-    - 'test/controllers/chemicals_controller_test.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Rails/WhereNot:
-  Exclude:
-    - 'app/models/plan_work_type.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: separated, grouped
-Style/AccessorGrouping:
-  Exclude:
-    - 'app/models/work_type.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, conditionals
-Style/AndOr:
-  Exclude:
-    - 'app/models/work.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-Style/ColonMethodCall:
-  Exclude:
-    - 'app/views/machine_results/index.csv.ruby'
-    - 'app/views/works/index.csv.ruby'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
 Style/CombinableLoops:
   Exclude:
     - 'app/controllers/work_chemicals_controller.rb'
-
-# Offense count: 8
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, SingleLineConditionsOnly, IncludeTernaryExpressions.
-# SupportedStyles: assign_to_condition, assign_inside_condition
-Style/ConditionalAssignment:
-  Exclude:
-    - 'app/controllers/machine_prices_controller.rb'
-    - 'app/controllers/machine_results_controller.rb'
-    - 'app/controllers/work_results_controller.rb'
-    - 'app/controllers/works_controller.rb'
-    - 'app/models/machine_result.rb'
-    - 'lib/tasks/extract_fixtures.rake'
-
-# Offense count: 38
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AutoCorrect, EnforcedStyle.
-# SupportedStyles: compact, expanded
-Style/EmptyMethod:
-  Enabled: false
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Style/ExpandPathArguments:
   Exclude:
     - 'config.ru'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowedVars.
-Style/FetchEnvVar:
-  Exclude:
-    - 'test/application_system_test_case.rb'
-
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: format, sprintf, percent
-Style/FormatString:
-  Exclude:
-    - 'app/decorators/land_decorator.rb'
-    - 'app/decorators/work_decorator.rb'
-    - 'app/decorators/work_result_decorator.rb'
-    - 'app/helpers/works_helper.rb'
-
-# Offense count: 5
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowedReceivers.
-# AllowedReceivers: Thread.current
-Style/HashEachMethods:
-  Exclude:
-    - 'app/controllers/land_costs_controller.rb'
-    - 'app/controllers/owned_rices_controller.rb'
-    - 'app/models/machine_remark.rb'
-    - 'app/models/sorimachi_account.rb'
-    - 'app/views/work_seedlings/index.csv.ruby'
 
 # Offense count: 180
 # This cop supports safe autocorrection (--autocorrect).
@@ -852,25 +177,6 @@ Style/HashEachMethods:
 Style/HashSyntax:
   Enabled: false
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowIfModifier.
-Style/IfInsideElse:
-  Exclude:
-    - 'app/models/machine_price_header.rb'
-    - 'app/models/work.rb'
-    - 'app/models/work_type.rb'
-
-# Offense count: 5
-# This cop supports safe autocorrection (--autocorrect).
-Style/IfUnlessModifier:
-  Exclude:
-    - 'app/controllers/gaps/monthly_reports_controller.rb'
-    - 'app/models/depreciation.rb'
-    - 'app/models/machine_price_header.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'lib/tasks/extract_fixtures.rake'
-
 # Offense count: 66
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
@@ -879,133 +185,20 @@ Style/Lambda:
   Enabled: false
 
 # Offense count: 4
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/MapToHash:
-  Exclude:
-    - 'app/controllers/sorimachi/work_types_controller.rb'
-    - 'app/models/sorimachi_account.rb'
-    - 'app/models/sorimachi_journal.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/MultilineTernaryOperator:
-  Exclude:
-    - 'app/decorators/chemical_stock_decorator.rb'
-
-# Offense count: 16
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: literals, strict
-Style/MutableConstant:
-  Exclude:
-    - 'app/decorators/schedule_decorator.rb'
-    - 'app/helpers/statistics_helper.rb'
-    - 'app/jobs/import_jma_job.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/NestedTernaryOperator:
-  Exclude:
-    - 'app/decorators/machine_result_decorator.rb'
-
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, MinBodyLength.
-# SupportedStyles: skip_modifier_ifs, always
-Style/Next:
-  Exclude:
-    - 'app/models/chemical_stock.rb'
-    - 'app/models/chemical_term.rb'
-    - 'app/models/machine_remark.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/models/sorimachi_work_type.rb'
-    - 'app/services/concerns/workbook.rb'
-    - 'app/views/total_dryings/index.csv.ruby'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: IncludeSemanticChanges.
-Style/NonNilCheck:
-  Exclude:
-    - 'app/controllers/work_types_controller.rb'
-
-# Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Strict, AllowedNumbers, AllowedPatterns.
 Style/NumericLiterals:
   MinDigits: 6
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, AllowedMethods, AllowedPatterns.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Exclude:
-    - 'app/models/work.rb'
-    - 'app/models/work_chemical.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: then, yield_self
-Style/ObjectThen:
-  Exclude:
-    - 'test/application_system_test_case.rb'
-
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
 Style/OrAssignment:
   Exclude:
     - 'app/controllers/sorimachi/accounts_controller.rb'
-    - 'app/models/work_type.rb'
-    - 'app/views/total_owned_rices/index.csv.ruby'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'config/application.rb'
-    - 'config/initializers/assets.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantConstantBase:
-  Exclude:
-    - 'config.ru'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantDoubleSplatHashBraces:
-  Exclude:
-    - 'test/application_system_test_case.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantFileExtensionInRequire:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/RedundantInterpolation:
-  Exclude:
-    - 'app/jobs/import_jma_job.rb'
-    - 'app/services/calendar_excel_month_service.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 Style/RedundantLineContinuation:
   Exclude:
     - 'app/controllers/application_controller.rb'
-
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantRegexpArgument:
-  Exclude:
-    - 'app/models/calendar_work_kind.rb'
-    - 'app/models/land.rb'
-    - 'lib/tasks/extract_fixtures.rake'
 
 # Offense count: 197
 # This cop supports safe autocorrection (--autocorrect).
@@ -1020,124 +213,8 @@ Style/RedundantSelf:
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'app/models/sorimachi_journal.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: implicit, explicit
 Style/RescueStandardError:
   Exclude:
     - 'app/controllers/sorimachi/imports_controller.rb'
-
-# Offense count: 12
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.
-# AllowedMethods: present?, blank?, presence, try, try!
-Style/SafeNavigation:
-  Exclude:
-    - 'app/controllers/sessions_controller.rb'
-    - 'app/decorators/work_broccoli_decorator.rb'
-    - 'app/decorators/work_decorator.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/jobs/import_jma_job.rb'
-    - 'app/models/machine.rb'
-    - 'app/models/machine_type.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/models/work_land.rb'
-    - 'app/models/work_type.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowAsExpressionSeparator.
-Style/Semicolon:
-  Exclude:
-    - 'app/models/work_type.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowModifier.
-Style/SoleNestedConditional:
-  Exclude:
-    - 'app/models/work.rb'
-
-# Offense count: 18
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Mode.
-Style/StringConcatenation:
-  Exclude:
-    - 'app/decorators/schedule_decorator.rb'
-    - 'app/decorators/schedule_worker_decorator.rb'
-    - 'app/decorators/work_decorator.rb'
-    - 'app/decorators/work_result_decorator.rb'
-    - 'app/decorators/worker_decorator.rb'
-    - 'app/helpers/sessions_helper.rb'
-    - 'app/jobs/import_jma_job.rb'
-    - 'app/models/home.rb'
-    - 'app/models/worker.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiteralsInInterpolation:
-  Exclude:
-    - 'app/services/zgis_excel_service.rb'
-
-# Offense count: 4
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowMethodsWithArguments, AllowedMethods, AllowedPatterns, AllowComments.
-# AllowedMethods: define_method, mail, respond_to
-Style/SymbolProc:
-  Exclude:
-    - 'app/models/land_cost.rb'
-    - 'app/models/sorimachi_account.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/models/work.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, AllowSafeAssignment.
-# SupportedStyles: require_parentheses, require_no_parentheses, require_parentheses_when_complex
-Style/TernaryParentheses:
-  Exclude:
-    - 'app/decorators/chemical_stock_decorator.rb'
-    - 'app/helpers/works_helper.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInArguments:
-  Exclude:
-    - 'app/models/chemical_work_type.rb'
-
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInArrayLiteral:
-  Exclude:
-    - 'test/controllers/chemicals/inventories_controller_test.rb'
-    - 'test/controllers/chemicals/stores_controller_test.rb'
-    - 'test/controllers/dryings_controller_test.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInHashLiteral:
-  Exclude:
-    - 'app/controllers/works_controller.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: ExactNameMatch, AllowPredicates, AllowDSLWriters, IgnoreClassMethods, AllowedMethods.
-# AllowedMethods: to_ary, to_a, to_c, to_enum, to_h, to_hash, to_i, to_int, to_io, to_open, to_path, to_proc, to_r, to_regexp, to_str, to_s, to_sym
-Style/TrivialAccessors:
-  Exclude:
-    - 'app/models/cost_type.rb'

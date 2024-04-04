@@ -32,7 +32,7 @@ class User < ApplicationRecord
   has_many :calendar_work_kinds, dependent: :destroy
 
   validates :login_name, uniqueness: true
-  validates_length_of :password, maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED
+  validates :password, length: { maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED }
 
   def login_name=(value)
     super(value.downcase)

@@ -15,7 +15,7 @@
 #  index_seedlings_on_term_and_work_type_id  (term,work_type_id) UNIQUE
 #
 
-class Seedling < ActiveRecord::Base
+class Seedling < ApplicationRecord
   belongs_to :work_type, -> {with_deleted}
   has_many :seedling_homes, dependent: :destroy
 

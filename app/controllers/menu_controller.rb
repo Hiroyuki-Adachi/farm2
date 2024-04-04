@@ -16,8 +16,7 @@ class MenuController < ApplicationController
     @minute = Minute.for_personal(current_user.worker).last&.decorate
   end
 
-  def edit
-  end
+  def edit; end
 
   def edit_term
     @terms = WorkDecorator.terms
