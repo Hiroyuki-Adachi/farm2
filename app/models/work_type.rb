@@ -33,21 +33,20 @@ class WorkType < ApplicationRecord
   scope :indexes, -> {where(category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
   scope :land, -> {where(land_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
   scope :cost, -> {where(cost_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
-  scope :select_category, -> (category) {where(category_flag: false, work_flag: true, genre: category[:genre]).order(display_order: :ASC, id: :ASC)}
+  scope :select_category, ->(category) {where(category_flag: false, work_flag: true, genre: category[:genre]).order(display_order: :ASC, id: :ASC)}
   scope :by_term, ->(term) {
     where("EXISTS (SELECT * FROM work_type_terms WTT WHERE work_types.id = WTT.work_type_id AND WTT.term = ?)", term)
     .with_deleted
   }
   scope :for_work, ->(category, work) {
-    where(<<SQL, category[:genre], work.term, work.work_type_id, category[:genre], work.work_type.genre_id)
+    where(<<SQL.squish, category[:genre], work.term, work.work_type_id, category[:genre], work.work_type.genre_id)
     (category_flag = FALSE AND work_flag = TRUE AND genre = ? AND EXISTS (SELECT * FROM work_type_terms WTT WHERE work_types.id = WTT.work_type_id AND WTT.term = ?)) OR (id = ? AND ? = ?)
 SQL
     .with_deleted
     .order(display_order: :ASC, id: :ASC)
   }
 
-  attr_accessor :term
-  attr_accessor :term_flag
+  attr_accessor :term, :term_flag
 
   def genre_id
     Rails.cache.fetch("genre_id_#{self[:genre]}", expires_in: 1.hour) do
@@ -93,6 +92,21 @@ SQL
     return fg_color_term(organization.get_term(date))
   end
 
+  def self.to_fg_color(bg_color)
+    rgb = {r: 255, g: 255, b: 255 }
+    lum = 135
+  
+    if bg_color[0, 1] == '#' && bg_color.length == 7
+      rgb[:r] = bg_color[1, 2].to_i(16)
+      rgb[:g] = bg_color[3, 2].to_i(16)
+      rgb[:b] = bg_color[5, 2].to_i(16)
+    end
+
+    yuv = (0.2126 * rgb[:r]) + (0.7152 * rgb[:g]) + (0.0722 * rgb[:b])
+  
+    return yuv >= lum ? 'black' : 'white'
+  end
+
   private
 
   def update_cost_flag
@@ -105,23 +119,8 @@ SQL
       work_term ||= WorkTypeTerm.new(term: @term, work_type_id: self.id)
       work_term.bg_color = self.bg_color
       work_term.save!
-    else
-      work_term.destroy if work_term
+    elsif work_term
+      work_term.destroy
     end
-  end
-
-  def self.to_fg_color(bg_color)
-    rgb = {r: 255, g: 255, b: 255 }
-    lum = 135
-  
-    if bg_color[0, 1] == '#' && bg_color.length == 7
-      rgb[:r] = bg_color[1, 2].to_i(16)
-      rgb[:g] = bg_color[3, 2].to_i(16)
-      rgb[:b] = bg_color[5, 2].to_i(16)
-    end
-
-    yuv = 0.2126 * rgb[:r] + 0.7152 * rgb[:g] + 0.0722 * rgb[:b];
-  
-    return yuv >= lum ? 'black' : 'white'
   end
 end

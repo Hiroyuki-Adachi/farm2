@@ -19,10 +19,8 @@ class LandCost < ApplicationRecord
   belongs_to :work_type, -> {with_deleted}
 
   validates :activated_on, presence: true
-  validates :land_id, presence: true
-  validates :work_type_id, presence: true
 
-  scope :newest, ->(target) {where([<<SQL, target])}
+  scope :newest, ->(target) {where([<<SQL.squish, target])}
   EXISTS (
     SELECT land_id, MAX(activated_on)
       FROM land_costs lc2
@@ -51,7 +49,7 @@ SQL
 
   def self.sum_area_for_harvest(worked_at, work_kind_id)
     results = {}
-    Work.where(worked_at: worked_at, work_kind_id: work_kind_id).each do |work|
+    Work.where(worked_at: worked_at, work_kind_id: work_kind_id).find_each do |work|
       work.lands.each do |land|
         land_cost = land.cost(worked_at)
         next if land_cost.nil?
@@ -64,7 +62,7 @@ SQL
   end
 
   def self.for_straws(term, work_type_id)
-    LandCost.newest(Date.new(term.to_i,4,1)).joins(:land).where([<<SQL, work_type_id, term]).group("land_costs.work_type_id").sum("lands.area")
+    LandCost.newest(Date.new(term.to_i, 4, 1)).joins(:land).where([<<SQL.squish, work_type_id, term]).group("land_costs.work_type_id").sum("lands.area")
       EXISTS (SELECT * FROM work_lands 
         INNER JOIN works ON works.id = work_lands.work_id AND works.work_type_id = ? AND works.term = ?
         WHERE lands.id = work_lands.land_id
@@ -109,8 +107,6 @@ SQL
   end
 
   def regist_work_work_types
-    Work.where("worked_at BETWEEN ? AND ?", activated_on, next_land_cost&.activated_on || Date.today).by_land(land).each do |w|
-      w.regist_work_work_types
-    end
+    Work.where("worked_at BETWEEN ? AND ?", activated_on, next_land_cost&.activated_on || Time.zone.today).by_land(land).each(&:regist_work_work_types)
   end
 end

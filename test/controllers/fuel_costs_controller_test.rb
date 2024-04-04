@@ -25,7 +25,8 @@ class FuelCostsControllerTest < ActionController::TestCase
           light_oil_price: light_oil_price,
           machine_results: {machine_results(:machine_results0).id => {
             fuel_usage: fuel_usage, old_usage: 0
-        }}}
+          }}
+        }
       end
     end
     assert_redirected_to fuel_costs_path

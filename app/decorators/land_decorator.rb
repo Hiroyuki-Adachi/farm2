@@ -11,13 +11,13 @@ class LandDecorator < Draper::Decorator
   #   end
 
   def area
-    return h.h(sprintf("%.2f", model.area))
+    return h.h(format("%.2f", model.area))
   end
 
   def self.homes
     hs = []
     hs << ["全て", ""]
-    Home.landable.includes(:holder).each do |h|
+    Home.landable.includes(:holder).find_each do |h|
       hs << [h.owner_name, h.id]
     end
     return hs

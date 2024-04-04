@@ -16,11 +16,10 @@ class PersonalCalendarsController < ApplicationController
 
   private
 
-  def restrict_remote_ip
-  end
+  def restrict_remote_ip; end
 
   def worked_from
-    Date.new(Date.today.year - 1, 1, 1)
+    Date.new(Time.zone.today.year - 1, 1, 1)
   end
 
   def make_calendar
@@ -75,6 +74,6 @@ class PersonalCalendarsController < ApplicationController
   end
 
   def to_datetime(date, time)
-    Time.local(date.year, date.month, date.day, time.hour, time.min, 0)
+    Time.zone.local(date.year, date.month, date.day, time.hour, time.min, 0)
   end
 end

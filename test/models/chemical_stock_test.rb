@@ -40,7 +40,7 @@ class ChemicalStockTest < ActiveSupport::TestCase
     assert_equal stock2.stored, stock2.adjust
 
     assert_equal stock2.stock - work_stock.using, work_stock.stock
-    assert_equal -work_stock.using, work_stock.adjust
+    assert_equal(-work_stock.using, work_stock.adjust)
 
     stock4 = ChemicalStock.find(chemical_stocks(:stock_model4).id)
     assert_equal work_stock.stock + stock4.stored, stock4.stock
@@ -48,7 +48,7 @@ class ChemicalStockTest < ActiveSupport::TestCase
 
     stock5 = ChemicalStock.find(chemical_stocks(:stock_model5).id)
     assert_equal stock4.stock - stock5.shipping, stock5.stock
-    assert_equal -stock5.shipping, stock5.adjust
+    assert_equal(-stock5.shipping, stock5.adjust)
 
     stock6 = ChemicalStock.find(chemical_stocks(:stock_model6).id)
     assert_equal stock6.inventory, stock6.stock

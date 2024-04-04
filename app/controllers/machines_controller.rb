@@ -11,8 +11,7 @@ class MachinesController < ApplicationController
     @machine = Machine.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @machine = Machine.new(machine_params)

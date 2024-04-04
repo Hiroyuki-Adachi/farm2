@@ -39,6 +39,6 @@ class CalendarWorkKind < ApplicationRecord
   end
 
   def excel_color
-    text_color.gsub(/#/, '')
+    text_color.delete('#')
   end
 end

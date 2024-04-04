@@ -1,4 +1,4 @@
-require 'sessions_helper.rb'
+require 'sessions_helper'
 
 module ApplicationHelper
   include SessionsHelper
@@ -7,8 +7,8 @@ module ApplicationHelper
     return simple_format(h(text))
   end
 
-  def error_print(ar)
-    render(partial: "error_templete", :locals => {:ar => ar}) if ar && ar.errors.any?
+  def error_print(record)
+    render(partial: "error_templete", :locals => {:ar => record}) if record&.errors&.any?
   end
 
   def data_print(data, kind, url)

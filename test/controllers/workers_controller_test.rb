@@ -5,8 +5,8 @@ class WorkersControllerTest < ActionController::TestCase
     setup_ip
     @worker = workers(:worker1)
     @update = { 
-        family_name: "試験", first_name: "太郎", family_phonetic: "しけん", first_phonetic: "たろう",
-        home_id: Home.first, display_order: 99 
+      family_name: "試験", first_name: "太郎", family_phonetic: "しけん", first_phonetic: "たろう",
+      home_id: Home.first, display_order: 99 
     }
   end
 

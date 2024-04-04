@@ -19,8 +19,8 @@ class PlanSeedling < ApplicationRecord
   belongs_to :plan, class_name: "PlanWorkType", foreign_key: "plan_work_type_id"
 
   def self.usual
-    results = Hash.new { |h,k| h[k] = {} }
-    PlanSeedling.all.each do |seedling|
+    results = Hash.new { |h, k| h[k] = {} }
+    PlanSeedling.find_each do |seedling|
       results[seedling.home_id][seedling.plan_work_type_id] = seedling
     end
     return results
@@ -33,11 +33,11 @@ class PlanSeedling < ApplicationRecord
         if pl.present?
           pl.quantity = q[:quantity]
         else
-          pl = PlanSeedling.create(home_id: hid, plan_work_type_id: pid, quantity: q[:quantity])
+          PlanSeedling.create(home_id: hid, plan_work_type_id: pid, quantity: q[:quantity])
         end
       end
     end
-    PlanSeedling.joins(:home).where("homes.seedling_order IS NULL").destroy_all
+    PlanSeedling.joins(:home).where(homes: { seedling_order: nil }).destroy_all
   end
 
   def seeds
@@ -55,6 +55,6 @@ class PlanSeedling < ApplicationRecord
 
   def seed_bag2
     return 0 if plan&.bag_weight2.nil? || plan.bag_weight2.zero?
-    return ((seeds - seed_bag1 * plan.bag_weight1) / plan.bag_weight2).ceil
+    return ((seeds - (seed_bag1 * plan.bag_weight1)) / plan.bag_weight2).ceil
   end
 end

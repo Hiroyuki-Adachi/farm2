@@ -12,13 +12,13 @@
 #  work_result_id(作業結果)   :integer
 #
 
-class SeedlingResult < ActiveRecord::Base
+class SeedlingResult < ApplicationRecord
   belongs_to :seedling_home
   belongs_to :work_result
 
   scope :total, ->(seedling_homes) {where(seedling_home_id: seedling_homes.pluck(:id)).group(:seedling_home_id).sum(:quantity)}
 
-  scope :by_work_day, -> (seedling_home) {
+  scope :by_work_day, ->(seedling_home) {
     joins(work_result: :work)
     .where(seedling_home_id: seedling_home.id)
     .group("works.worked_at")

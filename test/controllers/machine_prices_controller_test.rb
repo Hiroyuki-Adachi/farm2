@@ -80,5 +80,4 @@ class MachinePricesControllerTest < ActionController::TestCase
     end
     assert_redirected_to show_machine_machine_price_headers_path(machine_id: @machine_price_m.machine_id)
   end
-
 end
