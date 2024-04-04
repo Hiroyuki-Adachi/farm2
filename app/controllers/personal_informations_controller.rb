@@ -17,9 +17,9 @@ class PersonalInformationsController < ApplicationController
   def restrict_remote_ip; end
 
   def set_worker
-    @worker = Worker.find_by(token: params[:token] || params[:personal_information_token])
-    to_error_path unless @worker
-    @current_user = @worker&.user
+    @current_user = User.find_by(token: params[:token] || params[:personal_information_token])
+    to_error_path unless @current_user&.worker
+    @worker = @current_user.worker
   end
 
   def between_worked_at

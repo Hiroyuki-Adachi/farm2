@@ -9,6 +9,7 @@
 #  target_from(開始年月)         :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)           :date             default(Fri, 31 Dec 2010), not null
 #  term(期)                      :integer          default(0), not null
+#  token(アクセストークン)       :string(36)       default(""), not null
 #  view_month(表示切替月)        :integer          default(["1", "4", "8"]), not null, is an Array
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
@@ -20,6 +21,7 @@
 #
 #  index_users_on_login_name  (login_name) UNIQUE
 #  index_users_on_worker_id   (worker_id) UNIQUE
+#  ix_users_token             (token) UNIQUE
 #
 
 users1:
@@ -31,6 +33,7 @@ users1:
   permission_id: 9
   term: 2015
   calendar_term: 2014
+  token: 2e51d555-9cc2-4588-8326-a4dedddd5349
 
 user_manager:
   id: 2
@@ -41,6 +44,7 @@ user_manager:
   permission_id: 3
   term: 2015
   calendar_term: 2014
+  token: e71d3ea1-05b0-4127-b701-631923f53a2f
 
 user_checker:
   id: 3
@@ -51,6 +55,7 @@ user_checker:
   permission_id: 2
   term: 2015
   calendar_term: 2014
+  token: 749a06f5-30da-45b9-b3b1-90d5767ac72f
 
 user_user:
   id: 4
@@ -61,6 +66,7 @@ user_user:
   permission_id: 1
   term: 2015
   calendar_term: 2014
+  token: 4baa7151-e9ab-45fa-9cbe-626df92c18ed
 
 user_visitor:
   id: 5
@@ -71,6 +77,7 @@ user_visitor:
   permission_id: 0
   term: 2015
   calendar_term: 2014
+  token: 04daf6ea-ab96-4f15-9185-65dbd648c5a7
 
 user31:
   worker_id: 31
@@ -80,6 +87,7 @@ user31:
   permission_id: 0
   term: 2015
   calendar_term: 2014
+  token: d8d76740-4a70-4e98-ba9f-f49eb5739b1c
 
 user2017:
   worker_id: 32
@@ -89,6 +97,7 @@ user2017:
   permission_id: 9
   term: 2017
   calendar_term: 2014
+  token: 2d10d73d-7c1b-4205-8fe9-5b6348fcc5ae
 
 user2017c:
   worker_id: 33
@@ -98,3 +107,4 @@ user2017c:
   permission_id: 2
   term: 2017
   calendar_term: 2014
+  token: 8d171996-8d90-4f0e-b8d6-194dad141ad8
