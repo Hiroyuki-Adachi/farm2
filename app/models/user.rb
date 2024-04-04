@@ -9,6 +9,7 @@
 #  target_from(開始年月)         :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)           :date             default(Fri, 31 Dec 2010), not null
 #  term(期)                      :integer          default(0), not null
+#  token(アクセストークン)       :string(36)       default(""), not null
 #  view_month(表示切替月)        :integer          default(["1", "4", "8"]), not null, is an Array
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
@@ -20,10 +21,12 @@
 #
 #  index_users_on_login_name  (login_name) UNIQUE
 #  index_users_on_worker_id   (worker_id) UNIQUE
+#  ix_users_token             (token) UNIQUE
 #
 
 class User < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+  before_create :set_token
 
   belongs_to :worker
   belongs_to :organization
@@ -64,6 +67,12 @@ class User < ApplicationRecord
 
   def checkable?
     admin? || manager? || checker?
+  end
+
+  private
+
+  def set_token
+    self.token = SecureRandom.uuid
   end
 
   has_secure_password

@@ -1,6 +1,6 @@
 class PersonalCalendarsController < ApplicationController
   def show
-    @worker = Worker.find_by(token: params[:token])
+    @worker = User.find_by(token: params[:token])&.worker
     if @worker
       @schedules = ScheduleWorkerDecorator.decorate_collection(ScheduleWorker.for_calendar(@worker))
       @results = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from))
