@@ -12,8 +12,7 @@ class HomesController < ApplicationController
     @home = Home.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @home = Home.new(home_params)
@@ -44,7 +43,7 @@ class HomesController < ApplicationController
   end
 
   def set_sections
-    @sections = Section.all.order(:display_order)
+    @sections = Section.order(:display_order)
   end
 
   def home_params

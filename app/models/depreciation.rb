@@ -20,14 +20,12 @@ class Depreciation < ApplicationRecord
   has_many :depreciation_types, dependent: :destroy
   has_many :work_types, through: :depreciation_types
 
-  scope :usual, ->(term) {joins(:machine, :machine_type).where(["depreciations.term = ?", term])}
+  scope :usual, ->(term) {joins(:machine, :machine_type).where(depreciations: { term: term })}
 
   def regist_work_types(work_types)
     work_types.each do |work_type|
-      unless depreciation_types.find_by(work_type_id: work_type)
-        DepreciationType.create(depreciation_id: id, work_type_id: work_type)
-      end
+      DepreciationType.create(depreciation_id: id, work_type_id: work_type) unless depreciation_types.find_by(work_type_id: work_type)
     end
-    depreciation_types.where.not(work_type_id: work_types).each(&:destroy)
+    depreciation_types.where.not(work_type_id: work_types).find_each(&:destroy)
   end
 end

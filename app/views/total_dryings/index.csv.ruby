@@ -17,19 +17,18 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
           drying.amount(current_system, home.id)
         ]
       end
-      if current_system.waste_price.positive? && drying.waste_weight.positive?
-        csv << [
-          home&.finance_code,
-          home&.name,
-          drying.work_type&.name,
-          drying.model.carried_on,
-          drying.model.waste_date,
-          "くず米",
-          drying.waste_weight / Drying::KG_PER_BAG_WASTE,
-          current_system.waste_price,
-          drying.waste_amount(current_system)
-        ]
-      end
+      next unless current_system.waste_price.positive? && drying.waste_weight.positive?
+      csv << [
+        home&.finance_code,
+        home&.name,
+        drying.work_type&.name,
+        drying.model.carried_on,
+        drying.model.waste_date,
+        "くず米",
+        drying.waste_weight / Drying::KG_PER_BAG_WASTE,
+        current_system.waste_price,
+        drying.waste_amount(current_system)
+      ]
     end
   end
 end

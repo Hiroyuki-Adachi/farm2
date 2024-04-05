@@ -13,9 +13,9 @@ class WorkResultDecorator < Draper::Decorator
 
   def worker_name(organization)
     if organization.print_home?
-      return model.worker.name + "(" + model.worker.home.name + ")"
+      return "#{model.worker.name}(#{model.worker.home.name})"
     elsif organization.print_section?
-      return model.worker.name + "(" + model.worker.home.section.name + ")"
+      return "#{model.worker.name}(#{model.worker.home.section.name})"
     end
     return model.worker.name
   end
@@ -25,7 +25,7 @@ class WorkResultDecorator < Draper::Decorator
   end
 
   def name
-    work.work_type.name + "(" + work_name + ")"
+    "#{work.work_type.name}(#{work_name})"
   end
 
   def worked_at
@@ -53,11 +53,11 @@ class WorkResultDecorator < Draper::Decorator
   end
 
   def work_name_short
-    model.work.work_type.name + "(" + model.work.work_kind.name + ")"
+    "#{model.work.work_type.name}(#{model.work.work_kind.name})"
   end
 
   def hours
-    return "%.1f"%model.hours
+    return "%.1f" % model.hours
   end
 
   def price

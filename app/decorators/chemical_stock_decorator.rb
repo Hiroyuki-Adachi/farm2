@@ -10,8 +10,11 @@ class ChemicalStockDecorator < Draper::Decorator
   end
 
   def shipping_format
-    (model.shipping || model.using) ?
-    h.number_to_currency((model.shipping || model.using), precision: 1, format: "%n%u", unit: model.chemical.stock_unit) : ""
+    if model.shipping || model.using
+      h.number_to_currency((model.shipping || model.using), precision: 1, format: "%n%u", unit: model.chemical.stock_unit)
+    else
+      ""
+    end
   end
 
   def stock_format

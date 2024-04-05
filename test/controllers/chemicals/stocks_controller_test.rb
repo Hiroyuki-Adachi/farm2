@@ -41,7 +41,8 @@ class Chemicals::StocksControllerTest < ActionController::TestCase
           stock_on: '2015-03-03',
           name: 'TEST',
           stored: 20
-      }}
+        }
+      }
     end
     assert_response :success
   end
@@ -60,7 +61,8 @@ class Chemicals::StocksControllerTest < ActionController::TestCase
           stock_on: '2015-12-31',
           name: 'UPDATE',
           stored: 1
-      }}
+        }
+      }
     end
     assert_response :success
     assert_equal 1, ChemicalStock.find(@stock.id).stored

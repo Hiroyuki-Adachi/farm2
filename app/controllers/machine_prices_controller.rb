@@ -9,20 +9,20 @@ class MachinePricesController < ApplicationController
 
   def show_type
     @machine_type = MachineType.find(params[:machine_type_id])
-    @machine_price = MachinePriceHeader.show_type(@machine_type, Date.today).first
+    @machine_price = MachinePriceHeader.show_type(@machine_type, Time.zone.today).first
   end
 
   def show_machine
     @machine = Machine.find(params[:machine_id])
-    @machine_price = MachinePriceHeader.show_machine(@machine, Date.today).first
+    @machine_price = MachinePriceHeader.show_machine(@machine, Time.zone.today).first
   end
 
   def new
-    if params[:machine_id]
-      @machine_price = MachinePriceHeader.new(machine_id: params[:machine_id], machine_type_id: 0, validated_at: Date.today)
-    else
-      @machine_price = MachinePriceHeader.new(machine_type_id: params[:machine_type_id], machine_id: 0, validated_at: Date.today)
-    end
+    @machine_price = if params[:machine_id]
+                       MachinePriceHeader.new(machine_id: params[:machine_id], machine_type_id: 0, validated_at: Time.zone.today)
+                     else
+                       MachinePriceHeader.new(machine_type_id: params[:machine_type_id], machine_id: 0, validated_at: Time.zone.today)
+                     end
   end
 
   def create
@@ -40,8 +40,7 @@ class MachinePricesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     @machine_price.details_form = params[:details_form]

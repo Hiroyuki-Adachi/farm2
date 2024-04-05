@@ -12,8 +12,7 @@ class ChemicalsController < ApplicationController
     @chemical = Chemical.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @chemical = Chemical.new(chemical_params)
@@ -49,7 +48,7 @@ class ChemicalsController < ApplicationController
   end
 
   def set_chemical_types
-    @chemical_types = ChemicalType.all.order(:display_order)
+    @chemical_types = ChemicalType.order(:display_order)
   end
 
   def chemical_params

@@ -37,7 +37,11 @@ class Plans::LandsController < PlansController
   end
 
   def current_date
-    System.find_by(term: plan_term, organization_id: current_organization.id)&.start_date
+    if params[:mode] == TERM_MODES[:current]
+      Time.zone.now.to_date
+    else
+      System.find_by(term: plan_term, organization_id: current_organization.id)&.start_date
+    end
   end
 
   def validate_mode

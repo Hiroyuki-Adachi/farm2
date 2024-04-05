@@ -30,8 +30,8 @@ class WorkChemical < ApplicationRecord
   has_one    :work_type, -> {with_deleted}, through: :work
   has_one    :work_kind, -> {with_deleted}, through: :work
 
-  validates_presence_of :quantity
-  validates_numericality_of :quantity, if: proc { |x| x.quantity.present?}
+  validates :quantity, presence: true
+  validates :quantity, numericality: { if: proc { |x| x.quantity.present?} }
 
   scope :by_term, ->(term){
     joins(:work)
@@ -42,11 +42,11 @@ class WorkChemical < ApplicationRecord
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
       .joins("INNER JOIN systems ON systems.term = works.term")
       .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
-      .where("systems.term = ?", term)
+      .where(systems: { term: term })
       .order("works.worked_at, works.id, chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
   }
 
-  scope :for_stock, -> (chemical_id, start_date) {
+  scope :for_stock, ->(chemical_id, start_date) {
     joins(:work)
     .includes(:chemical)
     .where("works.worked_at >= ? AND work_chemicals.chemical_id = ?", start_date, chemical_id)
@@ -54,12 +54,12 @@ class WorkChemical < ApplicationRecord
   }
 
   def chemical_display_order
-    chemical_type.display_order * 100_000 + chemical_type.id * 1000 + chemical.display_order * 100 + chemical_id
+    (chemical_type.display_order * 100_000) + (chemical_type.id * 1000) + (chemical.display_order * 100) + chemical_id
   end
 
   def quantity10
     sum_area = work.chemical_group_flag ? work.sum_areas(chemical_group_no) : work.sum_areas
-    return sum_area == 0 ? 0 : (quantity / sum_area * 10).round(1)
+    return sum_area.zero? ? 0 : (quantity / sum_area * 10).round(1)
   end
 
   def dilution_amount

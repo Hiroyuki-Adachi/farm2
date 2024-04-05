@@ -18,8 +18,8 @@ class WorkChemicalsController < ApplicationController
     @total_chemicals = {}
     @work_areas = {}
     @work_types = {}
-    work_rate_denom = Hash.new { |h,k| h[k] = Hash.new(&h.default_proc) }
-    work_rate_numer = Hash.new { |h,k| h[k] = {} }
+    work_rate_denom = Hash.new { |h, k| h[k] = Hash.new(&h.default_proc) }
+    work_rate_numer = Hash.new { |h, k| h[k] = {} }
     work_chemicals_temp = WorkChemical.by_term(@term)
     work_chemicals_temp.each do |work_chemical|
       next if (work_chemical.work.work_lands&.count || 0).zero?
@@ -38,7 +38,7 @@ class WorkChemicalsController < ApplicationController
       @work_types[work_chemical.work_id] = work_chemical.work.exact_work_types
       @work_types[work_chemical.work_id].each do |work_type|
         numer = work_rate_numer[work_chemical.work_id][work_chemical.chemical_id]
-        next unless numer.present?
+        next if numer.blank?
         work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type.id] = 0 if work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type.id] == {}
         quantity = work_chemical.quantity * work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type.id] / numer
         @work_chemicals["#{work_chemical.work_id},#{work_type.id},#{work_chemical.chemical_id}"] = quantity
