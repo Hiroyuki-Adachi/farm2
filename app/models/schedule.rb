@@ -18,8 +18,6 @@
 class Schedule < ApplicationRecord
   validates :worked_at, presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
-  validates :work_type_id, presence: true
-  validates :work_kind_id, presence: true
 
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
@@ -30,12 +28,12 @@ class Schedule < ApplicationRecord
   has_one :minute, dependent: :destroy
 
   scope :usual, -> {
-      where(["worked_at >= current_date"])
-        .includes(:work_type, :work_kind, schedule_workers: [worker: :home])
-        .order(worked_at: :ASC, id: :ASC)
-    }
+                  where(["worked_at >= current_date"])
+                    .includes(:work_type, :work_kind, schedule_workers: [worker: :home])
+                    .order(worked_at: :ASC, id: :ASC)
+                }
 
-  scope :by_worker, ->(worker) {where([<<SQL, worker.id])}
+  scope :by_worker, ->(worker) {where([<<SQL.squish, worker.id])}
       EXISTS (SELECT * FROM schedule_workers
             WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
 SQL
@@ -61,15 +59,19 @@ SQL
   def regist_workers(params)
     workers = []
     params.each do |param|
-      param = OpenStruct.new(param)
-      workers << param.worker_id.to_i
-      schedule_worker = schedule_workers.find_by(worker_id: param.worker_id)
+      worker_id = param[:worker_id].to_i
+      workers << worker_id
+      display_order = param[:display_order].to_i
+      schedule_worker = schedule_workers.find_by(worker_id: worker_id)
       if schedule_worker
-        schedule_worker.update(display_order: param.display_order) if schedule_worker.display_order != param.display_order.to_i
+        # display_orderが異なる場合のみupdateを実行
+        schedule_worker.update(display_order: display_order) if schedule_worker.display_order != display_order
       else
-        ScheduleWorker.create(schedule_id: id, worker_id: param.worker_id, display_order: param.display_order)
+        ScheduleWorker.create(schedule_id: id, worker_id: worker_id, display_order: display_order)
       end
     end
-    schedule_workers.where.not(worker_id: workers).each(&:destroy)
+    
+    # このスケジュールに属さないworker_idを持つschedule_workersを削除
+    schedule_workers.where.not(worker_id: workers).destroy_all
   end
 end

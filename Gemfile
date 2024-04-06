@@ -28,7 +28,7 @@ gem 'daemons'
 # Use bootstrap4
 # gem 'bootstrap', '>= 4.0'
 # Japan Holiday
-gem 'holiday_jp', :git => 'https://github.com/holiday-jp/holiday_jp-ruby.git'
+gem 'holiday_jp'
 
 # In the Loofah gem for Ruby through v2.3.0 unsanitized JavaScript may occur in sanitized output when a crafted SVG element is republished.
 gem "loofah", ">= 2.3.1"
@@ -50,7 +50,7 @@ gem 'i18n-js', '~> 3'
 # This gem provides XML serialization for your Active Model objects and Active Record models.
 gem 'activemodel-serializers-xml'
 # ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource for an ActiveRecord-like model.
-gem 'active_hash', :git => 'https://github.com/gazayas/active_hash.git'
+gem 'active_hash'
 # TZInfo::Data is the public domain IANA Time Zone Database packaged as a set of Ruby modules for use with TZInfo.
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 # Paranoia is a re-implementation of acts_as_paranoid for Rails 3/4/5.
@@ -110,7 +110,9 @@ group :development do
   gem 'annotate'
   # RuboCop is a Ruby static code analyzer.
   gem 'rubocop', require: false
-
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'ruby-lsp'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
@@ -120,5 +122,7 @@ end
 group :test do
   # This gem is only useful once assigns and assert_template have been removed from Rails.
   gem 'rails-controller-testing'
-end
 
+  gem 'capybara'
+  gem 'cuprite'
+end

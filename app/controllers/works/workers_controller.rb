@@ -4,8 +4,7 @@ class Works::WorkersController < WorksController
   before_action :check_fixed, only: [:new, :create]
   before_action :permit_checkable_or_self, only: [:new, :create]
 
-  def new
-  end
+  def new; end
 
   def create
     @work.regist_results(params[:results])

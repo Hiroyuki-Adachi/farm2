@@ -1,6 +1,7 @@
 class LandCostsController < ApplicationController
   include PermitManager
 
+  before_action :permit_this_term
   before_action :set_work_types, only: [:index]
   before_action :set_land_cost, only: [:index]
   before_action :set_land, only: [:edit, :update]
@@ -22,7 +23,7 @@ class LandCostsController < ApplicationController
   def create
     redirect_to land_costs_path(land_place_id: params[:land_place_id]) unless params[:land_costs]
     LandCost.transaction do
-      params[:land_costs].each do |_, land_cost|
+      params[:land_costs].each_value do |land_cost|
         if land_cost[:id].present?
           @land_cost = LandCost.find(land_cost[:id])
           session[:land_cost] = @land_cost.attributes unless @land_cost.update_work_type(land_cost_params(land_cost), current_system.start_date)
@@ -48,7 +49,7 @@ class LandCostsController < ApplicationController
   end
 
   def map
-    @target = params[:target].present? ? params[:target] : Time.zone.today
+    @target = params[:target].presence || Time.zone.today
     @costs = LandCost.usual(Land.regionable.expiry(@target), @target).includes(land: :owner).includes(:work_type)
     @work_types = WorkType.land.by_term(current_organization.get_term(@target))
   end
@@ -56,8 +57,8 @@ class LandCostsController < ApplicationController
   def work_types
     render turbo_stream: turbo_stream.replace(
       "work_types_#{params[:index]}", partial: 'work_types', 
-        locals: {data_index: params[:index], activate_date: params[:date], work_type_id: params[:work_type_id]
-      })
+                                      locals: {data_index: params[:index], activate_date: params[:date], work_type_id: params[:work_type_id]}
+    )
   end
 
   private

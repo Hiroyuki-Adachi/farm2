@@ -36,7 +36,7 @@ class Land < ApplicationRecord
   belongs_to :owner, -> {with_deleted}, class_name: :Home, foreign_key: :owner_id
   belongs_to :manager, -> {with_deleted}, class_name: :Home, foreign_key: :manager_id
   belongs_to :land_place, -> {with_deleted}
-  belongs_to :group, class_name: :Land, foreign_key: :group_id
+  belongs_to :group, class_name: :Land
 
   has_one :owner_holder, -> {with_deleted}, through: :owner, source: :holder
   has_one :manager_holder, -> {with_deleted}, through: :manager, source: :holder
@@ -55,9 +55,9 @@ class Land < ApplicationRecord
   scope :for_finance1, -> {where("owner_id = manager_id").where(target_flag: true)}
   scope :for_finance2, -> {where("owner_id <> manager_id").where(target_flag: true)}
   scope :regionable, -> {where.not(region: nil).where(target_flag: true, group_id: nil)}
-  scope :expiry, -> (target) {where("? BETWEEN start_on AND end_on", target)}
-  scope :for_place, -> (place) {where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order)}
-  scope :by_term, -> (sys) {where(["start_on <= ? AND ? <= end_on", sys.end_date, sys.start_date])}
+  scope :expiry, ->(target) {where("? BETWEEN start_on AND end_on", target)}
+  scope :for_place, ->(place) {where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order)}
+  scope :by_term, ->(sys) {where(["start_on <= ? AND ? <= end_on", sys.end_date, sys.start_date])}
 
   validates :place, presence: true
   validates :area, presence: true
@@ -73,9 +73,9 @@ class Land < ApplicationRecord
     owner.member_flag ? owner_holder.name : owner.name
   end
 
-  def self.for_plan(user_id)
+  def self.for_plan(user_id, term)
     self.regionable
-    .joins("LEFT OUTER JOIN plan_lands ON plan_lands.land_id = lands.id AND plan_lands.user_id = #{user_id}")
+    .joins("LEFT OUTER JOIN plan_lands ON plan_lands.land_id = lands.id AND plan_lands.user_id = #{user_id} AND plan_lands.term = #{term}")
     .select("lands.*, plan_lands.work_type_id")
   end
 
@@ -127,8 +127,8 @@ class Land < ApplicationRecord
   end
 
   def land_display_order
-    result = land_place.display_order * LandPlace.maximum(:id) + land_place_id
-    result = (result * Land.maximum(:display_order) + display_order) * Land.maximum(:id) + id
+    result = (land_place.display_order * LandPlace.maximum(:id)) + land_place_id
+    result = (((result * Land.maximum(:display_order)) + display_order) * Land.maximum(:id)) + id
     return result
   end
 
@@ -138,7 +138,7 @@ class Land < ApplicationRecord
 
   def region_values
     return nil if region.empty?
-    return JSON.parse(region.gsub(/\(/, "[").gsub(/\)/, "]"))
+    return JSON.parse(region.tr('(', "[").tr(')', "]"))
   end
 
   def region_center
@@ -169,14 +169,14 @@ class Land < ApplicationRecord
     LandFee.find_by(term: term, land_id: self.id)
   end
 
-  def expiry?(date = Date.today)
+  def expiry?(date = Time.zone.today)
     self.start_on <= date && date <= self.end_on
   end
 
   def self.totals(work_kinds, sys)
     sql = []
     sql << "SELECT L.place, MAX(L.area) AS area, MAX(HO.name) AS _owner_name, COALESCE(MAX(WT.name), '') AS work_type_name"
-    work_kinds.each_with_index do |work_kind, index|
+    work_kinds.each_with_index do |_work_kind, index|
       sql << ", MIN(W#{index}.worked_at) AS w#{index}_date"
     end
     sql << " FROM lands L"
@@ -203,7 +203,7 @@ class Land < ApplicationRecord
     sql << "GROUP BY L.place "
     sql << "HAVING"
     having = []
-    work_kinds.each_with_index do |work_kind, index|
+    work_kinds.each_with_index do |_work_kind, index|
       having << "(MIN(W#{index}.worked_at) IS NOT NULL)"
     end
     sql << having.join(" OR ")

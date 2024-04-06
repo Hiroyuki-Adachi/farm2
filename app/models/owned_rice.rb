@@ -22,7 +22,7 @@ class OwnedRice < ApplicationRecord
 
   scope :usual, ->(term) {
     joins(:owned_rice_price)
-      .where(["owned_rice_prices.term = ?", term])
+      .where(owned_rice_prices: { term: term })
   }
 
   scope :by_home, ->(term, home_id) {
@@ -36,7 +36,7 @@ class OwnedRice < ApplicationRecord
   scope :for_finance, ->(term) {
     joins(:owned_rice_price)
       .joins(:home)
-      .where(["owned_rice_prices.term = ?", term])
+      .where(owned_rice_prices: { term: term })
       .where("owned_rices.owned_count > 0")
       .order("homes.finance_order, homes.id, owned_rice_prices.display_order, owned_rice_prices.id")
   }

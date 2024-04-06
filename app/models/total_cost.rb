@@ -64,15 +64,9 @@ class TotalCost < ApplicationRecord
       .sum("total_cost_details.cost")
   end
 
-  def self.make(term, organization, fixed_on)
+  def self.make(term, fixed_on)
     TotalCost.where(term: term).destroy_all
-    sys = System.find_by(term: term, organization_id: organization.id)
     make_work(term, fixed_on)
-    make_seedling(term, sys)
-    make_lands(term, sys)
-    make_machines(term, fixed_on)
-    make_sorimachi(term, sys)
-    # make_depreciation(term, sys)
     make_details(term)
   end
 
@@ -83,7 +77,7 @@ class TotalCost < ApplicationRecord
   def cost(work_type_id)
     work_type = WorkType.find(work_type_id)
     return amount if work_type.cost_only?
-    return nil unless total_cost_details.where(work_type_id: work_type_id).exists?
+    return nil unless total_cost_details.exists?(work_type_id: work_type_id)
     return dif_amount * rate(work_type_id)
   end
 
@@ -115,7 +109,7 @@ class TotalCost < ApplicationRecord
   end
 
   def self.make_work(term, fixed_on)
-    Work.by_term(term).where("worked_at <= ?", fixed_on) .each do |work|
+    Work.by_term(term).where("worked_at <= ?", fixed_on).find_each do |work|
       make_work_worker(term, work)
 
       # make_work_machine(term, work)
@@ -154,7 +148,7 @@ class TotalCost < ApplicationRecord
   end
 
   def self.make_machines(term, fixed_on)
-    Work.by_term(term).machinable.where("worked_at <= ?", fixed_on) .each do |work|
+    Work.by_term(term).machinable.where("worked_at <= ?", fixed_on).find_each do |work|
       work.machine_results.each do |machine_result|
         make_machine(work, machine_result)
       end
@@ -374,7 +368,7 @@ class TotalCost < ApplicationRecord
   def self.make_depreciation(term, sys)
     days = (sys.end_date - sys.start_date + 1).to_i
     lands = TotalCostDetail.lands(term, days)
-    Depreciation.usual(term).where.not(cost: 0).each do |depreciation|
+    Depreciation.usual(term).where.not(cost: 0).find_each do |depreciation|
       total_cost = TotalCost.create(
         term: term,
         total_cost_type_id: TotalCostType::DEPRECIATION.id,

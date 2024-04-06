@@ -66,14 +66,14 @@ ORDER
   scope :by_term, ->(term) {
     joins(:chemical_type)
       .with_deleted
-      .where("chemicals.id IN (?)", WorkChemical.by_term(term).pluck("work_chemicals.chemical_id").uniq)
+      .where(chemicals: { id: WorkChemical.by_term(term).pluck("work_chemicals.chemical_id").uniq })
       .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 
   scope :for_stock, ->(term) {
     joins(:chemical_type)
       .with_deleted
-      .where("chemicals.id IN (?)", ChemicalTerm.where(term: term).pluck("chemical_id"))
+      .where(chemicals: { id: ChemicalTerm.where(term: term).select("chemical_id") })
       .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 
@@ -81,7 +81,7 @@ ORDER
 
   scope :by_work_kind, ->(work_kind_id) {
     joins(chemical_type: :chemical_kinds).includes(:chemical_type)
-      .where("chemical_kinds.work_kind_id = ?", work_kind_id)
+      .where(chemical_kinds: { work_kind_id: work_kind_id })
       .order("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.id")
   }
 
@@ -90,7 +90,7 @@ ORDER
   end
 
   def this_term?(term)
-    chemical_terms.where(term: term).exists?
+    chemical_terms.exists?(term: term)
   end
 
   def base_unit_name
@@ -141,7 +141,7 @@ ORDER
 
   def save_term
     if ActiveRecord::Type::Boolean.new.cast(@this_term_flag)
-      ChemicalTerm.create(term: @term, chemical_id: id) unless chemical_terms.where(term: @term).exists?
+      ChemicalTerm.create(term: @term, chemical_id: id) unless chemical_terms.exists?(term: @term)
     else
       chemical_terms.where(term: @term).destroy_all
     end

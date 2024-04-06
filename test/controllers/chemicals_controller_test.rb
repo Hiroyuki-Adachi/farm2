@@ -35,7 +35,7 @@ class ChemicalsControllerTest < ActionController::TestCase
     assert_no_difference('Chemical.count') do
       patch :update, params: {id: @chemical, chemical: @update}
     end
-    assert_not ChemicalTerm.where(term: @term, chemical_id: @chemical).exists?
+    assert_not ChemicalTerm.exists?(term: @term, chemical_id: @chemical)
     assert_redirected_to chemicals_path
   end
 

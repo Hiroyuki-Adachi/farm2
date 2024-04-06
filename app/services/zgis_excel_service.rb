@@ -1,23 +1,22 @@
 require 'rubyXL'
-require 'rubyXL/convenience_methods/cell'
-require 'rubyXL/convenience_methods/workbook'
-require 'rubyXL/convenience_methods/worksheet'
+require 'rubyXL/convenience_methods'
 
 class ZgisExcelService
   include Workbook
   TITLE_ROW = 1
   START_ROW = 2
 
-  def self.call(land_costs)
-    return new.call(land_costs)
+  def self.call(land_costs, work_types = nil, term = nil)
+    return new.call(land_costs, work_types, term)
   end
     
-  def call(land_costs)
+  def call(land_costs, work_types, term)
     workbook = RubyXL::Parser.parse('app/views/zgis/excels/zgis.xlsx')
     setup_workbook(workbook)
 
     fill_titles(workbook[0])
     fill_lands(workbook[0], land_costs)
+    fill_work_types(workbook[1], work_types, term) if work_types
 
     return workbook.stream.read
   end
@@ -38,10 +37,20 @@ class ZgisExcelService
       sheet.add_cell(row, 4, land_cost.work_type.name)
     end
   end
+
+  def fill_work_types(sheet, work_types, term)
+    work_types.each_with_index do |work_type, index|
+      row = index + 1
+      cell = sheet.add_cell(row, 0)
+      cell.change_contents(work_type.name)
+      cell.change_fill(work_type.bg_color_term(term).delete('#'))
+      cell.change_font_color(work_type.fg_color_term(term) == 'white' ? 'FFFFFF' : '000000')
+    end
+  end
   
   def zgis_polygon(land)
     return "" if land.region.empty?
     polygons = land.region_values.map { |region| "#{region[1]} #{region[0]}" }
-    return "Polygon((#{polygons.join(",")}))"
+    return "Polygon((#{polygons.join(',')}))"
   end
 end

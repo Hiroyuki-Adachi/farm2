@@ -24,9 +24,9 @@ class MachinePriceHeader < ApplicationRecord
 
   has_many :details, class_name: "MachinePriceDetail", dependent: :destroy
 
-  scope :show_type, -> (machine_type, base_date){where("machine_type_id = ? AND validated_at <= ?" , machine_type, base_date).order("validated_at DESC")}
-  scope :show_machine, -> (machine, base_date){where("machine_id = ? AND validated_at <= ?" , machine, base_date).order("validated_at DESC")}
-  scope :histories, -> (machine_price){where("(machine_id = ? AND machine_id <> 0) OR (machine_type_id = ? AND machine_type_id <> 0)", machine_price.machine_id, machine_price.machine_type_id).order("validated_at ASC")}
+  scope :show_type, ->(machine_type, base_date){where("machine_type_id = ? AND validated_at <= ?", machine_type, base_date).order("validated_at DESC")}
+  scope :show_machine, ->(machine, base_date){where("machine_id = ? AND validated_at <= ?", machine, base_date).order("validated_at DESC")}
+  scope :histories, ->(machine_price){where("(machine_id = ? AND machine_id <> 0) OR (machine_type_id = ? AND machine_type_id <> 0)", machine_price.machine_id, machine_price.machine_type_id).order("validated_at ASC")}
 
   def machine?
     !machine_id.zero?
@@ -37,9 +37,10 @@ class MachinePriceHeader < ApplicationRecord
   end
 
   def work_kinds
-    results = [OpenStruct.new(id: 0, name: "標準")]
+    work_kind_struct = Struct.new(:id, :name)
+    results = [work_kind_struct.new(0, "標準")]
     (machine? ? machine.machine_type.work_kinds : machine_type.work_kinds).each do |work_kind|
-      results << OpenStruct.new(id: work_kind.id, name: work_kind.name)
+      results << work_kind_struct.new(work_kind.id, work_kind.name)
     end
     return results
   end
@@ -76,10 +77,8 @@ class MachinePriceHeader < ApplicationRecord
           else
             detail.update(adjust_id: v2[:adjust_id], price: v2[:price])
           end
-        else
-          if v2[:adjust_id].to_i != Adjust::NONE.id
-            MachinePriceDetail.create(machine_price_header_id: id, lease_id: lease_id, work_kind_id: work_kind_id, adjust_id: v2[:adjust_id], price: v2[:price])
-          end
+        elsif v2[:adjust_id].to_i != Adjust::NONE.id
+          MachinePriceDetail.create(machine_price_header_id: id, lease_id: lease_id, work_kind_id: work_kind_id, adjust_id: v2[:adjust_id], price: v2[:price])
         end
       end
     end

@@ -2,8 +2,7 @@ class Schedules::WorkersController < ApplicationController
   include PermitChecker
   before_action :set_schedule, only: [:new, :create]
 
-  def new
-  end
+  def new; end
 
   def create
     @schedule.regist_workers(params[:schedule_workers])

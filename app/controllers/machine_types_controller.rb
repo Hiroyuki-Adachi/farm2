@@ -4,15 +4,14 @@ class MachineTypesController < ApplicationController
   before_action :set_work_kinds, only: [:new, :create, :edit, :update]
 
   def index
-    @machine_types = MachineType.includes(:machines).all.order(:display_order)
+    @machine_types = MachineType.includes(:machines).order(:display_order)
   end
 
   def new
     @machine_type = MachineType.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @machine_type = MachineType.new(machine_type_params)

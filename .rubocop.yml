@@ -1,76 +1,90 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+
 AllCops:
-  TargetRubyVersion: 2.3
+  SuggestExtensions: false
+  # 最新のルールを適用する
+  NewCops: enable
+  # 何のルールに引っかかったか表示する
+  DisplayCopNames: true
+  # rubocop対象外(リポジトリ毎で調節)
+  Exclude:
+    - "Gemfile"
+    - "bin/**/*"
+    - "db/**/*"
+    - "log/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+    - "lib/tasks/auto_annotate_models.rake"
+    - "config/environments/*"
+    - "config/puma.rb"
 
-Rails:
-  Enabled: true
+### ルールのカスタマイズ
 
-Documentation:
+# 設定が厳しいので一旦全てfalseにする
+Metrics:
   Enabled: false
 
-EmptyLinesAroundClassBody:
+# 一行あたりの文字数
+Layout/LineLength:
   Enabled: false
 
-HashSyntax:
+# メソッドの改行ルール
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+# 日本語にコメントを許可
+Style/AsciiComments:
   Enabled: false
 
-MethodName:
+# クラスにコメントを残さなくても良い
+Style/Documentation:
   Enabled: false
 
-StringLiterals:
-  Enabled: false
-
-# Use only ascii symbols in comments.
-AsciiComments:
-  Enabled: false
-
-Metrics/AbcSize:
-  Max: 35
-
-Metrics/ClassLength:
-  Max: 200
-
-Metrics/CyclomaticComplexity:
-  Max: 9
-
-Metrics/MethodLength:
-  Max: 25
-
-Metrics/LineLength:
-  Max: 100
-
-Metrics/PerceivedComplexity:
-  Max: 11
-
-Style/RedundantReturn:
-  Enabled: false
-
-Style/SymbolArray:
-  EnforcedStyle: brackets
-  MinSize: 0
-  SupportedStyles:
-    - percent
-    - brackets
-
+# コントローラ等のモジュールをネストしての宣言
 Style/ClassAndModuleChildren:
-  EnforcedStyle: compact
-
-Style/EmptyMethod:
-  EnforcedStyle: expanded
-
-Style/BracesAroundHashParameters:
   Enabled: false
 
+# 文字列のfreeze（Ruby3からは自動でfreezeされるので要らない）
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# ガード節の提案（難しいので一旦false）
+Style/GuardClause:
+  Enabled: false
+
+# 文字列のダブルクォートチェック
+Style/StringLiterals:
+  Enabled: false
+
+# シンボルによる配列の%記法のチェック
+Style/SymbolArray:
+  Enabled: false
+  # EnforcedStyle: brackets
+
+# 文字列による配列の%記法のチェック
 Style/WordArray:
-  EnforcedStyle: brackets
-
-Style/Lambda:
   Enabled: false
 
-Layout/SpaceInsideHashLiteralBraces:
-  EnforcedStyle: no_space
+# 変数名に数字を許可
+Naming/VariableNumber:
+  Enabled: false
 
-Layout/SpaceInsideBlockBraces:
-  EnforcedStyle: no_space
+# = と == の指摘
+Lint/AssignmentInCondition:
+  Enabled: false
 
-Layout/EndOfLine:
-  EnforcedStyle: lf
+# メソッド名等の命名の指摘
+Naming/PredicateName:
+  Enabled: false
+
+# 未i18nのチェック（バリデーションエラーメッセージをi18nに登録するのはやや冗長？なためfalse）
+Rails/I18nLocaleTexts:
+  Enabled: false
+
+# before_actionの際の未定義メソッドのチェック（deviseとの兼ね合いで一旦false）
+Rails/LexicallyScopedActionFilter:
+  Enabled: false

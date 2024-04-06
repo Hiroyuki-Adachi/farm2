@@ -20,8 +20,7 @@ class Sorimachi::AccountsController < ApplicationController
     redirect_to sorimachi_accounts_path
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     @account.attributes = sorimachi_account_params

@@ -4,11 +4,9 @@ class StatisticsController < ApplicationController
 
   before_action :set_total, only: [:tab1, :tab2, :tab3]
 
-  def index
-  end
+  def index; end
 
-  def tab1
-  end
+  def tab1; end
 
   def tab2
     @categories = WorkType.categories

@@ -12,8 +12,7 @@ class WorkKindsController < ApplicationController
     @work_kind = WorkKind.new(price: current_system.default_price)
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @work_kind = WorkKind.new(work_kind_params)

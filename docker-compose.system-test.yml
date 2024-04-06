@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - type: volume
+        source: dbdata_test
+        target: /var/lib/postgresql/data
+        volume:
+          nocopy: true
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: farm2_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  chrome:
+    image: browserless/chrome:latest
+    ports:
+      - "3333:3333"
+    volumes:
+      - .:/app:cached
+    environment:
+      PORT: 3333
+      CONNECTION_TIMEOUT: 600000
+
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-test
+    command: bundle exec rake test:system
+    volumes:
+      - type: bind
+        source: .
+        target: /farm2
+    environment:
+      CHROME_URL: http://chrome:3333
+    depends_on:
+      - db
+      - chrome
+
+volumes:
+   dbdata_test:
