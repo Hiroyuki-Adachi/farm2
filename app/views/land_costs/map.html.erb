@@ -18,7 +18,7 @@
 </div>
 <div class="row">
   <% @work_types.each_with_index do |work_type, i| %>
-    <div class="col" style="background-color: <%= work_type.bg_color %>; color: <%= work_type.fg_color %>;">
+    <div class="col" style="background-color: <%= work_type.bg_color_date(current_organization, @target) %>; color: <%= work_type.fg_color_date(current_organization, @target) %>;">
       <div id="work_type_<%= work_type.id %>"><%= work_type.name %></div>
       <div id="land_area_<%= work_type.id %>" class="label text-right area-sum">0.0</div>
     </div>
@@ -32,7 +32,11 @@
 <%= hidden_field_tag :location, "[#{current_location}]" %>
 <%= hidden_field_tag :organization_name, current_organization.name %>
 <% @costs.each do |cost| %>
-  <%= hidden_field_tag :regions, cost.land.region, {id: "land_#{cost.land.id}", data: {id: cost.land.id, place: cost.land.place, area: cost.land.area, owner: cost.land.owner.name, color: cost.work_type.bg_color, "work-type" => cost.work_type_id}} %>
+  <%= hidden_field_tag :regions, cost.land.region, {
+    id: "land_#{cost.land.id}", 
+    data: {id: cost.land.id, place: cost.land.place, area: cost.land.area, owner: cost.land.owner.name,
+    color: cost.work_type.bg_color_date(current_organization, @target), "work-type" => cost.work_type_id}
+    } %>
 <% end %>
 <% content_for :head do %>
 <%= javascript_include_tag 'controllers/lands-maps', 'data-turbo-track': 'reload', type: :module %>
