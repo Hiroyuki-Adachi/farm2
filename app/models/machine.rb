@@ -33,7 +33,7 @@ class Machine < ApplicationRecord
   validates :display_order, presence: true
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
 
-  scope :by_work, -> (work) { 
+  scope :by_work, ->(work) { 
     includes(:machine_type, :machine_kinds)
       .where("(machine_kinds.work_kind_id = ? and validity_start_at <= ? and ? <= validity_end_at) OR (machines.id in (?))", work.work_kind_id, work.worked_at, work.worked_at, work.machine_results.pluck(:machine_id))
       .order("machine_types.display_order, machines.display_order")
@@ -47,9 +47,9 @@ class Machine < ApplicationRecord
     where(["validity_start_at <= ? AND validity_end_at >= ?", system.start_date, system.end_date])
   }
 
-  scope :by_results, -> (results) {
+  scope :by_results, ->(results) {
     joins(:machine_results)
-      .where('machine_results.work_result_id in (?)', results.ids)
+      .where(machine_results: { work_result_id: results.ids })
       .order('machines.display_order')
       .distinct
   }
@@ -66,15 +66,15 @@ class Machine < ApplicationRecord
   def price_details(work)
     header = price_headers.where("validated_at <= ?", work.worked_at).order(validated_at: :DESC).first
     return header.details if header
-    return machine_type ? machine_type.price_details(work) : nil
+    return machine_type&.price_details(work)
   end
 
   def leasable?(worked_at)
     return false if company?
     header = price_headers.where("validated_at <= ?", worked_at).order(validated_at: :DESC).first
-    return header.details.where(lease_id: Lease::LEASE.id).exists? if header
+    return header.details.exists?(lease_id: Lease::LEASE.id) if header
     header = machine_type.price_headers.where("validated_at <= ?", worked_at).order(validated_at: :DESC).first
-    return header.details.where(lease_id: Lease::LEASE.id).exists? if header
+    return header.details.exists?(lease_id: Lease::LEASE.id) if header
     return false
   end
 
@@ -101,7 +101,7 @@ class Machine < ApplicationRecord
   def machine_order
     max_machine = Machine.maximum(:id)
     result = machine_type.machine_type_order
-    result = (result * Machine.maximum(:display_order) + display_order) * max_machine + id
+    result = (((result * Machine.maximum(:display_order)) + display_order) * max_machine) + id
     return result
   end
 

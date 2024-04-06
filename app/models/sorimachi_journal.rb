@@ -50,7 +50,7 @@ class SorimachiJournal < ApplicationRecord
 
   has_many :sorimachi_work_types, dependent: :destroy
   has_many :work_types, through: :sorimachi_work_types
-  has_many :details, query_constraints: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term , :line]
+  has_many :details, query_constraints: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line]
 
   validate :term_check
 
@@ -58,7 +58,7 @@ class SorimachiJournal < ApplicationRecord
   belongs_to :account2, query_constraints: [:term, :code12], class_name: 'SorimachiAccount'
 
   def self.import(term, file)
-    CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: /^\/\//) do |row|
+    CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: %r{^//}) do |row|
       sorimachi_new = SorimachiJournal.new([updatable_attributes, row].transpose.to_h)
       journal = SorimachiJournal.find_by(term: term, line: row[0], detail: row[1])
       if journal.nil?
@@ -76,21 +76,21 @@ class SorimachiJournal < ApplicationRecord
   def self.details(journals)
     return [] unless journals.exists?
     SorimachiJournal.where(term: journals.first.term)
-      .where(line: journals.map{|j| j.line})
+      .where(line: journals.map(&:line))
       .where("detail > 1")
       .order(:detail)
   end
 
   def self.update_cost_flag(term)
-    SorimachiAccount.where(term: term).each do |account|
+    SorimachiAccount.where(term: term).find_each do |account|
       SorimachiJournal.where(term: term, code01: account.code).update_all(cost0_flag: account.cost_flag)
       SorimachiJournal.where(term: term, code12: account.code).update_all(cost1_flag: account.cost_flag)
     end
   end
 
   def self.refresh(term)
-    accounts = SorimachiAccount.where(term: term).map{|a| [a.code, a.total_cost_type]}.to_h
-    SorimachiJournal.where(term: term).each do |journal|
+    accounts = SorimachiAccount.where(term: term).to_h{|a| [a.code, a.total_cost_type]}
+    SorimachiJournal.where(term: term).find_each do |journal|
       if [TotalCostType::EXPENSEDIRECT, TotalCostType::EXPENSEINDIRECT].include?(accounts[journal.code12]) || accounts[journal.code01] == TotalCostType::SALES
         journal.swap
         journal.save!
@@ -108,7 +108,7 @@ class SorimachiJournal < ApplicationRecord
   def self.accounts(term)
     t1 = SorimachiJournal.where(term: term).order(:code01).group(:code01).sum(:amount1)
     t2 = SorimachiJournal.where(term: term).order(:code12).group(:code12).sum(:amount2)
-    return t1.merge(t2).map {|k,v| [k, [t1[k] || 0, t2[k] || 0]]}.to_h
+    return t1.merge(t2).to_h {|k, _v| [k, [t1[k] || 0, t2[k] || 0]]}
   end
 
   def cost_amount
@@ -182,31 +182,31 @@ class SorimachiJournal < ApplicationRecord
     end
     unless sum_amount == self.cost_amount
       sorimachi_work_type = SorimachiWorkType.where(sorimachi_journal_id: self.id, work_type_id: max_work_type_id).first
-      sorimachi_work_type.increment!(:amount, self.cost_amount - sum_amount) if sorimachi_work_type
+      sorimachi_work_type&.increment!(:amount, self.cost_amount - sum_amount)
     end
     self.reload
   end
 
-  def ==(value)
-    return self.amount1 == value.amount1 &&
-      self.amount2 == value.amount2 && 
-      self.code01 == value.code01 &&
-      self.code12 == value.code12
+  def ==(other)
+    return self.amount1 == other.amount1 &&
+           self.amount2 == other.amount2 && 
+           self.code01 == other.code01 &&
+           self.code12 == other.code12
   end
 
-private
   def self.updatable_attributes
     ['line', 'detail', 'accounted_on',
-      'code01', 'code02', 'code03', 'code04', 'tax01', 'code05', 'code06', 'code07', 'amount1', 
-      'code11', 'code12', 'code13', 'code14', 'code15', 'tax11', 'code16', 'code17', 'code18', 'amount2', 
-      'code21', 'remark1', 'remark2', 'remark3', 'code31', 'amount3', 'remark4'
-    ]
+     'code01', 'code02', 'code03', 'code04', 'tax01', 'code05', 'code06', 'code07', 'amount1', 
+     'code11', 'code12', 'code13', 'code14', 'code15', 'tax11', 'code16', 'code17', 'code18', 'amount2', 
+     'code21', 'remark1', 'remark2', 'remark3', 'code31', 'amount3', 'remark4']
   end
 
+  private_class_method :updatable_attributes
+
+  private
+
   def term_check
-    if self.accounted_on.present? && self.accounted_on.year != self.term
-      errors.add(:term, "の対応に誤りがあります。")
-    end
+    errors.add(:term, "の対応に誤りがあります。") if self.accounted_on.present? && self.accounted_on.year != self.term
   end
 
   def clear_work_types

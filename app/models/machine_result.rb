@@ -34,27 +34,27 @@ class MachineResult < ApplicationRecord
   has_one :work_kind, -> {with_deleted}, through: :work
 
   scope :by_home, ->(term) {
-     joins(:machine).eager_load(:machine)
-    .joins(:work_result).eager_load(:work_result)
-    .joins(:work_type).eager_load(:work_type)
-    .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
-    .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
-    .joins("INNER JOIN systems ON systems.term = works.term")
-    .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
-    .where("homes.company_flag = FALSE")
-    .where("systems.term = ?", term)
-    .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
+    joins(:machine).eager_load(:machine)
+   .joins(:work_result).eager_load(:work_result)
+   .joins(:work_type).eager_load(:work_type)
+   .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
+   .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
+   .joins("INNER JOIN systems ON systems.term = works.term")
+   .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
+   .where("homes.company_flag = FALSE")
+   .where(systems: { term: term })
+   .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
   }
 
   scope :by_home_for_fix, ->(term, fixed_at) {
-     joins(:machine).eager_load(:machine)
-    .joins(:work_result).eager_load(:work_result)
-    .joins(:work_type).eager_load(:work_type)
-    .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
-    .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
-    .where("homes.company_flag = FALSE AND works.term = ?", term)
-    .where("works.fixed_at = ? AND machine_results.fixed_price IS NOT NULL", fixed_at)
-    .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
+    joins(:machine).eager_load(:machine)
+   .joins(:work_result).eager_load(:work_result)
+   .joins(:work_type).eager_load(:work_type)
+   .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
+   .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
+   .where("homes.company_flag = FALSE AND works.term = ?", term)
+   .where("works.fixed_at = ? AND machine_results.fixed_price IS NOT NULL", fixed_at)
+   .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
   }
 
   scope :for_personal, ->(home, worked_at) {
@@ -62,7 +62,7 @@ class MachineResult < ApplicationRecord
       .joins(:machine).eager_load(:machine)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
       .where("works.worked_at >= ?", worked_at)
-      .where("machines.home_id = ?", home.id)
+      .where(machines: { home_id: home.id })
       .order("works.worked_at, machines.display_order, machines.id")
   }
 
@@ -71,10 +71,10 @@ class MachineResult < ApplicationRecord
       .joins(:work_result)
       .joins(:work)
       .where("works.fixed_at = ? AND machine_results.fixed_price IS NOT NULL", fixed_at)
-      .where("works.term = ?", term)
+      .where(works: { term: term })
   }
 
-  scope :by_works, ->(works) {joins(:work_result).where(["work_results.work_id IN (?)", works.ids]).order("machine_results.id")}
+  scope :by_works, ->(works) {joins(:work_result).where(work_results: { work_id: works.ids }).order("machine_results.id")}
   scope :by_work_machine, ->(work, machine) {joins(:work_result).find_by(["machine_results.machine_id = ? AND work_results.work_id = ?", machine.id, work.id])}
 
   def sum_hours
@@ -114,21 +114,21 @@ class MachineResult < ApplicationRecord
       return
     end
 
-    if owner.id == work_result.worker.home_id
-      price_details = price_details.where(lease_id: Lease::NORMAL.id)
-    else
-      price_details = price_details.where(lease_id: Lease::LEASE.id)
-    end
+    price_details = if owner.id == work_result.worker.home_id
+                      price_details.where(lease_id: Lease::NORMAL.id)
+                    else
+                      price_details.where(lease_id: Lease::LEASE.id)
+                    end
     unless price_details.exists?
       clear_amount
       return
     end
 
-    if price_details.where(work_kind_id: work.work_kind.id).exists?
-      price_details = price_details.where(work_kind_id: work.work_kind.id)
-    else
-      price_details = price_details.where(work_kind_id: 0)
-    end
+    price_details = if price_details.exists?(work_kind_id: work.work_kind.id)
+                      price_details.where(work_kind_id: work.work_kind.id)
+                    else
+                      price_details.where(work_kind_id: 0)
+                    end
     unless price_details.exists?
       clear_amount
       return
@@ -143,13 +143,13 @@ class MachineResult < ApplicationRecord
 
     @price = price_detail.price
     @quantity = case @adjust
-      when Adjust::HOUR
-        sum_hours
-      when Adjust::AREA
-        work.sum_areas / 10
-      when Adjust::DAY
-        1
-    end
+                when Adjust::HOUR
+                  sum_hours
+                when Adjust::AREA
+                  work.sum_areas / 10
+                when Adjust::DAY
+                  1
+                end
     @amount = @price * @quantity
   end
 

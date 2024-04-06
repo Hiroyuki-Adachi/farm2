@@ -5,8 +5,7 @@ class Gaps::CleaningsController < GapsController
     @works = WorkDecorator.decorate_collection(Work.by_term(current_term).where(work_kind_id: current_organization.cleaning_id))
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     @cleaning.attributes = cleaning_params

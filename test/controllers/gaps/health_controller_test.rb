@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Gaps::HealthControllerTest <  ActionController::TestCase
+class Gaps::HealthControllerTest < ActionController::TestCase
   setup do
     setup_ip
   end

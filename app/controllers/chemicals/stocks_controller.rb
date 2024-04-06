@@ -3,8 +3,7 @@ class Chemicals::StocksController < ApplicationController
   before_action :set_chemical_term, only: [:search, :new, :edit, :create, :update]
   before_action :set_stock, only: [:edit, :update, :destroy]
 
-  def index
-  end
+  def index; end
 
   def load
     @chemicals = ChemicalTerm.by_type(params[:term], params[:chemical_type_id])
@@ -26,9 +25,9 @@ class Chemicals::StocksController < ApplicationController
   def create
     @stock = ChemicalStock.new(stock_params)
     if @stock.save
-      render json: nil, status: 200
+      render json: nil, status: :ok
     else
-      render json: nil, status: 500
+      render json: nil, status: :internal_server_error
     end
   end
 
@@ -38,15 +37,15 @@ class Chemicals::StocksController < ApplicationController
 
   def update
     if @stock.update(stock_params)
-      render json: nil, status: 200
+      render json: nil, status: :ok
     else
-      render json: nil, status: 500
+      render json: nil, status: :internal_server_error
     end
   end
 
   def destroy
     @stock.destroy
-    render json: nil, status: 200
+    render json: nil, status: :ok
   end
 
   private

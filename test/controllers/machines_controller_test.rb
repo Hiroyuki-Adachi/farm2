@@ -5,9 +5,9 @@ class MachinesControllerTest < ActionController::TestCase
     setup_ip
     @machine = machines(:machines1)
     @update = { 
-        name: "試験", display_order: 99, 
-        validity_start_at: "2010-01-01", validity_end_at: "2020-12-31", 
-        machine_type_id: machine_types(:machine_types0).id, home: homes(:home1).id
+      name: "試験", display_order: 99, 
+      validity_start_at: "2010-01-01", validity_end_at: "2020-12-31", 
+      machine_type_id: machine_types(:machine_types0).id, home: homes(:home1).id
     }
   end
 

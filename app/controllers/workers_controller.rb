@@ -13,8 +13,7 @@ class WorkersController < ApplicationController
     @worker = Worker.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @worker = Worker.new(worker_params)

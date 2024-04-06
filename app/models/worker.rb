@@ -49,8 +49,8 @@ class Worker < ApplicationRecord
 
   has_one :user
 
-  scope :usual, -> {includes(home: :section).where(["homes.company_flag = ?", false]).order('sections.display_order, homes.display_order, workers.display_order')}
-  scope :company, -> {joins(:home).eager_load(:home).where(["homes.company_flag = ?", true]).order("workers.display_order")}
+  scope :usual, -> {includes(home: :section).where(homes: { company_flag: false }).order('sections.display_order, homes.display_order, workers.display_order')}
+  scope :company, -> {joins(:home).eager_load(:home).where(homes: { company_flag: true }).order("workers.display_order")}
   scope :by_homes, ->(homes) {where(home_id: homes.ids).order("display_order")}
   scope :gaps, -> {where.not(broccoli_mark: [nil, ""]).order(:broccoli_mark, :family_phonetic, :first_phonetic, :id)}
 
@@ -75,11 +75,11 @@ class Worker < ApplicationRecord
   validates :broccoli_mark, uniqueness: true, :if => proc { |x| x.broccoli_mark.present?}
 
   def name
-    family_name + ' ' + first_name
+    "#{family_name} #{first_name}"
   end
 
   def phonetic
-    family_phonetic + ' ' + first_phonetic
+    "#{family_phonetic} #{first_phonetic}"
   end
 
   def payment

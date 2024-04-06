@@ -22,7 +22,6 @@
 require 'test_helper'
 
 class WorkTypeTest < ActiveSupport::TestCase
-
   test "作業分類年度別マスタ連携" do
     # 削除パターン
     work_type = WorkType.find(work_types(:work_types17).id)

@@ -2,8 +2,7 @@ class Users::PermissionsController < ApplicationController
   before_action :set_user
   before_action :set_permission
 
-  def new
-  end
+  def new; end
 
   def create
     if @user.update(user_params)

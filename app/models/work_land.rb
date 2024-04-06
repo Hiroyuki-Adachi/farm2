@@ -28,7 +28,7 @@ class WorkLand < ApplicationRecord
     joins(:work).includes(work: :work_kind)
       .joins(:land).includes(:land)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id")
-      .where("works.term = ?", term)
+      .where(works: { term: term })
       .where("(lands.manager_id = ? OR EXISTS (SELECT * FROM land_homes WHERE lands.id = land_homes.land_id AND home_id = ? AND manager_flag = true))", home.id, home.id)
       .order("lands.display_order, lands.id, works.worked_at")
   }
@@ -36,9 +36,9 @@ class WorkLand < ApplicationRecord
   scope :for_fix, ->(term, fixed_at, contract_id) {
     joins(:work)
       .joins(:land)
-      .where("works.work_type_id = ?", contract_id)
+      .where(works: { work_type_id: contract_id })
       .where("works.fixed_at = ? AND work_lands.fixed_cost IS NOT NULL", fixed_at)
-      .where("works.term = ?", term)
+      .where(works: { term: term })
   }
 
   scope :for_cards, ->(land_id, worked_at) {
@@ -46,7 +46,7 @@ class WorkLand < ApplicationRecord
       .joins(:land).includes(:land)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").includes(work: :work_kind)
       .where("works.worked_at >= ?", worked_at)
-      .where("lands.id = ?", land_id)
+      .where(lands: { id: land_id })
       .order("works.worked_at, works.id")
   }
 
@@ -65,7 +65,7 @@ class WorkLand < ApplicationRecord
     return fixed_cost if fixed_cost
     local_cost = interim_cost
     return local_cost unless largest?
-    return local_cost + (work.sum_workers_amount - work.work_lands.map(&:interim_cost).sum)
+    return local_cost + (work.sum_workers_amount - work.work_lands.sum(&:interim_cost))
   end
 
   def self.by_worked_at(worked_at)
@@ -105,18 +105,17 @@ class WorkLand < ApplicationRecord
       chemical_term = ChemicalTerm.find_by(chemical_id: work_chemical.chemical_id, term: work_chemical.work.term)
       next unless chemical_term
       chemical_work_type = ChemicalWorkType.find_by(chemical_term_id: chemical_term, work_type_id: work_type_id)
-      next unless chemical_work_type && chemical_work_type.quantity.positive?
+      next unless chemical_work_type&.quantity&.positive?
       denom = 0
-      numer = same_areas * chemical_work_type.quantity
       ChemicalWorkType.usable(chemical_term).each do |cw|
         denom += (WorkLand.sum_areas(work_id, cw.work_type_id) * cw.quantity)
       end
       next if denom.zero?
       results.push({
-        chemical: work_chemical.chemical,
-        quantity: work_chemical.quantity10,
-        standard: chemical_work_type.quantity
-      })
+                     chemical: work_chemical.chemical,
+                     quantity: work_chemical.quantity10,
+                     standard: chemical_work_type.quantity
+                   })
     end
     results.push({chemical: nil, quantity: nil}) if results.count.zero?
     return results

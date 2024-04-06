@@ -15,7 +15,7 @@
 #  index_seedling_homes_on_seedling_id_and_home_id  (seedling_id,home_id) UNIQUE
 #
 
-class SeedlingHome < ActiveRecord::Base
+class SeedlingHome < ApplicationRecord
   belongs_to :home, -> {with_deleted}
   belongs_to :seedling
   has_many :seedling_results, dependent: :destroy
@@ -39,7 +39,7 @@ class SeedlingHome < ActiveRecord::Base
   end
 
   def dispose?
-    seedling_results.where(disposal_flag: true).exists?
+    seedling_results.exists?(disposal_flag: true)
   end
 
   def cost_quantity
@@ -48,7 +48,5 @@ class SeedlingHome < ActiveRecord::Base
     return dispose? ? quantity : result_quantity
   end
 
-  def home_display_order
-    home.home_display_order
-  end
+  delegate :home_display_order, to: :home
 end

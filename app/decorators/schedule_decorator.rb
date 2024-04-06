@@ -15,7 +15,7 @@ class ScheduleDecorator < Draper::Decorator
     "18:00" => "午後６時", "18:30" => "午後６時半", "19:00" => "午後７時", "19:30" => "午後７時半",
     "20:00" => "午後８時", "20:30" => "午後８時半", "21:00" => "午後９時", "21:30" => "午後９時半",
     "22:00" => "午後10時", "22:30" => "午後10時半", "23:00" => "深夜11時", "23:30" => "深夜11時半"
-  }
+  }.freeze
 
   def worked_at
     model.worked_at.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})"
@@ -46,7 +46,7 @@ class ScheduleDecorator < Draper::Decorator
   end
 
   def work_time
-    start_at + '～' + end_at
+    "#{start_at}～#{end_at}"
   end
 
   def start_at
