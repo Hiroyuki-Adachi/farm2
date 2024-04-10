@@ -6,12 +6,20 @@ class ZgisExcelService
   TITLE_ROW = 1
   START_ROW = 2
 
+  PLACE_FILE = "z-gis-places.xlsx".freeze
+
   def self.call(land_costs, work_types = nil, term = nil)
-    return new.call(land_costs, work_types, term)
+    z_gis_file = Rails.root.join("tmp/#{SecureRandom.hex(10)}.zip")
+    Zip::File.open(z_gis_file, Zip::File::CREATE) do |zipfile|
+      zipfile.get_output_stream(PLACE_FILE) do |f|
+        f.write(new.call(land_costs, work_types, term))
+      end
+    end
+    return z_gis_file
   end
     
   def call(land_costs, work_types, term)
-    workbook = RubyXL::Parser.parse('app/views/zgis/excels/zgis.xlsx')
+    workbook = RubyXL::Parser.parse("app/views/plans/excels/#{PLACE_FILE}")
     setup_workbook(workbook)
 
     fill_titles(workbook[0])
