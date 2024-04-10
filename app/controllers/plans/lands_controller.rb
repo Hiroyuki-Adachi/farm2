@@ -8,7 +8,7 @@ class Plans::LandsController < PlansController
     work_types = WorkType.land.by_term(plan_term)
     plan_lands = PlanLand.usual(current_user, plan_term)
     z_gis_file = ZgisExcelService.call(plan_lands, work_types, plan_term)
-    send_data File.read(z_gis_file), filename: zip_file, type: 'application/zip'
+    send_data File.read(z_gis_file), filename: "zgis.zip", type: 'application/zip'
     File.delete(z_gis_file)
   end
 
