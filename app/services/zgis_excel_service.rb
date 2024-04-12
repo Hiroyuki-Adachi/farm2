@@ -6,17 +6,38 @@ class ZgisExcelService
   TITLE_ROW = 1
   START_ROW = 2
 
+  PLACE_FILE = "zgis-places.xlsx".freeze
+  COLOR_FILE = "zgis-colors.xlsx".freeze
+
   def self.call(land_costs, work_types = nil, term = nil)
-    return new.call(land_costs, work_types, term)
+    z_gis_file = Rails.root.join("tmp/#{SecureRandom.hex(10)}.zip")
+    Zip::File.open(z_gis_file, Zip::File::CREATE) do |zipfile|
+      zipfile.get_output_stream(PLACE_FILE) do |f|
+        f.write(new.call_place(land_costs, work_types, term))
+      end
+      zipfile.get_output_stream(COLOR_FILE) do |f|
+        f.write(new.call_color(work_types, term))
+      end
+    end
+    return z_gis_file
   end
     
-  def call(land_costs, work_types, term)
-    workbook = RubyXL::Parser.parse('app/views/zgis/excels/zgis.xlsx')
+  def call_place(land_costs, work_types, term)
+    workbook = RubyXL::Parser.parse("app/views/plans/excels/#{PLACE_FILE}")
     setup_workbook(workbook)
 
     fill_titles(workbook[0])
     fill_lands(workbook[0], land_costs)
     fill_work_types(workbook[1], work_types, term) if work_types
+
+    return workbook.stream.read
+  end
+
+  def call_color(work_types, term)
+    workbook = RubyXL::Parser.parse("app/views/plans/excels/#{COLOR_FILE}")
+    setup_workbook(workbook)
+
+    fill_colors(workbook[0], work_types, term) if work_types
 
     return workbook.stream.read
   end
@@ -47,7 +68,15 @@ class ZgisExcelService
       cell.change_font_color(work_type.fg_color_term(term) == 'white' ? 'FFFFFF' : '000000')
     end
   end
-  
+
+  def fill_colors(sheet, work_types, term)
+    work_types.each_with_index do |work_type, row|
+      sheet.add_cell(row, 0).change_contents(work_type.name)
+      sheet.add_cell(row, 1).change_fill(work_type.bg_color_term(term).delete('#'))
+      sheet.add_cell(row, 2, '255')
+    end
+  end
+
   def zgis_polygon(land)
     return "" if land.region.empty?
     polygons = land.region_values.map { |region| "#{region[1]} #{region[0]}" }
