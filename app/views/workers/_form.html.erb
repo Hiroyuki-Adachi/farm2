@@ -54,17 +54,6 @@
     <%= f.text_field :broccoli_mark, {maxlength: 1, class: "form-control"} %>
   </div>
 </div>
-<% if @worker.token.present? %>
-<div id="token_info" class="mb-3">
-  <%= f.label :token, class: "col-form-label-lg form-label" %>
-  <div class="row">
-    <div class="col-md-4">
-      <%= text_field_tag :worker_token, @worker.token, {readonly: :readonly, class: "form-control"} %>
-    </div>
-    <%= image_tag qrcode_tag personal_information_path(@worker.token) %>
-  </div>
-</div>
-<% end %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= f.submit '登録', class: "btn btn-warning" %>
