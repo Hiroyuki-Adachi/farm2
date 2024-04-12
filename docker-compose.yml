@@ -17,6 +17,10 @@ services:
       POSTGRES_DB: farm2_development
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}" ]
+      interval: 5s
+      retries: 3
 
   web:
     build:
@@ -41,8 +45,8 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
-      - sass
+      db:
+        condition: service_healthy
 
   worker:
     build:
@@ -54,7 +58,8 @@ services:
         source: .
         target: /farm2
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   sass:
     build:

@@ -29,7 +29,7 @@ class MinutesControllerTest < ActionController::TestCase
 
   test "議事録PDF参照(TOKEN)" do
     session[:user_id] = nil
-    get :show, params: {token: workers(:worker1).token, id: minutes(:minute1)}
+    get :show, params: {token: users(:users1).token, id: minutes(:minute1)}
     assert_response :success
   end
 
