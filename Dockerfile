@@ -54,16 +54,8 @@ COPY Gemfile /farm2/Gemfile
 COPY Gemfile.lock /farm2/Gemfile.lock
 
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
-# YJIT有効化
-ENV RUBYOPT="--yjit"
 
 # バンドルインストール
 RUN gem update --system
 RUN gem install bundler
 RUN bundle install
-# entrypoint.shをコピー
-COPY entrypoint.sh /usr/bin/entrypoint.sh
-# 実行権限を付与
-RUN chmod +x /usr/bin/entrypoint.sh
-# entrypoint.shをエントリーポイントとして設定
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]
