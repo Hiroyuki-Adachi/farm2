@@ -42,7 +42,7 @@ class MinutesController < ApplicationController
 
   def permit_show
     if @current_user.blank?
-      @current_user = Worker.find_by(token: params[:token]).user if params[:token].present?
+      @current_user = User.find_by(token: params[:token]) if params[:token].present?
       @current_user = User.find(session[:user_id]) if session[:user_id].present?
     end
     return true if @current_user&.checkable?
