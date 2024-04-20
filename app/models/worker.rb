@@ -17,7 +17,6 @@
 #  mobile(携帯番号)                  :string(15)
 #  mobile_mail(メールアドレス(携帯)) :string(50)
 #  pc_mail(メールアドレス(PC))       :string(50)
-#  token(アクセストークン)           :string(36)       default(""), not null
 #  work_flag(作業フラグ)             :boolean          default(TRUE), not null
 #  created_at                        :datetime
 #  updated_at                        :datetime
@@ -29,7 +28,6 @@
 # Indexes
 #
 #  index_workers_on_deleted_at  (deleted_at)
-#  index_workers_on_token       (token) UNIQUE
 #
 
 require 'securerandom'
@@ -37,8 +35,6 @@ require 'securerandom'
 class Worker < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   acts_as_paranoid
-
-  before_create :set_token
 
   belongs_to :home, -> {with_deleted}
   belongs_to_active_hash :position
@@ -84,9 +80,5 @@ class Worker < ApplicationRecord
 
   def payment
     home.worker_payment_flag ? self : home.holder
-  end
-
-  def set_token
-    self.token = SecureRandom.uuid
   end
 end

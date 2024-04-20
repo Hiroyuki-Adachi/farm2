@@ -24,6 +24,18 @@
     </div>
   </div>
 </div>
+<% if @user.token.present? %>
+<div id="token_info" class="mb-3">
+  <%= f.label :token, class: "col-form-label-lg form-label" %>
+  <div class="row">
+    <div class="col-md-4">
+      <%= text_field_tag :worker_token, @user.token, {readonly: :readonly, class: "form-control"} %>
+    </div>
+    <%= image_tag qrcode_tag personal_information_path(@user.token) %>
+  </div>
+</div>
+<% end %>
+
 <%= f.hidden_field :worker_id %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">

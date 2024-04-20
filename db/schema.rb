@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_22_084532) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_04_085905) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -837,7 +837,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_084532) do
     t.integer "permission_id", default: 0, null: false, comment: "権限"
     t.integer "view_month", default: [1, 4, 8], null: false, comment: "表示切替月", array: true
     t.integer "calendar_term", default: 2018, null: false, comment: "期(カレンダー)"
+    t.string "token", limit: 36, default: "", null: false, comment: "アクセストークン"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
+    t.index ["token"], name: "ix_users_token", unique: true
     t.index ["worker_id"], name: "index_users_on_worker_id", unique: true
   end
 
@@ -1012,11 +1014,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_084532) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.datetime "deleted_at", precision: nil
-    t.string "token", limit: 36, default: "", null: false, comment: "アクセストークン"
     t.integer "position_id", default: 0, null: false, comment: "役職"
     t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
     t.index ["deleted_at"], name: "index_workers_on_deleted_at"
-    t.index ["token"], name: "index_workers_on_token", unique: true
   end
 
   create_table "works", id: { type: :serial, comment: "作業データ" }, comment: "作業データ", force: :cascade do |t|

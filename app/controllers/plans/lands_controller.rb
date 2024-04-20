@@ -1,3 +1,4 @@
+require 'securerandom'
 class Plans::LandsController < PlansController
   before_action :validate_mode
   helper GmapHelper
@@ -6,13 +7,9 @@ class Plans::LandsController < PlansController
   def index
     work_types = WorkType.land.by_term(plan_term)
     plan_lands = PlanLand.usual(current_user, plan_term)
-    excel_data = ZgisExcelService.call(plan_lands, work_types, plan_term)
-
-    respond_to do |format|
-      format.xlsx do
-        send_data excel_data, filename: "zgis.xlsx".encode(Encoding::Windows_31J)
-      end
-    end
+    z_gis_file = ZgisExcelService.call(plan_lands, work_types, plan_term)
+    send_data File.read(z_gis_file), filename: "zgis.zip", type: 'application/zip'
+    File.delete(z_gis_file)
   end
 
   def new

@@ -1,6 +1,5 @@
 source 'http://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 7.1'
 # Use postgresql as the database for Active Record
@@ -17,11 +16,11 @@ gem 'pg'
 
 gem 'delayed_job_active_record'
 
-#gem 'webpacker'
+# gem 'webpacker'
 
+gem "cssbundling-rails"
 gem 'importmap-rails'
 gem 'propshaft'
-gem "cssbundling-rails"
 
 gem 'daemons'
 
@@ -85,6 +84,9 @@ gem 'icalendar'
 # Use Puma as the app server
 gem 'puma'
 
+# Rubyzip is a ruby library for reading and writing zip files.
+gem 'rubyzip'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -96,10 +98,10 @@ group :development, :test do
   # An interface which glues ruby-debug to IDEs
   # gem 'ruby-debug-ide', '~> 0.6'
 
-  #gem 'pry-byebug'
-  #gem 'pry-doc'
-  #gem 'pry-rails'
-  #gem 'pry-stack_explorer'
+  # gem 'pry-byebug'
+  # gem 'pry-doc'
+  # gem 'pry-rails'
+  # gem 'pry-stack_explorer'
 end
 
 group :development do
