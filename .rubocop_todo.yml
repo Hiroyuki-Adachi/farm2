@@ -63,6 +63,68 @@ Layout/SpaceInsideHashLiteralBraces:
 Layout/TrailingWhitespace:
   Enabled: false
 
+# Offense count: 1
+# Configuration parameters: AllowComments, AllowEmptyLambdas.
+Lint/EmptyBlock:
+  Exclude:
+    - 'app/controllers/work_seedlings_controller.rb'
+
+# Offense count: 2
+Lint/FloatComparison:
+  Exclude:
+    - 'app/models/work.rb'
+
+# Offense count: 2
+Lint/IneffectiveAccessModifier:
+  Exclude:
+    - 'app/models/sorimachi_journal.rb'
+    - 'app/models/work_type.rb'
+
+# Offense count: 7
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: AutoCorrect, IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
+Lint/UnusedBlockArgument:
+  Exclude:
+    - 'app/models/land.rb'
+    - 'app/models/machine_remark.rb'
+    - 'app/models/sorimachi_account.rb'
+    - 'app/models/sorimachi_journal.rb'
+    - 'app/views/machine_results/index.csv.ruby'
+    - 'app/views/works/index.csv.ruby'
+
+# Offense count: 2
+# This cop supports safe autocorrection (--autocorrect).
+# Configuration parameters: AutoCorrect, AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods.
+Lint/UnusedMethodArgument:
+  Exclude:
+    - 'app/models/land_fee.rb'
+    - 'app/models/work_result.rb'
+
+# Offense count: 3
+# This cop supports unsafe autocorrection (--autocorrect-all).
+# Configuration parameters: AutoCorrect.
+Lint/UselessAssignment:
+  Exclude:
+    - 'app/models/plan_seedling.rb'
+    - 'app/models/plan_work_type.rb'
+    - 'app/models/work_land.rb'
+
+# Offense count: 1
+Naming/AccessorMethodName:
+  Exclude:
+    - 'app/controllers/total_owned_rices_controller.rb'
+
+# Offense count: 1
+# Configuration parameters: AsciiConstants.
+Naming/AsciiIdentifiers:
+  Exclude:
+    - 'app/views/work_seedlings/index.csv.ruby'
+
+# Offense count: 1
+# This cop supports safe autocorrection (--autocorrect).
+Naming/BinaryOperatorParameterName:
+  Exclude:
+    - 'app/models/sorimachi_journal.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
