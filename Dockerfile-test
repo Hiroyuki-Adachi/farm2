@@ -8,7 +8,7 @@ ENV TZ=Asia/Tokyo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ENV LANG C.UTF-8
-ENV RUBY_VERSION 3.3.0
+ENV RUBY_VERSION 3.3.1
 
 # 必要なパッケージをインストール
 RUN apt-get update -qq && \
