@@ -424,9 +424,8 @@ SQL
   def exact_work_types
     return [work_type] if work_lands.empty?
     return work_types if work_types.exists?
-    wts = []
-    lands.each do |land|
-      wts << land.cost(worked_at)&.work_type
+    wts = lands.map do |land|
+      land.cost(worked_at)&.work_type
     end
     return wts.compact.uniq if wts.compact.length.positive?
     return [work_type]

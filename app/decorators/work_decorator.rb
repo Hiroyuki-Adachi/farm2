@@ -57,9 +57,8 @@ class WorkDecorator < Draper::Decorator
   end
 
   def chemicals
-    result = []
-    model.work_chemicals.each do |work_chemical|
-      result << ("#{work_chemical.chemical.name}(#{work_chemical.chemical.chemical_type.name}):#{work_chemical.quantity}")
+    result = model.work_chemicals.map do |work_chemical|
+      "#{work_chemical.chemical.name}(#{work_chemical.chemical.chemical_type.name}):#{work_chemical.quantity}"
     end
     return result.to_sentence
   end
@@ -82,8 +81,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def self.get_terms(term)
-    terms = []
-    Work.get_terms(term).each { |t| terms << [t.strftime('%Jy年%m月'), t.strftime('%Y-%m-%d')] }
+    terms = Work.get_terms(term).map { |t| [t.strftime('%Jy年%m月'), t.strftime('%Y-%m-%d')] }
     return terms
   end
 
@@ -160,9 +158,8 @@ class WorkDecorator < Draper::Decorator
   end
 
   def machine_numbers
-    results = []
-    model.machine_numbers.each do |key, value|
-      results << "#{key}-#{value.sort.join(',')}"
+    results = model.machine_numbers.map do |key, value|
+      "#{key}-#{value.sort.join(',')}"
     end
     return results.join('、')
   end
