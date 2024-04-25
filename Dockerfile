@@ -38,9 +38,9 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Rubyのインストール
-RUN curl -O https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.0.tar.gz
-RUN tar -xzvf ruby-3.3.0.tar.gz
-WORKDIR /tmp/ruby-3.3.0
+RUN curl -O https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.1.tar.gz
+RUN tar -xzvf ruby-3.3.1.tar.gz
+WORKDIR /tmp/ruby-3.3.1
 RUN ./configure --enable-yjit && make && make install
 
 # アプリケーションディレクトリを作成
