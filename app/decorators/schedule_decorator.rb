@@ -34,10 +34,7 @@ class ScheduleDecorator < Draper::Decorator
   end
 
   def worker_names
-    results = []
-    workers.each do |worker|
-      results << worker.home_name
-    end
+    results = workers.map(&:home_name)
     return results.to_sentence
   end
 
