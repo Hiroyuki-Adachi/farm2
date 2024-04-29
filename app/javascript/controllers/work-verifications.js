@@ -5,10 +5,17 @@ document.addEventListener('turbo:load', () => {
         changePrint(event.target);
     });
 
-    document.querySelectorAll(".show-work").forEach((element) => {
-        element.addEventListener("click", (event) => {
-            execShow(event.target.dataset.url);
-        });
+    document.getElementById('list').addEventListener('click', event => {
+        let target = event.target;
+        while (target != null && !target.classList.contains('show-work')) {
+            if (target === event.currentTarget) return;
+            target = target.parentElement;
+        }
+
+        if (target && target.classList.contains('show-work')) {
+            execShow(target.dataset.url);
+            event.preventDefault();
+        }
     });
 
     document.getElementById("print_self").checked = true;
@@ -16,16 +23,16 @@ document.addEventListener('turbo:load', () => {
 });
 
 const getCsrfToken = () => {
-  const metas = document.getElementsByTagName('meta');
-  for (let meta of metas) {
-    if (meta.getAttribute('name') === 'csrf-token') {
-      return meta.getAttribute('content');
+    const metas = document.getElementsByTagName('meta');
+    for (let meta of metas) {
+        if (meta.getAttribute('name') === 'csrf-token') {
+            return meta.getAttribute('content');
+        }
     }
-  }
-  return '';
+    return '';
 };
 
-  function execCreate(url) {
+const execCreate = (url) => {
     verificationModal.hide();
     verificationModal = null;
 
@@ -37,18 +44,18 @@ const getCsrfToken = () => {
             'X-CSRF-Token': getCsrfToken()
         }
     })
-    .then((data) => data.text())
-    .then((html) => {
-        document.getElementById("list").innerHTML = html;
-    })
-    .then(() => {
-        loadingEnd();
-        changePrint(document.getElementById("print_self"));
-    });
+        .then((data) => data.text())
+        .then((html) => {
+            document.getElementById("list").innerHTML = html;
+        })
+        .then(() => {
+            loadingEnd();
+            changePrint(document.getElementById("print_self"));
+        });
     return false;
 }
 
-function execDestroy(url) {
+const execDestroy = (url) => {
     verificationModal.hide();
     verificationModal = null;
     loadingStart("取消中...");
@@ -59,44 +66,44 @@ function execDestroy(url) {
             'X-CSRF-Token': getCsrfToken()
         }
     })
-    .then((data) => data.text())
-    .then((html) => {
-        document.getElementById("list").innerHTML = html;
-    })
-    .then(() => {
-        loadingEnd();
-        changePrint(document.getElementById("print_self"));
-    });
+        .then((data) => data.text())
+        .then((html) => {
+            document.getElementById("list").innerHTML = html;
+        })
+        .then(() => {
+            loadingEnd();
+            changePrint(document.getElementById("print_self"));
+        });
     return false;
 }
 
 let verificationModal = null;
-function execShow(url) {
+const execShow = (url) => {
     fetch(url, {
         method: "GET"
     })
-    .then((data) => data.text())
-    .then((html) => {
-        document.getElementById("show_work_content").innerHTML = html;
-        verificationModal = new Modal(document.getElementById("show_work"));
-        verificationModal.show();
-        if (document.getElementById("work_exec") != null) {
-            document.getElementById("work_exec").addEventListener("click", (event) => {
-                execCreate(event.target.dataset.url, event.target.dataset.work);
-            });
-        }
-        if (document.getElementById("work_cancel") != null) {
-            document.getElementById("work_cancel").addEventListener("click", (event) => {
-                execDestroy(event.target.dataset.url);
-            });
-        }
-        loadingEnd();
-    })
+        .then((data) => data.text())
+        .then((html) => {
+            document.getElementById("show_work_content").innerHTML = html;
+            verificationModal = new Modal(document.getElementById("show_work"));
+            verificationModal.show();
+            if (document.getElementById("work_exec") != null) {
+                document.getElementById("work_exec").addEventListener("click", (event) => {
+                    execCreate(event.target.dataset.url, event.target.dataset.work);
+                });
+            }
+            if (document.getElementById("work_cancel") != null) {
+                document.getElementById("work_cancel").addEventListener("click", (event) => {
+                    execDestroy(event.target.dataset.url);
+                });
+            }
+            loadingEnd();
+        })
     return false;
 }
 
-function changePrint(checkbox) {
-    if(checkbox.checked) {
+const changePrint = (checkbox) => {
+    if (checkbox.checked) {
         document.querySelectorAll("input[name='self_flag']").forEach((element) => {
             element.closest("tr").style.display = "none";
         });
