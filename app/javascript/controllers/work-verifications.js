@@ -5,10 +5,17 @@ document.addEventListener('turbo:load', () => {
         changePrint(event.target);
     });
 
-    document.querySelectorAll(".show-work").forEach((element) => {
-        element.addEventListener("click", (event) => {
-            execShow(event.target.dataset.url);
-        });
+    document.getElementById('list').addEventListener('click', event => {
+        let target = event.target;
+        while (target != null && !target.classList.contains('show-work')) {
+            if (target === event.currentTarget) return;
+            target = target.parentElement;
+        }
+
+        if (target && target.classList.contains('show-work')) {
+            execShow(target.dataset.url);
+            event.preventDefault();
+        }
     });
 
     document.getElementById("print_self").checked = true;
