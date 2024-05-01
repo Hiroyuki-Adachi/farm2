@@ -16,7 +16,7 @@ class CalendarExcelHalfService
 
     first_month = works[0].model.worked_at.month
     fill_title(workbook[0], calendar_work_kinds, year, first_month)
-    fill_holidays(workbook[1], year, first_month, first_month + MAX_MONTHS - 1)
+    fill_holidays(workbook[1], year, 1, 12)
     fill_works(workbook[0], works, first_month)
 
     return workbook.stream.read
