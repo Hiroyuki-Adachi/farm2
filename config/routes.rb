@@ -47,8 +47,7 @@ Rails.application.routes.draw do
   resources :calendar_work_kinds, only: [:index, :create]
   resources :calendars, only: [:index]
   namespace :calendars do
-    resources :excels, only: [:index]
-    resources :year_excels, only: [:index]
+    resources :excels, param: :months, only: [:index]
   end
   resources :contracts, only: [:index]
   resources :minutes, only: [:index, :create, :show, :destroy]
