@@ -7,7 +7,7 @@ class Works::WorkersController < WorksController
   def new; end
 
   def create
-    @work.regist_results(params[:results])
+    @work.regist_results(params[:results], current_user.worker)
     redirect_to new_work_health_path(@work)
   end
 end
