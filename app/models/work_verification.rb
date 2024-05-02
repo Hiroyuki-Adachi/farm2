@@ -22,12 +22,12 @@ class WorkVerification < ApplicationRecord
   def self.regist(work, worker)
     return if work.created_by == worker.id
 
-    Rails.application.config.update_logger.info "updated by #{worker.name}"
-    wv = WorkVerification.where(work_id: work.id, worker_id: worker.id)
-    if wv.exists?
-      wv.first.touch
-      wv.first.save!
-    else
+    Rails.application.config.update_logger.info "verified by #{worker.name}"
+    verification = WorkVerification.find_by(work_id: work.id, worker_id: worker.id)
+    if verification
+      verification.touch
+      verification.save!
+    elsif WorkVerification.where(work_id: work.id).count < ENOUGH
       WorkVerification.create(work_id: work.id, worker_id: worker.id)
     end
   end
