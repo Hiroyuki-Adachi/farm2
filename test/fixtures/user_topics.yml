@@ -1,0 +1,16 @@
+# == Schema Information
+#
+# Table name: user_topics
+#
+#  id                   :bigint           not null, primary key
+#  word(ワード)         :string(128)      default(""), not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  topic_id(トピックID) :integer          not null
+#  user_id(利用者ID)    :integer          not null
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#

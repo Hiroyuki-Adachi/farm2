@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_04_085905) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_06_075958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -759,6 +759,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_04_085905) do
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
   end
 
+  create_table "topics", comment: "トピック", force: :cascade do |t|
+    t.string "url", limit: 512, default: "", null: false, comment: "URL"
+    t.string "title", limit: 512, default: "", null: false, comment: "タイトル"
+    t.date "posted_on", null: false, comment: "投稿日"
+    t.text "content", comment: "内容"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["url"], name: "index_topics_on_url", unique: true
+  end
+
   create_table "total_cost_details", comment: "集計原価(明細)", force: :cascade do |t|
     t.integer "total_cost_id", null: false, comment: "集計原価"
     t.integer "work_type_id", null: false, comment: "作業分類"
@@ -820,6 +830,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_04_085905) do
     t.string "training_place", limit: 20, default: "", null: false, comment: "研修場所"
     t.string "studying_place", limit: 20, default: "", null: false, comment: "学習場所"
     t.text "remarks", default: "", null: false, comment: "備考"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_topics", comment: "利用者トピック", force: :cascade do |t|
+    t.integer "user_id", null: false, comment: "利用者ID"
+    t.integer "topic_id", null: false, comment: "トピックID"
+    t.string "word", limit: 128, default: "", null: false, comment: "ワード"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_words", comment: "利用者ワード", force: :cascade do |t|
+    t.integer "user_id", null: false, comment: "利用者ID"
+    t.string "word", limit: 128, default: "", null: false, comment: "ワード"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
