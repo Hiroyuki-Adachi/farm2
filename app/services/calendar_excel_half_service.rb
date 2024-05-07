@@ -2,20 +2,20 @@ require 'rubyXL'
 require 'rubyXL/convenience_methods/cell'
 require 'rubyXL/convenience_methods/workbook'
 
-class CalendarExcelMonthService
+class CalendarExcelHalfService
   include Workbook
-  MAX_MONTHS = 3
+  MAX_MONTHS = 6
 
   def self.call(calendar_work_kinds, works, year)
     return new.call(calendar_work_kinds, works, year)
   end
 
   def call(calendar_work_kinds, works, year)
-    workbook = RubyXL::Parser.parse('app/views/calendars/excels/3month01.xlsx')
+    workbook = RubyXL::Parser.parse('app/views/calendars/excels/6month01.xlsx')
     setup_workbook(workbook)
 
     first_month = works[0].model.worked_at.month
-    fill_title(workbook[0], calendar_work_kinds[0], year, first_month)
+    fill_title(workbook[0], calendar_work_kinds, year, first_month)
     fill_holidays(workbook[1], year, 1, 12)
     fill_works(workbook[0], works, first_month)
 
@@ -24,9 +24,9 @@ class CalendarExcelMonthService
 
   private
 
-  def fill_title(data_sheet, calendar_work_kind, year, first_month)
+  def fill_title(data_sheet, calendar_work_kinds, year, first_month)
     title_cell = data_sheet[3][0]
-    title_cell.change_contents(calendar_work_kind.work_kind.name.to_s)
+    title_cell.change_contents(calendar_work_kinds.map {|calendar_work_kind| calendar_work_kind.work_kind.name }.join('・'))
 
     data_sheet[5][0].change_contents(year)
     data_sheet[5][2].change_contents(first_month)

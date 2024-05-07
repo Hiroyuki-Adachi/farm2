@@ -232,7 +232,7 @@ SQL
     return params
   end
 
-  def regist_results(params)
+  def regist_results(params, current_worker)
     workers = []
     params.each do |param|
       worker_id = param[:worker_id].to_i
@@ -253,7 +253,9 @@ SQL
     
     # この作業に属さないworker_idを持つwork_resultsを削除
     work_results.where.not(worker_id: workers).destroy_all
-    
+
+    WorkVerification.regist(self, current_worker)
+
     # printed_atとprinted_byをリセット
     self.printed_at = nil
     self.printed_by = nil
@@ -424,9 +426,8 @@ SQL
   def exact_work_types
     return [work_type] if work_lands.empty?
     return work_types if work_types.exists?
-    wts = []
-    lands.each do |land|
-      wts << land.cost(worked_at)&.work_type
+    wts = lands.map do |land|
+      land.cost(worked_at)&.work_type
     end
     return wts.compact.uniq if wts.compact.length.positive?
     return [work_type]

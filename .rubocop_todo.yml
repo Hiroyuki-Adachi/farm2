@@ -57,13 +57,6 @@ Layout/SpaceInsideBlockBraces:
 Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
 
-# Offense count: 91
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowInHeredoc.
-Layout/TrailingWhitespace:
-  Enabled: false
-
-
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyleForLeadingUnderscores.
@@ -72,23 +65,11 @@ Naming/MemoizedInstanceVariableName:
   Exclude:
     - 'app/controllers/owned_rice_prices_controller.rb'
 
-
-# Offense count: 1
-# Configuration parameters: MinSize.
-Performance/CollectionLiteralInLoop:
-  Exclude:
-    - 'app/models/sorimachi_account.rb'
-
-# Offense count: 1
-Performance/MapMethodChain:
-  Exclude:
-    - 'app/models/chemical.rb'
-
-# Offense count: 1
+# Offense count: 91
 # This cop supports safe autocorrection (--autocorrect).
-Performance/RedundantSplitRegexpArgument:
-  Exclude:
-    - 'lib/tasks/extract_fixtures.rake'
+# Configuration parameters: AllowInHeredoc.
+Layout/TrailingWhitespace:
+  Enabled: false
 
 # Offense count: 103
 # This cop supports unsafe autocorrection (--autocorrect-all).
