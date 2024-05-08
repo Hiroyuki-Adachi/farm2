@@ -10,4 +10,19 @@
 #
 class UserWord < ApplicationRecord
   belongs_to :user
+
+  before_create :nop_empty_words
+  before_update :remove_empty_words
+
+  private
+
+  def nop_empty_words
+    logger.debug "nop_empty_words"
+    throw(:abort) if self.word.blank?
+  end
+
+  def remove_empty_words
+    logger.debug "remove_empty_words"
+    self.destroy if self.word.blank?
+  end
 end

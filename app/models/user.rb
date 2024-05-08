@@ -37,6 +37,8 @@ class User < ApplicationRecord
   has_many :user_topics, dependent: :destroy
   has_many :topics, through: :user_topics
 
+  accepts_nested_attributes_for :user_words, allow_destroy: true
+
   validates :login_name, uniqueness: true
   validates :password, length: { maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED }
 
