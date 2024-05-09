@@ -8,6 +8,10 @@
 #  updated_at        :datetime         not null
 #  user_id(利用者ID) :integer          not null
 #
+# Indexes
+#
+#  index_user_words_on_word_by_user_id  (user_id,word) UNIQUE
+#
 
 # This model initially had no columns defined. If you add columns to the
 # model remove the "{}" from the fixture names and add the columns immediately
