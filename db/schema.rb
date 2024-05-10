@@ -838,6 +838,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_06_075958) do
     t.integer "user_id", null: false, comment: "利用者ID"
     t.integer "topic_id", null: false, comment: "トピックID"
     t.string "word", limit: 128, default: "", null: false, comment: "ワード"
+    t.boolean "read_flag", default: false, null: false, comment: "既読フラグ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -848,6 +849,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_06_075958) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "word"], name: "index_user_words_on_word_by_user_id", unique: true
+    t.index ["word"], name: "index_user_words_on_word"
   end
 
   create_table "users", id: { type: :serial, comment: "利用者マスタ" }, comment: "利用者マスタ", force: :cascade do |t|

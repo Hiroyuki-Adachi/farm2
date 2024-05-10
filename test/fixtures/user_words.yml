@@ -10,6 +10,7 @@
 #
 # Indexes
 #
+#  index_user_words_on_word             (word)
 #  index_user_words_on_word_by_user_id  (user_id,word) UNIQUE
 #
 

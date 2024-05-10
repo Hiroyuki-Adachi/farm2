@@ -10,17 +10,25 @@
 #
 # Indexes
 #
+#  index_user_words_on_word             (word)
 #  index_user_words_on_word_by_user_id  (user_id,word) UNIQUE
 #
 class UserWord < ApplicationRecord
   belongs_to :user
 
+  before_save :trim_word
   after_save :remove_empty_words
+
+  scope :words, -> { select(:word).distinct.pluck(:word) }
 
   validates :word, length: { maximum: 128 }
   validates :word, uniqueness: { scope: :user_id }
 
   private
+
+  def trim_word
+    self.word = self.word.strip
+  end
 
   def remove_empty_words
     self.destroy if self.word.blank?
