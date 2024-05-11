@@ -13,10 +13,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+  <header>
 <% if session[:user_id] %>
 <%= render 'navbar' %>
 <% end %>
+</header>
 <main class="container-fluid">
 <% if session[:user_id] %>
   <div class="row">
@@ -29,6 +30,9 @@
     </button>
 <% end %>
       <div class="container-fluid">
+      <div id="flash_messages" class="row">
+        <%= render "application/flashes", locals: {flash: flash} %>
+      </div>
 <%= yield %>
       </div>
 <% if session[:user_id] %>

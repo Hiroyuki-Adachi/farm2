@@ -4,46 +4,39 @@ source 'http://rubygems.org'
 gem 'rails', '>= 7.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
-# Use SCSS for stylesheets
-# gem 'sassc-rails'
-# Use Uglifier as compressor for JavaScript assets
-# gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .coffee assets and views
-# gem 'coffee-rails', '~> 4.1.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-# gem "mini_racer"
-
+# delayed_job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background.
 gem 'delayed_job_active_record'
 
-# gem 'webpacker'
-
+# CSSBundling provides a way to bundle CSS files in Rails applications.
 gem "cssbundling-rails"
+# importmap-rails provides a way to bundle JavaScript files in Rails applications.
 gem 'importmap-rails'
+# propshaft provides a way to bundle JavaScript files in Rails applications.
 gem 'propshaft'
 
+# daemons provides an easy way to wrap existing ruby scripts (for example a self-written server) to be run as a daemon and to be controlled by simple start/stop/restart commands.
 gem 'daemons'
 
-# Use bootstrap4
-# gem 'bootstrap', '>= 4.0'
-# Japan Holiday
+# Japanese Holiday
 gem 'holiday_jp'
 
 # In the Loofah gem for Ruby through v2.3.0 unsanitized JavaScript may occur in sanitized output when a crafted SVG element is republished.
 gem "loofah", ">= 2.3.1"
 
-# gem 'bootsnap'
-
+# Japanese Era
 gem 'wareki'
 
-# Use jquery as the JavaScript library
-# gem 'jquery-ui-rails', '~> 5.0'
+# Nokogiri is an HTML, XML, SAX, and Reader parser.
+gem 'nokogiri'
+# mechanize is a ruby library that makes automated web interaction easy.
+gem 'mechanize'
+# dotenv is a Ruby gem to load environment variables from .env into ENV in development.
+gem 'dotenv-rails'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbo-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-# gem 'sdoc', '~> 0.4.0', group: :doc
 # Internationalization and localization solution
 gem 'i18n-js', '~> 3'
 # This gem provides XML serialization for your Active Model objects and Active Record models.
@@ -58,12 +51,8 @@ gem 'paranoia'
 gem 'kaminari'
 # Draper adds an object-oriented layer of presentation logic to your Rails application.
 gem 'draper'
-# ActiveRecords infamously doesn't support composite primary keys.
-# gem 'composite_primary_keys'
-# Comments for migrations
-# gem 'migration_comments'
 
-# Library for encoding QR Codes in Ruby.
+# Encoding QR Codes in Ruby.
 gem 'rqrcode'
 # Read and write PNG files.
 gem 'chunky_png'
@@ -76,10 +65,6 @@ gem 'rubyXL'
 
 # Ruby library for dealing with iCalendar files
 gem 'icalendar'
-# Integrate Chart.js into Rails Asset Pipeline
-# gem 'chart-js-rails'
-# Use Unicorn as the app server
-# gem 'unicorn'
 
 # Use Puma as the app server
 gem 'puma'
@@ -87,24 +72,8 @@ gem 'puma'
 # Rubyzip is a ruby library for reading and writing zip files.
 gem 'rubyzip'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  # gem 'byebug'
-  # debase is a fast implementation of the standard Ruby debugger debug.rb for Ruby 2.0
-  # gem 'debase'
-  # An interface which glues ruby-debug to IDEs
-  # gem 'ruby-debug-ide', '~> 0.6'
-
-  # gem 'pry-byebug'
-  # gem 'pry-doc'
-  # gem 'pry-rails'
-  # gem 'pry-stack_explorer'
-end
-
 group :development do
+  # listen to file modifications
   gem 'listen'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 4.0'
@@ -124,7 +93,8 @@ end
 group :test do
   # This gem is only useful once assigns and assert_template have been removed from Rails.
   gem 'rails-controller-testing'
-
+  # capybara helps you test web applications by simulating how a real user would interact with your app.
   gem 'capybara'
+  # cuprite is a Capybara driver for headless Chrome/Chromium
   gem 'cuprite'
 end
