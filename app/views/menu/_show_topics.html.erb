@@ -11,23 +11,10 @@
     </li>
   <% end %>
 </ul>
-<div class="modal modal-lg fade" id="topic_data_modal" tabindex="-1" aria-labelledby="topicModalLabel" aria-hidden="true">
+<div class="modal modal-xl fade" id="topic_data_modal" tabindex="-1" aria-labelledby="topicModalLabel" aria-hidden="true">
   <div class="modal-dialog" id="topic_data_dialog">
   </div>
 </div>
 <% content_for :head do %>
-<script type="module" data-turbo-track="reload">
-import { Turbo } from "@hotwired/turbo-rails";
-import { Modal } from "bootstrap";
-
-document.addEventListener('turbo:load', function() {
-    document.addEventListener('turbo:before-stream-render', (event) => {
-        console.log('turbo:before-stream-render');
-        if (document.getElementById('topic_data_modal')) {
-            const myModal = new Modal(document.getElementById('topic_data_modal'));
-            myModal.show();
-        }
-    });
-});
-</script>
+<%= javascript_include_tag 'controllers/menu-topics', "data-turbo-track": "reload", type: :module %>
 <% end %>

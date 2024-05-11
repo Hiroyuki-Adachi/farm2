@@ -37,4 +37,8 @@ module ApplicationHelper
   def chemical_name(chemical)
     chemical.url.present? ? link_to(chemical.name, chemical.url, target: :_blank, rel: "noopener noreferrer") : chemical.name
   end
+
+  def show_topic(content)
+    h(content).gsub!(/(?<=\u3000)/, '<br />　').html_safe
+  end
 end
