@@ -15,3 +15,20 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+user_topic1:
+  word: "word1"
+  read_flag: false
+  topic: topic1
+  user_id: 1
+
+user_topic2:
+  word: "word2"
+  read_flag: false
+  topic: topic2
+  user_id: 1
+
+user_topic3:
+  word: "word2"
+  read_flag: false
+  topic: topic2
+  user_id: 2
