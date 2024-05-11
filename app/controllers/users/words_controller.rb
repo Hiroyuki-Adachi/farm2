@@ -13,6 +13,11 @@ class Users::WordsController < UsersController
     end
   end
 
+  def show
+    @topic = Topic.find(params[:id])
+    respond_to { |format| format.turbo_stream }
+  end
+
   private
 
   def user_params

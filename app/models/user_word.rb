@@ -31,6 +31,9 @@ class UserWord < ApplicationRecord
   end
 
   def remove_empty_words
-    self.destroy if self.word.blank?
+    if self.word.blank?
+      self.destroy
+      UserTopic.where(user_id: self.user_id, word: self.word_before_last_save)&.destroy_all
+    end
   end
 end

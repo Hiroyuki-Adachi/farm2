@@ -1,10 +1,12 @@
 <h1>ニュース検索ワード</h1>
 <%= form_with(model: current_user, url: users_words_path, local: true, method: :post) do |form| %>
   <%= form.fields_for :user_words do |word_form| %>
+    <% if word_form.index < 5 %>
     <div class="form-group">
-      <%= word_form.text_field :word, class: "form-control", maxlength: 128 %>
+      <%= word_form.text_field :word, class: "form-control", maxlength: 10, pattern: ".{2,10}"  %>
       <%= word_form.hidden_field :id %>
     </div>
+    <% end %>
   <% end %>
   <div id="btn_toolbar" class="btn-toolbar">
     <div class="btn-group mr-2">
