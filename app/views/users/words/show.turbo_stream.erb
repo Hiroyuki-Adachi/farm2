@@ -1,5 +1,5 @@
 <%= turbo_stream.replace 'topic_data_dialog' do %>
-  <div class="modal-dialog" id="topic_data_dialog">
+  <div class="modal-dialog" id="topic_data_dialog" data-url="<%= users_word_path(@topic) %>">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="topicModalLabel"><%= @topic.title %></h5>

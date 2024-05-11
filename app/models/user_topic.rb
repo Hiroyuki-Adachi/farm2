@@ -15,4 +15,8 @@ class UserTopic < ApplicationRecord
   belongs_to :topic
 
   scope :current_topics, ->(user) { where(user_id: user.id).joins(:topic).order('topics.posted_on desc, topics.id desc').limit(10) }
+
+  def readed!
+    update(read_flag: true)
+  end
 end

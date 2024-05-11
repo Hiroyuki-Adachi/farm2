@@ -17,6 +17,12 @@ class Users::WordsController < UsersController
     @topic = Topic.find(params[:id])
     respond_to { |format| format.turbo_stream }
   end
+  
+  def destroy
+    UserTopic.find_by(user_id: current_user.id, topic_id: params[:id]).readed!
+    @user_topics = UserTopic.current_topics(current_user)
+    render layout: false, partial: 'menu/show_topics'
+  end
 
   private
 
