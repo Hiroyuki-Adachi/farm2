@@ -66,9 +66,7 @@ class WorkResult < ApplicationRecord
   }
 
   scope :for_personal, ->(worker, worked_from, worked_to = Time.zone.today + 1) {
-    joins(:work)
-      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
-      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
+    joins(:work).includes(:work_kind).includes(:work_type)
       .where("works.worked_at BETWEEN ? AND ?", worked_from, worked_to - 1)
       .where(worker_id: worker)
       .order("works.worked_at, work_results.id")
