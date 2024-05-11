@@ -7,7 +7,7 @@ class CrawlAgriNewsJob < ApplicationJob
   AGRI_NEWS_URL = "https://www.agrinews.co.jp".freeze
   START_DAY = 7
 
-  def perform(*_args)
+  def perform
     agent = Mechanize.new
     return unless login_agri_news(agent)
     search_all_agri_news(agent)

@@ -156,6 +156,7 @@ Rails.application.routes.draw do
     resources :dryings, controller: "personal_informations/dryings", only: [:index]
     resources :owned_rices, controller: "personal_informations/owned_rices", only: [:index]
     resources :minutes, controller: "personal_informations/minutes", only: [:show]
+    resources :topics, controller: "personal_informations/topics", only: [:index, :show]
   end
   resources :personal_calendars, param: "token", only: [:show]
   resources :users, except: [:show] do
