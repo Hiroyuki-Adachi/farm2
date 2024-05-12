@@ -1,0 +1,27 @@
+# == Schema Information
+#
+# Table name: user_words
+#
+#  id                :bigint           not null, primary key
+#  word(ワード)      :string(128)      default(""), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  user_id(利用者ID) :integer          not null
+#
+# Indexes
+#
+#  index_user_words_on_word             (word)
+#  index_user_words_on_word_by_user_id  (user_id,word) UNIQUE
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+words1:
+  word: 'word1'
+  user_id: 1
+
+words2:
+  word: 'word2'
+  user_id: 1
