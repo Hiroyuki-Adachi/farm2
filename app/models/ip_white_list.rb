@@ -1,2 +1,0 @@
-class IpWhiteList < ApplicationRecord
-end
