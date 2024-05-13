@@ -19,7 +19,6 @@ class CrawlJob < ApplicationJob
   end
 
   def self.ordered_classes
-    # [CrawlAgriNewsJob, CrawlAgriMyNaviJob]
-    [CrawlAgriJournalJob]
+    [CrawlAgriNewsJob, CrawlAgriMyNaviJob, CrawlAgriJournalJob]
   end
 end
