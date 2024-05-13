@@ -1,6 +1,6 @@
 class CrawlAgriJournalJob < CrawlJob
   queue_as :default
-  MY_AGRI_URL = "https://agrijournal.jp/".freeze
+  MY_AGRI_URL = "https://agrijournal.jp".freeze
 
   def perform(words)
     agent = Mechanize.new

@@ -5,6 +5,7 @@ class CrawlJob < ApplicationJob
 
   def perform(perform_now: false)
     words = UserWord.words
+    Topic.old(START_DAY).delete_all
     if perform_now
       CrawlJob.ordered_classes.each {|job| job.perform_now(words) }
     else
@@ -19,6 +20,7 @@ class CrawlJob < ApplicationJob
   end
 
   def self.ordered_classes
-    [CrawlAgriNewsJob, CrawlAgriMyNaviJob, CrawlAgriJournalJob]
+    # [CrawlAgriNewsJob, CrawlAgriMyNaviJob, CrawlAgriJournalJob]
+    [CrawlSmartAgriJob]
   end
 end
