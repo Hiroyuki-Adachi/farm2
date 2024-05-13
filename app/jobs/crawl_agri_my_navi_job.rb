@@ -2,23 +2,16 @@ require 'mechanize'
 require 'dotenv/load'
 require 'nokogiri'
 
-class CrawlAgriMyNaviJob < ApplicationJob
+class CrawlAgriMyNaviJob < CrawlJob
   queue_as :default
   MY_NAVI_URL = "https://agri.mynavi.jp".freeze
-  START_DAY = 7
 
-  def perform
+  def perform(words)
     agent = Mechanize.new
-    search_all_agri_news(agent)
+    search_all_agri_news(agent, words)
   end
 
   private
-
-  def search_all_agri_news(agent)
-    UserWord.words.each do |word|
-      search_agri_news(agent, word)
-    end
-  end
 
   def search_agri_news(agent, word)
     search_doc = Nokogiri::HTML(agent.get("#{MY_NAVI_URL}/", {s: word}).body)
