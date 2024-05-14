@@ -39,6 +39,6 @@ module ApplicationHelper
   end
 
   def show_topic(content)
-    h(content).gsub!(/(?<=\u3000)/, '<br />　')&.html_safe
+    h(content).gsub(/(?<=\u3000)/, '<br />　')&.html_safe
   end
 end

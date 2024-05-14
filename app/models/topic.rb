@@ -15,4 +15,7 @@
 #  index_topics_on_url  (url) UNIQUE
 #
 class Topic < ApplicationRecord
+  has_many :user_topics, dependent: :destroy
+
+  scope :old, ->(days) { where(["posted_on < ?", Time.zone.today - days]) }
 end
