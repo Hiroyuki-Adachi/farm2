@@ -81,4 +81,20 @@ class Worker < ApplicationRecord
   def payment
     home.worker_payment_flag ? self : home.holder
   end
+
+  def member?
+    position == Position::MEMBER
+  end
+
+  def leader?
+    position == Position::LEADER
+  end
+
+  def director?
+    position == Position::DIRECTOR
+  end
+
+  def advisor?
+    position == Position::ADVISOR
+  end
 end

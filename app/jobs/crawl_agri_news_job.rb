@@ -2,15 +2,14 @@ require 'mechanize'
 require 'dotenv/load'
 require 'nokogiri'
 
-class CrawlAgriNewsJob < ApplicationJob
+class CrawlAgriNewsJob < CrawlJob
   queue_as :default
   AGRI_NEWS_URL = "https://www.agrinews.co.jp".freeze
-  START_DAY = 7
 
-  def perform
+  def perform(words)
     agent = Mechanize.new
     return unless login_agri_news(agent)
-    search_all_agri_news(agent)
+    search_all_agri_news(agent, words)
   end
 
   private
@@ -24,12 +23,6 @@ class CrawlAgriNewsJob < ApplicationJob
 
     dashboard_page = form.submit
     return dashboard_page.uri.to_s != "#{AGRI_NEWS_URL}/user/login"
-  end
-
-  def search_all_agri_news(agent)
-    UserWord.words.each do |word|
-      search_agri_news(agent, word)
-    end
   end
 
   def search_agri_news(agent, word)
