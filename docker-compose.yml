@@ -47,6 +47,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      sass:
+        condition: service_healthy
+      worker:
+        condition: service_healthy
 
   worker:
     build:
@@ -60,6 +64,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "pgrep -f rake || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   sass:
     build:
@@ -70,6 +79,11 @@ services:
       - type: bind
         source: .
         target: /farm2
+    healthcheck:
+      test: [ "CMD-SHELL", "pgrep -f yarn || exit 1" ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 
   chrome:
     image: browserless/chrome:latest
