@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install yarn
 
 # sass をインストール
 RUN yarn add sass
+RUN chmod +x node_modules/.bin/sass
 
 # Rustのインストール
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
