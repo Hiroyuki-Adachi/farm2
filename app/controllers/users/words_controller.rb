@@ -1,4 +1,4 @@
-class Users::WordsController < UsersController
+class Users::WordsController < ApplicationController
   def new
     current_user.user_words.build
   end
