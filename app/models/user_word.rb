@@ -19,7 +19,10 @@ class UserWord < ApplicationRecord
   before_save :trim_word
   after_save :remove_empty_words
 
-  scope :words, -> { select(:word).distinct.pluck(:word) }
+  scope :words, -> { 
+    select(:word).joins(user: :worker)
+    .where(workers: { position_id: Position::DIRECTOR.id }).distinct.pluck(:word)
+  }
 
   validates :word, length: { maximum: 128 }
   validates :word, uniqueness: { scope: :user_id }

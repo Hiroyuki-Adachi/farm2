@@ -1,5 +1,6 @@
 <h1>ニュース検索ワード</h1>
 <%= form_with(model: current_user, url: users_words_path, local: true, method: :post) do |form| %>
+<% if current_user.worker.director? %>
   <%= form.fields_for :user_words do |word_form| %>
     <% if word_form.index < 5 %>
     <div class="form-group">
@@ -8,10 +9,15 @@
     </div>
     <% end %>
   <% end %>
+<% else %>
+<div class="text-primary">本機能は理事のみが使用できます。</div>
+<% end %>
   <div id="btn_toolbar" class="btn-toolbar">
+<% if current_user.worker.director? %>
     <div class="btn-group mr-2">
       <%= form.submit '登録', name: 'regist', class: "btn btn-warning" %>
     </div>
+<% end %>
     <div class="btn-group mr-2">
       <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
     </div>
