@@ -125,5 +125,6 @@
     <%= link_to 'QRコード', users_qr_index_path, {class: "dropdown-item ms-2", data: {controller: :qr}} %>
     <%= link_to '検索ワード設定', new_users_word_path, {class: "dropdown-item ms-2", data: {controller: :words}} %>
     <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item ms-2", data: {controller: :users, actions: [:edit]}} %>
+    <%= link_to 'メールアドレス設定', new_users_mail_path, {class: "dropdown-item ms-2", data: {controller: :mails}} %>
   </div>
 </nav>

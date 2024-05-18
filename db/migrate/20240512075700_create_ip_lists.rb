@@ -1,6 +1,6 @@
 class CreateIpLists < ActiveRecord::Migration[7.1]
   def change
-    create_table :ip_lists do |t|
+    create_table :ip_lists, comment: 'IPアドレスリスト' do |t|
       t.string :ip_address, limit: 64, null: false, default: '', comment: 'IP Address'
       t.string :confirmation_token, limit: 64, null: false, default: '', comment: 'トークン'
       t.date :expired_on, null: true, comment: '有効期限'

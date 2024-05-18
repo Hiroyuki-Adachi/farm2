@@ -165,6 +165,7 @@ Rails.application.routes.draw do
   namespace :users do
     resources :qr, only: [:index]
     resources :words, only: [:new, :create, :show, :destroy]
+    resources :mails, only: [:new, :create]
   end
   resources :work_verifications, param: "work_id", only: [:index, :update, :destroy, :show]
 

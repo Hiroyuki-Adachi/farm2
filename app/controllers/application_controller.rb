@@ -30,13 +30,6 @@ class ApplicationController < ActionController::Base
     "count_workers#{term}"
   end
 
-  def broccoli?(work)
-    return current_organization.broccoli_work_type_id \
-        && current_organization.broccoli_work_kind_id \
-        && current_organization.broccoli_work_type_id == work.work_type_id \
-        && current_organization.broccoli_work_kind_id == work.work_kind_id
-  end
-
   def sum_hours(term)
     Rails.cache.fetch(sum_hours_key(term), expires_in: 1.hour) do
       WorkResult.where(work_id: Work.usual(term).select(:id)).group(:work_id).sum(:hours).to_h
@@ -73,7 +66,7 @@ class ApplicationController < ActionController::Base
   def restrict_remote_ip
     remote_ip = IPAddr.new(request.remote_ip)
     if PERMIT_ADDRESSES.none? { |ip| ip.include?(remote_ip) }
-      to_error_path
+      redirect_to mails_path
     elsif session[:user_id].nil? && controller_name != "sessions"
       redirect_to root_path
     end
