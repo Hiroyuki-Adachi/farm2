@@ -1,0 +1,20 @@
+<h1>メールアドレス設定</h1>
+<%= form_with(model: @user, url: users_mails_path, method: :post) do |f| %>
+<div class="row">
+  <div class="col-md-3">
+    <div class="field mb-3">
+      <%= f.label :mail, class: "col-form-label-lg form-label" %>
+      <%= f.email_field :mail, {required: false, class: "form-control", autocomplete: false} %>
+    </div>
+  </div>
+</div>
+
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= f.submit '登録', class: "btn btn-warning" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>
+<% end %>
