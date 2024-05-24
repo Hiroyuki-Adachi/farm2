@@ -1,4 +1,6 @@
 class PersonalInformationsController < ApplicationController
+  skip_before_action :restrict_remote_ip
+
   before_action :set_worker
   layout 'sm'
 
@@ -13,8 +15,6 @@ class PersonalInformationsController < ApplicationController
   end
 
   protected
-
-  def restrict_remote_ip; end
 
   def set_worker
     @current_user = User.find_by(token: params[:token] || params[:personal_information_token])

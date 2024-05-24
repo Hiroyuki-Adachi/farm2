@@ -1,2 +1,0 @@
-module PersonalInformations::MailConfirmationsHelper
-end
