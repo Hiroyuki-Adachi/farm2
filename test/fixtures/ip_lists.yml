@@ -24,3 +24,12 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+ip_white:
+  ip_address: '3.3.3.3'
+  created_by: 1
+  expired_on: '2999-12-31'
+  white_flag: true
+
+ip_black:
+  ip_address: '4.4.4.4'
+  block_count: 10

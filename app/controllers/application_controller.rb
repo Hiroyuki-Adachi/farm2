@@ -54,13 +54,9 @@ class ApplicationController < ActionController::Base
   end
 
   def restrict_remote_ip
-    remote_ip = IPAddr.new(request.remote_ip)
-    if IpList.black_list.any? { |ip| ip.include?(remote_ip) }
-      redirect_to to_error_path
-    elsif IpList.white_list.none? { |ip| ip.include?(remote_ip) }
-      redirect_to new_mail_path
-    elsif session[:user_id].nil? && controller_name != "sessions"
+    if session[:user_id].nil? 
       redirect_to root_path
+      return
     end
   end
 
