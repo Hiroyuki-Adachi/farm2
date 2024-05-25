@@ -8,6 +8,7 @@ class CreateIpLists < ActiveRecord::Migration[7.1]
       t.integer :block_count, null: false, default: 0, comment: 'ブロック回数'
       t.string :mail, limit: 255, null: false, default: '', comment: 'メールアドレス'
       t.integer :created_by, null: false, default: 0, comment: '作成者'
+      t.datetime :mail_confirmation_expired_at, null: true, comment: 'メールアドレス確認有効期限'
 
       t.timestamps
     end

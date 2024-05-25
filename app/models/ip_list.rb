@@ -4,16 +4,18 @@ require 'ipaddr'
 #
 # Table name: ip_lists
 #
-#  id                               :bigint           not null, primary key
-#  block_count(ブロック回数)        :integer          default(0), not null
-#  confirmation_token(トークン)     :string(64)       default(""), not null
-#  created_by(作成者)               :integer          default(0), not null
-#  expired_on(有効期限)             :date
-#  ip_address(IP Address)           :string(64)       default(""), not null
-#  mail(メールアドレス)             :string(255)      default(""), not null
-#  white_flag(ホワイトリストフラグ) :boolean          default(FALSE), not null
-#  created_at                       :datetime         not null
-#  updated_at                       :datetime         not null
+#  id                                                       :bigint           not null, primary key
+#  block_count(ブロック回数)                                :integer          default(0), not null
+#  confirmation_token(トークン)                             :string(64)       default(""), not null
+#  created_by(作成者)                                       :integer          default(0), not null
+#  datetime(メールアドレス確認有効期限)                     :datetime
+#  expired_on(有効期限)                                     :date
+#  ip_address(IP Address)                                   :string(64)       default(""), not null
+#  mail(メールアドレス)                                     :string(255)      default(""), not null
+#  mail_confirmation_expired_at(メールアドレス確認有効期限) :datetime
+#  white_flag(ホワイトリストフラグ)                         :boolean          default(FALSE), not null
+#  created_at                                               :datetime         not null
+#  updated_at                                               :datetime         not null
 #
 # Indexes
 #
@@ -24,7 +26,7 @@ class IpList < ApplicationRecord
   LOCAL_ADDRESSES = [
     IPAddr.new('127.0.0.1/32'),      # IPv4 local host
     IPAddr.new('10.0.0.0/8'),        # IPv4 private network(class A)
-    # IPAddr.new('172.16.0.0/12'),     # IPv4 private network(class B)
+    IPAddr.new('172.16.0.0/12'),     # IPv4 private network(class B)
     IPAddr.new('192.168.0.0/16'),    # IPv4 private network(class C)
     IPAddr.new('::1/128'),           # IPv6 local host
     IPAddr.new('fc00::/7'),          # IPv6 unique local addresses
@@ -59,12 +61,16 @@ class IpList < ApplicationRecord
     ip.expired_on = nil
     ip.created_by = user.id
     ip.mail = user.mail
+    ip.mail_confirmation_expired_at = 1.day.from_now
     ip.save
     return ip
   end
 
   def self.confirm!(user, token)
-    where(mail: user.mail).find_by(confirmation_token: token)&.update(expired_on: Time.now.advance(months: 1).to_date)
+    where(mail: user.mail)
+    .where("current_timestamp <= mail_confirmation_expired_at")
+    .find_by(confirmation_token: token)
+    &.update(expired_on: Time.now.advance(months: 1).to_date)
   end
 
   def self.white_list

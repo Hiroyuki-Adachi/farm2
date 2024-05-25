@@ -387,6 +387,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_12_080054) do
     t.integer "block_count", default: 0, null: false, comment: "ブロック回数"
     t.string "mail", limit: 255, default: "", null: false, comment: "メールアドレス"
     t.integer "created_by", default: 0, null: false, comment: "作成者"
+    t.datetime "mail_confirmation_expired_at", comment: "メールアドレス確認有効期限"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ip_address"], name: "ixdex_ip_lists_on_ip_address", unique: true
