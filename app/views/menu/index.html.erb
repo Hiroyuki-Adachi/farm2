@@ -16,6 +16,13 @@
           <%= render(:partial => 'show_lands') %>
         </div>
       </div>
+<% if current_user.worker.director? %>
+      <div class="row">
+        <div class="col-md-12" id="topics_content">
+          <%= render(:partial => 'show_topics') %>
+        </div>
+      </div>
+<% end %>
     </div>
   </div>
   <div class="col-md-4">

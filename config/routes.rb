@@ -156,12 +156,16 @@ Rails.application.routes.draw do
     resources :dryings, controller: "personal_informations/dryings", only: [:index]
     resources :owned_rices, controller: "personal_informations/owned_rices", only: [:index]
     resources :minutes, controller: "personal_informations/minutes", only: [:show]
+    resources :topics, controller: "personal_informations/topics", only: [:index, :show]
   end
   resources :personal_calendars, param: "token", only: [:show]
   resources :users, except: [:show] do
     resources :permissions, controller: "users/permissions", only: [:new, :create]
   end
-  resources :qr, path: "/users/qr", controller: "users/qr", only: [:index]
+  namespace :users do
+    resources :qr, only: [:index]
+    resources :words, only: [:new, :create, :show, :destroy]
+  end
   resources :work_verifications, param: "work_id", only: [:index, :update, :destroy, :show]
 
   resources :menu, only: [:index, :edit, :update] do

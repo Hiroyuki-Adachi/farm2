@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_04_085905) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_12_080054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -377,6 +377,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_04_085905) do
     t.point "location", comment: "位置"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "ip_lists", force: :cascade do |t|
+    t.string "ip_address", limit: 64, default: "", null: false, comment: "IP Address"
+    t.string "confirmation_token", limit: 64, default: "", null: false, comment: "トークン"
+    t.date "expired_on", comment: "有効期限"
+    t.boolean "white_flag", default: false, null: false, comment: "ホワイトリストフラグ"
+    t.boolean "block_flag", default: false, null: false, comment: "ブロックフラグ"
+    t.integer "block_count", default: 0, null: false, comment: "ブロック回数"
+    t.string "mail", limit: 255, default: "", null: false, comment: "メールアドレス"
+    t.integer "created_by", default: 0, null: false, comment: "作成者"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ip_address"], name: "ixdex_ip_lists_on_ip_address", unique: true
   end
 
   create_table "land_costs", id: { type: :serial, comment: "土地原価" }, comment: "土地原価", force: :cascade do |t|
@@ -759,6 +773,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_04_085905) do
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
   end
 
+  create_table "topics", comment: "トピック", force: :cascade do |t|
+    t.string "url", limit: 512, default: "", null: false, comment: "URL"
+    t.string "title", limit: 512, default: "", null: false, comment: "タイトル"
+    t.date "posted_on", null: false, comment: "投稿日"
+    t.text "content", comment: "内容"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["url"], name: "index_topics_on_url", unique: true
+  end
+
   create_table "total_cost_details", comment: "集計原価(明細)", force: :cascade do |t|
     t.integer "total_cost_id", null: false, comment: "集計原価"
     t.integer "work_type_id", null: false, comment: "作業分類"
@@ -824,6 +848,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_04_085905) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_topics", comment: "利用者トピック", force: :cascade do |t|
+    t.integer "user_id", null: false, comment: "利用者ID"
+    t.integer "topic_id", null: false, comment: "トピックID"
+    t.string "word", limit: 128, default: "", null: false, comment: "ワード"
+    t.boolean "read_flag", default: false, null: false, comment: "既読フラグ"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_words", comment: "利用者ワード", force: :cascade do |t|
+    t.integer "user_id", null: false, comment: "利用者ID"
+    t.string "word", limit: 128, default: "", null: false, comment: "ワード"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "word"], name: "index_user_words_on_word_by_user_id", unique: true
+    t.index ["word"], name: "index_user_words_on_word"
+  end
+
   create_table "users", id: { type: :serial, comment: "利用者マスタ" }, comment: "利用者マスタ", force: :cascade do |t|
     t.string "login_name", limit: 12, null: false, comment: "ログイン名"
     t.string "password_digest", limit: 128, null: false, comment: "パスワード"
@@ -838,6 +880,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_04_085905) do
     t.integer "view_month", default: [1, 4, 8], null: false, comment: "表示切替月", array: true
     t.integer "calendar_term", default: 2018, null: false, comment: "期(カレンダー)"
     t.string "token", limit: 36, default: "", null: false, comment: "アクセストークン"
+    t.string "mail", limit: 255, default: "", null: false, comment: "メールアドレス"
+    t.datetime "mail_confirmed_at", comment: "メールアドレス確認日時"
+    t.string "mail_confirmation_token", limit: 64, comment: "メールアドレス確認トークン"
+    t.datetime "mail_confirmation_expired_at", comment: "メールアドレス確認有効期限"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["token"], name: "ix_users_token", unique: true
     t.index ["worker_id"], name: "index_users_on_worker_id", unique: true
