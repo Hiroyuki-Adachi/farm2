@@ -45,6 +45,7 @@ class Gaps::AccidentsController < GapsController
   end
 
   def audiences
+    return if params[:work_id].blank?
     @workers = WorkerDecorator.decorate_collection(Work.find(params[:work_id]).workers)
     @worker_id = params[:id]
     respond_to { |format| format.turbo_stream }
