@@ -1,0 +1,6 @@
+ようこそ、<%= @user.worker.name %>さん
+
+下のリンクをクリックしてメールアドレス登録を完了してください。
+心当たりがない場合、このメールは無視してください。
+
+<%= edit_personal_information_mail_confirmation_url(personal_information_token: @user.token, mail_token: @user.mail_confirmation_token) %>

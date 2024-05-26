@@ -1,0 +1,6 @@
+ようこそ、<%= @ip.created_user.worker.name %>さん
+
+下のリンクをクリックしてIPアドレス登録を完了してください。
+心当たりがない場合、このメールは無視してください。
+
+<%= edit_personal_information_ip_confirmation_url(personal_information_token: @ip.created_user.token, ip_token: @ip.confirmation_token) %>
