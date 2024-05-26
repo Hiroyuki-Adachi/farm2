@@ -205,5 +205,7 @@ Rails.application.routes.draw do
   resources :machine_results, only: [:index]
   resources :work_chemicals, only: [:index]
 
+  resources :tablets, only: [:index]
+
   root controller: :sessions, action: :new
 end

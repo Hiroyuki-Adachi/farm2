@@ -21,4 +21,8 @@ class Section < ApplicationRecord
   has_many :homes, -> {order("homes.display_order, homes.id")}
 
   scope :usual, ->{where(work_flag: true).order(display_order: :asc)}
+
+  scope :with_users, -> {
+    where(id: Home.joins(workers: :user).select('homes.section_id'))
+  }
 end

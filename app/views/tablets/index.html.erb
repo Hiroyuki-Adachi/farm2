@@ -1,0 +1,13 @@
+<div class="container-fluid">
+  <div class="row mt-4">
+    <% @sections.each_with_index do |section, index| %>
+      <div class="col-md-4 col-sm-6 mb-3">
+        <div class="card group-card text-white <%= section.id == @section_id ? 'bg-primary' : 'bg-secondary' %>" style="<%= section.id == @section_id ? '' : 'cursor: pointer;' %>" data-group-id="<%= section.id %>">
+          <div class="card-body">
+            <h5 class="card-title"><%= section.name %></h5>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
