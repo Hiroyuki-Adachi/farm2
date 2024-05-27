@@ -46,6 +46,12 @@ class User < ApplicationRecord
   validates :login_name, uniqueness: true
   validates :password, length: { maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED }
 
+  scope :by_section, ->(section_id) { 
+    joins(worker: {home: :section})
+    .where(sections: { id: section_id })
+    .order("workers.family_phonetic, workers.first_phonetic") 
+  }
+
   def login_name=(value)
     super(value.downcase)
   end
