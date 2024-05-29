@@ -5,8 +5,10 @@
 </div>
 <div class="row mt-4">
   <% @sections.each_with_index do |section, index| %>
-    <div class="col-md-4 col-sm-6 mb-3">
-      <div class="card group-card text-white <%= section.id == @section_id ? 'bg-primary' : 'bg-secondary' %>" style="<%= section.id == @section_id ? '' : 'cursor: pointer;' %>" data-group-id="<%= section.id %>">
+    <div id="section_list" class="col-md-4 col-sm-6 mb-3">
+      <div class="card group-card text-white <%= section.id == @section_id ? 'bg-primary' : 'bg-secondary clickable' %>" 
+        style="<%= section.id == @section_id ? '' : 'cursor: pointer;' %>" 
+        data-section-id="<%= section.id %>" data-url="<%= tablets_path(section_id: section.id)%>">
         <div class="card-body">
           <h5 class="card-title"><%= section.name %></h5>
         </div>
@@ -26,3 +28,16 @@
     </div>
   </div>
 </div>
+<% content_for :head do %>
+<script data-turbo-track="reload" type="module">
+import { visit } from "@hotwired/turbo";
+
+window.addEventListener('turbo:load', () => {
+    document.querySelectorAll("#section_list .clickable").forEach((element) => {
+        element.addEventListener("click", event => {
+            visit(element.getAttribute("data-url"));
+        });
+    });
+});
+</script>
+<% end %>
