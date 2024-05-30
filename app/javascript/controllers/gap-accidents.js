@@ -15,6 +15,9 @@ window.addEventListener('turbo:load', () => {
     }
     if (document.getElementById("accident_work_id") != null) {
         document.getElementById("accident_work_id").addEventListener("change", (event) => {
+            if (event.target.value == "") {
+                return;
+            }
             fetch(document.getElementById("audiences_gaps_accident_path").value.replace(":work_id", event.target.value), {
                 "Accept": "text/vnd.turbo-stream.html",
                 method: 'GET'
