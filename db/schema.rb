@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_12_080054) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_01_055122) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -318,6 +318,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_12_080054) do
     t.decimal "discount_numor", precision: 7, comment: "割引率(分子)"
     t.decimal "discount_denom", precision: 7, comment: "割引率(分母)"
     t.boolean "cost_flag", default: false, null: false, comment: "支払時原価フラグ"
+  end
+
+  create_table "face_descriptors", comment: "顔認証", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "ユーザーID"
+    t.json "descriptor", null: false, comment: "顔特徴量"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_face_descriptors_on_user_id"
   end
 
   create_table "fixes", primary_key: ["term", "fixed_at"], comment: "確定データ", force: :cascade do |t|
@@ -1086,4 +1094,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_12_080054) do
     t.boolean "chemical_group_flag", default: false, null: false, comment: "薬剤グループフラグ"
   end
 
+  add_foreign_key "face_descriptors", "users"
 end

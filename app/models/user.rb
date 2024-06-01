@@ -43,6 +43,7 @@ class User < ApplicationRecord
   has_many :user_words, dependent: :destroy
   has_many :user_topics, dependent: :destroy
   has_many :topics, through: :user_topics
+  has_many :face_descriptors, dependent: :destroy
 
   accepts_nested_attributes_for :user_words
 
