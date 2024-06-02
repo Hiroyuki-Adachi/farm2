@@ -2,18 +2,18 @@ class Users::FacesController < ApplicationController
   def new; end
 
   def create
-    # return render json: { status: 'Enough Faces' }, status: :ok if current_user.descriptor_enough?
-
     face_descriptor = params[:face_descriptor]
-    if face_descriptor.present?
-      if current_user.same_face?(face_descriptor, 0.4)
-        render json: { status: 'Same Face' }, status: :ok
+    return render json: { message: 'No face descriptors provided.' }, status: :unprocessable_entity if face_descriptor.blank?
+    user = User.find_similar_face(current_user.organization_id, face_descriptor, 0.4)
+    if user.present?
+      if user.id == current_user.id
+        return render json: { message: 'あなたの顔は登録済みです。' }, status: :already_reported
       else
-        current_user.face_descriptors.create(descriptor: face_descriptor)
-        render json: { status: 'Faces added successfully' }, status: :ok
+        return render json: { message: "あなたを#{user.worker.name}さんと認識しています。" }, status: :conflict
       end
-    else
-      render json: { errors: 'No face descriptors provided' }, status: :unprocessable_entity
     end
+
+    current_user.face_descriptors.create(descriptor: face_descriptor)
+    render json: { message: '新たに顔情報を登録しました。' }, status: :ok
   end
 end
