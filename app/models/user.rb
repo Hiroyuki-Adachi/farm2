@@ -33,6 +33,8 @@
 
 class User < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+  MAX_DESCRIPTOR_SIZE = 20
+
   before_create :set_token
 
   belongs_to :worker
@@ -88,6 +90,23 @@ class User < ApplicationRecord
 
   def checkable?
     admin? || manager? || checker?
+  end
+
+  def descriptor_enough?
+    face_descriptors.size >= MAX_DESCRIPTOR_SIZE
+  end
+
+  def same_face?(descriptor, threshold = 0.6)
+    user = User.find_similar_face(self.organization_id, descriptor, threshold)
+    return false if user.nil?
+    return user.id == self.id
+  end
+
+  def self.find_similar_face(organization_id, descriptor, threshold = 0.6)
+    FaceDescriptor.by_organization(organization_id).find_each do |face_descriptor|
+      return face_descriptor.user if face_descriptor.distance_from(descriptor) < threshold
+    end
+    return nil
   end
 
   private

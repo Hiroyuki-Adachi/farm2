@@ -124,6 +124,7 @@
     <%= link_to '対象年度変更', edit_term_menu_path(current_system), {class: "dropdown-item ms-2", data: {controller: :menu, actions: [:edit_term]}} %>
     <%= link_to 'QRコード', users_qr_index_path, {class: "dropdown-item ms-2", data: {controller: :qr}} %>
     <%= link_to '検索ワード設定', new_users_word_path, {class: "dropdown-item ms-2", data: {controller: :words}} %>
+    <%= link_to '顔登録', new_users_face_path, {class: "dropdown-item ms-2", data: {controller: :faces}} %>
     <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item ms-2", data: {controller: :users, actions: [:edit]}} %>
   </div>
 </nav>

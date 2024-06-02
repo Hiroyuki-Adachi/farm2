@@ -18,4 +18,14 @@
 #
 class FaceDescriptor < ApplicationRecord
   belongs_to :user
+
+  scope :by_organization, ->(organization_id) { joins(user: :organization).where(organizations: { id: organization_id }) }
+
+  def distance_from(descriptor1)
+    FaceDescriptor.calculate_distance(self.descriptor, descriptor1)
+  end
+
+  def self.calculate_distance(descriptor1, descriptor2)
+    Math.sqrt(descriptor1.zip(descriptor2).sum { |a, b| (a[1].to_f - b[1].to_f)**2 })
+  end
 end
