@@ -1,4 +1,3 @@
-version: "3.9"
 name: "farm2"
 services:
   db:
@@ -100,6 +99,19 @@ services:
     environment:
       PORT: 3333
       CONNECTION_TIMEOUT: 600000
+
+  https-portal:
+    container_name: farm2_https
+    image: steveltn/https-portal:1
+    ports:
+      - '80:80'
+      - '443:443'
+    links:
+      - web
+    restart: always
+    environment:
+      STAGE: local
+      DOMAINS: 'my-app.local -> http://web:3000'
 
 volumes:
   dbdata:
