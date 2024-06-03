@@ -8,10 +8,10 @@ let captureInterval;
 const faceDescriptors = [];
 let stream;
 
-async function captureFace() {
+const captureFace = async () => {
     const detection = await faceapi.detectSingleFace(video).withFaceLandmarks().withFaceDescriptor();
     if (detection) {
-        outputLog('顔情報を取得しました。');
+        outputLog('顔を認識しました。');
 
         // サーバーに顔情報を送信
         const response = await fetch(document.getElementById("face_create_path").value, {
@@ -24,39 +24,39 @@ async function captureFace() {
         }).then((result) => {
             return result.json();
         }).then((data) => {
-            stopCamera();
-            outputLog(data.message);
+            outputLog(data.message, 'success');
         });
     } else {
-        outputLog('顔情報を取得できませんでした。');
+        outputLog('顔を認識できませんでした。', 'danger');
     }
 }
 
-async function startCapture() {
+const startCapture = async () => {
     startCaptureButton.disabled = true;
     if (video.srcObject === null) {
         stream = await navigator.mediaDevices.getUserMedia({ video: {} });
         video.srcObject = stream;
+        outputLog('カメラを起動しました。', 'primary');
     }
     logDiv.innerHTML = '';
     captureInterval = setInterval(captureFace, 2000); 
-    outputLog('顔情報の記録を開始します。');
+    outputLog('顔情報の記録を開始します。', 'primary');
 }
 
-function stopCamera() {
+const stopCamera = () => {
     clearInterval(captureInterval);
     if (stream) {
         const tracks = stream.getTracks();
         tracks.forEach(track => track.stop());
         video.srcObject = null;
-        outputLog('カメラを停止しました。');
+        outputLog('カメラを停止しました。', 'primary');
     }
     startCaptureButton.disabled = false;
 }
 
-function outputLog(message) {
+const outputLog = (message, color = 'dark') => {
     const timestamp = new Date().toLocaleTimeString();
-    logDiv.innerHTML += `<p>[${timestamp}] ${message}</p>`;
+    logDiv.innerHTML += `<p class="text-${color} fs-5 my-1">[${timestamp}] ${message}</p>`;
     logDiv.scrollTop = logDiv.scrollHeight; // 最新のログにスクロール
 }
 

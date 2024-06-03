@@ -4,8 +4,8 @@
     <video id="face" class="border mb-3" width="720" height="560" autoplay muted></video>
   </div>
   <div class="col-md-4">
-    <div>データ:<%= current_user.face_descriptors.size %>件</div>
-    <div id="log" readonly="readonly"></div>
+    <h3>データ:<%= current_user.face_descriptors.size %>件</h3>
+    <div id="log" readonly="readonly" style="height: 560px; overflow-y: scroll;"></div>
   </div>
 </div>
 <div class="btn-toolbar">
