@@ -152,7 +152,7 @@ GEM
     icalendar (2.10.1)
       ice_cube (~> 0.16)
     ice_cube (0.16.4)
-    importmap-rails (2.0.1)
+    importmap-rails (1.2.3)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
@@ -390,7 +390,7 @@ DEPENDENCIES
   holiday_jp
   i18n-js (~> 3)
   icalendar
-  importmap-rails
+  importmap-rails (~> 1.2)
   jbuilder (~> 2.0)
   kaminari
   listen
