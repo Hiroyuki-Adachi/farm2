@@ -24,7 +24,7 @@ const captureFace = async () => {
         }).then((result) => {
             return result.json();
         }).then((data) => {
-            outputLog(data.message, 'success');
+            outputLog(data.message, data.status);
         });
     } else {
         outputLog('顔を認識できませんでした。', 'danger');

@@ -390,7 +390,7 @@ DEPENDENCIES
   holiday_jp
   i18n-js (~> 3)
   icalendar
-  importmap-rails (= 1.2.3)
+  importmap-rails (~> 1.2)
   jbuilder (~> 2.0)
   kaminari
   listen
