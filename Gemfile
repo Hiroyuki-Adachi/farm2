@@ -10,7 +10,7 @@ gem 'delayed_job_active_record'
 # CSSBundling provides a way to bundle CSS files in Rails applications.
 gem "cssbundling-rails"
 # importmap-rails provides a way to bundle JavaScript files in Rails applications.
-gem 'importmap-rails'
+gem 'importmap-rails', "~> 1.2"
 # propshaft provides a way to bundle JavaScript files in Rails applications.
 gem 'propshaft'
 
