@@ -7,12 +7,12 @@ class Users::MailsControllerTest < ActionController::TestCase
     setup_ip
   end
 
-  test "IPアドレス設定(表示)" do
+  test "メールアドレス設定(表示)" do
     get :new
     assert_response :success
   end
 
-  test "IPアドレス設定(登録)" do
+  test "メールアドレス設定(登録)" do
     assert_emails 1 do
       post :create, params: { user: { mail: 'new_email@example.com' } }
     end
