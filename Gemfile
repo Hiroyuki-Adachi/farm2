@@ -97,4 +97,6 @@ group :test do
   gem 'capybara'
   # cuprite is a Capybara driver for headless Chrome/Chromium
   gem 'cuprite'
+  # minitest is a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking.
+  gem 'mocha'
 end

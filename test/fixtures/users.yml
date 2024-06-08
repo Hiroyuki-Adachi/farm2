@@ -38,6 +38,8 @@ users1:
   term: 2015
   calendar_term: 2014
   token: 2e51d555-9cc2-4588-8326-a4dedddd5349
+  mail: "user1@example.com"
+  mail_confirmed_at: "2015-01-01 00:00:00"
 
 user_manager:
   id: 2

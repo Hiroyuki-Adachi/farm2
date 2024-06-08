@@ -69,6 +69,7 @@ class ApplicationController < ActionController::Base
       to_error_path
     elsif session[:user_id].nil? && controller_name != "sessions"
       redirect_to root_path
+      return
     end
   end
 
