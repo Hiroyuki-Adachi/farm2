@@ -72,6 +72,11 @@ gem 'puma'
 # Rubyzip is a ruby library for reading and writing zip files.
 gem 'rubyzip'
 
+# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible.
+gem 'omniauth-google-oauth2'
+# Google API client library
+gem 'google-api-client', '~> 0.53.0'
+
 group :development do
   # listen to file modifications
   gem 'listen'
