@@ -184,14 +184,6 @@ class WorksController < ApplicationController
     session[:work_search] = @work_search
   end
 
-  def set_broccoli
-    if broccoli?(@work)
-      @sizes = BroccoliSize.usual
-      @ranks = BroccoliRank.usual
-      @broccoli = @work.broccoli || WorkBroccoli.new
-    end
-  end
-
   def set_work_types
     @work_types = WorkType.by_term(@term).indexes
     @work_kinds = WorkKind.usual
