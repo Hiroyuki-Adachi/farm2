@@ -23,9 +23,11 @@
 #
 # Indexes
 #
-#  index_users_on_login_name  (login_name) UNIQUE
-#  index_users_on_worker_id   (worker_id) UNIQUE
-#  ix_users_token             (token) UNIQUE
+#  index_users_on_login_name            (login_name) UNIQUE
+#  index_users_on_worker_id             (worker_id) UNIQUE
+#  ix_users_on_mail                     (mail) UNIQUE WHERE ((mail)::text <> ''::text)
+#  ix_users_on_mail_confirmation_token  (mail_confirmation_token) UNIQUE WHERE (mail_confirmation_token IS NOT NULL)
+#  ix_users_token                       (token) UNIQUE
 #
 
 class User < ApplicationRecord
@@ -83,6 +85,13 @@ class User < ApplicationRecord
     self.mail_confirmed_at.present?
   end
 
+  def mail_confirm!(mail_confirmation_token)
+    return false if self.mail_confirmation_token != mail_confirmation_token
+    return false if self.mail_confirmation_expired_at < Time.current
+
+    self.update(mail_confirmed_at: Time.current)
+  end
+
   private
 
   def set_token
@@ -90,8 +99,8 @@ class User < ApplicationRecord
   end
 
   def clear_mail_fields
-    self.mail_confirmation_token = nil
-    self.mail_confirmation_expired_at = nil
+    self.mail_confirmation_token = SecureRandom.uuid
+    self.mail_confirmation_expired_at = 1.day.from_now
     self.mail_confirmed_at = nil
   end
 

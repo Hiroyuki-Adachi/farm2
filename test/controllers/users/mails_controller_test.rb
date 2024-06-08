@@ -1,7 +1,7 @@
 require "test_helper"
 
 class Users::MailsControllerTest < ActionController::TestCase
-  include ActionMailer::TestHelper  # ActionMailerのヘルパーをインクルード
+  include ActionMailer::TestHelper # ActionMailerのヘルパーをインクルード
 
   setup do
     setup_ip

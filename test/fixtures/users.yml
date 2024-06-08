@@ -23,9 +23,11 @@
 #
 # Indexes
 #
-#  index_users_on_login_name  (login_name) UNIQUE
-#  index_users_on_worker_id   (worker_id) UNIQUE
-#  ix_users_token             (token) UNIQUE
+#  index_users_on_login_name            (login_name) UNIQUE
+#  index_users_on_worker_id             (worker_id) UNIQUE
+#  ix_users_on_mail                     (mail) UNIQUE WHERE ((mail)::text <> ''::text)
+#  ix_users_on_mail_confirmation_token  (mail_confirmation_token) UNIQUE WHERE (mail_confirmation_token IS NOT NULL)
+#  ix_users_token                       (token) UNIQUE
 #
 
 users1:
