@@ -6,9 +6,7 @@ require 'fileutils'
 OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
 APPLICATION_NAME = '作業日報管理システム'.freeze
 CREDENTIALS_PATH = Rails.root.join('config/credentials.json').freeze
-TOKEN_PATH = Rails.root.join('tmp/token.yaml').freeze
-#CREDENTIALS_PATH = './config/credentials.json'.freeze
-#TOKEN_PATH = './tmp/token.yaml'.freeze
+TOKEN_PATH = Rails.root.join('config/token.yaml').freeze
 SCOPE = Google::Apis::GmailV1::AUTH_GMAIL_SEND
 
 class GmailAuthorizer
@@ -27,4 +25,3 @@ class GmailAuthorizer
     credentials
   end
 end
-# GmailAuthorizer.authorize

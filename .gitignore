@@ -71,3 +71,4 @@ yarn-debug.log*
 !/app/assets/builds/.keep
 .env
 /config/credentials.json
+/config/token.yaml
