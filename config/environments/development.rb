@@ -56,6 +56,8 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.logger = ActiveSupport::TaggedLogging.new(Logger.new(Rails.root.join('log/mailer.log')))
+  config.action_mailer.logger.level = Logger::DEBUG
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
