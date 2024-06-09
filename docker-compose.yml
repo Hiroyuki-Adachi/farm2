@@ -1,6 +1,8 @@
 version: "3.9"
+name: "farm2"
 services:
   db:
+    container_name: farm2_db
     image: postgres:13
     volumes:
       - type: volume
@@ -22,10 +24,11 @@ services:
       retries: 3
 
   web:
+    container_name: farm2_web
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: bash -c "rdbg -n --open --host 0.0.0.0 --port 12345 -c -- bin/rails s -p 3000 -b 0.0.0.0"
     tty: true
     stdin_open: true
     environment:
@@ -53,6 +56,7 @@ services:
         condition: service_healthy
 
   worker:
+    container_name: farm2_worker
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -71,6 +75,7 @@ services:
       retries: 3
 
   sass:
+    container_name: farm2_sass
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -86,6 +91,7 @@ services:
       retries: 3
 
   chrome:
+    container_name: farm2_chrome
     image: browserless/chrome:latest
     ports:
       - "3333:3333"
