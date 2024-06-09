@@ -65,8 +65,8 @@ document.addEventListener('turbo:load', () => {
 
     document.querySelectorAll("#navbarFarm2 a.farm2-navi").forEach((element) => {
         element.addEventListener("click", (event) => {
-            myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${event.target.id}"]`).innerHTML;
-            myMenu.querySelector("span").remove();
+            console.log(`click_1:${event.target.id}`);
+            myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${event.target.id}"] div.navbar`).innerHTML;
             myMenu.dataset.id = event.target.id;
             myMenu.style.display = "block";
 
@@ -83,6 +83,7 @@ document.addEventListener('turbo:load', () => {
 
     window.addEventListener("click", (event) => {
         if (!event.target.matches('.nav-link') && (myMenu != null)) {
+            console.log(`click_2:${event.target.id}`);
             myMenu.style.display = "none";
             event.stopPropagation();
         }
@@ -135,7 +136,7 @@ document.addEventListener('turbo:load', () => {
 });
 
 function activeBar(element) {
-    const navdiv = element.closest("div");
+    const navdiv = element.closest("div[aria-labelledby]");
     element.style.backgroundColor = "White";
     navdiv.style.display = "block";
     document.getElementById(navdiv.getAttribute("aria-labelledby")).classList.add("active");
