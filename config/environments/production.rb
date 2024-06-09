@@ -79,10 +79,6 @@ Rails.application.configure do
     address: 'smtp.gmail.com',
     port: 587,
     user_name: ENV['MAIL_ADDRESS'],
-    password: lambda {
-      credentials = GmailAuthorizer.authorize
-      credentials.access_token
-    }.call,
     authentication: :xoauth2,
     enable_starttls_auto: true
   }

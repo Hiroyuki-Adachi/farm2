@@ -25,6 +25,10 @@ class GmailAuthorizer
       code = gets.strip
       credentials = authorizer.get_and_store_credentials_from_code(user_id: user_id, code: code, base_url: OOB_URI)
     end
+    if credentials.expired?
+      credentials.refresh!
+      puts "New Access Token: #{credentials.access_token}"
+    end
     credentials
   end
 end
