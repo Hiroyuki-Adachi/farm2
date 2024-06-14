@@ -45,7 +45,7 @@
             <%= link_to '管理', "#", {class: "nav-link farm2-navi", id: :navbar_management} %>
           </li>
           <li class="nav-item">
-            <%= link_to 'ログアウト', sessions_path, {class: "nav-link"} %>
+            <%= link_to 'ログアウト', sessions_path, {class: "nav-link", data: {"turbo-prefetch": false}} %>
           </li>
         </ul>
         <span class="navbar-text ml-auto"><%= current_name %>さん</span>
