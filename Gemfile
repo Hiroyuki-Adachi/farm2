@@ -72,10 +72,10 @@ gem 'puma'
 # Rubyzip is a ruby library for reading and writing zip files.
 gem 'rubyzip'
 
-# Google API client library
-gem 'google-api-client', '~> 0.53.0'
-# Google Auth library
-gem 'googleauth'
+# omniauth is a generalized Rack framework for multiple-provider authentication.
+gem 'omniauth'
+# OmniAuth strategy for Google OAuth2
+gem 'omniauth-google-oauth2'
 
 group :development do
   # listen to file modifications

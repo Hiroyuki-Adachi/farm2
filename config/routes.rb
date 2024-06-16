@@ -207,5 +207,9 @@ Rails.application.routes.draw do
   resources :machine_results, only: [:index]
   resources :work_chemicals, only: [:index]
 
+  get 'auth/:provider/callback', to: 'auth#create'
+  get 'auth/failure', to: 'auth#failure'
+  post 'auth/:provider/callback', to: 'auth#create'
+
   root controller: :sessions, action: :new
 end

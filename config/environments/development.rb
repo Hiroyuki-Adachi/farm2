@@ -1,5 +1,4 @@
 require "active_support/core_ext/integer/time"
-require Rails.root.join('lib/gmail_authorizer')
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -47,9 +46,27 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
     port: 587,
-    user_name: ENV['MAIL_ADDRESS'],
+    domain: 'gmail.com',
     authentication: :xoauth2,
-    enable_starttls_auto: true
+    user_name: ENV.fetch('MAIL_ADDRESS'),
+    oauth2_token: lambda {
+      client = OAuth2::Client.new(
+        ENV.fetch('GOOGLE_CLIENT_ID'),
+        ENV.fetch('GOOGLE_CLIENT_SECRET'),
+        site: 'https://accounts.google.com',
+        authorize_url: '/o/oauth2/auth',
+        token_url: '/o/oauth2/token'
+      )
+  
+      refresh_token = AuthController.read_refresh_token
+  
+      token = OAuth2::AccessToken.from_hash(client, {
+        refresh_token: refresh_token,
+        expires_at: Time.now.to_i + 3600
+      })
+  
+      token.refresh!.token
+    }
   }
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.logger = ActiveSupport::TaggedLogging.new(Logger.new(Rails.root.join('log/mailer.log')))
