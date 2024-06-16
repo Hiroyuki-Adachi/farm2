@@ -48,25 +48,7 @@ Rails.application.configure do
     port: 587,
     domain: 'gmail.com',
     authentication: :xoauth2,
-    user_name: ENV.fetch('MAIL_ADDRESS'),
-    oauth2_token: lambda {
-      client = OAuth2::Client.new(
-        ENV.fetch('GOOGLE_CLIENT_ID'),
-        ENV.fetch('GOOGLE_CLIENT_SECRET'),
-        site: 'https://accounts.google.com',
-        authorize_url: '/o/oauth2/auth',
-        token_url: '/o/oauth2/token'
-      )
-  
-      refresh_token = AuthController.read_refresh_token
-  
-      token = OAuth2::AccessToken.from_hash(client, {
-        refresh_token: refresh_token,
-        expires_at: Time.now.to_i + 3600
-      })
-  
-      token.refresh!.token
-    }
+    user_name: ENV.fetch('MAIL_ADDRESS')
   }
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.logger = ActiveSupport::TaggedLogging.new(Logger.new(Rails.root.join('log/mailer.log')))
