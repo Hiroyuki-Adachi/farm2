@@ -28,3 +28,6 @@
     </div>
   </div>
 </div>
+<% content_for :head do %>
+<%= javascript_include_tag 'controllers/service_worker_controller' %>
+<% end %>
