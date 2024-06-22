@@ -6,7 +6,7 @@
   <tbody>
   <% land_id = 0 %>
   <% @lands.each do |land, results| %>
-    <tr class="<%= land.manager_id == land.owner_id ? "" : "manage" %>">
+    <%= tag.tr class: class_names(manage: land.manager_id == land.owner_id) do %>
       <td rowspan="<%= results.count %>"><%= land.place %></td>
       <td style="text-align:right;" rowspan="<%= results.count %>"><%= sprintf("%.1f", land.area) %></td>
 
@@ -22,7 +22,7 @@
         <% end %>
         <% work_type_name = land_cost&.work_type&.name %>
       <% end %>
-    </tr>
+    <% end %>
   <% end %>
   </tbody>
   </table>
