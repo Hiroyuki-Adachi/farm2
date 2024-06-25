@@ -63,6 +63,12 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  # Raise exceptions for disallowed deprecations.
+  config.assets.debug = true
+
+  # Configure SSL options to enable HSTS with subdomains. Preload is disabled by default.
+  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
