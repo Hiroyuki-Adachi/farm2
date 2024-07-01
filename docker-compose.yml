@@ -47,6 +47,7 @@ services:
         target: /farm2/log
     ports:
       - "3000:3000"
+      - "12345:12345"
     depends_on:
       db:
         condition: service_healthy
