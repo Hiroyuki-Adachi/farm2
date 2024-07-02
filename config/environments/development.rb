@@ -60,15 +60,6 @@ Rails.application.configure do
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
 
-  # Suppress logger output for asset requests.
-  config.assets.quiet = true
-
-  # Raise exceptions for disallowed deprecations.
-  config.assets.debug = true
-
-  # Configure SSL options to enable HSTS with subdomains. Preload is disabled by default.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
