@@ -71,7 +71,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: yarn build:css --watch
+    command: yarn watch:css
     volumes:
       - type: bind
         source: .
