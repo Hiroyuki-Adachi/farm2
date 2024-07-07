@@ -31,9 +31,8 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install yarn
 
 # sass をインストール
-RUN yarn global add sass postcss postcss-cli autoprefixer
+RUN yarn global add sass postcss postcss-cli autoprefixer nodemon
 RUN chmod +x /usr/local/share/.config/yarn/global/node_modules/.bin/sass
-RUN yarn global add nodemon
 
 # Rustのインストール
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
