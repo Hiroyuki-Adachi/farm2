@@ -1,0 +1,2 @@
+var a={};const isFullwidthCodePoint=a=>!Number.isNaN(a)&&(a>=4352&&(a<=4447||9001===a||9002===a||11904<=a&&a<=12871&&12351!==a||12880<=a&&a<=19903||19968<=a&&a<=42182||43360<=a&&a<=43388||44032<=a&&a<=55203||63744<=a&&a<=64255||65040<=a&&a<=65049||65072<=a&&a<=65131||65281<=a&&a<=65376||65504<=a&&a<=65510||110592<=a&&a<=110593||127488<=a&&a<=127569||131072<=a&&a<=262141));a=isFullwidthCodePoint;a.default=isFullwidthCodePoint;var e=a;export default e;
+
