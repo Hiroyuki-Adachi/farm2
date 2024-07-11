@@ -39,7 +39,7 @@ const startCapture = async () => {
         outputLog('カメラを起動しました。', 'primary');
     }
     logDiv.innerHTML = '';
-    captureInterval = setInterval(captureFace, 2000); 
+    captureInterval = setInterval(captureFace, 2000);
     outputLog('顔情報の記録を開始します。', 'primary');
 }
 
@@ -61,7 +61,7 @@ const outputLog = (message, color = 'dark') => {
 }
 
 window.addEventListener('turbo:load', async () => {
-    const MODEL_URL = 'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights';
+    const MODEL_URL = '/models';
     await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL);
     await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
     await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);

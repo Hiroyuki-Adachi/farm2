@@ -1,2 +1,0 @@
-var t={};var r="undefined"!=typeof crypto&&crypto.getRandomValues&&crypto.getRandomValues.bind(crypto)||"undefined"!=typeof msCrypto&&"function"==typeof window.msCrypto.getRandomValues&&msCrypto.getRandomValues.bind(msCrypto);if(r){var e=new Uint8Array(16);t=function whatwgRNG(){r(e);return e}}else{var n=new Array(16);t=function mathRNG(){for(var t,r=0;r<16;r++){0===(3&r)&&(t=4294967296*Math.random());n[r]=t>>>((3&r)<<3)&255}return n}}var a=t;export{a as default};
-

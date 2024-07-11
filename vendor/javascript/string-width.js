@@ -1,2 +1,0 @@
-import*as t from"strip-ansi";import*as e from"is-fullwidth-code-point";import*as r from"emoji-regex";var a="default"in t?t.default:t;var o="default"in e?e.default:e;var n="default"in r?r.default:r;var f={};const i=a;const l=o;const s=n;const stringWidth=t=>{if("string"!==typeof t||0===t.length)return 0;t=i(t);if(0===t.length)return 0;t=t.replace(s(),"  ");let e=0;for(let r=0;r<t.length;r++){const a=t.codePointAt(r);if(!(a<=31||a>=127&&a<=159)&&!(a>=768&&a<=879)){a>65535&&r++;e+=l(a)?2:1}}return e};f=stringWidth;f.default=stringWidth;var u=f;export{u as default};
-
