@@ -39,6 +39,7 @@ class User < ApplicationRecord
   has_many :user_topics, dependent: :destroy
   has_many :topics, through: :user_topics
   has_many :face_descriptors, dependent: :destroy
+  has_one :user_token, dependent: :destroy
 
   accepts_nested_attributes_for :user_words
 
@@ -100,6 +101,14 @@ class User < ApplicationRecord
       return face_descriptor.user if face_descriptor.distance_from(descriptor) < threshold
     end
     return nil
+  end
+  
+  def regenerate_token!
+    if user_token
+      user_token.update!(token: nil)
+    else
+      create_user_token!
+    end
   end
 
   private

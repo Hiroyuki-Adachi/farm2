@@ -1,0 +1,25 @@
+# == Schema Information
+#
+# Table name: user_tokens
+#
+#  id                    :bigint           not null, primary key
+#  expires_at(有効期限)  :datetime         not null
+#  token(トークン(UUID)) :string(36)       default(""), not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  user_id(利用者ID)     :integer          not null
+#
+# Indexes
+#
+#  index_user_tokens_on_user_id  (user_id) UNIQUE
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+user_token1:
+  user_id: 1
+  token: f9bc8121-9d68-4063-bdf8-68b807da3934
+  expires_at: 2020-01-01 00:00:00
