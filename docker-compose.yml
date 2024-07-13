@@ -94,7 +94,6 @@ services:
       - '443:443'
     links:
       - web
-    restart: always
     environment:
       STAGE: local
       DOMAINS: 'my-app.local -> http://web:3000'
