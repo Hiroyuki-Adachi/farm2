@@ -33,6 +33,10 @@ Rails.application.routes.draw do
       end
     end
   end
+  namespace :sessions do
+    resources :faces, only: [:create]
+    resources :qr, only: [:create]
+  end
   resources :zgis, only: [:new, :create]
   resources :work_seedlings, only: [:index]
   resources :owned_rices, only: [:index, :edit, :update]
