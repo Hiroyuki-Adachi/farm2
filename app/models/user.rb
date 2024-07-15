@@ -97,10 +97,23 @@ class User < ApplicationRecord
   end
 
   def self.find_similar_face(organization_id, descriptor, threshold = 0.6)
-    FaceDescriptor.by_organization(organization_id).find_each do |face_descriptor|
-      return face_descriptor.user if face_descriptor.distance_from(descriptor) < threshold
+    if organization_id.nil?
+      Organization.find_each do |organization|
+        face_descriptor = find_face_in_organization(organization.id, descriptor, threshold)
+        return face_descriptor.user if face_descriptor
+      end
+    else
+      face_descriptor = find_face_in_organization(organization_id, descriptor, threshold)
+      return face_descriptor.user if face_descriptor
     end
-    return nil
+    nil
+  end
+
+  def self.find_face_in_organization(organization_id, descriptor, threshold)
+    FaceDescriptor.by_organization(organization_id).find_each do |face_descriptor|
+      return face_descriptor if face_descriptor.distance_from(descriptor) < threshold
+    end
+    nil
   end
   
   def regenerate_token!
