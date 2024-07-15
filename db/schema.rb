@@ -322,7 +322,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_19_084005) do
 
   create_table "face_descriptors", comment: "顔認証", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザーID"
-    t.json "descriptor", null: false, comment: "顔特徴量"
+    t.float "descriptor", null: false, comment: "顔特徴量", array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_face_descriptors_on_user_id"

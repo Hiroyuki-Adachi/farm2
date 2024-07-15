@@ -2,7 +2,7 @@ class Users::FacesController < ApplicationController
   def new; end
 
   def create
-    face_descriptor = params[:face_descriptor]
+    face_descriptor = FaceDescriptor.param_to_array(params[:face_descriptor])
     return render json: { message: 'No face descriptors provided.', status: :danger }, status: :unprocessable_entity if face_descriptor.blank?
 
     organization_id = current_organization.id

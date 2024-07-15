@@ -26,6 +26,10 @@ class FaceDescriptor < ApplicationRecord
   end
 
   def self.calculate_distance(descriptor1, descriptor2)
-    Math.sqrt(descriptor1.zip(descriptor2).sum { |a, b| (a[1].to_f - b[1].to_f)**2 })
+    Math.sqrt(descriptor1.zip(descriptor2).sum { |a, b| (a - b)**2 })
+  end
+
+  def self.param_to_array(param)
+    param.permit!.to_h.sort_by { |key, value| key.to_i }.map { |key, value| value.to_f }
   end
 end
