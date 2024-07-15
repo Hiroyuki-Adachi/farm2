@@ -7,7 +7,9 @@ class Sessions::FacesControllerTest < ActionController::TestCase
   end
 
   test "Tablet(顔認証)" do
+    session[:user_id] = nil
     post :create, params: {face_descriptor: @face.descriptor.each_with_index.to_h { |value, index| [index.to_s, value] } }
     assert_response :success
+    assert_equal session[:user_id], @face.user_id
   end
 end
