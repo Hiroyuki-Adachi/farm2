@@ -1,11 +1,7 @@
 class TabletsController < ApplicationController
   layout 'tablet'
 
-  def index
-    @sections = Section.with_users.usual
-    @section_id = (params[:section_id] || @sections.first&.id).to_i
-    @users = User.by_section(@section_id).tabletable
-  end
+  def index; end
 
   private
 

@@ -8,6 +8,7 @@ document.addEventListener('turbo:load', async () => {
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
+    const menuUrl = document.getElementById('tablets_menu_path').value;
 
     const qrScanner = new QrScanner(video, result => handleQRCode(result), {
         highlightScanRegion: true,
@@ -19,7 +20,7 @@ document.addEventListener('turbo:load', async () => {
     await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
     await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
 
-
+    // カメラSetup
     navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
             video.srcObject = stream;
@@ -37,6 +38,7 @@ document.addEventListener('turbo:load', async () => {
         }, 1000); // 1秒ごとに処理を実行
     }
 
+    // QRコード認証処理
     async function handleQRCode(result) {
         fetch(document.getElementById("sessions_qr_path").value, {
             method: 'POST',
@@ -50,7 +52,7 @@ document.addEventListener('turbo:load', async () => {
             .then(data => {
                 if (data.success) {
                     // 認証成功時にメニュー画面へ遷移
-                    Turbo.visit('/menu'); // Turboを使用して遷移
+                    Turbo.visit(menuUrl);
                 } else {
                     // 認証失敗時の処理
                     console.log(data.message);
@@ -61,6 +63,7 @@ document.addEventListener('turbo:load', async () => {
             });
     }
 
+    // 顔認証処理
     async function scanFace() {
         const detection = await faceapi.detectSingleFace(video).withFaceLandmarks().withFaceDescriptor();
 
@@ -80,7 +83,7 @@ document.addEventListener('turbo:load', async () => {
                 .then(data => {
                     if (data.success) {
                         // 認証成功時にメニュー画面へ遷移
-                        Turbo.visit('/menu'); // Turboを使用して遷移
+                        Turbo.visit(menuUrl); 
                     } else {
                         // 認証失敗時の処理
                         console.log(data.message);

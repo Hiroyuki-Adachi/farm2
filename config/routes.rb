@@ -212,6 +212,9 @@ Rails.application.routes.draw do
   resources :work_chemicals, only: [:index]
 
   resources :tablets, only: [:index]
+  namespace :tablets do
+    resources :menu, only: [:index]
+  end
 
   root controller: :sessions, action: :new
 end
