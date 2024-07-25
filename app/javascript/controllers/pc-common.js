@@ -25,7 +25,7 @@ Turbo.setConfirmMethod((message, element) => {
     document.getElementById("popup_confirm_message").innerText = message;
     const popupForm = new Modal(document.getElementById("popup_confirm"));
     popupForm.show();
-  
+
     return new Promise((resolve, reject) => {
         popupForm._element.querySelectorAll(".confirm-button").forEach((button) => {
             button.addEventListener("click", () => {
@@ -34,7 +34,7 @@ Turbo.setConfirmMethod((message, element) => {
                 }
                 resolve(button.value == "true");
                 popupForm.hide();
-            }, {once: true});
+            }, { once: true });
         });
     });
 });
@@ -49,13 +49,13 @@ document.addEventListener('turbo:load', () => {
     if (currentController != null || currentAction != null) {
         const controllerValue = currentController.value;
         const actionValue = currentAction.value;
-    
-        if(mySidebar != null && (controllerValue != "menu" || actionValue != "index")) {
+
+        if (mySidebar != null && (controllerValue != "menu" || actionValue != "index")) {
             mySidebar.querySelectorAll("a[data-controller]").forEach((element) => {
-                if(element.dataset.controller == controllerValue) {
-                    if(mySidebar.querySelectorAll(`a[data-controller="${controllerValue}"]`).length <= 1) {
+                if (element.dataset.controller == controllerValue) {
+                    if (mySidebar.querySelectorAll(`a[data-controller="${controllerValue}"]`).length <= 1) {
                         activeBar(element);
-                    } else if(JSON.parse(element.dataset.actions).indexOf(actionValue) >= 0) {
+                    } else if (JSON.parse(element.dataset.actions).indexOf(actionValue) >= 0) {
                         activeBar(element);
                     }
                 }
@@ -65,7 +65,6 @@ document.addEventListener('turbo:load', () => {
 
     document.querySelectorAll("#navbarFarm2 a.farm2-navi").forEach((element) => {
         element.addEventListener("click", (event) => {
-            console.log(`click_1:${event.target.id}`);
             myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${event.target.id}"] div.navbar`).innerHTML;
             myMenu.dataset.id = event.target.id;
             myMenu.style.display = "block";
@@ -75,7 +74,7 @@ document.addEventListener('turbo:load', () => {
             do {
                 left += elm.offsetLeft || 0;
                 elm = elm.offsetParent;
-            } while(elm);
+            } while (elm);
             myMenu.style.left = left + "px";
             event.stopPropagation();
         });
@@ -83,7 +82,6 @@ document.addEventListener('turbo:load', () => {
 
     window.addEventListener("click", (event) => {
         if (!event.target.matches('.nav-link') && (myMenu != null)) {
-            console.log(`click_2:${event.target.id}`);
             myMenu.style.display = "none";
             event.stopPropagation();
         }
@@ -142,8 +140,7 @@ function activeBar(element) {
     document.getElementById(navdiv.getAttribute("aria-labelledby")).classList.add("active");
 }
 
-function loadingStart(message)
-{
+function loadingStart(message) {
     if (document.getElementById("loading_message") != null) {
         document.getElementById("loading_message").innerText = message;
     }
@@ -152,8 +149,7 @@ function loadingStart(message)
     }
 }
 
-function loadingEnd()
-{
+function loadingEnd() {
     if (document.getElementById("loading") != null) {
         document.getElementById("loading").classList.add("d-none");
     }
