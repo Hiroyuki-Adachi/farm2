@@ -1,1 +1,15 @@
 <h1>利用者：<%= current_user.worker.name %>さん</h1>
+
+
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="menu">
+      <ul class="list-unstyled text-center">
+        <li>
+          <a class="btn btn-danger btn-lg d-flex align-items-center justify-content-center" href="<%= tablets_path %>" data-method="delete" rel="nofollow">
+            <img src="/images/tablets/logout.png" alt="Logout" style="height: 24px; margin-right: 8px;">
+            ログアウト
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>

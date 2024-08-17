@@ -1,7 +1,9 @@
 class TabletsController < ApplicationController
   layout 'tablet'
 
-  def index; end
+  def index
+    log_out
+  end
 
   private
 
