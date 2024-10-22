@@ -1,23 +1,31 @@
 # ベースとなるイメージを指定
 FROM ubuntu:20.04
 
-ARG SECRET_KEY_BASE
-ENV SECRET_KEY_BASE=${SECRET_KEY_BASE}
-ENV DEBIAN_FRONTEND=noninteractive
-
 # タイムゾーンを設定（これをしないと、ビルド時にタイムゾーンの設定を求められる）
-ENV TZ=Asia/Tokyo
+ENV DEBIAN_FRONTEND=noninteractive \
+    TZ=Asia/Tokyo \
+    LANG=C.UTF-8 \
+    RUBY_VERSION=3.3.5 \
+    POSTGRES_USER=postgres \
+    POSTGRES_PASSWORD=postgres \
+    POSTGRES_DB=farm2_production \
+    PGDATA=/var/lib/postgresql/data
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ENV LANG C.UTF-8
-ENV RUBY_VERSION 3.3.4
+# PostgreSQLの公式リポジトリを追加
+RUN apt-get update && apt-get install -y wget gnupg lsb-release && \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 # 必要なパッケージをインストール
-RUN apt-get update -qq && \
-    apt-get install -y build-essential libpq-dev git curl tzdata \
-    libsqlite3-dev sqlite3 zlib1g-dev libssl-dev libreadline-dev libyaml-dev \
-    libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common \
-    libffi-dev
+RUN apt-get update -qq && apt-get install -y \
+    build-essential libpq-dev git curl tzdata \
+    libsqlite3-dev sqlite3 zlib1g-dev libssl-dev \
+    libreadline-dev libyaml-dev libxml2-dev libxslt1-dev \
+    libcurl4-openssl-dev software-properties-common libffi-dev \
+    nginx postgresql-13 postgresql-client-13 \
+    supervisor
 
 #最新版nodejsをインストール
 RUN mkdir -p /etc/apt/keyrings
@@ -35,6 +43,9 @@ RUN apt-get update && apt-get install yarn
 # sass をインストール
 RUN yarn add sass
 
+# PostCSSと関連パッケージのインストール
+RUN yarn global add postcss postcss-cli autoprefixer
+
 # Rustのインストール
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
@@ -46,8 +57,9 @@ WORKDIR /tmp/ruby-$RUBY_VERSION
 RUN ./configure --enable-yjit && make && make install
 
 # アプリケーションディレクトリを作成
-RUN mkdir /farm2
-WORKDIR /farm2
+RUN rm /etc/nginx/sites-enabled/default && \
+    mkdir -p /home/hiro/farm2
+WORKDIR /home/hiro/farm2
 
 # ホストのGemfileとGemfile.lockをコピー
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
@@ -55,10 +67,34 @@ RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 # YJIT有効化
 ENV RUBYOPT="--yjit"
 
+# SQLスクリプトとNginx設定をコピー
+COPY tmp/farm2.sql /tmp/01_farm2.sql
+COPY tmp/puma_farm2.conf /etc/nginx/sites-enabled/puma_farm2.conf
+
+# PostgreSQLのユーザとデータベースの設定
+RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/13/main/pg_hba.conf && \
+    echo "listen_addresses='*'" >> /etc/postgresql/13/main/postgresql.conf
+
+# PostgreSQLの起動とSQLスクリプトの実行
+USER postgres
+RUN /usr/lib/postgresql/13/bin/initdb -D $PGDATA && \
+    /usr/lib/postgresql/13/bin/pg_ctl -D $PGDATA -o "-c listen_addresses='localhost'" -w start && \
+    psql --username=postgres -c "CREATE DATABASE ${POSTGRES_DB} OWNER ${POSTGRES_USER};" && \
+    psql --username=postgres --dbname=$POSTGRES_DB -f /tmp/01_farm2.sql && \
+    /usr/lib/postgresql/13/bin/pg_ctl -D $PGDATA -m fast -w stop
+USER root
+
 # バンドルインストール
 RUN gem install bundler
-COPY Gemfile Gemfile.lock /farm2/
+COPY Gemfile Gemfile.lock /home/hiro/farm2/
 RUN bundle install
-COPY . /farm2
+
+# アセットプリコンパイルとDBマイグレーション
+COPY . /home/hiro/farm2
 RUN RAILS_ENV=production bundle exec rake assets:precompile
 RUN RAILS_ENV=production bundle exec rails db:migrate
+
+# ポートの公開とサービス起動
+EXPOSE 80 5432
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
