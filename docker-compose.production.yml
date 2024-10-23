@@ -10,6 +10,7 @@ services:
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
     ports:
       - "80:80"
+      - "443:443"
       - "5432:5432"
     volumes:
       - type: volume

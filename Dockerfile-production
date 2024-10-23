@@ -70,6 +70,8 @@ ENV RUBYOPT="--yjit"
 # SQLスクリプトとNginx設定をコピー
 COPY tmp/farm2.sql /tmp/01_farm2.sql
 COPY tmp/puma_farm2.conf /etc/nginx/sites-enabled/puma_farm2.conf
+ADD tmp/localhost.pem /etc/certs/localhost.pem
+ADD tmp/localhost-key.pem /etc/certs/localhost-key.pem
 
 # PostgreSQLのユーザとデータベースの設定
 RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/13/main/pg_hba.conf && \
