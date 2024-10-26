@@ -8,7 +8,7 @@ ENV TZ=Asia/Tokyo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ENV LANG C.UTF-8
-ENV RUBY_VERSION 3.3.3
+ENV RUBY_VERSION 3.3.5
 
 # 必要なパッケージをインストール
 RUN apt-get update -qq && \
@@ -31,8 +31,8 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install yarn
 
 # sass をインストール
-RUN yarn add sass
-RUN chmod +x node_modules/.bin/sass
+RUN yarn global add sass postcss postcss-cli autoprefixer nodemon
+RUN chmod +x /usr/local/share/.config/yarn/global/node_modules/.bin/sass
 
 # Rustのインストール
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
