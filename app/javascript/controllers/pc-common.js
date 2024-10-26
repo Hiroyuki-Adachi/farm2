@@ -137,7 +137,10 @@ function activeBar(element) {
     const navdiv = element.closest("div[aria-labelledby]");
     element.style.backgroundColor = "White";
     navdiv.style.display = "block";
-    document.getElementById(navdiv.getAttribute("aria-labelledby")).classList.add("active");
+    const label = document.getElementById(navdiv.getAttribute("aria-labelledby"));
+    if (label != null) {
+        label.classList.add("active");
+    }
 }
 
 function loadingStart(message) {
