@@ -87,16 +87,5 @@ services:
       PORT: 3333
       CONNECTION_TIMEOUT: 600000
 
-  https-portal:
-    image: steveltn/https-portal:1
-    ports:
-      - '80:80'
-      - '443:443'
-    links:
-      - web
-    environment:
-      STAGE: local
-      DOMAINS: 'my-app.local -> http://web:3000'
-
 volumes:
   dbdata:
