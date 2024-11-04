@@ -351,9 +351,11 @@ SQL
   end
 
   def self.total_by_month(worker, term)
-    results = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    Work.joins(:work_results).where(["work_results.worker_id = ? AND works.term = ?", worker.id, term])
-      .group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
+    results = Array.new(12, 0)
+
+    query = Work.joins(:work_results).where(term: term)
+    query = query.where("work_results.worker_id = ?", worker.id) if worker
+    query.group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
       results[k.to_i - 1] = v
     end
     return results
