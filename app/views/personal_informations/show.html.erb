@@ -29,15 +29,5 @@
   <% end %>
 <% end %>
 <% content_for :head do %>
-<script data-turbo-track="reload" type="module">
-import { Turbo } from "@hotwired/turbo-rails";
-
-window.addEventListener('turbo:load', () => {
-    document.querySelectorAll("#personal_table tr").forEach((element) => {
-        element.addEventListener("click", (event) => {
-            Turbo.visit(event.target.closest("tr").dataset.href);
-        });
-    });
-});
-</script>
+<%= javascript_include_tag 'controllers/personal_informations/show', 'data-turbo-track': 'reload', type: :module, data: {turbo: {track: :reload}} %>
 <% end %>

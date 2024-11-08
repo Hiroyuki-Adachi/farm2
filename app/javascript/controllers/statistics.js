@@ -14,10 +14,11 @@ window.addEventListener("turbo:load", () => {
             event.target.classList.add("active");
             fetch(event.target.dataset.action)
             .then((res) => {
-              return res.json();
+                return res.json();
             })
             .then((json) => {
-              window.myChart = new Chart(document.getElementById("chart").getContext("2d"), json);
+                console.log(json);
+                window.myChart = new Chart(document.getElementById("chart").getContext("2d"), json);
             });
         });
     });
