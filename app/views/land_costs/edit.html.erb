@@ -28,7 +28,7 @@
 </div>
 <%= form_with(model: @land, url: {controller: :land_costs, action: :update}) do |lf| %>
   <div class="row">
-    <table class="table table-sm">
+    <table id="tbl_list" class="table table-sm">
       <thead>
         <tr>
           <th>削除</th>
