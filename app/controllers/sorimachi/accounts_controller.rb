@@ -44,8 +44,8 @@ class Sorimachi::AccountsController < ApplicationController
   end
 
   def sorimachi_account_params
-    params.require(:sorimachi_account)
-      .permit(
+    params.expect(sorimachi_account:
+      [
         :term,
         :code,
         :name,
@@ -53,6 +53,6 @@ class Sorimachi::AccountsController < ApplicationController
         :auto_code,
         :auto_work_type_id,
         :total_cost_type_id
-      )
+      ])
   end
 end

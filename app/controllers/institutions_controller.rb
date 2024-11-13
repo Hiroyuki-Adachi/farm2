@@ -42,13 +42,13 @@ class InstitutionsController < ApplicationController
   end
 
   def institution_params
-    params.require(:institution)
-          .permit(
-            :name,
-            :start_term,
-            :end_term,
-            :display_order,
-            :location
-          )
+    params.expect(institution:
+      [
+        :name,
+        :start_term,
+        :end_term,
+        :display_order,
+        :location
+      ])
   end
 end

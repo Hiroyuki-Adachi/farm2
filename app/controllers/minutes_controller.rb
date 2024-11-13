@@ -33,7 +33,7 @@ class MinutesController < ApplicationController
   end
 
   def minute_params
-    params.require(:minute).permit(:schedule_id, :pdf)
+    params.expect(minute: [:schedule_id, :pdf])
   end
 
   def permit_checker

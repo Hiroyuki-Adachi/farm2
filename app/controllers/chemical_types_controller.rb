@@ -50,7 +50,7 @@ class ChemicalTypesController < ApplicationController
   end
 
   def chemical_type_params
-    return params.require(:chemical_type).permit(:name, :display_order)
+    params.expect(chemical_type: [:name, :display_order])
   end
 
   def update_work_kinds

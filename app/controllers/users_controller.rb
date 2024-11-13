@@ -43,7 +43,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:login_name, :password, :password_confirmation, :worker_id)
+    params.expect(user: [:login_name, :password, :password_confirmation, :worker_id])
   end
 
   def permit_self
