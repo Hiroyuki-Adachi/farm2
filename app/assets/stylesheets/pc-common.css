@@ -80,7 +80,7 @@ div.float-head-wrapper {
   z-index: 10000;
 }
 
-#tbl_list tbody tr td {
+table.tbl-clear-color tbody tr td {
   background-color: unset;
   color: unset;
 }
