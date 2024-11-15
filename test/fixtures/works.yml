@@ -323,10 +323,11 @@ work_not_fixed:
   end_at: '2015-03-22 17:00:00'
   fixed_at: 
   work_kind_id: 1
+  created_by: 3
   created_at: '2015-03-22 01:19:23.891545'
   updated_at: '2015-03-22 01:19:23.891545'
   printed_at: '2015-03-22 01:19:23.891545'
-  printed_by: workers(:worker2).id
+  printed_by: 2
 
 
 works19:
