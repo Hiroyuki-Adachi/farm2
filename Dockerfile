@@ -58,4 +58,4 @@ RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 # バンドルインストール
 RUN gem update --system
 RUN gem install bundler
-RUN bundle config set force_ruby_platform true && bundle install
+RUN bundle install
