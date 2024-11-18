@@ -201,8 +201,6 @@ class SorimachiJournal < ApplicationRecord
      'code21', 'remark1', 'remark2', 'remark3', 'code31', 'amount3', 'remark4']
   end
 
-  private_class_method :updatable_attributes
-
   private
 
   def term_check
