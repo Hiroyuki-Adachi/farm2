@@ -21,8 +21,12 @@ class ChemicalTypesControllerTest < ActionController::TestCase
     assert_difference('ChemicalType.count') do
       post :create, params: {chemical_type: @update}
     end
-
     assert_redirected_to chemical_types_path
+
+    # 薬剤種別の検証
+    chemical_type = ChemicalType.last
+    assert_equal @update[:name], chemical_type.name
+    assert_equal @update[:display_order], chemical_type.display_order
   end
 
   test "薬剤種別マスタ変更(表示)" do
@@ -35,6 +39,11 @@ class ChemicalTypesControllerTest < ActionController::TestCase
       patch :update, params: {id: @chemical_type, chemical_type: @update}
     end
     assert_redirected_to chemical_types_path
+
+    # 薬剤種別の検証
+    chemical_type = ChemicalType.find(@chemical_type.id)
+    assert_equal @update[:name], chemical_type.name
+    assert_equal @update[:display_order], chemical_type.display_order
   end
 
   test "薬剤種別マスタ削除" do
