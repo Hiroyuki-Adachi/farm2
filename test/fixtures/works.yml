@@ -5307,9 +5307,11 @@ work_for_price:
   weather_id: '1'
   work_type_id: '11'
   name: "金額計算テスト"
-  start_at: '2016-03-01 14:00:00'
-  end_at: '2016-03-01 16:00:00'
+  start_at: '14:00:00'
+  end_at: '16:00:00'
   work_kind: work_kind_every_term
+  printed_at: '2015-02-01'
+  printed_by: worker5
 
 work_march_1st:
   term: 2015

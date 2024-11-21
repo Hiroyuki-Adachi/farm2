@@ -114,5 +114,38 @@ class WorkTest < ActiveSupport::TestCase
     # 削除データの確認
     deleted_result = WorkResult.find_by(work_id: @work.id, worker_id: workers(:worker2).id)
     assert_nil deleted_result
+
+    # 印刷情報のクリア確認
+    assert_nil @work.printed_at
+    assert_nil @work.printed_by
+  end
+
+  test "農地登録" do
+    old_work_land = WorkLand.find_by(work_id: @work.id, land_id: lands(:lands0).id)
+    params = ActionController::Parameters.new(
+      {
+        work_lands: 
+          [
+            {land_id: lands(:lands0).id, display_order: 1},
+            {land_id: lands(:lands3).id, display_order: 2}
+          ]
+      }
+    )
+
+    @work.regist_lands(params[:work_lands])
+    assert_equal params[:work_lands].size, @work.work_lands.count
+
+    # 更新データの確認
+    updated_land = WorkLand.find_by(work_id: @work.id, land_id: lands(:lands0).id)
+    assert_equal old_work_land.updated_at, updated_land.updated_at
+
+    # 作成データの確認
+    created_land = WorkLand.find_by(work_id: @work.id, land_id: lands(:lands3).id)
+    assert_not_nil created_land
+    assert_equal 2, created_land.display_order
+
+    # 削除データの確認
+    deleted_land = WorkLand.find_by(work_id: @work.id, land_id: lands(:lands1).id)
+    assert_nil deleted_land
   end
 end
