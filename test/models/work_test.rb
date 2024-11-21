@@ -84,4 +84,35 @@ class WorkTest < ActiveSupport::TestCase
     assert wts.ids.include?(land_costs(:land_cost_genka1).work_type_id)
     assert wts.ids.include?(land_costs(:land_cost_genka21).work_type_id)
   end
+
+  test "作業者登録" do
+    old_result = WorkResult.find_by(work_id: @work.id, worker_id: workers(:worker1).id)
+    params = ActionController::Parameters.new(
+      {
+        results: 
+          [
+            {worker_id: workers(:worker1).id, hours: 1.5, display_order: 1},
+            {worker_id: workers(:worker4).id, hours: 4.5, display_order: 2}
+          ]
+      }
+    )
+    @work.regist_results(params[:results], workers(:worker3))
+    assert_equal params[:results].size, @work.work_results.count
+
+    # 更新データの確認
+    updated_result = WorkResult.find_by(work_id: @work.id, worker_id: workers(:worker1).id)
+    assert_not_equal old_result.updated_at, updated_result.updated_at
+    assert_equal 1.5, updated_result.hours
+    assert_equal 1, updated_result.display_order
+
+    # 作成データの確認
+    created_result = WorkResult.find_by(work_id: @work.id, worker_id: workers(:worker4).id)
+    assert_not_nil created_result
+    assert_equal 4.5, created_result.hours
+    assert_equal 2, created_result.display_order
+
+    # 削除データの確認
+    deleted_result = WorkResult.find_by(work_id: @work.id, worker_id: workers(:worker2).id)
+    assert_nil deleted_result
+  end
 end
