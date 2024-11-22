@@ -148,4 +148,33 @@ class WorkTest < ActiveSupport::TestCase
     deleted_land = WorkLand.find_by(work_id: @work.id, land_id: lands(:lands1).id)
     assert_nil deleted_land
   end
+
+  test "機械登録" do
+    params = ActionController::Parameters.new(
+      {
+        machine_hours: 
+          {
+            machines(:machine_hour_t).id.to_s => {work_results(:work_result_for_price1).id.to_s => 2.5},
+            machines(:machine_area_t).id.to_s => {work_results(:work_result_for_price2).id.to_s => 3.0},
+            machines(:machine_day_t).id.to_s => {work_results(:work_result_for_price2).id.to_s => 0}
+          }
+      }
+    )
+
+    @work.regist_machines(params[:machine_hours])
+    assert_equal 2, @work.machine_results.count
+
+    # 更新データの確認
+    updated_machine = MachineResult.find_by(work_result_id: work_results(:work_result_for_price1).id, machine_id: machines(:machine_hour_t).id)
+    assert_equal 2.5, updated_machine.hours
+
+    # 作成データの確認
+    created_machine = MachineResult.find_by(work_result_id: work_results(:work_result_for_price2).id, machine_id: machines(:machine_area_t).id)
+    assert_not_nil created_machine
+    assert_equal 3.0, created_machine.hours
+
+    # 削除データの確認
+    deleted_machine = MachineResult.find_by(work_result_id: work_results(:work_result_for_price2).id, machine_id: machines(:machine_day_t).id)
+    assert_nil deleted_machine
+  end
 end
