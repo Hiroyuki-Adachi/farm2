@@ -17,6 +17,8 @@ class Users::WordsControllerTest < ActionController::TestCase
       ] }}
     end
     assert_redirected_to new_users_word_path
+
+    assert_equal "test", UserWord.last.word
   end
 
   test "検索ワード(保守)(空欄パターン)" do
@@ -29,6 +31,9 @@ class Users::WordsControllerTest < ActionController::TestCase
       ] }}
     end
     assert_redirected_to new_users_word_path
+
+    assert_nil UserWord.find_by(id: word1.id)
+    assert_equal "TEST", UserWord.find_by(id: word2.id).word
   end
 
   test "検索ワード(保守)(重複パターン)" do
