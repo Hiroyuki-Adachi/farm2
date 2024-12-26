@@ -7,6 +7,9 @@ gem 'pg'
 # delayed_job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background.
 gem 'delayed_job_active_record'
 
+# The CSV library provides a complete interface to CSV files and data. 
+gem 'csv'
+
 # CSSBundling provides a way to bundle CSS files in Rails applications.
 gem "cssbundling-rails"
 # importmap-rails provides a way to bundle JavaScript files in Rails applications.
