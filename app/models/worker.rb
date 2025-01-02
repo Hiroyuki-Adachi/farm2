@@ -102,7 +102,9 @@ class Worker < ApplicationRecord
   private
 
   def set_email
-    self.user.email = (self.pc_mail.presence || '') if self.user.present?
-    self.user.save!
+    if self.user.present?
+      self.user.email = (self.pc_mail.presence || '')
+      self.user.save!
+    end
   end
 end

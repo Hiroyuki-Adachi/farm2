@@ -5,11 +5,11 @@ class AddAuthInfoToUsers < ActiveRecord::Migration[7.2]
     add_column :users, :email,          :string, limit: 50, null: false, default: '', comment: "e-mail"
 
     User.all.each do |user|
+      user.google_salt = SecureRandom.hex
       if user&.worker&.pc_mail.present?
         user.email = user.worker.pc_mail
-        user.save!
-        user.set_google_secret 
       end
+      user.save!
     end
   end
 end
