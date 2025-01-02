@@ -17,6 +17,9 @@ gem 'propshaft'
 # daemons provides an easy way to wrap existing ruby scripts (for example a self-written server) to be run as a daemon and to be controlled by simple start/stop/restart commands.
 gem 'daemons'
 
+# Rails integration with the Google Authenticator apps. Uses the Authlogic style for cookie management.
+gem 'google-authenticator-rails'
+
 # Japanese Holiday
 gem 'holiday_jp'
 
