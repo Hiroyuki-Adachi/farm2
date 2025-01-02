@@ -26,7 +26,10 @@
 
 class User < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+  acts_as_google_authenticated lookup_token: :google_salt, drift: 30, issuer: '(農)下出来洲'
+  before_save :set_google_salt
   before_create :set_token
+  after_save :set_google_secret_info
 
   belongs_to :worker
   belongs_to :organization
@@ -80,5 +83,16 @@ class User < ApplicationRecord
     self.token = SecureRandom.uuid
   end
 
+  def set_google_salt
+    self.google_salt = SecureRandom.hex if self.google_salt.blank?
+  end
+
+  def set_google_secret_info
+    if saved_change_to_email?
+      self.set_google_secret if self.email.present? && self.google_secret.blank?
+      self.clear_google_secret! if self.email.blank?
+    end
+  end
+  
   has_secure_password
 end

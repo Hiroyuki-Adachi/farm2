@@ -35,6 +35,7 @@ class Worker < ApplicationRecord
   belongs_to :home, -> {with_deleted}
   belongs_to_active_hash :position
   belongs_to_active_hash :gender
+  before_save :set_email
 
   has_many :work_results
   has_many :works, -> {order(:worked_at)}, through: :work_results
@@ -92,5 +93,12 @@ class Worker < ApplicationRecord
 
   def advisor?
     position == Position::ADVISOR
+  end
+
+  private
+
+  def set_email
+    self.user.email = (self.pc_mail.presence || '') if self.user.present?
+    self.user.save!
   end
 end
