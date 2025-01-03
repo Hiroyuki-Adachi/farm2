@@ -18,7 +18,7 @@ class Gaps::AccidentsControllerTest < ActionController::TestCase
 
   test "GAPヒヤリハット登録(実行)" do
     create_data = {
-      location: "(35.472840, 133.050677)",
+      location: "(35.472841, 133.050677)",
       investigated_on: "2015-12-30",
       content: "内容",
       problem: "問題点の考察",
@@ -33,6 +33,18 @@ class Gaps::AccidentsControllerTest < ActionController::TestCase
       post :create, params: {accident: create_data}
     end
     assert_redirected_to gaps_accidents_path
+
+    created_accident = Accident.last
+    create_data.each do |key, value|
+      if key == :location
+        location = created_accident.send(key)
+        assert_equal value, "(#{location.x}, #{location.y})"
+      elsif key == :investigated_on
+        assert_equal value, created_accident.send(key).strftime('%Y-%m-%d')
+      else
+        assert_equal value, created_accident.send(key)
+      end
+    end
   end
 
   test "GAPヒヤリハット(照会)" do
@@ -50,6 +62,9 @@ class Gaps::AccidentsControllerTest < ActionController::TestCase
       put :update, params: {id: @accident, accident: {content: "備考を変更"}}
     end
     assert_redirected_to gaps_accidents_path
+
+    updated_accident = Accident.find(@accident.id)
+    assert_equal "備考を変更", updated_accident.content
   end
 
   test "GAPヒヤリハット削除" do

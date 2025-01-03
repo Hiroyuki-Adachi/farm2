@@ -19,5 +19,9 @@ class Works::LandsControllerTest < ActionController::TestCase
       post :create, params: {work_id: works(:work_not_fixed), work_lands: [land_id: 1, display_order: 3], regist_lands: true}
     end
     assert_redirected_to work_path(id: works(:work_not_fixed))
+
+    updated_work_land = WorkLand.find_by(work_id: works(:work_not_fixed), land_id: 1) 
+    assert_not_nil updated_work_land
+    assert_equal 3, updated_work_land.display_order
   end
 end

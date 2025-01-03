@@ -45,4 +45,21 @@ module StatisticsHelper
     end
     return results
   end
+
+  def tab4_datasets(current_results, previous_results)
+    results = []
+    results << {
+      label: "前年度",
+      data: (1..12).map { |month| previous_results[month - 1].to_f },
+      backgroundColor: 'rgba(192, 192, 192, 1.0)',
+      fill: false
+    }
+    results << {
+      label: "今年度",
+      data: (1..12).map { |month| current_results[month - 1].to_f },
+      backgroundColor: COLORS[0],
+      fill: false
+    }
+    return results
+  end
 end

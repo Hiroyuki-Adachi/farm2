@@ -32,9 +32,19 @@ class WorksControllerTest < ActionController::TestCase
       post :create, params: {work: @update, regist: true}
     end
 
-    work = Work.where(name: "試験").first
+    work = Work.last
     user = User.find(session[:user_id])
+
+    # 作業情報が登録されていること
     assert_not_nil work
+    assert_equal @update[:name], work.name
+    assert_equal @update[:remarks], work.remarks
+    assert_equal @update[:work_type_id], work.work_type_id
+    assert_equal @update[:work_kind_id], work.work_kind_id
+    assert_equal @update[:worked_at], work.worked_at.strftime("%Y-%m-%d")
+    assert_equal @update[:weather_id], work.weather_id
+    assert_equal @update[:start_at], work.start_at.strftime("%H:%M:%S")
+    assert_equal @update[:end_at], work.end_at.strftime("%H:%M:%S")
     assert_equal work.created_by, user.worker.id
   end
 
@@ -51,10 +61,12 @@ class WorksControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "作業変更(表示)" do
+  test "作業変更(表示)(未確定)" do
     get :edit, params: {id: works(:work_not_fixed)}
     assert_response :success
+  end
 
+  test "作業変更(表示)(確定済)" do
     get :edit, params: {id: works(:work_fixed)}
     assert_redirected_to works_path
   end
@@ -64,19 +76,53 @@ class WorksControllerTest < ActionController::TestCase
     assert_response :error
   end
 
-  test "作業変更(実行)" do
-    get :update, params: {id: works(:work_not_fixed), work: @update, regist: true}
-    assert_redirected_to work_path(id: works(:work_not_fixed))
-    assert_equal Work.find(works(:work_not_fixed).id).name, @update[:name]
+  test "作業変更(実行)(未確定)" do
+    original_work = works(:work_not_fixed)
 
-    get :update, params: {id: works(:work_fixed), work: @update, regist: true}
-    assert_redirected_to works_path
-    assert_equal Work.find(works(:work_fixed).id).name, works(:work_fixed).name
+    put :update, params: {id: original_work.id, work: @update, regist: true}
+    assert_redirected_to work_path(id: original_work)
 
-    assert_not_empty WorkVerification.where(work_id: works(:work_not_fixed), worker_id: User.find(session[:user_id]).worker_id)
+    # 作業情報が更新されていること
+    work = Work.find(original_work.id)
+    worker_id = User.find(session[:user_id]).worker_id
+    assert_not_nil work
+    assert_equal @update[:name], work.name
+    assert_equal @update[:remarks], work.remarks
+    assert_equal @update[:work_type_id], work.work_type_id
+    assert_equal @update[:work_kind_id], work.work_kind_id
+    assert_equal @update[:worked_at], work.worked_at.strftime("%Y-%m-%d")
+    assert_equal @update[:weather_id], work.weather_id
+    assert_equal @update[:start_at], work.start_at.strftime("%H:%M:%S")
+    assert_equal @update[:end_at], work.end_at.strftime("%H:%M:%S")
+
+    # 作成者が変わっていないこと
+    assert_equal original_work.created_by, work.created_by
+
+    # 認証情報が作成されていること
+    assert_not_empty WorkVerification.where(work_id: work, worker_id: worker_id)
   end
 
-  test "作業削除" do
+  test "作業変更(実行)(確定済)" do
+    original_work = works(:work_fixed)
+
+    # 確定済の作業も更新可能であること
+    put :update, params: {id: original_work.id, work: @update, regist: true}
+    assert_redirected_to works_path
+
+    # 作業情報が更新されていること
+    work = Work.find(original_work.id)
+    assert_not_nil work
+    assert_equal original_work.name, work.name
+    assert_equal original_work.remarks, work.remarks
+    assert_equal original_work.work_type_id, work.work_type_id
+    assert_equal original_work.work_kind_id, work.work_kind_id
+    assert_equal original_work.worked_at, work.worked_at
+    assert_equal original_work.weather_id, work.weather_id
+    assert_equal original_work.start_at, work.start_at
+    assert_equal original_work.end_at, work.end_at
+  end
+
+  test "作業削除(未確定)" do
     assert_difference('WorkWorkType.count', -1) do
       assert_difference('WorkResult.count', -1) do
         assert_difference('WorkLand.count', -2) do
@@ -87,7 +133,9 @@ class WorksControllerTest < ActionController::TestCase
       end
     end
     assert_redirected_to works_path
+  end
 
+  test "作業削除(確定済)" do
     assert_no_difference('Work.count') do
       delete :destroy, params: {id: works(:work_fixed)}
     end

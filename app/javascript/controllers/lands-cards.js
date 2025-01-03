@@ -1,3 +1,5 @@
+import { Turbo } from "@hotwired/turbo-rails";
+
 function initMap(){
     const org = JSON.parse(document.getElementById("location").value);
     const pos = new google.maps.LatLng(org[0], org[1]);
@@ -41,7 +43,7 @@ function initMap(){
       });
 
       landRegions[land.dataset.id].addListener("click", function(arg) {
-        location.href = document.getElementById("show_path").value.replace(/0/g, this.landId);
+        Turbo.visit(document.getElementById("show_path").value.replace(/0/g, this.landId));
       });
     });
 }

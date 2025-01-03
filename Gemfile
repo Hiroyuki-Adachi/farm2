@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 7.1'
+gem 'rails', '>= 7.2'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # delayed_job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background.
@@ -10,7 +10,7 @@ gem 'delayed_job_active_record'
 # CSSBundling provides a way to bundle CSS files in Rails applications.
 gem "cssbundling-rails"
 # importmap-rails provides a way to bundle JavaScript files in Rails applications.
-gem 'importmap-rails', "~> 1.2"
+gem 'importmap-rails'
 # propshaft provides a way to bundle JavaScript files in Rails applications.
 gem 'propshaft'
 

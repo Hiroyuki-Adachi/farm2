@@ -139,6 +139,7 @@ Rails.application.routes.draw do
       get :tab1
       get :tab2
       get :tab3
+      get :tab4
     end
   end
   namespace :statistics do
