@@ -8,6 +8,10 @@ class Plans::WorkTypesControllerTest < ActionController::TestCase
     travel_to(Date.new(2015, 1, 1))
   end
 
+  teardown do
+    travel_back
+  end
+
   test "作付予定(表示)" do
     get :new
     assert_response :success
@@ -20,12 +24,13 @@ class Plans::WorkTypesControllerTest < ActionController::TestCase
   end
 
   test "作付予定(表示)(日付不正)" do
-    travel_to(Date.new(2016, 1, 1))
-    get :new
-    assert_response :error
+    travel_to(Date.new(2016, 1, 1)) do
+      get :new
+      assert_response :error
+    end
   end
 
-  test "作付予定(作成)" do
+  test "作付予定(作成)(追加)" do
     # 追加パターン
     assert_difference 'WorkTypeTerm.count', 1 do
       post :create, params: {work_types: {
@@ -34,7 +39,7 @@ class Plans::WorkTypesControllerTest < ActionController::TestCase
     end
     assert_redirected_to new_plans_work_type_path
 
-    # 更新パターン
+    # 追加後の更新パターン
     assert_difference 'WorkTypeTerm.count', 0 do
       post :create, params: {work_types: {
         @work_type.id => {term_flag: true, bg_color: "000000"}

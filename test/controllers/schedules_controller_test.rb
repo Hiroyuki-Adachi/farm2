@@ -36,6 +36,15 @@ class SchedulesControllerTest < ActionController::TestCase
       post :create, params: {schedule: @update}
     end
     assert_redirected_to new_schedule_worker_path(schedule_id: Schedule.maximum(:id))
+
+    # 作成した作業予定を検証
+    schedule = Schedule.last
+    assert_equal @update[:worked_at], schedule.worked_at.to_s
+    assert_equal @update[:work_type_id], schedule.work_type_id
+    assert_equal @update[:start_at], schedule.start_at.strftime("%H:%M:%S")
+    assert_equal @update[:end_at], schedule.end_at.strftime("%H:%M:%S")
+    assert_equal @update[:work_kind_id], schedule.work_kind_id
+    assert_equal @update[:name], schedule.name
   end
 
   test "作業予定変更(表示)" do
@@ -44,9 +53,20 @@ class SchedulesControllerTest < ActionController::TestCase
   end
 
   test "作業予定変更(実行)" do
-    get :update, params: {id: schedules(:schedule1), schedule: @update}
+    assert_no_difference('Schedule.count') do
+      patch :update, params: {id: schedules(:schedule1), schedule: @update}
+    end
     assert_redirected_to schedules_path
-    assert_equal Schedule.find(schedules(:schedule1).id).name, @update[:name]
+
+    # 更新した作業予定を検証
+    schedule = Schedule.find(schedules(:schedule1).id)
+    assert_not_nil schedule
+    assert_equal @update[:worked_at], schedule.worked_at.to_s
+    assert_equal @update[:work_type_id], schedule.work_type_id
+    assert_equal @update[:start_at], schedule.start_at.strftime("%H:%M:%S")
+    assert_equal @update[:end_at], schedule.end_at.strftime("%H:%M:%S")
+    assert_equal @update[:work_kind_id], schedule.work_kind_id
+    assert_equal @update[:name], schedule.name
   end
 
   test "作業予定削除" do

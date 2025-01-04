@@ -32,6 +32,16 @@ class Gaps::TrainingsControllerTest < ActionController::TestCase
       end
     end
     assert_redirected_to gaps_trainings_path
+
+    # 作成された研修データの確認
+    created_training = Training.last
+    assert_equal "document1", created_training.document
+    assert_equal @work1.id, created_training.work_id
+
+    # 作成された研修種別データの確認
+    created_training_type = TrainingTrainingType.last
+    assert_equal 1, created_training_type.training_type_id
+    assert_equal created_training.id, created_training_type.training_id
   end
 
   test "GAP研修記録表(削除)" do

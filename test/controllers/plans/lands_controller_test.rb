@@ -8,6 +8,10 @@ class Plans::LandsControllerTest < ActionController::TestCase
     travel_to(Date.new(2015, 1, 1))
   end
 
+  teardown do
+    travel_back
+  end
+
   test "作付計画(表示)" do
     get :new, params: {mode: @mode}
     assert_response :success
@@ -19,9 +23,10 @@ class Plans::LandsControllerTest < ActionController::TestCase
   end
 
   test "作付計画(表示)(日付不正)" do
-    travel_to(Date.new(2016, 1, 1))
-    get :new, params: {mode: @mode}
-    assert_response :error
+    travel_to(Date.new(2016, 1, 1)) do
+      get :new, params: {mode: @mode}
+      assert_response :error
+    end
   end
 
   test "作付計画(表示)(管理者以外)" do
@@ -38,6 +43,12 @@ class Plans::LandsControllerTest < ActionController::TestCase
       post :create, params: {land: {land.id => work_type.id}, mode: @mode}
     end
     assert_redirected_to new_plans_land_path(mode: @mode)
+
+    term = Organization.first.get_term(Time.zone.today.next_year)
+
+    created_plan_land = PlanLand.find_by(term: term, land_id: land.id, user_id: session[:user_id])
+    assert_not_nil created_plan_land
+    assert_equal work_type.id, created_plan_land.work_type_id
   end
 
   test "作付計画(初期化)" do

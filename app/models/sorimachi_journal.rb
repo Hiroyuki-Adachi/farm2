@@ -50,12 +50,12 @@ class SorimachiJournal < ApplicationRecord
 
   has_many :sorimachi_work_types, dependent: :destroy
   has_many :work_types, through: :sorimachi_work_types
-  has_many :details, query_constraints: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line]
+  has_many :details, foreign_key: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line]
 
   validate :term_check
 
-  belongs_to :account1, query_constraints: [:term, :code01], class_name: 'SorimachiAccount'
-  belongs_to :account2, query_constraints: [:term, :code12], class_name: 'SorimachiAccount'
+  belongs_to :account1, foreign_key: [:term, :code01], class_name: 'SorimachiAccount'
+  belongs_to :account2, foreign_key: [:term, :code12], class_name: 'SorimachiAccount'
 
   def self.import(term, file)
     CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: %r{^//}) do |row|
@@ -200,8 +200,6 @@ class SorimachiJournal < ApplicationRecord
      'code11', 'code12', 'code13', 'code14', 'code15', 'tax11', 'code16', 'code17', 'code18', 'amount2', 
      'code21', 'remark1', 'remark2', 'remark3', 'code31', 'amount3', 'remark4']
   end
-
-  private_class_method :updatable_attributes
 
   private
 

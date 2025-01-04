@@ -4,11 +4,12 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # タイムゾーンを設定（これをしないと、ビルド時にタイムゾーンの設定を求められる）
-ENV TZ=Asia/Tokyo
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ENV TZ=Asia/Tokyo \
+    LANG=C.UTF-8 \
+    RUBY_VERSION=3.3.6 \
+    PATH="/root/.cargo/bin:${PATH}"
 
-ENV LANG C.UTF-8
-ENV RUBY_VERSION 3.3.3
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # 必要なパッケージをインストール
 RUN apt-get update -qq && \
@@ -31,12 +32,11 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install yarn
 
 # sass をインストール
-RUN yarn add sass
-RUN chmod +x node_modules/.bin/sass
+RUN yarn global add sass postcss postcss-cli autoprefixer nodemon
+RUN chmod +x /usr/local/share/.config/yarn/global/node_modules/.bin/sass
 
 # Rustのインストール
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Rubyのインストール
 RUN curl -O https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION%.*}/ruby-$RUBY_VERSION.tar.gz

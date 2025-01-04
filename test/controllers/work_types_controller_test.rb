@@ -28,6 +28,12 @@ class WorkTypesControllerTest < ActionController::TestCase
       post :create, params: {work_type: @update}
     end
     assert_redirected_to work_types_path
+
+    # 作成した作業分類を検証
+    work_type = WorkType.last
+    assert_equal @update[:name], work_type.name
+    assert_equal @update[:display_order], work_type.display_order
+    assert_equal @update[:genre], work_type.genre
   end
 
   test "作業分類マスタ変更(表示)" do
@@ -40,6 +46,12 @@ class WorkTypesControllerTest < ActionController::TestCase
       patch :update, params: {id: @work_type, work_type: @update}
     end
     assert_redirected_to work_types_path
+
+    # 更新した作業分類を検証
+    work_type = WorkType.find(@work_type.id)
+    assert_equal @update[:name], work_type.name
+    assert_equal @update[:display_order], work_type.display_order
+    assert_equal @update[:genre], work_type.genre
   end
 
   test "作業分類マスタ削除" do

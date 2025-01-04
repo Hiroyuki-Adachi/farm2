@@ -35,7 +35,7 @@ class Work < ApplicationRecord
 
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
-  belongs_to :fix, class_name: "Fix", query_constraints: [:term, :fixed_at]
+  belongs_to :fix, class_name: "Fix", foreign_key: [:term, :fixed_at]
   belongs_to :creator, -> {with_deleted}, class_name: "Worker", foreign_key: "created_by"
   belongs_to :printer, -> {with_deleted}, class_name: "Worker", foreign_key: "printed_by"
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
@@ -351,9 +351,11 @@ SQL
   end
 
   def self.total_by_month(worker, term)
-    results = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    Work.joins(:work_results).where(["work_results.worker_id = ? AND works.term = ?", worker.id, term])
-      .group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
+    results = Array.new(12, 0)
+
+    query = Work.joins(:work_results).where(term: term)
+    query = query.where("work_results.worker_id = ?", worker.id) if worker
+    query.group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
       results[k.to_i - 1] = v
     end
     return results

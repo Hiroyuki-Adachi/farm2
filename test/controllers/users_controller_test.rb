@@ -28,6 +28,10 @@ class UsersControllerTest < ActionController::TestCase
       post :create, params: {user: @create}
     end
     assert_redirected_to users_path
+
+    # 作成したユーザを検証
+    user = User.last
+    assert_equal @create[:login_name], user.login_name
   end
 
   test "ユーザ変更(表示)" do
