@@ -57,7 +57,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "メールアドレス承認(NG)" do
     user = users(:user_manager)
-    user.mail = 'user_ok@example.com'
+    user.mail = 'user_ng@example.com'
     user.save!
 
     result = user.mail_confirm!("invalid_token")
