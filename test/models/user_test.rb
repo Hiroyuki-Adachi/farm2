@@ -32,7 +32,7 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  test "メールアドレス変更" do
+  test "メールアドレス設定" do
     user = users(:user_manager)
     user.mail = 'user@example.com'
     user.save!
@@ -40,6 +40,29 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil user.mail_confirmation_token
     assert_not_nil user.mail_confirmation_expired_at
     assert_operator user.mail_confirmation_expired_at, :>, Time.current
+    assert_nil user.mail_confirmed_at
+  end
+
+  test "メールアドレス承認(OK)" do
+    user = users(:user_manager)
+    user.mail = 'user_ok@example.com'
+    user.save!
+
+    result = user.mail_confirm!(user.mail_confirmation_token)
+
+    assert result
+    assert_not_nil user.mail_confirmed_at
+    assert_equal user.worker.pc_mail, user.mail
+  end
+
+  test "メールアドレス承認(NG)" do
+    user = users(:user_manager)
+    user.mail = 'user_ok@example.com'
+    user.save!
+
+    result = user.mail_confirm!("invalid_token")
+
+    assert_not result
     assert_nil user.mail_confirmed_at
   end
 end

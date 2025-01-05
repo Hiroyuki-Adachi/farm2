@@ -33,8 +33,8 @@
 class User < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   before_create :set_token
-  before_update :clear_mail_fields, if: -> { saved_change_to_mail? }
-  after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? }
+  before_update :clear_mail_fields, if: -> { mail_changed? && self.mail.present? }
+  after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && self.mail_confirmed_at.present? }
 
   belongs_to :worker
   belongs_to :organization
