@@ -1,8 +1,7 @@
 class Users::MailsController < ApplicationController
   before_action :set_user, only: [:new, :create]
 
-  def new
-  end
+  def new; end
 
   def create
     if @user.update(user_params)

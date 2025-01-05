@@ -33,7 +33,8 @@
 class User < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   before_create :set_token
-  before_update :clear_mail_fields, if: -> { mail_changed? }
+  before_update :clear_mail_fields, if: -> { saved_change_to_mail? }
+  after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? }
 
   belongs_to :worker
   belongs_to :organization
@@ -102,6 +103,12 @@ class User < ApplicationRecord
     self.mail_confirmation_token = SecureRandom.uuid
     self.mail_confirmation_expired_at = 1.day.from_now
     self.mail_confirmed_at = nil
+  end
+
+  def set_pc_mail
+    if self.mail.present? && self.worker.present? && self.worker.pc_mail.blank?
+      self.worker.update(pc_mail: mail)
+    end
   end
 
   has_secure_password

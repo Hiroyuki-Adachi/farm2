@@ -15,10 +15,12 @@ class ApplicationMailer < ActionMailer::Base
       token_url: '/o/oauth2/token'
     )
 
-    token = OAuth2::AccessToken.from_hash(client, {
+    token_hash = {
       refresh_token: refresh_token,
       expires_at: Time.now.to_i + 3600
-    })
+    }
+
+    token = OAuth2::AccessToken.from_hash(client, token_hash)
 
     access_token = token.refresh!.token
     Rails.logger.debug { "Generated access token: #{access_token}" }
