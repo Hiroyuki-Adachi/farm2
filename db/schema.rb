@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_05_12_080054) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_05_084840) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -377,6 +377,20 @@ ActiveRecord::Schema[7.2].define(version: 2024_05_12_080054) do
     t.point "location", comment: "位置"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "ip_lists", comment: "IPアドレスリスト", force: :cascade do |t|
+    t.string "ip_address", limit: 64, default: "", null: false, comment: "IP Address"
+    t.string "confirmation_token", limit: 6, default: "", null: false, comment: "トークン"
+    t.date "expired_on", comment: "有効期限"
+    t.boolean "white_flag", default: false, null: false, comment: "ホワイトリストフラグ"
+    t.integer "block_count", default: 0, null: false, comment: "ブロック回数"
+    t.string "mail", limit: 255, default: "", null: false, comment: "メールアドレス"
+    t.integer "created_by", default: 0, null: false, comment: "作成者"
+    t.datetime "confirmation_expired_at", comment: "確認有効期限"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ip_address"], name: "ixdex_ip_lists_on_ip_address", unique: true
   end
 
   create_table "land_costs", id: { type: :serial, comment: "土地原価" }, comment: "土地原価", force: :cascade do |t|

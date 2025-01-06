@@ -18,4 +18,17 @@ class SessionsController < ApplicationController
       render layout: false, partial: 'flash', content_type: 'text/vnd.turbo-stream.html', locals: {message: "IDまたはpasswordが間違っています。"}
     end
   end
+
+  private
+
+  def restrict_remote_ip
+    remote_ip = IPAddr.new(request.remote_ip)
+    if IpList.black_list.any? { |ip| ip.include?(remote_ip) }
+      to_error_path
+      return
+    elsif IpList.white_list.none? { |ip| ip.include?(remote_ip) }
+      redirect_to new_ip_list_path
+      return
+    end
+  end
 end

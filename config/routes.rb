@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :ip_lists, only: [:new, :create, :edit, :update]
   resources :zgis, only: [:new, :create]
   resources :work_seedlings, only: [:index]
   resources :owned_rices, only: [:index, :edit, :update]

@@ -7,16 +7,6 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   helper_method :menu_name
 
-  PERMIT_ADDRESSES = [
-    IPAddr.new('127.0.0.1/32'),      # IPv4 local host
-    IPAddr.new('10.0.0.0/8'),        # IPv4 private network(class A)
-    IPAddr.new('172.16.0.0/12'),     # IPv4 private network(class B)
-    IPAddr.new('192.168.0.0/16'),    # IPv4 private network(class C)
-    IPAddr.new('::1/128'),           # IPv6 local host
-    IPAddr.new('fc00::/7'),          # IPv6 unique local addresses
-    IPAddr.new('fe80::/10')          # IPv6 link-local addresses
-  ].freeze
-
   before_action :set_term, if: :user_present?
   before_action :restrict_remote_ip
 
@@ -64,10 +54,7 @@ class ApplicationController < ActionController::Base
   end
 
   def restrict_remote_ip
-    remote_ip = IPAddr.new(request.remote_ip)
-    if PERMIT_ADDRESSES.none? { |ip| ip.include?(remote_ip) }
-      to_error_path
-    elsif session[:user_id].nil? && controller_name != "sessions"
+    if session[:user_id].nil? 
       redirect_to root_path
       return
     end

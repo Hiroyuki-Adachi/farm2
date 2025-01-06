@@ -7,9 +7,22 @@ class SessionsControllerTest < ActionController::TestCase
     @user = users(:users1)
   end
 
-  test "ログイン画面" do
+  test "ログイン画面(パブリック)" do
+    ActionDispatch::Request.any_instance.stubs(:remote_ip).returns('1.1.1.1')
+    get :new
+    assert_redirected_to new_ip_list_path
+  end
+
+  test "ログイン画面(ホワイトリスト)" do
+    ActionDispatch::Request.any_instance.stubs(:remote_ip).returns('3.3.3.3')
     get :new
     assert_response :success
+  end
+
+  test "ログイン画面(ブラックリスト)" do
+    ActionDispatch::Request.any_instance.stubs(:remote_ip).returns('4.4.4.4')
+    get :new
+    assert_response :service_unavailable
   end
 
   test "ログイン実行(認証エラー)" do
