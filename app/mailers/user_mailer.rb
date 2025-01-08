@@ -3,4 +3,9 @@ class UserMailer < ApplicationMailer
     @user = user
     mail(to: @user.mail, subject: 'メールアドレス認証')
   end
+
+  def ip_confirmation(ip)
+    @ip = ip
+    mail(to: @ip.created_user.mail, subject: 'IPアドレス認証')
+  end
 end

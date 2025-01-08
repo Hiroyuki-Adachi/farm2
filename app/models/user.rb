@@ -93,6 +93,10 @@ class User < ApplicationRecord
     self.update(mail_confirmed_at: Time.current)
   end
 
+  def self.find_by_mail(mail)
+    User.where.not(mail_confirmed_at: nil).find_by(mail: mail)
+  end
+
   private
 
   def set_token
