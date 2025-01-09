@@ -44,6 +44,19 @@ class IpList < ApplicationRecord
     .pluck(:ip_address)
   }
 
+  def token=(value)
+    @token = value
+    self.hashed_token = Digest::SHA256.hexdigest(value)
+  end
+
+  def token
+    @token
+  end
+
+  def authenticate?(token)
+    self.hashed_token == Digest::SHA256.hexdigest(token)
+  end
+
   def self.block_ip!(ip_address)
     return if LOCAL_ADDRESSES.any? { |ip| ip.include?(ip_address) }
     ip = find_or_initialize_by(ip_address: ip_address)
@@ -56,20 +69,13 @@ class IpList < ApplicationRecord
     return if LOCAL_ADDRESSES.any? { |ip| ip.include?(ip_address) }
     ip = find_or_initialize_by(ip_address: ip_address)
     ip.white_flag = true
-    ip.confirmation_token = SecureRandom.random_number(10**6).to_s.rjust(6, '0')
+    ip.token = SecureRandom.random_number(10**6).to_s.rjust(6, '0')
     ip.expired_on = nil
     ip.created_by = user.id
     ip.mail = user.mail
     ip.confirmation_expired_at = 10.minutes.from_now
     ip.save
     return ip
-  end
-
-  def self.confirm!(user, token)
-    where(mail: user.mail)
-    .where("current_timestamp <= mail_confirmation_expired_at")
-    .find_by(confirmation_token: token)
-    &.update(expired_on: Time.now.advance(months: 1).to_date)
   end
 
   def self.white_list

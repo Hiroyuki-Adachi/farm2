@@ -16,8 +16,16 @@ class IpListsController < ApplicationController
     end
   end
 
-  def edit
-    to_error_path unless @ip
+  def edit; end
+
+  def update
+    if @ip.authenticate?(params[:token])
+      @ip.update(expired_on: Time.now.advance(months: 1).to_date)
+      log_in(@ip.created_user)
+      redirect_to menu_index_path
+    else
+      redirect_to new_ip_list_path
+    end
   end
 
   private
@@ -29,5 +37,6 @@ class IpListsController < ApplicationController
 
   def set_ip
     @ip = IpList.where("current_timestamp <= confirmation_expired_at").find_by(id: params[:id], ip_address: request.remote_ip, white_flag: true)
+    to_error_path unless @ip
   end
 end

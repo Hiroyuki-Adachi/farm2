@@ -381,7 +381,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_05_084840) do
 
   create_table "ip_lists", comment: "IPアドレスリスト", force: :cascade do |t|
     t.string "ip_address", limit: 64, default: "", null: false, comment: "IP Address"
-    t.string "confirmation_token", limit: 6, default: "", null: false, comment: "トークン"
+    t.string "hashed_token", limit: 64, default: "", null: false, comment: "ハッシュ化トークン"
     t.date "expired_on", comment: "有効期限"
     t.boolean "white_flag", default: false, null: false, comment: "ホワイトリストフラグ"
     t.integer "block_count", default: 0, null: false, comment: "ブロック回数"

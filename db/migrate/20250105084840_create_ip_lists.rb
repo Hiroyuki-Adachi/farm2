@@ -2,7 +2,7 @@ class CreateIpLists < ActiveRecord::Migration[7.2]
   def change
     create_table :ip_lists, comment: 'IPアドレスリスト' do |t|
       t.string :ip_address, limit: 64, null: false, default: '', comment: 'IP Address'
-      t.string :confirmation_token, limit: 6, null: false, default: '', comment: 'トークン'
+      t.string :hashed_token, limit: 64, null: false, default: '', comment: 'ハッシュ化トークン'
       t.date :expired_on, null: true, comment: '有効期限'
       t.boolean :white_flag, null: false, default: false, comment: 'ホワイトリストフラグ'
       t.integer :block_count, null: false, default: 0, comment: 'ブロック回数'
