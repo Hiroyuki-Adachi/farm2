@@ -44,7 +44,9 @@ class IpListsController < ApplicationController
   end
 
   def set_ip
-    @ip = IpList.where("current_timestamp <= confirmation_expired_at").find_by(id: params[:id], ip_address: request.remote_ip, white_flag: true)
+    @ip = IpList.where("current_timestamp <= confirmation_expired_at")
+      .where(expired_on: nil)
+      .find_by(id: params[:id], ip_address: request.remote_ip, white_flag: true)
     to_error_path unless @ip
   end
 end
