@@ -21,7 +21,66 @@
 require "test_helper"
 
 class IpListTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @user = users(:users1)
+  end
+
+  test "ブラックリスト(登録)" do
+    assert_difference('IpList.count') do
+      IpList.block_ip!('1.2.3.4')
+    end
+
+    ip = IpList.last
+    assert_equal '1.2.3.4', ip.ip_address
+    assert_equal false, ip.white_flag
+    assert_equal 1, ip.block_count
+
+    assert_no_difference('IpList.count') do
+      IpList.block_ip!('1.2.3.4')
+    end
+
+    ip = IpList.last
+    assert_equal '1.2.3.4', ip.ip_address
+    assert_equal 2, ip.block_count
+  end
+
+  test "ブラックリスト(ローカルIP除外)" do
+    assert_empty IpList.where(ip_address: '127.0.0.1', white_flag: false)
+
+    assert_no_difference('IpList.count') do
+      IpList.block_ip!('127.0.0.1')
+    end
+  end
+
+  test "ホワイトリスト(登録)" do
+    assert_difference('IpList.count') do
+      IpList.white_ip!('2.3.4.5', @user)
+    end
+
+    ip = IpList.last
+    assert_equal '2.3.4.5', ip.ip_address
+    assert_equal true, ip.white_flag
+    assert_equal @user.id, ip.created_by
+    assert_equal @user.mail, ip.mail
+    assert_not_nil ip.hashed_token
+    assert_operator ip.confirmation_expired_at, :>, Time.current
+    assert_nil ip.expired_on
+  end
+
+  test "ホワイトリスト(ローカルIP除外)" do
+    assert_empty IpList.where(ip_address: '127.0.0.1', white_flag: true)
+
+    assert_no_difference('IpList.count') do
+      IpList.white_ip!('127.0.0.1', @user)
+    end
+  end
+
+  test "ホワイトリスト(認証)" do
+    ip = IpList.white_ip!('2.3.4.5', @user)
+    ip.token = "123456"
+    ip.save!
+
+    assert_equal true, ip.authenticate?("123456")
+    assert_equal false, ip.authenticate?("654321")
+  end
 end
