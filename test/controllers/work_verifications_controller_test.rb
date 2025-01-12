@@ -47,5 +47,7 @@ class WorkVerificationsControllerTest < ActionDispatch::IntegrationTest
       delete work_verification_path(work_id: work.id)
     end
     assert_response :success
+
+    assert_nil WorkVerification.find_by(work_id: work.id, worker_id: @user.worker.id)
   end
 end
