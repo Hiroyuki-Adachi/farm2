@@ -5,7 +5,7 @@ class WorkChemicalsControllerTest < ActionDispatch::IntegrationTest
     login_as(users(:users1))
   end
 
-  test "作業別薬剤使用料一覧" do
+  test "作業別薬剤使用量一覧" do
     get work_chemicals_path
     assert_response :success
   end
