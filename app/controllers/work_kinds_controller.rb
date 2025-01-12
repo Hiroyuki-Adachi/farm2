@@ -54,6 +54,7 @@ class WorkKindsController < ApplicationController
       :phonetic,
       :cost_type_id
     )
+    .merge(term: current_term)
   end
 
   def set_others

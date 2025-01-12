@@ -56,13 +56,7 @@ class WorkKind < ApplicationRecord
   }
   scope :gaps, -> {where.not(broccoli_mark: [nil, ""]).group(:broccoli_mark).order(:broccoli_mark).select("broccoli_mark, MAX(name) AS name")}
 
-  def price
-    new_record? ? @p_price : term_price(Organization.term)
-  end
-
-  def price=(val)
-    @p_price = val.to_i
-  end
+  attr_accessor :price, :term
 
   def term_price(term)
     cache_key = price_cache_key(term)
@@ -79,14 +73,13 @@ class WorkKind < ApplicationRecord
   private
 
   def save_price
-    term = Organization.term
-    work_kind_price = WorkKindPrice.where(work_kind_id: id, term: term).order(:id).first
+    work_kind_price = WorkKindPrice.find_by(work_kind_id: id, term: @term)
     if work_kind_price
-      work_kind_price.update(price: @p_price)
+      work_kind_price.update(price: @price)
     else
-      WorkKindPrice.create(work_kind_id: id, term: term, price: @p_price)
+      WorkKindPrice.create(work_kind_id: id, term: @term, price: @price)
     end
-    Rails.cache.write(price_cache_key(term), @p_price, expires_in: 1.hour)
+    Rails.cache.write(price_cache_key(@term), @price, expires_in: 1.hour)
   end
 
   def price_cache_key(term)
