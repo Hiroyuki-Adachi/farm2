@@ -20,6 +20,10 @@ class ActionDispatch::IntegrationTest
     post sessions_path, params: { login_name: user.login_name, password: 'password' } # 認証用のリクエスト
   end
 
+  def logout
+    get new_session_path
+  end
+
   # Helper method to set the remote IP address
   def set_remote_ip(ip)
     @remote_ip = ip
