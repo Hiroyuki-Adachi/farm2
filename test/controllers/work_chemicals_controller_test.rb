@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class WorkChemicalsControllerTest < ActionController::TestCase
+class WorkChemicalsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "作業別薬剤使用料一覧" do
-    get :index
+    get work_chemicals_path
     assert_response :success
   end
 end
