@@ -4,8 +4,9 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:users1))
     @land = lands(:lands1)
+    @home = homes(:home1)
     @update = {
-      place: "9999", owner_id: Home.first.id, manager_id: Home.first.id, area: 55.5,
+      place: "9999", owner_id: @home.id, manager_id: @home.id, area: 55.5,
       display_order: 99, target_flag: true, reg_area: 66.6
     }
   end
