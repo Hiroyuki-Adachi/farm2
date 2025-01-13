@@ -41,11 +41,12 @@ class Chemicals::InventoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "農薬棚卸編集(実行)" do
+    chemical_id = 4
     chemical_inventory = {
       checked_on: '2015-12-25',
       name: "期末在庫",
       stocks_attributes: [
-        {chemical_id: 4, inventory: 100.2}
+        {chemical_id: chemical_id, inventory: 100.2}
       ]
     }
 
@@ -59,8 +60,10 @@ class Chemicals::InventoriesControllerTest < ActionDispatch::IntegrationTest
     @chemical_inventory.reload
     assert_equal chemical_inventory[:checked_on], @chemical_inventory.checked_on.to_s
     assert_equal chemical_inventory[:name], @chemical_inventory.name
-    assert_equal chemical_inventory[:stocks_attributes][0][:chemical_id], @chemical_inventory.stocks[0].chemical_id
-    assert_equal chemical_inventory[:stocks_attributes][0][:inventory], @chemical_inventory.stocks[0].inventory
+
+    stock = ChemicalStock.find_by(chemical_inventory_id: @chemical_inventory.id, chemical_id: chemical_id)
+    assert_not_nil stock
+    assert_equal chemical_inventory[:stocks_attributes][0][:inventory], stock.inventory
   end
 
   test "農薬棚卸編集(削除)" do
