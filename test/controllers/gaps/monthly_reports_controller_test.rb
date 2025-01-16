@@ -1,12 +1,12 @@
 require "test_helper"
 
-class Gaps::MonthlyReportsControllerTest < ActionController::TestCase
+class Gaps::MonthlyReportsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "GAP作業月毎記録表(一覧)" do
-    get :index
+    get gaps_monthly_reports_path
     assert_response :success
   end
 end

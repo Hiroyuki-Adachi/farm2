@@ -1,17 +1,19 @@
 require 'test_helper'
 
-class Works::PrintControllerTest < ActionController::TestCase
+class Works::PrintControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
     @user = users(:users1)
+    login_as(@user)
   end
 
   test "印刷" do
-    work = Work.find(works(:works4).id)
-    get :create, params: {work_id: work.id}
+    work = works(:works4)
+    assert_no_difference('Work.count') do
+      post work_print_index_path(work_id: work)
+    end
     assert_response :success
 
-    work = Work.find(work.id)
+    work.reload
     assert_equal @user.worker_id, work.printed_by
     assert_not_nil work.printed_at
   end
@@ -19,9 +21,12 @@ class Works::PrintControllerTest < ActionController::TestCase
   test "印刷取消" do
     work = Work.find(works(:works5).id)
 
-    get :destroy, params: {work_id: work.id, id: 0}
+    assert_no_difference('Work.count') do
+      delete work_print_path(work_id: work.id, id: 0)
+    end
     assert_response :success
-    work = Work.find(work.id)
+
+    work.reload
     assert_nil work.printed_at
     assert_nil work.printed_by
   end

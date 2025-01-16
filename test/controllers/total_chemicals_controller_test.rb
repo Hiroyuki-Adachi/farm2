@@ -1,13 +1,12 @@
 require 'test_helper'
 
-class TotalChemicalsControllerTest < ActionController::TestCase
+class TotalChemicalsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
-    @system = systems(:s2015)
+    login_as(users(:users1))
   end
 
   test "薬剤集計" do
-    get :index
+    get total_chemicals_path
     assert_response :success
   end
 end

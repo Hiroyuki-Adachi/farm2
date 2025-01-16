@@ -1,18 +1,18 @@
 require "test_helper"
 
-class Gaps::AccidentsControllerTest < ActionController::TestCase
+class Gaps::AccidentsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
     @accident = accidents(:accident1)
   end
 
   test "GAPヒヤリハット(一覧)" do
-    get :index
+    get gaps_accidents_path
     assert_response :success
   end
 
   test "GAPヒヤリハット登録(表示)" do
-    get :new
+    get new_gaps_accident_path
     assert_response :success
   end
 
@@ -30,7 +30,7 @@ class Gaps::AccidentsControllerTest < ActionController::TestCase
       investigator_id: 1
     }
     assert_difference('Accident.count') do
-      post :create, params: {accident: create_data}
+      post gaps_accidents_path, params: {accident: create_data}
     end
     assert_redirected_to gaps_accidents_path
 
@@ -48,29 +48,32 @@ class Gaps::AccidentsControllerTest < ActionController::TestCase
   end
 
   test "GAPヒヤリハット(照会)" do
-    get :show, params: {id: @accident}
+    get gaps_accident_path(id: @accident)
     assert_response :success
   end
 
   test "GAPヒヤリハット変更(表示)" do
-    get :edit, params: {id: @accident}
+    get edit_gaps_accident_path(id: @accident)
     assert_response :success
   end
 
   test "GAPヒヤリハット変更(実行)" do
+    content = "備考を変更"
     assert_no_difference('Accident.count') do
-      put :update, params: {id: @accident, accident: {content: "備考を変更"}}
+      put gaps_accident_path(id: @accident), params: {accident: {content: content}}
     end
     assert_redirected_to gaps_accidents_path
 
-    updated_accident = Accident.find(@accident.id)
-    assert_equal "備考を変更", updated_accident.content
+    @accident.reload
+    assert_equal content, @accident.content
   end
 
   test "GAPヒヤリハット削除" do
     assert_difference('Accident.count', -1) do
-      delete :destroy, params: {id: @accident}
+      delete gaps_accident_path(id: @accident)
     end
     assert_redirected_to gaps_accidents_path
+
+    assert_nil Accident.find_by(id: @accident.id)
   end
 end
