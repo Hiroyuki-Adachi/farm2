@@ -6,20 +6,17 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ログイン画面(パブリック)" do
-    set_remote_ip('1.1.1.1')
-    get new_session_path
+    get new_session_path, headers: { 'REMOTE_ADDR' => '1.1.1.1' }
     assert_redirected_to new_ip_list_path
   end
 
   test "ログイン画面(ホワイトリスト)" do
-    set_remote_ip('3.3.3.3')
-    get new_session_path
+    get new_session_path, headers: { 'REMOTE_ADDR' => '3.3.3.3' }
     assert_response :success
   end
 
   test "ログイン画面(ブラックリスト)" do
-    set_remote_ip('4.4.4.4')
-    get new_session_path
+    get new_session_path, headers: { 'REMOTE_ADDR' => '4.4.4.4' }
     assert_response :service_unavailable
   end
 
