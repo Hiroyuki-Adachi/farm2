@@ -1,13 +1,12 @@
 require 'test_helper'
 
-class PersonalInformationsControllerTest < ActionController::TestCase
+class PersonalInformationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:users1)
   end
 
   test "個人情報" do
-    session[:user_id] = nil
-    get :show, params: {token: @user.token}
+    get personal_information_path(token: @user.token)
     assert_response :success
   end
 end

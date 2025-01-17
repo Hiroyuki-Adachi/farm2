@@ -14,7 +14,7 @@ class Users::WordsController < ApplicationController
   end
 
   def show
-    to_error_path unless current_user.user_topics.exists?(topic_id: params[:id])
+    return to_error_path unless current_user.user_topics.exists?(topic_id: params[:id])
     @topic = Topic.find(params[:id])
     respond_to { |format| format.turbo_stream }
   end

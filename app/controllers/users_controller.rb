@@ -13,7 +13,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params.merge(organization_id: current_organization.id, permission_id: Permission::VISITOR.id))
+    @user = User.new(user_params.merge(
+      organization_id: current_organization.id,
+      permission_id: Permission::VISITOR.id,
+      term: current_term
+      ))
     if @user.save
       redirect_to users_path
     else

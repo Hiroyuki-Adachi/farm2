@@ -13,3 +13,7 @@
 #
 #  index_work_verifications_on_work_id_and_worker_id  (work_id,worker_id) UNIQUE
 #
+
+work_verification_verified:
+  work: work_verified
+  worker_id: 1

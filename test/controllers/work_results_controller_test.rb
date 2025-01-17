@@ -1,15 +1,15 @@
 require 'test_helper'
 
-class WorkResultsControllerTest < ActionController::TestCase
+class WorkResultsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "世帯別日当一覧" do
-    get :index
+    get work_results_path
     assert_response :success
 
-    get :index, params: {fixed_at: "2015-02-28"}
+    get work_results_path, params: {fixed_at: "2015-02-28"}
     assert_response :success
   end
 end

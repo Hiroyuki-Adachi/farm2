@@ -1,25 +1,25 @@
 require "test_helper"
 
-class Chemicals::AnnualsControllerTest < ActionController::TestCase
+class Chemicals::AnnualsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "薬剤年次更新(最新年度以外)" do
-    post :create
+    post chemicals_annuals_path
     assert_response :error
   end
 
   test "薬剤年次更新(管理者以外)" do
-    session[:user_id] = users(:user2017c).id
-    post :create
+    login_as(users(:user2017c))
+    post chemicals_annuals_path
     assert_response :error
   end
 
   test "薬剤年次更新" do
-    session[:user_id] = users(:user2017).id
+    login_as(users(:user2017))
     assert_difference('ChemicalTerm.count', ChemicalTerm.where(term: 2016).count) do
-      post :create
+      post chemicals_annuals_path
     end
     assert_redirected_to chemicals_path
   end

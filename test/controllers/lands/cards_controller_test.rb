@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class Lands::CardsControllerTest < ActionController::TestCase
+class Lands::CardsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "土地カルテ(一覧)" do
-    get :index
+    get lands_cards_path
     assert_response :success
   end
 end

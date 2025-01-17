@@ -1,15 +1,15 @@
 require 'test_helper'
 
-class MachineResultsControllerTest < ActionController::TestCase
+class MachineResultsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "機械結果一覧" do
-    get :index
+    get machine_results_path
     assert_response :success
 
-    get :index, params: {fixed_at: "2015-02-28"}
+    get machine_results_path, params: {fixed_at: "2015-02-28"}
     assert_response :success
   end
 end

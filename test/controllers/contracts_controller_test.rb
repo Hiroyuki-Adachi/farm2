@@ -1,18 +1,18 @@
 require 'test_helper'
 
-class ContractsControllerTest < ActionController::TestCase
+class ContractsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "受託作業一覧" do
-    get :index
+    get contracts_path
     assert_response :success
   end
 
   test "受託作業一覧(管理者以外)" do
-    session[:user_id] = users(:user_checker).id
-    get :index
+    login_as(users(:user_checker))
+    get contracts_path
     assert_response :error
   end
 end

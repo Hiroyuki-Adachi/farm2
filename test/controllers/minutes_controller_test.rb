@@ -1,42 +1,46 @@
 require 'test_helper'
 
-class MinutesControllerTest < ActionController::TestCase
+class MinutesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    @user = users(:users1)
+    login_as(@user)
+    @minute = minutes(:minute1)
   end
 
   test "議事録一覧" do
-    get :index
+    get minutes_path
     assert_response :success
   end
 
   test "議事録一覧(検証者以外)" do
-    session[:user_id] = users(:user_user).id
-    get :index
+    login_as(users(:user_user))
+    get minutes_path
     assert_response :error
   end
 
   test "議事録PDF参照(通常)" do
-    get :show, params: {id: minutes(:minute1)}
+    get minute_path(@minute.id)
     assert_response :success
   end
 
   test "議事録PDF参照(権限なし)" do
-    session[:user_id] = nil
-    get :show, params: {id: minutes(:minute1)}
+    logout
+    get minute_path(@minute.id)
     assert_response :error
   end
 
   test "議事録PDF参照(TOKEN)" do
-    session[:user_id] = nil
-    get :show, params: {token: users(:users1).token, id: minutes(:minute1)}
+    logout
+    get minute_path(@minute.id), params: {token: @user.token}
     assert_response :success
   end
 
   test "議事録削除" do
     assert_difference('Minute.count', -1) do
-      delete :destroy, params: {id: minutes(:minute1)}
+      delete minute_path(@minute.id)
     end
     assert_redirected_to minutes_path
+
+    assert_nil Minute.find_by(id: @minute.id)
   end
 end
