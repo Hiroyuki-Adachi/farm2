@@ -1,18 +1,18 @@
 require 'test_helper'
 
-class CalendarsControllerTest < ActionController::TestCase
+class CalendarsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "カレンダー" do
-    get :index
+    get calendars_path
     assert_response :success
   end
 
   test "カレンダー(管理者以外)" do
-    session[:user_id] = users(:user_checker).id
-    get :index
+    login_as(users(:user_checker))
+    get calendars_path
     assert_response :error
   end
 end

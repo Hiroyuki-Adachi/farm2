@@ -1,12 +1,12 @@
 require "test_helper"
 
-class Gaps::ChemicalsControllerTest < ActionController::TestCase
+class Gaps::ChemicalsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "GAP農薬台帳(一覧)" do
-    get :index
+    get gaps_chemicals_path
     assert_response :success
   end
 end
