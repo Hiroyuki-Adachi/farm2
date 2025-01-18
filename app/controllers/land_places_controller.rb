@@ -42,6 +42,6 @@ class LandPlacesController < ApplicationController
   end
 
   def land_place_params
-    params.require(:land_place).permit(:name, :display_order, :remarks)
+    params.expect(land_place: [:name, :display_order, :remarks])
   end
 end

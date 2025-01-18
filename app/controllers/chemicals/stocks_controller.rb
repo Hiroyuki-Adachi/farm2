@@ -52,13 +52,13 @@ class Chemicals::StocksController < ApplicationController
 
   def stock_params
     params
-      .require(:chemical_stock)
-      .permit(
-        :stock_on,
-        :name,
-        :stored,
-        :shipping
-      )
+      .expect(chemical_stock:
+        [
+          :stock_on,
+          :name,
+          :stored,
+          :shipping
+        ])
       .merge(chemical_id: @chemical_term.chemical_id)
   end
 

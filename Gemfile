@@ -1,11 +1,14 @@
 source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 7.2'
+gem 'rails', '>= 8.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # delayed_job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background.
 gem 'delayed_job_active_record'
+
+# The CSV library provides a complete interface to CSV files and data. 
+gem 'csv'
 
 # CSSBundling provides a way to bundle CSS files in Rails applications.
 gem "cssbundling-rails"

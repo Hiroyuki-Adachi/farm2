@@ -124,7 +124,7 @@ class WorksController < ApplicationController
   end
 
   def work_params
-    params.require(:work).permit(:worked_at, :weather_id, :start_at, :end_at, :work_type_id, :work_kind_id, :name, :remarks) 
+    params.expect(work: [:worked_at, :weather_id, :start_at, :end_at, :work_type_id, :work_kind_id, :name, :remarks])
   end
 
   def check_fixed
