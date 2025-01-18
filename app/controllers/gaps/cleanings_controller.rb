@@ -24,13 +24,13 @@ class Gaps::CleaningsController < GapsController
   end
 
   def cleaning_params
-    params.require(:cleaning)
-          .permit(
-            :target, 
-            :method,
-            cleaning_target_ids: [],
-            institution_ids: []
-          )
-          .merge(work_id: params[:id])
+    params.expect(cleaning:
+      [
+        :target, 
+        :method,
+        {cleaning_target_ids: [],
+         institution_ids: []}
+      ])
+      .merge(work_id: params[:id])
   end
 end

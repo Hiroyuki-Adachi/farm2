@@ -45,16 +45,17 @@ class WorkKindsController < ApplicationController
   end
 
   def work_kind_params
-    params.require(:work_kind).permit(
-      :name,
-      :display_order,
-      :price,
-      :land_flag,
-      :broccoli_mark,
-      :phonetic,
-      :cost_type_id
-    )
-    .merge(term: current_term)
+    params.expect(work_kind:
+      [
+        :name,
+        :display_order,
+        :price,
+        :land_flag,
+        :broccoli_mark,
+        :phonetic,
+        :cost_type_id
+      ])
+      .merge(term: current_term)
   end
 
   def set_others

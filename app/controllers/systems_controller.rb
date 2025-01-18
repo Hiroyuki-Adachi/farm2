@@ -19,17 +19,18 @@ class SystemsController < ApplicationController
   end
 
   def system_params
-    return params.require(:system).permit(
-      :start_date,
-      :end_date,
-      :default_price,
-      :default_fee,
-      :dry_price,
-      :adjust_price,
-      :dry_adjust_price,
-      :half_sum_flag,
-      :waste_price,
-      :relative_price
-    )
+    params.expect(system:
+      [
+        :start_date,
+        :end_date,
+        :default_price,
+        :default_fee,
+        :dry_price,
+        :adjust_price,
+        :dry_adjust_price,
+        :half_sum_flag,
+        :waste_price,
+        :relative_price
+      ])
   end
 end

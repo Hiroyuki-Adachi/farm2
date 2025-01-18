@@ -23,6 +23,6 @@ class Users::PermissionsController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:permission_id)
+    params.expect(user: [:permission_id])
   end
 end

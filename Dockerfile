@@ -51,8 +51,7 @@ RUN mkdir /farm2
 WORKDIR /farm2
 
 # ホストのGemfileとGemfile.lockをコピー
-COPY Gemfile /farm2/Gemfile
-COPY Gemfile.lock /farm2/Gemfile.lock
+COPY Gemfile Gemfile.lock /farm2/
 
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 

@@ -47,7 +47,7 @@ class MenuController < ApplicationController
   private
 
   def system_params
-    params.require(:system).permit(:term, :target_from, :target_to)
+    params.expect(system: [:term, :target_from, :target_to])
   end
 
   def permit_manager

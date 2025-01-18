@@ -52,23 +52,23 @@ class ChemicalsController < ApplicationController
   end
 
   def chemical_params
-    params.require(:chemical)
-          .permit(
-            :name, 
-            :display_order, 
-            :chemical_type_id, 
-            :this_term_flag, 
-            :unit, 
-            :phonetic,
-            :base_quantity,
-            :carton_quantity,
-            :carton_unit,
-            :base_unit_id,
-            :aqueous_flag,
-            :stock_quantity,
-            :stock_unit,
-            :url
-          )
-          .merge(term: current_term)
+    params.expect(chemical:
+      [
+        :name, 
+        :display_order, 
+        :chemical_type_id, 
+        :this_term_flag, 
+        :unit, 
+        :phonetic,
+        :base_quantity,
+        :carton_quantity,
+        :carton_unit,
+        :base_unit_id,
+        :aqueous_flag,
+        :stock_quantity,
+        :stock_unit,
+        :url
+      ])
+      .merge(term: current_term)
   end
 end
