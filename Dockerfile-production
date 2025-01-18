@@ -5,7 +5,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=Asia/Tokyo \
     LANG=C.UTF-8 \
-    RUBY_VERSION=3.3.6 \
+    RUBY_VERSION=3.4.1 \
     POSTGRES_USER=postgres \
     POSTGRES_PASSWORD=postgres \
     POSTGRES_DB=farm2_production \
