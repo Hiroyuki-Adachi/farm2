@@ -21,7 +21,8 @@
 class Accident < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
-  belongs_to_active_hash :accident_type
+  enum :accident_type_id, {rule: 1, hiyari: 2, other: 9}
+
   belongs_to :work
   belongs_to :investigator, class_name: "Worker"
   belongs_to :audience, class_name: "Worker"
@@ -29,4 +30,8 @@ class Accident < ApplicationRecord
   scope :usual, ->(term) {
     joins(:work).where(works: { term: term }).order("works.worked_at, works.start_at, accidents.id")
   }
+
+  def accident_type_name
+    I18n.t("activerecord.attributes.accident.accident_types.#{accident_type_id}")
+  end
 end
