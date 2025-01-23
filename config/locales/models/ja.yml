@@ -381,6 +381,10 @@ ja:
         problem: "問題点の考察"
         solving: "問題解決の考察"
         result: "改善の結果"
+        accident_types:
+          rule: "ルール違反"
+          hiyari: "ヒヤリハット"
+          other: "その他"
 
   status:
     organization:
