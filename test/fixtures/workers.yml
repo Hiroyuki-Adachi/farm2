@@ -44,10 +44,6 @@ worker1:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -68,10 +64,6 @@ worker2:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -92,10 +84,6 @@ worker3:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -116,10 +104,6 @@ worker4:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -138,10 +122,6 @@ worker5:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -160,10 +140,6 @@ worker6:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -182,10 +158,6 @@ worker7:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -204,10 +176,6 @@ worker8:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -226,10 +194,6 @@ worker9:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -248,10 +212,6 @@ worker10:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -270,10 +230,6 @@ worker11:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -292,10 +248,6 @@ worker12:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -314,10 +266,6 @@ worker13:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -336,10 +284,6 @@ worker14:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -358,10 +302,6 @@ worker15:
   display_order: 3
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-07-16 09:01:38.623449
   deleted_at: 
@@ -380,10 +320,6 @@ worker17:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -402,10 +338,6 @@ worker18:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -424,10 +356,6 @@ worker19:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-19 10:44:26.528643
   deleted_at: 
@@ -446,10 +374,6 @@ worker20:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -468,10 +392,6 @@ worker21:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -490,10 +410,6 @@ worker22:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -512,10 +428,6 @@ worker23:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -534,10 +446,6 @@ worker24:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -556,10 +464,6 @@ worker25:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -578,10 +482,6 @@ worker26:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -600,10 +500,6 @@ worker27:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -622,10 +518,6 @@ worker28:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -644,10 +536,6 @@ worker29:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -666,10 +554,6 @@ worker30:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -688,10 +572,6 @@ worker31:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2015-12-17 08:50:10.460973
   deleted_at: 
@@ -710,10 +590,6 @@ worker32:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -732,10 +608,6 @@ worker22:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-19 10:44:03.814998
   deleted_at: 
@@ -754,10 +626,6 @@ worker34:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -776,10 +644,6 @@ worker35:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -798,10 +662,6 @@ worker36:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -820,10 +680,6 @@ worker37:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -842,10 +698,6 @@ worker38:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -864,10 +716,6 @@ worker39:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -886,10 +734,6 @@ worker40:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -908,10 +752,6 @@ worker41:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -930,10 +770,6 @@ worker42:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
@@ -952,10 +788,6 @@ worker43:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-19 11:38:12.229411
   updated_at: 2010-07-19 11:38:12.229411
   deleted_at: 
@@ -974,10 +806,6 @@ worker44:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-19 11:38:39.100383
   updated_at: 2010-07-19 11:38:39.100383
   deleted_at: 
@@ -996,10 +824,6 @@ worker45:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-19 11:45:48.770313
   updated_at: 2010-07-19 11:45:48.770313
   deleted_at: 
@@ -1018,10 +842,6 @@ worker46:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-19 11:46:46.324567
   updated_at: 2010-07-19 11:46:46.324567
   deleted_at: 
@@ -1040,10 +860,6 @@ worker47:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2010-07-19 12:16:06.937903
   updated_at: 2010-07-19 13:35:37.890246
   deleted_at: 
@@ -1062,10 +878,6 @@ worker48:
   display_order: 0
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2011-05-08 09:09:44.094912
   updated_at: 2011-05-08 09:09:44.094912
   deleted_at: 
@@ -1084,10 +896,6 @@ worker49:
   display_order: 0
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2011-05-09 23:35:00.892503
   updated_at: 2011-05-09 23:35:00.892503
   deleted_at: 
@@ -1106,10 +914,6 @@ worker50:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2011-06-25 00:23:45.882427
   updated_at: 2011-06-25 00:23:45.882427
   deleted_at: 
@@ -1128,10 +932,6 @@ worker51:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2011-12-04 07:20:52.590354
   updated_at: 2011-12-04 07:20:52.590354
   deleted_at: 
@@ -1150,10 +950,6 @@ worker52:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2011-12-26 09:46:27.221566
   updated_at: 2013-07-16 09:02:07.485254
   deleted_at: 
@@ -1172,10 +968,6 @@ worker54:
   display_order: 0
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2011-12-26 09:49:22.436485
   updated_at: 2011-12-26 09:49:22.436485
   deleted_at: 
@@ -1194,10 +986,6 @@ worker44:
   display_order: 10
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2012-07-14 07:34:29.890144
   updated_at: 2012-07-14 07:34:29.890144
   deleted_at: 
@@ -1216,10 +1004,6 @@ worker56:
   display_order: 0
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2012-07-15 05:05:23.435815
   updated_at: 2012-07-15 05:05:23.435815
   deleted_at: 
@@ -1238,10 +1022,6 @@ worker57:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2012-10-02 07:24:30.738494
   updated_at: 2012-10-02 07:24:30.738494
   deleted_at: 
@@ -1260,10 +1040,6 @@ worker58:
   display_order: 0
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2012-10-02 07:26:54.472357
   updated_at: 2012-10-02 07:26:54.472357
   deleted_at: 
@@ -1282,10 +1058,6 @@ worker60:
   display_order: 3
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2013-07-09 01:05:02.902932
   updated_at: 2013-07-09 01:05:02.902932
   deleted_at: 
@@ -1304,10 +1076,6 @@ worker61:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2013-07-16 09:00:48.638123
   updated_at: 2013-07-16 09:02:32.862635
   deleted_at: 
@@ -1326,10 +1094,6 @@ worker62:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2014-01-20 08:24:18.408287
   updated_at: 2015-03-21 09:53:17.563115
   deleted_at: 
@@ -1348,10 +1112,6 @@ worker63:
   display_order: 20
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2014-05-06 06:42:47.698017
   updated_at: 2014-05-06 06:42:47.698017
   deleted_at: 
@@ -1370,10 +1130,6 @@ worker64:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2015-01-12 06:49:22.583886
   updated_at: 2015-01-12 06:49:22.583886
   deleted_at: 
@@ -1392,10 +1148,6 @@ worker65:
   display_order: 3
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2015-03-21 09:52:02.423872
   updated_at: 2015-03-21 09:52:02.423872
   deleted_at: 
@@ -1414,10 +1166,6 @@ worker66:
   display_order: 0
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2015-12-19 07:01:07.68698
   updated_at: 2015-12-19 07:01:07.68698
   deleted_at: 
@@ -1436,10 +1184,6 @@ worker67:
   display_order: 2
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2016-01-11 08:40:04.804056
   updated_at: 2016-01-11 08:40:04.804056
   deleted_at: 
@@ -1458,10 +1202,6 @@ worker_farm:
   display_order: 1
   work_flag: t
   gender_id: 0
-  bank_code: 0000
-  branch_code: 000
-  account_type_id: 0
-  account_number: 0000000
   created_at: 2016-01-11 08:40:04.804056
   updated_at: 2016-01-11 08:40:04.804056
   deleted_at: 
