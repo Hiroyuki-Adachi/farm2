@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: adjustments
+# Table name: adjustments(調整)
 #
 #  id                             :bigint           not null, primary key
 #  carried_on(搬入日)             :date

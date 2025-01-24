@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: cost_types
+# Table name: cost_types(原価種別)
 #
 #  id                               :bigint           not null, primary key
 #  display_order(表示順)            :integer          default(0), not null

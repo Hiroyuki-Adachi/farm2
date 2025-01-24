@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: chemicals
+# Table name: chemicals(薬剤マスタ)
 #
 #  id(薬剤マスタ)             :integer          not null, primary key
 #  aqueous_flag(水溶フラグ)   :boolean          default(FALSE), not null

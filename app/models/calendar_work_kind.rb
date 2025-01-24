@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: calendar_work_kinds
+# Table name: calendar_work_kinds(カレンダー作業種別)
 #
 #  id                     :bigint           not null, primary key
 #  text_color(文字色)     :string(8)        default("#000000"), not null

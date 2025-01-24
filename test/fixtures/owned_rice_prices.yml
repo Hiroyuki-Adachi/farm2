@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: owned_rice_prices
+# Table name: owned_rice_prices(保有米単価)
 #
 #  id                       :bigint           not null, primary key
 #  display_order(表示順)    :integer          default(0), not null
