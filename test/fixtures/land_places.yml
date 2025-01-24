@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: land_places
+# Table name: land_places(場所マスタ)
 #
 #  id            :integer          not null, primary key
 #  name          :string(40)       not null

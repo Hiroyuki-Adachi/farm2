@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_work_types
+# Table name: work_work_types(作業分類キャッシュ)
 #
 #  work_id      :integer          not null, primary key
 #  work_type_id :integer          not null, primary key

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_verifications
+# Table name: work_verifications(日報検証)
 #
 #  id         :integer          not null, primary key
 #  work_id    :integer

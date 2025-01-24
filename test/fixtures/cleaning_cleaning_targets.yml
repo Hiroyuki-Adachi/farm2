@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: cleaning_cleaning_targets
+# Table name: cleaning_cleaning_targets(清掃対象)
 #
 #  id                 :integer          not null, primary key
 #  cleaning_id        :integer

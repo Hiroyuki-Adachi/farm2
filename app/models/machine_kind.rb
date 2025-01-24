@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: machine_kinds
+# Table name: machine_kinds(作業種別機械利用可能マスタ)
 #
 #  id              :integer          not null, primary key
 #  machine_type_id :integer          not null

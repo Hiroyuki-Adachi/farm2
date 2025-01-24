@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: cleaning_institutions
+# Table name: cleaning_institutions(清掃施設)
 #
 #  id             :integer          not null, primary key
 #  cleaning_id    :integer          not null

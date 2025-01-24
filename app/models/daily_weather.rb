@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: daily_weathers
+# Table name: daily_weathers(気象)
 #
 #  target_date    :date             not null, primary key
 #  height         :float

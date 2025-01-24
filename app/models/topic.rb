@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: topics
+# Table name: topics(トピック)
 #
 #  id                :bigint           not null, primary key
 #  content(内容)     :text

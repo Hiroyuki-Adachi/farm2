@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: land_homes
+# Table name: land_homes(土地管理)
 #
 #  id           :integer          not null, primary key
 #  land_id      :integer          not null
