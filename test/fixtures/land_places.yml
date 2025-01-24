@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: land_places
+# Table name: land_places(場所マスタ)
 #
 #  id(場所マスタ)        :integer          not null, primary key
 #  deleted_at            :datetime

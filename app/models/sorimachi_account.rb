@@ -1,11 +1,12 @@
 # == Schema Information
 #
-# Table name: sorimachi_accounts
+# Table name: sorimachi_accounts(ソリマチ勘定科目)
 #
 #  id                                  :bigint           not null, primary key
 #  auto_code(自動設定コード)           :integer
 #  code(科目コード)                    :integer          default(0), not null
-#  name(名称)                          :string           default(""), not null
+#  cost_flag(原価計上フラグ)           :boolean          default(FALSE), not null
+#  name(名称)                          :string(10)       default(""), not null
 #  term(年度(期))                      :integer          not null
 #  created_at                          :datetime         not null
 #  updated_at                          :datetime         not null

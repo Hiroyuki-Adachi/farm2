@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: sections
+# Table name: sections(班／町内マスタ)
 #
 #  id(班／町内マスタ)      :integer          not null, primary key
 #  deleted_at              :datetime

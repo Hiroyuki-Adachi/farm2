@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: works
+# Table name: works(作業データ)
 #
 #  id(作業データ)                          :integer          not null, primary key
 #  chemical_group_flag(薬剤グループフラグ) :boolean          default(FALSE), not null

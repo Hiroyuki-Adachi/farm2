@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: land_homes
+# Table name: land_homes(土地管理)
 #
 #  id                         :bigint           not null, primary key
 #  area(面積)                 :decimal(5, 2)    not null
