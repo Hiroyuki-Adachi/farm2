@@ -4,6 +4,7 @@ class RenameForEnums < ActiveRecord::Migration[8.0]
     rename_column :workers, :gender_id, :gender
     rename_column :workers, :position_id, :position
     rename_column :works, :weather_id, :weather
+    rename_column :chemical_inventories, :chemical_adjust_type_id, :chemical_adjust_type
   end
 
   def down
@@ -11,5 +12,6 @@ class RenameForEnums < ActiveRecord::Migration[8.0]
     rename_column :workers, :gender, :gender_id
     rename_column :workers, :position, :position_id
     rename_column :works, :weather, :weather_id
+    rename_column :chemical_inventories, :chemical_adjust_type, :chemical_adjust_type_id
   end
 end

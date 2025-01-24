@@ -333,6 +333,10 @@ ja:
         name: "名称"
         checked_on: "日付"
         stocks: "在庫"
+        chemical_adjust_types:
+          inventory: "棚卸"
+          stored: "納品"
+          shipping: "出庫"
 
       chemical_stock:
         name: "名称"

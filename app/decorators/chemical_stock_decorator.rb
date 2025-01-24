@@ -2,7 +2,7 @@ class ChemicalStockDecorator < Draper::Decorator
   delegate_all
 
   def long_name
-    model.chemical_inventory_id ? "#{model.chemical_inventory.chemical_adjust_type.name}(#{model.name})" : model.name
+    model.chemical_inventory_id ? "#{model.chemical_inventory.chemical_adjust_type_name}(#{model.name})" : model.name
   end
 
   def stored_format

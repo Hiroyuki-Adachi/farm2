@@ -90,7 +90,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_23_132500) do
 
   create_table "chemical_inventories", comment: "農薬棚卸", force: :cascade do |t|
     t.date "checked_on", null: false, comment: "確認日"
-    t.integer "chemical_adjust_type_id", default: 0, null: false, comment: "在庫調整種別"
+    t.integer "chemical_adjust_type", default: 0, null: false, comment: "在庫調整種別"
     t.string "name", limit: 40, default: "", null: false, comment: "棚卸名称"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
