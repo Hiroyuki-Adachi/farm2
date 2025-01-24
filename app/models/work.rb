@@ -22,15 +22,15 @@
 #
 
 class Work < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
 
   require 'ostruct'
 
-  ENOUGH = WorkVerification::ENOUGH
+  enum :weather, { sunny: 1, cloudy: 2, rainy: 3, snow: 4, other: 9 }
+
   after_save :set_chemical_group_no
 
   validates :worked_at, presence: true
-  validates :weather_id,   presence: true
+  validates :weather,   presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
 
   belongs_to :work_type, -> {with_deleted}
@@ -39,7 +39,6 @@ class Work < ApplicationRecord
   belongs_to :creator, -> {with_deleted}, class_name: "Worker", foreign_key: "created_by"
   belongs_to :printer, -> {with_deleted}, class_name: "Worker", foreign_key: "printed_by"
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
-  belongs_to_active_hash :weather
 
   has_many :work_lands, -> {order('work_lands.display_order')}, dependent: :destroy
   has_many :work_results, -> {order('work_results.display_order')}, dependent: :destroy
@@ -87,7 +86,7 @@ class Work < ApplicationRecord
 SQL
       .order(worked_at: :ASC, id: :ASC)
   }
-  scope :enough_check, ->(worker) {where([<<SQL.squish, worker.id, worker.position == :director ? ENOUGH + 1 : ENOUGH])}
+  scope :enough_check, ->(worker) {where([<<SQL.squish, worker.id, worker.position == :director ? WorkVerification::ENOUGH + 1 : WorkVerification::ENOUGH])}
       NOT EXISTS (
         SELECT work_verifications.work_id FROM work_verifications
           WHERE (work_verifications.work_id = works.id)
@@ -490,6 +489,10 @@ SQL
     works = works.where(["worked_at >= ?", work_search[:worked_at1]]) if work_search[:worked_at1].present?
     works = works.where(["worked_at <= ?", work_search[:worked_at2]]) if work_search[:worked_at2].present?
     return works
+  end
+
+  def weather_name
+    I18n.t("activerecord.attributes.work.weathers.#{self.weather}")
   end
 
   private

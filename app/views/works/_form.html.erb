@@ -4,8 +4,8 @@
     <%= f.date_field :worked_at, {required: true, class: "form-control", min: current_system.start_date, max: current_system.end_date} %>
   </div>
   <div class="col-md-2">
-    <%= f.label :weather_id, '', class: "col-form-label-lg form-label" %>
-    <%= f.select(:weather_id, @weathers.map {|weather| [weather.name, weather.id]}, {}, {class: "form-select"}) %>
+    <%= f.label :weather, '', class: "col-form-label-lg form-label" %>
+    <%= f.select(:weather, Work.weathers.keys.map { |key| [I18n.t("activerecord.attributes.work.weathers.#{key}"), key] }, {}, {class: "form-select"}) %>
   </div>
   <div class="col-md-2">
     <%= f.label :start_at, '', class: "col-form-label-lg form-label" %>

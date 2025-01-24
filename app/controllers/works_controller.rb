@@ -119,12 +119,11 @@ class WorksController < ApplicationController
   end
 
   def set_masters
-    @weathers = Weather.all
     @work_types = WorkType.usual
   end
 
   def work_params
-    params.expect(work: [:worked_at, :weather_id, :start_at, :end_at, :work_type_id, :work_kind_id, :name, :remarks])
+    params.expect(work: [:worked_at, :weather, :start_at, :end_at, :work_type_id, :work_kind_id, :name, :remarks])
   end
 
   def check_fixed

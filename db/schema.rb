@@ -1042,7 +1042,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_23_132500) do
   create_table "works", id: { type: :serial, comment: "作業データ" }, comment: "作業データ", force: :cascade do |t|
     t.integer "term", null: false, comment: "年度(期)"
     t.date "worked_at", null: false, comment: "作業日"
-    t.integer "weather_id", comment: "天気"
+    t.integer "weather", comment: "天気"
     t.integer "work_type_id", comment: "作業分類"
     t.string "name", limit: 40, null: false, comment: "作業名称"
     t.text "remarks", comment: "備考"

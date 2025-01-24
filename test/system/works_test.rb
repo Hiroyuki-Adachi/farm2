@@ -13,7 +13,7 @@ class WorksTest < ApplicationSystemTestCase
     assert_selector 'h1', exact_text: '作業日報入力'
 
     fill_in 'work_worked_at', with: Date.new(2015, 5, 5)
-    select '曇り', from: 'work[weather_id]'
+    select '曇り', from: 'work[weather]'
     fill_in 'work_start_at', with: '0900'
     fill_in 'work_end_at', with: '1500'
     choose 'work_type_23'

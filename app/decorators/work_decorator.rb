@@ -76,10 +76,6 @@ class WorkDecorator < Draper::Decorator
     return h.raw("&nbsp;") + work_type.name
   end
 
-  def weather_name
-    model.weather ? model.weather.name : ""
-  end
-
   def self.get_terms(term)
     terms = Work.get_terms(term).map { |t| [t.strftime('%Jy年%m月'), t.strftime('%Y-%m-%d')] }
     return terms

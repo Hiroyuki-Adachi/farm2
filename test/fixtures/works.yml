@@ -25,7 +25,7 @@ work_fixed:
   id: '1477'
   term: '2015'
   worked_at: '2015-01-18'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '12'
   name: H27 作付け計画、その他
   remarks: ''
@@ -41,7 +41,7 @@ works1:
   id: '1478'
   term: '2015'
   worked_at: '2015-03-21'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: "サーバ再起動、データバックアップ、プリンタトナー発注。"
@@ -57,7 +57,7 @@ works2:
   id: '1479'
   term: '2015'
   worked_at: '2015-01-05'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: ''
   remarks: ''
@@ -73,7 +73,7 @@ works3:
   id: '1480'
   term: '2015'
   worked_at: '2015-01-06'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: ''
   remarks: ''
@@ -89,7 +89,7 @@ works4:
   id: '1481'
   term: '2015'
   worked_at: '2015-03-07'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: "真砂運搬、整地"
   remarks: "大前の田"
@@ -105,7 +105,7 @@ works5:
   id: '1482'
   term: '2015'
   worked_at: '2015-03-13'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '23'
   name: "あぜ構築、地ならし"
   remarks: ''
@@ -123,7 +123,7 @@ works6:
   id: '1483'
   term: '2015'
   worked_at: '2015-03-14'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: ''
   remarks: "出島"
@@ -139,7 +139,7 @@ work_no_fix1:
   id: '1484'
   term: '2015'
   worked_at: '2015-03-15'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '12'
   name: ''
   remarks: ''
@@ -155,7 +155,7 @@ work_no_fix2:
   id: '1485'
   term: '2015'
   worked_at: '2015-03-16'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '12'
   name: "干拓草刈り、畦作成"
   remarks: ''
@@ -171,7 +171,7 @@ works9:
   id: '1486'
   term: '2015'
   worked_at: '2015-03-16'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: ''
   remarks: ''
@@ -187,7 +187,7 @@ work_study_create:
   id: '1487'
   term: '2015'
   worked_at: '2015-03-21'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -203,7 +203,7 @@ work_study_edit:
   id: '1488'
   term: '2015'
   worked_at: '2015-03-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -219,7 +219,7 @@ works12:
   id: '1489'
   term: '2015'
   worked_at: '2015-03-19'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: "(配当）"
   remarks: ''
@@ -235,7 +235,7 @@ works13:
   id: '1490'
   term: '2015'
   worked_at: '2015-03-18'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: "(配当）"
   remarks: ''
@@ -251,7 +251,7 @@ work_wcs:
   id: '1491'
   term: '2015'
   worked_at: '2015-03-16'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -267,7 +267,7 @@ works15:
   id: '1492'
   term: '2015'
   worked_at: '2015-03-17'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -283,7 +283,7 @@ works16:
   id: '1493'
   term: '2015'
   worked_at: '2015-03-18'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: 3/17・3/18　大灘の田
@@ -299,7 +299,7 @@ works17:
   id: '1494'
   term: '2015'
   worked_at: '2015-03-18'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -315,7 +315,7 @@ work_not_fixed:
   id: '1495'
   term: '2015'
   worked_at: '2015-03-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: 1
   name: ''
   remarks: ''
@@ -334,7 +334,7 @@ works19:
   id: '1496'
   term: '2015'
   worked_at: '2015-03-21'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: ''
   remarks: ''
@@ -350,7 +350,7 @@ works20:
   id: '1497'
   term: '2015'
   worked_at: '2015-03-21'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: ''
   remarks: "トラクタ作業機交換"
@@ -366,7 +366,7 @@ works21:
   id: '1498'
   term: '2015'
   worked_at: '2015-03-14'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: H26保有米売買契約書作成
@@ -382,7 +382,7 @@ works22:
   id: '1499'
   term: '2015'
   worked_at: '2015-03-15'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: H26保有米売買契約書作成
@@ -398,7 +398,7 @@ works23:
   id: '1500'
   term: '2015'
   worked_at: '2015-03-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: H26保有米契約書作成・日報整理
@@ -414,7 +414,7 @@ works24:
   id: '1501'
   term: '2015'
   worked_at: '2015-03-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -430,7 +430,7 @@ works25:
   id: '1502'
   term: '2015'
   worked_at: '2015-03-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -446,7 +446,7 @@ works26:
   id: '1503'
   term: '2015'
   worked_at: '2015-03-24'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -462,7 +462,7 @@ works27:
   id: '1504'
   term: '2015'
   worked_at: '2015-04-18'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: "田植機保守、格納庫掃除"
   remarks: ''
@@ -478,7 +478,7 @@ works28:
   id: '1505'
   term: '2015'
   worked_at: '2015-04-11'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: "春作業について"
   remarks: ''
@@ -494,7 +494,7 @@ works29:
   id: '1506'
   term: '2015'
   worked_at: '2015-03-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: "トラクター・オイル交換他"
   remarks: ''
@@ -510,7 +510,7 @@ works30:
   id: '1507'
   term: '2015'
   worked_at: '2015-03-23'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -526,7 +526,7 @@ work_wcs2:
   id: '1508'
   term: '2015'
   worked_at: '2015-03-25'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -542,7 +542,7 @@ works32:
   id: '1509'
   term: '2015'
   worked_at: '2015-03-26'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: ''
   remarks: "干拓畦補修・ミニＢＦ洗車・園屋へ返却"
@@ -558,7 +558,7 @@ works33:
   id: '1510'
   term: '2015'
   worked_at: '2015-03-26'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "出島・草刈り"
   remarks: "トラクタ-・ＭＺ655"
@@ -574,7 +574,7 @@ works34:
   id: '1511'
   term: '2015'
   worked_at: '2015-03-26'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "堆肥散布機・掃除"
   remarks: ''
@@ -590,7 +590,7 @@ works35:
   id: '1512'
   term: '2015'
   worked_at: '2015-03-27'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: "トラクタ-作業機交換・干拓草刈り・米ぬか片付"
   remarks: ''
@@ -606,7 +606,7 @@ works36:
   id: '1513'
   term: '2015'
   worked_at: '2015-03-28'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: 2585・9.7　2584-イ・29.4　2584-ロ・29.5　　ＭＺ65・70.05ℓ　№3・54.5ℓ
@@ -622,7 +622,7 @@ works37:
   id: '1514'
   term: '2015'
   worked_at: '2015-03-29'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: 2669・34.6
@@ -638,7 +638,7 @@ works38:
   id: '1515'
   term: '2015'
   worked_at: '2015-03-03'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: "第3回総会　　議事の整理・原文作成・入力印刷"
@@ -654,7 +654,7 @@ works39:
   id: '1516'
   term: '2015'
   worked_at: '2015-05-03'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '15'
   name: "除草剤個別配分"
   remarks: ''
@@ -670,7 +670,7 @@ works40:
   id: '1517'
   term: '2015'
   worked_at: '2015-05-04'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: "除草剤個別配分・日報整理"
   remarks: ''
@@ -686,7 +686,7 @@ works41:
   id: '1518'
   term: '2015'
   worked_at: '2015-04-30'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: "農業委員会書類作成"
   remarks: ''
@@ -702,7 +702,7 @@ works42:
   id: '1519'
   term: '2015'
   worked_at: '2015-04-02'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: "ＭＺ655"
   remarks: "新田前・40ａ"
@@ -718,7 +718,7 @@ works43:
   id: '1520'
   term: '2015'
   worked_at: '2015-04-04'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: "ＭＺ65：松本\r\nＭＺ655：中西屋"
@@ -734,7 +734,7 @@ works44:
   id: '1521'
   term: '2015'
   worked_at: '2015-04-05'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '15'
   name: ''
   remarks: "ＭＺ65：ハンクロ：岡屋\r\nＭＺ65orMZ655?：東前"
@@ -750,7 +750,7 @@ works45:
   id: '1522'
   term: '2015'
   worked_at: '2015-04-06'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '15'
   name: ''
   remarks: MZ655
@@ -766,7 +766,7 @@ works46:
   id: '1523'
   term: '2015'
   worked_at: '2015-04-07'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '15'
   name: ''
   remarks: MZ655
@@ -782,7 +782,7 @@ works47:
   id: '1524'
   term: '2015'
   worked_at: '2015-04-08'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: "MZ65:中家\r\nMZ655orMZ65ハンクロ？：中北\r\n"
@@ -798,7 +798,7 @@ works48:
   id: '1525'
   term: '2015'
   worked_at: '2015-04-09'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: "MZ??\r\n2023・・23.6a"
@@ -814,7 +814,7 @@ works49:
   id: '1526'
   term: '2015'
   worked_at: '2015-04-10'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '15'
   name: ''
   remarks: "トラクター使用機械：不明"
@@ -830,7 +830,7 @@ works50:
   id: '1527'
   term: '2015'
   worked_at: '2015-04-11'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: "トラクタ－使用者：不明"
@@ -846,7 +846,7 @@ works51:
   id: '1528'
   term: '2015'
   worked_at: '2015-04-12'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: "トラクター使用：不明"
@@ -862,7 +862,7 @@ works52:
   id: '1529'
   term: '2015'
   worked_at: '2015-04-12'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "干拓・除草剤散布\r\nポンプ架装含む\r\nデジマ-95-1・93-1・66-1・65・64・63　Σ232.7a"
@@ -878,7 +878,7 @@ works53:
   id: '1530'
   term: '2015'
   worked_at: '2015-04-13'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -894,7 +894,7 @@ works54:
   id: '1531'
   term: '2015'
   worked_at: '2015-04-15'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: "作業機交換・メンテナンス"
   remarks: ''
@@ -910,7 +910,7 @@ works55:
   id: '1532'
   term: '2015'
   worked_at: '2015-04-21'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: ''
@@ -926,7 +926,7 @@ works56:
   id: '1533'
   term: '2015'
   worked_at: '2015-04-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: "新田前・40a\r\n"
@@ -942,7 +942,7 @@ works57:
   id: '1534'
   term: '2015'
   worked_at: '2015-04-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: ''
   remarks: ''
@@ -958,7 +958,7 @@ works58:
   id: '1535'
   term: '2015'
   worked_at: '2015-04-24'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -974,7 +974,7 @@ works59:
   id: '1536'
   term: '2015'
   worked_at: '2015-04-25'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -990,7 +990,7 @@ works60:
   id: '1537'
   term: '2015'
   worked_at: '2015-04-25'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: "フルターボ・16㎏・サラブレッドKAI・23㎏　イセキみどり・29袋：：：苗191+301箱"
@@ -1006,7 +1006,7 @@ works61:
   id: '1538'
   term: '2015'
   worked_at: '2015-04-26'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: "デジマ干拓"
   remarks: "デジマ・95-1・93-1・63・64・65　Σ200.8a\r\n"
@@ -1022,7 +1022,7 @@ works62:
   id: '1539'
   term: '2015'
   worked_at: '2015-04-26'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: 2639・34.6a+新田前・40a
   remarks: "フル・24＋19.8㎏：KAI・29.3＋26.5㎏：いずも28+37袋・米育ち9袋・キヌ一発15袋：ミルキー130箱：コシ46+309箱：キヌ306箱"
@@ -1038,7 +1038,7 @@ works63:
   id: '1540'
   term: '2015'
   worked_at: '2015-04-27'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: ''
   remarks: "フル39.7㎏：KAI34.2㎏：イセキみどり40袋：米育ち34袋：キヌ一発4袋：きぬ350＋222箱"
@@ -1054,7 +1054,7 @@ works64:
   id: '1541'
   term: '2015'
   worked_at: '2015-04-28'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: "こし・きぬ・たちあやか"
   remarks: "フル11.3㎏：オンコル12㎏：KAI12㎏：バッチリ12㎏：いずも7袋：ヰセキみどり14袋：硫安21袋：たちあやか192箱：キヌ80箱：こし80箱"
@@ -1070,7 +1070,7 @@ works65:
   id: '1542'
   term: '2015'
   worked_at: '2015-04-27'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: ''
   remarks: "干拓：勝田・105.1a"
@@ -1086,7 +1086,7 @@ works66:
   id: '1543'
   term: '2015'
   worked_at: '2015-04-29'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: "勝田：線路脇：23a"
@@ -1102,7 +1102,7 @@ works67:
   id: '1544'
   term: '2015'
   worked_at: '2015-04-29'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "たちあやか***2488-1:6.1a"
   remarks: "オンコル12+18㎏：バッチリ19+24㎏：硫安32+45袋：たちあやか256+64+346+26箱\r\n"
@@ -1118,7 +1118,7 @@ works68:
   id: '1545'
   term: '2015'
   worked_at: '2015-04-30'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "出島：95-1・93-1"
   remarks: "オンコル10㎏：バッチリ17㎏：硫安27袋：たちあやか214箱"
@@ -1134,7 +1134,7 @@ works69:
   id: '1546'
   term: '2015'
   worked_at: '2015-07-05'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "日報整理・入力"
@@ -1150,7 +1150,7 @@ works70:
   id: '1547'
   term: '2015'
   worked_at: '2015-05-02'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: "コシ早：フル2.0㎏・KAI2.5㎏・\r\n稲作名人4袋\r\n中北・（松の家）40箱"
@@ -1166,7 +1166,7 @@ works71:
   id: '1548'
   term: '2015'
   worked_at: '2015-05-03'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '14'
   name: "出島：勝田95-1・93-1　52.5+52.6a"
   remarks: ''
@@ -1182,7 +1182,7 @@ works72:
   id: '1549'
   term: '2015'
   worked_at: '2015-05-03'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "出島：排水側畦畔作り"
   remarks: "出島：63・64・65・66"
@@ -1198,7 +1198,7 @@ works73:
   id: '1550'
   term: '2015'
   worked_at: '2015-05-06'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: "竹内水田代掻き；50a"
@@ -1214,7 +1214,7 @@ works74:
   id: '1551'
   term: '2015'
   worked_at: '2015-05-06'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "出島：荒起こし+トラクターアタッチメント交換\r\n67-1：31.9a"
@@ -1230,7 +1230,7 @@ works75:
   id: '1552'
   term: '2015'
   worked_at: '2015-05-09'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "作業機交換"
   remarks: ''
@@ -1246,7 +1246,7 @@ works76:
   id: '1553'
   term: '2015'
   worked_at: '2015-05-10'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: "竹内田植：50a"
@@ -1262,7 +1262,7 @@ works77:
   id: '1554'
   term: '2015'
   worked_at: '2015-05-11'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -1278,7 +1278,7 @@ works78:
   id: '1555'
   term: '2015'
   worked_at: '2015-05-12'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -1294,7 +1294,7 @@ works79:
   id: '1556'
   term: '2015'
   worked_at: '2015-05-13'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: 4607-イ・ホ：整地
@@ -1310,7 +1310,7 @@ works80:
   id: '1557'
   term: '2015'
   worked_at: '2015-05-14'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '4'
   name: ''
   remarks: ''
@@ -1326,7 +1326,7 @@ works81:
   id: '1558'
   term: '2015'
   worked_at: '2015-05-16'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '4'
   name: "きぬむすめ"
   remarks: ''
@@ -1342,7 +1342,7 @@ works82:
   id: '1559'
   term: '2015'
   worked_at: '2015-05-17'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "出島草刈り"
@@ -1358,7 +1358,7 @@ works83:
   id: '1560'
   term: '2015'
   worked_at: '2015-05-17'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "出島草刈り"
@@ -1374,7 +1374,7 @@ works84:
   id: '1561'
   term: '2015'
   worked_at: '2015-05-17'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: ''
   remarks: "洗車場：泥採り\r\n新屋ミニBF：1.5hr"
@@ -1390,7 +1390,7 @@ works85:
   id: '1562'
   term: '2015'
   worked_at: '2015-07-19'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '14'
   name: ''
   remarks: "保有米予定表作成：日報整理"
@@ -1406,7 +1406,7 @@ works86:
   id: '1563'
   term: '2015'
   worked_at: '2015-05-17'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '4'
   name: ''
   remarks: ''
@@ -1422,7 +1422,7 @@ works87:
   id: '1564'
   term: '2015'
   worked_at: '2015-05-18'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '4'
   name: ''
   remarks: ''
@@ -1438,7 +1438,7 @@ works88:
   id: '1565'
   term: '2015'
   worked_at: '2015-05-19'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -1454,7 +1454,7 @@ works89:
   id: '1566'
   term: '2015'
   worked_at: '2015-05-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -1470,7 +1470,7 @@ works90:
   id: '1567'
   term: '2015'
   worked_at: '2015-05-21'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '24'
   name: ''
   remarks: ''
@@ -1486,7 +1486,7 @@ works91:
   id: '1568'
   term: '2015'
   worked_at: '2015-05-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: ''
   remarks: "田植機：作業機交換"
@@ -1502,7 +1502,7 @@ works92:
   id: '1569'
   term: '2015'
   worked_at: '2015-05-23'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -1518,7 +1518,7 @@ works93:
   id: '1570'
   term: '2015'
   worked_at: '2015-05-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: "コシ：遅"
   remarks: ''
@@ -1534,7 +1534,7 @@ works94:
   id: '1571'
   term: '2015'
   worked_at: '2015-05-24'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '24'
   name: "きぬ：遅＊＊＊＊飼料稲WCS・・・たちすずか"
   remarks: ''
@@ -1550,7 +1550,7 @@ works95:
   id: '1572'
   term: '2015'
   worked_at: '2015-05-24'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -1566,7 +1566,7 @@ works96:
   id: '1573'
   term: '2015'
   worked_at: '2015-05-25'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: ''
   remarks: ''
@@ -1582,7 +1582,7 @@ works97:
   id: '1574'
   term: '2015'
   worked_at: '2015-05-25'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "たちすずか"
   remarks: ''
@@ -1598,7 +1598,7 @@ works98:
   id: '1575'
   term: '2015'
   worked_at: '2015-05-26'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "たちすずか"
   remarks: ''
@@ -1614,7 +1614,7 @@ works99:
   id: '1576'
   term: '2015'
   worked_at: '2015-05-27'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "たちすずか"
   remarks: ''
@@ -1630,7 +1630,7 @@ works100:
   id: '1577'
   term: '2015'
   worked_at: '2015-05-28'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '8'
   name: "みほひかり"
   remarks: ''
@@ -1646,7 +1646,7 @@ works101:
   id: '1578'
   term: '2015'
   worked_at: '2015-05-30'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '13'
   name: "田植機・トラクター掃除"
   remarks: ''
@@ -1662,7 +1662,7 @@ works102:
   id: '1579'
   term: '2015'
   worked_at: '2015-05-31'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: ''
   remarks: "出島：畦波設置\r\nデジマ*63-1・64－1・65－1・66-1"
@@ -1678,7 +1678,7 @@ works103:
   id: '1580'
   term: '2015'
   worked_at: '2015-06-06'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: ''
   remarks: "ハロー・田植機***さび止め吹付"
@@ -1694,7 +1694,7 @@ works104:
   id: '1581'
   term: '2015'
   worked_at: '2015-06-07'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: ''
   remarks: "トラクター作業機交換（草刈り機）"
@@ -1710,7 +1710,7 @@ works105:
   id: '1582'
   term: '2015'
   worked_at: '2015-06-10'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "体質強化緊急対策事業の粗食・直播の写真撮り"
@@ -1726,7 +1726,7 @@ works106:
   id: '1583'
   term: '2015'
   worked_at: '2015-06-14'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "干拓草刈り"
@@ -1742,7 +1742,7 @@ works107:
   id: '1584'
   term: '2015'
   worked_at: '2015-06-14'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '12'
   name: "干拓"
   remarks: "干拓草刈り"
@@ -1758,7 +1758,7 @@ works108:
   id: '1585'
   term: '2015'
   worked_at: '2015-07-12'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '14'
   name: ''
   remarks: "格納庫掃除"
@@ -1774,7 +1774,7 @@ works109:
   id: '1586'
   term: '2015'
   worked_at: '2015-07-04'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '15'
   name: ''
   remarks: "ミルキークイン追肥＊みのりアップ1袋/10a"
@@ -1790,7 +1790,7 @@ works110:
   id: '1587'
   term: '2015'
   worked_at: '2015-07-16'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '14'
   name: ''
   remarks: "台風対策"
@@ -1806,7 +1806,7 @@ works111:
   id: '1588'
   term: '2015'
   worked_at: '2015-07-19'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '14'
   name: ''
   remarks: "台風対策"
@@ -1822,7 +1822,7 @@ works112:
   id: '1589'
   term: '2015'
   worked_at: '2015-07-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: ''
   remarks: ''
@@ -1838,7 +1838,7 @@ works113:
   id: '1590'
   term: '2015'
   worked_at: '2015-07-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: ''
   remarks: "出島：勝田"
@@ -1854,7 +1854,7 @@ works114:
   id: '1591'
   term: '2015'
   worked_at: '2015-07-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "日報入力：整理"
@@ -1870,7 +1870,7 @@ works115:
   id: '1592'
   term: '2015'
   worked_at: '2015-07-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '12'
   name: ''
   remarks: ''
@@ -1886,7 +1886,7 @@ works116:
   id: '1593'
   term: '2015'
   worked_at: '2015-07-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '12'
   name: ''
   remarks: ''
@@ -1902,7 +1902,7 @@ works117:
   id: '1594'
   term: '2015'
   worked_at: '2015-07-24'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -1918,7 +1918,7 @@ works118:
   id: '1595'
   term: '2015'
   worked_at: '2015-07-25'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -1934,7 +1934,7 @@ works119:
   id: '1596'
   term: '2015'
   worked_at: '2015-07-26'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -1950,7 +1950,7 @@ works120:
   id: '1598'
   term: '2015'
   worked_at: '2015-07-22'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '14'
   name: "廃棄ビニール処理"
   remarks: ''
@@ -1966,7 +1966,7 @@ works121:
   id: '1599'
   term: '2015'
   worked_at: '2015-07-25'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "出島・除草剤散布"
   remarks: "ﾃﾞｼﾞﾏ41-1･32.5"
@@ -1982,7 +1982,7 @@ works122:
   id: '1600'
   term: '2015'
   worked_at: '2015-07-26'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "出島・草刈り"
   remarks: ''
@@ -1998,7 +1998,7 @@ works123:
   id: '1601'
   term: '2015'
   worked_at: '2015-08-01'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: ''
   remarks: 2639-1・17.6
@@ -2014,7 +2014,7 @@ works124:
   id: '1602'
   term: '2015'
   worked_at: '2015-08-01'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "蕎麦田・除草　　　改良剤散布\r\nクロ-ラ-・ブロ－ドキャスター：トラクタ・除草機：ローダー"
@@ -2030,7 +2030,7 @@ works125:
   id: '1603'
   term: '2015'
   worked_at: '2015-08-01'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "出島・溝掘り…蕎麦"
@@ -2046,7 +2046,7 @@ works126:
   id: '1604'
   term: '2015'
   worked_at: '2015-08-02'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "出島・溝掘り　　　園家ミニBF・4.0hr使用　　トラクタ－＋ミニBF\r\n"
@@ -2062,7 +2062,7 @@ works127:
   id: '1605'
   term: '2015'
   worked_at: '2015-08-02'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "出島・草刈り"
   remarks: ''
@@ -2078,7 +2078,7 @@ works128:
   id: '1606'
   term: '2015'
   worked_at: '2015-08-03'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "そば削溝／種まき"
   remarks: "削溝・荒起こし　　種まき機取付け　MZ65"
@@ -2094,7 +2094,7 @@ works129:
   id: '1607'
   term: '2015'
   worked_at: '2015-08-04'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "そば削溝／種まき"
   remarks: "蕎麦種まき　　MZ65　播種機"
@@ -2110,7 +2110,7 @@ works130:
   id: '1608'
   term: '2015'
   worked_at: '2015-08-05'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: MZ65+播種機：洗車
@@ -2126,7 +2126,7 @@ works131:
   id: '1609'
   term: '2015'
   worked_at: '2015-08-09'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: ''
   remarks: "出島：除草剤散布"
@@ -2142,7 +2142,7 @@ works132:
   id: '1610'
   term: '2015'
   worked_at: '2015-08-09'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "出島：草刈り…勝田"
@@ -2158,7 +2158,7 @@ works133:
   id: '1611'
   term: '2015'
   worked_at: '2015-08-10'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "出島：草刈り・クボタ"
@@ -2174,7 +2174,7 @@ works134:
   id: '1612'
   term: '2015'
   worked_at: '2015-08-17'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: ''
   remarks: "第1回・穂肥　（N2.7kg）　　　　　　　　　　ミノルアップ15kg/10a"
@@ -2190,7 +2190,7 @@ works135:
   id: '1613'
   term: '2015'
   worked_at: '2015-08-19'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: ''
@@ -2206,7 +2206,7 @@ works136:
   id: '1614'
   term: '2015'
   worked_at: '2015-08-19'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: ''
   remarks: WCS・コンバイン・ロールベイラー　：点検整備
@@ -2222,7 +2222,7 @@ works137:
   id: '1615'
   term: '2015'
   worked_at: '2015-08-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: ''
   remarks: WCS:59本    2510-1…15.2/25.2：10a残
@@ -2238,7 +2238,7 @@ works138:
   id: '1616'
   term: '2015'
   worked_at: '2015-08-22'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '8'
   name: ''
   remarks: WCS：ホールクロップ・2台　　ラップマシン2台
@@ -2254,7 +2254,7 @@ works139:
   id: '1617'
   term: '2015'
   worked_at: '2015-08-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "トラクター・草刈り→ブロキャス・草刈り→ロータリー：交換\r\n"
@@ -2270,7 +2270,7 @@ works140:
   id: '1618'
   term: '2015'
   worked_at: '2015-08-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "たちあやか"
   remarks: "刈取り"
@@ -2286,7 +2286,7 @@ works141:
   id: '1619'
   term: '2015'
   worked_at: '2015-08-24'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '8'
   name: ''
   remarks: "溝切り　MZ655"
@@ -2302,7 +2302,7 @@ works142:
   id: '1620'
   term: '2015'
   worked_at: '2015-08-24'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: ''
   remarks: 188本
@@ -2318,7 +2318,7 @@ works143:
   id: '1621'
   term: '2015'
   worked_at: '2015-08-27'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: ''
   remarks: "たちすずか　採種田"
@@ -2334,7 +2334,7 @@ works144:
   id: '1622'
   term: '2015'
   worked_at: '2015-08-28'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '8'
   name: ''
   remarks: "刈取り　　94本+187㎏*1本　　　　出島95-1：52.5a  出島93-1：52.6a"
@@ -2350,7 +2350,7 @@ works145:
   id: '1623'
   term: '2015'
   worked_at: '2015-08-29'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "キャベツ・ブロッコリー　　ハンクロトラクタ：松本・ローダー：中原"
@@ -2366,7 +2366,7 @@ work_harvest1:
   id: '1624'
   term: '2015'
   worked_at: '2015-08-29'
-  weather_id: '1'
+  weather: '1'
   work_type_id: 6
   name: ''
   remarks: ''
@@ -2382,7 +2382,7 @@ work_harvest2:
   id: '1625'
   term: '2015'
   worked_at: '2015-08-29'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: ''
@@ -2398,7 +2398,7 @@ works148:
   id: '1626'
   term: '2015'
   worked_at: '2015-08-29'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "洗い場整備　ミニBF：園屋"
@@ -2414,7 +2414,7 @@ work_harvest3:
   id: '1627'
   term: '2015'
   worked_at: '2015-08-30'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: ''
@@ -2430,7 +2430,7 @@ works150:
   id: '1628'
   term: '2015'
   worked_at: '2015-08-31'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '14'
   name: ''
   remarks: "格納庫片付"
@@ -2446,7 +2446,7 @@ works151:
   id: '1629'
   term: '2015'
   worked_at: '2015-09-10'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: "山本工務店"
   remarks: ''
@@ -2462,7 +2462,7 @@ works152:
   id: '1630'
   term: '2015'
   worked_at: '2015-09-13'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: ''
@@ -2478,7 +2478,7 @@ works153:
   id: '1631'
   term: '2015'
   worked_at: '2015-09-13'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: "プリンタ調整、セキュリティソフト設定"
   remarks: ''
@@ -2494,7 +2494,7 @@ works154:
   id: '1632'
   term: '2015'
   worked_at: '2015-09-16'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: WCSたちあやか
   remarks: ''
@@ -2510,7 +2510,7 @@ works155:
   id: '1633'
   term: '2015'
   worked_at: '2015-09-02'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: ''
@@ -2526,7 +2526,7 @@ works156:
   id: '1634'
   term: '2015'
   worked_at: '2015-09-04'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: "外島藤江分家：70a・中家：30a分　　　　新田：多久和10a・合ケ谷：63a\r\n\r\n"
@@ -2542,7 +2542,7 @@ works157:
   id: '1635'
   term: '2015'
   worked_at: '2015-09-06'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '16'
   name: "そば田の溝掘り：出島"
   remarks: ''
@@ -2558,7 +2558,7 @@ works158:
   id: '1636'
   term: '2015'
   worked_at: '2015-09-06'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '1'
   name: "出荷米配置替え"
   remarks: ''
@@ -2574,7 +2574,7 @@ works159:
   id: '1637'
   term: '2015'
   worked_at: '2015-09-11'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: ''
   remarks: "積込\r\n"
@@ -2590,7 +2590,7 @@ works160:
   id: '1638'
   term: '2015'
   worked_at: '2015-09-05'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "キャベツ　植え"
   remarks: "植付け機・トラクター：各1ｈｒ・中家\r\n"
@@ -2606,7 +2606,7 @@ works161:
   id: '1639'
   term: '2015'
   worked_at: '2015-09-11'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: "新田：竹内・吾郷　　???"
@@ -2622,7 +2622,7 @@ works162:
   id: '1640'
   term: '2015'
   worked_at: '2015-09-12'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: ''
   remarks: "トラクター：ブロードキャスター⇒草刈り機"
@@ -2638,7 +2638,7 @@ works163:
   id: '1641'
   term: '2015'
   worked_at: '2015-09-12'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: ''
   remarks: WCS積込
@@ -2654,7 +2654,7 @@ works164:
   id: '1642'
   term: '2015'
   worked_at: '2015-09-12'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '1'
   name: ''
   remarks: "２４０５－ロ：12.5a"
@@ -2670,7 +2670,7 @@ works165:
   id: '1643'
   term: '2015'
   worked_at: '2015-10-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '26'
   name: ''
   remarks: ''
@@ -2686,7 +2686,7 @@ works166:
   id: '1644'
   term: '2015'
   worked_at: '2015-10-24'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -2702,7 +2702,7 @@ works167:
   id: '1645'
   term: '2015'
   worked_at: '2015-10-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '25'
   name: "(パレット回収）"
   remarks: ''
@@ -2718,7 +2718,7 @@ works168:
   id: '1646'
   term: '2015'
   worked_at: '2015-11-02'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -2734,7 +2734,7 @@ works169:
   id: '1647'
   term: '2015'
   worked_at: '2015-11-01'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -2750,7 +2750,7 @@ works170:
   id: '1648'
   term: '2015'
   worked_at: '2015-11-03'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -2766,7 +2766,7 @@ works171:
   id: '1649'
   term: '2015'
   worked_at: '2015-11-04'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: ''
@@ -2782,7 +2782,7 @@ works172:
   id: '1650'
   term: '2015'
   worked_at: '2015-11-05'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -2798,7 +2798,7 @@ works173:
   id: '1651'
   term: '2015'
   worked_at: '2015-11-08'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '13'
   name: "格納庫掃除"
   remarks: ''
@@ -2814,7 +2814,7 @@ works174:
   id: '1652'
   term: '2015'
   worked_at: '2015-11-18'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -2830,7 +2830,7 @@ works175:
   id: '1653'
   term: '2015'
   worked_at: '2015-09-13'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: "布崎：周藤約40a…大灘へ"
@@ -2846,7 +2846,7 @@ works176:
   id: '1654'
   term: '2015'
   worked_at: '2015-09-14'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "たちあやか：種とり　　　午前：コンバイン掃除"
   remarks: ''
@@ -2862,7 +2862,7 @@ works177:
   id: '1655'
   term: '2015'
   worked_at: '2015-09-14'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー苗取り：75枚"
   remarks: "キャベツ：バリダシン5：300ℓ散布　中北・橋前：ラウンドアップ散布300ℓ*2"
@@ -2878,7 +2878,7 @@ works178:
   id: '1656'
   term: '2015'
   worked_at: '2015-09-15'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: ''
   remarks: "布崎：坂本・約50a 大森土建：約10a"
@@ -2894,7 +2894,7 @@ works179:
   id: '1657'
   term: '2015'
   worked_at: '2015-09-15'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: ''
   remarks: "西尾自動車より2ｔDTをリース"
@@ -2910,7 +2910,7 @@ works180:
   id: '1658'
   term: '2015'
   worked_at: '2015-09-15'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー植え"
   remarks: "植付け機OP\r\n：原勤一"
@@ -2926,7 +2926,7 @@ works181:
   id: '1659'
   term: '2015'
   worked_at: '2015-09-18'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: 109本
   remarks: ''
@@ -2942,7 +2942,7 @@ works182:
   id: '1660'
   term: '2015'
   worked_at: '2015-11-18'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: ''
   remarks: "コンバイン掃除"
@@ -2958,7 +2958,7 @@ works183:
   id: '1661'
   term: '2015'
   worked_at: '2015-11-18'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー苗受取り"
   remarks: "ブロッコリー畝たて：植付け　2ｔトラック使用\r\nトラクター成形機：3hr・トラクターブロードキャスタ：3hr…【中家】"
@@ -2974,7 +2974,7 @@ works184:
   id: '1662'
   term: '2015'
   worked_at: '2015-09-19'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: "出荷：検査米引取・米袋のラべリング等"
   remarks: ''
@@ -2990,7 +2990,7 @@ works185:
   id: '1663'
   term: '2015'
   worked_at: '2015-09-19'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: ''
   remarks: ''
@@ -3006,7 +3006,7 @@ works186:
   id: '1664'
   term: '2015'
   worked_at: '2015-09-19'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー植付け"
   remarks: ''
@@ -3022,7 +3022,7 @@ works187:
   id: '1665'
   term: '2015'
   worked_at: '2015-09-19'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: 118本
   remarks: ''
@@ -3038,7 +3038,7 @@ works188:
   id: '1666'
   term: '2015'
   worked_at: '2015-09-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "稲刈り：115本"
   remarks: ''
@@ -3054,7 +3054,7 @@ works189:
   id: '1667'
   term: '2015'
   worked_at: '2015-09-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: ''
   remarks: "コンバイン：№1…センサー異常有り\r\n"
@@ -3070,7 +3070,7 @@ works190:
   id: '1668'
   term: '2015'
   worked_at: '2015-09-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: "＆整理　：保有米受付　ラべリング等"
   remarks: ''
@@ -3086,7 +3086,7 @@ works191:
   id: '1669'
   term: '2015'
   worked_at: '2015-09-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "集草機取付け他"
   remarks: ''
@@ -3102,7 +3102,7 @@ works192:
   id: '1670'
   term: '2015'
   worked_at: '2015-09-21'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: 193本
   remarks: ''
@@ -3118,7 +3118,7 @@ works193:
   id: '1671'
   term: '2015'
   worked_at: '2015-09-21'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "わら寄せ：格納庫掃除"
   remarks: ''
@@ -3134,7 +3134,7 @@ works194:
   id: '1672'
   term: '2015'
   worked_at: '2015-09-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "キャベツ薬剤散布"
   remarks: "動噴：中家\r\n"
@@ -3150,7 +3150,7 @@ works195:
   id: '1673'
   term: '2015'
   worked_at: '2015-09-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: "出荷"
   remarks: ''
@@ -3166,7 +3166,7 @@ works196:
   id: '1674'
   term: '2015'
   worked_at: '2015-09-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '6'
   name: 8本
   remarks: ''
@@ -3182,7 +3182,7 @@ works197:
   id: '1675'
   term: '2015'
   worked_at: '2015-09-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: 150本
   remarks: ''
@@ -3198,7 +3198,7 @@ works198:
   id: '1676'
   term: '2015'
   worked_at: '2015-09-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: 196本
   remarks: ''
@@ -3214,7 +3214,7 @@ works199:
   id: '1677'
   term: '2015'
   worked_at: '2015-09-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '1'
   name: "田中幸夫さん"
   remarks: ''
@@ -3230,7 +3230,7 @@ works200:
   id: '1678'
   term: '2015'
   worked_at: '2015-09-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '6'
   name: ''
   remarks: ''
@@ -3246,7 +3246,7 @@ works201:
   id: '1679'
   term: '2015'
   worked_at: '2015-09-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "ワラ寄せ"
   remarks: ''
@@ -3262,7 +3262,7 @@ works202:
   id: '1680'
   term: '2015'
   worked_at: '2015-09-24'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '9'
   name: "積込"
   remarks: ''
@@ -3278,7 +3278,7 @@ works203:
   id: '1681'
   term: '2015'
   worked_at: '2015-09-24'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー：うね立て直し"
   remarks: "トラクター：中家"
@@ -3294,7 +3294,7 @@ works204:
   id: '1682'
   term: '2015'
   worked_at: '2015-09-25'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー：苗取り・植付け"
   remarks: ''
@@ -3310,7 +3310,7 @@ works205:
   id: '1683'
   term: '2015'
   worked_at: '2015-09-26'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー：植付け"
   remarks: ''
@@ -3326,7 +3326,7 @@ works206:
   id: '1684'
   term: '2015'
   worked_at: '2015-09-26'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: "米運搬"
   remarks: ''
@@ -3342,7 +3342,7 @@ works207:
   id: '1685'
   term: '2015'
   worked_at: '2015-09-26'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: 144本
   remarks: ''
@@ -3358,7 +3358,7 @@ works208:
   id: '1686'
   term: '2015'
   worked_at: '2015-09-28'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: 170本
   remarks: ''
@@ -3374,7 +3374,7 @@ works209:
   id: '1687'
   term: '2015'
   worked_at: '2015-09-29'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "下出来洲26本：小島東80本"
   remarks: 2261-1：20.5a.・23本　2259-1・2258：31.4a・36本　2259-2：21本
@@ -3390,7 +3390,7 @@ works210:
   id: '1688'
   term: '2015'
   worked_at: '2015-09-30'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '8'
   name: "小島東：216本"
   remarks: ''
@@ -3406,7 +3406,7 @@ works211:
   id: '1689'
   term: '2015'
   worked_at: '2015-10-03'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "干拓草刈り"
   remarks: "クローラートラクター：モア"
@@ -3422,7 +3422,7 @@ works212:
   id: '1690'
   term: '2015'
   worked_at: '2015-10-04'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "干拓草刈り"
   remarks: "クローラートラクター：モア"
@@ -3438,7 +3438,7 @@ works213:
   id: '1691'
   term: '2015'
   worked_at: '2015-10-05'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '24'
   name: ''
   remarks: ''
@@ -3454,7 +3454,7 @@ works214:
   id: '1692'
   term: '2015'
   worked_at: '2015-10-06'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '24'
   name: ''
   remarks: "田中幸夫：40a"
@@ -3470,7 +3470,7 @@ works215:
   id: '1693'
   term: '2015'
   worked_at: '2015-10-06'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "キャベツ・ブロッコリー：薬剤散布・追肥"
   remarks: "動噴：中家"
@@ -3486,7 +3486,7 @@ works216:
   id: '1694'
   term: '2015'
   worked_at: '2015-10-06'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "小島東：小島西：112本"
   remarks: ''
@@ -3502,7 +3502,7 @@ works217:
   id: '1695'
   term: '2015'
   worked_at: '2015-10-07'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "小島西"
   remarks: ''
@@ -3518,7 +3518,7 @@ works218:
   id: '1696'
   term: '2015'
   worked_at: '2015-10-07'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '23'
   name: "米出荷：8P"
   remarks: ''
@@ -3534,7 +3534,7 @@ works219:
   id: '1697'
   term: '2015'
   worked_at: '2015-10-07'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "稲わら寄せ"
   remarks: ''
@@ -3550,7 +3550,7 @@ works220:
   id: '1698'
   term: '2015'
   worked_at: '2015-10-08'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "小島西：75本"
   remarks: 2513-ハ・ロ：44.8a  2519-1-ニ：30.0a
@@ -3566,7 +3566,7 @@ works221:
   id: '1699'
   term: '2015'
   worked_at: '2015-10-08'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: ''
   remarks: ''
@@ -3582,7 +3582,7 @@ works222:
   id: '1700'
   term: '2015'
   worked_at: '2015-10-08'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー：追肥・中耕"
   remarks: "管理機：中家"
@@ -3598,7 +3598,7 @@ works223:
   id: '1701'
   term: '2015'
   worked_at: '2015-10-09'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "２０本"
   remarks: ''
@@ -3614,7 +3614,7 @@ works224:
   id: '1702'
   term: '2015'
   worked_at: '2015-10-09'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "積込"
   remarks: "伊藤：12　藤増：24　西尾：12"
@@ -3630,7 +3630,7 @@ works225:
   id: '1703'
   term: '2015'
   worked_at: '2015-10-09'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "１２３本"
   remarks: ''
@@ -3646,7 +3646,7 @@ works226:
   id: '1704'
   term: '2015'
   worked_at: '2015-10-10'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "積込　４１６本"
   remarks: ''
@@ -3662,7 +3662,7 @@ works227:
   id: '1705'
   term: '2015'
   worked_at: '2015-10-11'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "ロール移動"
   remarks: ''
@@ -3678,7 +3678,7 @@ works228:
   id: '1706'
   term: '2015'
   worked_at: '2015-10-15'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '24'
   name: ''
   remarks: ''
@@ -3694,7 +3694,7 @@ works229:
   id: '1707'
   term: '2015'
   worked_at: '2015-10-16'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "稲わら寄せ"
   remarks: ''
@@ -3710,7 +3710,7 @@ works230:
   id: '1708'
   term: '2015'
   worked_at: '2015-10-16'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "わら積込"
   remarks: "渡部畜産：２０本"
@@ -3726,7 +3726,7 @@ works231:
   id: '1709'
   term: '2015'
   worked_at: '2015-10-16'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー"
   remarks: "トレー返却・追肥・中耕　　管理機：中家"
@@ -3742,7 +3742,7 @@ works232:
   id: '1710'
   term: '2015'
   worked_at: '2015-10-17'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: WCS・ラップマシン：掃除
   remarks: ''
@@ -3758,7 +3758,7 @@ works233:
   id: '1711'
   term: '2015'
   worked_at: '2015-10-17'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '24'
   name: ''
   remarks: ''
@@ -3774,7 +3774,7 @@ works234:
   id: '1712'
   term: '2015'
   worked_at: '2015-10-17'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '24'
   name: ''
   remarks: ''
@@ -3790,7 +3790,7 @@ works235:
   id: '1713'
   term: '2015'
   worked_at: '2015-10-18'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '4'
   name: "稲刈り"
   remarks: ''
@@ -3806,7 +3806,7 @@ works236:
   id: '1714'
   term: '2015'
   worked_at: '2015-10-18'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "わら寄せ"
   remarks: ''
@@ -3822,7 +3822,7 @@ works237:
   id: '1715'
   term: '2015'
   worked_at: '2015-10-19'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "わら寄せ"
   remarks: ''
@@ -3838,7 +3838,7 @@ works238:
   id: '1716'
   term: '2015'
   worked_at: '2015-10-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: WCS・ラップマシン：メンテナンス：格納
   remarks: ''
@@ -3854,7 +3854,7 @@ works239:
   id: '1717'
   term: '2015'
   worked_at: '2015-10-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "７２本"
   remarks: 2ｔDT:4ｈｒ
@@ -3870,7 +3870,7 @@ works240:
   id: '1718'
   term: '2015'
   worked_at: '2015-10-21'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "わら積込"
   remarks: "伊藤牧場：２６本・藤増牧場：２０本・西尾牧場：２０本"
@@ -3886,7 +3886,7 @@ works241:
   id: '1719'
   term: '2015'
   worked_at: '2015-10-21'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: 2ｔDT:4ｈｒ
   remarks: ''
@@ -3902,7 +3902,7 @@ works242:
   id: '1720'
   term: '2015'
   worked_at: '2015-10-24'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "わら寄せ"
   remarks: "協和町内"
@@ -3918,7 +3918,7 @@ works243:
   id: '1721'
   term: '2015'
   worked_at: '2015-10-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: "コンバイン掃除：種取用"
   remarks: ''
@@ -3934,7 +3934,7 @@ works244:
   id: '1722'
   term: '2015'
   worked_at: '2015-10-24'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "１２本"
   remarks: 2ｔDT:2ｈｒ
@@ -3950,7 +3950,7 @@ works245:
   id: '1723'
   term: '2015'
   worked_at: '2015-10-24'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: ''
   remarks: "デ63．デ64・デ65・デ66-1：ミホヒカリ：1,444+600+1,504+1,522+742+1,368㎏水分：23.6-26.4％\r\n"
@@ -3966,7 +3966,7 @@ works246:
   id: '1724'
   term: '2015'
   worked_at: '2015-10-25'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: "トラクター：ロータリー爪交換"
   remarks: ''
@@ -3982,7 +3982,7 @@ works247:
   id: '1725'
   term: '2015'
   worked_at: '2015-10-26'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: ''
   remarks: "協和：28本・出島：42本"
@@ -3998,7 +3998,7 @@ works248:
   id: '1726'
   term: '2015'
   worked_at: '2015-10-27'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "出島：堆肥散布"
   remarks: ''
@@ -4014,7 +4014,7 @@ works249:
   id: '1727'
   term: '2015'
   worked_at: '2015-10-28'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー・キャベツ"
   remarks: "殺虫：殺菌剤の散布・中家・動噴"
@@ -4030,7 +4030,7 @@ works250:
   id: '1728'
   term: '2015'
   worked_at: '2015-10-28'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "出島"
   remarks: ''
@@ -4046,7 +4046,7 @@ works251:
   id: '1729'
   term: '2015'
   worked_at: '2015-10-28'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '6'
   name: "出島"
   remarks: ''
@@ -4062,7 +4062,7 @@ works252:
   id: '1730'
   term: '2015'
   worked_at: '2015-10-29'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "積込：大型車：26本"
   remarks: ''
@@ -4078,7 +4078,7 @@ works253:
   id: '1731'
   term: '2015'
   worked_at: '2015-10-29'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: "集草機⇒ロータリー交換"
   remarks: ''
@@ -4094,7 +4094,7 @@ works254:
   id: '1732'
   term: '2015'
   worked_at: '2015-10-29'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '6'
   name: "出島"
   remarks: ''
@@ -4110,7 +4110,7 @@ works255:
   id: '1733'
   term: '2015'
   worked_at: '2015-10-31'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "積込：藤増牧場26本"
   remarks: ''
@@ -4126,7 +4126,7 @@ works256:
   id: '1734'
   term: '2015'
   worked_at: '2015-10-31'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '6'
   name: "イタリアン種子散布"
   remarks: "出島"
@@ -4142,7 +4142,7 @@ works257:
   id: '1735'
   term: '2015'
   worked_at: '2015-11-01'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "ブロッコリー・キャベツ：草刈り・除草"
   remarks: ''
@@ -4158,7 +4158,7 @@ works258:
   id: '1736'
   term: '2015'
   worked_at: '2015-11-01'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "積込：渡部畜産：56本"
   remarks: "西原の西"
@@ -4174,7 +4174,7 @@ works259:
   id: '1737'
   term: '2015'
   worked_at: '2015-11-01'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "積込：44本"
   remarks: ''
@@ -4190,7 +4190,7 @@ works260:
   id: '1738'
   term: '2015'
   worked_at: '2015-11-01'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: "コンバイン掃除"
   remarks: ''
@@ -4206,7 +4206,7 @@ works261:
   id: '1739'
   term: '2015'
   worked_at: '2015-11-04'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '8'
   name: "試験田"
   remarks: "アクア7・アクア＋プリブロックス・プリブロックス"
@@ -4222,7 +4222,7 @@ works262:
   id: '1740'
   term: '2015'
   worked_at: '2015-11-05'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: "粉霧機掃除"
   remarks: ''
@@ -4238,7 +4238,7 @@ works263:
   id: '1741'
   term: '2015'
   worked_at: '2015-11-05'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "除草剤：ラウンドアップ：散布"
   remarks: "出島21-1・13a:出島22・32.6a:出島23・33a\r\n"
@@ -4254,7 +4254,7 @@ works264:
   id: '1742'
   term: '2015'
   worked_at: '2015-11-06'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '9'
   name: "積込"
   remarks: ''
@@ -4270,7 +4270,7 @@ works265:
   id: '1743'
   term: '2015'
   worked_at: '2015-11-07'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '12'
   name: "バクヤーゼ散布"
   remarks: 80㎏/10a 散布
@@ -4286,7 +4286,7 @@ works266:
   id: '1744'
   term: '2015'
   worked_at: '2015-11-07'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '12'
   name: "改良剤あと荒耕"
   remarks: ''
@@ -4302,7 +4302,7 @@ works267:
   id: '1745'
   term: '2015'
   worked_at: '2015-11-11'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: "ロータリー交換"
   remarks: ''
@@ -4318,7 +4318,7 @@ works268:
   id: '1746'
   term: '2015'
   worked_at: '2015-11-11'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー：殺菌剤散布：動噴・中家"
   remarks: ''
@@ -4334,7 +4334,7 @@ works269:
   id: '1747'
   term: '2015'
   worked_at: '2015-11-12'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '15'
   name: ''
   remarks: ''
@@ -4350,7 +4350,7 @@ works270:
   id: '1748'
   term: '2015'
   worked_at: '2015-11-17'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '16'
   name: "キャベツ：収穫準備"
   remarks: ''
@@ -4366,7 +4366,7 @@ works271:
   id: '1749'
   term: '2015'
   worked_at: '2015-11-19'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "ブロッコリー・キャベツ：収穫"
   remarks: "キャベツ：2L*33・L*13：キャベツ代金酔心2,250-　ブロッコリー：赤2L*6・赤L*7・青2L*15・青L*23・青M*3・良L*1:計55箱\r\n"
@@ -4382,7 +4382,7 @@ works272:
   id: '1750'
   term: '2015'
   worked_at: '2015-11-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー：薬剤散布"
   remarks: "動噴：中家"
@@ -4398,7 +4398,7 @@ works273:
   id: '1751'
   term: '2015'
   worked_at: '2015-11-21'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー：収穫"
   remarks: "コンテナ36：青2L*6・青M*6・良L*2…コンテナ赤L*5・青L*42"
@@ -4414,7 +4414,7 @@ works274:
   id: '1752'
   term: '2015'
   worked_at: '2015-11-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー・キャベツ：収穫"
   remarks: "コンテナ赤L*6・青L*34・…赤2L*1・青2L*4・良L*2・青L*4…キャベツ赤2L*13・赤L8*17"
@@ -4430,7 +4430,7 @@ works275:
   id: '1753'
   term: '2015'
   worked_at: '2015-11-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "キャベツ出荷：コンテナ回収29"
   remarks: ''
@@ -4446,7 +4446,7 @@ works276:
   id: '1754'
   term: '2015'
   worked_at: '2015-11-24'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '16'
   name: "ブロッコリー：収穫"
   remarks: "コンテナ49：赤2L*1・青2L*6・青L*54・良L*6・青M*11…コンテナ赤L*8・青L*10"
@@ -4462,7 +4462,7 @@ works277:
   id: '1755'
   term: '2015'
   worked_at: '2015-11-25'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー・キャベツ：収穫"
   remarks: "キャベツ・赤120：ブロッコリー赤2L*8・赤L*5・青2L*20・青L*2・青M*2・良L*1:コンテナ赤L*6・青L*30"
@@ -4478,7 +4478,7 @@ works278:
   id: '1756'
   term: '2015'
   worked_at: '2015-11-26'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "ブロッコリー：収穫"
   remarks: "赤2L*1・赤L*12・青2L*3・青L*46・青M*8・良L*3…コンテナ36"
@@ -4494,7 +4494,7 @@ works279:
   id: '1757'
   term: '2015'
   worked_at: '2015-11-27'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '16'
   name: "ブロッコリー：収穫"
   remarks: "赤2L*1*赤L*8・青2L*2・青L*1…コンテナ青L*10…コンテナ13"
@@ -4510,7 +4510,7 @@ works280:
   id: '1758'
   term: '2015'
   worked_at: '2015-11-29'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '16'
   name: "ブロッコリー：収穫"
   remarks: "青2L*1・青L*16・良L*1…コンテナ赤L*13"
@@ -4526,7 +4526,7 @@ works281:
   id: '1759'
   term: '2015'
   worked_at: '2015-11-30'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "キャベツ：収穫"
   remarks: "赤2L*22・赤L*12"
@@ -4542,7 +4542,7 @@ works282:
   id: '1760'
   term: '2015'
   worked_at: '2015-12-01'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "ブロッコリー：収穫"
   remarks: "コンテナ赤L*8：赤2L*4・青2L*14・青L*48・良L*2"
@@ -4558,7 +4558,7 @@ works283:
   id: '1761'
   term: '2015'
   worked_at: '2015-12-02'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー・キャベツ：収穫"
   remarks: "キャベツ・赤2L*29・赤L*5:ブロッコリー・赤2L*2・青2L*11・青L*37・青M*4・良L*10……ブロコンテナ＊３７：キャコンテナ*34"
@@ -4574,7 +4574,7 @@ works284:
   id: '1762'
   term: '2015'
   worked_at: '2015-12-03'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "ブロッコリー：収穫"
   remarks: "コンテナ*25…青２L*７・青L*３・良L*3コンテナ赤L*3・青L*28"
@@ -4590,7 +4590,7 @@ works285:
   id: '1763'
   term: '2015'
   worked_at: '2015-12-12'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '14'
   name: "日報入力、チェック等"
   remarks: ''
@@ -4606,7 +4606,7 @@ works286:
   id: '1764'
   term: '2015'
   worked_at: '2015-12-06'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '14'
   name: "日報入力"
   remarks: ''
@@ -4622,7 +4622,7 @@ works287:
   id: '1765'
   term: '2015'
   worked_at: '2015-11-29'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "日報入力、チェック等"
   remarks: ''
@@ -4638,7 +4638,7 @@ works288:
   id: '1766'
   term: '2015'
   worked_at: '2015-11-22'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "日報入力、チェック等"
   remarks: ''
@@ -4654,7 +4654,7 @@ works289:
   id: '1767'
   term: '2015'
   worked_at: '2015-08-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "保有米伝票整理"
   remarks: ''
@@ -4670,7 +4670,7 @@ works290:
   id: '1768'
   term: '2015'
   worked_at: '2015-10-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "出荷米確認：チェック等"
   remarks: 9/4,6,8,14,15,16,19,20,22,27・10/4,11,18,19,20
@@ -4686,7 +4686,7 @@ works291:
   id: '1769'
   term: '2015'
   worked_at: '2015-09-27'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '14'
   name: "保有米配布"
   remarks: ''
@@ -4702,7 +4702,7 @@ works292:
   id: '1770'
   term: '2015'
   worked_at: '2015-09-16'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '26'
   name: ''
   remarks: ''
@@ -4718,7 +4718,7 @@ works293:
   id: '1771'
   term: '2015'
   worked_at: '2015-09-16'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '26'
   name: "パレット回収"
   remarks: ''
@@ -4734,7 +4734,7 @@ works294:
   id: '1772'
   term: '2015'
   worked_at: '2015-09-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '26'
   name: ''
   remarks: ''
@@ -4750,7 +4750,7 @@ works295:
   id: '1773'
   term: '2015'
   worked_at: '2015-10-08'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '26'
   name: ''
   remarks: ''
@@ -4766,7 +4766,7 @@ works296:
   id: '1774'
   term: '2015'
   worked_at: '2015-10-08'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '26'
   name: "パレット回収"
   remarks: ''
@@ -4782,7 +4782,7 @@ works297:
   id: '1775'
   term: '2015'
   worked_at: '2015-10-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '26'
   name: ''
   remarks: ''
@@ -4798,7 +4798,7 @@ works298:
   id: '1776'
   term: '2015'
   worked_at: '2015-10-23'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '26'
   name: "パレット回収"
   remarks: ''
@@ -4814,7 +4814,7 @@ works299:
   id: '1777'
   term: '2015'
   worked_at: '2015-12-05'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "ブロッコリー収穫"
   remarks: "赤L*1・青M*6・良L*6・コンテナ6ｋ*22・キャベツ赤2L*17・赤L9*1・赤L*5\r\n"
@@ -4830,7 +4830,7 @@ works300:
   id: '1778'
   term: '2015'
   worked_at: '2015-12-06'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '12'
   name: ''
   remarks: ''
@@ -4846,7 +4846,7 @@ works301:
   id: '1779'
   term: '2015'
   worked_at: '2015-12-07'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー収穫"
   remarks: "青2L*3・青L*28・青M*3・良L*5・コンテナ6K赤L*2"
@@ -4862,7 +4862,7 @@ works_work_land_test:
   id: '1780'
   term: '2015'
   worked_at: '2015-12-09'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '12'
   name: ''
   remarks: ''
@@ -4878,7 +4878,7 @@ works303:
   id: '1781'
   term: '2015'
   worked_at: '2015-12-09'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー収穫"
   remarks: "赤L*1・青L*17・青M*3・良L*2・残14…キャベツ10玉*6C/T"
@@ -4894,7 +4894,7 @@ works304:
   id: '1782'
   term: '2015'
   worked_at: '2015-12-10'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '16'
   name: "ブロッコリー収穫"
   remarks: "赤2K*4・赤L*7・青2L*6・青L*19・青M*1…残2"
@@ -4910,7 +4910,7 @@ works305:
   id: '1783'
   term: '2015'
   worked_at: '2015-12-11'
-  weather_id: '9'
+  weather: '9'
   work_type_id: '16'
   name: "ブロッコリー収穫・・・・大嵐"
   remarks: "赤L*1・青L*8・良L*1…残6…キャベツ赤L*30……収穫ブロ*6ケース・キャベ*60個"
@@ -4926,7 +4926,7 @@ works306:
   id: '1784'
   term: '2015'
   worked_at: '2015-12-15'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "ブロッコリー収穫"
   remarks: "桃源村出荷*100個・袋詰め*20・コンテナ*1（2,000）\r\n"
@@ -4942,7 +4942,7 @@ works307:
   id: '1785'
   term: '2015'
   worked_at: '2015-12-18'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "ブロッコリー収穫"
   remarks: "赤2L*5・青2L*71・青L*1・良2L*9・良L*2…残1…コンテナ6K*16"
@@ -4958,7 +4958,7 @@ works308:
   id: '1786'
   term: '2015'
   worked_at: '2015-12-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "ブロッコリー収穫"
   remarks: "コンテナ*47"
@@ -4974,7 +4974,7 @@ works309:
   id: '1787'
   term: '2015'
   worked_at: '2015-12-21'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '16'
   name: "ブロッコリー収穫"
   remarks: "赤2L*7・赤L*1・青2L*44・青L*19・良2L*2・良L*1…残14\r\n"
@@ -4990,7 +4990,7 @@ works310:
   id: '1788'
   term: '2015'
   worked_at: '2015-12-23'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "ブロッコリー収穫"
   remarks: "コンテナ*48"
@@ -5006,7 +5006,7 @@ works311:
   id: '1789'
   term: '2015'
   worked_at: '2015-12-24'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "ブロッコリー収穫"
   remarks: ''
@@ -5022,7 +5022,7 @@ works312:
   id: '1790'
   term: '2015'
   worked_at: '2015-12-24'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '16'
   name: "キャベツ収穫"
   remarks: ''
@@ -5038,7 +5038,7 @@ works313:
   id: '1791'
   term: '2015'
   worked_at: '2015-12-25'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "ブロッコリー収穫"
   remarks: ''
@@ -5054,7 +5054,7 @@ works314:
   id: '1792'
   term: '2015'
   worked_at: '2015-12-27'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '16'
   name: "ブロっこりー、キャベツ収穫"
   remarks: ''
@@ -5070,7 +5070,7 @@ works315:
   id: '1793'
   term: '2015'
   worked_at: '2015-12-28'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '15'
   name: "ブロッコリー、キャベツ収穫"
   remarks: ''
@@ -5086,7 +5086,7 @@ works316:
   id: '1794'
   term: '2015'
   worked_at: '2015-12-20'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '13'
   name: "格納庫大掃除"
   remarks: ''
@@ -5102,7 +5102,7 @@ works317:
   id: '1795'
   term: '2015'
   worked_at: '2015-12-19'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: "買い出し"
   remarks: ''
@@ -5118,7 +5118,7 @@ works318:
   id: '1796'
   term: '2015'
   worked_at: '2015-12-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '13'
   name: "格納庫大掃除"
   remarks: ''
@@ -5134,7 +5134,7 @@ works319:
   id: '1797'
   term: '2015'
   worked_at: '2015-12-20'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '13'
   name: "格納庫大掃除"
   remarks: ''
@@ -5150,7 +5150,7 @@ works320:
   id: '1798'
   term: '2015'
   worked_at: '2015-12-20'
-  weather_id: '3'
+  weather: '3'
   work_type_id: '11'
   name: "買い出し"
   remarks: ''
@@ -5166,7 +5166,7 @@ works321:
   id: '1799'
   term: '2016'
   worked_at: '2016-01-30'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '11'
   name: "源泉表作成"
   remarks: ''
@@ -5182,7 +5182,7 @@ works322:
   id: '1800'
   term: '2016'
   worked_at: '2016-01-31'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: "理事会（総会について）"
   remarks: ''
@@ -5198,7 +5198,7 @@ works323:
   id: '1801'
   term: '2016'
   worked_at: '2016-02-01'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: "源泉表提出"
   remarks: ''
@@ -5214,7 +5214,7 @@ works324:
   id: '1802'
   term: '2016'
   worked_at: '2016-02-09'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -5230,7 +5230,7 @@ works325:
   id: '1803'
   term: '2016'
   worked_at: '2016-02-07'
-  weather_id: '2'
+  weather: '2'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -5246,7 +5246,7 @@ works326:
   id: '1804'
   term: '2016'
   worked_at: '2016-02-05'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: ''
   remarks: ''
@@ -5262,7 +5262,7 @@ works_contract:
   id: '1805'
   term: '2016'
   worked_at: '2016-02-03'
-  weather_id: '1'
+  weather: '1'
   work_type_id: 28
   name: ''
   remarks: ''
@@ -5278,7 +5278,7 @@ works_past:
   id: '1810'
   term: 2014
   worked_at: '2016-02-28'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '12'
   name: "春作業について"
   remarks: ''
@@ -5292,7 +5292,7 @@ works_past:
 work_for_work_type_cache:
   term: 2016
   worked_at: '2016-02-16'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: "作業種別キャッシュテスト"
   remarks: ''
@@ -5304,7 +5304,7 @@ work_for_work_type_cache:
 work_for_price:
   term: 2015
   worked_at: '2015-01-01'
-  weather_id: '1'
+  weather: '1'
   work_type_id: '11'
   name: "金額計算テスト"
   start_at: '14:00:00'
@@ -5353,7 +5353,7 @@ work_cleaning:
 work_genka:
   term: 2017
   worked_at: "2017-02-16"
-  weather_id: 1
+  weather: 1
   work_type_id: 1
   name: "原価テスト"
   start_at: '2017-02-16 08:00:00'
@@ -5366,7 +5366,7 @@ work_genka:
 work_wcs_sale:
   term: 2017
   worked_at: "2017-09-16"
-  weather_id: 1
+  weather: 1
   work_type_id: 8
   name: "WCS売上テスト"
   start_at: '2017-09-16 08:00:00'
@@ -5377,7 +5377,7 @@ work_wcs_sale:
 
 work_chemical_test:
   term: 2016
-  weather_id: 1
+  weather: 1
   worked_at: '2016-05-30'
   work_type: work_type_broccoli
   name: "薬剤テスト"
@@ -5388,7 +5388,7 @@ work_chemical_test:
 work_not_fixed_next:
   term: '2016'
   worked_at: '2016-04-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: 1
   name: ''
   remarks: ''
@@ -5403,7 +5403,7 @@ work_not_fixed_next:
 work_not_printed:
   term: '2015'
   worked_at: '2015-04-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: 1
   name: ''
   remarks: ''
@@ -5418,7 +5418,7 @@ work_not_printed:
 work_verified:
   term: '2015'
   worked_at: '2015-05-20'
-  weather_id: '1'
+  weather: '1'
   work_type_id: 1
   name: ''
   remarks: ''
