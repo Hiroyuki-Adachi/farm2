@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_23_115840) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_23_132500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_23_115840) do
     t.integer "investigator_id", default: 0, null: false, comment: "調査責任者ID"
     t.date "investigated_on", null: false, comment: "調査日"
     t.string "informant_name", limit: 40, default: "", null: false, comment: "情報提供者"
-    t.integer "accident_type_id", default: 0, null: false, comment: "ヒヤリハット種別ID"
+    t.integer "accident_type", default: 0, null: false, comment: "ヒヤリハット種別ID"
     t.integer "work_id", null: false, comment: "対象日報"
     t.integer "audience_id", default: 0, null: false, comment: "対象者ID"
     t.point "location", comment: "場所"

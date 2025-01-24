@@ -24,7 +24,7 @@ class Gaps::AccidentsControllerTest < ActionDispatch::IntegrationTest
       problem: "問題点の考察",
       result: "改善の結果",
       solving: "問題解決の考察",
-      accident_type_id: 'rule',
+      accident_type: 'rule',
       audience_id: 7,
       work_id: 1493,
       investigator_id: 1

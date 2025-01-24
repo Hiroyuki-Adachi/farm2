@@ -23,7 +23,7 @@
     <div class="h5"><%= @accident.audience.name %></div>
   </div>
   <div class="col-md-3">
-    <%= label_tag :accident_type_id, Accident.human_attribute_name(:accident_type_id), class: "col-form-label-lg form-label" %>
+    <%= label_tag :accident_type, Accident.human_attribute_name(:accident_type), class: "col-form-label-lg form-label" %>
     <div class="h5"><%= @accident.accident_type_name %></div>
   </div>
 </div>

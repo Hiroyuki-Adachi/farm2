@@ -11,7 +11,7 @@ class Gaps::AccidentsController < GapsController
   end
 
   def new
-    @accident = Accident.new(accident_type_id: :rule)
+    @accident = Accident.new(accident_type: :rule)
   end
 
   def create
@@ -65,7 +65,7 @@ class Gaps::AccidentsController < GapsController
         :investigator_id,
         :investigated_on,
         :informant_name,
-        :accident_type_id,
+        :accident_type,
         :work_id,
         :audience_id,
         :location,

@@ -40,6 +40,9 @@ class Worker < ApplicationRecord
   belongs_to_active_hash :position
   belongs_to_active_hash :gender
 
+  enum gender_id: { none: 0, male: 1, female: 2}
+  enum position_id: { none: 0, member: 1, leader: 2, director: 3, advisor: 9}
+
   has_many :work_results
   has_many :works, -> {order(:worked_at)}, through: :work_results
 

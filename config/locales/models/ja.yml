@@ -146,6 +146,16 @@ ja:
         token: "アクセストークン"
         position_id: "役職"
         broccoli_mark: "ブロッコリ記号"
+        gender_ids:
+          none: "未設定"
+          male: "男性"
+          female: "女性"
+        position_ids:
+          none: ""
+          member: "組合員"
+          leader: "作業班長"
+          director: "理事"
+          advisor: "顧問"
 
       machine:
         name: 名称
@@ -368,7 +378,7 @@ ja:
         investigator_id: "調査責任者"
         investigated_on: "調査日"
         informant_name: "情報提供者"
-        accident_type_id: "種別"
+        accident_type: "種別"
         work_id: "対象作業"
         audience_id: "誰が"
         location: "どこで"

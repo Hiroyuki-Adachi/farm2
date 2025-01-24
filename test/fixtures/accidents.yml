@@ -28,7 +28,7 @@ accident1:
   problem: "問題点の考察"
   result: "改善の結果"
   solving: "問題解決の考察"
-  accident_type_id: 1
+  accident_type: 1
   audience_id: 7
   work_id: 1493
   investigator_id: 1
