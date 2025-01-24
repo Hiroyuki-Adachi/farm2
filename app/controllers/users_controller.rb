@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params.merge(
       organization_id: current_organization.id,
-      permission_id: Permission::VISITOR.id,
+      permission: :visitor,
       term: current_term
       ))
     if @user.save

@@ -25,12 +25,12 @@
 #
 
 class User < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
   before_create :set_token
+
+  enum :permission, { visitor: 0, user: 1, checker: 2, manager: 3, admin: 9 }
 
   belongs_to :worker
   belongs_to :organization
-  belongs_to_active_hash :permission
 
   has_many :calendar_work_kinds, dependent: :destroy
   has_many :user_words, dependent: :destroy
@@ -44,26 +44,6 @@ class User < ApplicationRecord
 
   def login_name=(value)
     super(value.downcase)
-  end
-
-  def admin?
-    permission == Permission::ADMIN
-  end
-
-  def manager?
-    permission == Permission::MANAGER
-  end
-
-  def checker?
-    permission == Permission::CHECKER
-  end
-
-  def user?
-    permission == Permission::USER
-  end
-
-  def visitor?
-    permission == Permission::VISITOR
   end
 
   def manageable?

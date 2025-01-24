@@ -5,8 +5,8 @@
 <div class="row">
   <div class="col-md-3">
     <div class="field mb-3">
-      <%= f.label :permission_id, class: "col-form-label-lg form-label" %>
-      <%= f.select(:permission_id, @permissions.map {|permission| [permission.name, permission.id]}, {}, class: "form-select") %>
+      <%= f.label :permission, class: "col-form-label-lg form-label" %>
+      <%= f.select(:permission, User.permissions.keys.map { |key| [I18n.t("activerecord.attributes.user.permissions.#{key}"), key] }, {}, class: "form-select") %>
     </div>
   </div>
 </div>

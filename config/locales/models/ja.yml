@@ -270,7 +270,13 @@ ja:
         target_from: "期間(自)"
         target_to: "期間(至)"
         organization_id: "組織"
-        permission_id: "権限"
+        permission: "権限"
+        permissions:
+          visitor: "閲覧者"
+          user: "利用者"
+          checker: "検閲者"
+          manager: "管理者"
+          admin: "システム"
     
       work_broccoli:
         shipped_on: "出荷日"

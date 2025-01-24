@@ -858,7 +858,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_23_132500) do
     t.date "target_from", default: "2010-01-01", null: false, comment: "開始年月"
     t.date "target_to", default: "2010-12-31", null: false, comment: "終了年月"
     t.integer "organization_id", default: 0, null: false, comment: "組織"
-    t.integer "permission_id", default: 0, null: false, comment: "権限"
+    t.integer "permission", default: 0, null: false, comment: "権限"
     t.integer "view_month", default: [1, 4, 8], null: false, comment: "表示切替月", array: true
     t.integer "calendar_term", default: 2018, null: false, comment: "期(カレンダー)"
     t.string "token", limit: 36, default: "", null: false, comment: "アクセストークン"

@@ -106,5 +106,5 @@ User.create!(
   target_from: system.target_from,
   target_to: system.target_to,
   organization_id: organization.id,
-  permission_id: Permission::ADMIN.id
+  permission: :admin
 )
