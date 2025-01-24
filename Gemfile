@@ -1,11 +1,14 @@
 source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 7.2'
+gem 'rails', '>= 8.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # delayed_job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background.
 gem 'delayed_job_active_record'
+
+# The CSV library provides a complete interface to CSV files and data. 
+gem 'csv'
 
 # CSSBundling provides a way to bundle CSS files in Rails applications.
 gem "cssbundling-rails"
@@ -78,7 +81,7 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 4.0'
   # Add a comment summarizing the current schema to the top or bottom of each informations.
-  gem 'annotate'
+  gem 'annotaterb'
   # RuboCop is a Ruby static code analyzer.
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false

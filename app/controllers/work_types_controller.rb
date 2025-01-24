@@ -65,17 +65,18 @@ class WorkTypesController < ApplicationController
   end
 
   def work_type_params
-    return params.require(:work_type).permit(
-      :name,
-      :display_order,
-      :genre,
-      :bg_color,
-      :land_flag,
-      :cost_flag,
-      :work_flag,
-      :icon,
-      :term_flag
-    )
+    params.expect(work_type:
+      [
+        :name,
+        :display_order,
+        :genre,
+        :bg_color,
+        :land_flag,
+        :cost_flag,
+        :work_flag,
+        :icon,
+        :term_flag
+      ])
     .merge(term: current_term)
   end
 

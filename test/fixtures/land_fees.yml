@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: land_fees
+# Table name: land_fees(土地料金)
 #
 #  id                  :bigint           not null, primary key
 #  manage_fee(管理料)  :decimal(7, 1)    default(0.0), not null

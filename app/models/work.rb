@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: works
+# Table name: works(作業データ)
 #
 #  id(作業データ)                          :integer          not null, primary key
 #  chemical_group_flag(薬剤グループフラグ) :boolean          default(FALSE), not null
@@ -214,10 +214,10 @@ SQL
     machine_results.to_a.uniq(&:machine_id).inject(0) { |a, e| a + e.fuel_usage} || 0
   end
 
-  def self.for_verifications(term, worker)
+  def self.for_verifications(user)
     Work.includes(:work_results, :creator)
       .includes(:machine_results, :work_lands, :work_type, :work_chemicals, :checkers)
-      .no_fixed(term).by_creator(worker).enough_check(worker).not_printed
+      .no_fixed(user.term).by_creator(user.worker).enough_check(user.worker).not_printed
   end
 
   def self.get_terms(term)

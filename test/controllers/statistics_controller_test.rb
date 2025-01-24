@@ -1,18 +1,18 @@
 require 'test_helper'
 
-class StatisticsControllerTest < ActionController::TestCase
+class StatisticsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "統計情報一覧" do
-    get :index
+    get statistics_path
     assert_response :success
   end
 
   test "統計情報一覧(利用者)" do
-    session[:user_id] = users(:user_user).id
-    get :index
+    login_as(users(:user_user))
+    get statistics_path
     assert_response :error
   end
 end

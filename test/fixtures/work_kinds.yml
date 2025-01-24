@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_kinds
+# Table name: work_kinds(作業種別マスタ)
 #
 #  id(作業種別マスタ)            :integer          not null, primary key
 #  broccoli_mark(ブロッコリ記号) :string(1)

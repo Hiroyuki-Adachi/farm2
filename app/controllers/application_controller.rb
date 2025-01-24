@@ -75,4 +75,12 @@ class ApplicationController < ActionController::Base
   def menu_name
     return controller_name
   end
+
+  def respond_to_format(format, partial: nil)
+    respond_to do |fmt|
+      fmt.send(format) do
+        partial.present? ? render(partial: partial) : render
+      end
+    end
+  end
 end

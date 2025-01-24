@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # タイムゾーンを設定（これをしないと、ビルド時にタイムゾーンの設定を求められる）
 ENV TZ=Asia/Tokyo \
     LANG=C.UTF-8 \
-    RUBY_VERSION=3.3.6 \
+    RUBY_VERSION=3.4.1 \
     PATH="/root/.cargo/bin:${PATH}"
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -51,8 +51,7 @@ RUN mkdir /farm2
 WORKDIR /farm2
 
 # ホストのGemfileとGemfile.lockをコピー
-COPY Gemfile /farm2/Gemfile
-COPY Gemfile.lock /farm2/Gemfile.lock
+COPY Gemfile Gemfile.lock /farm2/
 
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 

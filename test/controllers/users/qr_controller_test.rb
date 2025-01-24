@@ -1,12 +1,12 @@
 require "test_helper"
 
-class Users::QrControllerTest < ActionController::TestCase
+class Users::QrControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "QR(表示)" do
-    get :index
+    get users_qr_index_path
     assert_response :success
   end
 end

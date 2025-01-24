@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_kind_types
+# Table name: work_kind_types(作業種別分類対応マスタ)
 #
 #  id(作業種別分類対応マスタ) :integer          not null, primary key
 #  work_kind_id(作業種別)     :integer

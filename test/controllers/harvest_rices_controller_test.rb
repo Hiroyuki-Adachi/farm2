@@ -1,18 +1,18 @@
 require 'test_helper'
 
-class HarvestRicesControllerTest < ActionController::TestCase
+class HarvestRicesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "収穫一覧(水稲)" do
-    get :index
+    get harvest_rices_path
     assert_response :success
   end
 
   test "収穫一覧(水稲)(検証者以外)" do
-    session[:user_id] = users(:user_checker).id
-    get :index
+    login_as(users(:user_checker))
+    get harvest_rices_path
     assert_response :error
   end
 end

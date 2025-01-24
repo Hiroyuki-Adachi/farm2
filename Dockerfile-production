@@ -5,7 +5,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=Asia/Tokyo \
     LANG=C.UTF-8 \
-    RUBY_VERSION=3.3.6 \
+    RUBY_VERSION=3.4.1 \
     POSTGRES_USER=postgres \
     POSTGRES_PASSWORD=postgres \
     POSTGRES_DB=farm2_production \
@@ -83,7 +83,7 @@ USER root
 # バンドルインストール
 RUN gem install bundler
 COPY Gemfile Gemfile.lock /home/hiro/farm2/
-RUN bundle install
+RUN bundle install --without test development
 
 # アセットプリコンパイルとDBマイグレーション
 COPY . /home/hiro/farm2

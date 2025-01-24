@@ -26,26 +26,27 @@ class OrganizationsController < ApplicationController
   end
 
   def organization_params
-    return params.require(:organization).permit(
-      :name,
-      :workers_count,
-      :lands_count,
-      :machines_count,
-      :chemicals_count,
-      :chemical_group_count,
-      :daily_worker,
-      :url,
-      :broccoli_work_type_id,
-      :broccoli_work_kind_id,
-      :rice_planting_id,
-      :whole_crop_work_kind_id,
-      :contract_work_type_id,
-      :harvesting_work_kind_id,
-      :maintenance_id,
-      :cleaning_id,
-      :straw_id,
-      :training_id,
-      :location
-    )
+    params.expect(organization:
+      [
+        :name,
+        :workers_count,
+        :lands_count,
+        :machines_count,
+        :chemicals_count,
+        :chemical_group_count,
+        :daily_worker,
+        :url,
+        :broccoli_work_type_id,
+        :broccoli_work_kind_id,
+        :rice_planting_id,
+        :whole_crop_work_kind_id,
+        :contract_work_type_id,
+        :harvesting_work_kind_id,
+        :maintenance_id,
+        :cleaning_id,
+        :straw_id,
+        :training_id,
+        :location
+      ])
   end
 end

@@ -38,6 +38,8 @@ module Farm2
     config.access_logger.formatter = proc do |_severity, datetime, _progname, msg|
       "#{datetime}: #{msg}\n"
     end
+
+    config.active_support.to_time_preserves_timezone = :zone
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

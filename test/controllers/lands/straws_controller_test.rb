@@ -1,12 +1,12 @@
 require "test_helper"
 
-class Lands::StrawsControllerTest < ActionController::TestCase
+class Lands::StrawsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "稲わら一覧(初期表示)" do
-    get :index
+    get lands_straws_path
     assert_response :success
   end
 end

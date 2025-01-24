@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: machine_price_headers
+# Table name: machine_price_headers(機械利用単価マスタ(ヘッダ))
 #
 #  id(機械利用単価マスタ(ヘッダ)) :integer          not null, primary key
 #  validated_at(起点日)           :date             not null

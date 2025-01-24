@@ -70,10 +70,6 @@ class ChemicalCostsController < ApplicationController
   end
 
   def chemical_work_type_params
-    params.require(:chemical_work_type).permit(
-      :chemical_term_id,
-      :work_type_id,
-      :quantity
-    )
+    params.expect(chemical_work_type: [:chemical_term_id, :work_type_id, :quantity])
   end
 end

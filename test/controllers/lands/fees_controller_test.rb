@@ -1,24 +1,24 @@
 require "test_helper"
 
-class Lands::FeesControllerTest < ActionController::TestCase
+class Lands::FeesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
     @home_id = 5
   end
 
   test "土地原価一覧" do
-    get :index
+    get lands_fees_path
     assert_response :success
   end
 
   test "土地原価一覧(管理者以外)" do
-    session[:user_id] = users(:user_checker).id
-    get :index
+    login_as(users(:user_checker))
+    get lands_fees_path
     assert_response :error
   end
 
   test "土地原価変更(表示)" do
-    get :edit, params: {id: @home_id}
+    get edit_lands_fee_path(id: @home_id)
     assert_response :success
   end
 
@@ -33,9 +33,15 @@ class Lands::FeesControllerTest < ActionController::TestCase
         land_id: land_genka2.id
       }
     }
-    assert_difference('LandFee.count', 1) do
-      patch :update, params: {id: @home_id, land_fees: update}
+    assert_difference('LandFee.count') do
+      patch lands_fee_path(id: @home_id), params: {land_fees: update}
     end
     assert_redirected_to lands_fees_path
+
+    land_fee = LandFee.last
+    assert_equal update[land_genka2.id][:manage_fee], land_fee.manage_fee
+    assert_equal update[land_genka2.id][:peasant_fee], land_fee.peasant_fee
+    assert_equal update[land_genka2.id][:term], land_fee.term
+    assert_equal update[land_genka2.id][:land_id], land_fee.land_id
   end
 end

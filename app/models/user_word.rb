@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: user_words
+# Table name: user_words(利用者ワード)
 #
 #  id                :bigint           not null, primary key
 #  word(ワード)      :string(128)      default(""), not null

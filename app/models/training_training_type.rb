@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: training_training_types
+# Table name: training_training_types(訓練訓練種別)
 #
 #  id                           :bigint           not null, primary key
 #  created_at                   :datetime         not null
