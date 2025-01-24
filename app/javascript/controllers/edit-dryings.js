@@ -7,7 +7,7 @@ window.addEventListener('turbo:load', () => {
         });
     });
 
-    document.querySelectorAll('input[name="drying[drying_type_id]"]').forEach((element) => {
+    document.querySelectorAll('input[name="drying[drying_type]"]').forEach((element) => {
         element.addEventListener("change", () => {
             changeEnabled();
         });
@@ -63,7 +63,7 @@ function sumWeight(selector) {
 }
 
 function changeEnabled() {
-    const dry_type = document.querySelector('input[name="drying[drying_type_id]"]:checked').value;
+    const dry_type = document.querySelector('input[name="drying[drying_type]"]:checked').value;
 
     if(dry_type == undefined) {
         document.querySelectorAll(".dry-input").forEach((element) => {
@@ -126,7 +126,7 @@ function changeEnabled() {
 
 document.addEventListener("paste", function (e) {
     if (e.clipboardData && e.clipboardData.getData) {
-        const dry_type = document.querySelector('input[name="drying[drying_type_id]"]:checked').value;
+        const dry_type = document.querySelector('input[name="drying[drying_type]"]:checked').value;
         if(dry_type == undefined) return;
 
         const clip = e.clipboardData.getData('text/plain');

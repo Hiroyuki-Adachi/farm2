@@ -48,7 +48,7 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
     new_drying = {
       term: systems(:s2015).term, 
       shipped_on: drying.carried_on + 1,
-      drying_type_id: 1,
+      drying_type: :country,
       drying_moths_attributes: [
         {moth_count: 1, moth_no: 1000, water_content: 14.1, moth_weight: 760, rice_weight: 529.2},
         {moth_count: 2, moth_no: 1001, water_content: 14.9, moth_weight: 688, rice_weight: 487.7},
@@ -69,7 +69,7 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
     drying.reload
     assert_equal new_drying[:term], drying.term
     assert_equal new_drying[:shipped_on], drying.shipped_on
-    assert_equal new_drying[:drying_type_id], drying.drying_type_id
+    assert_equal new_drying[:drying_type], drying.drying_type.to_sym
 
     DryingMoth.where(drying_id: drying.id).order(:moth_count).each_with_index do |dm, i|
       assert_equal new_drying[:drying_moths_attributes][i][:moth_count], dm.moth_count
@@ -103,7 +103,7 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
     new_drying = {
       term: systems(:s2015).term, 
       shipped_on: drying.carried_on + 1,
-      drying_type_id: 2,
+      drying_type: :self,
       adjustment_attributes: {
         home_id: drying.home_id, rice_bag: 65, half_weight: 25, waste_weight: 120
       }
@@ -120,7 +120,7 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
     drying.reload
     assert_equal new_drying[:term], drying.term
     assert_equal new_drying[:shipped_on], drying.shipped_on
-    assert_equal new_drying[:drying_type_id], drying.drying_type_id
+    assert_equal new_drying[:drying_type], drying.drying_type.to_sym
 
     assert_empty DryingMoth.where(drying_id: drying.id)
 
@@ -137,7 +137,7 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
     new_drying = {
       term: systems(:s2015).term, 
       shipped_on: drying.carried_on + 1,
-      drying_type_id: 3,
+      drying_type: :another,
       adjustment_attributes: {
         home_id: homes(:home31).id, rice_bag: 65, half_weight: 25, waste_weight: 120
       }
@@ -154,7 +154,7 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
     drying.reload
     assert_equal new_drying[:term], drying.term
     assert_equal new_drying[:shipped_on], drying.shipped_on
-    assert_equal new_drying[:drying_type_id], drying.drying_type_id
+    assert_equal new_drying[:drying_type], drying.drying_type.to_sym
 
     assert_empty DryingMoth.where(drying_id: drying.id)
 

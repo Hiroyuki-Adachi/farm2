@@ -55,7 +55,7 @@ class DryingsController < ApplicationController
   def drying_params
     params.require(:drying).permit(
       :term, :home_id, :work_type_id, :carried_on, :shipped_on, :water_content, :rice_weight,
-      :drying_type_id,
+      :drying_type,
       drying_moths_attributes: [
         :moth_count, :moth_no, :water_content, :moth_weight, :rice_weight, :id
       ],

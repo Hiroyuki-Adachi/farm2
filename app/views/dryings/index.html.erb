@@ -21,7 +21,7 @@
       <% @works.each do |work| %>
         <% drying = @dryings.find {|d| d.carried_on == work.model.worked_at && d.home_id == home.id } %>
         <% if drying %>
-          <% if drying.drying_type_id == 0 %>
+          <% if drying.drying_type_none? %>
             <td>
               <%= link_to '○', drying, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}} %>
             </td>

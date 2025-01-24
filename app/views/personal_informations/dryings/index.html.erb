@@ -32,20 +32,20 @@
     <tfoot>
       <tr>
         <th rowspan="4" colspan="3">合計</th>
-        <th><%= DryingType::COUNTRY.name %></th>
-        <td class="text-right"><%= format_bag(@total_dryings[DryingType::COUNTRY.id]) %></td>
+        <th><%= I18n.t("activerecord.attributes.drying.drying_types.country") %></th>
+        <td class="text-right"><%= format_bag(@total_dryings[:country]) %></td>
       </tr>
       <tr>
-        <th><%= DryingType::SELF.name %></th>
-        <td class="text-right"><%= format_bag(@total_dryings[DryingType::SELF.id]) %></td>
+        <th><%= I18n.t("activerecord.attributes.drying.drying_types.self") %></th>
+        <td class="text-right"><%= format_bag(@total_dryings[:self]) %></td>
       </tr>
       <tr>
-        <th><%= DryingType::ADJUST.name %></th>
-        <td class="text-right"><%= format_bag(@total_dryings[DryingType::ADJUST.id]) %></td>
+        <th><%= I18n.t("activerecord.attributes.drying.drying_types.adjust") %></th>
+        <td class="text-right"><%= format_bag(@total_dryings[:adjust]) %></td>
       </tr>
       <tr>
         <th>くず米</th>
-        <td class="text-right"><%= format_waste_bag(@waste_totals[DryingType::SELF.id]) %></td>
+        <td class="text-right"><%= format_waste_bag(@waste_totals[:self]) %></td>
       </tr>
     </tfoot>
   </table>

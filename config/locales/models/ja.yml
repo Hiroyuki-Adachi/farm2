@@ -407,6 +407,14 @@ ja:
           rule: "ルール違反"
           hiyari: "ヒヤリハット"
           other: "その他"
+      
+      drying:
+        drying_types:
+          none: "未設定"
+          country: "乾籾出荷"
+          self: "調整出荷"
+          another: "乾燥のみ"
+          adjust: "調整のみ"
 
   status:
     organization:

@@ -272,7 +272,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_23_132500) do
     t.integer "term", null: false, comment: "年度(期)"
     t.integer "work_type_id", comment: "作業分類"
     t.integer "home_id", default: 0, null: false, comment: "担当世帯"
-    t.integer "drying_type_id", default: 0, null: false, comment: "乾燥種別"
+    t.integer "drying_type", default: 0, null: false, comment: "乾燥種別"
     t.date "carried_on", null: false, comment: "搬入日"
     t.date "shipped_on", comment: "出荷日"
     t.decimal "water_content", precision: 3, scale: 1, comment: "水分"
