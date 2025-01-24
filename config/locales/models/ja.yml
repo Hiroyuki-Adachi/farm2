@@ -141,16 +141,16 @@ ja:
         mobile_mail: "携帯アドレス"  #g
         pc_mail: PCメールアドレス
         display_order: "表示順"  #g
-        gender_id: "性別"
+        gender: "性別"
         home_id: "世帯"
         token: "アクセストークン"
-        position_id: "役職"
+        position: "役職"
         broccoli_mark: "ブロッコリ記号"
-        gender_ids:
+        genders:
           none: "未設定"
           male: "男性"
           female: "女性"
-        position_ids:
+        positions:
           none: ""
           member: "組合員"
           leader: "作業班長"

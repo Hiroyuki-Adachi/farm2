@@ -87,7 +87,7 @@ class Work < ApplicationRecord
 SQL
       .order(worked_at: :ASC, id: :ASC)
   }
-  scope :enough_check, ->(worker) {where([<<SQL.squish, worker.id, worker.position == Position::DIRECTOR ? ENOUGH + 1 : ENOUGH])}
+  scope :enough_check, ->(worker) {where([<<SQL.squish, worker.id, worker.position == :director ? ENOUGH + 1 : ENOUGH])}
       NOT EXISTS (
         SELECT work_verifications.work_id FROM work_verifications
           WHERE (work_verifications.work_id = works.id)
@@ -373,7 +373,7 @@ SQL
     sql = []
     sql << "SELECT"
     sql << "   SUM(work_results.hours) AS hours"
-    sql << " , CASE WHEN workers.gender_id = 2 THEN 5"
+    sql << " , CASE WHEN workers.gender = #{Worker.genders[:female]} THEN 5"
     sql << "     ELSE"
     sql << "       CASE WHEN date_part('year', age(works.worked_at, workers.birthday)) < 40 THEN 0"
     sql << "            WHEN date_part('year', age(works.worked_at, workers.birthday)) BETWEEN 40 AND 49 THEN 1"

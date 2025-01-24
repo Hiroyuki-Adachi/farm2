@@ -2,11 +2,11 @@
 #
 # Table name: cleaning_institutions(清掃施設)
 #
-#  id             :integer          not null, primary key
-#  cleaning_id    :integer          not null
-#  institution_id :integer          not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  id                     :bigint           not null, primary key
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  cleaning_id(清掃ID)    :integer          not null
+#  institution_id(施設ID) :integer          not null
 #
 # Indexes
 #

@@ -2,11 +2,11 @@
 #
 # Table name: cleaning_cleaning_targets(清掃対象)
 #
-#  id                 :integer          not null, primary key
-#  cleaning_id        :integer
-#  cleaning_target_id :integer
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  id                             :bigint           not null, primary key
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  cleaning_id(清掃)              :bigint
+#  cleaning_target_id(清掃対象ID) :integer
 #
 # Indexes
 #

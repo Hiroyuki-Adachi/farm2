@@ -29,15 +29,12 @@
 require 'securerandom'
 
 class Worker < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
   acts_as_paranoid
 
   belongs_to :home, -> {with_deleted}
-  belongs_to_active_hash :position
-  belongs_to_active_hash :gender
 
-  enum gender_id: { none: 0, male: 1, female: 2}
-  enum position_id: { none: 0, member: 1, leader: 2, director: 3, advisor: 9}
+  enum :gender, { none: 0, male: 1, female: 2}, prefix: true
+  enum :position, { none: 0, member: 1, leader: 2, director: 3, advisor: 9}, prefix: true
 
   has_many :work_results
   has_many :works, -> {order(:worked_at)}, through: :work_results
@@ -82,18 +79,22 @@ class Worker < ApplicationRecord
   end
 
   def member?
-    position == Position::MEMBER
+    self.position_member?
   end
 
   def leader?
-    position == Position::LEADER
+    self.position_leader?
   end
 
   def director?
-    position == Position::DIRECTOR
+    self.position_director?
   end
 
   def advisor?
-    position == Position::ADVISOR
+    self.position_advisor?
+  end
+
+  def position_name
+    I18n.t("activerecord.attributes.worker.positions.#{self.position}")
   end
 end

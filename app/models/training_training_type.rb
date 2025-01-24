@@ -2,11 +2,11 @@
 #
 # Table name: training_training_types(訓練訓練種別)
 #
-#  id               :integer          not null, primary key
-#  training_id      :integer          not null
-#  training_type_id :integer          not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id                           :bigint           not null, primary key
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
+#  training_id(訓練ID)          :integer          not null
+#  training_type_id(訓練訓練ID) :integer          not null
 #
 # Indexes
 #

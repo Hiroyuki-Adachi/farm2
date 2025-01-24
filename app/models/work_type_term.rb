@@ -2,12 +2,12 @@
 #
 # Table name: work_type_terms(作業分類年度別マスタ)
 #
-#  id           :integer          not null, primary key
-#  term         :integer          not null
-#  work_type_id :integer          not null
-#  bg_color     :string(8)
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id                     :bigint           not null, primary key
+#  bg_color(背景色)       :string(8)
+#  term(年度(期))         :integer          not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  work_type_id(作業分類) :integer          not null
 #
 # Indexes
 #
