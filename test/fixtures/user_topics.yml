@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: user_topics
+# Table name: user_topics(利用者トピック)
 #
 #  id                    :bigint           not null, primary key
 #  read_flag(既読フラグ) :boolean          default(FALSE), not null

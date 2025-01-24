@@ -86,7 +86,7 @@ group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 4.0'
   # Add a comment summarizing the current schema to the top or bottom of each informations.
-  gem 'annotate'
+  gem 'annotaterb'
   # RuboCop is a Ruby static code analyzer.
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false

@@ -83,7 +83,7 @@ USER root
 # バンドルインストール
 RUN gem install bundler
 COPY Gemfile Gemfile.lock /home/hiro/farm2/
-RUN bundle install
+RUN bundle install --without test development
 
 # アセットプリコンパイルとDBマイグレーション
 COPY . /home/hiro/farm2

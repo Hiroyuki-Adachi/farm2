@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: seedling_results
+# Table name: seedling_results(育苗結果)
 #
 #  id(育苗結果)               :integer          not null, primary key
 #  display_order(表示順)      :integer          default(0), not null

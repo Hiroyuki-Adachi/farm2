@@ -1,11 +1,8 @@
 # == Schema Information
 #
-# Table name: organizations
+# Table name: organizations(組織(体系)マスタ)
 #
 #  id(組織(体系)マスタ)                      :integer          not null, primary key
-#  account_number(口座番号)                  :string(7)        default("0000000"), not null
-#  bank_code(口座の金融機関コード)           :string(4)        default("0000"), not null
-#  branch_code(口座の支店コード)             :string(3)        default("000"), not null
 #  chemical_group_count(薬剤グループ数)      :integer          default(1)
 #  chemicals_count(作業日報の薬剤数)         :integer          default(4), not null
 #  consignor_code(委託者コード)              :string(10)
@@ -20,12 +17,15 @@
 #  workers_count(作業日報の作業者数)         :integer          default(12), not null
 #  created_at                                :datetime
 #  updated_at                                :datetime
-#  account_type_id(口座種別)                 :integer          default(0), not null
 #  broccoli_work_kind_id(ブロッコリ種別分類) :integer
 #  broccoli_work_type_id(ブロッコリ作業分類) :integer
+#  cleaning_id(清掃id)                       :integer
 #  contract_work_type_id(受託作業分類)       :integer
 #  harvesting_work_kind_id(稲刈作業種別)     :integer
+#  maintenance_id(機械保守id)                :integer
 #  rice_planting_id(田植作業種別)            :integer
+#  straw_id(稲わらid)                        :integer
+#  training_id(訓練id)                       :integer
 #  whole_crop_work_kind_id(WCS収穫分類)      :integer
 #
 

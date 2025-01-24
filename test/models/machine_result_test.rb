@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: machine_results
+# Table name: machine_results(機械稼動データ)
 #
 #  id(機械稼動データ)             :integer          not null, primary key
 #  display_order(表示順)          :integer          default(1), not null

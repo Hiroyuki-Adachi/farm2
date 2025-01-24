@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_chemicals
+# Table name: work_chemicals(薬剤使用データ)
 #
 #  id(薬剤使用データ)                  :integer          not null, primary key
 #  area_flag(10a当たり入力)            :boolean          default(FALSE), not null

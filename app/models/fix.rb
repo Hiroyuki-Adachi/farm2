@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: fixes
+# Table name: fixes(確定データ)
 #
 #  fixed_at(確定日)                :date             not null, primary key
 #  fixed_by(確定者)                :integer

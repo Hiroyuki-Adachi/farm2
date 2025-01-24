@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: plan_lands
+# Table name: plan_lands(作付計画)
 #
 #  term(年度)             :integer          default(0), not null
 #  created_at             :datetime         not null

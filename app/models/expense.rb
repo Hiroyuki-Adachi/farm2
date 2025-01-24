@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: expenses
+# Table name: expenses(経費)
 #
 #  id(経費)                     :integer          not null, primary key
 #  amount(支払金額)             :decimal(7, )     default(0), not null

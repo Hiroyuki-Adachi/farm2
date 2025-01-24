@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: homes
+# Table name: homes(世帯マスタ)
 #
 #  id(世帯マスタ)                      :integer          not null, primary key
 #  address1(住所1)                     :string(50)

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: healths
+# Table name: healths(健康)
 #
 #  id                       :bigint           not null, primary key
 #  code(コード)             :string(1)        not null
