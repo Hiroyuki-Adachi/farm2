@@ -5,7 +5,7 @@ class MachinePricesControllerTest < ActionDispatch::IntegrationTest
     login_as(users(:users1))
     @machine_price_t = machine_price_headers(:machine_price_header_t)
     @machine_price_m = machine_price_headers(:machine_price_header_m)
-    @price_detail = {1 => {0 => {adjust_id: 1, price: 500}}}
+    @price_detail = {normal: {0 => {adjust_id: 1, price: 500}}}
   end
 
   test "機械使用料マスタ一覧" do
@@ -44,8 +44,8 @@ class MachinePricesControllerTest < ActionDispatch::IntegrationTest
 
     machine_price_detail = MachinePriceDetail.last
     assert_equal machine_price_header.id, machine_price_detail.machine_price_header_id
-    assert_equal @price_detail[1][0][:adjust_id], machine_price_detail.adjust_id
-    assert_equal @price_detail[1][0][:price], machine_price_detail.price
+    assert_equal @price_detail[:normal][0][:adjust_id], machine_price_detail.adjust_id
+    assert_equal @price_detail[:normal][0][:price], machine_price_detail.price
   end
 
   test "機械使用料新規作成(実行)(機械)" do
@@ -63,8 +63,8 @@ class MachinePricesControllerTest < ActionDispatch::IntegrationTest
 
     machine_price_detail = MachinePriceDetail.last
     assert_equal machine_price_header.id, machine_price_detail.machine_price_header_id
-    assert_equal @price_detail[1][0][:adjust_id], machine_price_detail.adjust_id
-    assert_equal @price_detail[1][0][:price], machine_price_detail.price
+    assert_equal @price_detail[:normal][0][:adjust_id], machine_price_detail.adjust_id
+    assert_equal @price_detail[:normal][0][:price], machine_price_detail.price
   end
 
   test "機械使用料変更(表示)" do
@@ -88,8 +88,8 @@ class MachinePricesControllerTest < ActionDispatch::IntegrationTest
     assert_equal new_machine_price_header[:validated_at], @machine_price_t.validated_at.to_s
 
     machine_price_detail = @machine_price_t.details.first
-    assert_equal @price_detail[1][0][:adjust_id], machine_price_detail.adjust_id
-    assert_equal @price_detail[1][0][:price], machine_price_detail.price
+    assert_equal @price_detail[:normal][0][:adjust_id], machine_price_detail.adjust_id
+    assert_equal @price_detail[:normal][0][:price], machine_price_detail.price
   end
 
   test "機械使用料変更(実行)(機械)" do
@@ -105,8 +105,8 @@ class MachinePricesControllerTest < ActionDispatch::IntegrationTest
     assert_equal new_machine_price_header[:validated_at], @machine_price_m.validated_at.to_s
 
     machine_price_detail = @machine_price_m.details.first
-    assert_equal @price_detail[1][0][:adjust_id], machine_price_detail.adjust_id
-    assert_equal @price_detail[1][0][:price], machine_price_detail.price
+    assert_equal @price_detail[:normal][0][:adjust_id], machine_price_detail.adjust_id
+    assert_equal @price_detail[:normal][0][:price], machine_price_detail.price
   end
 
   test "機械使用料削除(種別)" do

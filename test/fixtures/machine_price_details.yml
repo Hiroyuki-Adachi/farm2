@@ -3,23 +3,23 @@
 # Table name: machine_price_details(機械利用単価マスタ(明細))
 #
 #  id(機械利用単価マスタ(明細))        :integer          not null, primary key
+#  lease(リース)                       :integer          not null
 #  price(単価)                         :decimal(5, )     default(0), not null
 #  created_at                          :datetime         not null
 #  updated_at                          :datetime         not null
 #  adjust_id(単位)                     :integer
-#  lease_id(リース)                    :integer          not null
 #  machine_price_header_id(単価ヘッダ) :integer          not null
 #  work_kind_id(作業種別)              :integer          default(0), not null
 #
 # Indexes
 #
-#  machine_price_details_2nd_key  (machine_price_header_id,lease_id,work_kind_id) UNIQUE
+#  machine_price_details_2nd_key  (machine_price_header_id,lease,work_kind_id) UNIQUE
 #
 
 machine_price_details0:
   id: '1'
   machine_price_header_id: '4'
-  lease_id: '1'
+  lease: '1'
   work_kind_id: '0'
   adjust_id: '2'
   price: '4500'
@@ -30,7 +30,7 @@ machine_price_details0:
 machine_price_details1:
   id: '2'
   machine_price_header_id: '4'
-  lease_id: '1'
+  lease: '1'
   work_kind_id: '3'
   adjust_id: '2'
   price: '4500'
@@ -41,7 +41,7 @@ machine_price_details1:
 machine_price_details2:
   id: '3'
   machine_price_header_id: '4'
-  lease_id: '1'
+  lease: '1'
   work_kind_id: '2'
   adjust_id: '2'
   price: '5000'
@@ -52,7 +52,7 @@ machine_price_details2:
 machine_price_details3:
   id: '4'
   machine_price_header_id: '4'
-  lease_id: '2'
+  lease: '2'
   work_kind_id: '0'
   adjust_id: '3'
   price: '10000'
@@ -63,7 +63,7 @@ machine_price_details3:
 machine_price_details4:
   id: '5'
   machine_price_header_id: '4'
-  lease_id: '2'
+  lease: '2'
   work_kind_id: '3'
   adjust_id: '3'
   price: '10000'
@@ -74,7 +74,7 @@ machine_price_details4:
 machine_price_details5:
   id: '6'
   machine_price_header_id: '4'
-  lease_id: '2'
+  lease: '2'
   work_kind_id: '2'
   adjust_id: '3'
   price: '10000'
@@ -85,7 +85,7 @@ machine_price_details5:
 machine_price_details6:
   id: '9'
   machine_price_header_id: '7'
-  lease_id: '1'
+  lease: '1'
   work_kind_id: '0'
   adjust_id: '2'
   price: '4000'
@@ -96,7 +96,7 @@ machine_price_details6:
 machine_price_details7:
   id: '10'
   machine_price_header_id: '7'
-  lease_id: '2'
+  lease: '2'
   work_kind_id: '0'
   adjust_id: '3'
   price: '20000'
@@ -107,7 +107,7 @@ machine_price_details7:
 machine_price_details8:
   id: '11'
   machine_price_header_id: '8'
-  lease_id: '1'
+  lease: '1'
   work_kind_id: '0'
   adjust_id: '2'
   price: '15000'
@@ -118,7 +118,7 @@ machine_price_details8:
 machine_price_details9:
   id: '12'
   machine_price_header_id: '8'
-  lease_id: '2'
+  lease: '2'
   work_kind_id: '0'
   adjust_id: '3'
   price: '30000'
@@ -129,7 +129,7 @@ machine_price_details9:
 machine_price_details10:
   id: '13'
   machine_price_header_id: '9'
-  lease_id: '1'
+  lease: '1'
   work_kind_id: '0'
   adjust_id: '1'
   price: '1000'
@@ -140,7 +140,7 @@ machine_price_details10:
 machine_price_details11:
   id: '14'
   machine_price_header_id: '9'
-  lease_id: '2'
+  lease: '2'
   work_kind_id: '0'
   adjust_id: '1'
   price: '1000'
@@ -149,7 +149,7 @@ machine_price_details11:
 
 machine_price_detail_1_hour:
   machine_price_header_id: 11
-  lease_id: 1
+  lease: 1
   work_kind_id: 0
   adjust_id: 1
   price: 1100
@@ -158,7 +158,7 @@ machine_price_detail_1_hour:
 
 machine_price_detail_1_area:
   machine_price_header_id: 12
-  lease_id: 1
+  lease: 1
   work_kind_id: 0
   adjust_id: 2
   price: 1200
@@ -167,7 +167,7 @@ machine_price_detail_1_area:
 
 machine_price_detail_1_day:
   machine_price_header_id: 13
-  lease_id: 1
+  lease: 1
   work_kind_id: 0
   adjust_id: 3
   price: 1300
@@ -176,7 +176,7 @@ machine_price_detail_1_day:
 
 machine_price_detail_march_hour:
   machine_price_header_id: 21
-  lease_id: 1
+  lease: 1
   work_kind_id: 0
   adjust_id: 1
   price: 2100
@@ -185,7 +185,7 @@ machine_price_detail_march_hour:
 
 machine_price_detail_march_area:
   machine_price_header_id: 22
-  lease_id: 1
+  lease: 1
   work_kind_id: 0
   adjust_id: 2
   price: 2200
@@ -194,7 +194,7 @@ machine_price_detail_march_area:
 
 machine_price_detail_march_day:
   machine_price_header_id: 23
-  lease_id: 1
+  lease: 1
   work_kind_id: 0
   adjust_id: 3
   price: 2300
@@ -203,7 +203,7 @@ machine_price_detail_march_day:
 
 machine_type_price_detail_1_hour:
   machine_price_header_id: 31
-  lease_id: 1
+  lease: 1
   work_kind_id: 0
   adjust_id: 1
   price: 3100
@@ -212,7 +212,7 @@ machine_type_price_detail_1_hour:
 
 machine_type_price_detail_1_area:
   machine_price_header_id: 32
-  lease_id: 1
+  lease: 1
   work_kind_id: 0
   adjust_id: 2
   price: 3200
@@ -221,7 +221,7 @@ machine_type_price_detail_1_area:
 
 machine_type_price_detail_1_day:
   machine_price_header_id: 33
-  lease_id: 1
+  lease: 1
   work_kind_id: 0
   adjust_id: 3
   price: 3300
@@ -230,7 +230,7 @@ machine_type_price_detail_1_day:
 
 machine_type_price_detail_march_hour:
   machine_price_header_id: 41
-  lease_id: 1
+  lease: 1
   work_kind_id: 0
   adjust_id: 1
   price: 4100
@@ -239,7 +239,7 @@ machine_type_price_detail_march_hour:
 
 machine_type_price_detail_march_area:
   machine_price_header_id: 42
-  lease_id: 1
+  lease: 1
   work_kind_id: 0
   adjust_id: 2
   price: 4200
@@ -248,7 +248,7 @@ machine_type_price_detail_march_area:
 
 machine_type_price_detail_march_day:
   machine_price_header_id: 43
-  lease_id: 1
+  lease: 1
   work_kind_id: 0
   adjust_id: 3
   price: 4300

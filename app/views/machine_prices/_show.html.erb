@@ -11,15 +11,15 @@
     </tr>
   </thead>
   <tbody>
-    <% Lease.all.each do |lease| %>
+    <% MachinePriceDetail.leases.keys.each do |lease| %>
       <tr>
-        <th><%=h lease.name %></th>
+        <th><%= I18n.t("activerecord.attributes.machine_price_detail.leases.#{lease}") %></th>
         <% work_kinds.each do |work_kind| %>
-          <% if @machine_price.details_form[lease.id][work_kind.id][:adjust_id].to_i == Adjust::NONE.id %>
-            <td colspan="2"><%=h Adjust::NONE.name %></td>
+          <% if @machine_price.details_form[lease][work_kind.id][:adjust_id].to_i == Adjust::NONE.id %>
+            <td colspan="2"><%= Adjust::NONE.name %></td>
           <% else %>
-            <td><%=h Adjust.find(@machine_price.details_form[lease.id][work_kind.id][:adjust_id]).name %></td>
-            <td class="numeric"><%=h number_with_delimiter(@machine_price.details_form[lease.id][work_kind.id][:price]) %></td>
+            <td><%= Adjust.find(@machine_price.details_form[lease][work_kind.id][:adjust_id]).name %></td>
+            <td class="numeric"><%=h number_with_delimiter(@machine_price.details_form[lease][work_kind.id][:price]) %></td>
           <% end %>
         <% end %>
       </tr>

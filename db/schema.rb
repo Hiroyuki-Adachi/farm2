@@ -451,13 +451,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_23_132500) do
 
   create_table "machine_price_details", id: { type: :serial, comment: "機械利用単価マスタ(明細)" }, comment: "機械利用単価マスタ(明細)", force: :cascade do |t|
     t.integer "machine_price_header_id", null: false, comment: "単価ヘッダ"
-    t.integer "lease_id", null: false, comment: "リース"
+    t.integer "lease", null: false, comment: "リース"
     t.integer "work_kind_id", default: 0, null: false, comment: "作業種別"
     t.integer "adjust_id", comment: "単位"
     t.decimal "price", precision: 5, default: "0", null: false, comment: "単価"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.index ["machine_price_header_id", "lease_id", "work_kind_id"], name: "machine_price_details_2nd_key", unique: true
+    t.index ["machine_price_header_id", "lease", "work_kind_id"], name: "machine_price_details_2nd_key", unique: true
   end
 
   create_table "machine_price_headers", id: { type: :serial, comment: "機械利用単価マスタ(ヘッダ)" }, comment: "機械利用単価マスタ(ヘッダ)", force: :cascade do |t|

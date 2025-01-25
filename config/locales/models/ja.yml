@@ -181,6 +181,11 @@ ja:
       machine_price_header:
         validated_at: 起算日
 
+      machine_price_detail:
+        leases:
+          normal: "標準"
+          lease: "リース"
+
       machine_result:
         owner_name: "所有世帯"
         machine_type_name: "機械種別"
