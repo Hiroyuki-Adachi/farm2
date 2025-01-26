@@ -27,7 +27,7 @@ class MachineResultTest < ActiveSupport::TestCase
     machine_result = machine_results(:machine_result_march_hour)
     machine_price_detail = machine_price_details(:machine_price_detail_march_hour)
     assert_equal machine_price_detail.price, machine_result.price
-    assert_equal Adjust::HOUR, machine_result.adjust
+    assert_equal :hour, machine_result.adjust
     assert_equal machine_result.hours, machine_result.quantity
     assert_equal machine_result.hours * machine_price_detail.price, machine_result.amount
   end
@@ -37,7 +37,7 @@ class MachineResultTest < ActiveSupport::TestCase
     land_area = work_lands(:work_land_march1).land.area + work_lands(:work_land_march2).land.area
     machine_price_detail = machine_price_details(:machine_price_detail_march_area)
     assert_equal machine_price_detail.price, machine_result.price
-    assert_equal Adjust::AREA, machine_result.adjust
+    assert_equal :area, machine_result.adjust
     assert_equal land_area / 10, machine_result.quantity
     assert_equal land_area * machine_price_detail.price / 10, machine_result.amount
   end
@@ -46,7 +46,7 @@ class MachineResultTest < ActiveSupport::TestCase
     machine_result = machine_results(:machine_result_march_day)
     machine_price_detail = machine_price_details(:machine_price_detail_march_day)
     assert_equal machine_price_detail.price, machine_result.price
-    assert_equal Adjust::DAY, machine_result.adjust
+    assert_equal :day, machine_result.adjust
     assert_equal 1, machine_result.quantity
     assert_equal machine_price_detail.price, machine_result.amount
   end
@@ -55,7 +55,7 @@ class MachineResultTest < ActiveSupport::TestCase
     machine_result = machine_results(:machine_result_feb_hour)
     machine_price_detail = machine_price_details(:machine_price_detail_1_hour)
     assert_equal machine_price_detail.price, machine_result.price
-    assert_equal Adjust::HOUR, machine_result.adjust
+    assert_equal :hour, machine_result.adjust
     assert_equal machine_result.hours, machine_result.quantity
     assert_equal machine_result.hours * machine_price_detail.price, machine_result.amount
   end
@@ -65,7 +65,7 @@ class MachineResultTest < ActiveSupport::TestCase
     land_area = work_lands(:work_land_feb1).land.area + work_lands(:work_land_feb2).land.area
     machine_price_detail = machine_price_details(:machine_price_detail_1_area)
     assert_equal machine_price_detail.price, machine_result.price
-    assert_equal Adjust::AREA, machine_result.adjust
+    assert_equal :area, machine_result.adjust
     assert_equal land_area / 10, machine_result.quantity
     assert_equal land_area * machine_price_detail.price / 10, machine_result.amount
   end
@@ -74,7 +74,7 @@ class MachineResultTest < ActiveSupport::TestCase
     machine_result = machine_results(:machine_result_feb_day)
     machine_price_detail = machine_price_details(:machine_price_detail_1_day)
     assert_equal machine_price_detail.price, machine_result.price
-    assert_equal Adjust::DAY, machine_result.adjust
+    assert_equal :day, machine_result.adjust
     assert_equal 1, machine_result.quantity
     assert_equal machine_price_detail.price, machine_result.amount
   end
@@ -83,7 +83,7 @@ class MachineResultTest < ActiveSupport::TestCase
     machine_result = machine_results(:machine_result_march_hour_t)
     machine_price_detail = machine_price_details(:machine_type_price_detail_march_hour)
     assert_equal machine_price_detail.price, machine_result.price
-    assert_equal Adjust::HOUR, machine_result.adjust
+    assert_equal :hour, machine_result.adjust
     assert_equal machine_result.hours, machine_result.quantity
     assert_equal machine_result.hours * machine_price_detail.price, machine_result.amount
   end
@@ -93,7 +93,7 @@ class MachineResultTest < ActiveSupport::TestCase
     land_area = work_lands(:work_land_march1).land.area + work_lands(:work_land_march2).land.area
     machine_price_detail = machine_price_details(:machine_type_price_detail_march_area)
     assert_equal machine_price_detail.price, machine_result.price
-    assert_equal Adjust::AREA, machine_result.adjust
+    assert_equal :area, machine_result.adjust
     assert_equal land_area / 10, machine_result.quantity
     assert_equal land_area * machine_price_detail.price / 10, machine_result.amount
   end
@@ -102,7 +102,7 @@ class MachineResultTest < ActiveSupport::TestCase
     machine_result = machine_results(:machine_result_march_day_t)
     machine_price_detail = machine_price_details(:machine_type_price_detail_march_day)
     assert_equal machine_price_detail.price, machine_result.price
-    assert_equal Adjust::DAY, machine_result.adjust
+    assert_equal :day, machine_result.adjust
     assert_equal 1, machine_result.quantity
     assert_equal machine_price_detail.price, machine_result.amount
   end
@@ -111,7 +111,7 @@ class MachineResultTest < ActiveSupport::TestCase
     machine_result = machine_results(:machine_result_feb_hour_t)
     machine_price_detail = machine_price_details(:machine_type_price_detail_1_hour)
     assert_equal machine_price_detail.price, machine_result.price
-    assert_equal Adjust::HOUR, machine_result.adjust
+    assert_equal :hour, machine_result.adjust
     assert_equal machine_result.hours, machine_result.quantity
     assert_equal machine_result.hours * machine_price_detail.price, machine_result.amount
   end
@@ -121,7 +121,7 @@ class MachineResultTest < ActiveSupport::TestCase
     land_area = work_lands(:work_land_feb1).land.area + work_lands(:work_land_feb2).land.area
     machine_price_detail = machine_price_details(:machine_type_price_detail_1_area)
     assert_equal machine_price_detail.price, machine_result.price
-    assert_equal Adjust::AREA, machine_result.adjust
+    assert_equal :area, machine_result.adjust
     assert_equal land_area / 10, machine_result.quantity
     assert_equal land_area * machine_price_detail.price / 10, machine_result.amount
   end
@@ -130,7 +130,7 @@ class MachineResultTest < ActiveSupport::TestCase
     machine_result = machine_results(:machine_result_feb_day_t)
     machine_price_detail = machine_price_details(:machine_type_price_detail_1_day)
     assert_equal machine_price_detail.price, machine_result.price
-    assert_equal Adjust::DAY, machine_result.adjust
+    assert_equal :day, machine_result.adjust
     assert_equal 1, machine_result.quantity
     assert_equal machine_price_detail.price, machine_result.amount
   end

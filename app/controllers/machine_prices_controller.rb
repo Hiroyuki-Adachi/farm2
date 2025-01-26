@@ -1,7 +1,6 @@
 class MachinePricesController < ApplicationController
   include PermitChecker
   before_action :set_machine_price, only: [:index, :edit, :update, :destroy]
-  before_action :set_adjusts, only: [:new, :create, :edit, :update]
 
   def index
     @machine_prices = MachinePriceHeader.histories(@machine_price)
@@ -71,10 +70,6 @@ class MachinePricesController < ApplicationController
 
   def set_machine_price
     @machine_price = MachinePriceHeader.find(params[:id])
-  end
-
-  def set_adjusts
-    @adjusts = Adjust.all
   end
 
   def machine_price_header_params

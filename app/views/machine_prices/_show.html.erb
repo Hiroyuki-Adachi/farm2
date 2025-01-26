@@ -15,10 +15,10 @@
       <tr>
         <th><%= I18n.t("activerecord.attributes.machine_price_detail.leases.#{lease}") %></th>
         <% work_kinds.each do |work_kind| %>
-          <% if @machine_price.details_form[lease][work_kind.id][:adjust_id].to_i == Adjust::NONE.id %>
-            <td colspan="2"><%= Adjust::NONE.name %></td>
+          <% if @machine_price.details_form[lease][work_kind.id][:adjust] == :none %>
+            <td colspan="2"><%= I18n.t("activerecord.enums.adjust.names.none") %></td>
           <% else %>
-            <td><%= Adjust.find(@machine_price.details_form[lease][work_kind.id][:adjust_id]).name %></td>
+            <td><%= I18n.t("activerecord.enums.adjust.names.#{@machine_price.details_form[lease][work_kind.id][:adjust]}") %></td>
             <td class="numeric"><%=h number_with_delimiter(@machine_price.details_form[lease][work_kind.id][:price]) %></td>
           <% end %>
         <% end %>

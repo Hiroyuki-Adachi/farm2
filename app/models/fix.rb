@@ -39,7 +39,7 @@ class Fix < ApplicationRecord
         hours += result.hours
       end
       work.machine_results.to_a.uniq(&:machine_id).each do |result|
-        result.update(fixed_quantity: result.quantity, fixed_adjust_id: result.adjust.id, fixed_price: result.price, fixed_amount: result.amount)
+        result.update(fixed_quantity: result.quantity, fixed_adjust: result.adjust, fixed_price: result.price, fixed_amount: result.amount)
         machines_amount += result.amount
       end
       work.work_lands.each do |work_land|
@@ -60,7 +60,7 @@ class Fix < ApplicationRecord
         result.update(fixed_hours: nil, fixed_price: nil, fixed_amount: nil)
       end
       work.machine_results.each do |result|
-        result.update(fixed_quantity: nil, fixed_adjust_id: nil, fixed_price: nil, fixed_amount: nil)
+        result.update(fixed_quantity: nil, fixed_adjust: nil, fixed_price: nil, fixed_amount: nil)
       end
       work.work_lands.each do |work_land|
         work_land.update(fixed_cost: nil)

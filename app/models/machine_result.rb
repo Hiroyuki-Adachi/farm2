@@ -21,11 +21,12 @@
 #
 
 class MachineResult < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
+  include AdjustEnum
+
+  define_adjust_enum :fixed_adjust
 
   belongs_to  :machine, -> {with_deleted}
   belongs_to  :work_result
-  belongs_to_active_hash  :fixed_adjust, class_name: "Adjust"
 
   has_one :work, through: :work_result
   has_one :owner, -> {with_deleted}, through: :machine
@@ -88,7 +89,7 @@ class MachineResult < ApplicationRecord
   end
 
   def adjust
-    @adjust = fixed_adjust if work.fixed_at
+    @adjust = fixed_adjust.to_sym if work.fixed_at
     calc_amount unless @adjust
     return @adjust
   end
@@ -103,6 +104,10 @@ class MachineResult < ApplicationRecord
     @amount = fixed_amount if work.fixed_at
     calc_amount unless @amount
     return @amount
+  end
+
+  def adjust_unit
+    return I18n.t("activerecord.enums.adjust.units.#{adjust}")
   end
 
   private
@@ -135,19 +140,19 @@ class MachineResult < ApplicationRecord
     end
 
     price_detail = price_details.first
-    @adjust = price_detail.adjust
-    if @adjust == Adjust::NONE
+    @adjust = price_detail.adjust.to_sym
+    if @adjust == :none
       clear_amount
       return
     end
 
     @price = price_detail.price
     @quantity = case @adjust
-                when Adjust::HOUR
+                when :hour
                   sum_hours
-                when Adjust::AREA
+                when :area
                   work.sum_areas / 10
-                when Adjust::DAY
+                when :day
                   1
                 end
     @amount = @price * @quantity
@@ -155,7 +160,7 @@ class MachineResult < ApplicationRecord
 
   def clear_amount
     @price = 0
-    @adjust = Adjust::NONE
+    @adjust = :none
     @quantity = 0
     @amount = 0
   end
