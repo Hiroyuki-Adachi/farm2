@@ -17,14 +17,13 @@
 #
 
 class MachinePriceDetail < ApplicationRecord
-  include AdjustEnum
-
-  define_adjust_enum :adjust
+  extend ActiveHash::Associations::ActiveRecordExtensions
 
   enum :lease, {normal: 1, lease: 2}
 
   belongs_to :header, class_name: :MachinePriceHeader
   belongs_to :work_kind
+  belongs_to_active_hash :adjust
 
   validates :price, presence: true
   validates :price, numericality: true, if: proc { |x| x.price.present?}

@@ -35,11 +35,11 @@ class MachineResultDecorator < Draper::Decorator
 
   def quantity
     case model.adjust
-    when :hour
+    when Adjust::HOUR
       h.number_to_currency(model.quantity, {precision: 1, unit: ""})
-    when :day
+    when Adjust::DAY
       h.number_to_currency(model.quantity, {precision: 0, unit: ""})
-    when :area
+    when Adjust::AREA
       h.number_to_currency(model.quantity, {precision: 3, unit: ""})
     end
   end
@@ -53,6 +53,6 @@ class MachineResultDecorator < Draper::Decorator
   end
 
   def unit
-    I18n.t("activerecord.enums.adjust.units.#{model.adjust}")
+    model.adjust.unit
   end
 end

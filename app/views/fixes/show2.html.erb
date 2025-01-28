@@ -35,9 +35,9 @@
           <td></td>
         <% end %>
         <% if home.drying_order %>
-          <td class="numeric"><%= format_bag(@total_dryings[home.id][:country]) %></td>
-          <td class="numeric"><%= format_bag(@total_dryings[home.id][:self] + @waste_totals[home.id][:self]) %></td>
-          <td class="numeric"><%= format_bag(@total_dryings[home.id][:adjust] + @waste_totals[home.id][:adjust]) %></td>
+          <td class="numeric"><%= format_bag(@total_dryings[home.id][DryingType::COUNTRY.id]) %></td>
+          <td class="numeric"><%= format_bag(@total_dryings[home.id][DryingType::SELF.id] + @waste_totals[home.id][DryingType::SELF.id]) %></td>
+          <td class="numeric"><%= format_bag(@total_dryings[home.id][DryingType::ADJUST.id] + @waste_totals[home.id][DryingType::ADJUST.id]) %></td>
         <% else %>
           <td></td>
           <td></td>

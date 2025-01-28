@@ -8,8 +8,6 @@ class RenameForEnums < ActiveRecord::Migration[8.0]
     rename_column :users, :permission_id, :permission
     rename_column :dryings, :drying_type_id, :drying_type
     rename_column :machine_price_details, :lease_id, :lease
-    rename_column :machine_price_details, :adjust_id, :adjust
-    rename_column :machine_results, :fixed_adjust_id, :fixed_adjust
   end
 
   def down
@@ -21,7 +19,5 @@ class RenameForEnums < ActiveRecord::Migration[8.0]
     rename_column :users, :permission, :permission_id
     rename_column :dryings, :drying_type, :drying_type_id
     rename_column :machine_price_details, :lease, :lease_id
-    rename_column :machine_price_details, :adjust, :adjust_id
-    rename_column :machine_results, :fixed_adjust, :fixed_adjust_id
   end
 end

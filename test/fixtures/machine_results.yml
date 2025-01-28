@@ -27,7 +27,7 @@ machine_results0:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: '0.00'
-  fixed_adjust: '0'
+  fixed_adjust_id: '0'
   fixed_price: '0'
   fixed_amount: '0'
   created_at: '2015-03-21 00:40:31.081077'
@@ -41,7 +41,7 @@ machine_results1:
   display_order: '1'
   hours: '2.5'
   fixed_quantity: '0.00'
-  fixed_adjust: '0'
+  fixed_adjust_id: '0'
   fixed_price: '0'
   fixed_amount: '0'
   created_at: '2015-03-21 00:42:49.790541'
@@ -55,7 +55,7 @@ machine_results2:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: '14.00'
-  fixed_adjust: '1'
+  fixed_adjust_id: '1'
   fixed_price: '1000'
   fixed_amount: '14000'
   created_at: '2015-03-21 00:48:03.533993'
@@ -69,7 +69,7 @@ machine_results3:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: '0.00'
-  fixed_adjust: '0'
+  fixed_adjust_id: '0'
   fixed_price: '0'
   fixed_amount: '0'
   created_at: '2015-03-21 00:48:03.541313'
@@ -83,7 +83,7 @@ machine_results4:
   display_order: '1'
   hours: '6.0'
   fixed_quantity: '6.00'
-  fixed_adjust: '1'
+  fixed_adjust_id: '1'
   fixed_price: '1000'
   fixed_amount: '6000'
   created_at: '2015-03-21 00:50:10.796356'
@@ -97,7 +97,7 @@ machine_results5:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-21 00:55:09.315975'
@@ -111,7 +111,7 @@ machine_results6:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-21 00:58:35.658765'
@@ -125,7 +125,7 @@ machine_results7:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-22 01:12:31.298527'
@@ -139,7 +139,7 @@ machine_results8:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-22 01:12:31.373253'
@@ -153,7 +153,7 @@ machine_results9:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-22 01:14:02.660029'
@@ -167,7 +167,7 @@ machine_results10:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-22 01:14:02.667366'
@@ -181,7 +181,7 @@ machine_results11:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-22 01:16:27.752712'
@@ -195,7 +195,7 @@ machine_results12:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-22 01:18:35.079534'
@@ -209,7 +209,7 @@ machine_results13:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-22 01:18:35.225538'
@@ -223,7 +223,7 @@ machine_results14:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-22 01:27:32.586397'
@@ -237,7 +237,7 @@ machine_results15:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-22 01:27:32.593802'
@@ -251,7 +251,7 @@ machine_results16:
   display_order: '1'
   hours: '6.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-22 01:31:02.74519'
@@ -265,7 +265,7 @@ machine_results17:
   display_order: '1'
   hours: '6.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-03-22 01:31:02.752961'
@@ -279,7 +279,7 @@ machine_results18:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-05-04 05:52:09.66653'
@@ -293,7 +293,7 @@ machine_results19:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-05-04 05:52:09.683542'
@@ -307,7 +307,7 @@ machine_results20:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-05-04 05:58:40.814845'
@@ -321,7 +321,7 @@ machine_results21:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-05-04 05:58:40.834027'
@@ -335,7 +335,7 @@ machine_results22:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-05-04 06:25:06.088675'
@@ -349,7 +349,7 @@ machine_results23:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-05-04 06:25:08.358081'
@@ -363,7 +363,7 @@ machine_results24:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-05-04 06:43:49.038535'
@@ -377,7 +377,7 @@ machine_results25:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-05-04 06:43:49.046083'
@@ -391,7 +391,7 @@ machine_results26:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-05-04 06:43:49.053365'
@@ -405,7 +405,7 @@ machine_results27:
   display_order: '1'
   hours: '6.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 06:15:21.995987'
@@ -419,7 +419,7 @@ machine_results28:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 06:21:54.779927'
@@ -433,7 +433,7 @@ machine_results29:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 06:21:54.912147'
@@ -447,7 +447,7 @@ machine_results30:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 06:29:43.456534'
@@ -461,7 +461,7 @@ machine_results31:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 06:29:43.567567'
@@ -475,7 +475,7 @@ machine_results32:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 06:32:39.617271'
@@ -489,7 +489,7 @@ machine_results33:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 06:35:42.934407'
@@ -503,7 +503,7 @@ machine_results34:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 06:40:59.813426'
@@ -517,7 +517,7 @@ machine_results35:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 06:40:59.912437'
@@ -531,7 +531,7 @@ machine_results36:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 06:46:08.802221'
@@ -545,7 +545,7 @@ machine_results37:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 06:51:05.037248'
@@ -559,7 +559,7 @@ machine_results38:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 06:51:05.169315'
@@ -573,7 +573,7 @@ machine_results39:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 07:11:26.762131'
@@ -587,7 +587,7 @@ machine_results40:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 07:11:26.781413'
@@ -601,7 +601,7 @@ machine_results41:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 07:11:26.788783'
@@ -615,7 +615,7 @@ machine_results42:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 07:17:54.052851'
@@ -629,7 +629,7 @@ machine_results43:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-06-14 07:17:54.060195'
@@ -643,7 +643,7 @@ machine_results44:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:23:01.60898'
@@ -657,7 +657,7 @@ machine_results45:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:23:01.763992'
@@ -671,7 +671,7 @@ machine_results46:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:23:01.771256'
@@ -685,7 +685,7 @@ machine_results47:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:30:07.918339'
@@ -699,7 +699,7 @@ machine_results48:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:30:07.925779'
@@ -713,7 +713,7 @@ machine_results49:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:30:07.932955'
@@ -727,7 +727,7 @@ machine_results50:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:38:58.528285'
@@ -741,7 +741,7 @@ machine_results51:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:38:58.5363'
@@ -755,7 +755,7 @@ machine_results52:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:38:58.544088'
@@ -769,7 +769,7 @@ machine_results53:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:45:35.354856'
@@ -783,7 +783,7 @@ machine_results54:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:45:35.539163'
@@ -797,7 +797,7 @@ machine_results55:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:45:35.604583'
@@ -811,7 +811,7 @@ machine_results56:
   display_order: '1'
   hours: '7.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:52:43.9604'
@@ -825,7 +825,7 @@ machine_results57:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:52:43.967816'
@@ -839,7 +839,7 @@ machine_results58:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 06:52:43.97501'
@@ -853,7 +853,7 @@ machine_results59:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 07:40:19.427635'
@@ -867,7 +867,7 @@ machine_results60:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 07:40:19.447296'
@@ -881,7 +881,7 @@ machine_results61:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 07:57:05.33956'
@@ -895,7 +895,7 @@ machine_results62:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 07:59:10.90004'
@@ -909,7 +909,7 @@ machine_results63:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 08:01:26.744423'
@@ -923,7 +923,7 @@ machine_results64:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 08:08:44.387675'
@@ -937,7 +937,7 @@ machine_results65:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 08:08:44.410931'
@@ -951,7 +951,7 @@ machine_results66:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-05 08:22:23.548364'
@@ -965,7 +965,7 @@ machine_results67:
   display_order: '1'
   hours: '2.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 09:55:31.298666'
@@ -979,7 +979,7 @@ machine_results68:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 10:05:56.330978'
@@ -993,7 +993,7 @@ machine_results69:
   display_order: '1'
   hours: '2.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 10:12:00.971899'
@@ -1007,7 +1007,7 @@ machine_results70:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 10:15:58.94409'
@@ -1021,7 +1021,7 @@ machine_results71:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 10:15:59.081218'
@@ -1035,7 +1035,7 @@ machine_results72:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 10:17:27.60601'
@@ -1049,7 +1049,7 @@ machine_results73:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 10:17:27.759915'
@@ -1063,7 +1063,7 @@ machine_results74:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 10:20:07.033013'
@@ -1077,7 +1077,7 @@ machine_results75:
   display_order: '1'
   hours: '6.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 10:20:07.040229'
@@ -1091,7 +1091,7 @@ machine_results76:
   display_order: '1'
   hours: '6.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 10:20:07.047414'
@@ -1105,7 +1105,7 @@ machine_results77:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 10:22:09.622136'
@@ -1119,7 +1119,7 @@ machine_results78:
   display_order: '1'
   hours: '6.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 10:22:09.629456'
@@ -1133,7 +1133,7 @@ machine_results79:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-19 10:23:32.691314'
@@ -1147,7 +1147,7 @@ machine_results80:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:07:30.724706'
@@ -1161,7 +1161,7 @@ machine_results81:
   display_order: '1'
   hours: '7.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:08:58.936205'
@@ -1175,7 +1175,7 @@ machine_results82:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:10:48.15217'
@@ -1189,7 +1189,7 @@ machine_results83:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:10:48.299774'
@@ -1203,7 +1203,7 @@ machine_results84:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:10:48.424476'
@@ -1217,7 +1217,7 @@ machine_results85:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:12:37.531451'
@@ -1231,7 +1231,7 @@ machine_results86:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:12:37.699047'
@@ -1245,7 +1245,7 @@ machine_results87:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:12:37.906246'
@@ -1259,7 +1259,7 @@ machine_results88:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:14:15.074096'
@@ -1273,7 +1273,7 @@ machine_results89:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:14:15.081587'
@@ -1287,7 +1287,7 @@ machine_results90:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:14:15.088927'
@@ -1301,7 +1301,7 @@ machine_results91:
   display_order: '1'
   hours: '10.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:17:23.078996'
@@ -1315,7 +1315,7 @@ machine_results92:
   display_order: '1'
   hours: '10.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:17:23.271579'
@@ -1329,7 +1329,7 @@ machine_results93:
   display_order: '1'
   hours: '10.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:17:23.35949'
@@ -1343,7 +1343,7 @@ machine_results94:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:19:35.702093'
@@ -1357,7 +1357,7 @@ machine_results95:
   display_order: '1'
   hours: '10.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:19:35.709952'
@@ -1371,7 +1371,7 @@ machine_results96:
   display_order: '1'
   hours: '10.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:19:35.717353'
@@ -1385,7 +1385,7 @@ machine_results97:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:23:49.069527'
@@ -1399,7 +1399,7 @@ machine_results98:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:23:49.077054'
@@ -1413,7 +1413,7 @@ machine_results99:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:23:49.084297'
@@ -1427,7 +1427,7 @@ machine_results100:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:23:49.091645'
@@ -1441,7 +1441,7 @@ machine_results101:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:28:22.911145'
@@ -1455,7 +1455,7 @@ machine_results102:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:28:23.054369'
@@ -1469,7 +1469,7 @@ machine_results103:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:30:23.986186'
@@ -1483,7 +1483,7 @@ machine_results104:
   display_order: '1'
   hours: '10.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:30:24.060023'
@@ -1497,7 +1497,7 @@ machine_results105:
   display_order: '1'
   hours: '10.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:30:24.067413'
@@ -1511,7 +1511,7 @@ machine_results106:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:32:02.350729'
@@ -1525,7 +1525,7 @@ machine_results107:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:32:02.478556'
@@ -1539,7 +1539,7 @@ machine_results108:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:35:19.885502'
@@ -1553,7 +1553,7 @@ machine_results109:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:35:19.893276'
@@ -1567,7 +1567,7 @@ machine_results110:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:38:39.123901'
@@ -1581,7 +1581,7 @@ machine_results111:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:38:39.131799'
@@ -1595,7 +1595,7 @@ machine_results112:
   display_order: '1'
   hours: '6.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:40:56.361304'
@@ -1609,7 +1609,7 @@ machine_results113:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:45:29.616808'
@@ -1623,7 +1623,7 @@ machine_results114:
   display_order: '1'
   hours: '5.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:45:29.624781'
@@ -1637,7 +1637,7 @@ machine_results115:
   display_order: '1'
   hours: '9.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-20 02:45:29.632545'
@@ -1651,7 +1651,7 @@ machine_results116:
   display_order: '1'
   hours: '5.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-24 09:18:38.702064'
@@ -1665,7 +1665,7 @@ machine_results117:
   display_order: '1'
   hours: '1.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-07-24 09:39:36.729836'
@@ -1679,7 +1679,7 @@ machine_results118:
   display_order: '1'
   hours: '2.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-08-23 07:42:07.13736'
@@ -1693,7 +1693,7 @@ machine_results119:
   display_order: '1'
   hours: '2.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-08-23 07:42:07.153663'
@@ -1707,7 +1707,7 @@ machine_results120:
   display_order: '1'
   hours: '2.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-08-23 07:42:07.160891'
@@ -1721,7 +1721,7 @@ machine_results121:
   display_order: '1'
   hours: '2.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-08-23 07:42:07.168081'
@@ -1735,7 +1735,7 @@ machine_results122:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-08-23 07:42:07.17528'
@@ -1749,7 +1749,7 @@ machine_results123:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-08-23 07:45:12.090043'
@@ -1763,7 +1763,7 @@ machine_results124:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-08-23 07:45:12.107075'
@@ -1777,7 +1777,7 @@ machine_results125:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-08-23 07:45:12.114901'
@@ -1791,7 +1791,7 @@ machine_results126:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-08-23 07:45:12.122627'
@@ -1805,7 +1805,7 @@ machine_results127:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:32:50.237402'
@@ -1819,7 +1819,7 @@ machine_results128:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:32:50.254764'
@@ -1833,7 +1833,7 @@ machine_results129:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:32:50.262477'
@@ -1847,7 +1847,7 @@ machine_results130:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:32:50.270124'
@@ -1861,7 +1861,7 @@ machine_results131:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:32:50.278033'
@@ -1875,7 +1875,7 @@ machine_results132:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:45:00.459932'
@@ -1889,7 +1889,7 @@ machine_results133:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:45:00.467591'
@@ -1903,7 +1903,7 @@ machine_results134:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:45:00.474737'
@@ -1917,7 +1917,7 @@ machine_results135:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:45:00.481903'
@@ -1931,7 +1931,7 @@ machine_results136:
   display_order: '1'
   hours: '9.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:45:00.489014'
@@ -1945,7 +1945,7 @@ machine_results137:
   display_order: '1'
   hours: '5.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:50:43.631908'
@@ -1959,7 +1959,7 @@ machine_results138:
   display_order: '1'
   hours: '5.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:50:43.892568'
@@ -1973,7 +1973,7 @@ machine_results139:
   display_order: '1'
   hours: '5.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:50:44.048741'
@@ -1987,7 +1987,7 @@ machine_results140:
   display_order: '1'
   hours: '5.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:50:44.170233'
@@ -2001,7 +2001,7 @@ machine_results141:
   display_order: '1'
   hours: '5.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:50:44.243465'
@@ -2015,7 +2015,7 @@ machine_results142:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 01:57:58.580665'
@@ -2029,7 +2029,7 @@ machine_results143:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 02:01:17.159805'
@@ -2043,7 +2043,7 @@ machine_results144:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-09-06 02:05:36.2457'
@@ -2057,7 +2057,7 @@ machine_results145:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-10-11 05:33:15.608301'
@@ -2071,7 +2071,7 @@ machine_results146:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-10-11 05:33:15.74071'
@@ -2085,7 +2085,7 @@ machine_results147:
   display_order: '1'
   hours: '7.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-10-11 05:38:55.739652'
@@ -2099,7 +2099,7 @@ machine_results148:
   display_order: '1'
   hours: '3.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-10-11 05:45:10.160889'
@@ -2113,7 +2113,7 @@ machine_results149:
   display_order: '1'
   hours: '3.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-10-11 05:51:53.548418'
@@ -2127,7 +2127,7 @@ machine_results150:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-10-11 05:55:54.377698'
@@ -2141,7 +2141,7 @@ machine_results151:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-10-11 05:55:54.52476'
@@ -2155,7 +2155,7 @@ machine_results152:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-10-11 06:04:48.044682'
@@ -2169,7 +2169,7 @@ machine_results153:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-10-11 06:04:48.052267'
@@ -2183,7 +2183,7 @@ machine_results154:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 06:00:02.393854'
@@ -2197,7 +2197,7 @@ machine_results155:
   display_order: '1'
   hours: '5.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 06:03:10.706458'
@@ -2211,7 +2211,7 @@ machine_results156:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 06:09:16.806974'
@@ -2225,7 +2225,7 @@ machine_results157:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 06:28:33.434966'
@@ -2239,7 +2239,7 @@ machine_results158:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 06:28:33.65502'
@@ -2253,7 +2253,7 @@ machine_results159:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 06:28:33.742593'
@@ -2267,7 +2267,7 @@ machine_results160:
   display_order: '1'
   hours: '7.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 06:50:00.524707'
@@ -2281,7 +2281,7 @@ machine_results161:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 06:50:00.541239'
@@ -2295,7 +2295,7 @@ machine_results162:
   display_order: '1'
   hours: '7.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 06:59:58.264422'
@@ -2309,7 +2309,7 @@ machine_results163:
   display_order: '1'
   hours: '7.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 06:59:58.412807'
@@ -2323,7 +2323,7 @@ machine_results164:
   display_order: '1'
   hours: '7.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 06:59:58.555705'
@@ -2337,7 +2337,7 @@ machine_results165:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 07:05:40.793396'
@@ -2351,7 +2351,7 @@ machine_results166:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 07:05:40.801028'
@@ -2365,7 +2365,7 @@ machine_results167:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 07:05:40.808473'
@@ -2379,7 +2379,7 @@ machine_results168:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 07:05:40.816026'
@@ -2393,7 +2393,7 @@ machine_results169:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 07:05:40.823493'
@@ -2407,7 +2407,7 @@ machine_results170:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 07:08:40.165441'
@@ -2421,7 +2421,7 @@ machine_results171:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 07:08:40.182385'
@@ -2435,7 +2435,7 @@ machine_results172:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 07:18:08.350956'
@@ -2449,7 +2449,7 @@ machine_results173:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 07:18:08.358598'
@@ -2463,7 +2463,7 @@ machine_results174:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 07:18:08.36582'
@@ -2477,7 +2477,7 @@ machine_results175:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 07:18:08.373072'
@@ -2491,7 +2491,7 @@ machine_results176:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-11-29 07:18:08.380207'
@@ -2505,7 +2505,7 @@ machine_results177:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:26:54.369949'
@@ -2519,7 +2519,7 @@ machine_results178:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:26:54.605443'
@@ -2533,7 +2533,7 @@ machine_results179:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:32:01.716145'
@@ -2547,7 +2547,7 @@ machine_results180:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:32:01.72372'
@@ -2561,7 +2561,7 @@ machine_results181:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:32:01.730977'
@@ -2575,7 +2575,7 @@ machine_results182:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:32:01.738164'
@@ -2589,7 +2589,7 @@ machine_results183:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:32:01.745334'
@@ -2603,7 +2603,7 @@ machine_results184:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:37:21.397517'
@@ -2617,7 +2617,7 @@ machine_results185:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:37:21.588633'
@@ -2631,7 +2631,7 @@ machine_results186:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:37:21.688796'
@@ -2645,7 +2645,7 @@ machine_results187:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:37:21.695793'
@@ -2659,7 +2659,7 @@ machine_results188:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:37:21.914596'
@@ -2673,7 +2673,7 @@ machine_results189:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:37:21.925571'
@@ -2687,7 +2687,7 @@ machine_results190:
   display_order: '1'
   hours: '2.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:39:05.344106'
@@ -2701,7 +2701,7 @@ machine_results191:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:43:08.649702'
@@ -2715,7 +2715,7 @@ machine_results192:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:43:08.657466'
@@ -2729,7 +2729,7 @@ machine_results193:
   display_order: '1'
   hours: '3.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:46:36.486616'
@@ -2743,7 +2743,7 @@ machine_results194:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:58:11.850508'
@@ -2757,7 +2757,7 @@ machine_results195:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:58:11.857987'
@@ -2771,7 +2771,7 @@ machine_results196:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:58:11.865213'
@@ -2785,7 +2785,7 @@ machine_results197:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:58:11.872425'
@@ -2799,7 +2799,7 @@ machine_results198:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 02:58:11.879635'
@@ -2813,7 +2813,7 @@ machine_results199:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:35:51.676888'
@@ -2827,7 +2827,7 @@ machine_results200:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:35:51.779462'
@@ -2841,7 +2841,7 @@ machine_results201:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:35:51.888982'
@@ -2855,7 +2855,7 @@ machine_results202:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:35:51.999612'
@@ -2869,7 +2869,7 @@ machine_results203:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:35:52.139719'
@@ -2883,7 +2883,7 @@ machine_results204:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:45:59.988216'
@@ -2897,7 +2897,7 @@ machine_results205:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:45:59.995629'
@@ -2911,7 +2911,7 @@ machine_results206:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:46:00.002649'
@@ -2925,7 +2925,7 @@ machine_results207:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:46:00.00974'
@@ -2939,7 +2939,7 @@ machine_results208:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:46:00.016829'
@@ -2953,7 +2953,7 @@ machine_results209:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:46:00.023868'
@@ -2967,7 +2967,7 @@ machine_results210:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:46:00.030971'
@@ -2981,7 +2981,7 @@ machine_results211:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:54:16.961335'
@@ -2995,7 +2995,7 @@ machine_results212:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:54:17.130511'
@@ -3009,7 +3009,7 @@ machine_results213:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 07:56:39.635227'
@@ -3023,7 +3023,7 @@ machine_results214:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:05:58.018077'
@@ -3037,7 +3037,7 @@ machine_results215:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:05:58.148072'
@@ -3051,7 +3051,7 @@ machine_results216:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:05:58.278512'
@@ -3065,7 +3065,7 @@ machine_results217:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:05:58.455718'
@@ -3079,7 +3079,7 @@ machine_results218:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:05:58.555403'
@@ -3093,7 +3093,7 @@ machine_results219:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:05:58.562717'
@@ -3107,7 +3107,7 @@ machine_results220:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:05:58.569922'
@@ -3121,7 +3121,7 @@ machine_results221:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:09:05.077056'
@@ -3135,7 +3135,7 @@ machine_results222:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:09:05.084609'
@@ -3149,7 +3149,7 @@ machine_results223:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:09:05.092084'
@@ -3163,7 +3163,7 @@ machine_results224:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:09:05.099549'
@@ -3177,7 +3177,7 @@ machine_results225:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:09:05.107004'
@@ -3191,7 +3191,7 @@ machine_results226:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:17:29.489275'
@@ -3205,7 +3205,7 @@ machine_results227:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:17:29.496851'
@@ -3219,7 +3219,7 @@ machine_results228:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:17:29.504'
@@ -3233,7 +3233,7 @@ machine_results229:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:17:29.511177'
@@ -3247,7 +3247,7 @@ machine_results230:
   display_order: '1'
   hours: '6.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:35:14.645934'
@@ -3261,7 +3261,7 @@ machine_results231:
   display_order: '1'
   hours: '6.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:35:14.653483'
@@ -3275,7 +3275,7 @@ machine_results232:
   display_order: '1'
   hours: '6.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:35:14.660827'
@@ -3289,7 +3289,7 @@ machine_results233:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:35:14.668074'
@@ -3303,7 +3303,7 @@ machine_results234:
   display_order: '1'
   hours: '8.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:37:58.060313'
@@ -3317,7 +3317,7 @@ machine_results235:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:39:10.407475'
@@ -3331,7 +3331,7 @@ machine_results236:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:45:54.798161'
@@ -3345,7 +3345,7 @@ machine_results237:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:45:54.816001'
@@ -3359,7 +3359,7 @@ machine_results238:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-06 08:45:54.985647'
@@ -3373,7 +3373,7 @@ machine_results239:
   display_order: '1'
   hours: '7.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-11 23:51:44.343814'
@@ -3387,7 +3387,7 @@ machine_results240:
   display_order: '1'
   hours: '8.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-11 23:55:23.073476'
@@ -3401,7 +3401,7 @@ machine_results241:
   display_order: '1'
   hours: '3.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-11 23:58:15.765256'
@@ -3415,7 +3415,7 @@ machine_results242:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:15:05.753446'
@@ -3429,7 +3429,7 @@ machine_results243:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:15:05.760894'
@@ -3443,7 +3443,7 @@ machine_results244:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:15:05.768058'
@@ -3457,7 +3457,7 @@ machine_results245:
   display_order: '1'
   hours: '2.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:22:53.961052'
@@ -3471,7 +3471,7 @@ machine_results246:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:22:54.071801'
@@ -3485,7 +3485,7 @@ machine_results247:
   display_order: '1'
   hours: '2.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:34:23.016107'
@@ -3499,7 +3499,7 @@ machine_results248:
   display_order: '1'
   hours: '2.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:34:23.158465'
@@ -3513,7 +3513,7 @@ machine_results249:
   display_order: '1'
   hours: '6.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:38:38.755182'
@@ -3527,7 +3527,7 @@ machine_results250:
   display_order: '1'
   hours: '6.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:38:38.900712'
@@ -3541,7 +3541,7 @@ machine_results251:
   display_order: '1'
   hours: '5.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:46:48.261199'
@@ -3555,7 +3555,7 @@ machine_results252:
   display_order: '1'
   hours: '6.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:49:58.5378'
@@ -3569,7 +3569,7 @@ machine_results253:
   display_order: '1'
   hours: '6.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:49:58.5451'
@@ -3583,7 +3583,7 @@ machine_results254:
   display_order: '1'
   hours: '7.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:54:13.672479'
@@ -3597,7 +3597,7 @@ machine_results255:
   display_order: '1'
   hours: '7.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:54:13.792206'
@@ -3611,7 +3611,7 @@ machine_results256:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:55:22.412595'
@@ -3625,7 +3625,7 @@ machine_results257:
   display_order: '1'
   hours: '1.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 00:56:52.958482'
@@ -3639,7 +3639,7 @@ machine_results258:
   display_order: '1'
   hours: '6.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 01:00:13.595028'
@@ -3653,7 +3653,7 @@ machine_results259:
   display_order: '1'
   hours: '2.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 01:00:13.780997'
@@ -3667,7 +3667,7 @@ machine_results260:
   display_order: '1'
   hours: '0.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 01:01:50.822331'
@@ -3681,7 +3681,7 @@ machine_results261:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 04:08:50.461193'
@@ -3695,7 +3695,7 @@ machine_results262:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 04:10:11.728752'
@@ -3709,7 +3709,7 @@ machine_results263:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 04:18:10.278273'
@@ -3723,7 +3723,7 @@ machine_results264:
   display_order: '1'
   hours: '1.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 04:25:30.0382'
@@ -3737,7 +3737,7 @@ machine_results265:
   display_order: '1'
   hours: '3.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-12 04:40:48.371993'
@@ -3751,7 +3751,7 @@ machine_results266:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-23 05:22:45.688615'
@@ -3765,7 +3765,7 @@ machine_results267:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-23 05:22:45.901139'
@@ -3779,7 +3779,7 @@ machine_results268:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-23 05:22:45.964983'
@@ -3793,7 +3793,7 @@ machine_results269:
   display_order: '1'
   hours: '7.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-23 05:22:45.972284'
@@ -3807,7 +3807,7 @@ machine_results270:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-23 05:30:44.600351'
@@ -3821,7 +3821,7 @@ machine_results271:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-23 05:30:44.766391'
@@ -3835,7 +3835,7 @@ machine_results272:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-23 05:30:44.874245'
@@ -3849,7 +3849,7 @@ machine_results273:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2015-12-23 05:30:45.007229'
@@ -3863,7 +3863,7 @@ machine_results274:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2016-02-23 08:53:39.121946'
@@ -3877,7 +3877,7 @@ machine_results275:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2016-02-23 08:53:39.141217'
@@ -3891,7 +3891,7 @@ machine_results276:
   display_order: '1'
   hours: '4.0'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2016-02-23 08:53:39.148609'
@@ -3905,7 +3905,7 @@ machine_results277:
   display_order: '1'
   hours: '4.5'
   fixed_quantity: 
-  fixed_adjust: 
+  fixed_adjust_id: 
   fixed_price: 
   fixed_amount: 
   created_at: '2016-02-23 08:53:39.156026'

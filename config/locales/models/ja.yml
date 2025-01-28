@@ -420,18 +420,6 @@ ja:
           self: "調整出荷"
           another: "乾燥のみ"
           adjust: "調整のみ"
-    enums:
-      adjust:
-        names:
-          none: "設定しない"
-          hour: "1時間あたり"
-          area: "10αあたり"
-          day: "1日あたり"
-        unit:
-          none: ""
-          hour: "時間"
-          area: "×10α"
-          day: "日"
 
   status:
     organization:

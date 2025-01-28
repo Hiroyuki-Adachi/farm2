@@ -453,7 +453,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_05_06_075958) do
     t.integer "machine_price_header_id", null: false, comment: "単価ヘッダ"
     t.integer "lease", null: false, comment: "リース"
     t.integer "work_kind_id", default: 0, null: false, comment: "作業種別"
-    t.integer "adjust", comment: "単位"
+    t.integer "adjust_id", comment: "単位"
     t.decimal "price", precision: 5, default: "0", null: false, comment: "単価"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -486,7 +486,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_05_06_075958) do
     t.integer "display_order", default: 1, null: false, comment: "表示順"
     t.decimal "hours", precision: 3, scale: 1, default: "0.0", null: false, comment: "稼動時間"
     t.decimal "fixed_quantity", precision: 6, scale: 2, comment: "確定稼動量"
-    t.integer "fixed_adjust", comment: "確定稼動単位"
+    t.integer "fixed_adjust_id", comment: "確定稼動単位"
     t.decimal "fixed_price", precision: 5, comment: "確定稼動単価"
     t.decimal "fixed_amount", precision: 7, comment: "確定使用料"
     t.datetime "created_at", precision: nil

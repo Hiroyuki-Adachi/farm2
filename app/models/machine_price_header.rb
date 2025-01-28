@@ -50,9 +50,9 @@ class MachinePriceHeader < ApplicationRecord
     MachinePriceDetail.leases.keys.each do |lease|
       result = {}
       work_kinds.each do |work_kind|
-        result[work_kind.id] = {adjust: :none, price: 0}
+        result[work_kind.id] = {adjust_id: 0, price: 0}
         detail = details.find_by(lease: lease, work_kind_id: work_kind.id)
-        result[work_kind.id] = {adjust: detail.adjust, price: detail.price} if detail
+        result[work_kind.id] = {adjust_id: detail.adjust_id, price: detail.price} if detail
       end
       results[lease] = result
     end
@@ -72,13 +72,13 @@ class MachinePriceHeader < ApplicationRecord
       v1.each do |work_kind_id, v2|
         detail = MachinePriceDetail.find_by(machine_price_header_id: id, lease: lease, work_kind_id: work_kind_id)
         if detail.present?
-          if v2[:adjust] == :none
+          if v2[:adjust_id].to_i == Adjust::NONE.id
             detail.destroy
           else
-            detail.update(adjust: v2[:adjust], price: v2[:price])
+            detail.update(adjust_id: v2[:adjust_id], price: v2[:price])
           end
-        elsif v2[:adjust] != :none
-          MachinePriceDetail.create(machine_price_header_id: id, lease: lease, work_kind_id: work_kind_id, adjust: v2[:adjust], price: v2[:price])
+        elsif v2[:adjust_id].to_i != Adjust::NONE.id
+          MachinePriceDetail.create(machine_price_header_id: id, lease: lease, work_kind_id: work_kind_id, adjust_id: v2[:adjust_id], price: v2[:price])
         end
       end
     end

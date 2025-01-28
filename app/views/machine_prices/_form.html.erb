@@ -19,14 +19,7 @@
         <tr>
           <th><%= I18n.t("activerecord.attributes.machine_price_detail.leases.#{lease}") %></th>
           <% work_kinds.each do |work_kind| %>
-            <td><%= select_tag(
-              "details_form[#{lease}][#{work_kind.id}][adjust]",
-              options_for_select(
-                MachinePriceDetail.adjusts.keys.map { |key| [I18n.t("activerecord.enums.adjust.names.#{key}"), key] }, 
-                @machine_price.details_form[lease][work_kind.id][:adjust]
-              ),
-              {class: "form-select"}) %>
-            </td>
+            <td><%= select_tag("details_form[#{lease}][#{work_kind.id}][adjust_id]", options_from_collection_for_select(@adjusts, :id, :name, @machine_price.details_form[lease][work_kind.id][:adjust_id]), {class: "form-select"}) %></td>
             <td><%= number_field_tag("details_form[#{lease}][#{work_kind.id}][price]", @machine_price.details_form[lease][work_kind.id][:price], {min: 0, max: 99999, required: true, step: 1, class: "form-control"}) %></td>
           <% end %>
         </tr>
