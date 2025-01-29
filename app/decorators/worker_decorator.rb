@@ -16,10 +16,10 @@ class WorkerDecorator < Draper::Decorator
   end
 
   def permission_name
-    model.user ? I18n.t("activerecord.attributes.user.permissions.#{model.user.permission}") : ""
+    model&.user&.permission_name || ''
   end
 
   def login_name
-    model.user ? model.user.login_name : ""
+    model&.user&.login_name || ''
   end
 end

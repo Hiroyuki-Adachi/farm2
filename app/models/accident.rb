@@ -32,6 +32,6 @@ class Accident < ApplicationRecord
   }
 
   def accident_type_name
-    I18n.t("activerecord.attributes.accident.accident_types.#{accident_type}")
+    human_attribute_enum(:accident_type)
   end
 end

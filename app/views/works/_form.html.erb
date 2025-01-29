@@ -5,7 +5,7 @@
   </div>
   <div class="col-md-2">
     <%= f.label :weather, '', class: "col-form-label-lg form-label" %>
-    <%= f.select(:weather, Work.weathers.keys.map { |key| [I18n.t("activerecord.attributes.work.weathers.#{key}"), key] }, {}, {class: "form-select"}) %>
+    <%= f.select(:weather, enum_options_for_select(Work, :weather), {}, {class: "form-select"}) %>
   </div>
   <div class="col-md-2">
     <%= f.label :start_at, '', class: "col-form-label-lg form-label" %>

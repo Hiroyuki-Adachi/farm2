@@ -41,4 +41,8 @@ module ApplicationHelper
   def show_topic(content)
     h(content).gsub(/(?<=\u3000)/, '<br />　')&.html_safe
   end
+
+  def enum_options_for_select(klass, attr_name)
+    klass.send(attr_name.to_s.pluralize).keys.map { [klass.human_attribute_enum_value(attr_name, it), it] }.to_h
+  end
 end

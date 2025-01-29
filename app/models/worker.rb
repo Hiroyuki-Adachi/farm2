@@ -95,6 +95,6 @@ class Worker < ApplicationRecord
   end
 
   def position_name
-    I18n.t("activerecord.attributes.worker.positions.#{self.position}")
+    human_attribute_enum(:position)
   end
 end

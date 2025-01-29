@@ -29,7 +29,7 @@
   </div>
   <div class="field mb-3 col-md-2">
     <%= f.label :gender, class: "col-form-label-lg form-label" %>
-    <%= f.select(:gender, Worker.genders.keys.map { |key| [I18n.t("activerecord.attributes.worker.genders.#{key}"), key] }, {}, class: "form-select") %>
+    <%= f.select(:gender, enum_options_for_select(Worker, :gender), {}, class: "form-select") %>
   </div>
   <div class="field mb-3 col-md-2">
     <%= f.label :display_order, class: "col-form-label-lg form-label" %>
@@ -47,7 +47,7 @@
   </div>
   <div class="field mb-3 col-md-2">
     <%= f.label :position, class: "col-form-label-lg form-label" %>
-    <%= f.select(:position, Worker.positions.keys.map { |key| [I18n.t("activerecord.attributes.worker.positions.#{key}"), key] }, {}, class: "form-select") %>
+    <%= f.select(:position, enum_options_for_select(Worker, :position), {}, class: "form-select") %>
   </div>
   <div class="field mb-3 col-md-2">
     <%= f.label :broccoli_mark, class: "col-form-label-lg form-label" %>

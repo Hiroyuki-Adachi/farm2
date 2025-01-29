@@ -32,15 +32,15 @@
     <tfoot>
       <tr>
         <th rowspan="4" colspan="3">合計</th>
-        <th><%= I18n.t("activerecord.attributes.drying.drying_types.country") %></th>
+        <th><%= Drying.human_attribute_enum_value(:drying_type, :country) %></th>
         <td class="text-right"><%= format_bag(@total_dryings[:country]) %></td>
       </tr>
       <tr>
-        <th><%= I18n.t("activerecord.attributes.drying.drying_types.self") %></th>
+        <th><%= Drying.human_attribute_enum_value(:drying_type, :self) %></th>
         <td class="text-right"><%= format_bag(@total_dryings[:self]) %></td>
       </tr>
       <tr>
-        <th><%= I18n.t("activerecord.attributes.drying.drying_types.adjust") %></th>
+        <th><%= Drying.human_attribute_enum_value(:drying_type, :adjust) %></th>
         <td class="text-right"><%= format_bag(@total_dryings[:adjust]) %></td>
       </tr>
       <tr>

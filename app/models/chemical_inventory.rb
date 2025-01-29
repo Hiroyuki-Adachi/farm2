@@ -20,6 +20,6 @@ class ChemicalInventory < ApplicationRecord
   scope :stores, -> {where(chemical_adjust_type: :stored).order(:checked_on)}
 
   def chemical_adjust_type_name
-    I18n.t("activerecord.attributes.chemical_inventory.chemical_adjust_types.#{chemical_adjust_type}")
+    human_attribute_enum(:chemical_adjust_type)
   end
 end

@@ -118,12 +118,12 @@ ja:
         work_type_id: "作業分類"
         work_kind_id: "作業種別"
         chemical_group_flag: "土地単位に薬剤を入力する"
-        weathers:
-          sunny: "晴れ"
-          cloudy: "曇り"
-          rainy: "雨"
-          snow: "雪"
-          other: "その他"
+      work/weather:
+        sunny: "晴れ"
+        cloudy: "曇り"
+        rainy: "雨"
+        snow: "雪"
+        other: "その他"
 
       work_type:
         name: "名称"
@@ -152,16 +152,16 @@ ja:
         token: "アクセストークン"
         position: "役職"
         broccoli_mark: "ブロッコリ記号"
-        genders:
-          none: "未設定"
-          male: "男性"
-          female: "女性"
-        positions:
-          none: ""
-          member: "組合員"
-          leader: "作業班長"
-          director: "理事"
-          advisor: "顧問"
+      worker/gender:
+        none: "未設定"
+        male: "男性"
+        female: "女性"
+      worker/position:
+        none: ""
+        member: "組合員"
+        leader: "作業班長"
+        director: "理事"
+        advisor: "顧問"
 
       machine:
         name: 名称
@@ -182,9 +182,10 @@ ja:
         validated_at: 起算日
 
       machine_price_detail:
-        leases:
-          normal: "標準"
-          lease: "リース"
+        lease: "リース種別"
+      machine_price_detail/lease:
+        normal: "標準"
+        lease: "リース"
 
       machine_result:
         owner_name: "所有世帯"
@@ -276,18 +277,13 @@ ja:
         target_to: "期間(至)"
         organization_id: "組織"
         permission: "権限"
-        permissions:
-          visitor: "閲覧者"
-          user: "利用者"
-          checker: "検閲者"
-          manager: "管理者"
-          admin: "システム"
-    
-      work_broccoli:
-        shipped_on: "出荷日"
-        broccoli_box_id: "出荷用の箱"
-        rest: "残数"
-
+      user/permission:
+        visitor: "閲覧者"
+        user: "利用者"
+        checker: "検閲者"
+        manager: "管理者"
+        admin: "システム"
+  
       schedule:
         worked_at: "作業予定日"
         name: "内容"
@@ -344,10 +340,10 @@ ja:
         name: "名称"
         checked_on: "日付"
         stocks: "在庫"
-        chemical_adjust_types:
-          inventory: "棚卸"
-          stored: "納品"
-          shipping: "出庫"
+      chemical_inventory/chemical_adjust_type:
+        inventory: "棚卸"
+        stored: "納品"
+        shipping: "出庫"
 
       chemical_stock:
         name: "名称"
@@ -408,18 +404,19 @@ ja:
         problem: "問題点の考察"
         solving: "問題解決の考察"
         result: "改善の結果"
-        accident_types:
-          rule: "ルール違反"
-          hiyari: "ヒヤリハット"
-          other: "その他"
+      accident/accident_type:
+        rule: "ルール違反"
+        hiyari: "ヒヤリハット"
+        other: "その他"
       
       drying:
-        drying_types:
-          none: "未設定"
-          country: "乾籾出荷"
-          self: "調整出荷"
-          another: "乾燥のみ"
-          adjust: "調整のみ"
+        drying_type: "乾燥種別"
+      drying/drying_type:
+        none: "未設定"
+        country: "乾籾出荷"
+        self: "調整出荷"
+        another: "乾燥のみ"
+        adjust: "調整のみ"
 
   status:
     organization:

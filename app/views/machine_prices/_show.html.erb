@@ -13,7 +13,7 @@
   <tbody>
     <% MachinePriceDetail.leases.keys.each do |lease| %>
       <tr>
-        <th><%= I18n.t("activerecord.attributes.machine_price_detail.leases.#{lease}") %></th>
+        <th><%= MachinePriceDetail.human_attribute_enum_value(:lease, lease) %></th>
         <% work_kinds.each do |work_kind| %>
           <% if @machine_price.details_form[lease][work_kind.id][:adjust_id].to_i == Adjust::NONE.id %>
             <td colspan="2"><%= Adjust::NONE.name %></td>

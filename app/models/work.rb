@@ -492,7 +492,7 @@ SQL
   end
 
   def weather_name
-    I18n.t("activerecord.attributes.work.weathers.#{self.weather}")
+    human_attribute_enum(:weather)
   end
 
   private

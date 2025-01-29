@@ -6,7 +6,7 @@
   <div class="col-md-3">
     <div class="field mb-3">
       <%= f.label :permission, class: "col-form-label-lg form-label" %>
-      <%= f.select(:permission, User.permissions.keys.map { |key| [I18n.t("activerecord.attributes.user.permissions.#{key}"), key] }, {}, class: "form-select") %>
+      <%= f.select(:permission, enum_options_for_select(User, :permission), {}, class: "form-select") %>
     </div>
   </div>
 </div>

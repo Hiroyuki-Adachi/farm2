@@ -65,7 +65,7 @@ class DryingDecorator < Draper::Decorator
   end
 
   def drying_type_name(home_id)
-    return I18n.t("activerecord.attributes.dryings.drying_types.adjust") if model.adjust_only?(home_id)
+    return Drying.human_attribute_enum_value(:drying_type, :adjust) if model.adjust_only?(home_id)
     return model.drying_type_name
   end
 end

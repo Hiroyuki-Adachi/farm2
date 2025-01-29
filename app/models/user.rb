@@ -54,6 +54,10 @@ class User < ApplicationRecord
     admin? || manager? || checker?
   end
 
+  def permission_name
+    human_attribute_enum(:permission)
+  end
+
   private
 
   def set_token
