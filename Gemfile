@@ -94,8 +94,6 @@ group :development do
 end
 
 group :test do
-  # This gem is only useful once assigns and assert_template have been removed from Rails.
-  gem 'rails-controller-testing'
   # capybara helps you test web applications by simulating how a real user would interact with your app.
   gem 'capybara'
   # cuprite is a Capybara driver for headless Chrome/Chromium

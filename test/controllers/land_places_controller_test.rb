@@ -9,7 +9,7 @@ class LandPlacesControllerTest < ActionDispatch::IntegrationTest
   test "場所マスタ一覧" do
     get land_places_path
     assert_response :success
-    assert_not_nil assigns(:land_places)
+    assert_select "table.table tbody tr", minimum: 1 
   end
 
   test "場所マスタ一覧(管理者以外)" do
