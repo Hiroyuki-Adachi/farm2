@@ -140,6 +140,12 @@ GEM
     ffi (1.17.1-x86_64-linux-gnu)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    google-authenticator-rails (3.4.3)
+      actionpack
+      activerecord
+      rails
+      rotp (>= 5.0, < 7.0)
+      rqrcode
     holiday_jp (0.8.1)
     http-cookie (1.0.8)
       domain_name (~> 0.5)
@@ -303,6 +309,7 @@ GEM
       io-console (~> 0.5)
     request_store (1.7.0)
       rack (>= 1.4)
+    rotp (6.3.0)
     rqrcode (2.2.0)
       chunky_png (~> 1.0)
       rqrcode_core (~> 1.0)
@@ -395,6 +402,7 @@ DEPENDENCIES
   delayed_job_active_record
   dotenv-rails
   draper
+  google-authenticator-rails
   holiday_jp
   i18n-js (~> 3)
   icalendar

@@ -36,6 +36,9 @@ gem 'mechanize'
 # dotenv is a Ruby gem to load environment variables from .env into ENV in development.
 gem 'dotenv-rails'
 
+# Rails integration with the Google Authenticator apps. Uses the Authlogic style for cookie management.
+gem 'google-authenticator-rails'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbo-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
