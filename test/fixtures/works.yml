@@ -5363,6 +5363,19 @@ work_genka:
   created_at: '2017-03-01 08:34:35.513224'
   updated_at: '2017-03-01 08:34:35.513224'
 
+work_genka_worker:
+  term: 2017
+  worked_at: "2017-02-16"
+  weather_id: 1
+  work_type_id: 1
+  name: "原価テスト2"
+  start_at: '08:00:00'
+  end_at: '17:00:00'
+  fixed_at: 
+  work_kind_id: 1
+  created_at: '2017-03-01 08:34:35.513224'
+  updated_at: '2017-03-01 08:34:35.513224'
+
 work_wcs_sale:
   term: 2017
   worked_at: "2017-09-16"
