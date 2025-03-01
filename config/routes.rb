@@ -65,7 +65,7 @@ Rails.application.routes.draw do
   resources :chemical_costs, except: [:destroy]
   resources :fuel_costs, only: [:index, :create]
   resources :depreciations, only: [:index, :create]
-  resources :total_costs, only: [:index, :create]
+  resources :total_costs, only: [:index, :create, :destroy]
   namespace :total_costs do
     resources :machines, only: [:index]
   end

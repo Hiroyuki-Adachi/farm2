@@ -42,6 +42,7 @@ class WorkKindsController < ApplicationController
 
   def set_work_kind
     @work_kind = WorkKind.find(params[:id])
+    @work_kind.term = current_term
   end
 
   def work_kind_params

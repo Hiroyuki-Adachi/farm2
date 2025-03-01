@@ -89,6 +89,10 @@ class WorkResult < ApplicationRecord
     (work.fixed_at ? fixed_amount : hours * price) || 0
   end
 
+  def worker_amount
+    self&.worker&.home&.member_flag ? amount : 0
+  end
+
   def set_uuid
     self.uuid = SecureRandom.uuid
   end

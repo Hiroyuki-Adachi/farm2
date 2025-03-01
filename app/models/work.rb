@@ -203,7 +203,7 @@ SQL
   end
 
   def sum_workers_amount
-    work_results.inject(0) { |a, e| a + e.amount} || 0
+    work_results.inject(0) { |amount, result| amount + result.worker_amount} || 0
   end
 
   def sum_machines_amount

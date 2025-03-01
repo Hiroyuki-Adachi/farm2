@@ -13763,6 +13763,18 @@ work_result_genka1:
   hours: 6
   display_order: 1
 
+work_result_not_worker_genka1:
+  work: work_genka_worker
+  worker_id: 1
+  hours: 3
+  display_order: 1
+
+work_result_not_worker_genka2:
+  work: work_genka_worker
+  worker: worker_not_worker
+  hours: 4
+  display_order: 2
+
 work_results_add:
   work_id: '1478'
   worker_id: 1
