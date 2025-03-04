@@ -13797,3 +13797,21 @@ work_chemical_test_cleaning:
   worker_id: 1
   hours: 6
   display_order: 1
+
+work_result_stat_2019_1_1:
+  work: work_stat_2019_1
+  worker_id: 1
+  hours: 6
+  display_order: 1
+
+work_result_stat_2019_1_2:
+  work: work_stat_2019_1
+  worker_id: 2
+  hours: 7
+  display_order: 1
+
+work_result_stat_2019_2:
+  work: work_stat_2019_2
+  worker_id: 1
+  hours: 8
+  display_order: 1

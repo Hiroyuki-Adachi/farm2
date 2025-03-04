@@ -144,6 +144,7 @@ Rails.application.routes.draw do
   end
   namespace :statistics do
     resources :work_days, only: [:index]
+    resources :workers, only: [:index]
   end
   resources :fixes, param: "fixed_at", except: [:edit, :update]
   resources :personal_informations, param: "token", only: [:show] do

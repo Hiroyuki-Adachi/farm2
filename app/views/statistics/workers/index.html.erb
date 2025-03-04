@@ -1,0 +1,26 @@
+<h1>作業者別作業日数一覧</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>世帯</th>
+      <th>作業者</th>
+      <th class="numeric">作業日数</th>
+      <th class="numeric">作業時間</th>
+      <th class="numeric">オペレータ日数</th>
+      <th class="numeric">オペレータ時間</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @results.each do |result| %>
+      <tr>
+        <td><%= result.home_name %></td>
+        <td><%= result.family_name %> <%= result.first_name %></td>
+        <td class="numeric"><%= result.work_days %></td>
+        <td class="numeric"><%= result.work_hours %></td>
+        <td class="numeric"><%= result.machine_days %></td>
+        <td class="numeric"><%= result.machine_hours %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
