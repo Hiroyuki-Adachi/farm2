@@ -1,7 +1,7 @@
 require "test_helper"
 
 class StatisticsWorkerResultsTest < ActiveSupport::TestCase
-  test "業者別作業日数一覧クエリ" do
+  test "作業者別作業日数一覧クエリ" do
     results = StatisticsWorkerQuery.new(2019).call
 
     assert_equal 2, results.size
