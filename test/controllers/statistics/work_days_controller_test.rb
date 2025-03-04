@@ -5,8 +5,8 @@ class Statistics::WorkDaysControllerTest < ActionDispatch::IntegrationTest
     login_as(users(:users1))
   end
 
-  test "世帯別作業日数一覧" do
-    get statistics_path
+  test "世帯別作業一覧" do
+    get statistics_work_days_path
     assert_response :success
   end
 end
