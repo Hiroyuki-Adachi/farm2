@@ -55,7 +55,7 @@ work_kinds2:
   deleted_at: 
 
 
-work_kinds3:
+work_kind_inekari:
   id: '4'
   name: "稲刈り"
   phonetic: 'いねかり'

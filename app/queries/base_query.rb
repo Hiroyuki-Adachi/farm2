@@ -1,18 +1,20 @@
 class BaseQuery
-  def self.call(**args)
-    new(**args).execute
+  def self.call(*args, **kwargs)
+    new(*args, **kwargs).execute
   end
   
   def execute
-    raise NotImplementedError, "#{self.class} must define a Result struct" unless self.class.const_defined?(:Result)
-
     results = ActiveRecord::Base.connection.exec_query(build_query.to_sql)
-    results.map { |row| self.class::Result.new(row.symbolize_keys) }
+    results.map { |row| result_class.new(row.symbolize_keys) }
   end
   
   private
   
   def build_query
     raise NotImplementedError, "Subclasses must implement `build_query`"
+  end
+
+  def result_class
+    raise NotImplementedError, "#{self.class} must define a result_class method"
   end
 end

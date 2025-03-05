@@ -16,8 +16,13 @@ class Lands::TotalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :error
   end
 
-  test "土地統計一覧(実行)" do
+  test "土地統計一覧(実行1)" do
     get lands_totals_path, params: {work_kinds: [work_kinds(:work_kind_taue).id]}
+    assert_response :success
+  end
+
+  test "土地統計一覧(実行2)" do
+    get lands_totals_path, params: {work_kinds: [work_kinds(:work_kind_taue).id, work_kinds(:work_kind_inekari).id]}
     assert_response :success
   end
 end

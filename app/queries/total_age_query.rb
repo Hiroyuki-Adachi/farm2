@@ -1,6 +1,4 @@
 class TotalAgeQuery < BaseQuery
-  Result = Struct.new(:term, :age_group, :hours, keyword_init: true)
-
   def initialize
   end
   
@@ -45,5 +43,9 @@ class TotalAgeQuery < BaseQuery
     query.order(works[:term], age_case)
 
     query
+  end
+
+  def result_class
+    Struct.new(:term, :age_group, :hours, keyword_init: true)
   end
 end

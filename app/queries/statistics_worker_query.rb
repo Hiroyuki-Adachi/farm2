@@ -56,4 +56,11 @@ class StatisticsWorkerQuery < BaseQuery
 
     query
   end
+
+  def result_class
+    Struct.new(
+      :home_name, :family_name, :first_name, :work_days,
+      :work_hours, :machine_days, :machine_hours, keyword_init: true
+    )
+  end
 end
