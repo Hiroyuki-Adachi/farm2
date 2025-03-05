@@ -1,11 +1,16 @@
-class StatisticsWorkerQuery
-  Result = Struct.new(:home_name, :family_name, :first_name, :work_days, :work_hours, :machine_days, :machine_hours, keyword_init: true)
+class StatisticsWorkerQuery < BaseQuery
+  Result = Struct.new(
+    :home_name, :family_name, :first_name, :work_days,
+    :work_hours, :machine_days, :machine_hours, keyword_init: true
+  )
 
-  def initialize(term)
+  def initialize(term:)
     @term = term
   end
 
-  def call
+  private
+
+  def build_query
     # Arelテーブル
     works = Work.arel_table
     work_results = WorkResult.arel_table
@@ -49,7 +54,6 @@ class StatisticsWorkerQuery
     query.where(homes[:member_flag].eq(true))
     query.order(sections[:display_order], sections[:id], homes[:display_order], homes[:id], workers[:display_order], workers[:id])
 
-    results = ActiveRecord::Base.connection.exec_query(query.to_sql)
-    results.map { |row| Result.new(row.symbolize_keys) }
+    query
   end
 end

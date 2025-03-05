@@ -1,6 +1,6 @@
 class Statistics::WorkersController < ApplicationController
   def index
-    @results = StatisticsWorkerQuery.new(current_term).call
+    @results = StatisticsWorkerQuery.call(term: current_term)
   end
 
   private
