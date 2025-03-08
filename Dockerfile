@@ -23,17 +23,7 @@ RUN mkdir -p /etc/apt/keyrings
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 WORKDIR /tmp
 RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
-RUN apt-get update
-RUN apt-get install nodejs
-
-# 最新版yarnをインストール
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install yarn
-
-# sass をインストール
-RUN yarn global add sass postcss postcss-cli autoprefixer nodemon
-RUN chmod +x /usr/local/share/.config/yarn/global/node_modules/.bin/sass
+RUN apt-get update && apt-get install nodejs
 
 # Rustのインストール
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -44,18 +34,24 @@ RUN tar -xzvf ruby-$RUBY_VERSION.tar.gz
 WORKDIR /tmp/ruby-$RUBY_VERSION
 RUN ./configure --enable-yjit && make && make install
 
+# 最新版yarnをインストール
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/yarn.gpg
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update && apt-get install yarn
+
 # アプリケーションディレクトリを作成
 RUN mkdir /farm2
-
-# 作業ディレクトリを指定
 WORKDIR /farm2
 
-# ホストのGemfileとGemfile.lockをコピー
+# ホストの設定ファイルをコピー
 COPY Gemfile Gemfile.lock /farm2/
-
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # バンドルインストール
 RUN gem update --system
 RUN gem install bundler
 RUN bundle install
+
+# Yarn の依存関係をインストール
+COPY package.json yarn.lock /farm2/
+RUN rm -rf node_modules && yarn install

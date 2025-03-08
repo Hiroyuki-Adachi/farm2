@@ -37,12 +37,9 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesourc
 RUN apt-get update && apt-get install nodejs
 
 # 最新版yarnをインストール
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/yarn.gpg
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install yarn
-
-# sass と PostCSS をインストール
-RUN yarn add sass && yarn global add postcss postcss-cli autoprefixer
 
 # Rustのインストール
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -81,9 +78,14 @@ RUN /usr/lib/postgresql/13/bin/initdb -D $PGDATA && \
 USER root
 
 # バンドルインストール
+RUN gem update --system
 RUN gem install bundler
 COPY Gemfile Gemfile.lock /home/hiro/farm2/
 RUN bundle install --without test development
+
+# Yarn の依存関係をインストール
+COPY package.json yarn.lock /home/hiro/farm2/
+RUN rm -rf /home/hiro/farm2/node_modules && yarn install
 
 # アセットプリコンパイルとDBマイグレーション
 COPY . /home/hiro/farm2
