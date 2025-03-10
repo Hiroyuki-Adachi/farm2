@@ -1,4 +1,4 @@
-module PermitLastTerm
+module PermitThisTerm
   extend ActiveSupport::Concern
   
   included do
@@ -8,6 +8,6 @@ module PermitLastTerm
   private
   
   def permit_term
-    to_error_path unless last_term?
+    to_error_path unless this_term?
   end
 end

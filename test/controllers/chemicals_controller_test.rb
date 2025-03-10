@@ -2,16 +2,32 @@ require 'test_helper'
 
 class ChemicalsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    login_as(users(:users1))
+    @user = users(:users1)
+    login_as(@user)
     @chemical = chemicals(:chemicals1)
     @new_chemical_false = {name: "試験無", phonetic: 'しけんむ', display_order: 99, chemical_type_id: chemical_types(:chemical_types1).id, this_term_flag: false}
     @new_chemical_true = {name: "試験有", phonetic: 'しけんゆう', display_order: 10, chemical_type_id: chemical_types(:chemical_types1).id, this_term_flag: true}
-    @term = Organization.first.term
+    @term = @user.term
   end
 
-  test "薬剤マスタ一覧" do
-    get chemicals_path
-    assert_response :success
+  test "薬剤マスタ一覧(今期)" do
+    system = System.find_by(term: @term, organization_id: @user.organization_id)
+    travel_to system.start_date do
+      get chemicals_path
+      assert_response :success
+
+      assert_select "#chemical_annual:not([disabled])", true
+    end
+  end
+
+  test "薬剤マスタ一覧(前期)" do
+    system = System.find_by(term: @term - 1, organization_id: @user.organization_id)
+    travel_to system.start_date do
+      get chemicals_path
+      assert_response :success
+
+      assert_select "#chemical_annual[disabled]", true
+    end
   end
 
   test "薬剤マスタ新規作成(表示)" do
