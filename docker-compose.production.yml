@@ -3,12 +3,15 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile-production
+      args:
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     tty: true
     stdin_open: true
     environment:
       - API_KEY=${GOOGLE_MAPS_API_KEY}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - DB_PASSWORD=${DB_PASSWORD}
     ports:
       - "80:80"
       - "443:443"

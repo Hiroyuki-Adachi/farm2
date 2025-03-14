@@ -1,14 +1,18 @@
 # ベースとなるイメージを指定
 FROM ubuntu:20.04
 
+ARG POSTGRES_USER
+ARG POSTGRES_PASSWORD
+ARG POSTGRES_DB
+
 # タイムゾーンを設定（これをしないと、ビルド時にタイムゾーンの設定を求められる）
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=Asia/Tokyo \
     LANG=C.UTF-8 \
     RUBY_VERSION=3.4.2 \
-    POSTGRES_USER=postgres \
-    POSTGRES_PASSWORD=${DB_PASSWORD} \
-    POSTGRES_DB=farm2_production \
+    POSTGRES_USER=${POSTGRES_USER} \
+    POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
+    POSTGRES_DB=${POSTGRES_DB} \
     PGDATA=/var/lib/postgresql/data \
     RUBYOPT="--yjit" \
     PATH="/root/.cargo/bin:${PATH}"
@@ -65,15 +69,16 @@ ADD tmp/localhost.pem /etc/certs/localhost.pem
 ADD tmp/localhost-key.pem /etc/certs/localhost-key.pem
 
 # PostgreSQLのユーザとデータベースの設定
-RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/13/main/pg_hba.conf && \
+RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/13/main/pg_hba.conf && \
     echo "listen_addresses='*'" >> /etc/postgresql/13/main/postgresql.conf
 
 # PostgreSQLの起動とSQLスクリプトの実行
 USER postgres
 RUN /usr/lib/postgresql/13/bin/initdb -D $PGDATA && \
     /usr/lib/postgresql/13/bin/pg_ctl -D $PGDATA -o "-c listen_addresses='localhost'" -w start && \
-    psql --username=postgres -c "CREATE DATABASE ${POSTGRES_DB} OWNER ${POSTGRES_USER};" && \
-    psql --username=postgres --dbname=$POSTGRES_DB -f /tmp/01_farm2.sql && \
+    psql -U postgres -c "CREATE USER ${POSTGRES_USER} WITH SUPERUSER PASSWORD '${POSTGRES_PASSWORD}';" && \
+    psql -U postgres -c "CREATE DATABASE ${POSTGRES_DB} OWNER ${POSTGRES_USER};" && \
+    psql -U ${POSTGRES_USER} -d $POSTGRES_DB -f /tmp/01_farm2.sql && \
     /usr/lib/postgresql/13/bin/pg_ctl -D $PGDATA -m fast -w stop
 USER root
 

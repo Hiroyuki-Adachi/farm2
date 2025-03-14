@@ -84,7 +84,7 @@ test:
 #
 production:
   <<: *default
-  database: farm2_production
-  username: postgres
+  database: <%= ENV.fetch("POSTGRES_DB", "farm2_production") %>
+  username: <%= ENV.fetch("POSTGRES_USER", "postgres") %>
   host: <%= ENV["DB_HOST"] || 'localhost' %>
-  password: <%= ENV.fetch("DB_PASSWORD", "") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "") %>
