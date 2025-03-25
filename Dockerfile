@@ -27,10 +27,11 @@ RUN apt-get update && apt-get install nodejs
 
 # Rustのインストール
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Rubyのインストール
 RUN curl -O https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION%.*}/ruby-$RUBY_VERSION.tar.gz
-RUN tar -xzvf ruby-$RUBY_VERSION.tar.gz
+RUN tar xzvf ruby-$RUBY_VERSION.tar.gz
 WORKDIR /tmp/ruby-$RUBY_VERSION
 RUN ./configure --enable-yjit && make && make install
 

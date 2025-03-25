@@ -21,8 +21,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # PostgreSQLの公式リポジトリを追加
 RUN apt-get update && apt-get install -y wget gnupg lsb-release && \
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /usr/share/keyrings/postgresql.gpg > /dev/null && \
+    echo "deb [signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 # 必要なパッケージをインストール
 RUN apt-get update -qq && apt-get install -y \
@@ -47,10 +47,11 @@ RUN apt-get update && apt-get install yarn
 
 # Rustのインストール
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Rubyのインストール
 RUN curl -O https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION%.*}/ruby-$RUBY_VERSION.tar.gz
-RUN tar -xzvf ruby-$RUBY_VERSION.tar.gz
+RUN tar xzvf ruby-$RUBY_VERSION.tar.gz
 WORKDIR /tmp/ruby-$RUBY_VERSION
 RUN ./configure --enable-yjit && make && make install
 
@@ -63,21 +64,18 @@ WORKDIR /home/hiro/farm2
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # SQLスクリプトとNginx設定をコピー
-COPY tmp/farm2.sql /tmp/01_farm2.sql
+COPY tmp/farm2.sql /tmp/farm2.sql
 COPY tmp/puma_farm2.conf /etc/nginx/sites-enabled/puma_farm2.conf
 ADD tmp/localhost.pem /etc/certs/localhost.pem
 ADD tmp/localhost-key.pem /etc/certs/localhost-key.pem
+COPY scripts/init_postgres.sh /tmp/init_postgres.sh
+RUN chmod +x /tmp/init_postgres.sh
 
 # PostgreSQLの起動とSQLスクリプトの実行
 USER postgres
-RUN /usr/lib/postgresql/13/bin/initdb -D $PGDATA && \
-    /usr/lib/postgresql/13/bin/pg_ctl -D $PGDATA -o "-c listen_addresses='localhost'" -w start && \
-    psql -U postgres -c "CREATE USER ${POSTGRES_USER} WITH SUPERUSER PASSWORD '${POSTGRES_PASSWORD}';" && \
-    psql -U postgres -c "CREATE DATABASE ${POSTGRES_DB} OWNER ${POSTGRES_USER};" && \
-    psql -U ${POSTGRES_USER} -d $POSTGRES_DB -f /tmp/01_farm2.sql && \
-    psql -U postgres -c "ALTER SYSTEM SET listen_addresses = '*';" && \
-    psql -U ${POSTGRES_USER} -d $POSTGRES_DB -c "ALTER USER postgres WITH NOLOGIN;" && \
-    /usr/lib/postgresql/13/bin/pg_ctl -D $PGDATA -m fast -w stop
+RUN service postgresql start && \
+    /tmp/init_postgres.sh && \
+    service postgresql stop
 USER root
 
 # バンドルインストール
