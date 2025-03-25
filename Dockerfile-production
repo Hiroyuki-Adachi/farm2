@@ -1,14 +1,18 @@
 # ベースとなるイメージを指定
 FROM ubuntu:20.04
 
+ARG POSTGRES_USER
+ARG POSTGRES_PASSWORD
+ARG POSTGRES_DB
+
 # タイムゾーンを設定（これをしないと、ビルド時にタイムゾーンの設定を求められる）
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=Asia/Tokyo \
     LANG=C.UTF-8 \
-    RUBY_VERSION=3.4.1 \
-    POSTGRES_USER=postgres \
-    POSTGRES_PASSWORD=postgres \
-    POSTGRES_DB=farm2_production \
+    RUBY_VERSION=3.4.2 \
+    POSTGRES_USER=${POSTGRES_USER} \
+    POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
+    POSTGRES_DB=${POSTGRES_DB} \
     PGDATA=/var/lib/postgresql/data \
     RUBYOPT="--yjit" \
     PATH="/root/.cargo/bin:${PATH}"
@@ -17,8 +21,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # PostgreSQLの公式リポジトリを追加
 RUN apt-get update && apt-get install -y wget gnupg lsb-release && \
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /usr/share/keyrings/postgresql.gpg > /dev/null && \
+    echo "deb [signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 # 必要なパッケージをインストール
 RUN apt-get update -qq && apt-get install -y \
@@ -37,19 +41,17 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesourc
 RUN apt-get update && apt-get install nodejs
 
 # 最新版yarnをインストール
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/yarn.gpg
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install yarn
 
-# sass と PostCSS をインストール
-RUN yarn add sass && yarn global add postcss postcss-cli autoprefixer
-
 # Rustのインストール
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Rubyのインストール
 RUN curl -O https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION%.*}/ruby-$RUBY_VERSION.tar.gz
-RUN tar -xzvf ruby-$RUBY_VERSION.tar.gz
+RUN tar xzvf ruby-$RUBY_VERSION.tar.gz
 WORKDIR /tmp/ruby-$RUBY_VERSION
 RUN ./configure --enable-yjit && make && make install
 
@@ -62,28 +64,29 @@ WORKDIR /home/hiro/farm2
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # SQLスクリプトとNginx設定をコピー
-COPY tmp/farm2.sql /tmp/01_farm2.sql
+COPY tmp/farm2.sql /tmp/farm2.sql
 COPY tmp/puma_farm2.conf /etc/nginx/sites-enabled/puma_farm2.conf
 ADD tmp/localhost.pem /etc/certs/localhost.pem
 ADD tmp/localhost-key.pem /etc/certs/localhost-key.pem
-
-# PostgreSQLのユーザとデータベースの設定
-RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/13/main/pg_hba.conf && \
-    echo "listen_addresses='*'" >> /etc/postgresql/13/main/postgresql.conf
+COPY scripts/init_postgres.sh /tmp/init_postgres.sh
+RUN chmod +x /tmp/init_postgres.sh
 
 # PostgreSQLの起動とSQLスクリプトの実行
 USER postgres
-RUN /usr/lib/postgresql/13/bin/initdb -D $PGDATA && \
-    /usr/lib/postgresql/13/bin/pg_ctl -D $PGDATA -o "-c listen_addresses='localhost'" -w start && \
-    psql --username=postgres -c "CREATE DATABASE ${POSTGRES_DB} OWNER ${POSTGRES_USER};" && \
-    psql --username=postgres --dbname=$POSTGRES_DB -f /tmp/01_farm2.sql && \
-    /usr/lib/postgresql/13/bin/pg_ctl -D $PGDATA -m fast -w stop
+RUN service postgresql start && \
+    /tmp/init_postgres.sh && \
+    service postgresql stop
 USER root
 
 # バンドルインストール
+RUN gem update --system
 RUN gem install bundler
 COPY Gemfile Gemfile.lock /home/hiro/farm2/
 RUN bundle install --without test development
+
+# Yarn の依存関係をインストール
+COPY package.json yarn.lock /home/hiro/farm2/
+RUN rm -rf /home/hiro/farm2/node_modules && yarn install
 
 # アセットプリコンパイルとDBマイグレーション
 COPY . /home/hiro/farm2
@@ -92,5 +95,5 @@ RUN RAILS_ENV=production bundle exec rails db:migrate
 
 # ポートの公開とサービス起動
 EXPOSE 80 5432
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./config/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

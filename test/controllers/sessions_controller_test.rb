@@ -22,7 +22,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "ログイン実行(認証エラー)" do
     post sessions_path, params: {login_name: @user.login_name, password: "hogehoge"}
-    assert_template :_flash
+    assert_select 'div.alert.alert-danger', I18n.t("session.login_error")
     assert_nil session[:user_id]
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_05_084840) do
+ActiveRecord::Schema[8.0].define(version: 2024_05_06_075958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -880,10 +880,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_05_084840) do
     t.integer "view_month", default: [1, 4, 8], null: false, comment: "表示切替月", array: true
     t.integer "calendar_term", default: 2018, null: false, comment: "期(カレンダー)"
     t.string "token", limit: 36, default: "", null: false, comment: "アクセストークン"
-    t.string "mail", limit: 255, default: "", null: false, comment: "メールアドレス"
-    t.datetime "mail_confirmed_at", comment: "メールアドレス確認日時"
-    t.string "mail_confirmation_token", limit: 64, comment: "メールアドレス確認トークン"
-    t.datetime "mail_confirmation_expired_at", comment: "メールアドレス確認有効期限"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["mail"], name: "ix_users_on_mail", unique: true, where: "((mail)::text <> ''::text)"
     t.index ["mail_confirmation_token"], name: "ix_users_on_mail_confirmation_token", unique: true, where: "(mail_confirmation_token IS NOT NULL)"

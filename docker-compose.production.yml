@@ -3,6 +3,10 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile-production
+      args:
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     tty: true
     stdin_open: true
     environment:
@@ -13,11 +17,8 @@ services:
       - "443:443"
       - "5432:5432"
     volumes:
-      - type: volume
-        source: dbdata_production
-        target: /var/lib/postgresql/data
-        volume:
-          nocopy: true
-
+      - ./config/postgresql/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+    env_file:
+      - .env
 volumes:
   dbdata_production:

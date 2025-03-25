@@ -4031,3 +4031,11 @@ machine_result_for_price2:
   hours: 2
   created_at: '2016-02-23 08:53:39.156026'
   updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_stat_2019_1:
+  machine_id: 4
+  work_result: work_result_stat_2019_1_1
+  display_order: 1
+  hours: 2.5
+  created_at: '2019-01-01 08:53:39'
+  updated_at: '2019-01-01 08:53:39'

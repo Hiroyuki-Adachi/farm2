@@ -24,8 +24,10 @@ class CostType < ApplicationRecord
 
   attr_writer :work_kind_ids
 
+  private
+
   def save_work_kinds
-    WorkKind.where(cost_type_id: self.id).update(cost_type_id: nil)
-    WorkKind.where(id: @work_kind_ids).update(cost_type_id: self.id)
+    WorkKind.where(cost_type_id: self.id).update_all(cost_type_id: nil)
+    WorkKind.where(id: @work_kind_ids).update_all(cost_type_id: self.id)
   end
 end

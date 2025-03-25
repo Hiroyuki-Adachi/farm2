@@ -44,7 +44,7 @@ class WorkKind < ApplicationRecord
   validates :phonetic, format: { with: /\A[\p{Hiragana}ー－A-Z0-9]+\z/ }, if: proc { |x| x.phonetic.present?}
   validates :display_order, presence: true
 
-  validates :price, numericality: true, if: proc { |x| x.price.present?}
+  validates :price, numericality: true, if: proc { |x| x.price.present? && @term.present? }
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
 
   scope :usual, -> {where(other_flag: false).order(:phonetic, :display_order, :id)}
@@ -56,7 +56,8 @@ class WorkKind < ApplicationRecord
   }
   scope :gaps, -> {where.not(broccoli_mark: [nil, ""]).group(:broccoli_mark).order(:broccoli_mark).select("broccoli_mark, MAX(name) AS name")}
 
-  attr_accessor :price, :term
+  attr_writer :price
+  attr_accessor :term
 
   def term_price(term)
     cache_key = price_cache_key(term)
@@ -68,6 +69,10 @@ class WorkKind < ApplicationRecord
       Rails.cache.write(cache_key, price_value, expires_in: 1.hour)
     end
     return price_value
+  end
+
+  def price
+    term_price(@term)
   end
 
   private

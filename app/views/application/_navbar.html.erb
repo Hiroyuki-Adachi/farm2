@@ -26,9 +26,11 @@
           <li class="nav-item">
             <%= link_to '原価管理', "#", {class: "nav-link farm2-navi", id: :navbar_cost} %>
           </li>
+          <% if this_term? %>
           <li class="nav-item">
             <%= link_to '生産計画', "#", {class: "nav-link farm2-navi", id: :navbar_plan} %>
           </li>
+          <% end %>
           <li class="nav-item">
             <%= link_to 'GAP対応', "#", {class: "nav-link farm2-navi", id: :navbar_gap} %>
           </li>

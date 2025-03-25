@@ -401,3 +401,6 @@ ja:
 
   calendar:
     title: "営農カレンダー"
+
+  session:
+    login_error: "IDまたはpasswordが間違っています。"

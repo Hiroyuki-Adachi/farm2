@@ -1,7 +1,7 @@
 <%= form_with url: total_costs_path, method: :post do |f|  %>
   <%= select_tag('fixed_on', options_from_collection_for_select(@fixes, :fixed_at, :fixed_at), {class: "form-select"}) %>
   <div class="btn-group mr-2">
-    <%= submit_tag '計算実行', class: "btn btn-warning", data: {confirm: "原価を再計算してもよろしいですか？"} %>
+    <%= submit_tag '計算実行', class: "btn btn-warning", data: {turbo_confirm: "原価を再計算してもよろしいですか？"} %>
   </div>
 <% end %>
 <hr />

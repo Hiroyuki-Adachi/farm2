@@ -66,7 +66,7 @@ Rails.application.routes.draw do
   resources :chemical_costs, except: [:destroy]
   resources :fuel_costs, only: [:index, :create]
   resources :depreciations, only: [:index, :create]
-  resources :total_costs, only: [:index, :create]
+  resources :total_costs, only: [:index, :create, :destroy]
   namespace :total_costs do
     resources :machines, only: [:index]
   end
@@ -145,6 +145,7 @@ Rails.application.routes.draw do
   end
   namespace :statistics do
     resources :work_days, only: [:index]
+    resources :workers, only: [:index]
   end
   resources :fixes, param: "fixed_at", except: [:edit, :update]
   resources :personal_informations, param: "token", only: [:show] do

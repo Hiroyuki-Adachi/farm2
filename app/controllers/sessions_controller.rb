@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
       log_in(user)
       redirect_to menu_index_path
     else
-      render layout: false, partial: 'flash', content_type: 'text/vnd.turbo-stream.html', locals: {message: "IDまたはpasswordが間違っています。"}
+      render layout: false, partial: 'flash', content_type: 'text/vnd.turbo-stream.html', locals: {message: I18n.t("session.login_error") }
     end
   end
 
