@@ -75,6 +75,9 @@ gem 'puma'
 # Rubyzip is a ruby library for reading and writing zip files.
 gem 'rubyzip'
 
+# Clean ruby syntax for writing and deploying cron jobs.
+gem 'whenever', require: false
+
 # omniauth is a generalized Rack framework for multiple-provider authentication.
 gem 'omniauth'
 # OmniAuth strategy for Google OAuth2
