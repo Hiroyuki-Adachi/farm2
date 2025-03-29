@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: homes
+# Table name: homes(世帯マスタ)
 #
 #  id(世帯マスタ)                      :integer          not null, primary key
 #  address1(住所1)                     :string(50)
@@ -727,3 +727,22 @@ home_kumiai:
   deleted_at: 
   owner_flag: t
 
+home_not_worker:
+  phonetic: ひくみあいいｎ
+  name: 非組合員
+  holder: worker_not_worker
+  zip_code: 6910011
+  address1: ○○市△△町1-2555
+  address2: 
+  telephone: 072-762-5309
+  fax: 
+  section_id: 6
+  display_order: 33
+  member_flag: f
+  worker_payment_flag: f
+  company_flag: f
+  created_at: 2010-07-11 12:42:48
+  updated_at: 2013-02-02 10:29:46.964267
+  deleted_at: 
+  owner_flag: t
+  drying_order: 150

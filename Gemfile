@@ -1,11 +1,14 @@
 source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 7.1'
+gem 'rails', '>= 8.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # delayed_job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background.
 gem 'delayed_job_active_record'
+
+# The CSV library provides a complete interface to CSV files and data. 
+gem 'csv'
 
 # CSSBundling provides a way to bundle CSS files in Rails applications.
 gem "cssbundling-rails"
@@ -72,13 +75,18 @@ gem 'puma'
 # Rubyzip is a ruby library for reading and writing zip files.
 gem 'rubyzip'
 
+# omniauth is a generalized Rack framework for multiple-provider authentication.
+gem 'omniauth'
+# OmniAuth strategy for Google OAuth2
+gem 'omniauth-google-oauth2'
+
 group :development do
   # listen to file modifications
   gem 'listen'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 4.0'
   # Add a comment summarizing the current schema to the top or bottom of each informations.
-  gem 'annotate'
+  gem 'annotaterb'
   # RuboCop is a Ruby static code analyzer.
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
@@ -91,10 +99,10 @@ group :development do
 end
 
 group :test do
-  # This gem is only useful once assigns and assert_template have been removed from Rails.
-  gem 'rails-controller-testing'
   # capybara helps you test web applications by simulating how a real user would interact with your app.
   gem 'capybara'
   # cuprite is a Capybara driver for headless Chrome/Chromium
   gem 'cuprite'
+  # minitest is a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking.
+  gem 'mocha'
 end

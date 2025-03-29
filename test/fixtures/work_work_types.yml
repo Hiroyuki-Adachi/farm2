@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_work_types
+# Table name: work_work_types(作業分類キャッシュ)
 #
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_lands
+# Table name: work_lands(作業地データ)
 #
 #  id(作業地データ)                    :integer          not null, primary key
 #  chemical_group_no(薬剤グループ番号) :integer          default(0), not null

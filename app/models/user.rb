@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: users
+# Table name: users(利用者マスタ)
 #
 #  id(利用者マスタ)                                         :integer          not null, primary key
 #  calendar_term(期(カレンダー))                            :integer          default(2018), not null
@@ -14,7 +14,7 @@
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
 #  term(期)                                                 :integer          default(0), not null
 #  token(アクセストークン)                                  :string(36)       default(""), not null
-#  view_month(表示切替月)                                   :integer          default(["1", "4", "8"]), not null, is an Array
+#  view_month(表示切替月)                                   :integer          default([1, 4, 8]), not null, is an Array
 #  created_at                                               :datetime         not null
 #  updated_at                                               :datetime         not null
 #  organization_id(組織)                                    :integer          default(0), not null
@@ -23,14 +23,18 @@
 #
 # Indexes
 #
-#  index_users_on_login_name  (login_name) UNIQUE
-#  index_users_on_worker_id   (worker_id) UNIQUE
-#  ix_users_token             (token) UNIQUE
+#  index_users_on_login_name            (login_name) UNIQUE
+#  index_users_on_worker_id             (worker_id) UNIQUE
+#  ix_users_on_mail                     (mail) UNIQUE WHERE ((mail)::text <> ''::text)
+#  ix_users_on_mail_confirmation_token  (mail_confirmation_token) UNIQUE WHERE (mail_confirmation_token IS NOT NULL)
+#  ix_users_token                       (token) UNIQUE
 #
 
 class User < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   before_create :set_token
+  before_update :clear_mail_fields, if: -> { mail_changed? && self.mail.present? }
+  after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && self.mail_confirmed_at.present? }
 
   belongs_to :worker
   belongs_to :organization
@@ -78,10 +82,37 @@ class User < ApplicationRecord
     admin? || manager? || checker?
   end
 
+  def mail_confirmed?
+    self.mail_confirmed_at.present?
+  end
+
+  def mail_confirm!(mail_confirmation_token)
+    return false if self.mail_confirmation_token != mail_confirmation_token
+    return false if self.mail_confirmation_expired_at < Time.current
+
+    self.update(mail_confirmed_at: Time.current)
+  end
+
+  def self.find_by_mail(mail)
+    User.where.not(mail_confirmed_at: nil).find_by(mail: mail)
+  end
+
   private
 
   def set_token
     self.token = SecureRandom.uuid
+  end
+
+  def clear_mail_fields
+    self.mail_confirmation_token = SecureRandom.uuid
+    self.mail_confirmation_expired_at = 1.day.from_now
+    self.mail_confirmed_at = nil
+  end
+
+  def set_pc_mail
+    if self.mail.present? && self.worker.present? && self.worker.pc_mail.blank?
+      self.worker.update(pc_mail: mail)
+    end
   end
 
   has_secure_password

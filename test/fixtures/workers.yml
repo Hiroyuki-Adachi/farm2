@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: workers
+# Table name: workers(作業者マスタ)
 #
 #  id(作業者マスタ)                  :integer          not null, primary key
 #  account_number(口座番号)          :string(7)        default("0000000"), not null
@@ -1466,3 +1466,23 @@ worker_farm:
   updated_at: 2016-01-11 08:40:04.804056
   deleted_at: 
   
+worker_not_worker:
+  family_phonetic: あおき
+  family_name: 青木
+  first_phonetic: さぶろう
+  first_name: 三郎
+  birthday: 
+  home: home_not_worker
+  mobile: 
+  mobile_mail: 
+  pc_mail: 
+  display_order: 2
+  work_flag: t
+  gender_id: 0
+  bank_code: 0000
+  branch_code: 000
+  account_type_id: 0
+  account_number: 0000000
+  created_at: 2016-01-11 08:40:04.804056
+  updated_at: 2016-01-11 08:40:04.804056
+  deleted_at: 

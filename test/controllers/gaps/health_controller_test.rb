@@ -1,12 +1,12 @@
 require "test_helper"
 
-class Gaps::HealthControllerTest < ActionController::TestCase
+class Gaps::HealthControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "GAP体調確認表(一覧)" do
-    get :index
+    get gaps_health_index_path
     assert_response :success
   end
 end

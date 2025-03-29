@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: users
+# Table name: users(利用者マスタ)
 #
 #  id(利用者マスタ)                                         :integer          not null, primary key
 #  calendar_term(期(カレンダー))                            :integer          default(2018), not null
@@ -14,7 +14,7 @@
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
 #  term(期)                                                 :integer          default(0), not null
 #  token(アクセストークン)                                  :string(36)       default(""), not null
-#  view_month(表示切替月)                                   :integer          default(["1", "4", "8"]), not null, is an Array
+#  view_month(表示切替月)                                   :integer          default([1, 4, 8]), not null, is an Array
 #  created_at                                               :datetime         not null
 #  updated_at                                               :datetime         not null
 #  organization_id(組織)                                    :integer          default(0), not null
@@ -23,9 +23,11 @@
 #
 # Indexes
 #
-#  index_users_on_login_name  (login_name) UNIQUE
-#  index_users_on_worker_id   (worker_id) UNIQUE
-#  ix_users_token             (token) UNIQUE
+#  index_users_on_login_name            (login_name) UNIQUE
+#  index_users_on_worker_id             (worker_id) UNIQUE
+#  ix_users_on_mail                     (mail) UNIQUE WHERE ((mail)::text <> ''::text)
+#  ix_users_on_mail_confirmation_token  (mail_confirmation_token) UNIQUE WHERE (mail_confirmation_token IS NOT NULL)
+#  ix_users_token                       (token) UNIQUE
 #
 
 users1:
@@ -38,6 +40,8 @@ users1:
   term: 2015
   calendar_term: 2014
   token: 2e51d555-9cc2-4588-8326-a4dedddd5349
+  mail: "user1@example.com"
+  mail_confirmed_at: "2015-01-01 00:00:00"
 
 user_manager:
   id: 2
@@ -104,7 +108,7 @@ user2017:
   token: 2d10d73d-7c1b-4205-8fe9-5b6348fcc5ae
 
 user2017c:
-  worker_id: 33
+  worker_id: 34
   login_name: '2017c'
   password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
   organization_id: 1

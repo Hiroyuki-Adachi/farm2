@@ -1,18 +1,18 @@
 require 'test_helper'
 
-class TotalOwnedRicesControllerTest < ActionController::TestCase
+class TotalOwnedRicesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "保有米集計一覧" do
-    get :index
+    get total_owned_rices_path
     assert_response :success
   end
 
   test "保有米集計(管理者以外)" do
-    session[:user_id] = users(:user_checker).id
-    get :index
+    login_as(users(:user_checker))
+    get total_owned_rices_path
     assert_response :error
   end
 end

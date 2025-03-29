@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: expense_work_types
+# Table name: expense_work_types(経費作業種別)
 #
 #  id(経費作業種別)       :integer          not null, primary key
 #  rate(割合)             :decimal(5, 2)    default(0.0), not null

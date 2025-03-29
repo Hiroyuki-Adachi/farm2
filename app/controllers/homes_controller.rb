@@ -47,8 +47,8 @@ class HomesController < ApplicationController
   end
 
   def home_params
-    params.require(:home)
-      .permit(
+    params.expect(home:
+      [
         :name,
         :phonetic,
         :telephone,
@@ -62,6 +62,6 @@ class HomesController < ApplicationController
         :owned_rice_order,
         :seedling_order,
         :location
-      )
+      ])
   end
 end

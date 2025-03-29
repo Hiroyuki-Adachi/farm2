@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: cost_types
+# Table name: cost_types(原価種別)
 #
 #  id                               :bigint           not null, primary key
 #  display_order(表示順)            :integer          default(0), not null
@@ -24,8 +24,10 @@ class CostType < ApplicationRecord
 
   attr_writer :work_kind_ids
 
+  private
+
   def save_work_kinds
-    WorkKind.where(cost_type_id: self.id).update(cost_type_id: nil)
-    WorkKind.where(id: @work_kind_ids).update(cost_type_id: self.id)
+    WorkKind.where(cost_type_id: self.id).update_all(cost_type_id: nil)
+    WorkKind.where(id: @work_kind_ids).update_all(cost_type_id: self.id)
   end
 end

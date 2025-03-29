@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: machine_remarks
+# Table name: machine_remarks(作業機械備考)
 #
 #  id                         :bigint           not null, primary key
 #  care_remarks(備考(保守))   :string(30)       default(""), not null

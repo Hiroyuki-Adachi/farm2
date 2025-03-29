@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: whole_crop_rolls
+# Table name: whole_crop_rolls(WCSロール)
 #
 #  id                          :bigint           not null, primary key
 #  display_order(番号)         :integer          default(0), not null

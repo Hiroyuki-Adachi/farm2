@@ -17,4 +17,9 @@ class TotalCostsController < ApplicationController
     TotalCostsMakeJob.perform_later(current_term, params[:fixed_on])
     redirect_to total_costs_path
   end
+
+  def destroy
+    TotalCost.where(term: current_term).destroy_all
+    redirect_to total_costs_path
+  end
 end

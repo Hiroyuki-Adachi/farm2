@@ -43,7 +43,7 @@ class SeedlingCostsController < ApplicationController
   end
 
   def system_params
-    params.require(:system).permit(:seedling_price, :seedling_chemical_id)
+    params.expect(system: [:seedling_price, :seedling_chemical_id])
   end
 
   def seedling_params(seedling)

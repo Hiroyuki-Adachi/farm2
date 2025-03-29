@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: machine_results
+# Table name: machine_results(機械稼動データ)
 #
 #  id(機械稼動データ)             :integer          not null, primary key
 #  display_order(表示順)          :integer          default(1), not null
@@ -4015,3 +4015,27 @@ machine_result_genka1:
   created_at: '2016-02-23 08:53:39.156026'
   updated_at: '2016-02-23 08:53:39.156026'
   fuel_usage: 45
+
+machine_result_for_price1:
+  machine: machine_hour_t
+  work_result: work_result_for_price1
+  display_order: 1
+  hours: 3
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_for_price2:
+  machine: machine_day_t
+  work_result: work_result_for_price2
+  display_order: 2
+  hours: 2
+  created_at: '2016-02-23 08:53:39.156026'
+  updated_at: '2016-02-23 08:53:39.156026'
+
+machine_result_stat_2019_1:
+  machine_id: 4
+  work_result: work_result_stat_2019_1_1
+  display_order: 1
+  hours: 2.5
+  created_at: '2019-01-01 08:53:39'
+  updated_at: '2019-01-01 08:53:39'

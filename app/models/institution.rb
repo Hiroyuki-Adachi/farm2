@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: institutions
+# Table name: institutions(施設マスタ)
 #
 #  id                       :bigint           not null, primary key
 #  display_order(表示順)    :integer          not null

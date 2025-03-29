@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: workers
+# Table name: workers(作業者マスタ)
 #
 #  id(作業者マスタ)                  :integer          not null, primary key
 #  account_number(口座番号)          :string(7)        default("0000000"), not null

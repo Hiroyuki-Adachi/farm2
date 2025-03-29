@@ -1,39 +1,49 @@
 # ベースとなるイメージを指定
 FROM ubuntu:20.04
 
-ARG SECRET_KEY_BASE
-ENV SECRET_KEY_BASE=${SECRET_KEY_BASE}
-ENV DEBIAN_FRONTEND=noninteractive
+ARG POSTGRES_USER
+ARG POSTGRES_PASSWORD
+ARG POSTGRES_DB
 
 # タイムゾーンを設定（これをしないと、ビルド時にタイムゾーンの設定を求められる）
-ENV TZ=Asia/Tokyo
+ENV DEBIAN_FRONTEND=noninteractive \
+    TZ=Asia/Tokyo \
+    LANG=C.UTF-8 \
+    RUBY_VERSION=3.4.2 \
+    POSTGRES_USER=${POSTGRES_USER} \
+    POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
+    POSTGRES_DB=${POSTGRES_DB} \
+    PGDATA=/var/lib/postgresql/data \
+    RUBYOPT="--yjit" \
+    PATH="/root/.cargo/bin:${PATH}"
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ENV LANG C.UTF-8
-ENV RUBY_VERSION 3.3.4
+# PostgreSQLの公式リポジトリを追加
+RUN apt-get update && apt-get install -y wget gnupg lsb-release && \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /usr/share/keyrings/postgresql.gpg > /dev/null && \
+    echo "deb [signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
 # 必要なパッケージをインストール
-RUN apt-get update -qq && \
-    apt-get install -y build-essential libpq-dev git curl tzdata \
-    libsqlite3-dev sqlite3 zlib1g-dev libssl-dev libreadline-dev libyaml-dev \
-    libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common \
-    libffi-dev
+RUN apt-get update -qq && apt-get install -y \
+    build-essential libpq-dev git curl tzdata \
+    libsqlite3-dev sqlite3 zlib1g-dev libssl-dev \
+    libreadline-dev libyaml-dev libxml2-dev libxslt1-dev \
+    libcurl4-openssl-dev software-properties-common libffi-dev \
+    nginx postgresql-13 postgresql-client-13 \
+    supervisor
 
 #最新版nodejsをインストール
 RUN mkdir -p /etc/apt/keyrings
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 WORKDIR /tmp
 RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
-RUN apt-get update
-RUN apt-get install nodejs
+RUN apt-get update && apt-get install nodejs
 
 # 最新版yarnをインストール
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/yarn.gpg
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install yarn
-
-# sass をインストール
-RUN yarn add sass
 
 # Rustのインストール
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -41,24 +51,49 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Rubyのインストール
 RUN curl -O https://cache.ruby-lang.org/pub/ruby/${RUBY_VERSION%.*}/ruby-$RUBY_VERSION.tar.gz
-RUN tar -xzvf ruby-$RUBY_VERSION.tar.gz
+RUN tar xzvf ruby-$RUBY_VERSION.tar.gz
 WORKDIR /tmp/ruby-$RUBY_VERSION
 RUN ./configure --enable-yjit && make && make install
 
 # アプリケーションディレクトリを作成
-RUN mkdir /farm2
-WORKDIR /farm2
+RUN rm /etc/nginx/sites-enabled/default && \
+    mkdir -p /home/hiro/farm2
+WORKDIR /home/hiro/farm2
 
 # ホストのGemfileとGemfile.lockをコピー
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-# YJIT有効化
-ENV RUBYOPT="--yjit"
+# SQLスクリプトとNginx設定をコピー
+COPY tmp/farm2.sql /tmp/farm2.sql
+COPY tmp/puma_farm2.conf /etc/nginx/sites-enabled/puma_farm2.conf
+ADD tmp/localhost.pem /etc/certs/localhost.pem
+ADD tmp/localhost-key.pem /etc/certs/localhost-key.pem
+COPY scripts/init_postgres.sh /tmp/init_postgres.sh
+RUN chmod +x /tmp/init_postgres.sh
+
+# PostgreSQLの起動とSQLスクリプトの実行
+USER postgres
+RUN service postgresql start && \
+    /tmp/init_postgres.sh && \
+    service postgresql stop
+USER root
 
 # バンドルインストール
+RUN gem update --system
 RUN gem install bundler
-COPY Gemfile Gemfile.lock /farm2/
-RUN bundle install
-COPY . /farm2
+COPY Gemfile Gemfile.lock /home/hiro/farm2/
+RUN bundle install --without test development
+
+# Yarn の依存関係をインストール
+COPY package.json yarn.lock /home/hiro/farm2/
+RUN rm -rf /home/hiro/farm2/node_modules && yarn install
+
+# アセットプリコンパイルとDBマイグレーション
+COPY . /home/hiro/farm2
 RUN RAILS_ENV=production bundle exec rake assets:precompile
 RUN RAILS_ENV=production bundle exec rails db:migrate
+
+# ポートの公開とサービス起動
+EXPOSE 80 5432
+COPY ./config/supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_whole_crops
+# Table name: work_whole_crops(WCS作業)
 #
 #  id                   :bigint           not null, primary key
 #  article_name(品名)   :string(15)       default(""), not null

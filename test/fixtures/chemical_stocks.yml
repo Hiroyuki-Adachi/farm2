@@ -1,16 +1,16 @@
 # == Schema Information
 #
-# Table name: chemical_stocks
+# Table name: chemical_stocks(農薬在庫)
 #
 #  id                              :bigint           not null, primary key
-#  adjust(調整量)                  :decimal(5, 1)    default(0.0), not null
-#  inventory(棚卸量)               :decimal(7, 1)
+#  adjust(調整量)                  :decimal(7, 1)    default(0.0), not null
+#  inventory(棚卸量)               :decimal(8, 1)
 #  name(在庫名称)                  :string(40)       default(""), not null
-#  shipping(出庫量)                :decimal(5, 1)
-#  stock(在庫量)                   :decimal(7, 1)    default(0.0), not null
+#  shipping(出庫量)                :decimal(7, 1)
+#  stock(在庫量)                   :decimal(8, 1)    default(0.0), not null
 #  stock_on(在庫日)                :date             not null
-#  stored(入庫量)                  :decimal(5, 1)
-#  using(使用量)                   :decimal(5, 1)
+#  stored(入庫量)                  :decimal(7, 1)
+#  using(使用量)                   :decimal(7, 1)
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
 #  chemical_id(薬剤)               :integer          not null

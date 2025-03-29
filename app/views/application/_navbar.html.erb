@@ -6,9 +6,6 @@
     <div class="collapse navbar-collapse" id="navbarFarm2">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <%= link_to '日報管理', "#", {class: "nav-link farm2-navi", id: :navbar_daily} %>
-          </li>
-          <li class="nav-item">
             <%= link_to '予定管理', "#", {class: "nav-link farm2-navi", id: :navbar_schedule} %>
           </li>
           <% if current_user.checkable? %>
@@ -29,9 +26,11 @@
           <li class="nav-item">
             <%= link_to '原価管理', "#", {class: "nav-link farm2-navi", id: :navbar_cost} %>
           </li>
+          <% if this_term? %>
           <li class="nav-item">
             <%= link_to '生産計画', "#", {class: "nav-link farm2-navi", id: :navbar_plan} %>
           </li>
+          <% end %>
           <li class="nav-item">
             <%= link_to 'GAP対応', "#", {class: "nav-link farm2-navi", id: :navbar_gap} %>
           </li>
