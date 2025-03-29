@@ -5,9 +5,19 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     @user = users(:users1)
   end
 
-  test "ログイン画面" do
-    get new_session_path
+  test "ログイン画面(パブリック)" do
+    get new_session_path, headers: { 'REMOTE_ADDR' => '1.1.1.1' }
+    assert_redirected_to new_ip_list_path
+  end
+
+  test "ログイン画面(ホワイトリスト)" do
+    get new_session_path, headers: { 'REMOTE_ADDR' => '3.3.3.3' }
     assert_response :success
+  end
+
+  test "ログイン画面(ブラックリスト)" do
+    get new_session_path, headers: { 'REMOTE_ADDR' => '4.4.4.4' }
+    assert_response :service_unavailable
   end
 
   test "ログイン実行(認証エラー)" do

@@ -52,6 +52,34 @@ Rails.application.configure do
   # Replace the default in-process and non-durable queuing backend for Active Job.
   config.active_job.queue_adapter = :delayed_job
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'gmail.com',
+    authentication: :xoauth2,
+    user_name: ENV.fetch('MAIL_ADDRESS'),
+    oauth2_token: lambda {
+      client = OAuth2::Client.new(
+        ENV.fetch('GOOGLE_CLIENT_ID'),
+        ENV.fetch('GOOGLE_CLIENT_SECRET'),
+        site: 'https://accounts.google.com',
+        authorize_url: '/o/oauth2/auth',
+        token_url: '/o/oauth2/token'
+      )
+  
+      refresh_token = AuthController.read_refresh_token
+  
+      token = OAuth2::AccessToken.from_hash(client, {
+        refresh_token: refresh_token,
+        expires_at: Time.now.to_i + 3600
+      })
+  
+      token.refresh!.token
+    }
+  }
+  config.action_mailer.default_url_options = { host: ENV['URL'] }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false

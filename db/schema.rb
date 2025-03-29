@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_05_06_075958) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_05_084840) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -377,6 +377,20 @@ ActiveRecord::Schema[8.0].define(version: 2024_05_06_075958) do
     t.point "location", comment: "位置"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "ip_lists", comment: "IPアドレスリスト", force: :cascade do |t|
+    t.string "ip_address", limit: 64, default: "", null: false, comment: "IP Address"
+    t.string "hashed_token", limit: 64, default: "", null: false, comment: "ハッシュ化トークン"
+    t.date "expired_on", comment: "有効期限"
+    t.boolean "white_flag", default: false, null: false, comment: "ホワイトリストフラグ"
+    t.integer "block_count", default: 0, null: false, comment: "ブロック回数"
+    t.string "mail", limit: 255, default: "", null: false, comment: "メールアドレス"
+    t.integer "created_by", default: 0, null: false, comment: "作成者"
+    t.datetime "confirmation_expired_at", comment: "確認有効期限"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ip_address"], name: "ixdex_ip_lists_on_ip_address", unique: true
   end
 
   create_table "land_costs", id: { type: :serial, comment: "土地原価" }, comment: "土地原価", force: :cascade do |t|
@@ -866,7 +880,13 @@ ActiveRecord::Schema[8.0].define(version: 2024_05_06_075958) do
     t.integer "view_month", default: [1, 4, 8], null: false, comment: "表示切替月", array: true
     t.integer "calendar_term", default: 2018, null: false, comment: "期(カレンダー)"
     t.string "token", limit: 36, default: "", null: false, comment: "アクセストークン"
+    t.string "mail", limit: 255, default: "", null: false, comment: "メールアドレス"
+    t.datetime "mail_confirmed_at", comment: "メールアドレス確認日時"
+    t.string "mail_confirmation_token", limit: 64, comment: "メールアドレス確認トークン"
+    t.datetime "mail_confirmation_expired_at", comment: "メールアドレス確認有効期限"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
+    t.index ["mail"], name: "ix_users_on_mail", unique: true, where: "((mail)::text <> ''::text)"
+    t.index ["mail_confirmation_token"], name: "ix_users_on_mail_confirmation_token", unique: true, where: "(mail_confirmation_token IS NOT NULL)"
     t.index ["token"], name: "ix_users_token", unique: true
     t.index ["worker_id"], name: "index_users_on_worker_id", unique: true
   end

@@ -3,6 +3,7 @@ require 'wareki'
 module SessionsHelper
   def log_in(user)
     session[:user_id] = user.id
+    Rails.application.config.access_logger.info "PC-#{user.worker.name}"
   end
 
   def logged_in?

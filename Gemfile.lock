@@ -131,15 +131,22 @@ GEM
       ruby2_keywords
     drb (2.2.1)
     erubi (1.13.1)
+    faraday (2.12.2)
+      faraday-net_http (>= 2.0, < 3.5)
+      json
+      logger
+    faraday-net_http (3.4.0)
+      net-http (>= 0.5.0)
     ferrum (0.15)
       addressable (~> 2.5)
       concurrent-ruby (~> 1.1)
       webrick (~> 1.7)
       websocket-driver (~> 0.7)
-    ffi (1.17.1-x64-mingw-ucrt)
     ffi (1.17.1-x86_64-linux-gnu)
+    ffi (1.17.1-x86_64-linux-musl)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hashie (5.0.0)
     holiday_jp (0.8.1)
     http-cookie (1.0.8)
       domain_name (~> 0.5)
@@ -164,6 +171,8 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.10.2)
+    jwt (2.10.1)
+      base64
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -211,6 +220,12 @@ GEM
     mime-types-data (3.2025.0304)
     mini_mime (1.1.5)
     minitest (5.25.5)
+    mocha (2.7.1)
+      ruby2_keywords (>= 0.0.5)
+    multi_xml (0.7.1)
+      bigdecimal (~> 3.1)
+    net-http (0.6.0)
+      uri
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.5)
       connection_pool (~> 2.2)
@@ -229,6 +244,27 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.4-x86_64-linux-gnu)
       racc (~> 1.4)
+    nokogiri (1.18.2-x86_64-linux-musl)
+      racc (~> 1.4)
+    oauth2 (2.0.9)
+      faraday (>= 0.17.3, < 3.0)
+      jwt (>= 1.0, < 3.0)
+      multi_xml (~> 0.5)
+      rack (>= 1.2, < 4)
+      snaky_hash (~> 2.0)
+      version_gem (~> 1.1)
+    omniauth (2.1.2)
+      hashie (>= 3.4.6)
+      rack (>= 2.2.3)
+      rack-protection
+    omniauth-google-oauth2 (1.2.1)
+      jwt (>= 2.9.2)
+      oauth2 (~> 2.0)
+      omniauth (~> 2.0)
+      omniauth-oauth2 (~> 1.8)
+    omniauth-oauth2 (1.8.0)
+      oauth2 (>= 1.4, < 3)
+      omniauth (~> 2.0)
     ostruct (0.6.1)
     parallel (1.26.3)
     paranoia (3.0.1)
@@ -254,6 +290,10 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.1.12)
+    rack-protection (4.1.1)
+      base64 (>= 0.1.0)
+      logger (>= 1.6.0)
+      rack (>= 3.0.0, < 4)
     rack-session (2.1.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
@@ -345,6 +385,9 @@ GEM
       base64
     rubyzip (2.4.1)
     securerandom (0.4.1)
+    snaky_hash (2.0.1)
+      hashie
+      version_gem (~> 1.1, >= 1.1.1)
     sorbet-runtime (0.5.11934)
     spring (4.3.0)
     stringio (3.1.5)
@@ -355,13 +398,12 @@ GEM
       railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    tzinfo-data (1.2025.1)
-      tzinfo (>= 1.0.0)
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
     uri (1.0.3)
     useragent (0.16.11)
+    version_gem (1.1.4)
     wareki (1.1.0)
       ya_kansuji (> 0.0.9, < 2.0.0)
     web-console (4.2.1)
@@ -381,8 +423,9 @@ GEM
     zeitwerk (2.7.2)
 
 PLATFORMS
-  x64-mingw-ucrt
   x86_64-linux
+  x86_64-linux-gnu
+  x86_64-linux-musl
 
 DEPENDENCIES
   active_hash
@@ -408,7 +451,10 @@ DEPENDENCIES
   listen
   loofah (>= 2.3.1)
   mechanize
+  mocha
   nokogiri
+  omniauth
+  omniauth-google-oauth2
   paranoia
   pg
   propshaft

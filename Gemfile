@@ -75,6 +75,11 @@ gem 'puma'
 # Rubyzip is a ruby library for reading and writing zip files.
 gem 'rubyzip'
 
+# omniauth is a generalized Rack framework for multiple-provider authentication.
+gem 'omniauth'
+# OmniAuth strategy for Google OAuth2
+gem 'omniauth-google-oauth2'
+
 group :development do
   # listen to file modifications
   gem 'listen'
@@ -98,4 +103,6 @@ group :test do
   gem 'capybara'
   # cuprite is a Capybara driver for headless Chrome/Chromium
   gem 'cuprite'
+  # minitest is a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking.
+  gem 'mocha'
 end

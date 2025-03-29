@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :ip_lists, only: [:new, :create, :edit, :update]
   resources :zgis, only: [:new, :create]
   resources :work_seedlings, only: [:index]
   resources :owned_rices, only: [:index, :edit, :update]
@@ -159,6 +160,7 @@ Rails.application.routes.draw do
     resources :owned_rices, controller: "personal_informations/owned_rices", only: [:index]
     resources :minutes, controller: "personal_informations/minutes", only: [:show]
     resources :topics, controller: "personal_informations/topics", only: [:index, :show]
+    resources :mail_confirmations, controller: "personal_informations/mail_confirmations", param: "mail_token", only: [:edit]
   end
   resources :personal_calendars, param: "token", only: [:show]
   resources :users, except: [:show] do
@@ -167,6 +169,7 @@ Rails.application.routes.draw do
   namespace :users do
     resources :qr, only: [:index]
     resources :words, only: [:new, :create, :show, :destroy]
+    resources :mails, only: [:new, :create]
   end
   resources :work_verifications, param: "work_id", only: [:index, :update, :destroy, :show]
 
@@ -206,6 +209,10 @@ Rails.application.routes.draw do
   resources :work_results, only: [:index]
   resources :machine_results, only: [:index]
   resources :work_chemicals, only: [:index]
+
+  get 'auth/:provider/callback', to: 'auth#create'
+  get 'auth/failure', to: 'auth#failure'
+  post 'auth/:provider/callback', to: 'auth#create'
 
   root controller: :sessions, action: :new
 end

@@ -29,91 +29,40 @@
 #  ix_users_on_mail_confirmation_token  (mail_confirmation_token) UNIQUE WHERE (mail_confirmation_token IS NOT NULL)
 #  ix_users_token                       (token) UNIQUE
 #
+require 'test_helper'
 
-class User < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
-  before_create :set_token
-  before_update :clear_mail_fields, if: -> { mail_changed? && self.mail.present? }
-  after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && self.mail_confirmed_at.present? }
+class UserTest < ActiveSupport::TestCase
+  test "メールアドレス設定" do
+    user = users(:user_manager)
+    user.mail = 'user@example.com'
+    user.save!
 
-  belongs_to :worker
-  belongs_to :organization
-  belongs_to_active_hash :permission
-
-  has_many :calendar_work_kinds, dependent: :destroy
-  has_many :user_words, dependent: :destroy
-  has_many :user_topics, dependent: :destroy
-  has_many :topics, through: :user_topics
-
-  accepts_nested_attributes_for :user_words
-
-  validates :login_name, uniqueness: true
-  validates :password, length: { maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED }
-
-  def login_name=(value)
-    super(value.downcase)
+    assert_not_nil user.mail_confirmation_token
+    assert_not_nil user.mail_confirmation_expired_at
+    assert_operator user.mail_confirmation_expired_at, :>, Time.current
+    assert_nil user.mail_confirmed_at
   end
 
-  def admin?
-    permission == Permission::ADMIN
+  test "メールアドレス承認(OK)" do
+    user = users(:user_manager)
+    user.mail = 'user_ok@example.com'
+    user.save!
+
+    result = user.mail_confirm!(user.mail_confirmation_token)
+
+    assert result
+    assert_not_nil user.mail_confirmed_at
+    assert_equal user.worker.pc_mail, user.mail
   end
 
-  def manager?
-    permission == Permission::MANAGER
+  test "メールアドレス承認(NG)" do
+    user = users(:user_manager)
+    user.mail = 'user_ng@example.com'
+    user.save!
+
+    result = user.mail_confirm!("invalid_token")
+
+    assert_not result
+    assert_nil user.mail_confirmed_at
   end
-
-  def checker?
-    permission == Permission::CHECKER
-  end
-
-  def user?
-    permission == Permission::USER
-  end
-
-  def visitor?
-    permission == Permission::VISITOR
-  end
-
-  def manageable?
-    admin? || manager?
-  end
-
-  def checkable?
-    admin? || manager? || checker?
-  end
-
-  def mail_confirmed?
-    self.mail_confirmed_at.present?
-  end
-
-  def mail_confirm!(mail_confirmation_token)
-    return false if self.mail_confirmation_token != mail_confirmation_token
-    return false if self.mail_confirmation_expired_at < Time.current
-
-    self.update(mail_confirmed_at: Time.current)
-  end
-
-  def self.find_by_mail(mail)
-    User.where.not(mail_confirmed_at: nil).find_by(mail: mail)
-  end
-
-  private
-
-  def set_token
-    self.token = SecureRandom.uuid
-  end
-
-  def clear_mail_fields
-    self.mail_confirmation_token = SecureRandom.uuid
-    self.mail_confirmation_expired_at = 1.day.from_now
-    self.mail_confirmed_at = nil
-  end
-
-  def set_pc_mail
-    if self.mail.present? && self.worker.present? && self.worker.pc_mail.blank?
-      self.worker.update(pc_mail: mail)
-    end
-  end
-
-  has_secure_password
 end
