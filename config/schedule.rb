@@ -21,6 +21,10 @@
 env :PATH, ENV['PATH']
 env :RAILS_ENV, 'production'
 
+# rbenv 初期化用（bash）
+env :RBENV_ROOT, "$HOME/.rbenv"
+env :PATH, "$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
+
 set :output, "/opt/app/farm2/log/cron.log"
 
 every 1.day, at: '10:58 am' do
