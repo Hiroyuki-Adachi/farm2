@@ -23,9 +23,13 @@ env :RAILS_ENV, 'production'
 
 # rbenv 初期化用（bash）
 env :RBENV_ROOT, "$HOME/.rbenv"
-env :PATH, "$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH"
 
+set :env_path, '"$HOME/.rbenv/shims":"$HOME/.rbenv/bin"'
 set :output, "/opt/app/farm2/log/cron.log"
+
+job_type :rake,   %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bin/rake :task --silent :output }
+job_type :runner, %q{ cd :path && PATH=:env_path:"$PATH" bin/rails runner -e :environment ':task' :output }
+job_type :script, %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bundle exec bin/:task :output }
 
 every 1.day, at: '10:58 am' do
   runner "ImportJmaJob.perform_now"
