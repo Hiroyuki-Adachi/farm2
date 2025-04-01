@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 #環境変数の読み込み
 set -a
