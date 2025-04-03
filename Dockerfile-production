@@ -4,6 +4,10 @@ FROM ubuntu:20.04
 ARG POSTGRES_USER
 ARG POSTGRES_PASSWORD
 ARG POSTGRES_DB
+ARG MAIL_ADDRESS
+ARG GOOGLE_CLIENT_ID
+ARG GOOGLE_CLIENT_SECRET
+ARG SECRET_KEY_BASE
 
 # タイムゾーンを設定（これをしないと、ビルド時にタイムゾーンの設定を求められる）
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -13,6 +17,10 @@ ENV DEBIAN_FRONTEND=noninteractive \
     POSTGRES_USER=${POSTGRES_USER} \
     POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
     POSTGRES_DB=${POSTGRES_DB} \
+    MAIL_ADDRESS=${MAIL_ADDRESS} \
+    GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID} \
+    GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET} \
+    SECRET_KEY_BASE=${SECRET_KEY_BASE} \
     PGDATA=/var/lib/postgresql/data \
     RUBYOPT="--yjit" \
     PATH="/root/.cargo/bin:${PATH}"
@@ -57,17 +65,15 @@ RUN ./configure --enable-yjit && make && make install
 
 # アプリケーションディレクトリを作成
 RUN rm /etc/nginx/sites-enabled/default && \
-    mkdir -p /home/hiro/farm2
-WORKDIR /home/hiro/farm2
+    mkdir -p /opt/app/farm2
+WORKDIR /opt/app/farm2
 
 # ホストのGemfileとGemfile.lockをコピー
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # SQLスクリプトとNginx設定をコピー
 COPY tmp/farm2.sql /tmp/farm2.sql
-COPY tmp/puma_farm2.conf /etc/nginx/sites-enabled/puma_farm2.conf
-ADD tmp/localhost.pem /etc/certs/localhost.pem
-ADD tmp/localhost-key.pem /etc/certs/localhost-key.pem
+COPY config/puma_farm2.conf /etc/nginx/sites-enabled/puma_farm2.conf
 COPY scripts/init_postgres.sh /tmp/init_postgres.sh
 RUN chmod +x /tmp/init_postgres.sh
 
@@ -81,16 +87,16 @@ USER root
 # バンドルインストール
 RUN gem update --system
 RUN gem install bundler
-COPY Gemfile Gemfile.lock /home/hiro/farm2/
+COPY Gemfile Gemfile.lock /opt/app/farm2/
 RUN bundle install --without test development
 
 # Yarn の依存関係をインストール
-COPY package.json yarn.lock /home/hiro/farm2/
-RUN rm -rf /home/hiro/farm2/node_modules && yarn install
+COPY package.json yarn.lock /opt/app/farm2/
+RUN rm -rf /opt/app/farm2/node_modules && yarn install
 
 # アセットプリコンパイルとDBマイグレーション
-COPY . /home/hiro/farm2
-RUN RAILS_ENV=production bundle exec rake assets:precompile
+COPY . /opt/app/farm2
+RUN RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/farm2 bundle exec rake assets:precompile
 RUN RAILS_ENV=production bundle exec rails db:migrate
 
 # ポートの公開とサービス起動
