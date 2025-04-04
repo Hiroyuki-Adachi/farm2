@@ -28,5 +28,7 @@ RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/farm2 bundle exec rake assets:prec
 
 echo "→ Puma 再起動"
 sudo systemctl restart puma
+echo "→ delayed_job 再起動"
+sudo systemctl restart delayed_job
 
 echo "==== デプロイ完了 ===="
