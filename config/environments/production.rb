@@ -109,6 +109,10 @@ Rails.application.configure do
   # app root
   config.relative_url_root = "/farm2"
 
+  host = ENV.fetch("APP_DOMAIN", "example.com")
+  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
+  Rails.application.routes.default_url_options[:host] = host
+  Rails.application.routes.default_url_options[:protocol] = 'https'
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
