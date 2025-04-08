@@ -9,3 +9,4 @@ end
 OmniAuth.config.allowed_request_methods = [:post, :get]
 OmniAuth.config.silence_get_warning = true
 OmniAuth.config.logger = Rails.logger
+OmniAuth.config.path_prefix = "#{Rails.application.config.relative_url_root}/auth"
