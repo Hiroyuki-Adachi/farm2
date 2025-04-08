@@ -138,7 +138,7 @@
         <%= link_to '利用者マスタ保守', users_path, {class: "dropdown-item", data: {controller: :users, actions: [:new, :index]}} %>
         <%= link_to '管理情報変更', edit_organization_path(current_organization), {class: "dropdown-item", data: {controller: :organizations}} %>
         <%= link_to 'システム変更', edit_system_path(current_system), {class: "dropdown-item", data: {controller: :systems}} %>
-        <%= link_to "GOOGLEサインイン", "/auth/google_oauth2", {class: "dropdown-item"} %>
+        <%= link_to "GOOGLEサインイン", main_app.url_for("/auth/google_oauth2"), {class: "dropdown-item"} %>
       <% end %>
       <%= link_to '対象年度変更', edit_term_menu_path(current_system), {class: "dropdown-item", data: {controller: :menu, actions: [:edit_term]}} %>
       <%= link_to 'QRコード', users_qr_index_path, {class: "dropdown-item", data: {controller: :qr}} %>
