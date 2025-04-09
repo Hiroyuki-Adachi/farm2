@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  scope ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/') do
+  if Rails.env.production?
+    scope '/farm2' do
+      draw :all_routes
+    end
+  else
     draw :all_routes
   end
 end
