@@ -23,8 +23,7 @@ echo "→ DB Migration"
 RAILS_ENV=production bundle exec rails db:migrate
 
 echo "→ アセットプリコンパイル"
-RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/farm2 bundle exec rake assets:precompile
-
+RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/farm2 ASSET_HOST=/farm2 bundle exec rake assets:clobber assets:precompile
 
 echo "→ Puma 再起動"
 sudo systemctl restart puma
