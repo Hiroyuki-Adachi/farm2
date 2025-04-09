@@ -16,7 +16,7 @@ class UserMailerTest < ActionMailer::TestCase
 
   test "IPアドレス認証" do
     ip = ip_lists(:ip_white)
-    email = UserMailer.ip_confirmation(ip)
+    email = UserMailer.ip_confirmation(ip, '123456')
 
     assert_emails 1 do
       email.deliver_now
