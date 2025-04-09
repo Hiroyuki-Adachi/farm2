@@ -62,7 +62,7 @@ class IpList < ApplicationRecord
     ip = find_or_initialize_by(ip_address: ip_address)
     ip.white_flag = false
     ip.block_count += 1
-    ip.save
+    Rails.cache.delete('black_list') if ip.save
   end
 
   def self.white_ip!(ip_address, user)
@@ -74,7 +74,7 @@ class IpList < ApplicationRecord
     ip.created_by = user.id
     ip.mail = user.mail
     ip.confirmation_expired_at = 10.minutes.from_now
-    ip.save
+    Rails.cache.delete('white_list') if ip.save
     return ip
   end
 
