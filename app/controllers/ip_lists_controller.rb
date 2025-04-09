@@ -8,7 +8,7 @@ class IpListsController < ApplicationController
     user = User.find_by_mail(params[:mail])
     if user
       ip = IpList.white_ip!(request.remote_ip, user)
-      UserMailer.ip_confirmation(ip).deliver_later
+      UserMailer.ip_confirmation(ip, ip.token).deliver_later
       redirect_to edit_ip_list_path(ip)
     else
       IpList.block_ip!(request.remote_ip)
