@@ -8,7 +8,7 @@
   <%= javascript_include_tag 'controllers/pc-common', 'data-turbo-track': 'reload', type: :module %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag 'pc-common', 'data-turbo-track': 'reload' %>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["API_KEY"]%>&libraries=drawing" defer="defer" async="async" data-turbolinks-eval="false"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"]%>&libraries=drawing" defer="defer" async="async" data-turbolinks-eval="false"></script>
   <%= yield :head %>
   <%= csrf_meta_tags %>
 </head>

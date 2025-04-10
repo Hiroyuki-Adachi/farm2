@@ -14,7 +14,7 @@ services:
     tty: true
     stdin_open: true
     environment:
-      - API_KEY=${GOOGLE_MAPS_API_KEY}
+      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
     ports:
       - "80:80"
