@@ -30,7 +30,7 @@ services:
     tty: true
     stdin_open: true
     environment:
-      API_KEY: ${GOOGLE_MAPS_API_KEY}
+      GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
       CHROME_URL: "http://chrome:3333"
       RAILS_ENV: development
       RUBYOPT: "--yjit"
