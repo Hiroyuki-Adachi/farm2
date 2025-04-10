@@ -31,7 +31,7 @@ module ApplicationHelper
   end
 
   def work_type_icon_tag(work_type)
-    image_tag(work_type.icon ? url_for(show_icon_work_type_path(work_type)) : "/images/works/default.png", size: "48x48", skip_pipeline: true)
+    work_type.icon ? tag.img(src: show_icon_work_type_path(work_type), height: 48, width: 48) : image_tag("/images/works/default.png", size: "48x48")
   end
 
   def chemical_name(chemical)
