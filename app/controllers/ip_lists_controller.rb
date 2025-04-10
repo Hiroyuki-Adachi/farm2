@@ -20,7 +20,7 @@ class IpListsController < ApplicationController
 
   def update
     if @ip.authenticate?(params[:token])
-      @ip.update(expired_on: Time.now.advance(months: 1).to_date)
+      @ip.updated_expired_on
       log_in(@ip.created_user)
       redirect_to menu_index_path
     else
