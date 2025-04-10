@@ -57,6 +57,10 @@ class IpList < ApplicationRecord
     self.hashed_token == Digest::SHA256.hexdigest(token)
   end
 
+  def updated_expired_on
+    Rails.cache.delete('white_list') if update(expired_on: Time.now.advance(months: 1).to_date)
+  end
+
   def self.block_ip!(ip_address)
     return if LOCAL_ADDRESSES.any? { |ip| ip.include?(ip_address) }
     ip = find_or_initialize_by(ip_address: ip_address)
