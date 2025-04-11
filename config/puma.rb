@@ -28,9 +28,9 @@ threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
 threads threads_count, threads_count
 
 app_root = File.expand_path("../..", __FILE__)
-bind "unix://#{app_root}/tmp/puma_farm2.sock"
-pidfile "#{app_root}/tmp/puma_farm2.pid"
-state_path "#{app_root}/tmp/puma_farm2.state"
+bind "unix://#{app_root}/tmp/pids/puma_farm2.sock"
+pidfile "#{app_root}/tmp/pids/puma_farm2.pid"
+state_path "#{app_root}/tmp/pids/puma_farm2.state"
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 port ENV.fetch("PORT", 3000)
