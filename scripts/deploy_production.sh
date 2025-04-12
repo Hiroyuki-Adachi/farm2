@@ -30,4 +30,7 @@ sudo systemctl restart puma
 echo "→ delayed_job 再起動"
 sudo systemctl restart delayed_job
 
+echo "→ cron 登録 (whenever)"
+RAILS_ENV=production bundle exec whenever --update-crontab
+
 echo "==== デプロイ完了 ===="
