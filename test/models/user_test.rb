@@ -41,7 +41,7 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil user.mail_confirmation_expired_at
     assert_operator user.mail_confirmation_expired_at, :>, Time.current
     assert_nil user.mail_confirmed_at
-    assert_equal user.current_mail_status, :pending
+    assert_equal :pending, user.current_mail_status
   end
 
   test "メールアドレス承認(OK)" do
