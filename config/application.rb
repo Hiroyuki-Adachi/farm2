@@ -35,6 +35,7 @@ module Farm2
       action, name, from_hour, to_hour = msg.strip.split(':', 4)
       {
         time: datetime.strftime('%Y-%m-%dT%H:%M:%S%:z'),
+        severity: :INFO,
         action: action,
         worker: name,
         from: from_hour.to_f,
@@ -48,6 +49,7 @@ module Farm2
       device, name = msg.strip.split('-', 2)
       {
         time: datetime.strftime('%Y-%m-%dT%H:%M:%S%:z'),
+        severity: :INFO,
         action: 'access',
         device: device,
         user: name

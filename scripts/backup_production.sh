@@ -15,4 +15,4 @@ PGPASSWORD="$POSTGRES_PASSWORD" pg_dump -h localhost -U $POSTGRES_USER -d $POSTG
 rclone copy "$BACKUP_FILE" backup:backup/
 rm -rf $BACKUP_FILE
 
-echo "$(date '+%F %T') Backup complete: $BACKUP_FILE uploaded to Google Drive"
+echo "{\"time\": \"$(date -Is)\", \"level\": \"NOTICE\", \"action\": \"backup\", \"file\": \"${BACKUP_FILE}\", \"message\": \"Backup complete and uploaded to Google Drive\"}" >> /opt/app/farm2/log/db_backup.log
