@@ -54,7 +54,7 @@ class UserTest < ActiveSupport::TestCase
     assert result
     assert_not_nil user.mail_confirmed_at
     assert_equal user.worker.pc_mail, user.mail
-    assert_equal user.current_mail_status, :confirmed
+    assert_equal :confirmed, user.current_mail_status
   end
 
   test "メールアドレス承認(NG)" do
