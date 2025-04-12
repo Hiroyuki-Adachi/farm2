@@ -1,7 +1,7 @@
 class ApplicationMailer < ActionMailer::Base
   default from: ENV.fetch('MAIL_ADDRESS')
   layout 'mailer'
-  before_action :update_smtp_settings
+  before_action :update_smtp_settings, unless: -> { Rails.env.test? }
   
   def update_smtp_settings
     refresh_token = AuthController.read_refresh_token

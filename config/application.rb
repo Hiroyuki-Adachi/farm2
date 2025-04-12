@@ -29,14 +29,27 @@ module Farm2
 
     config.action_controller.include_all_helpers = false
 
-    config.update_logger = Logger.new('log/update_worker.log', 'monthly')
+    config.update_logger = Logger.new('log/update_worker.log')
     config.update_logger.formatter = proc do |_severity, datetime, _progname, msg|
-      "#{datetime}: #{msg}\n"
+      action, name, from_hour, to_hour = msg.strip.split(':', 4)
+      {
+        time: datetime.strftime('%Y-%m-%dT%H:%M:%S%:z'),
+        action: action,
+        worker: name,
+        from: from_hour.to_f,
+        to: to_hour.to_f
+      }.to_json + "\n"
     end
 
-    config.access_logger = Logger.new('log/access_info.log', 'monthly')
+    config.access_logger = Logger.new('log/access_info.log')
     config.access_logger.formatter = proc do |_severity, datetime, _progname, msg|
-      "#{datetime}: #{msg}\n"
+      device, name = msg.strip.split('-', 2)
+      {
+        time: datetime.strftime('%Y-%m-%dT%H:%M:%S%:z'),
+        action: 'access',
+        device: device,
+        user: name
+      }.to_json + "\n"
     end
 
     config.active_support.to_time_preserves_timezone = :zone
@@ -47,5 +60,8 @@ module Farm2
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.lograge.enabled = true
+    config.lograge.formatter = Lograge::Formatters::Json.new
   end
 end
