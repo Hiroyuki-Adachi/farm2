@@ -4,6 +4,7 @@
   <div class="col-md-3">
     <div class="field mb-3">
       <%= f.label :mail, class: "col-form-label-lg form-label" %>
+      <%= mail_status_badge(@user) %>
       <%= f.email_field :mail, {required: false, class: "form-control", autocomplete: false} %>
     </div>
   </div>
