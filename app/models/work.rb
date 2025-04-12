@@ -242,7 +242,7 @@ SQL
       work_result = work_results.find_by(worker_id: worker_id)
       if work_result
         # hoursが変更された場合にログを出力
-        Rails.application.config.update_logger.info "#{work_result.worker.name}:#{work_result.hours} -> #{hours}" if work_result.hours != hours
+        Rails.application.config.update_logger.info "updated:#{work_result.worker.name}:#{work_result.hours}:#{hours}" if work_result.hours != hours
         
         # display_orderまたはhoursが異なる場合のみupdateを実行
         work_result.update(display_order: display_order, hours: hours) if work_result.display_order != display_order || work_result.hours != hours

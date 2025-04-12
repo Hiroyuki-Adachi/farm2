@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
   before_action :set_term, if: :user_present?
   before_action :restrict_remote_ip
 
+  unless Rails.env.development? || Rails.env.test?
+    rescue_from StandardError, with: :handle_error
+  end
+
   protected
 
   def sum_hours_key(term)
@@ -82,5 +86,17 @@ class ApplicationController < ActionController::Base
         partial.present? ? render(partial: partial) : render
       end
     end
+  end
+
+  def handle_error(e)
+    logger.error({
+      error: e.class.name,
+      message: e.message,
+      backtrace: e.backtrace.take(5),
+      path: request.fullpath,
+      time: Time.current
+    }.to_json)
+
+    render file: Rails.public_path.join('500.html'), layout: false, status: 500
   end
 end
