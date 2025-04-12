@@ -37,7 +37,7 @@ class OwnedRicePricesController < ApplicationController
   private
 
   def owned_rice_price_params
-    params.require(:owned_rice_price)
-          .permit(:term, :work_type_id, :display_order, :name, :short_name, :owned_price)
+    params.expect(owned_rice_price:
+      [:term, :work_type_id, :display_order, :name, :short_name, :owned_price])
   end
 end

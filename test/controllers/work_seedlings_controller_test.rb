@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class WorkSeedlingsControllerTest < ActionController::TestCase
+class WorkSeedlingsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "育苗集計(会計)" do
-    get :index
+    get work_seedlings_path
     assert_response :success
   end
 end

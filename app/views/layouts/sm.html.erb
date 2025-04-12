@@ -15,7 +15,7 @@
 <main class="container-fluid">
 <div id="site-header">
 <nav class="navbar navbar-dark bg-success fixed-top" role="navigation">
-  <%= link_to "作業日報(#{current_name})", personal_information_path(token: token), {class: "navbar-brand"} %>
+  <%= link_to "作業日報(#{current_name})", personal_information_path(token: token), {class: "navbar-brand ms-2"} %>
   <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarFarm2" aria-bs-controls="navbarFarm2" aria-expanded="false" aria-label="ナビゲーションの切替">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -25,7 +25,7 @@
         <div class="col-3">
           <a href="<%= personal_information_schedules_path(personal_information_token: token)%>">
             <figure class="figure text-center">
-              <img class="figure-img" width="48" height="48" src="/images/menu/calendar.png" />
+              <%= image_tag "/images/menu/calendar.png", {width: 48, height: 48, class: "figure-img"} %>
               <figcaption class="figure-caption text-white">予 定</figcaption>
             </figure>
           </a>
@@ -33,7 +33,7 @@
         <div class="col-3">
           <a href="<%= personal_information_lands_path(personal_information_token: token)%>">
             <figure class="figure text-center">
-              <img class="figure-img" width="48" height="48" src="/images/menu/tanbo.png" />
+              <%= image_tag "/images/menu/tanbo.png", {width: 48, height: 48, class: "figure-img"} %>
               <figcaption class="figure-caption text-white">農 地</figcaption>
             </figure>
           </a>
@@ -41,7 +41,7 @@
         <div class="col-3">
           <a href="<%= personal_information_seedlings_path(personal_information_token: token)%>">
             <figure class="figure text-center">
-              <img class="figure-img" width="48" height="48" src="/images/menu/jouro.png" />
+              <%= image_tag "/images/menu/jouro.png", {width: 48, height: 48, class: "figure-img"} %>
               <figcaption class="figure-caption text-white">育 苗</figcaption>
             </figure>
           </a>
@@ -49,7 +49,7 @@
         <div class="col-3">
           <a href="<%= personal_information_statistics_path(personal_information_token: token)%>">
             <figure class="figure text-center">
-              <img class="figure-img" width="48" height="48" src="/images/menu/graph.png" />
+              <%= image_tag "/images/menu/graph.png", {width: 48, height: 48, class: "figure-img"} %>
               <figcaption class="figure-caption text-white">集 計</figcaption>
             </figure>
           </a>
@@ -59,7 +59,7 @@
         <div class="col-3">
           <a href="<%= personal_information_dryings_path(personal_information_token: token)%>">
             <figure class="figure text-center">
-              <img class="figure-img" width="48" height="48" src="/images/menu/country.png" />
+              <%= image_tag "/images/menu/country.png", {width: 48, height: 48, class: "figure-img"} %>
               <figcaption class="figure-caption text-white">乾 燥</figcaption>
             </figure>
           </a>
@@ -67,7 +67,7 @@
         <div class="col-3">
           <a href="<%= personal_information_machines_path(personal_information_token: token)%>">
             <figure class="figure text-center">
-              <img class="figure-img" width="48" height="48" src="/images/menu/tractor.png" />
+              <%= image_tag "/images/menu/tractor.png", {width: 48, height: 48, class: "figure-img"} %>
               <figcaption class="figure-caption text-white">賃 借</figcaption>
             </figure>
           </a>
@@ -75,7 +75,7 @@
         <div class="col-3">
           <a href="<%= personal_information_topics_path(personal_information_token: token)%>">
             <figure class="figure text-center">
-              <img class="figure-img" width="48" height="48" src="/images/menu/website_news.png" />
+              <%= image_tag "/images/menu/website_news.png", {width: 48, height: 48, class: "figure-img"} %>
               <figcaption class="figure-caption text-white">TOPIC</figcaption>
             </figure>
           </a>
@@ -83,7 +83,7 @@
         <div class="col-3">
           <a href="<%= personal_information_owned_rices_path(personal_information_token: token)%>">
             <figure class="figure text-center">
-              <img class="figure-img" width="48" height="48" src="/images/menu/kome.png" />
+              <%= image_tag "/images/menu/kome.png", {width: 48, height: 48, class: "figure-img"} %>
               <figcaption class="figure-caption text-white">保有米</figcaption>
             </figure>
           </a>

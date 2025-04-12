@@ -1,8 +1,9 @@
 # == Schema Information
 #
-# Table name: sorimachi_work_types
+# Table name: sorimachi_work_types(ソリマチ作業分類)
 #
 #  id                                 :bigint           not null, primary key
+#  amount(内訳金額)                   :decimal(7, )     default(0), not null
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
 #  sorimachi_journal_id(ソリマチ仕訳) :integer          default(0), not null

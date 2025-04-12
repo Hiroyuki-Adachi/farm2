@@ -78,6 +78,6 @@ class MachinePricesController < ApplicationController
   end
 
   def machine_price_header_params
-    params.require(:machine_price_header).permit(:validated_at, :machine_id, :machine_type_id)
+    params.expect(machine_price_header: [:validated_at, :machine_id, :machine_type_id])
   end
 end

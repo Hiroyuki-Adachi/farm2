@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_results
+# Table name: work_results(作業結果データ)
 #
 #  id(作業結果データ)         :integer          not null, primary key
 #  display_order(表示順)      :integer          default(0), not null
@@ -13763,6 +13763,18 @@ work_result_genka1:
   hours: 6
   display_order: 1
 
+work_result_not_worker_genka1:
+  work: work_genka_worker
+  worker_id: 1
+  hours: 3
+  display_order: 1
+
+work_result_not_worker_genka2:
+  work: work_genka_worker
+  worker: worker_not_worker
+  hours: 4
+  display_order: 2
+
 work_results_add:
   work_id: '1478'
   worker_id: 1
@@ -13784,4 +13796,22 @@ work_chemical_test_cleaning:
   work: work_chemical_test
   worker_id: 1
   hours: 6
+  display_order: 1
+
+work_result_stat_2019_1_1:
+  work: work_stat_2019_1
+  worker_id: 1
+  hours: 6
+  display_order: 1
+
+work_result_stat_2019_1_2:
+  work: work_stat_2019_1
+  worker_id: 2
+  hours: 7
+  display_order: 1
+
+work_result_stat_2019_2:
+  work: work_stat_2019_2
+  worker_id: 1
+  hours: 8
   display_order: 1

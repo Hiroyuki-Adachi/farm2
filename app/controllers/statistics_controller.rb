@@ -18,6 +18,11 @@ class StatisticsController < ApplicationController
     @age_groups = t("statistics.age")
   end
 
+  def tab4
+    @current_results = Work.total_by_month(nil, current_term)
+    @previous_results = Work.total_by_month(nil, previous_term)
+  end
+
   private
 
   def set_total

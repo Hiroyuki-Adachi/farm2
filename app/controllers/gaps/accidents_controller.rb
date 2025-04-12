@@ -60,20 +60,20 @@ class Gaps::AccidentsController < GapsController
   end
 
   def accident_params
-    params.require(:accident)
-          .permit(
-            :investigator_id,
-            :investigated_on,
-            :informant_name,
-            :accident_type_id,
-            :work_id,
-            :audience_id,
-            :location,
-            :location_name,
-            :content,
-            :problem,
-            :solving,
-            :result
-          )
+    params.expect(accident:
+      [
+        :investigator_id,
+        :investigated_on,
+        :informant_name,
+        :accident_type_id,
+        :work_id,
+        :audience_id,
+        :location,
+        :location_name,
+        :content,
+        :problem,
+        :solving,
+        :result
+      ])
   end
 end

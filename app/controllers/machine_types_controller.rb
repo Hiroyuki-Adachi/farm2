@@ -49,7 +49,7 @@ class MachineTypesController < ApplicationController
   end
 
   def machine_type_params
-    return params.require(:machine_type).permit(:name, :display_order, :code)
+    params.expect(machine_type: [:name, :display_order, :code])
   end
 
   def update_work_kinds

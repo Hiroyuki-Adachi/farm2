@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: works
+# Table name: works(作業データ)
 #
 #  id(作業データ)                          :integer          not null, primary key
 #  chemical_group_flag(薬剤グループフラグ) :boolean          default(FALSE), not null
@@ -35,7 +35,7 @@ class Work < ApplicationRecord
 
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
-  belongs_to :fix, class_name: "Fix", query_constraints: [:term, :fixed_at]
+  belongs_to :fix, class_name: "Fix", foreign_key: [:term, :fixed_at]
   belongs_to :creator, -> {with_deleted}, class_name: "Worker", foreign_key: "created_by"
   belongs_to :printer, -> {with_deleted}, class_name: "Worker", foreign_key: "printed_by"
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
@@ -203,7 +203,7 @@ SQL
   end
 
   def sum_workers_amount
-    work_results.inject(0) { |a, e| a + e.amount} || 0
+    work_results.inject(0) { |amount, result| amount + result.worker_amount} || 0
   end
 
   def sum_machines_amount
@@ -214,10 +214,10 @@ SQL
     machine_results.to_a.uniq(&:machine_id).inject(0) { |a, e| a + e.fuel_usage} || 0
   end
 
-  def self.for_verifications(term, worker)
+  def self.for_verifications(user)
     Work.includes(:work_results, :creator)
       .includes(:machine_results, :work_lands, :work_type, :work_chemicals, :checkers)
-      .no_fixed(term).by_creator(worker).enough_check(worker).not_printed
+      .no_fixed(user.term).by_creator(user.worker).enough_check(user.worker).not_printed
   end
 
   def self.get_terms(term)
@@ -351,9 +351,11 @@ SQL
   end
 
   def self.total_by_month(worker, term)
-    results = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    Work.joins(:work_results).where(["work_results.worker_id = ? AND works.term = ?", worker.id, term])
-      .group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
+    results = Array.new(12, 0)
+
+    query = Work.joins(:work_results).where(term: term)
+    query = query.where("work_results.worker_id = ?", worker.id) if worker
+    query.group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
       results[k.to_i - 1] = v
     end
     return results

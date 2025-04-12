@@ -47,7 +47,8 @@
         <%= link_to '機械利用料', machine_results_path, {class: "dropdown-item", data: {controller: "machine_results"}} %>
         <%= link_to '薬剤使用量一覧', work_chemicals_path, {class: "dropdown-item", data: {controller: "work_chemicals", wait: true}} %>
         <%= link_to '苗使用量一覧', work_seedlings_path, {class: "dropdown-item", data: {controller: "work_seedlings"}} %>
-        <%= link_to '作業日数一覧', statistics_work_days_path, {class: "dropdown-item", data: {controller: "work_days"}} %>
+        <%= link_to '世帯別作業一覧', statistics_work_days_path, {class: "dropdown-item", data: {controller: "work_days"}} %>
+        <%= link_to '作業者別作業一覧', statistics_workers_path, {class: "dropdown-item", data: {controller: "statistics_workers"}} %>
         <!-- <%= link_to 'Z-GIS出力', new_zgi_path, {class: "dropdown-item", data: {controller: "zgis"}} %> -->
         <%= link_to 'カレンダー', calendars_path, {class: "dropdown-item", data: {controller: "calendars"}} %>
       <% end %>
@@ -137,11 +138,13 @@
         <%= link_to '利用者マスタ保守', users_path, {class: "dropdown-item", data: {controller: :users, actions: [:new, :index]}} %>
         <%= link_to '管理情報変更', edit_organization_path(current_organization), {class: "dropdown-item", data: {controller: :organizations}} %>
         <%= link_to 'システム変更', edit_system_path(current_system), {class: "dropdown-item", data: {controller: :systems}} %>
+        <%= link_to "GOOGLEサインイン", "#{Rails.application.config.relative_url_root}/auth/google_oauth2", {class: "dropdown-item"} %>
       <% end %>
       <%= link_to '対象年度変更', edit_term_menu_path(current_system), {class: "dropdown-item", data: {controller: :menu, actions: [:edit_term]}} %>
       <%= link_to 'QRコード', users_qr_index_path, {class: "dropdown-item", data: {controller: :qr}} %>
       <%= link_to '検索ワード設定', new_users_word_path, {class: "dropdown-item", data: {controller: :words}} %>
+      <%= link_to 'メールアドレス設定', new_users_mail_path, {class: "dropdown-item", data: {controller: :mails}} %>
       <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item", data: {controller: :users, actions: [:edit]}} %>
-    </div>
+   </div>
   </div>
 </nav>

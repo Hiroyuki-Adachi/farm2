@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: works
+# Table name: works(作業データ)
 #
 #  id(作業データ)                          :integer          not null, primary key
 #  chemical_group_flag(薬剤グループフラグ) :boolean          default(FALSE), not null
@@ -83,5 +83,98 @@ class WorkTest < ActiveSupport::TestCase
     assert_equal wts.count, 2
     assert wts.ids.include?(land_costs(:land_cost_genka1).work_type_id)
     assert wts.ids.include?(land_costs(:land_cost_genka21).work_type_id)
+  end
+
+  test "作業者登録" do
+    old_result = WorkResult.find_by(work_id: @work.id, worker_id: workers(:worker1).id)
+    params = ActionController::Parameters.new(
+      {
+        results: 
+          [
+            {worker_id: workers(:worker1).id, hours: 1.5, display_order: 1},
+            {worker_id: workers(:worker4).id, hours: 4.5, display_order: 2}
+          ]
+      }
+    )
+    @work.regist_results(params[:results], workers(:worker3))
+    assert_equal params[:results].size, @work.work_results.count
+
+    # 更新データの確認
+    updated_result = WorkResult.find_by(work_id: @work.id, worker_id: workers(:worker1).id)
+    assert_not_equal old_result.updated_at, updated_result.updated_at
+    assert_equal 1.5, updated_result.hours
+    assert_equal 1, updated_result.display_order
+
+    # 作成データの確認
+    created_result = WorkResult.find_by(work_id: @work.id, worker_id: workers(:worker4).id)
+    assert_not_nil created_result
+    assert_equal 4.5, created_result.hours
+    assert_equal 2, created_result.display_order
+
+    # 削除データの確認
+    deleted_result = WorkResult.find_by(work_id: @work.id, worker_id: workers(:worker2).id)
+    assert_nil deleted_result
+
+    # 印刷情報のクリア確認
+    assert_nil @work.printed_at
+    assert_nil @work.printed_by
+  end
+
+  test "農地登録" do
+    old_work_land = WorkLand.find_by(work_id: @work.id, land_id: lands(:lands0).id)
+    params = ActionController::Parameters.new(
+      {
+        work_lands: 
+          [
+            {land_id: lands(:lands0).id, display_order: 1},
+            {land_id: lands(:lands3).id, display_order: 2}
+          ]
+      }
+    )
+
+    @work.regist_lands(params[:work_lands])
+    assert_equal params[:work_lands].size, @work.work_lands.count
+
+    # 更新データの確認
+    updated_land = WorkLand.find_by(work_id: @work.id, land_id: lands(:lands0).id)
+    assert_equal old_work_land.updated_at, updated_land.updated_at
+
+    # 作成データの確認
+    created_land = WorkLand.find_by(work_id: @work.id, land_id: lands(:lands3).id)
+    assert_not_nil created_land
+    assert_equal 2, created_land.display_order
+
+    # 削除データの確認
+    deleted_land = WorkLand.find_by(work_id: @work.id, land_id: lands(:lands1).id)
+    assert_nil deleted_land
+  end
+
+  test "機械登録" do
+    params = ActionController::Parameters.new(
+      {
+        machine_hours: 
+          {
+            machines(:machine_hour_t).id.to_s => {work_results(:work_result_for_price1).id.to_s => 2.5},
+            machines(:machine_area_t).id.to_s => {work_results(:work_result_for_price2).id.to_s => 3.0},
+            machines(:machine_day_t).id.to_s => {work_results(:work_result_for_price2).id.to_s => 0}
+          }
+      }
+    )
+
+    @work.regist_machines(params[:machine_hours])
+    assert_equal 2, @work.machine_results.count
+
+    # 更新データの確認
+    updated_machine = MachineResult.find_by(work_result_id: work_results(:work_result_for_price1).id, machine_id: machines(:machine_hour_t).id)
+    assert_equal 2.5, updated_machine.hours
+
+    # 作成データの確認
+    created_machine = MachineResult.find_by(work_result_id: work_results(:work_result_for_price2).id, machine_id: machines(:machine_area_t).id)
+    assert_not_nil created_machine
+    assert_equal 3.0, created_machine.hours
+
+    # 削除データの確認
+    deleted_machine = MachineResult.find_by(work_result_id: work_results(:work_result_for_price2).id, machine_id: machines(:machine_day_t).id)
+    assert_nil deleted_machine
   end
 end

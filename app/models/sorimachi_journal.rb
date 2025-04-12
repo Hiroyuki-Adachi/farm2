@@ -2,7 +2,7 @@ require 'csv'
 
 # == Schema Information
 #
-# Table name: sorimachi_journals
+# Table name: sorimachi_journals(ソリマチ仕訳)
 #
 #  id                           :bigint           not null, primary key
 #  accounted_on(仕訳日)         :date
@@ -16,14 +16,14 @@ require 'csv'
 #  code05(コード0-5)            :integer          not null
 #  code06(コード0-6)            :integer          not null
 #  code07(コード0-7)            :integer          not null
-#  code11(コード1-1)            :bigint           not null
-#  code12(コード1-2)            :bigint           not null
-#  code13(コード1-3)            :bigint           not null
-#  code14(コード1-4)            :bigint           not null
-#  code15(コード1-5)            :bigint           not null
-#  code16(コード1-6)            :bigint           not null
-#  code17(コード1-7)            :bigint           not null
-#  code18(コード1-8)            :bigint           not null
+#  code11(コード1-1)            :integer          not null
+#  code12(コード1-2)            :integer          not null
+#  code13(コード1-3)            :integer          not null
+#  code14(コード1-4)            :integer          not null
+#  code15(コード1-5)            :integer          not null
+#  code16(コード1-6)            :integer          not null
+#  code17(コード1-7)            :integer          not null
+#  code18(コード1-8)            :integer          not null
 #  code21(コード2-1)            :integer          not null
 #  code31(コード3-1)            :string(1)        not null
 #  cost0_flag(原価フラグ(借方)) :boolean          default(FALSE), not null
@@ -34,6 +34,8 @@ require 'csv'
 #  remark2(備考2)               :string(50)       not null
 #  remark3(備考3)               :string(50)       not null
 #  remark4(備考4)               :string(50)       not null
+#  tax01(消費税0-1)             :integer
+#  tax11(消費税1-1)             :integer
 #  term(年度(期))               :integer          not null
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
@@ -50,12 +52,12 @@ class SorimachiJournal < ApplicationRecord
 
   has_many :sorimachi_work_types, dependent: :destroy
   has_many :work_types, through: :sorimachi_work_types
-  has_many :details, query_constraints: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line]
+  has_many :details, foreign_key: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line]
 
   validate :term_check
 
-  belongs_to :account1, query_constraints: [:term, :code01], class_name: 'SorimachiAccount'
-  belongs_to :account2, query_constraints: [:term, :code12], class_name: 'SorimachiAccount'
+  belongs_to :account1, foreign_key: [:term, :code01], class_name: 'SorimachiAccount'
+  belongs_to :account2, foreign_key: [:term, :code12], class_name: 'SorimachiAccount'
 
   def self.import(term, file)
     CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: %r{^//}) do |row|
@@ -200,8 +202,6 @@ class SorimachiJournal < ApplicationRecord
      'code11', 'code12', 'code13', 'code14', 'code15', 'tax11', 'code16', 'code17', 'code18', 'amount2', 
      'code21', 'remark1', 'remark2', 'remark3', 'code31', 'amount3', 'remark4']
   end
-
-  private_class_method :updatable_attributes
 
   private
 

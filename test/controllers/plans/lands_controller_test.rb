@@ -1,32 +1,37 @@
 require 'test_helper'
 
-class Plans::LandsControllerTest < ActionController::TestCase
+class Plans::LandsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
-    session[:user_id] = users(:user_manager).id
+    @user = users(:user_manager)
+    login_as(@user)
     @mode = Plans::LandsController::TERM_MODES[:next]
     travel_to(Date.new(2015, 1, 1))
   end
 
+  teardown do
+    travel_back
+  end
+
   test "作付計画(表示)" do
-    get :new, params: {mode: @mode}
+    get new_plans_land_path(mode: @mode)
     assert_response :success
   end
 
   test "作付計画(モード不正)" do
-    get :new, params: {mode: 2}
+    get new_plans_land_path(mode: 999)
     assert_response :error
   end
 
   test "作付計画(表示)(日付不正)" do
-    travel_to(Date.new(2016, 1, 1))
-    get :new, params: {mode: @mode}
-    assert_response :error
+    travel_to(Date.new(2016, 1, 1)) do
+      get new_plans_land_path(mode: @mode)
+      assert_response :error
+    end
   end
 
   test "作付計画(表示)(管理者以外)" do
-    session[:user_id] = users(:user_checker).id
-    get :new, params: {mode: @mode}
+    login_as(users(:user_checker))
+    get new_plans_land_path(mode: @mode)
     assert_response :error
   end
 
@@ -35,13 +40,19 @@ class Plans::LandsControllerTest < ActionController::TestCase
     work_type = work_types(:work_types2)
     PlanLand.delete_all
     assert_difference('PlanLand.count') do
-      post :create, params: {land: {land.id => work_type.id}, mode: @mode}
+      post plans_lands_path(mode: @mode), params: {land: {land.id => work_type.id}}
     end
     assert_redirected_to new_plans_land_path(mode: @mode)
+
+    term = @user.organization.get_term(Time.zone.today.next_year)
+
+    created_plan_land = PlanLand.find_by(term: term, land_id: land.id, user_id: @user.id)
+    assert_not_nil created_plan_land
+    assert_equal work_type.id, created_plan_land.work_type_id
   end
 
   test "作付計画(初期化)" do
-    post :destroy, params: {id: 0, mode: @mode}
+    delete plans_land_path(mode: @mode, id: 0)
     assert_redirected_to new_plans_land_path(mode: @mode)
   end
 end

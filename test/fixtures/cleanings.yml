@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: cleanings
+# Table name: cleanings(清掃)
 #
 #  id               :bigint           not null, primary key
 #  method(清掃方法) :string(20)       default(""), not null

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: chemical_inventories
+# Table name: chemical_inventories(農薬棚卸)
 #
 #  id                                    :bigint           not null, primary key
 #  checked_on(確認日)                    :date             not null

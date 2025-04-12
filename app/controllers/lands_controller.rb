@@ -62,22 +62,22 @@ class LandsController < ApplicationController
   end
 
   def land_params
-    params.require(:land)
-          .permit(
-            :place,
-            :owner_id,
-            :manager_id,
-            :area,
-            :target_flag,
-            :display_order,
-            :land_place_id,
-            :reg_area,
-            :broccoli_mark,
-            :region,
-            :start_on,
-            :end_on,
-            :peasant_start_term,
-            :peasant_end_term
-          )
+    params.expect(land:
+      [
+        :place,
+        :owner_id,
+        :manager_id,
+        :area,
+        :target_flag,
+        :display_order,
+        :land_place_id,
+        :reg_area,
+        :broccoli_mark,
+        :region,
+        :start_on,
+        :end_on,
+        :peasant_start_term,
+        :peasant_end_term
+      ])
   end
 end

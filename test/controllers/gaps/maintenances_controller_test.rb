@@ -1,12 +1,12 @@
 require "test_helper"
 
-class Gaps::MaintenancesControllerTest < ActionController::TestCase
+class Gaps::MaintenancesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    setup_ip
+    login_as(users(:users1))
   end
 
   test "GAP整備記録表(一覧)" do
-    get :index
+    get gaps_maintenances_path
     assert_response :success
   end
 end

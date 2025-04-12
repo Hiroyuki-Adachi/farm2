@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: expense_types
+# Table name: expense_types(経費種別)
 #
 #  id                        :bigint           not null, primary key
 #  chemical_flag(薬剤フラグ) :boolean          default(FALSE), not null

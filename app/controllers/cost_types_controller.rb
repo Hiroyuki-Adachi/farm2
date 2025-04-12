@@ -46,8 +46,6 @@ class CostTypesController < ApplicationController
   end
 
   def cost_type_params
-    params
-      .require(:cost_type)
-      .permit(:name, :phonetic, :display_order, work_kind_ids: [])
+    params.expect(cost_type: [:name, :phonetic, :display_order, {work_kind_ids: []}])
   end
 end

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: whole_crop_lands
+# Table name: whole_crop_lands(WCS土地)
 #
 #  id                          :bigint           not null, primary key
 #  display_order(番号)         :integer          default(0), not null

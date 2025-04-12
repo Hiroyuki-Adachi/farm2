@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: fixes
+# Table name: fixes(確定データ)
 #
 #  fixed_at(確定日)                :date             not null, primary key
 #  fixed_by(確定者)                :integer
@@ -29,6 +29,12 @@ class FixTest < ActiveSupport::TestCase
     end
     assert_equal @fixed_at, Work.find(works(:work_no_fix1).id).fixed_at
     assert_equal @fixed_at, Work.find(works(:work_no_fix2).id).fixed_at
-    assert_equal @worker_id, Fix.where(fixed_at: @fixed_at, term: @term).first.fixed_by
+
+    # 確定データの確認
+    created_fix = Fix.find_by(fixed_at: @fixed_at)
+    assert_not_nil created_fix
+    assert_equal @worker_id, created_fix.fixed_by
+    assert_equal @term, created_fix.term
+    assert_equal @no_fix_works.size, created_fix.works_count
   end
 end

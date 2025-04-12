@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: cleaning_targets
+# Table name: cleaning_targets(清掃種別マスタ)
 #
 #  id                    :bigint           not null, primary key
 #  display_order(表示順) :integer          default(0), not null

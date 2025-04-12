@@ -47,8 +47,8 @@ class MachinesController < ApplicationController
   end
 
   def machine_params
-    params.require(:machine)
-          .permit(:name, :display_order, :validity_start_at, :validity_end_at,
-                  :machine_type_id, :home_id, :number, :diesel_flag)
+    params.expect(machine:
+          [:name, :display_order, :validity_start_at, :validity_end_at,
+           :machine_type_id, :home_id, :number, :diesel_flag])
   end
 end

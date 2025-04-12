@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_results
+# Table name: work_results(作業結果データ)
 #
 #  id(作業結果データ)         :integer          not null, primary key
 #  display_order(表示順)      :integer          default(0), not null
@@ -87,6 +87,10 @@ class WorkResult < ApplicationRecord
 
   def amount
     (work.fixed_at ? fixed_amount : hours * price) || 0
+  end
+
+  def worker_amount
+    self&.worker&.home&.member_flag ? amount : 0
   end
 
   def set_uuid

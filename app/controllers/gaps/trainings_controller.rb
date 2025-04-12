@@ -35,17 +35,17 @@ class Gaps::TrainingsController < GapsController
   end
 
   def traning_params
-    params.require(:training)
-          .permit(
-            :schedule_id,
-            :worker_id,
-            :content,
-            :document,
-            :training_place,
-            :studying_place,
-            :remarks,
-            training_type_ids: []
-          )
-          .merge(work_id: params[:id])
+    params.expect(training:
+      [
+        :schedule_id,
+        :worker_id,
+        :content,
+        :document,
+        :training_place,
+        :studying_place,
+        :remarks,
+        {training_type_ids: []}
+      ])
+    .merge(work_id: params[:id])
   end
 end

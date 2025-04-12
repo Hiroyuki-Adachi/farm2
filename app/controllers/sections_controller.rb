@@ -41,6 +41,6 @@ class SectionsController < ApplicationController
   end
 
   def section_params
-    return params.require(:section).permit(:name, :display_order, :work_flag)
+    params.expect(section: [:name, :display_order, :work_flag])
   end
 end

@@ -19,6 +19,6 @@ class Works::ChemicalsController < WorksController
   private
 
   def work_params
-    params.require(:work).permit(:chemical_group_flag) 
+    params.expect(work: [:chemical_group_flag])
   end
 end

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: work_type_terms
+# Table name: work_type_terms(作業分類年度別マスタ)
 #
 #  id                     :bigint           not null, primary key
 #  bg_color(背景色)       :string(8)

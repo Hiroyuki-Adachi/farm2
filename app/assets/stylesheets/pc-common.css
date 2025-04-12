@@ -1,11 +1,14 @@
 input[type=number] {
   text-align: right;
 }
+
 input[type=number].narrow {
   width: 100px;
 }
-  
-td.numeric, th.numeric, div.d-table-cell.numeric {
+
+td.numeric,
+th.numeric,
+div.d-table-cell.numeric {
   text-align: right;
 }
 
@@ -13,6 +16,7 @@ td.numeric, th.numeric, div.d-table-cell.numeric {
   display: inline-block;
   width: auto;
 }
+
 .d-table-row.row-hover:hover {
   background-color: gainsboro;
 }
@@ -24,7 +28,8 @@ td.numeric, th.numeric, div.d-table-cell.numeric {
   }
 }
 
-.form-check-input, .form-check-label {
+.form-check-input,
+.form-check-label {
   cursor: pointer;
 }
 
@@ -38,32 +43,44 @@ input[type=date].form-control {
   width: 200px;
 }
 
-div.form-check-inline input[type='checkbox']:checked + label {
+div.form-check-inline input[type='checkbox']:checked+label {
   color: red;
   font-weight: bold;
 }
 
-div.form-check-inline input[type='radio']:checked + label {
+div.form-check-inline input[type='radio']:checked+label {
   font-weight: bold;
 }
 
-table.float-head, div.d-table.float-head {
-	position: relative;
+table.float-head,
+div.d-table.float-head {
+  position: relative;
 }
-table.float-head th, div.d-table.float-head div.d-table-row.fix-head {
-	position: sticky;
+
+table.float-head th,
+div.d-table.float-head div.d-table-row.fix-head {
+  position: sticky;
   background-color: white;
   z-index: 1;
-	top: 0;
+  top: 0;
 }
+
 div.float-head-wrapper {
   overflow-y: scroll;
   height: calc(100vh - 400px);
 }
-.tr-total1, .tr-total2 {
+
+.tr-total1,
+.tr-total2 {
   cursor: pointer;
 }
+
 #loading {
   background: rgba(0, 0, 0, .5);
   z-index: 10000;
+}
+
+table.tbl-clear-color tbody tr td {
+  background-color: unset;
+  color: unset;
 }
