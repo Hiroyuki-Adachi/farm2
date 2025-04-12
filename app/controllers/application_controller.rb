@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
   end
 
   def to_error_path
-    render plain: 'Service Unavailable', status: :service_unavailable
+    render file: Rails.public_path.join('503.html'), layout: false, status: :service_unavailable
   end
 
   def user_present?
