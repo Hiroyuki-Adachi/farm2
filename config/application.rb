@@ -30,6 +30,7 @@ module Farm2
     config.action_controller.include_all_helpers = false
 
     config.update_logger = Logger.new('log/update_worker.log')
+    config.update_logger.level = Logger::INFO
     config.update_logger.formatter = proc do |_severity, datetime, _progname, msg|
       action, name, from_hour, to_hour = msg.strip.split(':', 4)
       {
@@ -42,6 +43,7 @@ module Farm2
     end
 
     config.access_logger = Logger.new('log/access_info.log')
+    config.access_logger.level = Logger::INFO
     config.access_logger.formatter = proc do |_severity, datetime, _progname, msg|
       device, name = msg.strip.split('-', 2)
       {
