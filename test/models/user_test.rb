@@ -66,6 +66,6 @@ class UserTest < ActiveSupport::TestCase
 
     assert_not result
     assert_nil user.mail_confirmed_at
-    assert_equal user.current_mail_status, :pending
+    assert_equal :pending, user.current_mail_status
   end
 end
