@@ -94,8 +94,8 @@ class ApplicationController < ActionController::Base
       message: e.message,
       stack_trace: e.backtrace.take(5),
       path: request.fullpath,
-      time: Time.current
-      severity: :ERROR,
+      time: Time.current,
+      severity: :ERROR
     }.to_json)
 
     render file: Rails.public_path.join('500.html'), layout: false, status: 500
