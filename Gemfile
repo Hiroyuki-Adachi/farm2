@@ -54,6 +54,8 @@ gem 'paranoia'
 gem 'kaminari'
 # Draper adds an object-oriented layer of presentation logic to your Rails application.
 gem 'draper'
+# A simple and efficient way to handle file uploads in your Rails application.
+gem 'lograge'
 
 # Encoding QR Codes in Ruby.
 gem 'rqrcode'

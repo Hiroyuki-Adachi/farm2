@@ -97,6 +97,13 @@ class User < ApplicationRecord
     User.where.not(mail_confirmed_at: nil).find_by(mail: mail)
   end
 
+  def current_mail_status
+    return :not_entered if mail.blank?
+    return :confirmed if mail_confirmed_at.present?
+    return :expired if mail_confirmation_expired_at.present? && mail_confirmation_expired_at < Time.current
+    :pending
+  end
+
   private
 
   def set_token
