@@ -9,7 +9,7 @@ set +a
 DATE=$(date +%Y%m%d)
 BACKUP_FILE="/tmp/farm2-${DATE}.sql.gz"
 #
-PGPASSWORD="$POSTGRES_PASSWORD" pg_dump -h localhost -U $POSTGRES_USER -d $POSTGRES_DB | gzip > $BACKUP_FILE
+PGPASSWORD="$POSTGRES_PASSWORD" pg_dump -h localhost -U $POSTGRES_USER -d $POSTGRES_DB --no-owner | gzip > $BACKUP_FILE
 
 # Google Drive にアップロード（rclone: backup:）
 rclone copy "$BACKUP_FILE" backup:backup/

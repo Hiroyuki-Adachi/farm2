@@ -77,7 +77,8 @@ class LandsController < ApplicationController
         :start_on,
         :end_on,
         :peasant_start_term,
-        :peasant_end_term
+        :peasant_end_term,
+        :parcel_number
       ])
   end
 end
