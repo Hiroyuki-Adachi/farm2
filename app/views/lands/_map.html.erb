@@ -3,7 +3,7 @@
   <input type="button" value="クリア" id="clear_region"  class="btn btn-danger mt-5" />
 </div>
 <%= f.hidden_field :region, {id: :land_region} %>
-<% @other_lands.each do |land| %>
+<% (@other_lands || []).each do |land| %>
 <%= hidden_field_tag "other_lands", land.region, {id: nil} %>
 <% end %>
 <%= hidden_field_tag "location", "[#{land_location(@land)}]" %>

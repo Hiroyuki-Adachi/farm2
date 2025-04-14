@@ -22,6 +22,7 @@
       <thead>
         <tr>
           <th>地番</th>
+          <th>耕地番号</th>
           <th>面積</th>
           <th>所有者</th>
           <th>作付</th>
@@ -34,6 +35,7 @@
         <% @lands.each do |land| %>
           <tr>
             <td><%= land.place %></td>
+            <td class="numeric"><%= land.parcel_number %></td>
             <td class="numeric"><%= land.area %></td>
             <td><%= land._owner_name %></td>
             <td><%= land.work_type_name %></td>
