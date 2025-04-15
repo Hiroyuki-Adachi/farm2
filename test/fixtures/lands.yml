@@ -10,6 +10,7 @@
 #  end_on(有効期間(至))               :date             default(Tue, 31 Dec 2999), not null
 #  group_flag(グループフラグ)         :boolean          default(FALSE), not null
 #  group_order(グループ内並び順)      :integer          default(0), not null
+#  parcel_number(耕地番号)            :integer
 #  peasant_end_term(小作料期間(至))   :integer          default(9999), not null
 #  peasant_start_term(小作料期間(自)) :integer          default(0), not null
 #  place(番地)                        :string(15)       not null

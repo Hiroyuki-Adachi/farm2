@@ -63,7 +63,11 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
+  </div>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :parcel_number, class: "col-form-label-lg form-label" %>
+    <%= f.number_field :parcel_number, {min: 0, max: 9999, step: 1, class: "form-control"} %>
   </div>
   <div class="field mb-3 col-md-2">
     <%= f.label :peasant_start_term, class: "col-form-label-lg form-label" %>
