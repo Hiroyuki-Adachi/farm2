@@ -208,6 +208,7 @@ end
 resources :work_results, only: [:index]
 resources :machine_results, only: [:index]
 resources :work_chemicals, only: [:index]
+resources :health, only: [:index]
 
 get 'auth/:provider/callback', to: 'auth#create'
 get 'auth/failure', to: 'auth#failure'
