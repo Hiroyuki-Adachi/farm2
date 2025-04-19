@@ -22,9 +22,10 @@ env :PATH, ENV['PATH']
 env :RAILS_ENV, 'production'
 
 # rbenv 初期化用（bash）
-env :RBENV_ROOT, "$HOME/.rbenv"
+rbenv_root = "#{ENV['HOME']}/.rbenv"
+env :RBENV_ROOT, rbenv_root
+set :env_path, "#{rbenv_root}/shims:#{rbenv_root}/bin"
 
-set :env_path, '"$HOME/.rbenv/shims":"$HOME/.rbenv/bin"'
 set :output, "/opt/app/farm2/log/cron.log"
 
 job_type :rake,   %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bin/rake :task --silent :output }
