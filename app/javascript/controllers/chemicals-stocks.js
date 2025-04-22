@@ -1,4 +1,4 @@
-import { Modal } from "bootstrap";
+import "bootstrap";
 
 window.addEventListener('turbo:load', () => {
     loadChemical(document.getElementById("term").value, document.getElementById("chemical_type").value);
@@ -62,7 +62,7 @@ function addEventForEdit()
 
 function popupModal(modalForm)
 {
-    const popup = new Modal(modalForm);
+    const popup = new bootstrap.Modal(modalForm);
     popup.show();
 
     document.getElementById("update_button").addEventListener("click", (event) => {

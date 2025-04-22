@@ -1,4 +1,4 @@
-import { Modal } from "bootstrap";
+import "bootstrap";
 let landRegion;
 
 function initMap(){
@@ -81,7 +81,7 @@ document.addEventListener('turbo:load', () => {
   let popForm = null;
   document.querySelectorAll(".edit-homes").forEach((element) => {
     element.addEventListener("click", (event) => {
-      popForm = new Modal(document.getElementById("popup_edit"));
+      popForm = new bootstrap.Modal(document.getElementById("popup_edit"));
       document.getElementById("destroy_path").value = event.target.dataset.updatePath;
       document.getElementById("index_path").value = event.target.dataset.path;
       popupModal(event.target.dataset.path, () => {
