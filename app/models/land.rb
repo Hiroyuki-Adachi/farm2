@@ -10,6 +10,7 @@
 #  end_on(有効期間(至))               :date             default(Tue, 31 Dec 2999), not null
 #  group_flag(グループフラグ)         :boolean          default(FALSE), not null
 #  group_order(グループ内並び順)      :integer          default(0), not null
+#  parcel_number(耕地番号)            :integer
 #  peasant_end_term(小作料期間(至))   :integer          default(9999), not null
 #  peasant_start_term(小作料期間(自)) :integer          default(0), not null
 #  place(番地)                        :string(15)       not null
@@ -65,6 +66,7 @@ class Land < ApplicationRecord
 
   validates :area, numericality: true, if: proc { |x| x.area.present?}
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
+  validates :parcel_number, uniqueness: true, allow_nil: true
 
   accepts_nested_attributes_for :land_costs, allow_destroy: true, reject_if: :reject_land_costs
   accepts_nested_attributes_for :land_homes, allow_destroy: true
@@ -174,7 +176,7 @@ class Land < ApplicationRecord
 
   def self.totals(work_kinds, sys)
     sql = []
-    sql << "SELECT L.place, MAX(L.area) AS area, MAX(HO.name) AS _owner_name, COALESCE(MAX(WT.name), '') AS work_type_name"
+    sql << "SELECT L.place, L.parcel_number, MAX(L.area) AS area, MAX(HO.name) AS _owner_name, COALESCE(MAX(WT.name), '') AS work_type_name"
     work_kinds.each_with_index do |_work_kind, index|
       sql << ", MIN(W#{index}.worked_at) AS w#{index}_date"
     end
@@ -199,7 +201,7 @@ class Land < ApplicationRecord
       sql << "LEFT OUTER JOIN works W#{index} ON WL.work_id = W#{index}.id AND W#{index}.work_kind_id = #{work_kind} AND W#{index}.term = #{sys.term}"
     end
     sql << "WHERE L.start_on <= '#{sys.end_date}' AND L.end_on >= '#{sys.start_date}'"
-    sql << "GROUP BY L.place "
+    sql << "GROUP BY L.place, L.id "
     sql << "HAVING"
     having = []
     work_kinds.each_with_index do |_work_kind, index|
@@ -207,7 +209,7 @@ class Land < ApplicationRecord
     end
     sql << having.join(" OR ")
     sql << "ORDER BY"
-    sql << "MAX(HO.display_order), L.place"
+    sql << "L.parcel_number, MAX(HO.display_order), L.place, L.id"
 
     return Land.find_by_sql(sql.join("\n"))
   end

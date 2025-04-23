@@ -41,6 +41,7 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil user.mail_confirmation_expired_at
     assert_operator user.mail_confirmation_expired_at, :>, Time.current
     assert_nil user.mail_confirmed_at
+    assert_equal :pending, user.current_mail_status
   end
 
   test "メールアドレス承認(OK)" do
@@ -53,6 +54,7 @@ class UserTest < ActiveSupport::TestCase
     assert result
     assert_not_nil user.mail_confirmed_at
     assert_equal user.worker.pc_mail, user.mail
+    assert_equal :confirmed, user.current_mail_status
   end
 
   test "メールアドレス承認(NG)" do
@@ -64,5 +66,6 @@ class UserTest < ActiveSupport::TestCase
 
     assert_not result
     assert_nil user.mail_confirmed_at
+    assert_equal :pending, user.current_mail_status
   end
 end
