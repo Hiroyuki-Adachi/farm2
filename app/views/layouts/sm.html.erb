@@ -71,10 +71,10 @@
           </a>
         </div>
         <div class="col-3">
-          <a href="<%= personal_information_machines_path(personal_information_token: token)%>">
+          <a href="line://oaMessage/<%= ENV.fetch('LINE_CHANNEL_ID') %>/?token=<%= token %>">
             <figure class="figure text-center">
-              <%= image_tag "/images/menu/tractor.png", {width: 48, height: 48, class: "figure-img"} %>
-              <figcaption class="figure-caption text-white">賃 借</figcaption>
+              <%= image_tag "/images/menu/line-me.png", {width: 48, height: 48, class: "figure-img"} %>
+              <figcaption class="figure-caption text-white">LINE</figcaption>
             </figure>
           </a>
         </div>
