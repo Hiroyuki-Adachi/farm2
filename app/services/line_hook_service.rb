@@ -1,0 +1,81 @@
+class LineHookService
+  API_ENDPOINT = 'https://api.line.me/v2/bot/message/'.freeze
+
+  def initialize(message_text, line_id)
+    @message_text = message_text
+    @line_id = line_id
+  end
+
+  def call(reply_token)
+    if token_message?
+      register_line_id(reply_token, extract_user_token)
+    else
+      true
+    end
+  rescue => e
+    Rails.logger.error("LineHookService Error: #{e.message}")
+    false
+  end
+
+  def self.send_reply(reply_token, message)
+    payload = {
+      replyToken: reply_token,
+      messages: [
+        { type: 'text', text: message }
+      ]
+    }
+    send_request(:reply, payload)
+  end
+
+  def self.push_message(line_id, message)
+    payload = {
+      to: line_id,
+      messages: [
+        { type: 'text', text: message }
+      ]
+    }
+    send_request(:push, payload)
+  end
+
+  def self.send_request(command, payload)
+    uri = URI.join(API_ENDPOINT, command.to_s)
+
+    Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+      request = Net::HTTP::Post.new(uri.request_uri, {
+        'Content-Type' => 'application/json',
+        'Authorization' => "Bearer #{ENV['LINE_CHANNEL_ACCESS_TOKEN']}"
+      })
+      request.body = payload.to_json
+
+      http.request(request)
+    end
+  end
+
+  private
+
+  def token_message?
+    @message_text.start_with?('token=')
+  end
+
+  def extract_user_token
+    @message_text.split('=').last
+  end
+
+  def register_line_id(reply_token, user_token)
+    if User.exists?(line_id: @line_id)
+      self.class.send_reply(reply_token, I18n.t('line_hook.already_linked'))
+      return false
+    end
+
+    user = User.find_by(token: user_token)
+    unless user
+      self.class.send_reply(reply_token, I18n.t('line_hook.invalid_token'))
+      return false
+    end
+
+    user.update!(line_id: @line_id)
+    self.class.send_reply(reply_token, I18n.t('line_hook.linked'))
+    Rails.application.config.access_logger.info("LH-#{user.worker.name}")
+    true
+  end
+end
