@@ -128,7 +128,7 @@ user_line:
   calendar_term: 2014
   token: a5b3e8d2-01a0-4843-a3a3-89480526d48c
 
-user_line_line:
+user_line_id_already_exists:
   worker_id: 13
   login_name: 'line_line'
   password_digest: <%= BCrypt::Password.create('password', cost: 5) %>

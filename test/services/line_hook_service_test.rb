@@ -30,7 +30,7 @@ class LineHookServiceTest < ActiveSupport::TestCase
   test 'line_idが既に存在する場合、呼び出しに失敗する' do
     LineHookService.stubs(:send_reply).returns(true)
 
-    already_line_id = users(:user_line_line).line_id
+    already_line_id = users(:user_line_id_already_exists).line_id
     service = LineHookService.new("token=#{@user.token}", already_line_id)
 
     assert_no_difference -> { User.where(line_id: already_line_id).count } do
