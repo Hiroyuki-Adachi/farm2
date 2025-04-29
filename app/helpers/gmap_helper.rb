@@ -12,17 +12,17 @@ module GmapHelper
     return "(#{home.location ? home.location.x : current_organization.location.x},#{home.location ? home.location.y : current_organization.location.y})"
   end
 
-  def land_region_hidden_field(land, color: nil, work_type_id: nil)
+  def land_region_hidden_field(land, color: nil, text_color: nil, work_type_id: nil)
     data = {
       id: land.id,
       place: land.place,
       area: land.area,
-      owner: land.owner.name,
-      manager: land.manager.name
+      owner: land&.owner&.name || '',
+      center: land.region_center,
+      color: color || '',
+      "text-color" => text_color || '',
+      "work-type" => work_type_id || '',
     }
-
-    data[:color] = color if color
-    data["work-type"] = work_type_id if work_type_id
   
     hidden_field_tag :regions, land.region, id: "land_#{land.id}", data: data
   end
