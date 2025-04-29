@@ -54,7 +54,7 @@ class LineHookService
   private
 
   def token_message?
-    @message_text.start_with?('token=')
+    @message_text.strip.start_with?('token=')
   end
 
   def extract_user_token
