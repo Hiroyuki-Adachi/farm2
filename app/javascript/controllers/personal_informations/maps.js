@@ -46,22 +46,24 @@ function initMap(){
         }
       });
     });
+
+  navigator.geolocation.getCurrentPosition((position) => {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+    
+      const myLatLng = { lat: lat, lng: lng };
+  
+      map.setCenter(myLatLng);
+      map.setZoom(18);
+      
+      new google.maps.Marker({
+        position: myLatLng,
+        map,
+        title: "あなたの位置",
+      });
+  });
 }
 
-navigator.geolocation.getCurrentPosition((position) => {
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
-  
-    const myLatLng = { lat: lat, lng: lng };
-
-    map.setCenter(myLatLng);
-
-    new google.maps.Marker({
-      position: myLatLng,
-      map,
-      title: "あなたの位置",
-    });
-});
 
 
 document.addEventListener('DOMContentLoaded', initMap);
