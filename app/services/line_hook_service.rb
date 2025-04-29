@@ -75,7 +75,8 @@ class LineHookService
 
     user.update!(line_id: @line_id)
     self.class.send_reply(reply_token, I18n.t('line_hook.linked'))
-    Rails.application.config.access_logger.info("LH-#{user.worker.name}")
+    worker_name = user.worker ? user.worker.name : 'unknown-worker'
+    Rails.application.config.access_logger.info("LH-#{worker_name}")
     true
   end
 end
