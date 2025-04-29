@@ -405,3 +405,8 @@ ja:
 
   session:
     login_error: "IDまたはpasswordが間違っています。"
+
+  line_hook:
+    already_linked: "あなたのユーザ情報は既に登録済です。"
+    invalid_token: "ユーザ情報が見つかりませんでした。"
+    linked: "ユーザ情報を紐付けました。"

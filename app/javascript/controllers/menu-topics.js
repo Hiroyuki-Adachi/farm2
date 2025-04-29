@@ -1,8 +1,8 @@
-import { Modal } from "bootstrap";
+import "bootstrap";
 
 document.addEventListener('turbo:load', function () {
     document.addEventListener('turbo:before-stream-render', (event) => {
-        const myModal = new Modal(document.getElementById('topic_data_modal'));
+        const myModal = new bootstrap.Modal(document.getElementById('topic_data_modal'));
         myModal.show();
 
         document.getElementById("topic_data_modal").addEventListener("hidden.bs.modal", () => {

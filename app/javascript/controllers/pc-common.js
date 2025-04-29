@@ -1,15 +1,15 @@
 import { Turbo } from "@hotwired/turbo-rails";
-import { Modal } from "bootstrap";
+import "bootstrap";
 
 window.popupAlert = (message) => {
     document.getElementById("popup_alert_message").innerText = message;
-    const popupForm = new Modal(document.getElementById("popup_alert"));
+    const popupForm = new bootstrap.Modal(document.getElementById("popup_alert"));
     popupForm.show();
 };
 
 window.popupConfirm = (message, callback) => {
     document.getElementById("popup_confirm_message").innerText = message;
-    const popupForm = new Modal(document.getElementById("popup_confirm"));
+    const popupForm = new bootstrap.Modal(document.getElementById("popup_confirm"));
     document.getElementById("popup_confirm_yes").onclick = () => {
         popupForm.hide();
         callback(true);
@@ -23,7 +23,7 @@ window.popupConfirm = (message, callback) => {
 
 Turbo.setConfirmMethod((message, element) => {
     document.getElementById("popup_confirm_message").innerText = message;
-    const popupForm = new Modal(document.getElementById("popup_confirm"));
+    const popupForm = new bootstrap.Modal(document.getElementById("popup_confirm"));
     popupForm.show();
 
     return new Promise((resolve, reject) => {

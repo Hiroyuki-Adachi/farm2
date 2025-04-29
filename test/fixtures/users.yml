@@ -17,6 +17,7 @@
 #  view_month(表示切替月)                                   :integer          default([1, 4, 8]), not null, is an Array
 #  created_at                                               :datetime         not null
 #  updated_at                                               :datetime         not null
+#  line_id                                                  :string(50)       default(""), not null
 #  organization_id(組織)                                    :integer          default(0), not null
 #  permission_id(権限)                                      :integer          default(0), not null
 #  worker_id(作業者)                                        :integer
@@ -116,3 +117,24 @@ user2017c:
   term: 2017
   calendar_term: 2014
   token: 8d171996-8d90-4f0e-b8d6-194dad141ad8
+
+user_line:
+  worker_id: 12
+  login_name: 'line'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 0
+  term: 2015
+  calendar_term: 2014
+  token: a5b3e8d2-01a0-4843-a3a3-89480526d48c
+
+user_line_id_already_exists:
+  worker_id: 13
+  login_name: 'line_line'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 0
+  term: 2015
+  calendar_term: 2014
+  token: 932b9a3f-5946-4be8-82ff-f4d0862932c2
+  line_id: '1234567890'

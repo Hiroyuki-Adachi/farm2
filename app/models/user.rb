@@ -17,6 +17,7 @@
 #  view_month(表示切替月)                                   :integer          default([1, 4, 8]), not null, is an Array
 #  created_at                                               :datetime         not null
 #  updated_at                                               :datetime         not null
+#  line_id                                                  :string(50)       default(""), not null
 #  organization_id(組織)                                    :integer          default(0), not null
 #  permission_id(権限)                                      :integer          default(0), not null
 #  worker_id(作業者)                                        :integer
