@@ -16,7 +16,7 @@ function initMap(){
       map: map
     });
   
-    document.getElementsByName("regions").forEach(function(land) {
+    document.querySelectorAll('[name="regions"]').forEach(function(land) {
       let paths = [];
       JSON.parse(land.value.replace(/\(/g, "[").replace(/\)/g, "]")).forEach(function(rg) {
         paths.push({lat: rg[0], lng: rg[1]});
