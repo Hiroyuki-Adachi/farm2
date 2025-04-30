@@ -159,6 +159,7 @@ resources :personal_informations, param: "token", only: [:show] do
   resources :owned_rices, controller: "personal_informations/owned_rices", only: [:index]
   resources :minutes, controller: "personal_informations/minutes", only: [:show]
   resources :topics, controller: "personal_informations/topics", only: [:index, :show]
+  resources :maps, controller: "personal_informations/maps", only: [:index]
   resources :mail_confirmations, controller: "personal_informations/mail_confirmations", param: "mail_token", only: [:edit]
 end
 resources :personal_calendars, param: "token", only: [:show]
