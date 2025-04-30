@@ -19,7 +19,6 @@ class PersonalInformationsTest < ApplicationSystemTestCase
     };
   JS
 
-    sleep 0.5
-    assert_selector "#map"
+    assert_selector "#map", wait: 5
   end
 end
