@@ -7,8 +7,11 @@ window.initMap = function() {
     map = new google.maps.Map(document.getElementById('map'), {
       center: pos,
       zoom: 16,
+      gestureHandling: "greedy",
+      fullscreenControl: false,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
+    document.getElementById("map").style.setProperty("touch-action", "none", "important");
   
     new google.maps.Marker({
       position: pos,
