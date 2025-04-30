@@ -38,7 +38,7 @@ window.initMap = function() {
         map: map,
         label: {
           text: `${land.dataset.place}(${land.dataset.area}a)`,
-          fontSize: "12px"   // フォントサイズ！
+          fontSize: "16px"   // フォントサイズ！
         },
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
