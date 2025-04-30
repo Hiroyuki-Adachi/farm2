@@ -1,0 +1,18 @@
+<div class="position-relative" style="height: 100vh;">
+  <div id="map" class="position-absolute top-0 start-0 w-100 h-100"></div>
+</div>
+<%= hidden_field_tag :location, "[#{current_location}]" %>
+<%= hidden_field_tag :organization_name, current_organization.name %>
+<%= hidden_field_tag :user_id, current_user.id %>
+<% @costs.each do |cost| %>
+  <%= land_region_hidden_field(
+    cost.land, 
+    color: cost.work_type.bg_color_date(current_organization, @target), 
+    text_color: cost.work_type.fg_color_date(current_organization, @target),
+    work_type_id: cost.work_type_id)
+  %>
+<% end %>
+<% content_for :head do %>
+<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{ENV["GOOGLE_MAPS_API_KEY"]}&libraries=drawing&callback=initMap", defer: true, async: true, "data-turbolinks-eval": false %>
+<%= javascript_include_tag 'controllers/personal_informations/maps', 'data-turbo-track': 'reload', type: :module %>
+<% end %>

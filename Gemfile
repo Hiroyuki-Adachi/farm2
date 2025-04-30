@@ -36,7 +36,7 @@ gem 'mechanize'
 # dotenv is a Ruby gem to load environment variables from .env into ENV in development.
 gem 'dotenv-rails'
 
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+# turbo-rails is a set of tools for building modern web applications with Turbo.
 gem 'turbo-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'

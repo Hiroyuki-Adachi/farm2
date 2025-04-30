@@ -16,7 +16,7 @@
 <%= hidden_field_tag :organization_name, current_organization.name %>
 <%= hidden_field_tag :show_path, lands_card_path(land_id: 0) %>
 <% @costs.each do |cost| %>
-  <%= hidden_field_tag :regions, cost.land.region, {id: "land_#{cost.land.id}", data: {id: cost.land.id, place: cost.land.place, area: cost.land.area, owner: cost.land.owner.name, color: cost.work_type.bg_color}} %>
+  <%= land_region_hidden_field(cost.land, color: cost.work_type.bg_color) %>
 <% end %>
 <div id="btn_toolbar" class="btn-toolbar">
   <div class="btn-group mr-2">

@@ -1,9 +1,9 @@
-import { Modal } from "bootstrap";
+import "bootstrap";
 import Decimal from "decimal.js";
 
 window.addEventListener("turbo:load", () => {
-  const kamokuForm = new Modal(document.getElementById("kamoku_modal"));
-  const totalForm = new Modal(document.getElementById("total_modal"));
+  const kamokuForm = new bootstrap.Modal(document.getElementById("kamoku_modal"));
+  const totalForm = new bootstrap.Modal(document.getElementById("total_modal"));
 
   const getCsrfToken = () => {
     const metas = document.getElementsByTagName('meta');
