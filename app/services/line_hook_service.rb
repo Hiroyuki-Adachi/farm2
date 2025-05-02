@@ -12,7 +12,7 @@ class LineHookService
     else
       true
     end
-  rescue => e
+  rescue NoMethodError, StandardError => e
     Rails.logger.error("LineHookService Error: #{e.message}")
     false
   end
