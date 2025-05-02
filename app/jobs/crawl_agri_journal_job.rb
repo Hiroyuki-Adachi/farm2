@@ -1,6 +1,6 @@
 class CrawlAgriJournalJob < CrawlJob
   queue_as :default
-  MY_AGRI_URL = "https://agrijournal.jp".freeze
+  MY_AGRI_URL = TopicType::AGRI_JOURNAL.url
 
   def perform(words)
     agent = Mechanize.new
@@ -17,6 +17,9 @@ class CrawlAgriJournalJob < CrawlJob
       UserWord.where(word: word).find_each do |user_word|
         UserTopic.find_or_create_by(user_id: user_word.user_id, topic_id: topic.id) do |ut|
           ut.word = word
+          ut.pc_flag = user_word.pc_flag
+          ut.sp_flag = user_word.sp_flag
+          ut.line_flag = user_word.line_flag
         end
       end
     end
@@ -30,6 +33,7 @@ class CrawlAgriJournalJob < CrawlJob
       t.title = topic_doc.css('article#singlearticle h1').text
       t.content = topic_doc.css('article#singlearticle > p:not([class])').map { |p| p.text.gsub(/\s+/, '')}.join('　')
       t.posted_on = topic_date
+      t.topic_type_id = TopicType::AGRI_JOURNAL.id
     end
   end
 end
