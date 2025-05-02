@@ -415,5 +415,6 @@ ja:
 
   line_hook:
     already_linked: "あなたのユーザ情報は既に登録済です。"
-    invalid_token: "ユーザ情報が見つかりませんでした。"
-    linked: "ユーザ情報を紐付けました。"
+    invalid_token: "あなたのユーザ情報が見つかりませんでした。"
+    linked: "さんのユーザ情報を紐付けました。"
+    update_failed: "あなたのユーザ情報の更新に失敗しました。"
