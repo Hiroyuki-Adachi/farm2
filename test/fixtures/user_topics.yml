@@ -2,13 +2,16 @@
 #
 # Table name: user_topics(利用者トピック)
 #
-#  id                    :bigint           not null, primary key
-#  read_flag(既読フラグ) :boolean          default(FALSE), not null
-#  word(ワード)          :string(128)      default(""), not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  topic_id(トピックID)  :integer          not null
-#  user_id(利用者ID)     :integer          not null
+#  id                            :bigint           not null, primary key
+#  line_flag(LINEフラグ)         :boolean          default(FALSE), not null
+#  pc_flag(パソコンフラグ)       :boolean          default(TRUE), not null
+#  read_flag(既読フラグ)         :boolean          default(FALSE), not null
+#  sp_flag(スマートフォンフラグ) :boolean          default(TRUE), not null
+#  word(ワード)                  :string(128)      default(""), not null
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  topic_id(トピックID)          :integer          not null
+#  user_id(利用者ID)             :integer          not null
 #
 
 # This model initially had no columns defined. If you add columns to the
@@ -32,3 +35,17 @@ user_topic3:
   read_flag: false
   topic: topic2
   user_id: 2
+
+free_unread:
+  user: user_line_id_already_exists
+  topic: free_topic
+  word: "keyword"
+  read_flag: false
+  line_flag: true
+
+paid_unread:
+  user: user_line_id_already_exists
+  topic: paid_topic
+  word: "有料キーワード"
+  read_flag: false
+  line_flag: true

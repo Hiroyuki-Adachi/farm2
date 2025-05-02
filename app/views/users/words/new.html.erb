@@ -1,17 +1,21 @@
 <h1>ニュース検索ワード</h1>
 <%= form_with(model: current_user, url: users_words_path, local: true, method: :post) do |form| %>
-<% if current_user.worker.director? %>
-  <%= form.fields_for :user_words do |word_form| %>
-    <% if word_form.index < 5 %>
+  <%= form.fields_for :user_words, form.object.user_words.first(5) do |word_form| %>
     <div class="form-group">
       <%= word_form.text_field :word, class: "form-control", maxlength: 10, pattern: ".{2,10}"  %>
+      <%= word_form.hidden_field :pc_flag, value: false, id: nil %>
+      <%= word_form.check_box :pc_flag, {class: "form-check-input"}, true, false %>
+      <%= word_form.label :pc_flag, class: "form-check-label" %>
+      <%= word_form.hidden_field :sp_flag, value: false, id: nil %>
+      <%= word_form.check_box :sp_flag, {class: "form-check-input"}, true, false %>
+      <%= word_form.label :sp_flag, class: "form-check-label" %>
+      <%= word_form.hidden_field :line_flag, value: false, id: nil %>
+      <%= word_form.check_box :line_flag, {class: "form-check-input"}, true, false %>
+      <%= word_form.label :line_flag, class: "form-check-label" %>
       <%= word_form.hidden_field :id %>
     </div>
-    <% end %>
+  <hr />
   <% end %>
-<% else %>
-<div class="text-primary">本機能は理事のみが使用できます。</div>
-<% end %>
   <div id="btn_toolbar" class="btn-toolbar">
 <% if current_user.worker.director? %>
     <div class="btn-group mr-2">

@@ -2,13 +2,14 @@
 #
 # Table name: topics(トピック)
 #
-#  id                :bigint           not null, primary key
-#  content(内容)     :text
-#  posted_on(投稿日) :date             not null
-#  title(タイトル)   :string(512)      default(""), not null
-#  url(URL)          :string(512)      default(""), not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id                          :bigint           not null, primary key
+#  content(内容)               :text
+#  posted_on(投稿日)           :date             not null
+#  title(タイトル)             :string(512)      default(""), not null
+#  url(URL)                    :string(512)      default(""), not null
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  topic_type_id(トピック種別) :integer          default(0), not null
 #
 # Indexes
 #
@@ -24,9 +25,23 @@ topic1:
   content: "　ニュース１の内容だよ。　ニュース１の内容だよ。　ニュース１の内容だよ。　ニュース１の内容だよ。"
   posted_on: 2015-05-04
   url: "https://example.com/1"
+  topic_type_id: 2
 
 topic2:
   title: "ニュース2のタイトルです"
   content: "　ニュース２の内容だよ。　ニュース２の内容だよ。　ニュース２の内容だよ。　ニュース２の内容だよ。"
   posted_on: 2015-05-05
   url: "https://example.com/2"
+  topic_type_id: 3
+
+free_topic:
+  title: Free Topic
+  posted_on: <%= Date.today %>
+  url: http://example.com
+  topic_type_id: 2
+
+paid_topic:
+  title: Paid Topic
+  posted_on: <%= Date.today %>
+  url: http://paid.example.com
+  topic_type_id: 1

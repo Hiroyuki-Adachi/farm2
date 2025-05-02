@@ -14,7 +14,7 @@ class MenuController < ApplicationController
     @land_costs = LandCost.newest(Time.zone.today).where(land_id: @lands.map(&:land_id))
     @lands = WorkLandDecorator.decorate_collection(@lands).group_by(&:land)
     @minute = Minute.for_personal(current_user.worker).last&.decorate
-    @user_topics = UserTopic.current_topics(current_user)
+    @user_topics = UserTopic.current_topics(current_user).pc
   end
 
   def edit; end

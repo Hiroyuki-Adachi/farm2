@@ -1,6 +1,6 @@
 class CrawlJaComJob < CrawlJob
   queue_as :default
-  JA_COM_URL = "https://www.jacom.or.jp".freeze
+  JA_COM_URL = TopicType::JA_COM.url
 
   def perform(words)
     agent = Mechanize.new
@@ -26,6 +26,9 @@ class CrawlJaComJob < CrawlJob
       UserWord.where(word: word).find_each do |user_word|
         UserTopic.find_or_create_by(user_id: user_word.user_id, topic_id: topic.id) do |ut|
           ut.word = word
+          ut.pc_flag = user_word.pc_flag
+          ut.sp_flag = user_word.sp_flag
+          ut.line_flag = user_word.line_flag
         end
       end
     end
@@ -42,6 +45,7 @@ class CrawlJaComJob < CrawlJob
       end
       t.content = news_doc.css('div.contArticle__body').text.gsub(/\s+/, '')
       t.posted_on = topic_date
+      t.topic_type_id = TopicType::JA_COM.id
     end
   end
 end

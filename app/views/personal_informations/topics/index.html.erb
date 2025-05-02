@@ -1,7 +1,8 @@
 <ul class="list-group">
   <% @user_topics.each do |user_topic| %>
     <li class="list-group-item">
-      <span class='badge bg-secondary me-1'><%= user_topic.word %></span>
+      <span class='badge bg-primary me-1'><%= user_topic.word %></span>
+      <span class='badge bg-secondary me-1'><%= user_topic.topic&.topic_type&.name %></span>
       <%= link_to user_topic.topic.title, personal_information_topic_path(personal_information_token: @worker.user.token, id: user_topic.topic.id) %>
       <small class="text-muted">(<%= user_topic.topic.posted_on.strftime("%Y-%m-%d") %>)</small>
       <% unless user_topic.read_flag %>
