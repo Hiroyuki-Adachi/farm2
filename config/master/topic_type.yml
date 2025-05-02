@@ -1,0 +1,35 @@
+- id: 0
+  code: none
+  name: "該当なし"
+  url: "https://www.example.com"
+  paid_flag: true
+
+- id: 1
+  code: agri_news
+  name: "日本農業新聞"
+  url: "https://www.agrinews.co.jp"
+  paid_flag: true
+
+- id: 2
+  code: agri_my_navi
+  name: "マイナビ農業"
+  url: "https://agri.mynavi.jp"
+  paid_flag: false
+
+- id: 3
+  code: agri_journal
+  name: "アグリジャーナル"
+  url: "https://agrijournal.jp"
+  paid_flag: false
+
+- id: 4
+  code: smart_agri
+  name: "スマートアグリ"
+  url: "https://smartagri-jp.com"
+  paid_flag: false
+
+- id: 5
+  code: ja_com
+  name: "JA新聞"
+  url: "https://www.jacom.or.jp"
+  paid_flag: false

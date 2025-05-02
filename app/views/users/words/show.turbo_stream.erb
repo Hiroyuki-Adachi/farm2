@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
         <p>　<%= show_topic(@topic.content) %></p>
-        <p><%= link_to '原文', @topic.url, target: :_blank %></p>
+        <p><%= link_to_unless(@topic&.topic_type&.paid_flag, @topic&.topic_type&.name, @topic.url, target: :_blank) %></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -36,6 +36,7 @@ ja:
       cleaning: "清掃"
       training: "研修"
       accident: "ヒヤリハット"
+      user_word: "利用者ワード"
 
     attributes:
       chemical:
@@ -383,6 +384,12 @@ ja:
         problem: "問題点の考察"
         solving: "問題解決の考察"
         result: "改善の結果"
+
+      user_word:
+        word: "検索ワード"
+        pc_flag: "パソコン閲覧"
+        sp_flag: "スマホ閲覧"
+        line_flag: "LINE送信"
 
   status:
     organization:
