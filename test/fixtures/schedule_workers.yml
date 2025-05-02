@@ -25,7 +25,7 @@ schedule_worker2:
   worker_id: 2
   display_order: 2
 
-schedule_tommorrow_worker:
+schedule_tomorrow_worker:
   schedule: schedule_tomorrow
   worker_id: 13
   display_order: 1
