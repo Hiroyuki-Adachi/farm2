@@ -20,7 +20,9 @@ class CrawlSmartAgriJob < CrawlJob
       UserWord.where(word: word).find_each do |user_word|
         UserTopic.find_or_create_by(user_id: user_word.user_id, topic_id: topic.id) do |ut|
           ut.word = word
-          assign_flags(ut, user_word)
+          ut.pc_flag = user_word.pc_flag
+          ut.sp_flag = user_word.sp_flag
+          ut.line_flag = user_word.line_flag
         end
       end
     end
