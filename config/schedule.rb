@@ -44,6 +44,6 @@ every 1.day, at: '10:31 am' do
   runner "NewsDeliverJob.perform_now"
 end
 
-every 1.day, at: '17:40 am' do
+every 1.day, at: '5:40 pm' do
   runner "ScheduleDeliverJob.perform_now"
 end
