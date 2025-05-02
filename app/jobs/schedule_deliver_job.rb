@@ -4,7 +4,7 @@ class ScheduleDeliverJob < ApplicationJob
   def perform
     User.linable.each do |user|
       messages = ['明日は以下の予定です。']
-      Schedule.by_worker(user.worker).tommorrow.each do |schedule|
+      Schedule.by_worker(user.worker).tomorrow.each do |schedule|
         messages << "#{schedule.start_at.strftime('%H:%M')}から#{schedule.work_kind.name}です。"
       end
 
