@@ -1,6 +1,6 @@
 class CrawlSmartAgriJob < CrawlJob
   queue_as :default
-  MY_AGRI_URL = "https://smartagri-jp.com".freeze
+  MY_AGRI_URL = TopicType::SMART_AGRI.url
 
   def perform(words)
     agent = Mechanize.new
@@ -20,6 +20,9 @@ class CrawlSmartAgriJob < CrawlJob
       UserWord.where(word: word).find_each do |user_word|
         UserTopic.find_or_create_by(user_id: user_word.user_id, topic_id: topic.id) do |ut|
           ut.word = word
+          ut.pc_flag = user_word.pc_flag
+          ut.sp_flag = user_word.sp_flag
+          ut.line_flag = user_word.line_flag
         end
       end
     end
@@ -34,6 +37,7 @@ class CrawlSmartAgriJob < CrawlJob
       end
       t.content = news_doc.css('div.editor-contents').text.gsub(/\s+/, '').gsub("　　", "　")
       t.posted_on = topic_date
+      t.topic_type_id = TopicType::SMART_AGRI.id
     end
   end
 end

@@ -2,7 +2,8 @@
   <ul class="list-group">
   <% @user_topics.each do |user_topic| %>
     <li class="list-group-item">
-      <span class='badge bg-secondary me-1'><%= user_topic.word %></span>
+      <span class='badge bg-primary me-1'><%= user_topic.word %></span>
+      <span class='badge bg-secondary me-1'><%= user_topic.topic&.topic_type&.name %></span>
       <%= link_to user_topic.topic.title, users_word_path(user_topic.topic.id), data: { turbo_stream: true, turbo_frame: 'topic_modal' } %>
       <small class="text-muted">(<%= user_topic.topic.posted_on.strftime("%Y-%m-%d") %>)</small>
       <% unless user_topic.read_flag %>

@@ -4,7 +4,7 @@ require 'nokogiri'
 
 class CrawlAgriNewsJob < CrawlJob
   queue_as :default
-  AGRI_NEWS_URL = "https://www.agrinews.co.jp".freeze
+  AGRI_NEWS_URL = TopicType::AGRI_NEWS.url
 
   def perform(words)
     agent = Mechanize.new
@@ -37,6 +37,9 @@ class CrawlAgriNewsJob < CrawlJob
       UserWord.where(word: word).find_each do |user_word|
         UserTopic.find_or_create_by(user_id: user_word.user_id, topic_id: topic.id) do |ut|
           ut.word = word
+          ut.pc_flag = user_word.pc_flag
+          ut.sp_flag = user_word.sp_flag
+          ut.line_flag = user_word.line_flag
         end
       end
     end
@@ -48,6 +51,7 @@ class CrawlAgriNewsJob < CrawlJob
       t.title = news_doc.css('article h1.uk-article-title').text
       t.content = news_doc.css('article div.hk-article-body').text.gsub(/\s+/, '')
       t.posted_on = news_doc.css('article time')[0][:datetime]
+      t.topic_type_id = TopicType::AGRI_NEWS.id
     end
   end
 end

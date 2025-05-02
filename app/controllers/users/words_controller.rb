@@ -28,6 +28,6 @@ class Users::WordsController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(user_words_attributes: [:id, :word])
+    params.require(:user).permit(user_words_attributes: [:id, :word, :pc_flag, :sp_flag, :line_flag])
   end
 end

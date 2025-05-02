@@ -2,11 +2,14 @@
 #
 # Table name: user_words(利用者ワード)
 #
-#  id                :bigint           not null, primary key
-#  word(ワード)      :string(128)      default(""), not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  user_id(利用者ID) :integer          not null
+#  id                            :bigint           not null, primary key
+#  line_flag(LINEフラグ)         :boolean          default(FALSE), not null
+#  pc_flag(パソコンフラグ)       :boolean          default(TRUE), not null
+#  sp_flag(スマートフォンフラグ) :boolean          default(TRUE), not null
+#  word(ワード)                  :string(128)      default(""), not null
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  user_id(利用者ID)             :integer          not null
 #
 # Indexes
 #
