@@ -32,15 +32,16 @@
 #
 
 class Land < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
-  belongs_to :owner, -> {with_deleted}, class_name: :Home, foreign_key: :owner_id
-  belongs_to :manager, -> {with_deleted}, class_name: :Home, foreign_key: :manager_id
-  belongs_to :land_place, -> {with_deleted}
+  belongs_to :owner, -> {with_discarded}, class_name: :Home, foreign_key: :owner_id
+  belongs_to :manager, -> {with_discarded}, class_name: :Home, foreign_key: :manager_id
+  belongs_to :land_place, -> {with_discarded}
   belongs_to :group, class_name: :Land
 
-  has_one :owner_holder, -> {with_deleted}, through: :owner, source: :holder
-  has_one :manager_holder, -> {with_deleted}, through: :manager, source: :holder
+  has_one :owner_holder, -> {with_discarded}, through: :owner, source: :holder
+  has_one :manager_holder, -> {with_discarded}, through: :manager, source: :holder
 
   has_many :work_lands
   has_many :works, through: :work_lands
@@ -49,6 +50,11 @@ class Land < ApplicationRecord
   has_many :land_fees
   has_many :plan_lands
   has_many :land_homes, dependent: :destroy
+
+  default_scope -> { kept }
+
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
 
   scope :usual, -> {where(target_flag: true).order(:place, :display_order)}
   scope :list, -> {where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}

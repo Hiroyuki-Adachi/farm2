@@ -32,7 +32,7 @@ class ChemicalsController < ApplicationController
   end
 
   def destroy
-    @chemical.destroy
+    @chemical.discard
     redirect_to chemicals_path, status: :see_other
   end
 

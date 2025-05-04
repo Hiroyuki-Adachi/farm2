@@ -21,12 +21,19 @@
 #
 
 class WorkType < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
+
   before_save :update_cost_flag
   after_save :save_work_type_term
 
   has_one :plan, class_name: "PlanWorkType", dependent: :destroy
   has_many :work_type_terms
+
+  default_scope -> { kept }
+
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
 
   scope :categories, -> {where(category_flag: true).order(display_order: :ASC, id: :ASC)}
   scope :usual, -> {where(work_flag: true).order(category_flag: :ASC, display_order: :ASC, id: :ASC)}

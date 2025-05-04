@@ -31,7 +31,7 @@ class MachinesController < ApplicationController
   end
 
   def destroy
-    @machine.destroy
+    @machine.discard
     redirect_to machines_path, status: :see_other
   end
 

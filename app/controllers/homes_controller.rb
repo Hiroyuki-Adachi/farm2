@@ -32,7 +32,7 @@ class HomesController < ApplicationController
   end
 
   def destroy
-    @home.destroy
+    @home.discard
     redirect_to homes_path, status: :see_other
   end
 

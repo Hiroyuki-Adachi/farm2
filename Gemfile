@@ -46,8 +46,8 @@ gem 'activemodel-serializers-xml'
 gem 'active_hash'
 # TZInfo::Data is the public domain IANA Time Zone Database packaged as a set of Ruby modules for use with TZInfo.
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
-# Paranoia is a re-implementation of acts_as_paranoid for Rails 3/4/5.
-gem 'paranoia'
+# Logical deletion for ActiveRecord
+gem 'discard'
 # A paginator for modern web app frameworks and ORMs
 gem 'kaminari'
 # Draper adds an object-oriented layer of presentation logic to your Rails application.

@@ -27,7 +27,8 @@
 
 class Chemical < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
   after_save :save_term
 
@@ -43,6 +44,11 @@ class Chemical < ApplicationRecord
   validates :phonetic, format: { with: /\A[\p{Hiragana}ー－A-Z0-9]+\z/ }, if: proc { |x| x.phonetic.present?}
 
   attr_accessor :term
+
+  default_scope -> { kept }
+
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
 
   scope :usual, ->(work) {
     joins(:chemical_type)

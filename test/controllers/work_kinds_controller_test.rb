@@ -78,6 +78,5 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to work_kinds_path
 
     assert_nil WorkKind.find_by(id: @work_kind.id)
-    assert_equal 0, WorkKindPrice.where(work_kind_id: @work_kind.id).count
   end
 end

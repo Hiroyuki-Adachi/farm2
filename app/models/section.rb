@@ -16,9 +16,15 @@
 #
 
 class Section < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
   has_many :homes, -> {order("homes.display_order, homes.id")}
+
+  default_scope -> { kept }
+
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
 
   scope :usual, ->{where(work_flag: true).order(display_order: :asc)}
 end

@@ -30,7 +30,7 @@ class SectionsController < ApplicationController
   end
 
   def destroy
-    @section.destroy
+    @section.discard
     redirect_to sections_path, status: :see_other
   end
 

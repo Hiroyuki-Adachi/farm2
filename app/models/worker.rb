@@ -34,7 +34,8 @@ require 'securerandom'
 
 class Worker < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
   belongs_to :home, -> {with_deleted}
   belongs_to_active_hash :position
@@ -44,6 +45,11 @@ class Worker < ApplicationRecord
   has_many :works, -> {order(:worked_at)}, through: :work_results
 
   has_one :user
+
+  default_scope -> { kept }
+
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
 
   scope :usual, -> {includes(home: :section).where(homes: { company_flag: false }).order('sections.display_order, homes.display_order, workers.display_order')}
   scope :company, -> {joins(:home).eager_load(:home).where(homes: { company_flag: true }).order("workers.display_order")}

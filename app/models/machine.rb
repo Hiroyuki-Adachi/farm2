@@ -17,7 +17,8 @@
 #
 
 class Machine < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
   has_many  :machine_results
   has_many  :work_results, through: :machine_results
@@ -26,12 +27,17 @@ class Machine < ApplicationRecord
   has_many :machine_kinds, through: :machine_type
   has_many :price_headers, -> {order("machine_price_headers.validated_at DESC")}, class_name: :MachinePriceHeader, dependent: :destroy
 
-  belongs_to :owner, -> {with_deleted}, class_name: :Home, foreign_key: :home_id
+  belongs_to :owner, -> {with_discarded}, class_name: :Home, foreign_key: :home_id
 
   validates :validity_start_at, presence: true
   validates :validity_end_at, presence: true
   validates :display_order, presence: true
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
+
+  default_scope -> { kept }
+
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
 
   scope :by_work, ->(work) { 
     includes(:machine_type, :machine_kinds)

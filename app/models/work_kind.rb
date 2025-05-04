@@ -20,7 +20,8 @@
 #
 
 class WorkKind < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
   after_save :save_price
 
@@ -46,6 +47,11 @@ class WorkKind < ApplicationRecord
 
   validates :price, numericality: true, if: proc { |x| x.price.present? && @term.present? }
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
+
+  default_scope -> { kept }
+
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
 
   scope :usual, -> {where(other_flag: false).order(:phonetic, :display_order, :id)}
   scope :landable, ->{where(land_flag: true)}
