@@ -25,7 +25,7 @@ class LandPlacesControllerTest < ActionDispatch::IntegrationTest
 
   test "場所マスタ新規作成(実行)" do
     new_land_place = {name: "中央", display_order: 2, remarks: "備考です"}
-    assert_difference('LandPlace.count') do
+    assert_difference('LandPlace.kept.count') do
       post land_places_path, params: {land_place: new_land_place}
     end
     assert_redirected_to land_places_path
@@ -53,11 +53,11 @@ class LandPlacesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "場所マスタ削除" do
-    assert_difference('LandPlace.count', -1) do
+    assert_difference('LandPlace.kept.count', -1) do
       delete land_place_path(@land_place)
     end
     assert_redirected_to land_places_path
 
-    assert_nil LandPlace.find_by(id: @land_place.id)
+    assert_nil LandPlace.kept.find_by(id: @land_place.id)
   end
 end
