@@ -43,7 +43,7 @@ class HomesController < ApplicationController
   end
 
   def set_sections
-    @sections = Section.order(:display_order)
+    @sections = Section.list
   end
 
   def home_params

@@ -21,10 +21,9 @@ class Section < ApplicationRecord
 
   has_many :homes, -> {order("homes.display_order, homes.id")}
 
-  default_scope -> { kept }
-
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
-  scope :usual, ->{where(work_flag: true).order(display_order: :asc)}
+  scope :list, -> { kept.order(display_order: :asc) }
+  scope :usual, ->{ kept.where(work_flag: true).order(display_order: :asc)}
 end
