@@ -13,10 +13,9 @@ class CrawlNousonNewsJobTest < ActiveJob::TestCase
     agent.stubs(:get).with(regexp_matches(%r{https://.+})).returns(BODY.new(item_html))
 
     travel_to Date.new(2025, 4, 10) do
-      job = CrawlNousonNewsJob.new
       assert_difference "Topic.count", +1 do
         assert_difference "UserTopic.count", +1 do
-          job.send(:search_all_agri_news, agent, [user_word.word])
+          CrawlNousonNewsJob.perform_now(agent, [user_word.word])
         end
       end
 
