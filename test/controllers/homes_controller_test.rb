@@ -57,11 +57,11 @@ class HomesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "世帯マスタ削除" do
-    assert_difference('Home.count', -1) do
+    assert_difference('Home.kept.count', -1) do
       delete home_path(@home)
     end
     assert_redirected_to homes_path
 
-    assert_nil Home.find_by(id: @home.id)
+    assert_nil Home.kept.find_by(id: @home.id)
   end
 end
