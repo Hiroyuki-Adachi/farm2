@@ -22,11 +22,11 @@ class CrawlAgriJournalJob < CrawlJob
     topic_doc = Nokogiri::HTML(agent.get(url).body)
     topic_date = Date.strptime(topic_doc.css('article#singlearticle p.articledate').text, '%Y/%m/%d')
     return nil if topic_date < Time.zone.today - START_DAY
-    return Topic.find_or_create_by(url: url) do |t|
-      t.title = topic_doc.css('article#singlearticle h1').text
-      t.content = topic_doc.css('article#singlearticle > p:not([class])').map { |p| p.text.gsub(/\s+/, '')}.join('　')
-      t.posted_on = topic_date
-      t.topic_type_id = TopicType::AGRI_JOURNAL.id
+    return Topic.find_or_create_by(url: url) do |topic|
+      topic.title = topic_doc.css('article#singlearticle h1').text
+      topic.content = topic_doc.css('article#singlearticle > p:not([class])').map { |p| p.text.gsub(/\s+/, '')}.join('　')
+      topic.posted_on = topic_date
+      topic.topic_type_id = TopicType::AGRI_JOURNAL.id
     end
   end
 end

@@ -25,14 +25,14 @@ class CrawlAgriMyNaviJob < CrawlJob
 
   def save_topic(agent, url, topic_date)
     news_doc = Nokogiri::HTML(agent.get(url).body)
-    return Topic.find_or_create_by(url: url) do |t|
-      t.title = news_doc.css('div#main article header h1').text
+    return Topic.find_or_create_by(url: url) do |topic|
+      topic.title = news_doc.css('div#main article header h1').text
       news_doc.css('div#main article div.entry').css('br').each do |br|
         br.add_next_sibling(Nokogiri::XML::Text.new('　', news_doc))
       end
-      t.content = news_doc.css('div#main article div.entry').text.gsub(/\s+/, '')
-      t.posted_on = topic_date
-      t.topic_type_id = TopicType::AGRI_MY_NAVI.id
+      topic.content = news_doc.css('div#main article div.entry').text.gsub(/\s+/, '')
+      topic.posted_on = topic_date
+      topic.topic_type_id = TopicType::AGRI_MY_NAVI.id
     end
   end
 end
