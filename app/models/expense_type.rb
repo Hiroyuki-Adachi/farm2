@@ -14,9 +14,12 @@
 #
 
 class ExpenseType < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
-  scope :usual, -> {order(display_order: :ASC, id: :ASC)}
+  scope :usual, -> {kept.order(display_order: :ASC, id: :ASC)}
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
 
   def self.chemical_id
     return ExpenseType.find_by(chemical_flag: true, sales_flag: false)&.id || 0

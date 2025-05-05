@@ -31,7 +31,7 @@ class LandPlacesController < ApplicationController
   end
 
   def destroy
-    @land_place.destroy
+    @land_place.discard
     redirect_to land_places_path, status: :see_other
   end
 

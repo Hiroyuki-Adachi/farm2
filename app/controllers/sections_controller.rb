@@ -3,7 +3,7 @@ class SectionsController < ApplicationController
   before_action :set_section, only: [:edit, :update, :destroy]
 
   def index
-    @sections = Section.order(display_order: :ASC)
+    @sections = Section.list
   end
 
   def new
@@ -30,7 +30,7 @@ class SectionsController < ApplicationController
   end
 
   def destroy
-    @section.destroy
+    @section.discard
     redirect_to sections_path, status: :see_other
   end
 
