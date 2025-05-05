@@ -13,8 +13,7 @@ class CrawlAgriJournalJob < CrawlJob
     search_doc = Nokogiri::HTML(agent.get("#{MY_AGRI_URL}/", {s: word}).body)
     search_doc.css('section.articles02 section>a').each do |topic_item|
       topic = save_topic(agent, topic_item[:href])
-      next if topic.nil?
-      save_user_topic(word, topic)
+      save_user_topic(word, topic) if topic
     end
   end
 
