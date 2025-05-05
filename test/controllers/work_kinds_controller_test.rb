@@ -25,7 +25,7 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "作業種別マスタ新規作成(実行)" do
-    assert_difference('WorkKind.count') do
+    assert_difference('WorkKind.kept.count') do
       assert_difference('WorkKindPrice.count') do
         post work_kinds_path, params: {work_kind: @update}
       end
@@ -52,7 +52,7 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
   test "作業種別マスタ変更(実行)" do
     WorkKindPrice.where(work_kind_id: @work_kind).update_all(price: 1000)
 
-    assert_no_difference('WorkKind.count') do
+    assert_no_difference('WorkKind.kept.count') do
       patch work_kind_path(@work_kind), params: {work_kind: @update}
     end
     assert_redirected_to work_kinds_path
@@ -72,11 +72,11 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "作業種別マスタ削除" do
-    assert_difference('WorkKind.count', -1) do
+    assert_difference('WorkKind.kept.count', -1) do
       delete work_kind_path(@work_kind)
     end
     assert_redirected_to work_kinds_path
 
-    assert_nil WorkKind.find_by(id: @work_kind.id)
+    assert_nil WorkKind.kept.find_by(id: @work_kind.id)
   end
 end
