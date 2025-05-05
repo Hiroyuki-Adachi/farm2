@@ -75,7 +75,7 @@ class LineHookService
 
     begin
       user.update!(line_id: @line_id)
-      self.class.send_reply(reply_token, "#{user.worker.name}#{I18n.t('line_hook.linked')}")
+      self.class.send_reply(reply_token, "#{user.worker.name} #{I18n.t('line_hook.linked')}")
       Rails.application.config.access_logger.info("LH-#{user.worker.name}")
       true
     rescue ActiveRecord::RecordInvalid => e
