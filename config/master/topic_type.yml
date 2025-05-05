@@ -33,3 +33,9 @@
   name: "JA新聞"
   url: "https://www.jacom.or.jp"
   paid_flag: false
+
+- id: 6
+  code: nouson_news
+  name: "農村ニュース"
+  url: "https://www.nouson-n.com"
+  paid_flag: false
