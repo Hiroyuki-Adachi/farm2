@@ -13815,3 +13815,15 @@ work_result_stat_2019_2:
   worker_id: 1
   hours: 8
   display_order: 1
+
+work_created_yesterday_1:
+  work: work_created_yesterday
+  worker_id: 13
+  hours: 6
+  display_order: 1
+
+work_created_yesterday_2:
+  work: work_created_yesterday
+  worker_id: 1
+  hours: 6
+  display_order: 2
