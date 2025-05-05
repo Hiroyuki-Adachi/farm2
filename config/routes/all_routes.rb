@@ -198,6 +198,7 @@ resources :works do
   resources :remarks, controller: "works/remarks", only: [:new, :create]
   resources :chemicals, controller: "works/chemicals", only: [:new, :create], as: :use_chemicals
   resources :whole_crops, controller: "works/whole_crops", only: [:new, :create]
+  resources :supporters, controller: "works/supporters", only: [:index]
   collection do
     get :work_types
     get :work_kinds
