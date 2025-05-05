@@ -39,7 +39,7 @@ class ChemicalsController < ApplicationController
   private
 
   def set_chemical
-    @chemical = Chemical.find(params[:id])
+    @chemical = Chemical.kept.find(params[:id])
     @chemical.term = current_term
   end
 

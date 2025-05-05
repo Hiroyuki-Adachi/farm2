@@ -45,12 +45,11 @@ class Chemical < ApplicationRecord
 
   attr_accessor :term
 
-  default_scope -> { kept }
-
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
   scope :usual, ->(work) {
+    kept
     joins(:chemical_type)
       .where(<<-WHERE, work.term, ChemicalWorkType.by_work(work).map(&:chemical).map(&:id), work.work_kind.chemical_kinds.pluck(:chemical_type_id), work.chemicals.pluck(:chemical_id))
             (
@@ -65,11 +64,13 @@ WHERE
 ORDER
   }
   scope :list, ->{
-    includes(:chemical_type)
+    kept
+    .includes(:chemical_type)
     .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 
   scope :by_term, ->(term) {
+    kept
     joins(:chemical_type)
       .with_deleted
       .where(chemicals: { id: WorkChemical.by_term(term).pluck("work_chemicals.chemical_id").uniq })
