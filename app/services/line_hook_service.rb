@@ -68,15 +68,20 @@ class LineHookService
     end
 
     user = User.find_by(token: user_token)
-    unless user
+    unless user && user.worker && user.worker.name
       self.class.send_reply(reply_token, I18n.t('line_hook.invalid_token'))
       return false
     end
 
-    user.update!(line_id: @line_id)
-    self.class.send_reply(reply_token, I18n.t('line_hook.linked'))
-    worker_name = user.worker ? user.worker.name : 'unknown-worker'
-    Rails.application.config.access_logger.info("LH-#{worker_name}")
-    true
+    begin
+      user.update!(line_id: @line_id)
+      self.class.send_reply(reply_token, "#{user.worker.name} #{I18n.t('line_hook.linked')}")
+      Rails.application.config.access_logger.info("LH-#{user.worker.name}")
+      true
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error("Failed to update user line_id: #{e.message}")
+      self.class.send_reply(reply_token, I18n.t('line_hook.update_failed'))
+      false
+    end
   end
 end

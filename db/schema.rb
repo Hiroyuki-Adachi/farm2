@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_24_101749) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_30_064310) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -781,6 +781,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_24_101749) do
     t.text "content", comment: "内容"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "topic_type_id", default: 0, null: false, comment: "トピック種別"
     t.index ["url"], name: "index_topics_on_url", unique: true
   end
 
@@ -856,6 +857,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_24_101749) do
     t.boolean "read_flag", default: false, null: false, comment: "既読フラグ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "pc_flag", default: true, null: false, comment: "パソコンフラグ"
+    t.boolean "sp_flag", default: true, null: false, comment: "スマートフォンフラグ"
+    t.boolean "line_flag", default: false, null: false, comment: "LINEフラグ"
   end
 
   create_table "user_words", comment: "利用者ワード", force: :cascade do |t|
@@ -863,6 +867,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_24_101749) do
     t.string "word", limit: 128, default: "", null: false, comment: "ワード"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "pc_flag", default: true, null: false, comment: "パソコンフラグ"
+    t.boolean "sp_flag", default: true, null: false, comment: "スマートフォンフラグ"
+    t.boolean "line_flag", default: false, null: false, comment: "LINEフラグ"
     t.index ["user_id", "word"], name: "index_user_words_on_word_by_user_id", unique: true
     t.index ["word"], name: "index_user_words_on_word"
   end

@@ -56,6 +56,8 @@ SQL
     .order(worked_at: :ASC, id: :ASC)
   }
 
+  scope :tomorrow, -> { where(worked_at: Date.tomorrow) }
+
   def regist_workers(params)
     workers = []
     params.each do |param|

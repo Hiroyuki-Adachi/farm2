@@ -36,6 +36,7 @@ ja:
       cleaning: "清掃"
       training: "研修"
       accident: "ヒヤリハット"
+      user_word: "利用者ワード"
 
     attributes:
       chemical:
@@ -384,6 +385,12 @@ ja:
         solving: "問題解決の考察"
         result: "改善の結果"
 
+      user_word:
+        word: "検索ワード"
+        pc_flag: "パソコン閲覧"
+        sp_flag: "スマホ閲覧"
+        line_flag: "LINE送信"
+
   status:
     organization:
       daily_worker:
@@ -408,5 +415,6 @@ ja:
 
   line_hook:
     already_linked: "あなたのユーザ情報は既に登録済です。"
-    invalid_token: "ユーザ情報が見つかりませんでした。"
-    linked: "ユーザ情報を紐付けました。"
+    invalid_token: "あなたのユーザ情報が見つかりませんでした。"
+    linked: "さんのユーザ情報を紐付けました。"
+    update_failed: "あなたのユーザ情報の更新に失敗しました。"
