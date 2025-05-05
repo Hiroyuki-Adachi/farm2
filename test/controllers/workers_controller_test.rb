@@ -27,7 +27,7 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "作業者マスタ新規作成(実行)" do
-    assert_difference('Worker.count') do
+    assert_difference('Worker.kept.count') do
       post workers_path, params: {worker: @update}
     end
     assert_redirected_to workers_path
@@ -48,7 +48,7 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "作業者マスタ変更(実行)" do
-    assert_no_difference('Worker.count') do
+    assert_no_difference('Worker.kept.count') do
       patch worker_path(@worker), params: {worker: @update}
     end
     assert_redirected_to workers_path
@@ -64,11 +64,11 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "作業者マスタ削除" do
-    assert_difference('Worker.count', -1) do
+    assert_difference('Worker.kept.count', -1) do
       delete worker_path(@worker)
     end
     assert_redirected_to workers_path
 
-    assert_nil Worker.find_by(id: @worker.id)
+    assert_nil Worker.kept.find_by(id: @worker.id)
   end
 end
