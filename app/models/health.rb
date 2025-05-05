@@ -17,10 +17,8 @@ class Health < ApplicationRecord
   include Discard::Model
   self.discard_column = :deleted_at
 
-  default_scope -> { kept }
-
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
-  scope :usual, -> {order(:display_order)}
+  scope :usual, -> {kept.order(:display_order)}
 end
