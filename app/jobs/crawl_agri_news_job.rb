@@ -34,14 +34,7 @@ class CrawlAgriNewsJob < CrawlJob
     search_doc = Nokogiri::HTML(agent.get("#{AGRI_NEWS_URL}/search", search_params).body)
     search_doc.css('dd a').each do |anchor|
       topic = save_topic(agent, "#{AGRI_NEWS_URL}/#{anchor[:href]}")
-      UserWord.where(word: word).find_each do |user_word|
-        UserTopic.find_or_create_by(user_id: user_word.user_id, topic_id: topic.id) do |ut|
-          ut.word = word
-          ut.pc_flag = user_word.pc_flag
-          ut.sp_flag = user_word.sp_flag
-          ut.line_flag = user_word.line_flag
-        end
-      end
+      save_user_topic(word, topic)
     end
   end
 
