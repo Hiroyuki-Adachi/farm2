@@ -17,9 +17,7 @@ class ExpenseType < ApplicationRecord
   include Discard::Model
   self.discard_column = :deleted_at
 
-  default_scope -> { kept }
-
-  scope :usual, -> {order(display_order: :ASC, id: :ASC)}
+  scope :usual, -> {kept.order(display_order: :ASC, id: :ASC)}
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
