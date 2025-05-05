@@ -51,20 +51,18 @@ class Land < ApplicationRecord
   has_many :plan_lands
   has_many :land_homes, dependent: :destroy
 
-  default_scope -> { kept }
-
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
-  scope :usual, -> {where(target_flag: true).order(:place, :display_order)}
-  scope :list, -> {where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
-  scope :group_list, -> {where(group_flag: true).includes(:land_place, :members).order(Arel.sql("place, lands.display_order, lands.id"))}
-  scope :for_finance1, -> {where("owner_id = manager_id").where(target_flag: true)}
-  scope :for_finance2, -> {where("owner_id <> manager_id").where(target_flag: true)}
-  scope :regionable, -> {where.not(region: nil).where(target_flag: true, group_id: nil)}
-  scope :expiry, ->(target) {where("? BETWEEN start_on AND end_on", target)}
-  scope :for_place, ->(place) {where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order)}
-  scope :by_term, ->(sys) {where(["start_on <= ? AND ? <= end_on", sys.end_date, sys.start_date])}
+  scope :usual, -> {kept.where(target_flag: true).order(:place, :display_order)}
+  scope :list, -> {kept.where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
+  scope :group_list, -> {kept.where(group_flag: true).includes(:land_place, :members).order(Arel.sql("place, lands.display_order, lands.id"))}
+  scope :for_finance1, -> {kept.where("owner_id = manager_id").where(target_flag: true)}
+  scope :for_finance2, -> {kept.where("owner_id <> manager_id").where(target_flag: true)}
+  scope :regionable, -> {kept.where.not(region: nil).where(target_flag: true, group_id: nil)}
+  scope :expiry, ->(target) {kept.where("? BETWEEN start_on AND end_on", target)}
+  scope :for_place, ->(place) {kept.where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order)}
+  scope :by_term, ->(sys) {kept.where(["start_on <= ? AND ? <= end_on", sys.end_date, sys.start_date])}
 
   validates :place, presence: true
   validates :area, presence: true
