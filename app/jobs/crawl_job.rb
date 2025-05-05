@@ -19,6 +19,14 @@ class CrawlJob < ApplicationJob
     end
   end
 
+  # Associates a given topic with all users who have the specified word in their UserWord records.
+  # 
+  # @param word [String] The word to search for in UserWord records.
+  # @param topic [Topic] The topic to associate with the users.
+  # 
+  # For each UserWord record matching the given word, this method creates or updates a UserTopic
+  # record that links the user to the topic. It also copies the `pc_flag`, `sp_flag`, and `line_flag`
+  # attributes from the UserWord record to the UserTopic record.
   def save_user_topic(word, topic)
     UserWord.where(word: word).find_each do |user_word|
       UserTopic.find_or_create_by(user_id: user_word.user_id, topic_id: topic.id) do |user_topic|
