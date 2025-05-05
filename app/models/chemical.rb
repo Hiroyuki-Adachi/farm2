@@ -49,8 +49,7 @@ class Chemical < ApplicationRecord
   scope :only_deleted, -> { with_discarded.discarded }
 
   scope :usual, ->(work) {
-    kept
-    joins(:chemical_type)
+    kept.joins(:chemical_type)
       .where(<<-WHERE, work.term, ChemicalWorkType.by_work(work).map(&:chemical).map(&:id), work.work_kind.chemical_kinds.pluck(:chemical_type_id), work.chemicals.pluck(:chemical_id))
             (
                   chemicals.id IN (SELECT chemical_id FROM chemical_terms WHERE term = ?)
