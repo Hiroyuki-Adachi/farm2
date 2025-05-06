@@ -20,7 +20,8 @@
 #
 
 class WorkKind < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
   after_save :save_price
 
@@ -47,14 +48,18 @@ class WorkKind < ApplicationRecord
   validates :price, numericality: true, if: proc { |x| x.price.present? && @term.present? }
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
 
-  scope :usual, -> {where(other_flag: false).order(:phonetic, :display_order, :id)}
-  scope :landable, ->{where(land_flag: true)}
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
+
+  scope :usual, -> {kept.where(other_flag: false).order(:phonetic, :display_order, :id)}
+  scope :landable, ->{kept.where(land_flag: true)}
   scope :by_type, ->(work_type) {
-    joins(:work_kind_types)
+    kept
+      .joins(:work_kind_types)
       .where(work_kind_types: { work_type_id: work_type.genre_id })
       .order("work_kinds.other_flag, work_kinds.phonetic, work_kinds.display_order, work_kinds.id")
   }
-  scope :gaps, -> {where.not(broccoli_mark: [nil, ""]).group(:broccoli_mark).order(:broccoli_mark).select("broccoli_mark, MAX(name) AS name")}
+  scope :gaps, -> {kept.where.not(broccoli_mark: [nil, ""]).group(:broccoli_mark).order(:broccoli_mark).select("broccoli_mark, MAX(name) AS name")}
 
   attr_writer :price
   attr_accessor :term

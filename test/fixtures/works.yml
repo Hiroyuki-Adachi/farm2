@@ -5468,3 +5468,16 @@ work_stat_2019_2:
   created_by: 3
   created_at: '2019-01-01 01:19:23'
   updated_at: '2019-01-01 01:19:23'
+
+work_created_yesterday:
+  term: 2020
+  worked_at: '2020-01-01'
+  weather_id: 1
+  work_type_id: 1
+  name: "昨日入力した作業"
+  start_at: '08:00:00'
+  end_at: '17:00:00'
+  work_kind_id: 1
+  created_by: 3
+  created_at: <%= Time.zone.now - 1.day %>
+  updated_at: <%= Time.zone.now - 1.day %>

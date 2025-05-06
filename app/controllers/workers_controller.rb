@@ -41,7 +41,7 @@ class WorkersController < ApplicationController
   end
 
   def destroy
-    @worker.destroy
+    @worker.discard
     redirect_to workers_path, status: :see_other
   end
 

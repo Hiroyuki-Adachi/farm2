@@ -17,14 +17,7 @@ class CrawlSmartAgriJob < CrawlJob
       topic_date = Time.zone.parse(topic[:published]).to_date
       next if topic_date < Time.zone.today - START_DAY
       topic = save_topic(agent, "#{MY_AGRI_URL}#{topic[:url]}", topic_date)
-      UserWord.where(word: word).find_each do |user_word|
-        UserTopic.find_or_create_by(user_id: user_word.user_id, topic_id: topic.id) do |ut|
-          ut.word = word
-          ut.pc_flag = user_word.pc_flag
-          ut.sp_flag = user_word.sp_flag
-          ut.line_flag = user_word.line_flag
-        end
-      end
+      save_user_topic(word, topic)
     end
   end
 

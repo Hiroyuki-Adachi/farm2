@@ -17,7 +17,8 @@
 #
 
 class Machine < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
   has_many  :machine_results
   has_many  :work_results, through: :machine_results
@@ -26,36 +27,42 @@ class Machine < ApplicationRecord
   has_many :machine_kinds, through: :machine_type
   has_many :price_headers, -> {order("machine_price_headers.validated_at DESC")}, class_name: :MachinePriceHeader, dependent: :destroy
 
-  belongs_to :owner, -> {with_deleted}, class_name: :Home, foreign_key: :home_id
+  belongs_to :owner, -> {with_discarded}, class_name: :Home, foreign_key: :home_id
 
   validates :validity_start_at, presence: true
   validates :validity_end_at, presence: true
   validates :display_order, presence: true
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
 
-  scope :by_work, ->(work) { 
-    includes(:machine_type, :machine_kinds)
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
+
+  scope :by_work, ->(work) {
+    kept
+      .includes(:machine_type, :machine_kinds)
       .where("(machine_kinds.work_kind_id = ? and validity_start_at <= ? and ? <= validity_end_at) OR (machines.id in (?))", work.work_kind_id, work.worked_at, work.worked_at, work.machine_results.pluck(:machine_id))
       .order("machine_types.display_order, machines.display_order")
   }
-  scope :diesel, -> {where(diesel_flag: true)}
+  scope :diesel, -> {kept.where(diesel_flag: true)}
 
-  scope :of_company, -> {where(home_id: Home.company)}
-  scope :of_owners, ->(work) {where(home_id: work.workers.pluck(:home_id).uniq)}
-  scope :of_no_owners, ->(work) {where.not(home_id: work.workers.pluck(:home_id).uniq)}
+  scope :of_company, -> {kept.where(home_id: Home.company)}
+  scope :of_owners, ->(work) {kept.where(home_id: work.workers.pluck(:home_id).uniq)}
+  scope :of_no_owners, ->(work) {kept.where.not(home_id: work.workers.pluck(:home_id).uniq)}
   scope :between_term, ->(system) {
-    where(["validity_start_at <= ? AND validity_end_at >= ?", system.start_date, system.end_date])
+    kept.where(["validity_start_at <= ? AND validity_end_at >= ?", system.start_date, system.end_date])
   }
 
   scope :by_results, ->(results) {
-    joins(:machine_results)
+    kept
+      .joins(:machine_results)
       .where(machine_results: { work_result_id: results.ids })
       .order('machines.display_order')
       .distinct
   }
 
   scope :usual, -> {
-    includes(:machine_type)
+    kept
+      .includes(:machine_type)
       .order("machine_types.display_order, machines.display_order, machines.id")
   }
 

@@ -14,7 +14,11 @@
 #
 
 class Health < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
-  scope :usual, -> {order(:display_order)}
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
+
+  scope :usual, -> {kept.order(:display_order)}
 end

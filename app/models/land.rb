@@ -32,15 +32,16 @@
 #
 
 class Land < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
-  belongs_to :owner, -> {with_deleted}, class_name: :Home, foreign_key: :owner_id
-  belongs_to :manager, -> {with_deleted}, class_name: :Home, foreign_key: :manager_id
-  belongs_to :land_place, -> {with_deleted}
+  belongs_to :owner, -> {with_discarded}, class_name: :Home, foreign_key: :owner_id
+  belongs_to :manager, -> {with_discarded}, class_name: :Home, foreign_key: :manager_id
+  belongs_to :land_place, -> {with_discarded}
   belongs_to :group, class_name: :Land
 
-  has_one :owner_holder, -> {with_deleted}, through: :owner, source: :holder
-  has_one :manager_holder, -> {with_deleted}, through: :manager, source: :holder
+  has_one :owner_holder, -> {with_discarded}, through: :owner, source: :holder
+  has_one :manager_holder, -> {with_discarded}, through: :manager, source: :holder
 
   has_many :work_lands
   has_many :works, through: :work_lands
@@ -50,15 +51,18 @@ class Land < ApplicationRecord
   has_many :plan_lands
   has_many :land_homes, dependent: :destroy
 
-  scope :usual, -> {where(target_flag: true).order(:place, :display_order)}
-  scope :list, -> {where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
-  scope :group_list, -> {where(group_flag: true).includes(:land_place, :members).order(Arel.sql("place, lands.display_order, lands.id"))}
-  scope :for_finance1, -> {where("owner_id = manager_id").where(target_flag: true)}
-  scope :for_finance2, -> {where("owner_id <> manager_id").where(target_flag: true)}
-  scope :regionable, -> {where.not(region: nil).where(target_flag: true, group_id: nil)}
-  scope :expiry, ->(target) {where("? BETWEEN start_on AND end_on", target)}
-  scope :for_place, ->(place) {where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order)}
-  scope :by_term, ->(sys) {where(["start_on <= ? AND ? <= end_on", sys.end_date, sys.start_date])}
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
+
+  scope :usual, -> {kept.where(target_flag: true).order(:place, :display_order)}
+  scope :list, -> {kept.where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
+  scope :group_list, -> {kept.where(group_flag: true).includes(:land_place, :members).order(Arel.sql("place, lands.display_order, lands.id"))}
+  scope :for_finance1, -> {kept.where("owner_id = manager_id").where(target_flag: true)}
+  scope :for_finance2, -> {kept.where("owner_id <> manager_id").where(target_flag: true)}
+  scope :regionable, -> {kept.where.not(region: nil).where(target_flag: true, group_id: nil)}
+  scope :expiry, ->(target) {kept.where("? BETWEEN start_on AND end_on", target)}
+  scope :for_place, ->(place) {kept.where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order)}
+  scope :by_term, ->(sys) {kept.where(["start_on <= ? AND ? <= end_on", sys.end_date, sys.start_date])}
 
   validates :place, presence: true
   validates :area, presence: true
