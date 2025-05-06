@@ -46,7 +46,7 @@ gem 'activemodel-serializers-xml'
 gem 'active_hash'
 # TZInfo::Data is the public domain IANA Time Zone Database packaged as a set of Ruby modules for use with TZInfo.
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
-# Logical deletion for ActiveRecord
+# Logical deletion for ActiveRecord. Documentation: https://github.com/jhawthorn/discard
 gem 'discard'
 # A paginator for modern web app frameworks and ORMs
 gem 'kaminari'
