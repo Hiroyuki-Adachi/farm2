@@ -63,8 +63,7 @@ WHERE
 ORDER
   }
   scope :list, ->{
-    kept
-    .includes(:chemical_type)
+    kept.includes(:chemical_type)
     .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 
