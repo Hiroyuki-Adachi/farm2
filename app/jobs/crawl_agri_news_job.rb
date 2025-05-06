@@ -40,11 +40,11 @@ class CrawlAgriNewsJob < CrawlJob
 
   def save_topic(agent, url)
     news_doc = Nokogiri::HTML(agent.get(url).body)
-    return Topic.find_or_create_by(url: url) do |t|
-      t.title = news_doc.css('article h1.uk-article-title').text
-      t.content = news_doc.css('article div.hk-article-body').text.gsub(/\s+/, '')
-      t.posted_on = news_doc.css('article time')[0][:datetime]
-      t.topic_type_id = TopicType::AGRI_NEWS.id
+    return Topic.find_or_create_by(url: url) do |topic|
+      topic.title = news_doc.css('article h1.uk-article-title').text
+      topic.content = news_doc.css('article div.hk-article-body').text.gsub(/\s+/, '')
+      topic.posted_on = news_doc.css('article time')[0][:datetime]
+      topic.topic_type_id = TopicType::AGRI_NEWS.id
     end
   end
 end
