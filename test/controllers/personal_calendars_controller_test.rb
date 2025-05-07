@@ -17,10 +17,11 @@ class PersonalCalendarsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_match %r{^text/calendar}, response.header["Content-Type"]
   
-    assert_includes body, "BEGIN:VEVENT"
+    assert_includes body, "BEGIN:VCALENDAR"
     assert_includes body, schedules(:schedule1).name
     assert_includes body, works(:works1).remarks
     assert_includes body, "SUMMARY:"  
+    assert_includes body, "END:VCALENDAR"
   end
 
   test "無効なトークンはエラーを返す" do
