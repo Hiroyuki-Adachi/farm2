@@ -1,6 +1,5 @@
 class CrawlNousonNewsJob < CrawlJob
   queue_as :default
-  NOUSON_NEWS_URL = TopicType::NOUSON_NEWS.url
 
   def perform(words)
     agent = Mechanize.new
@@ -10,7 +9,7 @@ class CrawlNousonNewsJob < CrawlJob
   private
 
   def search_agri_news(agent, word)
-    search_doc = Nokogiri::HTML(agent.get("#{NOUSON_NEWS_URL}/media/search", {schKeyword: word}).body)
+    search_doc = Nokogiri::HTML(agent.get("#{TopicType::NOUSON_NEWS.url}/media/search", {schKeyword: word}).body)
     search_doc.css('div.archivelist_wrap div.blog_contents').each do |content|
       topic_date = Date.strptime(content.css('span.blog_date01').text, '%Y/%m/%d')
       next if topic_date < Time.zone.today - START_DAY

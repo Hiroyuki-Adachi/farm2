@@ -1,6 +1,5 @@
 class CrawlSmartAgriJob < CrawlJob
   queue_as :default
-  MY_AGRI_URL = TopicType::SMART_AGRI.url
 
   def perform(words)
     agent = Mechanize.new
@@ -11,12 +10,12 @@ class CrawlSmartAgriJob < CrawlJob
 
   def search_agri_news(agent, word)
     search_params = {count: 30, offset: 0, keyword: word}
-    search_json = JSON.parse(agent.get("#{MY_AGRI_URL}/api/v2/ajax/post", search_params).body, symbolize_names: true)
+    search_json = JSON.parse(agent.get("#{TopicType::SMART_AGRI.url}/api/v2/ajax/post", search_params).body, symbolize_names: true)
 
     search_json[:data][:posts].each do |topic|
       topic_date = Time.zone.parse(topic[:published]).to_date
       next if topic_date < Time.zone.today - START_DAY
-      topic = save_topic(agent, "#{MY_AGRI_URL}#{topic[:url]}", topic_date)
+      topic = save_topic(agent, "#{TopicType::SMART_AGRI.url}#{topic[:url]}", topic_date)
       save_user_topic(word, topic)
     end
   end

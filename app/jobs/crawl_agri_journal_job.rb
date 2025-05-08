@@ -1,6 +1,5 @@
 class CrawlAgriJournalJob < CrawlJob
   queue_as :default
-  MY_AGRI_URL = TopicType::AGRI_JOURNAL.url
 
   def perform(words)
     agent = Mechanize.new
@@ -10,7 +9,7 @@ class CrawlAgriJournalJob < CrawlJob
   private
 
   def search_agri_news(agent, word)
-    search_doc = Nokogiri::HTML(agent.get("#{MY_AGRI_URL}/", {s: word}).body)
+    search_doc = Nokogiri::HTML(agent.get("#{TopicType::AGRI_JOURNAL.url}/", {s: word}).body)
     search_doc.css('section.articles02 section>a').each do |topic_item|
       topic = save_topic(agent, topic_item[:href])
       save_user_topic(word, topic) if topic

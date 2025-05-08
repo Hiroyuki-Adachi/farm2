@@ -4,7 +4,6 @@ require 'nokogiri'
 
 class CrawlAgriMyNaviJob < CrawlJob
   queue_as :default
-  MY_NAVI_URL = TopicType::AGRI_MY_NAVI.url
 
   def perform(words)
     agent = Mechanize.new
@@ -14,7 +13,7 @@ class CrawlAgriMyNaviJob < CrawlJob
   private
 
   def search_agri_news(agent, word)
-    search_doc = Nokogiri::HTML(agent.get("#{MY_NAVI_URL}/", {s: word}).body)
+    search_doc = Nokogiri::HTML(agent.get("#{TopicType::AGRI_MY_NAVI.url}/", {s: word}).body)
     search_doc.css('ul.news_archive li').each do |topic|
       topic_date = Date.strptime(topic.css('a p.date').text, '%Y年%m月%d日')
       next if topic_date < Time.zone.today - START_DAY

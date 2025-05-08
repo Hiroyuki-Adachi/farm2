@@ -1,6 +1,5 @@
 class CrawlJaComJob < CrawlJob
   queue_as :default
-  JA_COM_URL = TopicType::JA_COM.url
 
   def perform(words)
     agent = Mechanize.new
@@ -19,7 +18,7 @@ class CrawlJaComJob < CrawlJob
       startday: (Time.zone.today - START_DAY).strftime('%Y-%m-%d'),
       endday: Time.zone.today.strftime('%Y-%m-%d')
     }
-    search_doc = Nokogiri::HTML(agent.get("#{JA_COM_URL}/search.php", search_params).body)
+    search_doc = Nokogiri::HTML(agent.get("#{TopicType::JA_COM.url}/search.php", search_params).body)
     search_doc.css('ul#searchResults li.searchList__item').each do |topic|
       topic_date = Date.strptime(topic.css('div.searchListDate').text, '%Y年%m月%d日')
       topic = save_topic(agent, topic.css('a')[0][:href], topic_date)

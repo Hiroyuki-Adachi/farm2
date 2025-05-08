@@ -4,7 +4,6 @@ require 'nokogiri'
 
 class CrawlAgriNewsJob < CrawlJob
   queue_as :default
-  AGRI_NEWS_URL = TopicType::AGRI_NEWS.url
 
   def perform(words)
     agent = Mechanize.new
@@ -15,14 +14,14 @@ class CrawlAgriNewsJob < CrawlJob
   private
 
   def login_agri_news(agent)
-    login_page = agent.get("#{AGRI_NEWS_URL}/user/login")
+    login_page = agent.get("#{TopicType::AGRI_NEWS.url}/user/login")
 
     form = login_page.form_with(id: 'form1')
     form['email'] = ENV.fetch('AGRI_NEWS_ID')
     form['password'] = ENV.fetch('AGRI_NEWS_PASSWORD')
 
     dashboard_page = form.submit
-    return dashboard_page.uri.to_s != "#{AGRI_NEWS_URL}/user/login"
+    return dashboard_page.uri.to_s != "#{TopicType::AGRI_NEWS.url}/user/login"
   end
 
   def search_agri_news(agent, word)
@@ -31,9 +30,9 @@ class CrawlAgriNewsJob < CrawlJob
       openDate: (Time.zone.today - START_DAY).strftime('%Y-%m-%d'),
       closeDate: Time.zone.today.strftime('%Y-%m-%d')
     }
-    search_doc = Nokogiri::HTML(agent.get("#{AGRI_NEWS_URL}/search", search_params).body)
+    search_doc = Nokogiri::HTML(agent.get("#{TopicType::AGRI_NEWS.url}/search", search_params).body)
     search_doc.css('dd a').each do |anchor|
-      topic = save_topic(agent, "#{AGRI_NEWS_URL}/#{anchor[:href]}")
+      topic = save_topic(agent, "#{TopicType::AGRI_NEWS.url}/#{anchor[:href]}")
       save_user_topic(word, topic)
     end
   end
