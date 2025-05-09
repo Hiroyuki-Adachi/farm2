@@ -9,6 +9,8 @@ class LineHookService
   def call(reply_token)
     if token_message?
       register_line_id(reply_token, extract_user_token)
+    elsif unlink_message?
+      unlink_line_id(reply_token)
     else
       true
     end
@@ -57,6 +59,10 @@ class LineHookService
     @message_text.strip.start_with?('token=')
   end
 
+  def unlink_message?
+    @message_text.strip == '解除'
+  end
+
   def extract_user_token
     @message_text.split('=').last
   end
@@ -76,6 +82,28 @@ class LineHookService
     begin
       user.update!(line_id: @line_id)
       self.class.send_reply(reply_token, "#{user.worker.name} #{I18n.t('line_hook.linked')}")
+      Rails.application.config.access_logger.info("LH-#{user.worker.name}")
+      true
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error("Failed to update user line_id: #{e.message}")
+      self.class.send_reply(reply_token, I18n.t('line_hook.update_failed'))
+      false
+    end
+  end
+
+  def unlink_line_id(reply_token)
+    unless User.exists?(line_id: @line_id)
+      self.class.send_reply(reply_token, I18n.t('line_hook.not_linked'))
+      return false
+    end
+    user = User.find_by(line_id: @line_id)
+    unless user && user.worker && user.worker.name  
+      self.class.send_reply(reply_token, I18n.t('line_hook.invalid_token'))
+      return false
+    end
+    begin
+      user.update!(line_id: '')
+      self.class.send_reply(reply_token, "#{user.worker.name}#{I18n.t('line_hook.unlinked')}")
       Rails.application.config.access_logger.info("LH-#{user.worker.name}")
       true
     rescue ActiveRecord::RecordInvalid => e
