@@ -43,6 +43,7 @@ class PersonalCalendarsController < ApplicationController
     event.uid = result.uuid&.upcase
     event.created = work.created_at
     event.last_modified = work.updated_at
+    event.url = personal_information_work_url(personal_information_token: params[:token], id: result.work_id)
     return event
   end
 

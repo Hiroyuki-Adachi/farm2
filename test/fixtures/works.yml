@@ -44,7 +44,7 @@ works1:
   weather_id: '1'
   work_type_id: '11'
   name: ''
-  remarks: "サーバ再起動、データバックアップ、プリンタトナー発注。"
+  remarks: "サーバ再起動、データバックアップ。"
   start_at: '2015-03-21 09:00:00'
   end_at: '2015-03-21 10:00:00'
   fixed_at: 
