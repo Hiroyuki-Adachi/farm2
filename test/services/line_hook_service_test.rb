@@ -7,7 +7,7 @@ class LineHookServiceTest < ActiveSupport::TestCase
     @user = users(:user_line)
   end
 
-  test 'tokenが有効の場合、呼び出しに成功する' do
+  test 'tokenが有効の場合、紐付けに成功する' do
     LineHookService.stubs(:send_reply).returns(true)
 
     service = LineHookService.new("token=#{@user.token}", @line_user_id)
@@ -17,7 +17,7 @@ class LineHookServiceTest < ActiveSupport::TestCase
     end
   end
 
-  test 'tokenが無効の場合、呼び出しに失敗する' do
+  test 'tokenが無効の場合、紐付けに失敗する' do
     LineHookService.stubs(:send_reply).returns(true)
 
     service = LineHookService.new('token=invalid_token', @line_user_id)
@@ -27,7 +27,7 @@ class LineHookServiceTest < ActiveSupport::TestCase
     end
   end
 
-  test 'line_idが既に存在する場合、呼び出しに失敗する' do
+  test 'line_idが既に存在する場合、紐付けに失敗する' do
     LineHookService.stubs(:send_reply).returns(true)
 
     already_line_id = users(:user_line_id_already_exists).line_id
@@ -36,6 +36,21 @@ class LineHookServiceTest < ActiveSupport::TestCase
     assert_no_difference -> { User.where(line_id: already_line_id).count } do
       assert_not service.call(@reply_token)
     end
+  end
+
+  test '解除コマンドが含まれている場合、解除に成功する' do
+    LineHookService.stubs(:send_reply).returns(true)
+    already_linked_user = users(:user_line_id_already_exists)
+    service = LineHookService.new('解除', already_linked_user.line_id)
+
+    assert service.call(@reply_token)
+    assert_equal '', already_linked_user.reload.line_id
+  end
+
+  test '紐付けの無いユーザが解除コマンドを受け取った場合、何も起こらない' do
+    LineHookService.stubs(:send_reply).returns(true)
+    service = LineHookService.new('解除', @line_user_id)
+    assert_not service.call(@reply_token)
   end
 
   test 'tokenに無関係な場合、呼び出しは成功となる' do
