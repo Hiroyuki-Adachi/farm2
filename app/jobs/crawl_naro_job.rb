@@ -15,7 +15,7 @@ class CrawlNaroJob < CrawlJob
       break if topic_date < Time.zone.today - START_DAY
 
       topic_title = dd.at_css('a')&.text
-      topic_url = dd.at_css('a')&.[](:href)
+      topic_url = URI.join(TopicType::NARO.url, dd.at_css('a')&.[](:href)).to_s
 
       save_topic(agent, topic_url, topic_date, topic_title, words)
     end
@@ -23,11 +23,11 @@ class CrawlNaroJob < CrawlJob
 
   private
 
-  def save_topic(agent, url, topic_date, topic_title, words)
-    topic_doc = Nokogiri::HTML(agent.get(URI.join(TopicType::NARO.url, url).to_s).body)
+  def save_topic(agent, topic_url, topic_date, topic_title, words)
+    topic_doc = Nokogiri::HTML(agent.get(topic_url).body)
     words.each do |word|
       if topic_doc.text.include?(word)
-        topic = Topic.find_or_create_by(url: url) do |new_topic|
+        topic = Topic.find_or_create_by(url: topic_url) do |new_topic|
           new_topic.title = topic_title
           new_topic.content = normalize_text(topic_doc.css('#postBlock').text)
           new_topic.posted_on = topic_date
