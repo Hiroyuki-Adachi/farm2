@@ -27,7 +27,8 @@
 
 class Chemical < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
   after_save :save_term
 
@@ -44,8 +45,11 @@ class Chemical < ApplicationRecord
 
   attr_accessor :term
 
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
+
   scope :usual, ->(work) {
-    joins(:chemical_type)
+    kept.joins(:chemical_type)
       .where(<<-WHERE, work.term, ChemicalWorkType.by_work(work).map(&:chemical).map(&:id), work.work_kind.chemical_kinds.pluck(:chemical_type_id), work.chemicals.pluck(:chemical_id))
             (
                   chemicals.id IN (SELECT chemical_id FROM chemical_terms WHERE term = ?)
@@ -59,11 +63,12 @@ WHERE
 ORDER
   }
   scope :list, ->{
-    includes(:chemical_type)
+    kept.includes(:chemical_type)
     .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 
   scope :by_term, ->(term) {
+    kept
     joins(:chemical_type)
       .with_deleted
       .where(chemicals: { id: WorkChemical.by_term(term).pluck("work_chemicals.chemical_id").uniq })

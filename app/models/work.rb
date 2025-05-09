@@ -181,6 +181,12 @@ SQL
       .distinct
       .order("worked_at")
   }
+  scope :deliverable, ->(worker_id) {
+    joins(:work_results)
+      .where(created_at: Time.zone.yesterday.beginning_of_day..Time.zone.yesterday.end_of_day)
+      .where.not(created_by: worker_id)
+      .where("work_results.worker_id = ?", worker_id)
+  }
 
   def workers_count
     work_results.count

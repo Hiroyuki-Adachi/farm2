@@ -45,3 +45,15 @@ paid_topic:
   posted_on: <%= Date.today %>
   url: http://paid.example.com
   topic_type_id: 1
+
+old_topic:
+  posted_on: <%= 10.days.ago.to_date %>
+  title: "古い記事"
+  url: http://example.com/1
+  topic_type_id: 1
+
+new_topic:
+  posted_on: <%= Date.today %>
+  title: "新しい記事"
+  url: http://example.com/2
+  topic_type_id: 1

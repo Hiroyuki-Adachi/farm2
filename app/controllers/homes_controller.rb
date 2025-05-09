@@ -32,7 +32,7 @@ class HomesController < ApplicationController
   end
 
   def destroy
-    @home.destroy
+    @home.discard
     redirect_to homes_path, status: :see_other
   end
 
@@ -43,7 +43,7 @@ class HomesController < ApplicationController
   end
 
   def set_sections
-    @sections = Section.order(:display_order)
+    @sections = Section.list
   end
 
   def home_params

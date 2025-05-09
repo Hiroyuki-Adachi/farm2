@@ -38,7 +38,7 @@ class LandsController < ApplicationController
   end
 
   def destroy
-    @land.destroy
+    @land.discard
     redirect_to lands_path(home_id: params[:home_id].presence), status: :see_other
   end
 

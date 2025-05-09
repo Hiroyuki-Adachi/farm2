@@ -109,11 +109,11 @@ class ChemicalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "薬剤マスタ削除" do
-    assert_difference('Chemical.count', -1) do
+    assert_difference('Chemical.kept.count', -1) do
       delete chemical_path(@chemical)
     end
     assert_redirected_to chemicals_path
 
-    assert_nil Chemical.find_by(id: @chemical.id)
+    assert_nil Chemical.kept.find_by(id: @chemical.id)
   end
 end

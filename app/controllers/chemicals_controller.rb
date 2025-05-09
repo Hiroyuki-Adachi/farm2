@@ -32,14 +32,14 @@ class ChemicalsController < ApplicationController
   end
 
   def destroy
-    @chemical.destroy
+    @chemical.discard
     redirect_to chemicals_path, status: :see_other
   end
 
   private
 
   def set_chemical
-    @chemical = Chemical.find(params[:id])
+    @chemical = Chemical.kept.find(params[:id])
     @chemical.term = current_term
   end
 

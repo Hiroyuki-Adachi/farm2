@@ -21,19 +21,24 @@
 #
 
 class WorkType < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
+
   before_save :update_cost_flag
   after_save :save_work_type_term
 
   has_one :plan, class_name: "PlanWorkType", dependent: :destroy
   has_many :work_type_terms
 
-  scope :categories, -> {where(category_flag: true).order(display_order: :ASC, id: :ASC)}
-  scope :usual, -> {where(work_flag: true).order(category_flag: :ASC, display_order: :ASC, id: :ASC)}
-  scope :indexes, -> {where(category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
-  scope :land, -> {where(land_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
-  scope :cost, -> {where(cost_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
-  scope :select_category, ->(category) {where(category_flag: false, work_flag: true, genre: category[:genre]).order(display_order: :ASC, id: :ASC)}
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
+
+  scope :categories, -> {kept.where(category_flag: true).order(display_order: :ASC, id: :ASC)}
+  scope :usual, -> {kept.where(work_flag: true).order(category_flag: :ASC, display_order: :ASC, id: :ASC)}
+  scope :indexes, -> {kept.where(category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
+  scope :land, -> {kept.where(land_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
+  scope :cost, -> {kept.where(cost_flag: true, category_flag: false).order(genre: :ASC, display_order: :ASC, id: :ASC)}
+  scope :select_category, ->(category) {kept.where(category_flag: false, work_flag: true, genre: category[:genre]).order(display_order: :ASC, id: :ASC)}
   scope :by_term, ->(term) {
     where("EXISTS (SELECT * FROM work_type_terms WTT WHERE work_types.id = WTT.work_type_id AND WTT.term = ?)", term)
     .with_deleted

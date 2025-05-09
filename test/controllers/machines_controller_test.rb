@@ -28,7 +28,7 @@ class MachinesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "機械マスタ新規作成(実行)" do
-    assert_difference('Machine.count') do
+    assert_difference('Machine.kept.count') do
       post machines_path, params: {machine: @update}
     end
     assert_redirected_to machines_path
@@ -48,7 +48,7 @@ class MachinesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "機械種別マスタ変更(実行)" do
-    assert_no_difference('Machine.count') do
+    assert_no_difference('Machine.kept.count') do
       patch machine_path(@machine), params: {id: @machine, machine: @update}
     end
     assert_redirected_to machines_path
@@ -63,11 +63,11 @@ class MachinesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "機械種別マスタ削除" do
-    assert_difference('Machine.count', -1) do
+    assert_difference('Machine.kept.count', -1) do
       delete machine_path(@machine)
     end
     assert_redirected_to machines_path
 
-    assert_nil Machine.find_by(id: @machine.id)
+    assert_nil Machine.kept.find_by(id: @machine.id)
   end
 end

@@ -44,7 +44,7 @@ class WorkTypesController < ApplicationController
   end
 
   def destroy
-    @work_type.destroy
+    @work_type.discard
     redirect_to work_types_path, status: :see_other
   end
 

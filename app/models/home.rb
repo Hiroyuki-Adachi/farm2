@@ -32,7 +32,8 @@
 #
 
 class Home < ApplicationRecord
-  acts_as_paranoid
+  include Discard::Model
+  self.discard_column = :deleted_at
 
   REG_PHONE = /\A\d{2,4}-\d{2,4}-\d{4}\z/
 
@@ -41,33 +42,40 @@ class Home < ApplicationRecord
   has_many :managed_lands,  -> {order(:place)}, class_name: :Land, foreign_key: :manager_id
   has_many :sub_lands,    -> {order(:place)}, class_name: :LandHome
 
-  belongs_to :holder,  -> {with_deleted}, class_name: :Worker, foreign_key: :worker_id, optional: true
-  belongs_to :section, -> {with_deleted}
+  belongs_to :holder,  -> {with_discarded}, class_name: :Worker, foreign_key: :worker_id, optional: true
+  belongs_to :section, -> {with_discarded}
+
+  scope :with_deleted, -> { with_discarded }
+  scope :only_deleted, -> { with_discarded.discarded }
 
   scope :usual, -> {
-    includes(:section)
+    kept
+    .includes(:section)
       .where(sections: { work_flag: true })
       .order(Arel.sql("sections.display_order, homes.display_order, homes.id"))
   }
   scope :list, -> {
-    includes(:section, :holder)
+    kept
+    .includes(:section, :holder)
       .where(company_flag: false)
       .order(Arel.sql("sections.display_order, homes.display_order, homes.id"))
   }
   scope :landable, -> {
-    joins(:section).includes(:section)
+    kept
+    .joins(:section).includes(:section)
       .order(Arel.sql("homes.company_flag, sections.display_order, homes.display_order, homes.id"))
   }
-  scope :machine_owners, -> {where(owner_flag: true).order(Arel.sql("company_flag DESC, display_order, id"))}
-  scope :company, ->{where(company_flag: true)}
-  scope :for_finance1, -> {where(member_flag: true, owner_flag: true).order(finance_order: :ASC, id: :ASC)}
-  scope :for_drying, -> {where.not(drying_order: nil).order(:drying_order, id: :ASC)}
+  scope :machine_owners, -> {kept.where(owner_flag: true).order(Arel.sql("company_flag DESC, display_order, id"))}
+  scope :company, ->{kept.where(company_flag: true)}
+  scope :for_finance1, -> {kept.where(member_flag: true, owner_flag: true).order(finance_order: :ASC, id: :ASC)}
+  scope :for_drying, -> {kept.where.not(drying_order: nil).order(:drying_order, id: :ASC)}
   scope :for_owned_rice, -> {
-    where(member_flag: true, owner_flag: true)
+    kept
+    .where(member_flag: true, owner_flag: true)
       .order(owned_rice_order: :ASC, display_order: :ASC, id: :ASC)
   }
-  scope :for_seedling, -> {where.not(seedling_order: nil).order(seedling_order: :ASC, id: :ASC)}
-  scope :for_fee, -> {where("EXISTS (SELECT 1 FROM lands WHERE homes.id = lands.owner_id AND lands.deleted_at IS NULL AND lands.target_flag = TRUE)")}
+  scope :for_seedling, -> {kept.where.not(seedling_order: nil).order(seedling_order: :ASC, id: :ASC)}
+  scope :for_fee, -> {kept.where("EXISTS (SELECT 1 FROM lands WHERE homes.id = lands.owner_id AND lands.deleted_at IS NULL AND lands.target_flag = TRUE)")}
 
   validates :phonetic,      presence: true
   validates :name,          presence: true
