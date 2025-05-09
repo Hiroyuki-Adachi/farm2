@@ -38,6 +38,14 @@ class CrawlJob < ApplicationJob
     end
   end
 
+  def include_word?(text, word)
+    normalize_text(text).include?(normalize_text(word))
+  end
+  
+  def normalize_text(text)
+    text.to_s.tr('　', ' ').gsub(/\s+/, '')
+  end
+
   def self.ordered_classes
     [CrawlAgriNewsJob, CrawlAgriMyNaviJob, CrawlAgriJournalJob, CrawlSmartAgriJob, CrawlJaComJob, CrawlNousonNewsJob]
   end
