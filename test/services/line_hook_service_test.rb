@@ -68,6 +68,14 @@ class LineHookServiceTest < ActiveSupport::TestCase
     assert service.call(@reply_token)
   end
 
+  test 'LINE IDがユーザ以外の場合は無条件で失敗となる' do
+    LineHookService.stubs(:send_reply).returns(true)
+
+    service = LineHookService.new("token=#{@not_linked_user.token}", 'C1234567890abcdef')
+
+    assert_not service.call(@reply_token)
+  end
+
   test 'self.send_replyが動作する' do
     Net::HTTP.any_instance.stubs(:request).returns(Struct.new(:code, :body).new('200', '{}'))
 

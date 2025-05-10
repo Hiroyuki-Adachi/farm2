@@ -6,6 +6,7 @@ class Users::LineHooksController < ApplicationController
     events = params['events'] || []
     events.each do |event|
       next unless event['type'] == 'message' && event['message']['type'] == 'text'
+      next unless event['source']['type'] == 'user'
 
       message_text = event['message']['text']
       line_user_id = event['source']['userId']
