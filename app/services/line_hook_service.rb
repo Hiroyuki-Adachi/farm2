@@ -7,13 +7,12 @@ class LineHookService
   end
 
   def call(reply_token)
-    return false if @line_id[0] != 'U'
+    return false unless @line_id.to_s.start_with?('U')
     return register_line_id(reply_token, extract_user_token) if token_message?
 
     user = User.find_by(line_id: @line_id)
-    unless user
-      return false
-    end
+    return false unless user
+
     Rails.application.config.access_logger.info("LN-#{user.worker.name}")
     return unlink_line_id(reply_token, user) if unlink_message?
 
