@@ -39,3 +39,9 @@
   name: "農村ニュース"
   url: "https://www.nouson-n.com"
   paid_flag: false
+
+- id: 7
+  code: naro
+  name: "農研機構"
+  url: "https://www.naro.go.jp"
+  paid_flag: false
