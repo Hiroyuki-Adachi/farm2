@@ -12,7 +12,6 @@ class LineHookService
 
     user = User.find_by(line_id: @line_id)
     unless user
-      self.class.send_reply(reply_token, I18n.t('line_hook.not_linked'))
       return false
     end
     Rails.application.config.access_logger.info("LN-#{user.worker.name}")
