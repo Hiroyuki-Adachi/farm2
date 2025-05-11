@@ -4,13 +4,14 @@ class LineHookServiceTest < ActiveSupport::TestCase
   setup do
     @line_user_id = 'U1234567890abcdef'
     @reply_token = 'dummy_reply_token'
-    @user = users(:user_line)
+    @not_linked_user = users(:user_line)
+    @linked_user = users(:user_line_id_already_exists)
   end
 
   test 'tokenが有効の場合、紐付けに成功する' do
     LineHookService.stubs(:send_reply).returns(true)
 
-    service = LineHookService.new("token=#{@user.token}", @line_user_id)
+    service = LineHookService.new("token=#{@not_linked_user.token}", @line_user_id)
 
     assert_difference -> { User.where(line_id: @line_user_id).count }, 1 do
       assert service.call(@reply_token)
@@ -30,21 +31,19 @@ class LineHookServiceTest < ActiveSupport::TestCase
   test 'line_idが既に存在する場合、紐付けに失敗する' do
     LineHookService.stubs(:send_reply).returns(true)
 
-    already_line_id = users(:user_line_id_already_exists).line_id
-    service = LineHookService.new("token=#{@user.token}", already_line_id)
+    service = LineHookService.new("token=#{@not_linked_user.token}", @linked_user.line_id)
 
-    assert_no_difference -> { User.where(line_id: already_line_id).count } do
+    assert_no_difference -> { User.where(line_id: @linked_user.line_id).count } do
       assert_not service.call(@reply_token)
     end
   end
 
   test '解除コマンドが含まれている場合、解除に成功する' do
     LineHookService.stubs(:send_reply).returns(true)
-    already_linked_user = users(:user_line_id_already_exists)
-    service = LineHookService.new('解除', already_linked_user.line_id)
+    service = LineHookService.new('解除', @linked_user.line_id)
 
     assert service.call(@reply_token)
-    assert_equal '', already_linked_user.reload.line_id
+    assert_equal '', @linked_user.reload.line_id
   end
 
   test '紐付けの無いユーザが解除コマンドを受け取った場合、何も起こらない' do
@@ -53,12 +52,28 @@ class LineHookServiceTest < ActiveSupport::TestCase
     assert_not service.call(@reply_token)
   end
 
-  test 'tokenに無関係な場合、呼び出しは成功となる' do
+  test 'コマンドにもtokenにも無関係な場合、ユーザ不在の場合は失敗となる' do
     LineHookService.stubs(:send_reply).returns(true)
 
     service = LineHookService.new('hello world', @line_user_id)
 
+    assert_not service.call(@reply_token)
+  end
+
+  test 'コマンドにもtokenにも無関係な場合、ユーザ登録済の場合は成功となる' do
+    LineHookService.stubs(:send_reply).returns(true)
+
+    service = LineHookService.new('hello world', @linked_user.line_id)
+
     assert service.call(@reply_token)
+  end
+
+  test 'LINE IDがユーザ以外の場合は無条件で失敗となる' do
+    LineHookService.stubs(:send_reply).returns(true)
+
+    service = LineHookService.new("token=#{@not_linked_user.token}", 'C1234567890abcdef')
+
+    assert_not service.call(@reply_token)
   end
 
   test 'self.send_replyが動作する' do
