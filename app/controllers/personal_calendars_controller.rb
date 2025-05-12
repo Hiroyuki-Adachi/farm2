@@ -40,7 +40,13 @@ class PersonalCalendarsController < ApplicationController
     event.summary = result.work_name
     event.dtstart = ::Icalendar::Values::DateTime.new(to_datetime(work.worked_at, work.start_at))
     event.dtend = ::Icalendar::Values::DateTime.new(to_datetime(work.worked_at, work.end_at))
-    event.description = "■備考\n　#{work.remarks}\n\n■詳細\n#{url}\n"
+    event.description = <<~DESCRIPTION
+      ■備考
+      　#{work.remarks}
+      
+      ■詳細
+      #{url}
+    DESCRIPTION
     event.uid = result.uuid&.upcase
     event.created = work.created_at
     event.last_modified = work.updated_at
