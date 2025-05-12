@@ -21,4 +21,19 @@ class PersonalInformationsTest < ApplicationSystemTestCase
 
     assert_selector "#map", wait: 5
   end
+
+  test "日報表示(標準)" do
+    work_id = WorkResult.where(worker_id: @user.worker.id).first.work_id
+    visit personal_information_work_path(personal_information_token: @user.token, id: work_id)
+
+    assert_selector 'nav'
+  end
+
+  test "日報表示(簡易)" do
+    work_id = WorkResult.where(worker_id: @user.worker.id).first.work_id
+    visit personal_information_work_path(personal_information_token: @user.token, id: work_id, simple: true)
+
+    assert_no_selector 'nav'
+    assert_text @user.worker.name
+  end
 end
