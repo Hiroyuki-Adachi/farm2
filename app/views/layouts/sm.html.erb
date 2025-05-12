@@ -19,6 +19,7 @@
 <% token = params[:token] || params[:personal_information_token] %>
 <body style="padding-top:64px;">
 <main class="container-fluid">
+<% unless params[:simple] %>
 <div id="site-header">
 <nav class="navbar navbar-dark bg-success fixed-top" role="navigation">
   <%= link_to "作業日報(#{current_name})", personal_information_path(token: token), {class: "navbar-brand ms-2"} %>
@@ -99,6 +100,7 @@
   </div>
 </nav>
 </div>
+<% end %>
 <%= yield %>
 </main>
 </body>

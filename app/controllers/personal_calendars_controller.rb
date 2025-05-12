@@ -34,16 +34,23 @@ class PersonalCalendarsController < ApplicationController
   end
 
   def make_event_for_work(result)
+    url = personal_information_work_url(personal_information_token: params[:token], id: result.work_id, simple: true)
     work = result.work.model
     event = ::Icalendar::Event.new
     event.summary = result.work_name
     event.dtstart = ::Icalendar::Values::DateTime.new(to_datetime(work.worked_at, work.start_at))
     event.dtend = ::Icalendar::Values::DateTime.new(to_datetime(work.worked_at, work.end_at))
-    event.description = work.remarks
+    event.description = <<~DESCRIPTION
+      ■備考
+      　#{work.remarks}
+      
+      ■詳細
+      #{url}
+    DESCRIPTION
     event.uid = result.uuid&.upcase
     event.created = work.created_at
     event.last_modified = work.updated_at
-    event.url = personal_information_work_url(personal_information_token: params[:token], id: result.work_id)
+    event.url = url
     return event
   end
 
