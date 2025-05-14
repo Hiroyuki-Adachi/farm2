@@ -76,7 +76,7 @@ class IpList < ApplicationRecord
     ip.token = SecureRandom.random_number(10**6).to_s.rjust(6, '0')
     ip.expired_on = nil
     ip.created_by = user.id
-    ip.mail = user.mail
+    ip.mail = user.login_name
     ip.confirmation_expired_at = 10.minutes.from_now
     Rails.cache.delete('white_list') if ip.save
     return ip

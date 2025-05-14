@@ -11,10 +11,10 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <h1 class="text-center my-4">メールアドレス確認</h1>
+        <h1 class="text-center my-4">ID確認</h1>
         <%= form_with url: ip_lists_path, class: "needs-validation", method: :post do |form| %>
           <div class="mb-3">
-            <%= form.email_field :mail, class: "form-control", placeholder: "メールアドレスを入力してください。", required: true %>
+            <%= form.text_field :login_name, maxlength: 12, required: true, class: "form-control form-control-lg rounded-0" %>
           </div>
           <div class="d-grid">
             <%= form.submit "送信", class: "btn btn-primary" %>

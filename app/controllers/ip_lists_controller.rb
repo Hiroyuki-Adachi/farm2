@@ -5,14 +5,22 @@ class IpListsController < ApplicationController
   def new; end
 
   def create
-    user = User.find_by_mail(params[:mail])
-    if user
-      ip = IpList.white_ip!(request.remote_ip, user)
-      UserMailer.ip_confirmation(ip, ip.token).deliver_later
+    user = User.find_by(login_name: params[:login_name])
+    unless user
+      IpList.block_ip!(request.remote_ip)
+      return to_error_path
+    end
+
+    unless user.linable?
+      return to_error_path
+    end
+
+    ip = IpList.white_ip!(request.remote_ip, user)
+    if LineHookService.push_message(user.line_id, I18n.t('line.authentication', token: ip.token)).is_a?(Net::HTTPSuccess)
       redirect_to edit_ip_list_path(ip)
     else
-      IpList.block_ip!(request.remote_ip)
-      to_error_path
+      ip.destroy
+      return to_error_path
     end
   end
 
