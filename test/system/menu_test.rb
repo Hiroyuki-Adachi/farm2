@@ -1,10 +1,14 @@
 require "application_system_test_case"
 
 class MenuTest < ApplicationSystemTestCase
+  setup do
+    @user = users(:users1)
+  end
+
   test "ログインから各メニューの表示" do
     visit root_path 
 
-    fill_in 'login_name', with: '1234567890'
+    fill_in 'login_name', with: @user.login_name
     fill_in 'password', with: 'password'
     click_button '認証する'
 
