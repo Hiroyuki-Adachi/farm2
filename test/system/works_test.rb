@@ -1,10 +1,14 @@
 require "application_system_test_case"
 
 class WorksTest < ApplicationSystemTestCase
+  setup do
+    @user = users(:users1)
+  end
+
   test "ログインから日報入力まで" do
     visit root_path 
 
-    fill_in 'login_name', with: '1234567890'
+    fill_in 'login_name', with: @user.login_name
     fill_in 'password', with: 'password'
     click_button '認証する'
     assert_selector 'a', exact_text: '作業日報管理'

@@ -105,7 +105,7 @@ group :test do
   # capybara helps you test web applications by simulating how a real user would interact with your app.
   gem 'capybara'
   # cuprite is a Capybara driver for headless Chrome/Chromium
-  gem 'cuprite'
+  gem 'cuprite', '0.15.1'
   # minitest is a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking.
   gem 'mocha'
 end

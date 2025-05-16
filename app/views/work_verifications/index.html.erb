@@ -1,5 +1,4 @@
 <h1>作業日報検証</h1>
-<% if @works.count > 0 %>
   <div class="float-end">
     <div class="form-check form-check-inline">
       <%= check_box_tag "print_self", nil, false, {class: "form-check-input"} %>
@@ -7,9 +6,8 @@
     </div>
   </div>
 <div id="list" class="wrapper float-head-wrapper" style="height: calc(100vh - 150px);">
-<%= render(partial: 'list') %>
+  <%= render(partial: 'list') %>
 </div>
-<% end %>
 <div id="btn_toolbar" class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= link_to '戻る', menu_index_path, {class: "btn btn-outline-dark"} %>

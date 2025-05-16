@@ -30,7 +30,10 @@ Capybara.register_driver(:better_cuprite) do |app|
     app,
     window_size: [1200, 800],
     browser_options: remote_chrome ? { "no-sandbox" => nil } : {},
-    inspector: true, **remote_options
+    js_errors: true,
+    timeout: 30,
+    headless: true,
+    **remote_options
   )
 end
 
