@@ -1,4 +1,4 @@
-import { Modal } from 'bootstrap';
+import "bootstrap";
 
 document.addEventListener('turbo:load', () => {
     document.getElementById("print_self").addEventListener("change", (event) => {
@@ -85,7 +85,7 @@ const execShow = (url) => {
         .then((data) => data.text())
         .then((html) => {
             document.getElementById("show_work_content").innerHTML = html;
-            verificationModal = new Modal(document.getElementById("show_work"));
+            verificationModal = new bootstrap.Modal(document.getElementById("show_work"));
             verificationModal.show();
             if (document.getElementById("work_exec") != null) {
                 document.getElementById("work_exec").addEventListener("click", (event) => {

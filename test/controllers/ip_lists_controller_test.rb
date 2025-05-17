@@ -2,44 +2,74 @@ require "test_helper"
 
 class IpListsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:users1)
+    @user = users(:user_line_id_already_exists)
     @ip_address = '5.5.5.5'
+    @original = LineHookService.method(:push_message)
   end
 
-  test "メール送信画面(ブラックリスト)" do
+  teardown do
+    LineHookService.define_singleton_method(:push_message, @original)
+  end
+
+  test "ID認証画面(ブラックリスト)" do
     get new_ip_list_path, headers: { 'REMOTE_ADDR' => '4.4.4.4' }
     assert_response :service_unavailable
   end
 
-  test "メール送信画面(ホワイトリスト)" do
+  test "ID認証画面(ホワイトリスト)" do
     get new_ip_list_path, headers: { 'REMOTE_ADDR' => '3.3.3.3' }
     assert_redirected_to root_path
   end
 
-  test "メール送信画面(ローカルアドレス)" do
+  test "ID認証画面(ローカルアドレス)" do
     get new_ip_list_path, headers: { 'REMOTE_ADDR' => '127.0.0.1' }
     assert_redirected_to root_path
   end
 
-  test "メール送信画面" do
+  test "ID認証画面" do
     get new_ip_list_path, headers: { 'REMOTE_ADDR' => @ip_address }
     assert_response :success
   end
 
-  test "メール送信画面(送信)" do
-    assert_difference('IpList.count') do
-      post ip_lists_path, params: {mail: @user.mail}, headers: { 'REMOTE_ADDR' => @ip_address }
+  test "ID認証画面(LINE送信)" do
+    LineHookService.define_singleton_method(:push_message) do |*args|
+      Net::HTTPOK.new("1.1", "200", "OK")
     end
+    assert_difference('IpList.count') do
+      post ip_lists_path, params: {login_name: @user.login_name}, headers: { 'REMOTE_ADDR' => @ip_address }
+    end
+
     ip = IpList.last
-    assert_equal @user.mail, ip.mail
+    assert_equal @user.login_name, ip.mail
     assert_equal @ip_address, ip.ip_address
     assert_equal true, ip.white_flag
     assert_redirected_to edit_ip_list_path(ip)
   end
 
-  test "メール送信画面(送信)(未登録)" do
+  test "ID認証画面(LINE送信失敗)" do
+    LineHookService.define_singleton_method(:push_message) do |*args|
+      Net::HTTPServerError.new(1.0, "500", "Error")
+    end
+
+    assert_no_difference('IpList.count') do
+      post ip_lists_path, params: {login_name: @user.login_name}, headers: { 'REMOTE_ADDR' => @ip_address }
+    end
+
+    assert_response :service_unavailable
+  end
+
+  test "ID認証画面(LINE未登録)" do
+    @user.update(line_id: '')
+    assert_no_difference('IpList.count') do
+      post ip_lists_path, params: {login_name: @user.login_name}, headers: { 'REMOTE_ADDR' => @ip_address }
+    end
+
+    assert_response :service_unavailable
+  end
+
+  test "ID認証画面(LINE送信)(未登録)" do
     assert_difference('IpList.count') do
-      post ip_lists_path, params: {mail: 'error@example.com'}, headers: { 'REMOTE_ADDR' => @ip_address }
+      post ip_lists_path, params: {login_name: 'invalid_name'}, headers: { 'REMOTE_ADDR' => @ip_address }
     end
     assert_response :service_unavailable
 
