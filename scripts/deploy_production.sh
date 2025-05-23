@@ -22,7 +22,7 @@ bundle install
 echo "-> DB Migration"
 RAILS_ENV=production bundle exec rails db:migrate
 
-echo "-> assets Precompile"
+echo "-> Assets Precompile"
 RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/farm2 bundle exec rake assets:clobber assets:precompile
 
 echo "-> Puma Restart"
