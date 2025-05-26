@@ -18,7 +18,7 @@ class LineHookService
 
     self.class.send_reply(reply_token, "#{user.worker.name}さん、こんにちは😀\n\n#{I18n.t('line_hook.help')}")
     return true
-  rescue NoMethodError, StandardError => e
+  rescue StandardError => e
     Rails.logger.error("LineHookService Error: #{e.message}")
     false
   end
@@ -47,10 +47,13 @@ class LineHookService
     uri = URI.join(API_ENDPOINT, command.to_s)
 
     Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-      request = Net::HTTP::Post.new(uri.request_uri, {
-        'Content-Type' => 'application/json',
-        'Authorization' => "Bearer #{ENV['LINE_CHANNEL_ACCESS_TOKEN']}"
-      })
+      request = Net::HTTP::Post.new(
+        uri.request_uri, 
+        {
+          'Content-Type' => 'application/json',
+          'Authorization' => "Bearer #{ENV.fetch['LINE_CHANNEL_ACCESS_TOKEN']}"
+        }
+      )
       request.body = payload.to_json
 
       http.request(request)
@@ -78,7 +81,7 @@ class LineHookService
     end
 
     user = User.find_by(token: user_token)
-    unless user && user.worker && user.worker.name
+    unless user&.worker&.name
       self.class.send_reply(reply_token, I18n.t('line_hook.invalid_token'))
       return false
     end
