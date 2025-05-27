@@ -7,7 +7,7 @@ class DiskCheckJob < ApplicationJob
   WEEKLY_REPORT_DAYS = [:sun].freeze
 
   def perform
-    line_id = ENV.fetch('LINE_SECRETARIANT_ID', nil).freeze
+    line_id = ENV.fetch('LINE_SECRETARIANT_ID', '').freeze
     return unless line_id
 
     df_output = `df / -h | tail -1`.split
