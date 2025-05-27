@@ -48,6 +48,10 @@ every 1.day, at: '10:31 am' do
   runner "NewsDeliverJob.perform_now"
 end
 
+every 1.day, at: '5:15 pm' do
+  runner "DiskCheckJob.perform_now"
+end
+
 every 1.day, at: '5:40 pm' do
   runner "ScheduleDeliverJob.perform_now"
 end
