@@ -51,7 +51,7 @@ class LineHookService
         uri.request_uri, 
         {
           'Content-Type' => 'application/json',
-          'Authorization' => "Bearer #{ENV.fetch['LINE_CHANNEL_ACCESS_TOKEN']}"
+          'Authorization' => "Bearer #{ENV.fetch('LINE_CHANNEL_ACCESS_TOKEN', nil)}"
         }
       )
       request.body = payload.to_json

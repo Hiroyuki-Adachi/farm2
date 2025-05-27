@@ -4,25 +4,28 @@ class DiskCheckJob < ApplicationJob
   THRESHOLD_CRITICAL = 5
   THRESHOLD_WARNING  = 20
   THRESHOLD_CAUTION  = 40
+  WEEKLY_REPORT_DAYS = [:sun].freeze
 
   def perform
     line_id = ENV.fetch('LINE_SECRETARIANT_ID', nil).freeze
     return unless line_id
 
     df_output = `df / -h | tail -1`.split
-    size = df_output[1]      # 例: "40G"
-    avail = df_output[3]     # 例: "10G"
-    used_pct = df_output[4]  # 例: "75%" ← 使用済みパーセント
+    size = df_output[1]
+    avail = df_output[3]
+    used_pct = df_output[4] # 使用済みパーセント
 
     used_pct_num = used_pct.delete('%').to_i
     free_pct = 100 - used_pct_num
 
-    return if free_pct > THRESHOLD_CAUTION
+    weekday = Date::ABBR_DAYNAMES[Time.zone.now.wday].downcase.to_sym
+    return if free_pct > THRESHOLD_CAUTION && WEEKLY_REPORT_DAYS.exclude?(weekday)
 
     emoji = case free_pct
-            when 0..THRESHOLD_CRITICAL then "🟥"
-            when (THRESHOLD_CRITICAL + 1)..THRESHOLD_WARNING then "🟧"
-            else "🟨"
+            when 0..THRESHOLD_CRITICAL then '🟥'
+            when (THRESHOLD_CRITICAL + 1)..THRESHOLD_WARNING then '🟧'
+            when (THRESHOLD_WARNING + 1)..THRESHOLD_CAUTION then '🟨'
+            else '🟦'
             end
 
     message = <<~MSG.chomp
