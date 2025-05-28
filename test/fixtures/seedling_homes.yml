@@ -10,10 +10,6 @@
 #  home_id(世帯)     :integer
 #  seedling_id(育苗) :integer
 #
-# Indexes
-#
-#  index_seedling_homes_on_seedling_id_and_home_id  (seedling_id,home_id) UNIQUE
-#
 
 seedling_home1:
   seedling: seedling1
@@ -26,3 +22,15 @@ seedling_home_genka:
   home_id: 1
   quantity: 200
   sowed_on: "2017-05-01"
+
+seedling_home21:
+  seedling: seedling1
+  home_id: 2
+  quantity: 300
+  sowed_on: "2015-04-01"
+
+seedling_home22:
+  seedling: seedling1
+  home_id: 2
+  quantity: 200
+  sowed_on: "2015-05-10"
