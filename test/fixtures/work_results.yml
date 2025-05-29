@@ -13827,3 +13827,15 @@ work_created_yesterday_2:
   worker_id: 1
   hours: 6
   display_order: 2
+
+work_result_taue1:
+  work: work_taue
+  worker_id: 1
+  hours: 6
+  display_order: 1
+
+work_result_taue2:
+  work: work_taue
+  worker_id: 13
+  hours: 5
+  display_order: 2
