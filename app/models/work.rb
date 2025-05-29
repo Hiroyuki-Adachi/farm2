@@ -72,6 +72,7 @@ class Work < ApplicationRecord
   scope :by_work_kind_type, ->(term, work_kind_id, seedling_home) {
     joins(:work_lands)
       .where(term: term, work_kind_id: work_kind_id)
+      .where(works: { worked_at: seedling_home.sowed_on.. })
       .where([<<SQL.squish, seedling_home.work_type_id]).select(:id, :worked_at).distinct
     EXISTS (
       SELECT * FROM land_costs lc1
