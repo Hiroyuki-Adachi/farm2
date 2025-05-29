@@ -62,3 +62,10 @@ land_cost_broccoli:
   work_type: work_type_broccoli
   created_at: '2016-07-11 12:12:12'
   updated_at: '2016-07-11 12:12:12'
+
+land_cost_taue:
+  activated_on: '2015-01-01'
+  land: land_taue
+  work_type_id: 2
+  created_at: '2016-07-11 12:12:12'
+  updated_at: '2016-07-11 12:12:12'

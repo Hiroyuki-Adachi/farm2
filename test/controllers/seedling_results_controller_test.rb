@@ -28,6 +28,17 @@ class SeedlingResultsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "育苗対象作業一覧" do
+    get work_results_seedling_results_path(index: 1, work_id: works(:work_taue).id),
+        headers: { "Accept" => "text/vnd.turbo-stream.html" }
+
+    assert_response :success
+    assert_includes @response.media_type, "text/vnd.turbo-stream.html"
+
+    body = @response.body
+    assert_includes body, "<select"
+  end
+
   test "育苗使用(担当:更新)(登録)" do
     work_result = work_results(:work_results300)
     seedling_result_insert = {seedling_results_attributes: [{work_result_id: work_result.id, quantity: 100}]}
