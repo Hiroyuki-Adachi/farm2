@@ -36,16 +36,16 @@ every 1.day, at: '10:58 am' do
   runner "ImportJmaJob.perform_now"
 end
 
-every 1.day, at: '10:02 am' do
-  runner "CrawlJob.perform_now(perform_now: true)"
-end
-
 every 1.day, at: '10:15 am' do
   runner "WorksDeliverJob.perform_now"
 end
 
 every 1.day, at: '10:31 am' do
   runner "NewsDeliverJob.perform_now"
+end
+
+every 1.day, at: '5:15 pm' do
+  runner "DiskCheckJob.perform_now"
 end
 
 every 1.day, at: '5:40 pm' do

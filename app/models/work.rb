@@ -69,10 +69,11 @@ class Work < ApplicationRecord
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :DESC, id: :DESC)}
   scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
   scope :by_creator, ->(worker) {where(["works.created_by IS NULL OR works.created_by <> ?", worker.id])}
-  scope :by_work_kind_type, ->(term, work_kind_id, work_type_id) {
+  scope :by_work_kind_type, ->(term, work_kind_id, seedling_home) {
     joins(:work_lands)
       .where(term: term, work_kind_id: work_kind_id)
-      .where([<<SQL.squish, work_type_id]).select(:id, :worked_at).distinct
+      .where(works: { worked_at: seedling_home.sowed_on.. })
+      .where([<<SQL.squish, seedling_home.work_type_id]).select(:id, :worked_at).distinct
     EXISTS (
       SELECT * FROM land_costs lc1
       WHERE
