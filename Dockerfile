@@ -42,7 +42,11 @@ RUN apt-get update && apt-get install yarn
 
 # アプリケーションディレクトリを作成
 RUN mkdir /farm2
+
+# Yarn の依存関係をインストール
+COPY package.json yarn.lock /farm2/
 WORKDIR /farm2
+RUN yarn install
 
 # ホストの設定ファイルをコピー
 COPY Gemfile Gemfile.lock /farm2/
@@ -53,6 +57,3 @@ RUN gem update --system
 RUN gem install bundler
 RUN bundle install
 
-# Yarn の依存関係をインストール
-COPY package.json yarn.lock /farm2/
-RUN rm -rf node_modules && yarn install
