@@ -29,3 +29,8 @@ schedule_tomorrow_worker:
   schedule: schedule_tomorrow
   worker_id: 13
   display_order: 1
+
+schedule_today_worker:
+  schedule: schedule_today
+  worker_id: 13
+  display_order: 1
