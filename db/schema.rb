@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_30_064310) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_28_101946) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -668,7 +668,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_30_064310) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.date "sowed_on", comment: "播種日"
-    t.index ["seedling_id", "home_id"], name: "index_seedling_homes_on_seedling_id_and_home_id", unique: true
   end
 
   create_table "seedling_results", id: { type: :serial, comment: "育苗結果" }, comment: "育苗結果", force: :cascade do |t|
