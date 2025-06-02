@@ -7,9 +7,9 @@ class CrawlJob < ApplicationJob
     words = UserWord.words
     Topic.old(START_DAY).destroy_all
     if perform_now
-      CrawlJob.ordered_classes.each {|job| job.perform_now(words) }
+      CrawlJob.ordered_classes.each {|job| job&.perform_now }
     else
-      CrawlJob.ordered_classes.each {|job| job.perform_later(words) }
+      CrawlJob.ordered_classes.each {|job| job&.perform_later }
     end
   end
 
