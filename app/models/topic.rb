@@ -13,7 +13,8 @@
 #
 # Indexes
 #
-#  index_topics_on_url  (url) UNIQUE
+#  index_topics_on_title_and_content_pgroonga  (((((COALESCE(title, ''::character varying))::text || ' '::text) || COALESCE(content, ''::text)))) USING pgroonga
+#  index_topics_on_url                         (url) UNIQUE
 #
 class Topic < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
