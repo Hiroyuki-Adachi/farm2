@@ -50,13 +50,20 @@ SQL
   }
 
   scope :for_training, ->(work) {
-    where("schedules.worked_at >= ?", work.worked_at)
+    where(worked_at: work.worked_at..)
     .where("work_flag = FALSE")
     .includes(:work_kind, :schedule_workers)
     .order(worked_at: :ASC, id: :ASC)
   }
 
   scope :tomorrow, -> { where(worked_at: Date.tomorrow) }
+  scope :today, -> { where(worked_at: Time.zone.today) }
+  scope :am_only, -> {
+    where("EXTRACT(HOUR FROM start_at) < 12")
+  }
+  scope :pm_only, -> {
+    where("EXTRACT(HOUR FROM start_at) >= 12")
+  }
 
   def regist_workers(params)
     workers = []

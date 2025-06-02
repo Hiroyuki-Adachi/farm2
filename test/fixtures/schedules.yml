@@ -37,10 +37,20 @@ schedule_meeting:
 
 schedule_tomorrow:
   term: 2015
-  worked_at: '2015-05-01'
+  worked_at: '2015-05-02'
   work_type_id: 12
   work_kind_id: 31
   work_flag: false
   name: "会議"
   start_at: '09:00'
+  end_at: '17:00'
+
+schedule_today:
+  term: 2015
+  worked_at: '2015-05-01'
+  work_type_id: 12
+  work_kind_id: 31
+  work_flag: false
+  name: "会議"
+  start_at: '14:00'
   end_at: '17:00'

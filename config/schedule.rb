@@ -48,6 +48,10 @@ every 1.day, at: '5:15 pm' do
   runner "DiskCheckJob.perform_now"
 end
 
+every 1.day, at: '8:40 pm' do
+  runner "ScheduleDeliverJob.perform_now(:morning)"
+end
+
 every 1.day, at: '5:40 pm' do
-  runner "ScheduleDeliverJob.perform_now"
+  runner "ScheduleDeliverJob.perform_now(:afternoon)"
 end
