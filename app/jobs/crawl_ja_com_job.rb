@@ -1,30 +1,30 @@
 class CrawlJaComJob < CrawlJob
   queue_as :default
 
-  def perform(words)
+  def perform
     agent = Mechanize.new
-    search_all_agri_news(agent, words)
+
+    uri = TopicType::JA_COM.url
+    page = 1
+
+    catch(:done) do
+      loop do
+        path = page > 1 ? ["news_#{page}.php"] : ['news.php']
+        doc = Nokogiri::HTML(agent.get(URI.join(uri, *path).to_s).body)
+
+        doc.css('div.newsList__body ul li.newsList__item').each do |topic|
+          topic_date = Date.strptime(topic.at_css('div.newsListDate')&.text, '%Y年%m月%d日')
+          throw(:done) if topic_date < Time.zone.today - START_DAY
+
+          save_topic(agent, topic.at_css('a')&.[](:href), topic_date)
+        end
+
+        page += 1
+      end
+    end
   end
 
   private
-
-  def search_agri_news(agent, word)
-    search_params = {
-      search: word,
-      searchAct: '検索',
-      detailSearch: 'detail',
-      blogid: '',
-      sort: 'desc',
-      startday: (Time.zone.today - START_DAY).strftime('%Y-%m-%d'),
-      endday: Time.zone.today.strftime('%Y-%m-%d')
-    }
-    search_doc = Nokogiri::HTML(agent.get(URI.join(TopicType::JA_COM.url, 'search.php').to_s, search_params).body)
-    search_doc.css('ul#searchResults li.searchList__item').each do |topic|
-      topic_date = Date.strptime(topic.at_css('div.searchListDate')&.text, '%Y年%m月%d日')
-      topic = save_topic(agent, topic.at_css('a')&.[](:href), topic_date)
-      save_user_topic(word, topic)
-    end
-  end
 
   def save_topic(agent, url, topic_date)
     news_doc = Nokogiri::HTML(agent.get(url).body)
