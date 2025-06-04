@@ -15,7 +15,7 @@ class CrawlNousonNewsJob < CrawlJob
     doc = Nokogiri::HTML(agent.get(URI.join(TopicType::NOUSON_NEWS.url, url).to_s).body)
     doc.css('div.archivelist_wrap div.blog_contents').each do |content|
       topic_date = Date.strptime(content.css('span.blog_date01').text, '%Y/%m/%d')
-      break if topic_date < Time.zone.today - START_DAY - 10
+      break if topic_date < Time.zone.today - START_DAY
       save_topic(agent, content.at_css('a')&.[](:href), topic_date)
     end
   end
