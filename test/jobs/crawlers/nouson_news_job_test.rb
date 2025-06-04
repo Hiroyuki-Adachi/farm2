@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CrawlNousonNewsJobTest < ActiveJob::TestCase
+class Crawlers::NousonNewsJobTest < ActiveJob::TestCase
   BODY = Struct.new(:body)
 
   test "クロールして記事を保存できる" do

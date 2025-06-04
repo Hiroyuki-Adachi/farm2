@@ -1,4 +1,4 @@
-class CrawlAgriJournalJob < CrawlJob
+class Crawlers::AgriJournalJob < CrawlJob
   queue_as :default
 
   def perform

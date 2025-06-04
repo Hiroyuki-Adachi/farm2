@@ -2,7 +2,7 @@ require 'mechanize'
 require 'dotenv/load'
 require 'nokogiri'
 
-class CrawlAgriMyNaviJob < CrawlJob
+class Crawlers::AgriMyNaviJob < CrawlJob
   queue_as :default
 
   def perform

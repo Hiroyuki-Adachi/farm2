@@ -1,4 +1,4 @@
-class CrawlNaroJob < CrawlJob
+class Crawlers::NaroJob < CrawlJob
   queue_as :default
 
   def perform

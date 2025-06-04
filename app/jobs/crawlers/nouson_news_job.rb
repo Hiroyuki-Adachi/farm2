@@ -1,4 +1,4 @@
-class CrawlNousonNewsJob < CrawlJob
+class Crawlers::NousonNewsJob < CrawlJob
   queue_as :default
 
   def perform

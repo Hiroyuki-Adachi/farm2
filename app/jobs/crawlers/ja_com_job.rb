@@ -1,4 +1,4 @@
-class CrawlJaComJob < CrawlJob
+class Crawlers::JaComJob < CrawlJob
   queue_as :default
 
   def perform
