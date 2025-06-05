@@ -37,11 +37,11 @@ class Crawlers::AgriJournalJobTest < ActiveJob::TestCase
   end
 
   def assert_expected_topic
-    last_topic = Topic.last
-    assert_equal "想定される記事のタイトル", last_topic.title
-    assert_equal "https://agrijournal.jp/information/82779/", last_topic.url
-    assert_equal TopicType::AGRI_JOURNAL.id, last_topic.topic_type_id
-    assert_equal Date.new(2024, 10, 21), last_topic.posted_on
-    assert_includes last_topic.content, "想定される記事の本文の一部"
+    topic = Topic.last
+    assert_equal "想定される記事のタイトル", topic.title
+    assert_equal "https://agrijournal.jp/information/82779/", topic.url
+    assert_equal TopicType::AGRI_JOURNAL.id, topic.topic_type_id
+    assert_equal Date.new(2024, 10, 21), topic.posted_on
+    assert_includes topic.content, "想定される記事の本文の一部"
   end
 end

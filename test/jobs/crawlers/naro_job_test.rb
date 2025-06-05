@@ -33,12 +33,12 @@ class Crawlers::NaroJobTest < ActiveJob::TestCase
   end
 
   def assert_expected_topic
-    last_topic = Topic.last
+    topic = Topic.last
     item_url = URI.join(TopicType::NARO.url, '/project/research_activities/laboratory/carc/169353.html').to_s
-    assert_equal "想定される記事のタイトル", last_topic.title
-    assert_equal item_url, last_topic.url
-    assert_equal TopicType::NARO.id, last_topic.topic_type_id
-    assert_equal Date.new(2025, 5, 10), last_topic.posted_on
-    assert_includes last_topic.content, '想定される記事の本文の一部'
+    assert_equal "想定される記事のタイトル", topic.title
+    assert_equal item_url, topic.url
+    assert_equal TopicType::NARO.id, topic.topic_type_id
+    assert_equal Date.new(2025, 5, 10), topic.posted_on
+    assert_includes topic.content, '想定される記事の本文の一部'
   end
 end
