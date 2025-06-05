@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Crawlers::AgriMyNaviJobTest < ActiveJob::TestCase
   test "クロールして記事を保存できる" do
-    stub_agri_mynavi_page(
+    stub_pages(
       list: "agri.mynavi.jp.list.html",
       item: "agri.mynavi.jp.item.html"
     )
@@ -18,7 +18,7 @@ class Crawlers::AgriMyNaviJobTest < ActiveJob::TestCase
 
   private
 
-  def stub_agri_mynavi_page(list:, item:)
+  def stub_pages(list:, item:)
     base_url = TopicType::AGRI_MY_NAVI.url
     stub_request(:get, "#{base_url}/news").to_return(
       body: read_fixture(list)

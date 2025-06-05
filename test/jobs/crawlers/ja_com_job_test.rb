@@ -1,10 +1,8 @@
 require 'test_helper'
 
 class Crawlers::JaComJobTest < ActiveJob::TestCase
-  BODY = Struct.new(:body)
-  
   test "クロールして記事を保存できる" do
-    stub_ja_com_page(
+    stub_pages(
       list: "jacom.or.jp.list.html",
       item: "jacom.or.jp.item.html"
     )
@@ -18,9 +16,9 @@ class Crawlers::JaComJobTest < ActiveJob::TestCase
     end
   end
 
-    private
+  private
 
-  def stub_ja_com_page(list:, item:)
+  def stub_pages(list:, item:)
     base_url = TopicType::JA_COM.url
     stub_request(:get, "#{base_url}/news.php").to_return(
       body: read_fixture(list)

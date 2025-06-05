@@ -1,10 +1,8 @@
 require 'test_helper'
 
 class Crawlers::AgriJournalJobTest < ActiveJob::TestCase
-  BODY = Struct.new(:body)
-
   test "クロールして記事を保存できる" do
-    stub_agri_journal_page(
+    stub_pages(
       list: "agrijournal.jp.list.html",
       item1: "agrijournal.jp.item1.html",
       item2: "agrijournal.jp.item2.html"
@@ -21,7 +19,7 @@ class Crawlers::AgriJournalJobTest < ActiveJob::TestCase
 
   private
 
-  def stub_agri_journal_page(list:, item1:, item2:)
+  def stub_pages(list:, item1:, item2:)
     base_url = TopicType::AGRI_JOURNAL.url
     stub_request(:get, "#{base_url}/allposts").to_return(
       body: read_fixture(list)
