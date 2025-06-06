@@ -1,26 +1,19 @@
 import "bootstrap";
 
-document.addEventListener('turbo:load', function () {
-    document.addEventListener('turbo:before-stream-render', (event) => {
-        const myModal = new bootstrap.Modal(document.getElementById('topic_data_modal'));
-        myModal.show();
-
-        document.getElementById("topic_data_modal").addEventListener("hidden.bs.modal", () => {
-            fetch(document.getElementById("topic_data_dialog").dataset.url, {
-                method: 'delete',
+document.addEventListener('turbo:load', () => {
+    document.querySelectorAll("a.topic-link").forEach(link => {
+        link.addEventListener("click", (event) => {
+            event.preventDefault();
+            fetch(link.dataset.readed, {
+                method: "DELETE",
                 headers: {
-                    'X-CSRF-Token': getCsrfToken()
-                }
-            }).then(response => {
-                if (!response.ok) {
-                    throw new Error('Error deleting topic data');
-                }
-                return response.text();
-            }).then(html => {
-                document.getElementById("topics_content").innerHTML = html;
-            }).catch(error => {
-                console.error(error.message);
-            });
+                    "X-CSRF-Token": getCsrfToken()
+                },
+                keepalive: true 
+            })
+            .then((data) => data.text())
+            .then((html) => document.getElementById("topics_content").innerHTML = html)
+            .finally(() => window.open(link.href, '_blank'));
         });
     });
 });

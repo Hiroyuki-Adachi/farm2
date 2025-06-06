@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_30_135138) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_06_125231) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -861,6 +861,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_30_135138) do
     t.boolean "pc_flag", default: true, null: false, comment: "パソコンフラグ"
     t.boolean "sp_flag", default: true, null: false, comment: "スマートフォンフラグ"
     t.boolean "line_flag", default: false, null: false, comment: "LINEフラグ"
+    t.index ["user_id", "topic_id"], name: "ix_user_topics_user_id_topic_id", unique: true
   end
 
   create_table "user_words", comment: "利用者ワード", force: :cascade do |t|

@@ -3,7 +3,8 @@
     <li class="list-group-item">
       <span class='badge bg-primary me-1'><%= user_topic.word %></span>
       <span class='badge bg-secondary me-1'><%= user_topic.topic&.topic_type&.name %></span>
-      <a href="<%= user_topic.topic.url %>" target="_blank" rel="noopener noreferrer">
+      <a href="<%= user_topic.topic.url %>" target="_blank" rel="noopener noreferrer" class="topic-link"
+        data-readed="<%= users_word_path(user_topic.topic_id) %>">
         <%= user_topic.topic.title %>
       </a>
       <small class="text-muted">(<%= user_topic.topic.posted_on.strftime("%Y-%m-%d") %>)</small>
