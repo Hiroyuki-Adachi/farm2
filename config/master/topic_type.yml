@@ -4,12 +4,6 @@
   url: "https://www.example.com"
   paid_flag: true
 
-- id: 1
-  code: agri_news
-  name: "日本農業新聞"
-  url: "https://www.agrinews.co.jp"
-  paid_flag: true
-
 - id: 2
   code: agri_my_navi
   name: "マイナビ農業"

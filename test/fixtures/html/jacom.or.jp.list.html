@@ -14,15 +14,22 @@
     <title></title>
     <meta name="keywords" content="JAcom,農業,協同組合,新聞,農政,JAグループ,ニュース,農協,協会,agricultual">
     <meta name="description" content="JAcom農業協同組合新聞は昭和23年創刊。全国のＪＡグループ・農業・農村・食・環境などの情報を配信する専門紙。農政解説や提言、ＪＡ現場からの声、アグリビジネス、新刊紹介、フードビジネスなど毎日更新。">
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-KRX4L4H');</script>
+	<!-- End Google Tag Manager -->
     <link rel="icon" href="https://www.jacom.or.jp/images/favicon.ico">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" type="text/css" href="https://www.jacom.or.jp/css/style_2020.css?250503">
-    <link rel="stylesheet" type="text/css" href="https://www.jacom.or.jp/css/style_add_2020.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://www.jacom.or.jp/css/style_2020.css?250605">
+    <link rel="stylesheet" type="text/css" href="https://www.jacom.or.jp/css/style_add_2020.css?250605">
 
     <script src="https://www.jacom.or.jp/js/jquery-1.12.4.min.js"></script>
     <script src="https://www.jacom.or.jp/js/ua-parser.min.js"></script>
     
-    <script>
+	<script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -38,9 +45,9 @@
     jQuery("a").click(function(e) {        
         var ahref = jQuery(this).attr('href');
         if (ahref.indexOf("jacom.or.jp") != -1 || ahref.indexOf("http") == -1 ) {
-            ga('send', 'event', 'https://www.jacom.or.jp/search.php', 'クリック', ahref);} 
+            ga('send', 'event', 'https://www.jacom.or.jp/news.php', 'クリック', ahref);} 
         else { 
-            ga('send', 'event', 'https://www.jacom.or.jp/search.php', 'クリック', ahref);}
+            ga('send', 'event', 'https://www.jacom.or.jp/news.php', 'クリック', ahref);}
         });
     });
 </script>
@@ -75,7 +82,14 @@ $(document).ready(function () {
 	})
 });
 </script>
+    <style>
+      .searchRelease{
+        display: none;
+      }
+    </style>
+    <script data-ad-client="ca-pub-7612467038182708" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
+
 <body>
     
     <div id="wrapper">
@@ -87,11 +101,19 @@ $(document).ready(function () {
                         <h1 class="headerTop__Left__item headerLogo1"><a href="https://www.jacom.or.jp/"><img src="https://www.jacom.or.jp/images/jacom_top_logo160-2.png" alt="https://www.jacom.or.jp/"></a></h1>
                             <h1 class="headerTop__left__sp headerLogoSp"><a href="https://www.jacom.or.jp/">JAcom</a></h1>
                             <div class="headerTop__Left__item headerDate">
-                                <p>2025年5月6日<span>(火)</span></p>
+                                <p>2025年6月5日<span>(木)</span></p>
                             </div>
                         </div>
                         <!-- headerLeft -->
                         <div class="headerTop__Right_sp">
+                            <select name="translang" id="translang" class="translang">
+  <option lang="" value="">翻訳</option>
+  <option lang="en" value="en">ENGLISH</option>
+  <option lang="ko" value="ko">한국어</option>
+  <option lang="zh-CN" value="zh-CN">中文(简化字)</option>
+  <option lang="zh-TW" value="zh-TW">中文(繁體字)</option>
+  <option lang="ja" value="ja">日本語</option>
+</select>
                             <div id="searchBtn"></div>
                             <div id="searchBtn__body">
                                 <ul>
@@ -108,37 +130,44 @@ $(document).ready(function () {
                         </div>
                         <div class="headerTop__Right">
                             <div class="headerTop__Right__innerL">
-                                <div class='bannerPc'><a href="https://www.nippon-soda.co.jp/nougyo/product/4470/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/d19c8cb117ceee7b3aa563fac262c870.jpg" alt="250501　ミギワ20　PC"></a></div>                            </div>
+                                <div class='bannerPc'><a href="https://www.fmc-japan.com/Agricultural-Solutions/hakozai?utm_source=JAcom&utm_medium=banner_top&utm_campaign=JAcom_hakozai_202112" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/0db674c5ac0c15c951592e54b2f837ab.gif" alt="ヘッダー：FMC221007PC"></a></div>                            </div>
                             <div class="headerTop__Right__innerR">
                                 <div class="headerTop__Right__item snsbanner">
-                                  <div><a href="https://www.facebook.com/JAcom.or.jp/" target="_blank"><img src="https://www.jacom.or.jp/images/header_sns_01.png" alt="facebook"></a></div>
-                                  <div><a href="https://twitter.com/JAcom_nokyo" target="_blank"><img src="https://www.jacom.or.jp/images/header_sns_02.png" alt="twitter"></a></div>
+                                    <div><a href="https://www.facebook.com/JAcom.or.jp/" target="_blank"><img src="https://www.jacom.or.jp/images/header_sns_01.png" alt="facebook"></a></div>
+                                    <div><a href="https://twitter.com/JAcom_nokyo" target="_blank"><img src="https://www.jacom.or.jp/images/header_sns_02.png" alt="twitter"></a></div>
                                 </div>
                                 <div class="headerTop__Right__item mgbanner">
                                     <a href="https://fl20.asp.cuenote.jp/mypage/regist/Tg33TRTgbR3b33HPi" target="_blank"><img src="https://www.jacom.or.jp/images/mailmag_banner.png" alt="メルマガ会員募集"></a>
                                 </div>
-                                <!-- サイト内検索 -->
                                 <form id="pcPageSearch" class="inSide headerTop__Right__item" method="get" action="https://www.jacom.or.jp/search.php">
                                     <p class="searchform"><input type="text" name="search" value="" placeholder="記事を探す" maxlength="50"></p>
                                     <input type="hidden" name="detailSearch" value="normal">
                                     <input type="submit" value="検索" id="search" class="searchLabel" name="searchAct">
                                 </form>
+                                <select name="translang" id="translang" class="translang">
+  <option lang="" value="">翻訳</option>
+  <option lang="en" value="en">ENGLISH</option>
+  <option lang="ko" value="ko">한국어</option>
+  <option lang="zh-CN" value="zh-CN">中文(简化字)</option>
+  <option lang="zh-TW" value="zh-TW">中文(繁體字)</option>
+  <option lang="ja" value="ja">日本語</option>
+</select>
                             </div>
                             <nav class="gnav">
                                 <ul>
-                                  <li class="gnav__item01"><a href="https://www.jacom.or.jp/nousei/"></a></li>
-                                  <li class="gnav__item02"><a href="https://www.jacom.or.jp/noukyo/"></a></li>
-                                  <li class="gnav__item03"><a href="https://www.jacom.or.jp/column/"></a></li>
-                                  <li class="gnav__item04"><a href="https://www.jacom.or.jp/jinji/"></a></li>
-                                  <li class="gnav__item05"><a href="https://www.jacom.or.jp/nouyaku/"></a></li>
-                                  <li class="gnav__item06"><a href="https://www.jacom.or.jp/kome/"></a></li>
-                                  <li class="gnav__item07"><a href="https://www.jacom.or.jp/kinyu/"></a></li>
-                                  <li class="gnav__item08"><a href="https://www.jacom.or.jp/shizai/"></a></li>
-                                  <li class="gnav__item09"><a href="https://www.jacom.or.jp/saibai/"></a></li>
-                                  <li class="gnav__item10"><a href="https://www.jacom.or.jp/niku/"></a></li>
-                                  <li class="gnav__item11"><a href="https://www.jacom.or.jp/ryutsu/"></a></li>
-                                  <li class="gnav__item12"><a href="https://www.jacom.or.jp/yasai/"></a></li>
-                                  <li class="gnav__item13"><a href="https://www.jacom.or.jp/glossary/"></a></li>
+                                    <li class="gnav__item01"><a href="https://www.jacom.or.jp/nousei/"></a></li>
+                                    <li class="gnav__item02"><a href="https://www.jacom.or.jp/noukyo/"></a></li>
+                                    <li class="gnav__item03"><a href="https://www.jacom.or.jp/column/"></a></li>
+                                    <li class="gnav__item04"><a href="https://www.jacom.or.jp/jinji/"></a></li>
+                                    <li class="gnav__item05"><a href="https://www.jacom.or.jp/nouyaku/"></a></li>
+                                    <li class="gnav__item06"><a href="https://www.jacom.or.jp/kome/"></a></li>
+                                    <li class="gnav__item07"><a href="https://www.jacom.or.jp/kinyu/"></a></li>
+                                    <li class="gnav__item08"><a href="https://www.jacom.or.jp/shizai/"></a></li>
+                                    <li class="gnav__item09"><a href="https://www.jacom.or.jp/saibai/"></a></li>
+                                    <li class="gnav__item10"><a href="https://www.jacom.or.jp/niku/"></a></li>
+                                    <li class="gnav__item11"><a href="https://www.jacom.or.jp/ryutsu/"></a></li>
+                                    <li class="gnav__item12"><a href="https://www.jacom.or.jp/yasai/"></a></li>
+                                    <li class="gnav__item13"><a href="https://www.jacom.or.jp/glossary/"></a></li>
                                 </ul>
                             </nav>
                         </div><!-- headerRight -->
@@ -203,8 +232,8 @@ $(document).ready(function () {
 
                         </ul>
                         <div class="tagNav__toBtn">
-                          <a href="https://www.jacom.or.jp/tags/"></a>
-                          
+                            <a href="https://www.jacom.or.jp/tags/"></a>
+                            
                         </div>
                     </div>
                 </div>
@@ -243,7 +272,8 @@ $(document).ready(function () {
                     </nav>
                     <div class="scrollheader">
                         <nav class="gNav">
-                            <h1><a href="https://www.jacom.or.jp/"><img src="https://www.jacom.or.jp/images/headerLogo_scr1.png" alt="JAcom" width="120px" height="40px"></a></h1>
+                            <div><a href="https://www.jacom.or.jp/"><img src="https://www.jacom.or.jp/images/headerLogo_scr1.png" alt="JAcom" width="120px" height="40px"></a></div>
+                            
                             <div id="searchBtnPC__body">
                                 <ul class="searchBtnPC__body__inner">
                                     <li>
@@ -257,19 +287,19 @@ $(document).ready(function () {
                             </div>
                             <div class="gNav__inner">
                                 <ul>
-                                  <li class="gnav__item01"><a href="https://www.jacom.or.jp/nousei/"></a></li>
-                                  <li class="gnav__item02"><a href="https://www.jacom.or.jp/noukyo/"></a></li>
-                                  <li class="gnav__item03"><a href="https://www.jacom.or.jp/column/"></a></li>
-                                  <li class="gnav__item04"><a href="https://www.jacom.or.jp/jinji/"></a></li>
-                                  <li class="gnav__item05"><a href="https://www.jacom.or.jp/nouyaku/"></a></li>
-                                  <li class="gnav__item06"><a href="https://www.jacom.or.jp/kome/"></a></li>
-                                  <li class="gnav__item07"><a href="https://www.jacom.or.jp/kinyu/"></a></li>
-                                  <li class="gnav__item08"><a href="https://www.jacom.or.jp/shizai/"></a></li>
-                                  <li class="gnav__item09"><a href="https://www.jacom.or.jp/saibai/"></a></li>
-                                  <li class="gnav__item10"><a href="https://www.jacom.or.jp/niku/"></a></li>
-                                  <li class="gnav__item11"><a href="https://www.jacom.or.jp/ryutsu/"></a></li>
-                                  <li class="gnav__item12"><a href="https://www.jacom.or.jp/yasai/"></a></li>
-                                  <li class="gnav__item13"><a href="https://www.jacom.or.jp/glossary/"></a></li>
+                                    <li class="gnav__item01"><a href="https://www.jacom.or.jp/nousei/"></a></li>
+                                    <li class="gnav__item02"><a href="https://www.jacom.or.jp/noukyo/"></a></li>
+                                    <li class="gnav__item03"><a href="https://www.jacom.or.jp/column/"></a></li>
+                                    <li class="gnav__item04"><a href="https://www.jacom.or.jp/jinji/"></a></li>
+                                    <li class="gnav__item05"><a href="https://www.jacom.or.jp/nouyaku/"></a></li>
+                                    <li class="gnav__item06"><a href="https://www.jacom.or.jp/kome/"></a></li>
+                                    <li class="gnav__item07"><a href="https://www.jacom.or.jp/kinyu/"></a></li>
+                                    <li class="gnav__item08"><a href="https://www.jacom.or.jp/shizai/"></a></li>
+                                    <li class="gnav__item09"><a href="https://www.jacom.or.jp/saibai/"></a></li>
+                                    <li class="gnav__item10"><a href="https://www.jacom.or.jp/niku/"></a></li>
+                                    <li class="gnav__item11"><a href="https://www.jacom.or.jp/ryutsu/"></a></li>
+                                    <li class="gnav__item12"><a href="https://www.jacom.or.jp/yasai/"></a></li>
+                                    <li class="gnav__item13"><a href="https://www.jacom.or.jp/glossary/"></a></li>
                                 </ul>
                             </div>
                         </nav>
@@ -344,100 +374,668 @@ $(document).ready(function () {
                 <div class="l-main__inner">
                     <div class="l-main__left">
                         <div class="sideleft">
-                            <section class="adBanner" id="leftBanner">
+                        <section class="adBanner" id="leftBanner">
                                 <div class="adBanner__inner">
-                                    <div class='bannerPc'><a href="https://www.jacom.or.jp/special/personnel/2025/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/866f5f5a703b15a2b7eaeb288ee26dc9.jpg" alt="2025人事バナー縦"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/tags/?tag=%E5%85%A8%E8%BE%B2,%E4%BA%BA%E4%BA%8B" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/c911991b5d52a05c3fcb05176e53850b.jpg" alt="ＪＡ全農人事情報"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/tags/?tag=%E7%97%85%E5%AE%B3%E8%99%AB%E7%99%BA%E7%94%9F%E6%83%85%E5%A0%B1" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/d2e64cfe159c6718536d84a06ae7109b.jpg" alt="左カラム_病害虫情報2021"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/jacom/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/17fe718588305cc9b756ef7e7bad2656.jpg" alt="新聞購読申込 230901"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/tags/?tag=%E8%BE%B2%E5%8D%94%E7%A0%94%E7%A9%B6%E4%BC%9A" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/55cae79271fc4684830144e3681d5abd.jpg" alt="農協研究会"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/nouseiron/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/morishima_shin_bannnar2.jpg" alt="左カラム_コラム_正義派の農政論_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat654/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/colum_pc_komemarket_1.jpg" alt="左カラム_コラム_米マーケット情報_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat600/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/colum_chihounoganriki_pc.jpg" alt="左カラム_コラム_地方の眼力_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat647/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/colum_syokuryonogyomondai_pc.jpg" alt="左カラム_コラム_食料・農業問題　本質と裏側"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat680/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/colum_pc_mukashi.jpg" alt="左カラム_コラム_昔の農村・今の世の中_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat929/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/d49932075749f787ae775b0d861a7d33.jpg" alt="左カラム_コラム_花づくり_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat602/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/colum_pc_global.jpg" alt="左カラム_コラム_グローバルとローカル_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat601/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/TPP_kondo.jpg" alt="左カラム_コラム_ＴＰＰから見える風景_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat732/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/colum_muranosumikara_pc.jpg" alt="左カラム_コラム_ムラの角から_pc"></a></div>                                </div>
+                                
+                                    <div class='bannerPc'><a href="https://www.jacom.or.jp/special/personnel/2025/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/866f5f5a703b15a2b7eaeb288ee26dc9.jpg" alt="2025人事バナー縦"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/tags/?tag=%E5%85%A8%E8%BE%B2,%E4%BA%BA%E4%BA%8B" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/c911991b5d52a05c3fcb05176e53850b.jpg" alt="ＪＡ全農人事情報"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/tags/?tag=%E7%97%85%E5%AE%B3%E8%99%AB%E7%99%BA%E7%94%9F%E6%83%85%E5%A0%B1" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/db2eac4b204190348c402bfa86ad419c.jpg" alt="左カラム_病害虫情報2021"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/jacom/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/17fe718588305cc9b756ef7e7bad2656.jpg" alt="新聞購読申込 230901"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/tags/?tag=%E8%BE%B2%E5%8D%94%E7%A0%94%E7%A9%B6%E4%BC%9A" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/55cae79271fc4684830144e3681d5abd.jpg" alt="農協研究会"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/nouseiron/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/morishima_shin_bannnar2.jpg" alt="左カラム_コラム_正義派の農政論_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat654/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/colum_pc_komemarket_1.jpg" alt="左カラム_コラム_米マーケット情報_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat600/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/colum_chihounoganriki_pc.jpg" alt="左カラム_コラム_地方の眼力_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat647/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/colum_syokuryonogyomondai_pc.jpg" alt="左カラム_コラム_食料・農業問題　本質と裏側"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat680/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/colum_pc_mukashi.jpg" alt="左カラム_コラム_昔の農村・今の世の中_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat929/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/d49932075749f787ae775b0d861a7d33.jpg" alt="左カラム_コラム_花づくり_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat602/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/colum_pc_global.jpg" alt="左カラム_コラム_グローバルとローカル_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat601/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/TPP_kondo.jpg" alt="左カラム_コラム_ＴＰＰから見える風景_pc"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/column/cat732/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/colum_muranosumikara_pc.jpg" alt="左カラム_コラム_ムラの角から_pc"></a></div>                                </div>
                             </section>
                         </div>
                     </div>
                     <div class="l-main__center">
                         <div class="contents">
-                           <div class='bannerSp'><a href="http://www.ns-green.com/pd/048.html" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/mpBanner-sp-01-100.jpg" alt="ニッソーグリーンSP：マスタピース水和剤"></a></div><div class='bannerPc'><a href="https://ja-group.jp/?waad=gPCaqMsC" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/zenchu_pc.gif" alt="ＪＡ全中中央①PC"></a></div><div class='bannerSp'><a href="https://www.nippon-soda.co.jp/nougyo/product/5483/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/JAcom_SP_Migiwa10.gif" alt="日本曹達　231012 SP"></a></div>                            <section class="searchList">
-                                <div class="searchList__head">
-                                  <h2>検索</h2>
-                                </div>
-                                <div class="searchField">
-                                  <form method="get" action="https://www.jacom.or.jp/search.php">
-                                    <div class="reportsearch" id="reportsearch_main">
-                                      <div class="search__area">
-                                        <input type="text" id="formSearch" name="search" placeholder="記事などを検索" value="つや姫" maxlength="50"><br>
-                                        <div class="searchRecord" id="searchCnt">1件</div>
-                                        <div class="searchButton">
-                                          <button id="searchButton" name="searchAct" value="検索">検索する</button>
-                                          <input type="hidden" name="detailSearch" value="detail">
-                                        <button id="itemsReset">リセット</button>
-                                        </div>
-                                      
-                                      </div>
-                                      <div class="searchMore__area">
-                                        <div class="searchOption">
-                                          <select id="formBlogId" name="blogid" class="type">
-                                            <option value="">カテゴリ選択</option>
-                                            <option value="3" >農政</option>
-                                            <option value="4" >JA</option>
-                                            <option value="5" >コラム</option>
-                                            <option value="6" >人事</option>
-                                            <option value="7" >農薬</option>
-                                            <option value="8" >米</option>
-                                            <option value="9" >金融共済</option>
-                                            <option value="10" >生産資材</option>
-                                            <option value="12" >畜産</option>
-                                            <option value="14" >青果物</option>
-                                            <option value="11" >栽培技術</option>
-                                            <option value="13" >流通</option>
-                                          </select>
-                                          <select name="sort" id="formOrder" class="sort">
-                                            <option value="">並び順</option>
-                                            <option value="desc" >公開日の新しい順</option>
-                                            <option value="asc" >公開日の古い順</option>
-                                          </select>
-                                        </div>
-                                        <div class="searchRelease" style="display:block;">
-                                          <div class="searchRelease__upper">
-                                            <span class="searchRelease__label">期間指定　開始</span>
-                                            <input type="text" name="startday" class="startday" id="startday" value="2025-04-01" placeholder="年-月-日">
-                                          </div>
-                                          <div class="searchRelease__bottom">
-                                            <span class="searchRelease__label">終了</span>
-                                            <input type="text" name="endday" class="endday" id="endday" value="2025-05-10" placeholder="年-月-日">
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </form>
-                                </div>
-                                <div class="searchList__body">
-                                                                    <ul id="searchResults">
-                                    <li class="searchList__item"><a href="https://www.jacom.or.jp/kome/news/2025/04/250409-80831.php"><div class="searchList__item__inner"><div class="searchListTitle">米の高温耐性品種　42府県で作付け　20万ha超える　24年産</div><div class="searchListDate">2025年4月9日</div><div class="searchListDiscription">想定される記事の本文の一部。農水省のまとめによると2024年産米で高温耐性品種を作付けしたのは42府県で面積は20万haを超えた。多くの県で高温耐性品種の1等米比率が県平均を上回っている。</div></div></a></li>                                  </ul>
-                                  <p id="searchErrors"></p>
-                                </div>
-                                    <div class="newsList__paging paging">
-                                      <ul>
-                                                                                                                                                                                                                                                  <li class="page current"><span>1</span></li>
-                                                                                                                                                                                                    </ul>
-                                    </div>
-                            </section>
-                            <script>
-                                $('#itemsReset').on('click', function(){
-                                    $('#formSearch').val('');
-                                    $('#startday').val('');
-                                    $('#endday').val('');
-                                    $("select").each(function(){
-                                        this.selectedIndex = 0;
-                                    });
-                                });
-                            </script>
-                <section class="bannerPc">
+                            <div class='bannerSp'><a href="https://www.fmc-japan.com/Agricultural-Solutions/Verimark/special/08?utm_source=JAcom&utm_medium=banner_center&utm_campaign=JAcom_verimark_remotevideo_202109" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/3d8d193e321295c16e92e68c456eb035.gif" alt="FMCベリマークSC：（SP）ヘッダー"></a></div><div class='bannerPc'><a href="https://www.nippon-soda.co.jp/nougyo/product/5483/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/JAcom_Top_Migiwa10.gif" alt="日本曹達　231012 PC"></a></div><div class='bannerSp'><a href="https://ja-group.jp/?waad=gPCaqMsC" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/zenchu_sp.gif" alt="ＪＡ全中中央SP"></a></div>
+<section class="newsList newsTopics">
+    <div class="newsList__head">
+      <h2>全記事一覧</h2>
+    </div>
+    <div class="newsList__body">
+  <ul>
     
-</section>
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/column/2025/06/250605-82230.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/column/images/8690e63b65febf21913805e44d2241a0.jpg" alt="浜矩子が斬る日本経済見出し画像 .jpg">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">【浜矩子が斬る！　日本経済】「日本経済の潜在成長率は低すぎるのか？」　成熟国なら"巡行速度"</div>
+            <div class="newsListDate">2025年4月09日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82229.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/kome/images/4d5dbd693b4ed9b12044484a410d48f3.jpg" alt="ファミリーマートの担当者から話を聞く小泉農相">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">小泉農相が備蓄米販売のコンビニエンスストア視察　契約から販売までのスピードに驚き</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82228.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/kome/images/aa0b320a967b3d4e2af7f3dcb9f8575d.jpg" alt="ファミリーマート　ムスビ田町店で販売が開始された備蓄米">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">備蓄米　大手コンビニ3社も申込み　5日から販売</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/jinji/2025/250605-82231.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/jinji/images/008d7b680762ebb013691df8665f8678.jpg" alt="ＪＡ甘楽富岡.jpg">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">【ＪＡ人事】ＪＡ甘楽富岡（群馬県）新組合長に今井善圓氏（5月27日）</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/jinji/2025/250605-82211.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/jinji/images/0a17d60aff5ad0aebc5387bd13412d5f.jpg" alt="【ＪＡ人事】ＪＡ中春別（北海道）新組合長に西川寛稔氏（6月3日）.jpg">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">【ＪＡ人事】ＪＡ中春別（北海道）新組合長に西川寛稔氏（6月3日）</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/column/2025/06/250605-82194.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/column/images/a934c4b7936cd74dbc70ed52c2bd37a9.png" alt="新コラム　花づくりの現場から　宇田明さん.">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">6月の第3日曜日は父の日ですが母の日に比べると影が薄い【花づくりの現場から　宇田明】第61回</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/column/2025/06/250605-82193.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/column/images/mukashinonoson1600_2.jpg" alt="mukashinonoson1600_900.jpg">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">サツマイモ、食糧難、蔓【酒井惇一・昔の農村・今の世の中】第343回</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82213.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/noukyo/images/565c3da7400229a52df14bef9f5f64bd.jpg" alt="あいさつする大林会長">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">ＪＡカントリーエレベーター　食料基地の自信と誇りを　ＣＥ協が総代会</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82223.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/noukyo/images/23cad88c97ad7d6cec109327ad8fadb5.jpg" alt="受章者と関係者のみなさん">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">農林水産大臣賞にＪＡみい八坂ＣＥ　優良農協ＣＥ表彰</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82222.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/noukyo/images/4a261aeb089a38dbe864539541a7cc34.jpg" alt="認定された上級オペレーターのみなさんと関係者">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">生産者に安心を　上級オペレーター10人を認定　全国ＣＥ協議会</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82227.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/noukyo/images/0da06fee0e177df8f59007b0e930666e.jpg" alt="富山県内各地で大麦の収穫作業が始まる　ＪＡ全農とやま.jpg">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">富山県内各地で大麦の収穫作業が始まる　ＪＡ全農とやま</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82225.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/noukyo/images/f6ed96e9e9cce1658c7449fa7743f477.jpg" alt="ＪＡ全農いばらき.jpg">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">茨城で「共同購入第3弾コンバイン購入者向け研修会」を開催　ＪＡ全農いばらき</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/kinyu/news/2025/06/250605-82232.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/kinyu/images/nous20070116_1.jpg" alt="ＪＡ共済連">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">インパクト債券ファンドに投資　気候変動への対応に期待　ＪＡ共済連</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82217.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/kome/images/6c8d055f61159d9b186cfb57f1134281.jpg" alt="ＪＡ小松市　地元農家が育てた新米「ゆめみづほ」ふるさと納税で先行予約開始.jpg">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">ＪＡ小松市　地元農家が育てた新米「ゆめみづほ」ふるさと納税で先行予約開始</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82199.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/noukyo/images/03962055ce94e0e61c6ca7b5f7368382.jpg" alt="産地直送通販サイト「ＪＡタウン」のリアルイベント　JR東京駅で初開催.jpg">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">産地直送通販サイト「ＪＡタウン」のリアルイベント　JR東京駅で初開催</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/kinyu/news/2025/06/250605-82218.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/kinyu/images/60c9d5ee52bb3c546542ceb009499ddd.jpg" alt="農林中金と業務提携　農畜産分野のGHG排出削減へ　Green-Carbon.jpg">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">農林中金と業務提携　農畜産分野のGHG排出削減へ　Green Carbon</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82212.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/kome/images/b4cef95a645b86992c547874d5c6af11.jpg" alt="新たに全国主食集荷協同組合連合会（全集連）副会長に選ばれあいさつする円子徳通氏（6月4日、東京都内）">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">米不足で集荷も厳しく　生産現場支援が大切　全集連が総会　</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/yasai/news/2025/06/250605-82226.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/yasai/images/1dd5790a8afe5e05529f2a2e50f51ba5.jpg" alt="「新潟えだまめ盛フェス」チラシ">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">「新潟えだまめ盛フェス」で新潟産えだまめを渋谷で食べ放題　世界えだまめ早食い選手権予選も開催　新潟県</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/yasai/news/2025/06/250605-82224.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/yasai/images/3618a0ab1b50f1a8997c4ff877914aa6.jpg" alt="『もっともっとレタスかわかみレタス』Long Ver.">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">日本一のレタス生産量・川上村のレタスのプロモーション動画を公開　TOKYO FM</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+      
+        
+        <li class="newsList__item">
+          
+            <a href="https://www.jacom.or.jp/jinji/2025/250605-82219.php">
+          
+            <div class="newsList__item__left fixItem">
+              <div class="newsListImage">
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/jinji/images/e2280f0231ad52884e5bc129f8aa71a0.jpg" alt="全国主食集荷協同組合連合会.jpg">
+      
+    </div>
+  
+</div>
+            </div>
+            <div class="newsList__item__right fixItem">
+              
+              <div class="newsListTitle">【役員人事】全国主食集荷協同組合連合会（全集連）（6月4日付）</div>
+            <div class="newsListDate">2023年6月5日
+    <span></span>
+</div>
+            </div>
+          </a>
+        </li>
+         
+  </ul>
+</div>
 
 
-                <section class="bannerSp">
+  
+    <div class="newsList__paging paging"><ul>
     
-</section>
+  
+  
+    <li class="page current"><span>1</span></li>
+  
+  
 
+  
+  
+    <li class="page"><a href="https://www.jacom.or.jp/news_2.php">2</a></li>
+  
+  
 
-                
+  
+  
+    <li class="page"><a href="https://www.jacom.or.jp/news_3.php">3</a></li>
+  
+  
+
+  
+  
+    <li class="page"><a href="https://www.jacom.or.jp/news_4.php">4</a></li>
+  
+  
+
+  
+  
+    <li class="page"><a href="https://www.jacom.or.jp/news_5.php">5</a></li>
+  
+  
+    
+      <li class="page pageNext"><a href="https://www.jacom.or.jp/news_2.php"></a></li>
+    
+    </ul></div>
+  
+
+  </section>
+
+  
     
         
             
@@ -469,7 +1067,7 @@ $(document).ready(function () {
                 
                 
                     <li class="listsBox__items">
-                        <a href="https://www.jacom.or.jp/nousei/rensai/2025/04/250424-81240.php" class="listsBox-item col3">
+                        <a href="https://www.jacom.or.jp/nousei/news/2025/05/250523-81877.php" class="listsBox-item col3">
                             <div class="listsBox-item__left">
                                 
   
@@ -478,14 +1076,14 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/nousei/images/4ff1dea41594ba09b87110113ca78952.jpg" alt="ＪＡ松本ハイランド組合長　田中均氏">
+        <img src="https://www.jacom.or.jp/nousei/images/e71cfd13625016bb7d990a0a1c1a06b4.jpg" alt="備蓄米">
       
     </div>
   
 
                             </div>
                             <div class="listsBox-item__right">
-                                <div class="listsBox-item__title"><span class="listsBox-item__titleP">【どうするのか？崩壊寸前　食料安保】米の安定供給は長期的視点で　ＪＡ松本ハイランド組合長　田中均氏</span><span class="listsBox-item__titleD">4月24日 更新</span>
+                                <div class="listsBox-item__title"><span class="listsBox-item__titleP">2025年 備蓄米関連ニュースまとめ【放出・政策・需給動向】</span><span class="listsBox-item__titleD">6月5日 更新</span>
     <span></span>
 </div>
                                 
@@ -498,7 +1096,7 @@ $(document).ready(function () {
                 
                 
                     <li class="listsBox__items">
-                        <a href="https://www.jacom.or.jp/kome/news/2025/04/250421-81137.php" class="listsBox-item col3">
+                        <a href="https://www.jacom.or.jp/noukyo/news/2025/05/250530-82069.php" class="listsBox-item col3">
                             <div class="listsBox-item__left">
                                 
   
@@ -507,14 +1105,14 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/kome/images/2170e6ad4dfc30e6fc47c4de829df1c5_2.jpg" alt="お米.jpg">
+        <img src="https://www.jacom.or.jp/noukyo/images/31b0ee9d6bffdf064982a7639fe4ef4a_1.jpg" alt="農協人文化賞.jpg">
       
     </div>
   
 
                             </div>
                             <div class="listsBox-item__right">
-                                <div class="listsBox-item__title"><span class="listsBox-item__titleP">契約通りの出荷で加算「60キロ500円」　ＪＡ香川</span><span class="listsBox-item__titleD">4月21日 更新</span>
+                                <div class="listsBox-item__title"><span class="listsBox-item__titleP">農協運動の仲間たちが贈る　第46回農協人文化賞受賞者決定！　8部門19氏</span><span class="listsBox-item__titleD">6月5日 更新</span>
     <span></span>
 </div>
                                 
@@ -527,7 +1125,7 @@ $(document).ready(function () {
                 
                 
                     <li class="listsBox__items">
-                        <a href="https://www.jacom.or.jp/noukyo/news/2025/04/250403-80683.php" class="listsBox-item col3">
+                        <a href="https://www.jacom.or.jp/kome/closeup/2025/250530-82055.php" class="listsBox-item col3">
                             <div class="listsBox-item__left">
                                 
   
@@ -536,14 +1134,14 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/noukyo/images/833699fde7e4061ea5c4cbdaa3d2e229.jpg" alt="【第46回農協人文化賞】受賞候補者推薦のお願い.jpg">
+        <img src="https://www.jacom.or.jp/kome/images/d890cb364839263b7228343fb790800a_1.jpg" alt="福岡県糸島稲作経営研究会・岩崎博道氏">
       
     </div>
   
 
                             </div>
                             <div class="listsBox-item__right">
-                                <div class="listsBox-item__title"><span class="listsBox-item__titleP">【第46回農協人文化賞】受賞候補者推薦のお願い</span><span class="listsBox-item__titleD">4月3日 更新</span>
+                                <div class="listsBox-item__title"><span class="listsBox-item__titleP">【緊急寄稿・稲作農家の声】玄米60キロ２万円が"適正"　経費上昇、危うい「生命産業」</span><span class="listsBox-item__titleD">6月2日 更新</span>
     <span></span>
 </div>
                                 
@@ -568,8 +1166,13 @@ $(document).ready(function () {
           
         
         
+      
+        
+          
+        
+        
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/column/2025/05/250503-81387.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82229.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -578,17 +1181,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/column/images/d4490981e13349f77e31a75abd366cc7_5.jpg" alt="シンとんぼ.jpg">
+        <img src="https://www.jacom.or.jp/kome/images/4d5dbd693b4ed9b12044484a410d48f3.jpg" alt="ファミリーマートの担当者から話を聞く小泉農相">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">シンとんぼ（140）－改正食料・農業・農村基本法（26）－
+                <div class="itemNewsList__title">小泉農相が備蓄米販売のコンビニエンスストア視察　契約から販売までのスピードに驚き
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月3日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -601,7 +1204,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/nouyaku/rensai/2025/05/250503-81389.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82228.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -610,17 +1213,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/nouyaku/images/NOYAKU1_1600_4.jpg" alt="NOYAKU1_1600_900.jpg">
+        <img src="https://www.jacom.or.jp/kome/images/aa0b320a967b3d4e2af7f3dcb9f8575d.jpg" alt="ファミリーマート　ムスビ田町店で販売が開始された備蓄米">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">みどり戦略対策に向けたＩＰＭ防除の実践（57）【防除学習帖】第296回
+                <div class="itemNewsList__title">備蓄米　大手コンビニ3社も申込み　5日から販売
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月3日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -633,7 +1236,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/noukyo/rensai/2025/05/250503-81388.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/jinji/2025/250605-82231.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -642,54 +1245,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/noukyo/images/imasara_doyou_1.jpg" alt="imasara_doyou.jpg">
+        <img src="https://www.jacom.or.jp/jinji/images/008d7b680762ebb013691df8665f8678.jpg" alt="ＪＡ甘楽富岡.jpg">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">農薬の正しい使い方（30）【今さら聞けない営農情報】第296回
+                <div class="itemNewsList__title">【ＪＡ人事】ＪＡ甘楽富岡（群馬県）新組合長に今井善圓氏（5月27日）
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月3日</div>
-                  
-                </div>
-              </div>
-            </a>
-          </li>
-        
-      
-        
-          
-        
-        
-      
-        
-          
-        
-        
-          <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/column/2025/05/250502-81386.php" class="itemNewsList">
-              <div class="itemNewsList__img">
-                
-  
-  
-
-  
-    <div class="newsImg">
-      
-        <img src="https://www.jacom.or.jp/column/images/1bc628f99d0987000f277157b523a190.jpg" alt="suzukisensei">
-      
-    </div>
-  
-
-              </div>
-              <div class="itemNewsList__body">
-                <div class="itemNewsList__title">【鈴木宣弘：食料・農業問題　本質と裏側】「盗人に追い銭」「鴨葱」外交の生贄にしてはならぬ農産物
-    <span></span>
-
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -702,7 +1268,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/noukyo/news/2025/05/250502-81381.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/jinji/2025/250605-82211.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -711,17 +1277,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/noukyo/images/0fbd520daf43f9597ce7a085021e8352.jpg" alt="小林氏（左）と大島氏">
+        <img src="https://www.jacom.or.jp/jinji/images/0a17d60aff5ad0aebc5387bd13412d5f.jpg" alt="【ＪＡ人事】ＪＡ中春別（北海道）新組合長に西川寛稔氏（6月3日）.jpg">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">【2025国際協同組合年】情報を共有　協同の力で国際協力　連続シンポスタート
+                <div class="itemNewsList__title">【ＪＡ人事】ＪＡ中春別（北海道）新組合長に西川寛稔氏（6月3日）
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -734,7 +1300,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/kome/news/2025/05/250502-81380.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/column/2025/06/250605-82194.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -743,17 +1309,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/kome/images/1776a144d45c5f264ce205b76d807822.jpg" alt="ジャノヒゲの株内で越冬中の成虫　提供：埼玉県防虫害防除所">
+        <img src="https://www.jacom.or.jp/column/images/a934c4b7936cd74dbc70ed52c2bd37a9.png" alt="新コラム　花づくりの現場から　宇田明さん.">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">イネカメムシが越冬　埼玉、群馬、栃木で確認　被害多発の恐れ
+                <div class="itemNewsList__title">6月の第3日曜日は父の日ですが母の日に比べると影が薄い【花づくりの現場から　宇田明】第61回
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -766,7 +1332,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/ryutsu/news/2025/05/250502-81385.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/column/2025/06/250605-82193.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -775,17 +1341,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/ryutsu/images/3eebb75907955f6c6ccea5e3da79cca6.jpg" alt="福岡空港で検疫代行サービスs.jpg">
+        <img src="https://www.jacom.or.jp/column/images/mukashinonoson1600_2.jpg" alt="mukashinonoson1600_900.jpg">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">九州和牛をシンガポール人に人気のお土産に　福岡空港で検疫代行サービスを開始　福岡ソノリク
+                <div class="itemNewsList__title">サツマイモ、食糧難、蔓【酒井惇一・昔の農村・今の世の中】第343回
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -798,7 +1364,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/ryutsu/news/2025/05/250502-81384.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82213.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -807,17 +1373,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/ryutsu/images/7b058e2e5af052bf4b946e077aa97a3a.jpg" alt="農福連携「ハプネスワーク」01.jpg">
+        <img src="https://www.jacom.or.jp/noukyo/images/565c3da7400229a52df14bef9f5f64bd.jpg" alt="あいさつする大林会長">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">就労継続支援B型事業所を開設し農福連携に挑戦　有機農家とも業務提携　ハピネス
+                <div class="itemNewsList__title">ＪＡカントリーエレベーター　食料基地の自信と誇りを　ＣＥ協が総代会
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -830,7 +1396,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/kinyu/news/2025/05/250502-81383.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82223.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -839,17 +1405,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/kinyu/images/84b5a229fdcf252a47043bf4b94655fa.jpg" alt="サービスのスキーム">
+        <img src="https://www.jacom.or.jp/noukyo/images/23cad88c97ad7d6cec109327ad8fadb5.jpg" alt="受章者と関係者のみなさん">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">宮崎ガス「カーボン・オフセット都市ガス」 を県庁などに供給開始　農林中金が媒介
+                <div class="itemNewsList__title">農林水産大臣賞にＪＡみい八坂ＣＥ　優良農協ＣＥ表彰
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -862,7 +1428,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/ryutsu/news/2025/05/250502-81382.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82222.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -871,17 +1437,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/ryutsu/images/8080352c3d766a24faf0b4631494042f.jpg" alt="日本ワインやペアリングメニューを提供（イメージ）">
+        <img src="https://www.jacom.or.jp/noukyo/images/4a261aeb089a38dbe864539541a7cc34.jpg" alt="認定された上級オペレーターのみなさんと関係者">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">５月29日から「丸の内 日本ワインWeeks2025」開催　"日本ワイン"を学び、楽しむ3週間　三菱地所
+                <div class="itemNewsList__title">生産者に安心を　上級オペレーター10人を認定　全国ＣＥ協議会
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -894,7 +1460,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/noukyo/news/2025/05/250502-81375.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82227.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -903,17 +1469,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/noukyo/images/2145b6a7c497219efbbe607e1099c049.jpg" alt="創刊100周年記念のダンスコンテストを盛り上げようと栗原会長ら役職員でダンス。">
+        <img src="https://www.jacom.or.jp/noukyo/images/0da06fee0e177df8f59007b0e930666e.jpg" alt="富山県内各地で大麦の収穫作業が始まる　ＪＡ全農とやま.jpg">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">協同心の泉　大切に　創立記念式典　家の光協会
+                <div class="itemNewsList__title">富山県内各地で大麦の収穫作業が始まる　ＪＡ全農とやま
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -926,7 +1492,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/column/2025/05/250502-81333.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82225.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -935,17 +1501,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/column/images/d55567791de568b56452af439fb94c30.jpg" alt="スマート農業の風">
+        <img src="https://www.jacom.or.jp/noukyo/images/f6ed96e9e9cce1658c7449fa7743f477.jpg" alt="ＪＡ全農いばらき.jpg">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">【スマート農業の風】（14）スマート農業のハードルを下げる
+                <div class="itemNewsList__title">茨城で「共同購入第3弾コンバイン購入者向け研修会」を開催　ＪＡ全農いばらき
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -958,7 +1524,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/column/2025/05/250502-81363.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/kinyu/news/2025/06/250605-82232.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -967,17 +1533,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/column/images/global_1600_6.jpg" alt="global_1600_900.jpg">
+        <img src="https://www.jacom.or.jp/kinyu/images/nous20070116_1.jpg" alt="ＪＡ共済連">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">（433）「エルダースピーク」実体験【三石誠司・グローバルとローカル：世界は今】
+                <div class="itemNewsList__title">インパクト債券ファンドに投資　気候変動への対応に期待　ＪＡ共済連
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -990,7 +1556,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/shizai/news/2025/05/250502-81374.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82217.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -999,17 +1565,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/shizai/images/ad34bdf0cb51d9268b62f9d37bc00d42.jpg" alt="吊るしてGET虫ミニ 強力タイプ">
+        <img src="https://www.jacom.or.jp/kome/images/6c8d055f61159d9b186cfb57f1134281.jpg" alt="ＪＡ小松市　地元農家が育てた新米「ゆめみづほ」ふるさと納税で先行予約開始.jpg">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">約1cm程度の害虫を強力捕獲「吊るしてGET虫ミニ強力タイプ」新発売　平城商事
+                <div class="itemNewsList__title">ＪＡ小松市　地元農家が育てた新米「ゆめみづほ」ふるさと納税で先行予約開始
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -1022,7 +1588,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/kinyu/news/2025/05/250502-81373.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82199.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -1031,17 +1597,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/kinyu/images/7e0974d08f69f066efccf9effe800407.jpg" alt="農中情報システム　自社の導入・活用のノウハウを活かし「Box」通じたDX支援開始.jpg">
+        <img src="https://www.jacom.or.jp/noukyo/images/03962055ce94e0e61c6ca7b5f7368382.jpg" alt="産地直送通販サイト「ＪＡタウン」のリアルイベント　JR東京駅で初開催.jpg">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">農中情報システム　自社の導入・活用のノウハウを活かし「Box」通じたDX支援開始
+                <div class="itemNewsList__title">産地直送通販サイト「ＪＡタウン」のリアルイベント　JR東京駅で初開催
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -1054,7 +1620,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/shizai/news/2025/05/250502-81372.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/kinyu/news/2025/06/250605-82218.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -1063,17 +1629,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/shizai/images/e36d005bef2381c76b85f3ca29d1d8ec.jpg" alt="洗車を楽しく「CRUZARD」洗車仕様ホースリールとノズルを発売　コメリ.jpg">
+        <img src="https://www.jacom.or.jp/kinyu/images/60c9d5ee52bb3c546542ceb009499ddd.jpg" alt="農林中金と業務提携　農畜産分野のGHG排出削減へ　Green-Carbon.jpg">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">洗車を楽しく「CRUZARD」洗車仕様ホースリールとノズルを発売　コメリ
+                <div class="itemNewsList__title">農林中金と業務提携　農畜産分野のGHG排出削減へ　Green Carbon
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -1086,7 +1652,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/ryutsu/news/2025/05/250502-81371.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82212.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -1095,17 +1661,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/ryutsu/images/f7434c0f2ea0ef3cecae80589790711c.jpg" alt="◯パルシステム神奈川.jpg">
+        <img src="https://www.jacom.or.jp/kome/images/b4cef95a645b86992c547874d5c6af11.jpg" alt="新たに全国主食集荷協同組合連合会（全集連）副会長に選ばれあいさつする円子徳通氏（6月4日、東京都内）">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">戦後80年の国際協同組合年　世代超え「戦争と平和」考える　パルシステム神奈川
+                <div class="itemNewsList__title">米不足で集荷も厳しく　生産現場支援が大切　全集連が総会　
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -1118,7 +1684,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/ryutsu/news/2025/05/250502-81370.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/yasai/news/2025/06/250605-82226.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -1127,17 +1693,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/ryutsu/images/c3af7b92c493c3188caed5030cc47597.jpg" alt="生協の「地域見守り協定」締結数　全市区町村数の75%超の1308市区町村に到達.jpg">
+        <img src="https://www.jacom.or.jp/yasai/images/1dd5790a8afe5e05529f2a2e50f51ba5.jpg" alt="「新潟えだまめ盛フェス」チラシ">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">生協の「地域見守り協定」締結数　全市区町村数の75%超の1308市区町村に到達
+                <div class="itemNewsList__title">「新潟えだまめ盛フェス」で新潟産えだまめを渋谷で食べ放題　世界えだまめ早食い選手権予選も開催　新潟県
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -1150,7 +1716,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/saibai/news/2025/05/250502-81369.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/yasai/news/2025/06/250605-82224.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -1159,17 +1725,17 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/saibai/images/f33dec9bea1361fa32a044ccdc285427.jpg" alt="ムコ多糖症ニホンザルの臨床徴候改善に成功　組換えカイコと糖鎖改変技術による新型酵素s.jpg">
+        <img src="https://www.jacom.or.jp/yasai/images/3618a0ab1b50f1a8997c4ff877914aa6.jpg" alt="『もっともっとレタスかわかみレタス』Long Ver.">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">ムコ多糖症ニホンザルの臨床徴候改善に成功　組換えカイコと糖鎖改変技術による新型酵素
+                <div class="itemNewsList__title">日本一のレタス生産量・川上村のレタスのプロモーション動画を公開　TOKYO FM
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -1182,7 +1748,7 @@ $(document).ready(function () {
         
         
           <li class="latestNews__items col2">
-            <a href="https://www.jacom.or.jp/ryutsu/news/2025/05/250502-81368.php" class="itemNewsList">
+            <a href="https://www.jacom.or.jp/jinji/2025/250605-82219.php" class="itemNewsList">
               <div class="itemNewsList__img">
                 
   
@@ -1191,17 +1757,49 @@ $(document).ready(function () {
   
     <div class="newsImg">
       
-        <img src="https://www.jacom.or.jp/ryutsu/images/a1342b54d3a8592f5622a89a5109f252.jpg" alt="エフピコ×Aコープ「エコトレー」など積極使用で「ストアtoストア」協働を拡大_02.jpg">
+        <img src="https://www.jacom.or.jp/jinji/images/e2280f0231ad52884e5bc129f8aa71a0.jpg" alt="全国主食集荷協同組合連合会.jpg">
       
     </div>
   
 
               </div>
               <div class="itemNewsList__body">
-                <div class="itemNewsList__title">エフピコ×Aコープ「エコトレー」など積極使用で「ストアtoストア」協働を拡大
+                <div class="itemNewsList__title">【役員人事】全国主食集荷協同組合連合会（全集連）（6月4日付）
     <span></span>
 
-                  <div class="itemNewsList__date">2025年5月2日</div>
+                  <div class="itemNewsList__date">2025年6月5日</div>
+                  
+                </div>
+              </div>
+            </a>
+          </li>
+        
+      
+        
+          
+        
+        
+          <li class="latestNews__items col2">
+            <a href="https://www.jacom.or.jp/shizai/news/2025/06/250605-82221.php" class="itemNewsList">
+              <div class="itemNewsList__img">
+                
+  
+  
+
+  
+    <div class="newsImg">
+      
+        <img src="https://www.jacom.or.jp/shizai/images/1635d4f0b1ce2ee17557f4c582c08364.jpg" alt="Agtonomy社の自動化センサーを搭載したクボタトラクタ">
+      
+    </div>
+  
+
+              </div>
+              <div class="itemNewsList__body">
+                <div class="itemNewsList__title">米国のアグリテックスタートアップAgtonomyとの協業を加速　クボタ
+    <span></span>
+
+                  <div class="itemNewsList__date">2025年6月5日</div>
                   
                 </div>
               </div>
@@ -1232,7 +1830,7 @@ $(document).ready(function () {
 
 
 
-<div class='bannerSp'><a href="https://www.jacom.or.jp/noukyo/tokusyu/2016/08/160803-30551.php" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/disc_sp.gif" alt="DiSC：SP"></a></div><section class="topBasicBlock typeBlue">
+<div class='bannerSp'><a href="https://www.kumiai-chem.co.jp/mametsubu/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/80c9e79458d7f0523cbcbae3c3600675.jpg" alt="クミアイ化学右カラムSP"></a></div><section class="topBasicBlock typeBlue">
   <div class="topBasicBlock__head">
     <h2>みどり戦略</h2>
   </div>
@@ -1402,11 +2000,11 @@ $(document).ready(function () {
                                 <ul>
                                     
                                     
+                                        <li><a href="https://www.jacom.or.jp/column/2025/06/250603-82144.php">【スマート農業の風】（15）スマート農業のハードルを下げるＺ-ＧＩＳ利用法</a></li>
+                                    
                                         <li><a href="https://www.jacom.or.jp/noukyo/news/2025/01/250130-79227.php">営農管理システム「Z－ＧＩＳ」と「レイミーのＡＩ病害虫雑草診断」アプリが4月に...</a></li>
                                     
                                         <li><a href="https://www.jacom.or.jp/noukyo/news/2025/01/250130-79228.php">営農管理システム「Z－ＧＩＳ」と「レイミーのＡＩ病害虫雑草診断」アプリが4月に...</a></li>
-                                    
-                                        <li><a href="https://www.jacom.or.jp/noukyo/news/2025/01/250117-78934.php">生産者にＺ‐ＧＩＳ活用講習会　ＪＡ全農</a></li>
                                     
                                 </ul>
                             </div>
@@ -1486,11 +2084,11 @@ $(document).ready(function () {
                                 <ul>
                                     
                                       
+                                        <li><a href="https://www.jacom.or.jp/column/2025/06/250603-82144.php">【スマート農業の風】（15）スマート農業のハードルを下げるＺ-ＧＩＳ利用法</a></li>
+                                      
                                         <li><a href="https://www.jacom.or.jp/noukyo/news/2025/01/250130-79227.php">営農管理システム「Z－ＧＩＳ」と「レイミーのＡＩ病害虫雑草診断」アプリが4月に...</a></li>
                                       
                                         <li><a href="https://www.jacom.or.jp/noukyo/news/2025/01/250130-79228.php">営農管理システム「Z－ＧＩＳ」と「レイミーのＡＩ病害虫雑草診断」アプリが4月に...</a></li>
-                                      
-                                        <li><a href="https://www.jacom.or.jp/noukyo/news/2025/01/250117-78934.php">生産者にＺ‐ＧＩＳ活用講習会　ＪＡ全農</a></li>
                                       
                                 </ul>
                             </div>
@@ -1526,7 +2124,7 @@ $(document).ready(function () {
       <div class="topBasicBlock__items">
           <div class="topBasicBlock__items__left">
             
-              <a href="https://www.jacom.or.jp/jinji/2025/250430-81334.php">
+              <a href="https://www.jacom.or.jp/jinji/2025/250605-82231.php">
             
                   
   
@@ -1535,7 +2133,7 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/jinji/images/ca9d0c9395030f6bc5d552680115abba.jpg" alt="【ＪＡ人事】ＪＡクレイン（山梨県）新組合長に藤波聡氏.jpg">
+        <img src="https://www.jacom.or.jp/jinji/images/008d7b680762ebb013691df8665f8678.jpg" alt="ＪＡ甘楽富岡.jpg">
       
     </div>
   
@@ -1544,14 +2142,14 @@ $(document).ready(function () {
           </div>
           <div class="topBasicBlock__items__right">
               <div class="catName"><a href="https://www.jacom.or.jp/jinji/">人事</a></div>
-              <div class="title"><a href="https://www.jacom.or.jp/jinji/2025/250430-81334.php">【ＪＡ人事】ＪＡクレイン（山梨県）新組合長に藤波聡氏</a></div>
+              <div class="title"><a href="https://www.jacom.or.jp/jinji/2025/250605-82231.php">【ＪＡ人事】ＪＡ甘楽富岡（群馬県）新組合長に今井善圓氏（5月27日）</a></div>
           </div>
       </div>
     
       <div class="topBasicBlock__items">
           <div class="topBasicBlock__items__left">
             
-              <a href="https://www.jacom.or.jp/jinji/2025/250428-81312.php">
+              <a href="https://www.jacom.or.jp/jinji/2025/250605-82211.php">
             
                   
   
@@ -1560,7 +2158,7 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/jinji/images/logo.jpg" alt="logo.jpg">
+        <img src="https://www.jacom.or.jp/jinji/images/0a17d60aff5ad0aebc5387bd13412d5f.jpg" alt="【ＪＡ人事】ＪＡ中春別（北海道）新組合長に西川寛稔氏（6月3日）.jpg">
       
     </div>
   
@@ -1569,14 +2167,14 @@ $(document).ready(function () {
           </div>
           <div class="topBasicBlock__items__right">
               <div class="catName"><a href="https://www.jacom.or.jp/jinji/">人事</a></div>
-              <div class="title"><a href="https://www.jacom.or.jp/jinji/2025/250428-81312.php">【ＪＡ人事】石塚克己（茨城県）石塚克己組合長を再任（4月26日）</a></div>
+              <div class="title"><a href="https://www.jacom.or.jp/jinji/2025/250605-82211.php">【ＪＡ人事】ＪＡ中春別（北海道）新組合長に西川寛稔氏（6月3日）</a></div>
           </div>
       </div>
     
       <div class="topBasicBlock__items">
           <div class="topBasicBlock__items__left">
             
-              <a href="https://www.jacom.or.jp/jinji/2025/250425-81283.php">
+              <a href="https://www.jacom.or.jp/jinji/2025/250604-82189.php">
             
                   
   
@@ -1585,7 +2183,7 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/jinji/images/92e75f7ea315ce6bb6a2bc3dc2d32d78.jpg" alt="ＪＡサロマ.jpg">
+        <img src="https://www.jacom.or.jp/jinji/images/34f7d45700bd3c2cd1e3cf22fdacd8ec.jpg" alt="ＪＡ馬路村.jpg">
       
     </div>
   
@@ -1594,14 +2192,14 @@ $(document).ready(function () {
           </div>
           <div class="topBasicBlock__items__right">
               <div class="catName"><a href="https://www.jacom.or.jp/jinji/">人事</a></div>
-              <div class="title"><a href="https://www.jacom.or.jp/jinji/2025/250425-81283.php">【ＪＡ人事】ＪＡサロマ（北海道）櫛部文治組合長を再任（4月18日）</a></div>
+              <div class="title"><a href="https://www.jacom.or.jp/jinji/2025/250604-82189.php">【ＪＡ人事】ＪＡ馬路村（高知県）長野桃太組合長を新任（3月26日）</a></div>
           </div>
       </div>
     
       <div class="topBasicBlock__items">
           <div class="topBasicBlock__items__left">
             
-              <a href="https://www.jacom.or.jp/jinji/2025/250425-81279.php">
+              <a href="https://www.jacom.or.jp/jinji/2025/250604-82187.php">
             
                   
   
@@ -1610,7 +2208,7 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/jinji/images/bd3261deaf613fe7d0482862a0786d2a.jpg" alt="ＪＡようてい.jpg">
+        <img src="https://www.jacom.or.jp/jinji/images/d5984ddd714068dbe3943ea1313504cd.jpg" alt="ＪＡはが野.jpg">
       
     </div>
   
@@ -1619,7 +2217,7 @@ $(document).ready(function () {
           </div>
           <div class="topBasicBlock__items__right">
               <div class="catName"><a href="https://www.jacom.or.jp/jinji/">人事</a></div>
-              <div class="title"><a href="https://www.jacom.or.jp/jinji/2025/250425-81279.php">【ＪＡ人事】ＪＡようてい（北海道）金子辰四郎組合長を新任（４月11日）</a></div>
+              <div class="title"><a href="https://www.jacom.or.jp/jinji/2025/250604-82187.php">【ＪＡ人事】ＪＡはが野（栃木県）渡辺栄組合長を再任（5月28日）</a></div>
           </div>
       </div>
     
@@ -1649,7 +2247,7 @@ $(document).ready(function () {
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/kome/news/2025/05/250501-81362.php">
+                <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82229.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -1659,22 +2257,22 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/kome/images/7bf4bfc2974c661f465476e2bc7c5b09.jpg" alt="○米袋.jpg">
+        <img src="https://www.jacom.or.jp/kome/images/4d5dbd693b4ed9b12044484a410d48f3.jpg" alt="ファミリーマートの担当者から話を聞く小泉農相">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">備蓄米　小売業へ2592ｔ販売　3月末の6倍　農水省</p>
-                    <p class="pickUpItem__title__date">2025年5月1日</p>
+                    <p class="pickUpItem__title__txt">小泉農相が備蓄米販売のコンビニエンスストア視察　契約から販売までのスピードに驚き</p>
+                    <p class="pickUpItem__title__date">2025年6月5日</p>
                   </div>
                 </a>
               </div>
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/kome/news/2025/04/250430-81335.php">
+                <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82228.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -1684,22 +2282,22 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/kome/images/2170e6ad4dfc30e6fc47c4de829df1c5_2.jpg" alt="お米.jpg">
+        <img src="https://www.jacom.or.jp/kome/images/aa0b320a967b3d4e2af7f3dcb9f8575d.jpg" alt="ファミリーマート　ムスビ田町店で販売が開始された備蓄米">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">米価格　5kg4220円　前週比プラス0.1％</p>
-                    <p class="pickUpItem__title__date">2025年4月30日</p>
+                    <p class="pickUpItem__title__txt">備蓄米　大手コンビニ3社も申込み　5日から販売</p>
+                    <p class="pickUpItem__title__date">2025年6月5日</p>
                   </div>
                 </a>
               </div>
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/kome/news/2025/04/250430-81326.php">
+                <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82213.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -1709,22 +2307,22 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/kome/images/61591482e4d40b4c3d17e6e10b55593b.jpg" alt="輸入米も並ぶスーパー店頭。カルローズは売り切れだった（東京都内）。">
+        <img src="https://www.jacom.or.jp/noukyo/images/565c3da7400229a52df14bef9f5f64bd.jpg" alt="あいさつする大林会長">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">米の「民間輸入」急増　25年は6万トン超か　輸入依存には危うさ</p>
-                    <p class="pickUpItem__title__date">2025年4月30日</p>
+                    <p class="pickUpItem__title__txt">ＪＡカントリーエレベーター　食料基地の自信と誇りを　ＣＥ協が総代会</p>
+                    <p class="pickUpItem__title__date">2025年6月5日</p>
                   </div>
                 </a>
               </div>
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/kome/news/2025/04/250430-81341.php">
+                <a href="https://www.jacom.or.jp/noukyo/news/2025/06/250605-82222.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -1734,15 +2332,15 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/kome/images/f6249770852c0656fa9fbd0ebb069136.jpg" alt="備蓄米">
+        <img src="https://www.jacom.or.jp/noukyo/images/4a261aeb089a38dbe864539541a7cc34.jpg" alt="認定された上級オペレーターのみなさんと関係者">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">備蓄米　第3回は10万ｔ放出　落札率99％</p>
-                    <p class="pickUpItem__title__date">2025年4月30日</p>
+                    <p class="pickUpItem__title__txt">生産者に安心を　上級オペレーター10人を認定　全国ＣＥ協議会</p>
+                    <p class="pickUpItem__title__date">2025年6月5日</p>
                   </div>
                 </a>
               </div>
@@ -1765,7 +2363,7 @@ $(document).ready(function () {
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/nousei/news/2025/04/250430-81321.php">
+                <a href="https://www.jacom.or.jp/nousei/news/2025/06/250604-82171.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -1775,22 +2373,22 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/nousei/images/2c729175edd718ac36332055f39413ac.jpg" alt="鳥インフル.jpg">
+        <img src="https://www.jacom.or.jp/nousei/images/2c729175edd718ac36332055f39413ac_2.jpg" alt="鳥インフル.jpg">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">鳥インフル　米デラウェア州など3州からの生きた家きん、家きん肉等　輸入停止措置を解除　農水省</p>
-                    <p class="pickUpItem__title__date">2025年4月30日</p>
+                    <p class="pickUpItem__title__txt">鳥インフル　米アーカンソー州からの生きた家きん、家きん肉等　輸入停止措置を解除　農水省</p>
+                    <p class="pickUpItem__title__date">2025年6月4日</p>
                   </div>
                 </a>
               </div>
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/nousei/news/2025/04/250423-81203.php">
+                <a href="https://www.jacom.or.jp/nousei/news/2025/05/250530-82018.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -1800,22 +2398,22 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/nousei/images/680996e4e6e8150c735c5d9806082a9b_1.jpg" alt="鳥インフルエンザ.jpg">
+        <img src="https://www.jacom.or.jp/nousei/images/2c729175edd718ac36332055f39413ac_2.jpg" alt="鳥インフル.jpg">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">鳥インフル対策　大規模養鶏は分割管理を　農水省</p>
-                    <p class="pickUpItem__title__date">2025年4月23日</p>
+                    <p class="pickUpItem__title__txt">鳥インフル　アルゼンチンからの家きん肉等の一時輸入停止措置を解除　農水省</p>
+                    <p class="pickUpItem__title__date">2025年5月30日</p>
                   </div>
                 </a>
               </div>
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/nousei/news/2025/04/250423-81188.php">
+                <a href="https://www.jacom.or.jp/nousei/news/2025/05/250529-81991.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -1825,22 +2423,22 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/nousei/images/c9ea27e05727e1783819bfbc76a75aa4.jpg" alt="鳥.jpg">
+        <img src="https://www.jacom.or.jp/nousei/images/2c729175edd718ac36332055f39413ac_2.jpg" alt="鳥インフル.jpg">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">鳥インフル　米イリノイ州からの生きた家きん、家きん肉等　輸入を一時停止　農水省</p>
-                    <p class="pickUpItem__title__date">2025年4月23日</p>
+                    <p class="pickUpItem__title__txt">鳥インフル　リトアニアからの家きん肉等　輸入を一時停止　農水省</p>
+                    <p class="pickUpItem__title__date">2025年5月29日</p>
                   </div>
                 </a>
               </div>
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/nousei/news/2025/04/250422-81151.php">
+                <a href="https://www.jacom.or.jp/niku/news/2025/05/250526-81891.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -1850,15 +2448,15 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/nousei/images/2c729175edd718ac36332055f39413ac_1.jpg" alt="鳥インフル.jpg">
+        <img src="https://www.jacom.or.jp/niku/images/32f90000b61d0010ce019abcbd34cdcc.jpg" alt="現場の"困った"に応える3製品構成構成">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">鳥インフル　米カンザス州からの生きた家きん、家きん肉等　輸入を一時停止　農水省</p>
-                    <p class="pickUpItem__title__date">2025年4月22日</p>
+                    <p class="pickUpItem__title__txt">埋却処理・卵処理を一体化　鳥インフル感染拡大に挑む国内初の特許技術「PALSAP」提供開始</p>
+                    <p class="pickUpItem__title__date">2025年5月26日</p>
                   </div>
                 </a>
               </div>
@@ -1878,6 +2476,81 @@ $(document).ready(function () {
           <h3><a href="https://www.jacom.or.jp/tags/?tag=国際協同組合年">国際協同組合年</a></h3>
           </div>
           <div class="pickUp__block__body">
+            
+              <div class="pickUpItem">
+              
+                <a href="https://www.jacom.or.jp/nousei/news/2025/05/250528-81972.php">
+              
+                <div class="pickUpItem__img fixItem">
+                    
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/nousei/images/toku01.jpg" alt="国会議事堂">
+      
+    </div>
+  
+
+                  </div>
+                  <div class="pickUpItem__title fixItem">
+                    <p class="pickUpItem__title__txt">協同組合の振興　衆参両院で初の決議　国際協同組合年</p>
+                    <p class="pickUpItem__title__date">2025年5月28日</p>
+                  </div>
+                </a>
+              </div>
+            
+              <div class="pickUpItem">
+              
+                <a href="https://www.jacom.or.jp/noukyo/news/2025/05/250520-81754.php">
+              
+                <div class="pickUpItem__img fixItem">
+                    
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/noukyo/images/15b7a9e73fcefca4b04d966c00158f90.jpg" alt="岐阜県の協同組合間提携について講演を行う李准教授">
+      
+    </div>
+  
+
+                  </div>
+                  <div class="pickUpItem__title fixItem">
+                    <p class="pickUpItem__title__txt">「令和７年度　協同組合を考える集い」に参加　ＪＡ全農岐阜</p>
+                    <p class="pickUpItem__title__date">2025年5月20日</p>
+                  </div>
+                </a>
+              </div>
+            
+              <div class="pickUpItem">
+              
+                <a href="https://www.jacom.or.jp/noukyo/news/2025/05/250519-81726.php">
+              
+                <div class="pickUpItem__img fixItem">
+                    
+  
+      
+
+  
+    <div class="">
+      
+        <img src="https://www.jacom.or.jp/noukyo/images/67f4dfe9f1d6d9921b5180cba3a038c9.jpg" alt="協同組合のポテンシャルへの期待を語る高﨑真一ILO駐日代表。左は認定NPO法人抱樸の奥田知志理事長">
+      
+    </div>
+  
+
+                  </div>
+                  <div class="pickUpItem__title fixItem">
+                    <p class="pickUpItem__title__txt">【2025国際協同組合年】ディーセントワークを協同の力で　連続シンポ第2回</p>
+                    <p class="pickUpItem__title__date">2025年5月19日</p>
+                  </div>
+                </a>
+              </div>
             
               <div class="pickUpItem">
               
@@ -1904,81 +2577,6 @@ $(document).ready(function () {
                 </a>
               </div>
             
-              <div class="pickUpItem">
-              
-                <a href="https://www.jacom.or.jp/noukyo/news/2025/03/250327-80485.php">
-              
-                <div class="pickUpItem__img fixItem">
-                    
-  
-      
-
-  
-    <div class="">
-      
-        <img src="https://www.jacom.or.jp/noukyo/images/jca1600_3.jpg" alt="jca1600_900.jpg">
-      
-    </div>
-  
-
-                  </div>
-                  <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">日本の協同組合　組合員数延べ1億835万人　前年から15万人増　ＪＣＡ</p>
-                    <p class="pickUpItem__title__date">2025年3月27日</p>
-                  </div>
-                </a>
-              </div>
-            
-              <div class="pickUpItem">
-              
-                <a href="https://www.jacom.or.jp/noukyo/news/2025/02/250220-79695.php">
-              
-                <div class="pickUpItem__img fixItem">
-                    
-  
-      
-
-  
-    <div class="">
-      
-        <img src="https://www.jacom.or.jp/noukyo/images/3c1c3e05dbda4dade94d9d28a90b5c6f.jpg" alt="日本協同組合連携機構　阿高あや基礎研究部主任研究員（写真提供：日本農民新聞社）">
-      
-    </div>
-  
-
-                  </div>
-                  <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">組合員との対話を深めて組織基盤の強化を　ＪＡ組合員大学全国ネットワーク研究会開く　ＪＡ全中</p>
-                    <p class="pickUpItem__title__date">2025年2月20日</p>
-                  </div>
-                </a>
-              </div>
-            
-              <div class="pickUpItem">
-              
-                <a href="https://www.jacom.or.jp/noukyo/tokusyu/2025/01/250122-79026.php">
-              
-                <div class="pickUpItem__img fixItem">
-                    
-  
-      
-
-  
-    <div class="">
-      
-        <img src="https://www.jacom.or.jp/noukyo/images/f785e062c14d72fe29a77c3b6e76ff85.jpg" alt="【新年特集】2025国際協同組合年座談会「協同組合が築く持続可能な社会」（1）どうする？この国の進路">
-      
-    </div>
-  
-
-                  </div>
-                  <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">【新年特集】2025国際協同組合年座談会「協同組合が築く持続可能な社会」（1）どうする？この国の進路</p>
-                    <p class="pickUpItem__title__date">2025年1月22日</p>
-                  </div>
-                </a>
-              </div>
-            
           </div>
           <div class="pickUp__block__more">
             <div class="moreBtn">
@@ -1997,7 +2595,7 @@ $(document).ready(function () {
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/kome/news/2025/04/250430-81335.php">
+                <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82229.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -2007,22 +2605,22 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/kome/images/2170e6ad4dfc30e6fc47c4de829df1c5_2.jpg" alt="お米.jpg">
+        <img src="https://www.jacom.or.jp/kome/images/4d5dbd693b4ed9b12044484a410d48f3.jpg" alt="ファミリーマートの担当者から話を聞く小泉農相">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">米価格　5kg4220円　前週比プラス0.1％</p>
-                    <p class="pickUpItem__title__date">2025年4月30日</p>
+                    <p class="pickUpItem__title__txt">小泉農相が備蓄米販売のコンビニエンスストア視察　契約から販売までのスピードに驚き</p>
+                    <p class="pickUpItem__title__date">2025年6月5日</p>
                   </div>
                 </a>
               </div>
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/kome/news/2025/04/250430-81326.php">
+                <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82228.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -2032,22 +2630,22 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/kome/images/61591482e4d40b4c3d17e6e10b55593b.jpg" alt="輸入米も並ぶスーパー店頭。カルローズは売り切れだった（東京都内）。">
+        <img src="https://www.jacom.or.jp/kome/images/aa0b320a967b3d4e2af7f3dcb9f8575d.jpg" alt="ファミリーマート　ムスビ田町店で販売が開始された備蓄米">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">米の「民間輸入」急増　25年は6万トン超か　輸入依存には危うさ</p>
-                    <p class="pickUpItem__title__date">2025年4月30日</p>
+                    <p class="pickUpItem__title__txt">備蓄米　大手コンビニ3社も申込み　5日から販売</p>
+                    <p class="pickUpItem__title__date">2025年6月5日</p>
                   </div>
                 </a>
               </div>
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/column/2025/04/250428-81309.php">
+                <a href="https://www.jacom.or.jp/kome/news/2025/06/250605-82212.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -2057,22 +2655,22 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/column/images/b7c82a3fe6ce1842942e9142337dcbfd.jpg" alt="正義派の農政論ー森島.jpg">
+        <img src="https://www.jacom.or.jp/kome/images/b4cef95a645b86992c547874d5c6af11.jpg" alt="新たに全国主食集荷協同組合連合会（全集連）副会長に選ばれあいさつする円子徳通氏（6月4日、東京都内）">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">二重米価制で農政を刷新せよ【森島　賢・正義派の農政論】</p>
-                    <p class="pickUpItem__title__date">2025年4月28日</p>
+                    <p class="pickUpItem__title__txt">米不足で集荷も厳しく　生産現場支援が大切　全集連が総会　</p>
+                    <p class="pickUpItem__title__date">2025年6月5日</p>
                   </div>
                 </a>
               </div>
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/kome/news/2025/04/250425-81287.php">
+                <a href="https://www.jacom.or.jp/kome/news/2025/06/250604-82177.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -2082,15 +2680,15 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/kome/images/9db5406986f8e5ca5452cf6af12b4c85.jpg" alt="2025年3月の1人1ヵ月当たり精米消費量 出所：米穀機構「米の消費動向調査結果（令和7年3月分）」">
+        <img src="https://www.jacom.or.jp/kome/images/99ae7fec484f7c88d665b7b0459cba58.jpg" alt="〇米">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">1人当たり精米消費、3月は微減　家庭内消費堅調も「中食」減少　米穀機構</p>
-                    <p class="pickUpItem__title__date">2025年4月25日</p>
+                    <p class="pickUpItem__title__txt">備蓄米放出で米の在庫増　4月末</p>
+                    <p class="pickUpItem__title__date">2025年6月4日</p>
                   </div>
                 </a>
               </div>
@@ -2113,7 +2711,7 @@ $(document).ready(function () {
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/saibai/news/2025/04/250428-81291.php">
+                <a href="https://www.jacom.or.jp/saibai/news/2025/06/250604-82176.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -2123,22 +2721,22 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/saibai/images/5b8e3e527d52156704b48dc595cc5105_1.jpg" alt="〇【注意報】ムギ類に赤かび病　県内全域で多発のおそれ　愛知県.jpg">
+        <img src="https://www.jacom.or.jp/saibai/images/330e9e0fc3a40fbe7ba3f84cd91ac983.jpg" alt="【注意報】キクにクロゲハナアザミウマ　西和地域で多発のおそれ　奈良県.jpg">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">【注意報】ムギ類に赤かび病　県内全域で多発のおそれ　愛知県</p>
-                    <p class="pickUpItem__title__date">2025年4月28日</p>
+                    <p class="pickUpItem__title__txt">【注意報】キクにクロゲハナアザミウマ　西和地域で多発のおそれ　奈良県</p>
+                    <p class="pickUpItem__title__date">2025年6月4日</p>
                   </div>
                 </a>
               </div>
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/saibai/news/2025/04/250422-81144.php">
+                <a href="https://www.jacom.or.jp/saibai/news/2025/06/250604-82157.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -2148,22 +2746,22 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/saibai/images/fddd15da3d46e90e923830f9fde75996.jpg" alt="【注意報】小麦、大麦に赤かび病　県内全域で多発のおそれ　滋賀県.jpg">
+        <img src="https://www.jacom.or.jp/saibai/images/72d43a8d4453e780df5bd10b5d6a7a4c_1.jpg" alt="〇茶.jpg">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">【注意報】小麦、大麦に赤かび病　県内全域で多発のおそれ　滋賀県</p>
-                    <p class="pickUpItem__title__date">2025年4月22日</p>
+                    <p class="pickUpItem__title__txt">【注意報】茶にカンザワハダニ　県下全域で多発のおそれ　宮崎県</p>
+                    <p class="pickUpItem__title__date">2025年6月4日</p>
                   </div>
                 </a>
               </div>
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/saibai/news/2025/04/250418-81083.php">
+                <a href="https://www.jacom.or.jp/saibai/news/2025/06/250604-82156.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -2173,22 +2771,22 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/saibai/images/707b1a67b4342bc6e804381354389b44.jpg" alt="写真3：かすり状の斑点（提供：愛知県農業総合試験場）">
+        <img src="https://www.jacom.or.jp/saibai/images/35deb2b51487ef41f2cf380bd5431383_2.jpg" alt="〇トマト.jpg">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">【特殊報】コムギ縞萎縮病　県内で数十年ぶりに確認　愛知県</p>
-                    <p class="pickUpItem__title__date">2025年4月18日</p>
+                    <p class="pickUpItem__title__txt">【注意報】ナス、トマト、キク等にオオタバコガ　県内全域で多発のおそれ　奈良県</p>
+                    <p class="pickUpItem__title__date">2025年6月4日</p>
                   </div>
                 </a>
               </div>
             
               <div class="pickUpItem">
               
-                <a href="https://www.jacom.or.jp/saibai/news/2025/03/250331-80540.php">
+                <a href="https://www.jacom.or.jp/saibai/news/2025/06/250604-82155.php">
               
                 <div class="pickUpItem__img fixItem">
                     
@@ -2198,15 +2796,15 @@ $(document).ready(function () {
   
     <div class="">
       
-        <img src="https://www.jacom.or.jp/saibai/images/1b60c74251d6c49db5d960aaed12e6ec.jpg" alt="【注意報】かんきつ、びわ、落葉果樹に果樹カメムシ類　県内全域で多発のおそれ　静岡県.jpg">
+        <img src="https://www.jacom.or.jp/saibai/images/56522dbe1879bd6740527395c9a151f5.jpg" alt="〇かんきつ.jpg">
       
     </div>
   
 
                   </div>
                   <div class="pickUpItem__title fixItem">
-                    <p class="pickUpItem__title__txt">【注意報】かんきつ、びわ、落葉果樹に果樹カメムシ類　県内全域で多発のおそれ　静岡県</p>
-                    <p class="pickUpItem__title__date">2025年3月31日</p>
+                    <p class="pickUpItem__title__txt">【注意報】かんきつに黒点病　県下全域で多発のおそれ　宮崎県</p>
+                    <p class="pickUpItem__title__date">2025年6月4日</p>
                   </div>
                 </a>
               </div>
@@ -2224,16 +2822,37 @@ $(document).ready(function () {
 </section>
 
 
-            </div><!-- .contents -->
+
+</div><!-- .contents -->
                     </div>
                     <div class="l-main__right">
                         <div id="side" class="side">
-                          <div class='bannerPc'><a href="https://syngenta.libra.jpn.com/?utm_source=Banner&utm_medium=+JACOM&utm_campaign=20240920_syt-library" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/5287d8aeface8697b407b021505cf5d7_1.jpg" alt="240918・シンジェンタライブラリー：右上長方形PC"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/noukyo/tokusyu/2016/08/160803-30551.php" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/disc_pc.jpg" alt="DiSC右正方形1PC"></a></div><div class='bannerPc'><a href="https://z-gis.net/99/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/17e314362328b00444bf2af03247ca59.jpg" alt="Z-GIS 右正方形２　PC　230630"></a></div><div class='bannerPc'><a href="http://www.ja-kyosai.or.jp/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/image_1_b.jpg" alt="JA共済連右横長1PC"></a></div><div class='bannerPc'><a href="http://www.jabank.org/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/jabank_banner_0410_100-300.jpg" alt="JAバンク右横長1PC"></a></div><div class='bannerPc'><a href="http://www.ja-hitodukuriken.jp/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/719844813cbf7fc9d468bf467158e5b7.jpg" alt="JA人づくり研究会右横長1PC"></a></div><section class="articleListBox">
+                          <div class='bannerPc'><a href="https://50th-basagran.jp/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/d74ce1c4053b9be46fe1b40ebb2292d9.png" alt="250508_バサグラン50周年_PC"></a></div><div class='bannerPc'><a href="https://www.jacom.or.jp/noukyo/tokusyu/2016/08/160803-30551.php" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/disc_pc.jpg" alt="DiSC右正方形1PC"></a></div><div class='bannerPc'><a href="https://z-gis.net/99/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/17e314362328b00444bf2af03247ca59.jpg" alt="Z-GIS 右正方形２　PC　230630"></a></div><div class='bannerPc'><a href="http://www.ja-kyosai.or.jp/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/image_1_b.jpg" alt="JA共済連右横長1PC"></a></div><div class='bannerPc'><a href="http://www.jabank.org/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/jabank_banner_0410_100-300.jpg" alt="JAバンク右横長1PC"></a></div><div class='bannerPc'><a href="http://www.ja-hitodukuriken.jp/" target="_blank" onclick="ga('send', 'event', {eventCategory: 'banner', eventAction: 'click', eventLabel: this.href, transport: 'beacon'})"><img src="https://www.jacom.or.jp/banner/719844813cbf7fc9d468bf467158e5b7.jpg" alt="JA人づくり研究会右横長1PC"></a></div><section class="articleListBox">
   <div class="articleListBox__heading articleListBox--mainColor">
     <h2>注目の情報</h2>
   </div>
   <div class="articleListBox__body">
     <ul class="articleList">
+        
+          <li class="articleList__items articleList__items--mainColor">
+               
+            <a href="https://www.jacom.or.jp/noukyo/tokusyu/2025/05/250515-81633.php" class="articleList__items__inner">
+          
+              
+  
+  
+
+  
+    <div class="articleListImg">
+      
+        <img src="https://www.jacom.or.jp/noukyo/images/deb482c43fc8f7a3887e5809c004ba77.jpg" alt="ＪＡ共済連　青江会長インタビュー.jpg">
+      
+    </div>
+  
+
+              <p class="articleListTitle">"安心のお守り"拡充へ　ＪＡ共済連　青江伯夫会長に聞く【令和6年度ＪＡ共済優績組合表彰】</p>
+            </a>
+          </li>
         
           <li class="articleList__items articleList__items--mainColor">
                
@@ -2332,24 +2951,6 @@ $(document).ready(function () {
   
 
               <p class="articleListTitle">ＪＡ中古農業機械展示会に約240人が来場　コスト低減の一助に　ＪＡ全農おおいた</p>
-            </a>
-          </li>
-        
-          <li class="articleList__items articleList__items--mainColor">
-               
-            <a href="https://www.jacom.or.jp/shizai/closeup/2025/250303-79892.php" class="articleList__items__inner">
-          
-              
-  
-  
-
-  
-    <div class="articleListImg">
-      <img src="https://www.jacom.or.jp/shizai/images/8403c4f63296c4580997830e295cae04.jpg" alt="農業用バイオスティミュラント「エンビタ」とは　水稲育苗期にも効果　北興化学工業">
-    </div>
-  
-
-              <p class="articleListTitle">農業用バイオスティミュラント「エンビタ」とは　水稲育苗期にも効果　北興化学工業</p>
             </a>
           </li>
         
@@ -2466,16 +3067,8 @@ $(document).ready(function () {
         <script src="https://www.jacom.or.jp/js/fitie.js"></script>
         <script src="https://www.jacom.or.jp/js/jquery.matchHeight-min.js"></script>
         
-        <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
-        <script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
-        <script>
-            flatpickr.localize(flatpickr.l10ns.ja);
-            flatpickr("#startday");
-            flatpickr("#endday");
-        </script>
-        
-        <script src="https://www.jacom.or.jp/js/scripts.js?250503"></script>
-        <script src="https://www.jacom.or.jp/js/getpost.js?250503"></script>
+        <script src="https://www.jacom.or.jp/js/scripts.js?250605"></script>
+        <script src="https://www.jacom.or.jp/js/getpost.js?250605"></script>
     </div>
 </body>
 

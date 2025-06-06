@@ -13,12 +13,14 @@
 #
 # Indexes
 #
-#  index_topics_on_url  (url) UNIQUE
+#  index_topics_on_title_and_content_pgroonga  (((((COALESCE(title, ''::character varying))::text || ' '::text) || COALESCE(content, ''::text)))) USING pgroonga
+#  index_topics_on_url                         (url) UNIQUE
 #
 class Topic < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :topic_type
   has_many :user_topics, dependent: :destroy
 
-  scope :old, ->(days) { where(["posted_on < ?", Time.zone.today - days]) }
+  scope :old, ->(days) { where(posted_on: ...(Time.zone.today - days)) }
+  scope :by_word, ->(word) { where("(title || ' ' || content) &@~ ?", word) }
 end
