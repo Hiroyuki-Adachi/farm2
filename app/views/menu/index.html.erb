@@ -8,24 +8,24 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <%= render(:partial => 'show_schedules') %>
+          <%= render(partial: 'show_schedules') %>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <%= render(:partial => 'show_lands') %>
+          <%= render(partial: 'show_lands') %>
         </div>
       </div>
 <% if current_user.worker.director? %>
       <div class="row">
         <div class="col-md-12" id="topics_content">
-          <%= render(:partial => 'show_topics') %>
+          <%= render(partial: 'show_topics') %>
         </div>
       </div>
 <% end %>
     </div>
   </div>
   <div class="col-md-4">
-    <%= render(:partial => 'show_results') %>
+    <%= render(partial: 'show_results') %>
   </div>
 </div>

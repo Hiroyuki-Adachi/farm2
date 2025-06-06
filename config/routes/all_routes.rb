@@ -158,7 +158,7 @@ resources :personal_informations, param: "token", only: [:show] do
   resources :dryings, controller: "personal_informations/dryings", only: [:index]
   resources :owned_rices, controller: "personal_informations/owned_rices", only: [:index]
   resources :minutes, controller: "personal_informations/minutes", only: [:show]
-  resources :topics, controller: "personal_informations/topics", only: [:index, :show]
+  resources :topics, controller: "personal_informations/topics", only: [:index, :update]
   resources :maps, controller: "personal_informations/maps", only: [:index]
   resources :mail_confirmations, controller: "personal_informations/mail_confirmations", param: "mail_token", only: [:edit]
 end
@@ -168,7 +168,7 @@ resources :users, except: [:show] do
 end
 namespace :users do
   resources :qr, only: [:index]
-  resources :words, only: [:new, :create, :show, :destroy]
+  resources :words, only: [:new, :create, :destroy]
   resources :mails, only: [:new, :create]
   resources :line_hooks, only: [:create]
 end
