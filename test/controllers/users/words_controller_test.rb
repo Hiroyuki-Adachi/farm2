@@ -59,19 +59,6 @@ class Users::WordsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "検索ワード(表示)" do
-    topic = topics(:topic1)
-    get users_word_path(id: topic.id), as: :turbo_stream
-    assert_response :success
-  end
-
-  test "検索ワード(表示)(失敗)" do
-    login_as(users(:user_checker))
-    topic = topics(:topic1)
-    get users_word_path(id: topic.id), as: :turbo_stream
-    assert_response :error
-  end
-
   test "検索ワード(既読)" do
     topic = topics(:topic1)
     delete users_word_path(id: topic.id)

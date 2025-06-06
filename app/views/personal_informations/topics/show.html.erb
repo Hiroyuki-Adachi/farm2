@@ -1,8 +1,0 @@
-<h3><%= @topic.title %></h3>
-<div>　<%= show_topic(@topic.content) %></div>
-<div class="text-center">
-  <div class="btn-group" role="group" aria-label="Basic example">
-    <%= link_to_unless(@topic&.topic_type&.paid_flag, @topic&.topic_type&.name, @topic.url, {target: :_blank, class: "btn btn-primary"}) %>
-    <%= link_to "一覧に戻る", personal_information_topics_path(personal_information_token: @worker.user.token), {class: "btn btn-secondary"} %>
-  </div>
-</div>
