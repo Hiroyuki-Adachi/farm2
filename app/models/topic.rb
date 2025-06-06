@@ -21,5 +21,6 @@ class Topic < ApplicationRecord
   belongs_to_active_hash :topic_type
   has_many :user_topics, dependent: :destroy
 
-  scope :old, ->(days) { where(["posted_on < ?", Time.zone.today - days]) }
+  scope :old, ->(days) { where(posted_on: ...(Time.zone.today - days)) }
+  scope :by_word, ->(word) { where("(title || ' ' || content) &@~ ?", word) }
 end

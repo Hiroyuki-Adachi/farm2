@@ -34,3 +34,17 @@ words2:
   pc_flag: true
   sp_flag: false
   line_flag: true
+
+user_word_kinu:
+  word: 'きぬむすめ'
+  user_id: 1
+  pc_flag: true
+  sp_flag: true
+  line_flag: false
+
+user_word_koshi:
+  word: 'コシヒカリ'
+  user_id: 1
+  pc_flag: true
+  sp_flag: false
+  line_flag: true

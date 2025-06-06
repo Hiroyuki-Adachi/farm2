@@ -35,6 +35,20 @@ topic2:
   url: "https://example.com/2"
   topic_type_id: 3
 
+topic_koshi:
+  title: "ニュース3はコシヒカリです"
+  content: "　ニュース３の内容だよ。"
+  posted_on: 2015-05-05
+  url: "https://example.com/3"
+  topic_type_id: 3
+
+topic_kinu:
+  title: "ニュース4のタイトルです"
+  content: "　ニュース４の内容は「きぬむすめ」だよ。"
+  posted_on: 2015-05-05
+  url: "https://example.com/4"
+  topic_type_id: 4
+
 free_topic:
   title: Free Topic
   posted_on: <%= Date.today %>
