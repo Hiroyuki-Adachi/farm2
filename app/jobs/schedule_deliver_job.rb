@@ -1,14 +1,31 @@
 class ScheduleDeliverJob < ApplicationJob
   queue_as :default
 
-  def perform
+  def perform(timing)
+    raise ArgumentError, "Missing timing argument" if timing.blank?
+
     User.linable.each do |user|
-      messages = ['明日は以下の予定です。']
-      Schedule.by_worker(user.worker).tomorrow.each do |schedule|
+      messages, schedules = case timing.to_sym
+                            when :morning
+                              [
+                                [I18n.t('line_deliver_schedule.morning')],
+                                Schedule.by_worker(user.worker).today.pm_only
+                              ]
+                            when :afternoon
+                              [
+                                [I18n.t('line_deliver_schedule.afternoon')],
+                                Schedule.by_worker(user.worker).tomorrow.am_only
+                              ]
+                            else
+                              raise ArgumentError, "Unknown timing: #{timing.inspect}"
+                            end
+      next if schedules.blank?
+
+      schedules.each do |schedule|
         messages << "#{schedule.start_at.strftime('%H:%M')}から#{schedule.work_kind.name}です。"
       end
 
-      LineHookService.push_message(user.line_id, messages.join("\n")) if messages.size > 1
+      LineHookService.push_message(user.line_id, messages.join("\n"))
     end
   end
 end

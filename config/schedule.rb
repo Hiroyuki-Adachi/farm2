@@ -32,7 +32,11 @@ job_type :rake,   %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment 
 job_type :runner, %q{ cd :path && PATH=:env_path:"$PATH" bin/rails runner -e :environment ':task' :output }
 job_type :script, %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bundle exec bin/:task :output }
 
-every 1.day, at: '10:58 am' do
+every 1.day, at: '07:05 am' do
+  runner "CrawlJob.perform_now"
+end
+
+every 1.day, at: '07:38 am' do
   runner "ImportJmaJob.perform_now"
 end
 
@@ -48,6 +52,10 @@ every 1.day, at: '5:15 pm' do
   runner "DiskCheckJob.perform_now"
 end
 
+every 1.day, at: '8:40 am' do
+  runner "ScheduleDeliverJob.perform_now(:morning)"
+end
+
 every 1.day, at: '5:40 pm' do
-  runner "ScheduleDeliverJob.perform_now"
+  runner "ScheduleDeliverJob.perform_now(:afternoon)"
 end

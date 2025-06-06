@@ -14,7 +14,7 @@ class SchedulesController < ApplicationController
       worked_at: Time.zone.today,
       work_type_id: @work_types.first.id,
       term: 0,
-      work_flag: true
+      work_flag: true,
     ).decorate
   end
 
