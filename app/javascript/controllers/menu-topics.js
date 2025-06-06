@@ -1,5 +1,3 @@
-import "bootstrap";
-
 document.addEventListener('turbo:load', () => {
     document.querySelectorAll("a.topic-link").forEach(link => {
         link.addEventListener("click", (event) => {

@@ -4,7 +4,7 @@
       <span class='badge bg-primary me-1'><%= user_topic.word %></span>
       <span class='badge bg-secondary me-1'><%= user_topic.topic&.topic_type&.name %></span>
       <a href="<%= user_topic.topic.url %>" target="_blank" rel="noopener noreferrer" class="topic-link"
-        data-readed="<%= users_word_path(user_topic.topic_id) %>">
+        data-readed="<%= personal_information_topic_path(personal_information_token: @current_user.token, id: user_topic.topic_id) %>">
         <%= user_topic.topic.title %>
       </a>
       <small class="text-muted">(<%= user_topic.topic.posted_on.strftime("%Y-%m-%d") %>)</small>
@@ -14,3 +14,6 @@
     </li>
   <% end %>
 </ul>
+<% content_for :head do %>
+<%= javascript_include_tag 'controllers/personal_informations/topics', 'data-turbo-track': 'reload', type: :module, data: {turbo: {track: :reload}} %>
+<% end %>
