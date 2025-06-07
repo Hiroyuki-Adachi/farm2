@@ -2,13 +2,13 @@ require "test_helper"
 
 class NewsDeliverJobTest < ActiveJob::TestCase
   setup do
-    @original = LineHookService.method(:push_message)
+    @original = LineHookService.method(:push_messages)
   end
 
   test "記事のLINE配信に成功した場合" do
     free_user_topic = user_topics(:free_unread)
 
-    LineHookService.define_singleton_method(:push_message) do |*args|
+    LineHookService.define_singleton_method(:push_messages) do |*args|
       Net::HTTPOK.new("1.1", "200", "OK")
     end
 
@@ -20,7 +20,7 @@ class NewsDeliverJobTest < ActiveJob::TestCase
   test "記事のLINE配信でエラーが発生した場合" do
     free_user_topic = user_topics(:free_unread)
   
-    LineHookService.define_singleton_method(:push_message) do |*args|
+    LineHookService.define_singleton_method(:push_messages) do |*args|
       Net::HTTPServerError.new(1.0, "500", "Error")
     end
   
@@ -30,6 +30,6 @@ class NewsDeliverJobTest < ActiveJob::TestCase
   end
 
   teardown do
-    LineHookService.define_singleton_method(:push_message, @original)
+    LineHookService.define_singleton_method(:push_messages, @original)
   end
 end

@@ -1,5 +1,6 @@
 class LineHookService
   API_ENDPOINT = 'https://api.line.me/v2/bot/message/'.freeze
+  MAX_MESSAGES = 5
 
   def initialize(message_text, line_id)
     @message_text = message_text
@@ -34,11 +35,16 @@ class LineHookService
   end
 
   def self.push_message(line_id, message)
+    push_messages(line_id, [message])
+  end
+
+  def self.push_messages(line_id, messages)
+    return if messages.blank?
+
+    messages = messages.take(MAX_MESSAGES).map { |msg| { type: 'text', text: msg } }
     payload = {
       to: line_id,
-      messages: [
-        { type: 'text', text: message }
-      ]
+      messages: messages
     }
     send_request(:push, payload)
   end
@@ -68,6 +74,10 @@ class LineHookService
 
   def unlink_message?
     @message_text.strip == '解除'
+  end
+
+  def news_message?
+    @message_text.strip =~ /のニュース$/
   end
 
   def extract_user_token
