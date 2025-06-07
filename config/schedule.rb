@@ -33,7 +33,7 @@ job_type :runner, %q{ cd :path && PATH=:env_path:"$PATH" bin/rails runner -e :en
 job_type :script, %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bundle exec bin/:task :output }
 
 every 1.day, at: '07:05 am' do
-  runner "CrawlJob.perform_now"
+  runner "CrawlJob.perform_now(perform_now: true)"
 end
 
 every 1.day, at: '07:38 am' do
