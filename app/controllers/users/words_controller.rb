@@ -12,12 +12,6 @@ class Users::WordsController < ApplicationController
       render turbo_stream: turbo_stream.update('flash_messages', partial: 'application/flashes')
     end
   end
-
-  def show
-    return to_error_path unless current_user.user_topics.exists?(topic_id: params[:id])
-    @topic = Topic.find(params[:id])
-    respond_to { |format| format.turbo_stream }
-  end
   
   def destroy
     UserTopic.find_by(user_id: current_user.id, topic_id: params[:id])&.readed!
@@ -28,6 +22,6 @@ class Users::WordsController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(user_words_attributes: [:id, :word, :pc_flag, :sp_flag, :line_flag])
+    params.expect(user: [user_words_attributes: [[:id, :word, :pc_flag, :sp_flag, :line_flag]]])
   end
 end

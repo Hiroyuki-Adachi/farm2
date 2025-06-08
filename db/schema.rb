@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_28_101946) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_06_125231) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pgroonga"
 
   create_table "accidents", comment: "ヒヤリハット", force: :cascade do |t|
     t.integer "investigator_id", default: 0, null: false, comment: "調査責任者ID"
@@ -781,6 +782,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_101946) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "topic_type_id", default: 0, null: false, comment: "トピック種別"
+    t.index "((((COALESCE(title, ''::character varying))::text || ' '::text) || COALESCE(content, ''::text)))", name: "index_topics_on_title_and_content_pgroonga", using: :pgroonga
     t.index ["url"], name: "index_topics_on_url", unique: true
   end
 
@@ -859,6 +861,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_101946) do
     t.boolean "pc_flag", default: true, null: false, comment: "パソコンフラグ"
     t.boolean "sp_flag", default: true, null: false, comment: "スマートフォンフラグ"
     t.boolean "line_flag", default: false, null: false, comment: "LINEフラグ"
+    t.index ["user_id", "topic_id"], name: "ix_user_topics_user_id_topic_id", unique: true
   end
 
   create_table "user_words", comment: "利用者ワード", force: :cascade do |t|

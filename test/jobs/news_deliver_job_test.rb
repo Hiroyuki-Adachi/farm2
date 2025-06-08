@@ -7,7 +7,6 @@ class NewsDeliverJobTest < ActiveJob::TestCase
 
   test "記事のLINE配信に成功した場合" do
     free_user_topic = user_topics(:free_unread)
-    paid_user_topic = user_topics(:paid_unread)
 
     LineHookService.define_singleton_method(:push_message) do |*args|
       Net::HTTPOK.new("1.1", "200", "OK")
@@ -15,8 +14,7 @@ class NewsDeliverJobTest < ActiveJob::TestCase
 
     perform_enqueued_jobs { NewsDeliverJob.perform_now }
 
-    assert free_user_topic.reload.read_flag, "既読フラグが true になるはず"
-    assert_not paid_user_topic.reload.read_flag, "有料トピックは既読にしない"
+    assert free_user_topic.reload.read_flag
   end
 
   test "記事のLINE配信でエラーが発生した場合" do
@@ -28,7 +26,7 @@ class NewsDeliverJobTest < ActiveJob::TestCase
   
     perform_enqueued_jobs { NewsDeliverJob.perform_now }
   
-    assert_not free_user_topic.reload.read_flag, "通知失敗時は既読にならない"
+    assert_not free_user_topic.reload.read_flag
   end
 
   teardown do

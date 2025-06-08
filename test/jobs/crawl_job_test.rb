@@ -1,58 +1,36 @@
 require "test_helper"
 
 class CrawlJobTest < ActiveJob::TestCase
-  setup do
-    @originals = CrawlJob.ordered_classes.map do |klass|
-      [klass, klass.method(:perform_now), klass.method(:perform_later)]
+  test "perform_now モードで各ジョブが perform_now される" do
+    CrawlJob.ordered_classes.each do |job_class|
+      job_class.expects(:perform_now)
     end
+
+    UserWord.expects(:match_all_topics!)
+    Topic.expects(:old).with(CrawlJob::START_DAY).returns(Topic.none)
+
+    CrawlJob.new.perform(perform_now: true)
   end
 
-  teardown do
-    # 元のメソッドに戻す
-    @originals.each do |klass, orig_now, orig_later|
-      klass.define_singleton_method(:perform_now, orig_now)
-      klass.define_singleton_method(:perform_later, orig_later)
+  test "perform_later モードで各ジョブが perform_later される" do
+    CrawlJob.ordered_classes.each do |job_class|
+      job_class.expects(:perform_later)
     end
+
+    UserWord.expects(:match_all_topics!)
+    Topic.expects(:old).with(CrawlJob::START_DAY).returns(Topic.none)
+
+    CrawlJob.new.perform(perform_now: false)
   end
 
   test "古いトピックが削除される" do
-    old_topic = topics(:old_topic)
-    new_topic = topics(:new_topic)
+    old_topics = mock("topics")
+    old_topics.expects(:destroy_all)
 
-    assert Topic.exists?(old_topic.id)
+    Topic.expects(:old).with(CrawlJob::START_DAY).returns(old_topics)
+    CrawlJob.ordered_classes.each { |j| j.stubs(:perform_later) }
+    UserWord.stubs(:match_all_topics!)
 
-    # CrawlJobsは空stubでOK
-    CrawlJob.ordered_classes.each do |klass|
-      klass.define_singleton_method(:perform_later) { |_| }
-    end
-
-    perform_enqueued_jobs { CrawlJob.perform_now }
-
-    refute Topic.exists?(old_topic.id), "古いトピックが削除されるべき"
-    assert Topic.exists?(new_topic.id), "新しいトピックは残るべき"
-  end
-
-  test "perform_now: true のとき perform_now が呼ばれる" do
-    called = []
-    CrawlJob.ordered_classes.each do |klass|
-      klass.define_singleton_method(:perform_now) { |words| called << [klass.name, :now, words] }
-    end
-
-    perform_enqueued_jobs { CrawlJob.perform_now(perform_now: true) }
-
-    assert_equal CrawlJob.ordered_classes.size, called.size
-    assert called.all? { |entry| entry[1] == :now }, "全て perform_now が呼ばれるべき"
-  end
-
-  test "perform_now: false のとき perform_later が呼ばれる" do
-    called = []
-    CrawlJob.ordered_classes.each do |klass|
-      klass.define_singleton_method(:perform_later) { |words| called << [klass.name, :later, words] }
-    end
-
-    perform_enqueued_jobs { CrawlJob.perform_now }
-
-    assert_equal CrawlJob.ordered_classes.size, called.size
-    assert called.all? { |entry| entry[1] == :later }, "全て perform_later が呼ばれるべき"
+    CrawlJob.new.perform
   end
 end

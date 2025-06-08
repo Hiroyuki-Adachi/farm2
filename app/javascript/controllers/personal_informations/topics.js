@@ -3,15 +3,15 @@ document.addEventListener('turbo:load', () => {
         link.addEventListener("click", (event) => {
             event.preventDefault();
             fetch(link.dataset.readed, {
-                method: "DELETE",
+                method: "PATCH",
                 headers: {
                     "X-CSRF-Token": getCsrfToken()
                 },
                 keepalive: true 
             })
-            .then((data) => data.text())
-            .then((html) => document.getElementById("topics_content").innerHTML = html)
-            .finally(() => window.open(link.href, '_blank'));
+            .then(() => window.open(link.href, '_blank'))
+            .catch(() => window.open(link.href, '_blank'))
+            .finally(() => Turbo.visit(window.location.href, { action: 'replace' }));
         });
     });
 });
