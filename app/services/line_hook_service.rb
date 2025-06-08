@@ -23,6 +23,7 @@ class LineHookService
         return false
       end
       NewsReplyJob.perform_later(user.id, word)
+      return true
     end
 
     self.class.send_reply(reply_token, "#{user.worker.name}さん、こんにちは😀\n\n#{I18n.t('line_hook.help')}")
