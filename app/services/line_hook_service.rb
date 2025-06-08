@@ -19,7 +19,7 @@ class LineHookService
 
     if (word = news_keyword)
       if word.length < 2
-        self.class.send_reply(reply_token, I18n.t('line_hook.line_reply.news_keyword_too_short'))
+        self.class.send_reply(reply_token, I18n.t('line_reply.news_keyword_too_short'))
         return false
       end
       NewsReplyJob.perform_later(user.id, word)
