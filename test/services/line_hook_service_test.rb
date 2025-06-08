@@ -1,11 +1,18 @@
 require 'test_helper'
 
 class LineHookServiceTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   setup do
     @line_user_id = 'U1234567890abcdef'
     @reply_token = 'dummy_reply_token'
     @not_linked_user = users(:user_line)
     @linked_user = users(:user_line_id_already_exists)
+  end
+
+  teardown do
+    clear_enqueued_jobs
+    clear_performed_jobs
   end
 
   test 'tokenが有効の場合、紐付けに成功する' do
@@ -43,7 +50,7 @@ class LineHookServiceTest < ActiveSupport::TestCase
     service = LineHookService.new('解除', @linked_user.line_id)
 
     assert service.call(@reply_token)
-    assert_equal '', @linked_user.reload.line_id
+    assert @linked_user.reload.line_id.blank?
   end
 
   test '紐付けの無いユーザが解除コマンドを受け取った場合、何も起こらない' do
@@ -88,5 +95,26 @@ class LineHookServiceTest < ActiveSupport::TestCase
 
     response = LineHookService.push_message('dummy_user_id', 'Push Hello')
     assert response.code.to_i.between?(200, 299)
+  end
+
+  test 'self.push_messagesが動作する' do
+    Net::HTTP.any_instance.stubs(:request).returns(Struct.new(:code, :body).new('200', '{}'))
+
+    response = LineHookService.push_messages('dummy_user_id', ['Push message 1', 'Push message 2'])
+    assert response.code.to_i.between?(200, 299)
+  end
+
+  test '1文字の場合はニュース検索に失敗する' do
+    LineHookService.stubs(:send_reply).returns(true)
+    service = LineHookService.new('稲のニュース', @line_user_id)
+    assert_not service.call(@reply_token)
+  end
+
+  test '2文字の場合はニュース検索が実行される' do
+    LineHookService.stubs(:push_messages).returns(Struct.new(:code, :body).new('200', '{}'))
+    perform_enqueued_jobs do
+      service = LineHookService.new('田植えのニュース', @line_user_id)
+      service.call(@reply_token)
+    end
   end
 end

@@ -436,4 +436,6 @@ ja:
     morning: "本日午後の予定は以下の通りです。"
     afternoon: "明日午前の予定は以下の通りです。"
   line_reply:
-    topics_found: "以下のトピックが見つかりました📰"
+    news_keyword_too_short: "検索ワードが短すぎます😱"
+    topics_found: "以下のトピックが見つかりました✌"
+    topics_not_found: "トピックが見つかりませんでした😢"

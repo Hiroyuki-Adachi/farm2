@@ -17,6 +17,14 @@ class LineHookService
     Rails.application.config.access_logger.info("LN-#{user.worker.name}")
     return unlink_line_id(reply_token, user) if unlink_message?
 
+    if (word = news_keyword)
+      if word.length < 2
+        self.class.send_reply(reply_token, I18n.t('line_hook.line_reply.news_keyword_too_short'))
+        return false
+      end
+      NewsReplyJob.perform_later(user.id, word)
+    end
+
     self.class.send_reply(reply_token, "#{user.worker.name}さん、こんにちは😀\n\n#{I18n.t('line_hook.help')}")
     return true
   rescue StandardError => e
@@ -76,8 +84,10 @@ class LineHookService
     @message_text.strip == '解除'
   end
 
-  def news_message?
-    @message_text.strip =~ /のニュース$/
+  def news_keyword
+    if (m = @message_text.strip.match(/(.+)のニュース$/))
+      m[1]
+    end
   end
 
   def extract_user_token

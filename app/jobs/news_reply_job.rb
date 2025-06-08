@@ -9,11 +9,17 @@ class NewsReplyJob < ApplicationJob
     return if user&.line_id.blank?
 
     topics = Topic.by_word(word)
-    return if topics.empty?
+    if topics.empty?
+      LineHookService.push_message(user.line_id, I18n.t('line_reply.topics_not_found'))
+      return
+    end
 
     messages = build_topic_messages(user, topics)
 
-    return if messages.size <= 1 # ヘッダーしかない
+    if messages.size <= 1
+      LineHookService.push_message(user.line_id, I18n.t('line_reply.topics_not_found'))
+      return
+    end
 
     response = LineHookService.push_messages(user.line_id, messages)
     log_response(user.id, word, response)

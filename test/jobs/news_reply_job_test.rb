@@ -55,33 +55,45 @@ class NewsReplyJobTest < ActiveJob::TestCase
     assert_not was_called.call
   end
 
-  test "トピックが0件の場合は送信しない" do
+  test "トピックが0件の場合はエラーメッセージを送信する" do
     user = users(:user_line_id_already_exists)
     word = "notfoundword"
 
-    was_called = stub_push_messages
+    called_args = nil
+    LineHookService.define_singleton_method(:push_message) do |line_id, message|
+      called_args = [line_id, message]
+      Net::HTTPOK.new("1.1", "200", "OK")
+    end
 
     perform_enqueued_jobs do
       NewsReplyJob.perform_now(user.id, word)
     end
 
-    assert_not was_called.call
+    assert_not called_args.nil?
+    assert_equal user.line_id, called_args[0]
+    assert_includes called_args[1], I18n.t('line_reply.topics_not_found')
   end
 
-  test "URLが死んでいる場合はメッセージに含めない" do
+  test "URLが死んでいる場合はエラーメッセージを送信する" do
     topic = topics(:dead_topic)
     stub_request(:head, topic.url).to_return(status: 404)
 
     user = users(:user_line_id_already_exists)
     word = "dead"
 
-    was_called = stub_push_messages
+    called_args = nil
+    LineHookService.define_singleton_method(:push_message) do |line_id, message|
+      called_args = [line_id, message]
+      Net::HTTPOK.new("1.1", "200", "OK")
+    end
 
     perform_enqueued_jobs do
       NewsReplyJob.perform_now(user.id, word)
     end
 
-    assert_not was_called.call
+    assert_not called_args.nil?
+    assert_equal user.line_id, called_args[0]
+    assert_includes called_args[1], I18n.t('line_reply.topics_not_found')
   end
 
   def stub_push_messages
