@@ -52,7 +52,15 @@ topic_kinu:
 free_topic:
   title: Free Topic
   posted_on: <%= Date.today %>
-  url: http://example.com
+  content: "This is a free topic content."
+  url: http://free.example.com
+  topic_type_id: 2
+
+dead_topic:
+  title: Dead Topic
+  posted_on: <%= Date.today %>
+  content: "This is a dead topic content."
+  url: http://dead.example.com
   topic_type_id: 2
 
 paid_topic:
