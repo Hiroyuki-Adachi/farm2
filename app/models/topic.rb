@@ -22,5 +22,5 @@ class Topic < ApplicationRecord
   has_many :user_topics, dependent: :destroy
 
   scope :old, ->(days) { where(posted_on: ...(Time.zone.today - days)) }
-  scope :by_word, ->(word) { where("(title || ' ' || content) &@~ ?", word) }
+  scope :by_word, ->(word) { where("(title || ' ' || content) &@~ ?", word).order(posted_on: :desc, id: :desc) }
 end

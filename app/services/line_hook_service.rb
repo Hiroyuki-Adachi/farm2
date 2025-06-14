@@ -1,5 +1,7 @@
 class LineHookService
   API_ENDPOINT = 'https://api.line.me/v2/bot/message/'.freeze
+  MAX_MESSAGES = 5
+  MIN_NEWS_KEYWORD_LENGTH = 2
 
   def initialize(message_text, line_id)
     @message_text = message_text
@@ -15,6 +17,15 @@ class LineHookService
 
     Rails.application.config.access_logger.info("LN-#{user.worker.name}")
     return unlink_line_id(reply_token, user) if unlink_message?
+
+    if (word = news_keyword)
+      if word.length < MIN_NEWS_KEYWORD_LENGTH
+        self.class.send_reply(reply_token, I18n.t('line_reply.news_keyword_too_short'))
+        return false
+      end
+      NewsReplyJob.perform_later(user.id, word)
+      return true
+    end
 
     self.class.send_reply(reply_token, "#{user.worker.name}さん、こんにちは😀\n\n#{I18n.t('line_hook.help')}")
     return true
@@ -34,11 +45,16 @@ class LineHookService
   end
 
   def self.push_message(line_id, message)
+    push_messages(line_id, [message])
+  end
+
+  def self.push_messages(line_id, messages)
+    return if messages.blank?
+
+    messages = messages.take(MAX_MESSAGES).map { |msg| { type: 'text', text: msg } }
     payload = {
       to: line_id,
-      messages: [
-        { type: 'text', text: message }
-      ]
+      messages: messages
     }
     send_request(:push, payload)
   end
@@ -68,6 +84,12 @@ class LineHookService
 
   def unlink_message?
     @message_text.strip == '解除'
+  end
+
+  def news_keyword
+    if (m = @message_text.strip.match(/(.+)のニュース$/))
+      m[1]
+    end
   end
 
   def extract_user_token
