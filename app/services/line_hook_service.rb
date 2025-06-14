@@ -1,6 +1,7 @@
 class LineHookService
   API_ENDPOINT = 'https://api.line.me/v2/bot/message/'.freeze
   MAX_MESSAGES = 5
+  MIN_NEWS_KEYWORD_LENGTH = 2
 
   def initialize(message_text, line_id)
     @message_text = message_text
