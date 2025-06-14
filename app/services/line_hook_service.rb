@@ -18,7 +18,7 @@ class LineHookService
     return unlink_line_id(reply_token, user) if unlink_message?
 
     if (word = news_keyword)
-      if word.length < 2
+      if word.length < MIN_NEWS_KEYWORD_LENGTH
         self.class.send_reply(reply_token, I18n.t('line_reply.news_keyword_too_short'))
         return false
       end
