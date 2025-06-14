@@ -21,7 +21,8 @@ class Crawlers::MaffGoJob < CrawlJob
     topic_date = nil
     begin
       topic_date = Date.parse(topic_doc.at_css('div.content_utility-date').children[0])
-    rescue StandardError
+    rescue StandardError => e
+      Rails.logger.error("Failed to parse date: #{e.message}. Input: #{topic_doc.at_css('div.content_utility-date').children[0]}")
       return
     end
     return if topic_date < Time.zone.today - START_DAY
