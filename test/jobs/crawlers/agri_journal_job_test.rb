@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class Crawlers::AgriJournalJobTest < ActiveJob::TestCase
+  include CrawlersTestHelper
+
   test "クロールして記事を保存できる" do
     stub_pages(
       list: "agrijournal.jp.list.html",
@@ -30,10 +32,6 @@ class Crawlers::AgriJournalJobTest < ActiveJob::TestCase
     stub_request(:get, %r{https://agrijournal.jp/renewableenergy/83364/}).to_return(
       body: read_fixture(item2)
     )
-  end
-
-  def read_fixture(filename)
-    Rails.root.join("test/fixtures/html/#{filename}").read
   end
 
   def assert_expected_topic

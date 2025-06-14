@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class Crawlers::NousonNewsJobTest < ActiveJob::TestCase
+  include CrawlersTestHelper
+
   test "クロールして記事を保存できる" do
     stub_pages(
       top: "nouson-n.com.top.html",
@@ -30,10 +32,6 @@ class Crawlers::NousonNewsJobTest < ActiveJob::TestCase
     stub_request(:get, %r{https://www.nouson-n.com/media/2025/05/27/10142}).to_return(
       body: read_fixture(item)
     )
-  end
-
-  def read_fixture(filename)
-    Rails.root.join("test/fixtures/html/#{filename}").read
   end
 
   def assert_expected_topic

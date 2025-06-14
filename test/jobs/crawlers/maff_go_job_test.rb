@@ -1,6 +1,8 @@
 require "test_helper"
 
 class Crawlers::MaffGoJobTest < ActiveJob::TestCase
+  include CrawlersTestHelper
+
   test "クロールして記事を保存できる" do
     stub_pages(
       list: "maff.go.jp.list.html",
@@ -26,10 +28,6 @@ class Crawlers::MaffGoJobTest < ActiveJob::TestCase
     stub_request(:get, URI.join(base_url, '/j/press/yusyutu_kokusai/chiiki/250613.html').to_s).to_return(
       body: read_fixture(item)
     )
-  end
-
-  def read_fixture(filename)
-    Rails.root.join("test/fixtures/html/#{filename}").read
   end
 
   def assert_expected_topic
