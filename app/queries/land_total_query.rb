@@ -1,8 +1,8 @@
 class LandTotalQuery
   Result = Struct.new(:place, :parcel_number, :area, :owner_name, :work_type_name, :w_date, keyword_init: true)
 
-  def initialize(work_kinds, sys)
-    @work_kinds = work_kinds
+  def initialize(work_kind_ids, sys)
+    @work_kind_ids = work_kind_ids
     @sys = sys
   end
 
@@ -15,7 +15,7 @@ class LandTotalQuery
         area: row['area'].to_f,
         owner_name: row['owner_name'],
         work_type_name: row['work_type_name'],
-        w_date: @work_kinds.each_with_index.map { |_, index| row["w#{index}_date"] }
+        w_date: @work_kind_ids.to_h { |id| [id.to_i, row["w#{id}_date"].blank? ? nil : Date.parse(row["w#{id}_date"])] }
       )
     end
   rescue ActiveRecord::StatementInvalid => e
@@ -33,8 +33,8 @@ class LandTotalQuery
   def build_sql
     sql = []
     sql << "SELECT L.place, L.parcel_number, MAX(L.area) AS area, MAX(HO.name) AS owner_name, COALESCE(MAX(WT.name), '') AS work_type_name"
-    @work_kinds.each_with_index do |_work_kind, index|
-      sql << ", MIN(W#{index}.worked_at) AS w#{index}_date"
+    @work_kind_ids.each do |id|
+      sql << ", MIN(W#{id}.worked_at) AS w#{id}_date"
     end
     sql << " FROM lands L"
     sql << "INNER JOIN work_lands WL ON L.id = WL.land_id"
@@ -53,17 +53,13 @@ class LandTotalQuery
     sql << ") "
     sql << "LEFT OUTER JOIN work_types WT"
     sql << "ON LC.work_type_id = WT.id"
-    @work_kinds.each_with_index do |work_kind, index|
-      sql << "LEFT OUTER JOIN works W#{index} ON WL.work_id = W#{index}.id AND W#{index}.work_kind_id = #{work_kind} AND W#{index}.term = #{@sys.term}"
+    @work_kind_ids.each do |id|
+      sql << "LEFT OUTER JOIN works W#{id} ON WL.work_id = W#{id}.id AND W#{id}.work_kind_id = #{id} AND W#{id}.term = #{@sys.term}"
     end
     sql << "WHERE L.start_on <= '#{@sys.end_date}' AND L.end_on >= '#{@sys.start_date}'"
     sql << "GROUP BY L.place, L.id "
     sql << "HAVING"
-    having = []
-    @work_kinds.each_with_index do |_work_kind, index|
-      having << "(MIN(W#{index}.worked_at) IS NOT NULL)"
-    end
-    sql << having.join(" OR ")
+    sql << @work_kind_ids.map { |id| "(MIN(W#{id}.worked_at) IS NOT NULL)" }.join(" OR ")
     sql << "ORDER BY"
     sql << "L.parcel_number, MAX(HO.display_order), L.place, L.id"
 

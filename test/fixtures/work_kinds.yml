@@ -31,7 +31,7 @@ work_kind_taue:
   deleted_at: 
 
 
-work_kinds1:
+work_kind_shirokaki:
   id: '2'
   name: "代掻"
   phonetic: 'しろかき'
