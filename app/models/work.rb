@@ -361,7 +361,7 @@ SQL
     results = Array.new(12, 0)
 
     query = Work.joins(:work_results).where(term: term)
-    query = query.where("work_results.worker_id = ?", worker.id) if worker
+    query = query.where(work_results: { worker_id: worker.id }) if worker
     query.group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
       results[k.to_i - 1] = v
     end

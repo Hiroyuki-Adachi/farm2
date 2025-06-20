@@ -9,12 +9,12 @@ class ScheduleDeliverJob < ApplicationJob
                             when :morning
                               [
                                 [I18n.t('line_deliver_schedule.morning')],
-                                Schedule.by_worker(user.worker).today.pm_only
+                                ScheduleDecorator.decorate_collection(Schedule.by_worker(user.worker).today.pm_only)
                               ]
                             when :afternoon
                               [
                                 [I18n.t('line_deliver_schedule.afternoon')],
-                                Schedule.by_worker(user.worker).tomorrow.am_only
+                                ScheduleDecorator.decorate_collection(Schedule.by_worker(user.worker).tomorrow.am_only)
                               ]
                             else
                               raise ArgumentError, "Unknown timing: #{timing.inspect}"
@@ -22,7 +22,7 @@ class ScheduleDeliverJob < ApplicationJob
       next if schedules.blank?
 
       schedules.each do |schedule|
-        messages << "#{schedule.start_at.strftime('%H:%M')}から#{schedule.work_kind.name}です。"
+        messages << "#{schedule.start_at}から#{schedule.name}です。"
       end
 
       LineHookService.push_message(user.line_id, messages.join("\n"))
