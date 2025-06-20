@@ -39,3 +39,9 @@
   name: "農研機構"
   url: "https://www.naro.go.jp"
   paid_flag: false
+
+- id: 8
+  code: maff_go
+  name: "農林水産省"
+  url: "https://www.maff.go.jp"
+  paid_flag: false

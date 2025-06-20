@@ -14,7 +14,7 @@ class StatisticsController < ApplicationController
   end
 
   def tab3
-    @total_age = Work.total_age
+    @total_age = WorkTotalAgeQuery.new.call
     @age_groups = t("statistics.age")
   end
 
