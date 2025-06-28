@@ -49,7 +49,21 @@ class SchedulesController < ApplicationController
   end
 
   def schedule_params
-    params.expect(schedule: [:worked_at, :work_type_id, :work_kind_id, :name, :term, :work_flag, :start_at, :end_at])
+    params.expect(
+      schedule: [
+        :worked_at,
+        :work_type_id,
+        :work_kind_id,
+        :name,
+        :work_flag,
+        :start_at,
+        :end_at,
+        :calendar_remove_flag,
+        :farming_flag,
+        :line_flag,
+        :minutes_flag
+      ]
+    )
   end
 
   def set_masters

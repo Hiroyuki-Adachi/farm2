@@ -3,18 +3,6 @@
     <%= f.label :worked_at, '', class: "col-form-label-lg form-label" %>
     <%= f.date_field :worked_at, {required: true, class: "form-control", min: Date.today} %>
   </div>
-  <div class="mb-3 col-md-1"></div>
-  <div class="mb-3 col-md-4">
-    <%= f.label :work_flag, '', class: "col-form-label-lg form-label" %>
-    <div class="form-check">
-      <%= f.radio_button :work_flag, true, {class: "form-check-input"} %>
-      <%= label_tag "schedule_work_flag_true", "作業(日当が支払われるもの)", {class: "form-check-label"} %>
-    </div>
-    <div class="form-check">
-      <%= f.radio_button :work_flag, false, {class: "form-check-input"} %>
-      <%= label_tag "schedule_work_flag_false", "作業以外(総会、理事会、監査など)", {class: "form-check-label"} %>
-    </div>
-  </div>
   <div class="mb-3 col-md-2">
     <%= f.label :start_at, '', class: "col-form-label-lg form-label" %>
     <%= f.time_field :start_at, {required: true, class: "form-control", value: f.object.start_at&.strftime('%H:%M') } %>
@@ -22,6 +10,19 @@
   <div class="mb-3 col-md-2">
     <%= f.label :end_at, '', class: "col-form-label-lg form-label" %>
     <%= f.time_field :end_at, {required: true, class: "form-control", value: f.object.end_at&.strftime('%H:%M')} %>
+  </div>
+</div>
+<div class="row">
+  <div class="mb-3 col-md-2">
+    <%= f.label :work_flag, '', class: "col-form-label-lg form-label" %>
+    <div class="form-check">
+      <%= f.radio_button :work_flag, true, {class: "form-check-input"} %>
+      <%= label_tag "schedule_work_flag_true", "日当が支払われる作業", {class: "form-check-label"} %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :work_flag, false, {class: "form-check-input"} %>
+      <%= label_tag "schedule_work_flag_false", "日当が支払われない作業", {class: "form-check-label"} %>
+    </div>
   </div>
 </div>
 <div class="row">

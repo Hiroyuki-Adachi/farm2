@@ -2,17 +2,21 @@
 #
 # Table name: schedules(作業予定)
 #
-#  id(作業予定)           :integer          not null, primary key
-#  end_at(終了予定時刻)   :time             default(2000-01-01 17:00:00.000000000 JST +09:00), not null
-#  name(作業名称)         :string(40)       not null
-#  start_at(開始予定時刻) :time             default(2000-01-01 08:00:00.000000000 JST +09:00), not null
-#  term(年度(期))         :integer          not null
-#  work_flag(作業フラグ)  :boolean          default(TRUE), not null
-#  worked_at(作業予定日)  :date             not null
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  work_kind_id(作業種別) :integer          default(0), not null
-#  work_type_id(作業分類) :integer
+#  id(作業予定)                               :integer          not null, primary key
+#  calendar_remove_flag(カレンダー削除フラグ) :boolean          default(FALSE), not null
+#  end_at(終了予定時刻)                       :time             default(2000-01-01 17:00:00.000000000 JST +09:00), not null
+#  farming_flag(営農フラグ)                   :boolean          default(TRUE), not null
+#  line_flag(LINEフラグ)                      :boolean          default(TRUE), not null
+#  minutes_flag(議事録フラグ)                 :boolean          default(TRUE), not null
+#  name(作業名称)                             :string(40)       not null
+#  start_at(開始予定時刻)                     :time             default(2000-01-01 08:00:00.000000000 JST +09:00), not null
+#  term(年度(期))                             :integer          not null
+#  work_flag(作業フラグ)                      :boolean          default(TRUE), not null
+#  worked_at(作業予定日)                      :date             not null
+#  created_at                                 :datetime         not null
+#  updated_at                                 :datetime         not null
+#  work_kind_id(作業種別)                     :integer          default(0), not null
+#  work_type_id(作業分類)                     :integer
 #
 
 class Schedule < ApplicationRecord

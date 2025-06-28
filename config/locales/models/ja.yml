@@ -278,6 +278,10 @@ ja:
         work_flag: "作業フラグ"
         start_at: "開始予定時刻"  #g
         end_at: "終了予定時刻"  #g
+        farming_flag: "営農フラグ"
+        line_flag: "LINE通知フラグ"
+        minutes_flag: "議事録フラグ"
+        calendar_remove_flag: "カレンダー削除フラグ"
 
       land_place:
         name: "名称"

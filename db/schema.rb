@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_06_125231) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_26_115800) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -650,6 +650,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_06_125231) do
     t.datetime "updated_at", precision: nil, null: false
     t.time "start_at", default: "2000-01-01 08:00:00", null: false, comment: "開始予定時刻"
     t.time "end_at", default: "2000-01-01 17:00:00", null: false, comment: "終了予定時刻"
+    t.boolean "minutes_flag", default: true, null: false, comment: "議事録フラグ"
+    t.boolean "line_flag", default: true, null: false, comment: "LINEフラグ"
+    t.boolean "calendar_remove_flag", default: false, null: false, comment: "カレンダー削除フラグ"
+    t.boolean "farming_flag", default: true, null: false, comment: "営農フラグ"
   end
 
   create_table "sections", id: { type: :serial, comment: "班／町内マスタ" }, comment: "班／町内マスタ", force: :cascade do |t|
