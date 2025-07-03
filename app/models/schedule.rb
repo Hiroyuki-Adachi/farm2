@@ -33,6 +33,8 @@ class Schedule < ApplicationRecord
 
   has_one :minute, dependent: :destroy
 
+  before_save :for_farming_flag
+
   scope :usual, -> {
                   where(worked_at: (Time.zone.today - DISPLAY_DAYS.days)..)
                     .includes(:work_type, :work_kind, schedule_workers: [worker: :home])
@@ -93,5 +95,16 @@ SQL
     
     # このスケジュールに属さないworker_idを持つschedule_workersを削除
     schedule_workers.where.not(worker_id: workers).destroy_all
+  end
+
+  private
+
+  def for_farming_flag
+    if farming_flag_changed? && !farming_flag
+      self.work_kind_id = WorkKind.find_other.id
+      self.work_type_id = WorkType.find_other.id
+      self.minutes_flag = false
+      self.work_flag = false
+    end
   end
 end

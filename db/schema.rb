@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_26_115800) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_03_124913) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -1028,6 +1028,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_26_115800) do
     t.binary "icon", comment: "アイコン"
     t.boolean "cost_flag", default: false, null: false, comment: "原価フラグ"
     t.boolean "work_flag", default: true, null: false, comment: "日報フラグ"
+    t.boolean "other_flag", default: false, null: false, comment: "その他フラグ"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
   end
 
