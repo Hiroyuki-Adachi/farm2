@@ -275,7 +275,7 @@ ja:
         workers_count: "人数"
         work_type_id: "作業分類"
         work_kind_id: "作業種別"
-        work_flag: "作業フラグ"
+        work_flag: "日当フラグ"
         start_at: "開始予定時刻"  #g
         end_at: "終了予定時刻"  #g
         farming_flag: "営農フラグ"

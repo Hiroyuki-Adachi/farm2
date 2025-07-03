@@ -64,6 +64,7 @@ class SchedulesController < ApplicationController
         :minutes_flag
       ]
     )
+    .merge(term: 0)
   end
 
   def set_masters

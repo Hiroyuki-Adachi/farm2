@@ -23,6 +23,8 @@ class Schedule < ApplicationRecord
   validates :worked_at, presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
 
+  DISPLAY_DAYS = 30
+
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
 
@@ -32,7 +34,7 @@ class Schedule < ApplicationRecord
   has_one :minute, dependent: :destroy
 
   scope :usual, -> {
-                  where(["worked_at >= current_date"])
+                  where(worked_at: (Time.zone.today - DISPLAY_DAYS.days)..)
                     .includes(:work_type, :work_kind, schedule_workers: [worker: :home])
                     .order(worked_at: :ASC, id: :ASC)
                 }
@@ -42,7 +44,10 @@ class Schedule < ApplicationRecord
             WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
 SQL
 
-  scope :for_minute, -> {where(["(worked_at BETWEEN (current_timestamp + '-1 year') AND current_timestamp) AND (work_flag = ?)", false]).order(worked_at: :ASC, id: :ASC)}
+  scope :for_minute, -> {
+    where(["(worked_at BETWEEN (current_timestamp + '-1 year') AND current_timestamp) AND (minutes_flag = ?)", true])
+    .order(worked_at: :ASC, id: :ASC)
+  }
 
   scope :for_calendar, ->(term, work_kinds) {
     group(:worked_at, :work_kind_id)
@@ -59,6 +64,8 @@ SQL
     .includes(:work_kind, :schedule_workers)
     .order(worked_at: :ASC, id: :ASC)
   }
+
+  scope :linable, -> { where(line_flag: true) }
 
   scope :tomorrow, -> { where(worked_at: Date.tomorrow) }
   scope :today, -> { where(worked_at: Time.zone.today) }

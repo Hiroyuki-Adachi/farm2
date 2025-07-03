@@ -20,17 +20,21 @@
 #
 
 schedule1:
-  id: 1
-  term: 2015
+  term: 0
   worked_at: '2015-04-01'
   work_type_id: 12
   work_kind_id: 31
-  name: "作付計画"
+  name: "作付計画！！"
   start_at: '09:00'
   end_at: '17:00'
+  work_flag: true
+  calendar_remove_flag: true
+  farming_flag: true
+  line_flag: true
+  minutes_flag: true
 
 schedule_meeting:
-  term: 2015
+  term: 0
   worked_at: '2015-05-01'
   work_type_id: 12
   work_kind_id: 31
@@ -38,9 +42,10 @@ schedule_meeting:
   name: "会議"
   start_at: '09:00'
   end_at: '17:00'
+  calendar_remove_flag: false
 
 schedule_tomorrow:
-  term: 2015
+  term: 0
   worked_at: '2015-05-02'
   work_type_id: 12
   work_kind_id: 31
@@ -48,9 +53,10 @@ schedule_tomorrow:
   name: "会議"
   start_at: '09:00'
   end_at: '17:00'
+  calendar_remove_flag: false
 
 schedule_today:
-  term: 2015
+  term: 0
   worked_at: '2015-05-01'
   work_type_id: 12
   work_kind_id: 31
@@ -58,3 +64,4 @@ schedule_today:
   name: "会議"
   start_at: '14:00'
   end_at: '17:00'
+  calendar_remove_flag: false

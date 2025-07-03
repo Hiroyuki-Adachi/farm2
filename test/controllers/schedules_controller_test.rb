@@ -6,7 +6,11 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     @schedule = schedules(:schedule1)
     @update = { worked_at: "2015-05-06", work_type_id: work_types(:work_type_koshi).id,
                 start_at: "08:00:00", end_at: "17:00:00",
-                work_kind_id: work_kinds(:work_kind_taue).id, name: "テスト", term: 2015 }
+                calendar_remove_flag: false,
+                farming_flag: true,
+                line_flag: false,
+                minutes_flag: false,
+                work_kind_id: work_kinds(:work_kind_taue).id, name: "テスト" }
   end
 
   test "作業予定一覧" do
@@ -45,6 +49,10 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:end_at], schedule.end_at.strftime("%H:%M:%S")
     assert_equal @update[:work_kind_id], schedule.work_kind_id
     assert_equal @update[:name], schedule.name
+    assert_equal @update[:calendar_remove_flag], schedule.calendar_remove_flag
+    assert_equal @update[:farming_flag], schedule.farming_flag
+    assert_equal @update[:line_flag], schedule.line_flag
+    assert_equal @update[:minutes_flag], schedule.minutes_flag
   end
 
   test "作業予定変更(表示)" do
@@ -66,6 +74,10 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:end_at], @schedule.end_at.strftime("%H:%M:%S")
     assert_equal @update[:work_kind_id], @schedule.work_kind_id
     assert_equal @update[:name], @schedule.name
+    assert_equal @update[:calendar_remove_flag], @schedule.calendar_remove_flag
+    assert_equal @update[:farming_flag], @schedule.farming_flag
+    assert_equal @update[:line_flag], @schedule.line_flag
+    assert_equal @update[:minutes_flag], @schedule.minutes_flag
   end
 
   test "作業予定削除" do
