@@ -34,7 +34,7 @@ class ScheduleDecorator < Draper::Decorator
   end
 
   def worker_names
-    results = workers.map(&:home_name)
+    results = workers.map(&:name)
     return results.to_sentence
   end
 
@@ -56,5 +56,13 @@ class ScheduleDecorator < Draper::Decorator
 
   def end_at
     model.end_at.strftime("%H:%M")
+  end
+
+  def line_flag
+    model.line_flag ? "◯" : ""
+  end
+
+  def minutes_flag
+    model.minutes_flag ? "◯" : ""
   end
 end

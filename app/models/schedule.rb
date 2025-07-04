@@ -23,7 +23,7 @@ class Schedule < ApplicationRecord
   validates :worked_at, presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
 
-  DISPLAY_DAYS = 30
+  DISPLAY_DAYS = 60
 
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}

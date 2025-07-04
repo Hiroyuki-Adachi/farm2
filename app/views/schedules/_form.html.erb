@@ -1,7 +1,7 @@
 <div class="row">
   <div class="mb-3 col-md-3">
     <%= f.label :worked_at, '', class: "col-form-label-lg form-label" %>
-    <%= f.date_field :worked_at, {required: true, class: "form-control", min: Date.today} %>
+    <%= f.date_field :worked_at, {required: true, class: "form-control", min: Date.today - Schedule::DISPLAY_DAYS.days} %>
   </div>
   <div class="mb-3 col-md-2">
     <%= f.label :start_at, '', class: "col-form-label-lg form-label" %>
@@ -24,7 +24,7 @@
       <%= label_tag "schedule_farming_flag_false", "営農組合以外の予定", {class: "form-check-label"} %>
     </div>
   </div>
-  <div class="mb-3 col-md-2 farming-visible">
+  <div class="mb-3 col-md-3 farming-visible">
     <%= f.label :work_flag, '', class: "col-form-label-lg form-label" %>
     <div class="form-check">
       <%= f.radio_button :work_flag, true, {class: "form-check-input"} %>
@@ -57,7 +57,7 @@
       <%= label_tag "schedule_minutes_flag_false", "議事録なし", {class: "form-check-label"} %>
     </div>
   </div>
-  <div class="mb-3 col-md-2">
+  <div class="mb-3 col-md-3">
     <%= f.label :calendar_remove_flag, '', class: "col-form-label-lg form-label" %>
     <div class="form-check">
       <%= f.radio_button :calendar_remove_flag, true, {class: "form-check-input"} %>

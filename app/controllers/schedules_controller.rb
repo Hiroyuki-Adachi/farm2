@@ -4,7 +4,7 @@ class SchedulesController < ApplicationController
   before_action :permit_not_manager, except: [:index]
 
   def index
-    @schedules = Schedule.includes(workers: :home).usual
+    @schedules = Schedule.usual
     @schedules = @schedules.by_worker(current_user.worker) unless current_user.checkable?
     @schedules = ScheduleDecorator.decorate_collection(@schedules.page(params[:page] || 1))
   end
