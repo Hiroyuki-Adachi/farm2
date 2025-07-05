@@ -33,6 +33,7 @@ schedule1:
   farming_flag: true
   line_flag: true
   minutes_flag: true
+  created_by: 1
 
 schedule_meeting:
   term: 0
@@ -44,6 +45,7 @@ schedule_meeting:
   start_at: '09:00'
   end_at: '17:00'
   calendar_remove_flag: false
+  created_by: 1
 
 schedule_tomorrow:
   term: 0
@@ -55,6 +57,7 @@ schedule_tomorrow:
   start_at: '09:00'
   end_at: '17:00'
   calendar_remove_flag: false
+  created_by: 1
 
 schedule_today:
   term: 0
@@ -66,3 +69,4 @@ schedule_today:
   start_at: '14:00'
   end_at: '17:00'
   calendar_remove_flag: false
+  created_by: 1

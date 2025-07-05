@@ -1,11 +1,12 @@
 class SchedulesController < ApplicationController
+  include PermitUser
   before_action :set_schedule, only: [:edit, :update, :destroy]
   before_action :set_masters, only: [:new, :create, :edit, :update]
-  before_action :permit_not_manager, except: [:index]
+  before_action :permit_only_self, only: [:edit, :update, :destroy]
 
   def index
     @schedules = Schedule.usual
-    @schedules = @schedules.by_worker(current_user.worker) 
+    @schedules = @schedules.by_worker(current_user.worker) unless current_user.admin?
     @schedules = ScheduleDecorator.decorate_collection(@schedules.page(params[:page] || 1))
   end
 
@@ -15,6 +16,10 @@ class SchedulesController < ApplicationController
       work_type_id: @work_types.first.id,
       term: 0,
       work_flag: true,
+      farming_flag: true,
+      line_flag: true,
+      minutes_flag: true,
+      calendar_remove_flag: false
     ).decorate
   end
 
@@ -72,7 +77,12 @@ class SchedulesController < ApplicationController
     @work_kinds = WorkKind.by_type(@schedule ? @schedule.work_type : @work_types.first) || []
   end
 
-  def permit_not_manager
-    to_error_path unless current_user.manageable?
+  def permit_only_self
+    return true if current_user.admin?
+    if (current_user.worker.id == @schedule.created_by) || (@schedule.workers.any? { |w| w.id == current_user.worker.id })
+      true
+    else
+      to_error_path
+    end
   end
 end

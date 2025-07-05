@@ -23,12 +23,8 @@
         <td class="text-center"><%= schedule.line_flag %></td>
         <td class="text-center"><%= schedule.minutes_flag %></td>
         <td class="text-wrap"><%= schedule.worker_names %></td>
-        <% if current_user.manageable? %>
         <td><%= link_to '修正', edit_schedule_path(schedule), {class: "btn btn-success btn-sm", style: "min-width: 40px;"} %></td>
-        <% end %>
-        <% if current_user.checkable? %>
         <td><%= link_to '予定者', new_schedule_worker_path(schedule_id: schedule), {class: "btn btn-success btn-sm", style: "min-width: 60px;"} %></td>
-        <% end %>
       </tr>
     <% end %>
   </tbody>

@@ -77,6 +77,10 @@ class User < ApplicationRecord
     permission == Permission::VISITOR
   end
 
+  def userable?
+    admin? || manager? || checker? || user?
+  end
+
   def manageable?
     admin? || manager?
   end

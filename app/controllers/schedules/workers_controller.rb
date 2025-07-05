@@ -1,5 +1,5 @@
 class Schedules::WorkersController < ApplicationController
-  include PermitChecker
+  include PermitUser
   before_action :set_schedule, only: [:new, :create]
 
   def new; end

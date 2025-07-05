@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SchedulesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:user_manager)
+    @user = users(:user_user)
     login_as(@user)
     @schedule = schedules(:schedule1)
     @update = { worked_at: "2015-05-06", work_type_id: work_types(:work_type_koshi).id,
@@ -19,21 +19,15 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "作業予定一覧(閲覧者でも可)" do
+  test "作業予定一覧(閲覧者はNG)" do
     login_as(users(:user_visitor))
     get schedules_path
-    assert_response :success
+    assert_response :error
   end
 
   test "作業予定登録(表示)" do
     get new_schedule_path
     assert_response :success
-  end
-
-  test "作業予定登録(検閲者)" do
-    login_as(users(:user_checker))
-    get new_schedule_path
-    assert_response :error
   end
 
   test "作業予定登録(実行)" do
@@ -58,6 +52,19 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "作業予定変更(表示)" do
+    get edit_schedule_path(@schedule)
+    assert_response :success
+  end
+
+  test "作業予定変更(表示)(本人不在の場合はNG)" do
+    ScheduleWorker.where(schedule_id: @schedule.id, worker_id: @user.worker.id).destroy_all
+    get edit_schedule_path(@schedule)
+    assert_response :error
+  end
+
+  test "作業予定変更(表示)(本人不在でも作成者の場合はOK)" do
+    ScheduleWorker.where(schedule_id: @schedule.id, worker_id: @user.worker.id).destroy_all
+    @schedule.update(created_by: @user.worker.id)
     get edit_schedule_path(@schedule)
     assert_response :success
   end

@@ -25,6 +25,11 @@ schedule_worker2:
   worker_id: 2
   display_order: 2
 
+schedule_worker3:
+  schedule: schedule1
+  worker_id: 4
+  display_order: 3
+
 schedule_tomorrow_worker:
   schedule: schedule_tomorrow
   worker_id: 13
