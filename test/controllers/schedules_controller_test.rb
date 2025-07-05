@@ -2,7 +2,8 @@ require 'test_helper'
 
 class SchedulesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    login_as(users(:user_manager))
+    @user = users(:user_manager)
+    login_as(@user)
     @schedule = schedules(:schedule1)
     @update = { worked_at: "2015-05-06", work_type_id: work_types(:work_type_koshi).id,
                 start_at: "08:00:00", end_at: "17:00:00",
@@ -53,6 +54,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:farming_flag], schedule.farming_flag
     assert_equal @update[:line_flag], schedule.line_flag
     assert_equal @update[:minutes_flag], schedule.minutes_flag
+    assert_equal @user.worker.id, schedule.created_by
   end
 
   test "作業予定変更(表示)" do

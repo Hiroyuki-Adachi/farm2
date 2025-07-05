@@ -5,7 +5,7 @@ class SchedulesController < ApplicationController
 
   def index
     @schedules = Schedule.usual
-    @schedules = @schedules.by_worker(current_user.worker) unless current_user.checkable?
+    @schedules = @schedules.by_worker(current_user.worker) 
     @schedules = ScheduleDecorator.decorate_collection(@schedules.page(params[:page] || 1))
   end
 
@@ -19,7 +19,7 @@ class SchedulesController < ApplicationController
   end
 
   def create
-    @schedule = Schedule.new(schedule_params)
+    @schedule = Schedule.new(schedule_params.merge(created_by: current_user.worker.id))
     if @schedule.save
       redirect_to(new_schedule_worker_path(schedule_id: @schedule))
     else

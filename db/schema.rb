@@ -654,6 +654,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_124913) do
     t.boolean "line_flag", default: true, null: false, comment: "LINEフラグ"
     t.boolean "calendar_remove_flag", default: false, null: false, comment: "カレンダー削除フラグ"
     t.boolean "farming_flag", default: true, null: false, comment: "営農フラグ"
+    t.integer "created_by", default: 0, null: false, comment: "作成者ID"
   end
 
   create_table "sections", id: { type: :serial, comment: "班／町内マスタ" }, comment: "班／町内マスタ", force: :cascade do |t|

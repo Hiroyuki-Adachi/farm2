@@ -4,6 +4,7 @@
 #
 #  id(作業予定)                               :integer          not null, primary key
 #  calendar_remove_flag(カレンダー削除フラグ) :boolean          default(FALSE), not null
+#  created_by(作成者ID)                       :integer          default(0), not null
 #  end_at(終了予定時刻)                       :time             default(2000-01-01 17:00:00.000000000 JST +09:00), not null
 #  farming_flag(営農フラグ)                   :boolean          default(TRUE), not null
 #  line_flag(LINEフラグ)                      :boolean          default(TRUE), not null
@@ -41,9 +42,10 @@ class Schedule < ApplicationRecord
                     .order(worked_at: :ASC, id: :ASC)
                 }
 
-  scope :by_worker, ->(worker) {where([<<SQL.squish, worker.id])}
+  scope :by_worker, ->(worker) {where([<<SQL.squish, worker.id, worker.id])}
       EXISTS (SELECT * FROM schedule_workers
             WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
+      OR schedules.created_by = ?
 SQL
 
   scope :for_minute, -> {
