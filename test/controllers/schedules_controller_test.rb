@@ -22,7 +22,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
   test "作業予定一覧(閲覧者はNG)" do
     login_as(users(:user_visitor))
     get schedules_path
-    assert_response :error
+    assert_response :forbidden
   end
 
   test "作業予定登録(表示)" do
