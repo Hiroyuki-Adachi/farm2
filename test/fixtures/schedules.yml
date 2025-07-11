@@ -2,31 +2,41 @@
 #
 # Table name: schedules(作業予定)
 #
-#  id(作業予定)           :integer          not null, primary key
-#  end_at(終了予定時刻)   :time             default(2000-01-01 17:00:00.000000000 JST +09:00), not null
-#  name(作業名称)         :string(40)       not null
-#  start_at(開始予定時刻) :time             default(2000-01-01 08:00:00.000000000 JST +09:00), not null
-#  term(年度(期))         :integer          not null
-#  work_flag(作業フラグ)  :boolean          default(TRUE), not null
-#  worked_at(作業予定日)  :date             not null
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  work_kind_id(作業種別) :integer          default(0), not null
-#  work_type_id(作業分類) :integer
+#  id(作業予定)                               :integer          not null, primary key
+#  calendar_remove_flag(カレンダー削除フラグ) :boolean          default(FALSE), not null
+#  created_by(作成者ID)                       :integer          default(0), not null
+#  end_at(終了予定時刻)                       :time             default(2000-01-01 17:00:00.000000000 JST +09:00), not null
+#  farming_flag(営農フラグ)                   :boolean          default(TRUE), not null
+#  line_flag(LINEフラグ)                      :boolean          default(TRUE), not null
+#  minutes_flag(議事録フラグ)                 :boolean          default(TRUE), not null
+#  name(作業名称)                             :string(40)       not null
+#  start_at(開始予定時刻)                     :time             default(2000-01-01 08:00:00.000000000 JST +09:00), not null
+#  term(年度(期))                             :integer          not null
+#  work_flag(作業フラグ)                      :boolean          default(TRUE), not null
+#  worked_at(作業予定日)                      :date             not null
+#  created_at                                 :datetime         not null
+#  updated_at                                 :datetime         not null
+#  work_kind_id(作業種別)                     :integer          default(0), not null
+#  work_type_id(作業分類)                     :integer
 #
 
 schedule1:
-  id: 1
-  term: 2015
+  term: 0
   worked_at: '2015-04-01'
   work_type_id: 12
   work_kind_id: 31
-  name: "作付計画"
+  name: "作付計画！！"
   start_at: '09:00'
   end_at: '17:00'
+  work_flag: true
+  calendar_remove_flag: true
+  farming_flag: true
+  line_flag: true
+  minutes_flag: true
+  created_by: 1
 
 schedule_meeting:
-  term: 2015
+  term: 0
   worked_at: '2015-05-01'
   work_type_id: 12
   work_kind_id: 31
@@ -34,9 +44,11 @@ schedule_meeting:
   name: "会議"
   start_at: '09:00'
   end_at: '17:00'
+  calendar_remove_flag: false
+  created_by: 1
 
 schedule_tomorrow:
-  term: 2015
+  term: 0
   worked_at: '2015-05-02'
   work_type_id: 12
   work_kind_id: 31
@@ -44,9 +56,11 @@ schedule_tomorrow:
   name: "会議"
   start_at: '09:00'
   end_at: '17:00'
+  calendar_remove_flag: false
+  created_by: 1
 
 schedule_today:
-  term: 2015
+  term: 0
   worked_at: '2015-05-01'
   work_type_id: 12
   work_kind_id: 31
@@ -54,3 +68,5 @@ schedule_today:
   name: "会議"
   start_at: '14:00'
   end_at: '17:00'
+  calendar_remove_flag: false
+  created_by: 1

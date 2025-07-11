@@ -88,6 +88,16 @@ user_visitor:
   calendar_term: 2014
   token: 04daf6ea-ab96-4f15-9185-65dbd648c5a7
 
+user_user_other:
+  worker_id: 11
+  login_name: '31415'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 1
+  term: 2015
+  calendar_term: 2014
+  token: fb7a5630-27c3-9be0-30f6-4257a35286cf
+
 user31:
   worker_id: 31
   login_name: '56777'

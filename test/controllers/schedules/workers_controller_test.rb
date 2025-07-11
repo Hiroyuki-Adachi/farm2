@@ -14,8 +14,8 @@ class Schedules::WorkersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "作業予定者登録(利用者)" do
-    login_as(users(:user_user))
+  test "作業予定者登録(閲覧者はNG)" do
+    login_as(users(:user_visitor))
     get new_schedule_worker_path(schedule_id: @schedule.id)
     assert_response :error
   end

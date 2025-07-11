@@ -9,12 +9,12 @@ class ScheduleDeliverJob < ApplicationJob
                             when :morning
                               [
                                 [I18n.t('line_deliver_schedule.morning')],
-                                ScheduleDecorator.decorate_collection(Schedule.by_worker(user.worker).today.pm_only)
+                                ScheduleDecorator.decorate_collection(Schedule.by_worker(user.worker).today.linable.pm_only)
                               ]
                             when :afternoon
                               [
                                 [I18n.t('line_deliver_schedule.afternoon')],
-                                ScheduleDecorator.decorate_collection(Schedule.by_worker(user.worker).tomorrow.am_only)
+                                ScheduleDecorator.decorate_collection(Schedule.by_worker(user.worker).tomorrow.linable.am_only)
                               ]
                             else
                               raise ArgumentError, "Unknown timing: #{timing.inspect}"
