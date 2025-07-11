@@ -37,10 +37,10 @@
             <td><%= land.place %></td>
             <td class="numeric"><%= land.parcel_number %></td>
             <td class="numeric"><%= land.area %></td>
-            <td><%= land._owner_name %></td>
+            <td><%= land.owner_name %></td>
             <td><%= land.work_type_name %></td>
-            <% @work_kinds.each_with_index do |work_kind, index| %>
-              <td><%= land["w#{index}_date"] %></td>
+            <% @work_kinds.each do |id| %>
+              <td><%= land.w_date[id] %></td>
             <% end %>
           </tr>
         <% end %>

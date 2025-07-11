@@ -35,7 +35,7 @@ work_results0:
 
 work_results1:
   id: '5210'
-  work_id: '1479'
+  work: works_land_total_query
   worker_id: '4'
   hours: '8.0'
   display_order: '1'

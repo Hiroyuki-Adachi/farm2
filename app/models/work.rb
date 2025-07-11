@@ -361,7 +361,7 @@ SQL
     results = Array.new(12, 0)
 
     query = Work.joins(:work_results).where(term: term)
-    query = query.where("work_results.worker_id = ?", worker.id) if worker
+    query = query.where(work_results: { worker_id: worker.id }) if worker
     query.group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
       results[k.to_i - 1] = v
     end
@@ -374,33 +374,6 @@ SQL
         .group(:genre, :term)
         .order("work_types.genre", :term)
         .sum("work_results.hours")
-  end
-
-  def self.total_age
-    sql = []
-    sql << "SELECT"
-    sql << "   SUM(work_results.hours) AS hours"
-    sql << " , CASE WHEN workers.gender_id = 2 THEN 5"
-    sql << "     ELSE"
-    sql << "       CASE WHEN date_part('year', age(works.worked_at, workers.birthday)) < 40 THEN 0"
-    sql << "            WHEN date_part('year', age(works.worked_at, workers.birthday)) BETWEEN 40 AND 49 THEN 1"
-    sql << "            WHEN date_part('year', age(works.worked_at, workers.birthday)) BETWEEN 50 AND 59 THEN 2"
-    sql << "            WHEN date_part('year', age(works.worked_at, workers.birthday)) BETWEEN 60 AND 69 THEN 3"
-    sql << "       ELSE 4"
-    sql << "   END END AS age_group"
-    sql << ", works.term"
-    sql << " FROM works"
-    sql << " INNER JOIN work_results ON work_results.work_id = works.id"
-    sql << " INNER JOIN workers ON work_results.worker_id = workers.id"
-    sql << " GROUP BY works.term, age_group"
-    sql << " ORDER BY works.term, age_group"
-
-    results = {}
-    Work.find_by_sql(sql.join("\n")).each do |r|
-      results[[r.term, r.age_group]] = r.hours
-    end
-
-    return results
   end
 
   def self.monthly(term, worked_from, worked_to, worker_id)

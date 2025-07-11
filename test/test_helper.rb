@@ -6,6 +6,8 @@ require 'webmock/minitest'
 
 WebMock.disable_net_connect!(allow_localhost: true)
 
+Rails.root.glob("test/support/**/*.rb").sort.each { |f| require f }
+
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all

@@ -21,7 +21,8 @@ class CrawlJob < ApplicationJob
       Crawlers::SmartAgriJob,
       Crawlers::JaComJob,
       Crawlers::NousonNewsJob,
-      Crawlers::NaroJob
+      Crawlers::NaroJob,
+      Crawlers::MaffGoJob
     ]
   end
 end
