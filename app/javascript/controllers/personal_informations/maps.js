@@ -1,6 +1,6 @@
-let map;
 
 window.initMap = function() {
+    let map = null;
     const org = JSON.parse(document.getElementById("location").value);
     const pos = new google.maps.LatLng(org[0], org[1]);
 
@@ -66,3 +66,7 @@ window.initMap = function() {
       });
   });
 }
+
+window.addEventListener('turbo:load', () => {
+  initMap();
+});
