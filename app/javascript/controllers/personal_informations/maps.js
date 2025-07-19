@@ -67,6 +67,5 @@ window.initMap = function() {
   });
 }
 
-window.addEventListener('turbo:load', () => {
-  initMap();
-});
+window.removeEventListener('turbo:load', initMap); // Ensure no duplicate listeners
+window.addEventListener('turbo:load', initMap);
