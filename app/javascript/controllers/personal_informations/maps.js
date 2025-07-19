@@ -1,4 +1,4 @@
-let map;
+let map = null;
 
 window.initMap = function() {
     const org = JSON.parse(document.getElementById("location").value);
@@ -66,3 +66,6 @@ window.initMap = function() {
       });
   });
 }
+
+window.removeEventListener('turbo:load', initMap); // Ensure no duplicate listeners
+window.addEventListener('turbo:load', initMap);

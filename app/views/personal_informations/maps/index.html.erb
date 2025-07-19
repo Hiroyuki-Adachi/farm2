@@ -13,6 +13,6 @@
   %>
 <% end %>
 <% content_for :head do %>
-<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{ENV["GOOGLE_MAPS_API_KEY"]}&libraries=drawing&callback=initMap", defer: true, async: true, "data-turbolinks-eval": false %>
+<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{ENV["GOOGLE_MAPS_API_KEY"]}&libraries=drawing", defer: true, async: true, "data-turbolinks-eval": false %>
 <%= javascript_include_tag 'controllers/personal_informations/maps', 'data-turbo-track': 'reload', type: :module %>
 <% end %>
