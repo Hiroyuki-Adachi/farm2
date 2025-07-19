@@ -80,6 +80,10 @@ class WorkKind < ApplicationRecord
     term_price(@term)
   end
 
+  def self.find_other
+    find_by(other_flag: true)
+  end
+
   private
 
   def save_price

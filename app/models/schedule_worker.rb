@@ -39,7 +39,7 @@ class ScheduleWorker < ApplicationRecord
     joins(:schedule)
       .eager_load(:schedule)
       .joins("INNER JOIN work_kinds ON schedules.work_kind_id = work_kinds.id").preload(:work_kind)
-      .where(["schedules.worked_at >= ? OR schedules.work_flag = ?", Time.zone.today, false])
+      .where(["schedules.worked_at >= ? OR schedules.calendar_remove_flag = ?", Time.zone.today, false])
       .where(worker_id: worker)
       .order("schedules.worked_at, schedule_workers.id")
   }
