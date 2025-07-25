@@ -1,12 +1,12 @@
 - id: 0
   code: Visitor
-  name: "閲覧者"
+  name: "ゲスト"
 - id: 1
   code: User
-  name: "利用者"
+  name: "一般ユーザー"
 - id: 2
   code: Checker
-  name: "検閲者"
+  name: "サポーター"
 - id: 3
   code: Manager
   name: "管理者"

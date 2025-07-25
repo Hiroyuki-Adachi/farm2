@@ -11,15 +11,15 @@
       <% end %>
     </div>
   </div>
+  <div aria-labelledby="navbar_schedule" class="mt-2" style="display:none;">
+    <span class="h5">予定管理</span>
+    <div class="ms-3 navbar">
+      <%= link_to '作業予定', schedules_path, {class: "dropdown-item", data: {controller:  "schedules"}} %>
   <% if current_user.userable? %>
-    <div aria-labelledby="navbar_schedule" class="mt-2" style="display:none;">
-      <span class="h5">予定管理</span>
-      <div class="ms-3 navbar">
-        <%= link_to '作業予定', schedules_path, {class: "dropdown-item", data: {controller:  "schedules"}} %>
-        <%= link_to '議事録', minutes_path, {class: "dropdown-item", data: {controller:  "minutes"}} %>
-      </div>
-    </div>
+      <%= link_to '議事録', minutes_path, {class: "dropdown-item", data: {controller:  "minutes"}} %>
   <% end %>
+    </div>
+  </div>
   <% if current_user.checkable? %>
     <div aria-labelledby="navbar_harvest" class="mt-2" style="display:none;">
       <span class="h5">収穫管理</span>
