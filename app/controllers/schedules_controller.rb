@@ -1,5 +1,4 @@
 class SchedulesController < ApplicationController
-  include PermitUser
   before_action :set_schedule, only: [:edit, :update, :destroy]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :permit_only_self, only: [:edit, :update, :destroy]
