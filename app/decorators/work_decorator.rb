@@ -24,6 +24,10 @@ class WorkDecorator < Draper::Decorator
     model.worked_at.strftime('%Jy年%m月%d日') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})"
   end
 
+  def worked_at_weekday
+    model.worked_at.strftime('%m月%d日') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})"
+  end
+
   def worked_at_short
     model.worked_at&.strftime('%m-%d')
   end

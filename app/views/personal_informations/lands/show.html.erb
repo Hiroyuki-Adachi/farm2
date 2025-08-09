@@ -1,0 +1,79 @@
+<ul class="nav nav-tabs" id="landTabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="activities-tab" data-bs-toggle="tab" href="#activities" role="tab">作業履歴</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="chemicals-tab" data-bs-toggle="tab" href="#chemicals" role="tab">散布履歴</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="crops-tab" data-bs-toggle="tab" href="#crops" role="tab">作付履歴</a>
+  </li>
+</ul>
+<div class="tab-content mt-3">
+  <div class="tab-pane fade show active" id="activities" role="tabpanel">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>日付</th>
+          <th>区分</th>
+          <th>作業内容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @work_lands.each do |work_land| %>
+          <tr>
+            <td><%= work_land.work.worked_at_weekday %></td>
+            <td><%= work_land&.work_type&.name %></td>
+            <td><%= work_land.work_kind_name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="tab-pane fade" id="crops" role="tabpanel">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>日付</th>
+          <th>作付</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @land_costs.each do |land_cost| %>
+          <tr>
+            <td><%= land_cost.activated_on %></td>
+            <td><%= land_cost.work_type&.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="tab-pane fade" id="chemicals" role="tabpanel">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>日付</th>
+          <th>種別</th>
+          <th>名称</th>
+          <th>使用量(10a当)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @work_lands.each do |work_land| %>
+          <% work_land.chemicals.each do |chemical| %>
+            <% next if chemical[:chemical].blank? %>
+            <tr>
+              <td><%= work_land.work.worked_at_weekday %></td>
+              <td><%= chemical[:chemical]&.chemical_type&.name%></td>
+              <td><%= chemical[:chemical]&.name %></td>
+              <td class="numeric">
+                <%= number_with_precision(chemical[:quantity], precision: 1) %>
+                <%= chemical[:chemical]&.base_unit_name %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
