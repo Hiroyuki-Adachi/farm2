@@ -64,6 +64,8 @@
 </div>
 <div class="row">
   <div class="col-md-4">
+    <%= f.label :uuid, class: "col-form-label-lg form-label" %>
+    <%= f.text_field :uuid, {readonly: :readonly, class: "form-control"} %>
   </div>
   <div class="field mb-3 col-md-2">
     <%= f.label :parcel_number, class: "col-form-label-lg form-label" %>
