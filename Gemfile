@@ -38,6 +38,8 @@ gem 'dotenv-rails'
 
 # turbo-rails is a set of tools for building modern web applications with Turbo.
 gem 'turbo-rails'
+# Stimulus is a modest JavaScript framework for the HTML you already have.
+gem "stimulus-rails"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # This gem provides XML serialization for your Active Model objects and Active Record models.
