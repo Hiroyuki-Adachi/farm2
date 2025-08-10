@@ -25,6 +25,10 @@ class PersonalInformations::ScansController < PersonalInformationsController
 
   def decode_params
     payload = params[:payload].to_s
-    @data = JSON.parse(payload, symbolize_names: true) 
+    begin
+      @data = JSON.parse(payload, symbolize_names: true)
+    rescue JSON::ParserError
+      render json: { error: "Malformed JSON payload" }, status: :unprocessable_entity and return
+    end
   end
 end
