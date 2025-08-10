@@ -1,6 +1,6 @@
 class LandsController < ApplicationController
   include PermitChecker
-  before_action :set_land, only: [:edit, :update, :destroy]
+  before_action :set_land, only: [:edit, :update, :destroy, :qr]
   before_action :set_homes, only: [:new, :create, :edit, :update]
   before_action :set_places, only: [:new, :create, :edit, :update]
   before_action :set_other_lands, only: [:new, :edit]
@@ -40,6 +40,9 @@ class LandsController < ApplicationController
   def destroy
     @land.discard
     redirect_to lands_path(home_id: params[:home_id].presence), status: :see_other
+  end
+
+  def qr
   end
 
   private

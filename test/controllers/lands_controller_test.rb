@@ -72,4 +72,11 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
 
     assert_nil Land.kept.find_by(id: @land.id)
   end
+
+  test "圃場QR(表示)" do
+    get qr_land_path(@land)
+    assert_response :success
+    assert_select 'h1', '圃場QRコード'
+    assert_select 'img[alt="圃場QRコード"]'
+  end
 end

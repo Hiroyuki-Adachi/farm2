@@ -111,6 +111,9 @@ end
 resources :lands, except: [:show] do
   resources :owners, controller: "lands/owners", only: [:index, :create, :destroy]
   resources :managers, controller: "lands/managers", only: [:index, :create, :destroy]
+  member do
+    get :qr
+  end
 end
 resources :homes, except: [:show]
 resources :institutions, except: [:show]

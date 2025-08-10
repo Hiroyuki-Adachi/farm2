@@ -17,7 +17,7 @@
       <th>管理者</th>
       <th>地図</th>
       <th style="text-align:right;">耕作面積(α)</th>
-      <th></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
   <tbody>
@@ -31,6 +31,7 @@
       <td><%= land.region.present? ? "◯" : "" %></td>
       <td class="numeric"><%= land.area %></td>
       <td><%= link_to '修正', edit_land_path(land, home_id: params[:home_id]), {class: "btn btn-success btn-sm"} %></td>
+      <td><%= link_to 'QR', qr_land_path(land), {class: "btn btn-info btn-sm"} %></td>
     </tr>
   <% end %>
   </tbody>

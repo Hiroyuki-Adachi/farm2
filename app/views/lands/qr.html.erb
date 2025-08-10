@@ -1,0 +1,23 @@
+<h1>圃場QRコード</h1>
+<div class="row">
+  <div class="col-md-6">
+    <h2><%= @land.place %></h2>
+    <p><strong>面積:</strong> <%= @land.area %>a</p>
+    <p><strong>所有者:</strong> <%= @land.owner_name %></p>
+    <p><strong>管理者:</strong> <%= @land.manager_name %></p>
+    <% if @land.land_place %>
+      <p><strong>場所:</strong> <%= @land.place_name %></p>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <%= image_tag qrcode_tag(lands_card_path(@land)), alt: "圃場QRコード", class: "img-fluid" %>
+  </div>
+</div>
+<div class="btn-toolbar mt-3">
+  <div class="btn-group mr-2">
+    <%= link_to "圃場カード", lands_card_path(@land), class: "btn btn-outline-primary" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", lands_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>
