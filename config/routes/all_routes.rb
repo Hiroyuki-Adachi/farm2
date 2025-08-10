@@ -161,7 +161,7 @@ resources :personal_informations, param: "token", only: [:show] do
   resources :topics, controller: "personal_informations/topics", only: [:index, :update]
   resources :maps, controller: "personal_informations/maps", only: [:index]
   resources :mail_confirmations, controller: "personal_informations/mail_confirmations", param: "mail_token", only: [:edit]
-  resources :scans, controller: "personal_informations/scans", only: [:index, :create]
+  resources :scans, controller: "personal_informations/scans", only: [:new, :create]
 end
 resources :personal_calendars, param: "token", only: [:show]
 resources :users, except: [:show] do
