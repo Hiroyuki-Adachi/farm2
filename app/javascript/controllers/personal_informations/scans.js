@@ -42,7 +42,11 @@ document.addEventListener('turbo:load', () => {
 
     let data = null;
     console.log("scanning data:", text);
-    try { data = JSON.parse(text); } catch(e) { console.log(e.message); return; }
+    try { data = JSON.parse(text); } catch(e) { 
+      console.log(e.message); 
+      toast("QRコードの内容が不正です（JSON形式でありません）");
+      return; 
+    }
     if (!data || typeof data !== 'object' || !('type' in data)) return;
 
     posting = true;
