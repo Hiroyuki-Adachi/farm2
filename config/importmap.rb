@@ -24,7 +24,4 @@ pin "@hotwired/turbo", to: "@hotwired--turbo.js" # @8.0.4
 pin "chart.js/auto", to: "https://ga.jspm.io/npm:chart.js@4.4.3/auto/auto.js"
 pin "@rails/actioncable", to: "@rails--actioncable.js" # @7.2.102
 pin "bootstrap", to: "bootstrap.bundle.min.js" # @5.3.5
-pin "qr-scanner", integrity: "sha384-XQBmBeX12UookZtOgW/8WfOLfqXIqsH2Du9Qo+5InoVvGeuf1NGpQRgR1DqAElZj" # @1.4.2
-pin "@hotwired/stimulus", to: "stimulus.min.js"
-pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
-pin_all_from "app/javascript/controllers", under: "controllers"
+pin "qr-scanner", to: "/javascripts/qr-scanner/qr-scanner.min.js"
