@@ -149,7 +149,7 @@ end
 resources :fixes, param: "fixed_at", except: [:edit, :update]
 resources :personal_informations, param: "token", only: [:show] do
   resources :works, controller: "personal_informations/works", only: [:show]
-  resources :lands, controller: "personal_informations/lands", only: [:index]
+  resources :lands, controller: "personal_informations/lands", only: [:index, :show]
   resources :machines, controller: "personal_informations/machines", only: [:index]
   resources :schedules, controller: "personal_informations/schedules", only: [:index]
   resources :statistics, controller: "personal_informations/statistics", only: [:index]
@@ -161,6 +161,7 @@ resources :personal_informations, param: "token", only: [:show] do
   resources :topics, controller: "personal_informations/topics", only: [:index, :update]
   resources :maps, controller: "personal_informations/maps", only: [:index]
   resources :mail_confirmations, controller: "personal_informations/mail_confirmations", param: "mail_token", only: [:edit]
+  resources :scans, controller: "personal_informations/scans", only: [:new, :create]
 end
 resources :personal_calendars, param: "token", only: [:show]
 resources :users, except: [:show] do
