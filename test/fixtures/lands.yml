@@ -60,6 +60,7 @@ lands1:
   deleted_at: 
   land_place_id: land_places(:land_place0).id
   region: "((35.474177,133.047340), (35.472866,133.047340), (35.472648,133.049056))"
+  uuid: "16c773fe-31cd-4c24-82b7-a125ee405bc7"
 
 
 lands2:

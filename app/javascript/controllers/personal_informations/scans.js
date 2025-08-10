@@ -14,10 +14,10 @@ document.addEventListener('turbo:load', () => {
     video,
     onScan,
     {
-      preferredCamera: 'user',
+      preferredCamera: 'environment',
       highlightScanRegion: true,
       highlightCodeOutline: true,
-      // maxScansPerSecond: 8,
+      maxScansPerSecond: 8,
     }
   );
 
@@ -43,7 +43,6 @@ document.addEventListener('turbo:load', () => {
     let data = null;
     console.log("scanning data:", text);
     try { data = JSON.parse(text); } catch(e) { console.log(e.message); return; }
-    console.log("scanned data:", data);
     if (!data || typeof data !== 'object' || !('type' in data)) return;
 
     posting = true;
