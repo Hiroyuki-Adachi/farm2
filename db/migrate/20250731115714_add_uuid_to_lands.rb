@@ -2,7 +2,7 @@ class AddUuidToLands < ActiveRecord::Migration[8.0]
   def change
     add_column :lands, :uuid, :string, limit: 36, null: false, default: "", comment: "UUID"
 
-    Land.all.each do |land|
+    Land.find_each do |land|
       land.set_uuid
       land.save!
     end
