@@ -9,8 +9,10 @@
       <p><strong>場所:</strong> <%= @land.place_name %></p>
     <% end %>
   </div>
-  <div class="col-md-6">
-    <%= image_tag qrcode_tag(lands_card_path(@land)), alt: "圃場QRコード", class: "img-fluid" %>
+  <div class="col-md-6 text-center">
+    <p><strong>QRコード</strong></p>
+    <%= image_tag qrcode_tag(lands_card_path(@land)), alt: "圃場QRコード", class: "img-fluid", style: "max-width: 300px;" %>
+    <p class="text-muted small mt-2">スマートフォンで読み取って圃場カードを表示</p>
   </div>
 </div>
 <div class="btn-toolbar mt-3">
