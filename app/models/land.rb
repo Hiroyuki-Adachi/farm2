@@ -18,6 +18,7 @@
 #  region(領域)                       :polygon
 #  start_on(有効期間(自))             :date             default(Mon, 01 Jan 1900), not null
 #  target_flag(管理対象フラグ)        :boolean          default(TRUE), not null
+#  uuid(UUID)                         :string(36)       default(""), not null
 #  created_at                         :datetime
 #  updated_at                         :datetime
 #  group_id(グループID)               :integer
@@ -29,11 +30,14 @@
 #
 #  index_lands_on_deleted_at  (deleted_at)
 #  index_lands_on_place       (place)
+#  index_lands_on_uuid        (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
 #
 
 class Land < ApplicationRecord
   include Discard::Model
   self.discard_column = :deleted_at
+
+  before_create :set_uuid
 
   belongs_to :owner, -> {with_discarded}, class_name: :Home, foreign_key: :owner_id
   belongs_to :manager, -> {with_discarded}, class_name: :Home, foreign_key: :manager_id
@@ -70,8 +74,13 @@ class Land < ApplicationRecord
 
   validates :area, numericality: true, if: proc { |x| x.area.present?}
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
-  validates :parcel_number, uniqueness: true, allow_nil: true
+  validates :parcel_number, numericality: {only_integer: true}, allow_nil: true
+  validates :peasant_start_term, numericality: {only_integer: true}, allow_nil: true
+  validates :peasant_end_term, numericality: {only_integer: true}, allow_nil: true
 
+  accepts_nested_attributes_for :work_lands, allow_destroy: true
+  accepts_nested_attributes_for :land_fees, allow_destroy: true
+  accepts_nested_attributes_for :plan_lands, allow_destroy: true
   accepts_nested_attributes_for :land_costs, allow_destroy: true, reject_if: :reject_land_costs
   accepts_nested_attributes_for :land_homes, allow_destroy: true
 
@@ -176,5 +185,9 @@ class Land < ApplicationRecord
 
   def expiry?(date = Time.zone.today)
     date.between?(self.start_on, self.end_on)
+  end
+
+  def set_uuid
+    self.uuid = SecureRandom.uuid
   end
 end

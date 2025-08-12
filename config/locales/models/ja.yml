@@ -102,6 +102,7 @@ ja:
         peasant_start_term: "小作料有効年度(自)"
         peasant_end_term: "小作料有効年度(至)"
         parcel_number: "耕地番号"
+        uuid: "UUID"
 
       work: 
         year: "年度"  #g

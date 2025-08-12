@@ -4,4 +4,9 @@ class PersonalInformations::LandsController < PersonalInformationsController
     @land_costs = LandCost.where(land_id: @lands.map(&:land_id))
     @lands = WorkLandDecorator.decorate_collection(@lands).group_by(&:land)
   end
+
+  def show
+    @work_lands = WorkLandDecorator.decorate_collection(WorkLand.for_cards(params[:id], now_system.start_date))
+    @land_costs = LandCostDecorator.decorate_collection(LandCost.by_land(params[:id]))
+  end
 end

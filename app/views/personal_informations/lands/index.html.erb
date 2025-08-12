@@ -12,7 +12,7 @@
 
       <% work_type_name = "" %>
       <% results.each_with_index do |result, i| %>
-        <% land_cost = @land_costs.newest(result.work.worked_at).find{|land_cost| land_cost.land_id == land.id} %>
+        <% land_cost = @land_costs.newest(result.work.model.worked_at).find{|land_cost| land_cost.land_id == land.id} %>
         <td class="small"><%= work_type_name == land_cost&.work_type&.name ? "" : land_cost&.work_type&.name %></td>
         <td class="small"><%= result.worked_at_short%></td>
         <td class="small"><%= result.work_kind_name %></td>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_03_124913) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_31_115714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -455,8 +455,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_03_124913) do
     t.integer "peasant_start_term", default: 0, null: false, comment: "小作料期間(自)"
     t.integer "peasant_end_term", default: 9999, null: false, comment: "小作料期間(至)"
     t.integer "parcel_number", comment: "耕地番号"
+    t.string "uuid", limit: 36, default: "", null: false, comment: "UUID"
     t.index ["deleted_at"], name: "index_lands_on_deleted_at"
     t.index ["place"], name: "index_lands_on_place"
+    t.index ["uuid"], name: "index_lands_on_uuid", unique: true, where: "((uuid)::text <> ''::text)"
   end
 
   create_table "machine_kinds", id: { type: :serial, comment: "作業種別機械利用可能マスタ" }, comment: "作業種別機械利用可能マスタ", force: :cascade do |t|
