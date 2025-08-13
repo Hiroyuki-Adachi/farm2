@@ -27,7 +27,7 @@ class SchedulesController < ApplicationController
     if @schedule.save
       redirect_to(new_schedule_worker_path(schedule_id: @schedule))
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -37,7 +37,7 @@ class SchedulesController < ApplicationController
     if @schedule.update(schedule_params)
       redirect_to(schedules_path)
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

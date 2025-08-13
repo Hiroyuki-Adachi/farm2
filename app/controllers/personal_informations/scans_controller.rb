@@ -5,7 +5,7 @@ class PersonalInformations::ScansController < PersonalInformationsController
 
   def create
     # JSONで、かつ "type" キーが必須
-    return render json: { error: "Invalid QR payload" }, status: :unprocessable_entity unless @data.is_a?(Hash) && @data.key?(:type)
+    return render json: { error: "Invalid QR payload" }, status: :unprocessable_content unless @data.is_a?(Hash) && @data.key?(:type)
 
     case @data[:type]
     when "lands"
@@ -28,7 +28,7 @@ class PersonalInformations::ScansController < PersonalInformationsController
     begin
       @data = JSON.parse(payload, symbolize_names: true)
     rescue JSON::ParserError
-      render json: { error: "Malformed JSON payload" }, status: :unprocessable_entity and return
+      render json: { error: "Malformed JSON payload" }, status: :unprocessable_content and return
     end
   end
 end

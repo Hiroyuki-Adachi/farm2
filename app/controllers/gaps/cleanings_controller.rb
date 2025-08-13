@@ -12,7 +12,7 @@ class Gaps::CleaningsController < GapsController
     if @cleaning.save
       redirect_to gaps_cleanings_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

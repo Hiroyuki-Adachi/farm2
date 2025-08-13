@@ -20,7 +20,7 @@ class WorkKindsController < ApplicationController
       update_others
       redirect_to work_kinds_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -29,7 +29,7 @@ class WorkKindsController < ApplicationController
       update_others
       redirect_to work_kinds_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 
