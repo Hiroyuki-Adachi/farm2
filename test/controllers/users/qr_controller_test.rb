@@ -9,7 +9,7 @@ class Users::QrControllerTest < ActionDispatch::IntegrationTest
     login_as(@user)
     get users_qr_index_path
     assert_response :success
-    assert_select 'img[src*="personal_information"]'
+    assert_select 'img[src*="data:image/png"]'
   end
 
   test "QR(未ログイン)" do
