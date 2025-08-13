@@ -69,4 +69,30 @@ class UserTest < ActiveSupport::TestCase
     assert_nil user.mail_confirmed_at
     assert_equal :pending, user.current_mail_status
   end
+
+  test "メールアドレス承認(期限無し)" do
+    user = users(:user_manager)
+    user.mail = 'user_nil@example.com'
+    user.save!
+    user.update_column(:mail_confirmation_expired_at, nil)
+
+    result = user.mail_confirm!(user.mail_confirmation_token)
+
+    assert_not result
+    assert_nil user.mail_confirmed_at
+    assert_equal :pending, user.current_mail_status
+  end
+
+  test "メールアドレス承認(期限切れ)" do
+    user = users(:user_manager)
+    user.mail = 'user_expired@example.com'
+    user.save!
+    user.update_column(:mail_confirmation_expired_at, 1.day.ago)
+
+    result = user.mail_confirm!(user.mail_confirmation_token)
+
+    assert_not result
+    assert_nil user.mail_confirmed_at
+    assert_equal :expired, user.current_mail_status
+  end
 end
