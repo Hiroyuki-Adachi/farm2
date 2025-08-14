@@ -33,7 +33,16 @@ class LandTest < ActiveSupport::TestCase
     fee, results = land.costs(start_date, end_date)
 
     assert_equal land_fees(:land_fee1), fee
-    assert_equal({5 => 30, 8 => 62}, results)
+    WORK_TYPE_ID_A = 5
+    WORK_TYPE_ID_B = 8
+    DAYS_FOR_TYPE_A = 30
+    DAYS_FOR_TYPE_B = 62
+
+    fee, results = land.costs(start_date, end_date)
+
+    assert_equal land_fees(:land_fee1), fee
+    expected_results = {WORK_TYPE_ID_A => DAYS_FOR_TYPE_A, WORK_TYPE_ID_B => DAYS_FOR_TYPE_B}
+    assert_equal(expected_results, results)
   end
 
   test 'region values and center' do
