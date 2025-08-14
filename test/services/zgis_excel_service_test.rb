@@ -27,7 +27,11 @@ class ZgisExcelServiceTest < ActiveSupport::TestCase
     sheet = workbook[0]
 
     assert_equal work_type.name, sheet[0][0].value
-    assert_equal work_type.bg_color.delete('#').downcase, sheet[0][1].fill_color[-6..].downcase
+    expected_color = work_type.bg_color.delete('#').downcase
+    actual_color = sheet[0][1].fill_color.to_s.delete('#').downcase
+    # Compare only the last 6 characters if actual_color is at least 6 chars, else use the whole string
+    actual_color = actual_color.length >= 6 ? actual_color[-6..] : actual_color
+    assert_equal expected_color, actual_color
     assert_equal '255', sheet[0][2].value
   end
 end
