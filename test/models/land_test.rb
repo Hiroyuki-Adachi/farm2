@@ -48,7 +48,12 @@ class LandTest < ActiveSupport::TestCase
   test 'region values and center' do
     land = lands(:lands1)
 
-    assert_equal [[35.474177, 133.04734], [35.472866, 133.04734], [35.472648, 133.049056]], land.region_values
+    expected_region_values = [
+      [35.474177, 133.04734],    # Northwest corner
+      [35.472866, 133.04734],    # Southwest corner
+      [35.472648, 133.049056]    # Southeast corner
+    ]
+    assert_equal expected_region_values, land.region_values
 
     center = land.region_center
     assert_in_delta 35.4734125, center[0], 1e-6
