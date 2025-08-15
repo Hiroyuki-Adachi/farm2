@@ -16,7 +16,7 @@ class OwnedRicePricesController < ApplicationController
     if @owned_rice_price.save
       redirect_to owned_rice_prices_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 
@@ -25,7 +25,7 @@ class OwnedRicePricesController < ApplicationController
     if @owned_rice_price.update(owned_rice_price_params)
       redirect_to owned_rice_prices_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

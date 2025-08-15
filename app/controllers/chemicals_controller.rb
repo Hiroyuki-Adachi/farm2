@@ -19,7 +19,7 @@ class ChemicalsController < ApplicationController
     if @chemical.save
       redirect_to chemicals_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -27,7 +27,7 @@ class ChemicalsController < ApplicationController
     if @chemical.update(chemical_params)
       redirect_to chemicals_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

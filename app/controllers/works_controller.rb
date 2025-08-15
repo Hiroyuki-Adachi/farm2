@@ -59,7 +59,7 @@ class WorksController < ApplicationController
     if @work.save
       redirect_to(new_work_worker_path(work_id: @work))
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -75,7 +75,7 @@ class WorksController < ApplicationController
       if @work.update(work_params)
         @work.refresh_broccoli(current_organization)
       else
-        render action: :edit, status: :unprocessable_entity
+        render action: :edit, status: :unprocessable_content
       end
     end
 

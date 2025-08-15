@@ -24,7 +24,7 @@ class WorkersController < ApplicationController
     if @worker.save
       redirect_to workers_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -36,7 +36,7 @@ class WorkersController < ApplicationController
     if @worker.update(worker_params)
       redirect_to workers_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 
