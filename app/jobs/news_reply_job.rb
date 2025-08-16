@@ -60,7 +60,8 @@ class NewsReplyJob < ApplicationJob
     res = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
       http.head(uri.request_uri)
     end
-    res.is_a?(Net::HTTPSuccess)
+
+    res.is_a?(Net::HTTPSuccess) || res.is_a?(Net::HTTPRedirection)
   rescue StandardError
     false
   end

@@ -19,7 +19,7 @@ class Gaps::AccidentsController < GapsController
     if @accident.save
       redirect_to gaps_accidents_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -29,7 +29,7 @@ class Gaps::AccidentsController < GapsController
     if @accident.update(accident_params)
       redirect_to gaps_accidents_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

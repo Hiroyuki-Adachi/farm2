@@ -20,7 +20,7 @@ class MachineTypesController < ApplicationController
       update_work_kinds
       redirect_to machine_types_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -29,7 +29,7 @@ class MachineTypesController < ApplicationController
       update_work_kinds
       redirect_to machine_types_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

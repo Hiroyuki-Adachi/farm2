@@ -36,7 +36,7 @@ class MachinePricesController < ApplicationController
         redirect_to show_type_machine_price_headers_path(machine_type_id: @machine_price.machine_type_id)
       end
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -51,7 +51,7 @@ class MachinePricesController < ApplicationController
         redirect_to show_type_machine_price_headers_path(machine_type_id: @machine_price.machine_type_id)
       end
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

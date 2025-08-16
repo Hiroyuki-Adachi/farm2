@@ -95,7 +95,7 @@ class User < ApplicationRecord
 
   def mail_confirm!(mail_confirmation_token)
     return false if self.mail_confirmation_token != mail_confirmation_token
-    return false if self.mail_confirmation_expired_at < Time.current
+    return false if self.mail_confirmation_expired_at.nil? || self.mail_confirmation_expired_at < Time.current
 
     self.update(mail_confirmed_at: Time.current)
   end

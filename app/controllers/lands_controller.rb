@@ -25,7 +25,7 @@ class LandsController < ApplicationController
     if @land.save
       redirect_to lands_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -33,7 +33,7 @@ class LandsController < ApplicationController
     if @land.update(land_params)
       redirect_to lands_path(home_id: params[:home_id].presence)
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 
