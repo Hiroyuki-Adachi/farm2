@@ -35,7 +35,12 @@ class WorksController < ApplicationController
   end
 
   def new
-    @work = Work.new(worked_at: Time.zone.today, work_type_id: @work_types.first.id, start_at: '8:00', end_at: '17:00')
+    @work = Work.new(
+      worked_at: Time.zone.today,
+      work_type_id: @work_types.first.id,
+      weather_id: @weathers.first.id,
+      start_at: '8:00', end_at: '17:00'
+    )
     @results = []
     @work_lands = []
     @work_kinds = WorkKind.by_type(@work_types.first)
@@ -120,7 +125,7 @@ class WorksController < ApplicationController
 
   def set_masters
     @weathers = Weather.all
-    @work_types = WorkType.usual
+    @work_types = WorkType.usual.by_term(current_term)
   end
 
   def work_params
