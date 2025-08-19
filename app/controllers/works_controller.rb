@@ -43,7 +43,7 @@ class WorksController < ApplicationController
     )
     @results = []
     @work_lands = []
-    @work_kinds = WorkKind.by_type(@work_types.first)
+    @work_kinds = WorkKind.except_other.by_type(@work_types.first)
   end
 
   def show
@@ -69,7 +69,7 @@ class WorksController < ApplicationController
   end
 
   def edit
-    @work_kinds = WorkKind.by_type(@work.work_type) || []
+    @work_kinds = WorkKind.except_other.by_type(@work.work_type) || []
   end
 
   def update
@@ -100,7 +100,7 @@ class WorksController < ApplicationController
 
   def work_kinds
     @work_kind_id = params[:work_kind_id]
-    @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
+    @work_kinds = params[:work_type_id].present? ? WorkKind.except_other.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
     respond_to { |format| format.turbo_stream }
   end
 
