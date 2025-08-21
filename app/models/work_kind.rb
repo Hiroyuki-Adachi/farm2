@@ -51,7 +51,7 @@ class WorkKind < ApplicationRecord
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
-  scope :usual, -> {kept.where(other_flag: false).order(:phonetic, :display_order, :id)}
+  scope :usual, -> { except_other.order(:phonetic, :display_order, :id) }
   scope :landable, ->{kept.where(land_flag: true)}
   scope :by_type, ->(work_type) {
     kept
