@@ -6,7 +6,8 @@ class PersonalInformations::LandsController < PersonalInformationsController
   end
 
   def show
-    @work_lands = WorkLandDecorator.decorate_collection(WorkLand.for_cards(params[:id], now_system.start_date))
-    @land_costs = LandCostDecorator.decorate_collection(LandCost.by_land(params[:id]))
+    @land = Land.find(params[:id]).decorate
+    @work_lands = WorkLandDecorator.decorate_collection(WorkLand.for_cards(@land.id, now_system.start_date))
+    @land_costs = LandCostDecorator.decorate_collection(LandCost.by_land(@land.id))
   end
 end
