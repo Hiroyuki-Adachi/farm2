@@ -22,7 +22,7 @@ class ScheduleDecorator < Draper::Decorator
   end
 
   def genre_name
-    model.work_type.genre_name + "(#{model.work_type.name})"
+    "#{model.work_type&.genre_name}(#{model.work_type&.name})"
   end
 
   def name
