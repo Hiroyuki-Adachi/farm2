@@ -1,5 +1,6 @@
 // app/javascript/controllers/personal_informations/scans.js
 import QrScanner from "qr-scanner";
+import "bootstrap";
 
 document.addEventListener('turbo:load', () => {
   const video = document.getElementById("video");
@@ -44,7 +45,7 @@ document.addEventListener('turbo:load', () => {
     console.log("scanning data:", text);
     try { data = JSON.parse(text); } catch(e) { 
       console.log(e.message); 
-      toast("QRコードの内容が不正です（JSON形式でありません）");
+      toast("QRコードの内容が不正です");
       return; 
     }
     if (!data || typeof data !== 'object' || !('type' in data)) return;
@@ -76,7 +77,7 @@ document.addEventListener('turbo:load', () => {
         // 4xx → エラー表示してスキャン続行
         const err = await safeJson(res);
         console.warn("scan rejected:", err);
-        toast("読み取り内容が不正です"); // 任意: トースト関数
+        toast(err?.message || "読み取り内容が不正です");
         posting = false;
       }
     } catch (e) {
@@ -97,7 +98,10 @@ document.addEventListener('turbo:load', () => {
   }
 
   function toast(msg) {
-    // 最小限の簡易トースト（BootstrapならAlertでもOK）
+    document.getElementById("popup_alert_message").innerText = msg;
+    const popupForm = new bootstrap.Modal(document.getElementById("popup_alert"));
+    popupForm.show();
+
     console.log("[toast]", msg);
   }
 });

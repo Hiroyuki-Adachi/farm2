@@ -57,6 +57,8 @@ gem 'lograge'
 
 # Encoding QR Codes in Ruby.
 gem 'rqrcode'
+# Generate PNG images from QR Codes.
+gem "rqrcode_png"
 # Read and write PNG files.
 gem 'chunky_png'
 

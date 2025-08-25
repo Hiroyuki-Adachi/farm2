@@ -1,8 +1,25 @@
 class IpListsController < ApplicationController
   layout false
-  before_action :set_ip, only: [:edit, :update]
+  before_action :set_ip, only: [:update]
 
-  def new; end
+  def new
+    # PCタブ専用の一時レコードを作成
+    @qr = QrLoginRequest.create!(
+      user_agent: request.user_agent,
+      ip: request.remote_ip
+    )
+
+    # このタブ専用のnonce（念押し）
+    pc_nonce = cookies.encrypted[:pc_nonce] ||= SecureRandom.hex(16)
+    @qr.update!(pc_nonce: pc_nonce)
+
+    # スマホに渡す短いJSON（id は signed_id）
+    @payload_json = {
+      v: 1,
+      t: "login",
+      id: @qr.signed_id(purpose: :qr_login, expires_in: (@qr.expires_at - Time.current).to_i)
+    }.to_json
+  end
 
   def create
     user = User.find_by(login_name: params[:login_name])
@@ -24,7 +41,16 @@ class IpListsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    qr = QrLoginRequest.find(params[:id])
+    payload_json = {
+      v: 1,
+      t: "login",
+      id: qr.signed_id(purpose: :qr_login, expires_in: (qr.expires_at - Time.current).to_i)
+    }.to_json
+    png = RQRCode::QRCode.new(payload_json).as_png(size: 320, border_modules: 2).to_s
+    send_data png, type: "image/png", disposition: "inline"
+  end
 
   def update
     if @ip.authenticate?(params[:token])
