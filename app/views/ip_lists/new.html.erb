@@ -27,7 +27,7 @@
   </div>
 
   <!-- 自動submit用フォーム（最終確定） -->
-  <%= form_with url: ip_lists_path, method: :post, id: "qr-finalize-form", data: { turbo: true } do |f| %>
+  <%= form_with url: ip_lists_path, method: :post, id: "qr_finalize_form", data: { turbo: true } do |f| %>
     <%= hidden_field_tag :token, @qr.token %>
   <% end %>
 </body>

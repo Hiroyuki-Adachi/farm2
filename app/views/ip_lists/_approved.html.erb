@@ -1,0 +1,9 @@
+<div id="<%= dom_id(qr, :status) %>">
+  <p>承認されました。ログイン処理を完了しています...</p>
+  <script>
+    (function(){
+      var f = document.getElementById("qr_finalize_form");
+      if (f) f.submit();
+    })();
+  </script>
+</div>

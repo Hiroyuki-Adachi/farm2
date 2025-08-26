@@ -1,5 +1,5 @@
 class PersonalInformations::ScansController < PersonalInformationsController
-  before_action :decode_params, only: [:create]
+  before_action :decode_and_normalize!, only: [:create]
 
   def new; end
 
@@ -8,43 +8,52 @@ class PersonalInformations::ScansController < PersonalInformationsController
     return render json: { error: "Invalid QR payload", message: 'QRコードの内容が不正です' }, status: :unprocessable_content unless @data.is_a?(Hash) && @data.key?(:type)
 
     case @data[:type]
-    when 'lands'
-      land = Land.find_by(uuid: @data[:value])
-      return render json: { error: 'Record Not found', message: '該当する圃場が見つかりません' }, status: :not_found unless land
-
-      redirect_url = personal_information_land_path(personal_information_token: current_user.token, id: land.id)
+    when "lands" then return handle_lands
+    when "login" then return handle_login
     else
-      return render json: { error: "Unsupported type", message: 'サポートされていないタイプです' }, status: :bad_request
+      return render json: { error: "Unsupported type", message: 'サポートされていないQRコードです' }, status: :bad_request
     end
-
-    # 成功 → フロントで Turbo.visit できるようにURLを返す
-    render json: { redirect_url: redirect_url }, status: :ok
   end
 
   private
 
-  def decode_params
-    payload = params[:payload].to_s
-    begin
-      @data = JSON.parse(payload, symbolize_names: true)
-    rescue JSON::ParserError
-      return render json: { error: "Malformed JSON payload", message: 'QRコードの内容が不正です' }, status: :unprocessable_content
-    end
+  def decode_and_normalize!
+    raw = JSON.parse(params[:payload].to_s, symbolize_names: true)
+  rescue JSON::ParserError
+    render json: { action: "error", message: "QRコードの内容が不正です" }, status: :unprocessable_entity and return
+  else
+    @data = {
+      version: raw.key?(:v) ? raw[:v] : raw[:version],
+      type:    raw.key?(:t) ? raw[:t] : raw[:type],
+    }
+    [:id, :token, :value, :exp].each { |k| @data[k] = raw[k] if raw.key?(k) }
+    render json: { action: "error", message: "typeがありません" }, status: :unprocessable_entity unless @data[:type]
+  end
 
-    # v と version、t と type を統一する
-    unified = {}
+  def handle_lands
+    land = Land.find_by(uuid: @data[:value])
+    return render json: { action: "error", message: "該当する圃場が見つかりません" }, status: :not_found unless land
 
-    # version
-    unified[:version] = raw.key?(:v) ? raw[:v] : raw[:version]
+    url = personal_information_land_path(personal_information_token: current_user.token, id: land.id)
+    render json: { action: "redirect", url: url }, status: :ok
+  end
 
-    # type
-    unified[:type] = raw.key?(:t) ? raw[:t] : raw[:type]
+  def handle_login
+    qr = QrLoginRequest.find_signed!(@data[:id], purpose: :qr_login)
+    return render json: { action: "error", message: "QRの有効期限が切れています" }, status: :gone if qr.expired?
+    return render json: { action: "error", message: "このQRは承認できません" }, status: :conflict unless qr.approvable?
 
-    # その他はそのままコピー（token/value/idなど）
-    [:id, :token, :value, :exp].each do |k|
-      unified[k] = raw[k] if raw.key?(k)
-    end
+    qr.update!(approved_at: Time.current, approved_by: current_user)
 
-    @data = unified
+    Turbo::StreamsChannel.broadcast_replace_to(
+      qr,
+      target: ActionView::RecordIdentifier.dom_id(qr, :status),
+      partial: "qr_logins/approved",
+      locals: { qr: qr }
+    )
+
+    render json: { action: "ack", message: "PCにログイン信号を送りました" }, status: :ok
+  rescue ActiveSupport::MessageVerifier::InvalidSignature
+    render json: { action: "error", message: "QRトークンが不正です" }, status: :unprocessable_entity
   end
 end

@@ -63,15 +63,22 @@ document.addEventListener('turbo:load', () => {
 
       if (res.ok) {
         const json = await res.json();
-        // 成功 → スキャン停止して遷移
-        await scanner.stop();
-        video.srcObject?.getTracks().forEach(t => t.stop());
-        video.srcObject = null;
-        if (json?.redirect_url) {
-          Turbo.visit(json.redirect_url);
-        } else {
-          // URLが無い場合はフルリロードのフォールバック
-          window.location.reload();
+        console.debug(json);
+
+        switch (json.action) {
+          case "redirect":
+            await scanner.stop(); 
+            video.srcObject?.getTracks().forEach(t => t.stop());
+            video.srcObject = null;
+            Turbo.visit(json.url);
+            break;
+          case "ack":
+            toast(json.message || "完了しました"); 
+            setTimeout(() => { posting = false; }, 1200);
+            break;
+          default:
+            toast(json.message || "処理に失敗しました");
+            posting = false;
         }
       } else {
         // 4xx → エラー表示してスキャン続行

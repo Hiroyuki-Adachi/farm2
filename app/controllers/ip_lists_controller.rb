@@ -1,6 +1,5 @@
 class IpListsController < ApplicationController
   layout false
-  before_action :set_ip, only: [:update]
 
   def new
     # PCタブ専用の一時レコードを作成
@@ -22,23 +21,36 @@ class IpListsController < ApplicationController
   end
 
   def create
-    user = User.find_by(login_name: params[:login_name])
-    unless user
-      IpList.block_ip!(request.remote_ip)
-      return to_error_path
+    token = params[:token].to_s
+    pc_nonce = cookies.encrypted[:pc_nonce].to_s
+
+    QrLoginRequest.transaction do
+      qr = QrLoginRequest.lock.find_by!(token: token)
+      return to_error_path if qr.expired?
+      return to_error_path if qr.approved_at.nil?
+      return to_error_path if qr.used_at.present?
+
+      # 念押し：このタブ本人の確認（pc_nonce を一致確認）
+      return to_error_path if qr.pc_nonce.present? && qr.pc_nonce != pc_nonce
+
+      user = qr.approved_by
+      unless user
+        IpList.block_ip!(qr.ip)
+        return to_error_path
+      end
+
+      log_in(user) if respond_to?(:sign_in)
+
+      qr.update!(used_at: Time.current)
+      IpList.white_ip!(qr.ip, user)
     end
 
-    unless user.linable?
-      return to_error_path
-    end
-
-    ip = IpList.white_ip!(request.remote_ip, user)
-    if LineHookService.push_message(user.line_id, I18n.t('line_authentication', token: ip.token)).is_a?(Net::HTTPSuccess)
-      redirect_to edit_ip_list_path(ip)
-    else
-      ip.destroy
-      return to_error_path
-    end
+    redirect_to menu_index_path
+  rescue ActiveRecord::RecordNotFound
+    head :not_found
+  rescue => e
+    Rails.logger.warn("[qr_create] #{e.class}: #{e.message}")
+    head :conflict
   end
 
   def edit
@@ -75,12 +87,5 @@ class IpListsController < ApplicationController
       to_error_path
       return
     end
-  end
-
-  def set_ip
-    @ip = IpList.where("current_timestamp <= confirmation_expired_at")
-      .where(expired_on: nil)
-      .find_by(id: params[:id], ip_address: request.remote_ip, white_flag: true)
-    to_error_path unless @ip
   end
 end
