@@ -40,7 +40,7 @@ class IpList < ApplicationRecord
 
   scope :blacks, -> { 
     where(white_flag: false, expired_on: nil)
-    .where('block_count >= ?', BLOCK_LIMIT)
+    .where(block_count: BLOCK_LIMIT..)
     .pluck(:ip_address)
   }
 
@@ -62,7 +62,6 @@ class IpList < ApplicationRecord
     ip = find_or_initialize_by(ip_address: ip_address)
     ip.white_flag = false
     ip.block_count += 1
-    Rails.cache.delete('black_list') if ip.save
   end
 
   def self.white_ip!(ip_address, user)
@@ -72,19 +71,14 @@ class IpList < ApplicationRecord
     ip.expired_on = Time.zone.now.advance(months: 1).to_date
     ip.created_by = user.id
     ip.mail = user.login_name
-    Rails.cache.delete('white_list') if ip.save
     return ip
   end
 
   def self.white_list
-    Rails.cache.fetch('white_list', expires_in: 1.hour) do
-      LOCAL_ADDRESSES | whites.map { |ip| IPAddr.new(ip) }
-    end
+    LOCAL_ADDRESSES | whites.map { |ip| IPAddr.new(ip) }
   end
 
   def self.black_list
-    Rails.cache.fetch('black_list', expires_in: 1.hour) do
-      blacks.map { |ip| IPAddr.new(ip) }
-    end
+    blacks.map { |ip| IPAddr.new(ip) }
   end
 end

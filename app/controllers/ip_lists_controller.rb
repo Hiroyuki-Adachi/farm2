@@ -77,10 +77,7 @@ class IpListsController < ApplicationController
   private
 
   def restrict_remote_ip
-    if IpList::LOCAL_ADDRESSES.any? { |ip| ip.include?(IPAddr.new(request.remote_ip)) }
-      redirect_to root_path 
-      return
-    elsif IpList.white_list.any? { |ip| ip.include?(request.remote_ip) }
+    if IpList.white_list.any? { |ip| ip.include?(request.remote_ip) }
       redirect_to root_path
       return
     elsif IpList.black_list.any? { |ip| ip.include?(request.remote_ip) }

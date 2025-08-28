@@ -48,8 +48,21 @@ document.addEventListener('turbo:load', () => {
       toast("QRコードの内容が不正です");
       return; 
     }
-    if (!data || typeof data !== 'object' || !('type' in data)) return;
+    if (!data || typeof data !== "object") return;
 
+    const normalized = {
+      type:    data.type || data.t,
+      version: data.version || data.v,
+      id:      data.id,
+      token:   data.token,
+      value:   data.value,
+      exp:     data.exp
+    };
+
+    if (!normalized.type) {
+      toast("QRコードにタイプ情報がありません");
+      return;
+    }
     posting = true;
     try {
       const res = await fetch(document.getElementById("scan_path").value, {
@@ -58,7 +71,7 @@ document.addEventListener('turbo:load', () => {
           "Content-Type": "application/json",
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content
         },
-        body: JSON.stringify({ payload: text })
+        body: JSON.stringify({ payload: normalized })
       });
 
       if (res.ok) {
@@ -103,12 +116,12 @@ document.addEventListener('turbo:load', () => {
   async function safeJson(res) {
     try { return await res.json(); } catch { return null; }
   }
+});
 
-  function toast(msg) {
+window.toast = (msg) => {
     document.getElementById("popup_alert_message").innerText = msg;
     const popupForm = new bootstrap.Modal(document.getElementById("popup_alert"));
     popupForm.show();
 
     console.log("[toast]", msg);
-  }
-});
+}

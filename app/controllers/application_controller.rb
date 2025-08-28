@@ -68,7 +68,18 @@ class ApplicationController < ActionController::Base
     to_error_path unless this_term?
   end
 
-  def to_error_path
+  def to_error_path(exception = nil)
+    logger.error "[503] Service Unavailable"
+    if exception
+      logger.error "Exception: #{exception.class} - #{exception.message}"
+      logger.error "Backtrace: #{exception.backtrace.first(5).join("\n")}"
+    else
+      logger.error "No exception object given (manual trigger)"
+    end
+    logger.error "Request: #{request.method} #{request.fullpath} from #{request.remote_ip}"
+    logger.error "Params: #{request.params}"
+    logger.error "User: #{current_user&.id || 'guest'}"
+
     render file: Rails.public_path.join('503.html'), layout: false, status: :service_unavailable
   end
 
@@ -88,16 +99,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def handle_error(e)
+  def handle_error(exception = nil)
+    logger.error "[500] Internal Server Error"
     logger.error({
-      error: e.class.name,
-      message: e.message,
-      stack_trace: e.backtrace.take(5),
+      error: exception.class.name,
+      message: exception.message,
+      stack_trace: exception.backtrace.take(5),
       path: request.fullpath,
       time: Time.current,
       severity: :ERROR
     }.to_json)
 
-    render file: Rails.public_path.join('500.html'), layout: false, status: 500
+    render file: Rails.public_path.join('500.html'), layout: false, status: :internal_server_error
   end
 end

@@ -18,16 +18,33 @@ class PersonalInformations::ScansController < PersonalInformationsController
   private
 
   def decode_and_normalize!
-    raw = JSON.parse(params[:payload].to_s, symbolize_names: true)
-  rescue JSON::ParserError
-    render json: { action: "error", message: "QRコードの内容が不正です" }, status: :unprocessable_entity and return
-  else
+    raw = params[:payload]
+
+    case raw
+    when String
+      begin
+        raw = JSON.parse(raw, symbolize_names: true)
+      rescue JSON::ParserError
+        return render json: { error: "Malformed JSON payload", message: "QRコードの内容が不正です" },
+                      status: :unprocessable_entity
+      end
+    when ActionController::Parameters, Hash
+      raw = raw.to_unsafe_h if raw.is_a?(ActionController::Parameters)
+      raw = raw.deep_symbolize_keys
+    else
+      return render json: { error: "Invalid QR payload", message: "QRコードの内容が不正です" },
+                    status: :unprocessable_entity
+    end
+
     @data = {
-      version: raw.key?(:v) ? raw[:v] : raw[:version],
-      type:    raw.key?(:t) ? raw[:t] : raw[:type],
+      version: raw[:v] || raw[:version],
+      type: raw[:t] || raw[:type]
     }
     [:id, :token, :value, :exp].each { |k| @data[k] = raw[k] if raw.key?(k) }
-    render json: { action: "error", message: "typeがありません" }, status: :unprocessable_entity unless @data[:type]
+
+    return if @data[:type].present?
+
+    return render json: { error: "Missing type", message: "typeがありません" }, status: :unprocessable_entity
   end
 
   def handle_lands
@@ -48,7 +65,7 @@ class PersonalInformations::ScansController < PersonalInformationsController
     Turbo::StreamsChannel.broadcast_replace_to(
       qr,
       target: ActionView::RecordIdentifier.dom_id(qr, :status),
-      partial: "qr_logins/approved",
+      partial: "ip_lists/approved",
       locals: { qr: qr }
     )
 

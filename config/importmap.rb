@@ -22,6 +22,7 @@ pin "base64-js" # @1.5.1
 pin "ieee754" # @1.2.1
 pin "@hotwired/turbo", to: "@hotwired--turbo.js" # @8.0.4
 pin "chart.js/auto", to: "https://ga.jspm.io/npm:chart.js@4.4.3/auto/auto.js"
-pin "@rails/actioncable", to: "@rails--actioncable.js" # @7.2.102
+pin "@rails/actioncable", to: "@rails--actioncable.js" # @8.0.201
 pin "bootstrap", to: "bootstrap.bundle.min.js" # @5.3.5
 pin "qr-scanner", to: "/javascripts/qr-scanner/qr-scanner.min.js"
+pin_all_from "app/javascript/channels", under: "channels"
