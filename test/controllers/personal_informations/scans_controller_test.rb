@@ -13,7 +13,7 @@ class PersonalInformations::ScansControllerTest < ActionDispatch::IntegrationTes
     assert_response :success
   end
 
-  test "QR(スキャン結果)(OK)" do
+  test "QR(スキャン結果)(圃場)(OK)" do
     params = {
       type: "lands",
       value: @land.uuid,
@@ -26,7 +26,8 @@ class PersonalInformations::ScansControllerTest < ActionDispatch::IntegrationTes
     assert_response :success
 
     body = JSON.parse(@response.body)
-    assert_equal personal_information_land_path(personal_information_token: @user.token, id: @land.id), body["redirect_url"]
+    assert_equal 'redirect', body['action']
+    assert_equal personal_information_land_path(personal_information_token: @user.token, id: @land.id), body["url"]
   end
 
   test "QR(スキャン結果)(ERROR)" do
@@ -42,7 +43,7 @@ class PersonalInformations::ScansControllerTest < ActionDispatch::IntegrationTes
     assert_response :bad_request
   end
 
-  test "QR(スキャン結果)(Not Found)" do
+  test "QR(スキャン結果)(圃場)(Not Found)" do
     params = {
       type: 'lands',
       value: 'abcd',

@@ -18,7 +18,7 @@ class PersonalInformationsController < ApplicationController
 
   def set_worker
     @current_user = User.find_by(token: params[:token] || params[:personal_information_token])
-    to_error_path unless @current_user&.worker
+    return to_error_path unless @current_user&.worker
     @worker = @current_user.worker
   end
 
