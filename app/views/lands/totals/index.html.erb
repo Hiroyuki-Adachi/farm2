@@ -6,7 +6,7 @@
     <div class="col-md-6">
       <div class="input-group">
         <% 4.times do |index| %>
-          <%= select_tag("work_kinds[]", options_from_collection_for_select(WorkKind.landable.usual, :id, :name, @work_kinds[index]), {include_blank: true, class: "form-select"}) %>
+          <%= select_tag("work_kinds[]", options_from_collection_for_select(WorkKind.landable.usual, :id, :name, @work_kind_ids[index]), {include_blank: true, class: "form-select"}) %>
         <% end %>
       </div>
     </div>
@@ -15,32 +15,32 @@
     </div>
   </div>
 <% end %>
-<% unless @work_kinds.empty? %>
+<% unless @work_kind_ids.empty? %>
 <div class="row">
   <div class="col-lg-12">
     <table id="work_list" class="table table-sm table-hover">
       <thead>
         <tr>
-          <th>地番</th>
           <th>耕地番号</th>
+          <th>地番</th>
           <th>面積</th>
           <th>所有者</th>
           <th>作付</th>
-          <% @work_kinds.each do |work_kind| %>
-            <th><%= WorkKind.find(work_kind).name %></th>
+          <% @work_kind_ids.each do |work_kind_id| %>
+            <th><%= WorkKind.find(work_kind_id).name %></th>
           <% end %>
         </tr>
       </thead>
       <tbody>
         <% @lands.each do |land| %>
           <tr>
-            <td><%= land.place %></td>
             <td class="numeric"><%= land.parcel_number %></td>
+            <td><%= land.place %></td>
             <td class="numeric"><%= land.area %></td>
             <td><%= land.owner_name %></td>
             <td><%= land.work_type_name %></td>
-            <% @work_kinds.each do |id| %>
-              <td><%= land.w_date[id] %></td>
+            <% @work_kind_ids.each do |work_kind_id| %>
+              <td><%= land.w_date[work_kind_id.to_i] %></td>
             <% end %>
           </tr>
         <% end %>
