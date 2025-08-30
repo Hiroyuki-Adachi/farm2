@@ -11,9 +11,7 @@ class IpListsController < ApplicationController
       return to_error_path
     end
 
-    unless user.linable?
-      return to_error_path
-    end
+    return to_error_path unless user.linable?
 
     ip = IpList.white_ip!(request.remote_ip, user)
     if LineHookService.push_message(user.line_id, I18n.t('line_authentication', token: ip.token)).is_a?(Net::HTTPSuccess)
@@ -39,10 +37,7 @@ class IpListsController < ApplicationController
   private
 
   def restrict_remote_ip
-    if IpList::LOCAL_ADDRESSES.any? { |ip| ip.include?(IPAddr.new(request.remote_ip)) }
-      redirect_to root_path 
-      return
-    elsif IpList.white_list.any? { |ip| ip.include?(request.remote_ip) }
+    if IpList.white_list.any? { |ip| ip.include?(request.remote_ip) }
       redirect_to root_path
       return
     elsif IpList.black_list.any? { |ip| ip.include?(request.remote_ip) }
