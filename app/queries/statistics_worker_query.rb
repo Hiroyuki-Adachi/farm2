@@ -1,5 +1,5 @@
 class StatisticsWorkerQuery
-  Result = Struct.new(:home_name, :family_name, :first_name, :work_days, :work_hours, :machine_days, :machine_hours, keyword_init: true)
+  Result = Struct.new(:home_name, :family_name, :first_name, :work_days, :work_hours, :machine_days, :machine_hours, :member_flag, keyword_init: true)
 
   def initialize(term)
     @term = term
@@ -41,13 +41,13 @@ class StatisticsWorkerQuery
       wr_table_alias[:days].as("work_days"),
       wr_table_alias[:hours].as("work_hours"),
       wr_table_alias[:machine_days],
-      Arel::Nodes::NamedFunction.new("COALESCE", [wr_table_alias[:machine_hours], 0]).as("machine_hours")
+      Arel::Nodes::NamedFunction.new("COALESCE", [wr_table_alias[:machine_hours], 0]).as("machine_hours"),
+      homes[:member_flag]
     )
     query.join(workers).on(wr_table_alias[:worker_id].eq(workers[:id]))
     query.join(homes).on(workers[:home_id].eq(homes[:id]))
     query.join(sections).on(homes[:section_id].eq(sections[:id]))
-    query.where(homes[:member_flag].eq(true))
-    query.order(sections[:display_order], sections[:id], homes[:display_order], homes[:id], workers[:display_order], workers[:id])
+    query.order(homes[:member_flag].desc, sections[:display_order], sections[:id], homes[:display_order], homes[:id], workers[:display_order], workers[:id])
 
     results = ActiveRecord::Base.connection.exec_query(query.to_sql)
     results.map { |row| Result.new(row.symbolize_keys) }

@@ -13839,3 +13839,9 @@ work_result_taue2:
   worker_id: 13
   hours: 5
   display_order: 2
+
+work_result_stat_2019_non_member:
+  work: work_stat_2019_1
+  worker: worker_not_worker
+  hours: 5
+  display_order: 3
