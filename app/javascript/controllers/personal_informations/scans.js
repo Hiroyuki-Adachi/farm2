@@ -1,5 +1,6 @@
 // app/javascript/controllers/personal_informations/scans.js
 import QrScanner from "qr-scanner";
+import "bootstrap";
 
 document.addEventListener('turbo:load', () => {
   const video = document.getElementById("video");
@@ -44,10 +45,24 @@ document.addEventListener('turbo:load', () => {
     console.log("scanning data:", text);
     try { data = JSON.parse(text); } catch(e) { 
       console.log(e.message); 
-      toast("QRコードの内容が不正です（JSON形式でありません）");
+      toast("QRコードの内容が不正です");
       return; 
     }
-    if (!data || typeof data !== 'object' || !('type' in data)) return;
+    if (!data || typeof data !== "object") return;
+
+    const normalized = {
+      type:    data.type || data.t,
+      version: data.version || data.v,
+      id:      data.id,
+      token:   data.token,
+      value:   data.value,
+      exp:     data.exp
+    };
+
+    if (!normalized.type) {
+      toast("QRコードにタイプ情報がありません");
+      return;
+    }
 
     posting = true;
     try {
@@ -57,26 +72,33 @@ document.addEventListener('turbo:load', () => {
           "Content-Type": "application/json",
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')?.content
         },
-        body: JSON.stringify({ payload: text })
+        body: JSON.stringify({ payload: normalized })
       });
 
       if (res.ok) {
         const json = await res.json();
-        // 成功 → スキャン停止して遷移
-        await scanner.stop();
-        video.srcObject?.getTracks().forEach(t => t.stop());
-        video.srcObject = null;
-        if (json?.redirect_url) {
-          Turbo.visit(json.redirect_url);
-        } else {
-          // URLが無い場合はフルリロードのフォールバック
-          window.location.reload();
+        console.debug(json);
+
+        switch (json.action) {
+          case "redirect":
+            await scanner.stop(); 
+            video.srcObject?.getTracks().forEach(t => t.stop());
+            video.srcObject = null;
+            Turbo.visit(json.url);
+            break;
+          case "ack":
+            toast(json.message || "完了しました"); 
+            setTimeout(() => { posting = false; }, 1200);
+            break;
+          default:
+            toast(json.message || "処理に失敗しました");
+            posting = false;
         }
       } else {
         // 4xx → エラー表示してスキャン続行
         const err = await safeJson(res);
         console.warn("scan rejected:", err);
-        toast("読み取り内容が不正です"); // 任意: トースト関数
+        toast(err?.message || "読み取り内容が不正です");
         posting = false;
       }
     } catch (e) {
@@ -101,3 +123,9 @@ document.addEventListener('turbo:load', () => {
     console.log("[toast]", msg);
   }
 });
+
+window.toast = (msg) => {
+    document.getElementById("popup_alert_message").innerText = msg;
+    const popupForm = new bootstrap.Modal(document.getElementById("popup_alert"));
+    popupForm.show();
+}
