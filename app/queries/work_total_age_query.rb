@@ -22,9 +22,10 @@ class WorkTotalAgeQuery
     sql = []
     sql << "SELECT"
     sql << "   SUM(work_results.hours) AS hours"
-    sql << " , CASE WHEN workers.gender_id = 2 THEN 5"
+    sql << " , CASE WHEN homes.section_id = 11 THEN 6"
+    sql << "        WHEN workers.gender_id = 2 THEN 5"
     sql << "     ELSE"
-    sql << "       CASE WHEN date_part('year', age(works.worked_at, workers.birthday)) < 40 THEN 0"
+    sql << "       CASE WHEN (workers.birthday IS NULL) OR (date_part('year', age(works.worked_at, workers.birthday)) < 40) THEN 0"
     sql << "            WHEN date_part('year', age(works.worked_at, workers.birthday)) BETWEEN 40 AND 49 THEN 1"
     sql << "            WHEN date_part('year', age(works.worked_at, workers.birthday)) BETWEEN 50 AND 59 THEN 2"
     sql << "            WHEN date_part('year', age(works.worked_at, workers.birthday)) BETWEEN 60 AND 69 THEN 3"
@@ -34,6 +35,7 @@ class WorkTotalAgeQuery
     sql << " FROM works"
     sql << " INNER JOIN work_results ON work_results.work_id = works.id"
     sql << " INNER JOIN workers ON work_results.worker_id = workers.id"
+    sql << " INNER JOIN homes ON workers.home_id = homes.id"
     sql << " GROUP BY works.term, age_group"
     sql << " ORDER BY works.term, age_group"
 
