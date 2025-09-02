@@ -57,7 +57,7 @@ module SessionsHelper
   def now_system
     org_id = current_user.organization_id
     @now_system ||= System.find_by("organization_id = ? AND CURRENT_DATE BETWEEN start_date AND end_date", org_id) ||
-                    System.find_by!(term: System.where(organization_id: org_id).maximum(:term), organization_id: org_id)
+                    System.find_by(term: System.where(organization_id: org_id).maximum(:term), organization_id: org_id)
   end
 
   def current_name
