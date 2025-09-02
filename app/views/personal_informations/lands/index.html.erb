@@ -3,25 +3,23 @@
     .manage {color: blue;}
   </style>
   <table class="table table-sm">
-  <tbody>
-  <% land_id = 0 %>
-  <% @lands.each do |land, results| %>
+    <thead>
+      <tr>
+        <th>番地</th>
+        <th>面積(a)</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @lands.each do |land| %>
     <tr class="<%= land.manager_id == land.owner_id ? "" : "manage" %>">
-      <td rowspan="<%= results.count %>"><%= land.place %></td>
-      <td style="text-align:right;" rowspan="<%= results.count %>"><%= sprintf("%.1f", land.area) %></td>
-
-      <% work_type_name = "" %>
-      <% results.each_with_index do |result, i| %>
-        <% land_cost = @land_costs.newest(result.work.model.worked_at).find{|land_cost| land_cost.land_id == land.id} %>
-        <td class="small"><%= work_type_name == land_cost&.work_type&.name ? "" : land_cost&.work_type&.name %></td>
-        <td class="small"><%= result.worked_at_short%></td>
-        <td class="small"><%= result.work_kind_name %></td>
-        <% if i < results.count - 1 %>
-        </tr>
-        <tr>
-        <% end %>
-        <% work_type_name = land_cost&.work_type&.name %>
-      <% end %>
+      <td><%= land.place %></td>
+      <td class="text-right"><%= land.area %></td>
+      <td>
+        <%= link_to '詳細',
+        personal_information_land_path(personal_information_token: params[:personal_information_token], id: land.id),
+        class: "btn btn-success" %>
+      </td>
     </tr>
   <% end %>
   </tbody>
