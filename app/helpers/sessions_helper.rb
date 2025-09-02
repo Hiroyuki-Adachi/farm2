@@ -15,11 +15,13 @@ module SessionsHelper
   end
 
   def current_organization
-    @current_organization ||= Organization.find_by(id: current_user.organization_id)
+    @current_organization ||= Organization.find(current_user.organization_id)
   end
 
   def current_system
-    @current_system ||= System.find_by(term: current_user.term, organization_id: current_user.organization_id)
+    return @current_system if defined?(@current_system)
+
+    @current_system = System.find_by(term: current_user.term, organization_id: current_user.organization_id)
   end
 
   def next_system
@@ -51,13 +53,17 @@ module SessionsHelper
   end
   
   def this_term?
-    current_system.start_date <= Time.zone.today && current_system.end_date >= Time.zone.today
+    Time.zone.today.between?(current_system.start_date, current_system.end_date)
   end
 
   def now_system
     organization_id = current_user.organization_id
-    @now_system ||= System.find_by(["organization_id = ? AND (current_date BETWEEN start_date AND end_date)", organization_id])
-    @now_system ||= System.find_by(term: System.where(organization_id: organization_id).maximum(:term), organization_id: organization_id)
+    return @now_system if defined?(@now_system)
+
+    @now_system = System.find_by(["organization_id = ? AND (current_date BETWEEN start_date AND end_date)", organization_id])
+    return @now_system if defined?(@now_system)
+
+    @now_system = System.find_by(term: System.where(organization_id: organization_id).maximum(:term), organization_id: organization_id)
   end
 
   def current_name
