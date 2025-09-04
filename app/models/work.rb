@@ -22,11 +22,11 @@
 #
 
 class Work < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
-
   require 'ostruct'
 
   ENOUGH = WorkVerification::ENOUGH
+  enum :weather_id, { sunny: 1, cloudy: 2, rainy: 3, snow: 4, other: 9 }
+
   after_save :set_chemical_group_no
 
   validates :worked_at, presence: true
@@ -39,7 +39,6 @@ class Work < ApplicationRecord
   belongs_to :creator, -> {with_deleted}, class_name: "Worker", foreign_key: "created_by"
   belongs_to :printer, -> {with_deleted}, class_name: "Worker", foreign_key: "printed_by"
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
-  belongs_to_active_hash :weather
 
   has_many :work_lands, -> {order('work_lands.display_order')}, dependent: :destroy
   has_many :work_results, -> {order('work_results.display_order')}, dependent: :destroy
@@ -470,6 +469,10 @@ SQL
     works = works.where(["worked_at >= ?", work_search[:worked_at1]]) if work_search[:worked_at1].present?
     works = works.where(["worked_at <= ?", work_search[:worked_at2]]) if work_search[:worked_at2].present?
     return works
+  end
+
+  def weather_name
+    I18n.t("activerecord.attributes.work.weather_ids.#{self.weather_id}")
   end
 
   private

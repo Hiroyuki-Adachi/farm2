@@ -121,6 +121,12 @@ ja:
         work_type_id: "作業分類"
         work_kind_id: "作業種別"
         chemical_group_flag: "土地単位に薬剤を入力する"
+        weather_ids:
+          sunny: "晴れ"
+          cloudy: "曇り"
+          rainy: "雨"
+          snow: "雪"
+          other: "その他"
 
       work_type:
         name: "名称"
