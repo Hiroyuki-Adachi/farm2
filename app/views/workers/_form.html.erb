@@ -29,7 +29,7 @@
   </div>
   <div class="field mb-3 col-md-2">
     <%= f.label :gender_id, class: "col-form-label-lg form-label" %>
-    <%= f.select(:gender_id, @genders.map {|gender| [gender.name, gender.id]}, {}, class: "form-select") %>
+    <%= f.select(:gender_id, Worker.gender_ids.keys.map { |key| [I18n.t("activerecord.attributes.worker.gender_ids.#{key}"), key] }, {}, class: "form-select") %>
   </div>
   <div class="field mb-3 col-md-2">
     <%= f.label :display_order, class: "col-form-label-lg form-label" %>

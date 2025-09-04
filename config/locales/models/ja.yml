@@ -153,6 +153,10 @@ ja:
         token: "アクセストークン"
         position_id: "役職"
         broccoli_mark: "ブロッコリ記号"
+        gender_ids:
+          none: "未設定"
+          male: "男性"
+          female: "女性"
 
       machine:
         name: 名称

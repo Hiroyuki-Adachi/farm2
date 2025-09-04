@@ -39,7 +39,8 @@ class Worker < ApplicationRecord
 
   belongs_to :home, -> {with_deleted}
   belongs_to_active_hash :position
-  belongs_to_active_hash :gender
+
+  enum :gender_id, { none: 0, male: 1, female: 2}, prefix: true
 
   has_many :work_results
   has_many :works, -> {order(:worked_at)}, through: :work_results
