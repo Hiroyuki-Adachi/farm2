@@ -2,16 +2,16 @@ class AddPermissionToUsers < ActiveRecord::Migration[4.2]
   def up
     add_column :users, :permission_id, :integer, {null: false, default: 0, comment: "権限"}
     User.all.each do |user|
-      user.permission =
+      user.permission_id =
         case user.worker.position_id
         when :member
-          Permission::USER
+          'user'
         when :leader
-          Permission::CHECKER
+          'checker'
         when :director
-          Permission::MANAGER
+          'manager'
         else
-          Permission::VISITOR
+          'visitor'
         end
       user.save!
     end

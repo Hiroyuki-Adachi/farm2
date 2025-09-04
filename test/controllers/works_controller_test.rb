@@ -5,7 +5,7 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
     @user = users(:users1)
     login_as(@user)
     @update = {
-      worked_at: "2015-05-05", weather_id: 'sunny', start_at: "08:00:00", end_at: "17:00:00",
+      worked_at: "2015-05-05", weather_id: :sunny, start_at: "08:00:00", end_at: "17:00:00",
       work_type_id: work_types(:work_type_koshi).id, work_kind_id: work_kinds(:work_kind_taue).id,
       name: "試験", remarks: "備考だよーーー"
     }
@@ -40,7 +40,7 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:work_type_id], work.work_type_id
     assert_equal @update[:work_kind_id], work.work_kind_id
     assert_equal @update[:worked_at], work.worked_at.strftime("%Y-%m-%d")
-    assert_equal @update[:weather_id], work.weather_id
+    assert_equal @update[:weather_id], work.weather_id.to_sym
     assert_equal @update[:start_at], work.start_at.strftime("%H:%M:%S")
     assert_equal @update[:end_at], work.end_at.strftime("%H:%M:%S")
     assert_equal work.created_by, @user.worker.id
@@ -88,7 +88,7 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:work_type_id], work.work_type_id
     assert_equal @update[:work_kind_id], work.work_kind_id
     assert_equal @update[:worked_at], work.worked_at.strftime("%Y-%m-%d")
-    assert_equal @update[:weather_id], work.weather_id
+    assert_equal @update[:weather_id], work.weather_id.to_sym
     assert_equal @update[:start_at], work.start_at.strftime("%H:%M:%S")
     assert_equal @update[:end_at], work.end_at.strftime("%H:%M:%S")
 

@@ -38,7 +38,7 @@ class WorksController < ApplicationController
     @work = Work.new(
       worked_at: Time.zone.today,
       work_type_id: @work_types.first.id,
-      weather_id: 'sunny',
+      weather_id: :sunny,
       start_at: '8:00', end_at: '17:00'
     )
     @results = []

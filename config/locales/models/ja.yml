@@ -279,7 +279,13 @@ ja:
         organization_id: "組織"
         permission_id: "権限"
         mail: "メールアドレス"
-    
+        permission_ids:
+          visitor: "ゲスト"
+          user: "一般ユーザ"
+          checker: "サポーター"
+          manager: "管理者"
+          admin: "システム"
+   
       work_broccoli:
         shipped_on: "出荷日"
         broccoli_box_id: "出荷用の箱"
