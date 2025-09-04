@@ -159,6 +159,7 @@ ja:
         token: "アクセストークン"
         position_id: "役職"
         broccoli_mark: "ブロッコリ記号"
+        office_role: "事務の役割"
         gender_ids:
           none: "未設定"
           male: "男性"
@@ -169,6 +170,11 @@ ja:
           leader: "作業班長"
           director: "理事"
           advisor: "顧問"
+        office_roles:
+          none: "なし"
+          finance: "経理"
+          general: "一般"
+          president: "代表"
 
       machine:
         name: 名称

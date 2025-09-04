@@ -23,6 +23,7 @@
 
 class WorkType < ApplicationRecord
   include Discard::Model
+
   self.discard_column = :deleted_at
 
   before_save :update_cost_flag

@@ -21,6 +21,7 @@
 
 class WorkKind < ApplicationRecord
   include Discard::Model
+
   self.discard_column = :deleted_at
 
   after_save :save_price

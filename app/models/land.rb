@@ -35,6 +35,7 @@
 
 class Land < ApplicationRecord
   include Discard::Model
+
   self.discard_column = :deleted_at
 
   before_create :set_uuid

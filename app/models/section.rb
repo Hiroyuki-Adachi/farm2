@@ -17,6 +17,7 @@
 
 class Section < ApplicationRecord
   include Discard::Model
+
   self.discard_column = :deleted_at
 
   has_many :homes, -> {order("homes.display_order, homes.id")}
