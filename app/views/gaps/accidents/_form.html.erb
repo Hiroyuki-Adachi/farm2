@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-md-3">
       <%= f.label :investigator_id, class: "col-form-label-lg form-label" %>
-      <%= f.select :investigator_id, options_from_collection_for_select(Worker.usual.where(position_id: Position::DIRECTOR.id) , :id, :name, f.object.investigator_id), {}, {class: "form-select"} %>
+      <%= f.select :investigator_id, options_from_collection_for_select(Worker.usual.where(position_id: :director) , :id, :name, f.object.investigator_id), {}, {class: "form-select"} %>
     </div>
     <div class="col-md-3">
       <%= f.label :investigated_on, class: "col-form-label-lg form-label" %>

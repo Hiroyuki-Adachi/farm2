@@ -2,7 +2,6 @@ class WorkersController < ApplicationController
   include PermitChecker
   before_action :set_worker, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
-  before_action :set_positions, only: [:new, :create, :edit, :update]
 
   def index
     @workers = WorkerDecorator.decorate_collection(Worker.usual.page(params[:page]))
@@ -52,10 +51,6 @@ class WorkersController < ApplicationController
 
   def set_homes
     @homes = Home.usual
-  end
-
-  def set_positions
-    @positions = Position.all
   end
 
   def worker_params

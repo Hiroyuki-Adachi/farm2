@@ -157,6 +157,12 @@ ja:
           none: "未設定"
           male: "男性"
           female: "女性"
+        position_ids:
+          none: ""
+          member: "組合員"
+          leader: "作業班長"
+          director: "理事"
+          advisor: "顧問"
 
       machine:
         name: 名称

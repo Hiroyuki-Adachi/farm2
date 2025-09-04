@@ -43,11 +43,11 @@
   </div>
   <div class="field mb-3 col-md-3">
     <%= f.label :mobile, class: "col-form-label-lg form-label" %>
-    <%= f.telephone_field :mobile, {:maxlength => 15, :size => 20, class: "form-control"} %>
+    <%= f.telephone_field :mobile, {maxlength: 15, class: "form-control"} %>
   </div>
   <div class="field mb-3 col-md-2">
     <%= f.label :position_id, class: "col-form-label-lg form-label" %>
-    <%= f.select(:position_id, @positions.map {|position| [position.name, position.id]}, {}, class: "form-select") %>
+    <%= f.select(:position_id, Worker.position_ids.keys.map { |key| [I18n.t("activerecord.attributes.worker.position_ids.#{key}"), key] }, {}, class: "form-select") %>
   </div>
   <div class="field mb-3 col-md-2">
     <%= f.label :broccoli_mark, class: "col-form-label-lg form-label" %>

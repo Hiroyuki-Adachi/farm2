@@ -88,7 +88,7 @@ class Work < ApplicationRecord
 SQL
       .order(worked_at: :ASC, id: :ASC)
   }
-  scope :enough_check, ->(worker) {where([<<SQL.squish, worker.id, worker.position == Position::DIRECTOR ? ENOUGH + 1 : ENOUGH])}
+  scope :enough_check, ->(worker) {where([<<SQL.squish, worker.id, worker.position_id == :director ? ENOUGH + 1 : ENOUGH])}
       NOT EXISTS (
         SELECT work_verifications.work_id FROM work_verifications
           WHERE (work_verifications.work_id = works.id)
