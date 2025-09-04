@@ -60,4 +60,13 @@ module ApplicationHelper
 
     content_tag(:span, label, class: "badge bg-#{color}")
   end
+
+  def enum_options_for(model_class, attr_name)
+    model_class.send(attr_name.to_s.pluralize).keys.map do |key|
+      [
+        I18n.t("activerecord.attributes.#{model_class.model_name.i18n_key}.#{attr_name}s.#{key}"),
+        key
+      ]
+    end
+  end
 end
