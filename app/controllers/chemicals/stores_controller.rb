@@ -50,6 +50,6 @@ class Chemicals::StoresController < ApplicationController
         :checked_on,
         stocks_attributes: [:stored_stock, :chemical_id, :_destroy, :id]
       )
-      .merge(chemical_adjust_type_id: ChemicalAdjustType::STORED.id)
+      .merge(chemical_adjust_type_id: :stored)
   end
 end

@@ -357,6 +357,11 @@ ja:
         name: "名称"
         checked_on: "日付"
         stocks: "在庫"
+        chemical_adjust_type_id: "棚卸種別"
+        chemical_adjust_type_ids:
+          inventory: "棚卸"
+          stored: "納品"
+          shipping: "出庫"
 
       chemical_stock:
         name: "名称"

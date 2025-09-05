@@ -11,20 +11,13 @@
 #
 
 class ChemicalInventory < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
+  enum :chemical_adjust_type_id, {inventory: 1, stored: 2, shipping: 3}
 
-  belongs_to_active_hash :chemical_adjust_type
+  validates :name, presence: true, length: {maximum: 40}
+  validates :checked_on, presence: true
   has_many :stocks, class_name: :ChemicalStock, dependent: :destroy
   accepts_nested_attributes_for :stocks, allow_destroy: true
 
-  scope :inventories, -> {where(chemical_adjust_type_id: ChemicalAdjustType::INVENTORY).order(:checked_on)}
-  scope :stores, -> {where(chemical_adjust_type_id: ChemicalAdjustType::STORED).order(:checked_on)}
-
-  def inventory?
-    chemical_adjust_type_id == ChemicalAdjustType::INVENTORY.id
-  end
-
-  def stored?
-    chemical_adjust_type_id == ChemicalAdjustType::STORED.id
-  end
+  scope :inventories, -> {where(chemical_adjust_type_id: :inventory).order(:checked_on)}
+  scope :stores, -> {where(chemical_adjust_type_id: :stored).order(:checked_on)}
 end
