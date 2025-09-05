@@ -75,7 +75,8 @@ class WorkTypesController < ApplicationController
         :cost_flag,
         :work_flag,
         :icon,
-        :term_flag
+        :term_flag,
+        :office_role
       ])
     .merge(term: current_term)
   end

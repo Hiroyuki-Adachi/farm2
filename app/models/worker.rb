@@ -35,6 +35,7 @@ require 'securerandom'
 
 class Worker < ApplicationRecord
   include Discard::Model
+  include Enums::OfficeRole
 
   self.discard_column = :deleted_at
 
@@ -42,7 +43,6 @@ class Worker < ApplicationRecord
 
   enum :gender_id, {none: 0, male: 1, female: 2}, prefix: true
   enum :position_id, {none: 0, member: 1, leader: 2, director: 3, advisor: 9}, prefix: true
-  enum :office_role, {none: 0, finance: 1, general: 2, president: 9}, prefix: true
 
   has_many :work_results
   has_many :works, -> {order(:worked_at)}, through: :work_results

@@ -140,6 +140,12 @@ ja:
         map_flag: "地図表示"
         icon: "アイコン"
         term_flag: "今年度使用する"
+        office_role: "事務の役割"
+        office_roles:
+          none: "なし"
+          finance: "経理"
+          general: "総務"
+          president: "代表"
 
       worker: 
         family_phonetic: "姓(ふりがな)"  #g
@@ -174,7 +180,7 @@ ja:
         office_roles:
           none: "なし"
           finance: "経理"
-          general: "一般"
+          general: "総務"
           president: "代表"
 
       machine:

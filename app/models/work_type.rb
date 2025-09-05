@@ -13,6 +13,7 @@
 #  icon_name(アイコン名)           :string(40)
 #  land_flag(土地利用)             :boolean          default(TRUE), not null
 #  name(作業分類名称)              :string(10)       not null
+#  office_role(事務の役割)         :integer          default("none"), not null
 #  other_flag(その他フラグ)        :boolean          default(FALSE), not null
 #  work_flag(日報フラグ)           :boolean          default(TRUE), not null
 #
@@ -23,6 +24,7 @@
 
 class WorkType < ApplicationRecord
   include Discard::Model
+  include Enums::OfficeRole
 
   self.discard_column = :deleted_at
 
