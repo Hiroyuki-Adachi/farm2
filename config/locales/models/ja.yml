@@ -37,6 +37,7 @@ ja:
       training: "研修"
       accident: "ヒヤリハット"
       user_word: "利用者ワード"
+      drying: "乾燥調整"
 
     attributes:
       chemical:
@@ -432,6 +433,19 @@ ja:
         pc_flag: "パソコン閲覧"
         sp_flag: "スマホ閲覧"
         line_flag: "LINE送信"
+      
+      drying:
+        term: "年度"
+        carried_on: "搬入日"
+        drying_type_id: "乾燥種別"
+        home_id: "担当世帯"
+        work_type_id: "作業分類"
+        drying_type_ids:
+          unset: "未選択"
+          country: "乾籾出荷"
+          self: "調整出荷"
+          another: "乾燥のみ"
+          adjust: "調整のみ"
 
   status:
     organization:
