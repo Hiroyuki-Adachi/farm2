@@ -11,7 +11,7 @@ class Gaps::AccidentsController < GapsController
   end
 
   def new
-    @accident = Accident.new(accident_type_id: AccidentType::RULE.id)
+    @accident = Accident.new(accident_type_id: :rule)
   end
 
   def create

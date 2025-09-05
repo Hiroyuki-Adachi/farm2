@@ -16,14 +16,15 @@
 #  first_phonetic(名(ﾌﾘｶﾞﾅ))    :string(15)       not null
 #  mobile(携帯番号)                  :string(15)
 #  mobile_mail(メールアドレス(携帯)) :string(50)
+#  office_role(事務の役割)           :integer          default("none"), not null
 #  pc_mail(メールアドレス(PC))       :string(50)
 #  work_flag(作業フラグ)             :boolean          default(TRUE), not null
 #  created_at                        :datetime
 #  updated_at                        :datetime
 #  account_type_id(口座種別)         :integer          default(0), not null
-#  gender_id(性別)                   :integer          default(0), not null
+#  gender_id(性別)                   :integer          default("none"), not null
 #  home_id(世帯)                     :integer
-#  position_id(役職)                 :integer          default(0), not null
+#  position_id(役職)                 :integer          default("none"), not null
 #
 # Indexes
 #
@@ -33,13 +34,15 @@
 require 'securerandom'
 
 class Worker < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
   include Discard::Model
+  include Enums::OfficeRole
+
   self.discard_column = :deleted_at
 
   belongs_to :home, -> {with_deleted}
-  belongs_to_active_hash :position
-  belongs_to_active_hash :gender
+
+  enum :gender_id, {none: 0, male: 1, female: 2}, prefix: true
+  enum :position_id, {none: 0, member: 1, leader: 2, director: 3, advisor: 9}, prefix: true
 
   has_many :work_results
   has_many :works, -> {order(:worked_at)}, through: :work_results
@@ -87,18 +90,22 @@ class Worker < ApplicationRecord
   end
 
   def member?
-    position == Position::MEMBER
+    self.position_id_member?
   end
 
   def leader?
-    position == Position::LEADER
+    self.position_id_leader?
   end
 
   def director?
-    position == Position::DIRECTOR
+    self.position_id_director?
   end
 
   def advisor?
-    position == Position::ADVISOR
+    self.position_id_advisor?
+  end
+
+  def position_name
+    I18n.t("activerecord.attributes.worker.position_ids.#{self.position_id}")
   end
 end

@@ -28,6 +28,7 @@
 class Chemical < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   include Discard::Model
+
   self.discard_column = :deleted_at
 
   after_save :save_term

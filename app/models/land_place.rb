@@ -13,6 +13,7 @@
 
 class LandPlace < ApplicationRecord
   include Discard::Model
+
   self.discard_column = :deleted_at
 
   scope :with_deleted, -> { with_discarded }
