@@ -18,6 +18,7 @@
 
 class Machine < ApplicationRecord
   include Discard::Model
+
   self.discard_column = :deleted_at
 
   has_many  :machine_results

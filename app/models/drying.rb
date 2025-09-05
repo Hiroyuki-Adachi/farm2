@@ -11,7 +11,7 @@
 #  water_content(水分)      :decimal(3, 1)
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
-#  drying_type_id(乾燥種別) :integer          default(0), not null
+#  drying_type_id(乾燥種別) :integer          default("unset"), not null
 #  home_id(担当世帯)        :integer          default(0), not null
 #  work_type_id(作業分類)   :integer
 #
@@ -21,14 +21,13 @@
 #
 
 class Drying < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
-
   KG_PER_BAG_RICE = 30
   KG_PER_BAG_WASTE = 25
 
+  enum :drying_type_id, {unset: 0, country: 1, self: 2, another: 3, adjust: 4}
+
   belongs_to :work_type, -> {with_deleted}
   belongs_to :home, -> {with_deleted}
-  belongs_to_active_hash :drying_type
   has_many   :drying_moths, dependent: :destroy
   has_many   :drying_lands, dependent: :destroy
   has_one    :adjustment,   dependent: :destroy
@@ -60,12 +59,12 @@ class Drying < ApplicationRecord
   end
 
   def harvest_weight(system)
-    return rice_weight || 0 if drying_type == DryingType::COUNTRY
+    return rice_weight || 0 if country?
     return adjustment&.rice_weight(system) || 0
   end
 
   def waste_weight
-    return 0 if drying_type == DryingType::COUNTRY
+    return 0 if country?
     return adjustment&.waste_weight || 0
   end
 
@@ -75,11 +74,11 @@ class Drying < ApplicationRecord
   end
 
   def adjust_only?(home_id)
-    return drying_type == DryingType::ANOTHER && adjustment&.home_id == home_id
+    return another? && adjustment&.home_id == home_id
   end
 
   def delete_child
-    if drying_type == DryingType::COUNTRY
+    if country?
       adjustment.destroy
     else
       drying_moths.destroy_all
@@ -89,7 +88,7 @@ class Drying < ApplicationRecord
 
   def price(system, home_id)
     return system.adjust_price if adjust_only?(home_id)
-    return drying_type == DryingType::SELF ? system.dry_adjust_price : system.dry_price
+    return self? ? system.dry_adjust_price : system.dry_price
   end
 
   def amount(system, home_id)
@@ -106,33 +105,33 @@ class Drying < ApplicationRecord
 
   def self.calc_total(dryings, home, system)
     rice_totals = {
-      DryingType::ADJUST.id => 0.0,
-      DryingType::COUNTRY.id => 0.0,
-      DryingType::SELF.id => 0.0
+      adjust: 0.0,
+      country: 0.0,
+      self: 0.0
     }
     waste_totals = {
-      DryingType::ADJUST.id => 0.0,
-      DryingType::SELF.id => 0.0
+      adjust: 0.0,
+      self: 0.0
     }
     shipped_totals = {
-      DryingType::ADJUST.id => 0.0,
-      DryingType::COUNTRY.id => 0.0,
-      DryingType::SELF.id => 0.0
+      adjust: 0.0,
+      country: 0.0,
+      self: 0.0
     }
     dryings.each do |drying|
       if drying.adjust_only?(home.id)
-        rice_totals[DryingType::ADJUST.id] += drying.adjustment.rice_weight(system) || 0
-        waste_totals[DryingType::ADJUST.id] += drying.adjustment.waste_weight || 0
-        shipped_totals[DryingType::ADJUST.id] += drying.harvest_weight(system)
+        rice_totals[:adjust] += drying.adjustment.rice_weight(system) || 0
+        waste_totals[:adjust] += drying.adjustment.waste_weight || 0
+        shipped_totals[:adjust] += drying.harvest_weight(system)
         next
       end
-      if drying.drying_type == DryingType::SELF
-        rice_totals[DryingType::SELF.id] += drying.adjustment.rice_weight(system) || 0
-        waste_totals[DryingType::SELF.id] += drying.adjustment.waste_weight || 0
-        shipped_totals[DryingType::SELF.id] += drying.harvest_weight(system)
+      if drying.self?
+        rice_totals[:self] += drying.adjustment.rice_weight(system) || 0
+        waste_totals[:self] += drying.adjustment.waste_weight || 0
+        shipped_totals[:self] += drying.harvest_weight(system)
       else
-        rice_totals[DryingType::COUNTRY.id] += drying.drying_moths.sum(:rice_weight) || 0
-        shipped_totals[DryingType::COUNTRY.id] += drying.harvest_weight(system)
+        rice_totals[:country] += drying.drying_moths.sum(:rice_weight) || 0
+        shipped_totals[:country] += drying.harvest_weight(system)
       end
     end
     return rice_totals, waste_totals, shipped_totals
@@ -145,5 +144,9 @@ class Drying < ApplicationRecord
       home_id: self.home_id,
       copy_flag: Drying.where(carried_on: self.carried_on, home_id: self.home_id).maximum(:copy_flag) + 1
     )
+  end
+
+  def drying_type_name
+    I18n.t("activerecord.attributes.drying.drying_type_ids.#{self.drying_type_id}")
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_31_115714) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_05_134944) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -631,6 +631,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_115714) do
     t.index ["work_type_id"], name: "plan_work_types_2nd", unique: true
   end
 
+  create_table "qr_login_requests", comment: "QRログインリクエスト", force: :cascade do |t|
+    t.string "token", limit: 64, null: false, comment: "一時トークン"
+    t.datetime "approved_at", comment: "承認日時"
+    t.bigint "approved_by_id", comment: "承認者ID"
+    t.datetime "expires_at", null: false, comment: "有効期限"
+    t.datetime "used_at", comment: "確定日時"
+    t.string "pc_nonce", limit: 64, default: "", null: false, comment: "PC用ノンス"
+    t.text "user_agent", default: "", null: false, comment: "ユーザーエージェント"
+    t.string "ip", limit: 45, default: "", null: false, comment: "IPアドレス"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approved_by_id"], name: "index_qr_login_requests_on_approved_by_id"
+    t.index ["expires_at"], name: "index_qr_login_requests_on_expires_at"
+    t.index ["token"], name: "index_qr_login_requests_on_token", unique: true
+    t.index ["used_at"], name: "index_qr_login_requests_on_used_at"
+  end
+
   create_table "schedule_workers", id: { type: :serial, comment: "作業予定作業者" }, comment: "作業予定作業者", force: :cascade do |t|
     t.integer "schedule_id", comment: "作業予定"
     t.integer "worker_id", comment: "作業者"
@@ -1032,6 +1049,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_115714) do
     t.boolean "cost_flag", default: false, null: false, comment: "原価フラグ"
     t.boolean "work_flag", default: true, null: false, comment: "日報フラグ"
     t.boolean "other_flag", default: false, null: false, comment: "その他フラグ"
+    t.integer "office_role", default: 0, null: false, comment: "事務の役割"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
   end
 
@@ -1083,6 +1101,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_115714) do
     t.datetime "deleted_at", precision: nil
     t.integer "position_id", default: 0, null: false, comment: "役職"
     t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
+    t.integer "office_role", default: 0, null: false, comment: "事務の役割"
     t.index ["deleted_at"], name: "index_workers_on_deleted_at"
   end
 

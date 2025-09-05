@@ -6,7 +6,7 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
     @worker = workers(:worker1)
     @update = { 
       family_name: "試験", first_name: "太郎", family_phonetic: "しけん", first_phonetic: "たろう",
-      home_id: 6, display_order: 99 
+      home_id: 6, display_order: 99, office_role: :general
     }
   end
 
@@ -40,6 +40,7 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:first_phonetic], worker.first_phonetic
     assert_equal @update[:home_id], worker.home_id
     assert_equal @update[:display_order], worker.display_order
+    assert_equal @update[:office_role], worker.office_role.to_sym
   end
 
   test "作業者マスタ変更(表示)" do
@@ -61,6 +62,7 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:first_phonetic], @worker.first_phonetic
     assert_equal @update[:home_id], @worker.home_id
     assert_equal @update[:display_order], @worker.display_order
+    assert_equal @update[:office_role], @worker.office_role.to_sym
   end
 
   test "作業者マスタ削除" do

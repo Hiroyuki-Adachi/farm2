@@ -33,6 +33,7 @@
 
 class Home < ApplicationRecord
   include Discard::Model
+
   self.discard_column = :deleted_at
 
   REG_PHONE = /\A\d{2,4}-\d{2,4}-\d{4}\z/

@@ -1,7 +1,7 @@
 require "test_helper"
 
 class InitWorkTypeCacheJobTest < ActiveJob::TestCase
-  test "Work.no_fixed(term).landable が呼ばれ、各レコードで regist_work_work_types が実行される" do
+  test "Work.no_fixed.landable が呼ばれ、各レコードで regist_work_work_types が実行される" do
     term = 2024
     work1 = mock("work1")
     work2 = mock("work2")
@@ -13,7 +13,18 @@ class InitWorkTypeCacheJobTest < ActiveJob::TestCase
     relation.expects(:landable).returns(relation)
     relation.expects(:find_each).multiple_yields([work1], [work2])
 
-    perform_enqueued_jobs { InitWorkTypeCacheJob.perform_now(term) }
+    System.create(
+      term: term,
+      target_from: '2024-01-01',
+      target_to: '2024-12-31',
+      start_date: '2024-01-01',
+      end_date: '2024-12-31',
+      organization_id: organizations(:org).id
+    )
+
+    travel_to Time.zone.local(2024, 3, 22) do
+      perform_enqueued_jobs { InitWorkTypeCacheJob.perform_now }
+    end
   end
 
   test "キュー名が default である" do
