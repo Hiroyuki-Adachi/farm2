@@ -38,6 +38,7 @@ ja:
       accident: "ヒヤリハット"
       user_word: "利用者ワード"
       drying: "乾燥調整"
+      task: "タスク管理"
 
     attributes:
       chemical:
@@ -452,6 +453,42 @@ ja:
           self: "調整出荷"
           another: "乾燥のみ"
           adjust: "調整のみ"
+        
+      task:
+        title: "タイトル"
+        description: "内容"
+        due_on: "期限"
+        assignee_id: "担当者"
+        creator_id: "作成者"
+        status: "状態"
+        priority: "優先度"
+        end_reason: "完了理由"
+        started_on: "着手日"
+        ended_on: "完了日"
+        office_role: "事務"
+        statuses:
+          to_do: "未着手"
+          doing: "進行中"
+          hold: "保留中"
+          done: "完了"
+          cancel: "中止"
+        priorities:
+          low: "低"
+          medium: "中"
+          high: "高"
+          urgent: "緊急"
+        end_reasons:
+          unset: ""
+          completed: "完了"
+          no_action: "作業不要"
+          unavailable: "無効"
+          duplicated: "重複"
+          other: "その他"
+        office_roles:
+          none: "なし"
+          finance: "経理"
+          general: "総務"
+          president: "代表"
 
   status:
     organization:

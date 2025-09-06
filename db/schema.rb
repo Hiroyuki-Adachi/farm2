@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_05_134944) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_06_074858) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -798,6 +798,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_05_134944) do
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
   end
 
+  create_table "tasks", comment: "タスク", force: :cascade do |t|
+    t.string "title", limit: 64, null: false, comment: "タスク名"
+    t.text "description", null: false, comment: "説明"
+    t.integer "status", default: 0, null: false, comment: "状態"
+    t.integer "priority", default: 0, null: false, comment: "優先度"
+    t.date "due_on", comment: "期限"
+    t.date "started_on", comment: "着手日"
+    t.date "ended_on", comment: "完了日"
+    t.integer "end_reason", default: 0, null: false, comment: "完了理由"
+    t.integer "office_role", default: 0, null: false, comment: "役割"
+    t.bigint "assignee_id", comment: "担当者"
+    t.bigint "creator_id", null: false, comment: "作成者"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
+    t.index ["creator_id"], name: "index_tasks_on_creator_id"
+  end
+
   create_table "topics", comment: "トピック", force: :cascade do |t|
     t.string "url", limit: 512, default: "", null: false, comment: "URL"
     t.string "title", limit: 512, default: "", null: false, comment: "タイトル"
@@ -1123,4 +1141,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_05_134944) do
     t.integer "printed_by", comment: "印刷者"
     t.boolean "chemical_group_flag", default: false, null: false, comment: "薬剤グループフラグ"
   end
+
+  add_foreign_key "tasks", "workers", column: "assignee_id"
+  add_foreign_key "tasks", "workers", column: "creator_id"
 end
