@@ -81,8 +81,8 @@ function changeEnabled() {
     document.querySelectorAll("select.dry-country, select.dry-another, select.dry-self").forEach((element) => {
         element.disabled = false;
     });
-    switch(dry_type * 1) {
-        case 1: // Country
+    switch(dry_type) {
+        case 'country':
             document.querySelectorAll("input.dry-country").forEach((element) => {
                 element.readOnly = false;
             });
@@ -95,7 +95,7 @@ function changeEnabled() {
             document.getElementById("drying_adjustment_attributes_home_id").value = "";
             break;
 
-        case 2: // Self
+        case 'self':
             document.querySelectorAll("input.dry-self").forEach((element) => {
                 element.readOnly = false;
             });
@@ -109,7 +109,7 @@ function changeEnabled() {
             document.getElementById("drying_adjustment_attributes_home_id").value = document.getElementById("drying_home_id").value;
             break;
 
-        case 3: // Another
+        case 'another':
             document.querySelectorAll("input.dry-another").forEach((element) => {
                 element.readOnly = false;
             });
@@ -130,13 +130,13 @@ document.addEventListener("paste", function (e) {
         if(dry_type == undefined) return;
 
         const clip = e.clipboardData.getData('text/plain');
-        switch(dry_type * 1) {
-          case 1: // Country
+        switch(dry_type) {
+          case 'country':
             pasteDry(clip);
             break;
 
-          case 2:
-          case 3:
+          case 'self':
+          case 'another':
             pasteAdjust(clip);
             break;
         }

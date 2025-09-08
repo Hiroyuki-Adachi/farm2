@@ -2,7 +2,11 @@ class ChemicalStockDecorator < Draper::Decorator
   delegate_all
 
   def long_name
-    model.chemical_inventory_id ? "#{model.chemical_inventory.chemical_adjust_type.name}(#{model.name})" : model.name
+    if model.chemical_inventory.present?
+      "#{I18n.t("activerecord.attributes.chemical_inventory.chemical_adjust_type_ids.#{model.chemical_inventory.chemical_adjust_type_id}")}(#{model.name})"
+    else
+      model.name
+    end
   end
 
   def stored_format

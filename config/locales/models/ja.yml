@@ -37,6 +37,7 @@ ja:
       training: "研修"
       accident: "ヒヤリハット"
       user_word: "利用者ワード"
+      drying: "乾燥調整"
 
     attributes:
       chemical:
@@ -121,6 +122,12 @@ ja:
         work_type_id: "作業分類"
         work_kind_id: "作業種別"
         chemical_group_flag: "土地単位に薬剤を入力する"
+        weather_ids:
+          sunny: "晴れ"
+          cloudy: "曇り"
+          rainy: "雨"
+          snow: "雪"
+          other: "その他"
 
       work_type:
         name: "名称"
@@ -133,6 +140,12 @@ ja:
         map_flag: "地図表示"
         icon: "アイコン"
         term_flag: "今年度使用する"
+        office_role: "事務の役割"
+        office_roles:
+          none: "なし"
+          finance: "経理"
+          general: "総務"
+          president: "代表"
 
       worker: 
         family_phonetic: "姓(ふりがな)"  #g
@@ -153,6 +166,22 @@ ja:
         token: "アクセストークン"
         position_id: "役職"
         broccoli_mark: "ブロッコリ記号"
+        office_role: "事務の役割"
+        gender_ids:
+          none: "未設定"
+          male: "男性"
+          female: "女性"
+        position_ids:
+          none: ""
+          member: "組合員"
+          leader: "作業班長"
+          director: "理事"
+          advisor: "顧問"
+        office_roles:
+          none: "なし"
+          finance: "経理"
+          general: "総務"
+          president: "代表"
 
       machine:
         name: 名称
@@ -263,7 +292,13 @@ ja:
         organization_id: "組織"
         permission_id: "権限"
         mail: "メールアドレス"
-    
+        permission_ids:
+          visitor: "ゲスト"
+          user: "一般ユーザ"
+          checker: "サポーター"
+          manager: "管理者"
+          admin: "システム"
+   
       work_broccoli:
         shipped_on: "出荷日"
         broccoli_box_id: "出荷用の箱"
@@ -329,6 +364,11 @@ ja:
         name: "名称"
         checked_on: "日付"
         stocks: "在庫"
+        chemical_adjust_type_id: "棚卸種別"
+        chemical_adjust_type_ids:
+          inventory: "棚卸"
+          stored: "納品"
+          shipping: "出庫"
 
       chemical_stock:
         name: "名称"
@@ -389,12 +429,29 @@ ja:
         problem: "問題点の考察"
         solving: "問題解決の考察"
         result: "改善の結果"
+        accident_types:
+          rule: "ルール違反"
+          hiyari: "ヒヤリハット"
+          other: "その他"
 
       user_word:
         word: "検索ワード"
         pc_flag: "パソコン閲覧"
         sp_flag: "スマホ閲覧"
         line_flag: "LINE送信"
+      
+      drying:
+        term: "年度"
+        carried_on: "搬入日"
+        drying_type_id: "乾燥種別"
+        home_id: "担当世帯"
+        work_type_id: "作業分類"
+        drying_type_ids:
+          unset: "未選択"
+          country: "乾籾出荷"
+          self: "調整出荷"
+          another: "乾燥のみ"
+          adjust: "調整のみ"
 
   status:
     organization:

@@ -19,7 +19,7 @@
 #  updated_at                                               :datetime         not null
 #  line_id                                                  :string(50)       default(""), not null
 #  organization_id(組織)                                    :integer          default(0), not null
-#  permission_id(権限)                                      :integer          default(0), not null
+#  permission_id(権限)                                      :integer          default("visitor"), not null
 #  worker_id(作業者)                                        :integer
 #
 # Indexes

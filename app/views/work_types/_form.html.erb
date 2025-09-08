@@ -58,6 +58,10 @@
       <label for="work_type_work_flag_false" class="form-check-label form-label">日報に表示しない</label>
     </div>
   </div>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :office_role, class: "col-form-label-lg form-label" %>
+    <%= f.select(:office_role, enum_options_for(WorkType, :office_role), {}, class: "form-select") %>
+  </div>
 </div>
 <div class="row">
   <div class="field mb-3 col-md-2">

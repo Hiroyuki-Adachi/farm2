@@ -11,7 +11,7 @@
 #  water_content(水分)      :decimal(3, 1)
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
-#  drying_type_id(乾燥種別) :integer          default(0), not null
+#  drying_type_id(乾燥種別) :integer          default("unset"), not null
 #  home_id(担当世帯)        :integer          default(0), not null
 #  work_type_id(作業分類)   :integer
 #
