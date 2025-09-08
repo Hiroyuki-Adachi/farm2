@@ -471,6 +471,7 @@ ja:
           doing: "進行中"
           hold: "保留中"
           done: "完了"
+          reopen: "再開"
           cancel: "中止"
         priorities:
           low: "低"

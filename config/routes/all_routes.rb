@@ -208,6 +208,7 @@ resources :works do
   end
 end
 
+resources :tasks
 resources :work_results, only: [:index]
 resources :machine_results, only: [:index]
 resources :work_chemicals, only: [:index]

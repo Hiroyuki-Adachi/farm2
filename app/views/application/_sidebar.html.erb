@@ -15,6 +15,9 @@
     <span class="h5">予定管理</span>
     <div class="ms-3 navbar">
       <%= link_to '作業予定', schedules_path, {class: "dropdown-item", data: {controller:  "schedules"}} %>
+  <% if current_user.checkable? %>
+      <%= link_to 'タスク', tasks_path, {class: "dropdown-item", data: {controller:  "tasks"}} %>
+  <% end %>
   <% if current_user.userable? %>
       <%= link_to '議事録', minutes_path, {class: "dropdown-item", data: {controller:  "minutes"}} %>
   <% end %>

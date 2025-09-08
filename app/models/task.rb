@@ -33,11 +33,14 @@ class Task < ApplicationRecord
   belongs_to :assignee, class_name: 'Worker', optional: true
   belongs_to :creator, class_name: 'Worker'
 
-  enum :status, { to_do: 0, doing: 1, hold: 2, done: 3, cancel: 9 }
+  enum :status, { to_do: 0, reopen: 1, doing: 2, hold: 3, done: 4, cancel: 9 }
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
   enum :end_reason, { unset: 0, completed: 1, no_action: 2, unavailable: 3, duplicate: 4, other: 9 }
 
-  validates :title, presence: true, length: { maximum: 64 }
+  STATUS_OPEN = Task.statuses.values_at(:to_do, :doing, :hold, :reopen)
+  STATUS_CLOSED = Task.statuses.values_at(:done, :cancel)
+
+  validates :title, presence: true, length: { maximum: 40 }
   validates :status, presence: true
   validates :priority, presence: true
   validates :end_reason, presence: true
@@ -45,8 +48,33 @@ class Task < ApplicationRecord
   validate :ended_on_after_started_on
   validate :due_on_after_started_on
 
+  scope :usual_order, -> { order("priority DESC, due_on ASC NULLS LAST, id ASC") }
+
+  scope :for_index, -> {
+    where('status IN (?) OR (status IN (?) AND created_at > ?)', STATUS_OPEN, STATUS_CLOSED, Time.zone.today - 30.days)
+    .usual_order
+  }
+
+  scope :by_worker, ->(worker) {
+    participant =
+      Task.where(assignee_id: worker.id)
+          .or(Task.where(creator_id: worker.id))
+          .or(Task.where(office_role: worker.office_role))
+
+    participant
+      .where(status: STATUS_OPEN)
+      .or(participant.where(status: STATUS_CLOSED, created_at: Time.zone.today.all_day))
+      .usual_order
+  }
+
   def closed?
-    self.done? || self.cancel?
+    STATUS_CLOSED.include?(self.status_before_type_cast)
+  end
+
+  def overdue?
+    return false if due_on.blank?
+
+    due_on < Date.current && !closed?
   end
 
   private

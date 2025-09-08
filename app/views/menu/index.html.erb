@@ -4,28 +4,41 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-9">
     <div class="container">
+      <% if @schedules.present? || @minute.present? %>
       <div class="row">
         <div class="col-md-12">
           <%= render(partial: 'show_schedules') %>
         </div>
       </div>
+      <% end %>
+      <% if @tasks.present? %>
+      <div class="row">
+        <div class="col-md-12">
+          <%= render(partial: 'show_tasks') %>
+        </div>
+      </div>
+      <% end %>
+      <% if @lands.present? %>
       <div class="row">
         <div class="col-md-12">
           <%= render(partial: 'show_lands') %>
         </div>
       </div>
-<% if current_user.worker.director? %>
+      <% end %>
+      <% if @user_topics.present? %>
       <div class="row">
         <div class="col-md-12" id="topics_content">
           <%= render(partial: 'show_topics') %>
         </div>
       </div>
-<% end %>
+      <% end %>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
+    <% if @results.present? %>
     <%= render(partial: 'show_results') %>
+    <% end %>
   </div>
 </div>

@@ -2,6 +2,8 @@ class MenuController < ApplicationController
   before_action :permit_manager, except: [:index, :edit_term, :update]
   before_action :set_system, only: [:edit, :edit_term]
 
+  helper TasksHelper
+
   SCHEDULE_DAY = 7
 
   def index
@@ -15,6 +17,7 @@ class MenuController < ApplicationController
     @lands = WorkLandDecorator.decorate_collection(@lands).group_by(&:land)
     @minute = Minute.for_personal(current_user.worker).last&.decorate
     @user_topics = UserTopic.current_topics(current_user).pc
+    @tasks = Task.by_worker(current_user.worker)
   end
 
   def edit; end
