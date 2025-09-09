@@ -35,7 +35,11 @@ class Task < ApplicationRecord
   belongs_to :creator, class_name: 'Worker', optional: true
   belongs_to_active_hash :task_status
 
+  has_many :task_watchers, dependent: :destroy
+  has_many :watchers, through: :task_watchers, source: :worker
+
   before_save :clear_end_reason
+  before_save :create_watcher
 
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
   enum :end_reason, { unset: 0, completed: 1, no_action: 2, unavailable: 3, duplicate: 4, other: 9 }
@@ -56,10 +60,16 @@ class Task < ApplicationRecord
   }
 
   scope :by_worker, ->(worker) {
-    participant =
-      Task.where(assignee_id: worker.id)
-          .or(Task.where(creator_id: worker.id))
-          .or(Task.where(office_role: worker.office_role))
+    t  = arel_table
+    tw = TaskWatcher.arel_table
+
+    subq = TaskWatcher
+            .select(1)
+            .where(tw[:worker_id].eq(worker.id))
+            .where(tw[:task_id].eq(t[:id]))
+
+    exists = Arel::Nodes::Exists.new(subq.arel)
+    participant = Task.where(t[:assignee_id].eq(worker.id).or(exists))
 
     participant
       .where(task_status_id: TaskStatus.open_ids)
@@ -93,5 +103,10 @@ class Task < ApplicationRecord
 
   def clear_end_reason
     self.end_reason = :unset unless self.closed?
+  end
+
+  def create_watcher
+    self.task_watchers.find_or_create_by(worker: self.assignee_id) if self.assignee_id.present?
+    self.task_watchers.find_or_create_by(worker: self.creator_id) if self.creator_id.present?
   end
 end

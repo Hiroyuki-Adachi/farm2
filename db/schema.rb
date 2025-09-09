@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_06_074858) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_09_120044) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -798,6 +798,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_06_074858) do
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
   end
 
+  create_table "task_watchers", comment: "タスク閲覧者", force: :cascade do |t|
+    t.bigint "task_id", null: false, comment: "タスクID"
+    t.bigint "worker_id", null: false, comment: "閲覧者ID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_task_watchers_on_task_id"
+    t.index ["worker_id", "task_id"], name: "index_task_watchers_on_worker_id_and_task_id", unique: true
+    t.index ["worker_id"], name: "index_task_watchers_on_worker_id"
+  end
+
   create_table "tasks", comment: "タスク", force: :cascade do |t|
     t.string "title", limit: 64, default: "", null: false, comment: "タスク名"
     t.text "description", default: "", null: false, comment: "説明"
@@ -1142,6 +1152,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_06_074858) do
     t.boolean "chemical_group_flag", default: false, null: false, comment: "薬剤グループフラグ"
   end
 
+  add_foreign_key "task_watchers", "tasks"
+  add_foreign_key "task_watchers", "workers"
   add_foreign_key "tasks", "workers", column: "assignee_id"
   add_foreign_key "tasks", "workers", column: "creator_id"
 end
