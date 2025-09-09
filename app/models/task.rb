@@ -3,19 +3,19 @@
 # Table name: tasks(タスク)
 #
 #  id                   :bigint           not null, primary key
-#  description(説明)    :text             not null
+#  description(説明)    :text             default(""), not null
 #  due_on(期限)         :date
 #  end_reason(完了理由) :integer          default("unset"), not null
 #  ended_on(完了日)     :date
-#  office_role(役割)    :integer          default(0), not null
+#  office_role(役割)    :integer          default("none"), not null
 #  priority(優先度)     :integer          default("low"), not null
 #  started_on(着手日)   :date
-#  status(状態)         :integer          default("to_do"), not null
-#  title(タスク名)      :string(64)       not null
+#  title(タスク名)      :string(64)       default(""), not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  assignee_id(担当者)  :bigint
-#  creator_id(作成者)   :bigint           not null
+#  creator_id(作成者)   :bigint
+#  task_status_id(状態) :integer          default(0), not null
 #
 # Indexes
 #
@@ -28,20 +28,20 @@
 #  fk_rails_...  (creator_id => workers.id)
 #
 class Task < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
   include Enums::OfficeRole
 
   belongs_to :assignee, class_name: 'Worker', optional: true
-  belongs_to :creator, class_name: 'Worker'
+  belongs_to :creator, class_name: 'Worker', optional: true
+  belongs_to_active_hash :task_status
 
-  enum :status, { to_do: 0, reopen: 1, doing: 2, hold: 3, done: 4, cancel: 9 }
+  before_save :clear_end_reason
+
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
   enum :end_reason, { unset: 0, completed: 1, no_action: 2, unavailable: 3, duplicate: 4, other: 9 }
 
-  STATUS_OPEN = Task.statuses.values_at(:to_do, :doing, :hold, :reopen)
-  STATUS_CLOSED = Task.statuses.values_at(:done, :cancel)
-
   validates :title, presence: true, length: { maximum: 40 }
-  validates :status, presence: true
+  validates :task_status_id, presence: true
   validates :priority, presence: true
   validates :end_reason, presence: true
 
@@ -51,7 +51,7 @@ class Task < ApplicationRecord
   scope :usual_order, -> { order("priority DESC, due_on ASC NULLS LAST, id ASC") }
 
   scope :for_index, -> {
-    where('status IN (?) OR (status IN (?) AND created_at > ?)', STATUS_OPEN, STATUS_CLOSED, Time.zone.today - 30.days)
+    where('task_status_id IN (?) OR (task_status_id IN (?) AND created_at > ?)', TaskStatus.open_ids, TaskStatus.closed_ids, Time.zone.today - 30.days)
     .usual_order
   }
 
@@ -62,13 +62,13 @@ class Task < ApplicationRecord
           .or(Task.where(office_role: worker.office_role))
 
     participant
-      .where(status: STATUS_OPEN)
-      .or(participant.where(status: STATUS_CLOSED, created_at: Time.zone.today.all_day))
+      .where(task_status_id: TaskStatus.open_ids)
+      .or(participant.where(task_status_id: TaskStatus.closed_ids, created_at: Time.zone.today.all_day))
       .usual_order
   }
 
   def closed?
-    STATUS_CLOSED.include?(self.status_before_type_cast)
+    TaskStatus.closed_ids.include?(self.task_status_id)
   end
 
   def overdue?
@@ -89,5 +89,9 @@ class Task < ApplicationRecord
     return if due_on.blank? || started_on.blank?
 
     errors.add(:due_on, "は着手日以降の日付にしてください。") if due_on < started_on
+  end
+
+  def clear_end_reason
+    self.end_reason = :unset unless self.closed?
   end
 end

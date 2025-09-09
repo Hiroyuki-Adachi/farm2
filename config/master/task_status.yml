@@ -1,0 +1,30 @@
+- id: 0
+  code: to_do
+  name: "未着手"
+  closed_flag: false
+  next_statuses: [0, 1, 4, 9]
+- id: 1
+  code: reopen
+  name: "再開"
+  closed_flag: false
+  next_statuses: [2, 3, 4, 9]
+- id: 2
+  code: doing
+  name: "対応中"
+  closed_flag: false
+  next_statuses: [3, 4, 9]
+- id: 3
+  code: hold
+  name: "保留"
+  closed_flag: false
+  next_statuses: [2, 4, 9]
+- id: 4
+  code: done
+  name: "完了"
+  closed_flag: true
+  next_statuses: [1]
+- id: 9
+  code: cancel
+  name: "中止"
+  closed_flag: true
+  next_statuses: [1]

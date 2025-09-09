@@ -466,13 +466,6 @@ ja:
         started_on: "着手日"
         ended_on: "完了日"
         office_role: "事務"
-        statuses:
-          to_do: "未着手"
-          doing: "進行中"
-          hold: "保留中"
-          done: "完了"
-          reopen: "再開"
-          cancel: "中止"
         priorities:
           low: "低"
           medium: "中"

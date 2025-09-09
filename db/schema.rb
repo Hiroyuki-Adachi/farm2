@@ -799,9 +799,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_06_074858) do
   end
 
   create_table "tasks", comment: "タスク", force: :cascade do |t|
-    t.string "title", limit: 64, null: false, comment: "タスク名"
-    t.text "description", null: false, comment: "説明"
-    t.integer "status", default: 0, null: false, comment: "状態"
+    t.string "title", limit: 64, default: "", null: false, comment: "タスク名"
+    t.text "description", default: "", null: false, comment: "説明"
+    t.integer "task_status_id", default: 0, null: false, comment: "状態"
     t.integer "priority", default: 0, null: false, comment: "優先度"
     t.date "due_on", comment: "期限"
     t.date "started_on", comment: "着手日"
@@ -809,7 +809,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_06_074858) do
     t.integer "end_reason", default: 0, null: false, comment: "完了理由"
     t.integer "office_role", default: 0, null: false, comment: "役割"
     t.bigint "assignee_id", comment: "担当者"
-    t.bigint "creator_id", null: false, comment: "作成者"
+    t.bigint "creator_id", comment: "作成者"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
