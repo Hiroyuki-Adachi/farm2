@@ -8,7 +8,7 @@
   <%= javascript_include_tag 'controllers/pc-common', 'data-turbo-track': 'reload', type: :module %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag 'pc-common', 'data-turbo-track': 'reload' %>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"]%>&libraries=drawing" defer="defer" async="async" data-turbolinks-eval="false"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"]%>&libraries=drawing" defer="defer" async="async" data-turbo-eval="false"></script>
   <%= yield :head %>
   <%= csrf_meta_tags %>
   <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path('/images/icons/farm2-32.png') %>">
@@ -16,31 +16,49 @@
 </head>
 <body>
   <header>
-<% if session[:user_id] %>
 <%= render 'navbar' %>
-<% end %>
-</header>
+  </header>
 <main class="container-fluid">
-<% if session[:user_id] %>
-  <div class="row">
-    <div id="my_side_wrapper" class="col-md-2 bg-info collapse show">
-      <%= render 'sidebar' %>
+  <button class="btn btn-outline-secondary d-md-none ms-auto"
+          type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#sidebar_off_canvas"
+          aria-controls="sidebar_off_canvas">
+    <i class="fa-solid fa-bars"></i> メニュー
+  </button>
+
+  <div class="row g-3">
+ <!-- モバイル: offcanvas -->
+    <div class="d-md-none">
+      <div id="sidebar_off_canvas" class="offcanvas offcanvas-start" tabindex="-1" aria-labelledby="sidebarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="sidebarLabel">メニュー</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+          <!-- ★ 重複IDを避けるため、部分側の id をやめ class化する（後述B） -->
+          <%= render 'sidebar' %>
+        </div>
+      </div>
     </div>
-    <div id="my_content" class="col-md-10">
-    <button type="button" id="my_side_open" class="btn btn-sm btn-info float-begin d-none d-print-none">
-      <i class="far fa-window-restore"></i>
-    </button>
-<% end %>
+
+    <!-- デスクトップ: 常時表示（折りたたみ対応のため wrapper に ID を振る） -->
+    <aside id="sidebar-desktop" class="col-md-3 col-xl-2 d-none d-md-block">
+      <div class="app-card p-0">
+        <%= render 'sidebar' %>
+      </div>
+    </aside>
+
+    <div id="my_content" class="col-md-9 col-xl-10">
       <div class="container-fluid">
-      <div id="flash_messages" class="row">
-        <%= render "application/flashes", locals: {flash: flash} %>
+        <div id="flash_messages" class="row">
+          <%= render "application/flashes", locals: {flash: flash} %>
+        </div>
+        <div class="app-card">
+          <%= yield %>
+        </div>
       </div>
-<%= yield %>
-      </div>
-<% if session[:user_id] %>
     </div>
   </div>
-<% end %>
 </main>
 <input type="hidden" id="current_controller" value="<%= menu_name %>">
 <input type="hidden" id="current_action" value="<%= controller.action_name %>">

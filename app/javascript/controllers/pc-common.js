@@ -39,54 +39,172 @@ Turbo.setConfirmMethod((message, element) => {
     });
 });
 
+
+document.addEventListener("turbo:before-cache", () => {
+  document.querySelectorAll(".modal.show").forEach(el => {
+    const inst = bootstrap.Modal.getInstance(el);
+    if (inst) inst.hide();
+  })
+  document.querySelectorAll(".modal-backdrop, .offcanvas-backdrop").forEach(bd => bd.remove())
+  document.body.classList.remove("modal-open");
+  document.body.style.removeProperty("overflow");
+  document.body.style.removeProperty("padding-right");
+})
+
+document.addEventListener("turbo:load", () => {
+  document.querySelectorAll(".modal-backdrop, .offcanvas-backdrop").forEach(bd => bd.remove());
+  document.body.classList.remove("modal-open");
+  document.body.style.removeProperty("overflow");
+  document.body.style.removeProperty("padding-right");
+});
+
 document.addEventListener('turbo:load', () => {
-    // for sidebar
-    const currentController = document.getElementById("current_controller");
-    const currentAction = document.getElementById("current_action");
-    const myMenu = document.getElementById("menu_dropdown");
-    const mySidebar = document.getElementById("my_sidebar");
+  // --- 残留掃除（既存のまま） ---
+  document.querySelectorAll(".modal-backdrop, .offcanvas-backdrop").forEach((bd) => {bd.remove()});
+  document.body.classList.remove("modal-open");
+  document.body.style.removeProperty("overflow");
+  document.body.style.removeProperty("padding-right");
 
-    if (currentController != null || currentAction != null) {
-        const controllerValue = currentController.value;
-        const actionValue = currentAction.value;
+  const currentController = document.getElementById("current_controller");
+  const currentAction     = document.getElementById("current_action");
+  const myMenu            = document.getElementById("menu_dropdown");
 
-        if (mySidebar != null && (controllerValue != "menu" || actionValue != "index")) {
-            mySidebar.querySelectorAll("a[data-controller]").forEach((element) => {
-                if (element.dataset.controller == controllerValue) {
-                    if (mySidebar.querySelectorAll(`a[data-controller="${controllerValue}"]`).length <= 1) {
-                        activeBar(element);
-                    } else if (JSON.parse(element.dataset.actions).indexOf(actionValue) >= 0) {
-                        activeBar(element);
-                    }
-                }
-            });
-        }
+  // ★ モバイル/PC 両方のサイドバーが対象
+  const sidebars = document.querySelectorAll(".my_sidebar");
+
+  // ★ 常時表示したいグループ（=サイドバーの中の「日報管理」）
+  //   ここを増やしたい場合は ID を追加するだけでOK
+  const STICKY_NAVBAR_IDS = new Set(["navbar_daily"]);
+
+  // ---- utils ----
+  const eachSidebarGroup = (cb) => {
+    sidebars.forEach(sb => {
+      sb.querySelectorAll("div[aria-labelledby]").forEach(div => cb(div, sb));
+    });
+  };
+
+  const hideAllNonStickyGroups = () => {
+    eachSidebarGroup((div) => {
+      const navId = div.getAttribute("aria-labelledby");
+      if (!STICKY_NAVBAR_IDS.has(navId)) {
+        div.style.display = "none";
+      } else {
+        // stickyは常時表示
+        div.style.display = "block";
+      }
+    });
+  };
+
+  const showSidebarGroupByNavbarId = (navbarId) => {
+    hideAllNonStickyGroups();
+    if (!navbarId) return;
+    sidebars.forEach(sb => {
+      const group = sb.querySelector(`div[aria-labelledby="${navbarId}"]`);
+      if (group) group.style.display = "block"; // stickyはすでにblock
+    });
+    // ナビゲーションの .active を整理
+    document.querySelectorAll("#navbarFarm2 a.farm2-navi.active").forEach(a => a.classList.remove("active"));
+    const label = document.getElementById(navbarId);
+    if (label) label.classList.add("active");
+  };
+
+  const clearActiveOnLinks = () => {
+    sidebars.forEach(sb => {
+      sb.querySelectorAll("a.dropdown-item.active").forEach(a => a.classList.remove("active"));
+    });
+  };
+
+  // controller/action による初期ハイライト
+  const highlightByControllerAction = () => {
+    if (!currentController || !currentAction || sidebars.length === 0) {
+      // それでも sticky は常時表示
+      hideAllNonStickyGroups();
+      return;
     }
+    const controllerValue = currentController.value;
+    const actionValue     = currentAction.value;
 
-    document.querySelectorAll("#navbarFarm2 a.farm2-navi").forEach((element) => {
-        element.addEventListener("click", (event) => {
-            myMenu.innerHTML = document.querySelector(`div[aria-labelledby="${event.target.id}"] div.navbar`).innerHTML;
-            myMenu.dataset.id = event.target.id;
-            myMenu.style.display = "block";
+    hideAllNonStickyGroups();
+    clearActiveOnLinks();
 
-            let left = 0;
-            let elm = event.target;
-            do {
-                left += elm.offsetLeft || 0;
-                elm = elm.offsetParent;
-            } while (elm);
-            myMenu.style.left = left + "px";
+    // どのグループを開くか（最初に見つけたものを代表に）
+    let firstNavbarIdToShow = null;
+
+    sidebars.forEach((sb) => {
+      // 対象controllerのリンク候補
+      const links = Array.from(sb.querySelectorAll(`a[data-controller="${controllerValue}"]`));
+      if (links.length === 0) return;
+
+      // actionsが一致するリンクを優先
+      let picked = links.find(a => {
+        try {
+          const acts = a.dataset.actions ? JSON.parse(a.dataset.actions) : null;
+          return !acts || acts.includes(actionValue);
+        } catch(e) {
+          return true; // 解析失敗時は許容
+        }
+      });
+
+      // ハイライト
+      picked.classList.add("active");
+      // そのリンクが属するグループを開く
+      const navdiv = picked.closest("div[aria-labelledby]");
+      if (navdiv) {
+        // stickyは既にopen。非stickyなら開く
+        const navId = navdiv.getAttribute("aria-labelledby");
+        if (!STICKY_NAVBAR_IDS.has(navId)) {
+          navdiv.style.display = "block";
+        }
+        if (!firstNavbarIdToShow) firstNavbarIdToShow = navId;
+      }
+    });
+
+    // ナビの .active を整える（sticky優先ではなく、見つかったグループ基準）
+    if (firstNavbarIdToShow) {
+      document.querySelectorAll("#navbarFarm2 a.farm2-navi.active").forEach(a => a.classList.remove("active"));
+      const label = document.getElementById(firstNavbarIdToShow);
+      if (label) label.classList.add("active");
+    }
+  };
+
+    // ---- 初期表示 ----
+    highlightByControllerAction();
+
+    // ---- ナビクリック → サイドバーの該当グループを開く + ドロップダウンにも表示 ----
+    const navbarLinks = document.querySelectorAll("#navbarFarm2 a.farm2-navi");
+    navbarLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+            const navbarId = event.currentTarget.id;
+
+            // 1) サイドバーを該当グループに切り替え（stickyは常に表示）
+            showSidebarGroupByNavbarId(navbarId);
+
+            // 2) ドロップダウンにも表示（従来機能）
+            if (myMenu) {
+                const src = document.querySelector(`div[aria-labelledby="${navbarId}"] div.navbar`);
+                if (src) {
+                    myMenu.innerHTML = src.innerHTML;
+                    myMenu.dataset.id = navbarId;
+                    myMenu.style.display = "block";
+
+                    let left = 0, elm = event.currentTarget;
+                    do { left += elm.offsetLeft || 0; elm = elm.offsetParent; } while (elm);
+                    myMenu.style.left = left + "px";
+                }
+            }
             event.stopPropagation();
+            event.preventDefault(); // href="#"のスクロール抑止
         });
     });
 
     window.addEventListener("click", (event) => {
-        if (!event.target.matches('.nav-link') && (myMenu != null)) {
+        if (!event.target.matches('.nav-link') && myMenu) {
             myMenu.style.display = "none";
             event.stopPropagation();
         }
     });
 
+    // === 既存のテーブル開閉/ローディング系ハンドラはこの下にそのまま ===
     Array.from(document.getElementsByClassName("tr-total1")).forEach((element) => {
         element.addEventListener("click", (event) => {
             const totalTr = event.target.closest("tr");
@@ -133,15 +251,18 @@ document.addEventListener('turbo:load', () => {
     });
 });
 
+// 既存 activeBar を .my_sidebar でも動くようにそのまま活用
 function activeBar(element) {
-    const navdiv = element.closest("div[aria-labelledby]");
-    element.style.backgroundColor = "White";
+  const navdiv = element.closest("div[aria-labelledby]");
+  element.style.backgroundColor = "White";
+  if (navdiv) {
     navdiv.style.display = "block";
     const label = document.getElementById(navdiv.getAttribute("aria-labelledby"));
-    if (label != null) {
-        label.classList.add("active");
-    }
+    if (label) label.classList.add("active");
+  }
 }
+
+// loadingStart / loadingEnd は既存のまま
 
 function loadingStart(message) {
     if (document.getElementById("loading_message") != null) {

@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   helper_method :menu_name
 
-  before_action :set_term, if: :user_present?
   before_action :restrict_remote_ip
+  before_action :set_term, if: :user_present?
 
   unless Rails.env.development? || Rails.env.test?
     rescue_from StandardError, with: :handle_error
@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   def restrict_remote_ip
     if session[:user_id].nil? 
       redirect_to root_path
-      return
+      return false
     end
   end
 
