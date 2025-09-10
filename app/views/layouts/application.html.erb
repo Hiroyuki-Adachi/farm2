@@ -26,7 +26,7 @@
     <i class="fa-solid fa-bars"></i> メニュー
   </button>
 
-  <div class="row g-3">
+  <div class="row g-3 main-row">
  <!-- モバイル: offcanvas -->
     <div class="d-md-none">
       <div id="sidebar_off_canvas" class="offcanvas offcanvas-start" tabindex="-1" aria-labelledby="sidebarLabel">
@@ -42,13 +42,13 @@
     </div>
 
     <!-- デスクトップ: 常時表示（折りたたみ対応のため wrapper に ID を振る） -->
-    <aside id="sidebar-desktop" class="col-md-3 col-xl-2 d-none d-md-block">
+    <aside id="sidebar_desktop" class="col-md-3 col-xl-2 d-none d-md-block">
       <div class="app-card p-0">
         <%= render 'sidebar' %>
       </div>
     </aside>
 
-    <div id="my_content" class="col-md-9 col-xl-10">
+    <div id="content_col" class="col-md-9 col-xl-10">
       <div class="container-fluid">
         <div id="flash_messages" class="row">
           <%= render "application/flashes", locals: {flash: flash} %>

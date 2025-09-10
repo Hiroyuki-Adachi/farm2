@@ -3,13 +3,19 @@
 
   <!-- BS4 -> BS5 へ -->
   <button class="navbar-toggler" type="button"
-          data-bs-toggle="collapse" data-bs-target="#navbarFarm2"
-          aria-controls="navbarFarm2" aria-expanded="false"
+          data-bs-toggle="collapse" data-bs-target="#navbar_farm2"
+          aria-controls="navbar_farm2" aria-expanded="false"
           aria-label="ナビゲーションの切替">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarFarm2">
+  <button id="toggle_sidebar"
+        class="btn btn-sm btn-outline-secondary ms-2 d-none d-md-inline-flex"
+        type="button" aria-pressed="false" aria-label="サイドバーの表示切替">
+    <i class="fa-solid fa-columns"></i>&nbsp;サイドバー
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbar_farm2">
     <ul class="navbar-nav me-auto"> <!-- mr-auto -> me-auto -->
       <li class="nav-item">
         <%= link_to '予定管理', "#", {class: "nav-link farm2-navi", id: :navbar_schedule} %>

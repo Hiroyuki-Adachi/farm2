@@ -70,7 +70,7 @@ document.addEventListener('turbo:load', () => {
   const myMenu            = document.getElementById("menu_dropdown");
 
   // ★ モバイル/PC 両方のサイドバーが対象
-  const sidebars = document.querySelectorAll(".my_sidebar");
+  const sidebars = document.querySelectorAll(".my-sidebar");
 
   // ★ 常時表示したいグループ（=サイドバーの中の「日報管理」）
   //   ここを増やしたい場合は ID を追加するだけでOK
@@ -103,7 +103,7 @@ document.addEventListener('turbo:load', () => {
       if (group) group.style.display = "block"; // stickyはすでにblock
     });
     // ナビゲーションの .active を整理
-    document.querySelectorAll("#navbarFarm2 a.farm2-navi.active").forEach(a => a.classList.remove("active"));
+    document.querySelectorAll("#navbar_farm2 a.farm2-navi.active").forEach(a => a.classList.remove("active"));
     const label = document.getElementById(navbarId);
     if (label) label.classList.add("active");
   };
@@ -145,23 +145,23 @@ document.addEventListener('turbo:load', () => {
         }
       });
 
-      // ハイライト
-      picked.classList.add("active");
-      // そのリンクが属するグループを開く
-      const navdiv = picked.closest("div[aria-labelledby]");
-      if (navdiv) {
-        // stickyは既にopen。非stickyなら開く
-        const navId = navdiv.getAttribute("aria-labelledby");
-        if (!STICKY_NAVBAR_IDS.has(navId)) {
-          navdiv.style.display = "block";
+      
+      if (picked) {
+        picked.classList.add("active");
+        const navdiv = picked.closest("div[aria-labelledby]");
+        if (navdiv) {
+          const navId = navdiv.getAttribute("aria-labelledby");
+          if (!STICKY_NAVBAR_IDS.has(navId)) {
+            navdiv.style.display = "block";
+          }
+          if (!firstNavbarIdToShow) firstNavbarIdToShow = navId;
         }
-        if (!firstNavbarIdToShow) firstNavbarIdToShow = navId;
       }
     });
 
     // ナビの .active を整える（sticky優先ではなく、見つかったグループ基準）
     if (firstNavbarIdToShow) {
-      document.querySelectorAll("#navbarFarm2 a.farm2-navi.active").forEach(a => a.classList.remove("active"));
+      document.querySelectorAll("#navbar_farm2 a.farm2-navi.active").forEach(a => a.classList.remove("active"));
       const label = document.getElementById(firstNavbarIdToShow);
       if (label) label.classList.add("active");
     }
@@ -171,7 +171,7 @@ document.addEventListener('turbo:load', () => {
     highlightByControllerAction();
 
     // ---- ナビクリック → サイドバーの該当グループを開く + ドロップダウンにも表示 ----
-    const navbarLinks = document.querySelectorAll("#navbarFarm2 a.farm2-navi");
+    const navbarLinks = document.querySelectorAll("#navbar_farm2 a.farm2-navi");
     navbarLinks.forEach((link) => {
         link.addEventListener("click", (event) => {
             const navbarId = event.currentTarget.id;
@@ -249,9 +249,49 @@ document.addEventListener('turbo:load', () => {
     window.addEventListener("turbo:frame-load", () => {
         loadingEnd();
     });
+
+  // PC幅のサイドバー折りたたみ
+  const desktopSidebar = document.getElementById("sidebar_desktop");
+  const contentCol     = document.getElementById("content_col");
+  const toggleBtn      = document.getElementById("toggle_sidebar");
+  const STORE_KEY      = "farm2:sidebar_folded";
+
+  const applySidebarState = (folded) => {
+    if (!desktopSidebar || !contentCol) return;
+
+    if (folded) {
+      // ★ PC幅で確実に消す
+      desktopSidebar.classList.add("d-md-none");
+      desktopSidebar.classList.remove("d-md-block");
+
+      contentCol.classList.remove("col-md-9","col-xl-10");
+      contentCol.classList.add("col-12");
+
+      toggleBtn?.setAttribute("aria-pressed","true");
+      document.documentElement.classList.add("sidebar-collapsed");
+    } else {
+      // ★ PC幅で表示に戻す
+      desktopSidebar.classList.remove("d-md-none");
+      desktopSidebar.classList.add("d-md-block");
+
+      contentCol.classList.remove("col-12");
+      contentCol.classList.add("col-md-9","col-xl-10");
+
+      toggleBtn?.setAttribute("aria-pressed","false");
+      document.documentElement.classList.remove("sidebar-collapsed");
+    }
+  };
+
+  applySidebarState(localStorage.getItem(STORE_KEY) === "1");
+
+  toggleBtn?.addEventListener("click", () => {
+    const next = !(localStorage.getItem(STORE_KEY) === "1");
+    localStorage.setItem(STORE_KEY, next ? "1" : "0");
+    applySidebarState(next);
+  });
 });
 
-// 既存 activeBar を .my_sidebar でも動くようにそのまま活用
+// 既存 activeBar を .my-sidebar でも動くようにそのまま活用
 function activeBar(element) {
   const navdiv = element.closest("div[aria-labelledby]");
   element.style.backgroundColor = "White";

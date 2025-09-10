@@ -27,7 +27,7 @@ div.d-table-cell.numeric {
 }
 
 @media print {
-  .my_sidebar {
+  .my-sidebar {
     display: none;
   }
 }
@@ -110,9 +110,19 @@ header.navbar {
 }
 
 /* サイドバーの現在位置を分かりやすく */
-.my_sidebar a.dropdown-item.active {
+.my-sidebar a.dropdown-item.active {
   background: #fff;
   border-left: 4px solid var(--brand);
   font-weight: 600;
 }
-.my_sidebar a.dropdown-item { border-left: 4px solid transparent; }
+.my-sidebar a.dropdown-item { border-left: 4px solid transparent; }
+
+#sidebar_desktop {
+  transition: opacity .18s ease;
+}
+.sidebar-collapsed #sidebar_desktop { opacity: 0; }
+/* サイドバー折りたたみ中は、rowの縦ガターを消す */
+.sidebar-collapsed .main-row { --bs-gutter-y: 0; }
+
+/* 念のため、列側の上パディングもゼロ（環境差対策） */
+.sidebar-collapsed #content_col { padding-top: 0 !important; }
