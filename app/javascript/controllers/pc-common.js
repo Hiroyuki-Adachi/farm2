@@ -141,7 +141,7 @@ document.addEventListener('turbo:load', () => {
           const acts = a.dataset.actions ? JSON.parse(a.dataset.actions) : null;
           return !acts || acts.includes(actionValue);
         } catch(e) {
-          return true; // 解析失敗時は許容
+          return false;
         }
       });
 
@@ -259,29 +259,29 @@ document.addEventListener('turbo:load', () => {
   const applySidebarState = (folded) => {
     if (!desktopSidebar || !contentCol) return;
 
+    // 折りたたみはPC幅（≥lg）向け。<lg では aside 自体が非表示なので気にしない。
     if (folded) {
-      // ★ PC幅で確実に消す
-      desktopSidebar.classList.add("d-md-none");
-      desktopSidebar.classList.remove("d-md-block");
+      desktopSidebar.classList.add("d-lg-none");
+      desktopSidebar.classList.remove("d-lg-block");
 
-      contentCol.classList.remove("col-md-9","col-xl-10");
+      contentCol.classList.remove("col-lg-10");
       contentCol.classList.add("col-12");
 
       toggleBtn?.setAttribute("aria-pressed","true");
       document.documentElement.classList.add("sidebar-collapsed");
     } else {
-      // ★ PC幅で表示に戻す
-      desktopSidebar.classList.remove("d-md-none");
-      desktopSidebar.classList.add("d-md-block");
+      desktopSidebar.classList.remove("d-lg-none");
+      desktopSidebar.classList.add("d-lg-block");
 
       contentCol.classList.remove("col-12");
-      contentCol.classList.add("col-md-9","col-xl-10");
+      contentCol.classList.add("col-lg-10");
 
       toggleBtn?.setAttribute("aria-pressed","false");
       document.documentElement.classList.remove("sidebar-collapsed");
     }
   };
 
+  // 初期適用（保存状態を反映）
   applySidebarState(localStorage.getItem(STORE_KEY) === "1");
 
   toggleBtn?.addEventListener("click", () => {
@@ -289,18 +289,24 @@ document.addEventListener('turbo:load', () => {
     localStorage.setItem(STORE_KEY, next ? "1" : "0");
     applySidebarState(next);
   });
-});
 
-// 既存 activeBar を .my-sidebar でも動くようにそのまま活用
-function activeBar(element) {
-  const navdiv = element.closest("div[aria-labelledby]");
-  element.style.backgroundColor = "White";
-  if (navdiv) {
-    navdiv.style.display = "block";
-    const label = document.getElementById(navdiv.getAttribute("aria-labelledby"));
-    if (label) label.classList.add("active");
+  const offcanvasEl = document.getElementById('sidebar_off_canvas');
+  if (offcanvasEl) {
+    offcanvasEl.addEventListener('show.bs.offcanvas', () => {
+      offcanvasEl
+        .querySelectorAll('.my-sidebar div[aria-labelledby]')
+        .forEach(div => { div.style.display = 'block'; });
+    });
+
+    // ついでに、リンクを押したら自動的に閉じる（ナビ後の残留防止）
+    offcanvasEl.addEventListener('click', (e) => {
+      const a = e.target.closest('a');
+      if (!a) return;
+      const inst = bootstrap.Offcanvas.getInstance(offcanvasEl);
+      inst?.hide();
+    });
   }
-}
+});
 
 // loadingStart / loadingEnd は既存のまま
 

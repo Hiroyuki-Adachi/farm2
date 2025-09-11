@@ -124,5 +124,7 @@ header.navbar {
 /* サイドバー折りたたみ中は、rowの縦ガターを消す */
 .sidebar-collapsed .main-row { --bs-gutter-y: 0; }
 
-/* 念のため、列側の上パディングもゼロ（環境差対策） */
+.navbar .btn { white-space: nowrap; }
+
+/* 折りたたみ中、余白が出る場合の保険 */
 .sidebar-collapsed #content_col { padding-top: 0 !important; }

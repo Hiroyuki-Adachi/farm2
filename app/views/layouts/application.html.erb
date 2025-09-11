@@ -19,36 +19,29 @@
 <%= render 'navbar' %>
   </header>
 <main class="container-fluid">
-  <button class="btn btn-outline-secondary d-md-none ms-auto"
-          type="button" data-bs-toggle="offcanvas"
-          data-bs-target="#sidebar_off_canvas"
-          aria-controls="sidebar_off_canvas">
-    <i class="fa-solid fa-bars"></i> メニュー
-  </button>
-
   <div class="row g-3 main-row">
- <!-- モバイル: offcanvas -->
-    <div class="d-md-none">
+    <!-- <lg 専用のオフキャンバス（サイドメニュー） -->
+    <div class="d-lg-none">
       <div id="sidebar_off_canvas" class="offcanvas offcanvas-start" tabindex="-1" aria-labelledby="sidebarLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="sidebarLabel">メニュー</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body p-0">
-          <!-- ★ 重複IDを避けるため、部分側の id をやめ class化する（後述B） -->
           <%= render 'sidebar' %>
         </div>
       </div>
     </div>
 
-    <!-- デスクトップ: 常時表示（折りたたみ対応のため wrapper に ID を振る） -->
-    <aside id="sidebar_desktop" class="col-md-3 col-xl-2 d-none d-md-block">
+    <!-- ≥lg：サイドバー -->
+    <aside id="sidebar_desktop" class="col-lg-2 col-xl-2 d-none d-lg-block">
       <div class="app-card p-0">
         <%= render 'sidebar' %>
       </div>
     </aside>
 
-    <div id="content_col" class="col-md-9 col-xl-10">
+    <!-- コンテンツ -->
+    <div id="content_col" class="col-12 col-lg-10">
       <div class="container-fluid">
         <div id="flash_messages" class="row">
           <%= render "application/flashes", locals: {flash: flash} %>
