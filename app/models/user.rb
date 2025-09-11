@@ -13,6 +13,7 @@
 #  target_from(開始年月)                                    :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
 #  term(期)                                                 :integer          default(0), not null
+#  theme_preference(画面テーマ)                             :integer          default(0), not null
 #  token(アクセストークン)                                  :string(36)       default(""), not null
 #  view_month(表示切替月)                                   :integer          default([1, 4, 8]), not null, is an Array
 #  created_at                                               :datetime         not null
@@ -37,6 +38,7 @@ class User < ApplicationRecord
   after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && self.mail_confirmed_at.present? }
 
   enum :permission_id, { visitor: 0, user: 1, checker: 2, manager: 3, admin: 9 }
+  enum :theme_preference, { light: 0, dark: 1, system: 2 }
 
   scope :linable, -> { where.not(line_id: '') }
 

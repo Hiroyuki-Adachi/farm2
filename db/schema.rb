@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_05_134944) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_11_132917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -798,6 +798,34 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_05_134944) do
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
   end
 
+  create_table "task_watchers", comment: "タスク閲覧者", force: :cascade do |t|
+    t.bigint "task_id", null: false, comment: "タスクID"
+    t.bigint "worker_id", null: false, comment: "閲覧者ID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_task_watchers_on_task_id"
+    t.index ["worker_id", "task_id"], name: "index_task_watchers_on_worker_id_and_task_id", unique: true
+    t.index ["worker_id"], name: "index_task_watchers_on_worker_id"
+  end
+
+  create_table "tasks", comment: "タスク", force: :cascade do |t|
+    t.string "title", limit: 64, default: "", null: false, comment: "タスク名"
+    t.text "description", default: "", null: false, comment: "説明"
+    t.integer "task_status_id", default: 0, null: false, comment: "状態"
+    t.integer "priority", default: 0, null: false, comment: "優先度"
+    t.date "due_on", comment: "期限"
+    t.date "started_on", comment: "着手日"
+    t.date "ended_on", comment: "完了日"
+    t.integer "end_reason", default: 0, null: false, comment: "完了理由"
+    t.integer "office_role", default: 0, null: false, comment: "役割"
+    t.bigint "assignee_id", comment: "担当者"
+    t.bigint "creator_id", comment: "作成者"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
+    t.index ["creator_id"], name: "index_tasks_on_creator_id"
+  end
+
   create_table "topics", comment: "トピック", force: :cascade do |t|
     t.string "url", limit: 512, default: "", null: false, comment: "URL"
     t.string "title", limit: 512, default: "", null: false, comment: "タイトル"
@@ -919,6 +947,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_05_134944) do
     t.string "mail_confirmation_token", limit: 64, comment: "メールアドレス確認トークン"
     t.datetime "mail_confirmation_expired_at", comment: "メールアドレス確認有効期限"
     t.string "line_id", limit: 50, default: "", null: false
+    t.integer "theme_preference", default: 0, null: false, comment: "画面テーマ"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["mail"], name: "ix_users_on_mail", unique: true, where: "((mail)::text <> ''::text)"
     t.index ["mail_confirmation_token"], name: "ix_users_on_mail_confirmation_token", unique: true, where: "(mail_confirmation_token IS NOT NULL)"
@@ -1123,4 +1152,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_05_134944) do
     t.integer "printed_by", comment: "印刷者"
     t.boolean "chemical_group_flag", default: false, null: false, comment: "薬剤グループフラグ"
   end
+
+  add_foreign_key "task_watchers", "tasks"
+  add_foreign_key "task_watchers", "workers"
+  add_foreign_key "tasks", "workers", column: "assignee_id"
+  add_foreign_key "tasks", "workers", column: "creator_id"
 end
