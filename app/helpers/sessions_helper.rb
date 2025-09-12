@@ -13,7 +13,6 @@ module SessionsHelper
   def current_user
     return @current_user if @current_user.present?
     @current_user = User.find(session[:user_id]) if session[:user_id]
-    return @current_user 
   end
 
   def current_organization
