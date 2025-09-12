@@ -1,0 +1,23 @@
+<h1>タスク一覧</h1>
+
+<turbo-frame id="tasks_list">
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th>タイトル</th>
+        <th>優先度</th>
+        <th>期限</th>
+        <th>状態</th>
+        <th>結果</th>
+        <th>担当</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @tasks %> <!-- _task.html.erb を行パーシャルに -->
+    </tbody>
+  </table>
+  <%= paginate @tasks %>
+</turbo-frame>
+
+<%= link_to "新規作成", new_task_path, class: "btn btn-primary" %>

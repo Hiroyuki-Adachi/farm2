@@ -63,6 +63,8 @@ class Task < ApplicationRecord
     .usual_order
   }
 
+  scope :opened, -> { where(task_status_id: TaskStatus.open_ids).usual_order }
+
   scope :by_worker, ->(worker) {
     t  = arel_table
     tw = TaskWatcher.arel_table

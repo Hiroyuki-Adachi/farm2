@@ -4,6 +4,6 @@ class TasksController < ApplicationController
   helper TasksHelper
 
   def index
-    @tasks = Task.for_index.page(params[:page])
+    @tasks = TaskDecorator.decorate_collection(Task.for_index.includes(:assignee).page(params[:page]))
   end
 end

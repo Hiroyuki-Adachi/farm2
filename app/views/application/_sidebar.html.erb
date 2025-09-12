@@ -16,7 +16,7 @@
     <div class="ms-3 navbar">
       <%= link_to '作業予定', schedules_path, {class: "dropdown-item", data: {controller:  "schedules"}} %>
   <% if current_user.checkable? %>
-      <%= link_to 'タスク', tasks_path, {class: "dropdown-item", data: {controller:  "tasks"}} %>
+      <%= link_to 'タスク一覧', tasks_path, {class: "dropdown-item", data: {controller:  "tasks"}} %>
   <% end %>
   <% if current_user.userable? %>
       <%= link_to '議事録', minutes_path, {class: "dropdown-item", data: {controller:  "minutes"}} %>
@@ -68,8 +68,6 @@
       <%= link_to '育苗集計', total_seedlings_path, {class: "dropdown-item", data: {controller: :total_seedlings}} %>
       <%= link_to '乾燥調整一覧', total_dryings_path, {class: "dropdown-item", data: {controller: :total_dryings}} %>
       <%= link_to 'WCS一覧', whole_crops_path, {class: "dropdown-item", data: {controller: :whole_crops}} %>
-      <%= link_to '組合内受託一覧', contracts_path, {class: "dropdown-item", data: {controller: "contracts"}} %>
-      <%= link_to '保有米一覧', total_owned_rices_path, {class: "dropdown-item", data: {controller: :total_owned_rices}} %>
     </div>
   </div>
   <div aria-labelledby="navbar_stock" class="mt-2" style="display:none;">

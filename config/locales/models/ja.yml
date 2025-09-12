@@ -471,6 +471,11 @@ ja:
           medium: "中"
           high: "高"
           urgent: "緊急"
+        priority_colors:
+          low: "success"
+          medium: "primary"
+          high: "warning"
+          urgent: "danger"
         end_reasons:
           unset: ""
           completed: "完了"
