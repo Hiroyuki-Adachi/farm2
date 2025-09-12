@@ -51,13 +51,6 @@ document.addEventListener("turbo:before-cache", () => {
   document.body.style.removeProperty("padding-right");
 })
 
-document.addEventListener("turbo:load", () => {
-  document.querySelectorAll(".modal-backdrop, .offcanvas-backdrop").forEach(bd => bd.remove());
-  document.body.classList.remove("modal-open");
-  document.body.style.removeProperty("overflow");
-  document.body.style.removeProperty("padding-right");
-});
-
 document.addEventListener('turbo:load', () => {
   // --- 残留掃除（既存のまま） ---
   document.querySelectorAll(".modal-backdrop, .offcanvas-backdrop").forEach((bd) => {bd.remove()});
