@@ -37,9 +37,13 @@ class Task < ApplicationRecord
 
   has_many :task_watchers, dependent: :destroy
   has_many :watchers, through: :task_watchers, source: :worker
+  has_many :task_comments, dependent: :destroy
+  has_many :task_events, dependent: :destroy
 
   before_save :clear_end_reason
   before_save :create_watcher
+  after_create :notify_task_event_for_create
+  after_update :notify_task_event_for_update
 
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
   enum :end_reason, { unset: 0, completed: 1, no_action: 2, unavailable: 3, duplicate: 4, other: 9 }
@@ -77,6 +81,8 @@ class Task < ApplicationRecord
       .usual_order
   }
 
+  attr_accessor :updated_by
+
   def closed?
     TaskStatus.closed_ids.include?(self.task_status_id)
   end
@@ -108,5 +114,51 @@ class Task < ApplicationRecord
   def create_watcher
     self.task_watchers.find_or_create_by(worker: self.assignee_id) if self.assignee_id.present?
     self.task_watchers.find_or_create_by(worker: self.creator_id) if self.creator_id.present?
+  end
+
+  def notify_task_event_for_create
+    return if self.creator.nil?
+    TaskEvent.create(
+      task: self,
+      actor: self.creator,
+      event_type: :task_created,
+      status_to: self.task_status_id,
+      assignee_to: self.assignee,
+      due_on_to: self.due_on
+    )
+  end
+
+  def notify_task_event_for_update
+    return if self.creator.nil?
+
+    if self.saved_change_to_task_status_id?
+      TaskEvent.create(
+        task: self,
+        actor: self.updated_by,
+        event_type: :status_changed,
+        status_from_id: self.task_status_id_before_last_save,
+        status_to_id: self.task_status_id
+      )
+    end
+
+    if self.saved_change_to_assignee_id?
+      TaskEvent.create(
+        task: self,
+        actor: self.updated_by,
+        event_type: :assignee_changed,
+        assignee_from_id: self.assignee_id_before_last_save,
+        assignee_to_id: self.assignee_id
+      )
+    end
+
+    if self.saved_change_to_due_on?
+      TaskEvent.create(
+        task: self,
+        actor: self.updated_by,
+        event_type: :due_on_changed,
+        due_on_from: self.due_on_before_last_save,
+        due_on_to: self.due_on
+      )
+    end
   end
 end

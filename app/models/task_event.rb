@@ -1,0 +1,48 @@
+# == Schema Information
+#
+# Table name: task_events(タスクイベント)
+#
+#  id                               :bigint           not null, primary key
+#  due_on_from(変更前の期限)        :date
+#  due_on_to(変更後の期限)          :date
+#  event_type(イベント種別)         :integer          not null
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  actor_id(実行者)                 :bigint           not null
+#  assignee_from_id(変更前の担当者) :bigint
+#  assignee_to_id(変更後の担当者)   :bigint
+#  status_from_id(変更前ステータス) :integer
+#  status_to_id(変更後ステータス)   :integer
+#  task_comment_id(関連コメント)    :bigint
+#  task_id(対象タスク)              :bigint           not null
+#
+# Indexes
+#
+#  index_task_events_on_actor_id                (actor_id)
+#  index_task_events_on_assignee_from_id        (assignee_from_id)
+#  index_task_events_on_assignee_to_id          (assignee_to_id)
+#  index_task_events_on_task_comment_id         (task_comment_id)
+#  index_task_events_on_task_id                 (task_id)
+#  index_task_events_on_task_id_and_created_at  (task_id,created_at)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (actor_id => workers.id)
+#  fk_rails_...  (assignee_from_id => workers.id)
+#  fk_rails_...  (assignee_to_id => workers.id)
+#  fk_rails_...  (task_comment_id => task_comments.id)
+#  fk_rails_...  (task_id => tasks.id)
+#
+class TaskEvent < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
+  belongs_to :task
+  belongs_to :actor, class_name: 'Worker'
+  belongs_to :assignee_from, class_name: 'Worker', optional: true
+  belongs_to :assignee_to, class_name: 'Worker', optional: true
+  belongs_to :task_comment, optional: true
+  belongs_to_active_hash :status_from, class_name: 'TaskStatus', foreign_key: 'status_from_id', optional: true
+  belongs_to_active_hash :status_to, class_name: 'TaskStatus', foreign_key: 'status_to_id', optional: true
+
+  enum :event_type, { task_created: 0, status_changed: 1, assignee_changed: 2, due_on_changed: 3, comment_added: 4 }
+end
