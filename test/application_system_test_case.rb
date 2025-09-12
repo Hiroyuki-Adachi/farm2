@@ -28,7 +28,7 @@ remote_options = remote_chrome ? { url: REMOTE_CHROME_URL } : {}
 Capybara.register_driver(:better_cuprite) do |app|
   Capybara::Cuprite::Driver.new(
     app,
-    window_size: [1200, 800],
+    window_size: [1920, 1080],
     browser_options: remote_chrome ? { "no-sandbox" => nil } : {},
     js_errors: true,
     timeout: 30,
@@ -43,9 +43,15 @@ Capybara.default_driver = Capybara.javascript_driver = :better_cuprite
 Capybara.app_host = "http://#{ENV.fetch('APP_HOST', `hostname`.strip&.downcase || '0.0.0.0')}"
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :better_cuprite
+  driven_by :better_cuprite, screen_size: [1920, 1080], options: { browser_options: {}, window_size: [1920, 1080] }
 
   setup do
     WebMock.allow_net_connect!
   end
+end
+
+def ensure_wide!(min_width: 1200, height: 900)
+  page.driver.resize(min_width, height)
+  page.evaluate_script("window.dispatchEvent(new Event('resize'))")
+  page.evaluate_script("document.body.getBoundingClientRect().width")
 end
