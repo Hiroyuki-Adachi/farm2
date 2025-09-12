@@ -145,7 +145,6 @@ document.addEventListener('turbo:load', () => {
         }
       });
 
-      
       if (picked) {
         picked.classList.add("active");
         const navdiv = picked.closest("div[aria-labelledby]");
