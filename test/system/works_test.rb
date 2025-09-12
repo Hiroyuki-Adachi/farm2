@@ -11,6 +11,7 @@ class WorksTest < ApplicationSystemTestCase
     fill_in 'login_name', with: @user.login_name
     fill_in 'password', with: 'password'
     click_button '認証する'
+    ensure_wide!
     assert_selector 'a', exact_text: '作業日報管理'
 
     click_link '日報入力'

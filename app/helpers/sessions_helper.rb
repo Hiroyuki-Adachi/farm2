@@ -11,7 +11,8 @@ module SessionsHelper
   end
 
   def current_user
-    @current_user ||= User.find(session[:user_id])
+    return @current_user if @current_user.present?
+    @current_user = User.find(session[:user_id]) if session[:user_id]
   end
 
   def current_organization
@@ -61,7 +62,7 @@ module SessionsHelper
   end
 
   def current_name
-    @current_name ||= "#{current_user.worker.family_name} #{current_user.worker.first_name}"
+    @current_name ||= "#{current_user&.worker&.family_name} #{current_user&.worker&.first_name}"
   end
 
   def log_out

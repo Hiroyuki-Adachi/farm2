@@ -21,20 +21,13 @@ div.d-table-cell.numeric {
   background-color: gainsboro;
 }
 
-#my_side_wrapper {
-  @media (min-width: 767.98px) {
-    padding-right: 0;
-    max-width: 200px;
-  }
-}
-
 .form-check-input,
 .form-check-label {
   cursor: pointer;
 }
 
 @media print {
-  #my_sidebar {
+  .my-sidebar {
     display: none;
   }
 }
@@ -84,3 +77,54 @@ table.tbl-clear-color tbody tr td {
   background-color: unset;
   color: unset;
 }
+
+:root {
+  --surface: #f6f8fb;
+  --surface-2: #ffffff;
+  --border: rgba(0,0,0,.08);
+  --brand: #1f8feb;
+  --brand-weak: #e7f2fd;
+}
+body {
+  background: linear-gradient(180deg, #f8fbff 0%, #f3f6fa 100%);
+  min-height: 100vh;
+}
+header.navbar {
+  background: linear-gradient(90deg, #fff 0%, var(--brand-weak) 100%);
+  border-bottom: 1px solid var(--border);
+}
+.app-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,.04);
+}
+@media (min-width: 768px) {
+  .offcanvas-md {
+    position: static;
+    transform: none !important;
+    visibility: visible !important;
+    border-right: 1px solid var(--border);
+  }
+}
+
+/* サイドバーの現在位置を分かりやすく */
+.my-sidebar a.dropdown-item.active {
+  background: #fff;
+  border-left: 4px solid var(--brand);
+  font-weight: 600;
+}
+.my-sidebar a.dropdown-item { border-left: 4px solid transparent; }
+
+#sidebar_desktop {
+  transition: opacity .18s ease;
+}
+.sidebar-collapsed #sidebar_desktop { opacity: 0; }
+/* サイドバー折りたたみ中は、rowの縦ガターを消す */
+.sidebar-collapsed .main-row { --bs-gutter-y: 0; }
+
+.navbar .btn { white-space: nowrap; }
+
+/* 折りたたみ中、余白が出る場合の保険 */
+.sidebar-collapsed #content_col { padding-top: 0 !important; }
