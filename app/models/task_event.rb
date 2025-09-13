@@ -15,6 +15,7 @@
 #  status_to_id(変更後ステータス)   :integer
 #  task_comment_id(関連コメント)    :bigint
 #  task_id(対象タスク)              :bigint           not null
+#  work_id(関連作業)                :bigint
 #
 # Indexes
 #
@@ -24,6 +25,7 @@
 #  index_task_events_on_task_comment_id         (task_comment_id)
 #  index_task_events_on_task_id                 (task_id)
 #  index_task_events_on_task_id_and_created_at  (task_id,created_at)
+#  index_task_events_on_work_id                 (work_id)
 #
 # Foreign Keys
 #
@@ -32,6 +34,7 @@
 #  fk_rails_...  (assignee_to_id => workers.id)
 #  fk_rails_...  (task_comment_id => task_comments.id)
 #  fk_rails_...  (task_id => tasks.id)
+#  fk_rails_...  (work_id => works.id)
 #
 class TaskEvent < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
@@ -44,5 +47,5 @@ class TaskEvent < ApplicationRecord
   belongs_to_active_hash :status_from, class_name: 'TaskStatus', foreign_key: 'status_from_id', optional: true
   belongs_to_active_hash :status_to, class_name: 'TaskStatus', foreign_key: 'status_to_id', optional: true
 
-  enum :event_type, { task_created: 0, status_changed: 1, assignee_changed: 2, due_on_changed: 3, comment_added: 4 }
+  enum :event_type, { task_created: 0, change_status: 1, change_assignee: 2, change_due_on: 3, comment_added: 4 }
 end

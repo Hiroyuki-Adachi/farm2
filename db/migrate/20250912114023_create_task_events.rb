@@ -11,6 +11,7 @@ class CreateTaskEvents < ActiveRecord::Migration[8.0]
       t.date :due_on_from, null: true, comment: '変更前の期限'
       t.date :due_on_to, null: true, comment: '変更後の期限'
       t.references :task_comment, null: true, foreign_key: true, comment: '関連コメント'
+      t.references :work, null: true, foreign_key: true, comment: '関連作業'
 
       t.timestamps
     end

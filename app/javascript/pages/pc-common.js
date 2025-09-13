@@ -125,7 +125,7 @@ document.addEventListener('turbo:load', () => {
 
     sidebars.forEach((sb) => {
       // 対象controllerのリンク候補
-      const links = Array.from(sb.querySelectorAll(`a[data-controller="${controllerValue}"]`));
+      const links = Array.from(sb.querySelectorAll(`a[data-app-controller="${controllerValue}"]`));
       if (links.length === 0) return;
 
       // actionsが一致するリンクを優先

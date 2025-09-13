@@ -54,6 +54,7 @@ class Worker < ApplicationRecord
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
+  scope :taskable, -> {kept.where.not(office_role: :none)}
   scope :usual, -> {kept.includes(home: :section).where(homes: { company_flag: false }).order('sections.display_order, homes.display_order, workers.display_order')}
   scope :company, -> {kept.joins(:home).eager_load(:home).where(homes: { company_flag: true }).order("workers.display_order")}
   scope :by_homes, ->(homes) {kept.where(home_id: homes.ids).order("display_order")}

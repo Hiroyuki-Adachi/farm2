@@ -101,6 +101,8 @@ GEM
       xpath (~> 3.2)
     chronic (0.10.2)
     chunky_png (1.4.0)
+    commonmarker (2.3.2-x86_64-linux)
+    commonmarker (2.3.2-x86_64-linux-musl)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.4)
     crack (1.0.0)
@@ -358,6 +360,7 @@ GEM
     request_store (1.7.0)
       rack (>= 1.4)
     rexml (3.4.4)
+    rouge (4.6.0)
     rqrcode (3.1.0)
       chunky_png (~> 1.0)
       rqrcode_core (~> 2.0)
@@ -403,6 +406,8 @@ GEM
       hashie (>= 0.1.0, < 6)
       version_gem (>= 1.1.8, < 3)
     spring (4.4.0)
+    stimulus-rails (1.3.4)
+      railties (>= 6.0.0)
     stringio (3.1.7)
     thor (1.4.0)
     timeout (0.4.3)
@@ -453,6 +458,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   capybara
   chunky_png
+  commonmarker
   cssbundling-rails
   csv
   cuprite (= 0.15.1)
@@ -479,6 +485,7 @@ DEPENDENCIES
   propshaft
   puma
   rails (>= 8.0)
+  rouge
   rqrcode
   rubocop
   rubocop-performance
@@ -487,6 +494,7 @@ DEPENDENCIES
   rubyXL
   rubyzip
   spring
+  stimulus-rails
   turbo-rails
   tzinfo-data
   wareki

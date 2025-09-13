@@ -31,6 +31,8 @@ class Task < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   include Enums::OfficeRole
 
+  attribute :watched, :boolean # ← SELECTエイリアスを型付け（任意）
+
   belongs_to :assignee, class_name: 'Worker', optional: true
   belongs_to :creator, class_name: 'Worker', optional: true
   belongs_to_active_hash :task_status
@@ -41,12 +43,11 @@ class Task < ApplicationRecord
   has_many :task_events, dependent: :destroy
 
   before_save :clear_end_reason
-  before_save :create_watcher
-  after_create :notify_task_event_for_create
-  after_update :notify_task_event_for_update
+  before_create :create_watcher
+  after_create :create_task_event
 
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
-  enum :end_reason, { unset: 0, completed: 1, no_action: 2, unavailable: 3, duplicate: 4, other: 9 }
+  enum :end_reason, { unset: 0, completed: 1, no_action: 2, unavailable: 3, duplicate: 4, other: 9 }, prefix: true
 
   validates :title, presence: true, length: { maximum: 40 }
   validates :task_status_id, presence: true
@@ -83,10 +84,24 @@ class Task < ApplicationRecord
       .usual_order
   }
 
-  attr_accessor :updated_by
+  
+  scope :with_watch_flag, ->(worker_id) {
+    select(<<~SQL.squish)
+      #{table_name}.*, 
+      EXISTS (
+        SELECT 1 FROM task_watchers tw
+        WHERE tw.task_id = #{table_name}.id
+          AND tw.worker_id = #{worker_id}
+      ) AS watched
+    SQL
+  }
 
   def closed?
     TaskStatus.closed_ids.include?(self.task_status_id)
+  end
+
+  def opened?
+    !self.closed?
   end
 
   def overdue?
@@ -95,7 +110,63 @@ class Task < ApplicationRecord
     due_on < Date.current && !closed?
   end
 
+  # 担当者変更
+  def change_assignee!(new_assignee:, actor:, comment: nil)
+    return false if new_assignee&.id == assignee_id
+
+    in_change_tx!(actor:, comment:) do |c|
+      events.create!(
+        actor:, event_type: :assignee_changed,
+        assignee_from_id: assignee_id, assignee_to_id: new_assignee&.id,
+        task_comment: c
+      )
+      update!(assignee: new_assignee)
+
+      # ウォッチャ登録（複合ユニークIndex: [:task_id, :worker_id] 前提）
+      TaskWatcher.find_or_create_by!(task_id: id, worker_id: new_assignee.id) if new_assignee
+      # Rails 7+ なら insert_all + unique_by でもOK
+    end
+  end
+
+  # ステータス変更
+  def change_status!(new_status:, actor:, comment: nil)
+    return false if new_status.id == task_status_id
+
+    in_change_tx!(actor:, comment:) do |c|
+      events.create!(
+        actor:, event_type: :status_changed,
+        status_from: task_status_id, status_to: new_status.id,
+        task_comment: c
+      )
+      update!(task_status: new_status)
+    end
+  end
+
+  # 期限変更
+  def change_due_on!(new_due_on:, actor:, comment: nil)
+    return false if new_due_on == due_on
+
+    in_change_tx!(actor:, comment:) do |c|
+      events.create!(
+        actor:, event_type: :due_changed,
+        due_on_from: due_on, due_on_to: new_due_on,
+        task_comment: c
+      )
+      update!(due_on: new_due_on)
+    end
+  end
+
   private
+
+  # 共通ラッパ：コメントを（あれば）作ってトランザクション内でyield
+  def in_change_tx!(actor:, comment:)
+    transaction do
+      created_comment =
+        comment.present? ? TaskComment.create!(task: self, user: actor, body: comment) : nil
+      yield(created_comment)
+    end
+    true
+  end
 
   def ended_on_after_started_on
     return if ended_on.blank? || started_on.blank?
@@ -109,6 +180,12 @@ class Task < ApplicationRecord
     errors.add(:due_on, "は着手日以降の日付にしてください。") if due_on < started_on
   end
 
+  def end_reason_for_closed
+    return if self.opened?
+
+    errors.add("完了理由を選択してください。") if self.end_reason_unset?
+  end
+
   def clear_end_reason
     self.end_reason = :unset unless self.closed?
   end
@@ -118,49 +195,13 @@ class Task < ApplicationRecord
     self.task_watchers.find_or_create_by(worker: self.creator_id) if self.creator_id.present?
   end
 
-  def notify_task_event_for_create
+  def create_task_event
     return if self.creator.nil?
-    TaskEvent.create(
+
+    TaskEvent.create!(
       task: self,
       actor: self.creator,
-      event_type: :task_created,
-      status_to: self.task_status_id,
-      assignee_to: self.assignee,
-      due_on_to: self.due_on
+      event_type: :task_created
     )
-  end
-
-  def notify_task_event_for_update
-    return if self.creator.nil?
-
-    if self.saved_change_to_task_status_id?
-      TaskEvent.create(
-        task: self,
-        actor: self.updated_by,
-        event_type: :status_changed,
-        status_from_id: self.task_status_id_before_last_save,
-        status_to_id: self.task_status_id
-      )
-    end
-
-    if self.saved_change_to_assignee_id?
-      TaskEvent.create(
-        task: self,
-        actor: self.updated_by,
-        event_type: :assignee_changed,
-        assignee_from_id: self.assignee_id_before_last_save,
-        assignee_to_id: self.assignee_id
-      )
-    end
-
-    if self.saved_change_to_due_on?
-      TaskEvent.create(
-        task: self,
-        actor: self.updated_by,
-        event_type: :due_on_changed,
-        due_on_from: self.due_on_before_last_save,
-        due_on_to: self.due_on
-      )
-    end
   end
 end

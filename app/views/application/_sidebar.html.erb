@@ -3,23 +3,23 @@
     <span class="h5">日報管理</span>
     <div class="ms-3 navbar">
       <% unless current_user.visitor? %>
-        <%= link_to '日報入力', new_work_path, {class: "dropdown-item", data: {controller: :works, actions: [:new, :edit, :show]}} %>
+        <%= link_to '日報入力', new_work_path, {class: "dropdown-item", data: {app_controller: :works, actions: [:new, :edit, :show]}} %>
       <% end %>
-      <%= link_to '日報一覧', works_path, {class: "dropdown-item", data: {controller:  "works", actions: [:index]}} %>
+      <%= link_to '日報一覧', works_path, {class: "dropdown-item", data: {app_controller:  "works", actions: [:index]}} %>
       <% if current_user.checkable? %>
-        <%= link_to '日報検証', work_verifications_path, {class: "dropdown-item", data: {controller: "work_verifications"}} %>
+        <%= link_to '日報検証', work_verifications_path, {class: "dropdown-item", data: {app_controller: "work_verifications"}} %>
       <% end %>
     </div>
   </div>
   <div aria-labelledby="navbar_schedule" class="mt-2" style="display:none;">
     <span class="h5">予定管理</span>
     <div class="ms-3 navbar">
-      <%= link_to '作業予定', schedules_path, {class: "dropdown-item", data: {controller:  "schedules"}} %>
+      <%= link_to '作業予定', schedules_path, {class: "dropdown-item", data: {app_controller:  "schedules"}} %>
   <% if current_user.checkable? %>
-      <%= link_to 'タスク一覧', tasks_path, {class: "dropdown-item", data: {controller:  "tasks"}} %>
+      <%= link_to 'タスク一覧', tasks_path, {class: "dropdown-item", data: {app_controller:  "tasks"}} %>
   <% end %>
   <% if current_user.userable? %>
-      <%= link_to '議事録', minutes_path, {class: "dropdown-item", data: {controller:  "minutes"}} %>
+      <%= link_to '議事録', minutes_path, {class: "dropdown-item", data: {app_controller:  "minutes"}} %>
   <% end %>
     </div>
   </div>
@@ -27,13 +27,13 @@
     <div aria-labelledby="navbar_harvest" class="mt-2" style="display:none;">
       <span class="h5">収穫管理</span>
       <div class="ms-3 navbar">
-        <%= link_to '育苗一覧', seedling_results_path, {class: "dropdown-item", data: {controller: "seedling_results"}} %>
+        <%= link_to '育苗一覧', seedling_results_path, {class: "dropdown-item", data: {app_controller: "seedling_results"}} %>
         <% if current_user.manageable? %>
-          <%= link_to '乾燥調整一覧', dryings_path, {class: "dropdown-item", data: {controller: :dryings}} %>
-          <%= link_to '収穫一覧(水稲)', harvest_rices_path, {class: "dropdown-item", data: {controller: "harvest_rices"}} %>
-          <%= link_to '収穫一覧(WCS)', harvest_whole_crops_path, {class: "dropdown-item", data: {controller: "harvest_whole_crops"}} %>
-          <%= link_to '保有米一覧', owned_rices_path, {class: "dropdown-item", data: {controller: :owned_rices}} %>
-          <%= link_to '稲わら面積一覧', lands_straws_path, {class: "dropdown-item", data: {controller: "straws"}} %>
+          <%= link_to '乾燥調整一覧', dryings_path, {class: "dropdown-item", data: {app_controller: :dryings}} %>
+          <%= link_to '収穫一覧(水稲)', harvest_rices_path, {class: "dropdown-item", data: {app_controller: "harvest_rices"}} %>
+          <%= link_to '収穫一覧(WCS)', harvest_whole_crops_path, {class: "dropdown-item", data: {app_controller: "harvest_whole_crops"}} %>
+          <%= link_to '保有米一覧', owned_rices_path, {class: "dropdown-item", data: {app_controller: :owned_rices}} %>
+          <%= link_to '稲わら面積一覧', lands_straws_path, {class: "dropdown-item", data: {app_controller: "straws"}} %>
         <% end %>
       </div>
     </div>
@@ -42,20 +42,20 @@
     <span class="h5">集計処理</span>
     <div class="ms-3 navbar">
       <% if current_user.checkable? %>
-        <%= link_to '統計照会', statistics_path, {class: "dropdown-item", data: {controller: :statistics}} %>
-        <%= link_to '土地カルテ', lands_cards_path, {class: "dropdown-item", data: {controller: :cards}} %>
-        <%= link_to '土地集計', lands_totals_path, {class: "dropdown-item", data: {controller: :totals}} %>
+        <%= link_to '統計照会', statistics_path, {class: "dropdown-item", data: {app_controller: :statistics}} %>
+        <%= link_to '土地カルテ', lands_cards_path, {class: "dropdown-item", data: {app_controller: :cards}} %>
+        <%= link_to '土地集計', lands_totals_path, {class: "dropdown-item", data: {app_controller: :totals}} %>
       <% end %>
       <% if current_user.manageable? %>
-        <%= link_to '集計対象期間変更', edit_menu_path(current_system), {class: "dropdown-item", data: {controller: :menu, actions: [:edit]}} %>
-        <%= link_to '日当一覧', work_results_path, {class: "dropdown-item", data: {controller: "work_results", wait: true}} %>
-        <%= link_to '機械利用料', machine_results_path, {class: "dropdown-item", data: {controller: "machine_results"}} %>
-        <%= link_to '薬剤使用量一覧', work_chemicals_path, {class: "dropdown-item", data: {controller: "work_chemicals", wait: true}} %>
-        <%= link_to '苗使用量一覧', work_seedlings_path, {class: "dropdown-item", data: {controller: "work_seedlings"}} %>
-        <%= link_to '世帯別作業一覧', statistics_work_days_path, {class: "dropdown-item", data: {controller: "work_days"}} %>
-        <%= link_to '作業者別作業一覧', statistics_workers_path, {class: "dropdown-item", data: {controller: "statistics_workers"}} %>
-        <!-- <%= link_to 'Z-GIS出力', new_zgi_path, {class: "dropdown-item", data: {controller: "zgis"}} %> -->
-        <%= link_to 'カレンダー', calendars_path, {class: "dropdown-item", data: {controller: "calendars"}} %>
+        <%= link_to '集計対象期間変更', edit_menu_path(current_system), {class: "dropdown-item", data: {app_controller: :menu, actions: [:edit]}} %>
+        <%= link_to '日当一覧', work_results_path, {class: "dropdown-item", data: {app_controller: "work_results", wait: true}} %>
+        <%= link_to '機械利用料', machine_results_path, {class: "dropdown-item", data: {app_controller: "machine_results"}} %>
+        <%= link_to '薬剤使用量一覧', work_chemicals_path, {class: "dropdown-item", data: {app_controller: "work_chemicals", wait: true}} %>
+        <%= link_to '苗使用量一覧', work_seedlings_path, {class: "dropdown-item", data: {app_controller: "work_seedlings"}} %>
+        <%= link_to '世帯別作業一覧', statistics_work_days_path, {class: "dropdown-item", data: {app_controller: "work_days"}} %>
+        <%= link_to '作業者別作業一覧', statistics_workers_path, {class: "dropdown-item", data: {app_controller: "statistics_workers"}} %>
+        <!-- <%= link_to 'Z-GIS出力', new_zgi_path, {class: "dropdown-item", data: {app_controller: "zgis"}} %> -->
+        <%= link_to 'カレンダー', calendars_path, {class: "dropdown-item", data: {app_controller: "calendars"}} %>
       <% end %>
     </div>
   </div>
@@ -63,51 +63,51 @@
   <div aria-labelledby="navbar_fix" class="mt-2" style="display:none;">
     <span class="h5">会計処理</span>
     <div class="ms-3 navbar">
-      <%= link_to '新規確定', new_fix_path, {class: "dropdown-item", data: {controller: :fixes, actions: [:new], wait: true}} %>
-      <%= link_to '確定一覧', fixes_path, {class: "dropdown-item", data: {controller: :fixes, actions: [:index, :show]}} %>
-      <%= link_to '育苗集計', total_seedlings_path, {class: "dropdown-item", data: {controller: :total_seedlings}} %>
-      <%= link_to '乾燥調整一覧', total_dryings_path, {class: "dropdown-item", data: {controller: :total_dryings}} %>
-      <%= link_to 'WCS一覧', whole_crops_path, {class: "dropdown-item", data: {controller: :whole_crops}} %>
+      <%= link_to '新規確定', new_fix_path, {class: "dropdown-item", data: {app_controller: :fixes, actions: [:new], wait: true}} %>
+      <%= link_to '確定一覧', fixes_path, {class: "dropdown-item", data: {app_controller: :fixes, actions: [:index, :show]}} %>
+      <%= link_to '育苗集計', total_seedlings_path, {class: "dropdown-item", data: {app_controller: :total_seedlings}} %>
+      <%= link_to '乾燥調整一覧', total_dryings_path, {class: "dropdown-item", data: {app_controller: :total_dryings}} %>
+      <%= link_to 'WCS一覧', whole_crops_path, {class: "dropdown-item", data: {app_controller: :whole_crops}} %>
     </div>
   </div>
   <div aria-labelledby="navbar_stock" class="mt-2" style="display:none;">
     <span class="h5">在庫管理</span>
     <div class="ms-3 navbar">
-      <%= link_to '棚卸処理', chemicals_inventories_path, {class: "dropdown-item", data: {controller: :inventories}} %>
-      <%= link_to '納品処理', chemicals_stores_path, {class: "dropdown-item", data: {controller: :stores}} %>
-      <%= link_to '在庫確認', chemicals_stocks_path, {class: "dropdown-item", data: {controller: :stocks}} %>
+      <%= link_to '棚卸処理', chemicals_inventories_path, {class: "dropdown-item", data: {app_controller: :inventories}} %>
+      <%= link_to '納品処理', chemicals_stores_path, {class: "dropdown-item", data: {app_controller: :stores}} %>
+      <%= link_to '在庫確認', chemicals_stocks_path, {class: "dropdown-item", data: {app_controller: :stocks}} %>
     </div>
   </div>
   <div aria-labelledby="navbar_cost" class="mt-2" style="display:none;">
     <span class="h5">原価管理</span>
     <div class="ms-3 navbar">
-      <%= link_to '薬剤原価', chemical_costs_path, {class: "dropdown-item", data: {controller: "chemical_costs", wait: true}} %>
-      <%= link_to '育苗原価', seedling_costs_path, {class: "dropdown-item", data: {controller: "seedling_costs"}} %>
-      <%= link_to '原価一覧', total_costs_path, {class: "dropdown-item", data: {controller: "total_costs"}} %>
-      <%= link_to '農業簿記', sorimachi_imports_path, {class: "dropdown-item", data: {controller: :imports}} %>
-      <%= link_to '勘定科目', sorimachi_accounts_path, {class: "dropdown-item", data: {controller: :accounts}} %>
+      <%= link_to '薬剤原価', chemical_costs_path, {class: "dropdown-item", data: {app_controller: "chemical_costs", wait: true}} %>
+      <%= link_to '育苗原価', seedling_costs_path, {class: "dropdown-item", data: {app_controller: "seedling_costs"}} %>
+      <%= link_to '原価一覧', total_costs_path, {class: "dropdown-item", data: {app_controller: "total_costs"}} %>
+      <%= link_to '農業簿記', sorimachi_imports_path, {class: "dropdown-item", data: {app_controller: :imports}} %>
+      <%= link_to '勘定科目', sorimachi_accounts_path, {class: "dropdown-item", data: {app_controller: :accounts}} %>
     </div>
   </div>
   <% if this_term? %>
   <div aria-labelledby="navbar_plan" class="mt-2" style="display:none;">
     <span class="h5">生産計画</span>
     <div class="ms-3 navbar">
-      <%= link_to '作付予定', new_plans_work_type_path, {class: "dropdown-item", data: {controller: :plan_work_types}} %>
-      <%= link_to '作付計画', new_plans_land_path(mode: Plans::LandsController::TERM_MODES[:current]), {class: "dropdown-item", data: {controller: :plan_lands}} %>
-      <%= link_to '作付明細', land_costs_path, {class: "dropdown-item", data: {controller: "land_costs"}} %>
+      <%= link_to '作付予定', new_plans_work_type_path, {class: "dropdown-item", data: {app_controller: :plan_work_types}} %>
+      <%= link_to '作付計画', new_plans_land_path(mode: Plans::LandsController::TERM_MODES[:current]), {class: "dropdown-item", data: {app_controller: :plan_lands}} %>
+      <%= link_to '作付明細', land_costs_path, {class: "dropdown-item", data: {app_controller: "land_costs"}} %>
     </div>
   </div>
   <% end %>
   <div aria-labelledby="navbar_gap" class="mt-2" style="display:none;">
     <span class="h5">GAP関連</span>
     <div class="ms-3 navbar">
-      <%= link_to '作業月毎記録表', gaps_monthly_reports_path, {class: "dropdown-item", data: {controller: :gaps_monthly_reports}} %>
-      <%= link_to '農薬肥料台帳', gaps_chemicals_path, {class: "dropdown-item", data: {controller: :gaps_chemicals}} %>
-      <%= link_to '体調確認表', gaps_health_index_path, {class: "dropdown-item", data: {controller: :gaps_health}} %>
-      <%= link_to '整備記録表', gaps_maintenances_path, {class: "dropdown-item", data: {controller: :gaps_maintenances}} %>
-      <%= link_to '清掃記録表', gaps_cleanings_path, {class: "dropdown-item", data: {controller: :gaps_cleanings}} %>
-      <%= link_to '研修記録表', gaps_trainings_path, {class: "dropdown-item", data: {controller: :gaps_trainings}} %>
-      <%= link_to 'ヒヤリハット', gaps_accidents_path, {class: "dropdown-item", data: {controller: :gaps_accidents}} %>
+      <%= link_to '作業月毎記録表', gaps_monthly_reports_path, {class: "dropdown-item", data: {app_controller: :gaps_monthly_reports}} %>
+      <%= link_to '農薬肥料台帳', gaps_chemicals_path, {class: "dropdown-item", data: {app_controller: :gaps_chemicals}} %>
+      <%= link_to '体調確認表', gaps_health_index_path, {class: "dropdown-item", data: {app_controller: :gaps_health}} %>
+      <%= link_to '整備記録表', gaps_maintenances_path, {class: "dropdown-item", data: {app_controller: :gaps_maintenances}} %>
+      <%= link_to '清掃記録表', gaps_cleanings_path, {class: "dropdown-item", data: {app_controller: :gaps_cleanings}} %>
+      <%= link_to '研修記録表', gaps_trainings_path, {class: "dropdown-item", data: {app_controller: :gaps_trainings}} %>
+      <%= link_to 'ヒヤリハット', gaps_accidents_path, {class: "dropdown-item", data: {app_controller: :gaps_accidents}} %>
     </div>
   </div>
   <% end %>
@@ -115,21 +115,21 @@
   <div aria-labelledby="navbar_master" class="mt-2" style="display:none;">
     <span class="h5">マスタ保守</span>
     <div class="ms-3 navbar">
-      <%= link_to '世帯マスタ', homes_path, {class: "dropdown-item", data: {controller: :homes}} %>
-      <%= link_to '作業者マスタ', workers_path, {class: "dropdown-item", data: {controller: :workers}} %>
-      <%= link_to '土地マスタ', lands_path, {class: "dropdown-item", data: {controller: :lands}} %>
-      <%= link_to '作業種別マスタ', work_kinds_path, {class: "dropdown-item", data: {controller: "work_kinds"}} %>
-      <%= link_to '機械種別マスタ', machine_types_path, {class: "dropdown-item", data: {controller: "machine_types"}} %>
-      <%= link_to '機械マスタ', machines_path, {class: "dropdown-item", data: {controller: :machines}} %>
-      <%= link_to '薬剤種別マスタ', chemical_types_path, {class: "dropdown-item", data: {controller: "chemical_types"}} %>
-      <%= link_to '薬剤マスタ', chemicals_path, {class: "dropdown-item", data: {controller: :chemicals}} %>
+      <%= link_to '世帯マスタ', homes_path, {class: "dropdown-item", data: {app_controller: :homes}} %>
+      <%= link_to '作業者マスタ', workers_path, {class: "dropdown-item", data: {app_controller: :workers}} %>
+      <%= link_to '土地マスタ', lands_path, {class: "dropdown-item", data: {app_controller: :lands}} %>
+      <%= link_to '作業種別マスタ', work_kinds_path, {class: "dropdown-item", data: {app_controller: "work_kinds"}} %>
+      <%= link_to '機械種別マスタ', machine_types_path, {class: "dropdown-item", data: {app_controller: "machine_types"}} %>
+      <%= link_to '機械マスタ', machines_path, {class: "dropdown-item", data: {app_controller: :machines}} %>
+      <%= link_to '薬剤種別マスタ', chemical_types_path, {class: "dropdown-item", data: {app_controller: "chemical_types"}} %>
+      <%= link_to '薬剤マスタ', chemicals_path, {class: "dropdown-item", data: {app_controller: :chemicals}} %>
       <% if current_user.manageable? %>
-        <%= link_to '原価種別マスタ', cost_types_path, {class: "dropdown-item", data: {controller: "cost_types"}} %>
-        <%= link_to '保有米単価マスタ', owned_rice_prices_path, {class: "dropdown-item", data: {controller: :owned_rice_prices}} %>
-        <%= link_to '場所マスタ', land_places_path, {class: "dropdown-item", data: {controller: "land_places"}} %>
-        <%= link_to '施設マスタ', institutions_path, {class: "dropdown-item", data: {controller: "institutions"}} %>
-        <%= link_to '作業分類マスタ', work_types_path, {class: "dropdown-item", data: {controller: "work_types", actions: [:index, :edit]}} %>
-        <%= link_to '班マスタ', sections_path, {class: "dropdown-item", data: {controller: :sections}} %>
+        <%= link_to '原価種別マスタ', cost_types_path, {class: "dropdown-item", data: {app_controller: "cost_types"}} %>
+        <%= link_to '保有米単価マスタ', owned_rice_prices_path, {class: "dropdown-item", data: {app_controller: :owned_rice_prices}} %>
+        <%= link_to '場所マスタ', land_places_path, {class: "dropdown-item", data: {app_controller: "land_places"}} %>
+        <%= link_to '施設マスタ', institutions_path, {class: "dropdown-item", data: {app_controller: "institutions"}} %>
+        <%= link_to '作業分類マスタ', work_types_path, {class: "dropdown-item", data: {app_controller: "work_types", actions: [:index, :edit]}} %>
+        <%= link_to '班マスタ', sections_path, {class: "dropdown-item", data: {app_controller: :sections}} %>
       <% end %>
     </div>
   </div>
@@ -138,14 +138,14 @@
     <span class="h5">管理</span>
     <div class="ms-3 navbar">
       <% if current_user.admin? %>
-        <%= link_to '利用者マスタ保守', users_path, {class: "dropdown-item", data: {controller: :users, actions: [:new, :index]}} %>
-        <%= link_to '管理情報変更', edit_organization_path(current_organization), {class: "dropdown-item", data: {controller: :organizations}} %>
-        <%= link_to 'システム変更', edit_system_path(current_system), {class: "dropdown-item", data: {controller: :systems}} %>
+        <%= link_to '利用者マスタ保守', users_path, {class: "dropdown-item", data: {app_controller: :users, actions: [:new, :index]}} %>
+        <%= link_to '管理情報変更', edit_organization_path(current_organization), {class: "dropdown-item", data: {app_controller: :organizations}} %>
+        <%= link_to 'システム変更', edit_system_path(current_system), {class: "dropdown-item", data: {app_controller: :systems}} %>
       <% end %>
-      <%= link_to '対象年度変更', edit_term_menu_path(current_system), {class: "dropdown-item", data: {controller: :menu, actions: [:edit_term]}} %>
-      <%= link_to 'QRコード', users_qr_index_path, {class: "dropdown-item", data: {controller: :qr}} %>
-      <%= link_to '検索ワード設定', new_users_word_path, {class: "dropdown-item", data: {controller: :words}} %>
-      <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item", data: {controller: :users, actions: [:edit]}} %>
+      <%= link_to '対象年度変更', edit_term_menu_path(current_system), {class: "dropdown-item", data: {app_controller: :menu, actions: [:edit_term]}} %>
+      <%= link_to 'QRコード', users_qr_index_path, {class: "dropdown-item", data: {app_controller: :qr}} %>
+      <%= link_to '検索ワード設定', new_users_word_path, {class: "dropdown-item", data: {app_controller: :words}} %>
+      <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item", data: {app_controller: :users, actions: [:edit]}} %>
    </div>
   </div>
 </nav>

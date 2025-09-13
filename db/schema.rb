@@ -820,6 +820,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_114023) do
     t.date "due_on_from", comment: "変更前の期限"
     t.date "due_on_to", comment: "変更後の期限"
     t.bigint "task_comment_id", comment: "関連コメント"
+    t.bigint "work_id", comment: "関連作業"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["actor_id"], name: "index_task_events_on_actor_id"
@@ -828,6 +829,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_114023) do
     t.index ["task_comment_id"], name: "index_task_events_on_task_comment_id"
     t.index ["task_id", "created_at"], name: "index_task_events_on_task_id_and_created_at"
     t.index ["task_id"], name: "index_task_events_on_task_id"
+    t.index ["work_id"], name: "index_task_events_on_work_id"
   end
 
   create_table "task_watchers", comment: "タスク閲覧者", force: :cascade do |t|
@@ -1192,6 +1194,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_114023) do
   add_foreign_key "task_events", "workers", column: "actor_id"
   add_foreign_key "task_events", "workers", column: "assignee_from_id"
   add_foreign_key "task_events", "workers", column: "assignee_to_id"
+  add_foreign_key "task_events", "works"
   add_foreign_key "task_watchers", "tasks"
   add_foreign_key "task_watchers", "workers"
   add_foreign_key "tasks", "workers", column: "assignee_id"

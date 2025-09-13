@@ -25,3 +25,8 @@ pin "chart.js/auto", to: "https://ga.jspm.io/npm:chart.js@4.4.3/auto/auto.js"
 pin "@rails/actioncable", to: "@rails--actioncable.js" # @7.2.102
 pin "bootstrap", to: "bootstrap.bundle.min.js" # @5.3.8
 pin "qr-scanner", to: "/javascripts/qr-scanner/qr-scanner.min.js"
+pin "marked" # @12.0.2
+pin "dompurify" # @3.2.6
+pin "@hotwired/stimulus", to: "stimulus.min.js"
+pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
+pin_all_from "app/javascript/controllers", under: "controllers"

@@ -16,6 +16,8 @@ gem "cssbundling-rails"
 gem 'importmap-rails'
 # propshaft provides a way to bundle JavaScript files in Rails applications.
 gem 'propshaft'
+# Use stimulus for JavaScript
+gem 'stimulus-rails'
 
 # daemons provides an easy way to wrap existing ruby scripts (for example a self-written server) to be run as a daemon and to be controlled by simple start/stop/restart commands.
 gem 'daemons'
@@ -82,6 +84,11 @@ gem 'whenever', require: false
 gem 'omniauth'
 # OmniAuth strategy for Google OAuth2
 gem 'omniauth-google-oauth2'
+
+# Reduces the size of your HTML output by removing unnecessary whitespace and comments.
+gem "commonmarker"
+# Rouge is a pure-ruby syntax highlighter.
+gem "rouge"
 
 group :development do
   # listen to file modifications

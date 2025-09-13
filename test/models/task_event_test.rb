@@ -15,6 +15,7 @@
 #  status_to_id(変更後ステータス)   :integer
 #  task_comment_id(関連コメント)    :bigint
 #  task_id(対象タスク)              :bigint           not null
+#  work_id(関連作業)                :bigint
 #
 # Indexes
 #
@@ -24,6 +25,7 @@
 #  index_task_events_on_task_comment_id         (task_comment_id)
 #  index_task_events_on_task_id                 (task_id)
 #  index_task_events_on_task_id_and_created_at  (task_id,created_at)
+#  index_task_events_on_work_id                 (work_id)
 #
 # Foreign Keys
 #
@@ -32,6 +34,7 @@
 #  fk_rails_...  (assignee_to_id => workers.id)
 #  fk_rails_...  (task_comment_id => task_comments.id)
 #  fk_rails_...  (task_id => tasks.id)
+#  fk_rails_...  (work_id => works.id)
 #
 require "test_helper"
 

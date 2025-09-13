@@ -23,17 +23,4 @@
 class TaskComment < ApplicationRecord
   belongs_to :poster, class_name: 'Worker'
   belongs_to :task
-
-  after_create :notify_task_event
-
-  private
-
-  def notify_task_event
-    TaskEvent.create(
-      task: task,
-      actor: poster,
-      event_type: :comment_added,
-      task_comment: self
-    )
-  end
 end

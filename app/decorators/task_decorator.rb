@@ -18,7 +18,7 @@ class TaskDecorator < Draper::Decorator
   end
 
   def end_reason_name
-    return "" if object.unset?
+    return "" if object.end_reason_unset?
 
     I18n.t("activerecord.attributes.task.end_reasons.#{object.end_reason}")
   end
