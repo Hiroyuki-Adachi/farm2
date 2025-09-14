@@ -11,14 +11,18 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    unless current_user.worker.office_role_none?
+      @task.assignee = current_user.worker
+      @task.office_role = current_user.worker.office_role
+    end
   end
 
   def create
     @task = Task.new(task_params)
-    @task.creator = current_user.worker # ← ご希望どおり自動設定
+    @task.creator = current_user.worker 
 
     if @task.save
-      redirect_to @task, notice: "タスクを作成しました。"
+      redirect_to tasks_path, notice: "タスクを作成しました。"
     else
       render :new, status: :unprocessable_entity
     end

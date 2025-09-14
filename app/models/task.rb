@@ -43,7 +43,7 @@ class Task < ApplicationRecord
   has_many :task_events, dependent: :destroy
 
   before_save :clear_end_reason
-  before_create :create_watcher
+  after_create :create_watcher
   after_create :create_task_event
 
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
@@ -191,8 +191,8 @@ class Task < ApplicationRecord
   end
 
   def create_watcher
-    self.task_watchers.find_or_create_by(worker: self.assignee_id) if self.assignee_id.present?
-    self.task_watchers.find_or_create_by(worker: self.creator_id) if self.creator_id.present?
+    self.task_watchers.find_or_create_by(worker_id: self.assignee.id) if self.assignee.present?
+    self.task_watchers.find_or_create_by(worker_id: self.creator.id) if self.creator.present?
   end
 
   def create_task_event
