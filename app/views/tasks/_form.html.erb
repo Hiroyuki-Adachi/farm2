@@ -9,7 +9,7 @@
 
       <div class="row g-3">
         <!-- 状態は新規では非表示にするため、この行自体を削除 -->
-        <div class="col-md-4">
+        <div class="col-md-5">
           <%= f.label :assignee_id, "担当者", class: "form-label" %>
           <%= f.collection_select :assignee_id, Worker.taskable.usual, :id, :name, { include_blank: true }, { class: "form-select" } %>
         </div>
@@ -21,13 +21,9 @@
           <%= f.label :office_role, "役割", class: "form-label" %>
           <%= f.select(:office_role, enum_options_for(Task, :office_role), {}, class: "form-select") %>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <%= f.label :due_on, "期限", class: "form-label" %>
           <%= f.date_field :due_on, class: "form-control" %>
-        </div>
-        <div class="col-md-2">
-          <%= f.label :started_on, "着手日", class: "form-label" %>
-          <%= f.date_field :started_on, class: "form-control" %>
         </div>
       </div>
     </div>

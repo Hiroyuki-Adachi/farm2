@@ -1,0 +1,47 @@
+<h1 class="mb-4">タスク詳細</h1>
+
+<div class="card shadow-sm mb-3">
+  <div class="card-body">
+    <h4 class="mb-2"><%= @task.title %></h4>
+    <div class="text-muted mb-3">
+      作成者: <%= @task.creator_name %> /
+      担当: <%= @task.assignee_name %>
+    </div>
+
+    <!-- 期限・担当などの小さなフォーム（Turbo Frameで差し替え） -->
+    <div class="row g-3">
+      <div class="col-md-4">
+        <%= turbo_frame_tag dom_id(@task, :due_on) do %>
+          <%= render "tasks/due_dates/inline", task: @task %>
+        <% end %>
+      </div>
+      <div class="col-md-4">
+        <%= turbo_frame_tag dom_id(@task, :assignee) do %>
+          <%= render "tasks/assignees/inline", task: @task %>
+        <% end %>
+      </div>
+      <div class="col-md-4">
+        <%= turbo_frame_tag "task_priority" do %>
+          <%= render "tasks/priorities/show", task: @task %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 説明（Markdown表示 + 小編集） -->
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h6 class="text-muted mb-2">説明</h6>
+    <%= turbo_frame_tag dom_id(@task, :description) do %>
+      <div class="mb-2">
+        <%= markdown_to_html(@task.description).html_safe %>
+      </div>
+      <%= link_to "編集", "#", class: "btn btn-sm btn-outline-primary",
+            data: { action: "click->toggle#show", target: dom_id(@task, :description_form) } %>
+      <div id="<%= dom_id(@task, :description_form) %>" hidden>
+        <%= render "tasks/descriptions/inline", task: @task %>
+      </div>
+    <% end %>
+  </div>
+</div>

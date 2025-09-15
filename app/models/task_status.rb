@@ -16,4 +16,12 @@ class TaskStatus < ActiveYaml::Base
   def self.open_ids
     open.pluck(:id)
   end
+
+  def btn_class
+    self[:btn_class] || "btn btn-secondary"
+  end
+
+  def next_statuses
+    TaskStatus.where(id: self[:next_statuses])
+  end
 end

@@ -7,3 +7,6 @@ application.debug = false;
 window.Stimulus   = application;
 
 export { application }
+
+import BsModalController from "controllers/bs_modal_controller"
+application.register("bs-modal", BsModalController)

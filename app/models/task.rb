@@ -42,7 +42,7 @@ class Task < ApplicationRecord
   has_many :task_comments, dependent: :destroy
   has_many :task_events, dependent: :destroy
 
-  before_save :clear_end_reason
+  before_save :set_closed_info
   after_create :create_watcher
   after_create :create_task_event
 
@@ -186,8 +186,13 @@ class Task < ApplicationRecord
     errors.add("完了理由を選択してください。") if self.end_reason_unset?
   end
 
-  def clear_end_reason
-    self.end_reason = :unset unless self.closed?
+  def set_closed_info
+    if self.closed?
+      self.ended_on = Time.zone.today
+    else
+      self.end_reason = :unset
+      self.ended_on = nil
+    end
   end
 
   def create_watcher

@@ -1,0 +1,6 @@
+<%= form_with url: task_due_on_path(task), method: :patch, data: { turbo_frame: dom_id(task, :due_on) } do |f| %>
+  <div class="input-group">
+    <%= date_field_tag :due_on, task.due_on, class: "form-control" %>
+    <button class="btn btn-outline-primary">保存</button>
+  </div>
+<% end %>

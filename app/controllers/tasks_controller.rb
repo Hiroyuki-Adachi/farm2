@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
   include PermitChecker
 
+  before_action :set_task, only: [:show, :destroy]
+
   helper TasksHelper
   helper MarkdownHelper
 
@@ -28,6 +30,15 @@ class TasksController < ApplicationController
     end
   end
 
+  def show
+    @task = @task.decorate
+  end
+
+  def destroy
+    @task.destroy
+    redirect_to tasks_path, notice: "タスクを削除しました。"
+  end
+  
   private
 
   def task_params
@@ -44,5 +55,14 @@ class TasksController < ApplicationController
         :office_role,
         :assignee_id
       ])
+  end
+
+  def set_task
+    @task = 
+      if params[:id]
+        Task.includes(:assignee, :creator, task_comments: :worker).find(params[:id])
+      else
+        Task.find(params[:task_id])
+      end
   end
 end

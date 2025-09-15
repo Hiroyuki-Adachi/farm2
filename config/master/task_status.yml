@@ -2,29 +2,35 @@
   code: to_do
   name: "未着手"
   closed_flag: false
-  next_statuses: [0, 1, 4, 9]
+  next_statuses: [2, 3, 4, 9]
+  btn_class: "btn btn-outline-secondary"
 - id: 1
   code: reopen
   name: "再開"
   closed_flag: false
   next_statuses: [2, 3, 4, 9]
+  btn_class: "btn btn-warning"
 - id: 2
   code: doing
   name: "対応中"
   closed_flag: false
   next_statuses: [3, 4, 9]
+  btn_class: "btn btn-primary"
 - id: 3
   code: hold
   name: "保留"
   closed_flag: false
   next_statuses: [2, 4, 9]
+  btn_class: "btn btn-outline-warning"
 - id: 4
   code: done
   name: "完了"
   closed_flag: true
   next_statuses: [1]
+  btn_class: "btn btn-success"
 - id: 9
   code: cancel
   name: "中止"
   closed_flag: true
   next_statuses: [1]
+  btn_class: "btn btn-outline-danger"

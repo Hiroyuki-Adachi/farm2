@@ -1,0 +1,9 @@
+<%= turbo_stream.replace "task_priority",
+      partial: "tasks/priorities/show",
+      locals: { task: @task } %>
+
+<% frame_id = dom_id(@task, :priority_modal_frame) %>
+<% modal_id = dom_id(@task, :priority_modal) %>
+<%= turbo_stream.replace frame_id,
+      partial: "tasks/close_modal",
+      locals: { modal_id: modal_id } %>

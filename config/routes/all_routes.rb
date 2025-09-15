@@ -208,7 +208,15 @@ resources :works do
   end
 end
 
-resources :tasks
+resources :tasks, except: [:edit, :update] do
+  resource :assignee, controller: "tasks/assignees", only: [:edit, :update]
+  resource :description, controller: "tasks/descriptions", only: [:edit, :update]
+  resource :due_on, controller: "tasks/due_dates", only: [:edit, :update]
+  resource :office_role, controller: "tasks/office_roles", only: [:edit, :update]
+  resource :priority, controller: "tasks/priorities", only: [:edit, :update]
+  resource :status, controller: "tasks/statuses", only: [:edit, :update]
+  resources :comments, controller: "tasks/comments", only: [:new, :create, :edit, :update, :destroy]
+end
 resources :work_results, only: [:index]
 resources :machine_results, only: [:index]
 resources :work_chemicals, only: [:index]

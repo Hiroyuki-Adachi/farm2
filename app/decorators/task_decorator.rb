@@ -17,6 +17,14 @@ class TaskDecorator < Draper::Decorator
     object.task_status.name
   end
 
+  def creator_name
+    object.creator&.name || "（未設定）"
+  end
+
+  def assignee_name
+    object.assignee&.name || "（未設定）"
+  end
+
   def end_reason_name
     return "" if object.end_reason_unset?
 
