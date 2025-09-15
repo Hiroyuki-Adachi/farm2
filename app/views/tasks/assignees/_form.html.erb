@@ -1,4 +1,6 @@
 <%= form_with model: task, url: task_assignee_path(task), method: :patch do |f| %>
+  <%= error_print(f.object) %>
+
   <div class="mb-3">
     <%= f.label :assignee_id %>
     <%= f.collection_select :assignee_id, Worker.taskable.usual, :id, :name, { include_blank: true }, { class: "form-select" } %>

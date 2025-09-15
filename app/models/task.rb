@@ -31,7 +31,8 @@ class Task < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   include Enums::OfficeRole
 
-  attribute :watched, :boolean # ← SELECTエイリアスを型付け（任意）
+  attribute :watched, :boolean
+  attribute :comment, :string
 
   belongs_to :assignee, class_name: 'Worker', optional: true
   belongs_to :creator, class_name: 'Worker', optional: true
@@ -111,7 +112,11 @@ class Task < ApplicationRecord
 
   # 担当者変更
   def change_assignee!(new_assignee_id, actor, comment = nil)
-    return false if new_assignee_id == assignee_id
+    self.comment = comment
+    if new_assignee_id.to_i == assignee_id.to_i
+      errors.add(:assignee_id, "が変更されていません")
+      raise ActiveRecord::RecordInvalid, self
+    end
 
     in_change_tx!(actor: actor, comment: comment) do |c|
       events.create!(
@@ -127,6 +132,7 @@ class Task < ApplicationRecord
 
   # ステータス変更
   def change_status!(new_status_id, actor, comment = nil)
+    self.comment = comment
     return false if new_status_id == task_status_id
 
     in_change_tx!(actor: actor, comment: comment) do |c|
@@ -141,7 +147,11 @@ class Task < ApplicationRecord
 
   # 期限変更
   def change_due_on!(new_due_on, actor, comment = nil)
-    return false if new_due_on == due_on
+    self.comment = comment
+    if new_due_on == due_on
+      errors.add(:due_on, "が変更されていません")
+      raise ActiveRecord::RecordInvalid, self
+    end
 
     in_change_tx!(actor: actor, comment: comment) do |c|
       events.create!(
