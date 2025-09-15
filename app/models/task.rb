@@ -39,8 +39,8 @@ class Task < ApplicationRecord
 
   has_many :task_watchers, dependent: :destroy
   has_many :watchers, through: :task_watchers, source: :worker
-  has_many :task_comments, dependent: :destroy
-  has_many :task_events, dependent: :destroy
+  has_many :comments, class_name: 'TaskComment', dependent: :destroy
+  has_many :events, class_name: 'TaskEvent', dependent: :destroy
 
   before_save :set_closed_info
   after_create :create_watcher
@@ -111,20 +111,18 @@ class Task < ApplicationRecord
   end
 
   # 担当者変更
-  def change_assignee!(new_assignee:, actor:, comment: nil)
-    return false if new_assignee&.id == assignee_id
+  def change_assignee!(new_assignee_id, actor, comment = nil)
+    return false if new_assignee_id == assignee_id
 
-    in_change_tx!(actor:, comment:) do |c|
+    in_change_tx!(actor: actor, comment: comment) do |c|
       events.create!(
-        actor:, event_type: :assignee_changed,
-        assignee_from_id: assignee_id, assignee_to_id: new_assignee&.id,
-        task_comment: c
+        actor: actor, event_type: :change_assignee,
+        assignee_from_id: assignee_id, assignee_to_id: new_assignee_id,
+        comment: c
       )
-      update!(assignee: new_assignee)
+      update!(assignee_id: new_assignee_id)
 
-      # ウォッチャ登録（複合ユニークIndex: [:task_id, :worker_id] 前提）
-      TaskWatcher.find_or_create_by!(task_id: id, worker_id: new_assignee.id) if new_assignee
-      # Rails 7+ なら insert_all + unique_by でもOK
+      TaskWatcher.find_or_create_by!(task_id: id, worker_id: new_assignee_id) if new_assignee_id
     end
   end
 
@@ -132,11 +130,11 @@ class Task < ApplicationRecord
   def change_status!(new_status:, actor:, comment: nil)
     return false if new_status.id == task_status_id
 
-    in_change_tx!(actor:, comment:) do |c|
+    in_change_tx!(actor: actor, comment: comment) do |c|
       events.create!(
-        actor:, event_type: :status_changed,
+        actor: actor, event_type: :change_status,
         status_from: task_status_id, status_to: new_status.id,
-        task_comment: c
+        comment: c
       )
       update!(task_status: new_status)
     end
@@ -146,11 +144,11 @@ class Task < ApplicationRecord
   def change_due_on!(new_due_on:, actor:, comment: nil)
     return false if new_due_on == due_on
 
-    in_change_tx!(actor:, comment:) do |c|
+    in_change_tx!(actor: actor, comment: comment) do |c|
       events.create!(
-        actor:, event_type: :due_changed,
+        actor: actor, event_type: :change_due_on,
         due_on_from: due_on, due_on_to: new_due_on,
-        task_comment: c
+        comment: c
       )
       update!(due_on: new_due_on)
     end
@@ -162,7 +160,7 @@ class Task < ApplicationRecord
   def in_change_tx!(actor:, comment:)
     transaction do
       created_comment =
-        comment.present? ? TaskComment.create!(task: self, user: actor, body: comment) : nil
+        comment.present? ? TaskComment.create!(task: self, poster_id: actor.id, body: comment) : nil
       yield(created_comment)
     end
     true

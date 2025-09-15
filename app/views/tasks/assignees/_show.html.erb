@@ -1,0 +1,23 @@
+<div class="d-inline" role="button"
+     data-bs-toggle="modal"
+     data-bs-target="#<%= dom_id(task, :assignee_modal) %>">
+  <span>
+    <%= task.assignee_name %>
+  </span>
+</div>
+
+<div class="modal fade" id="<%= dom_id(task, :assignee_modal) %>" tabindex="-1" aria-hidden="true" data-controller="bs-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">担当者</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+      </div>
+      <div class="modal-body">
+        <%= turbo_frame_tag dom_id(task, :assignee_modal_frame),
+              src: edit_task_assignee_path(task),
+              loading: "lazy" %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "task_assignee", partial: "tasks/assignees/show" %>
+
+<% frame_id = dom_id(@task, :assignee_modal_frame) %>
+<% modal_id = dom_id(@task, :assignee_modal) %>
+<%= turbo_stream.replace frame_id, partial: "tasks/close_modal", locals: { modal_id: modal_id } %>

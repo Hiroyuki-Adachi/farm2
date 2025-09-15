@@ -1,8 +1,8 @@
 <div class="d-inline" role="button"
      data-bs-toggle="modal"
      data-bs-target="#<%= dom_id(task, :priority_modal) %>">
-  <span class="badge text-bg-<%= t("activerecord.attributes.task.priority_colors.#{task.priority}") %>">
-    <%= t("activerecord.attributes.task.priorities.#{task.priority}") %>
+  <span class="badge text-bg-<%= task.priority_color %>">
+    <%= task.priority_name %>
   </span>
 </div>
 
@@ -10,7 +10,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">優先度を編集</h5>
+        <h5 class="modal-title">優先度</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
       </div>
       <div class="modal-body">

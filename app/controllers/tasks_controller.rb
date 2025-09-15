@@ -6,9 +6,10 @@ class TasksController < ApplicationController
   helper TasksHelper
   helper MarkdownHelper
 
+  decorates_assigned :task, :tasks
+
   def index
     @tasks = Task.for_index.includes(:assignee).with_watch_flag(current_user.worker.id).page(params[:page])
-    @tasks = TaskDecorator.decorate_collection(@tasks)
   end
 
   def new
@@ -30,9 +31,7 @@ class TasksController < ApplicationController
     end
   end
 
-  def show
-    @task = @task.decorate
-  end
+  def show; end
 
   def destroy
     @task.destroy
@@ -60,7 +59,7 @@ class TasksController < ApplicationController
   def set_task
     @task = 
       if params[:id]
-        Task.includes(:assignee, :creator, task_comments: :worker).find(params[:id])
+        Task.includes(:assignee, :creator, comments: :worker).find(params[:id])
       else
         Task.find(params[:task_id])
       end

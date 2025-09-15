@@ -1,8 +1,0 @@
-<%= form_with url: task_assignee_path(task), method: :patch, data: { turbo_frame: dom_id(task, :assignee) } do |f| %>
-  <div class="input-group">
-    <%= select_tag :assignee_id,
-          options_from_collection_for_select(Worker.taskable.usual, :id, :name, task.assignee_id),
-          include_blank: true, class: "form-select" %>
-    <button class="btn btn-outline-primary">変更</button>
-  </div>
-<% end %>

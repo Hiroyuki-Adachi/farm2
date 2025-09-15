@@ -43,7 +43,7 @@ class TaskEvent < ApplicationRecord
   belongs_to :actor, class_name: 'Worker'
   belongs_to :assignee_from, class_name: 'Worker', optional: true
   belongs_to :assignee_to, class_name: 'Worker', optional: true
-  belongs_to :task_comment, optional: true
+  belongs_to :comment, class_name: 'TaskComment', foreign_key: 'task_comment_id', optional: true
   belongs_to_active_hash :status_from, class_name: 'TaskStatus', foreign_key: 'status_from_id', optional: true
   belongs_to_active_hash :status_to, class_name: 'TaskStatus', foreign_key: 'status_to_id', optional: true
 

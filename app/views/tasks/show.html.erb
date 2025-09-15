@@ -2,10 +2,16 @@
 
 <div class="card shadow-sm mb-3">
   <div class="card-body">
-    <h4 class="mb-2"><%= @task.title %></h4>
+    <h4 class="mb-2">
+      <%= turbo_frame_tag "task_title" do %>
+        <%= render "tasks/titles/show", task: task %>
+      <% end %>
+    </h4>
     <div class="text-muted mb-3">
-      作成者: <%= @task.creator_name %> /
-      担当: <%= @task.assignee_name %>
+      作成者: <%= task.creator_name %> /
+      担当: <%= turbo_frame_tag "task_assignee" do %>
+              <%= render "tasks/assignees/show", task: task %>
+            <% end %>
     </div>
 
     <!-- 期限・担当などの小さなフォーム（Turbo Frameで差し替え） -->
@@ -16,13 +22,8 @@
         <% end %>
       </div>
       <div class="col-md-4">
-        <%= turbo_frame_tag dom_id(@task, :assignee) do %>
-          <%= render "tasks/assignees/inline", task: @task %>
-        <% end %>
-      </div>
-      <div class="col-md-4">
         <%= turbo_frame_tag "task_priority" do %>
-          <%= render "tasks/priorities/show", task: @task %>
+          <%= render "tasks/priorities/show", task: task %>
         <% end %>
       </div>
     </div>
