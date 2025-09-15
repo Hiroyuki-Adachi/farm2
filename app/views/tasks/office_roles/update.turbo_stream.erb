@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "task_office_role", partial: "tasks/office_roles/show" %>
+
+<% frame_id = dom_id(@task, :office_role_modal_frame) %>
+<% modal_id = dom_id(@task, :office_role_modal) %>
+<%= turbo_stream.update frame_id do %>
+  <div data-controller="bs-modal" data-bs-modal-id-value="<%= modal_id %>"></div>
+<% end %>

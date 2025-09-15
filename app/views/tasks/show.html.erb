@@ -20,10 +20,17 @@
         <% end %>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-2">
         <span class="h5">期限:</span>
         <%= turbo_frame_tag "task_due_on" do %>
           <%= render "tasks/due_dates/show", task: task %>
+        <% end %>
+      </div>
+
+      <div class="col-md-2">
+        <span class="h5">種別:</span>
+        <%= turbo_frame_tag "task_office_role" do %>
+          <%= render "tasks/office_roles/show", task: task %>
         <% end %>
       </div>
     </div>
