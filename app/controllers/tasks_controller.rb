@@ -34,6 +34,7 @@ class TasksController < ApplicationController
   def show; end
 
   def destroy
+    to_error_path unless @task.deletable?(current_user)
     @task.destroy
     redirect_to tasks_path, notice: "タスクを削除しました。"
   end
@@ -59,9 +60,13 @@ class TasksController < ApplicationController
   def set_task
     @task = 
       if params[:id]
-        Task.includes(:assignee, :creator, comments: :worker).find(params[:id])
+        Task.includes(:assignee, :creator).find(params[:id])
       else
         Task.find(params[:task_id])
       end
+  end
+
+  def task_comment
+    params[:task][:comment]
   end
 end

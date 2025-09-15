@@ -1,7 +1,7 @@
-<%= form_with model: task, url: task_assignee_path(task), method: :patch do |f| %>
+<%= form_with model: task, url: task_due_on_path(task), method: :patch do |f| %>
   <div class="mb-3">
-    <%= f.label :assignee_id %>
-    <%= f.collection_select :assignee_id, Worker.taskable.usual, :id, :name, { include_blank: true }, { class: "form-select" } %>
+    <%= f.label :due_on %>
+    <%= f.date_field :due_on, class: "form-control" %>
   </div>
 
   <div class="mb-3">

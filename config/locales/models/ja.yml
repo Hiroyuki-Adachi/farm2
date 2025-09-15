@@ -455,7 +455,7 @@ ja:
           adjust: "調整のみ"
         
       task:
-        title: "タイトル"
+        title: "タスク名"
         description: "内容"
         due_on: "期限"
         assignee_id: "担当者"
@@ -465,7 +465,7 @@ ja:
         end_reason: "完了理由"
         started_on: "着手日"
         ended_on: "完了日"
-        office_role: "事務"
+        office_role: "種別"
         priorities:
           low: "低"
           medium: "中"

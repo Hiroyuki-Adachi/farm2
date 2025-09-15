@@ -25,6 +25,16 @@ class TaskDecorator < Draper::Decorator
     object.assignee&.name || "（未設定）"
   end
 
+  def due_on_display
+    return "（未設定）" if object.due_on.blank?
+
+    I18n.l(object.due_on, format: :long)
+  end
+
+  def office_role_name
+    I18n.t("activerecord.attributes.task.office_roles.#{object.office_role}")
+  end
+
   def end_reason_name
     return "" if object.end_reason_unset?
 

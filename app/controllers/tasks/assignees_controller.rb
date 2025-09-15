@@ -22,8 +22,4 @@ class Tasks::AssigneesController < TasksController
   def new_assignee_id
     params[:task][:assignee_id]
   end
-
-  def task_comment
-    params[:task][:comment]
-  end
 end

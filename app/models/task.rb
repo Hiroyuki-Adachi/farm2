@@ -55,7 +55,6 @@ class Task < ApplicationRecord
   validates :end_reason, presence: true
 
   validate :ended_on_after_started_on
-  validate :due_on_after_started_on
 
   scope :usual_order, -> { order("priority DESC, due_on ASC NULLS LAST, id ASC") }
 
@@ -127,13 +126,13 @@ class Task < ApplicationRecord
   end
 
   # ステータス変更
-  def change_status!(new_status:, actor:, comment: nil)
-    return false if new_status.id == task_status_id
+  def change_status!(new_status_id, actor, comment = nil)
+    return false if new_status_id == task_status_id
 
     in_change_tx!(actor: actor, comment: comment) do |c|
       events.create!(
         actor: actor, event_type: :change_status,
-        status_from: task_status_id, status_to: new_status.id,
+        status_from: task_status_id, status_to: new_status_id,
         comment: c
       )
       update!(task_status: new_status)
@@ -141,7 +140,7 @@ class Task < ApplicationRecord
   end
 
   # 期限変更
-  def change_due_on!(new_due_on:, actor:, comment: nil)
+  def change_due_on!(new_due_on, actor, comment = nil)
     return false if new_due_on == due_on
 
     in_change_tx!(actor: actor, comment: comment) do |c|
@@ -152,6 +151,10 @@ class Task < ApplicationRecord
       )
       update!(due_on: new_due_on)
     end
+  end
+
+  def deletable?(user)
+    (user.admin? || (self.creator_id == user.worker_id)) && self.opened?
   end
 
   private
@@ -172,12 +175,6 @@ class Task < ApplicationRecord
     errors.add(:ended_on, "は着手日以降の日付にしてください。") if ended_on < started_on
   end
 
-  def due_on_after_started_on
-    return if due_on.blank? || started_on.blank?
-
-    errors.add(:due_on, "は着手日以降の日付にしてください。") if due_on < started_on
-  end
-
   def end_reason_for_closed
     return if self.opened?
 
@@ -187,6 +184,7 @@ class Task < ApplicationRecord
   def set_closed_info
     if self.closed?
       self.ended_on = Time.zone.today
+      self.started_on = Time.zone.today if self.started_on.nil?
     else
       self.end_reason = :unset
       self.ended_on = nil

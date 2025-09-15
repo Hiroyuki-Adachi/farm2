@@ -3,7 +3,7 @@
   <td><span class="badge text-bg-<%= task.priority_color %>"><%= task.priority_name %></span></td>
   <td><%= l(task.due_on) if task.due_on %></td>
   <td><span class="badge text-bg-<%= task.status_color %>"><%= task.status_name %></span></td>
-  <td><span class="badge text-bg-light"><%= task.end_reason_name %></span></td>
+  <td><%= task.office_role_name %></td>
   <td><%= task.assignee&.name %></td>
   <td></td>
 </tr>

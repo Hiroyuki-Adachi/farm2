@@ -2,28 +2,28 @@
 
 <div class="card shadow-sm mb-3">
   <div class="card-body">
-    <h4 class="mb-2">
+    <h4 class="mb-2">タスク名：
       <%= turbo_frame_tag "task_title" do %>
         <%= render "tasks/titles/show", task: task %>
       <% end %>
+      <%= turbo_frame_tag "task_priority" do %>
+        <%= render "tasks/priorities/show", task: task %>
+      <% end %>
     </h4>
-    <div class="text-muted mb-3">
-      作成者: <%= task.creator_name %> /
-      担当: <%= turbo_frame_tag "task_assignee" do %>
-              <%= render "tasks/assignees/show", task: task %>
-            <% end %>
-    </div>
 
-    <!-- 期限・担当などの小さなフォーム（Turbo Frameで差し替え） -->
     <div class="row g-3">
-      <div class="col-md-4">
-        <%= turbo_frame_tag dom_id(@task, :due_on) do %>
-          <%= render "tasks/due_dates/inline", task: @task %>
+      <div class="col-md-4 text-muted mb-3">
+        <span class="h5">作成者:</span> <%= task.creator_name %> /
+        <span class="h5">担当者:</span>
+        <%= turbo_frame_tag "task_assignee" do %>
+          <%= render "tasks/assignees/show", task: task %>
         <% end %>
       </div>
+
       <div class="col-md-4">
-        <%= turbo_frame_tag "task_priority" do %>
-          <%= render "tasks/priorities/show", task: task %>
+        <span class="h5">期限:</span>
+        <%= turbo_frame_tag "task_due_on" do %>
+          <%= render "tasks/due_dates/show", task: task %>
         <% end %>
       </div>
     </div>
@@ -44,5 +44,15 @@
         <%= render "tasks/descriptions/inline", task: @task %>
       </div>
     <% end %>
+  </div>
+</div>
+<div class="btn-toolbar">
+  <% if @task.deletable?(current_user) %>
+    <div class="btn-group mr-2">
+      <%= link_to '削除', @task, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+    </div>
+  <% end %>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', tasks_path, {class: "btn btn-outline-dark"} %>
   </div>
 </div>
