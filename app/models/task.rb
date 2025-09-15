@@ -148,7 +148,7 @@ class Task < ApplicationRecord
   # 期限変更
   def change_due_on!(new_due_on, actor, comment = nil)
     self.comment = comment
-    if new_due_on == due_on
+    if new_due_on.presence&.to_date == due_on
       errors.add(:due_on, "が変更されていません")
       raise ActiveRecord::RecordInvalid, self
     end

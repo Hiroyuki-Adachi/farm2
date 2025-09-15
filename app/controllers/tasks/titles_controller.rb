@@ -10,10 +10,7 @@ class Tasks::TitlesController < TasksController
         format.html { redirect_to @task, notice: "タイトルを更新しました" }
       end
     else
-      respond_to do |format|
-        format.turbo_stream { render partial: "tasks/titles/form", status: :unprocessable_entity, locals: { task: @task } }
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+      render :edit, status: :unprocessable_entity
     end
   end
 

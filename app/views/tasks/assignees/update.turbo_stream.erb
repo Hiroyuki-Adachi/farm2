@@ -2,4 +2,6 @@
 
 <% frame_id = dom_id(@task, :assignee_modal_frame) %>
 <% modal_id = dom_id(@task, :assignee_modal) %>
-<%= turbo_stream.replace frame_id, partial: "tasks/close_modal", locals: { modal_id: modal_id } %>
+<%= turbo_stream.update frame_id do %>
+  <div data-controller="bs-modal" data-bs-modal-id-value="<%= modal_id %>"></div>
+<% end %>

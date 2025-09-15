@@ -6,7 +6,12 @@
   </span>
 </div>
 
-<div class="modal fade" id="<%= dom_id(task, :title_modal) %>" tabindex="-1" aria-hidden="true" data-controller="bs-modal">
+<div class="modal fade"
+  id="<%= dom_id(task, :title_modal) %>"
+  tabindex="-1" aria-hidden="true"
+  data-controller="modal-reset"
+  data-modal-reset-frame-id-value="<%= dom_id(task, :title_modal_frame) %>"
+  data-modal-reset-frame-src-value="<%= edit_task_title_path(task) %>">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

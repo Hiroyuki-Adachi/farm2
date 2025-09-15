@@ -1,4 +1,6 @@
 <%= form_with model: task, url: task_due_on_path(task), method: :patch do |f| %>
+  <%= error_print(f.object) %>
+
   <div class="mb-3">
     <%= f.label :due_on %>
     <%= f.date_field :due_on, class: "form-control" %>
