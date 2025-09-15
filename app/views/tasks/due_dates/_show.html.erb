@@ -2,7 +2,7 @@
      data-bs-toggle="modal"
      data-bs-target="#<%= dom_id(task, :due_on_modal) %>">
   <span>
-    <%= task.due_on_display %>
+    <%= task.due_on_display %><%= task.due_badge %>
   </span>
 </div>
 

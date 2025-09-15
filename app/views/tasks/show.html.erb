@@ -12,15 +12,18 @@
     </h4>
 
     <div class="row g-3">
-      <div class="col-md-4 text-muted mb-3">
-        <span class="h5">作成者:</span> <%= task.creator_name %> /
+      <div class="col-md-2 text-muted mb-3">
+        <span class="h5">作成者:</span> <%= task.creator_name %>
+      </div>
+
+      <div class="col-md-2 text-muted mb-3">
         <span class="h5">担当者:</span>
         <%= turbo_frame_tag "task_assignee" do %>
           <%= render "tasks/assignees/show", task: task %>
         <% end %>
       </div>
 
-      <div class="col-md-2">
+      <div class="col-md-3">
         <span class="h5">期限:</span>
         <%= turbo_frame_tag "task_due_on" do %>
           <%= render "tasks/due_dates/show", task: task %>
