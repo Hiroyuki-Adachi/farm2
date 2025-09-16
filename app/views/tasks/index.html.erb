@@ -4,13 +4,12 @@
   <table class="table table-sm">
     <thead>
       <tr>
-        <th>タイトル</th>
-        <th>優先度</th>
-        <th>期限</th>
-        <th>状態</th>
-        <th>種別</th>
-        <th>担当者</th>
-        <th></th>
+        <th><%= I18n.t("activerecord.attributes.task.title") %></th>
+        <th><%= I18n.t("activerecord.attributes.task.priority") %></th>
+        <th><%= I18n.t("activerecord.attributes.task.due_on") %></th>
+        <th><%= I18n.t("activerecord.attributes.task.status") %></th>
+        <th><%= I18n.t("activerecord.attributes.task.office_role") %></th>
+        <th><%= I18n.t("activerecord.attributes.task.assignee_id") %></th>
       </tr>
     </thead>
     <tbody>

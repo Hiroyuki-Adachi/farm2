@@ -1,6 +1,13 @@
-<h1 class="mb-4">タスク詳細</h1>
+<div class="d-flex align-items-center justify-content-between">
+  <h1 class="mb-0">タスク詳細</h1>
+  <% if @task.deletable?(current_user) %>
+    <div class="btn-group mr-2">
+      <%= link_to '削除', @task, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+    </div>
+  <% end %>
+</div>
 
-<div class="card shadow-sm mb-3">
+<div class="card shadow-sm mb-3 mt-2">
   <div class="card-body">
     <h4 class="mb-2"><%= I18n.t("activerecord.attributes.task.title") %>：
       <%= turbo_frame_tag "task_title" do %>
@@ -61,28 +68,16 @@
   </div>
 </div>
 
-<!-- 説明（Markdown表示 + 小編集） -->
-<div class="card shadow-sm">
-  <div class="card-body">
-    <h6 class="text-muted mb-2">説明</h6>
-    <%= turbo_frame_tag dom_id(@task, :description) do %>
-      <div class="mb-2">
-        <%= markdown_to_html(@task.description).html_safe %>
-      </div>
-      <%= link_to "編集", "#", class: "btn btn-sm btn-outline-primary",
-            data: { action: "click->toggle#show", target: dom_id(@task, :description_form) } %>
-      <div id="<%= dom_id(@task, :description_form) %>" hidden>
-        <%= render "tasks/descriptions/inline", task: @task %>
-      </div>
+<!-- 説明 -->
+<div class="card shadow-sm mb-3">
+  <div class="card-body p-0">
+    <%= turbo_frame_tag "task_description" do %>
+      <%= render "tasks/descriptions/show", task: @task %>
     <% end %>
   </div>
 </div>
+
 <div class="btn-toolbar">
-  <% if @task.deletable?(current_user) %>
-    <div class="btn-group mr-2">
-      <%= link_to '削除', @task, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
-    </div>
-  <% end %>
   <div class="btn-group mr-2">
     <%= link_to '戻る', tasks_path, {class: "btn btn-outline-dark"} %>
   </div>
