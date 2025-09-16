@@ -1,2 +1,2 @@
-class Tasks::CommentsController < ApplicationController
+class Tasks::CommentsController < TasksController
 end

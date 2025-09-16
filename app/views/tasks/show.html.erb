@@ -50,8 +50,12 @@
       </div>
 
       <div class="col-md-3">
-        <span class="h5"><%= I18n.t("activerecord.attributes.task.end_reason") %>:</span>
-        <%= task.end_reason_name %>
+        <% if task.closed? %>
+          <span class="h5"><%= I18n.t("activerecord.attributes.task.end_reason") %>:</span>
+          <%= turbo_frame_tag "task_end_reason" do %>
+            <%= render "tasks/end_reasons/show", task: task %>
+          <% end %>
+        <% end %>
       </div>
     </div>
   </div>

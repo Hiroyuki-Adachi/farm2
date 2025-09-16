@@ -48,7 +48,7 @@ class Task < ApplicationRecord
   after_create :create_task_event
 
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
-  enum :end_reason, { unset: 0, completed: 1, no_action: 2, unavailable: 3, duplicate: 4, other: 9 }, prefix: true
+  enum :end_reason, { unset: 0, completed: 1, no_action: 2, unavailable: 3, duplicated: 4, other: 9 }, prefix: true
 
   validates :title, presence: true, length: { maximum: 40 }
   validates :task_status_id, presence: true

@@ -216,6 +216,7 @@ resources :tasks, except: [:edit, :update] do
   resource :priority, controller: "tasks/priorities", only: [:edit, :update]
   resource :status, controller: "tasks/statuses", only: [:edit, :update]
   resource :title, controller: "tasks/titles", only: [:edit, :update]
+  resource :end_reason, controller: "tasks/end_reasons", only: [:edit, :update]
   resources :comments, controller: "tasks/comments", only: [:new, :create, :edit, :update, :destroy]
 end
 resources :work_results, only: [:index]
