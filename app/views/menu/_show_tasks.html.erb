@@ -3,16 +3,9 @@
 <ul>
   <% @tasks.each do |task| %>
     <li class="mb-1">
-      <!-- ステータス・結果バッジ（closed時のみ結果表示） -->
-      <%= status_badge(task) %>
-
-      <!-- 期限ピル（色分け） -->
-      <span class="badge <%= task.overdue? ? 'text-bg-danger' : 'text-bg-light' %> ms-1">
-        <%= task.due_on ? l(task.due_on, format: :short) : "期限なし" %>
-      </span>
+      <%= task.status_badge %>
+      <%= task.priority_badge %>
       <%= task.due_badge %>
-
-      <!-- タイトルは詳細へリンク -->
       <%= link_to task.title, task_path(task), class: "me-2 text-decoration-none" %>
     </li>
   <% end %>

@@ -2,8 +2,6 @@ class MenuController < ApplicationController
   before_action :permit_manager, except: [:index, :edit_term, :update]
   before_action :set_system, only: [:edit, :edit_term]
 
-  helper TasksHelper
-
   SCHEDULE_DAY = 7
 
   def index

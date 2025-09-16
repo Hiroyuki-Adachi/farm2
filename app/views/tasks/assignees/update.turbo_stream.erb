@@ -1,4 +1,4 @@
-<%= turbo_stream.replace "task_assignee", partial: "tasks/assignees/show" %>
+<%= turbo_stream.update "task_assignee", partial: "tasks/assignees/show" %>
 
 <% frame_id = dom_id(@task, :assignee_modal_frame) %>
 <% modal_id = dom_id(@task, :assignee_modal) %>

@@ -2,39 +2,56 @@
 
 <div class="card shadow-sm mb-3">
   <div class="card-body">
-    <h4 class="mb-2">タスク名：
+    <h4 class="mb-2"><%= I18n.t("activerecord.attributes.task.title") %>：
       <%= turbo_frame_tag "task_title" do %>
         <%= render "tasks/titles/show", task: task %>
       <% end %>
       <%= turbo_frame_tag "task_priority" do %>
         <%= render "tasks/priorities/show", task: task %>
       <% end %>
+      <%= task.status_badge %>
     </h4>
 
     <div class="row g-3">
-      <div class="col-md-2 text-muted mb-3">
-        <span class="h5">作成者:</span> <%= task.creator_name %>
+      <div class="col-md-3 text-muted mb-3">
+        <span class="h5"><%= I18n.t("activerecord.attributes.task.creator_id") %>:</span> <%= task.creator_name %>
       </div>
 
-      <div class="col-md-2 text-muted mb-3">
-        <span class="h5">担当者:</span>
+      <div class="col-md-3 text-muted mb-3">
+        <span class="h5"><%= I18n.t("activerecord.attributes.task.assignee_id") %>:</span>
         <%= turbo_frame_tag "task_assignee" do %>
           <%= render "tasks/assignees/show", task: task %>
         <% end %>
       </div>
 
       <div class="col-md-3">
-        <span class="h5">期限:</span>
+        <span class="h5"><%= I18n.t("activerecord.attributes.task.due_on") %>:</span>
         <%= turbo_frame_tag "task_due_on" do %>
           <%= render "tasks/due_dates/show", task: task %>
         <% end %>
       </div>
 
-      <div class="col-md-2">
-        <span class="h5">種別:</span>
+      <div class="col-md-3">
+        <span class="h5"><%= I18n.t("activerecord.attributes.task.office_role") %>:</span>
         <%= turbo_frame_tag "task_office_role" do %>
           <%= render "tasks/office_roles/show", task: task %>
         <% end %>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-3">
+        <span class="h5"><%= I18n.t("activerecord.attributes.task.started_on") %>:</span>
+        <%= task.started_on_display %>
+      </div>
+
+      <div class="col-md-3">
+        <span class="h5"><%= I18n.t("activerecord.attributes.task.ended_on") %>:</span>
+        <%= task.ended_on_display %>
+      </div>
+
+      <div class="col-md-3">
+        <span class="h5"><%= I18n.t("activerecord.attributes.task.end_reason") %>:</span>
+        <%= task.end_reason_name %>
       </div>
     </div>
   </div>

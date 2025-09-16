@@ -9,12 +9,16 @@ class TaskDecorator < Draper::Decorator
     I18n.t("activerecord.attributes.task.priorities.#{object.priority}")
   end
 
-  def status_color
-    object.closed? ? "secondary" : "primary"
+  def priority_badge
+    h.content_tag(:span, priority_name, class: "badge text-bg-#{priority_color}")
   end
 
   def status_name
     object.task_status.name
+  end
+
+  def status_badge
+    h.content_tag(:span, status_name, class: object.task_status.badge_class)
   end
 
   def creator_name
@@ -30,9 +34,21 @@ class TaskDecorator < Draper::Decorator
 
     I18n.l(object.due_on, format: :long)
   end
-  
+
+  def started_on_display
+    return "（未設定）" if object.started_on.blank?
+
+    I18n.l(object.started_on, format: :long)
+  end
+
+  def ended_on_display
+    return "（未設定）" if object.ended_on.blank?
+
+    I18n.l(object.ended_on, format: :long)
+  end
+
   def due_status
-    return :none if due_on.blank?
+    return :unset   if due_on.blank?
     return :expired if due_on < Date.current
     return :today   if due_on == Date.current
     return :soon    if due_on <= Date.current + 3
@@ -44,7 +60,6 @@ class TaskDecorator < Draper::Decorator
     when :expired then h.content_tag(:span, "期限切れ", class: "badge bg-danger")
     when :today   then h.content_tag(:span, "今日が期限", class: "badge bg-warning text-dark")
     when :soon    then h.content_tag(:span, "期限が近い", class: "badge bg-primary")
-    when :ok      then h.content_tag(:span, "余裕あり", class: "badge bg-success")
     else ""      
     end
   end

@@ -3,7 +3,6 @@ class TasksController < ApplicationController
 
   before_action :set_task, only: [:show, :destroy]
 
-  helper TasksHelper
   helper MarkdownHelper
 
   decorates_assigned :task, :tasks

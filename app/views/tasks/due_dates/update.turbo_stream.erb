@@ -1,4 +1,4 @@
-<%= turbo_stream.replace "task_due_on", partial: "tasks/due_dates/show" %>
+<%= turbo_stream.update "task_due_on", partial: "tasks/due_dates/show" %>
 
 <% frame_id = dom_id(@task, :due_on_modal_frame) %>
 <% modal_id = dom_id(@task, :due_on_modal) %>
