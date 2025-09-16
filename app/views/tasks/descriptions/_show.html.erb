@@ -2,9 +2,6 @@
 <div class="p-3 position-relative">
   <div class="d-flex align-items-center justify-content-between mb-2">
     <h5 class="mb-0"><%= I18n.t("activerecord.attributes.task.description") %></h5>
-    <%= link_to "編集", edit_task_description_path(task),
-          data: { turbo_frame: "task_description" },
-          class: "btn btn-sm btn-outline-primary" %>
   </div>
 
   <div class="text-body">
