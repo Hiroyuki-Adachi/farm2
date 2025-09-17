@@ -44,8 +44,17 @@ class TaskEvent < ApplicationRecord
   belongs_to :assignee_from, class_name: 'Worker', optional: true
   belongs_to :assignee_to, class_name: 'Worker', optional: true
   belongs_to :comment, class_name: 'TaskComment', foreign_key: 'task_comment_id', optional: true
+  belongs_to :work, optional: true
   belongs_to_active_hash :status_from, class_name: 'TaskStatus', foreign_key: 'status_from_id', optional: true
   belongs_to_active_hash :status_to, class_name: 'TaskStatus', foreign_key: 'status_to_id', optional: true
 
-  enum :event_type, { task_created: 0, change_status: 1, change_assignee: 2, change_due_on: 3, add_comment: 4 }
+  enum :event_type, { task_created: 0, change_status: 1, change_assignee: 2, change_due_on: 3, add_comment: 9 }
+
+  after_save :clear_comment
+
+  private
+
+  def clear_comment
+    self.destroy if self.task_comment_id.nil? && self.add_comment?
+  end
 end

@@ -23,4 +23,5 @@
 class TaskComment < ApplicationRecord
   belongs_to :poster, class_name: 'Worker'
   belongs_to :task
+  has_one :event, class_name: 'TaskEvent', dependent: :nullify
 end

@@ -36,14 +36,14 @@ class Task < ApplicationRecord
 
   belongs_to :assignee, class_name: 'Worker', optional: true
   belongs_to :creator, class_name: 'Worker', optional: true
-  belongs_to_active_hash :task_status
+  belongs_to_active_hash :status, class_name: 'TaskStatus', foreign_key: 'task_status_id'
 
   has_many :task_watchers, dependent: :destroy
   has_many :watchers, through: :task_watchers, source: :worker
   has_many :comments, class_name: 'TaskComment', dependent: :destroy
   has_many :events, class_name: 'TaskEvent', dependent: :destroy
 
-  before_save :set_closed_info
+  before_save :clear_end_info
   after_create :create_watcher
   after_create :create_task_event
 
@@ -83,7 +83,6 @@ class Task < ApplicationRecord
       .or(participant.where(task_status_id: TaskStatus.closed_ids, created_at: Time.zone.today.all_day))
       .usual_order
   }
-
   
   scope :with_watch_flag, ->(worker_id) {
     select(<<~SQL.squish)
@@ -98,6 +97,14 @@ class Task < ApplicationRecord
 
   def closed?
     TaskStatus.closed_ids.include?(self.task_status_id)
+  end
+
+  def start?
+    TaskStatus.start_ids.include?(self.task_status_id)
+  end
+
+  def started?
+    TaskStatus.started_ids.include?(self.task_status_id)
   end
 
   def opened?
@@ -131,17 +138,37 @@ class Task < ApplicationRecord
   end
 
   # ステータス変更
-  def change_status!(new_status_id, actor, comment = nil)
-    self.comment = comment
-    return false if new_status_id == task_status_id
+  def change_status!(new_params, actor)
+    self.comment = new_params[:comment]
+    new_status = TaskStatus.find_by(code: new_params[:task_status])
+    if new_status.nil?
+      errors.add(:status, "が不正な値です")
+      raise ActiveRecord::RecordInvalid, self
+    end
+    if new_status.code == self.status.code
+      errors.add(:status, "が変更されていません")
+      raise ActiveRecord::RecordInvalid, self
+    end
+    if self.status.next_statuses.pluck(:id).exclude?(new_status.id)
+      errors.add(:status, "が不正な値です")
+      raise ActiveRecord::RecordInvalid, self
+    end
 
     in_change_tx!(actor: actor, comment: comment) do |c|
       events.create!(
         actor: actor, event_type: :change_status,
-        status_from: task_status_id, status_to: new_status_id,
+        status_from_id: self.task_status_id, status_to_id: new_status.id,
         comment: c
       )
-      update!(task_status: new_status)
+      self.task_status_id = new_status.id
+      if new_status.started_flag
+        self.started_on = Time.zone.today
+      elsif new_status.closed_flag
+        self.ended_on = Time.zone.today
+        self.started_on ||= Time.zone.today
+        self.end_reason = new_params[:end_reason_id].presence || :other
+      end
+      self.save!
     end
   end
 
@@ -191,14 +218,12 @@ class Task < ApplicationRecord
     errors.add("完了理由を選択してください。") if self.end_reason_unset?
   end
 
-  def set_closed_info
-    if self.closed?
-      self.ended_on = Time.zone.today
-      self.started_on = Time.zone.today if self.started_on.nil?
-    else
+  def clear_end_info
+    unless self.closed?
       self.end_reason = :unset
       self.ended_on = nil
     end
+    self.started_on = nil if self.start?
   end
 
   def create_watcher

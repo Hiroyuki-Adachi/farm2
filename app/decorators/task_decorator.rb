@@ -14,11 +14,11 @@ class TaskDecorator < Draper::Decorator
   end
 
   def status_name
-    object.task_status.name
+    object.status.name
   end
 
   def status_badge
-    h.content_tag(:span, status_name, class: object.task_status.badge_class)
+    h.content_tag(:span, status_name, class: object.status.badge_class)
   end
 
   def creator_name

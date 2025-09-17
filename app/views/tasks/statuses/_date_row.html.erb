@@ -1,0 +1,22 @@
+<div class="row g-3">
+  <div class="col-md-3">
+    <span class="h5"><%= I18n.t("activerecord.attributes.task.started_on") %>:</span>
+    <%= task.started_on_display %>
+  </div>
+
+  <div class="col-md-3">
+    <span class="h5"><%= I18n.t("activerecord.attributes.task.ended_on") %>:</span>
+    <%= task.ended_on_display %>
+  </div>
+
+  <div class="col-md-3">
+    <%= turbo_frame_tag "task_end_reason" do %>
+      <% if task.closed? %>
+        <span class="h5"><%= t("activerecord.attributes.task.end_reason") %>:</span>
+        <%= render "tasks/end_reasons/show", task: task %>
+      <% else %>
+        <span class="text-muted">—</span>
+      <% end %>
+    <% end %>
+  </div>
+</div>

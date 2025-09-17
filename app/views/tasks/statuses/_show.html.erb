@@ -1,0 +1,12 @@
+<!-- views/tasks/statuses/_show.html.erb（ボタンのみ）-->
+<div class="btn-group" role="group">
+  <% task.status.next_statuses.each do |next_status| %>
+    <button type="button"
+            class="<%= "#{next_status.btn_class}" %>"
+            data-bs-toggle="modal"
+            data-bs-target="#<%= dom_id(task, :status_modal) %>"
+            data-modal-reset-frame-src-value="<%= edit_task_status_path(task, code: next_status.code) %>">
+      <%= next_status.name %>
+    </button>
+  <% end %>
+</div>

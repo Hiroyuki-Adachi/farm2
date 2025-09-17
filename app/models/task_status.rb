@@ -8,13 +8,27 @@ class TaskStatus < ActiveYaml::Base
 
   scope :closed, -> { where(closed_flag: true) }
   scope :open, -> { where(closed_flag: false) }
+  scope :start, -> { where(start_flag: true) }
+  scope :started, -> { where(started_flag: true) }
 
   def self.closed_ids
     closed.pluck(:id)
   end
 
+  def self.closed_codes
+    closed.pluck(:code)
+  end
+
   def self.open_ids
     open.pluck(:id)
+  end
+
+  def self.start_ids
+    start.pluck(:id)
+  end
+
+  def self.started_ids
+    started.pluck(:id)
   end
 
   def btn_class
@@ -22,6 +36,6 @@ class TaskStatus < ActiveYaml::Base
   end
 
   def next_statuses
-    TaskStatus.where(id: self[:next_statuses])
+    TaskStatus.where(id: self[:next_statuses]).order(:id)
   end
 end

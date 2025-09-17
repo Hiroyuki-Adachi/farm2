@@ -9,15 +9,26 @@
 
 <div class="card shadow-sm mb-3 mt-2">
   <div class="card-body">
-    <h4 class="mb-2"><%= I18n.t("activerecord.attributes.task.title") %>：
-      <%= turbo_frame_tag "task_title" do %>
-        <%= render "tasks/titles/show", task: task %>
-      <% end %>
-      <%= turbo_frame_tag "task_priority" do %>
-        <%= render "tasks/priorities/show", task: task %>
-      <% end %>
-      <%= task.status_badge %>
-    </h4>
+    <div class="row g-3">
+      <div class="col-md-8">
+        <h4 class="mb-2"><%= I18n.t("activerecord.attributes.task.title") %>：
+          <%= turbo_frame_tag "task_title" do %>
+            <%= render "tasks/titles/show", task: task %>
+          <% end %>
+          <%= turbo_frame_tag "task_priority" do %>
+            <%= render "tasks/priorities/show", task: task %>
+          <% end %>
+          <%= turbo_frame_tag "task_status_badge" do %>
+            <%= task.status_badge %>
+          <% end %>
+        </h4>
+      </div>
+      <div class="col-md-4 text-end">
+        <%= turbo_frame_tag "task_status_controls" do %>
+          <%= render "tasks/statuses/show", task: task %>
+        <% end %>
+      </div>
+    </div>
 
     <div class="row g-3">
       <div class="col-md-3 text-muted mb-3">
@@ -45,26 +56,11 @@
         <% end %>
       </div>
     </div>
-    <div class="row g-3">
-      <div class="col-md-3">
-        <span class="h5"><%= I18n.t("activerecord.attributes.task.started_on") %>:</span>
-        <%= task.started_on_display %>
-      </div>
 
-      <div class="col-md-3">
-        <span class="h5"><%= I18n.t("activerecord.attributes.task.ended_on") %>:</span>
-        <%= task.ended_on_display %>
-      </div>
+    <%= turbo_frame_tag dom_id(@task, :status_date) do %>
+      <%= render "tasks/statuses/date_row", task: task %>
+    <% end %>
 
-      <div class="col-md-3">
-        <% if task.closed? %>
-          <span class="h5"><%= I18n.t("activerecord.attributes.task.end_reason") %>:</span>
-          <%= turbo_frame_tag "task_end_reason" do %>
-            <%= render "tasks/end_reasons/show", task: task %>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -80,5 +76,24 @@
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= link_to '戻る', tasks_path, {class: "btn btn-outline-dark"} %>
+  </div>
+</div>
+
+<div class="modal fade"
+     id="<%= dom_id(@task, :status_modal) %>"
+     tabindex="-1" aria-hidden="true"
+     data-controller="modal-reset"
+     data-modal-reset-frame-id-value="<%= dom_id(@task, :status_modal_frame) %>"
+     data-modal-reset-frame-src-value="">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= t("activerecord.attributes.task.status") %>変更</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+      </div>
+      <div class="modal-body">
+        <%= turbo_frame_tag dom_id(@task, :status_modal_frame), loading: "lazy" %>
+      </div>
+    </div>
   </div>
 </div>
