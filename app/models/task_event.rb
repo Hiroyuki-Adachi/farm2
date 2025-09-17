@@ -47,5 +47,5 @@ class TaskEvent < ApplicationRecord
   belongs_to_active_hash :status_from, class_name: 'TaskStatus', foreign_key: 'status_from_id', optional: true
   belongs_to_active_hash :status_to, class_name: 'TaskStatus', foreign_key: 'status_to_id', optional: true
 
-  enum :event_type, { task_created: 0, change_status: 1, change_assignee: 2, change_due_on: 3, comment_added: 4 }
+  enum :event_type, { task_created: 0, change_status: 1, change_assignee: 2, change_due_on: 3, add_comment: 4 }
 end
