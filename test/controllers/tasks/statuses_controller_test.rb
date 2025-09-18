@@ -14,9 +14,15 @@ class Tasks::StatusesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ステータス編集(実行)" do
-    patch task_status_path(@task, code: :doing),
-          params: { task: { task_status: :doing, comment: "" } },
-          headers: { "Accept" => "text/vnd.turbo-stream.html" }
+    assert_difference "TaskEvent.count", 1 do
+      assert_no_difference "TaskComment.count" do
+        assert_no_difference "Task.count" do
+          patch task_status_path(@task, code: :doing),
+                params: { task: { task_status: :doing, comment: "" } },
+                headers: { "Accept" => "text/vnd.turbo-stream.html" }
+        end
+      end
+    end
 
     assert_response :success
     assert_equal "text/vnd.turbo-stream.html", response.media_type
@@ -27,9 +33,11 @@ class Tasks::StatusesControllerTest < ActionDispatch::IntegrationTest
     # change_status! が例外を投げる状況をモック（mocha 利用）
     Task.any_instance.stubs(:change_status!).raises(ActiveRecord::RecordInvalid.new(@task))
 
-    patch task_status_path(@task, code: :doing), params: {
-      task: { task_status: :doing, comment: "" }
-    }
+    assert_no_difference "TaskEvent.count" do
+      patch task_status_path(@task, code: :doing), params: {
+        task: { task_status: :doing, comment: "" }
+      }
+    end
 
     assert_response :unprocessable_entity
     # エラーフォームが返ってきていることの簡易確認
