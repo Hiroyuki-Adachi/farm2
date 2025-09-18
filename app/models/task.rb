@@ -31,7 +31,7 @@ class Task < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   include Enums::OfficeRole
 
-  attribute :watched, :boolean
+  attribute :watching, :boolean
   attribute :comment, :string
 
   belongs_to :assignee, class_name: 'Worker', optional: true
@@ -91,7 +91,7 @@ class Task < ApplicationRecord
         SELECT 1 FROM task_watchers tw
         WHERE tw.task_id = #{table_name}.id
           AND tw.worker_id = #{worker_id}
-      ) AS watched
+      ) AS watching
     SQL
   }
 
@@ -200,6 +200,18 @@ class Task < ApplicationRecord
 
   def deletable?(user)
     (user.admin? || (self.creator_id == user.worker_id)) && self.opened?
+  end
+
+  def watching_by?(user)
+    return false if user.nil? || user.worker_id.nil?
+
+    task_watchers.exists?(worker_id: user.worker_id)
+  end
+
+  def watching_by(user)
+    raise ActiveRecord::RecordInvalid if user.nil? || user.worker_id.nil?
+
+    task_watchers.find_by(worker_id: user.worker_id)
   end
 
   private

@@ -229,17 +229,23 @@ document.addEventListener('turbo:load', () => {
         element.style.display = "none";
     });
 
-    window.addEventListener("turbo:click", (event) => {
+    document.addEventListener("turbo:click", (event) => {
         if (event.target.dataset.wait) {
             loadingStart("しばらくお待ちください");
         }
     });
 
-    window.addEventListener("turbo:loading", () => {
+    document.addEventListener("turbo:loading", () => {
         loadingEnd();
     });
-    window.addEventListener("turbo:frame-load", () => {
+    document.addEventListener("turbo:frame-load", () => {
         loadingEnd();
+    });
+    document.addEventListener("turbo:before-fetch-response", () => {
+        loadingEnd();
+    });
+    document.addEventListener("turbo:fetch-request-error", () => {
+      loadingEnd();
     });
 
   // PC幅のサイドバー折りたたみ

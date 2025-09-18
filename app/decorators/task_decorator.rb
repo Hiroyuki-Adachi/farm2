@@ -74,4 +74,12 @@ class TaskDecorator < Draper::Decorator
 
     I18n.t("activerecord.attributes.task.end_reasons.#{object.end_reason}")
   end
+
+  def watching_name
+    if object.watching?
+      h.content_tag(:span, "●", class: "text-success")
+    else
+      ""
+    end
+  end
 end

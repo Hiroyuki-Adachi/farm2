@@ -218,6 +218,7 @@ resources :tasks, except: [:edit, :update] do
   resource :title, controller: "tasks/titles", only: [:edit, :update]
   resource :end_reason, controller: "tasks/end_reasons", only: [:edit, :update]
   resources :comments, controller: "tasks/comments", only: [:new, :create, :edit, :update, :destroy]
+  resources :watchers, controller: "tasks/watchers", only: [:create, :destroy]
 end
 resources :work_results, only: [:index]
 resources :machine_results, only: [:index]

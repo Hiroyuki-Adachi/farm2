@@ -58,10 +58,10 @@ class TasksController < ApplicationController
 
   def set_task
     @task = 
-      if params[:id]
-        Task.includes(:assignee, :creator).find(params[:id])
-      else
+      if params[:task_id]
         Task.find(params[:task_id])
+      else
+        Task.includes(:assignee, :creator).find(params[:id])
       end
   end
 

@@ -1,8 +1,13 @@
 <div class="d-flex align-items-center justify-content-between">
   <h1 class="mb-0">タスク詳細</h1>
+  <div class="btn-toolbar">
+  <%= turbo_frame_tag "task_watchers" do %>
+    <%= render "tasks/watchers/show", task: task %>
+  <% end %>
   <%= turbo_frame_tag "task_delete_button" do %>
     <%= render "tasks/statuses/delete_button", task: task %>
   <% end %>
+  </div>
 </div>
 
 <div class="card shadow-sm mb-3 mt-2">
