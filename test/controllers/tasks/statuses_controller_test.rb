@@ -39,7 +39,7 @@ class Tasks::StatusesControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     # エラーフォームが返ってきていることの簡易確認
     assert_select "form[action='#{task_status_path(@task)}']", true
   end

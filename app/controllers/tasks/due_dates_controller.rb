@@ -10,7 +10,7 @@ class Tasks::DueDatesController < TasksController
       format.html { redirect_to @task, notice: "期限を更新しました" }
     end
   rescue ActiveRecord::RecordInvalid
-    render :edit, status: :unprocessable_entity
+    render :edit, status: :unprocessable_content
   end
 
   private

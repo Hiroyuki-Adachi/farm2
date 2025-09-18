@@ -26,7 +26,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to tasks_path, notice: "タスクを作成しました。"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 

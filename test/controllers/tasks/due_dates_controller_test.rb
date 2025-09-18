@@ -39,7 +39,7 @@ class Tasks::DueDatesControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     # エラーフォームが返ってきていることの簡易確認
     assert_select "form[action='#{task_due_on_path(@task)}']", true
   end

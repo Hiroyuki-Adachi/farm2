@@ -11,7 +11,7 @@ class Tasks::StatusesController < TasksController
       format.html { redirect_to @task, notice: "タスクの状態を更新しました" }
     end
   rescue ActiveRecord::RecordInvalid
-    render :edit, status: :unprocessable_entity
+    render :edit, status: :unprocessable_content
   end
 
   private

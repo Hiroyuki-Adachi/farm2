@@ -14,6 +14,9 @@ class WorksTest < ApplicationSystemTestCase
     ensure_wide!
     assert_selector 'a', exact_text: '作業日報管理'
 
+    ensure_wide!                     # ログイン後の画面でも再度広げる
+    open_nav_if_collapsed            # 折りたたまれていれば開く
+
     click_link '日報入力'
     assert_selector 'h1', exact_text: '作業日報入力'
 

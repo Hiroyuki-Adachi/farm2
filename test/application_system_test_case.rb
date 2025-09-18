@@ -41,6 +41,7 @@ Capybara.server_host = "0.0.0.0"
 Capybara.default_normalize_ws = true
 Capybara.default_driver = Capybara.javascript_driver = :better_cuprite
 Capybara.app_host = "http://#{ENV.fetch('APP_HOST', `hostname`.strip&.downcase || '0.0.0.0')}"
+Capybara.default_max_wait_time = 5
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :better_cuprite, screen_size: [1920, 1080], options: { browser_options: {}, window_size: [1920, 1080] }
@@ -53,5 +54,15 @@ end
 def ensure_wide!(min_width: 1200, height: 900)
   page.driver.resize(min_width, height)
   page.evaluate_script("window.dispatchEvent(new Event('resize'))")
+  assert page.has_css?('body', wait: 0.2)
   page.evaluate_script("document.body.getBoundingClientRect().width")
+end
+
+def open_nav_if_collapsed
+  # すでに desktop サイドバーが表示されていれば何もしない
+  return unless page.has_css?('#sidebar_desktop.d-none', visible: :all, wait: 0.2)
+
+  # ボタンをクリックしてオフキャンバスを開く
+  find('button[data-bs-target="#sidebar_off_canvas"]', visible: :all).click
+  assert_selector '#sidebar_off_canvas.show', wait: 2
 end

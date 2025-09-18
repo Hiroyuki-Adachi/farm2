@@ -10,7 +10,7 @@ class Tasks::PrioritiesController < TasksController
         format.html { redirect_to @task, notice: "優先度を更新しました" }
       end
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

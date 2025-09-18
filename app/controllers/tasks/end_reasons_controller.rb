@@ -4,7 +4,7 @@ class Tasks::EndReasonsController < TasksController
   def edit; end
 
   def update
-    render :edit, status: :unprocessable_entity and return unless @task.closed?
+    render :edit, status: :unprocessable_content and return unless @task.closed?
 
     if @task.update(end_reason_params)
       respond_to do |format|
@@ -12,7 +12,7 @@ class Tasks::EndReasonsController < TasksController
         format.html { redirect_to @task, notice: "完了理由を更新しました" }
       end
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
