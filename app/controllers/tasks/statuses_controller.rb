@@ -5,7 +5,7 @@ class Tasks::StatusesController < TasksController
   def edit; end
 
   def update
-    @task.change_status!(new_params, current_user.worker)
+    @task.change_status!(status_params, current_user.worker)
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to @task, notice: "タスクの状態を更新しました" }
@@ -16,7 +16,7 @@ class Tasks::StatusesController < TasksController
 
   private
 
-  def new_params
+  def status_params
     params.expect(task: [:task_status, :comment, :end_reason])
   end
 
