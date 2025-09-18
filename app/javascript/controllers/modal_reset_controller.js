@@ -10,7 +10,13 @@ export default class extends Controller {
       const urlFromButton = trigger?.dataset?.modalResetFrameSrcValue;
       const url = urlFromButton || this.frameSrcValue; // ボタン優先、無ければ固定値
       const frame = document.getElementById(this.frameIdValue);
+      const title = trigger?.dataset?.bsTitle;
+
       if (frame && url) frame.src = url;
+      if (title) {
+        const titleElement = this.element.querySelector(".modal-title");
+        if (titleElement) titleElement.textContent = title;
+      }
     }
 
     this.onHidden = () => {

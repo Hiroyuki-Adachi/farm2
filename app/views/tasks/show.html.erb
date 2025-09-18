@@ -1,9 +1,7 @@
 <div class="d-flex align-items-center justify-content-between">
   <h1 class="mb-0">タスク詳細</h1>
-  <% if @task.deletable?(current_user) %>
-    <div class="btn-group mr-2">
-      <%= link_to '削除', @task, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
-    </div>
+  <%= turbo_frame_tag "task_delete_button" do %>
+    <%= render "tasks/statuses/delete_button", task: task %>
   <% end %>
 </div>
 

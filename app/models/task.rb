@@ -166,7 +166,7 @@ class Task < ApplicationRecord
       elsif new_status.closed_flag
         self.ended_on = Time.zone.today
         self.started_on ||= Time.zone.today
-        self.end_reason = new_params[:end_reason_id].presence || :other
+        self.end_reason = new_params[:end_reason].presence || :other
       end
       self.save!
     end
@@ -215,7 +215,7 @@ class Task < ApplicationRecord
   def end_reason_for_closed
     return if self.opened?
 
-    errors.add("完了理由を選択してください。") if self.end_reason_unset?
+    errors.add(:end_reason, "を選択してください。") if self.end_reason_unset?
   end
 
   def clear_end_info

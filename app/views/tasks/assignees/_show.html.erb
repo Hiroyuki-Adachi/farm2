@@ -1,3 +1,6 @@
+<% if task.closed? %>
+  <div class="d-inline"><span><%= task.assignee_name %></span></div>
+<% else %>
 <div class="d-inline" role="button"
      data-bs-toggle="modal"
      data-bs-target="#<%= dom_id(task, :assignee_modal) %>">
@@ -5,6 +8,7 @@
     <%= task.assignee_name %>
   </span>
 </div>
+<% end %>
 
 <div class="modal fade"
      id="<%= dom_id(task, :assignee_modal) %>"

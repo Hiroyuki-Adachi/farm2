@@ -465,7 +465,7 @@ ja:
         end_reason: "完了理由"
         started_on: "着手日"
         ended_on: "完了日"
-        office_role: "種別"
+        office_role: "部門区分"
         comment: "コメント"
         priorities:
           low: "低"

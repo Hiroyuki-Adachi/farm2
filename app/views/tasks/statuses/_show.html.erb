@@ -5,7 +5,8 @@
             class="<%= "#{next_status.btn_class}" %>"
             data-bs-toggle="modal"
             data-bs-target="#<%= dom_id(task, :status_modal) %>"
-            data-modal-reset-frame-src-value="<%= edit_task_status_path(task, code: next_status.code) %>">
+            data-modal-reset-frame-src-value="<%= edit_task_status_path(task, code: next_status.code) %>"
+            data-bs-title="<%= next_status.name %>に変更">
       <%= next_status.name %>
     </button>
   <% end %>

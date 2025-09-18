@@ -1,10 +1,14 @@
-<div class="d-inline" role="button"
-     data-bs-toggle="modal"
-     data-bs-target="#<%= dom_id(task, :due_on_modal) %>">
-  <span>
-    <%= task.due_on_display %><%= task.due_badge %>
-  </span>
-</div>
+<% if task.closed? %>
+  <div class="d-inline"><span><%= task.due_on_display %></span></div>
+<% else %>
+  <div class="d-inline" role="button"
+      data-bs-toggle="modal"
+      data-bs-target="#<%= dom_id(task, :due_on_modal) %>">
+    <span>
+      <%= task.due_on_display %><%= task.due_badge %>
+    </span>
+  </div>
+<% end %>
 
 <div class="modal fade"
   id="<%= dom_id(task, :due_on_modal) %>"
