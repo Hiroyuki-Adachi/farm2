@@ -180,7 +180,7 @@ class TaskTest < ActiveSupport::TestCase
 
     # OK例（to_do -> cancel）
     task1 = tasks(:open_task)
-    assert_changes -> { task1.reload.task_status_id }, to: 9 do
+    assert_changes -> { task1.reload.task_status_id }, to: TaskStatus::CANCEL.id do
       task1.change_status!({ task_status: :cancel, comment: "中止します" }, worker1)
     end
 
