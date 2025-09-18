@@ -25,3 +25,6 @@
 #  fk_rails_...  (task_id => tasks.id)
 #  fk_rails_...  (worker_id => workers.id)
 #
+task_watcher1:
+  task: worker1_task
+  worker_id: 1

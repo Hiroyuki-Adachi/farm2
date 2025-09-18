@@ -68,3 +68,14 @@ closed_task:
   ended_on: <%= Date.current - 1.day %>
   created_at: <%= Time.zone.now - 3.days %>
   updated_at: <%= Time.zone.now - 1.day %>
+
+worker1_task:
+  title: "worker1のタスク"
+  description: ""
+  priority: low
+  end_reason: unset
+  task_status_id: 0     # to_do
+  assignee_id: 1
+  creator_id: 2
+  created_at: <%= Time.zone.now - 2.days %>
+  updated_at: <%= Time.zone.now - 2.days %>
