@@ -93,6 +93,16 @@ class TaskTest < ActiveSupport::TestCase
     assert open_task.errors.any?
   end
 
+  test "担当者変更処理(完了済)" do
+    worker2 = workers(:worker2)
+    closed_task = tasks(:closed_task)
+
+    assert_raises(ActiveRecord::RecordInvalid) do
+      closed_task.change_assignee!(worker2.id, worker2, "完了済です")
+    end
+    assert closed_task.errors.any?
+  end
+
   test "期限変更" do
     worker1 = workers(:worker1)
     open_task = tasks(:open_task)
@@ -118,6 +128,17 @@ class TaskTest < ActiveSupport::TestCase
       open_task.change_due_on!(nil, worker1)
     end
     assert open_task.errors.any?
+  end
+
+  test "期限変更(完了済)" do
+    worker1 = workers(:worker1)
+    closed_task = tasks(:closed_task)
+    closed_task.update!(due_on: Time.zone.yesterday)
+
+    assert_raises(ActiveRecord::RecordInvalid) do
+      closed_task.change_due_on!(Time.zone.today, worker1)
+    end
+    assert closed_task.errors.any?
   end
 
   test "ステータス変更(未着手⇒進行中)" do

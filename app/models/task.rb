@@ -124,6 +124,10 @@ class Task < ApplicationRecord
       errors.add(:assignee_id, "が変更されていません")
       raise ActiveRecord::RecordInvalid, self
     end
+    if self.closed?
+      errors.add(:assignee_id, "を変更できません（タスクが完了しています）")
+      raise ActiveRecord::RecordInvalid, self
+    end
 
     in_change_tx!(actor: actor, comment: comment) do |c|
       events.create!(
@@ -177,6 +181,10 @@ class Task < ApplicationRecord
     self.comment = comment
     if new_due_on.presence&.to_date == due_on
       errors.add(:due_on, "が変更されていません")
+      raise ActiveRecord::RecordInvalid, self
+    end
+    if self.closed?
+      errors.add(:due_on, "を変更できません（タスクが完了しています）")
       raise ActiveRecord::RecordInvalid, self
     end
 
