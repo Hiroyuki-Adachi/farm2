@@ -42,8 +42,3 @@
 #  fk_rails_...  (task_id => tasks.id)
 #  fk_rails_...  (work_id => works.id)
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value

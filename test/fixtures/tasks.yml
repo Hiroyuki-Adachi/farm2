@@ -33,8 +33,38 @@
 #  fk_rails_...  (assignee_id => workers.id)
 #  fk_rails_...  (creator_id => workers.id)
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+open_task:
+  title: "未着手タスク"
+  description: ""
+  priority: low
+  end_reason: unset
+  task_status_id: 0     # to_do
+  assignee_id: 1
+  creator_id: 1
+  created_at: <%= Time.zone.now - 2.days %>
+  updated_at: <%= Time.zone.now - 2.days %>
+
+started_task:
+  title: "進行中タスク"
+  description: ""
+  priority: medium
+  end_reason: unset
+  task_status_id: 2     # doing (started_flag: true)
+  assignee_id: 1
+  creator_id: 1
+  started_on: <%= Date.current - 1.day %>
+  created_at: <%= Time.zone.now - 2.days %>
+  updated_at: <%= Time.zone.now - 2.days %>
+
+closed_task:
+  title: "完了タスク"
+  description: ""
+  priority: high
+  end_reason: completed
+  task_status_id: 4     # done (closed)
+  assignee_id: 1
+  creator_id: 1
+  started_on: <%= Date.current - 2.days %>
+  ended_on: <%= Date.current - 1.day %>
+  created_at: <%= Time.zone.now - 3.days %>
+  updated_at: <%= Time.zone.now - 1.day %>

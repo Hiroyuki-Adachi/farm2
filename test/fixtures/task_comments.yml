@@ -26,8 +26,3 @@
 #  fk_rails_...  (poster_id => workers.id)
 #  fk_rails_...  (task_id => tasks.id)
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value

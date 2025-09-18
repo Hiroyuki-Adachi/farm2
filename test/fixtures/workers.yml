@@ -54,6 +54,7 @@ worker1:
   deleted_at: 
   birthday: '1980-01-01'
   gender_id: 1
+  office_role: 1 
 
 worker2:
   id: 2
@@ -78,6 +79,7 @@ worker2:
   deleted_at: 
   birthday: '1960-01-01'
   gender_id: 1
+  office_role: 2
 
 worker3:
   id: 3
