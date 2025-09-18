@@ -67,11 +67,22 @@
   </div>
 </div>
 
-<!-- 説明 -->
 <div class="card shadow-sm mb-3">
   <div class="card-body p-0">
     <%= turbo_frame_tag "task_description" do %>
       <%= render "tasks/descriptions/show", task: @task %>
+    <% end %>
+  </div>
+</div>
+
+<div class="card shadow-sm mb-3">
+  <div class="card-header d-flex align-items-center gap-2">
+    <i class="bi bi-chat-dots"></i>
+    <strong>やり取り / 更新履歴</strong>
+  </div>
+  <div class="card-body">
+    <%= turbo_frame_tag "task_events" do %>
+      <%= render "tasks/events/list", task: @task, events: @events %>
     <% end %>
   </div>
 </div>

@@ -7,11 +7,12 @@ class WorksTest < ApplicationSystemTestCase
 
   test "ログインから日報入力まで" do
     visit root_path 
+    assert_selector 'body'
+    ensure_wide!
 
     fill_in 'login_name', with: @user.login_name
     fill_in 'password', with: 'password'
     click_button '認証する'
-    ensure_wide!
     assert_selector 'a', exact_text: '作業日報管理'
 
     ensure_wide!                     # ログイン後の画面でも再度広げる

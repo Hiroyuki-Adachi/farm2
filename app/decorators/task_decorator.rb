@@ -1,24 +1,17 @@
 class TaskDecorator < Draper::Decorator
+  include PriorityPresenter
+  include TaskStatusPresenter
+
   delegate_all
-
-  def priority_color
-    I18n.t("activerecord.attributes.task.priority_colors.#{object.priority}")
-  end
-
-  def priority_name
-    I18n.t("activerecord.attributes.task.priorities.#{object.priority}")
-  end
+  decorates_association :creator
+  decorates_association :assignee
 
   def priority_badge
-    h.content_tag(:span, priority_name, class: "badge text-bg-#{priority_color}")
-  end
-
-  def status_name
-    object.status.name
+    super(object.priority)
   end
 
   def status_badge
-    h.content_tag(:span, status_name, class: object.status.badge_class)
+    super(object.status)
   end
 
   def creator_name
@@ -77,7 +70,7 @@ class TaskDecorator < Draper::Decorator
 
   def watching_name
     if object.watching?
-      h.content_tag(:span, "●", class: "text-success")
+      h.content_tag(:span, "●", class: "text-danger", title: "監視中")
     else
       ""
     end

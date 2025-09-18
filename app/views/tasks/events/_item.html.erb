@@ -1,0 +1,21 @@
+<div class="d-flex <%= mine ? 'justify-content-end' : 'justify-content-start' %>">
+  <div class="d-flex align-items-start gap-2 <%= mine ? 'flex-row-reverse text-end' : '' %>" style="max-width: 75%;">
+    <div class="<%= mine ? 'bg-primary-subtle text-primary-emphasis border border-primary-subtle' 
+                         : 'bg-body-tertiary text-body border border-secondary-subtle' %> rounded-3 p-2 shadow-sm w-auto">
+      <div class="small <%= mine ? 'text-primary' : 'text-muted' %>">
+        <%= event.actor.name %> ・ <%= l(event.created_at, format: :short) %>
+      </div>
+
+      <div class="mt-1">
+        <%=raw event.human_message %>
+      </div>
+
+      <% if event.comment&.body.present? %>
+        <hr class="my-2">
+        <div class="small">
+          <%= simple_format(h(event.comment.body)) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

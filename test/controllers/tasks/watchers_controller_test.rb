@@ -24,6 +24,7 @@ class Tasks::WatchersControllerTest < ActionDispatch::IntegrationTest
 
   test "監視者削除" do
     task = tasks(:worker1_task)
+    assert TaskWatcher.exists?(task_id: task.id, worker_id: @user.worker_id)
 
     assert_difference "TaskWatcher.count", -1 do
       delete task_watcher_path(task_id: task.id, id: @user.worker_id),
@@ -34,6 +35,6 @@ class Tasks::WatchersControllerTest < ActionDispatch::IntegrationTest
     assert_equal "text/vnd.turbo-stream.html", response.media_type
     assert_includes response.body, "<turbo-stream"
 
-    assert_nil TaskWatcher.find_by(task_id: task.id, worker_id: @user.worker_id)
+    assert_not TaskWatcher.exists?(task_id: task.id, worker_id: @user.worker_id)
   end
 end

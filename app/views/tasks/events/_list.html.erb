@@ -1,0 +1,5 @@
+<div id="task_timeline" class="d-flex flex-column gap-3">
+  <% events.each do |e| %>
+    <%= render "tasks/events/item", event: e, mine: (e.actor_id == current_user.worker.id) %>
+  <% end %>
+</div>

@@ -1,9 +1,7 @@
 <div class="d-inline" role="button"
      data-bs-toggle="modal"
      data-bs-target="#<%= dom_id(task, :priority_modal) %>">
-  <span class="badge text-bg-<%= task.priority_color %>">
-    <%= task.priority_name %>
-  </span>
+  <%= task.priority_badge%>
 </div>
 
 <div class="modal fade"
