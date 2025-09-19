@@ -44,7 +44,8 @@ Capybara.app_host = "http://#{ENV.fetch('APP_HOST', `hostname`.strip&.downcase |
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :better_cuprite
-
+  include SystemSidebarHelpers
+  
   setup do
     WebMock.allow_net_connect!
   end

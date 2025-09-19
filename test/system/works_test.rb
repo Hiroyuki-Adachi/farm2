@@ -14,7 +14,7 @@ class WorksTest < ApplicationSystemTestCase
     click_button '認証する'
     assert_selector 'a', exact_text: '作業日報管理'
 
-    save_screenshot("tmp/capybara/work.png", full: true)
+    ensure_sidebar_shown!
 
     click_link '日報入力'
     assert_selector 'h1', exact_text: '作業日報入力'
