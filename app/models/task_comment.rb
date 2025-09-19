@@ -23,22 +23,20 @@
 class TaskComment < ApplicationRecord
   belongs_to :poster, class_name: 'Worker'
   belongs_to :task
-  has_one :event, class_name: 'TaskEvent', dependent: :nullify
-
-  before_save :remove_blank_body
-  after_save :delete_blank_body, if: :body_changed?
+  has_one :event, class_name: 'TaskEvent', inverse_of: :comment, dependent: :nullify
+  before_validation :strip_body
+  after_commit :purge_if_blank, on: [:create, :update]
 
   private
 
-  def remove_blank_body
-    self.body = body.strip if body.present?
+  def strip_body
+    self.body = body.to_s.strip
   end
 
-  def delete_blank_body
-    if body.blank?
-      logger.debug "TaskComment ##{id} body is blank. Deleting the comment."
-      event.update!(comment: nil) if event.present?
-      self.destroy
-    end
+  def purge_if_blank
+    return if body.present?
+
+    event.update(comment: nil) if event.present?
+    destroy!
   end
 end

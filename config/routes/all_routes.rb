@@ -220,7 +220,7 @@ resources :tasks, except: [:edit, :update] do
   resources :watchers, controller: "tasks/watchers", only: [:create, :destroy]
   resources :comments, controller: "tasks/comments", only: [:create]
   resources :events, only: [] do
-    resource :comment, controller: "tasks/event_comments", only: [:show, :edit, :create, :update, :destroy]
+    resource :comment, controller: "tasks/event_comments", only: [:show, :edit, :create, :update]
   end
 end
 resources :work_results, only: [:index]

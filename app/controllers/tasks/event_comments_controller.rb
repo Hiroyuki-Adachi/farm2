@@ -64,11 +64,24 @@ class Tasks::EventCommentsController < TasksController
     end
 
     if @comment.update(comment_params)
-      render turbo_stream: turbo_stream.update(
-        helpers.dom_id(@event, :comment),
-        partial: "tasks/comments/show_for_event",
-        locals: { task: @task, event: @event, comment: @comment }
-      )
+      if TaskEvent.exists?(id: @event.id)
+        @event.reload
+        if @event.comment.present?
+          render turbo_stream: turbo_stream.update(
+            helpers.dom_id(@event, :comment),
+            partial: "tasks/comments/show_for_event",
+            locals: { task: @task, event: @event, comment: @event.comment }
+          )
+        else
+          render turbo_stream: turbo_stream.update(
+            helpers.dom_id(@event, :comment),
+            partial: "tasks/comments/empty_for_event",
+            locals: { task: @task, event: @event }
+          )
+        end
+      else
+        render turbo_stream: turbo_stream.remove(helpers.dom_id(@event, :event_item))
+      end
     else
       render turbo_stream: turbo_stream.update(
         helpers.dom_id(@event, :comment),
@@ -77,26 +90,6 @@ class Tasks::EventCommentsController < TasksController
         status: :unprocessable_content
       )
     end
-  end
-
-  def destroy
-    @comment = @event.comment
-    unless authorize_comment_owner?(@comment)
-      render turbo_stream: turbo_stream.update(
-        helpers.dom_id(@event, :comment),
-        partial: "tasks/comments/edit_for_event",
-        locals: { task: @task, event: @event, comment: @comment },
-        status: :unprocessable_content
-      )
-    end
-    @comment.destroy!
-
-    # コメント部位だけ“未付与表示”に戻す
-    render turbo_stream: turbo_stream.update(
-      helpers.dom_id(@event, :comment),
-      partial: "tasks/comments/empty_for_event",
-      locals: { task: @task, event: @event }
-    )
   end
 
   private

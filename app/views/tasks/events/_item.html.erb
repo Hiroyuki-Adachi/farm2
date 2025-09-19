@@ -1,4 +1,4 @@
-<div class="d-flex <%= mine ? 'justify-content-end' : 'justify-content-start' %>">
+<div id="<%= dom_id(event, :event_item) %>" class="d-flex <%= mine ? 'justify-content-end' : 'justify-content-start' %>">
   <div class="d-flex align-items-start gap-2 <%= mine ? 'flex-row-reverse text-end' : '' %>" style="max-width: 75%;">
     <div class="<%= mine ? 'bg-primary-subtle text-primary-emphasis border border-primary-subtle' 
                          : 'bg-body-tertiary text-body border border-secondary-subtle' %> rounded-3 p-2 shadow-sm w-auto">
