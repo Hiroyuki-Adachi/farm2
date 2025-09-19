@@ -79,3 +79,14 @@ worker1_task:
   creator_id: 2
   created_at: <%= Time.zone.now - 2.days %>
   updated_at: <%= Time.zone.now - 2.days %>
+
+comment_task:
+  title: "コメント付きタスク"
+  description: ""
+  priority: medium
+  end_reason: unset
+  task_status_id: 0     # to_do
+  assignee_id: 3
+  creator_id: 3
+  created_at: <%= Time.zone.now - 2.days %>
+  updated_at: <%= Time.zone.now - 2.days %>

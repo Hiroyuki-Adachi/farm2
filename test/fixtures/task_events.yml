@@ -42,3 +42,13 @@
 #  fk_rails_...  (task_id => tasks.id)
 #  fk_rails_...  (work_id => works.id)
 #
+
+comment_event:
+  event_type: change_due_on
+  due_on_from: <%= Date.current + 1.day %>
+  due_on_to: <%= Date.current + 2.days %>
+  task: comment_task
+  actor_id: 3
+  comment: one_day_ago_comment
+  created_at: <%= Time.zone.now - 1.day %>
+  updated_at: <%= Time.zone.now - 1.day %>

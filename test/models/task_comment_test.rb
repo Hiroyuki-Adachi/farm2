@@ -23,7 +23,34 @@
 require "test_helper"
 
 class TaskCommentTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @comment = task_comments(:one_day_ago_comment)
+    @event = @comment.event
+  end
+
+  test "コメント削除(タスクがコメント追加)" do
+    @event.update!(due_on_from: nil, due_on_to: nil, event_type: :add_comment)
+    assert_difference("TaskComment.count", -1) do
+      assert_difference("TaskEvent.count", -1) do
+        @comment.update(body: '')
+      end
+    end
+  end
+
+  test "コメント削除(タスクがコメント追加以外)" do
+    @event.update!(due_on_from: Date.current + 1.day, due_on_to: Date.current + 2.days, event_type: :change_due_on)
+    assert_difference("TaskComment.count", -1) do
+      assert_no_difference("TaskEvent.count") do
+        @comment.update(body: '')
+      end
+    end
+  end
+
+  test "コメント変更" do
+    assert_no_difference("TaskComment.count") do
+      assert_no_difference("TaskEvent.count") do
+        @comment.update(body: 'ABC')
+      end
+    end
+  end
 end

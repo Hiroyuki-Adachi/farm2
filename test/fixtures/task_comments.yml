@@ -26,3 +26,9 @@
 #  fk_rails_...  (poster_id => workers.id)
 #  fk_rails_...  (task_id => tasks.id)
 #
+
+one_day_ago_comment:
+  body: "1日前のコメント"
+  task: comment_task
+  poster_id: 3
+  created_at: <%= Time.zone.now - 1.day %>
