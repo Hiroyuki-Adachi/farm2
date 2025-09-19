@@ -24,4 +24,21 @@ class TaskComment < ApplicationRecord
   belongs_to :poster, class_name: 'Worker'
   belongs_to :task
   has_one :event, class_name: 'TaskEvent', dependent: :nullify
+
+  before_save :remove_blank_body
+  after_save :delete_blank_body, if: :body_changed?
+
+  private
+
+  def remove_blank_body
+    self.body = body.strip if body.present?
+  end
+
+  def delete_blank_body
+    if body.blank?
+      logger.debug "TaskComment ##{id} body is blank. Deleting the comment."
+      event.update!(comment: nil) if event.present?
+      self.destroy
+    end
+  end
 end

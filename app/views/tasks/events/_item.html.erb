@@ -10,11 +10,15 @@
         <%=raw event.human_message %>
       </div>
 
-      <% if event.comment&.body.present? %>
-        <hr class="my-2">
-        <div class="small">
-          <%= simple_format(h(event.comment.body)) %>
-        </div>
+      <% if event.comment.present? %>
+        <%= turbo_frame_tag dom_id(event, :comment) do %>
+          <%= render "tasks/comments/show_for_event",
+                task: task, event: event, comment: event.comment %>
+        <% end %>
+      <% else %>
+        <%= turbo_frame_tag dom_id(event, :comment) do %>
+          <%= render "tasks/comments/empty_for_event", task: task, event: event %>
+        <% end %>
       <% end %>
     </div>
   </div>

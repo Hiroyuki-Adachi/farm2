@@ -48,9 +48,14 @@ class TaskEvent < ApplicationRecord
   belongs_to_active_hash :status_from, class_name: 'TaskStatus', foreign_key: 'status_from_id', optional: true
   belongs_to_active_hash :status_to, class_name: 'TaskStatus', foreign_key: 'status_to_id', optional: true
 
-  enum :event_type, { task_created: 0, change_status: 1, change_assignee: 2, change_due_on: 3, add_comment: 9 }
+  enum :event_type, { task_created: 0, change_status: 1, change_assignee: 2, change_due_on: 3, add_work: 8, add_comment: 9 }
 
   after_save :clear_comment
+
+  def self.add_comment!(task:, actor:, body:)
+    comment = task.comments.create!(poster: actor, body: body)
+    create!(task: task, actor: actor, event_type: :add_comment, comment: comment)
+  end
 
   private
 

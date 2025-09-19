@@ -65,7 +65,19 @@ class TaskEventDecorator < Draper::Decorator
   def due_on_to_display
     return "（未設定）" if object.due_on_to.blank?
 
-    h.l(object.due_on_to, format: :short)
+    if object.due_on_to == Time.zone.today
+      "今日"
+    elsif object.due_on_to == Time.zone.yesterday
+      "昨日"
+    elsif object.due_on_to == Time.zone.tomorrow
+      "明日"
+    elsif object.due_on_to == Time.zone.today + 2
+      "明後日"
+    elsif object.due_on_to.year == Time.zone.today.year
+      object.due_on_to.strftime('%m/%d')
+    else
+      object.due_on_to.strftime('%Y/%m/%d')
+    end
   end
 
   def human_message
