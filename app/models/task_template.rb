@@ -1,0 +1,96 @@
+# == Schema Information
+#
+# Table name: task_templates(定型タスク)
+#
+#  id                              :bigint           not null, primary key
+#  active(有効)                    :boolean          default(TRUE), not null
+#  annual_month(期日月)            :integer
+#  description(説明)               :text             default(""), not null
+#  discarded_at(論理削除日時)      :datetime
+#  kind(年次/月次)                 :integer          default("annual"), not null
+#  monthly_stage(期日週)           :integer          default("w1"), not null
+#  months_before_due(事前通知月数) :integer          default(1), not null
+#  office_role(役割)               :integer          default("none"), not null
+#  priority(優先度)                :integer          default("low"), not null
+#  title(タスク名)                 :string(40)       not null
+#  year_offset(基準年からのズレ)   :integer          default(0), not null
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#
+# Indexes
+#
+#  idx_on_kind_annual_month_monthly_stage_5eb8d135fc  (kind,annual_month,monthly_stage)
+#
+class TaskTemplate < ApplicationRecord
+  include Enums::OfficeRole
+  include Discard::Model
+
+  enum :priority, { low: 0, medium: 5, high: 8 }
+  enum :kind, { annual: 0, monthly: 1 }, prefix: true
+  enum :monthly_stage, { w1: 0, w2: 7, w3: 14, w4: 21, month_end: 31 }
+
+  has_many :tasks, dependent: :restrict_with_error
+
+  validates :title, presence: true, length: { maximum: 40 }
+  validates :months_before_due, inclusion: { in: 0..6 }
+  validates :annual_month, inclusion: { in: 1..12 }, if: :kind_annual?
+  validates :year_offset, inclusion: { in: [-1, 0, 1] }
+
+  # 指定年月の期日(due_on)を計算
+  def due_on_for(year:, month:)
+    base = Date.new(year, month, 1)
+    day =
+      case monthly_stage.to_sym
+      when :month_end
+        base.end_of_month.day
+      else
+        nth_saturday_day(base.year, base.month, stage_to_n(monthly_stage))
+      end
+    Date.new(base.year, base.month, day)
+  end
+
+  # 今日が生成基準日に当たる due_on 候補を返す
+  # 生成基準日 = (due_on - months_before_due.months)
+  def due_on_candidates_for(today:)
+    list = []
+    targets =
+      if kind_monthly?
+        # 今月/来月の2候補を見れば十分
+        [today.beginning_of_month, (today.beginning_of_month >> 1)]
+      else
+        # 年次は annual_month を使用（今年/来年分を見る）
+        return list unless annual_month
+        [Date.new(today.year, annual_month, 1),
+         Date.new(today.year + 1, annual_month, 1)]
+      end
+
+    targets.each do |base|
+      due_on = due_on_for(year: base.year, month: base.month)
+      anchor = due_on << months_before_due
+      list << due_on if anchor == today
+    end
+    list
+  end
+
+  def destroy_or_archive!
+    if tasks.exists?
+      update!(active: false)
+      discard unless discarded?
+    else
+      destroy!
+    end
+  end
+
+  private
+
+  def stage_to_n(stage)
+    { w1: 1, w2: 2, w3: 3, w4: 4 }[stage.to_sym]
+  end
+
+  def nth_saturday_day(year, month, n)
+    first = Date.new(year, month, 1)
+    # 最初の土曜
+    first_sat = first + ((6 - first.wday) % 7)
+    (first_sat + 7 * (n - 1)).day
+  end
+end

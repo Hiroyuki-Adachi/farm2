@@ -7,11 +7,11 @@ module PriorityPresenter
   end
 
   def priority_name(value)
-    I18n.t("activerecord.attributes.task.priorities.#{value}")
+    I18n.t("activerecord.enums.task.priorities.#{value}")
   end
 
   def priority_color(value)
-    I18n.t("activerecord.attributes.task.priority_colors.#{value}")
+    I18n.t("activerecord.enums.task.priority_colors.#{value}")
   end
 
   def priority_badge(value)

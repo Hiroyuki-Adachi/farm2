@@ -110,7 +110,7 @@ class Worker < ApplicationRecord
   end
 
   def position_name
-    I18n.t("activerecord.attributes.worker.position_ids.#{self.position_id}")
+    I18n.t("activerecord.enums.worker.position_ids.#{self.position_id}")
   end
 
   private

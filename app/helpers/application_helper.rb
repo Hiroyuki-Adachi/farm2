@@ -68,7 +68,7 @@ module ApplicationHelper
       .reject { |key| exclude_keys.include?(key) }
       .map do |key|
         [
-          I18n.t("activerecord.attributes.#{model_class.model_name.i18n_key}.#{attr_name.to_s.pluralize}.#{key}"),
+          I18n.t("activerecord.enums.#{model_class.model_name.i18n_key}.#{attr_name.to_s.pluralize}.#{key}"),
           key
         ]
       end

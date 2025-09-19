@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_12_114023) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_19_130306) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -832,6 +832,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_114023) do
     t.index ["work_id"], name: "index_task_events_on_work_id"
   end
 
+  create_table "task_templates", comment: "定型タスク", force: :cascade do |t|
+    t.integer "kind", default: 0, null: false, comment: "年次/月次"
+    t.string "title", limit: 40, null: false, comment: "タスク名"
+    t.text "description", default: "", null: false, comment: "説明"
+    t.integer "priority", default: 0, null: false, comment: "優先度"
+    t.integer "office_role", default: 0, null: false, comment: "役割"
+    t.integer "monthly_stage", default: 0, null: false, comment: "期日週"
+    t.integer "annual_month", comment: "期日月"
+    t.integer "months_before_due", default: 1, null: false, comment: "事前通知月数"
+    t.integer "year_offset", default: 0, null: false, comment: "基準年からのズレ"
+    t.boolean "active", default: true, null: false, comment: "有効"
+    t.datetime "discarded_at", comment: "論理削除日時"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["kind", "annual_month", "monthly_stage"], name: "idx_on_kind_annual_month_monthly_stage_5eb8d135fc"
+  end
+
   create_table "task_watchers", comment: "タスク閲覧者", force: :cascade do |t|
     t.bigint "task_id", null: false, comment: "タスクID"
     t.bigint "worker_id", null: false, comment: "閲覧者ID"
@@ -856,8 +873,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_114023) do
     t.bigint "creator_id", comment: "作成者"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "task_template_id", comment: "定型タスク"
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
     t.index ["creator_id"], name: "index_tasks_on_creator_id"
+    t.index ["task_template_id"], name: "index_tasks_on_task_template_id"
   end
 
   create_table "topics", comment: "トピック", force: :cascade do |t|
@@ -1197,6 +1216,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_12_114023) do
   add_foreign_key "task_events", "works"
   add_foreign_key "task_watchers", "tasks"
   add_foreign_key "task_watchers", "workers"
+  add_foreign_key "tasks", "task_templates"
   add_foreign_key "tasks", "workers", column: "assignee_id"
   add_foreign_key "tasks", "workers", column: "creator_id"
 end

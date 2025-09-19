@@ -59,13 +59,13 @@ class TaskDecorator < Draper::Decorator
   end
 
   def office_role_name
-    I18n.t("activerecord.attributes.task.office_roles.#{object.office_role}")
+    I18n.t("activerecord.enums.task.office_roles.#{object.office_role}")
   end
 
   def end_reason_name
     return "" if object.end_reason_unset?
 
-    I18n.t("activerecord.attributes.task.end_reasons.#{object.end_reason}")
+    I18n.t("activerecord.enums.task.end_reasons.#{object.end_reason}")
   end
 
   def watching_name
