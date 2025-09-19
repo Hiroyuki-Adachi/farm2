@@ -22,10 +22,39 @@ class TaskDecorator < Draper::Decorator
     object.assignee&.name || "（未設定）"
   end
 
+  def kind_name
+    if object.template.blank?
+      "随時"
+    else
+      I18n.t("activerecord.enums.task_template.kind.#{object.template.kind}")
+    end
+  end
+
+  def kind_badge
+    if object.template.blank?
+      h.content_tag(:span, kind_name, class: "badge text-bg-warning")
+    else
+      case object.template.kind.to_sym
+      when :annual
+        h.content_tag(:span, kind_name, class: "badge text-bg-info")
+      when :monthly
+        h.content_tag(:span, kind_name, class: "badge text-bg-success")
+      else
+        ""
+      end
+    end
+  end
+
   def due_on_display
     return "（未設定）" if object.due_on.blank?
 
     I18n.l(object.due_on, format: :long)
+  end
+
+  def due_on_short
+    return "（未設定）" if object.due_on.blank?
+
+    I18n.l(object.due_on, format: :short)
   end
 
   def started_on_display

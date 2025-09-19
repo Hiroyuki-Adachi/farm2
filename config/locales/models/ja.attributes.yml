@@ -381,6 +381,7 @@ ja:
         ended_on: "完了日"
         office_role: "部門区分"
         comment: "コメント"
+        kind: "処理区分"
 
       task_template:
         title: "テンプレート名"
