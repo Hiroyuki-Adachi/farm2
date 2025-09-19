@@ -17,7 +17,15 @@ class TaskEventDecorator < Draper::Decorator
   end
 
   def created_at_display
-    h.l(object.created_at, format: :short)
+    if object.created_at.to_date == Time.zone.today
+      object.created_at.strftime('%H:%M')
+    elsif object.created_at.to_date == Time.zone.yesterday
+      "昨日 #{object.created_at.strftime('%H:%M')}"
+    elsif object.created_at.year == Time.zone.today.year
+      object.created_at.strftime('%m/%d %H:%M')
+    else
+      object.created_at.strftime('%Y/%m/%d %H:%M')
+    end
   end
 
   def actor_name
@@ -36,7 +44,7 @@ class TaskEventDecorator < Draper::Decorator
     if object.assignee_from_id == context[:current_worker]&.id
       h.content_tag(:span, "あなた", class: 'badge bg-danger text-white')
     else
-      h.content_tag(:span, "#{assignee_from_name}", class: 'badge bg-secondary') + "さん"
+      "#{h.content_tag(:span, assignee_from_name, class: 'badge bg-secondary')}さん"
     end
   end
 
@@ -44,7 +52,7 @@ class TaskEventDecorator < Draper::Decorator
     if object.assignee_to_id == context[:current_worker]&.id
       h.content_tag(:span, "あなた", class: 'badge bg-danger text-white')
     else
-      h.content_tag(:span, "#{assignee_to_name}", class: 'badge bg-secondary') + "さん"
+      "#{h.content_tag(:span, assignee_to_name, class: 'badge bg-secondary')}さん"
     end
   end
 

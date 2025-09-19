@@ -30,10 +30,7 @@ class TasksController < ApplicationController
     end
   end
 
-  def show
-    events = @task.events.includes(:actor, :comment).order(created_at: :asc)
-    @events = TaskEventDecorator.decorate_collection(events, context: { current_worker: current_user.worker })
-  end
+  def show; end
 
   def destroy
     to_error_path unless @task.deletable?(current_user)

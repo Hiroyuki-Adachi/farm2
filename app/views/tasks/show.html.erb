@@ -82,7 +82,7 @@
   </div>
   <div class="card-body">
     <%= turbo_frame_tag "task_events" do %>
-      <%= render "tasks/events/list", task: @task, events: @events %>
+      <%= render "tasks/events/list", task: @task %>
     <% end %>
   </div>
 </div>
