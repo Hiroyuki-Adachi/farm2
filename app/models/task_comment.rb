@@ -27,6 +27,9 @@ class TaskComment < ApplicationRecord
   before_validation :strip_body
   after_commit :purge_if_blank, on: [:create, :update]
 
+  validates :body, presence: true, on: :create
+  validate :poster_is_actor, if: -> { event.present? }
+
   private
 
   def strip_body
@@ -38,5 +41,9 @@ class TaskComment < ApplicationRecord
 
     event.update(comment: nil) if event.present?
     destroy!
+  end
+
+  def poster_is_actor
+    errors.add(:poster, "がイベントのアクターではありません") if event.actor_id != poster_id
   end
 end

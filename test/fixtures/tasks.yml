@@ -90,3 +90,15 @@ comment_task:
   creator_id: 3
   created_at: <%= Time.zone.now - 2.days %>
   updated_at: <%= Time.zone.now - 2.days %>
+
+due_on_task:
+  title: "期限付きタスク"
+  description: ""
+  priority: high
+  end_reason: unset
+  task_status_id: 0     # to_do
+  due_on: <%= Date.current + 1.day %>
+  assignee_id: 1
+  creator_id: 1
+  created_at: <%= Time.zone.now - 2.days %>
+  updated_at: <%= Time.zone.now - 2.days %>

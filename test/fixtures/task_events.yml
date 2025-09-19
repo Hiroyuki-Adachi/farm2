@@ -52,3 +52,12 @@ comment_event:
   comment: one_day_ago_comment
   created_at: <%= Time.zone.now - 1.day %>
   updated_at: <%= Time.zone.now - 1.day %>
+
+due_on_event:
+  event_type: change_due_on
+  due_on_from: <%= Date.current + 1.day %>
+  due_on_to: <%= Date.current + 3.days %>
+  task: due_on_task
+  actor_id: 3
+  created_at: <%= Time.zone.now - 2.days %>
+  updated_at: <%= Time.zone.now - 2.days %>
