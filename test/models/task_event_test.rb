@@ -39,7 +39,42 @@
 require "test_helper"
 
 class TaskEventTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "コメント削除(タスクがコメント追加)" do
+    event = task_events(:comment_event)
+    event.update!(due_on_from: nil, due_on_to: nil, event_type: :add_comment)
+    assert_difference("TaskEvent.count", -1) do
+      event.update!(comment: nil)
+    end
+  end
+
+  test "コメント削除(タスクがコメント追加以外)" do
+    event = task_events(:comment_event)
+    event.update!(due_on_from: Date.current + 1.day, due_on_to: Date.current + 2.days, event_type: :change_due_on)
+    assert_no_difference("TaskEvent.count") do
+      event.update!(comment: nil)
+    end
+  end
+
+  test "コメント追加" do
+    task = tasks(:open_task)
+    worker = workers(:worker1)
+    comment = '新しいコメント'
+    assert_difference("TaskEvent.count", 1) do
+      assert_difference("TaskComment.count", 1) do
+        TaskEvent.add_comment!(task: task, actor: worker, body: comment)
+      end
+    end
+
+    created_event = TaskEvent.last
+    assert_equal worker.id, created_event.actor_id
+    assert_equal task.id, created_event.task_id
+    assert created_event.add_comment?
+
+    created_comment = TaskComment.last
+    assert_equal comment, created_comment.body
+    assert_equal worker.id, created_comment.poster_id
+    assert_equal task.id, created_comment.task_id
+
+    assert_equal created_comment.id, created_event.task_comment_id
+  end
 end
