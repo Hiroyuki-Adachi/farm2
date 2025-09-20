@@ -130,6 +130,7 @@
         <%= link_to '施設マスタ', institutions_path, {class: "dropdown-item", data: {app_controller: "institutions"}} %>
         <%= link_to '作業分類マスタ', work_types_path, {class: "dropdown-item", data: {app_controller: "work_types", actions: [:index, :edit]}} %>
         <%= link_to '班マスタ', sections_path, {class: "dropdown-item", data: {app_controller: :sections}} %>
+        <%= link_to '定型タスク', task_templates_path, {class: "dropdown-item", data: {app_controller: :task_templates}} %>
       <% end %>
     </div>
   </div>

@@ -1,0 +1,104 @@
+<%= form_with(model: @template) do |f| %>
+  <%= error_print(f.object) %>
+  <div class="row">
+    <div class="field mb-3 col-md-12">
+      <%= f.label :title, class: "col-form-label-lg form-label" %>
+      <%= f.text_field :title, {maxlength: 40, required: true, class: "form-control", placeholder: "例：月次レポート／年度決算"} %>
+      <div class="form-text">
+        月次は実タスクで「令和X年Y月 + テンプレ名」、年次は「令和X年 + テンプレ名」に変換されます。
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field mb-3 col-md-3">
+      <%= f.label :priority, class: "col-form-label-lg form-label" %>
+      <%= f.select(:priority, enum_options_for(TaskTemplate, :priority), {}, class: "form-select") %>
+    </div>
+    <div class="field mb-3 col-md-3">
+      <%= f.label :office_role, class: "col-form-label-lg form-label" %>
+      <%= f.select(:office_role, enum_options_for(TaskTemplate, :office_role), {}, class: "form-select") %>
+      <div class="form-text">該当役割の作業者を自動で監視対象に追加します。</div>
+    </div>
+  </div>
+  <div class="row" data-controller="pages--task-template-kind">
+    <div class="field mb-3 col-md-3">
+      <%= f.label :kind, class: "col-form-label-lg form-label" %>
+      <%= f.select(:kind, enum_options_for(TaskTemplate, :kind), {}, data: {
+              "pages--task-template-kind-target": "kindSelect",
+              action: "change->pages--task-template-kind#toggle"
+            }, class: "form-select"
+        ) %>
+    </div>
+    <div class="field mb-3 col-md-3" data-pages--task-template-kind-target="annualOnly">
+      <%= f.label :annual_month, class: "col-form-label-lg form-label" %>
+      <%= f.select :annual_month,
+            (1..12).map { |m| ["#{m}月", m] },
+            { include_blank: "選択してください" },
+            class: "form-select" %>
+      <div class="form-text">年次テンプレートでのみ使用します。</div>
+    </div>
+    <div class="field mb-3 col-md-3">
+      <%= f.label :monthly_stage, class: "col-form-label-lg form-label" %>
+      <%= f.select(:monthly_stage, enum_options_for(TaskTemplate, :monthly_stage), {}, class: "form-select") %>
+    </div>
+    <div class="field mb-3 col-md-3">
+      <%= f.label :months_before_due, class: "col-form-label-lg form-label" %>
+      <%= f.select :months_before_due,
+            (0..6).map { |n| [("#{n}ヶ月前"), n] },
+            {}, class: "form-select" %>
+      <div class="form-text">期日から何ヶ月前にタスクを生成するかを指定します。</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="mb-3 col-md-8">
+      <%= f.label :year_offset, class: "col-form-label-lg form-label" %>
+      <% year_opts = [[-1, "前年扱い（決算・総会など）"], [0, "当年扱い（人事など）"], [1, "翌年扱い"]] %>
+      <div class="d-flex gap-3">
+        <% year_opts.each do |val, label| %>
+          <div class="form-check">
+            <%= f.radio_button :year_offset, val, class: "form-check-input", id: "year_offset_#{val}" %>
+            <%= f.label "year_offset_#{val}", label, class: "form-check-label" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="field mb-3 col-md-4">
+      <%= f.label :active, "有効(生成する)", class: "col-form-label-lg form-label" %>
+      <br />
+      <%= f.check_box :active, class: "form-check-input", role: "switch", id: "tpl_active" %>
+      <div class="form-text">オフにするとタスクの自動生成を停止します(データは残ります)。</div>
+    </div>
+  </div>
+  <div class="row" data-controller="markdown-preview">
+    <%= f.label :description, class: "col-form-label-lg form-label" %>
+    <div class="col-md-6">
+      <%= f.text_area :description,
+        class: "form-control",
+        rows: 14,
+        placeholder: "Markdown で説明を書いてください",
+        data: { "markdown-preview-target": "input", action: "input->markdown-preview#update" } %>
+      <div class="form-text">
+        例: <code>**太字**</code>、<code>`code`</code>、箇条書き、チェックボックス <code>- [ ] todo</code> など
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="border rounded p-3 bg-light-subtle" style="min-height: 260px;">
+        <div class="small text-muted mb-2">プレビュー</div>
+        <div data-markdown-preview-target="preview"></div>
+      </div>
+    </div>
+  </div>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= f.submit '登録', class: "btn btn-warning" %>
+    </div>
+    <% unless @template.new_record? %>
+      <div class="btn-group mr-2">
+        <%= link_to '削除', @template, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+      </div>
+    <% end %>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', task_templates_path, {class: "btn btn-outline-dark"} %>
+    </div>
+  </div>
+<% end %>

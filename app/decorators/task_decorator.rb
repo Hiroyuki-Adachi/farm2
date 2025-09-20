@@ -5,6 +5,7 @@ class TaskDecorator < Draper::Decorator
   delegate_all
   decorates_association :creator
   decorates_association :assignee
+  decorates_association :template
 
   def priority_badge
     super(object.priority)
@@ -26,7 +27,7 @@ class TaskDecorator < Draper::Decorator
     if object.template.blank?
       "随時"
     else
-      I18n.t("activerecord.enums.task_template.kind.#{object.template.kind}")
+      object.template.kind_name
     end
   end
 

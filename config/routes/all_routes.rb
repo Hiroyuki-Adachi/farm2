@@ -223,6 +223,7 @@ resources :tasks, except: [:edit, :update] do
     resource :comment, controller: "tasks/event_comments", only: [:show, :edit, :create, :update]
   end
 end
+resources :task_templates, controller: "tasks/templates", except: [:show]
 resources :work_results, only: [:index]
 resources :machine_results, only: [:index]
 resources :work_chemicals, only: [:index]

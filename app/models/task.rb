@@ -218,6 +218,14 @@ class Task < ApplicationRecord
     task_watchers.find_by(worker_id: user.worker_id)
   end
 
+  def create_watcher_by_role
+    return if self.office_role_none?
+
+    Workers.where(office_role: self.office_role).find_each do |worker|
+      task_watchers.find_or_create_by(worker_id: worker.id)
+    end
+  end
+
   private
 
   # 共通ラッパ：コメントを（あれば）作ってトランザクション内でyield

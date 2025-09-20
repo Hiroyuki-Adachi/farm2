@@ -386,9 +386,9 @@ ja:
       task_template:
         title: "テンプレート名"
         description: "内容"
-        priority: "内容"
+        priority: "優先度"
         office_role: "部門区分"
-        kind: "種別"
+        kind: "処理区分"
         monthly_stage: "期日週"
         annual_month: "期日月"
         months_before_due: "事前通知月数"

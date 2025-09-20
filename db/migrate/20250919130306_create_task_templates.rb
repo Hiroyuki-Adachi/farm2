@@ -18,7 +18,7 @@ class CreateTaskTemplates < ActiveRecord::Migration[8.0]
     add_index :task_templates, [:kind, :annual_month, :monthly_stage]
 
     change_table :tasks do |t|
-      t.references :task_template, foreign_key: true, null: true, comment: '定型タスク'
+      t.references :task_template, foreign_key: true, null: true, comment: '定型タスクID'
     end
   end
 end

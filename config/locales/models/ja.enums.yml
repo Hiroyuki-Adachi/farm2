@@ -90,10 +90,6 @@ ja:
           low: "低"
           medium: "中"
           high: "高"
-        priority_colors:
-          low: "success"
-          medium: "primary"
-          high: "warning"
         office_roles:
           none: "なし"
           finance: "経理"
@@ -102,7 +98,7 @@ ja:
         kinds:
           annual: "年次"
           monthly: "月次"
-        monthly_stage:
+        monthly_stages:
           w1: "第1週の週末"
           w2: "第2週の週末"
           w3: "第3週の週末"

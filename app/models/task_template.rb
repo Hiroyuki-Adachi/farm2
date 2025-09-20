@@ -36,6 +36,10 @@ class TaskTemplate < ApplicationRecord
   validates :annual_month, inclusion: { in: 1..12 }, if: :kind_annual?
   validates :year_offset, inclusion: { in: [-1, 0, 1] }
 
+  before_save :clear_annual_month_fields, if: :kind_monthly?
+
+  scope :usual, -> { order(id: :desc) }
+
   # 指定年月の期日(due_on)を計算
   def due_on_for(year:, month:)
     base = Date.new(year, month, 1)
@@ -92,5 +96,9 @@ class TaskTemplate < ApplicationRecord
     # 最初の土曜
     first_sat = first + ((6 - first.wday) % 7)
     (first_sat + 7 * (n - 1)).day
+  end
+
+  def clear_annual_month_fields
+    self.annual_month = nil
   end
 end
