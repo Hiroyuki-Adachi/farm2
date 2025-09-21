@@ -11,7 +11,7 @@
   </thead>
   <tbody>
     <% templates.each do |template| %>
-      <tr>
+      <tr class="<%= template.row_class %>">
         <td><%= template.title %></td>
         <td><%= template.priority_name %></td>
         <td><%= template.office_role_name %></td>

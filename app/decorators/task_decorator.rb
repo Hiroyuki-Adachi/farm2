@@ -16,7 +16,9 @@ class TaskDecorator < Draper::Decorator
   end
 
   def creator_name
-    object.creator&.name || "（未設定）"
+    return object.creator.name if object.creator.present?
+    return kind_badge if object.template.present?
+    return "（未設定）"
   end
 
   def assignee_name
@@ -27,7 +29,7 @@ class TaskDecorator < Draper::Decorator
     if object.template.blank?
       "随時"
     else
-      object.template.kind_name
+      template.kind_name
     end
   end
 

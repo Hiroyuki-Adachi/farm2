@@ -180,22 +180,18 @@ class TaskTemplateTest < ActiveSupport::TestCase
     t = TaskTemplate.create!(build_template(kind: :monthly, title: "年次点検", year_offset: 0).attributes.except("id"))
     t.stubs(:same_task_exists?).returns(false)
 
-    # TaskStatus::TO_DO.id をスタブ
-    to_do = stub(id: 123)
-    TaskStatus.stubs(:const_get).with(:TO_DO).returns(stub(id: 123))
-    TaskStatus::TO_DO.stubs(:id).returns(123) rescue nil
-
     due_on = Date.new(2025, 2, 15)
-    # Task.create! の引数を検査
+
     Task.expects(:create!).with do |attrs|
-      attrs[:title].include?("年") && # 和暦フォーマットの先頭タグ部分は環境依存のため大まかに
+      rel = attrs[:template] || attrs[:task_template] # 念のため両対応
+      attrs[:title].include?("年") && 
       attrs[:title].include?("年次点検") &&
       attrs[:description] == t.description &&
       attrs[:due_on] == due_on &&
       attrs[:priority] == t.priority &&
-      attrs[:office_role] == t.office_role &&
-      attrs[:task_status_id] == 123 &&
-      attrs[:task_template] == t
+      attrs[:office_role] == t.office_role && 
+      attrs[:task_status_id].to_i == TaskStatus::TO_DO.id &&
+      rel == t
     end.returns(:task_double)
 
     assert_equal :task_double, t.create_task(due_on: due_on)

@@ -27,6 +27,7 @@ class Tasks::TemplatesController < ApplicationController
 
   def update
     if @template.update(template_params)
+      @template.undiscard
       redirect_to task_templates_path
     else
       render action: :edit, status: :unprocessable_content
