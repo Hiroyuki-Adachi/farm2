@@ -29,12 +29,14 @@
             }, class: "form-select"
         ) %>
     </div>
-    <div class="field mb-3 col-md-3" data-pages--task-template-kind-target="annualOnly">
+    <div class="field mb-3 col-md-3">
       <%= f.label :annual_month, class: "col-form-label-lg form-label" %>
       <%= f.select :annual_month,
             (1..12).map { |m| ["#{m}月", m] },
             { include_blank: "選択してください" },
-            class: "form-select" %>
+            class: "form-select",
+            data: { pages__task_template_kind_target: "annualOnly" }
+          %>
       <div class="form-text">年次テンプレートでのみ使用します。</div>
     </div>
     <div class="field mb-3 col-md-3">
@@ -45,8 +47,11 @@
       <%= f.label :months_before_due, class: "col-form-label-lg form-label" %>
       <%= f.select :months_before_due,
             (0..6).map { |n| [("#{n}ヶ月前"), n] },
-            {}, class: "form-select" %>
-      <div class="form-text">期日から何ヶ月前にタスクを生成するかを指定します。</div>
+            {}, class: "form-select",
+            data: { pages__task_template_kind_target: "annualOnly" } %>
+      <div class="form-text">
+        期日から何ヶ月前にタスクを生成するかを指定します。<br />年次テンプレートでのみ使用します。
+      </div>
     </div>
   </div>
   <div class="row">

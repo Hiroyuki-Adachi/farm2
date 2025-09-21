@@ -22,10 +22,16 @@
 #  year_offset(基準年からのズレ)   :integer          default(0), not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
+#  organization_id(組織ID)         :bigint           not null
 #
 # Indexes
 #
 #  idx_on_kind_annual_month_monthly_stage_5eb8d135fc  (kind,annual_month,monthly_stage)
+#  index_task_templates_on_organization_id            (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 one: {}
 # column: value

@@ -844,9 +844,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_19_130306) do
     t.integer "year_offset", default: 0, null: false, comment: "基準年からのズレ"
     t.boolean "active", default: true, null: false, comment: "有効"
     t.datetime "discarded_at", comment: "論理削除日時"
+    t.bigint "organization_id", null: false, comment: "組織ID"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["kind", "annual_month", "monthly_stage"], name: "idx_on_kind_annual_month_monthly_stage_5eb8d135fc"
+    t.index ["organization_id"], name: "index_task_templates_on_organization_id"
   end
 
   create_table "task_watchers", comment: "タスク閲覧者", force: :cascade do |t|
@@ -873,7 +875,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_19_130306) do
     t.bigint "creator_id", comment: "作成者"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "task_template_id", comment: "定型タスク"
+    t.bigint "task_template_id", comment: "定型タスクID"
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
     t.index ["creator_id"], name: "index_tasks_on_creator_id"
     t.index ["task_template_id"], name: "index_tasks_on_task_template_id"
@@ -1214,6 +1216,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_19_130306) do
   add_foreign_key "task_events", "workers", column: "assignee_from_id"
   add_foreign_key "task_events", "workers", column: "assignee_to_id"
   add_foreign_key "task_events", "works"
+  add_foreign_key "task_templates", "organizations"
   add_foreign_key "task_watchers", "tasks"
   add_foreign_key "task_watchers", "workers"
   add_foreign_key "tasks", "task_templates"

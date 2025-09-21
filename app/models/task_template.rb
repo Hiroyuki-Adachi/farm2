@@ -16,10 +16,16 @@
 #  year_offset(基準年からのズレ)   :integer          default(0), not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
+#  organization_id(組織ID)         :bigint           not null
 #
 # Indexes
 #
 #  idx_on_kind_annual_month_monthly_stage_5eb8d135fc  (kind,annual_month,monthly_stage)
+#  index_task_templates_on_organization_id            (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 class TaskTemplate < ApplicationRecord
   include Enums::OfficeRole
@@ -30,6 +36,7 @@ class TaskTemplate < ApplicationRecord
   enum :monthly_stage, { w1: 0, w2: 7, w3: 14, w4: 21, month_end: 31 }
 
   has_many :tasks, dependent: :restrict_with_error
+  belongs_to :organization
 
   validates :title, presence: true, length: { maximum: 40 }
   validates :months_before_due, inclusion: { in: 0..6 }
@@ -38,7 +45,8 @@ class TaskTemplate < ApplicationRecord
 
   before_save :clear_annual_month_fields, if: :kind_monthly?
 
-  scope :usual, -> { order(id: :desc) }
+  scope :usual, -> { kept.order(active: :desc, id: :desc) }
+  scope :for_creation, -> { where(active: true) }
 
   # 指定年月の期日(due_on)を計算
   def due_on_for(year:, month:)
@@ -85,6 +93,39 @@ class TaskTemplate < ApplicationRecord
     end
   end
 
+  def create_task(due_on:)
+    raise ActiveRecord::RecordInvalid, "無効なテンプレートです" if discarded?
+    raise ActiveRecord::RecordInvalid, "無効なテンプレートです" unless active?
+    return false if same_task_exists?(due_on: due_on)
+
+    title_date = due_on + year_offset.years
+    task_title = 
+      if kind_annual?
+        "【#{title_date.strftime('%Jy年')}】#{title}"
+      else  
+        "【#{title_date.strftime('%Jy年%m月')}】#{title}"
+      end
+    
+    Task.create!(
+      title: task_title,
+      description: description,
+      due_on: due_on,
+      priority: priority,
+      office_role: office_role,
+      task_status_id: TaskStatus::TO_DO.id,
+      task_template: self
+    )
+  end
+
+  def same_task_exists?(due_on:)
+    return tasks.exists?(due_on: due_on.all_month) if self.kind_monthly?
+
+    target_system = System.get_system(due_on, organization_id)
+    return false unless target_system
+
+    return tasks.exists?(due_on: target_system.start_date..target_system.end_date)
+  end
+
   private
 
   def stage_to_n(stage)
@@ -100,5 +141,6 @@ class TaskTemplate < ApplicationRecord
 
   def clear_annual_month_fields
     self.annual_month = nil
+    self.months_before_due = 1
   end
 end

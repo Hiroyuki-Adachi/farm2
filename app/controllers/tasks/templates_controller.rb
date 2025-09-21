@@ -57,7 +57,7 @@ class Tasks::TemplatesController < ApplicationController
         :months_before_due,
         :year_offset,
         :active
-      ])
+      ]).merge(organization: current_organization)
   end
 
   def menu_name

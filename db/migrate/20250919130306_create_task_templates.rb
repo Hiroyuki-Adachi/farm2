@@ -12,6 +12,7 @@ class CreateTaskTemplates < ActiveRecord::Migration[8.0]
       t.integer :year_offset, null: false, default: 0, comment: '基準年からのズレ'
       t.boolean :active, null: false, default: true, comment: '有効'
       t.datetime :discarded_at, null: true, comment: '論理削除日時'
+      t.references :organization, null: false, foreign_key: true, comment: '組織ID'
 
       t.timestamps
     end
