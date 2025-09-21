@@ -113,7 +113,7 @@ class TaskTemplate < ApplicationRecord
       priority: priority,
       office_role: office_role,
       task_status_id: TaskStatus::TO_DO.id,
-      task_template: self
+      template: self
     )
   end
 
