@@ -3,6 +3,10 @@ class LineHookService
   MAX_MESSAGES = 5
   MIN_NEWS_KEYWORD_LENGTH = 2
 
+  OPEN_TIMEOUT = 5
+  READ_TIMEOUT = 8
+  WRITE_TIMEOUT = 8
+
   def initialize(message_text, line_id)
     @message_text = message_text
     @line_id = line_id
@@ -34,21 +38,23 @@ class LineHookService
     false
   end
 
-  def self.send_reply(reply_token, message)
+  def self.send_reply(reply_token, message, retry_key: nil)
     payload = {
       replyToken: reply_token,
       messages: [
         { type: 'text', text: message }
       ]
     }
-    send_request(:reply, payload)
+    retry_key ||= SecureRandom.uuid
+    send_request(:reply, payload, retry_key)
   end
 
-  def self.push_message(line_id, message)
-    push_messages(line_id, [message])
+  def self.push_message(line_id, message, retry_key: nil)
+    return if message.blank?
+    push_messages(line_id, [message], retry_key: retry_key)
   end
 
-  def self.push_messages(line_id, messages)
+  def self.push_messages(line_id, messages, retry_key: nil)
     return if messages.blank?
 
     messages = messages.take(MAX_MESSAGES).map { |msg| { type: 'text', text: msg } }
@@ -56,24 +62,53 @@ class LineHookService
       to: line_id,
       messages: messages
     }
-    send_request(:push, payload)
+    retry_key ||= SecureRandom.uuid
+    send_request(:push, payload, retry_key)
   end
 
-  def self.send_request(command, payload)
+  def self.send_request(command, payload, retry_key)
     uri = URI.join(API_ENDPOINT, command.to_s)
 
-    Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-      request = Net::HTTP::Post.new(
-        uri.request_uri, 
-        {
-          'Content-Type' => 'application/json',
-          'Authorization' => "Bearer #{ENV.fetch('LINE_CHANNEL_ACCESS_TOKEN', nil)}"
-        }
-      )
-      request.body = payload.to_json
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.open_timeout = OPEN_TIMEOUT
+    http.read_timeout = READ_TIMEOUT
 
-      http.request(request)
+    # write_timeout は Ruby 3.1+（環境次第で設定）
+    http.write_timeout = WRITE_TIMEOUT if http.respond_to?(:write_timeout=)
+
+    req = Net::HTTP::Post.new(
+      uri.request_uri,
+      {
+        "Content-Type" => "application/json",
+        "Authorization" => "Bearer #{ENV.fetch('LINE_CHANNEL_ACCESS_TOKEN')}",
+        "X-Line-Retry-Key" => retry_key
+      }
+    )
+    req.body = JSON.generate(payload)
+
+    res = http.request(req)
+
+    # 2xx 以外はログに残す（必要なら例外化して上位で Sidekiq リトライさせる）
+    unless res.is_a?(Net::HTTPSuccess)
+      Rails.logger.warn(
+        "[LINE] push failed status=#{res.code} body=#{truncate(res.body)} retry_key=#{retry_key}"
+      )
     end
+
+    return res
+  rescue Net::OpenTimeout, Net::ReadTimeout => e
+    # タイムアウト時も“同じ retry_key”で再実行されることが重要
+    Rails.logger.error("[LINE] timeout #{e.class} retry_key=#{retry_key}")
+    raise
+  rescue StandardError => e
+    Rails.logger.error("[LINE] error=#{e.class} msg=#{e.message} retry_key=#{retry_key}")
+    raise
+  end
+
+  def self.truncate(str, len = 500)
+    s = str.to_s
+    s.length > len ? "#{s[0, len]}..." : s
   end
 
   private
