@@ -85,7 +85,7 @@ class LineHookService
         "X-Line-Retry-Key" => retry_key
       }
     )
-    req.body = JSON.generate(payload)
+    req.body = payload.to_json
 
     res = http.request(req)
 
