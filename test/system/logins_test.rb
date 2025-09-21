@@ -14,7 +14,11 @@ class LoginsTest < ApplicationSystemTestCase
     click_button '認証する'
     assert_selector 'a', text: '作業日報管理'
 
+    ensure_wide!
+
+    assert_selector :link, 'ログアウト', wait: 5
     click_link 'ログアウト'
+
     assert_selector '#login_name'
   end
 end

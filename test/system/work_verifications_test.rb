@@ -14,8 +14,11 @@ class WorkVerificationsTest < ApplicationSystemTestCase
     click_button '認証する'
 
     # 検証画面への遷移
-    visit work_verifications_path
-    assert_selector 'h1', exact_text: '作業日報検証'
+    ensure_wide!
+    assert_selector :link, '日報検証', wait: 5
+    click_link '日報検証'
+    ensure_wide!
+    assert_selector 'h1', text: '作業日報検証'
     
     # 検証対象の作業日報を選択
     find("a.show-work[data-url=\"/work_verifications/#{@work.id}\"]").click

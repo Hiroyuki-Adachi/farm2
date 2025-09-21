@@ -1,54 +1,75 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark ps-1" role="navigation">
-    <%= link_to '作業日報管理', menu_index_path, {class: "navbar-brand"} %>
-    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarFarm2" aria-controls="navbarFarm2" aria-expanded="false" aria-label="ナビゲーションの切替">
-      <span class="navbar-toggler-icon"></span>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
+  <div class="container-fluid">
+    <%= link_to '作業日報管理', menu_index_path, class: "navbar-brand" %>
+
+    <!-- <lg：右端にハンバーガー（offcanvas） -->
+    <button class="btn btn-outline-secondary ms-auto d-inline-flex d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar_off_canvas"
+            aria-controls="sidebar_off_canvas"
+            aria-label="メニューを開く">
+      <i class="fa-solid fa-bars"></i>
     </button>
-    <div class="collapse navbar-collapse" id="navbarFarm2">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <%= link_to '予定管理', "#", {class: "nav-link farm2-navi", id: :navbar_schedule} %>
-          </li>
-          <% if current_user.checkable? %>
-          <li class="nav-item">
-            <%= link_to '収穫管理', "#", {class: "nav-link farm2-navi", id: :navbar_harvest} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to '集計処理', "#", {class: "nav-link farm2-navi", id: :navbar_total} %>
-          </li>
-          <% end %>
-          <% if current_user.manageable? %>
-          <li class="nav-item">
-            <%= link_to '会計処理', "#", {class: "nav-link farm2-navi", id: :navbar_fix} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to '在庫管理', "#", {class: "nav-link farm2-navi", id: :navbar_stock} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to '原価管理', "#", {class: "nav-link farm2-navi", id: :navbar_cost} %>
-          </li>
-          <% if this_term? %>
-          <li class="nav-item">
-            <%= link_to '生産計画', "#", {class: "nav-link farm2-navi", id: :navbar_plan} %>
-          </li>
-          <% end %>
-          <li class="nav-item">
-            <%= link_to 'GAP対応', "#", {class: "nav-link farm2-navi", id: :navbar_gap} %>
-          </li>
-          <% end %>
-          <% if current_user.checkable? %>
-          <li class="nav-item">
-            <%= link_to 'マスタ保守', "#", {class: "nav-link farm2-navi", id: :navbar_master} %>
-          </li>
-          <% end %>
-          <li class="nav-item">
-            <%= link_to '管理', "#", {class: "nav-link farm2-navi", id: :navbar_management} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'ログアウト', sessions_path, {class: "nav-link", data: {"turbo-prefetch": false}} %>
-          </li>
-        </ul>
-        <span class="navbar-text ml-auto"><%= current_name %>さん</span>
+
+    <!-- ≥lg：ナビ本体＋右クラスター -->
+    <div class="collapse navbar-collapse d-none d-lg-flex">
+      <ul class="navbar-nav me-auto" id="navbar_farm2">
+        <li class="nav-item">
+          <%= link_to '予定管理', "#", {class: "nav-link farm2-navi", id: :navbar_schedule} %>
+        </li>
+        <% if current_user.checkable? %>
+        <li class="nav-item">
+          <%= link_to '収穫管理', "#", {class: "nav-link farm2-navi", id: :navbar_harvest} %>
+        </li>
+        <li class="nav-item">
+          <%= link_to '集計処理', "#", {class: "nav-link farm2-navi", id: :navbar_total} %>
+        </li>
+        <% end %>
+        <% if current_user.manageable? %>
+        <li class="nav-item">
+          <%= link_to '会計処理', "#", {class: "nav-link farm2-navi", id: :navbar_fix} %>
+        </li>
+        <li class="nav-item">
+          <%= link_to '在庫管理', "#", {class: "nav-link farm2-navi", id: :navbar_stock} %>
+        </li>
+        <li class="nav-item">
+          <%= link_to '原価管理', "#", {class: "nav-link farm2-navi", id: :navbar_cost} %>
+        </li>
+        <% if this_term? %>
+        <li class="nav-item">
+          <%= link_to '生産計画', "#", {class: "nav-link farm2-navi", id: :navbar_plan} %>
+        </li>
+        <% end %>
+        <li class="nav-item">
+          <%= link_to 'GAP対応', "#", {class: "nav-link farm2-navi", id: :navbar_gap} %>
+        </li>
+        <% end %>
+        <% if current_user.checkable? %>
+        <li class="nav-item">
+          <%= link_to 'マスタ保守', "#", {class: "nav-link farm2-navi", id: :navbar_master} %>
+        </li>
+        <% end %>
+        <li class="nav-item">
+          <%= link_to '管理', "#", {class: "nav-link farm2-navi", id: :navbar_management} %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'ログアウト', sessions_path, {class: "nav-link", data: {"turbo-prefetch": false}} %>
+        </li>
+      </ul>
+
+      <div class="d-none d-lg-flex align-items-center">
+        <span class="navbar-text me-2"><%= current_name %>さん</span>
+        <!-- ≥lg：サイドバー折りたたみ -->
+        <button id="toggle_sidebar"
+                class="btn btn-sm btn-outline-secondary d-none d-lg-inline-flex"
+                type="button"
+                aria-pressed="false"
+                aria-label="サイドバーの表示切替">
+          <i class="fa-solid fa-columns"></i>
+        </button>
+      </div>
     </div>
+  </div>
 </nav>
-<div id="menu_dropdown" class="dropdown-menu">
-</div>
+<div id="menu_dropdown" class="dropdown-menu"></div>
