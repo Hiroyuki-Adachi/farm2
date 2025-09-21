@@ -32,7 +32,11 @@ job_type :rake,   %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment 
 job_type :runner, %q{ cd :path && PATH=:env_path:"$PATH" bin/rails runner -e :environment ':task' :output }
 job_type :script, %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bundle exec bin/:task :output }
 
-every 1.day, at: '06:40 am' do
+every 1.day, at: '02:20 am' do
+  runner "CreateTaskFromTemplateJob.perform_now"
+end
+
+every 1.day, at: '03:40 am' do
   runner "InitWorkTypeCacheJob.perform_now"
 end
 
