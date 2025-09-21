@@ -1,7 +1,13 @@
 require "test_helper"
 
 class PersonalInformations::TasksControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @user = users(:users1)
+    @task = tasks(:open_task)
+  end
+
+  test "タスク照会" do
+    get personal_information_task_path(@task, personal_information_token: @user.token)
+    assert_response :success
+  end
 end
