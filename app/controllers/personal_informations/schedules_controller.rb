@@ -2,6 +2,6 @@ class PersonalInformations::SchedulesController < PersonalInformationsController
   def index
     @schedules = ScheduleWorkerDecorator.decorate_collection(ScheduleWorker.for_personal(@worker, SCHEDULE_DAY))
     @minute = Minute.for_personal(@worker).last&.decorate
-    @company = Worker.company.first
+    @tasks = TaskDecorator.decorate_collection(Task.by_worker(@worker))
   end
 end

@@ -13,7 +13,7 @@
       <% if event.comment.present? %>
         <%= turbo_frame_tag dom_id(event, :comment) do %>
           <%= render "tasks/comments/show_for_event",
-                task: task, event: event, comment: event.comment %>
+                task: task, event: event, comment: event.comment, mobile: false %>
         <% end %>
       <% else %>
         <%= turbo_frame_tag dom_id(event, :comment) do %>

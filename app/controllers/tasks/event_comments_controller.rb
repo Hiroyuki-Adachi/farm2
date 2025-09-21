@@ -9,7 +9,7 @@ class Tasks::EventCommentsController < TasksController
       render turbo_stream: turbo_stream.update(
         helpers.dom_id(@event, :comment),
         partial: "tasks/comments/show_for_event",
-        locals: { task: @task, event: @event, comment: @comment }
+        locals: { task: @task, event: @event, comment: @comment, mobile: false }
       )
     else
       render turbo_stream: turbo_stream.update(
@@ -41,7 +41,7 @@ class Tasks::EventCommentsController < TasksController
     render turbo_stream: turbo_stream.update(
       helpers.dom_id(@event, :comment),
       partial: "tasks/comments/show_for_event",
-      locals: { task: @task, event: @event, comment: @comment }
+      locals: { task: @task, event: @event, comment: @comment, mobile: false }
     )
   rescue ActiveRecord::RecordInvalid
     render turbo_stream: turbo_stream.update(
@@ -70,7 +70,7 @@ class Tasks::EventCommentsController < TasksController
           render turbo_stream: turbo_stream.update(
             helpers.dom_id(@event, :comment),
             partial: "tasks/comments/show_for_event",
-            locals: { task: @task, event: @event, comment: @event.comment }
+            locals: { task: @task, event: @event, comment: @event.comment, mobile: false }
           )
         else
           render turbo_stream: turbo_stream.update(

@@ -1,5 +1,5 @@
 <!-- app/views/tasks/comments/_show_for_event.html.erb -->
-<% if event.actor_id == current_user.worker_id %>
+<% if event.actor_id == current_user.worker_id && !mobile %>
 <div class="small comment-body-hover" title="クリックして編集">
   <%= link_to edit_task_event_comment_path(task, event),
         data: { turbo_frame: dom_id(event, :comment) },
