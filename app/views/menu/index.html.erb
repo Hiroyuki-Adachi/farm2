@@ -6,20 +6,18 @@
 <div class="row">
   <div class="col-md-9">
     <div class="container">
-      <% if @tasks.present? %>
       <div class="row">
-        <div class="col-md-12">
-          <%= render(partial: 'show_tasks') %>
+        <div class="col-md-6">
+          <% if @tasks.present? %>
+            <%= render(partial: 'show_tasks') %>
+          <% end %>
+        </div>
+        <div class="col-md-6">
+          <% if @schedules.present? || @minute.present? %>
+            <%= render(partial: 'show_schedules') %>
+          <% end %>
         </div>
       </div>
-      <% end %>
-      <% if @schedules.present? || @minute.present? %>
-      <div class="row">
-        <div class="col-md-12">
-          <%= render(partial: 'show_schedules') %>
-        </div>
-      </div>
-      <% end %>
       <% if @lands.present? %>
       <div class="row">
         <div class="col-md-12">

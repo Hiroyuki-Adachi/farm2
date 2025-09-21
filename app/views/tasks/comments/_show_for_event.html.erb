@@ -4,9 +4,9 @@
   <%= link_to edit_task_event_comment_path(task, event),
         data: { turbo_frame: dom_id(event, :comment) },
         class: "d-block text-reset text-decoration-none" do %>
-    <%= simple_format(h(comment.body)) %>
+    <%= simple_format(h(comment.body), {}, wrapper_tag: "span") %>
   <% end %>
 </div>
 <% else %>
-  <%= simple_format(h(comment.body)) %>
+  <%= simple_format(h(comment.body), {}, wrapper_tag: "span") %>
 <% end %>
