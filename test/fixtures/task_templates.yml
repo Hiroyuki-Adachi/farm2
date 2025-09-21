@@ -33,8 +33,13 @@
 #
 #  fk_rails_...  (organization_id => organizations.id)
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+template1:
+  organization_id: 1
+  title: "月次レポート"
+  kind: monthly
+  monthly_stage: w2
+  priority: low
+  months_before_due: 1
+  office_role: finance
+  year_offset: 0
+  active: true

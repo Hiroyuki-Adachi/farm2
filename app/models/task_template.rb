@@ -94,9 +94,9 @@ class TaskTemplate < ApplicationRecord
   end
 
   def create_task(due_on:)
-    raise ActiveRecord::RecordInvalid, "無効なテンプレートです" if discarded?
-    raise ActiveRecord::RecordInvalid, "無効なテンプレートです" unless active?
-    return false if same_task_exists?(due_on: due_on)
+    return nil if discarded?
+    return nil unless active?
+    return nil if same_task_exists?(due_on: due_on)
 
     title_date = due_on + year_offset.years
     task_title = 
@@ -106,7 +106,7 @@ class TaskTemplate < ApplicationRecord
         "【#{title_date.strftime('%Jy年%m月')}】#{title}"
       end
     
-    Task.create!(
+    return Task.create!(
       title: task_title,
       description: description,
       due_on: due_on,
@@ -121,7 +121,7 @@ class TaskTemplate < ApplicationRecord
     return tasks.exists?(due_on: due_on.all_month) if self.kind_monthly?
 
     target_system = System.get_system(due_on, organization_id)
-    return false unless target_system
+    return true unless target_system
 
     return tasks.exists?(due_on: target_system.start_date..target_system.end_date)
   end
@@ -132,11 +132,11 @@ class TaskTemplate < ApplicationRecord
     { w1: 1, w2: 2, w3: 3, w4: 4 }[stage.to_sym]
   end
 
-  def nth_saturday_day(year, month, n)
+  def nth_saturday_day(year, month, num)
     first = Date.new(year, month, 1)
     # 最初の土曜
     first_sat = first + ((6 - first.wday) % 7)
-    (first_sat + 7 * (n - 1)).day
+    (first_sat + (7 * (num - 1))).day
   end
 
   def clear_annual_month_fields
