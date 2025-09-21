@@ -184,14 +184,15 @@ class TaskTemplateTest < ActiveSupport::TestCase
 
     Task.expects(:create!).with do |attrs|
       rel = attrs[:template] || attrs[:task_template] # 念のため両対応
+
       attrs[:title].include?("年") && 
-      attrs[:title].include?("年次点検") &&
-      attrs[:description] == t.description &&
-      attrs[:due_on] == due_on &&
-      attrs[:priority] == t.priority &&
-      attrs[:office_role] == t.office_role && 
-      attrs[:task_status_id].to_i == TaskStatus::TO_DO.id &&
-      rel == t
+        attrs[:title].include?("年次点検") &&
+        attrs[:description] == t.description &&
+        attrs[:due_on] == due_on &&
+        attrs[:priority] == t.priority &&
+        attrs[:office_role] == t.office_role && 
+        attrs[:task_status_id].to_i == TaskStatus::TO_DO.id &&
+        rel == t
     end.returns(:task_double)
 
     assert_equal :task_double, t.create_task(due_on: due_on)
