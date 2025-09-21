@@ -96,7 +96,7 @@ class LineHookService
       )
     end
 
-    return res
+    res
   rescue Net::OpenTimeout, Net::ReadTimeout => e
     # タイムアウト時も“同じ retry_key”で再実行されることが重要
     Rails.logger.error("[LINE] timeout #{e.class} retry_key=#{retry_key}")
