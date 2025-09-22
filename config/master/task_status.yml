@@ -9,7 +9,7 @@
   badge_class: "badge bg-secondary"
 - id: 1
   code: reopen
-  name: "再開"
+  name: "再　開"
   start_flag: true
   started_flag: false
   closed_flag: false
@@ -27,7 +27,7 @@
   badge_class: "badge bg-primary"
 - id: 3
   code: hold
-  name: "保留"
+  name: "保　留"
   start_flag: false
   started_flag: false
   closed_flag: false
@@ -36,7 +36,7 @@
   badge_class: "badge bg-warning text-dark"
 - id: 4
   code: done
-  name: "完了"
+  name: "完　了"
   start_flag: false
   started_flag: false
   closed_flag: true
@@ -45,7 +45,7 @@
   badge_class: "badge bg-success"
 - id: 9
   code: cancel
-  name: "中止"
+  name: "中　止"
   start_flag: false
   started_flag: false
   closed_flag: true

@@ -63,7 +63,7 @@ ja:
 
       task:
         priorities:
-          low: "後回し"
+          low: "適宜"
           medium: "順次"
           high: "至急"
           urgent: "緊急"

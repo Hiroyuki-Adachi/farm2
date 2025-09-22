@@ -27,7 +27,7 @@ class TaskDecorator < Draper::Decorator
 
   def kind_name
     if object.template.blank?
-      "随時"
+      "臨時"
     else
       template.kind_name
     end
@@ -57,7 +57,7 @@ class TaskDecorator < Draper::Decorator
   def due_on_short
     return "（未設定）" if object.due_on.blank?
 
-    I18n.l(object.due_on, format: :short)
+    object.due_on.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[object.due_on.wday]})"
   end
 
   def started_on_display
