@@ -11,7 +11,7 @@ class Tasks::TemplatesController < ApplicationController
   end
 
   def new
-    @template = TaskTemplate.new
+    @template = TaskTemplate.new(offset: 0)
   end
 
   def edit; end
@@ -56,7 +56,7 @@ class Tasks::TemplatesController < ApplicationController
         :monthly_stage,
         :annual_month,
         :months_before_due,
-        :year_offset,
+        :offset,
         :active
       ]).merge(organization: current_organization)
   end

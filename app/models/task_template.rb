@@ -11,9 +11,9 @@
 #  monthly_stage(期日週)           :integer          default("w1"), not null
 #  months_before_due(事前通知月数) :integer          default(1), not null
 #  office_role(役割)               :integer          default("none"), not null
+#  offset(基準からのズレ)          :integer          default(0), not null
 #  priority(優先度)                :integer          default("low"), not null
 #  title(タスク名)                 :string(40)       not null
-#  year_offset(基準年からのズレ)   :integer          default(0), not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
 #  organization_id(組織ID)         :bigint           not null
@@ -41,7 +41,7 @@ class TaskTemplate < ApplicationRecord
   validates :title, presence: true, length: { maximum: 40 }
   validates :months_before_due, inclusion: { in: 0..6 }
   validates :annual_month, inclusion: { in: 1..12 }, if: :kind_annual?
-  validates :year_offset, inclusion: { in: [-1, 0, 1] }
+  validates :offset, inclusion: { in: [-1, 0, 1] }
 
   before_save :clear_annual_month_fields, if: :kind_monthly?
 
@@ -98,7 +98,7 @@ class TaskTemplate < ApplicationRecord
     return nil unless active?
     return nil if same_task_exists?(due_on: due_on)
 
-    title_date = due_on + year_offset.years
+    title_date = due_on + (kind_annual? ? offset.years : offset.months)
     task_title = 
       if kind_annual?
         "【#{title_date.strftime('%Jy年')}】#{title}"

@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["annualOnly", "kindSelect"];
+  static targets = ["annualOnly", "monthlyOnly", "kindSelect"];
 
   connect() { this.toggle(); }
   change()  { this.toggle(); }
@@ -11,8 +11,10 @@ export default class extends Controller {
 
     if (kind === "annual") {
       this.showAnnual();
+      this.hideMonthly();
     } else {
       this.hideAnnual();
+      this.showMonthly();
     }
   }
 
@@ -24,6 +26,18 @@ export default class extends Controller {
 
   hideAnnual() {
     this.annualOnlyTargets.forEach(element => {
+      element.classList.add("d-none");
+    });
+  }
+
+  showMonthly() {
+    this.monthlyOnlyTargets.forEach(element => {
+      element.classList.remove("d-none");
+    });
+  }
+
+  hideMonthly() {
+    this.monthlyOnlyTargets.forEach(element => {
       element.classList.add("d-none");
     });
   }

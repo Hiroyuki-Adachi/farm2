@@ -841,7 +841,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_19_130306) do
     t.integer "monthly_stage", default: 0, null: false, comment: "期日週"
     t.integer "annual_month", comment: "期日月"
     t.integer "months_before_due", default: 1, null: false, comment: "事前通知月数"
-    t.integer "year_offset", default: 0, null: false, comment: "基準年からのズレ"
+    t.integer "offset", default: 0, null: false, comment: "基準からのズレ"
     t.boolean "active", default: true, null: false, comment: "有効"
     t.datetime "discarded_at", comment: "論理削除日時"
     t.bigint "organization_id", null: false, comment: "組織ID"

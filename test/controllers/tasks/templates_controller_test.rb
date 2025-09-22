@@ -6,7 +6,7 @@ class Tasks::TemplatesControllerTest < ActionDispatch::IntegrationTest
     @template = task_templates(:template1)
     @update = { 
       organization_id: 1, title: "月次タスク", kind: :monthly, monthly_stage: :w3, priority: :high,
-      months_before_due: 1, office_role: :general, year_offset: 0, active: true
+      months_before_due: 1, office_role: :general, offset: 0, active: true
     }
   end
 
@@ -41,7 +41,7 @@ class Tasks::TemplatesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:priority], template.priority.to_sym
     assert_equal @update[:months_before_due], template.months_before_due
     assert_equal @update[:office_role], template.office_role.to_sym
-    assert_equal @update[:year_offset], template.year_offset
+    assert_equal @update[:offset], template.offset
     assert_equal @update[:active], template.active
   end
 
@@ -65,7 +65,7 @@ class Tasks::TemplatesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:priority], @template.priority.to_sym
     assert_equal @update[:months_before_due], @template.months_before_due
     assert_equal @update[:office_role], @template.office_role.to_sym
-    assert_equal @update[:year_offset], @template.year_offset
+    assert_equal @update[:offset], @template.offset
     assert_equal @update[:active], @template.active
   end
 

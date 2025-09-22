@@ -392,6 +392,6 @@ ja:
         monthly_stage: "期日週"
         annual_month: "期日月"
         months_before_due: "事前通知月数"
-        year_offset: "年のずれ"
+        offset: "年/月のずれ"
         active: "有効"
         

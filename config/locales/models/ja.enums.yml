@@ -63,9 +63,9 @@ ja:
 
       task:
         priorities:
-          low: "低"
-          medium: "中"
-          high: "高"
+          low: "後回し"
+          medium: "順次"
+          high: "至急"
           urgent: "緊急"
         priority_colors:
           low: "success"

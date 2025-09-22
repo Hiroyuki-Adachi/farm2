@@ -4,7 +4,7 @@ class TaskTemplateDecorator < Draper::Decorator
   delegate_all
 
   def priority_name
-    super(object.priority)
+    I18n.t("activerecord.enums.task_template.priorities.#{object.priority}")
   end
 
   def kind_name

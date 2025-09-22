@@ -11,9 +11,9 @@
 #  monthly_stage(期日週)           :integer          default("w1"), not null
 #  months_before_due(事前通知月数) :integer          default(1), not null
 #  office_role(役割)               :integer          default("none"), not null
+#  offset(基準からのズレ)          :integer          default(0), not null
 #  priority(優先度)                :integer          default("low"), not null
 #  title(タスク名)                 :string(40)       not null
-#  year_offset(基準年からのズレ)   :integer          default(0), not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
 #  organization_id(組織ID)         :bigint           not null
@@ -43,7 +43,7 @@ class TaskTemplateTest < ActiveSupport::TestCase
       priority: :low,
       months_before_due: 1,
       office_role: :none,
-      year_offset: 0,
+      offset: 0,
       active: true
     }.merge(attrs))
   end
@@ -83,11 +83,11 @@ class TaskTemplateTest < ActiveSupport::TestCase
   end
 
   test "バリデーション(基準年からのズレは[-1, 0, 1]のいずれか)" do
-    assert build_template(year_offset: -1).valid?
-    assert build_template(year_offset: 0).valid?
-    assert build_template(year_offset: 1).valid?
+    assert build_template(offset: -1).valid?
+    assert build_template(offset: 0).valid?
+    assert build_template(offset: 1).valid?
 
-    t = build_template(year_offset: 2)
+    t = build_template(offset: 2)
     assert t.invalid?
   end
 
@@ -177,7 +177,7 @@ class TaskTemplateTest < ActiveSupport::TestCase
   end
 
   test "create_task(正常系)" do
-    t = TaskTemplate.create!(build_template(kind: :monthly, title: "年次点検", year_offset: 0).attributes.except("id"))
+    t = TaskTemplate.create!(build_template(kind: :monthly, title: "年次点検", offset: 0).attributes.except("id"))
     t.stubs(:same_task_exists?).returns(false)
 
     due_on = Date.new(2025, 2, 15)

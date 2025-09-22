@@ -9,7 +9,7 @@ class CreateTaskTemplates < ActiveRecord::Migration[8.0]
       t.integer :monthly_stage, null: false, default: 0, comment: '期日週'
       t.integer :annual_month, null: true, comment: '期日月'
       t.integer :months_before_due, null: false, default: 1, comment: '事前通知月数'
-      t.integer :year_offset, null: false, default: 0, comment: '基準年からのズレ'
+      t.integer :offset, null: false, default: 0, comment: '基準からのズレ'
       t.boolean :active, null: false, default: true, comment: '有効'
       t.datetime :discarded_at, null: true, comment: '論理削除日時'
       t.references :organization, null: false, foreign_key: true, comment: '組織ID'

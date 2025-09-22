@@ -1,4 +1,4 @@
-<%= form_with(model: @template) do |f| %>
+<%= form_with(model: @template,  data: {controller: "pages--task-template-kind"}) do |f| %>
   <%= error_print(f.object) %>
   <div class="row">
     <div class="field mb-3 col-md-12">
@@ -20,7 +20,7 @@
       <div class="form-text">該当役割の作業者を自動で監視対象に追加します。</div>
     </div>
   </div>
-  <div class="row" data-controller="pages--task-template-kind">
+  <div class="row">
     <div class="field mb-3 col-md-3">
       <%= f.label :kind, class: "col-form-label-lg form-label" %>
       <%= f.select(:kind, enum_options_for(TaskTemplate, :kind), {}, data: {
@@ -56,13 +56,21 @@
   </div>
   <div class="row">
     <div class="mb-3 col-md-8">
-      <%= f.label :year_offset, class: "col-form-label-lg form-label" %>
-      <% year_opts = [[-1, "前年扱い（決算・総会など）"], [0, "当年扱い（人事など）"], [1, "翌年扱い"]] %>
+      <%= f.label :offset, class: "col-form-label-lg form-label" %>
       <div class="d-flex gap-3">
-        <% year_opts.each do |val, label| %>
-          <div class="form-check">
-            <%= f.radio_button :year_offset, val, class: "form-check-input", id: "year_offset_#{val}" %>
-            <%= f.label "year_offset_#{val}", label, class: "form-check-label" %>
+        <% annual_offsets = [[-1, "前年扱い（決算・総会など）"], [0, "当年扱い（人事など）"], [1, "翌年扱い"]] %>
+        <% annual_offsets.each do |val, label| %>
+          <div class="form-check" data-pages--task-template-kind-target="annualOnly">
+            <%= f.radio_button :offset, val, class: "form-check-input", id: "annual_offset_#{val}" %>
+            <%= f.label "annual_offset_#{val}", label, class: "form-check-label", for: "annual_offset_#{val}" %>
+          </div>
+        <% end %>
+
+        <% monthly_offsets = [[-1, "前月扱い（会計・日報の処理など）"], [0, "当月扱い（支払い処理など）"], [1, "翌月扱い"]] %>
+        <% monthly_offsets.each do |val, label| %>
+          <div class="form-check" data-pages--task-template-kind-target="monthlyOnly">
+            <%= f.radio_button :offset, val, class: "form-check-input", id: "monthly_offset_#{val}" %>
+            <%= f.label "monthly_offset_#{val}", label, class: "form-check-label", for: "monthly_offset_#{val}" %>
           </div>
         <% end %>
       </div>
