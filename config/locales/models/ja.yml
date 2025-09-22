@@ -298,8 +298,8 @@ ja:
           checker: "サポーター"
           manager: "管理者"
           admin: "システム"
-        theme_preference: "画面テーマ"
-        theme_preferences:
+        theme: "画面テーマ"
+        themes:
           light: "ライト"
           dark: "ダーク"
           system: "システム"
