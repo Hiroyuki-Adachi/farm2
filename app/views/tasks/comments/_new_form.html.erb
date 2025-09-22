@@ -1,0 +1,15 @@
+<!-- app/views/tasks/comments/_new_form.html.erb -->
+<%= form_with(model: [task, comment], url: task_comments_path(task),
+              data: { controller: "inline-form",
+                      action: "turbo:submit-end->inline-form#afterSubmit" }) do |f| %>
+  <%= error_print(f.object) %>
+
+  <div class="d-flex gap-2">
+    <%= f.text_area :body, rows: 2, class: "form-control",
+          placeholder: "メッセージを入力（Ctrl/Cmd+Enterで送信）",
+          required: true,
+          data: { inline_form_target: "textarea",
+                  action: "input->inline-form#autosize keydown.ctrl+Enter->inline-form#submit keydown.meta+Enter->inline-form#submit" } %>
+    <%= f.submit "更新", class: "btn btn-primary" %>
+  </div>
+<% end %>

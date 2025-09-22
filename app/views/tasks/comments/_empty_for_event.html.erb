@@ -1,0 +1,9 @@
+<!-- app/views/tasks/comments/_empty_for_event.html.erb -->
+<% if event.actor_id == current_user.worker_id %>
+  <div class="small text-muted">
+    <%= link_to "コメントを追加する",
+        edit_task_event_comment_path(task, event),
+        data: { turbo_frame: dom_id(event, :comment) },
+        class: "ms-2 small" %>
+  </div>
+<% end %>

@@ -32,6 +32,6 @@ class Accident < ApplicationRecord
   }
 
   def accident_type_name
-    I18n.t("activerecord.attributes.accident.accident_types.#{accident_type_id}")
+    I18n.t("activerecord.enums.accident.accident_types.#{accident_type_id}")
   end
 end

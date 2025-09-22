@@ -125,7 +125,7 @@ document.addEventListener('turbo:load', () => {
 
     sidebars.forEach((sb) => {
       // 対象controllerのリンク候補
-      const links = Array.from(sb.querySelectorAll(`a[data-controller="${controllerValue}"]`));
+      const links = Array.from(sb.querySelectorAll(`a[data-app-controller="${controllerValue}"]`));
       if (links.length === 0) return;
 
       // actionsが一致するリンクを優先
@@ -229,17 +229,23 @@ document.addEventListener('turbo:load', () => {
         element.style.display = "none";
     });
 
-    window.addEventListener("turbo:click", (event) => {
+    document.addEventListener("turbo:click", (event) => {
         if (event.target.dataset.wait) {
             loadingStart("しばらくお待ちください");
         }
     });
 
-    window.addEventListener("turbo:loading", () => {
+    document.addEventListener("turbo:loading", () => {
         loadingEnd();
     });
-    window.addEventListener("turbo:frame-load", () => {
+    document.addEventListener("turbo:frame-load", () => {
         loadingEnd();
+    });
+    document.addEventListener("turbo:before-fetch-response", () => {
+        loadingEnd();
+    });
+    document.addEventListener("turbo:fetch-request-error", () => {
+      loadingEnd();
     });
 
   // PC幅のサイドバー折りたたみ
