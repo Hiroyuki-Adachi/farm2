@@ -5,10 +5,10 @@
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
   <%= javascript_importmap_tags %>
-  <%= javascript_include_tag 'controllers/pc-common', 'data-turbo-track': 'reload', type: :module %>
+  <%= javascript_include_tag 'pages/pc-common', 'data-turbo-track': 'reload', type: :module %>
   <%= stylesheet_link_tag 'pc-common' %>
   <%= csrf_meta_tags %>
-  <%= javascript_include_tag 'controllers/work-show', 'data-turbo-track': 'reload' %>
+  <%= javascript_include_tag 'pages/work-show', 'data-turbo-track': 'reload' %>
   <%= stylesheet_link_tag 'work-show', :media => 'all' %>
   <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
       <script type="text/javascript" data-turbo-track="reload">

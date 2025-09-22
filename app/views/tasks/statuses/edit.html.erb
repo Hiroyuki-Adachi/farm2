@@ -1,0 +1,4 @@
+<!-- views/tasks/statuses/edit.html.erb -->
+<%= turbo_frame_tag dom_id(@task, "status_modal_frame") do %>
+  <%= render "tasks/statuses/form", task: @task, next_status_code: @next_status_code %>
+<% end %>

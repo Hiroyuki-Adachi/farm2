@@ -80,7 +80,7 @@ class WorksController < ApplicationController
       if @work.update(work_params)
         @work.refresh_broccoli(current_organization)
       else
-        render action: :edit, status: :unprocessable_content
+        render action: :edit, status: :unprocessable_content and return
       end
     end
 

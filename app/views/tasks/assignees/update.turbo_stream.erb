@@ -1,0 +1,8 @@
+<%= turbo_stream.update "task_assignee", partial: "tasks/assignees/show" %>
+<%= turbo_stream.update "task_events", partial: "tasks/events/list", locals: { task: @task } %>
+
+<% frame_id = dom_id(@task, :assignee_modal_frame) %>
+<% modal_id = dom_id(@task, :assignee_modal) %>
+<%= turbo_stream.update frame_id do %>
+  <div data-controller="bs-modal" data-bs-modal-id-value="<%= modal_id %>"></div>
+<% end %>

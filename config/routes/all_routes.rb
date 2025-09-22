@@ -162,6 +162,7 @@ resources :personal_informations, param: "token", only: [:show] do
   resources :maps, controller: "personal_informations/maps", only: [:index]
   resources :mail_confirmations, controller: "personal_informations/mail_confirmations", param: "mail_token", only: [:edit]
   resources :scans, controller: "personal_informations/scans", only: [:new, :create]
+  resources :tasks, controller: "personal_informations/tasks", only: [:show]
 end
 resources :personal_calendars, param: "token", only: [:show]
 resources :users, except: [:show] do
@@ -208,6 +209,22 @@ resources :works do
   end
 end
 
+resources :tasks, except: [:edit, :update] do
+  resource :assignee, controller: "tasks/assignees", only: [:edit, :update]
+  resource :description, controller: "tasks/descriptions", only: [:edit, :update]
+  resource :due_on, controller: "tasks/due_dates", only: [:edit, :update]
+  resource :office_role, controller: "tasks/office_roles", only: [:edit, :update]
+  resource :priority, controller: "tasks/priorities", only: [:edit, :update]
+  resources :status, controller: "tasks/statuses", only: [:edit, :update], param: "code"
+  resource :title, controller: "tasks/titles", only: [:edit, :update]
+  resource :end_reason, controller: "tasks/end_reasons", only: [:edit, :update]
+  resources :watchers, controller: "tasks/watchers", only: [:create, :destroy]
+  resources :comments, controller: "tasks/comments", only: [:create]
+  resources :events, only: [] do
+    resource :comment, controller: "tasks/event_comments", only: [:show, :edit, :create, :update]
+  end
+end
+resources :task_templates, controller: "tasks/templates", except: [:show]
 resources :work_results, only: [:index]
 resources :machine_results, only: [:index]
 resources :work_chemicals, only: [:index]

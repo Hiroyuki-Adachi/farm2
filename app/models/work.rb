@@ -472,7 +472,7 @@ SQL
   end
 
   def weather_name
-    I18n.t("activerecord.attributes.work.weather_ids.#{self.weather_id}")
+    I18n.t("activerecord.enums.work.weather_ids.#{self.weather_id}")
   end
 
   private

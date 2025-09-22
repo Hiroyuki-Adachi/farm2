@@ -1,0 +1,17 @@
+<%= form_with model: task, url: task_assignee_path(task), method: :patch do |f| %>
+  <%= error_print(f.object) %>
+
+  <div class="mb-3">
+    <%= f.label :assignee_id %>
+    <%= f.collection_select :assignee_id, Worker.taskable.usual, :id, :name, { include_blank: true }, { class: "form-select" } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :comment %>
+    <%= f.text_area :comment, class: "form-control", rows: 3, placeholder: "コメントがあれば入力してください(任意)" %>
+  </div>
+  <div class="d-flex justify-content-end gap-2">
+    <%= f.submit "登録", class: "btn btn-primary" %>
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+  </div>
+<% end %>

@@ -1,0 +1,397 @@
+ja: 
+  activerecord: 
+    attributes:
+      chemical:
+        name: "名称"
+        phonetic: "名称(ふりがな)" 
+        chemical_type_id: "種別"
+        display_order: "表示順"
+        this_term_flag: "本年度使用する"
+        unit: "消費単位"
+        base_unit_id: "基本単位"
+        base_quantity: "消費数"
+        carton_unit: "購買単位"
+        carton_quantity: "購買数"
+        stock_unit: "在庫単位"
+        stock_quantity: "在庫数"
+        aqueous_flag: "水溶フラグ"
+        url: "URL"
+
+      chemical_type:
+        name: "名称"
+        display_order: "表示順"
+
+      home: 
+        phonetic: "世帯名(かな)"  #g
+        name: "世帯名"  #g
+        zip_code: "郵便番号"  #g
+        address1: "住所1"  #g
+        address2: "住所2"  #g
+        telephone: "電話番号"  #g
+        fax: "FAX番号"  #g
+        section_id: "班"  #g
+        display_order: "表示順"  #g
+        member_flag: "組合員フラグ"
+        owner_flag: "機械所有"
+        finance_order: "出力順(会計用)"
+        drying_order: "出力順(乾燥調整用)"
+        owned_rice_order: "出力順(保有米用)"
+        seedling_order: "出力順(育苗用)"
+
+      work_result: 
+        home_name: "世帯"
+        worker_name: "作業者"
+        payment_name: "支払先"
+        worked_at: "作業日"  #g
+        work_type_name: "作業種別"  #g
+        work_name: "作業内容"  #g
+        hours: "作業時間"  #g
+        price: "単価"  #g
+        amount: "日当"  #g
+
+      land: 
+        place: "番地"  #g
+        owner_id: "所有者"  #g
+        manager_id: "管理者"  #g
+        area: "耕作面積"  #g
+        display_order: "表示順"  #g
+        land_place_id: "場所"
+        target_flag: "管理"
+        reg_area: "登記面積"
+        broccoli_mark: "ブロッコリ記号"
+        start_on: "有効期間(自)"
+        end_on: "有効期間(至)"
+        peasant_start_term: "小作料有効年度(自)"
+        peasant_end_term: "小作料有効年度(至)"
+        parcel_number: "耕地番号"
+        uuid: "UUID"
+
+      work: 
+        year: "年度"  #g
+        worked_at: "作業日"  #g
+        weather: "天気"  #g
+        weather_id: "天気"  #g
+        name: "内容"  #g
+        remarks: "記事"  #g
+        start_at: "開始時刻"  #g
+        end_at: "終了時刻"  #g
+        genre_name: "大分類"
+        type_name: "小分類"
+        kind_name: "内容"
+        workers_count: "人数"
+        sum_hours: "工数"
+        work_type_id: "作業分類"
+        work_kind_id: "作業種別"
+        chemical_group_flag: "土地単位に薬剤を入力する"
+
+      work_type:
+        name: "名称"
+        genre: "カテゴリー"
+        display_order: "表示順"
+        bg_color: "背景色"
+        land_flag: "土地利用"
+        cost_flag: "原価"
+        work_flag: "日報表示"
+        map_flag: "地図表示"
+        icon: "アイコン"
+        term_flag: "今年度使用する"
+        office_role: "事務の役割"
+
+      worker: 
+        family_phonetic: "姓(ふりがな)"  #g
+        family_name: "姓"  #g
+        first_phonetic: "名(ふりがな)"  #g
+        first_name: "名"  #g
+        birthday: "誕生日"  #g
+        mobile: "携帯番号"  #g
+        mobile_mail: "携帯アドレス"  #g
+        pc_mail: PCメールアドレス
+        display_order: "表示順"  #g
+        bank_code: "金融機関"
+        branch_code: "支店"
+        account_type_id: "預金種別"
+        account_number: "口座番号"
+        gender_id: "性別"
+        home_id: "世帯"
+        token: "アクセストークン"
+        position_id: "役職"
+        broccoli_mark: "ブロッコリ記号"
+        office_role: "事務の役割"
+
+      machine:
+        name: 名称
+        machine_type_id: 種別
+        home_id: 所有者
+        display_order: 表示順
+        validity_start_at: 運用開始日
+        validity_end_at: 運用終了日
+        diesel_flag: "燃料"
+        number: "番号"
+
+      machine_type:
+        name: 名称
+        display_order: 表示順
+        code: "コード"
+        
+      machine_price_header:
+        validated_at: 起算日
+
+      machine_result:
+        owner_name: "所有世帯"
+        machine_type_name: "機械種別"
+        worked_at: "作業日"
+        work_type_name: "作業種別"
+        work_name: "作業内容"
+        price: "単価"
+        quantity: "作業量"
+        adjust_unit: "単位"
+        amount: "使用料"
+
+      work_kind:
+        name: 名称
+        display_order: 表示順
+        price: 作業単価
+        land_flag: "土地利用"
+        broccoli_mark: "ブロッコリ記号"
+        phonetic: "名称(ふりがな)"
+        cost_type_id: "原価種別"
+
+      bank:
+        code: "コード"
+        name: "名称"
+        phonetic: "ﾌﾘｶﾞﾅ"
+
+      bank_branch:
+        code: "コード"
+        name: "名称"
+        phonetic: "ﾌﾘｶﾞﾅ"
+        zip_code: "郵便番号"
+        address1: "住所1"
+        address2: "住所2"
+        telephone: "電話番号"
+        fax: "FAX番号"
+
+      system:
+        term: 年度
+        target_from: 期間(自)
+        target_to: 期間(至)
+        start_date: "期首"
+        end_date: "期末"
+        default_price: "工賃(初期値)"
+        default_fee: "初期値(管理料)"
+        dry_price: "基準額(乾燥のみ)"
+        adjust_price: "基準額(調整のみ)"
+        dry_adjust_price: "基準額(乾燥調整)"
+        half_sum_flag: "半端米を集計に含める"
+        waste_price: "くず米単価"
+        relative_price: "縁故米(加算額)"
+
+      organization:
+        name: "組織名称"
+        workers_count: "日報表示する作業者の人数"
+        lands_count: "日報表示する土地の数"
+        machines_count: "日報表示する機械の数"
+        chemicals_count: "日報表示する薬品の数"
+        chemical_group_count: "入力する時の薬品の列数"
+        daily_worker: "作業者への付加情報"
+        url: "URL"
+        broccoli_work_type_id: "ブロッコリーを選択"
+        broccoli_work_kind_id: "収穫を選択"
+        rice_planting_id: "田植を選択"
+        whole_crop_work_kind_id: "WCS収穫を選択"
+        contract_work_type_id: "受託作業を選択"
+        harvesting_work_kind_id: "稲刈りを選択"
+        maintenance_id: "機械保守を選択"
+        cleaning_id: "清掃作業を選択"
+        straw_id: "稲わらを選択"
+        training_id: "講習会・研修を選択"
+
+      section:
+        name: 名称
+        display_order: 表示順
+        work_flag: "作業"
+
+      work_chemical:
+        worked_at: "作業日"  #g
+        work_type_name: "作業種別"  #g
+        work_name: "作業内容"  #g
+        quantity: "使用量"
+
+      user:
+        login_name: "アカウント名"
+        password: "パスワード"
+        password_confirmation: "パスワード(確認)"
+        term: "年度"
+        target_from: "期間(自)"
+        target_to: "期間(至)"
+        organization_id: "組織"
+        permission_id: "権限"
+        mail: "メールアドレス"
+   
+      work_broccoli:
+        shipped_on: "出荷日"
+        broccoli_box_id: "出荷用の箱"
+        rest: "残数"
+
+      schedule:
+        worked_at: "作業予定日"
+        name: "内容"
+        kind_name: "内容"
+        workers_count: "人数"
+        work_type_id: "作業分類"
+        work_kind_id: "作業種別"
+        work_flag: "日当フラグ"
+        start_at: "開始予定時刻"  #g
+        end_at: "終了予定時刻"  #g
+        farming_flag: "営農フラグ"
+        line_flag: "LINE通知フラグ"
+        minutes_flag: "議事録フラグ"
+        calendar_remove_flag: "カレンダー削除フラグ"
+
+      land_place:
+        name: "名称"
+        display_order: "表示順"
+        remarks: "備考"
+
+      land_cost:
+        work_type_id: "作付"
+        cost: "原価"
+        
+      expense:
+        payed_on: "購入日"
+        expense_type_id: "支払種別"
+        content: "支払内容"
+        amount: "支払額"
+        chemical_type_id: "薬剤種別"
+        chemical_id: "薬剤"
+        discount: "値引額"
+        discount_numor: "値引率(値引額)"
+        discount_denom: "値引率(支払額)"
+        cost_flag: "原価区分"
+        quantity: "数量"
+
+      expense_type:
+        name: "経費種別名称"
+        chemical_flag: "薬品フラグ"
+        other_flag: "その他フラグ"
+        sales_flag: "売上フラグ"
+        display_order: "表示順"
+
+      owned_rice_price:
+        name: "品種名"
+        short_name: "品種名(略称)"
+        display_order: "表示順"
+        owned_price: "保有米価格"
+        relative_price: "縁故米価格"
+
+      cost_type:
+        name: "名称"
+        phonetic: "名称(ふりがな)" 
+        display_order: "表示順"
+
+      chemical_inventory:
+        name: "名称"
+        checked_on: "日付"
+        stocks: "在庫"
+        chemical_adjust_type_id: "棚卸種別"
+
+      chemical_stock:
+        name: "名称"
+        stock_on: "日付"
+        chemical_id: "薬剤"
+        stock: "在庫量"
+        stored: "入庫量"
+        shipping: "出庫量"
+        inventory: "棚卸量"
+
+      sorimachi_journal:
+        term: "年度"
+
+      sorimachi_account:
+        term: "年度"
+        code: "科目コード"
+        name: "科目名称"
+        cost_flag: "原価計上フラグ"
+        total_cost_type_id: "科目種別"
+        auto_code: "自動設定コード"
+        auto_work_type_id: "自動設定原価"
+
+      institution:
+        name: "施設名称"
+        display_order: "表示順"
+        start_term: "提供開始年度"
+        end_term: "提供終了年度"
+
+      cleaning:
+        target: "駆除対象動物・害虫名"
+        method: "清掃・駆除方法"
+        cleaning_targets: "種別"
+        institutions: "施設"
+
+      training:
+        training_place: "研修受講場所"
+        studying_place: "勉強会開催場所"
+        worker_id: "講師"
+        document: "資料"
+        content: "受講内容"
+        remarks: "摘要"
+        schedule_id: "勉強会"
+        training_types: "研修種別"
+        studied_on: "勉強会開催日"
+        studied_members: "勉強会参加者"
+
+      accident:
+        worked_at: "いつ"
+        investigator_id: "調査責任者"
+        investigated_on: "調査日"
+        informant_name: "情報提供者"
+        accident_type_id: "種別"
+        work_id: "対象作業"
+        audience_id: "誰が"
+        location: "どこで"
+        location_name: "場所(名称)"
+        content: "何をしたのか／何があったのか"
+        problem: "問題点の考察"
+        solving: "問題解決の考察"
+        result: "改善の結果"
+
+      user_word:
+        word: "検索ワード"
+        pc_flag: "パソコン閲覧"
+        sp_flag: "スマホ閲覧"
+        line_flag: "LINE送信"
+      
+      drying:
+        term: "年度"
+        carried_on: "搬入日"
+        drying_type_id: "乾燥種別"
+        home_id: "担当世帯"
+        work_type_id: "作業分類"
+        
+      task:
+        title: "タスク名"
+        description: "内容"
+        due_on: "期限"
+        assignee_id: "担当者"
+        creator_id: "作成者"
+        status: "状態"
+        priority: "優先度"
+        end_reason: "完了理由"
+        started_on: "着手日"
+        ended_on: "完了日"
+        office_role: "部門区分"
+        comment: "コメント"
+        kind: "処理区分"
+
+      task_template:
+        title: "テンプレート名"
+        description: "内容"
+        priority: "優先度"
+        office_role: "部門区分"
+        kind: "処理区分"
+        monthly_stage: "期日週"
+        annual_month: "期日月"
+        months_before_due: "事前通知月数"
+        offset: "年/月のずれ"
+        active: "有効"
+        

@@ -28,7 +28,7 @@
     </div>
     <div class="col-md-3">
       <%= f.label :accident_type_id, class: "col-form-label-lg form-label" %>
-      <%= f.collection_radio_buttons :accident_type_id, Accident.accident_type_ids.keys, :to_s, ->(key) { I18n.t("activerecord.attributes.accident.accident_types.#{key}") } do |c| %>
+      <%= f.collection_radio_buttons :accident_type_id, Accident.accident_type_ids.keys, :to_s, ->(key) { I18n.t("activerecord.enums.accident.accident_types.#{key}") } do |c| %>
         <div class="form-radio">
           <%= c.label class: "form-check-label" do %>
             <%= c.radio_button class: "form-check-input" %>
@@ -93,5 +93,5 @@
   </div>
 <% end %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/gap-accidents', 'data-turbo-track': 'reload', type: :module %>
+<%= javascript_include_tag 'pages/gap-accidents', 'data-turbo-track': 'reload', type: :module %>
 <% end %>

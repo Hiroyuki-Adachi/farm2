@@ -123,5 +123,5 @@
 <input type="hidden" id="dilution_l" value="<%= Dilution::L.id %>" />
 <input type="hidden" id="dilution_mag" value="<%= Dilution::MAG.id %>" />
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/edit-chemicals', "data-turbo-track": "reload", type: :module %>
+<%= javascript_include_tag 'pages/edit-chemicals', "data-turbo-track": "reload", type: :module %>
 <% end %>

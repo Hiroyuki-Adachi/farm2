@@ -1,0 +1,20 @@
+<!-- views/tasks/statuses/update.turbo_stream.erb -->
+<%= turbo_stream.update "task_status_badge" do %>
+  <%= task.status_badge %>
+<% end %>
+
+<%= turbo_stream.update dom_id(@task, :status_date), partial: "tasks/statuses/date_row", locals: { task: task } %>
+<%= turbo_stream.update "task_status_controls", partial: "tasks/statuses/show" %>
+<%= turbo_stream.update "task_delete_button", partial: "tasks/statuses/delete_button", locals: { task: task } %>
+<%= turbo_stream.update "task_office_role", partial: "tasks/office_roles/show", locals: { task: task } %>
+<%= turbo_stream.update "task_due_on", partial: "tasks/due_dates/show", locals: { task: task } %>
+<%= turbo_stream.update "task_assignee", partial: "tasks/assignees/show", locals: { task: task } %>
+<%= turbo_stream.update "task_events", partial: "tasks/events/list", locals: { task: @task } %>
+
+<% code = params.dig(:task, :task_status) || params[:code] %>
+<% frame_id = dom_id(@task, "status_modal_frame") %>
+<% modal_id = dom_id(@task, "status_modal") %>
+
+<%= turbo_stream.update frame_id do %>
+  <div data-controller="bs-modal" data-bs-modal-id-value="<%= modal_id %>"></div>
+<% end %>

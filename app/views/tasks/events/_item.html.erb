@@ -1,0 +1,26 @@
+<div id="<%= dom_id(event, :event_item) %>" class="d-flex <%= mine ? 'justify-content-end' : 'justify-content-start' %>">
+  <div class="d-flex align-items-start gap-2 <%= mine ? 'flex-row-reverse text-end' : '' %>" style="max-width: 75%;">
+    <div class="<%= mine ? 'bg-primary-subtle text-primary-emphasis border border-primary-subtle' 
+                         : 'bg-body-tertiary text-body border border-secondary-subtle' %> rounded-3 p-2 shadow-sm w-auto">
+      <div class="small <%= mine ? 'text-primary' : 'text-muted' %>">
+        <span class="fw-bold"><%= event.actor.name %></span>・<%= event.created_at_display %>
+      </div>
+
+      <div class="mt-1">
+        <%=raw event.human_message %>
+      </div>
+
+      <hr class="border border-dark mb-0 mt-0" />
+      <% if event.comment.present? %>
+        <%= turbo_frame_tag dom_id(event, :comment) do %>
+          <%= render "tasks/comments/show_for_event",
+                task: task, event: event, comment: event.comment, mobile: false %>
+        <% end %>
+      <% else %>
+        <%= turbo_frame_tag dom_id(event, :comment) do %>
+          <%= render "tasks/comments/empty_for_event", task: task, event: event %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
