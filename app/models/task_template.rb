@@ -102,7 +102,7 @@ class TaskTemplate < ApplicationRecord
     task_title = 
       if kind_annual?
         "【#{title_date.strftime('%Jy年')}】#{title}"
-      else  
+      else
         "【#{title_date.strftime('%Jy年%m月')}】#{title}"
       end
     
