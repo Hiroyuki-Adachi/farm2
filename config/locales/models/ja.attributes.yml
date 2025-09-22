@@ -227,6 +227,7 @@ ja:
         organization_id: "組織"
         permission_id: "権限"
         mail: "メールアドレス"
+        theme: "画面テーマ"
    
       work_broccoli:
         shipped_on: "出荷日"
