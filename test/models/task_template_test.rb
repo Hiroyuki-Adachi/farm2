@@ -106,7 +106,7 @@ class TaskTemplateTest < ActiveSupport::TestCase
 
   test "期日計算(週末)" do
     t = build_template(monthly_stage: :w1)
-    assert_equal 6, Date.new(2025, 2, 1).wday 
+    assert_equal 6, Date.new(2025, 2, 1).wday
 
     d1 = t.due_on_for(year: 2025, month: 2)
     assert_equal Date.new(2025, 2, 1 + ((6 - Date.new(2025,2,1).wday) % 7)), Date.new(2025,2,1) + ((6 - Date.new(2025,2,1).wday) % 7) # sanity
