@@ -8,13 +8,13 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <% if @tasks.present? %>
-            <%= render(partial: 'show_tasks') %>
+          <% if @schedules.present? || @minute.present? %>
+            <%= render(partial: 'show_schedules') %>
           <% end %>
         </div>
         <div class="col-md-6">
-          <% if @schedules.present? || @minute.present? %>
-            <%= render(partial: 'show_schedules') %>
+          <% if @tasks.present? %>
+            <%= render(partial: 'show_tasks') %>
           <% end %>
         </div>
       </div>

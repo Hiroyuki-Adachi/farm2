@@ -1,12 +1,10 @@
 <h1 class="h4">タスク</h1>
 
-<ul>
+<ul class="list-group">
   <% @tasks.each do |task| %>
-    <li class="mb-1">
-      <%= task.status_badge %>
-      <%= task.priority_badge %>
-      <%= task.due_badge %>
-      <%= link_to task.title, task_path(task), class: "me-2 text-decoration-none" %>
-    </li>
+    <%= link_to task_path(task), class: "list-group-item list-group-item-action" do %>
+      <%=raw "#{task.status_badge} #{task.priority_badge} #{task.due_badge}" %>
+      <%= task.text_display %>
+    <% end %>
   <% end %>
 </ul>
