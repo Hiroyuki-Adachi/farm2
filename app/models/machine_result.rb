@@ -115,9 +115,9 @@ class MachineResult < ApplicationRecord
     end
 
     price_details = if owner.id == work_result.worker.home_id
-                      price_details.where(lease_id: Lease::NORMAL.id)
+                      price_details.where(lease_id: :normal)
                     else
-                      price_details.where(lease_id: Lease::LEASE.id)
+                      price_details.where(lease_id: :lease)
                     end
     unless price_details.exists?
       clear_amount

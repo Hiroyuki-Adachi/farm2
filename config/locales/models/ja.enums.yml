@@ -61,6 +61,11 @@ ja:
           another: "乾燥のみ"
           adjust: "調整のみ"
 
+      machine_price_detail:
+        lease_ids:
+          normal: "標準"
+          lease: "リース"
+
       task:
         priorities:
           low: "適宜"
