@@ -836,3 +836,212 @@ div.content {
     position: fixed;
   }
   
+  /* === THEME TOKENS ===================================================== */
+/* Light (既定) */
+:root {
+  --paper-bg: #ffffff;          /* 紙の色（背景） */
+  --ink: #111111;               /* 文字色（本文） */
+  --ink-muted: #444;            /* 薄めの文字色 */
+  --rule: #000;                 /* 完全黒（線・枠） */
+  --rule-weak: #d0d7de;         /* 薄い枠線 */
+
+  /* 表（table） */
+  --tbl-bg: var(--paper-bg);
+  --tbl-th-bg: #f6f8fa;
+  --tbl-td-bg: var(--paper-bg);
+  --tbl-border: #000;
+
+  /* モーダル */
+  --modal-bg: #fff;
+  --modal-border: rgba(0,0,0,.2);
+  --modal-shadow: 0 3px 9px rgba(0,0,0,.5);
+  --backdrop: #000;
+  --backdrop-opacity: .5;
+
+  /* リンク */
+  --link: #337ab7;
+  --link-hover: #23527c;
+
+  /* ボタン（“見た目上の互換”） */
+  --btn-fg: #fff;
+  --btn-default-fg: #333;
+  --btn-default-bg: #fff;
+  --btn-default-border: #ccc;
+
+  --btn-primary-bg: #337ab7;
+  --btn-primary-border: #2e6da4;
+
+  --btn-success-bg: #5cb85c;
+  --btn-success-border: #4cae4c;
+
+  --btn-info-bg: #5bc0de;
+  --btn-info-border: #46b8da;
+
+  --btn-warning-bg: #f0ad4e;
+  --btn-warning-border: #eea236;
+
+  --btn-danger-bg: #d9534f;
+  --btn-danger-border: #d43f3a;
+}
+
+/* Dark 上書き */
+[data-bs-theme="dark"] {
+  color-scheme: dark;
+
+  --paper-bg: #0f1115;
+  --ink: #e6e8eb;
+  --ink-muted: #a5acb5;
+  --rule: #e6e8eb;
+  --rule-weak: #2a2f37;
+
+  --tbl-bg: #11151b;
+  --tbl-th-bg: #171c23;
+  --tbl-td-bg: #0f1115;
+  --tbl-border: #2d333b;
+
+  --modal-bg: #141821;
+  --modal-border: rgba(255,255,255,.12);
+  --modal-shadow: 0 3px 9px rgba(0,0,0,.7);
+  --backdrop: #000;
+  --backdrop-opacity: .65;
+
+  --link: #6fb9ff;
+  --link-hover: #9fd0ff;
+
+  --btn-default-fg: #e6e8eb;
+  --btn-default-bg: #202633;
+  --btn-default-border: #3a4352;
+
+  --btn-primary-bg: #2a6eb6;
+  --btn-primary-border: #215a94;
+
+  --btn-success-bg: #3c8f3c;
+  --btn-success-border: #2e6f2e;
+
+  --btn-info-bg: #2f93b0;
+  --btn-info-border: #2b869f;
+
+  --btn-warning-bg: #c8892e;
+  --btn-warning-border: #a36e22;
+
+  --btn-danger-bg: #b23c38;
+  --btn-danger-border: #922f2b;
+}
+
+/* 印刷は必ずライト系（白地に黒字）に固定 */
+@media print {
+  :root, [data-bs-theme="dark"], [data-bs-theme="auto"] {
+    --paper-bg: #fff;
+    --ink: #000;
+    --ink-muted: #333;
+    --rule: #000;
+    --rule-weak: #999;
+    --tbl-bg: #fff;
+    --tbl-th-bg: #fff;
+    --tbl-td-bg: #fff;
+    --tbl-border: #000;
+    --modal-bg: #fff;
+    --modal-border: #999;
+    --modal-shadow: none;
+    --backdrop: #000;
+    --backdrop-opacity: 0;
+    --link: #337ab7;
+    --link-hover: #23527c;
+    --btn-default-fg: #333;
+    --btn-default-bg: #fff;
+    --btn-default-border: #ccc;
+    --btn-primary-bg: #337ab7;
+    --btn-primary-border: #2e6da4;
+    --btn-success-bg: #5cb85c;
+    --btn-success-border: #4cae4c;
+    --btn-info-bg: #5bc0de;
+    --btn-info-border: #46b8da;
+    --btn-warning-bg: #f0ad4e;
+    --btn-warning-border: #eea236;
+    --btn-danger-bg: #d9534f;
+    --btn-danger-border: #d43f3a;
+  }
+}
+
+/* === OVERRIDES (元CSSの色指定を上書き) =============================== */
+/* ベース */
+body {
+  color: var(--ink);
+  background: var(--paper-bg);
+}
+
+/* 印刷想定の #show ブロックもダークに馴染ませる（紙色・字色） */
+div#show {
+  color: var(--ink);
+  background-color: var(--paper-bg);
+}
+
+/* テーブル全般 */
+table, th, td {
+  color: var(--ink);
+  background-color: var(--tbl-bg);
+  border-color: var(--tbl-border);
+}
+th {
+  background-color: var(--tbl-th-bg);
+}
+td {
+  background-color: var(--tbl-td-bg);
+}
+
+/* 文字色の差し替え（必要に応じて） */
+td.remarks, th {
+  color: var(--ink);
+}
+
+/* リンク */
+a { color: var(--link); }
+a:hover, a:focus { color: var(--link-hover); }
+
+/* モーダル */
+.modal-content {
+  background-color: var(--modal-bg);
+  border-color: var(--modal-border);
+  box-shadow: var(--modal-shadow);
+}
+.modal-backdrop {
+  background-color: var(--backdrop);
+}
+.modal-backdrop.in {
+  opacity: var(--backdrop-opacity);
+  filter: alpha(opacity=calc(var(--backdrop-opacity) * 100));
+}
+
+/* ボタン（Bootstrap3風の見た目を維持しつつトークン化） */
+.btn-default {
+  color: var(--btn-default-fg);
+  background-color: var(--btn-default-bg);
+  border-color: var(--btn-default-border);
+}
+.btn-primary {
+  color: var(--btn-fg);
+  background-color: var(--btn-primary-bg);
+  border-color: var(--btn-primary-border);
+}
+.btn-success {
+  color: var(--btn-fg);
+  background-color: var(--btn-success-bg);
+  border-color: var(--btn-success-border);
+}
+.btn-info {
+  color: var(--btn-fg);
+  background-color: var(--btn-info-bg);
+  border-color: var(--btn-info-border);
+}
+.btn-warning {
+  color: var(--btn-fg);
+  background-color: var(--btn-warning-bg);
+  border-color: var(--btn-warning-border);
+}
+.btn-danger {
+  color: var(--btn-fg);
+  background-color: var(--btn-danger-bg);
+  border-color: var(--btn-danger-border);
+}
+
+/* 罫線・黒固定のところ（印章の赤など）はそのままでOK */
