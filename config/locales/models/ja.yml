@@ -302,7 +302,7 @@ ja:
         themes:
           light: "ライト"
           dark: "ダーク"
-          system: "システム"
+          auto: "システム"
    
       work_broccoli:
         shipped_on: "出荷日"
