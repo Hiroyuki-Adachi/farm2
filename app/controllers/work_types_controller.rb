@@ -25,7 +25,7 @@ class WorkTypesController < ApplicationController
     if @work_type.save
       redirect_to work_types_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -39,7 +39,7 @@ class WorkTypesController < ApplicationController
     if @work_type.save
       redirect_to work_types_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 
@@ -75,7 +75,8 @@ class WorkTypesController < ApplicationController
         :cost_flag,
         :work_flag,
         :icon,
-        :term_flag
+        :term_flag,
+        :office_role
       ])
     .merge(term: current_term)
   end

@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   helper_method :menu_name
 
-  before_action :set_term, if: :user_present?
   before_action :restrict_remote_ip
+  before_action :set_term, if: :user_present?
 
   unless Rails.env.development? || Rails.env.test?
     rescue_from StandardError, with: :handle_error
@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
   end
 
   def permit_admin
-    to_error_path unless current_user.admin?
+    return to_error_path unless current_user.admin?
   end
 
   def make_months
@@ -60,15 +60,26 @@ class ApplicationController < ActionController::Base
   def restrict_remote_ip
     if session[:user_id].nil? 
       redirect_to root_path
-      return
+      return false
     end
   end
 
   def permit_this_term
-    to_error_path unless this_term?
+    return to_error_path unless this_term?
   end
 
-  def to_error_path
+  def to_error_path(exception = nil)
+    logger.error "[503] Service Unavailable"
+    if exception
+      logger.error "Exception: #{exception.class} - #{exception.message}"
+      logger.error "Backtrace: #{exception.backtrace.first(5).join("\n")}"
+    else
+      logger.error "No exception object given (manual trigger)"
+    end
+    logger.error "Request: #{request.method} #{request.fullpath} from #{request.remote_ip}"
+    logger.error "Params: #{request.params}"
+    logger.error "User: #{@current_user&.id}"
+
     render file: Rails.public_path.join('503.html'), layout: false, status: :service_unavailable
   end
 
@@ -88,16 +99,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def handle_error(e)
+  def handle_error(exception = nil)
+    logger.error "[500] Internal Server Error"
+
     logger.error({
-      error: e.class.name,
-      message: e.message,
-      stack_trace: e.backtrace.take(5),
+      error: exception.class.name,
+      message: exception.message,
+      stack_trace: exception.backtrace.take(5),
       path: request.fullpath,
       time: Time.current,
       severity: :ERROR
     }.to_json)
 
-    render file: Rails.public_path.join('500.html'), layout: false, status: 500
+    render file: Rails.public_path.join('500.html'), layout: false, status: :internal_server_error
   end
 end

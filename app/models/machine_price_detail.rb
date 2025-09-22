@@ -21,8 +21,9 @@ class MachinePriceDetail < ApplicationRecord
 
   belongs_to :header, class_name: :MachinePriceHeader
   belongs_to :work_kind
-  belongs_to_active_hash :lease
   belongs_to_active_hash :adjust
+
+  enum :lease_id, {normal: 1, lease: 2}
 
   validates :price, presence: true
   validates :price, numericality: true, if: proc { |x| x.price.present?}

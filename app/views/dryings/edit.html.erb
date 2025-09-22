@@ -8,16 +8,16 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
     <div class="col-md-5">
       <div class="input-group">
         <div class="form-check">
-          <%= fd.radio_button :drying_type_id, DryingType::COUNTRY.id, {class: "form-check-input", id: "drying_type_country"} %>
-          <label for="drying_type_country" class="form-check-label h3 form-label"><%= DryingType::COUNTRY.name %></label>
+          <%= fd.radio_button :drying_type_id, :country, {class: "form-check-input", id: "drying_type_country"} %>
+          <label for="drying_type_country" class="form-check-label h3 form-label"><%= I18n.t("activerecord.enums.drying.drying_type_ids.country") %></label>
         </div>
         <div class="form-check ms-2">
-          <%= fd.radio_button :drying_type_id, DryingType::ANOTHER.id, {class: "form-check-input", id: "drying_type_another"} %>
-          <label for="drying_type_another" class="form-check-label h3 form-label"><%= DryingType::ANOTHER.name %></label>
+          <%= fd.radio_button :drying_type_id, :another, {class: "form-check-input", id: "drying_type_another"} %>
+          <label for="drying_type_another" class="form-check-label h3 form-label"><%= I18n.t("activerecord.enums.drying.drying_type_ids.another") %></label>
         </div>
         <div class="form-check ms-2">
-          <%= fd.radio_button :drying_type_id, DryingType::SELF.id, {class: "form-check-input", id: "drying_type_self"} %>
-          <label for="drying_type_self" class="form-check-label h3 form-label"><%= DryingType::SELF.name %></label>
+          <%= fd.radio_button :drying_type_id, :self, {class: "form-check-input", id: "drying_type_self"} %>
+          <label for="drying_type_self" class="form-check-label h3 form-label"><%= I18n.t("activerecord.enums.drying.drying_type_ids.self") %></label>
         </div>
       </div>
     </div>
@@ -211,5 +211,5 @@ td#sum_moth_weight, td#sum_rice_weight {padding-right: 2.5rem;}
 <%= hidden_field_tag "kg_per_bag_rice", Drying::KG_PER_BAG_RICE %>
 <%= hidden_field_tag "carried_on", @drying.model.carried_on %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/edit-dryings' %>
+<%= javascript_include_tag 'pages/dryings-edit' %>
 <% end %>

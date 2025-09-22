@@ -5,7 +5,7 @@
   </div>
   <div class="col-md-2">
     <%= f.label :weather_id, '', class: "col-form-label-lg form-label" %>
-    <%= f.select(:weather_id, @weathers.map {|weather| [weather.name, weather.id]}, {}, {class: "form-select"}) %>
+    <%= f.select(:weather_id, enum_options_for(Work, :weather_id), {}, {required: true, class: "form-select"}) %>
   </div>
   <div class="col-md-2">
     <%= f.label :start_at, '', class: "col-form-label-lg form-label" %>
@@ -31,7 +31,7 @@
     <div class="col-md-10">
       <% WorkType.select_category(category).by_term(current_term).each do |work_type| %>
         <div class="form-check form-check-inline">
-          <%= f.radio_button :work_type_id, work_type.id, {id: "work_type_#{work_type.id}", class: "form-check-input"} %>
+          <%= f.radio_button :work_type_id, work_type.id, {id: "work_type_#{work_type.id}", class: "form-check-input", required: true} %>
           <%= label_tag "work_type_#{work_type.id}", work_type.name, {class: "form-check-label form-label"} %>
         </div>        
       <% end %>
@@ -41,20 +41,20 @@
 <div class="row">
   <div class="col-md-4">
     <%= f.label :work_kind_id, '', class: "col-form-label-lg form-label" %>
-    <%= f.collection_select(:work_kind_id, @work_kinds, :id, :name, {}, {class: "form-select", id: :work_kind_id}) %>
+    <%= f.collection_select(:work_kind_id, @work_kinds, :id, :name, {}, {class: "form-select", id: :work_kind_id, required: true}) %>
   </div>
   <div class="col-md-8">
     <%= f.label :name, '', class: "col-form-label-lg form-label" %>
-    <%= f.text_field :name, {:maxlength => 40, :size => 40, class: "form-control"} %>
+    <%= f.text_field :name, {maxlength: 40, class: "form-control"} %>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
     <%= f.label :remarks, '', class: "col-form-label-lg form-label" %>
-    <%= f.text_area :remarks, {:rows => 3, :cols => 40, class: "form-control"} %>
+    <%= f.text_area :remarks, {rows: 3, cols: 40, class: "form-control"} %>
   </div>
 </div>
 <%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/work-form', "data-turbo-track": "reload", type: :module %>
+<%= javascript_include_tag 'pages/work-form', "data-turbo-track": "reload", type: :module %>
 <% end %>

@@ -1,9 +1,8 @@
 class WorkersController < ApplicationController
   include PermitChecker
+
   before_action :set_worker, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
-  before_action :set_genders, only: [:new, :create, :edit, :update]
-  before_action :set_positions, only: [:new, :create, :edit, :update]
 
   def index
     @workers = WorkerDecorator.decorate_collection(Worker.usual.page(params[:page]))
@@ -24,7 +23,7 @@ class WorkersController < ApplicationController
     if @worker.save
       redirect_to workers_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -36,7 +35,7 @@ class WorkersController < ApplicationController
     if @worker.update(worker_params)
       redirect_to workers_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 
@@ -55,14 +54,6 @@ class WorkersController < ApplicationController
     @homes = Home.usual
   end
 
-  def set_genders
-    @genders = Gender.all
-  end
-
-  def set_positions
-    @positions = Position.all
-  end
-
   def worker_params
     params.expect(worker:
       [
@@ -76,7 +67,8 @@ class WorkersController < ApplicationController
         :gender_id,
         :birthday,
         :position_id,
-        :broccoli_mark
+        :broccoli_mark,
+        :office_role
       ])
   end
 end

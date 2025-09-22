@@ -11,15 +11,16 @@ module SessionsHelper
   end
 
   def current_user
-    @current_user ||= User.find(session[:user_id])
+    return @current_user if @current_user.present?
+    @current_user = User.find(session[:user_id]) if session[:user_id]
   end
 
   def current_organization
-    @current_organization ||= Organization.find_by(id: current_user.organization_id)
+    @current_organization ||= Organization.find(current_user.organization_id)
   end
 
   def current_system
-    @current_system ||= System.find_by(term: current_user.term, organization_id: current_user.organization_id)
+    @current_system ||= System.find_by!(term: current_user.term, organization_id: current_user.organization_id)
   end
 
   def next_system
@@ -49,19 +50,19 @@ module SessionsHelper
   def last_term?
     !System.exists?(["term > ? AND organization_id = ?", current_user.term, current_user.organization_id])
   end
-  
+
   def this_term?
-    current_system.start_date <= Time.zone.today && current_system.end_date >= Time.zone.today
+    Time.zone.today.between?(current_system.start_date, current_system.end_date)
   end
 
   def now_system
-    organization_id = current_user.organization_id
-    @now_system ||= System.find_by(["organization_id = ? AND (current_date BETWEEN start_date AND end_date)", organization_id])
-    @now_system ||= System.find_by(term: System.where(organization_id: organization_id).maximum(:term), organization_id: organization_id)
+    org_id = current_user.organization_id
+    @now_system ||= System.find_by("organization_id = ? AND CURRENT_DATE BETWEEN start_date AND end_date", org_id) ||
+                    System.find_by(term: System.where(organization_id: org_id).maximum(:term), organization_id: org_id)
   end
 
   def current_name
-    @current_name ||= "#{current_user.worker.family_name} #{current_user.worker.first_name}"
+    @current_name ||= "#{current_user&.worker&.family_name} #{current_user&.worker&.first_name}"
   end
 
   def log_out

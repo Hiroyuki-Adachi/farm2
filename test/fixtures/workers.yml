@@ -16,14 +16,15 @@
 #  first_phonetic(名(ﾌﾘｶﾞﾅ))    :string(15)       not null
 #  mobile(携帯番号)                  :string(15)
 #  mobile_mail(メールアドレス(携帯)) :string(50)
+#  office_role(事務の役割)           :integer          default("none"), not null
 #  pc_mail(メールアドレス(PC))       :string(50)
 #  work_flag(作業フラグ)             :boolean          default(TRUE), not null
 #  created_at                        :datetime
 #  updated_at                        :datetime
 #  account_type_id(口座種別)         :integer          default(0), not null
-#  gender_id(性別)                   :integer          default(0), not null
+#  gender_id(性別)                   :integer          default("none"), not null
 #  home_id(世帯)                     :integer
-#  position_id(役職)                 :integer          default(0), not null
+#  position_id(役職)                 :integer          default("none"), not null
 #
 # Indexes
 #
@@ -53,6 +54,7 @@ worker1:
   deleted_at: 
   birthday: '1980-01-01'
   gender_id: 1
+  office_role: 1 
 
 worker2:
   id: 2
@@ -77,6 +79,7 @@ worker2:
   deleted_at: 
   birthday: '1960-01-01'
   gender_id: 1
+  office_role: 2
 
 worker3:
   id: 3
@@ -101,6 +104,7 @@ worker3:
   deleted_at: 
   birthday: '1990-01-01'
   gender_id: 2
+  office_role: 3
 
 worker4:
   id: 4
@@ -123,6 +127,7 @@ worker4:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker5:
   id: 5
@@ -145,6 +150,7 @@ worker5:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker6:
   id: 6
@@ -167,6 +173,7 @@ worker6:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
   
 worker7:
   id: 7
@@ -189,6 +196,7 @@ worker7:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker8:
   id: 8
@@ -211,6 +219,7 @@ worker8:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker9:
   id: 9
@@ -233,6 +242,7 @@ worker9:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker10:
   id: 10
@@ -255,6 +265,7 @@ worker10:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker11:
   id: 11
@@ -277,6 +288,7 @@ worker11:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker12:
   id: 12
@@ -299,6 +311,7 @@ worker12:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker13:
   id: 13
@@ -321,6 +334,7 @@ worker13:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker14:
   id: 14
@@ -343,6 +357,7 @@ worker14:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker15:
   id: 15
@@ -365,6 +380,7 @@ worker15:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-07-16 09:01:38.623449
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker17:
   id: 17
@@ -387,6 +403,7 @@ worker17:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker18:
   id: 18
@@ -409,6 +426,7 @@ worker18:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker19:
   id: 19
@@ -431,6 +449,7 @@ worker19:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-19 10:44:26.528643
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker20:
   id: 20
@@ -453,6 +472,7 @@ worker20:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
   
 worker21:
   id: 21
@@ -475,6 +495,7 @@ worker21:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
   
 worker22:
   id: 22
@@ -497,6 +518,7 @@ worker22:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
   
 worker23:
   id: 23
@@ -519,7 +541,8 @@ worker23:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker24:
   id: 24
   family_phonetic: あらき
@@ -541,7 +564,8 @@ worker24:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker25:
   id: 25
   family_phonetic: あらき
@@ -563,7 +587,8 @@ worker25:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker26:
   id: 26
   family_phonetic: おおむら
@@ -585,7 +610,8 @@ worker26:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker27:
   id: 27
   family_phonetic: たしろ
@@ -607,7 +633,8 @@ worker27:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker28:
   id: 28
   family_phonetic: はやかわ
@@ -629,7 +656,8 @@ worker28:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker29:
   id: 29
   family_phonetic: たなか
@@ -651,7 +679,8 @@ worker29:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker30:
   id: 30
   family_phonetic: さとう
@@ -673,7 +702,8 @@ worker30:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker31:
   id: 31
   family_phonetic: うえむら
@@ -695,6 +725,7 @@ worker31:
   created_at: 2010-07-11 12:42:48
   updated_at: 2015-12-17 08:50:10.460973
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker32:
   id: 32
@@ -717,6 +748,7 @@ worker32:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  birthday: '1950-01-01'
 
 worker22:
   id: 22
@@ -739,7 +771,8 @@ worker22:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-19 10:44:03.814998
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker34:
   id: 34
   family_phonetic: やまもと
@@ -761,7 +794,8 @@ worker34:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker35:
   id: 35
   family_phonetic: さとう
@@ -783,7 +817,8 @@ worker35:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker36:
   id: 36
   family_phonetic: さとう
@@ -805,7 +840,8 @@ worker36:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker37:
   id: 37
   family_phonetic: やまもと
@@ -827,7 +863,8 @@ worker37:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker38:
   id: 38
   family_phonetic: たなか
@@ -849,7 +886,8 @@ worker38:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker39:
   id: 39
   family_phonetic: すずき
@@ -871,7 +909,8 @@ worker39:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker40:
   id: 40
   family_phonetic: あらき
@@ -893,7 +932,8 @@ worker40:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker41:
   id: 41
   family_phonetic: はやかわ
@@ -915,7 +955,8 @@ worker41:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker42:
   id: 42
   family_phonetic: すずき
@@ -937,7 +978,8 @@ worker42:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker43:
   id: 43
   family_phonetic: いしもと
@@ -959,7 +1001,8 @@ worker43:
   created_at: 2010-07-19 11:38:12.229411
   updated_at: 2010-07-19 11:38:12.229411
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker44:
   id: 44
   family_phonetic: たなか
@@ -981,7 +1024,8 @@ worker44:
   created_at: 2010-07-19 11:38:39.100383
   updated_at: 2010-07-19 11:38:39.100383
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker45:
   id: 45
   family_phonetic: おおむら
@@ -1003,7 +1047,8 @@ worker45:
   created_at: 2010-07-19 11:45:48.770313
   updated_at: 2010-07-19 11:45:48.770313
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker46:
   id: 46
   family_phonetic: すずき
@@ -1025,7 +1070,8 @@ worker46:
   created_at: 2010-07-19 11:46:46.324567
   updated_at: 2010-07-19 11:46:46.324567
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker47:
   id: 47
   family_phonetic: さとう
@@ -1047,7 +1093,8 @@ worker47:
   created_at: 2010-07-19 12:16:06.937903
   updated_at: 2010-07-19 13:35:37.890246
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker48:
   id: 48
   family_phonetic: あらき
@@ -1069,7 +1116,8 @@ worker48:
   created_at: 2011-05-08 09:09:44.094912
   updated_at: 2011-05-08 09:09:44.094912
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker49:
   id: 49
   family_phonetic: おおむら
@@ -1091,7 +1139,8 @@ worker49:
   created_at: 2011-05-09 23:35:00.892503
   updated_at: 2011-05-09 23:35:00.892503
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker50:
   id: 50
   family_phonetic: おおむら
@@ -1113,7 +1162,8 @@ worker50:
   created_at: 2011-06-25 00:23:45.882427
   updated_at: 2011-06-25 00:23:45.882427
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker51:
   id: 51
   family_phonetic: たしろ
@@ -1135,7 +1185,8 @@ worker51:
   created_at: 2011-12-04 07:20:52.590354
   updated_at: 2011-12-04 07:20:52.590354
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker52:
   id: 52
   family_phonetic: たけだ
@@ -1157,7 +1208,8 @@ worker52:
   created_at: 2011-12-26 09:46:27.221566
   updated_at: 2013-07-16 09:02:07.485254
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker54:
   id: 54
   family_phonetic: たなか
@@ -1179,7 +1231,8 @@ worker54:
   created_at: 2011-12-26 09:49:22.436485
   updated_at: 2011-12-26 09:49:22.436485
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker44:
   id: 44
   family_phonetic: すずき
@@ -1201,7 +1254,8 @@ worker44:
   created_at: 2012-07-14 07:34:29.890144
   updated_at: 2012-07-14 07:34:29.890144
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker56:
   id: 56
   family_phonetic: おおむら
@@ -1223,7 +1277,8 @@ worker56:
   created_at: 2012-07-15 05:05:23.435815
   updated_at: 2012-07-15 05:05:23.435815
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker57:
   id: 57
   family_phonetic: さとう
@@ -1245,7 +1300,8 @@ worker57:
   created_at: 2012-10-02 07:24:30.738494
   updated_at: 2012-10-02 07:24:30.738494
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker58:
   id: 58
   family_phonetic: さとう
@@ -1267,7 +1323,8 @@ worker58:
   created_at: 2012-10-02 07:26:54.472357
   updated_at: 2012-10-02 07:26:54.472357
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker60:
   id: 60
   family_phonetic: おおむら
@@ -1281,7 +1338,7 @@ worker60:
   pc_mail: 
   display_order: 3
   work_flag: t
-  gender_id: 0
+  gender_id: 2
   bank_code: 0000
   branch_code: 000
   account_type_id: 0
@@ -1289,7 +1346,8 @@ worker60:
   created_at: 2013-07-09 01:05:02.902932
   updated_at: 2013-07-09 01:05:02.902932
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker61:
   id: 61
   family_phonetic: たけだ
@@ -1303,7 +1361,7 @@ worker61:
   pc_mail: 
   display_order: 2
   work_flag: t
-  gender_id: 0
+  gender_id: 2
   bank_code: 0000
   branch_code: 000
   account_type_id: 0
@@ -1311,7 +1369,8 @@ worker61:
   created_at: 2013-07-16 09:00:48.638123
   updated_at: 2013-07-16 09:02:32.862635
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker62:
   id: 62
   family_phonetic: のむら
@@ -1325,7 +1384,7 @@ worker62:
   pc_mail: 
   display_order: 2
   work_flag: t
-  gender_id: 0
+  gender_id: 2
   bank_code: 0000
   branch_code: 000
   account_type_id: 0
@@ -1333,7 +1392,8 @@ worker62:
   created_at: 2014-01-20 08:24:18.408287
   updated_at: 2015-03-21 09:53:17.563115
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker63:
   id: 63
   family_phonetic: すずき
@@ -1355,7 +1415,8 @@ worker63:
   created_at: 2014-05-06 06:42:47.698017
   updated_at: 2014-05-06 06:42:47.698017
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker64:
   id: 64
   family_phonetic: あらき
@@ -1369,7 +1430,7 @@ worker64:
   pc_mail: 
   display_order: 2
   work_flag: t
-  gender_id: 0
+  gender_id: 2
   bank_code: 0000
   branch_code: 000
   account_type_id: 0
@@ -1377,6 +1438,7 @@ worker64:
   created_at: 2015-01-12 06:49:22.583886
   updated_at: 2015-01-12 06:49:22.583886
   deleted_at: 
+  birthday: '1950-01-01'
   
 worker65:
   id: 65
@@ -1399,7 +1461,8 @@ worker65:
   created_at: 2015-03-21 09:52:02.423872
   updated_at: 2015-03-21 09:52:02.423872
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker66:
   id: 66
   family_phonetic: さとう
@@ -1421,7 +1484,8 @@ worker66:
   created_at: 2015-12-19 07:01:07.68698
   updated_at: 2015-12-19 07:01:07.68698
   deleted_at: 
-  
+  birthday: '1950-01-01'
+
 worker67:
   id: 67
   family_phonetic: すずき
@@ -1435,7 +1499,7 @@ worker67:
   pc_mail: 
   display_order: 2
   work_flag: t
-  gender_id: 0
+  gender_id: 2
   bank_code: 0000
   branch_code: 000
   account_type_id: 0

@@ -13,13 +13,14 @@
 #  target_from(開始年月)                                    :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
 #  term(期)                                                 :integer          default(0), not null
+#  theme_preference(画面テーマ)                             :integer          default(0), not null
 #  token(アクセストークン)                                  :string(36)       default(""), not null
 #  view_month(表示切替月)                                   :integer          default([1, 4, 8]), not null, is an Array
 #  created_at                                               :datetime         not null
 #  updated_at                                               :datetime         not null
 #  line_id                                                  :string(50)       default(""), not null
 #  organization_id(組織)                                    :integer          default(0), not null
-#  permission_id(権限)                                      :integer          default(0), not null
+#  permission_id(権限)                                      :integer          default("visitor"), not null
 #  worker_id(作業者)                                        :integer
 #
 # Indexes
@@ -33,6 +34,13 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
+  setup do
+    @admin   = users(:users1)
+    @manager = users(:user_manager)
+    @checker = users(:user_checker)
+    @user    = users(:user_user)
+    @visitor = users(:user_visitor)
+  end
   test "メールアドレス設定" do
     user = users(:user_manager)
     user.mail = 'user@example.com'
@@ -68,5 +76,67 @@ class UserTest < ActiveSupport::TestCase
     assert_not result
     assert_nil user.mail_confirmed_at
     assert_equal :pending, user.current_mail_status
+  end
+
+  test "メールアドレス承認(期限無し)" do
+    user = users(:user_manager)
+    user.mail = 'user_nil@example.com'
+    user.save!
+    user.update_column(:mail_confirmation_expired_at, nil)
+
+    result = user.mail_confirm!(user.mail_confirmation_token)
+
+    assert_not result
+    assert_nil user.mail_confirmed_at
+    assert_equal :pending, user.current_mail_status
+  end
+
+  test "メールアドレス承認(期限切れ)" do
+    user = users(:user_manager)
+    user.mail = 'user_expired@example.com'
+    user.save!
+    user.update_column(:mail_confirmation_expired_at, 1.day.ago)
+
+    result = user.mail_confirm!(user.mail_confirmation_token)
+
+    assert_not result
+    assert_nil user.mail_confirmed_at
+    assert_equal :expired, user.current_mail_status
+  end
+
+  test "権限別の判定" do
+    {
+      admin:   @admin,
+      manager: @manager,
+      checker: @checker,
+      user:    @user,
+      visitor: @visitor
+    }.each do |role, u|
+      assert_equal role == :admin,   u.admin?,   "#{role} admin?"
+      assert_equal role == :manager, u.manager?, "#{role} manager?"
+      assert_equal role == :checker, u.checker?, "#{role} checker?"
+      assert_equal role == :user,    u.user?,    "#{role} user?"
+      assert_equal role == :visitor, u.visitor?, "#{role} visitor?"
+    end
+  end
+
+  test "権限の複合判定" do
+    assert @admin.userable?
+    assert @manager.userable?
+    assert @checker.userable?
+    assert @user.userable?
+    assert_not @visitor.userable?
+
+    assert @admin.manageable?
+    assert @manager.manageable?
+    assert_not @checker.manageable?
+    assert_not @user.manageable?
+    assert_not @visitor.manageable?
+
+    assert @admin.checkable?
+    assert @manager.checkable?
+    assert @checker.checkable?
+    assert_not @user.checkable?
+    assert_not @visitor.checkable?
   end
 end

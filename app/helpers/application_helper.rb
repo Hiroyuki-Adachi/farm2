@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def error_print(record)
-    render(partial: "error_templete", :locals => {:ar => record}) if record&.errors&.any?
+    render(partial: "error_template", :locals => {:ar => record}) if record&.errors&.any?
   end
 
   def data_print(data, kind, url)
@@ -59,5 +59,18 @@ module ApplicationHelper
     end
 
     content_tag(:span, label, class: "badge bg-#{color}")
+  end
+
+  def enum_options_for(model_class, attr_name, exclude_keys = [])
+    exclude_keys = Array(exclude_keys).map(&:to_s)
+
+    model_class.send(attr_name.to_s.pluralize).keys
+      .reject { |key| exclude_keys.include?(key) }
+      .map do |key|
+        [
+          I18n.t("activerecord.enums.#{model_class.model_name.i18n_key}.#{attr_name.to_s.pluralize}.#{key}"),
+          key
+        ]
+      end
   end
 end

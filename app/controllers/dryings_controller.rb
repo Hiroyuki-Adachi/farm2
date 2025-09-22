@@ -36,7 +36,7 @@ class DryingsController < ApplicationController
     if @drying.update(drying_params)
       redirect_to drying_path(@drying.home)
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

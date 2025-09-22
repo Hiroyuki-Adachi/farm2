@@ -21,6 +21,7 @@
 
 class WorkKind < ApplicationRecord
   include Discard::Model
+
   self.discard_column = :deleted_at
 
   after_save :save_price
@@ -51,14 +52,15 @@ class WorkKind < ApplicationRecord
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
-  scope :usual, -> {kept.where(other_flag: false).order(:phonetic, :display_order, :id)}
+  scope :usual, -> { except_other.order(:phonetic, :display_order, :id) }
   scope :landable, ->{kept.where(land_flag: true)}
   scope :by_type, ->(work_type) {
     kept
       .joins(:work_kind_types)
-      .where(work_kind_types: { work_type_id: work_type.genre_id })
+      .where(work_kind_types: { work_type_id: work_type&.genre_id })
       .order("work_kinds.other_flag, work_kinds.phonetic, work_kinds.display_order, work_kinds.id")
   }
+  scope :except_other, -> {kept.where(other_flag: false) }
   scope :gaps, -> {kept.where.not(broccoli_mark: [nil, ""]).group(:broccoli_mark).order(:broccoli_mark).select("broccoli_mark, MAX(name) AS name")}
 
   attr_writer :price

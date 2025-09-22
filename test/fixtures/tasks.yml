@@ -1,0 +1,107 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+# == Schema Information
+#
+# Table name: tasks(タスク)
+#
+#  id                             :bigint           not null, primary key
+#  description(説明)              :text             default(""), not null
+#  due_on(期限)                   :date
+#  end_reason(完了理由)           :integer          default("unset"), not null
+#  ended_on(完了日)               :date
+#  office_role(役割)              :integer          default("none"), not null
+#  priority(優先度)               :integer          default("low"), not null
+#  started_on(着手日)             :date
+#  title(タスク名)                :string(64)       default(""), not null
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  assignee_id(担当者)            :bigint
+#  creator_id(作成者)             :bigint
+#  task_status_id(状態)           :integer          default(0), not null
+#  task_template_id(定型タスクID) :bigint
+#
+# Indexes
+#
+#  index_tasks_on_assignee_id       (assignee_id)
+#  index_tasks_on_creator_id        (creator_id)
+#  index_tasks_on_task_template_id  (task_template_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (assignee_id => workers.id)
+#  fk_rails_...  (creator_id => workers.id)
+#  fk_rails_...  (task_template_id => task_templates.id)
+#
+open_task:
+  title: "未着手タスク"
+  description: ""
+  priority: low
+  end_reason: unset
+  task_status_id: 0     # to_do
+  assignee_id: 1
+  creator_id: 1
+  created_at: <%= Time.zone.now - 2.days %>
+  updated_at: <%= Time.zone.now - 2.days %>
+
+started_task:
+  title: "進行中タスク"
+  description: ""
+  priority: medium
+  end_reason: unset
+  task_status_id: 2     # doing (started_flag: true)
+  assignee_id: 1
+  creator_id: 1
+  started_on: <%= Date.current - 1.day %>
+  created_at: <%= Time.zone.now - 2.days %>
+  updated_at: <%= Time.zone.now - 2.days %>
+
+closed_task:
+  title: "完了タスク"
+  description: ""
+  priority: high
+  end_reason: completed
+  task_status_id: 4     # done (closed)
+  assignee_id: 1
+  creator_id: 1
+  started_on: <%= Date.current - 2.days %>
+  ended_on: <%= Date.current - 1.day %>
+  created_at: <%= Time.zone.now - 3.days %>
+  updated_at: <%= Time.zone.now - 1.day %>
+
+worker1_task:
+  title: "worker1のタスク"
+  description: ""
+  priority: low
+  end_reason: unset
+  task_status_id: 0     # to_do
+  assignee_id: 1
+  creator_id: 2
+  created_at: <%= Time.zone.now - 2.days %>
+  updated_at: <%= Time.zone.now - 2.days %>
+
+comment_task:
+  title: "コメント付きタスク"
+  description: ""
+  priority: medium
+  end_reason: unset
+  task_status_id: 0     # to_do
+  assignee_id: 3
+  creator_id: 3
+  created_at: <%= Time.zone.now - 2.days %>
+  updated_at: <%= Time.zone.now - 2.days %>
+
+due_on_task:
+  title: "期限付きタスク"
+  description: ""
+  priority: high
+  end_reason: unset
+  task_status_id: 0     # to_do
+  due_on: <%= Date.current + 1.day %>
+  assignee_id: 1
+  creator_id: 1
+  created_at: <%= Time.zone.now - 2.days %>
+  updated_at: <%= Time.zone.now - 2.days %>

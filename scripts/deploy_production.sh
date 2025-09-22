@@ -1,15 +1,25 @@
 #!/bin/bash
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 echo "==== Start Deploying ===="
 
-# .env 読み込み
-export $(grep -v '^#' /opt/app/farm2/.env | xargs)
+APP_ROOT=${APP_ROOT:-/opt/app/farm2}
+DEPLOY_BRANCH=${DEPLOY_BRANCH:-main}
 
-cd $APP_ROOT || exit 1
+# .env 読み込み（安全）
+if [[ -f "$APP_ROOT/.env" ]]; then
+  set -o allexport
+  . "$APP_ROOT/.env"
+  set +o allexport
+fi
 
-echo "-> Git Pull (${DEPLOY_BRANCH})"
-git pull origin "$DEPLOY_BRANCH"
+cd "$APP_ROOT"
+
+echo "-> Git Fetch/Reset ($DEPLOY_BRANCH)"
+git fetch --prune origin
+git checkout "$DEPLOY_BRANCH"
+git reset --hard "origin/$DEPLOY_BRANCH"
 
 echo "-> Ruby Version"
 ruby -v
@@ -17,20 +27,21 @@ ruby -v
 echo "-> Bundle Install"
 bundle config set deployment true
 bundle config set without 'development test'
-bundle install
+bundle install --jobs 4 --retry 3
 
 echo "-> DB Migration"
 RAILS_ENV=production bundle exec rails db:migrate
 
 echo "-> Assets Precompile"
-RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/farm2 bundle exec rake assets:clobber assets:precompile
+RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/farm2 bundle exec rails assets:clobber
+RAILS_ENV=production RAILS_RELATIVE_URL_ROOT=/farm2 bundle exec rails assets:precompile
 
-echo "-> Puma Restart"
+echo "-> Restart Puma"
 sudo systemctl restart puma
-echo "-> delayed_job Restart"
+echo "-> Restart delayed_job"
 sudo systemctl restart delayed_job
 
-echo "-> Registering Cron (Whenever)"
-RAILS_ENV=production bundle exec whenever --update-crontab
+echo "-> Register Cron (whenever)"
+RAILS_ENV=production bundle exec whenever --update-crontab farm2
 
 echo "==== Complete Deploying ===="

@@ -13,13 +13,14 @@
 #  target_from(開始年月)                                    :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
 #  term(期)                                                 :integer          default(0), not null
+#  theme_preference(画面テーマ)                             :integer          default(0), not null
 #  token(アクセストークン)                                  :string(36)       default(""), not null
 #  view_month(表示切替月)                                   :integer          default([1, 4, 8]), not null, is an Array
 #  created_at                                               :datetime         not null
 #  updated_at                                               :datetime         not null
 #  line_id                                                  :string(50)       default(""), not null
 #  organization_id(組織)                                    :integer          default(0), not null
-#  permission_id(権限)                                      :integer          default(0), not null
+#  permission_id(権限)                                      :integer          default("visitor"), not null
 #  worker_id(作業者)                                        :integer
 #
 # Indexes
@@ -32,16 +33,16 @@
 #
 
 class User < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
   before_create :set_token
   before_update :clear_mail_fields, if: -> { mail_changed? && self.mail.present? }
   after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && self.mail_confirmed_at.present? }
+
+  enum :permission_id, { visitor: 0, user: 1, checker: 2, manager: 3, admin: 9 }
 
   scope :linable, -> { where.not(line_id: '') }
 
   belongs_to :worker
   belongs_to :organization
-  belongs_to_active_hash :permission
 
   has_many :calendar_work_kinds, dependent: :destroy
   has_many :user_words, dependent: :destroy
@@ -55,26 +56,6 @@ class User < ApplicationRecord
 
   def login_name=(value)
     super(value.downcase)
-  end
-
-  def admin?
-    permission == Permission::ADMIN
-  end
-
-  def manager?
-    permission == Permission::MANAGER
-  end
-
-  def checker?
-    permission == Permission::CHECKER
-  end
-
-  def user?
-    permission == Permission::USER
-  end
-
-  def visitor?
-    permission == Permission::VISITOR
   end
 
   def userable?
@@ -95,7 +76,7 @@ class User < ApplicationRecord
 
   def mail_confirm!(mail_confirmation_token)
     return false if self.mail_confirmation_token != mail_confirmation_token
-    return false if self.mail_confirmation_expired_at < Time.current
+    return false if self.mail_confirmation_expired_at.nil? || self.mail_confirmation_expired_at < Time.current
 
     self.update(mail_confirmed_at: Time.current)
   end

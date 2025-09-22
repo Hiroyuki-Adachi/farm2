@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  layout false
+
   def index
     log_out
     redirect_to root_path
@@ -14,18 +16,17 @@ class SessionsController < ApplicationController
       log_in(user)
       redirect_to menu_index_path
     else
-      render layout: false, partial: 'flash', content_type: 'text/vnd.turbo-stream.html', locals: {message: I18n.t("session.login_error") }
+      render partial: 'flash', content_type: 'text/vnd.turbo-stream.html', locals: {message: I18n.t("session.login_error") }
     end
   end
 
   private
 
   def restrict_remote_ip
-    remote_ip = IPAddr.new(request.remote_ip)
-    if IpList.black_list.any? { |ip| ip.include?(remote_ip) }
+    if IpList.black_list.any? { |ip| ip.include?(request.remote_ip) }
       to_error_path
       return
-    elsif IpList.white_list.none? { |ip| ip.include?(remote_ip) }
+    elsif IpList.white_list.none? { |ip| ip.include?(request.remote_ip) }
       redirect_to new_ip_list_path
       return
     end

@@ -49,7 +49,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def work_type_name
-    return model.work_type.genre_name + "(#{model.work_type.name})"
+    "#{model.work_type&.genre_name}(#{model.work_type&.name})"
   end
 
   def start_at
@@ -68,7 +68,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def genre_name
-    model.work_type.genre_name + "(#{model.work_type.name})"
+    work_type_name
   end
 
   def select_work_type(work_type)
@@ -78,10 +78,6 @@ class WorkDecorator < Draper::Decorator
       return "◯#{work_type.name}"
     end
     return h.raw("&nbsp;") + work_type.name
-  end
-
-  def weather_name
-    model.weather ? model.weather.name : ""
   end
 
   def self.get_terms(term)

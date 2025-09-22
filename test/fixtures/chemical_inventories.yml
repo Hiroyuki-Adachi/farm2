@@ -7,7 +7,7 @@
 #  name(棚卸名称)                        :string(40)       default(""), not null
 #  created_at                            :datetime         not null
 #  updated_at                            :datetime         not null
-#  chemical_adjust_type_id(在庫調整種別) :integer          default(0), not null
+#  chemical_adjust_type_id(在庫調整種別) :integer          default(NULL), not null
 #
 
 # This model initially had no columns defined. If you add columns to the

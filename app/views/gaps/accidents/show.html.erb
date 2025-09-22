@@ -24,7 +24,7 @@
   </div>
   <div class="col-md-3">
     <%= label_tag :accident_type_id, Accident.human_attribute_name(:accident_type_id), class: "col-form-label-lg form-label" %>
-    <div class="h5"><%= @accident.accident_type.name %></div>
+    <div class="h5"><%= @accident.accident_type_name %></div>
   </div>
 </div>
 <div class="row">
@@ -77,5 +77,5 @@
   </div>
 </div>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/gap-accidents', 'data-turbo-track': 'reload', type: :module %>
+<%= javascript_include_tag 'pages/gap-accidents', 'data-turbo-track': 'reload', type: :module %>
 <% end %>

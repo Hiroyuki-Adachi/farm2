@@ -13,13 +13,14 @@
 #  target_from(開始年月)                                    :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
 #  term(期)                                                 :integer          default(0), not null
+#  theme_preference(画面テーマ)                             :integer          default(0), not null
 #  token(アクセストークン)                                  :string(36)       default(""), not null
 #  view_month(表示切替月)                                   :integer          default([1, 4, 8]), not null, is an Array
 #  created_at                                               :datetime         not null
 #  updated_at                                               :datetime         not null
 #  line_id                                                  :string(50)       default(""), not null
 #  organization_id(組織)                                    :integer          default(0), not null
-#  permission_id(権限)                                      :integer          default(0), not null
+#  permission_id(権限)                                      :integer          default("visitor"), not null
 #  worker_id(作業者)                                        :integer
 #
 # Indexes

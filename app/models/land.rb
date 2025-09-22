@@ -35,6 +35,7 @@
 
 class Land < ApplicationRecord
   include Discard::Model
+
   self.discard_column = :deleted_at
 
   before_create :set_uuid
@@ -67,7 +68,9 @@ class Land < ApplicationRecord
   scope :expiry, ->(target) {kept.where("? BETWEEN start_on AND end_on", target)}
   scope :for_place, ->(place) {kept.where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order)}
   scope :by_term, ->(sys) {kept.where(["start_on <= ? AND ? <= end_on", sys.end_date, sys.start_date])}
-
+  scope :for_personal, ->(home) {
+    kept.where("(lands.manager_id = ? OR EXISTS (SELECT * FROM land_homes WHERE lands.id = land_homes.land_id AND home_id = ? AND manager_flag = true))", home.id, home.id)
+  }
   validates :place, presence: true
   validates :area, presence: true
   validates :display_order, presence: true

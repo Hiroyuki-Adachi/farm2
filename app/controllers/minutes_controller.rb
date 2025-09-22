@@ -37,7 +37,7 @@ class MinutesController < ApplicationController
   end
 
   def permit_checker
-    to_error_path unless current_user.checkable?
+    return to_error_path unless current_user.checkable?
   end
 
   def permit_show

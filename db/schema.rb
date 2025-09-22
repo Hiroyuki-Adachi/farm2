@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_31_115714) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_19_130306) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -631,6 +631,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_115714) do
     t.index ["work_type_id"], name: "plan_work_types_2nd", unique: true
   end
 
+  create_table "qr_login_requests", comment: "QRログインリクエスト", force: :cascade do |t|
+    t.string "token", limit: 64, null: false, comment: "一時トークン"
+    t.datetime "approved_at", comment: "承認日時"
+    t.bigint "approved_by_id", comment: "承認者ID"
+    t.datetime "expires_at", null: false, comment: "有効期限"
+    t.datetime "used_at", comment: "確定日時"
+    t.string "pc_nonce", limit: 64, default: "", null: false, comment: "PC用ノンス"
+    t.text "user_agent", default: "", null: false, comment: "ユーザーエージェント"
+    t.string "ip", limit: 45, default: "", null: false, comment: "IPアドレス"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approved_by_id"], name: "index_qr_login_requests_on_approved_by_id"
+    t.index ["expires_at"], name: "index_qr_login_requests_on_expires_at"
+    t.index ["token"], name: "index_qr_login_requests_on_token", unique: true
+    t.index ["used_at"], name: "index_qr_login_requests_on_used_at"
+  end
+
   create_table "schedule_workers", id: { type: :serial, comment: "作業予定作業者" }, comment: "作業予定作業者", force: :cascade do |t|
     t.integer "schedule_id", comment: "作業予定"
     t.integer "worker_id", comment: "作業者"
@@ -781,6 +798,89 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_115714) do
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
   end
 
+  create_table "task_comments", force: :cascade do |t|
+    t.bigint "task_id", null: false, comment: "対象タスク"
+    t.bigint "poster_id", null: false, comment: "投稿者"
+    t.text "body", default: "", null: false, comment: "コメント本文"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["poster_id"], name: "index_task_comments_on_poster_id"
+    t.index ["task_id", "created_at"], name: "index_task_comments_on_task_id_and_created_at"
+    t.index ["task_id"], name: "index_task_comments_on_task_id"
+  end
+
+  create_table "task_events", comment: "タスクイベント", force: :cascade do |t|
+    t.bigint "task_id", null: false, comment: "対象タスク"
+    t.bigint "actor_id", null: false, comment: "実行者"
+    t.integer "event_type", null: false, comment: "イベント種別"
+    t.integer "status_from_id", comment: "変更前ステータス"
+    t.integer "status_to_id", comment: "変更後ステータス"
+    t.bigint "assignee_from_id", comment: "変更前の担当者"
+    t.bigint "assignee_to_id", comment: "変更後の担当者"
+    t.date "due_on_from", comment: "変更前の期限"
+    t.date "due_on_to", comment: "変更後の期限"
+    t.bigint "task_comment_id", comment: "関連コメント"
+    t.bigint "work_id", comment: "関連作業"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_id"], name: "index_task_events_on_actor_id"
+    t.index ["assignee_from_id"], name: "index_task_events_on_assignee_from_id"
+    t.index ["assignee_to_id"], name: "index_task_events_on_assignee_to_id"
+    t.index ["task_comment_id"], name: "index_task_events_on_task_comment_id"
+    t.index ["task_id", "created_at"], name: "index_task_events_on_task_id_and_created_at"
+    t.index ["task_id"], name: "index_task_events_on_task_id"
+    t.index ["work_id"], name: "index_task_events_on_work_id"
+  end
+
+  create_table "task_templates", comment: "定型タスク", force: :cascade do |t|
+    t.integer "kind", default: 0, null: false, comment: "年次/月次"
+    t.string "title", limit: 40, null: false, comment: "タスク名"
+    t.text "description", default: "", null: false, comment: "説明"
+    t.integer "priority", default: 0, null: false, comment: "優先度"
+    t.integer "office_role", default: 0, null: false, comment: "役割"
+    t.integer "monthly_stage", default: 0, null: false, comment: "期日週"
+    t.integer "annual_month", comment: "期日月"
+    t.integer "months_before_due", default: 1, null: false, comment: "事前通知月数"
+    t.integer "offset", default: 0, null: false, comment: "基準からのズレ"
+    t.boolean "active", default: true, null: false, comment: "有効"
+    t.datetime "discarded_at", comment: "論理削除日時"
+    t.bigint "organization_id", null: false, comment: "組織ID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["kind", "annual_month", "monthly_stage"], name: "idx_on_kind_annual_month_monthly_stage_5eb8d135fc"
+    t.index ["organization_id"], name: "index_task_templates_on_organization_id"
+  end
+
+  create_table "task_watchers", comment: "タスク閲覧者", force: :cascade do |t|
+    t.bigint "task_id", null: false, comment: "タスクID"
+    t.bigint "worker_id", null: false, comment: "閲覧者ID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_task_watchers_on_task_id"
+    t.index ["worker_id", "task_id"], name: "index_task_watchers_on_worker_id_and_task_id", unique: true
+    t.index ["worker_id"], name: "index_task_watchers_on_worker_id"
+  end
+
+  create_table "tasks", comment: "タスク", force: :cascade do |t|
+    t.string "title", limit: 64, default: "", null: false, comment: "タスク名"
+    t.text "description", default: "", null: false, comment: "説明"
+    t.integer "task_status_id", default: 0, null: false, comment: "状態"
+    t.integer "priority", default: 0, null: false, comment: "優先度"
+    t.date "due_on", comment: "期限"
+    t.date "started_on", comment: "着手日"
+    t.date "ended_on", comment: "完了日"
+    t.integer "end_reason", default: 0, null: false, comment: "完了理由"
+    t.integer "office_role", default: 0, null: false, comment: "役割"
+    t.bigint "assignee_id", comment: "担当者"
+    t.bigint "creator_id", comment: "作成者"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "task_template_id", comment: "定型タスクID"
+    t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
+    t.index ["creator_id"], name: "index_tasks_on_creator_id"
+    t.index ["task_template_id"], name: "index_tasks_on_task_template_id"
+  end
+
   create_table "topics", comment: "トピック", force: :cascade do |t|
     t.string "url", limit: 512, default: "", null: false, comment: "URL"
     t.string "title", limit: 512, default: "", null: false, comment: "タイトル"
@@ -902,6 +1002,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_115714) do
     t.string "mail_confirmation_token", limit: 64, comment: "メールアドレス確認トークン"
     t.datetime "mail_confirmation_expired_at", comment: "メールアドレス確認有効期限"
     t.string "line_id", limit: 50, default: "", null: false
+    t.integer "theme_preference", default: 0, null: false, comment: "画面テーマ"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["mail"], name: "ix_users_on_mail", unique: true, where: "((mail)::text <> ''::text)"
     t.index ["mail_confirmation_token"], name: "ix_users_on_mail_confirmation_token", unique: true, where: "(mail_confirmation_token IS NOT NULL)"
@@ -1032,6 +1133,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_115714) do
     t.boolean "cost_flag", default: false, null: false, comment: "原価フラグ"
     t.boolean "work_flag", default: true, null: false, comment: "日報フラグ"
     t.boolean "other_flag", default: false, null: false, comment: "その他フラグ"
+    t.integer "office_role", default: 0, null: false, comment: "事務の役割"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
   end
 
@@ -1083,6 +1185,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_115714) do
     t.datetime "deleted_at", precision: nil
     t.integer "position_id", default: 0, null: false, comment: "役職"
     t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
+    t.integer "office_role", default: 0, null: false, comment: "事務の役割"
     t.index ["deleted_at"], name: "index_workers_on_deleted_at"
   end
 
@@ -1104,4 +1207,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_31_115714) do
     t.integer "printed_by", comment: "印刷者"
     t.boolean "chemical_group_flag", default: false, null: false, comment: "薬剤グループフラグ"
   end
+
+  add_foreign_key "task_comments", "tasks"
+  add_foreign_key "task_comments", "workers", column: "poster_id"
+  add_foreign_key "task_events", "task_comments"
+  add_foreign_key "task_events", "tasks"
+  add_foreign_key "task_events", "workers", column: "actor_id"
+  add_foreign_key "task_events", "workers", column: "assignee_from_id"
+  add_foreign_key "task_events", "workers", column: "assignee_to_id"
+  add_foreign_key "task_events", "works"
+  add_foreign_key "task_templates", "organizations"
+  add_foreign_key "task_watchers", "tasks"
+  add_foreign_key "task_watchers", "workers"
+  add_foreign_key "tasks", "task_templates"
+  add_foreign_key "tasks", "workers", column: "assignee_id"
+  add_foreign_key "tasks", "workers", column: "creator_id"
 end

@@ -13,6 +13,7 @@
 #  icon_name(アイコン名)           :string(40)
 #  land_flag(土地利用)             :boolean          default(TRUE), not null
 #  name(作業分類名称)              :string(10)       not null
+#  office_role(事務の役割)         :integer          default("none"), not null
 #  other_flag(その他フラグ)        :boolean          default(FALSE), not null
 #  work_flag(日報フラグ)           :boolean          default(TRUE), not null
 #
@@ -23,6 +24,8 @@
 
 class WorkType < ApplicationRecord
   include Discard::Model
+  include Enums::OfficeRole
+
   self.discard_column = :deleted_at
 
   before_save :update_cost_flag
@@ -45,7 +48,7 @@ class WorkType < ApplicationRecord
     .with_deleted
   }
   scope :for_work, ->(category, work) {
-    where(<<SQL.squish, category[:genre], work.term, work.work_type_id, category[:genre], work.work_type.genre_id)
+    where(<<SQL.squish, category[:genre], work.term, work.work_type_id, category[:genre], work.work_type&.genre_id)
     (category_flag = FALSE AND work_flag = TRUE AND genre = ? AND EXISTS (SELECT * FROM work_type_terms WTT WHERE work_types.id = WTT.work_type_id AND WTT.term = ?)) OR (id = ? AND ? = ?)
 SQL
     .with_deleted

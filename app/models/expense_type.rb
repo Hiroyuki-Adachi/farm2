@@ -15,6 +15,7 @@
 
 class ExpenseType < ApplicationRecord
   include Discard::Model
+
   self.discard_column = :deleted_at
 
   scope :usual, -> {kept.order(display_order: :ASC, id: :ASC)}

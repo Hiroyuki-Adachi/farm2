@@ -35,10 +35,15 @@ class WorksController < ApplicationController
   end
 
   def new
-    @work = Work.new(worked_at: Time.zone.today, work_type_id: @work_types.first.id, start_at: '8:00', end_at: '17:00')
+    @work = Work.new(
+      worked_at: Time.zone.today,
+      work_type_id: @work_types.first.id,
+      weather_id: :sunny,
+      start_at: '8:00', end_at: '17:00'
+    )
     @results = []
     @work_lands = []
-    @work_kinds = WorkKind.by_type(@work_types.first)
+    @work_kinds = WorkKind.except_other.by_type(@work_types.first)
   end
 
   def show
@@ -59,12 +64,12 @@ class WorksController < ApplicationController
     if @work.save
       redirect_to(new_work_worker_path(work_id: @work))
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
   def edit
-    @work_kinds = WorkKind.by_type(@work.work_type) || []
+    @work_kinds = WorkKind.except_other.by_type(@work.work_type) || []
   end
 
   def update
@@ -75,7 +80,7 @@ class WorksController < ApplicationController
       if @work.update(work_params)
         @work.refresh_broccoli(current_organization)
       else
-        render action: :edit, status: :unprocessable_entity
+        render action: :edit, status: :unprocessable_content and return
       end
     end
 
@@ -95,7 +100,7 @@ class WorksController < ApplicationController
 
   def work_kinds
     @work_kind_id = params[:work_kind_id]
-    @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
+    @work_kinds = params[:work_type_id].present? ? WorkKind.except_other.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
     respond_to { |format| format.turbo_stream }
   end
 
@@ -119,8 +124,7 @@ class WorksController < ApplicationController
   end
 
   def set_masters
-    @weathers = Weather.all
-    @work_types = WorkType.usual
+    @work_types = WorkType.usual.by_term(current_term)
   end
 
   def work_params

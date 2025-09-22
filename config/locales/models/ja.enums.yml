@@ -1,0 +1,111 @@
+ja: 
+  activerecord: 
+    enums:
+      work: 
+        weather_ids:
+          sunny: "晴れ"
+          cloudy: "曇り"
+          rainy: "雨"
+          snow: "雪"
+          other: "その他"
+
+      work_type:
+        office_roles:
+          none: "なし"
+          finance: "経理"
+          general: "総務"
+          president: "代表"
+
+      worker: 
+        gender_ids:
+          none: "未設定"
+          male: "男性"
+          female: "女性"
+        position_ids:
+          none: ""
+          member: "組合員"
+          leader: "作業班長"
+          director: "理事"
+          advisor: "顧問"
+        office_roles:
+          none: "なし"
+          finance: "経理"
+          general: "総務"
+          president: "代表"
+
+      user:
+        permission_ids:
+          visitor: "ゲスト"
+          user: "一般ユーザ"
+          checker: "サポーター"
+          manager: "管理者"
+          admin: "システム"
+
+      chemical_inventory:
+        chemical_adjust_type_ids:
+          inventory: "棚卸"
+          stored: "納品"
+          shipping: "出庫"
+
+      accident:
+        accident_types:
+          rule: "ルール違反"
+          hiyari: "ヒヤリハット"
+          other: "その他"
+
+      drying:
+        drying_type_ids:
+          unset: "未選択"
+          country: "乾籾出荷"
+          self: "調整出荷"
+          another: "乾燥のみ"
+          adjust: "調整のみ"
+
+      machine_price_detail:
+        lease_ids:
+          normal: "標準"
+          lease: "リース"
+
+      task:
+        priorities:
+          low: "適宜"
+          medium: "順次"
+          high: "至急"
+          urgent: "緊急"
+        priority_colors:
+          low: "success"
+          medium: "primary"
+          high: "warning"
+          urgent: "danger"
+        end_reasons:
+          unset: ""
+          completed: "完了"
+          no_action: "作業不要"
+          unavailable: "無効"
+          duplicated: "重複"
+          other: "その他"
+        office_roles:
+          none: "なし"
+          finance: "経理"
+          general: "総務"
+          president: "代表"
+
+      task_template:
+        priorities:
+          low: "低"
+          medium: "中"
+          high: "高"
+        office_roles:
+          none: "なし"
+          finance: "経理"
+          general: "総務"
+          president: "代表"
+        kinds:
+          annual: "年次"
+          monthly: "月次"
+        monthly_stages:
+          w1: "第1週の週末"
+          w2: "第2週の週末"
+          w3: "第3週の週末"
+          w4: "第4週の週末"
+          month_end: "月末"

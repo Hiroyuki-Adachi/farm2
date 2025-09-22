@@ -1,5 +1,6 @@
 class LandsController < ApplicationController
   include PermitChecker
+
   before_action :set_land, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
   before_action :set_places, only: [:new, :create, :edit, :update]
@@ -25,7 +26,7 @@ class LandsController < ApplicationController
     if @land.save
       redirect_to lands_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -33,7 +34,7 @@ class LandsController < ApplicationController
     if @land.update(land_params)
       redirect_to lands_path(home_id: params[:home_id].presence)
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

@@ -16,8 +16,8 @@
           <td><%= schedule_worker.worker.name %></td>
           <td>
             <%= tag(:input, {type: :button, value: "削除", class: "btn btn-outline-dark btn-sm remove-worker", data: {worker: schedule_worker.worker_id}})%>
-            <%= hidden_field_tag "schedule_workers[][worker_id]", schedule_worker.worker_id, {:id => nil} %>
-            <%= hidden_field_tag "schedule_workers[][display_order]", i + 1, {:id => nil} %>
+            <%= hidden_field_tag "schedule_workers[][worker_id]", schedule_worker.worker_id, {id: nil} %>
+            <%= hidden_field_tag "schedule_workers[][display_order]", i + 1, {id: nil} %>
           </td>
         </tr>
         <% end %>
@@ -46,7 +46,7 @@
           <td style="width:80px;"><%= worker.home.name %></td>
           <td style="width:120px;"><%= worker.name %></td>
           <td style="display: none;"><%= worker.home.section_id %></td>
-          <td style="display: none;"><%= worker.position.code %></td>
+          <td style="display: none;"><%= worker.position_id %></td>
         </tr>
         <% end %>
       </tbody>
@@ -63,9 +63,9 @@
   </div>
   <div class="row">
     <div class="btn-group" role="group">
-      <%= tag(:input, {type: :button, id: "add_director", value: "←理事", class: "btn btn-outline-dark add-members", data: {positions: ["Director"]}})%>
-      <%= tag(:input, {type: :button, id: "add_leader", value: "←役員", class: "btn btn-outline-dark add-members", data: {positions: ["Director","Leader"]}})%>
-      <%= tag(:input, {type: :button, id: "add_member", value: "←全組合員", class: "btn btn-outline-dark add-members", data: {positions: ["Director","Leader","Member"]}})%>
+      <%= tag(:input, {type: :button, id: "add_director", value: "←理事", class: "btn btn-outline-dark add-members", data: {positions: ["director"]}})%>
+      <%= tag(:input, {type: :button, id: "add_leader", value: "←役員", class: "btn btn-outline-dark add-members", data: {positions: ["director","leader"]}})%>
+      <%= tag(:input, {type: :button, id: "add_member", value: "←全組合員", class: "btn btn-outline-dark add-members", data: {positions: ["director","leader","member"]}})%>
     </div>
   </div>
 </div>

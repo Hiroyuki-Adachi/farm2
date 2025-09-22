@@ -41,7 +41,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "ユーザ変更(実行)" do
     patch user_path(@user), params: {user: {login_name: 'updateuser', password: "AAAA", password_confirmation: "AAA"}}
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
 
     patch user_path(@user), params: {user: {login_name: 'updateuser', password: "AAAA", password_confirmation: "AAAA"}}
     assert_redirected_to menu_index_path
