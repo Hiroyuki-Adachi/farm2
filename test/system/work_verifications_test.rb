@@ -18,7 +18,6 @@ class WorkVerificationsTest < ApplicationSystemTestCase
     assert_selector :link, '日報検証', wait: 5
     click_link '日報検証'
 
-    ensure_sidebar_shown!
     assert_selector 'h1', text: '作業日報検証'
     
     # 検証対象の作業日報を選択
