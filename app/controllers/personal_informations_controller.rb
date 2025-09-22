@@ -4,6 +4,8 @@ class PersonalInformationsController < ApplicationController
 
   SCHEDULE_DAY = 3
 
+  helper WorkTypesHelper
+
   def show
     worked_from, worked_to = between_worked_at
     @results1 = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from, worked_to))

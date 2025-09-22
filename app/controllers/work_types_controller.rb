@@ -4,6 +4,8 @@ class WorkTypesController < ApplicationController
   before_action :set_work_type, only: [:edit, :update, :destroy]
   before_action :set_category, only: [:new, :create, :edit, :update]
 
+  helper WorkTypesHelper
+
   def index
     @work_types = WorkTypeDecorator.decorate_collection(WorkType.indexes)
     @work_type_terms = WorkTypeTerm.where(work_type_id: @work_types.object.ids, term: current_term).pluck(:work_type_id)
@@ -68,7 +70,7 @@ class WorkTypesController < ApplicationController
     end
 
     # コンテンツタイプは適宜。PNG/JPEGなどに合わせて
-    send_data data, disposition: "inline"
+    send_data data, type: "image/png", disposition: "inline"
   end
 
   private
