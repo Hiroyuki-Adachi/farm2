@@ -10,5 +10,5 @@ module WorkTypesHelper
     else
       image_tag("/images/works/default.png", size: "48x48", loading: "lazy", decoding: "async")
     end
-  end    
+  end
 end
