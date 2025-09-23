@@ -35,5 +35,5 @@
   <%= land_region_hidden_field(cost.land, color: cost.work_type.bg_color_date(current_organization, @target), work_type_id: cost.work_type_id) %>
 <% end %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/lands-maps', 'data-turbo-track': 'reload', type: :module %>
+<%= javascript_include_tag 'pages/lands-maps', 'data-turbo-track': 'reload', type: :module %>
 <% end %>

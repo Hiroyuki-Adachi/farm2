@@ -1,11 +1,24 @@
-<ul>
-<% if @schedules.count > 0%>
-  <% @schedules.each do |schedule| %>
-  <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
-  <% end %>
+<% if @tasks.present? %>
+  <h1 class="h2">タスク</h1>
+  <ul>
+    <% @tasks.each do |task| %>
+      <li class="mb-1">
+        <%= link_to task.title, personal_information_task_path(personal_information_token: params[:personal_information_token], id: task.model.id) %><%= task.due_badge %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+<% if @schedules.present? %>
+  <h1 class="h2">作業予定</h1>
+  <ul>
+    <% @schedules.each do |schedule| %>
+    <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
+    <% end %>
+  </ul>
 <% end %>
 <% if @minute.present? %>
-  <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(<%= link_to '議事録', personal_information_minute_path(@minute.id, personal_information_token: @worker.user.token), {target: :_blank, data: {turbolinks: false}} %>)</li>
+  <h1 class="h2">議事録</h1>
+  <ul>
+    <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(<%= link_to '議事録', personal_information_minute_path(@minute.id, personal_information_token: @worker.user.token), {target: :_blank, data: {turbolinks: false}} %>)</li>
+  </ul>
 <% end %>
-  <li>管理者への連絡は、<%= mail_to @company.pc_mail, "こちらのリンク", subject: "日報システムについて" %>を押してください。</li>
-</ul>

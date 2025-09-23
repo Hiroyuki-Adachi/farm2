@@ -16,6 +16,8 @@ gem "cssbundling-rails"
 gem 'importmap-rails'
 # propshaft provides a way to bundle JavaScript files in Rails applications.
 gem 'propshaft'
+# Use stimulus for JavaScript
+gem 'stimulus-rails'
 
 # daemons provides an easy way to wrap existing ruby scripts (for example a self-written server) to be run as a daemon and to be controlled by simple start/stop/restart commands.
 gem 'daemons'
@@ -39,11 +41,11 @@ gem 'dotenv-rails'
 # turbo-rails is a set of tools for building modern web applications with Turbo.
 gem 'turbo-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 # This gem provides XML serialization for your Active Model objects and Active Record models.
 gem 'activemodel-serializers-xml'
 # ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource for an ActiveRecord-like model.
-gem 'active_hash', "~> 3.3"
+gem 'active_hash'
 # TZInfo::Data is the public domain IANA Time Zone Database packaged as a set of Ruby modules for use with TZInfo.
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 # Logical deletion for ActiveRecord. Documentation: https://github.com/jhawthorn/discard
@@ -82,6 +84,11 @@ gem 'whenever', require: false
 gem 'omniauth'
 # OmniAuth strategy for Google OAuth2
 gem 'omniauth-google-oauth2'
+
+# Reduces the size of your HTML output by removing unnecessary whitespace and comments.
+gem "commonmarker"
+# Rouge is a pure-ruby syntax highlighter.
+gem "rouge"
 
 group :development do
   # listen to file modifications

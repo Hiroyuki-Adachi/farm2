@@ -40,10 +40,10 @@ class Land < ApplicationRecord
 
   before_create :set_uuid
 
-  belongs_to :owner, -> {with_discarded}, class_name: :Home, foreign_key: :owner_id
-  belongs_to :manager, -> {with_discarded}, class_name: :Home, foreign_key: :manager_id
+  belongs_to :owner, -> {with_discarded}, class_name: 'Home', foreign_key: :owner_id
+  belongs_to :manager, -> {with_discarded}, class_name: 'Home', foreign_key: :manager_id
   belongs_to :land_place, -> {with_discarded}
-  belongs_to :group, class_name: :Land
+  belongs_to :group, class_name: 'Land'
 
   has_one :owner_holder, -> {with_discarded}, through: :owner, source: :holder
   has_one :manager_holder, -> {with_discarded}, through: :manager, source: :holder

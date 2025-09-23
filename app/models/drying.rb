@@ -147,6 +147,6 @@ class Drying < ApplicationRecord
   end
 
   def drying_type_name
-    I18n.t("activerecord.attributes.drying.drying_type_ids.#{self.drying_type_id}")
+    I18n.t("activerecord.enums.drying.drying_type_ids.#{self.drying_type_id}")
   end
 end

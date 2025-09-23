@@ -53,7 +53,7 @@ div.d-table.float-head {
 table.float-head th,
 div.d-table.float-head div.d-table-row.fix-head {
   position: sticky;
-  background-color: white;
+  background-color: var(--sticky-head-bg); /* ← white を置換 */
   z-index: 1;
   top: 0;
 }
@@ -78,27 +78,22 @@ table.tbl-clear-color tbody tr td {
   color: unset;
 }
 
-:root {
-  --surface: #f6f8fb;
-  --surface-2: #ffffff;
-  --border: rgba(0,0,0,.08);
-  --brand: #1f8feb;
-  --brand-weak: #e7f2fd;
-}
 body {
-  background: linear-gradient(180deg, #f8fbff 0%, #f3f6fa 100%);
+  background: linear-gradient(180deg, var(--body-bg-grad-1) 0%, var(--body-bg-grad-2) 100%);
   min-height: 100vh;
 }
+
 header.navbar {
   background: linear-gradient(90deg, #fff 0%, var(--brand-weak) 100%);
   border-bottom: 1px solid var(--border);
 }
+
 .app-card {
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: 1rem;
   padding: 1rem;
-  box-shadow: 0 6px 18px rgba(0,0,0,.04);
+  box-shadow: var(--card-shadow);
 }
 @media (min-width: 768px) {
   .offcanvas-md {
@@ -109,9 +104,8 @@ header.navbar {
   }
 }
 
-/* サイドバーの現在位置を分かりやすく */
 .my-sidebar a.dropdown-item.active {
-  background: #fff;
+  background: var(--surface-2);
   border-left: 4px solid var(--brand);
   font-weight: 600;
 }

@@ -1,0 +1,32 @@
+<h1>定型タスク一覧</h1>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>テンプレート名</th>
+      <th>優先度</th>
+      <th>部門区分</th>
+      <th>処理区分</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% templates.each do |template| %>
+      <tr class="<%= template.row_class %>">
+        <td><%= template.title %></td>
+        <td><%= template.priority_name %></td>
+        <td><%= template.office_role_name %></td>
+        <td><%= template.kind_name %></td>
+        <td><%= link_to '修正', edit_task_template_path(template), {class: "btn btn-success btn-sm"} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate(templates) %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "新規登録", new_task_template_path, {class: "btn btn-success"}%>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, {class: "btn btn-outline-dark"} %>
+  </div>
+</div>
