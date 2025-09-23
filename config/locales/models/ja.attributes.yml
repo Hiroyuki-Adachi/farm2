@@ -135,6 +135,9 @@ ja:
         
       machine_price_header:
         validated_at: 起算日
+      
+      machine_price_detail:
+        lease_id: "リース区分"
 
       machine_result:
         owner_name: "所有世帯"
