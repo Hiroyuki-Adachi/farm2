@@ -150,5 +150,5 @@ SQL
 
   def touch_icon_timestamp
     self.icon_updated_at = Time.current
-  end  
+  end
 end
