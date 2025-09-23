@@ -105,7 +105,7 @@ SQL
 
   def icon_fingerprint
     return nil if icon.blank?
-    @icon_fingerprint ||= Digest::SHA256.hexdigest(icon)    
+    @icon_fingerprint ||= Digest::SHA256.hexdigest(icon)
   end
 
   def self.to_fg_color(bg_color)
