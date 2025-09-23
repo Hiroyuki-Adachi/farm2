@@ -40,6 +40,10 @@ ja:
           checker: "サポーター"
           manager: "管理者"
           admin: "システム"
+        themes:
+          light: "ライト"
+          dark: "ダーク"
+          auto: "システム"
 
       chemical_inventory:
         chemical_adjust_type_ids:

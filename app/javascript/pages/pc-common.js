@@ -325,3 +325,12 @@ function loadingEnd() {
 
 window.loadingStart = loadingStart;
 window.loadingEnd = loadingEnd;
+
+(function(){
+  var root = document.documentElement;
+  if (root.getAttribute('data-bs-theme') !== 'auto') return;
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+  function apply(){ root.setAttribute('data-bs-theme', mq.matches ? 'dark' : 'light'); }
+  mq.addEventListener ? mq.addEventListener('change', apply) : mq.addListener(apply);
+  apply();
+})();

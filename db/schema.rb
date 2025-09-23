@@ -1002,7 +1002,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_19_130306) do
     t.string "mail_confirmation_token", limit: 64, comment: "メールアドレス確認トークン"
     t.datetime "mail_confirmation_expired_at", comment: "メールアドレス確認有効期限"
     t.string "line_id", limit: 50, default: "", null: false
-    t.integer "theme_preference", default: 0, null: false, comment: "画面テーマ"
+    t.integer "theme", default: 0, null: false, comment: "画面テーマ"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["mail"], name: "ix_users_on_mail", unique: true, where: "((mail)::text <> ''::text)"
     t.index ["mail_confirmation_token"], name: "ix_users_on_mail_confirmation_token", unique: true, where: "(mail_confirmation_token IS NOT NULL)"

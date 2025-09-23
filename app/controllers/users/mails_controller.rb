@@ -19,6 +19,6 @@ class Users::MailsController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:mail)
+    params.expect(user: [:mail])
   end
 end

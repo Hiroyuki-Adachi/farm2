@@ -173,6 +173,7 @@ namespace :users do
   resources :words, only: [:new, :create, :destroy]
   resources :mails, only: [:new, :create]
   resources :line_hooks, only: [:create]
+  resources :themes, only: [:new, :create]
 end
 resources :work_verifications, param: "work_id", only: [:index, :update, :destroy, :show]
 
