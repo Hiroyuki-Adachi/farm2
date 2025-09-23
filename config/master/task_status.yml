@@ -1,0 +1,54 @@
+- id: 0
+  code: to_do
+  name: "未着手"
+  start_flag: true
+  started_flag: false
+  closed_flag: false
+  next_statuses: [2, 3, 4, 9]
+  btn_class: "btn btn-outline-secondary"
+  badge_class: "badge bg-secondary"
+- id: 1
+  code: reopen
+  name: "再　開"
+  start_flag: true
+  started_flag: false
+  closed_flag: false
+  next_statuses: [2, 3, 4, 9]
+  btn_class: "btn btn-warning"
+  badge_class: "badge bg-warning text-dark"
+- id: 2
+  code: doing
+  name: "対応中"
+  start_flag: false
+  started_flag: true
+  closed_flag: false
+  next_statuses: [3, 4, 9]
+  btn_class: "btn btn-primary"
+  badge_class: "badge bg-primary"
+- id: 3
+  code: hold
+  name: "保　留"
+  start_flag: false
+  started_flag: false
+  closed_flag: false
+  next_statuses: [2, 4, 9]
+  btn_class: "btn btn-outline-warning"
+  badge_class: "badge bg-warning text-dark"
+- id: 4
+  code: done
+  name: "完　了"
+  start_flag: false
+  started_flag: false
+  closed_flag: true
+  next_statuses: [1]
+  btn_class: "btn btn-success"
+  badge_class: "badge bg-success"
+- id: 9
+  code: cancel
+  name: "中　止"
+  start_flag: false
+  started_flag: false
+  closed_flag: true
+  next_statuses: [1]
+  btn_class: "btn btn-outline-danger"
+  badge_class: "badge bg-danger"

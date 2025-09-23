@@ -15,7 +15,7 @@ class ChemicalInventory < ApplicationRecord
 
   validates :name, presence: true, length: {maximum: 40}
   validates :checked_on, presence: true
-  has_many :stocks, class_name: :ChemicalStock, dependent: :destroy
+  has_many :stocks, class_name: 'ChemicalStock', dependent: :destroy
   accepts_nested_attributes_for :stocks, allow_destroy: true
 
   scope :inventories, -> {where(chemical_adjust_type_id: :inventory).order(:checked_on)}

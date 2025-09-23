@@ -1,0 +1,36 @@
+<!-- app/views/tasks/descriptions/edit.html.erb -->
+<%= turbo_frame_tag "task_description" do %>
+  <%= form_with model: @task, url: task_description_path(@task), method: :patch, data: { turbo_frame: "task_description" } do |f| %>
+    <div class="p-3">
+      <h5 class="mb-0"><%= I18n.t("activerecord.attributes.task.description") %> を編集</h5>
+
+      <div class="row g-3" data-controller="markdown-preview">
+        <div class="col-md-6">
+          <label class="form-label">編集</label>
+          <%= f.text_area :description,
+                class: "form-control",
+                rows: 14,
+                data: { "markdown-preview-target": "input", action: "input->markdown-preview#update" } %>
+          <div class="form-text">
+            Markdown が使えます（**bold**、_italic_、`code`、表、箇条書き など）
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">プレビュー</label>
+          <div class="border rounded p-2 bg-light" style="min-height: 300px;"
+               data-markdown-preview-target="preview">
+            <div class="text-muted">入力に応じてプレビューします…</div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-start mt-3">
+        <div>
+          <%= f.submit "保存", class: "btn btn-sm btn-primary" %>
+          <%= link_to "キャンセル", task_path(@task),
+                data: { turbo_frame: "task_description" },
+                class: "btn btn-sm btn-outline-secondary me-2" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

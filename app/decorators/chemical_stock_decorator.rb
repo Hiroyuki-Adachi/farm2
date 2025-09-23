@@ -3,7 +3,7 @@ class ChemicalStockDecorator < Draper::Decorator
 
   def long_name
     if model.chemical_inventory.present?
-      "#{I18n.t("activerecord.attributes.chemical_inventory.chemical_adjust_type_ids.#{model.chemical_inventory.chemical_adjust_type_id}")}(#{model.name})"
+      "#{I18n.t("activerecord.enums.chemical_inventory.chemical_adjust_type_ids.#{model.chemical_inventory.chemical_adjust_type_id}")}(#{model.name})"
     else
       model.name
     end

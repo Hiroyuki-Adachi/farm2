@@ -1,4 +1,3 @@
-<% if @results.count > 0 %>
   <h1 class="h4">実績</h1>
   <% total_hours = 0 %>
   <table class="type06 table table-sm">
@@ -13,8 +12,8 @@
       <% @results.each do |result| %>
         <tr>
           <td><%= result.worked_at_short %></td>
-          <td><%= result.work_name_short %></td>
-          <td style="text-align:right;"><%= result.hours %></td>
+          <td><%= link_to result.work_name_short, work_path(result.work), {target: :_blank} %></td>
+          <td class="numeric"><%= result.hours %></td>
           <% total_hours += result.model.hours %>
         </tr>
       <% end %>
@@ -22,8 +21,7 @@
     <tfoot>
       <tr>
         <th colspan="2">合計</th>
-        <td style="text-align:right;"><%= sprintf("%.1f", @total_hours || total_hours) %></td>
+        <td class="numeric"><%= sprintf("%.1f", @total_hours || total_hours) %></td>
       </tr>
     </tfoot>
   </table>
-<% end %>

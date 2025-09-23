@@ -104,5 +104,5 @@
 <%= f.hidden_field :term %>
 <%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/schedule', "data-turbo-track": "reload", type: :module %>
+<%= javascript_include_tag 'pages/schedule', "data-turbo-track": "reload", type: :module %>
 <% end %>

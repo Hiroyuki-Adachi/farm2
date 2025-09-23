@@ -1,0 +1,10 @@
+<tr id="<%= dom_id(task) %>">
+  <td><%= link_to task.title, task_path(task), data: { turbo_frame: "_top" } %></td>
+  <td><%= task.priority_badge %></td>
+  <td><%= task.due_on_short %><%= task.due_badge %></td>
+  <td><%= task.status_badge %></td>
+  <td><%= task.kind_badge %></td>
+  <td><%= task.office_role_name %></td>
+  <td><%= task.assignee&.name %></td>
+  <td><%= task.watching_name %></td>
+</tr>

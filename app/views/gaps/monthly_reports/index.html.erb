@@ -69,5 +69,5 @@
 </div>
 <%= hidden_field_tag :monthly_report_path, months_gaps_monthly_report_path(":work_type_id") %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/gaps-monthly-reports', 'data-turbo-track': 'reload', type: :module %>
+<%= javascript_include_tag 'pages/gaps-monthly-reports', 'data-turbo-track': 'reload', type: :module %>
 <% end %>

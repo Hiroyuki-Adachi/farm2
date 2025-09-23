@@ -38,5 +38,5 @@
     [work_type.id, {bg: work_type.bg_color_term(current_term), fg: work_type.fg_color_term(current_term)}]
   }.to_h.to_json %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/land-costs', 'data-turbo-track': 'reload', type: :module %>
+<%= javascript_include_tag 'pages/land-costs', 'data-turbo-track': 'reload', type: :module %>
 <% end %>

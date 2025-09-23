@@ -15,5 +15,5 @@
 <%= hidden_field_tag :chart2_data1, @total_month1.map {|ta| ta.to_f}.to_json.html_safe %>
 <%= hidden_field_tag :chart2_data2, @total_month2.map {|ta| ta.to_f}.to_json.html_safe %>
 <% content_for :head do %>
-<%= javascript_include_tag 'controllers/personal_informations/statistics', 'data-turbo-track': 'reload', type: :module, data: {turbo: {track: :reload}} %>
+<%= javascript_include_tag 'pages/personal_informations/statistics', 'data-turbo-track': 'reload', type: :module, data: {turbo: {track: :reload}} %>
 <% end %>

@@ -1,0 +1,67 @@
+<%= form_with model: task, class: "needs-validation", data: { turbo: true } do |f| %>
+  <%= error_print(f.object) %>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <div class="mb-3">
+        <%= f.label :title, class: "form-label" %>
+        <%= f.text_field :title, class: "form-control", maxlength: 64, required: true %>
+        <div class="form-text">64文字まで</div>
+      </div>
+
+      <div class="row g-3">
+        <!-- 状態は新規では非表示にするため、この行自体を削除 -->
+        <div class="col-md-5">
+          <%= f.label :assignee_id, class: "form-label" %>
+          <%= f.collection_select :assignee_id, Worker.taskable.usual, :id, :name, { include_blank: true }, { class: "form-select" } %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :priority, class: "form-label" %>
+          <%= f.select(:priority, enum_options_for(Task, :priority), {}, class: "form-select") %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :office_role, class: "form-label" %>
+          <%= f.select(:office_role, enum_options_for(Task, :office_role), {}, class: "form-select") %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :due_on, class: "form-label" %>
+          <%= f.date_field :due_on, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Markdown 入力 & プレビュー -->
+  <div class="card shadow-sm mb-4" data-controller="markdown-preview">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span>説明（Markdown）</span>
+      <small class="text-muted" data-markdown-preview-target="counter"></small>
+    </div>
+    <div class="card-body row g-3">
+      <div class="col-md-6">
+        <%= f.text_area :description,
+          class: "form-control",
+          rows: 14,
+          placeholder: "Markdown で説明を書いてください",
+          data: { "markdown-preview-target": "input", action: "input->markdown-preview#update" } %>
+        <div class="form-text">
+          例: <code>**太字**</code>、<code>`code`</code>、箇条書き、チェックボックス <code>- [ ] todo</code> など
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="border rounded p-3 bg-light-subtle" style="min-height: 260px;">
+          <div class="small text-muted mb-2">プレビュー</div>
+          <div data-markdown-preview-target="preview"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-2">
+    <%= f.submit "作成する", class: "btn btn-warning" %>
+    <%= link_to "戻る", tasks_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>
+<% content_for :head do %>
+<%= javascript_include_tag 'pages/tasks', 'data-turbo-track': 'reload', type: :module %>
+<% end %>
