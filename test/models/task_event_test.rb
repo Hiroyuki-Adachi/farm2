@@ -77,4 +77,20 @@ class TaskEventTest < ActiveSupport::TestCase
 
     assert_equal created_comment.id, created_event.task_comment_id
   end
+
+  test "作業削除(タスクが作業追加)" do
+    event = task_events(:work_event)
+    event.update!(status_from_id: nil, status_to_id: nil, event_type: :add_work)
+    assert_difference("TaskEvent.count", -1) do
+      event.update!(work: nil)
+    end
+  end
+
+  test "作業削除(タスクが作業追加以外)" do
+    event = task_events(:work_event)
+    event.update!(status_from_id: 0, status_to_id: 2, event_type: :change_status)
+    assert_no_difference("TaskEvent.count") do
+      event.update!(work: nil)
+    end
+  end
 end

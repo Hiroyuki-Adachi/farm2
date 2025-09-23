@@ -59,6 +59,9 @@ class Work < ApplicationRecord
   has_many :checkers, -> {with_deleted}, through: :work_verifications, source: :worker
   has_many :work_types, through: :work_work_types
   has_many :machines, through: :machine_results
+  
+  has_many :events, class_name: 'TaskEvent', dependent: :nullify
+  has_many :tasks, through: :events
 
   scope :no_fixed, ->(term){
     includes(:work_type, :work_kind)
