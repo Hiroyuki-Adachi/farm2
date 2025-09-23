@@ -93,9 +93,7 @@ resources :machine_types, except: [:show]
 resources :chemical_types, except: [:show]
 resources :work_kinds, except: [:show]
 resources :work_types, except: [:show] do
-  member do
-    get :show_icon
-  end
+  get :icon, to: "work_types#icon", as: :icon, on: :member
 end
 namespace :lands do
   resources :cards, param: "land_id", only: [:index, :show]

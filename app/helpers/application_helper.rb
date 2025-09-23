@@ -30,10 +30,6 @@ module ApplicationHelper
     Time.at((hours || 0) * 3600 / count).utc.strftime("%H:%M")
   end
 
-  def work_type_icon_tag(work_type)
-    work_type.icon ? tag.img(src: show_icon_work_type_path(work_type), height: 48, width: 48) : image_tag("/images/works/default.png", size: "48x48")
-  end
-
   def chemical_name(chemical)
     chemical.url.present? ? link_to(chemical.name, chemical.url, target: :_blank, rel: "noopener noreferrer") : chemical.name
   end

@@ -11,6 +11,7 @@
 #  genre(作業ジャンル)             :integer          not null
 #  icon(アイコン)                  :binary
 #  icon_name(アイコン名)           :string(40)
+#  icon_updated_at                 :datetime
 #  land_flag(土地利用)             :boolean          default(TRUE), not null
 #  name(作業分類名称)              :string(10)       not null
 #  office_role(事務の役割)         :integer          default("none"), not null
@@ -29,6 +30,7 @@ class WorkType < ApplicationRecord
   self.discard_column = :deleted_at
 
   before_save :update_cost_flag
+  before_save :touch_icon_timestamp, if: :will_save_change_to_icon?
   after_save :save_work_type_term
 
   has_one :plan, class_name: "PlanWorkType", dependent: :destroy
@@ -101,6 +103,11 @@ SQL
     return fg_color_term(organization.get_term(date))
   end
 
+  def icon_fingerprint
+    return nil if icon.blank?
+    @icon_fingerprint ||= Digest::SHA256.hexdigest(icon)
+  end
+
   def self.to_fg_color(bg_color)
     rgb = {r: 255, g: 255, b: 255 }
     lum = 135
@@ -120,6 +127,10 @@ SQL
     find_by(other_flag: true)
   end
 
+  def icon_last_modified
+    self.icon_updated_at
+  end
+
   private
 
   def update_cost_flag
@@ -135,5 +146,9 @@ SQL
     elsif work_term
       work_term.destroy
     end
+  end
+
+  def touch_icon_timestamp
+    self.icon_updated_at = Time.current
   end
 end

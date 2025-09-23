@@ -1,8 +1,10 @@
 class WorkTypesController < ApplicationController
-  skip_before_action :restrict_remote_ip, only: [:show_icon]
-  before_action :permit_manager, except: [:show_icon]
+  skip_before_action :restrict_remote_ip, only: [:icon]
+  before_action :permit_manager, except: [:icon]
   before_action :set_work_type, only: [:edit, :update, :destroy]
   before_action :set_category, only: [:new, :create, :edit, :update]
+
+  helper WorkTypesHelper
 
   def index
     @work_types = WorkTypeDecorator.decorate_collection(WorkType.indexes)
@@ -48,9 +50,27 @@ class WorkTypesController < ApplicationController
     redirect_to work_types_path, status: :see_other
   end
 
-  def show_icon
-    @work_type = WorkType.find(params[:id])
-    send_data @work_type.icon, :disposition => 'inline'
+  def icon
+    work_type = WorkType.find(params[:id])
+    return head :not_found if work_type.icon.blank?
+
+    # URLの :v（バージョン）と実データの指紋が違ったら 404（古いURLなど）
+    return head :not_found if params[:v].present? && params[:v] != work_type.icon_fingerprint
+
+    # ブラウザ/プロキシ向けのHTTPキャッシュ
+    expires_in 1.year, public: true
+    response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
+
+    # 条件付きGET（ETag / Last-Modified）
+    fresh_when etag: work_type.icon_fingerprint, last_modified: work_type.icon_last_modified, public: true
+
+    # ↑で fresh（=未変更）ならここに来ない（304で返る）。変更があれば送信。
+    data = Rails.cache.fetch(["work_type_icon", work_type.id, work_type.icon_fingerprint], expires_in: 30.days) do
+      work_type.icon # DBから1回読んで以後はメモリ/Redis等から
+    end
+
+    # コンテンツタイプは適宜。PNG/JPEGなどに合わせて
+    send_data data, type: "image/png", disposition: "inline"
   end
 
   private

@@ -11,6 +11,7 @@
 #  genre(作業ジャンル)             :integer          not null
 #  icon(アイコン)                  :binary
 #  icon_name(アイコン名)           :string(40)
+#  icon_updated_at                 :datetime
 #  land_flag(土地利用)             :boolean          default(TRUE), not null
 #  name(作業分類名称)              :string(10)       not null
 #  office_role(事務の役割)         :integer          default("none"), not null
