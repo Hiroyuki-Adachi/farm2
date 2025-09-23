@@ -19,7 +19,7 @@
 class MachinePriceDetail < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
-  belongs_to :header, class_name: :MachinePriceHeader
+  belongs_to :header, class_name: 'MachinePriceHeader'
   belongs_to :work_kind
   belongs_to_active_hash :adjust
 
