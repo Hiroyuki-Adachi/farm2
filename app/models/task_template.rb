@@ -43,7 +43,10 @@ class TaskTemplate < ApplicationRecord
   validates :annual_month, inclusion: { in: 1..12 }, if: :kind_annual?
   validates :offset, inclusion: { in: [-1, 0, 1] }
 
+  attr_writer :annual_offset, :monthly_offset
+
   before_save :clear_annual_month_fields, if: :kind_monthly?
+  before_save :set_offset
 
   scope :usual, -> { with_discarded.order(active: :desc, id: :desc) }
   scope :for_creation, -> { kept.where(active: true) }
@@ -126,6 +129,14 @@ class TaskTemplate < ApplicationRecord
     return tasks.exists?(due_on: target_system.start_date..target_system.end_date)
   end
 
+  def annual_offset
+    self.offset
+  end
+
+  def monthly_offset
+    self.offset
+  end
+
   private
 
   def stage_to_n(stage)
@@ -142,5 +153,9 @@ class TaskTemplate < ApplicationRecord
   def clear_annual_month_fields
     self.annual_month = nil
     self.months_before_due = 1
+  end
+
+  def set_offset
+    self.offset = kind_annual? ? @annual_offset.to_i : @monthly_offset.to_i
   end
 end
