@@ -4,6 +4,7 @@
   start_flag: true
   started_flag: false
   closed_flag: false
+  work_flag: true
   next_statuses: [2, 3, 4, 9]
   btn_class: "btn btn-outline-secondary"
   badge_class: "badge bg-secondary"
@@ -13,6 +14,7 @@
   start_flag: true
   started_flag: false
   closed_flag: false
+  work_flag: true
   next_statuses: [2, 3, 4, 9]
   btn_class: "btn btn-warning"
   badge_class: "badge bg-warning text-dark"
@@ -22,6 +24,7 @@
   start_flag: false
   started_flag: true
   closed_flag: false
+  work_flag: true
   next_statuses: [3, 4, 9]
   btn_class: "btn btn-primary"
   badge_class: "badge bg-primary"
@@ -31,6 +34,7 @@
   start_flag: false
   started_flag: false
   closed_flag: false
+  work_flag: false
   next_statuses: [2, 4, 9]
   btn_class: "btn btn-outline-warning"
   badge_class: "badge bg-warning text-dark"
@@ -40,6 +44,7 @@
   start_flag: false
   started_flag: false
   closed_flag: true
+  work_flag: false
   next_statuses: [1]
   btn_class: "btn btn-success"
   badge_class: "badge bg-success"
@@ -49,6 +54,7 @@
   start_flag: false
   started_flag: false
   closed_flag: true
+  work_flag: false
   next_statuses: [1]
   btn_class: "btn btn-outline-danger"
   badge_class: "badge bg-danger"

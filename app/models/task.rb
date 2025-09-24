@@ -68,6 +68,14 @@ class Task < ApplicationRecord
     .usual_order
   }
 
+  scope :for_work, ->(work) {
+    where(task_status_id: TaskStatus.workable_ids)
+    .where(office_role: work.work_type.office_role)
+    .where.not(office_role: 0) # noneは除外
+    .where(assignee_id: work.work_results.pluck(:worker_id))
+    .usual_order
+  }
+
   scope :opened, -> { where(task_status_id: TaskStatus.open_ids).usual_order }
 
   scope :by_worker, ->(worker) {
@@ -100,19 +108,23 @@ class Task < ApplicationRecord
   }
 
   def closed?
-    TaskStatus.closed_ids.include?(self.task_status_id)
+    self.status.closed_flag
   end
 
   def start?
-    TaskStatus.start_ids.include?(self.task_status_id)
+    self.status.start_flag
   end
 
   def started?
-    TaskStatus.started_ids.include?(self.task_status_id)
+    self.status.started_flag
   end
 
   def opened?
     !self.closed?
+  end
+
+  def workable?
+    self.status.work_flag
   end
 
   def overdue?
