@@ -53,11 +53,6 @@ class TaskEvent < ApplicationRecord
   after_commit :clear_if_comment_cleared, on: :update
   after_commit :clear_if_work_deleted, on: :update
 
-  def self.add_comment!(task:, actor:, body:)
-    comment = task.comments.create!(poster: actor, body: body)
-    create!(task: task, actor: actor, event_type: :add_comment, comment: comment)
-  end
-
   private
 
   def clear_if_comment_cleared

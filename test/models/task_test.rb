@@ -216,4 +216,67 @@ class TaskTest < ActiveSupport::TestCase
     end
     assert task2.errors.any?
   end
+  
+  test "コメント追加" do
+    task = tasks(:open_task)
+    worker = workers(:worker1)
+    comment = '新しいコメント'
+    assert_difference("TaskEvent.count", 1) do
+      assert_difference("TaskComment.count", 1) do
+        task.add_comment!(actor: worker, body: comment)
+      end
+    end
+
+    created_event = TaskEvent.last
+    assert_equal worker.id, created_event.actor_id
+    assert_equal task.id, created_event.task_id
+    assert created_event.add_comment?
+
+    created_comment = TaskComment.last
+    assert_equal comment, created_comment.body
+    assert_equal worker.id, created_comment.poster_id
+    assert_equal task.id, created_comment.task_id
+
+    assert_equal created_comment.id, created_event.task_comment_id
+  end
+
+  test "作業追加(ステータスが対応中)" do
+    task = tasks(:started_task)
+    worker = workers(:worker1)
+    work = works(:works1)
+
+    assert_difference("TaskEvent.count", 1) do
+      task.add_work!(actor: worker, work: work)
+    end
+
+    created_event = TaskEvent.last
+    assert_equal worker.id, created_event.actor_id
+    assert_equal task.id, created_event.task_id
+    assert created_event.add_work?
+    assert_equal work.id, created_event.work_id
+    assert_nil created_event.status_from_id
+    assert_nil created_event.status_to_id
+  end
+
+  test "作業追加(ステータスが未着手)" do
+    task = tasks(:open_task)
+    worker = workers(:worker1)
+    work = works(:works1)
+
+    assert_difference("TaskEvent.count", 1) do
+      task.add_work!(actor: worker, work: work)
+    end
+
+    created_event = TaskEvent.last
+    assert_equal worker.id, created_event.actor_id
+    assert_equal task.id, created_event.task_id
+    assert created_event.change_status?
+    assert_equal work.id, created_event.work_id
+    assert_equal TaskStatus::TO_DO.id, created_event.status_from_id
+    assert_equal TaskStatus::DOING.id, created_event.status_to_id
+
+    task.reload
+    assert_equal TaskStatus::DOING.id, task.task_status_id
+    assert_equal work.worked_at, task.started_on
+  end
 end

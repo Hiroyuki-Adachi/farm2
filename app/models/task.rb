@@ -238,6 +238,22 @@ class Task < ApplicationRecord
     end
   end
 
+  def add_comment!(actor:, body:)
+    comment = self.comments.create!(poster: actor, body: body)
+    TaskEvent.create!(task: self, actor: actor, event_type: :add_comment, comment: comment)
+  end
+
+  def add_work!(actor:, work:)
+    if status == TaskStatus::DOING
+      TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work)
+    elsif [TaskStatus::TO_DO, TaskStatus::REOPEN].include?(status)
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work)
+      update!(status: TaskStatus::DOING, started_on: work.worked_at)
+    else
+      raise "Cannot add work when task status is #{status.name}"
+    end
+  end
+
   private
 
   # 共通ラッパ：コメントを（あれば）作ってトランザクション内でyield
