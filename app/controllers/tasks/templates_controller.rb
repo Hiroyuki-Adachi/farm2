@@ -56,7 +56,8 @@ class Tasks::TemplatesController < ApplicationController
         :monthly_stage,
         :annual_month,
         :months_before_due,
-        :offset,
+        :annual_offset,
+        :monthly_offset,
         :active
       ]).merge(organization: current_organization)
   end
