@@ -44,6 +44,8 @@ class Worker < ApplicationRecord
   enum :gender_id, {none: 0, male: 1, female: 2}, prefix: true
   enum :position_id, {none: 0, member: 1, leader: 2, director: 3, advisor: 9}, prefix: true
 
+  before_save :set_user_permission_id, if: -> { user.present? }
+
   has_many :work_results
   has_many :works, -> {order(:worked_at)}, through: :work_results
 
@@ -52,6 +54,7 @@ class Worker < ApplicationRecord
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
+  scope :taskable, -> {kept.where.not(office_role: :none)}
   scope :usual, -> {kept.includes(home: :section).where(homes: { company_flag: false }).order('sections.display_order, homes.display_order, workers.display_order')}
   scope :company, -> {kept.joins(:home).eager_load(:home).where(homes: { company_flag: true }).order("workers.display_order")}
   scope :by_homes, ->(homes) {kept.where(home_id: homes.ids).order("display_order")}
@@ -76,6 +79,7 @@ class Worker < ApplicationRecord
 
   validates :display_order, numericality: {only_integer: true}, :if => proc { |x| x.display_order.present?}
   validates :broccoli_mark, uniqueness: true, :if => proc { |x| x.broccoli_mark.present?}
+  validate :office_role_only_user
 
   def name
     "#{family_name} #{first_name}"
@@ -106,6 +110,16 @@ class Worker < ApplicationRecord
   end
 
   def position_name
-    I18n.t("activerecord.attributes.worker.position_ids.#{self.position_id}")
+    I18n.t("activerecord.enums.worker.position_ids.#{self.position_id}")
+  end
+
+  private
+
+  def office_role_only_user
+    errors.add(:office_role, "を設定する場合は、先にユーザを登録してください。") if self.user.blank? && !self.office_role_none?
+  end
+
+  def set_user_permission_id
+    self.user.update(permission_id: :checker) unless self.user.checkable?
   end
 end

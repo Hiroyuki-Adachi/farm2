@@ -1,0 +1,4 @@
+<!-- app/views/tasks/descriptions/update.turbo_stream.erb -->
+<%= turbo_stream.update "task_description" do %>
+  <%= render "tasks/descriptions/show", task: @task %>
+<% end %>

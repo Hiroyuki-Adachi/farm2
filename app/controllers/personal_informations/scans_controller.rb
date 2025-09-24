@@ -25,14 +25,14 @@ class PersonalInformations::ScansController < PersonalInformationsController
         raw = JSON.parse(raw, symbolize_names: true)
       rescue JSON::ParserError
         return render json: { error: "Malformed JSON payload", message: "QRコードの内容が不正です" },
-                      status: :unprocessable_entity
+                      status: :unprocessable_content
       end
     when ActionController::Parameters, Hash
       raw = raw.to_unsafe_h if raw.is_a?(ActionController::Parameters)
       raw = raw.deep_symbolize_keys
     else
       return render json: { error: "Invalid QR payload", message: "QRコードの内容が不正です" },
-                    status: :unprocessable_entity
+                    status: :unprocessable_content
     end
 
     @data = {
@@ -43,7 +43,7 @@ class PersonalInformations::ScansController < PersonalInformationsController
 
     return if @data[:type].present?
 
-    return render json: { error: "Missing type", message: "typeがありません" }, status: :unprocessable_entity
+    return render json: { error: "Missing type", message: "typeがありません" }, status: :unprocessable_content
   end
 
   def handle_lands

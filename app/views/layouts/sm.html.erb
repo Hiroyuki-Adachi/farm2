@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-bs-theme="<%= current_user&.theme || 'light' %>">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta http-equiv="content-language" content="ja" />
@@ -9,6 +9,7 @@
   <title>作業日報管理システム(V2)</title>
   <%= javascript_importmap_tags %>
   <%= stylesheet_link_tag 'application' %>
+  <%= stylesheet_link_tag 'sp' %>
   <%= yield :head %>
   <%= csrf_meta_tags %>
   <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path('/images/icons/farm2-32.png') %>">

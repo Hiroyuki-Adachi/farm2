@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-bs-theme="<%= current_user&.theme || 'light' %>">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
   <%= javascript_importmap_tags %>
-  <%= javascript_include_tag 'controllers/pc-common', 'data-turbo-track': 'reload', type: :module %>
+  <%= javascript_include_tag 'pages/pc-common', 'data-turbo-track': 'reload', type: :module %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag 'theme', 'data-turbo-track': 'reload' %>
   <%= stylesheet_link_tag 'pc-common', 'data-turbo-track': 'reload' %>
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"]%>&libraries=drawing" defer="defer" async="async" data-turbo-eval="false"></script>
   <%= yield :head %>

@@ -1,0 +1,24 @@
+<!-- views/tasks/statuses/_form.html.erb -->
+<% code = next_status_code.to_s %>
+
+<%= form_with model: task, url: task_status_path(task, code: code), method: :patch do |f| %>
+  <%= error_print(f.object) %>
+  <%= f.hidden_field :task_status, value: code %>
+
+  <% if TaskStatus.closed_codes.include?(code) %>
+    <div class="mb-3">
+      <%= f.label :end_reason %>
+      <%= f.select(:end_reason, enum_options_for(Task, :end_reason, :unset), {}, class: "form-select") %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :comment %>
+    <%= f.text_area :comment, rows: 3, class: "form-control", placeholder: "任意コメント" %>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2">
+    <%= f.submit "実行", class: "btn btn-primary" %>
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+  </div>
+<% end %>

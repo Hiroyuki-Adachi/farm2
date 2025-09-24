@@ -30,10 +30,6 @@ module ApplicationHelper
     Time.at((hours || 0) * 3600 / count).utc.strftime("%H:%M")
   end
 
-  def work_type_icon_tag(work_type)
-    work_type.icon ? tag.img(src: show_icon_work_type_path(work_type), height: 48, width: 48) : image_tag("/images/works/default.png", size: "48x48")
-  end
-
   def chemical_name(chemical)
     chemical.url.present? ? link_to(chemical.name, chemical.url, target: :_blank, rel: "noopener noreferrer") : chemical.name
   end
@@ -61,12 +57,16 @@ module ApplicationHelper
     content_tag(:span, label, class: "badge bg-#{color}")
   end
 
-  def enum_options_for(model_class, attr_name)
-    model_class.send(attr_name.to_s.pluralize).keys.map do |key|
-      [
-        I18n.t("activerecord.attributes.#{model_class.model_name.i18n_key}.#{attr_name.to_s.pluralize}.#{key}"),
-        key
-      ]
-    end
+  def enum_options_for(model_class, attr_name, exclude_keys = [])
+    exclude_keys = Array(exclude_keys).map(&:to_s)
+
+    model_class.send(attr_name.to_s.pluralize).keys
+      .reject { |key| exclude_keys.include?(key) }
+      .map do |key|
+        [
+          I18n.t("activerecord.enums.#{model_class.model_name.i18n_key}.#{attr_name.to_s.pluralize}.#{key}"),
+          key
+        ]
+      end
   end
 end

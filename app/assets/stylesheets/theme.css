@@ -1,0 +1,37 @@
+/* Light (デフォルト) */
+:root {
+  /* あなたの既存変数は活かしつつ補強する */
+  --surface:    #f6f8fb;
+  --surface-2:  #ffffff;
+  --border:     rgba(0,0,0,.08);
+  --brand:      #1f8feb;
+  --brand-weak: #e7f2fd;
+
+  /* 追加のトークン（固定色を置き換える用） */
+  --body-bg-grad-1: #f8fbff;
+  --body-bg-grad-2: #f3f6fa;
+  --row-hover:   gainsboro;
+  --card-shadow: 0 6px 18px rgba(0,0,0,.04);
+  --sticky-head-bg: var(--surface-2);
+  --text-strong: #000;   /* 必要なら */
+  --text-muted:  #6c757d;/* 必要なら */
+}
+
+/* Dark 上書き */
+[data-bs-theme="dark"] {
+  color-scheme: dark; /* フォーム・スクロールバー等のネイティブ要素を暗色系に */
+
+  --surface:    #0f1115;
+  --surface-2:  #141821;
+  --border:     rgba(255,255,255,.12);
+  --brand:      #6fb9ff;
+  --brand-weak: rgba(111,185,255,.15);
+
+  --body-bg-grad-1: #0e1014;
+  --body-bg-grad-2: #0b0d11;
+  --row-hover:   rgba(255,255,255,.06);
+  --card-shadow: 0 6px 18px rgba(0,0,0,.6);
+  --sticky-head-bg: var(--surface-2);
+  --text-strong: #f1f3f5;
+  --text-muted:  #a0a6ad;
+}

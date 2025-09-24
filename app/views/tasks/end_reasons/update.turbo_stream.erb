@@ -1,0 +1,7 @@
+<%= turbo_stream.update "task_end_reason", partial: "tasks/end_reasons/show" %>
+
+<% frame_id = dom_id(@task, :end_reason_modal_frame) %>
+<% modal_id = dom_id(@task, :end_reason_modal) %>
+<%= turbo_stream.update frame_id do %>
+  <div data-controller="bs-modal" data-bs-modal-id-value="<%= modal_id %>"></div>
+<% end %>

@@ -39,11 +39,11 @@ class Home < ApplicationRecord
   REG_PHONE = /\A\d{2,4}-\d{2,4}-\d{4}\z/
 
   has_many :workers, -> {order(:display_order)}
-  has_many :owned_lands,    -> {order(:place)}, class_name: :Land, foreign_key: :owner_id
-  has_many :managed_lands,  -> {order(:place)}, class_name: :Land, foreign_key: :manager_id
-  has_many :sub_lands,    -> {order(:place)}, class_name: :LandHome
+  has_many :owned_lands,    -> {order(:place)}, class_name: 'Land', foreign_key: :owner_id
+  has_many :managed_lands,  -> {order(:place)}, class_name: 'Land', foreign_key: :manager_id
+  has_many :sub_lands,    -> {order(:place)}, class_name: 'LandHome'
 
-  belongs_to :holder,  -> {with_discarded}, class_name: :Worker, foreign_key: :worker_id, optional: true
+  belongs_to :holder,  -> {with_discarded}, class_name: 'Worker', foreign_key: :worker_id, optional: true
   belongs_to :section, -> {with_discarded}
 
   scope :with_deleted, -> { with_discarded }

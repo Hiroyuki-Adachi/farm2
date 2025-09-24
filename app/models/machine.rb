@@ -26,9 +26,9 @@ class Machine < ApplicationRecord
 
   belongs_to :machine_type
   has_many :machine_kinds, through: :machine_type
-  has_many :price_headers, -> {order("machine_price_headers.validated_at DESC")}, class_name: :MachinePriceHeader, dependent: :destroy
+  has_many :price_headers, -> {order("machine_price_headers.validated_at DESC")}, class_name: 'MachinePriceHeader', dependent: :destroy
 
-  belongs_to :owner, -> {with_discarded}, class_name: :Home, foreign_key: :home_id
+  belongs_to :owner, -> {with_discarded}, class_name: 'Home', foreign_key: :home_id
 
   validates :validity_start_at, presence: true
   validates :validity_end_at, presence: true
@@ -72,17 +72,17 @@ class Machine < ApplicationRecord
   end
 
   def price_details(work)
-    header = price_headers.where("validated_at <= ?", work.worked_at).order(validated_at: :DESC).first
+    header = price_headers.where(validated_at: ..work.worked_at).order(validated_at: :DESC).first
     return header.details if header
     return machine_type&.price_details(work)
   end
 
   def leasable?(worked_at)
     return false if company?
-    header = price_headers.where("validated_at <= ?", worked_at).order(validated_at: :DESC).first
-    return header.details.exists?(lease_id: Lease::LEASE.id) if header
-    header = machine_type.price_headers.where("validated_at <= ?", worked_at).order(validated_at: :DESC).first
-    return header.details.exists?(lease_id: Lease::LEASE.id) if header
+    header = price_headers.where(validated_at: ..worked_at).order(validated_at: :DESC).first
+    return header.details.exists?(lease_id: :lease) if header
+    header = machine_type.price_headers.where(validated_at: ..worked_at).order(validated_at: :DESC).first
+    return header.details.exists?(lease_id: :lease) if header
     return false
   end
 
