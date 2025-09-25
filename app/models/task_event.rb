@@ -53,6 +53,10 @@ class TaskEvent < ApplicationRecord
   after_commit :clear_if_comment_cleared, on: :update
   after_commit :clear_if_work_deleted, on: :update
 
+  def last?
+    task.events.order(created_at: :desc).first == self
+  end
+
   private
 
   def clear_if_comment_cleared

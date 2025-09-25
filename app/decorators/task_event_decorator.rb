@@ -5,6 +5,7 @@ class TaskEventDecorator < Draper::Decorator
   decorates_association :actor
   decorates_association :assignee_from
   decorates_association :assignee_to
+  decorates_association :work
 
   def status_from_badge
     return '（未設定）' if object.status_from.nil?
@@ -85,13 +86,24 @@ class TaskEventDecorator < Draper::Decorator
     when :task_created
       'タスクが作成されました。'
     when :change_status
-      "ステータスが #{status_to_badge} に変更されました。"
+      if object.work.present?
+        "ステータスが #{status_to_badge} に変更されました。<br />#{work_message}"
+      else
+        "ステータスが #{status_to_badge} に変更されました。"
+      end
     when :change_assignee
       "担当者が #{assignee_to_badge} に変更されました。"
     when :change_due_on
       "期限が #{due_on_to_display} に変更されました。"
+    when :add_work
+      work_message
     else
       ""
     end
+  end
+
+  def work_message
+    return "" if object.work.blank?
+    "#{h.link_to(work.worked_at, h.work_path(object.work), target: :_blank, rel: :noopener)} に作業しました。"
   end
 end

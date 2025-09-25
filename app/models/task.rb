@@ -271,6 +271,29 @@ class Task < ApplicationRecord
     end
   end
 
+  def remove_work!(work:)
+    event = TaskEvent.find_by(task: self, work: work)
+    return if event.nil?
+
+    if event.last? && event.change_status?
+      self.update!(status: event.status_from)
+      event.status_to = nil
+      event.status_from = nil
+      event.event_type = :add_work
+    end
+    event.work_id = nil
+    event.save!
+  end
+
+  def self.add_works!(actor:, all_task_ids:, check_task_ids:, work:)
+    ActiveRecord::Base.transaction do
+      Task.for_work(work).where(id: all_task_ids).find_each do |task|
+        task.add_work!(actor: actor, work: work) if check_task_ids.include?(task.id.to_s) && !task.has_work
+        task.remove_work!(work: work) if check_task_ids.exclude?(task.id.to_s) && task.has_work
+      end
+    end
+  end
+
   private
 
   # 共通ラッパ：コメントを（あれば）作ってトランザクション内でyield
