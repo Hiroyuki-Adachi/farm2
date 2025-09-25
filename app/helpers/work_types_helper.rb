@@ -1,8 +1,9 @@
 module WorkTypesHelper
   def work_type_icon_tag(work_type)
     if work_type.icon.present?
+      path = "/farm2/work_types/#{work_type.id}/icon?v=#{ERB::Util.url_encode(work_type.icon_fingerprint)}"
       image_tag(
-        icon_work_type_path(work_type, v: work_type.icon_fingerprint, script_name: ""),
+        path, 
         size: "48x48",
         loading: "lazy",
         decoding: "async",
