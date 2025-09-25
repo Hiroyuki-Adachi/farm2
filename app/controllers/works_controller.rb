@@ -2,6 +2,7 @@ require 'date'
 
 class WorksController < ApplicationController
   include WorksHelper
+
   before_action :set_work, only: [:edit, :show, :update, :destroy, :map]
   before_action :set_results, only: [:show]
   before_action :set_lands, only: [:show]

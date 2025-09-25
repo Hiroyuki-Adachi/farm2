@@ -206,6 +206,7 @@ resources :works do
   member do
     get :map
   end
+  resources :tasks, controller: "works/tasks", only: [:new, :create]
 end
 
 resources :tasks, except: [:edit, :update] do
