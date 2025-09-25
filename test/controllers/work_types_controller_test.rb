@@ -62,4 +62,21 @@ class WorkTypesControllerTest < ActionDispatch::IntegrationTest
 
     assert_nil WorkType.kept.find_by(id: @work_type.id)
   end
+
+  test "アイコン" do
+    wt = work_types(:work_types_wcs)
+    good_v = wt.icon_fingerprint
+
+    get icon_work_type_path(wt, v: good_v)
+    assert_response :success
+    assert_equal "image/jpeg", @response.media_type
+
+    etag = @response.headers["ETag"]
+    get icon_work_type_path(wt, v: good_v), headers: { 'HTTP_IF_NONE_MATCH' => etag }
+    assert_response :not_modified
+
+    get icon_work_type_path(wt, v: "OLD")
+    assert_response :moved_permanently
+    assert_includes @response.headers["Location"], good_v
+  end
 end
