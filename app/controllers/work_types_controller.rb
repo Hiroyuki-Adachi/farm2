@@ -54,23 +54,26 @@ class WorkTypesController < ApplicationController
     work_type = WorkType.find(params[:id])
     return head :not_found if work_type.icon.blank?
 
-    # URLの :v（バージョン）と実データの指紋が違ったら 404（古いURLなど）
-    return head :not_found if params[:v].present? && params[:v] != work_type.icon_fingerprint
+    # v は検証ではなく“案内役”。不一致なら最新URLへリダイレクト（キャッシュ更新を促す）
+    if params[:v].present? && params[:v] != work_type.icon_fingerprint
+      return redirect_to icon_work_type_path(work_type, v: work_type.icon_fingerprint), status: :moved_permanently
+      # もしくは 302 :found でも可
+    end
 
-    # ブラウザ/プロキシ向けのHTTPキャッシュ
+    # ブラウザ/プロキシ向けキャッシュ
     expires_in 1.year, public: true
     response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
 
-    # 条件付きGET（ETag / Last-Modified）
-    fresh_when etag: work_type.icon_fingerprint, last_modified: work_type.icon_last_modified, public: true
+    # 条件付きGET（stale? で明確に分岐）
+    if stale?(etag: work_type.icon_fingerprint, last_modified: work_type.icon_last_modified, public: true)
+      data = Rails.cache.fetch(["work_type_icon", work_type.id, work_type.icon_fingerprint], expires_in: 30.days) do
+        work_type.icon
+      end
 
-    # ↑で fresh（=未変更）ならここに来ない（304で返る）。変更があれば送信。
-    data = Rails.cache.fetch(["work_type_icon", work_type.id, work_type.icon_fingerprint], expires_in: 30.days) do
-      work_type.icon # DBから1回読んで以後はメモリ/Redis等から
+      # Content-Type 推定（簡易版：拡張子から）
+      mime = Rack::Mime.mime_type(File.extname(work_type.icon_name.to_s), 'application/octet-stream')
+      send_data data, type: mime, disposition: "inline", filename: work_type.icon_name.presence || "icon"
     end
-
-    # コンテンツタイプは適宜。PNG/JPEGなどに合わせて
-    send_data data, type: "image/png", disposition: "inline"
   end
 
   private
