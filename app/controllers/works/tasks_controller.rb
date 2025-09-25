@@ -2,8 +2,11 @@ class Works::TasksController < WorksController
   before_action :set_work, only: [:new, :create]
   before_action :set_tasks, only: [:new]
 
+  decorates_assigned :tasks, with: TaskDecorator
+
   def new
     redirect_to work_path(@work) and return unless @tasks.exists?
+    @tasks = @tasks.usual_order
   end
 
   def create
@@ -13,6 +16,6 @@ class Works::TasksController < WorksController
   private
 
   def set_tasks
-    @tasks = Task.by_work(@work)
+    @tasks = Task.for_work(@work)
   end
 end

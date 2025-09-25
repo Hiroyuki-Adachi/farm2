@@ -36,6 +36,7 @@ class Task < ApplicationRecord
 
   attribute :watching, :boolean
   attribute :comment, :string
+  attribute :has_work, :boolean
 
   belongs_to :assignee, class_name: 'Worker', optional: true
   belongs_to :creator, class_name: 'Worker', optional: true
@@ -69,43 +70,42 @@ class Task < ApplicationRecord
   }
 
   scope :for_work, ->(work) {
-    base = where(task_status_id: TaskStatus.workable_ids) # 作業紐づけ可能なステータス
-
     task_event_table = TaskEvent.arel_table
-    task_table = Task.arel_table
+    task_table = arel_table
     work_result_table = WorkResult.arel_table
 
     # 日報の作業者
-    worker_ids_subq =  work_result_table.project(work_result_table[:worker_id]).where(work_result_table[:work_id].eq(work.id))
+    worker_ids_subq = work_result_table.project(work_result_table[:worker_id]).where(work_result_table[:work_id].eq(work.id))
 
-    # 「既に紐づいている」= EXISTS (SELECT 1 FROM task_events te WHERE te.task_id = tasks.id AND te.work_id = ?)
-    exists_work_link = Arel::Nodes::Exists.new(
-      task_event_table.project(Arel.sql("1"))
-        .where(task_event_table[:task_id].eq(task_table[:id]).and(task_event_table[:work_id].eq(work.id)))
-    )
+    # 既に紐づいている
+    exists_work_link =
+      Arel::Nodes::Exists.new(
+        task_event_table.project(Arel.sql("1"))
+          .where(task_event_table[:task_id].eq(task_table[:id]).and(task_event_table[:work_id].eq(work.id)))
+      )
 
     # 新しく紐づけ可能なタスクの条件
     new_work_link = task_table[:office_role].eq(work.work_type.office_role) # 役割が一致
               .and(task_table[:office_role].not_eq(Task.office_roles[:none])) # 役割が「なし」ではない
               .and(task_table[:assignee_id].in(worker_ids_subq)) # 作業者が担当者に含まれる
 
-    # ステータス AND ((新しく紐づけ可能) OR (既に紐づいている))
-    base.where(new_work_link.or(exists_work_link))
+    base = where(task_status_id: TaskStatus.workable_ids).where(new_work_link.or(exists_work_link))
+    base.select(task_table[Arel.star], exists_work_link.dup.as("has_work"))
   }
 
   scope :opened, -> { where(task_status_id: TaskStatus.open_ids).usual_order }
 
   scope :by_worker, ->(worker) {
-    t  = arel_table
-    tw = TaskWatcher.arel_table
+    task_table = arel_table
+    task_watcher_table = TaskWatcher.arel_table
 
     subq = TaskWatcher
             .select(1)
-            .where(tw[:worker_id].eq(worker.id))
-            .where(tw[:task_id].eq(t[:id]))
+            .where(task_watcher_table[:worker_id].eq(worker.id))
+            .where(task_watcher_table[:task_id].eq(task_table[:id]))
 
     exists = Arel::Nodes::Exists.new(subq.arel)
-    participant = Task.where(t[:assignee_id].eq(worker.id).or(exists))
+    participant = Task.where(task_table[:assignee_id].eq(worker.id).or(exists))
 
     participant
       .where(task_status_id: TaskStatus.open_ids)
