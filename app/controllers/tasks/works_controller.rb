@@ -1,9 +1,20 @@
 class Tasks::WorksController < TasksController
   before_action :set_task
-  before_action :set_work, only: :destroy
+  before_action :set_work, only: [:update, :destroy]
 
   def index
     @works = WorkDecorator.decorate_collection(Work.for_task(@task))
+  end
+
+  def update
+    if @task.add_work!(actor: current_user.worker, work: @work)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @task, notice: "日報を紐づけました" }
+      end
+    else
+      render :edit, status: :unprocessable_content
+    end    
   end
     
   def destroy
@@ -27,7 +38,7 @@ class Tasks::WorksController < TasksController
     task = @task.decorate
     actions << turbo_stream.update("task_status_controls", partial: "tasks/statuses/show", locals: { task: task })
     actions << turbo_stream.update("task_status_badge", task.status_badge)
-    actions << turbo_stream.update("task_work_link", partial: "tasks/works/list", locals: { task: @task })
+    actions << turbo_stream.update("task_work_link", partial: "tasks/works/link", locals: { task: @task })
 
     render turbo_stream: actions
   end
@@ -35,6 +46,6 @@ class Tasks::WorksController < TasksController
   private
     
   def set_work
-    @work = @task.works.find(params[:id])
+    @work = Work.find(params[:id])
   end
 end

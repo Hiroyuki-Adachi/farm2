@@ -209,6 +209,7 @@ SQL
       .where(worked_at: (Time.zone.today - days)..Time.zone.today) # 期間（既定30日）
       .where(work_type_table[:office_role].not_eq(role_none)) # 作業分類の役割が none 以外
       .where(exists_work_results) # 担当者が作業者に含まれる
+      .where.not(id: task.works.select(:id)) # 既に紐づいている日報は除外
       .includes(:work_kind, :work_results)
       .order(worked_at: :desc, id: :desc)
   }
