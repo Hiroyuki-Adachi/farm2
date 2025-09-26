@@ -220,6 +220,7 @@ resources :tasks, except: [:edit, :update] do
   resource :end_reason, controller: "tasks/end_reasons", only: [:edit, :update]
   resources :watchers, controller: "tasks/watchers", only: [:create, :destroy]
   resources :comments, controller: "tasks/comments", only: [:create]
+  resources :work, controller: "tasks/works", only: [:new, :create, :destroy]
   resources :events, only: [] do
     resource :comment, controller: "tasks/event_comments", only: [:show, :edit, :create, :update]
   end

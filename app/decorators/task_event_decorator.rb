@@ -81,13 +81,13 @@ class TaskEventDecorator < Draper::Decorator
     end
   end
 
-  def human_message(mobile: false)
+  def human_message(mobile: false, mine: false)
     case object.event_type.to_sym
     when :task_created
       'タスクが作成されました。'
     when :change_status
       if object.work.present?
-        "ステータスが #{status_to_badge} に変更されました。<br />#{work_message}"
+        "ステータスが #{status_to_badge} に変更されました。<br />#{work_message(mobile: mobile, mine: mine)}"
       else
         "ステータスが #{status_to_badge} に変更されました。"
       end
@@ -96,17 +96,19 @@ class TaskEventDecorator < Draper::Decorator
     when :change_due_on
       "期限が #{due_on_to_display} に変更されました。"
     when :add_work
-      work_message(mobile: mobile)
+      work_message(mobile: mobile, mine: mine)
     else
       ""
     end
   end
 
-  def work_message(mobile: false)
+  def work_message(mobile: false, mine: false)
     return "" if object.work.blank?
     return "#{work.worked_at}に作業しました。" if mobile
+    cancel_url = ""
+    cancel_url = h.link_to('取消', h.task_work_path(task_id: object.task_id, id: object.work_id), data: { turbo_confirm: '作業を取消してよろしいですか？(作業そのものは削除されません)', turbo_method: :delete }, class: 'btn btn-sm p-0 btn-danger') if mine
+
     h.link_to(work.worked_at, h.work_path(object.work), target: :_blank, rel: :noopener) +
-      h.content_tag(:span, "に作業しました。") +
-      h.link_to('取消', '#', method: :delete, data: { confirm: '本当に取消してよろしいですか？' }, class: 'btn btn-sm p-0 btn-danger')
+      h.content_tag(:span, "に作業しました。") + cancel_url
   end
 end
