@@ -1,0 +1,7 @@
+<% if task.status == TaskStatus::DOING %>
+  <%= link_to "日報を紐づけ",
+              task_works_path(task_id: task.id),
+              data: { turbo_frame: "work_link_modal" },
+              class: "btn btn-sm btn-outline-primary" %>
+  <%= turbo_frame_tag "work_link_modal" %>
+<% end %>

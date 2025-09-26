@@ -1,0 +1,14 @@
+<%= turbo_frame_tag dom_id(work, :pick_row) do %>
+  <tr>
+    <td><%= work.worked_at %></td>
+    <td><%= work.work_time %></td>
+    <td><%= work.name %></td>
+    <td><%= work.worker_members %></td>
+    <td class="text-end">
+      <%= link_to "この日報を紐づけ",
+          task_work_path(task_id: task.id, id: work.id),
+          data: { turbo_method: :patch },
+          class: "btn btn-sm btn-primary" %>
+    </td>
+  </tr>
+<% end %>

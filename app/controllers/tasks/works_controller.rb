@@ -1,10 +1,14 @@
 class Tasks::WorksController < TasksController
   before_action :set_task
   before_action :set_work, only: :destroy
+
+  def index
+    @works = WorkDecorator.decorate_collection(Work.for_task(@task))
+  end
     
   def destroy
     event = @task.events.find_by(work_id: @work.id)
-    return redirect_to task_path(@task) if event.nil? || (event.actor_id != current_user.worker_id)
+    return redirect_to task_path(@task), notice: "変更または削除されています。" if event.nil? || (event.actor_id != current_user.worker_id)
 
     @task.remove_work!(work: @work)
 
@@ -23,6 +27,8 @@ class Tasks::WorksController < TasksController
     task = @task.decorate
     actions << turbo_stream.update("task_status_controls", partial: "tasks/statuses/show", locals: { task: task })
     actions << turbo_stream.update("task_status_badge", task.status_badge)
+    actions << turbo_stream.update("task_work_link", partial: "tasks/works/list", locals: { task: @task })
+
     render turbo_stream: actions
   end
 

@@ -1,0 +1,21 @@
+<%= turbo_frame_tag "work_link_modal" do %> 
+  <div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" data-controller="bs-modal" data-bs-modal-id-value="work_link_modal">
+        <div class="modal-header">
+          <h5 class="modal-title">日報を紐づけ</h5>
+          <button type="button" class="btn-close" data-action="bs-modal#close"></button>
+        </div>
+        <div class="modal-body">
+          <%= turbo_frame_tag "work_picker" do %>
+            <%= render "tasks/works/table", works: @works, task: @task %>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-action="bs-modal#close">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show"></div>
+<% end %>

@@ -104,11 +104,17 @@ class TaskEventDecorator < Draper::Decorator
 
   def work_message(mobile: false, mine: false)
     return "" if object.work.blank?
-    return "#{work.worked_at}に作業しました。" if mobile
+    return "日報#{work_info}に記載済みです。" if mobile
     cancel_url = ""
     cancel_url = h.link_to('取消', h.task_work_path(task_id: object.task_id, id: object.work_id), data: { turbo_confirm: '作業を取消してよろしいですか？(作業そのものは削除されません)', turbo_method: :delete }, class: 'btn btn-sm p-0 btn-danger') if mine
 
-    h.link_to(work.worked_at, h.work_path(object.work), target: :_blank, rel: :noopener) +
-      h.content_tag(:span, "に作業しました。") + cancel_url
+    h.content_tag(:span, "日報") +
+      h.link_to(work_info, h.work_path(object.work), target: :_blank, rel: :noopener) +
+      h.content_tag(:span, "に記載済みです。") + cancel_url
+  end
+  
+  def work_info
+    return "" if object.work.blank?
+    "#{work.worked_at}(#{work.name})"
   end
 end
