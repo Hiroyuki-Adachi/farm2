@@ -47,6 +47,7 @@ class Task < ApplicationRecord
   has_many :watchers, through: :task_watchers, source: :worker
   has_many :comments, class_name: 'TaskComment', dependent: :destroy
   has_many :events, class_name: 'TaskEvent', dependent: :destroy
+  has_many :works, through: :events, source: :work
 
   before_save :clear_end_info
   after_create :create_watcher

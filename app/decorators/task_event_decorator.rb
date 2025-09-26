@@ -81,7 +81,7 @@ class TaskEventDecorator < Draper::Decorator
     end
   end
 
-  def human_message
+  def human_message(mobile: false)
     case object.event_type.to_sym
     when :task_created
       'タスクが作成されました。'
@@ -96,14 +96,17 @@ class TaskEventDecorator < Draper::Decorator
     when :change_due_on
       "期限が #{due_on_to_display} に変更されました。"
     when :add_work
-      work_message
+      work_message(mobile: mobile)
     else
       ""
     end
   end
 
-  def work_message
+  def work_message(mobile: false)
     return "" if object.work.blank?
-    "#{h.link_to(work.worked_at, h.work_path(object.work), target: :_blank, rel: :noopener)} に作業しました。"
+    return "#{work.worked_at}に作業しました。" if mobile
+    h.link_to(work.worked_at, h.work_path(object.work), target: :_blank, rel: :noopener) +
+      h.content_tag(:span, "に作業しました。") +
+      h.link_to('取消', '#', method: :delete, data: { confirm: '本当に取消してよろしいですか？' }, class: 'btn btn-sm p-0 btn-danger')
   end
 end

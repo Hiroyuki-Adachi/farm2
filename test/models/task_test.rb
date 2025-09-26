@@ -279,4 +279,48 @@ class TaskTest < ActiveSupport::TestCase
     assert_equal TaskStatus::DOING.id, task.task_status_id
     assert_equal work.worked_at, task.started_on
   end
+
+  test "作業削除(関連作業がない)" do
+    task = tasks(:open_task)
+    work = works(:works1)
+    original_status = task.task_status_id
+
+    assert_no_difference("TaskEvent.count") do
+      assert_nil task.remove_work!(work: work)
+    end
+
+    task.reload
+    assert_equal original_status, task.task_status_id
+  end
+
+  test "作業削除(関連作業が存在かつ作業追加イベント)" do
+    task = tasks(:work_task)
+    event = task.events.last
+    work = event.work
+    original_status = task.task_status_id
+
+    event.update!(event_type: :add_work, status_from_id: nil, status_to_id: nil)
+
+    assert_difference("TaskEvent.count", -1) do
+      task.remove_work!(work: work)
+    end
+
+    task.reload
+    assert_equal original_status, task.task_status_id
+  end
+
+  test "作業削除(関連作業が存在かつステータス変更イベントが最後)" do
+    task = tasks(:work_task)
+    event = task.events.last
+    work = event.work
+
+    event.update!(event_type: :change_status, status_from_id: TaskStatus::TO_DO.id, status_to_id: TaskStatus::DOING.id)
+
+    assert_difference("TaskEvent.count", -1) do
+      task.remove_work!(work: work)
+    end
+
+    task.reload
+    assert_equal TaskStatus::TO_DO.id, task.task_status_id
+  end
 end
