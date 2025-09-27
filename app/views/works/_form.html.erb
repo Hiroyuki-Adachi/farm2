@@ -1,4 +1,4 @@
-<div class="row" data-page-module="pages/work-form">
+<div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/work-form">
   <div class="col-md-4">
     <%= f.label :worked_at, '', class: "col-form-label-lg form-label" %>
     <%= f.date_field :worked_at, {required: true, class: "form-control", min: current_system.start_date, max: current_system.end_date} %>

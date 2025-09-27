@@ -1,4 +1,4 @@
-<ul class="list-group" data-page-module="pages/personal_informations/topics">
+<ul class="list-group" data-controller="page-loader" data-page-loader-modules-value="pages/personal_informations/topics">
   <% @user_topics.each do |user_topic| %>
     <li class="list-group-item">
       <span class='badge bg-primary me-1'><%= user_topic.word %></span>
