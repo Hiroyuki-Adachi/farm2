@@ -1,4 +1,4 @@
-<h1>乾燥／調整管理表(<%= @home.name %>)</h1>
+<h1 data-page-module="pages/dryings-show">乾燥／調整管理表(<%= @home.name %>)</h1>
 <style>
 #drying-detail {
   overflow: hidden;
@@ -137,6 +137,3 @@
     <%= link_to '戻る', dryings_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/drying-show', 'data-turbo-track': 'reload', type: :module %>
-<% end %>
