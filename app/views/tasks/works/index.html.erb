@@ -1,0 +1,18 @@
+<%= turbo_frame_tag "work_link_modal_frame" do %> 
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">作業日</th>
+        <th scope="col">作業時刻</th>
+        <th scope="col">内容</th>
+        <th scope="col">作業者</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @works.each do |work| %>
+        <%= render "tasks/works/row", work: work, task: @task %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

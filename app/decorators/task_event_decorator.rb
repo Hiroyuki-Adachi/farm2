@@ -5,6 +5,7 @@ class TaskEventDecorator < Draper::Decorator
   decorates_association :actor
   decorates_association :assignee_from
   decorates_association :assignee_to
+  decorates_association :work
 
   def status_from_badge
     return '（未設定）' if object.status_from.nil?
@@ -80,18 +81,40 @@ class TaskEventDecorator < Draper::Decorator
     end
   end
 
-  def human_message
+  def human_message(mobile: false, mine: false)
     case object.event_type.to_sym
     when :task_created
       'タスクが作成されました。'
     when :change_status
-      "ステータスが #{status_to_badge} に変更されました。"
+      if object.work.present?
+        "ステータスが #{status_to_badge} に変更されました。<br />#{work_message(mobile: mobile, mine: mine)}"
+      else
+        "ステータスが #{status_to_badge} に変更されました。"
+      end
     when :change_assignee
       "担当者が #{assignee_to_badge} に変更されました。"
     when :change_due_on
       "期限が #{due_on_to_display} に変更されました。"
+    when :add_work
+      work_message(mobile: mobile, mine: mine)
     else
       ""
     end
+  end
+
+  def work_message(mobile: false, mine: false)
+    return "" if object.work.blank?
+    return "日報#{work_info}に記載済みです。" if mobile
+    cancel_url = ""
+    cancel_url = h.link_to('取消', h.task_work_path(task_id: object.task_id, id: object.work_id), data: { turbo_confirm: '作業を取消してよろしいですか？(作業そのものは削除されません)', turbo_method: :delete }, class: 'btn btn-sm p-0 btn-danger') if mine
+
+    h.content_tag(:span, "日報") +
+      h.link_to(work_info, h.work_path(object.work), target: :_blank, rel: :noopener) +
+      h.content_tag(:span, "に記載済みです。") + cancel_url
+  end
+  
+  def work_info
+    return "" if object.work.blank?
+    "#{work.worked_at}(#{work.name})"
   end
 end

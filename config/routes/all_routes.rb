@@ -206,6 +206,7 @@ resources :works do
   member do
     get :map
   end
+  resources :tasks, controller: "works/tasks", only: [:new, :create]
 end
 
 resources :tasks, except: [:edit, :update] do
@@ -219,6 +220,7 @@ resources :tasks, except: [:edit, :update] do
   resource :end_reason, controller: "tasks/end_reasons", only: [:edit, :update]
   resources :watchers, controller: "tasks/watchers", only: [:create, :destroy]
   resources :comments, controller: "tasks/comments", only: [:create]
+  resources :works, controller: "tasks/works", only: [:index, :update, :destroy]
   resources :events, only: [] do
     resource :comment, controller: "tasks/event_comments", only: [:show, :edit, :create, :update]
   end

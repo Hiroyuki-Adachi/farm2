@@ -55,26 +55,19 @@ class TaskEventTest < ActiveSupport::TestCase
     end
   end
 
-  test "コメント追加" do
-    task = tasks(:open_task)
-    worker = workers(:worker1)
-    comment = '新しいコメント'
-    assert_difference("TaskEvent.count", 1) do
-      assert_difference("TaskComment.count", 1) do
-        TaskEvent.add_comment!(task: task, actor: worker, body: comment)
-      end
+  test "作業削除(タスクが作業追加)" do
+    event = task_events(:work_event)
+    event.update!(status_from_id: nil, status_to_id: nil, event_type: :add_work)
+    assert_difference("TaskEvent.count", -1) do
+      event.update!(work: nil)
     end
+  end
 
-    created_event = TaskEvent.last
-    assert_equal worker.id, created_event.actor_id
-    assert_equal task.id, created_event.task_id
-    assert created_event.add_comment?
-
-    created_comment = TaskComment.last
-    assert_equal comment, created_comment.body
-    assert_equal worker.id, created_comment.poster_id
-    assert_equal task.id, created_comment.task_id
-
-    assert_equal created_comment.id, created_event.task_comment_id
+  test "作業削除(タスクが作業追加以外)" do
+    event = task_events(:work_event)
+    event.update!(status_from_id: 0, status_to_id: 2, event_type: :change_status)
+    assert_no_difference("TaskEvent.count") do
+      event.update!(work: nil)
+    end
   end
 end

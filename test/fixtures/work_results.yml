@@ -13839,3 +13839,9 @@ work_result_taue2:
   worker_id: 13
   hours: 5
   display_order: 2
+
+work_result_task:
+  work: work_task_work
+  worker_id: 3
+  hours: 6
+  display_order: 1

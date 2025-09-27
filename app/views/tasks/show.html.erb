@@ -80,6 +80,11 @@
   <div class="card-header d-flex align-items-center gap-2">
     <i class="bi bi-chat-dots"></i>
     <strong>やり取り / 更新履歴</strong>
+    <div class="ms-auto">
+      <%= turbo_frame_tag 'task_work_link' do %>
+        <%= render "tasks/works/link", task: @task %>
+      <% end %>
+    </div>
   </div>
   <div class="card-body">
     <%= turbo_frame_tag "task_events" do %>
