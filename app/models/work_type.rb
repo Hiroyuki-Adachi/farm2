@@ -150,5 +150,6 @@ SQL
 
   def touch_icon_timestamp
     self.icon_updated_at = Time.current
+    @icon_fingerprint = nil # 同一インスタンス内で更新直後も再計算させる
   end
 end

@@ -92,6 +92,9 @@ work_types_wcs:
   deleted_at: 
   bg_color: "#ffffff"
   land_flag: t
+  icon_name: "wcs.jpg"
+  icon: !binary |-
+    <%= Base64.strict_encode64(File.binread(Rails.root.join("test/fixtures/files/wcs.jpg"))) %>
 
 work_types7:
   id: '9'
