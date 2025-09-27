@@ -1,6 +1,6 @@
 import { Turbo } from "@hotwired/turbo-rails"
 
-window.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
     document.getElementById("term").addEventListener("change", (event) => {
         fetch(`${document.getElementById("work_types_works_path").value}?term=${event.target.value}`, {
             "Accept": "text/vnd.turbo-stream.html",

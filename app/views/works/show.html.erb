@@ -10,7 +10,7 @@
   <%= stylesheet_link_tag 'work-show', media: 'all' %>
   <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
       <script type="text/javascript" data-turbo-track="reload">
-      window.addEventListener('turbo:load', () => {
+      document.addEventListener('turbo:load', () => {
           layCover("work");
           layCover("workers");
           layCover("lands");

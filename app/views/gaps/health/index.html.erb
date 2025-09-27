@@ -25,7 +25,7 @@
 </div>
 <% content_for :head do %>
 <script data-turbo-track="reload">
-window.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
     document.getElementById("work_type_id").addEventListener("change", () => {
         loadingStart("集計中");
         document.getElementById("search_form").requestSubmit();

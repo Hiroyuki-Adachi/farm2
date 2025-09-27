@@ -1,6 +1,6 @@
 import Sortable from "sortablejs";
 
-window.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
     Sortable.create(document.getElementById("tbody_lands"), {
         onSort: renumberLands
     });

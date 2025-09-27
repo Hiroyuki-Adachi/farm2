@@ -65,7 +65,7 @@ function dispSum() {
     });
 }
   
-window.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
     document.getElementById("target").addEventListener("blur", function() {
         Turbo.visit(`${target.dataset.url}?target=${this.value}`);
     });

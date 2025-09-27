@@ -52,7 +52,7 @@
 <script data-turbo-track="reload" type="module">
 import { Turbo } from "@hotwired/turbo-rails";
 
-window.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
     Array.from(document.getElementsByClassName("work_select")).forEach((element) => {
         element.addEventListener("change", (event) => {
             const index = event.target.dataset.index;

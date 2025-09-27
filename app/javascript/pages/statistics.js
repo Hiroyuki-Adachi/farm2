@@ -1,6 +1,6 @@
 import Chart from "chart.js/auto";
 
-window.addEventListener("turbo:load", () => {
+document.addEventListener("turbo:load", () => {
     document.querySelectorAll(".nav-link").forEach((element) => {
         element.addEventListener("click", (event) => {
             if (window.myChart) {

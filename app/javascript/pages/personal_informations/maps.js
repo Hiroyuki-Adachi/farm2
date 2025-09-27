@@ -67,5 +67,5 @@ window.initMap = function() {
   });
 }
 
-window.removeEventListener('turbo:load', initMap); // Ensure no duplicate listeners
-window.addEventListener('turbo:load', initMap);
+document.removeEventListener('turbo:load', initMap); // Ensure no duplicate listeners
+document.addEventListener('turbo:load', initMap);

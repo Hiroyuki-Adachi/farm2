@@ -1,6 +1,6 @@
 import { Turbo } from "@hotwired/turbo-rails";
 
-window.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
     initMap();
 
     if (document.getElementById("worked_at") != null) {

@@ -1,6 +1,6 @@
 import Chart from "chart.js/auto";
 
-window.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
   const ctx1 = document.getElementById("chart1").getContext('2d');
   const ctx2 = document.getElementById("chart2").getContext('2d');
   const chart1 = new Chart(ctx1, {

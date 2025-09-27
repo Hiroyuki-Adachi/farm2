@@ -1,4 +1,4 @@
-window.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
     document.querySelectorAll(".check-weather").forEach((element) => {
         element.addEventListener("change", (event) => {
             checkWeather(event.target);

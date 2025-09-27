@@ -121,7 +121,7 @@ function changeSection(section) {
     }
 }
 
-window.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
     setAddButtons();
 
     Sortable.create(document.getElementById("tbody_workers"), {

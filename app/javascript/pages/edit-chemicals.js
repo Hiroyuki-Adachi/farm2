@@ -1,6 +1,6 @@
 import { Decimal } from "decimal.js";
 
-window.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
   document.querySelectorAll("[data-index='0']").forEach((element) => {
     element.style.display = "table-cell";
   });

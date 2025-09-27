@@ -1,6 +1,6 @@
 import { Decimal } from "decimal.js";
 
-window.addEventListener('turbo:load', () => {
+document.addEventListener('turbo:load', () => {
     document.getElementById("prorate").addEventListener("click", (event) => {
         let totalArea = new Decimal(0);
         const totalSoil = new Decimal(document.getElementById("soil_quantity_sum").value);

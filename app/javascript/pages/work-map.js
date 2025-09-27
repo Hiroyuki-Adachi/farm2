@@ -42,4 +42,4 @@ function initMap(){
     });
 }
 
-document.addEventListener('DOMContentLoaded', initMap);
+document.addEventListener('turbo:load', initMap);
