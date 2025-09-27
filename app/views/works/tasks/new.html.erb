@@ -1,0 +1,40 @@
+<h1>作業日報(タスク)登録</h1>
+<%= form_with url: work_tasks_path, html: { method: :post } do |f| %>
+<%= render partial: 'show_work', locals: { f: f } %>
+<div class="h4">関連するタスクが一覧にある場合、左のチェックボックスをチェックして登録ボタンを押下してください。</div>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th></th>
+      <th>状態</th>
+      <th>優先度</th>
+      <th>タイトル</th>
+      <th>着手日</th>
+      <th>期限</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tasks.each do |task| %>
+    <tr>
+      <td>
+        <%= check_box_tag "check_task_ids[]", task.id, task.has_work %>
+        <%= hidden_field_tag "all_task_ids[]", task.id %>
+      </td>
+      <td><%= task.status_badge %></td>
+      <td><%= task.priority_badge %></td>
+      <td><%= task.title %></td>
+      <td><%= task.started_on_short %></td>
+      <td><%= task.due_on_short %><%= task.due_badge %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= f.submit '登録', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', new_work_health_path(work_id: @work), {class: "btn btn-outline-dark"} %>
+    </div>
+  </div>
+<% end %>

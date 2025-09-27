@@ -10,6 +10,7 @@
 <%= turbo_stream.update "task_due_on", partial: "tasks/due_dates/show", locals: { task: task } %>
 <%= turbo_stream.update "task_assignee", partial: "tasks/assignees/show", locals: { task: task } %>
 <%= turbo_stream.update "task_events", partial: "tasks/events/list", locals: { task: @task } %>
+<%= turbo_stream.update "task_work_link", partial: "tasks/works/link", locals: { task: @task } %>
 
 <% code = params.dig(:task, :task_status) || params[:code] %>
 <% frame_id = dom_id(@task, "status_modal_frame") %>

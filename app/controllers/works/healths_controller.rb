@@ -8,6 +8,6 @@ class Works::HealthsController < WorksController
 
   def create
     WorkResult.regist_health(@work, params.require(:results))
-    redirect_to work_path(@work)
+    redirect_to new_work_task_path(work_id: @work.id)
   end
 end
