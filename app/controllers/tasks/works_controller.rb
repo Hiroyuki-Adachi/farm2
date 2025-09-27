@@ -7,13 +7,14 @@ class Tasks::WorksController < TasksController
   end
 
   def update
-    if @task.add_work!(actor: current_user.worker, work: @work)
+    begin
+      @task.add_work!(actor: current_user.worker, work: @work)
       @task.reload
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to @task, notice: "日報を紐づけました" }
       end
-    else
+    rescue => e
       render :index, status: :unprocessable_content
     end
   end
