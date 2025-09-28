@@ -1,5 +1,6 @@
+<% last_read_at = @task.reads.find_by(worker_id: current_user.worker_id)&.last_read_at || Time.at(0) %>
 <%= turbo_stream.update "task_assignee", partial: "tasks/assignees/show" %>
-<%= turbo_stream.update "task_events", partial: "tasks/events/list", locals: { task: @task } %>
+<%= turbo_stream.update "task_events", partial: "tasks/events/list", locals: { task: @task, last_read_at: last_read_at } %>
 
 <% frame_id = dom_id(@task, :assignee_modal_frame) %>
 <% modal_id = dom_id(@task, :assignee_modal) %>

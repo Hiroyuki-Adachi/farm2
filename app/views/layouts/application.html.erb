@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" data-bs-theme="<%= current_user&.theme || 'light' %>" data-device="pc">
+<html lang="ja" data-bs-theme="<%= current_user&.theme || 'light' %>">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta http-equiv="content-language" content="ja" />
@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path('/images/icons/farm2-32.png') %>">
   <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path('/images/icons/farm2-16.png') %>">
 </head>
-<body>
+<body data-controller="pc-common">
   <header>
 <%= render 'navbar' %>
   </header>

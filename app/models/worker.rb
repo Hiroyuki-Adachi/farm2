@@ -46,8 +46,9 @@ class Worker < ApplicationRecord
 
   before_save :set_user_permission_id, if: -> { user.present? }
 
-  has_many :work_results
+  has_many :work_results, dependent: :restrict_with_error
   has_many :works, -> {order(:worked_at)}, through: :work_results
+  has_many :task_reads, dependent: :destroy
 
   has_one :user
 

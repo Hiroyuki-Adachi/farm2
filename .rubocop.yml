@@ -88,3 +88,7 @@ Rails/I18nLocaleTexts:
 # before_actionの際の未定義メソッドのチェック（deviseとの兼ね合いで一旦false）
 Rails/LexicallyScopedActionFilter:
   Enabled: false
+
+# モデル内のスコープの順番を指摘
+Rails/OrderModelMacros:
+  Enabled: true

@@ -37,6 +37,7 @@ class Task < ApplicationRecord
   attribute :watching, :boolean
   attribute :comment, :string
   attribute :has_work, :boolean
+  attribute :unread_count, :integer
 
   belongs_to :assignee, class_name: 'Worker', optional: true
   belongs_to :creator, class_name: 'Worker', optional: true
@@ -48,10 +49,12 @@ class Task < ApplicationRecord
   has_many :comments, class_name: 'TaskComment', dependent: :destroy
   has_many :events, class_name: 'TaskEvent', dependent: :destroy
   has_many :works, through: :events, source: :work
+  has_many :reads, class_name: 'TaskRead', dependent: :destroy
 
   before_save :clear_end_info
   after_create :create_watcher
   after_create :create_task_event
+  after_create :init_task_reads
 
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
   enum :end_reason, { unset: 0, completed: 1, no_action: 2, unavailable: 3, duplicated: 4, other: 9 }, prefix: true
@@ -125,6 +128,19 @@ class Task < ApplicationRecord
     SQL
   }
 
+  scope :with_unread_count, ->(worker_id) {
+    select(<<~SQL.squish)
+      #{table_name}.*, 
+      (SELECT COUNT(DISTINCT tc.poster_id) FROM task_reads tr
+        LEFT OUTER JOIN task_comments tc ON tc.task_id = #{table_name}.id
+          AND tc.poster_id <> #{worker_id}
+        WHERE tr.task_id = #{table_name}.id
+          AND tr.worker_id = #{worker_id}
+          AND tr.last_read_at < tc.updated_at
+      ) AS unread_count
+    SQL
+  }
+
   def closed?
     self.status.closed_flag
   end
@@ -171,7 +187,10 @@ class Task < ApplicationRecord
       )
       update!(assignee_id: new_assignee_id)
 
-      TaskWatcher.find_or_create_by!(task_id: id, worker_id: new_assignee_id) if new_assignee_id
+      if new_assignee_id
+        TaskWatcher.find_or_create_by!(task: self, worker_id: new_assignee_id)
+        TaskRead.touch_and_get_previous!(task: self, worker_id: new_assignee_id, at: Time.at(0))
+      end
     end
   end
 
@@ -328,8 +347,8 @@ class Task < ApplicationRecord
   end
 
   def create_watcher
-    self.task_watchers.find_or_create_by(worker_id: self.assignee.id) if self.assignee.present?
-    self.task_watchers.find_or_create_by(worker_id: self.creator.id) if self.creator.present?
+    self.task_watchers.find_or_create_by(worker_id: self.assignee_id) if self.assignee.present?
+    self.task_watchers.find_or_create_by(worker_id: self.creator_id) if self.creator.present?
   end
 
   def create_task_event
@@ -340,5 +359,12 @@ class Task < ApplicationRecord
       actor: self.creator,
       event_type: :task_created
     )
+  end
+
+  def init_task_reads
+    return if self.creator.blank?
+    TaskRead.touch_and_get_previous!(task: self, worker_id: self.creator_id, at: self.created_at)
+    return if self.assignee.blank? || self.assignee_id == self.creator_id
+    TaskRead.touch_and_get_previous!(task: self, worker_id: self.assignee_id, at: Time.at(0))
   end
 end

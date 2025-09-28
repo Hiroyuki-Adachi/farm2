@@ -117,4 +117,16 @@ class TaskEventDecorator < Draper::Decorator
     return "" if object.work.blank?
     "#{work.worked_at}(#{work.name})"
   end
+
+  def my_message_read_count_display
+    return "" unless object.mine_flag
+    return "" if object.read_count.zero?
+    h.content_tag(:span, "既読 #{object.read_count}", class: 'small text-muted align-self-end')
+  end
+
+  def other_message_unread_display
+    return "" if object.mine_flag
+    return "" unless object.unread_flag
+    h.content_tag(:span, '未読', class: 'badge text-bg-danger align-self-end')
+  end
 end

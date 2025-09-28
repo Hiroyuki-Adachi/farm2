@@ -65,6 +65,9 @@ class TaskTest < ActiveSupport::TestCase
 
     # 作成イベントが出ている
     assert_equal 1, created_task.events.where(event_type: :task_created).count
+
+    # 既読が作成されている
+    assert_equal 1, created_task.reads.where(worker_id: worker2.id).count
   end
 
   test "担当者変更処理" do
@@ -73,8 +76,10 @@ class TaskTest < ActiveSupport::TestCase
     open_task = tasks(:open_task)
     comment = "引き継ぎます"
 
-    assert_changes -> { open_task.reload.assignee_id }, to: worker2.id do
-      open_task.change_assignee!(worker2.id, worker1, comment)
+    assert_difference("TaskRead.count", 1) do
+      assert_changes -> { open_task.reload.assignee_id }, to: worker2.id do
+        open_task.change_assignee!(worker2.id, worker1, comment)
+      end
     end
 
     last_event = open_task.events.order(:id).last
@@ -84,6 +89,10 @@ class TaskTest < ActiveSupport::TestCase
     assert_equal comment, last_event.comment&.body
 
     assert open_task.task_watchers.exists?(worker_id: worker2.id)
+
+    last_read = open_task.reads.find_by(worker_id: worker2.id)
+    assert_not_nil last_read
+    assert_equal Time.at(0).to_i, last_read.last_read_at.to_i
   end
 
   test "担当者変更処理(同じ担当者)" do

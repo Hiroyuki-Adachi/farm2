@@ -7,7 +7,9 @@ class PersonalInformations::TasksControllerTest < ActionDispatch::IntegrationTes
   end
 
   test "タスク照会" do
-    get personal_information_task_path(@task, personal_information_token: @user.token)
+    assert_difference("TaskRead.count", +1) do
+      get personal_information_task_path(@task, personal_information_token: @user.token)
+    end
     assert_response :success
   end
 end

@@ -19,13 +19,15 @@
 #
 # Indexes
 #
-#  index_task_events_on_actor_id                (actor_id)
-#  index_task_events_on_assignee_from_id        (assignee_from_id)
-#  index_task_events_on_assignee_to_id          (assignee_to_id)
-#  index_task_events_on_task_comment_id         (task_comment_id)
-#  index_task_events_on_task_id                 (task_id)
-#  index_task_events_on_task_id_and_created_at  (task_id,created_at)
-#  index_task_events_on_work_id                 (work_id)
+#  index_task_events_on_actor_id                             (actor_id)
+#  index_task_events_on_assignee_from_id                     (assignee_from_id)
+#  index_task_events_on_assignee_to_id                       (assignee_to_id)
+#  index_task_events_on_task_comment_id                      (task_comment_id)
+#  index_task_events_on_task_id                              (task_id)
+#  index_task_events_on_task_id_and_actor_id_and_updated_at  (task_id,actor_id,updated_at)
+#  index_task_events_on_task_id_and_created_at               (task_id,created_at)
+#  index_task_events_on_task_id_and_updated_at               (task_id,updated_at)
+#  index_task_events_on_work_id                              (work_id)
 #
 # Foreign Keys
 #
@@ -38,6 +40,10 @@
 #
 class TaskEvent < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+
+  attribute :read_count, :integer
+  attribute :unread_flag, :boolean
+  attribute :mine_flag, :boolean
 
   belongs_to :task
   belongs_to :actor, class_name: 'Worker'
@@ -53,8 +59,34 @@ class TaskEvent < ApplicationRecord
   after_commit :clear_if_comment_cleared, on: :update
   after_commit :clear_if_work_deleted, on: :update
 
+  scope :usual_order, -> {includes(:actor, :comment).order(created_at: :asc, id: :asc)}
+
+  scope :with_read_info, ->(worker_id, last_read_at) {
+    select([
+      <<~SQL.squish,
+        #{table_name}.*, 
+        COALESCE(
+        (SELECT COUNT(DISTINCT tr.worker_id) FROM task_comments tc
+          INNER JOIN task_reads tr ON tc.task_id = tr.task_id
+            AND tc.updated_at <= tr.last_read_at
+            AND tr.worker_id != ?
+          WHERE tc.task_id = #{table_name}.task_id
+            AND tc.id = #{table_name}.task_comment_id
+        ), 0) AS read_count,
+        EXISTS(SELECT 1 FROM task_comments tc
+            WHERE tc.task_id = #{table_name}.task_id
+              AND tc.id = #{table_name}.task_comment_id
+              AND tc.poster_id != ?
+              AND tc.updated_at > ?
+          ) AS unread_flag,
+        (#{table_name}.actor_id = ?) AS mine_flag
+      SQL
+      worker_id, worker_id, last_read_at, worker_id
+    ])
+  }
+
   def last?
-    task.events.order(created_at: :desc).first == self
+    task.events.order(created_at: :desc, id: :desc).first == self
   end
 
   private
