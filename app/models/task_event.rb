@@ -62,24 +62,27 @@ class TaskEvent < ApplicationRecord
   scope :usual_order, -> {includes(:actor, :comment).order(created_at: :asc, id: :asc)}
 
   scope :with_read_info, ->(worker_id, last_read_at) {
-    select(<<~SQL.squish)
-      #{table_name}.*, 
-      COALESCE(
-      (SELECT COUNT(DISTINCT tr.worker_id) FROM task_comments tc
-        INNER JOIN task_reads tr ON tc.task_id = tr.task_id
-          AND tc.updated_at <= tr.last_read_at
-          AND tr.worker_id != #{worker_id}
-        WHERE tc.task_id = #{table_name}.task_id
-          AND tc.id = #{table_name}.task_comment_id
-      ), 0) AS read_count,
-      EXISTS(SELECT 1 FROM task_comments tc
+    select([
+      <<~SQL.squish,
+        #{table_name}.*, 
+        COALESCE(
+        (SELECT COUNT(DISTINCT tr.worker_id) FROM task_comments tc
+          INNER JOIN task_reads tr ON tc.task_id = tr.task_id
+            AND tc.updated_at <= tr.last_read_at
+            AND tr.worker_id != ?
           WHERE tc.task_id = #{table_name}.task_id
             AND tc.id = #{table_name}.task_comment_id
-            AND tc.poster_id != #{worker_id}
-            AND tc.updated_at > '#{last_read_at.to_s}'
-        ) AS unread_flag,
-      (#{table_name}.actor_id = #{worker_id}) AS mine_flag
-    SQL
+        ), 0) AS read_count,
+        EXISTS(SELECT 1 FROM task_comments tc
+            WHERE tc.task_id = #{table_name}.task_id
+              AND tc.id = #{table_name}.task_comment_id
+              AND tc.poster_id != ?
+              AND tc.updated_at > ?
+          ) AS unread_flag,
+        (#{table_name}.actor_id = ?) AS mine_flag
+      SQL
+      worker_id, worker_id, last_read_at, worker_id
+    ])
   }
 
   def last?
