@@ -1,4 +1,4 @@
-<%= form_with model: task, class: "needs-validation", data: { turbo: true, page_module: "pages/tasks" } do |f| %>
+<%= form_with model: task, class: "needs-validation", data: { turbo: true, controller: "page-loader", page_loader_modules_value: "pages/tasks" } do |f| %>
   <%= error_print(f.object) %>
 
   <div class="card shadow-sm mb-4">

@@ -18,8 +18,4 @@ document.addEventListener('turbo:load', () => {
         .then(res => res.text())
         .then(html => Turbo.renderStreamMessage(html));
     });
-
-    window.showWork = function(tr) {
-        Turbo.visit(tr.dataset.url);
-    }
 });

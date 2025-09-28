@@ -1,4 +1,4 @@
-<%= form_with url: gaps_monthly_reports_path, method: :get, data: {turbo_frame: :list, page_module: "pages/gaps-monthly-reports"}, id: :search_form do |f| %>
+<%= form_with url: gaps_monthly_reports_path, method: :get, data: {turbo_frame: :list, controller: "page-loader", page_loader_modules_value: "pages/gaps-monthly-reports"}, id: :search_form do |f| %>
   <div class="row">
     <div class="col-md-4">
       <h1>作業月毎記録表</h1>

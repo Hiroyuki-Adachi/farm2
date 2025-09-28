@@ -1,4 +1,4 @@
-<%= form_with url: works_path, method: :get, data: {turbo_frame: :list, page_module: "pages/work-index"}, id: :search_form do |f| %>
+<%= form_with url: works_path, method: :get, data: {turbo_frame: :list, controller: "page-loader", page_loader_modules_value: "pages/work-index"}, id: :search_form do |f| %>
 <div class="row">
   <div class="col-md-3">
      <h1>作業一覧</h1>
