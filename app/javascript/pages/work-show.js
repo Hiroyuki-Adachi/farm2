@@ -29,4 +29,23 @@ export const init = () => {
             }
         }));
     };
+
+    function layCover(coverName) 
+    {
+        const coverElm = document.getElementById(`cover_${coverName}`);
+        const conteElm = document.getElementById(`content_${coverName}`);
+        if ((coverElm != null) && (conteElm != null)) {
+            coverElm.style.height = `${conteElm.clientHeight}px`;
+            coverElm.style.width  = `${conteElm.clientWidth}px`;
+        }
+    }
+
+    if (document.getElementById("covering_flag").value === "true") {
+        layCover("work");
+        layCover("workers");
+        layCover("lands");
+        layCover("machines");
+        layCover("chemicals");
+        layCover("whole_crops");
+    }
 };

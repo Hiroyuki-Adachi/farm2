@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/lands-index">
   <div class="col-md-8">
     <h1>土地マスタ一覧</h1>
   </div>
@@ -51,18 +51,3 @@
   </div>
 </div>
 <input type="hidden" id="lands_path" value="<%= lands_path %>" />
-<% content_for :head do %>
-<script type="module" data-turbo-track="reload">
-import { Turbo } from "@hotwired/turbo-rails";
-
-document.addEventListener('turbo:load', () => {
-    document.getElementById("home").addEventListener("change", (event) => {
-        if(event.target.value == "") {
-            Turbo.visit(document.getElementById("lands_path").value);
-        } else {
-            Turbo.visit(`${document.getElementById("lands_path").value}?home_id=${event.target.value}`);
-        }
-    });
-});
-</script>
-<% end %>
