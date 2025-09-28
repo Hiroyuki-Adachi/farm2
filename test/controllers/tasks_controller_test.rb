@@ -40,7 +40,9 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "タスク照会" do
-    get task_url(@task)
+    assert_difference("TaskRead.count", +1) do
+      get task_url(@task)
+    end
     assert_response :success
   end
 

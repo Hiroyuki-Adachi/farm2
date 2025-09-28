@@ -65,6 +65,9 @@ class TaskTest < ActiveSupport::TestCase
 
     # 作成イベントが出ている
     assert_equal 1, created_task.events.where(event_type: :task_created).count
+
+    # 既読が作成されている
+    assert_equal 1, created_task.reads.where(worker_id: worker2.id).count
   end
 
   test "担当者変更処理" do
