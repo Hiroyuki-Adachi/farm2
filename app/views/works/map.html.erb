@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--work-map' %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -5,9 +6,7 @@
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
   <%= javascript_importmap_tags %>
-  <%= stylesheet_link_tag 'application' %>
-  <%= javascript_include_tag 'pages/work-map', 'data-turbo-track': 'reload' %>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"]%>" defer="defer" data-turbolinks-eval="false"></script>
+  <%= stylesheet_link_tag 'application' %>  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"]%>" defer="defer" data-turbolinks-eval="false"></script>
   <%= csrf_meta_tags %>
 </head>
 <body>

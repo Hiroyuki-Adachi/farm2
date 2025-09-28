@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--personal-informations--show' %>
 <% [@results1, @results2].each do |results| %>
   <% if results.count > 0 %>
     <% total_hours = 0 %>
@@ -28,6 +29,4 @@
     </table>
   <% end %>
 <% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/personal_informations/show', 'data-turbo-track': 'reload', type: :module, data: {turbo: {track: :reload}} %>
-<% end %>
+<% content_for :head do %><% end %>

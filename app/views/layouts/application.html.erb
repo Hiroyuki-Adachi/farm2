@@ -5,7 +5,6 @@
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
   <%= javascript_importmap_tags %>
-  <%= javascript_include_tag 'pages/pc-common', 'data-turbo-track': 'reload', type: :module %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag 'theme', 'data-turbo-track': 'reload' %>
   <%= stylesheet_link_tag 'pc-common', 'data-turbo-track': 'reload' %>
@@ -15,7 +14,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path('/images/icons/farm2-32.png') %>">
   <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path('/images/icons/farm2-16.png') %>">
 </head>
-<body>
+<body data-controller="pc-common">
   <header>
 <%= render 'navbar' %>
   </header>
@@ -47,7 +46,8 @@
         <div id="flash_messages" class="row">
           <%= render "application/flashes", locals: {flash: flash} %>
         </div>
-        <div class="app-card">
+        <% page_controllers = view_flow.get(:page_controllers).presence %>
+        <div class="app-card" <%= page_controllers ? %(data-controller="#{page_controllers.strip}") : "" %>>
           <%= yield %>
         </div>
       </div>

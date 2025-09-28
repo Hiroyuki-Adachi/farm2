@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--sorimachi' %>
 <h1>ソリマチ農業簿記(<%= current_term %>)</h1>
 <% if @error %>
 <div class="alert alert-danger" role="alert"><%= @error %></div>
@@ -85,6 +86,4 @@
     </div>
   </div>
 </div>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/sorimachi', 'data-turbo-track': 'reload', type: :module %>
-<% end %>
+<% content_for :head do %><% end %>

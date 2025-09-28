@@ -8,7 +8,7 @@
           new_chemical_cost_path(chemical_term_id: chemical_work_type.chemical_term_id, work_type_id: chemical_work_type.work_type_id) :
           edit_chemical_cost_path(chemical_work_type)
         %>" class="chemical-cost-value" role="button"
-        onclick="chemicalClick(this)">
+        data-action="click->pages--chemical-costs#open">
       <%= chemical_work_type.quantity.zero? ? "-" : sprintf("%.1f", chemical_work_type.quantity) %>
     </span>
 </td>

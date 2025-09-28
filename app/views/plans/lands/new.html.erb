@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--plan-lands' %>
 <div class="row">
   <div class="col-md-6 h1">
     作付計画(<%= params[:mode] == Plans::LandsController::TERM_MODES[:next] ? next_term_jp : current_term_jp %>度)
@@ -75,6 +76,4 @@
   }
   .btn-toolbar {display: none;}
 }
-</style>
-<%= javascript_include_tag 'pages/plan-lands', 'data-turbo-track': 'reload', defer: true, type: :module %>
-<% end %>
+</style><% end %>

@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--gap-accidents' %>
 <%= error_print(@accident) %>
 <%= form_with model: @accident, url: @accident.new_record? ? gaps_accidents_path : gaps_accident_path(@accident)  do |f| %>
   <div class="row">
@@ -92,6 +93,4 @@
     </div>
   </div>
 <% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/gap-accidents', 'data-turbo-track': 'reload', type: :module %>
-<% end %>
+<% content_for :head do %><% end %>

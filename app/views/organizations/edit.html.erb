@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--organizations' %>
 <h1>管理情報変更</h1>
 <%= error_print(@organization) %>
 <%= form_with(model: @organization) do |f| %>
@@ -100,6 +101,4 @@
     </div>
   </div>
 <% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/organizations', 'data-turbo-track': 'reload' %>
-<% end %>
+<% content_for :head do %><% end %>

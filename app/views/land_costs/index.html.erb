@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--land-costs' %>
 <%= error_print(@land_cost) %>
 <h1>作付明細</h1>
 <div class="row">
@@ -37,6 +38,4 @@
 <%= hidden_field_tag :colors, @work_types.map { |work_type|
     [work_type.id, {bg: work_type.bg_color_term(current_term), fg: work_type.fg_color_term(current_term)}]
   }.to_h.to_json %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/land-costs', 'data-turbo-track': 'reload', type: :module %>
-<% end %>
+<% content_for :head do %><% end %>

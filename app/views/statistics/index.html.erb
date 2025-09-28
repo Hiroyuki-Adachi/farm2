@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--statistics' %>
 <h1>統計情報一覧</h1>
 
 <ul class="nav nav-tabs">
@@ -26,6 +27,4 @@
     </div>
 </div>
 <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/statistics', 'data-turbo-track': 'reload', type: :module %>
-<% end %>
+<% content_for :head do %><% end %>
