@@ -24,14 +24,11 @@ class TaskRead < ApplicationRecord
   belongs_to :task
   belongs_to :worker
 
-  def self.touch_and_get_previous!(task:, worker:, at: Time.current)
-    prev = nil
-    transaction do
-      rec = find_or_initialize_by(task: task, worker: worker)
-      prev = rec.last_read_at || Time.at(0)
-      rec.last_read_at = [prev, at].max
-      rec.save!
-    end
+  def self.touch_and_get_previous!(task:, worker_id:, at: Time.current)
+    rec = find_or_initialize_by(task: task, worker_id: worker_id)
+    prev = rec.last_read_at || Time.at(0)
+    rec.last_read_at = [prev, at].max
+    rec.save!
     return prev
   end
 end

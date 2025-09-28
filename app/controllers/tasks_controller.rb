@@ -36,7 +36,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @last_read_at = TaskRead.touch_and_get_previous!(task: @task, worker: current_user.worker)
+    @last_read_at = TaskRead.touch_and_get_previous!(task: @task, worker_id: current_user.worker_id)
   end
 
   def destroy

@@ -187,7 +187,10 @@ class Task < ApplicationRecord
       )
       update!(assignee_id: new_assignee_id)
 
-      TaskWatcher.find_or_create_by!(task_id: id, worker_id: new_assignee_id) if new_assignee_id
+      if new_assignee_id
+        TaskWatcher.find_or_create_by!(task: self, worker_id: new_assignee_id)
+        TaskRead.touch_and_get_previous!(task: self, worker_id: new_assignee_id, at: Time.at(0))
+      end
     end
   end
 
@@ -344,8 +347,8 @@ class Task < ApplicationRecord
   end
 
   def create_watcher
-    self.task_watchers.find_or_create_by(worker_id: self.assignee.id) if self.assignee.present?
-    self.task_watchers.find_or_create_by(worker_id: self.creator.id) if self.creator.present?
+    self.task_watchers.find_or_create_by(worker_id: self.assignee_id) if self.assignee.present?
+    self.task_watchers.find_or_create_by(worker_id: self.creator_id) if self.creator.present?
   end
 
   def create_task_event
@@ -359,6 +362,9 @@ class Task < ApplicationRecord
   end
 
   def init_task_reads
-    TaskRead.touch_and_get_previous!(task: self, worker: self.creator, at: self.created_at) if self.creator.present?
+    return if self.creator.blank?
+    TaskRead.touch_and_get_previous!(task: self, worker_id: self.creator_id, at: self.created_at)
+    return if self.assignee.blank? || self.assignee_id == self.creator_id
+    TaskRead.touch_and_get_previous!(task: self, worker_id: self.assignee_id, at: Time.at(0))
   end
 end
