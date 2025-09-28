@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--seedling-costs' %>
 <h1>育苗原価</h1>
 <h2>単価</h2>
 <%= form_with url: seedling_costs_path, method: :post do |f|  %>
@@ -62,6 +63,4 @@
     </div>
   </div>
 <% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/seedling-costs', 'data-turbo-track': 'reload', type: :module %>
-<% end %>
+<% content_for :head do %><% end %>

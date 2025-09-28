@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--institutions' %>
 <%= error_print(@institution) %>
 <%= form_with(model: @institution) do |f| %>
 <div class="row">
@@ -38,6 +39,4 @@
   </div>
 </div>
 <% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/institutions', 'data-turbo-track': 'reload' %>
-<% end %>
+<% content_for :head do %><% end %>

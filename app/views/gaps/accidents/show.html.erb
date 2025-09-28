@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--gap-accidents' %>
 <h1>ヒヤリハット調査票照会</h1>
 <div class="row">
   <div class="col-md-3">
@@ -76,6 +77,4 @@
     <%= link_to "戻る", gaps_accidents_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/gap-accidents', 'data-turbo-track': 'reload', type: :module %>
-<% end %>
+<% content_for :head do %><% end %>

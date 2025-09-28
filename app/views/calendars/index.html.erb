@@ -1,7 +1,7 @@
 <% content_for :head do %>
-<%= javascript_include_tag 'pages/calendar', 'data-turbo-track': 'reload', type: :module %>
 <%= stylesheet_link_tag 'calendar', media: 'all' %>
 <% end %>
+<% content_for :page_controllers, 'pages--calendar' %>
 <h1>カレンダー</h1>
 <style>
 <% @calendar_work_kinds.each do |calendar_work_kind| %>

@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--homes' %>
 <%= error_print(@home) %>
 <%= form_with(model: @home) do |f| %>
   <div class="row">
@@ -88,6 +89,4 @@
     </div>
   </div>
 <% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/homes', 'data-turbo-track': 'reload' %>
-<% end %>
+<% content_for :head do %><% end %>

@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--menu-topics' %>
 <h1 class="h4">ニュース</h1>
   <ul class="list-group">
   <% @user_topics.each do |user_topic| %>
@@ -18,6 +19,4 @@
   <div class="modal-dialog" id="topic_data_dialog">
   </div>
 </div>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/menu-topics', "data-turbo-track": "reload", type: :module %>
-<% end %>
+<% content_for :head do %><% end %>

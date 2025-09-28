@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--work-whole-crops' %>
 <h1>作業日報(WCS)登録</h1>
 <%= error_print(@work) %>
 <% updatable = @work.fixed_at.nil? && updatable_work(current_user, @work) %>
@@ -86,6 +87,4 @@
     </div>
   </div>
 <% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/work-whole-crops', "data-turbo-track": "reload", type: :module %>
-<% end %>
+<% content_for :head do %><% end %>

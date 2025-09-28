@@ -1,3 +1,4 @@
+<% content_for :page_controllers, 'pages--work-workers' %>
 <h1>作業日報(作業者)登録</h1>
 <%= error_print(@work) %>
 
@@ -68,6 +69,4 @@
     </div>
   </div>
 <% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/work-workers', "data-turbo-track": "reload", type: :module %>
-<% end %>
+<% content_for :head do %><% end %>
