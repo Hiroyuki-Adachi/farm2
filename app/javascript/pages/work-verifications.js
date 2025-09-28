@@ -1,6 +1,6 @@
 import "bootstrap";
 
-document.addEventListener('turbo:load', () => {
+export const init = () => {
     document.getElementById("print_self").addEventListener("change", (event) => {
         changePrint(event.target);
     });
@@ -20,7 +20,7 @@ document.addEventListener('turbo:load', () => {
 
     document.getElementById("print_self").checked = true;
     changePrint(document.getElementById("print_self"));
-});
+};
 
 const getCsrfToken = () => {
     const metas = document.getElementsByTagName('meta');

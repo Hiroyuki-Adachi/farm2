@@ -1,4 +1,4 @@
-<%= form_with url: gaps_monthly_reports_path, method: :get, data: {turbo_frame: :list}, id: :search_form do |f| %>
+<%= form_with url: gaps_monthly_reports_path, method: :get, data: {turbo_frame: :list, controller: "page-loader", page_loader_modules_value: "pages/gaps-monthly-reports"}, id: :search_form do |f| %>
   <div class="row">
     <div class="col-md-4">
       <h1>作業月毎記録表</h1>
@@ -68,6 +68,3 @@
   </div>
 </div>
 <%= hidden_field_tag :monthly_report_path, months_gaps_monthly_report_path(":work_type_id") %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/gaps-monthly-reports', 'data-turbo-track': 'reload', type: :module %>
-<% end %>

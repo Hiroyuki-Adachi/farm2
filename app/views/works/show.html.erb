@@ -1,39 +1,17 @@
 <!DOCTYPE html>
-<html lang="ja" data-bs-theme="<%= current_user&.theme || 'light' %>">
+<html lang="ja" data-bs-theme="<%= current_user&.theme || 'light' %>" data-device="pc">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
-  <%= javascript_importmap_tags %>
-  <%= javascript_include_tag 'pages/pc-common', 'data-turbo-track': 'reload', type: :module %>
-  <%= stylesheet_link_tag 'pc-common' %>
   <%= csrf_meta_tags %>
-  <%= javascript_include_tag 'pages/work-show', 'data-turbo-track': 'reload' %>
+  <%= csp_meta_tag %>
+  <%= javascript_importmap_tags %>
+  <%= stylesheet_link_tag 'pc-common' %>
   <%= stylesheet_link_tag 'work-show', media: 'all' %>
-  <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
-      <script type="text/javascript" data-turbo-track="reload">
-      window.addEventListener('turbo:load', () => {
-          layCover("work");
-          layCover("workers");
-          layCover("lands");
-          layCover("machines");
-          layCover("chemicals");
-          layCover("whole_crops");
-      });
-
-      function layCover(coverName)
-      {
-          const coverElm = document.getElementById(`cover_${coverName}`);
-          const conteElm = document.getElementById(`content_${coverName}`);
-          if ((coverElm != null) && (conteElm != null)) {
-              coverElm.style.height = `${conteElm.clientHeight}px`;
-              coverElm.style.width  = `${conteElm.clientWidth}px`;
-          }
-      }
-      </script>
-  <% end %>
 </head>
-<body>
+<body data-controller="page-loader" data-page-loader-modules-value="pages/work-show">
+  <header>
 <%= render partial: "show_base" %>
 <%= render partial: "show_workers" %>
 <% if (@work_lands.present? || @work.work_kind.land_flag) && current_organization.lands_count.positive? %>
@@ -67,6 +45,7 @@
 <% unless params[:target] == 'blank' %>
 <%= link_to "戻る", session[:work_referer] || works_path, class: "btn btn-default" %>
 <% end %>
+<%= hidden_field_tag :covering_flag, @work.fixed_at.nil? && updatable_work(current_user, @work) %>
 <%= render partial: "show_stamp" %>
 <%= render 'application/popup' %>
 </body>

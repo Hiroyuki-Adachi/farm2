@@ -1,5 +1,5 @@
 <%= error_print(@institution) %>
-<%= form_with(model: @institution) do |f| %>
+<%= form_with(model: @institution, data: {controller: "page-loader", page_loader_modules_value: "pages/institutions"}) do |f| %>
 <div class="row">
   <div class="field col-md-3">
     <%= f.label :name, class: "col-form-label-lg form-label" %>
@@ -37,7 +37,4 @@
     <%= link_to "戻る", institutions_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
-<% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/institutions', 'data-turbo-track': 'reload' %>
 <% end %>

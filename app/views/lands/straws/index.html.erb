@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/lands-straws">
   <div class="col-md-4">
     <h1>稲わら面積一覧</h1>
   </div>
@@ -23,12 +23,3 @@
   </div>
 </div>
 <%= hidden_field_tag :lands_straws_path, lands_straws_path %>
-<% content_for :head do %>
-<script data-turbo-track="reload">
-window.addEventListener('turbo:load', () => {
-    document.getElementById("term").addEventListener("change", () => {
-        document.getElementById("search_form").requestSubmit();
-    });
-});
-</script>
-<% end %>

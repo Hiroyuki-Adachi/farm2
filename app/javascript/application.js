@@ -2,3 +2,11 @@
 import "@hotwired/turbo-rails";
 import "bootstrap";
 import "controllers";
+
+const isPC = document.documentElement.dataset.device === "pc"
+           || (matchMedia && matchMedia("(pointer: fine)").matches)
+if (isPC) {
+    const pcMod = await import("pages/pc-common");
+
+    if (pcMod && pcMod.init) { pcMod.init() }
+}

@@ -1,4 +1,4 @@
-window.addEventListener('turbo:load', () => {
+export const init = () => {
     document.getElementById("adjustment_home_sql").value = document.getElementById("drying_adjustment_attributes_home_id").innerHTML;
 
     document.querySelectorAll('input[type="number"][name$="[moth_weight]"], input[type="number"][name$="[rice_weight]"]').forEach((element) => {
@@ -40,7 +40,7 @@ window.addEventListener('turbo:load', () => {
     calcSum();
     changeEnabled();
     wasteWeight2Bag();
-});
+};
 
 function calcSum() {
     const sum_moth = sumWeight('input[type="number"][name$="[moth_weight]"]');

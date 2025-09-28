@@ -1,7 +1,4 @@
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/schedule-workers', "data-turbo-track": "reload", type: :module %>
-<% end %>
-<h1 class="page-header">作業予定者設定</h1>
+<h1 class="page-header" data-controller="page-loader" data-page-loader-modules-value="pages/schedule-workers">作業予定者設定</h1>
 <%= error_print(@schedule) %>
 
 <%= form_with url: schedule_workers_path(schedule_id: @schedule.model), method: :post do |f| %>

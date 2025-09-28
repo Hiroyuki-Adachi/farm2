@@ -1,8 +1,8 @@
-<h1>作業日報(作業者)登録</h1>
+<h1 data-controller="page-loader" data-page-loader-modules-value="pages/work-workers">作業日報(作業者)登録</h1>
 <%= error_print(@work) %>
 
 <%= form_with(model: @work.model, url: {action: :create}, html: {method: :post}) do |f| %>
-  <%= render(:partial => 'show_work', :locals => {:f => f}) %>
+  <%= render partial: 'show_work', locals: {f: f} %>
 
   <h2>作業者</h2>
   <div class="clearfix">
@@ -67,7 +67,4 @@
       <%= link_to '戻る', work_path(@work.model), {class: "btn btn-outline-dark"} %>
     </div>
   </div>
-<% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/work-workers', "data-turbo-track": "reload", type: :module %>
 <% end %>

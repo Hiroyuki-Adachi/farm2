@@ -1,4 +1,4 @@
-<h1>薬剤原価登録</h1>
+<h1 data-controller="page-loader" data-page-loader-modules-value="pages/chemical-costs">薬剤原価登録</h1>
 <div class="row">
   <div id="table_wrapper" class="wrapper small float-head-wrapper" style="height: calc(100vh - 200px)">
     <table class="table table-sm table-hover float-head">
@@ -38,6 +38,3 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/chemical-costs', "data-turbo-track": "reload", type: :module %>
-<% end %>

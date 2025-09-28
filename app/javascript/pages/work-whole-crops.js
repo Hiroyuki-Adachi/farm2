@@ -1,12 +1,12 @@
 import Sortable from "sortablejs";
 
-window.addEventListener('turbo:load', () => {
+export const init = () => {
     Sortable.create(document.getElementById("tbody_lands"), {
         onSort: renumberLands
     });
 
     renumberLands();
-});
+};
 
 function renumberLands() {
     document.querySelectorAll("#tbody_lands tr").forEach((element, index) => {

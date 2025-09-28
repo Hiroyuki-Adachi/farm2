@@ -115,7 +115,7 @@ function addPositions(positions) {
     }
 }
 
-window.addEventListener('turbo:load', () => {
+export const init = () => {
     setAddButtons();
 
     Sortable.create(document.getElementById("tbody_workers"), {
@@ -151,4 +151,4 @@ window.addEventListener('turbo:load', () => {
             addSection(event.target.dataset.section);
         });
     });
-});
+};

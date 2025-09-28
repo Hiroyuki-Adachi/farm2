@@ -65,10 +65,10 @@ function dispSum() {
     });
 }
   
-window.addEventListener('turbo:load', () => {
+export const init = () => {
     document.getElementById("target").addEventListener("blur", function() {
         Turbo.visit(`${target.dataset.url}?target=${this.value}`);
     });
 
     initMap();
-});
+};

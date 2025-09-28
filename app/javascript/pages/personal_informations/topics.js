@@ -1,4 +1,4 @@
-document.addEventListener('turbo:load', () => {
+export const init = () => {
     document.querySelectorAll("a.topic-link").forEach(link => {
         link.addEventListener("click", (event) => {
             event.preventDefault();
@@ -14,7 +14,7 @@ document.addEventListener('turbo:load', () => {
             .finally(() => Turbo.visit(window.location.href, { action: 'replace' }));
         });
     });
-});
+};
 
 const getCsrfToken = () => {
     const metas = document.getElementsByTagName('meta');

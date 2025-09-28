@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/personal_informations/statistics">
   <div class="col-md-12">
     <canvas id="chart1" />
   </div>
@@ -14,6 +14,3 @@
 <%= hidden_field_tag :chart1_data2, @total_home.map {|ta| ta[1].to_f}.to_json.html_safe %>
 <%= hidden_field_tag :chart2_data1, @total_month1.map {|ta| ta.to_f}.to_json.html_safe %>
 <%= hidden_field_tag :chart2_data2, @total_month2.map {|ta| ta.to_f}.to_json.html_safe %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/personal_informations/statistics', 'data-turbo-track': 'reload', type: :module, data: {turbo: {track: :reload}} %>
-<% end %>

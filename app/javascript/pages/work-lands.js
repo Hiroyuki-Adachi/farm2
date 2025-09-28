@@ -89,7 +89,7 @@ function addLand(landId, landPlace, landArea)
     document.getElementById("land").value = "";
 }
 
-window.addEventListener('turbo:load', () => {
+export const init = () => {
     Sortable.create(document.getElementById("tbody_lands"), {
         onSort: renumberLand
     });
@@ -128,4 +128,4 @@ window.addEventListener('turbo:load', () => {
             }
         }
     });
-});
+};

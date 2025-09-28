@@ -1,4 +1,4 @@
-window.addEventListener('turbo:load', () => {
+export const init = () => {
     document.querySelectorAll(".check-weather").forEach((element) => {
         element.addEventListener("change", (event) => {
             checkWeather(event.target);
@@ -9,7 +9,7 @@ window.addEventListener('turbo:load', () => {
     checkWeather(document.getElementById("check_water"));
     checkWeather(document.getElementById("check_wind"));
     checkWeather(document.getElementById("check_other"));
-});
+};
 
 const checkWeather = (checkbox) => {
     document.querySelectorAll(checkbox.dataset.css).forEach((element) => {

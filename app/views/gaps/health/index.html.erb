@@ -1,4 +1,4 @@
-<%= form_with url: gaps_health_index_path, method: :get, data: {turbo_frame: :list}, id: :search_form do |f| %>
+<%= form_with url: gaps_health_index_path, method: :get, data: {turbo_frame: :list, controller: "page-loader", page_loader_modules_value: "pages/gaps-health"}, id: :search_form do |f| %>
   <div class="row">
     <div class="col-md-4">
       <h1>体調確認表</h1>
@@ -23,13 +23,3 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
-<% content_for :head do %>
-<script data-turbo-track="reload">
-window.addEventListener('turbo:load', () => {
-    document.getElementById("work_type_id").addEventListener("change", () => {
-        loadingStart("集計中");
-        document.getElementById("search_form").requestSubmit();
-    });
-});
-</script>
-<% end %>

@@ -1,6 +1,6 @@
 import { Turbo } from "@hotwired/turbo-rails";
 
-window.addEventListener('turbo:load', () => {
+export const init = () => {
     document.querySelectorAll("input[type='radio'][id^='work_type']:checked").forEach((element) => {
         element.closest("tr").style.backgroundColor = element.dataset.bgColor;
         element.closest("tr").style.color = element.dataset.fgColor;
@@ -16,7 +16,7 @@ window.addEventListener('turbo:load', () => {
             }
         });
     });
-});
+};
 
 window.selectWorktype = (element) => {
     element.closest("tr").style.backgroundColor = element.dataset.bgColor;

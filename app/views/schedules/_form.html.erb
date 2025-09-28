@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/schedule">
   <div class="mb-3 col-md-3">
     <%= f.label :worked_at, '', class: "col-form-label-lg form-label" %>
     <%= f.date_field :worked_at, {required: true, class: "form-control", min: Date.today - Schedule::DISPLAY_DAYS.days} %>
@@ -103,6 +103,3 @@
 </div>
 <%= f.hidden_field :term %>
 <%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/schedule', "data-turbo-track": "reload", type: :module %>
-<% end %>

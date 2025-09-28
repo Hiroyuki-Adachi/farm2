@@ -1,4 +1,4 @@
-<h1>作業日報(作業田)登録</h1>
+<h1 data-controller="page-loader" data-page-loader-modules-value="pages/work-lands">作業日報(作業田)登録</h1>
 <%= error_print(@work) %>
 
 <%= form_with(model: @work.model, url: {action: :create}, html: {method: :post}) do |f| %>
@@ -58,5 +58,4 @@
 <%= hidden_field_tag "autocomplete_work_lands_path", autocomplete_work_lands_path(work_id: @work) %>
 <% content_for :head do %>
 <%= stylesheet_link_tag 'auto-complete', 'data-turbo-track': 'reload' %>
-<%= javascript_include_tag 'pages/work-lands', "data-turbo-track": "reload", type: :module %>
 <% end %>
