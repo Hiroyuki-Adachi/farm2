@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" data-bs-theme="<%= current_user&.theme || 'light' %>" data-device="pc">
+<html lang="ja" data-bs-theme="<%= current_user&.theme || 'light' %>">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta http-equiv="content-language" content="ja" />
@@ -10,8 +10,8 @@
   <%= stylesheet_link_tag 'pc-common' %>
   <%= stylesheet_link_tag 'work-show', media: 'all' %>
 </head>
-<body data-controller="page-loader" data-page-loader-modules-value="pages/work-show">
-  <header>
+<body data-controller="pc-common">
+  <main data-controller="page-loader" data-page-loader-modules-value="pages/work-show">
 <%= render partial: "show_base" %>
 <%= render partial: "show_workers" %>
 <% if (@work_lands.present? || @work.work_kind.land_flag) && current_organization.lands_count.positive? %>
@@ -48,5 +48,6 @@
 <%= hidden_field_tag :covering_flag, @work.fixed_at.nil? && updatable_work(current_user, @work) %>
 <%= render partial: "show_stamp" %>
 <%= render 'application/popup' %>
+</main>
 </body>
 </html>

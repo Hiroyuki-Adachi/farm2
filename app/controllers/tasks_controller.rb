@@ -30,7 +30,9 @@ class TasksController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @last_read_at = TaskRead.touch_and_get_previous!(task: @task, worker: current_user.worker)
+  end
 
   def destroy
     to_error_path unless @task.deletable?(current_user)

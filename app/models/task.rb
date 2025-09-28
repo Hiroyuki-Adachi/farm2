@@ -48,10 +48,12 @@ class Task < ApplicationRecord
   has_many :comments, class_name: 'TaskComment', dependent: :destroy
   has_many :events, class_name: 'TaskEvent', dependent: :destroy
   has_many :works, through: :events, source: :work
+  has_many :reads, class_name: 'TaskRead', dependent: :destroy
 
   before_save :clear_end_info
   after_create :create_watcher
   after_create :create_task_event
+  after_create :init_task_reads
 
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
   enum :end_reason, { unset: 0, completed: 1, no_action: 2, unavailable: 3, duplicated: 4, other: 9 }, prefix: true
@@ -340,5 +342,9 @@ class Task < ApplicationRecord
       actor: self.creator,
       event_type: :task_created
     )
+  end
+
+  def init_task_reads
+    TaskRead.touch_and_get_previous!(task: self, worker: self.creator, at: self.created_at) if self.creator.present?
   end
 end
