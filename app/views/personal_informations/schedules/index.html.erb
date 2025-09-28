@@ -3,7 +3,11 @@
   <ul>
     <% @tasks.each do |task| %>
       <li class="mb-1">
-        <%= link_to task.title, personal_information_task_path(personal_information_token: params[:personal_information_token], id: task.model.id) %><%= task.due_badge %>
+        <%= link_to task.title, 
+          personal_information_task_path(personal_information_token: params[:personal_information_token], 
+          data: { turbo_prefetch: false },
+          id: task.model.id) %>
+          <%= task.due_badge %>
       </li>
     <% end %>
   </ul>

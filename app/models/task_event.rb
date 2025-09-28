@@ -41,6 +41,10 @@
 class TaskEvent < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
+  attribute :read_count, :integer
+  attribute :unread_flag, :boolean
+  attribute :mine_flag, :boolean
+
   belongs_to :task
   belongs_to :actor, class_name: 'Worker'
   belongs_to :assignee_from, class_name: 'Worker', optional: true
@@ -55,8 +59,31 @@ class TaskEvent < ApplicationRecord
   after_commit :clear_if_comment_cleared, on: :update
   after_commit :clear_if_work_deleted, on: :update
 
+  scope :usual_order, -> {includes(:actor, :comment).order(created_at: :asc, id: :asc)}
+
+  scope :with_read_info, ->(worker_id, last_read_at) {
+    select(<<~SQL.squish)
+      #{table_name}.*, 
+      COALESCE(
+      (SELECT COUNT(DISTINCT tr.worker_id) FROM task_comments tc
+        INNER JOIN task_reads tr ON tc.task_id = tr.task_id
+          AND tc.updated_at <= tr.last_read_at
+          AND tr.worker_id != #{worker_id}
+        WHERE tc.task_id = #{table_name}.task_id
+          AND tc.id = #{table_name}.task_comment_id
+      ), 0) AS read_count,
+      EXISTS(SELECT 1 FROM task_comments tc
+          WHERE tc.task_id = #{table_name}.task_id
+            AND tc.id = #{table_name}.task_comment_id
+            AND tc.poster_id != #{worker_id}
+            AND tc.updated_at > '#{last_read_at.to_s}'
+        ) AS unread_flag,
+      (#{table_name}.actor_id = #{worker_id}) AS mine_flag
+    SQL
+  }
+
   def last?
-    task.events.order(created_at: :desc).first == self
+    task.events.order(created_at: :desc, id: :desc).first == self
   end
 
   private

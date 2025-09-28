@@ -25,7 +25,7 @@ class TaskRead < ApplicationRecord
   belongs_to :worker
 
   def self.touch_and_get_previous!(task:, worker:, at: Time.current)
-    prev = Time.at(0)
+    prev = nil
     transaction do
       rec = find_or_initialize_by(task: task, worker: worker)
       prev = rec.last_read_at || Time.at(0)
