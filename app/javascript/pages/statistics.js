@@ -1,6 +1,6 @@
 import Chart from "chart.js/auto";
 
-document.addEventListener("turbo:load", () => {
+export const init = () => {
     document.querySelectorAll(".nav-link").forEach((element) => {
         element.addEventListener("click", (event) => {
             if (window.myChart) {
@@ -22,4 +22,4 @@ document.addEventListener("turbo:load", () => {
             });
         });
     });
-});
+};

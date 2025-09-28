@@ -51,7 +51,7 @@ document.addEventListener("turbo:before-cache", () => {
   document.body.style.removeProperty("padding-right");
 })
 
-document.addEventListener('turbo:load', () => {
+export const init = () => {
   // --- 残留掃除（既存のまま） ---
   document.querySelectorAll(".modal-backdrop, .offcanvas-backdrop").forEach((bd) => {bd.remove()});
   document.body.classList.remove("modal-open");
@@ -304,7 +304,7 @@ document.addEventListener('turbo:load', () => {
       inst?.hide();
     });
   }
-});
+};
 
 // loadingStart / loadingEnd は既存のまま
 

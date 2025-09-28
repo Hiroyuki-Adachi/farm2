@@ -1,6 +1,6 @@
 import { Turbo } from "@hotwired/turbo-rails"
 
-document.addEventListener('turbo:load', () => {
+export const init = () => {
     window.chemicalClick = (target) => {
         fetch(target.dataset.url, {
             "Accept": "text/vnd.turbo-stream.html",
@@ -9,4 +9,4 @@ document.addEventListener('turbo:load', () => {
         .then(res => res.text())
         .then(html => Turbo.renderStreamMessage(html));
     };
-});
+};

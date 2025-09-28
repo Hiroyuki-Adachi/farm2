@@ -38,7 +38,7 @@ function checkAll(val)
     calcTotal();
 }
 
-document.addEventListener('turbo:load', () => {
+export const init = () => {
     document.querySelectorAll(".all-check").forEach((element) => {
         element.addEventListener("click", () => {
             checkAll(true);
@@ -54,4 +54,4 @@ document.addEventListener('turbo:load', () => {
             calcTotal();
         });
     });
-});
+};

@@ -5,4 +5,8 @@ import "controllers";
 
 const isPC = document.documentElement.dataset.device === "pc"
            || (matchMedia && matchMedia("(pointer: fine)").matches)
-if (isPC) import("pages/pc-common")
+if (isPC) {
+    const pcMod = await import("pages/pc-common");
+
+    if (pcMod && pcMod.init) { pcMod.init() }
+}

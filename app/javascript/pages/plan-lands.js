@@ -110,4 +110,6 @@ const loadEvent = () => {
   initMap();
 }
 
-document.addEventListener('turbo:load', loadEvent);
+export const init = () => {
+  loadEvent();
+}
