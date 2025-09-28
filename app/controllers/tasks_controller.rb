@@ -8,7 +8,12 @@ class TasksController < ApplicationController
   decorates_assigned :task, :tasks
 
   def index
-    @tasks = Task.for_index.includes(:assignee).with_watch_flag(current_user.worker.id).page(params[:page])
+    @tasks = Task
+              .for_index
+              .includes(:assignee)
+              .with_watch_flag(current_user.worker.id)
+              .with_unread_count(current_user.worker.id)
+              .page(params[:page])
   end
 
   def new
