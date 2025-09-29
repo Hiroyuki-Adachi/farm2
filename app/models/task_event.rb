@@ -42,6 +42,7 @@ class TaskEvent < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   attribute :read_count, :integer
+  attribute :reader_names, :string, array: true, default: []
   attribute :unread_flag, :boolean
   attribute :mine_flag, :boolean
 
@@ -62,9 +63,7 @@ class TaskEvent < ApplicationRecord
   scope :usual_order, -> {includes(:actor, :comment).order(created_at: :asc, id: :asc)}
 
   scope :with_read_info, ->(worker_id, last_read_at) {
-    
-    sql = ApplicationRecord.sanitize_sql_array(
-      [<<~SQL.squish, {worker_id: worker_id, last_read_at: last_read_at}]
+    sql = <<-SQL.squish
         #{table_name}.*, 
         COALESCE(
         (SELECT COUNT(DISTINCT tr.worker_id) FROM task_comments tc
@@ -74,6 +73,15 @@ class TaskEvent < ApplicationRecord
           WHERE tc.task_id = #{table_name}.task_id
             AND tc.id = #{table_name}.task_comment_id
         ), 0) AS read_count,
+        (SELECT ARRAY_AGG(DISTINCT (w.family_name || ' ' || w.first_name))
+          FROM task_comments tc
+          INNER JOIN task_reads tr ON tc.task_id = tr.task_id
+            AND tc.updated_at <= tr.last_read_at
+            AND tr.worker_id != :worker_id
+          INNER JOIN workers w ON w.id = tr.worker_id
+          WHERE tc.task_id = #{table_name}.task_id
+            AND tc.id = #{table_name}.task_comment_id
+        ) AS reader_names,
         EXISTS(SELECT 1 FROM task_comments tc
             WHERE tc.task_id = #{table_name}.task_id
               AND tc.id = #{table_name}.task_comment_id
@@ -82,8 +90,8 @@ class TaskEvent < ApplicationRecord
           ) AS unread_flag,
         (#{table_name}.actor_id = :worker_id) AS mine_flag
       SQL
-    )
-    select(Arel.sql(sql))
+  
+    select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id, last_read_at: last_read_at}])))
   }
 
   def last?

@@ -118,27 +118,31 @@ class Task < ApplicationRecord
   }
   
   scope :with_watch_flag, ->(worker_id) {
-    select(<<~SQL.squish)
+    sql = <<-SQL.squish
       #{table_name}.*, 
       EXISTS (
         SELECT 1 FROM task_watchers tw
         WHERE tw.task_id = #{table_name}.id
-          AND tw.worker_id = #{worker_id}
+          AND tw.worker_id = :worker_id
       ) AS watching
     SQL
+
+    select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
   }
 
   scope :with_unread_count, ->(worker_id) {
-    select(<<~SQL.squish)
+    sql = <<-SQL.squish
       #{table_name}.*, 
-      (SELECT COUNT(DISTINCT tc.poster_id) FROM task_reads tr
+      (SELECT COUNT(DISTINCT tc.id) FROM task_reads tr
         LEFT OUTER JOIN task_comments tc ON tc.task_id = #{table_name}.id
-          AND tc.poster_id <> #{worker_id}
+          AND tc.poster_id <> :worker_id
         WHERE tr.task_id = #{table_name}.id
-          AND tr.worker_id = #{worker_id}
+          AND tr.worker_id = :worker_id
           AND tr.last_read_at < tc.updated_at
       ) AS unread_count
     SQL
+
+    select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
   }
 
   def closed?

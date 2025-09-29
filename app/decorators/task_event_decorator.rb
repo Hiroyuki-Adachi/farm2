@@ -118,10 +118,26 @@ class TaskEventDecorator < Draper::Decorator
     "#{work.worked_at}(#{work.name})"
   end
 
-  def my_message_read_count_display
+  def my_message_read_count_display(tooltip: false)
     return "" unless object.mine_flag
     return "" if object.read_count.zero?
-    h.content_tag(:span, "既読 #{object.read_count}", class: 'small text-muted align-self-end')
+    content_text = "既読 #{object.read_count}"
+    content_class = 'small text-muted align-self-end'
+    return h.content_tag(:span, content_text, class: content_class) unless tooltip
+
+    reader_names = object.reader_names.join('<br />').html_safe
+
+    options = { 
+      class: content_class,
+      data: {
+        bs_toggle: 'tooltip',
+        bs_placement: 'left',
+        bs_html: 'true',
+        bs_title: reader_names
+      }
+    }
+    options[:title] = object.reader_names.join('、') if object.reader_names.present?
+    h.content_tag(:span, content_text, options)
   end
 
   def other_message_unread_display
