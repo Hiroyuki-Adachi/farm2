@@ -40,12 +40,22 @@
       <%= f.number_field :dry_adjust_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
     </div>
     <div class="col-md-2 mb-3">
+      <%= f.label :half_sum_flag, class: "col-form-label-lg form-label" %>
+      <%= f.check_box :half_sum_flag, {class: "form-check"}, 1, 0 %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 mb-3">
       <%= f.label :waste_price, class: "col-form-label-lg form-label" %>
       <%= f.number_field :waste_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
     </div>
     <div class="col-md-2 mb-3">
-      <%= f.label :half_sum_flag, class: "col-form-label-lg form-label" %>
-      <%= f.check_box :half_sum_flag, {class: "form-control"}, 1, 0 %>
+      <%= f.label :waste_drying_price, class: "col-form-label-lg form-label" %>
+      <%= f.number_field :waste_drying_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
+    </div>
+    <div class="col-md-2 mb-3">
+      <%= f.label :waste_adjust_price, class: "col-form-label-lg form-label" %>
+      <%= f.number_field :waste_adjust_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
     </div>
   </div>
   <div class="btn-toolbar">

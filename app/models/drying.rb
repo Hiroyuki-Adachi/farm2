@@ -95,12 +95,17 @@ class Drying < ApplicationRecord
     harvest_weight(system) / KG_PER_BAG_RICE * price(system, home_id)
   end
 
-  def waste_amount(system)
-    waste_weight / KG_PER_BAG_WASTE * system.waste_price
+  def waste_price(sys, home_id)
+    return sys.waste_adjust_price if adjust_only?(home_id)
+    return self? ? sys.waste_price : sys.waste_drying_price
+  end
+
+  def waste_amount(sys, home_id)
+    waste_weight / KG_PER_BAG_WASTE * waste_price(sys, home_id)
   end
 
   def total_amount(system, home_id)
-    amount(system, home_id) + waste_amount(system)
+    amount(system, home_id) + waste_amount(system, home_id)
   end
 
   def self.calc_total(dryings, home, system)
@@ -111,7 +116,8 @@ class Drying < ApplicationRecord
     }
     waste_totals = {
       adjust: 0.0,
-      self: 0.0
+      self: 0.0,
+      another: 0.0
     }
     shipped_totals = {
       adjust: 0.0,
@@ -123,15 +129,14 @@ class Drying < ApplicationRecord
         rice_totals[:adjust] += drying.adjustment.rice_weight(system) || 0
         waste_totals[:adjust] += drying.adjustment.waste_weight || 0
         shipped_totals[:adjust] += drying.harvest_weight(system)
-        next
-      end
-      if drying.self?
+      elsif drying.self?
         rice_totals[:self] += drying.adjustment.rice_weight(system) || 0
         waste_totals[:self] += drying.adjustment.waste_weight || 0
         shipped_totals[:self] += drying.harvest_weight(system)
       else
         rice_totals[:country] += drying.drying_moths.sum(:rice_weight) || 0
         shipped_totals[:country] += drying.harvest_weight(system)
+        waste_totals[:another] += drying.waste_weight || 0
       end
     end
     return rice_totals, waste_totals, shipped_totals

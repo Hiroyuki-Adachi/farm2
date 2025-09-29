@@ -24,10 +24,10 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
         drying.work_type&.name,
         drying.model.carried_on,
         drying.model.waste_date,
-        "くず米",
+        drying.waste_name(home.id),
         drying.waste_weight / Drying::KG_PER_BAG_WASTE,
-        current_system.waste_price,
-        drying.waste_amount(current_system)
+        drying.waste_price(current_system, home.id),
+        drying.waste_amount(current_system, home.id)
       ]
     end
   end
