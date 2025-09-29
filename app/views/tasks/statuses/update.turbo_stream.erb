@@ -2,7 +2,7 @@
 <%= turbo_stream.update "task_status_badge" do %>
   <%= task.status_badge %>
 <% end %>
-<% last_read_at = @task.reads.find_by(worker_id: current_user.worker_id)&.last_read_at || Time.at(0) %>
+<% last_read_at = @task.reads.find_by(worker_id: current_user.worker_id)&.last_read_at&.to_time || Time.at(0) %>
 <%= turbo_stream.update dom_id(@task, :status_date), partial: "tasks/statuses/date_row", locals: { task: task } %>
 <%= turbo_stream.update "task_status_controls", partial: "tasks/statuses/show" %>
 <%= turbo_stream.update "task_delete_button", partial: "tasks/statuses/delete_button", locals: { task: task } %>
