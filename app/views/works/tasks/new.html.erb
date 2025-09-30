@@ -5,7 +5,8 @@
 <table class="table table-sm">
   <thead>
     <tr>
-      <th></th>
+      <th>着手</th>
+      <th>完了</th>
       <th>状態</th>
       <th>優先度</th>
       <th>タイトル</th>
@@ -15,10 +16,22 @@
   </thead>
   <tbody>
     <% tasks.each do |task| %>
-    <tr>
+    <tr data-controller="pages--work-task-toggle">
       <td>
-        <%= check_box_tag "check_task_ids[]", task.id, task.has_work %>
-        <%= hidden_field_tag "all_task_ids[]", task.id %>
+        <%= check_box_tag "check_task_ids[]", task.id, task.has_work,
+          id: dom_id(task, :check),
+          data: {
+            pages__work_task_toggle_target: "check",
+            action: "change->pages--work-task-toggle#sync"
+          } %>
+        <%= hidden_field_tag "all_task_ids[]", task.id, id: dom_id(task, :all) %>
+      </td>
+      <td><%= check_box_tag "close_task_ids[]", task.id, task.closed?,
+        id: dom_id(task, :close),
+        data: {
+          pages__work_task_toggle_target: "close",
+        },
+        disabled: !task.has_work %>
       </td>
       <td><%= task.status_badge %></td>
       <td><%= task.priority_badge %></td>
