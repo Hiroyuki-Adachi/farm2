@@ -64,6 +64,12 @@ ja:
           self: "調整出荷"
           another: "乾燥のみ"
           adjust: "調整のみ"
+        waste_names:
+          unset: ""
+          country: ""
+          self: "くず米(乾燥調整)"
+          another: "くず米(乾燥のみ)"
+          adjust: "くず米(調整のみ)"
 
       machine_price_detail:
         lease_ids:

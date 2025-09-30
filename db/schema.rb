@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_28_063513) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_29_081900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -795,6 +795,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_28_063513) do
     t.boolean "half_sum_flag", default: false, null: false, comment: "半端米集計フラグ"
     t.decimal "relative_price", precision: 5, default: "0", null: false, comment: "縁故米加算額"
     t.decimal "waste_price", precision: 4, default: "0", null: false, comment: "くず米金額"
+    t.decimal "waste_drying_price", precision: 4, default: "0", null: false, comment: "くず米金額(乾燥)"
+    t.decimal "waste_adjust_price", precision: 4, default: "0", null: false, comment: "くず米金額(調整)"
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
   end
 
