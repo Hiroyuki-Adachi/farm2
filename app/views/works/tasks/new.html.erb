@@ -1,5 +1,5 @@
 <h1>作業日報(タスク)登録</h1>
-<%= form_with url: work_tasks_path, html: { method: :post } do |f| %>
+<%= form_with url: work_tasks_path(work_id: @work), html: { method: :post } do |f| %>
 <%= render partial: 'show_work', locals: { f: f } %>
 <div class="h4">関連するタスクが一覧にある場合、左のチェックボックスをチェックして登録ボタンを押下してください。</div>
 <table class="table table-sm">

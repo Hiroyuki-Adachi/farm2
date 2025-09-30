@@ -316,7 +316,7 @@ class Task < ApplicationRecord
 
   def self.add_works!(actor:, all_task_ids:, check_task_ids:, close_task_ids: [], work:)
     ActiveRecord::Base.transaction do
-      Task.for_work(work).where(id: all_task_ids).find_each do |task|
+      Task.where(id: all_task_ids).find_each do |task|
         task.add_work!(actor: actor, work: work, close: close_task_ids.include?(task.id.to_s)) if check_task_ids.include?(task.id.to_s) && !task.has_work
         task.remove_work!(work: work) if check_task_ids.exclude?(task.id.to_s) && task.has_work
       end
