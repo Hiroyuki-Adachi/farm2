@@ -289,6 +289,30 @@ class TaskTest < ActiveSupport::TestCase
     assert_equal work.worked_at, task.started_on
   end
 
+  test "作業追加(完了モード)" do
+    task = tasks(:open_task)
+    worker = workers(:worker1)
+    work = works(:works1)
+
+    assert_difference("TaskEvent.count", 1) do
+      task.add_work!(actor: worker, work: work, close: true)
+    end
+
+    created_event = TaskEvent.last
+    assert_equal worker.id, created_event.actor_id
+    assert_equal task.id, created_event.task_id
+    assert created_event.change_status?
+    assert_equal work.id, created_event.work_id
+    assert_equal TaskStatus::TO_DO.id, created_event.status_from_id
+    assert_equal TaskStatus::DONE.id, created_event.status_to_id
+
+    task.reload
+    assert_equal TaskStatus::DONE.id, task.task_status_id
+    assert_equal work.worked_at, task.started_on
+    assert_equal work.worked_at, task.ended_on
+    assert_equal :completed, task.end_reason.to_sym
+  end
+
   test "作業削除(関連作業がない)" do
     task = tasks(:open_task)
     work = works(:works1)

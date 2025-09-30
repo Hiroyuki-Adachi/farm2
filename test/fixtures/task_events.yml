@@ -73,3 +73,11 @@ work_event:
   work: work_task_work
   created_at: '2025-01-01 12:00:00'
   updated_at: '2025-01-01 12:00:00'
+
+work_event3:
+  event_type: add_work
+  task: task32
+  actor_id: 3
+  work: work_task_work
+  created_at: '2025-01-01 12:00:00'
+  updated_at: '2025-01-01 12:00:00'
