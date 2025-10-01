@@ -36,7 +36,6 @@ class Task < ApplicationRecord
 
   attribute :watching, :boolean
   attribute :comment, :string
-  attribute :has_work, :boolean
   attribute :unread_count, :integer
 
   belongs_to :assignee, class_name: 'Worker', optional: true
@@ -310,9 +309,10 @@ class Task < ApplicationRecord
   def self.add_works!(actor:, check_task_ids:, close_task_ids: [], work:)
     ActiveRecord::Base.transaction do
       Task.where(id: check_task_ids).find_each do |task|
-        unless task.task_events.exists?(work_id: work.id)
-          task.add_work!(actor: actor, work: work, close: close_task_ids.include?(task.id.to_s))
-        end
+        next if task.events.exists?(work_id: work.id)
+
+        task.add_work!(actor: actor, work: work, close: close_task_ids.include?(task.id.to_s))
+      end
     end
   end
 
