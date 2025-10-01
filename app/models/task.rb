@@ -310,8 +310,9 @@ class Task < ApplicationRecord
   def self.add_works!(actor:, check_task_ids:, close_task_ids: [], work:)
     ActiveRecord::Base.transaction do
       Task.where(id: check_task_ids).find_each do |task|
-        task.add_work!(actor: actor, work: work, close: close_task_ids.include?(task.id.to_s)) if !task.has_work
-      end
+        unless task.task_events.exists?(work_id: work.id)
+          task.add_work!(actor: actor, work: work, close: close_task_ids.include?(task.id.to_s))
+        end
     end
   end
 
