@@ -25,7 +25,6 @@ class Works::TasksControllerTest < ActionDispatch::IntegrationTest
     assert_not work.tasks.include?(task3)
 
     post work_tasks_path(work_id: work), params: {
-      all_task_ids: [task1.id, task3.id],
       check_task_ids: [task1.id, task3.id],
       close_task_ids: [task3.id]
     }

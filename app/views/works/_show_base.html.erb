@@ -3,6 +3,7 @@
   <div class="title"><%= @work.worked_at_long %>&nbsp;天候(<%= @work.weather_name %>)</div>
   <div class="title">作業開始<%= @work.start_at %>&nbsp;作業終了<%= @work.end_at %></div>
 </div>
+<span id="work_id" style="font-family:sans-serif; font-size: 9pt;">No.<%= @work.id%></span>
 <div id="content_work" class="content">
   <table id="detail_work">
     <% categories = WorkType.categories %>
@@ -30,4 +31,3 @@
   </table>
   <div id="cover_work" class="cover" onclick="location.href='<%=raw edit_work_path(@work) %>'"></div>
 </div>
-<span id="work_id" style="position:absolute; top:<%= 120 + (defined?(top) ? top : 0) %>px; left:15px; font-family:sans-serif; font-size: 9pt;">No.<%= @work.id%></span>
