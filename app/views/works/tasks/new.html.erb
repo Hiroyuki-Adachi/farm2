@@ -18,15 +18,14 @@
     <% tasks.each do |task| %>
     <tr data-controller="pages--work-task-toggle">
       <td>
-        <%= check_box_tag "check_task_ids[]", task.id, task.has_work,
+        <%= check_box_tag "check_task_ids[]", task.id, false,
           id: dom_id(task, :check),
           data: {
             pages__work_task_toggle_target: "check",
             action: "change->pages--work-task-toggle#sync"
           } %>
-        <%= hidden_field_tag "all_task_ids[]", task.id, id: dom_id(task, :all) %>
       </td>
-      <td><%= check_box_tag "close_task_ids[]", task.id, task.closed?,
+      <td><%= check_box_tag "close_task_ids[]", task.id, false,
         id: dom_id(task, :close),
         data: {
           pages__work_task_toggle_target: "close",

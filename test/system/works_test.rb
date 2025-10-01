@@ -46,6 +46,8 @@ class WorksTest < ApplicationSystemTestCase
     assert_selector 'h1', exact_text: '作業日報(作業田)登録'
 
     fill_in 'land', with: '538'
+    assert_selector '[id^="autoComplete_list_"]', wait: 5
+
     find('#autoComplete_result_0').click
     assert_difference 'WorkLand.count', 1 do
       click_button '登録'

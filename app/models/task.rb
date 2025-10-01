@@ -81,20 +81,13 @@ class Task < ApplicationRecord
     # 日報の作業者
     worker_ids_subq = work_result_table.project(work_result_table[:worker_id]).where(work_result_table[:work_id].eq(work.id))
 
-    # 既に紐づいている
-    exists_work_link =
-      Arel::Nodes::Exists.new(
-        task_event_table.project(Arel.sql("1"))
-          .where(task_event_table[:task_id].eq(task_table[:id]).and(task_event_table[:work_id].eq(work.id)))
-      )
-
     # 新しく紐づけ可能なタスクの条件
     new_work_link = task_table[:office_role].eq(work.work_type.office_role) # 役割が一致
               .and(task_table[:office_role].not_eq(Task.office_roles[:none])) # 役割が「なし」ではない
               .and(task_table[:assignee_id].in(worker_ids_subq)) # 作業者が担当者に含まれる
 
-    base = where(task_status_id: TaskStatus.workable_ids).where(new_work_link.or(exists_work_link))
-    base.select(task_table[Arel.star], exists_work_link.dup.as("has_work"))
+    base = where(task_status_id: TaskStatus.workable_ids).where(new_work_link)
+    base.select(task_table[Arel.star])
   }
 
   scope :opened, -> { where(task_status_id: TaskStatus.open_ids).usual_order }
@@ -314,12 +307,12 @@ class Task < ApplicationRecord
     event.save!
   end
 
-  def self.add_works!(actor:, all_task_ids:, check_task_ids:, close_task_ids: [], work:)
+  def self.add_works!(actor:, check_task_ids:, close_task_ids: [], work:)
     ActiveRecord::Base.transaction do
-      Task.where(id: all_task_ids).find_each do |task|
-        task.add_work!(actor: actor, work: work, close: close_task_ids.include?(task.id.to_s)) if check_task_ids.include?(task.id.to_s) && !task.has_work
-        task.remove_work!(work: work) if check_task_ids.exclude?(task.id.to_s) && task.has_work
-      end
+      Task.where(id: check_task_ids).find_each do |task|
+        unless task.task_events.exists?(work_id: work.id)
+          task.add_work!(actor: actor, work: work, close: close_task_ids.include?(task.id.to_s))
+        end
     end
   end
 

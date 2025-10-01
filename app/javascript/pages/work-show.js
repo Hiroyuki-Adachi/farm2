@@ -7,9 +7,11 @@ export const init = () => {
                 })
                 .then((res) => res.text())
                 .then((text) => {
-                    document.getElementById("print_stamp").innerHTML = text;
+                    if (document.getElementById("print_stamp") != null) {
+                        document.getElementById("print_stamp").innerHTML = text;
+                        popupAlert("印刷した日報を原紙として保管してください。");
+                    }
                     window.print();
-                    popupAlert("印刷した日報を原紙として保管してください。");
                 });
             }
         }));
@@ -23,8 +25,10 @@ export const init = () => {
                 })
                 .then((res) => res.text())
                 .then((text) => {
-                    document.getElementById("print_stamp").innerHTML = text;
-                    popupAlert("印刷情報を削除しました。");
+                    if (document.getElementById("print_stamp") != null) {
+                        document.getElementById("print_stamp").innerHTML = text;
+                        popupAlert("印刷情報を削除しました。");
+                    }
                 });
             }
         }));

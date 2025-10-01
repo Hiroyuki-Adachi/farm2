@@ -12,42 +12,55 @@
 </head>
 <body data-controller="pc-common">
   <main data-controller="page-loader" data-page-loader-modules-value="pages/work-show">
-<%= render partial: "show_base" %>
-<%= render partial: "show_workers" %>
-<% if (@work_lands.present? || @work.work_kind.land_flag) && current_organization.lands_count.positive? %>
-  <%= render partial: "show_lands" %>
-<% end %>
-<% if (@machines.present? || @work.work_kind.machine_kinds.present?) && current_organization.machines_count.positive? %>
-  <%= render partial: "show_machines" %>
-<% end %>
-<span style="break-after: always;"></span>
-<% if (@chemicals.present? || @work.work_kind.chemical_kinds.present?) && current_organization.chemicals_count.positive? %>
-  <%= render partial: "show_chemicals" %>
-<% end %>
-<% if @work.work_kind_id == current_organization.rice_planting_id %>
-  <%= render partial: "show_seedlings" %>
-<% end %>
-<% if @whole_crop || current_organization.whole_crop_work_kind_id == @work.work_kind_id %>
-  <%= render partial: "show_whole_crops" %>
-<% end %>
-
-<% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
-<%= link_to '削除',raw(work_path(id: @work)), class: "btn btn-danger", data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete} %>
-<% end %>
-<% if !current_user.visitor? && @work.term == current_term %><%= link_to "新規登録", new_work_path, class: "btn btn-success" %><% end %>
-<% if updatable_work(current_user, @work) %>
-<%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: raw("execPrint('" + work_print_index_path(work_id: @work.id) + "');") %>
-<%= button_tag "印刷情報削除", type: :button, class: "btn btn-danger", onclick: raw("cancelPrint('" + work_print_path(work_id: @work.id, id: 0) + "');") %>
-<% end %>
-<% if @work.lands.regionable.exists? %>
-<%= link_to "地図", map_work_path(@work), {class: "btn btn-info", target: "_blank", rel: "noopener noreferrer"} %>
-<% end %>
-<% unless params[:target] == 'blank' %>
-<%= link_to "戻る", session[:work_referer] || works_path, class: "btn btn-default" %>
-<% end %>
-<%= hidden_field_tag :covering_flag, @work.fixed_at.nil? && updatable_work(current_user, @work) %>
-<%= render partial: "show_stamp" %>
-<%= render 'application/popup' %>
-</main>
+    <div class="sheet"> 
+      <section class="print-page">
+        <%= render partial: "show_stamp" %>
+        <%= render partial: "show_base" %>
+        <%= render partial: "show_workers" %>
+        <% if (@work_lands.present? || @work.work_kind.land_flag) && current_organization.lands_count.positive? %>
+          <%= render partial: "show_lands" %>
+        <% end %>
+        <% if (@machines.present? || @work.work_kind.machine_kinds.present?) && current_organization.machines_count.positive? %>
+          <%= render partial: "show_machines" %>
+        <% end %>
+      </section>
+      <% second_print = ((@chemicals.present? || @work.work_kind.chemical_kinds.present?) && current_organization.chemicals_count.positive?) ||
+                        (@work.work_kind_id == current_organization.rice_planting_id) ||
+                        (@whole_crop || current_organization.whole_crop_work_kind_id == @work.work_kind_id) %>
+      <% if second_print %>
+        <section class="print-page">
+          <% if (@chemicals.present? || @work.work_kind.chemical_kinds.present?) && current_organization.chemicals_count.positive? %>
+            <%= render partial: "show_chemicals" %>
+          <% end %>
+          <% if @work.work_kind_id == current_organization.rice_planting_id %>
+            <%= render partial: "show_seedlings" %>
+          <% end %>
+          <% if @whole_crop || current_organization.whole_crop_work_kind_id == @work.work_kind_id %>
+            <%= render partial: "show_whole_crops" %>
+          <% end %>
+        </section>
+      <% end %>
+      <section class="no-print">
+        <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
+          <%= link_to '削除',raw(work_path(id: @work)), class: "btn btn-danger", data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete} %>
+        <% end %>
+        <% if !current_user.visitor? && @work.term == current_term %>
+          <%= link_to "新規登録", new_work_path, class: "btn btn-success" %>
+        <% end %>
+        <% if updatable_work(current_user, @work) %>
+          <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: raw("execPrint('" + work_print_index_path(work_id: @work.id) + "');") %>
+          <%= button_tag "印刷情報削除", type: :button, class: "btn btn-danger", onclick: raw("cancelPrint('" + work_print_path(work_id: @work.id, id: 0) + "');") %>
+        <% end %>
+        <% if @work.lands.regionable.exists? %>
+          <%= link_to "地図", map_work_path(@work), {class: "btn btn-info", target: "_blank", rel: "noopener noreferrer"} %>
+        <% end %>
+        <% unless params[:target] == 'blank' %>
+          <%= link_to "戻る", session[:work_referer] || works_path, class: "btn btn-default" %>
+        <% end %>
+        <%= hidden_field_tag :covering_flag, @work.fixed_at.nil? && updatable_work(current_user, @work) %>
+        <%= render 'application/popup' %>
+      </section>
+    </div>
+  </main>
 </body>
 </html>

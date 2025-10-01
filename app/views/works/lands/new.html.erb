@@ -2,7 +2,7 @@
 <%= error_print(@work) %>
 
 <%= form_with(model: @work.model, url: {action: :create}, html: {method: :post}) do |f| %>
-<%= render(partial: 'show_work', :locals => {:f => f}) %>
+<%= render partial: 'show_work', locals: {f: f} %>
 
 <h2>作業田</h2>
 <div class="clearfix">
