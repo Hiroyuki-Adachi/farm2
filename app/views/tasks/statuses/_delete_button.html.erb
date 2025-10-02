@@ -1,5 +1,5 @@
 <% if task.deletable?(current_user) %>
   <div class="btn-group mr-2">
-    <%= link_to '削除', @task, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+    <%= link_to '削除', @task, {data: {turbo_frame: "_top", turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
   </div>
 <% end %>
