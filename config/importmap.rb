@@ -9,7 +9,7 @@ pin "process" # @2.0.1
 pin "randombytes" # @2.1.0
 pin "safe-buffer" # @5.2.1
 pin "sortablejs" # @1.15.2
-pin "@tarekraafat/autocomplete.js", to: "@tarekraafat--autocomplete.js.js" # @10.2.7
+pin "@tarekraafat/autocomplete.js", to: "@tarekraafat--autocomplete.js.js", preload: false # @10.2.7
 pin_all_from "app/javascript/i18n-js", under: "i18n-js"
 pin "@hotwired/turbo-rails", to: "@hotwired--turbo-rails.js" # @8.0.4
 pin "i18n-js" # @4.4.3
