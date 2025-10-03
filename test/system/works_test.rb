@@ -45,6 +45,7 @@ class WorksTest < ApplicationSystemTestCase
     find('#cover_lands').click
     assert_selector 'h1', exact_text: '作業日報(作業田)登録'
 
+    find('#land').click
     fill_in 'land', with: '538'
     assert_selector '[id^="autoComplete_list_"]', wait: 5
 

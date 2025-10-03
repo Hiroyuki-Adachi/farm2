@@ -90,6 +90,12 @@ gem "commonmarker"
 # Rouge is a pure-ruby syntax highlighter.
 gem "rouge"
 
+group :development, :test do
+  gem 'ruby-lsp'
+  # Debugging tool
+  gem 'debug'
+end
+
 group :development do
   # listen to file modifications
   gem 'listen'
@@ -101,11 +107,8 @@ group :development do
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
-  gem 'ruby-lsp'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
-  gem 'debug'
 end
 
 group :test do
