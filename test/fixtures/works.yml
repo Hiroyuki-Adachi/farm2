@@ -5493,3 +5493,16 @@ work_taue:
   work_kind_id: 1
   created_at: '2015-07-22 01:32:28.20475'
   updated_at: '2015-07-22 01:32:28.20475'
+
+work_task_work:
+  term: '2015'
+  worked_at: '2015-08-01'
+  weather_id: '1'
+  work_type_id: '11'
+  name: "作業指示テスト"
+  start_at: '08:30:00'
+  end_at: '15:00:00'
+  fixed_at: 
+  work_kind_id: 1
+  created_at: '2015-08-01 01:32:28.20475'
+  updated_at: '2015-08-01 01:32:28.20475'

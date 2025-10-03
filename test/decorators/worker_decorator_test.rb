@@ -11,7 +11,7 @@ class WorkerDecoratorTest < ActiveSupport::TestCase
     worker = Worker.new(family_name: "山田", first_name: "太郎")
     assert_equal "山田(太)", decorate(worker).short_name
 
-    worker2 = Worker.new(family_name: "Li", first_name: "Hiro")  # ASCII でもOK
+    worker2 = Worker.new(family_name: "Li", first_name: "Hiro") # ASCII でもOK
     assert_equal "Li(H)", decorate(worker2).short_name
 
     # 1文字姓の端ケース

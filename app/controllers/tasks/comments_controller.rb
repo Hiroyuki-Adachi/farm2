@@ -3,7 +3,7 @@ class Tasks::CommentsController < TasksController
   before_action :set_task
 
   def create
-    @event = TaskEvent.add_comment!(task: @task, actor: current_user.worker, body: comment_params[:body])
+    @event = @task.add_comment!(actor: current_user.worker, body: comment_params[:body])
 
     render turbo_stream: [
       # タイムライン末尾に追記（or 時系列順に並べ替えなら replace で全体描画でもOK）

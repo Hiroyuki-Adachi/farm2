@@ -36,6 +36,7 @@ class Task < ApplicationRecord
 
   attribute :watching, :boolean
   attribute :comment, :string
+  attribute :has_work, :boolean
 
   belongs_to :assignee, class_name: 'Worker', optional: true
   belongs_to :creator, class_name: 'Worker', optional: true
@@ -46,6 +47,7 @@ class Task < ApplicationRecord
   has_many :watchers, through: :task_watchers, source: :worker
   has_many :comments, class_name: 'TaskComment', dependent: :destroy
   has_many :events, class_name: 'TaskEvent', dependent: :destroy
+  has_many :works, through: :events, source: :work
 
   before_save :clear_end_info
   after_create :create_watcher
@@ -68,19 +70,43 @@ class Task < ApplicationRecord
     .usual_order
   }
 
+  scope :for_work, ->(work) {
+    task_event_table = TaskEvent.arel_table
+    task_table = arel_table
+    work_result_table = WorkResult.arel_table
+
+    # 日報の作業者
+    worker_ids_subq = work_result_table.project(work_result_table[:worker_id]).where(work_result_table[:work_id].eq(work.id))
+
+    # 既に紐づいている
+    exists_work_link =
+      Arel::Nodes::Exists.new(
+        task_event_table.project(Arel.sql("1"))
+          .where(task_event_table[:task_id].eq(task_table[:id]).and(task_event_table[:work_id].eq(work.id)))
+      )
+
+    # 新しく紐づけ可能なタスクの条件
+    new_work_link = task_table[:office_role].eq(work.work_type.office_role) # 役割が一致
+              .and(task_table[:office_role].not_eq(Task.office_roles[:none])) # 役割が「なし」ではない
+              .and(task_table[:assignee_id].in(worker_ids_subq)) # 作業者が担当者に含まれる
+
+    base = where(task_status_id: TaskStatus.workable_ids).where(new_work_link.or(exists_work_link))
+    base.select(task_table[Arel.star], exists_work_link.dup.as("has_work"))
+  }
+
   scope :opened, -> { where(task_status_id: TaskStatus.open_ids).usual_order }
 
   scope :by_worker, ->(worker) {
-    t  = arel_table
-    tw = TaskWatcher.arel_table
+    task_table = arel_table
+    task_watcher_table = TaskWatcher.arel_table
 
     subq = TaskWatcher
             .select(1)
-            .where(tw[:worker_id].eq(worker.id))
-            .where(tw[:task_id].eq(t[:id]))
+            .where(task_watcher_table[:worker_id].eq(worker.id))
+            .where(task_watcher_table[:task_id].eq(task_table[:id]))
 
     exists = Arel::Nodes::Exists.new(subq.arel)
-    participant = Task.where(t[:assignee_id].eq(worker.id).or(exists))
+    participant = Task.where(task_table[:assignee_id].eq(worker.id).or(exists))
 
     participant
       .where(task_status_id: TaskStatus.open_ids)
@@ -100,19 +126,23 @@ class Task < ApplicationRecord
   }
 
   def closed?
-    TaskStatus.closed_ids.include?(self.task_status_id)
+    self.status.closed_flag
   end
 
   def start?
-    TaskStatus.start_ids.include?(self.task_status_id)
+    self.status.start_flag
   end
 
   def started?
-    TaskStatus.started_ids.include?(self.task_status_id)
+    self.status.started_flag
   end
 
   def opened?
     !self.closed?
+  end
+
+  def workable?
+    self.status.work_flag
   end
 
   def overdue?
@@ -223,6 +253,45 @@ class Task < ApplicationRecord
 
     Worker.where(office_role: self.office_role).find_each do |worker|
       task_watchers.find_or_create_by(worker_id: worker.id)
+    end
+  end
+
+  def add_comment!(actor:, body:)
+    comment = self.comments.create!(poster: actor, body: body)
+    TaskEvent.create!(task: self, actor: actor, event_type: :add_comment, comment: comment)
+  end
+
+  def add_work!(actor:, work:)
+    if status == TaskStatus::DOING
+      TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work)
+    elsif [TaskStatus::TO_DO, TaskStatus::REOPEN].include?(status)
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work)
+      update!(status: TaskStatus::DOING, started_on: work.worked_at)
+    else
+      raise "Cannot add work when task status is #{status.name}"
+    end
+  end
+
+  def remove_work!(work:)
+    event = TaskEvent.find_by(task: self, work: work)
+    return if event.nil?
+
+    if event.last? && event.change_status?
+      self.update!(status: event.status_from)
+      event.status_to = nil
+      event.status_from = nil
+      event.event_type = :add_work
+    end
+    event.work_id = nil
+    event.save!
+  end
+
+  def self.add_works!(actor:, all_task_ids:, check_task_ids:, work:)
+    ActiveRecord::Base.transaction do
+      Task.for_work(work).where(id: all_task_ids).find_each do |task|
+        task.add_work!(actor: actor, work: work) if check_task_ids.include?(task.id.to_s) && !task.has_work
+        task.remove_work!(work: work) if check_task_ids.exclude?(task.id.to_s) && task.has_work
+      end
     end
   end
 

@@ -122,19 +122,19 @@ class WorkDecorator < Draper::Decorator
   end
 
   def exists_workers
-    model.work_results.count.zero? ? "" : "作業"
+    model.work_results.none? ? "" : "作業"
   end
 
   def exists_lands
-    model.work_lands.count.zero? ? "" : "土地"
+    model.work_lands.none? ? "" : "土地"
   end
 
   def exists_machines
-    model.machine_results.count.zero? ? "" : "機械"
+    model.machine_results.none? ? "" : "機械"
   end
 
   def exists_chemicals
-    model.work_chemicals.count.zero? ? "" : "薬品"
+    model.work_chemicals.none? ? "" : "薬品"
   end
 
   def machine_names
@@ -173,7 +173,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def worker_members
-    model.workers.count == 1 ? model.workers[0].name : "#{model.workers.count}名"
+    model.workers.one? ? model.workers[0].name : "#{model.workers.count}名"
   end
 
   def training_name

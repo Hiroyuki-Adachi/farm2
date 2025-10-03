@@ -125,6 +125,7 @@ work_types9:
   deleted_at: 
   bg_color: "#ffffff"
   land_flag: f
+  office_role: general
 
 work_types10:
   id: '12'

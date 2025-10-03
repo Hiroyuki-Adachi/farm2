@@ -12,7 +12,7 @@
       </div>
 
       <div class="mt-1 text-break">
-        <%= raw event.human_message %>
+        <%= raw event.human_message(mobile: true, mine: mine) %>
       </div>
 
       <% if event.comment.present? %>

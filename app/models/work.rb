@@ -59,6 +59,9 @@ class Work < ApplicationRecord
   has_many :checkers, -> {with_deleted}, through: :work_verifications, source: :worker
   has_many :work_types, through: :work_work_types
   has_many :machines, through: :machine_results
+  
+  has_many :events, class_name: 'TaskEvent', dependent: :nullify
+  has_many :tasks, through: :events
 
   scope :no_fixed, ->(term){
     includes(:work_type, :work_kind)
@@ -117,7 +120,7 @@ SQL
 
   scope :by_chemical, ->(term) {
     where(id: WorkChemical.by_term(term).pluck("work_chemicals.work_id").uniq)
-      .order("worked_at, id")
+      .order(:worked_at, :id)
   }
 
   scope :for_cost, ->(term) {where([<<SQL.squish, term, WorkType.land.select(:id)])}
@@ -179,13 +182,36 @@ SQL
     select("worked_at")
       .where(term: term, work_kind_id: organization.harvesting_work_kind_id)
       .distinct
-      .order("worked_at")
+      .order(:worked_at)
   }
+
   scope :deliverable, ->(worker_id) {
     joins(:work_results)
-      .where(created_at: Time.zone.yesterday.beginning_of_day..Time.zone.yesterday.end_of_day)
+      .where(created_at: Time.zone.yesterday.all_day)
       .where.not(created_by: worker_id)
-      .where("work_results.worker_id = ?", worker_id)
+      .where(work_results: {worker_id: worker_id})
+  }
+
+  scope :for_task, ->(task, days: 30) {
+    work_table = arel_table
+    work_result_table = WorkResult.arel_table
+    work_type_table = WorkType.arel_table
+
+    # 担当者一致：EXISTS (SELECT 1 FROM work_results WHERE work_id = works.id AND worker_id = task.assignee_id)
+    exists_work_results = Arel::Nodes::Exists.new(
+      work_result_table.project(Arel.sql("1"))
+        .where(work_result_table[:work_id].eq(work_table[:id]).and(work_result_table[:worker_id].eq(task.assignee_id)))
+    )
+
+    role_none = WorkType.office_roles[:none] 
+
+    joins(:work_type)
+      .where(worked_at: (Time.zone.today - days)..Time.zone.today) # 期間（既定30日）
+      .where(work_type_table[:office_role].not_eq(role_none)) # 作業分類の役割が none 以外
+      .where(exists_work_results) # 担当者が作業者に含まれる
+      .where.not(id: task.works.select(:id)) # 既に紐づいている日報は除外
+      .includes(:work_kind, :work_results)
+      .order(worked_at: :desc, id: :desc)
   }
 
   def workers_count

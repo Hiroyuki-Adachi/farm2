@@ -216,4 +216,111 @@ class TaskTest < ActiveSupport::TestCase
     end
     assert task2.errors.any?
   end
+  
+  test "コメント追加" do
+    task = tasks(:open_task)
+    worker = workers(:worker1)
+    comment = '新しいコメント'
+    assert_difference("TaskEvent.count", 1) do
+      assert_difference("TaskComment.count", 1) do
+        task.add_comment!(actor: worker, body: comment)
+      end
+    end
+
+    created_event = TaskEvent.last
+    assert_equal worker.id, created_event.actor_id
+    assert_equal task.id, created_event.task_id
+    assert created_event.add_comment?
+
+    created_comment = TaskComment.last
+    assert_equal comment, created_comment.body
+    assert_equal worker.id, created_comment.poster_id
+    assert_equal task.id, created_comment.task_id
+
+    assert_equal created_comment.id, created_event.task_comment_id
+  end
+
+  test "作業追加(ステータスが対応中)" do
+    task = tasks(:started_task)
+    worker = workers(:worker1)
+    work = works(:works1)
+
+    assert_difference("TaskEvent.count", 1) do
+      task.add_work!(actor: worker, work: work)
+    end
+
+    created_event = TaskEvent.last
+    assert_equal worker.id, created_event.actor_id
+    assert_equal task.id, created_event.task_id
+    assert created_event.add_work?
+    assert_equal work.id, created_event.work_id
+    assert_nil created_event.status_from_id
+    assert_nil created_event.status_to_id
+  end
+
+  test "作業追加(ステータスが未着手)" do
+    task = tasks(:open_task)
+    worker = workers(:worker1)
+    work = works(:works1)
+
+    assert_difference("TaskEvent.count", 1) do
+      task.add_work!(actor: worker, work: work)
+    end
+
+    created_event = TaskEvent.last
+    assert_equal worker.id, created_event.actor_id
+    assert_equal task.id, created_event.task_id
+    assert created_event.change_status?
+    assert_equal work.id, created_event.work_id
+    assert_equal TaskStatus::TO_DO.id, created_event.status_from_id
+    assert_equal TaskStatus::DOING.id, created_event.status_to_id
+
+    task.reload
+    assert_equal TaskStatus::DOING.id, task.task_status_id
+    assert_equal work.worked_at, task.started_on
+  end
+
+  test "作業削除(関連作業がない)" do
+    task = tasks(:open_task)
+    work = works(:works1)
+    original_status = task.task_status_id
+
+    assert_no_difference("TaskEvent.count") do
+      assert_nil task.remove_work!(work: work)
+    end
+
+    task.reload
+    assert_equal original_status, task.task_status_id
+  end
+
+  test "作業削除(関連作業が存在かつ作業追加イベント)" do
+    task = tasks(:work_task)
+    event = task.events.last
+    work = event.work
+    original_status = task.task_status_id
+
+    event.update!(event_type: :add_work, status_from_id: nil, status_to_id: nil)
+
+    assert_difference("TaskEvent.count", -1) do
+      task.remove_work!(work: work)
+    end
+
+    task.reload
+    assert_equal original_status, task.task_status_id
+  end
+
+  test "作業削除(関連作業が存在かつステータス変更イベントが最後)" do
+    task = tasks(:work_task)
+    event = task.events.last
+    work = event.work
+
+    event.update!(event_type: :change_status, status_from_id: TaskStatus::TO_DO.id, status_to_id: TaskStatus::DOING.id)
+
+    assert_difference("TaskEvent.count", -1) do
+      task.remove_work!(work: work)
+    end
+
+    task.reload
+    assert_equal TaskStatus::TO_DO.id, task.task_status_id
+  end
 end

@@ -47,4 +47,18 @@ export default class extends Controller {
       }
     }, 300)
   }
+
+  close() {
+    const el = document.getElementById(this.idValue)
+    const modal = window.bootstrap?.Modal?.getOrCreateInstance(el)
+    if (modal) {
+      modal.hide();
+    } else {
+      const frame = this.element.closest("turbo-frame")
+      if (frame) frame.innerHTML = ""
+      document.body.classList.remove("modal-open")
+      document.body.style.removeProperty("paddingRight")
+      document.querySelectorAll(".modal-backdrop").forEach((e) => e.remove())
+    }
+  }
 }

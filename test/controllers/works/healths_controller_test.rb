@@ -18,7 +18,7 @@ class Works::HealthsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('WorkResult.count') do
       post work_healths_path(work_id: @work.id), params: {results: {result.id => health}}
     end
-    assert_redirected_to work_path(id: @work)
+    assert_redirected_to new_work_task_path(work_id: @work)
 
     result.reload
     assert_equal health[:health_id], result.health_id

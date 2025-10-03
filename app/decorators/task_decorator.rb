@@ -66,6 +66,12 @@ class TaskDecorator < Draper::Decorator
     I18n.l(object.started_on, format: :long)
   end
 
+  def started_on_short
+    return "（未設定）" if object.started_on.blank?
+
+    object.started_on.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[object.started_on.wday]})"
+  end
+
   def ended_on_display
     return "（未設定）" if object.ended_on.blank?
 

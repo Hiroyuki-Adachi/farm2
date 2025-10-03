@@ -51,15 +51,19 @@ class TaskEvent < ApplicationRecord
   enum :event_type, { task_created: 0, change_status: 1, change_assignee: 2, change_due_on: 3, add_work: 8, add_comment: 9 }
 
   after_commit :clear_if_comment_cleared, on: :update
+  after_commit :clear_if_work_deleted, on: :update
 
-  def self.add_comment!(task:, actor:, body:)
-    comment = task.comments.create!(poster: actor, body: body)
-    create!(task: task, actor: actor, event_type: :add_comment, comment: comment)
+  def last?
+    task.events.order(created_at: :desc).first == self
   end
 
   private
 
   def clear_if_comment_cleared
     destroy! if add_comment? && task_comment_id.nil?
+  end
+
+  def clear_if_work_deleted
+    destroy! if add_work? && work_id.nil?
   end
 end

@@ -61,3 +61,13 @@ due_on_event:
   actor_id: 3
   created_at: <%= Time.zone.now - 2.days %>
   updated_at: <%= Time.zone.now - 2.days %>
+
+work_event:
+  event_type: change_status
+  task: work_task
+  actor_id: 3
+  status_from_id: 0
+  status_to_id: 2
+  work: work_task_work
+  created_at: '2025-01-01 12:00:00'
+  updated_at: '2025-01-01 12:00:00'
