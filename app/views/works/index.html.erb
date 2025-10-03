@@ -6,7 +6,17 @@
   <div class="col-md-3">
     <div class="input-group">
       <label for="term" class="h5 form-label">年度</label>
-      <%= select_tag(:term, options_for_select(@terms, selected: @term), {class: "form-select"}) %>
+      <%= select_tag(:term, options_for_select(@terms, selected: @term),
+        {
+          class: "form-select",
+          data: {
+            controller: "dependent-select",
+            action: "change->dependent-select#fetch",
+            dependent_select_url_value: work_types_works_path,
+            dependent_select_param_name_value: "term"
+          }
+        }
+      ) %>
     </div>
   </div>
   <div class="col-md-6">
@@ -23,7 +33,17 @@
   <div class="col-md-3">
     <div class="input-group">
       <label for="work_type_id" class="h5 form-label">分類</label>
-      <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name, @work_type_id), {include_blank: true, class: "form-select"}) %>
+      <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name, @work_type_id),
+        {
+          include_blank: true,
+          class: "form-select",
+          data: {
+            controller: "dependent-select",
+            action: "change->dependent-select#fetch",
+            dependent_select_url_value: work_kinds_works_path,
+            dependent_select_param_name_value: "work_type_id"
+          }
+        }) %>
       <label class="form-check-label form-label"><%= check_box_tag(:except, true, false, {class: "form-check-input"}) %>除外</label>
     </div>
   </div>
@@ -43,8 +63,6 @@
 <%= turbo_frame_tag 'list' do %>
   <%= render partial: "list" %>
 <% end %>
-<%= hidden_field_tag :work_types_works_path, work_types_works_path %>
-<%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= link_to 'CSV出力', works_path(format: :csv), class: "btn btn-primary" %>
@@ -53,6 +71,3 @@
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/work-index', "data-turbo-track": "reload", type: :module %>
-<% end %>

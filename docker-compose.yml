@@ -26,10 +26,12 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: bash -c "rdbg -n --open --host 0.0.0.0 --port 12345 -c -- bin/rails s -p 3000 -b 0.0.0.0"
+    command: bash -c "rdbg -n --open --host 0.0.0.0 --port 12345 -c -- bundle exec rails s -p 3000 -b '0.0.0.0'"
     tty: true
     stdin_open: true
     environment:
+      RUBY_DEBUG_LOCAL_FS_MAP: "/farm2:${PWD}"
+      RUBY_DEBUG_PORT: 12345
       GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
       CHROME_URL: "http://chrome:3333"
       RAILS_ENV: development

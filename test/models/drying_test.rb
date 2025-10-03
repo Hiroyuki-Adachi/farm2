@@ -33,7 +33,7 @@ class DryingTest < ActiveSupport::TestCase
     rice_weight1 = moth1.rice_weight + moth2.rice_weight
 
     assert_equal adjustment1.rice_bag * system2015.dry_adjust_price, drying2.amount(system2015, drying2.home_id)
-    assert_equal adjustment1.waste_weight / Drying::KG_PER_BAG_WASTE * system2015.waste_price, drying2.waste_amount(system2015)
+    assert_equal adjustment1.waste_weight / Drying::KG_PER_BAG_WASTE * system2015.waste_price, drying2.waste_amount(system2015, drying2.home_id)
     assert_equal rice_weight1 / Drying::KG_PER_BAG_RICE * system2015.dry_price, drying1.amount(system2015, drying1.home_id)
   end
 end

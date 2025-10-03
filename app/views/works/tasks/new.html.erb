@@ -1,11 +1,12 @@
 <h1>作業日報(タスク)登録</h1>
-<%= form_with url: work_tasks_path, html: { method: :post } do |f| %>
+<%= form_with url: work_tasks_path(work_id: @work), html: { method: :post } do |f| %>
 <%= render partial: 'show_work', locals: { f: f } %>
 <div class="h4">関連するタスクが一覧にある場合、左のチェックボックスをチェックして登録ボタンを押下してください。</div>
 <table class="table table-sm">
   <thead>
     <tr>
-      <th></th>
+      <th>着手</th>
+      <th>完了</th>
       <th>状態</th>
       <th>優先度</th>
       <th>タイトル</th>
@@ -15,10 +16,21 @@
   </thead>
   <tbody>
     <% tasks.each do |task| %>
-    <tr>
+    <tr data-controller="pages--work-task-toggle">
       <td>
-        <%= check_box_tag "check_task_ids[]", task.id, task.has_work %>
-        <%= hidden_field_tag "all_task_ids[]", task.id %>
+        <%= check_box_tag "check_task_ids[]", task.id, false,
+          id: dom_id(task, :check),
+          data: {
+            pages__work_task_toggle_target: "check",
+            action: "change->pages--work-task-toggle#sync"
+          } %>
+      </td>
+      <td><%= check_box_tag "close_task_ids[]", task.id, false,
+        id: dom_id(task, :close),
+        data: {
+          pages__work_task_toggle_target: "close",
+        },
+        disabled: false %>
       </td>
       <td><%= task.status_badge %></td>
       <td><%= task.priority_badge %></td>

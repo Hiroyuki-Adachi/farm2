@@ -1,14 +1,3 @@
-@page {size: A4 }
-@media print {
-    input[type="button"].btn,a.btn,button[type="button"].btn {display:none;}
-    div.modal-dialog {display:none;}
-    body {
-        margin: 0px 0px 0px 0px;
-    }
-    div.title {
-        margin-top:0px;
-    }
-}
 body {
   line-height: 1.5;
   letter-spacing: 1px;
@@ -1044,4 +1033,51 @@ a:hover, a:focus { color: var(--link-hover); }
   border-color: var(--btn-danger-border);
 }
 
-/* 罫線・黒固定のところ（印章の赤など）はそのままでOK */
+@page { size: A4; margin: 0; }
+
+@media print {
+  html, body { margin: 0; padding: 0; }
+
+  /* まず全ての明示的改ページを外す */
+  .print-page { break-before: auto; break-after: auto; page-break-before: auto; page-break-after: auto; }
+
+  /* 直前にも直後にも“ページ要素”があり、かつ次が高さ>0 のときのみ改ページ */
+  .print-page + .print-page {
+    break-before: page;
+    page-break-before: always; /* 互換 */
+  }
+  /* 次のページが空（高さ0）のときは無効化 */
+  .print-page + .print-page:empty { break-before: auto; page-break-before: auto; }
+
+  /* 用紙の内側の箱。左右12mm, 上下10mm（好みで） */
+  .sheet {
+    width: 210mm;
+    padding: 10mm 12mm;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+
+  /* 横方向は印字領域(= 210 - 12*2 = 186mm)よりさらに余裕を持たせる */
+  .print-page > * { max-width: 182mm !important; }
+
+  /* 絶対配置やオーバーレイは印刷時は無効に */
+  #work_id { position: static !important; }
+  .cover, .modal, .modal-backdrop, .no-print,
+  .btn, a.btn, button.btn { display: none !important; }
+
+  table { border-collapse: collapse; }
+  table, th, td { height: auto !important; }     /* 固定高さは丸め誤差の元 */
+  th, td { padding: 2px 3px; line-height: 1.4; }  /* 見た目はpadding/line-heightで調整 */
+
+  /* ページの最後の表の “いちばん下” のボーダーを消す（1〜2px分の逃げ） */
+  .print-page table:last-of-type tr:last-child > th,
+  .print-page table:last-of-type tr:last-child > td {
+    border-bottom: 0 !important;
+  }
+
+  /* ページの最後の要素の下マージンもゼロに */
+  .print-page > *:last-child { margin-bottom: 0 !important; }
+
+  /* margin 折り畳み対策（微小値でOK） */
+  .print-page { padding-bottom: .1px; box-sizing: border-box; }
+}

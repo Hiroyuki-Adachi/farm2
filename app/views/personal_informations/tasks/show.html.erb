@@ -58,7 +58,7 @@
     </div>
   </div>
 
-<% events = @task.events.includes(:actor, :comment).order(created_at: :asc) %>
+<% events = @task.events.with_read_info(current_user.worker_id, @last_read_at).usual_order %>
 <% events = TaskEventDecorator.decorate_collection(events, context: { current_worker: current_user.worker }) %>
 
   <!-- イベント＋メッセージ（チャット風・閲覧のみ） -->
@@ -70,8 +70,7 @@
     <div class="card-body" id="timeline" style="max-height: 70vh; overflow-y: auto;">
       <div class="d-flex flex-column gap-3">
         <% events.each do |event| %>
-          <% mine = (current_user&.worker_id.present? && event.actor_id == current_user.worker_id) %>
-          <%= render "tasks/events/mobile_item", task: @task, event: event, mine: mine %>
+          <%= render "tasks/events/mobile_item", task: @task, event: event, mine: event.mine_flag %>
         <% end %>
       </div>
     </div>

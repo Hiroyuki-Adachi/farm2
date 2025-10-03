@@ -1,4 +1,4 @@
-<div>
+<div data-controller="page-loader" data-page-loader-modules-value="pages/lands">
   <div id="map" class="ratio ratio-16x9"></div>
   <input type="button" value="クリア" id="clear_region"  class="btn btn-danger mt-5" />
 </div>
@@ -7,6 +7,3 @@
 <%= hidden_field_tag "other_lands", land.region, {id: nil} %>
 <% end %>
 <%= hidden_field_tag "location", "[#{land_location(@land)}]" %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/lands', 'data-turbo-track': 'reload', type: :module %>
-<% end %>

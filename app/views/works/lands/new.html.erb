@@ -1,62 +1,66 @@
-<h1>作業日報(作業田)登録</h1>
+<h1 data-controller="page-loader" data-page-loader-modules-value="pages/work-lands">
+  作業日報(作業田)登録
+</h1>
 <%= error_print(@work) %>
 
-<%= form_with(model: @work.model, url: {action: :create}, html: {method: :post}) do |f| %>
-<%= render(partial: 'show_work', :locals => {:f => f}) %>
+<%= form_with(model: @work.model, url: { action: :create }, html: { method: :post }) do |f| %>
+  <%= render partial: 'show_work', locals: { f: f } %>
 
-<h2>作業田</h2>
-<div class="clearfix">
-  <div class="float-start">
-    <table id="tbl_lands" class="table table-sm">
-      <thead style="display:block;">
-      <tr>
-        <th style="width:20px;">No.</th>
-        <th style="width:150px;">地番</th>
-        <th style="width:60px;">面積</th>
-        <th style="width:50px;">&nbsp;</th>
-      </tr>
-      </thead>
-      <tbody id="tbody_lands" style="display:block; height: 400px; overflow-y:scroll;">
-      <% @work_lands.each_with_index do |work_land, i| %>
-        <tr id="land_<%= work_land.land_id %>">
-          <td class="numeric" style="width:20px;"><%= i+1 %></td>
-          <td style="width:150px;"><%= work_land.place_name %></td>
-          <td class="numeric" style="width:60px;"><%= work_land.area %></td>
-          <td style="width:50px;">
-            <%= tag(:input, {type: :button, value: "削除", class: "btn btn-outline-dark btn-sm remove-land", data: {land: work_land.land_id}})%>
-            <%= hidden_field_tag "work_lands[][land_id]", work_land.land_id, {:id => nil} %>
-            <%= hidden_field_tag "work_lands[][display_order]", i + 1, {:id => nil} %>
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-      <tfoot style="display:block;">
-        <tr style="background-color:lightcyan;">
-          <td style="width:20px;">&nbsp;</td>
-          <td style="text-align: center;width:150px;">合計</td>
-          <td id="total_area" class="numeric" style="width:60px;"></td>
-          <td style="width:50px;">&nbsp;</td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-  <div id="land_pos" class="lands_search float-start">
-    <div id="land_base" class="mb-3" style="magin-left:40px !important;">
-      <%= text_field_tag :land, '', {placeholder: "地番または面積(α)を入力してください。", size: 30, autocomplete: :off, class: "form-control"}  %>
+  <h2>作業田</h2>
+  <div class="row g-3">
+    <div class="col-lg-7">
+      <div class="table-responsive" style="max-height: 420px; overflow-y: auto;">
+        <table id="tbl_lands" class="table table-sm align-middle">
+          <thead class="table-light position-sticky top-0">
+            <tr>
+              <th class="numeric w-10">No.</th>
+              <th class="w-60">地番</th>
+              <th class="numeric w-30">面積</th>
+              <th class="w-20">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody id="tbody_lands">
+            <% @work_lands.each_with_index do |work_land, i| %>
+              <tr id="land_<%= work_land.land_id %>" data-land-id="<%= work_land.land_id %>">
+                <td class="numeric"><%= i + 1 %></td>
+                <td><%= work_land.place_name %></td>
+                <td class="numeric"><%= number_with_precision(work_land.area, precision: 2) %></td>
+                <td>
+                  <button type="button" class="btn btn-outline-dark btn-sm js-remove">削除</button>
+                  <%= hidden_field_tag "work_lands[][land_id]", work_land.land_id, id: nil %>
+                  <%= hidden_field_tag "work_lands[][display_order]", i + 1, id: nil %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr class="bg-info-subtle">
+              <td>&nbsp;</td>
+              <td class="text-center">合計</td>
+              <td id="total_area" class="numeric"></td>
+              <td>&nbsp;</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="mb-3">
+        <%= text_field_tag :land, '', placeholder: "地番または面積(α)を入力してください。", size: 30,
+             autocomplete: :off, class: "form-control" %>
+        <small class="form-text text-body-secondary">2文字以上で候補が表示されます。</small>
+      </div>
     </div>
   </div>
-</div>
-<div class="btn-toolbar">
-  <div class="btn-group mr-2">
+
+  <div class="btn-toolbar gap-2">
     <%= f.submit '登録', class: "btn btn-warning" %>
+    <%= link_to '戻る', work_path(@work.model), class: "btn btn-outline-dark" %>
   </div>
-  <div class="btn-group mr-2">
-      <%= link_to '戻る', work_path(@work.model), {class: "btn btn-outline-dark"} %>
-  </div>
-</div>
 <% end %>
-<%= hidden_field_tag "autocomplete_work_lands_path", autocomplete_work_lands_path(work_id: @work) %>
+
+<%= hidden_field_tag "autocomplete_work_lands_path", autocomplete_work_lands_path(work_id: @work), id: "autocomplete_work_lands_path" %>
 <% content_for :head do %>
-<%= stylesheet_link_tag 'auto-complete', 'data-turbo-track': 'reload' %>
-<%= javascript_include_tag 'pages/work-lands', "data-turbo-track": "reload", type: :module %>
+<%= stylesheet_link_tag 'auto-complete', media: 'all' %>
 <% end %>

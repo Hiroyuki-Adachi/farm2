@@ -188,6 +188,8 @@ ja:
         half_sum_flag: "半端米を集計に含める"
         waste_price: "くず米単価"
         relative_price: "縁故米(加算額)"
+        waste_drying_price: "くず米金額(乾燥)"
+        waste_adjust_price: "くず米金額(調整)"
 
       organization:
         name: "組織名称"

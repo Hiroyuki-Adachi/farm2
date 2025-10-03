@@ -17,9 +17,11 @@
 #
 # Indexes
 #
-#  index_task_comments_on_poster_id               (poster_id)
-#  index_task_comments_on_task_id                 (task_id)
-#  index_task_comments_on_task_id_and_created_at  (task_id,created_at)
+#  index_task_comments_on_poster_id                             (poster_id)
+#  index_task_comments_on_task_id                               (task_id)
+#  index_task_comments_on_task_id_and_created_at                (task_id,created_at)
+#  index_task_comments_on_task_id_and_poster_id_and_updated_at  (task_id,poster_id,updated_at)
+#  index_task_comments_on_task_id_and_updated_at                (task_id,updated_at)
 #
 # Foreign Keys
 #

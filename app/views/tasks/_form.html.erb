@@ -1,4 +1,4 @@
-<%= form_with model: task, class: "needs-validation", data: { turbo: true } do |f| %>
+<%= form_with model: task, class: "needs-validation", data: { turbo: true, controller: "page-loader", page_loader_modules_value: "pages/tasks" } do |f| %>
   <%= error_print(f.object) %>
 
   <div class="card shadow-sm mb-4">
@@ -61,7 +61,4 @@
     <%= f.submit "作成する", class: "btn btn-warning" %>
     <%= link_to "戻る", tasks_path, class: "btn btn-outline-secondary" %>
   </div>
-<% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/tasks', 'data-turbo-track': 'reload', type: :module %>
 <% end %>

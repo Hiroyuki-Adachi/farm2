@@ -25,13 +25,15 @@
 #
 # Indexes
 #
-#  index_task_events_on_actor_id                (actor_id)
-#  index_task_events_on_assignee_from_id        (assignee_from_id)
-#  index_task_events_on_assignee_to_id          (assignee_to_id)
-#  index_task_events_on_task_comment_id         (task_comment_id)
-#  index_task_events_on_task_id                 (task_id)
-#  index_task_events_on_task_id_and_created_at  (task_id,created_at)
-#  index_task_events_on_work_id                 (work_id)
+#  index_task_events_on_actor_id                             (actor_id)
+#  index_task_events_on_assignee_from_id                     (assignee_from_id)
+#  index_task_events_on_assignee_to_id                       (assignee_to_id)
+#  index_task_events_on_task_comment_id                      (task_comment_id)
+#  index_task_events_on_task_id                              (task_id)
+#  index_task_events_on_task_id_and_actor_id_and_updated_at  (task_id,actor_id,updated_at)
+#  index_task_events_on_task_id_and_created_at               (task_id,created_at)
+#  index_task_events_on_task_id_and_updated_at               (task_id,updated_at)
+#  index_task_events_on_work_id                              (work_id)
 #
 # Foreign Keys
 #
@@ -68,6 +70,14 @@ work_event:
   actor_id: 3
   status_from_id: 0
   status_to_id: 2
+  work: work_task_work
+  created_at: '2025-01-01 12:00:00'
+  updated_at: '2025-01-01 12:00:00'
+
+work_event3:
+  event_type: add_work
+  task: task32
+  actor_id: 3
   work: work_task_work
   created_at: '2025-01-01 12:00:00'
   updated_at: '2025-01-01 12:00:00'

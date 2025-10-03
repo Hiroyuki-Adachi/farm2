@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/gap-trainings">
   <div class="col-md-12">
     <h1>研修実績登録</h1>
   </div>
@@ -83,7 +83,4 @@
       <%= link_to '戻る', gaps_trainings_path, class: "btn btn-outline-dark" %>
     </div>
   </div>
-<% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/gap-trainings', 'data-turbo-track': 'reload' %>
 <% end %>

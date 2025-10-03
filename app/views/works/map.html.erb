@@ -4,13 +4,13 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
   <%= javascript_importmap_tags %>
   <%= stylesheet_link_tag 'application' %>
-  <%= javascript_include_tag 'pages/work-map', 'data-turbo-track': 'reload' %>
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"]%>" defer="defer" data-turbolinks-eval="false"></script>
-  <%= csrf_meta_tags %>
 </head>
-<body>
+<body data-controller="page-loader" data-page-loader-modules-value="pages/work-map">
 <h1>作業地図</h1>
 <div class="container-fluid">
   <div class="row">

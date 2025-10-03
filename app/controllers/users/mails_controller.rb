@@ -1,6 +1,8 @@
 class Users::MailsController < ApplicationController
   before_action :set_user, only: [:new, :create]
 
+  helper MailHelper
+
   def new; end
 
   def create

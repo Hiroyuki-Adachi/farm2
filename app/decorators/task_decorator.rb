@@ -121,4 +121,10 @@ class TaskDecorator < Draper::Decorator
       ""
     end
   end
+
+  def unread_count_badge
+    return "" if object.unread_count.to_i.zero?
+
+    h.content_tag(:span, object.unread_count, class: "badge bg-primary rounded-pill")
+  end
 end

@@ -1,6 +1,6 @@
 import { Turbo } from "@hotwired/turbo-rails";
 
-window.addEventListener('turbo:load', () => {
+export const init = () => {
     initMap();
 
     if (document.getElementById("worked_at") != null) {
@@ -26,7 +26,7 @@ window.addEventListener('turbo:load', () => {
             .then(html => Turbo.renderStreamMessage(html));
         });
     }
-});
+};
 
 function initMap(){
     const location = document.getElementById("accident_location");

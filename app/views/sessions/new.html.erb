@@ -4,12 +4,12 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta http-equiv="content-language" content="ja" />
   <title>作業日報管理システム(V2)</title>
+  <%= csrf_meta_tags %>
   <%= javascript_importmap_tags %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag 'pc-common', 'data-turbo-track': 'reload' %>
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_MAPS_API_KEY"]%>&libraries=drawing" defer="defer" async="async" data-turbolinks-eval="false"></script>
   <%= yield :head %>
-  <%= csrf_meta_tags %>
   <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path('/images/icons/farm2-32.png') %>">
   <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path('/images/icons/farm2-16.png') %>">
 </head>

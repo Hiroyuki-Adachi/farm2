@@ -1,5 +1,5 @@
 <%= error_print(@accident) %>
-<%= form_with model: @accident, url: @accident.new_record? ? gaps_accidents_path : gaps_accident_path(@accident)  do |f| %>
+<%= form_with model: @accident, url: @accident.new_record? ? gaps_accidents_path : gaps_accident_path(@accident), data: {controller: "page-loader", page_loader_modules_value: "pages/gap-accidents"} do |f| %>
   <div class="row">
     <div class="col-md-3">
       <%= f.label :investigator_id, class: "col-form-label-lg form-label" %>
@@ -91,7 +91,4 @@
       <%= link_to "戻る", gaps_accidents_path, {class: "btn btn-outline-dark"}%>
     </div>
   </div>
-<% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/gap-accidents', 'data-turbo-track': 'reload', type: :module %>
 <% end %>

@@ -102,7 +102,6 @@ const dispSum = () => {
 }
 
 const loadEvent = () => {
-  document.removeEventListener('DOMContentLoaded', loadEvent);
   Array.from(document.getElementsByClassName("work-type")).forEach(function (wt) {
     wt.addEventListener('click', function () {
       clickWorkType(this.dataset.id);
@@ -111,5 +110,6 @@ const loadEvent = () => {
   initMap();
 }
 
-document.addEventListener('DOMContentLoaded', loadEvent);
-document.addEventListener('turbo:load', loadEvent);
+export const init = () => {
+  loadEvent();
+}

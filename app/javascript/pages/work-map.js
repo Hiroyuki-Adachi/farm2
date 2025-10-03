@@ -42,4 +42,6 @@ function initMap(){
     });
 }
 
-document.addEventListener('DOMContentLoaded', initMap);
+export const init = () => {
+  initMap();
+};

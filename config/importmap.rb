@@ -9,7 +9,7 @@ pin "process" # @2.0.1
 pin "randombytes" # @2.1.0
 pin "safe-buffer" # @5.2.1
 pin "sortablejs" # @1.15.2
-pin "@tarekraafat/autocomplete.js", to: "@tarekraafat--autocomplete.js.js" # @10.2.7
+pin "@tarekraafat/autocomplete.js", to: "@tarekraafat--autocomplete.js.js", preload: false # @10.2.7
 pin_all_from "app/javascript/i18n-js", under: "i18n-js"
 pin "@hotwired/turbo-rails", to: "@hotwired--turbo-rails.js" # @8.0.4
 pin "i18n-js" # @4.4.3
@@ -29,5 +29,6 @@ pin "marked" # @12.0.2
 pin "dompurify" # @3.2.6
 pin "@hotwired/stimulus", to: "stimulus.min.js"
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
-pin_all_from "app/javascript/controllers", under: "controllers"
+pin_all_from "app/javascript/controllers", under: "controllers", preload: false
+pin_all_from "app/javascript/pages", under: "pages", preload: false
 pin "controllers/application", to: "controllers/application.js"

@@ -15,7 +15,9 @@ class MenuController < ApplicationController
     @lands = WorkLandDecorator.decorate_collection(@lands).group_by(&:land)
     @minute = Minute.for_personal(current_user.worker).last&.decorate
     @user_topics = UserTopic.current_topics(current_user).pc
-    @tasks = TaskDecorator.decorate_collection(Task.by_worker(current_user.worker))
+    @tasks = TaskDecorator.decorate_collection(
+      Task.by_worker(current_user.worker).with_unread_count(current_user.worker.id)
+    )
   end
 
   def edit; end

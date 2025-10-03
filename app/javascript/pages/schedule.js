@@ -1,6 +1,6 @@
 import { Turbo } from "@hotwired/turbo-rails";
 
-window.addEventListener('turbo:load', () => {
+export const init = () => {
     document.querySelectorAll('input[name="schedule[work_type_id]"]').forEach((element) => {
         element.addEventListener("change", (event) => {
             fetch(`${document.getElementById("work_kinds_works_path").value}?work_type_id=${event.target.value}`, {
@@ -19,7 +19,7 @@ window.addEventListener('turbo:load', () => {
     });
 
     changeVisible(document.querySelector('input[name="schedule[farming_flag]"]:checked').value);
-});
+};
 
 const changeVisible = (value) => {
     document.querySelectorAll('.farming-visible').forEach((element) => {
