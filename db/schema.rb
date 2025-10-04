@@ -1022,7 +1022,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_055153) do
     t.integer "theme", default: 0, null: false, comment: "画面テーマ"
     t.boolean "otp_enabled", default: false, null: false, comment: "2段階認証フラグ"
     t.datetime "otp_last_used_at", comment: "2段階認証 最終使用日時"
-    t.string "otp_secret_ciphertext", comment: "2段階認証 秘密鍵"
+    t.json "otp_secret", comment: "2段階認証 秘密鍵"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["mail"], name: "ix_users_on_mail", unique: true, where: "((mail)::text <> ''::text)"
     t.index ["mail_confirmation_token"], name: "ix_users_on_mail_confirmation_token", unique: true, where: "(mail_confirmation_token IS NOT NULL)"

@@ -11,7 +11,7 @@
 #  mail_confirmed_at(メールアドレス確認日時)                :datetime
 #  otp_enabled(2段階認証フラグ)                             :boolean          default(FALSE), not null
 #  otp_last_used_at(2段階認証 最終使用日時)                 :datetime
-#  otp_secret_ciphertext(2段階認証 秘密鍵)                  :string
+#  otp_secret(2段階認証 秘密鍵)                             :json
 #  password_digest(パスワード)                              :string(128)      not null
 #  target_from(開始年月)                                    :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
@@ -104,10 +104,12 @@ class User < ApplicationRecord
 
   def totp
     return unless otp_secret.present?
-    ROTP::TOTP.new(otp_secret, issuer: "Shimo-Dekisu Farm")
+    ROTP::TOTP.new(otp_secret, issuer: ENV.fetch("OTP_SECRET_ISSUER"))
   end
 
   def prepare_totp_secret!
+    return if self[:otp_secret].present?  # すでに保存済みなら何もしない
+
     update!(otp_secret: ROTP::Base32.random_base32) unless otp_secret.present?
   end
 
