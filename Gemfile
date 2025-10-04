@@ -90,6 +90,9 @@ gem "commonmarker"
 # Rouge is a pure-ruby syntax highlighter.
 gem "rouge"
 
+# ROTP is a Ruby implementation of one-time password algorithms (HOTP and TOTP).
+gem "rotp"
+
 group :development, :test do
   gem 'ruby-lsp'
   # Debugging tool
