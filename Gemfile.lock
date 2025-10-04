@@ -472,6 +472,7 @@ DEPENDENCIES
   discard
   dotenv-rails
   draper
+  google-authenticator-rails
   holiday_jp
   icalendar
   importmap-rails

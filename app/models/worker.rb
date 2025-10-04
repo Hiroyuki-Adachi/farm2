@@ -123,4 +123,11 @@ class Worker < ApplicationRecord
   def set_user_permission_id
     self.user.update(permission_id: :checker) unless self.user.checkable?
   end
+
+  private
+
+  def set_email
+    self.user.email = (self.pc_mail.presence || '') if self.user.present?
+    self.user.save!
+  end
 end
