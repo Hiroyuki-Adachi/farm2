@@ -9,6 +9,9 @@
 #  mail_confirmation_expired_at(メールアドレス確認有効期限) :datetime
 #  mail_confirmation_token(メールアドレス確認トークン)      :string(64)
 #  mail_confirmed_at(メールアドレス確認日時)                :datetime
+#  otp_enabled(2段階認証フラグ)                             :boolean          default(FALSE), not null
+#  otp_last_used_at(2段階認証 最終使用日時)                 :datetime
+#  otp_secret_ciphertext(2段階認証 秘密鍵)                  :string
 #  password_digest(パスワード)                              :string(128)      not null
 #  target_from(開始年月)                                    :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
@@ -36,6 +39,8 @@ class User < ApplicationRecord
   before_create :set_token
   before_update :clear_mail_fields, if: -> { mail_changed? && self.mail.present? }
   after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && self.mail_confirmed_at.present? }
+
+  encrypts :otp_secret, attribute: :otp_secret_ciphertext
 
   enum :permission_id, { visitor: 0, user: 1, checker: 2, manager: 3, admin: 9 }
   enum :theme, { light: 0, dark: 1, auto: 2 }
@@ -95,6 +100,19 @@ class User < ApplicationRecord
     return :confirmed if mail_confirmed_at.present?
     return :expired if mail_confirmation_expired_at.present? && mail_confirmation_expired_at < Time.current
     :pending
+  end
+
+  def totp
+    return unless otp_secret.present?
+    ROTP::TOTP.new(otp_secret, issuer: "Shimo-Dekisu Farm")
+  end
+
+  def prepare_totp_secret!
+    update!(otp_secret: ROTP::Base32.random_base32) unless otp_secret.present?
+  end
+
+  def enable_totp!
+    update!(otp_enabled: true)
   end
 
   private
