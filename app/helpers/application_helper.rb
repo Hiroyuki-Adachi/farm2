@@ -38,25 +38,6 @@ module ApplicationHelper
     h(content).gsub(/(?<=\u3000)/, '<br />　')&.html_safe
   end
 
-  def mail_status_badge(user)
-    status = user.current_mail_status
-
-    label, color = case status
-    when :confirmed
-      ["認証済み", :success]
-    when :pending
-      ["認証待ち", :warning]
-    when :expired
-      ["期限切れ", :danger]
-    when :not_entered
-      ["未入力", :secondary]
-    else
-      ["不明", :dark]
-    end
-
-    content_tag(:span, label, class: "badge bg-#{color}")
-  end
-
   def enum_options_for(model_class, attr_name, exclude_keys = [])
     exclude_keys = Array(exclude_keys).map(&:to_s)
 

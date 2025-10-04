@@ -1,6 +1,6 @@
 import { Decimal } from "decimal.js";
 
-window.addEventListener('turbo:load', () => {
+export const init = () => {
   document.querySelectorAll("[data-index='0']").forEach((element) => {
     element.style.display = "table-cell";
   });
@@ -94,7 +94,7 @@ window.addEventListener('turbo:load', () => {
           calcAllQuantity10();
       });
   });
-});
+};
 
 function calcGroupAreas()
 {

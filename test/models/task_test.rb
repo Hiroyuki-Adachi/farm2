@@ -65,6 +65,9 @@ class TaskTest < ActiveSupport::TestCase
 
     # 作成イベントが出ている
     assert_equal 1, created_task.events.where(event_type: :task_created).count
+
+    # 既読が作成されている
+    assert_equal 1, created_task.reads.where(worker_id: worker2.id).count
   end
 
   test "担当者変更処理" do
@@ -73,8 +76,10 @@ class TaskTest < ActiveSupport::TestCase
     open_task = tasks(:open_task)
     comment = "引き継ぎます"
 
-    assert_changes -> { open_task.reload.assignee_id }, to: worker2.id do
-      open_task.change_assignee!(worker2.id, worker1, comment)
+    assert_difference("TaskRead.count", 1) do
+      assert_changes -> { open_task.reload.assignee_id }, to: worker2.id do
+        open_task.change_assignee!(worker2.id, worker1, comment)
+      end
     end
 
     last_event = open_task.events.order(:id).last
@@ -84,6 +89,10 @@ class TaskTest < ActiveSupport::TestCase
     assert_equal comment, last_event.comment&.body
 
     assert open_task.task_watchers.exists?(worker_id: worker2.id)
+
+    last_read = open_task.reads.find_by(worker_id: worker2.id)
+    assert_not_nil last_read
+    assert_equal Time.at(0).to_i, last_read.last_read_at.to_i
   end
 
   test "担当者変更処理(同じ担当者)" do
@@ -278,6 +287,30 @@ class TaskTest < ActiveSupport::TestCase
     task.reload
     assert_equal TaskStatus::DOING.id, task.task_status_id
     assert_equal work.worked_at, task.started_on
+  end
+
+  test "作業追加(完了モード)" do
+    task = tasks(:open_task)
+    worker = workers(:worker1)
+    work = works(:works1)
+
+    assert_difference("TaskEvent.count", 1) do
+      task.add_work!(actor: worker, work: work, close: true)
+    end
+
+    created_event = TaskEvent.last
+    assert_equal worker.id, created_event.actor_id
+    assert_equal task.id, created_event.task_id
+    assert created_event.change_status?
+    assert_equal work.id, created_event.work_id
+    assert_equal TaskStatus::TO_DO.id, created_event.status_from_id
+    assert_equal TaskStatus::DONE.id, created_event.status_to_id
+
+    task.reload
+    assert_equal TaskStatus::DONE.id, task.task_status_id
+    assert_equal work.worked_at, task.started_on
+    assert_equal work.worked_at, task.ended_on
+    assert_equal :completed, task.end_reason.to_sym
   end
 
   test "作業削除(関連作業がない)" do

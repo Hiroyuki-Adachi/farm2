@@ -2,7 +2,7 @@
 import QrScanner from "qr-scanner";
 import "bootstrap";
 
-document.addEventListener('turbo:load', () => {
+export const init = () => {
   const video = document.getElementById("video");
   const resultBox = document.getElementById("result-box");
   const resultText = document.getElementById("qr-result");
@@ -122,10 +122,10 @@ document.addEventListener('turbo:load', () => {
     // 最小限の簡易トースト（BootstrapならAlertでもOK）
     console.log("[toast]", msg);
   }
-});
 
-window.toast = (msg) => {
+  window.toast = (msg) => {
     document.getElementById("popup_alert_message").innerText = msg;
     const popupForm = new bootstrap.Modal(document.getElementById("popup_alert"));
     popupForm.show();
-}
+  };
+};

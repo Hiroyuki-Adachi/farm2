@@ -1,6 +1,6 @@
 import "bootstrap";
 
-window.addEventListener('turbo:load', () => {
+export const init = () => {
     loadChemical(document.getElementById("term").value, document.getElementById("chemical_type").value);
 
     document.getElementById("term").addEventListener("change", (event) => {
@@ -21,7 +21,7 @@ window.addEventListener('turbo:load', () => {
             popupModal(modalForm);
         });
     });
-});
+};
 
 function loadChemical(term, chemicalType)
 {

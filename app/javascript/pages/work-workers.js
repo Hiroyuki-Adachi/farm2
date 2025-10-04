@@ -121,7 +121,7 @@ function changeSection(section) {
     }
 }
 
-window.addEventListener('turbo:load', () => {
+export const init = () => {
     setAddButtons();
 
     Sortable.create(document.getElementById("tbody_workers"), {
@@ -138,11 +138,11 @@ window.addEventListener('turbo:load', () => {
         element.addEventListener("click", (event) => {
             addWorker(event.target.dataset.worker, event.target.dataset.name);
         });
-    })
+    });
 
     document.querySelectorAll(".remove-worker").forEach((element) => {
         element.addEventListener("click", (event) => {
             removeWorker(event.target.dataset.worker);
         });
     });
-});
+}

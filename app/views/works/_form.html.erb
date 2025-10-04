@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/work-form">
   <div class="col-md-4">
     <%= f.label :worked_at, '', class: "col-form-label-lg form-label" %>
     <%= f.date_field :worked_at, {required: true, class: "form-control", min: current_system.start_date, max: current_system.end_date} %>
@@ -21,7 +21,11 @@
     <%= f.label :work_type_id, '', class: "col-form-label-lg form-label" %>
   </div>
 </div>
-<div class="row">
+<div class="row"
+  data-controller="dependent-select"
+  data-dependent-select-url-value="<%= work_kinds_works_path %>"
+  data-dependent-select-param-name-value="work_type_id"
+  data-action="change->dependent-select#fetch">
   <% WorkType.categories.each do |category| %>
     <div class="col-md-2">
       <div class="form-check form-check-inline h5">
@@ -54,7 +58,3 @@
     <%= f.text_area :remarks, {rows: 3, cols: 40, class: "form-control"} %>
   </div>
 </div>
-<%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/work-form', "data-turbo-track": "reload", type: :module %>
-<% end %>

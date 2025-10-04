@@ -12,8 +12,8 @@ class Works::TasksController < WorksController
   def create
     Task.add_works!(
       actor: current_user.worker,
-      all_task_ids: params[:all_task_ids] || [],
       check_task_ids: params[:check_task_ids] || [],
+      close_task_ids: params[:close_task_ids] || [],
       work: @work
     )
     redirect_to work_path(@work)

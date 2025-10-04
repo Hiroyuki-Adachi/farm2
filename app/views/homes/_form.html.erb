@@ -1,5 +1,5 @@
 <%= error_print(@home) %>
-<%= form_with(model: @home) do |f| %>
+<%= form_with(model: @home, data: {controller: "page-loader", page_loader_modules_value: "pages/homes"}) do |f| %>
   <div class="row">
     <div class="col-md-3 field mb-3">
       <%= f.label :name, class: "col-form-label-lg form-label" %>
@@ -87,7 +87,4 @@
       <%= link_to '戻る', homes_path, class: "btn btn-outline-dark" %>
     </div>
   </div>
-<% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/homes', 'data-turbo-track': 'reload' %>
 <% end %>

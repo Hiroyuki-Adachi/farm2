@@ -2,9 +2,10 @@
 
 <ul class="list-group">
   <% @tasks.each do |task| %>
-    <%= link_to task_path(task), class: "list-group-item list-group-item-action" do %>
+    <%= link_to task_path(task), class: "list-group-item list-group-item-action", data: { turbo_prefetch: false } do %>
       <%=raw "#{task.status_badge} #{task.priority_badge} #{task.due_badge}" %>
       <%= task.text_display %>
+      <%= task.unread_count_badge %>
     <% end %>
   <% end %>
 </ul>

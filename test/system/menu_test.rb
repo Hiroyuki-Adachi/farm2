@@ -11,9 +11,9 @@ class MenuTest < ApplicationSystemTestCase
     fill_in 'login_name', with: @user.login_name
     fill_in 'password', with: 'password'
     click_button '認証する'
+    assert_selector 'a', text: '作業日報管理'
 
     ensure_wide!
-
     menu_ids = all("li.nav-item > a.nav-link.farm2-navi").map { |menu| menu[:id] }
 
     menu_ids.each do |menu_id|

@@ -1,7 +1,7 @@
 import { Turbo } from "@hotwired/turbo-rails";
 
 let colors = null;
-document.addEventListener('turbo:load', () => {
+export const init = () => {
     colors = JSON.parse(document.getElementById("colors").value);
     allWorkTypesSelect();
 
@@ -20,7 +20,7 @@ document.addEventListener('turbo:load', () => {
             }
         });
     });
-});
+};
 
 const allWorkTypesSelect = () => {
     document.querySelectorAll("input[type='radio'][id^='work_type']:checked").forEach((element) => {

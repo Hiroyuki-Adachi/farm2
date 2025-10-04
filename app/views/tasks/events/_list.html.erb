@@ -1,8 +1,8 @@
-<% events = task.events.includes(:actor, :comment).order(created_at: :asc) %>
+<% events = task.events.with_read_info(current_user.worker_id, last_read_at).usual_order %>
 <% events = TaskEventDecorator.decorate_collection(events, context: { current_worker: current_user.worker }) %>
 
-<div id="task_timeline" class="d-flex flex-column gap-3" data-turbo-prefetch="false">
+<div id="task_timeline" class="d-flex flex-column gap-3" data-turbo-prefetch="false" data-controller="bs-tooltip">
   <% events.each do |event| %>
-    <%= render "tasks/events/item", event: event, mine: (event.actor_id == current_user.worker.id) %>
+    <%= render "tasks/events/item", event: event, mine: event.mine_flag %>
   <% end %>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_22_055344) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_29_081900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -795,6 +795,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_22_055344) do
     t.boolean "half_sum_flag", default: false, null: false, comment: "半端米集計フラグ"
     t.decimal "relative_price", precision: 5, default: "0", null: false, comment: "縁故米加算額"
     t.decimal "waste_price", precision: 4, default: "0", null: false, comment: "くず米金額"
+    t.decimal "waste_drying_price", precision: 4, default: "0", null: false, comment: "くず米金額(乾燥)"
+    t.decimal "waste_adjust_price", precision: 4, default: "0", null: false, comment: "くず米金額(調整)"
     t.index ["term", "organization_id"], name: "index_systems_on_term_and_organization_id", unique: true
   end
 
@@ -806,6 +808,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_22_055344) do
     t.datetime "updated_at", null: false
     t.index ["poster_id"], name: "index_task_comments_on_poster_id"
     t.index ["task_id", "created_at"], name: "index_task_comments_on_task_id_and_created_at"
+    t.index ["task_id", "poster_id", "updated_at"], name: "index_task_comments_on_task_id_and_poster_id_and_updated_at"
+    t.index ["task_id", "updated_at"], name: "index_task_comments_on_task_id_and_updated_at"
     t.index ["task_id"], name: "index_task_comments_on_task_id"
   end
 
@@ -827,9 +831,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_22_055344) do
     t.index ["assignee_from_id"], name: "index_task_events_on_assignee_from_id"
     t.index ["assignee_to_id"], name: "index_task_events_on_assignee_to_id"
     t.index ["task_comment_id"], name: "index_task_events_on_task_comment_id"
+    t.index ["task_id", "actor_id", "updated_at"], name: "index_task_events_on_task_id_and_actor_id_and_updated_at"
     t.index ["task_id", "created_at"], name: "index_task_events_on_task_id_and_created_at"
+    t.index ["task_id", "updated_at"], name: "index_task_events_on_task_id_and_updated_at"
     t.index ["task_id"], name: "index_task_events_on_task_id"
     t.index ["work_id"], name: "index_task_events_on_work_id"
+  end
+
+  create_table "task_reads", comment: "タスク既読", force: :cascade do |t|
+    t.bigint "task_id", null: false, comment: "タスクID"
+    t.bigint "worker_id", null: false, comment: "作業者ID"
+    t.datetime "last_read_at", default: "1970-01-01 00:00:00", null: false, comment: "最終既読日時"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id", "worker_id"], name: "index_task_reads_on_task_id_and_worker_id", unique: true
+    t.index ["task_id"], name: "index_task_reads_on_task_id"
+    t.index ["worker_id"], name: "index_task_reads_on_worker_id"
   end
 
   create_table "task_templates", comment: "定型タスク", force: :cascade do |t|
@@ -1217,6 +1234,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_22_055344) do
   add_foreign_key "task_events", "workers", column: "assignee_from_id"
   add_foreign_key "task_events", "workers", column: "assignee_to_id"
   add_foreign_key "task_events", "works"
+  add_foreign_key "task_reads", "tasks"
+  add_foreign_key "task_reads", "workers"
   add_foreign_key "task_templates", "organizations"
   add_foreign_key "task_watchers", "tasks"
   add_foreign_key "task_watchers", "workers"

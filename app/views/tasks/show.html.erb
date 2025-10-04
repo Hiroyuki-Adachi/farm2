@@ -88,7 +88,7 @@
   </div>
   <div class="card-body">
     <%= turbo_frame_tag "task_events" do %>
-      <%= render "tasks/events/list", task: @task %>
+      <%= render "tasks/events/list", task: @task, last_read_at: @last_read_at %>
     <% end %>
   </div>
 </div>

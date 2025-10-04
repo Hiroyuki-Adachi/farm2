@@ -13,7 +13,7 @@
 #  target_from(開始年月)                                    :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
 #  term(期)                                                 :integer          default(0), not null
-#  theme(画面テーマ)                                        :integer          default(0), not null
+#  theme(画面テーマ)                                        :integer          default("light"), not null
 #  token(アクセストークン)                                  :string(36)       default(""), not null
 #  view_month(表示切替月)                                   :integer          default([1, 4, 8]), not null, is an Array
 #  created_at                                               :datetime         not null

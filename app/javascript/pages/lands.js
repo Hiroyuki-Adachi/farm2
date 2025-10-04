@@ -70,7 +70,7 @@ function convertRegion(region) {
   return results;
 }
 
-document.addEventListener('turbo:load', () => {
+export const init = () => {
   document.getElementById("clear_region").addEventListener("click", function() {
     if(landRegion) {
       landRegion.setMap(null);
@@ -111,8 +111,8 @@ document.addEventListener('turbo:load', () => {
       }
     });
   });
-});
-
+  initMap();
+};
 
 function popupModal(action, callback) {
   fetch(action)
@@ -125,7 +125,3 @@ function popupModal(action, callback) {
       }
   });
 }
-
-document.addEventListener('turbo:load', () => {
-  initMap();
-});

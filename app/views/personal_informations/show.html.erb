@@ -1,33 +1,32 @@
-<% [@results1, @results2].each do |results| %>
-  <% if results.count > 0 %>
-    <% total_hours = 0 %>
-    <table id="personal_table" class="type06 table table-sm">
-      <tbody>
-        <% results.each do |result| %>
-          <tr data-href="<%=raw personal_information_work_path(personal_information_token: params[:token], id: result.model.work.id) %>">
-            <td class="px-0"><%= work_type_icon_tag(result.work.work_type) %></td>
-            <td class="px-0">
-              <div><%= result.worked_at_short %></div>
-              <div class="small"><%= result.model.work.start_at.strftime("%H:%M") %>〜<%= result.model.work.end_at.strftime("%H:%M") %></div>
-            </td>
-            <td class="px-0">
-              <div><%= result.work_kind_short_name %></div>
-              <div class="small"><%= result.work_short_name  %></div>
-            </td>
-            <td class="text-right"><%= result.hours %></td>
-            <% total_hours += result.model.hours %>
+<div data-controller="page-loader" data-page-loader-modules-value="pages/personal_informations/show">
+  <% [@results1, @results2].each do |results| %>
+    <% if results.count.positive? %>
+      <% total_hours = 0 %>
+      <table id="personal_table" class="type06 table table-sm">
+        <tbody>
+          <% results.each do |result| %>
+            <tr data-href="<%=raw personal_information_work_path(personal_information_token: params[:token], id: result.model.work.id) %>">
+              <td class="px-0"><%= work_type_icon_tag(result.work.work_type) %></td>
+              <td class="px-0">
+                <div><%= result.worked_at_short %></div>
+                <div class="small"><%= result.model.work.start_at.strftime("%H:%M") %>〜<%= result.model.work.end_at.strftime("%H:%M") %></div>
+              </td>
+              <td class="px-0">
+                <div><%= result.work_kind_short_name %></div>
+                <div class="small"><%= result.work_short_name  %></div>
+              </td>
+              <td class="text-right"><%= result.hours %></td>
+              <% total_hours += result.model.hours %>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="3">合計</th>
+            <td class="text-right"><%= sprintf("%.1f", @total_hours || total_hours) %></td>
           </tr>
-        <% end %>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th colspan="3">合計</th>
-          <td class="text-right"><%= sprintf("%.1f", @total_hours || total_hours) %></td>
-        </tr>
-      </tfoot>
-    </table>
+        </tfoot>
+      </table>
+    <% end %>
   <% end %>
-<% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/personal_informations/show', 'data-turbo-track': 'reload', type: :module, data: {turbo: {track: :reload}} %>
-<% end %>
+</div>

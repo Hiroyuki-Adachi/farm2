@@ -36,7 +36,7 @@ class Task < ApplicationRecord
 
   attribute :watching, :boolean
   attribute :comment, :string
-  attribute :has_work, :boolean
+  attribute :unread_count, :integer
 
   belongs_to :assignee, class_name: 'Worker', optional: true
   belongs_to :creator, class_name: 'Worker', optional: true
@@ -48,10 +48,12 @@ class Task < ApplicationRecord
   has_many :comments, class_name: 'TaskComment', dependent: :destroy
   has_many :events, class_name: 'TaskEvent', dependent: :destroy
   has_many :works, through: :events, source: :work
+  has_many :reads, class_name: 'TaskRead', dependent: :destroy
 
   before_save :clear_end_info
   after_create :create_watcher
   after_create :create_task_event
+  after_create :init_task_reads
 
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
   enum :end_reason, { unset: 0, completed: 1, no_action: 2, unavailable: 3, duplicated: 4, other: 9 }, prefix: true
@@ -78,20 +80,13 @@ class Task < ApplicationRecord
     # 日報の作業者
     worker_ids_subq = work_result_table.project(work_result_table[:worker_id]).where(work_result_table[:work_id].eq(work.id))
 
-    # 既に紐づいている
-    exists_work_link =
-      Arel::Nodes::Exists.new(
-        task_event_table.project(Arel.sql("1"))
-          .where(task_event_table[:task_id].eq(task_table[:id]).and(task_event_table[:work_id].eq(work.id)))
-      )
-
     # 新しく紐づけ可能なタスクの条件
     new_work_link = task_table[:office_role].eq(work.work_type.office_role) # 役割が一致
               .and(task_table[:office_role].not_eq(Task.office_roles[:none])) # 役割が「なし」ではない
               .and(task_table[:assignee_id].in(worker_ids_subq)) # 作業者が担当者に含まれる
 
-    base = where(task_status_id: TaskStatus.workable_ids).where(new_work_link.or(exists_work_link))
-    base.select(task_table[Arel.star], exists_work_link.dup.as("has_work"))
+    base = where(task_status_id: TaskStatus.workable_ids).where(new_work_link)
+    base.select(task_table[Arel.star])
   }
 
   scope :opened, -> { where(task_status_id: TaskStatus.open_ids).usual_order }
@@ -115,14 +110,31 @@ class Task < ApplicationRecord
   }
   
   scope :with_watch_flag, ->(worker_id) {
-    select(<<~SQL.squish)
+    sql = <<-SQL.squish
       #{table_name}.*, 
       EXISTS (
         SELECT 1 FROM task_watchers tw
         WHERE tw.task_id = #{table_name}.id
-          AND tw.worker_id = #{worker_id}
+          AND tw.worker_id = :worker_id
       ) AS watching
     SQL
+
+    select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
+  }
+
+  scope :with_unread_count, ->(worker_id) {
+    sql = <<-SQL.squish
+      #{table_name}.*, 
+      (SELECT COUNT(DISTINCT tc.id) FROM task_reads tr
+        LEFT OUTER JOIN task_comments tc ON tc.task_id = #{table_name}.id
+          AND tc.poster_id <> :worker_id
+        WHERE tr.task_id = #{table_name}.id
+          AND tr.worker_id = :worker_id
+          AND tr.last_read_at < tc.updated_at
+      ) AS unread_count
+    SQL
+
+    select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
   }
 
   def closed?
@@ -171,7 +183,10 @@ class Task < ApplicationRecord
       )
       update!(assignee_id: new_assignee_id)
 
-      TaskWatcher.find_or_create_by!(task_id: id, worker_id: new_assignee_id) if new_assignee_id
+      if new_assignee_id
+        TaskWatcher.find_or_create_by!(task: self, worker_id: new_assignee_id)
+        TaskRead.touch_and_get_previous!(task: self, worker_id: new_assignee_id, at: Time.at(0))
+      end
     end
   end
 
@@ -261,7 +276,12 @@ class Task < ApplicationRecord
     TaskEvent.create!(task: self, actor: actor, event_type: :add_comment, comment: comment)
   end
 
-  def add_work!(actor:, work:)
+  def add_work!(actor:, work:, close: false)
+    if close
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work)
+      update!(status: TaskStatus::DONE, started_on: started_on || work.worked_at, ended_on: work.worked_at, end_reason: :completed)
+      return
+    end
     if status == TaskStatus::DOING
       TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work)
     elsif [TaskStatus::TO_DO, TaskStatus::REOPEN].include?(status)
@@ -286,11 +306,12 @@ class Task < ApplicationRecord
     event.save!
   end
 
-  def self.add_works!(actor:, all_task_ids:, check_task_ids:, work:)
+  def self.add_works!(actor:, check_task_ids:, close_task_ids: [], work:)
     ActiveRecord::Base.transaction do
-      Task.for_work(work).where(id: all_task_ids).find_each do |task|
-        task.add_work!(actor: actor, work: work) if check_task_ids.include?(task.id.to_s) && !task.has_work
-        task.remove_work!(work: work) if check_task_ids.exclude?(task.id.to_s) && task.has_work
+      Task.where(id: check_task_ids).find_each do |task|
+        next if task.events.exists?(work_id: work.id)
+
+        task.add_work!(actor: actor, work: work, close: close_task_ids.include?(task.id.to_s))
       end
     end
   end
@@ -328,8 +349,8 @@ class Task < ApplicationRecord
   end
 
   def create_watcher
-    self.task_watchers.find_or_create_by(worker_id: self.assignee.id) if self.assignee.present?
-    self.task_watchers.find_or_create_by(worker_id: self.creator.id) if self.creator.present?
+    self.task_watchers.find_or_create_by(worker_id: self.assignee_id) if self.assignee.present?
+    self.task_watchers.find_or_create_by(worker_id: self.creator_id) if self.creator.present?
   end
 
   def create_task_event
@@ -340,5 +361,12 @@ class Task < ApplicationRecord
       actor: self.creator,
       event_type: :task_created
     )
+  end
+
+  def init_task_reads
+    return if self.creator.blank?
+    TaskRead.touch_and_get_previous!(task: self, worker_id: self.creator_id, at: self.created_at)
+    return if self.assignee.blank? || self.assignee_id == self.creator_id
+    TaskRead.touch_and_get_previous!(task: self, worker_id: self.assignee_id, at: Time.at(0))
   end
 end

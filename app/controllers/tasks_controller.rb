@@ -8,7 +8,12 @@ class TasksController < ApplicationController
   decorates_assigned :task, :tasks
 
   def index
-    @tasks = Task.for_index.includes(:assignee).with_watch_flag(current_user.worker.id).page(params[:page])
+    @tasks = Task
+              .for_index
+              .includes(:assignee)
+              .with_watch_flag(current_user.worker.id)
+              .with_unread_count(current_user.worker.id)
+              .page(params[:page])
   end
 
   def new
@@ -30,7 +35,9 @@ class TasksController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @last_read_at = TaskRead.touch_and_get_previous!(task: @task, worker_id: current_user.worker_id)
+  end
 
   def destroy
     to_error_path unless @task.deletable?(current_user)

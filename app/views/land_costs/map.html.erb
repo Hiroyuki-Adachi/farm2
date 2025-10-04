@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/lands-maps">
   <div class="col-md-8">
     <h1>作付地図</h1>
   </div>
@@ -33,7 +33,4 @@
 <%= hidden_field_tag :organization_name, current_organization.name %>
 <% @costs.each do |cost| %>
   <%= land_region_hidden_field(cost.land, color: cost.work_type.bg_color_date(current_organization, @target), work_type_id: cost.work_type_id) %>
-<% end %>
-<% content_for :head do %>
-<%= javascript_include_tag 'pages/lands-maps', 'data-turbo-track': 'reload', type: :module %>
 <% end %>

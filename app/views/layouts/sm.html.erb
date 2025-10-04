@@ -7,11 +7,12 @@
   <meta name="apple-mobile-web-app-title" content="作業日報管理">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.3, maximum-scale=10.0, user-scalable=yes" />
   <title>作業日報管理システム(V2)</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
   <%= javascript_importmap_tags %>
   <%= stylesheet_link_tag 'application' %>
   <%= stylesheet_link_tag 'sp' %>
   <%= yield :head %>
-  <%= csrf_meta_tags %>
   <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path('/images/icons/farm2-32.png') %>">
   <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path('/images/icons/farm2-16.png') %>">
   <link rel="apple-touch-icon" href="<%= asset_path('/images/icons/farm2-180.png') %>">

@@ -19,13 +19,15 @@
 #
 # Indexes
 #
-#  index_task_events_on_actor_id                (actor_id)
-#  index_task_events_on_assignee_from_id        (assignee_from_id)
-#  index_task_events_on_assignee_to_id          (assignee_to_id)
-#  index_task_events_on_task_comment_id         (task_comment_id)
-#  index_task_events_on_task_id                 (task_id)
-#  index_task_events_on_task_id_and_created_at  (task_id,created_at)
-#  index_task_events_on_work_id                 (work_id)
+#  index_task_events_on_actor_id                             (actor_id)
+#  index_task_events_on_assignee_from_id                     (assignee_from_id)
+#  index_task_events_on_assignee_to_id                       (assignee_to_id)
+#  index_task_events_on_task_comment_id                      (task_comment_id)
+#  index_task_events_on_task_id                              (task_id)
+#  index_task_events_on_task_id_and_actor_id_and_updated_at  (task_id,actor_id,updated_at)
+#  index_task_events_on_task_id_and_created_at               (task_id,created_at)
+#  index_task_events_on_task_id_and_updated_at               (task_id,updated_at)
+#  index_task_events_on_work_id                              (work_id)
 #
 # Foreign Keys
 #
