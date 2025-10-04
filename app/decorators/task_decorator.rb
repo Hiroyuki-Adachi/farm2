@@ -7,8 +7,22 @@ class TaskDecorator < Draper::Decorator
   decorates_association :assignee
   decorates_association :template
 
+  SOON_DAYS = 3
+
+  NEW_DAYS_USER = 1
+  NEW_DAYS_SYSTEM = 3
+
   def priority_badge
     super(object.priority)
+  end
+
+  def new_badge
+    new_days = object.creator_id.present? ? NEW_DAYS_USER : NEW_DAYS_SYSTEM
+    if object.created_at >= new_days.days.ago
+      h.content_tag(:span, "新規", class: "badge bg-info")
+    else
+      ""
+    end
   end
 
   def status_badge
@@ -91,7 +105,7 @@ class TaskDecorator < Draper::Decorator
     return :unset   if due_on.blank?
     return :expired if due_on < Date.current
     return :today   if due_on == Date.current
-    return :soon    if due_on <= Date.current + 3
+    return :soon    if due_on <= Date.current + SOON_DAYS
     :ok
   end
 
