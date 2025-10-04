@@ -23,7 +23,7 @@ class IpList < ApplicationRecord
   LOCAL_ADDRESSES = [
     IPAddr.new('127.0.0.1/32'),      # IPv4 local host
     IPAddr.new('10.0.0.0/8'),        # IPv4 private network(class A)
-    IPAddr.new('172.16.0.0/12'),     # IPv4 private network(class B)
+    #IPAddr.new('172.16.0.0/12'),     # IPv4 private network(class B)
     IPAddr.new('192.168.0.0/16'),    # IPv4 private network(class C)
     IPAddr.new('::1/128'),           # IPv6 local host
     IPAddr.new('fc00::/7'),          # IPv6 unique local addresses
