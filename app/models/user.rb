@@ -34,13 +34,13 @@
 #  ix_users_on_mail_confirmation_token  (mail_confirmation_token) UNIQUE WHERE (mail_confirmation_token IS NOT NULL)
 #  ix_users_token                       (token) UNIQUE
 #
-
+require "rotp"
 class User < ApplicationRecord
   before_create :set_token
   before_update :clear_mail_fields, if: -> { mail_changed? && self.mail.present? }
   after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && self.mail_confirmed_at.present? }
 
-  encrypts :otp_secret, attribute: :otp_secret_ciphertext
+  encrypts :otp_secret
 
   enum :permission_id, { visitor: 0, user: 1, checker: 2, manager: 3, admin: 9 }
   enum :theme, { light: 0, dark: 1, auto: 2 }

@@ -1,0 +1,21 @@
+<!-- app/views/mfa/setup.html.erb -->
+<h1>TOTP 設定</h1>
+<p>Authenticator アプリで次のQRを読み取り、6桁コードを入力してください。</p>
+<%= raw RQRCode::QRCode.new(@provisioning_uri).as_svg(module_size: 6) %>
+
+<%= form_with url: verify_setup_mfa_path, method: :post do %>
+  <label for="otp">6桁コード</label>
+  <%= text_field_tag :otp, nil, 
+    maxlength: 6, 
+    autocomplete: "one-time-code",
+    class: "form-control form-control-lg",
+    placeholder: "6桁コードを入力してください。",
+    pattern: '\d{6}'
+  %>
+  <div class="btn-group mr-2">
+    <%= submit_tag "有効化", class: "btn btn-primary mt-2" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark mt-2" %>
+  </div>
+<% end %>

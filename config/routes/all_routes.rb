@@ -172,6 +172,7 @@ namespace :users do
   resources :mails, only: [:new, :create]
   resources :line_hooks, only: [:create]
   resources :themes, only: [:new, :create]
+  resources :mfa, only: [:new, :create]
 end
 resources :work_verifications, param: "work_id", only: [:index, :update, :destroy, :show]
 
