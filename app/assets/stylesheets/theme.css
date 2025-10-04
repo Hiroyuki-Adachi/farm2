@@ -34,4 +34,9 @@
   --sticky-head-bg: var(--surface-2);
   --text-strong: #f1f3f5;
   --text-muted:  #a0a6ad;
+
+  .btn-outline-dark {
+    color: #f8f9fa;
+    border-color: #f8f9fa;
+  }
 }

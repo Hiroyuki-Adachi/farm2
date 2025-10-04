@@ -18,6 +18,7 @@
           <%= turbo_frame_tag "task_title" do %>
             <%= render "tasks/titles/show", task: task %>
           <% end %>
+          <%= task.new_badge %>
           <%= turbo_frame_tag "task_priority" do %>
             <%= render "tasks/priorities/show", task: task %>
           <% end %>
