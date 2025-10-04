@@ -81,12 +81,14 @@ class Land < ApplicationRecord
       land_homes.project(Arel.sql('1')).where(
         land_homes[:land_id].eq(lands[:id])
           .and(land_homes[:home_id].eq(home.id))
-          .and(land_homes[:manager_flag].eq(true))
       )
     )
 
+    is_manager = lands[:manager_id].eq(home.id)
+    is_owner = lands[:owner_id].eq(home.id)
+
     kept.where(
-      lands[:manager_id].eq(home.id).or(exists_land_homes)
+      is_manager.or(is_owner).or(exists_land_homes)
     )
   end
 
