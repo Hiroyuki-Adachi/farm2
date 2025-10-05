@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+# == Schema Information
+#
+# Table name: trusted_devices
+#
+#  id                                      :bigint           not null, primary key
+#  device_name(デバイス名)                 :string(64)       default(""), not null
+#  ip_address(IPアドレス)                  :string(64)       not null
+#  last_used_at(最終使用日時)              :datetime         not null
+#  token_digest(トークンのダイジェスト)    :string(128)      not null
+#  ua_hash(ユーザーエージェントのハッシュ) :string(128)      not null
+#  created_at                              :datetime         not null
+#  updated_at                              :datetime         not null
+#  user_id(ユーザーID)                     :bigint           not null
+#
+# Indexes
+#
+#  index_trusted_devices_on_token_digest  (token_digest) UNIQUE
+#  index_trusted_devices_on_user_id       (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#

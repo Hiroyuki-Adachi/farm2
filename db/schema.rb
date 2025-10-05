@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_04_055153) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_05_122922) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -975,6 +975,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_055153) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "trusted_devices", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "ユーザーID"
+    t.string "token_digest", limit: 128, null: false, comment: "トークンのダイジェスト"
+    t.string "ua_hash", limit: 128, null: false, comment: "ユーザーエージェントのハッシュ"
+    t.string "device_name", limit: 64, default: "", null: false, comment: "デバイス名"
+    t.string "ip_address", limit: 64, null: false, comment: "IPアドレス"
+    t.datetime "last_used_at", null: false, comment: "最終使用日時"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token_digest"], name: "index_trusted_devices_on_token_digest", unique: true
+    t.index ["user_id"], name: "index_trusted_devices_on_user_id"
+  end
+
   create_table "user_topics", comment: "利用者トピック", force: :cascade do |t|
     t.integer "user_id", null: false, comment: "利用者ID"
     t.integer "topic_id", null: false, comment: "トピックID"
@@ -1245,4 +1258,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_04_055153) do
   add_foreign_key "tasks", "task_templates"
   add_foreign_key "tasks", "workers", column: "assignee_id"
   add_foreign_key "tasks", "workers", column: "creator_id"
+  add_foreign_key "trusted_devices", "users"
 end

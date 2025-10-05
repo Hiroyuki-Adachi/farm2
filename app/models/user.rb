@@ -40,6 +40,7 @@ class User < ApplicationRecord
   before_update :clear_mail_fields, if: -> { mail_changed? && self.mail.present? }
   after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && self.mail_confirmed_at.present? }
 
+  has_secure_password
   encrypts :otp_secret
 
   enum :permission_id, { visitor: 0, user: 1, checker: 2, manager: 3, admin: 9 }
@@ -136,6 +137,4 @@ class User < ApplicationRecord
       self.worker.update(pc_mail: mail)
     end
   end
-
-  has_secure_password
 end
