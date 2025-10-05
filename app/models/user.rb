@@ -108,13 +108,15 @@ class User < ApplicationRecord
   end
 
   def prepare_totp_secret!
-    return if self[:otp_secret].present?  # すでに保存済みなら何もしない
-
-    update!(otp_secret: ROTP::Base32.random_base32) unless otp_secret.present?
+    update!(otp_secret: ROTP::Base32.random_base32) unless otp_enabled
   end
 
   def enable_totp!
-    update!(otp_enabled: true)
+    update!(otp_enabled: true) if otp_secret.present?
+  end
+
+  def destroy_totp!
+    update!(otp_enabled: false, otp_secret: nil, otp_last_used_at: nil)
   end
 
   private

@@ -146,6 +146,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "TOTP対応(フラグ設定)" do
     user = users(:user_manager)
+    user.prepare_totp_secret!
     user.update!(otp_enabled: false)
 
     assert_not user.otp_enabled
