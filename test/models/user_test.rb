@@ -35,6 +35,7 @@
 #  ix_users_token                       (token) UNIQUE
 #
 require 'test_helper'
+require "rotp"
 
 class UserTest < ActiveSupport::TestCase
   setup do
@@ -141,5 +142,33 @@ class UserTest < ActiveSupport::TestCase
     assert @checker.checkable?
     assert_not @user.checkable?
     assert_not @visitor.checkable?
+  end
+
+  test "TOTP対応(フラグ設定)" do
+    user = users(:user_manager)
+    user.update!(otp_enabled: false)
+
+    assert_not user.otp_enabled
+    user.enable_totp!
+    assert user.otp_enabled
+  end
+
+  test "TOTP対応(秘密鍵準備)" do
+    user = users(:user_manager)
+    user.update!(otp_secret: nil)
+    assert_nil user.otp_secret
+
+    ENV["OTP_SECRET_ISSUER"] = "Farm2"
+
+    user.prepare_totp_secret!
+    assert_not_nil user.otp_secret
+    assert_not_nil user.totp
+    assert_instance_of ROTP::TOTP, user.totp
+    assert_equal ENV["OTP_SECRET_ISSUER"], user.totp.issuer
+  end
+
+  test "TOTP対応(シークレット生成:nil対応)" do
+    user = User.new(otp_secret: nil)
+    assert_nil user.totp
   end
 end
