@@ -1,5 +1,5 @@
 <h1>苗使用量一覧</h1>
-<table class="table table-sm table-bordered">
+<table class="table table-sm table-bordered" data-controller="grouped-rows">
   <thead class="thead-dark">
     <tr>
       <th>作業分類</th>
@@ -12,7 +12,7 @@
   <tbody>
     <% @work_types.each do |work_type| %>
       <% next if @work_areas[work_type.id].blank? %>
-      <tr class="tr-total1 table-row-primary-bg" data-code1="<%= work_type.id %>">
+      <tr class="tr-total1 table-row-primary-bg" data-code1="<%= work_type.id %>" data-action="click->grouped-rows#toggleTotal1 keydown->grouped-rows#onKeydown">
         <td><%= work_type.name %></td>
         <td></td>
         <td class="numeric"><%= @work_areas[work_type.id].values.inject(:+) %></td>
