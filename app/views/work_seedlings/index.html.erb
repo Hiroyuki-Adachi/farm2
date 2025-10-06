@@ -12,7 +12,7 @@
   <tbody>
     <% @work_types.each do |work_type| %>
       <% next if @work_areas[work_type.id].blank? %>
-      <tr class="tr-total1 table-primary" data-code1="<%= work_type.id %>">
+      <tr class="tr-total1 table-row-primary-bg" data-code1="<%= work_type.id %>">
         <td><%= work_type.name %></td>
         <td></td>
         <td class="numeric"><%= @work_areas[work_type.id].values.inject(:+) %></td>

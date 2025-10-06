@@ -19,7 +19,7 @@
   <% @whole_crops.each do |whole_crop| %>
     <% if whole_crop.work.work_type_id != old_work_type_id %>
       <% old_work_type_id = whole_crop.work.work_type_id %>
-      <tr class="tr-total1 table-primary" data-code1="<%= old_work_type_id %>">
+      <tr class="tr-total1 table-row-primary-bg" data-code1="<%= old_work_type_id %>">
         <td><%= whole_crop.work.work_type.name %></td>
         <td colspan="2"></td>
         <td class="numeric"><%= format_rolls(@work_type_totals[old_work_type_id][:rolls]) %></td>
@@ -29,7 +29,7 @@
     <% end %>
     <% if whole_crop.work.model.worked_at.beginning_of_month != old_worked_at %>
       <% old_worked_at = whole_crop.work.model.worked_at.beginning_of_month %>
-      <tr class="tr-total2 table-secondary" data-code1="<%= old_work_type_id %>" data-code2="<%= old_worked_at %>">
+      <tr class="tr-total2 table-row-low" data-code1="<%= old_work_type_id %>" data-code2="<%= old_worked_at %>">
         <td></td>
         <td><%= old_worked_at.strftime("%Y年 %m月") %></td>
         <td></td>

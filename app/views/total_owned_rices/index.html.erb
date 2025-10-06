@@ -23,7 +23,7 @@
           </tr>
         <% end %>
         <% old_home_id = owned_rice.home_id %>
-        <tr class="tr-total1 table-primary" data-code1="<%= old_home_id %>">
+        <tr class="tr-total1 table-row-primary-bg" data-code1="<%= old_home_id %>">
           <td><%= owned_rice.home.name %></td>
           <td></td>
           <td class="numeric"><%= @home_totals[old_home_id][:owned_count] %></td>

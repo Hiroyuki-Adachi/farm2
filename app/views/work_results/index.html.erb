@@ -18,7 +18,7 @@
   <% @results.each do |result| %>
     <% if result.worker.home_id != old_home_id %>
       <% old_home_id = result.worker.home_id %>
-      <tr class="tr-total1 table-primary" data-code1="<%= old_home_id %>" style="cursor: pointer;">
+      <tr class="tr-total1 table-row-primary-bg" data-code1="<%= old_home_id %>" style="cursor: pointer;">
         <td><%= result.home_name %></td>
         <td colspan="3"></td>
         <td class="numeric"><%= @home_totals[old_home_id][:count] %></td>
@@ -29,7 +29,7 @@
     <% end %>
     <% if result.worker.id != old_worker_id %>
       <% old_worker_id = result.worker.id %>
-      <tr class="tr-total2 table-secondary" data-code1="<%= old_home_id %>" data-code2="<%= old_worker_id %>" style="cursor: pointer;">
+      <tr class="tr-total2 table-row-low" data-code1="<%= old_home_id %>" data-code2="<%= old_worker_id %>" style="cursor: pointer;">
         <td></td>
         <td><%= result.worker_name(current_organization) %></td>
         <td colspan="2"></td>
