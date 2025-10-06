@@ -4,7 +4,7 @@
 <h1>収穫一覧(水稲)</h1>
 <% old_work_type_id = nil %>
 <% old_carried_on = nil %>
-<table class="table table-sm table-bordered">
+<table class="table table-sm table-bordered" data-controller="grouped-rows">
   <thead class="thead-dark">
     <tr>
       <th>品種</th>
@@ -24,7 +24,7 @@
       <% old_work_type_id = drying.work_type_id %>
       <% old_carried_on = nil %>
       <% sum_area = LandCost.sum_area_by_work_type(current_system.start_date, old_work_type_id) %>
-      <tr class="tr-total1 table-row-primary-bg" data-code1="<%= old_work_type_id %>">
+      <tr class="tr-total1 table-row-primary-bg" data-code1="<%= old_work_type_id %>" data-action="click->grouped-rows#toggleTotal1 keydown->grouped-rows#onKeydown">
         <td><%= drying.work_type.name %></td>
         <td colspan="3"></td>
         <td class="numeric"><%= format_weight(@work_type_totals[old_work_type_id][:rice_weight]) %></td>
@@ -36,7 +36,7 @@
     <% end %>
     <% if drying.carried_on != old_carried_on %>
       <% old_carried_on = drying.carried_on %>
-      <tr class="tr-total2 table-row-low" data-code1="<%= old_work_type_id %>" data-code2="<%= old_carried_on %>">
+      <tr class="tr-total2 table-row-low" data-code1="<%= old_work_type_id %>" data-code2="<%= old_carried_on %>" data-action="click->grouped-rows#toggleTotal2 keydown->grouped-rows#onKeydown">
         <td></td>
         <td><%= old_carried_on %></td>
         <td colspan="2"></td>
