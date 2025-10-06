@@ -15,7 +15,7 @@
   </thead>
   <tbody>
     <% @chemicals.each do |chemical| %>
-      <tr class="tr-total1 table-primary" data-code1="<%= chemical.id %>">
+      <tr class="tr-total1 table-row-primary-bg" data-code1="<%= chemical.id %>">
         <td><%= chemical.chemical_type.name %></td>
         <td><%= chemical.name %></td>
         <td colspan="3"></td>

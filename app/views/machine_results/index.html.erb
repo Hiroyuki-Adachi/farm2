@@ -18,7 +18,7 @@
     <% @results.each do |result| %>
       <% if old_owner_id != result.owner.id %>
         <% old_owner_id = result.owner.id %>
-        <tr class="tr-total1 table-primary" data-code1="<%= old_owner_id %>">
+        <tr class="tr-total1 table-row-primary-bg" data-code1="<%= old_owner_id %>">
           <td><%= result.owner.name %></td>
           <td colspan="6"></td>
           <td class="numeric"><%= @owner_totals[old_owner_id][:count] %></td>

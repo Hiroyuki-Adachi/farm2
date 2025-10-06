@@ -17,7 +17,7 @@
   <% @work_lands.each do |work_land| %>
     <% if work_land.land.manager_id != old_home_id %>
       <% old_home_id = work_land.land.manager_id %>
-      <tr class="tr-total1 table-primary" data-code1="<%= old_home_id %>" style="cursor: pointer;">
+      <tr class="tr-total1 table-row-primary-bg" data-code1="<%= old_home_id %>" style="cursor: pointer;">
         <td><%= work_land.land.manager.name %></td>
         <td colspan="4"></td>
         <td class="numeric"><%= number_to_currency(@home_totals[old_home_id][:cost], {precision: 0, unit: ""}) %></td>
@@ -26,7 +26,7 @@
     <% end %>
     <% if work_land.work.id != old_work_id || home_flag %>
       <% old_work_id = work_land.work.id %>
-      <tr class="tr-total2 table-secondary" data-code1="<%= old_home_id %>" data-code2="<%= old_work_id %>" style="cursor: pointer;">
+      <tr class="tr-total2 table-row-low" data-code1="<%= old_home_id %>" data-code2="<%= old_work_id %>" style="cursor: pointer;">
         <td></td>
         <td><%= work_land.work.decorate.worked_at %></td>
         <td style="overflow:hidden;"><%= work_land.work.decorate.name %></td>

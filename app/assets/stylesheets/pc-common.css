@@ -122,7 +122,3 @@ header.navbar {
 
 /* 折りたたみ中、余白が出る場合の保険 */
 .sidebar-collapsed #content_col { padding-top: 0 !important; }
-
-.bg-info {
-  color: #000 !important;
-}
