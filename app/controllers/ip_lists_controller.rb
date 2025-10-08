@@ -39,18 +39,14 @@ class IpListsController < ApplicationController
 
   def restrict_remote_ip
     if IpList.white_list.any? { |ip| ip.include?(request.remote_ip) }
-      redirect_to root_path
-      return
+      redirect_to root_path and return
     elsif IpList.black_list.any? { |ip| ip.include?(request.remote_ip) }
-      to_error_path
-      return
+      to_error_path and return
     end
   end
 
   def set_ip
-    @ip = IpList.where("current_timestamp <= confirmation_expired_at")
-      .where(expired_on: nil)
-      .find_by(id: params[:id], ip_address: request.remote_ip, white_flag: true)
-    to_error_path unless @ip
+    @ip = IpList.find_valid(params[:id], request.remote_ip)
+    to_error_path and return unless @ip
   end
 end

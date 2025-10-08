@@ -23,7 +23,7 @@ class IpList < ApplicationRecord
   LOCAL_ADDRESSES = [
     IPAddr.new('127.0.0.1/32'),      # IPv4 local host
     IPAddr.new('10.0.0.0/8'),        # IPv4 private network(class A)
-    #IPAddr.new('172.16.0.0/12'),     # IPv4 private network(class B)
+    IPAddr.new('172.16.0.0/12'),     # IPv4 private network(class B)
     IPAddr.new('192.168.0.0/16'),    # IPv4 private network(class C)
     IPAddr.new('::1/128'),           # IPv6 local host
     IPAddr.new('fc00::/7'),          # IPv6 unique local addresses
@@ -44,14 +44,17 @@ class IpList < ApplicationRecord
     .pluck(:ip_address)
   }
 
+  scope :active, -> {
+    where("current_timestamp <= confirmation_expired_at")
+      .where(expired_on: nil)
+  }
+
   def token=(value)
     @token = value
     self.hashed_token = Digest::SHA256.hexdigest(value)
   end
 
-  def token
-    @token
-  end
+  attr_reader :token
 
   def authenticate?(token)
     self.hashed_token == Digest::SHA256.hexdigest(token)
@@ -88,5 +91,9 @@ class IpList < ApplicationRecord
 
   def self.black_list
     blacks.map { |ip| IPAddr.new(ip) }
+  end
+
+  def self.find_valid(id, remote_ip)
+    active.find_by(id: id, ip_address: remote_ip, white_flag: true)
   end
 end

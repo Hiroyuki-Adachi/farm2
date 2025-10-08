@@ -37,7 +37,6 @@ class Users::MfaControllerTest < ActionDispatch::IntegrationTest
     totp = mock("totp")
     totp.expects(:verify).with("123456", has_entries(drift_behind: 30, drift_ahead: 30)).returns(true)
     @user.stubs(:totp).returns(totp)
-
     @user.expects(:enable_totp!).returns(true)
 
     patch users_mfa_path, params: { otp: "123456" }
