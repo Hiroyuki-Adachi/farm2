@@ -104,7 +104,7 @@ class User < ApplicationRecord
   end
 
   def totp
-    return unless otp_secret.present?
+    return if otp_secret.blank?
     ROTP::TOTP.new(otp_secret, issuer: ENV.fetch("OTP_SECRET_ISSUER"))
   end
 
@@ -133,8 +133,6 @@ class User < ApplicationRecord
   end
 
   def set_pc_mail
-    if self.mail.present? && self.worker.present? && self.worker.pc_mail.blank?
-      self.worker.update(pc_mail: mail)
-    end
+    self.worker.update(pc_mail: mail) if self.mail.present? && self.worker.present? && self.worker.pc_mail.blank?
   end
 end
