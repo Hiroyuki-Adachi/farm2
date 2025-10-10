@@ -13,7 +13,6 @@ class TasksController < ApplicationController
               .includes(:assignee)
               .with_watch_flag(current_user.worker.id)
               .with_unread_count(current_user.worker.id)
-              .page(params[:page])
   end
 
   def new

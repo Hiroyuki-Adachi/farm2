@@ -17,7 +17,7 @@
   </thead>
   <tbody>
     <% @schedules.each do |schedule| %>
-      <tr class="<%= schedule.farming_flag ? 'table-light' : 'table-secondary' %>">
+      <tr class="<%= schedule.farming_flag ? 'table-row-normal' : 'table-row-low' %>">
         <td class="text-nowrap"><%= schedule.worked_at %></td>
         <td class="text-nowrap"><%= schedule.name %></td>
         <td class="text-center"><%= schedule.line_flag %></td>

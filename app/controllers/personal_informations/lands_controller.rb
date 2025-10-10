@@ -1,6 +1,6 @@
 class PersonalInformations::LandsController < PersonalInformationsController
   def index
-    @lands = LandDecorator.decorate_collection(Land.usual.for_personal(@worker.home))
+    @lands = LandDecorator.decorate_collection(Land.usual.expiry.for_personal(@worker.home))
   end
 
   def show

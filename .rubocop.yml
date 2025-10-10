@@ -89,6 +89,6 @@ Rails/I18nLocaleTexts:
 Rails/LexicallyScopedActionFilter:
   Enabled: false
 
-# モデル内のスコープの順番を指摘
-Rails/OrderModelMacros:
+# DBの未使用カラムのチェック
+Rails/UnusedIgnoredColumns:
   Enabled: true

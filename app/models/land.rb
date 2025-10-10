@@ -65,12 +65,33 @@ class Land < ApplicationRecord
   scope :for_finance1, -> {kept.where("owner_id = manager_id").where(target_flag: true)}
   scope :for_finance2, -> {kept.where("owner_id <> manager_id").where(target_flag: true)}
   scope :regionable, -> {kept.where.not(region: nil).where(target_flag: true, group_id: nil)}
-  scope :expiry, ->(target) {kept.where("? BETWEEN start_on AND end_on", target)}
   scope :for_place, ->(place) {kept.where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order)}
   scope :by_term, ->(sys) {kept.where(["start_on <= ? AND ? <= end_on", sys.end_date, sys.start_date])}
-  scope :for_personal, ->(home) {
-    kept.where("(lands.manager_id = ? OR EXISTS (SELECT * FROM land_homes WHERE lands.id = land_homes.land_id AND home_id = ? AND manager_flag = true))", home.id, home.id)
-  }
+  scope :expiry, ->(target = nil) do
+    target ||= Date.current
+
+    kept.where(arel_table[:start_on].lteq(target))
+      .where(arel_table[:end_on].gteq(target))
+  end
+  scope :for_personal, ->(home) do
+    lands = arel_table
+    land_homes = LandHome.arel_table
+
+    exists_land_homes = Arel::Nodes::Exists.new(
+      land_homes.project(Arel.sql('1')).where(
+        land_homes[:land_id].eq(lands[:id])
+          .and(land_homes[:home_id].eq(home.id))
+      )
+    )
+
+    is_manager = lands[:manager_id].eq(home.id)
+    is_owner = lands[:owner_id].eq(home.id)
+
+    kept.where(
+      is_manager.or(is_owner).or(exists_land_homes)
+    )
+  end
+
   validates :place, presence: true
   validates :area, presence: true
   validates :display_order, presence: true

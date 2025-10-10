@@ -65,15 +65,20 @@ class Task < ApplicationRecord
 
   validate :ended_on_after_started_on
 
-  scope :usual_order, -> { order("priority DESC, due_on ASC NULLS LAST, id ASC") }
+  scope :usual_order, -> do
+    pairs = TaskStatus.all.map { |s| [s.id, s.display_order] }
+    values_sql = pairs.map { |id, display_order| "(#{Integer(id)}, #{Integer(display_order)})" }.join(",")
 
-  scope :for_index, -> {
+    joins("JOIN (VALUES #{values_sql}) AS statuses(id, display_order) ON statuses.id = tasks.task_status_id")
+      .order(Arel.sql("COALESCE(statuses.display_order, 99999999) ASC, due_on ASC NULLS LAST, priority DESC, tasks.id ASC"))
+  end
+
+  scope :for_index, -> do
     where('task_status_id IN (?) OR (task_status_id IN (?) AND created_at > ?)', TaskStatus.open_ids, TaskStatus.closed_ids, Time.zone.today - 30.days)
     .usual_order
-  }
+  end
 
-  scope :for_work, ->(work) {
-    task_event_table = TaskEvent.arel_table
+  scope :for_work, ->(work) do
     task_table = arel_table
     work_result_table = WorkResult.arel_table
 
@@ -87,7 +92,7 @@ class Task < ApplicationRecord
 
     base = where(task_status_id: TaskStatus.workable_ids).where(new_work_link)
     base.select(task_table[Arel.star])
-  }
+  end
 
   scope :opened, -> { where(task_status_id: TaskStatus.open_ids).usual_order }
 
