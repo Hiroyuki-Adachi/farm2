@@ -6,7 +6,7 @@ class Users::MfaController < ApplicationController
   end
 
   def update
-    if current_user.totp.verify(params[:otp], drift_behind: 30, drift_ahead: 30)
+    if current_user.totp_verify?(params[:otp])
       current_user.enable_totp!
       redirect_to menu_index_path, notice: "2段階認証が有効になりました。"
     else

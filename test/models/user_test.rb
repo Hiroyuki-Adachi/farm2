@@ -110,10 +110,10 @@ class UserTest < ActiveSupport::TestCase
 
   test "権限別の判定" do
     {
-      admin:   @admin,
+      admin: @admin,
       manager: @manager,
       checker: @checker,
-      user:    @user,
+      user: @user,
       visitor: @visitor
     }.each do |role, u|
       assert_equal role == :admin,   u.admin?,   "#{role} admin?"
@@ -165,11 +165,50 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil user.otp_secret
     assert_not_nil user.totp
     assert_instance_of ROTP::TOTP, user.totp
-    assert_equal ENV["OTP_SECRET_ISSUER"], user.totp.issuer
+    assert_equal ENV.fetch("OTP_SECRET_ISSUER", nil), user.totp.issuer
   end
 
   test "TOTP対応(シークレット生成:nil対応)" do
     user = User.new(otp_secret: nil)
     assert_nil user.totp
+  end
+
+  test "TOTP認証(成功時)" do
+    totp = mock("totp")
+    totp.expects(:verify)
+        .with("123456", has_entries(drift_behind: 30, drift_ahead: 30))
+        .returns(true)
+    @user.stubs(:totp).returns(totp)
+
+    assert_equal true, @user.totp_verify?("123456")
+    assert_in_delta Time.current, @user.otp_last_used_at, 1.second
+  end
+
+  test "TOTP認証(失敗時)" do
+    totp = mock("totp")
+    totp.expects(:verify)
+        .with("999999", has_entries(drift_behind: 30, drift_ahead: 30))
+        .returns(false)
+    @user.stubs(:totp).returns(totp)
+
+    assert_equal false, @user.totp_verify?("999999")
+    assert_nil @user.otp_last_used_at
+  end
+
+  test "TOTP認証(直前の成功から時間が経過していない場合)" do
+    @user.update!(otp_last_used_at: 5.seconds.ago) # ← 30秒以内
+    totp = mock("totp")
+    totp.expects(:verify).never # 早期returnなので呼ばれない
+    @user.stubs(:totp).returns(totp)
+
+    assert_equal false, @user.totp_verify?("123456")
+    assert_equal 5.seconds.ago.to_i, @user.otp_last_used_at.to_i
+  end
+
+  test "TOTP認証(TOTPオブジェクトが存在しない場合)" do
+    @user.stubs(:totp).returns(nil)
+
+    assert_equal false, @user.totp_verify?("123456")
+    assert_nil @user.otp_last_used_at
   end
 end

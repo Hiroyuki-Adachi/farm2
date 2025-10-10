@@ -108,6 +108,18 @@ class User < ApplicationRecord
     ROTP::TOTP.new(otp_secret, issuer: ENV.fetch("OTP_SECRET_ISSUER"))
   end
 
+  def totp_verify?(code)
+    return false if totp.blank?
+    return false if otp_last_used_at.present? && otp_last_used_at > 30.seconds.ago
+
+    if totp.verify(code, drift_behind: 30, drift_ahead: 30)
+      update(otp_last_used_at: Time.current)
+      true
+    else
+      false
+    end
+  end
+
   def prepare_totp_secret!
     update!(otp_secret: ROTP::Base32.random_base32) unless otp_enabled
   end

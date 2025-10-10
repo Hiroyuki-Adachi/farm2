@@ -26,7 +26,7 @@ class IpListsController < ApplicationController
 
   def update
     if @ip.created_user.otp_enabled
-      return redirect_to new_ip_list_path unless @ip.created_user.totp.verify(params[:token], drift_behind: 30, drift_ahead: 30)
+      return redirect_to new_ip_list_path unless @ip.created_user.totp_verify?(params[:token])
     elsif !@ip.authenticate?(params[:token])
       return redirect_to new_ip_list_path
     end
