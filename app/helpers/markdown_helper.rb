@@ -23,15 +23,15 @@ module MarkdownHelper
 
     # a 要素の target / rel を補完（新規タブ&セキュア）
     decorate_links!(frag)
+    decorate_tasklist_checkboxes!(frag)
 
     # 最後にサニタイズ（必要なタグ/属性だけ許可）
     sanitize(
       frag.to_html,
       tags: %w[
-        p br strong em a code pre h1 h2 h3 h4 h5 h6 ul ol li blockquote table thead tbody tr th td hr img div span
+        p br strong em a code pre h1 h2 h3 h4 h5 h6 ul ol li blockquote table thead tbody tr th td hr img div span input
       ],
-      # target / rel を許可に追加（noopener / noreferrer を付けるため）
-      attributes: %w[href title src alt class target rel]
+      attributes: %w[href title src alt class target rel type checked disabled value]
     )
   end
 
@@ -51,14 +51,14 @@ module MarkdownHelper
       Commonmarker.to_html(
         text,
         options: {
-          parse:  { smart: true },
+          parse: { smart: true },
           render: { unsafe: false },
           extensions: { table: true, footnotes: true, strikethrough: true, tasklist: true, autolink: true }
         }
       )
     else
       # どちらも入っていない場合のフォールバック（最小限）
-      ERB::Util.h(text).gsub(/\n/, "<br>")
+      ERB::Util.h(text).gsub("\n", "<br>")
     end
   end
 
@@ -94,6 +94,12 @@ module MarkdownHelper
       a["target"] ||= "_blank"
       rel = (a["rel"].to_s.split(/\s+/) + %w[noopener noreferrer]).uniq
       a["rel"] = rel.join(" ")
+    end
+  end
+
+  def decorate_tasklist_checkboxes!(frag)
+    frag.css('input[type="checkbox"]').each do |i|
+      i['disabled'] = 'disabled' # 読み取り専用に固定
     end
   end
 end

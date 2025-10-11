@@ -7,16 +7,17 @@ export default class extends Controller {
 
   connect() {
     // 好みでオプション
-    marked.setOptions({
-      breaks: true
-    })
+    marked.setOptions({ gfm: true, breaks: true })
     this.update()
   }
 
   update() {
     const raw = this.inputTarget.value || ""
     const dirty = marked.parse(raw)
-    const clean = DOMPurify.sanitize(dirty)
+    const clean = DOMPurify.sanitize(dirty, {
+      ADD_TAGS: ['input'],
+      ADD_ATTR: ['type','checked','disabled','value','class']
+    })
     this.previewTarget.innerHTML = clean
     if (this.hasCounterTarget) this.counterTarget.textContent = `${raw.length} chars`
   }
