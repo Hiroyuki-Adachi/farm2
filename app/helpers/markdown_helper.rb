@@ -66,7 +66,7 @@ module MarkdownHelper
   def highlight_codeblocks!(frag)
     frag.css("pre > code").each do |code|
       # 例: <code class="language-ruby"> を想定
-      lang = code["class"].to_s[/\blanguage-([A-Za-z0-9_+-]+)/, 1]
+      lang = code["class"].to_s[/\blanguage-([A-Za-z0-9_+\-]+)/, 1]
       lexer = pick_lexer(lang, code.text)
       highlighted = ROUGE_FORMATTER.format(lexer.lex(code.text))
       code.parent.replace(%(<div class="highlight">#{highlighted}</div>))
