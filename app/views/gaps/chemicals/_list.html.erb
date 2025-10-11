@@ -17,7 +17,7 @@
           <td class="text-center"><%= @stocks[chemical.id][i] ? @stocks[chemical.id][i].stock_on.strftime('%m/%d') : "" %></td>
           <% end %>
         </tr>
-        <tr class="table-primary">
+        <tr class="table-row-primary-bg">
           <th>入庫</th>
           <% max_stocks.times do |i| %>
           <td class="numeric"><%= @stocks[chemical.id][i] ? @stocks[chemical.id][i].stored_format : "" %></td>
