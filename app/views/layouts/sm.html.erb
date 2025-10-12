@@ -80,7 +80,7 @@
           </a>
         </div>
         <div class="col-3">
-          <a href="line://oaMessage/<%= ENV.fetch('LINE_CHANNEL_ID') %>/?token=<%= token %>">
+          <a href="line://oaMessage/<%= Rails.application.credentials.dig(:line, :channel_id) %>/?token=<%= token %>">
             <figure class="figure text-center">
               <%= image_tag "/images/menu/line-me.png", {width: 48, height: 48, class: "figure-img"} %>
               <figcaption class="figure-caption text-white">LINE</figcaption>
