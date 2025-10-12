@@ -19,11 +19,8 @@ function initMap(){
     });
   
     marker.addListener("dragend", function(event) {
-      const ll = event.latLng;
-      if (ll) {
-        // もとの "(lat, lng)" 形式に合わせて保存
-        location.value = `(${ll.lat().toFixed(6)}, ${ll.lng().toFixed(6)})`;
-      }
+      // もとの "(lat, lng)" 形式に合わせて保存
+      location.value = `(${event.latLng.lat().toFixed(6)}, ${event.latLng.lng().toFixed(6)})`;
     });
 }
 
