@@ -1,19 +1,22 @@
 import { Decimal } from "decimal.js";
 
+await google.maps.importLibrary("marker");
+await google.maps.importLibrary("drawing");
+
 let selectedWorkType;
 
 const initMap = () => {
   const org = JSON.parse(document.getElementById("location").value);
-  const pos = new google.maps.LatLng(org[0], org[1]);
+  const pos = {lat: org[0], lng: org[1]};
   const DEFAULT_COLOR = "#000000";
 
   const map = new google.maps.Map(document.getElementById('map'), {
+    mapId: 'FARM2_MAP',
     center: pos,
-    zoom: 16,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    zoom: 16
   });
 
-  const marker = new google.maps.Marker({
+  const marker = new google.maps.marker.AdvancedMarkerElement({
     position: pos,
     title: document.getElementById("organization_name").value,
     map: map

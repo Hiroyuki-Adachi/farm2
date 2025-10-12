@@ -81,7 +81,7 @@ class LineHookService
       uri.request_uri,
       {
         "Content-Type" => "application/json",
-        "Authorization" => "Bearer #{ENV.fetch('LINE_CHANNEL_ACCESS_TOKEN')}",
+        "Authorization" => "Bearer #{Rails.application.credentials.dig(:line, :channel_access_token)}",
         "X-Line-Retry-Key" => retry_key
       }
     )

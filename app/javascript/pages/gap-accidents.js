@@ -1,4 +1,6 @@
 import { Turbo } from "@hotwired/turbo-rails";
+await google.maps.importLibrary("marker");
+await google.maps.importLibrary("drawing");
 
 export const init = () => {
     initMap();
@@ -34,21 +36,21 @@ function initMap(){
         return;
     }
     const home = JSON.parse(location.value.replace("(", "[").replace(")", "]"));
-    const pos = new google.maps.LatLng(home[0], home[1])
+    const pos = {lat: home[0], lng: home[1]};
   
     const map = new google.maps.Map(document.getElementById('map'), {
       center: pos,
       zoom: 16,
-      mapTypeId: google.maps.MapTypeId.SATELLITE
+      mapId: 'FARM2_MAP'
     });
-  
-    const marker = new google.maps.Marker({
+
+    const marker = new google.maps.marker.AdvancedMarkerElement({
       position: pos,
-      draggable: true,
+      gmpDraggable: true,
       map: map
     });
-  
-    marker.addListener("dragend", function(arg) {
-      location.value = arg.latLng.toString();
+
+    marker.addListener("dragend", function(event) {
+      location.value = `(${event.latLng.lat().toFixed(6)}, ${event.latLng.lng().toFixed(6)})`;
     });
 }
