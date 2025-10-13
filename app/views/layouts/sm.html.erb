@@ -109,6 +109,9 @@
 </nav>
 </div>
 <% end %>
+<div id="flash_messages" class="row">
+  <%= render "application/flashes", locals: {flash: flash} %>
+</div>
 <%= yield %>
 </main>
 <%= render 'application/popup' %>

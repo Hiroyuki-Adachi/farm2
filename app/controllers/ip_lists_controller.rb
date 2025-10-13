@@ -11,10 +11,10 @@ class IpListsController < ApplicationController
       return to_error_path
     end
 
-    return to_error_path unless user.linable?
+    return to_error_path unless user.linable? || user.otp_enabled
 
     ip = IpList.white_ip!(request.remote_ip, user)
-    if LineHookService.push_message(user.line_id, I18n.t('line_authentication', token: ip.token)).is_a?(Net::HTTPSuccess)
+    if user.otp_enabled || LineHookService.push_message(user.line_id, I18n.t('line_authentication', token: ip.token)).is_a?(Net::HTTPSuccess)
       redirect_to edit_ip_list_path(ip)
     else
       ip.destroy
@@ -25,31 +25,28 @@ class IpListsController < ApplicationController
   def edit; end
 
   def update
-    if @ip.authenticate?(params[:token])
-      @ip.updated_expired_on
-      log_in(@ip.created_user)
-      redirect_to menu_index_path
-    else
-      redirect_to new_ip_list_path
+    if @ip.created_user.otp_enabled
+      return redirect_to new_ip_list_path unless @ip.created_user.totp_verify?(params[:token])
+    elsif !@ip.authenticate?(params[:token])
+      return redirect_to new_ip_list_path
     end
+    @ip.updated_expired_on
+    log_in(@ip.created_user)
+    redirect_to menu_index_path
   end
 
   private
 
   def restrict_remote_ip
     if IpList.white_list.any? { |ip| ip.include?(request.remote_ip) }
-      redirect_to root_path
-      return
+      redirect_to root_path and return
     elsif IpList.black_list.any? { |ip| ip.include?(request.remote_ip) }
-      to_error_path
-      return
+      to_error_path and return
     end
   end
 
   def set_ip
-    @ip = IpList.where("current_timestamp <= confirmation_expired_at")
-      .where(expired_on: nil)
-      .find_by(id: params[:id], ip_address: request.remote_ip, white_flag: true)
-    to_error_path unless @ip
+    @ip = IpList.find_valid(params[:id], request.remote_ip)
+    to_error_path and return unless @ip
   end
 end

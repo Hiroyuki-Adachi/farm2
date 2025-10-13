@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_29_081900) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_04_055153) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -1020,6 +1020,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_29_081900) do
     t.datetime "mail_confirmation_expired_at", comment: "メールアドレス確認有効期限"
     t.string "line_id", limit: 50, default: "", null: false
     t.integer "theme", default: 0, null: false, comment: "画面テーマ"
+    t.boolean "otp_enabled", default: false, null: false, comment: "2段階認証フラグ"
+    t.datetime "otp_last_used_at", comment: "2段階認証 最終使用日時"
+    t.json "otp_secret", comment: "2段階認証 秘密鍵"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["mail"], name: "ix_users_on_mail", unique: true, where: "((mail)::text <> ''::text)"
     t.index ["mail_confirmation_token"], name: "ix_users_on_mail_confirmation_token", unique: true, where: "(mail_confirmation_token IS NOT NULL)"
