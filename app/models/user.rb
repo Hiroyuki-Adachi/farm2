@@ -105,7 +105,7 @@ class User < ApplicationRecord
 
   def totp
     return if otp_secret.blank?
-    ROTP::TOTP.new(otp_secret, issuer: ENV.fetch("OTP_SECRET_ISSUER"))
+    ROTP::TOTP.new(otp_secret, issuer: self.organization.name)
   end
 
   def totp_verify?(code)

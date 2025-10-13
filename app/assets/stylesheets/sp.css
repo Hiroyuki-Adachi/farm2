@@ -1,3 +1,9 @@
 #timeline {
   padding-bottom: 5rem; /* ボタンの高さ＋余裕分 */
 }
+.map-label{
+  font: 600 20px/1.2 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+  color: #111;
+  pointer-events: none;           /* クリック透過（必要なければ外す） */
+  white-space: nowrap;
+}

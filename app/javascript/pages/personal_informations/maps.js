@@ -1,19 +1,21 @@
 let map = null;
+await google.maps.importLibrary("marker");
+await google.maps.importLibrary("drawing");
 
 window.initMap = function() {
     const org = JSON.parse(document.getElementById("location").value);
-    const pos = new google.maps.LatLng(org[0], org[1]);
+    const pos = {lat: org[0], lng: org[1]};
 
     map = new google.maps.Map(document.getElementById('map'), {
       center: pos,
       zoom: 16,
       gestureHandling: "greedy",
       fullscreenControl: false,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapId: 'FARM2_MAP'
     });
     document.getElementById("map").style.setProperty("touch-action", "none", "important");
   
-    new google.maps.Marker({
+    new google.maps.marker.AdvancedMarkerElement({
       position: pos,
       title : document.getElementById("organization_name").value,
       map: map
@@ -36,17 +38,15 @@ window.initMap = function() {
       });
 
       const center = JSON.parse(land.dataset.center);
-      new google.maps.Marker({
+      const labelEl = document.createElement("div");
+      labelEl.className = "map-label";
+      labelEl.textContent = `${land.dataset.place}(${land.dataset.area}a)`;
+
+      const marker = new google.maps.marker.AdvancedMarkerElement({
         position: { lat: center[0], lng: center[1] },
         map: map,
-        label: {
-          text: `${land.dataset.place}(${land.dataset.area}a)`,
-          fontSize: "20px"   // フォントサイズ！
-        },
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          scale: 0, // アイコンを透明にしてラベルだけ表示
-        }
+        content: labelEl,
+        title: labelEl.textContent
       });
     });
 
@@ -58,8 +58,8 @@ window.initMap = function() {
   
       map.setCenter(myLatLng);
       map.setZoom(18);
-      
-      new google.maps.Marker({
+
+      new google.maps.marker.AdvancedMarkerElement({
         position: myLatLng,
         map,
         title: "あなたの位置",

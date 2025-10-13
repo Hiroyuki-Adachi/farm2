@@ -159,13 +159,11 @@ class UserTest < ActiveSupport::TestCase
     user.update!(otp_secret: nil)
     assert_nil user.otp_secret
 
-    ENV["OTP_SECRET_ISSUER"] = "Farm2"
-
     user.prepare_totp_secret!
     assert_not_nil user.otp_secret
     assert_not_nil user.totp
     assert_instance_of ROTP::TOTP, user.totp
-    assert_equal ENV.fetch("OTP_SECRET_ISSUER", nil), user.totp.issuer
+    assert_equal user.organization.name, user.totp.issuer
   end
 
   test "TOTP対応(シークレット生成:nil対応)" do
