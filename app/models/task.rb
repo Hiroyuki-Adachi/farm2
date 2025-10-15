@@ -74,7 +74,7 @@ class Task < ApplicationRecord
   end
 
   scope :for_index, -> do
-    where('task_status_id IN (?) OR (task_status_id IN (?) AND created_at > ?)', TaskStatus.open_ids, TaskStatus.closed_ids, Time.zone.today - 30.days)
+    where('task_status_id NOT IN (:closed_ids) OR (task_status_id IN (:closed_ids) AND created_at > :created_at)', closed_ids: TaskStatus.closed_ids, created_at: Time.zone.today - 30.days)
     .usual_order
   end
 
@@ -110,7 +110,6 @@ class Task < ApplicationRecord
 
     participant
       .where(task_status_id: TaskStatus.open_ids)
-      .or(participant.where(task_status_id: TaskStatus.closed_ids, created_at: Time.zone.today.all_day))
       .usual_order
   }
   
@@ -154,8 +153,8 @@ class Task < ApplicationRecord
     self.status.started_flag
   end
 
-  def opened?
-    !self.closed?
+  def open?
+    self.status.open_flag
   end
 
   def workable?
@@ -253,7 +252,7 @@ class Task < ApplicationRecord
   end
 
   def deletable?(user)
-    (user.admin? || (self.creator_id == user.worker_id)) && self.opened?
+    (user.admin? || (self.creator_id == user.worker_id)) && !self.closed?
   end
 
   def watching_by?(user)
@@ -311,7 +310,7 @@ class Task < ApplicationRecord
     event.save!
   end
 
-  def self.add_works!(actor:, check_task_ids:, close_task_ids: [], work:)
+  def self.add_works!(actor:, check_task_ids:, work:, close_task_ids: [])
     ActiveRecord::Base.transaction do
       Task.where(id: check_task_ids).find_each do |task|
         next if task.events.exists?(work_id: work.id)
@@ -340,7 +339,7 @@ class Task < ApplicationRecord
   end
 
   def end_reason_for_closed
-    return if self.opened?
+    return unless self.closed?
 
     errors.add(:end_reason, "を選択してください。") if self.end_reason_unset?
   end
