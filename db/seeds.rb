@@ -16,10 +16,6 @@ organization = Organization.create!(
   daily_worker: 0,
   consignor_code: '',
   consignor_name: '',
-  bank_code: '0000',
-  branch_code: '000',
-  account_type_id: 0,
-  account_number: '0000000',
   term: Date.today.year
 )
 
