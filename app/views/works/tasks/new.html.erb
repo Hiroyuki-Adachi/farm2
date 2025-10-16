@@ -38,6 +38,7 @@
           class: "form-control", 
           placeholder: "コメント",
           data: { pages__work_task_toggle_target: "comment" },
+          aria: { label: "コメント (#{task.title})" },
           disabled: false %>
       </td>
       <td><%= task.status_badge %></td>
