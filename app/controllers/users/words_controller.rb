@@ -5,7 +5,6 @@ class Users::WordsController < ApplicationController
 
   def create
     if current_user.update(user_params)
-      logger.debug "create success:#{user_params}"
       redirect_to new_users_word_path, notice: "キーワードを登録しました。"
     else
       flash.now[:alert] = 'キーワードが重複している可能性があります。'
