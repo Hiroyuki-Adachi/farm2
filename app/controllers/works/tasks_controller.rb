@@ -10,7 +10,6 @@ class Works::TasksController < WorksController
   end
 
   def create
-    logger.debug "params: #{params.inspect}"
     Task.add_works!(
       actor: current_user.worker,
       check_task_ids: params[:check_task_ids] || [],
