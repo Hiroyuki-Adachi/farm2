@@ -289,7 +289,7 @@ class TaskTest < ActiveSupport::TestCase
     assert_equal task.id, created_event.task_id
     assert created_event.change_status?
     assert_equal work.id, created_event.work_id
-    assert_equal task_comment.id, created_event.task_comment_id
+    assert_equal task_comment, created_event.task_comment
     assert_equal TaskStatus::TO_DO.id, created_event.status_from_id
     assert_equal TaskStatus::DOING.id, created_event.status_to_id
 
