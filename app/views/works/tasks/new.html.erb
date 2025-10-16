@@ -7,6 +7,7 @@
     <tr>
       <th>着手</th>
       <th>完了</th>
+      <th>コメント</th>
       <th>状態</th>
       <th>優先度</th>
       <th>タイトル</th>
@@ -31,6 +32,13 @@
           pages__work_task_toggle_target: "close",
         },
         disabled: false %>
+      </td>
+      <td>
+        <%= text_field_tag "task_comments[#{task.id}]", nil, 
+          class: "form-control", 
+          placeholder: "コメント",
+          data: { pages__work_task_toggle_target: "comment" },
+          disabled: false %>
       </td>
       <td><%= task.status_badge %></td>
       <td><%= task.priority_badge %><%= task.new_badge %></td>

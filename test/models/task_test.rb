@@ -271,16 +271,25 @@ class TaskTest < ActiveSupport::TestCase
     task = tasks(:open_task)
     worker = workers(:worker1)
     work = works(:works1)
+    comment = "作業を開始します"
 
-    assert_difference("TaskEvent.count", 1) do
-      task.add_work!(actor: worker, work: work)
+    assert_difference("TaskComment.count", 1) do
+      assert_difference("TaskEvent.count", 1) do
+        task.add_work!(actor: worker, work: work, comment: comment)
+      end
     end
+
+    task_comment = TaskComment.last
+    assert_equal comment, task_comment.body
+    assert_equal worker.id, task_comment.poster_id
+    assert_equal task.id, task_comment.task_id
 
     created_event = TaskEvent.last
     assert_equal worker.id, created_event.actor_id
     assert_equal task.id, created_event.task_id
     assert created_event.change_status?
     assert_equal work.id, created_event.work_id
+    assert_equal task_comment.id, created_event.task_comment_id
     assert_equal TaskStatus::TO_DO.id, created_event.status_from_id
     assert_equal TaskStatus::DOING.id, created_event.status_to_id
 

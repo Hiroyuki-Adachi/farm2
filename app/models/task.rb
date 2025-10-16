@@ -280,16 +280,17 @@ class Task < ApplicationRecord
     TaskEvent.create!(task: self, actor: actor, event_type: :add_comment, comment: comment)
   end
 
-  def add_work!(actor:, work:, close: false)
+  def add_work!(actor:, work:, close: false, comment: nil)
+    task_comment = comment.present? ? self.comments.create!(poster: actor, body: comment) : nil
     if close
-      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work)
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work, comment: task_comment)
       update!(status: TaskStatus::DONE, started_on: started_on || work.worked_at, ended_on: work.worked_at, end_reason: :completed)
       return
     end
     if status == TaskStatus::DOING
-      TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work)
+      TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work, comment: task_comment)
     elsif [TaskStatus::TO_DO, TaskStatus::REOPEN].include?(status)
-      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work)
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work, comment: task_comment)
       update!(status: TaskStatus::DOING, started_on: work.worked_at)
     else
       raise "Cannot add work when task status is #{status.name}"
@@ -310,12 +311,17 @@ class Task < ApplicationRecord
     event.save!
   end
 
-  def self.add_works!(actor:, check_task_ids:, work:, close_task_ids: [])
+  def self.add_works!(actor:, check_task_ids:, work:, close_task_ids: [], task_comments: {})
     ActiveRecord::Base.transaction do
       Task.where(id: check_task_ids).find_each do |task|
         next if task.events.exists?(work_id: work.id)
 
-        task.add_work!(actor: actor, work: work, close: close_task_ids.include?(task.id.to_s))
+        task.add_work!(
+          actor: actor,
+          work: work,
+          close: close_task_ids.include?(task.id.to_s),
+          comment: task_comments[task.id.to_s] || task_comments[task.id]
+        )
       end
     end
   end
