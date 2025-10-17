@@ -74,7 +74,7 @@ class Task < ApplicationRecord
   end
 
   scope :for_index, -> do
-    where('task_status_id IN (?) OR (task_status_id IN (?) AND created_at > ?)', TaskStatus.open_ids, TaskStatus.closed_ids, Time.zone.today - 30.days)
+    where('task_status_id NOT IN (:closed_ids) OR (task_status_id IN (:closed_ids) AND created_at > :created_at)', closed_ids: TaskStatus.closed_ids, created_at: Time.zone.today - 30.days)
     .usual_order
   end
 
@@ -110,7 +110,6 @@ class Task < ApplicationRecord
 
     participant
       .where(task_status_id: TaskStatus.open_ids)
-      .or(participant.where(task_status_id: TaskStatus.closed_ids, created_at: Time.zone.today.all_day))
       .usual_order
   }
   
@@ -154,8 +153,8 @@ class Task < ApplicationRecord
     self.status.started_flag
   end
 
-  def opened?
-    !self.closed?
+  def open?
+    self.status.open_flag
   end
 
   def workable?
@@ -253,7 +252,7 @@ class Task < ApplicationRecord
   end
 
   def deletable?(user)
-    (user.admin? || (self.creator_id == user.worker_id)) && self.opened?
+    (user.admin? || (self.creator_id == user.worker_id)) && !self.closed?
   end
 
   def watching_by?(user)
@@ -281,19 +280,11 @@ class Task < ApplicationRecord
     TaskEvent.create!(task: self, actor: actor, event_type: :add_comment, comment: comment)
   end
 
-  def add_work!(actor:, work:, close: false)
-    if close
-      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work)
-      update!(status: TaskStatus::DONE, started_on: started_on || work.worked_at, ended_on: work.worked_at, end_reason: :completed)
-      return
-    end
-    if status == TaskStatus::DOING
-      TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work)
-    elsif [TaskStatus::TO_DO, TaskStatus::REOPEN].include?(status)
-      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work)
-      update!(status: TaskStatus::DOING, started_on: work.worked_at)
-    else
-      raise "Cannot add work when task status is #{status.name}"
+  def add_work!(actor:, work:, close: false, comment: nil)
+    if ActiveRecord::Base.connection.transaction_open?
+      add_work_core!(actor: actor, work: work, close: close, comment: comment)
+    else 
+      ActiveRecord::Base.transaction { add_work_core!(actor: actor, work: work, close: close, comment: comment) }
     end
   end
 
@@ -311,12 +302,17 @@ class Task < ApplicationRecord
     event.save!
   end
 
-  def self.add_works!(actor:, check_task_ids:, close_task_ids: [], work:)
+  def self.add_works!(actor:, check_task_ids:, work:, close_task_ids: [], task_comments: {})
     ActiveRecord::Base.transaction do
       Task.where(id: check_task_ids).find_each do |task|
         next if task.events.exists?(work_id: work.id)
 
-        task.add_work!(actor: actor, work: work, close: close_task_ids.include?(task.id.to_s))
+        task.add_work!(
+          actor: actor,
+          work: work,
+          close: close_task_ids.include?(task.id.to_s),
+          comment: task_comments[task.id.to_s] || task_comments[task.id]
+        )
       end
     end
   end
@@ -333,6 +329,23 @@ class Task < ApplicationRecord
     true
   end
 
+  def add_work_core!(actor:, work:, close: false, comment: nil)
+    task_comment = comment.present? ? self.comments.create!(poster: actor, body: comment) : nil
+    if close
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work, comment: task_comment)
+      update!(status: TaskStatus::DONE, started_on: started_on || work.worked_at, ended_on: work.worked_at, end_reason: :completed)
+      return
+    end
+    if status == TaskStatus::DOING
+      TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work, comment: task_comment)
+    elsif [TaskStatus::TO_DO, TaskStatus::REOPEN].include?(status)
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work, comment: task_comment)
+      update!(status: TaskStatus::DOING, started_on: work.worked_at)
+    else
+      raise "Cannot add work when task status is #{status.name}"
+    end
+  end
+
   def ended_on_after_started_on
     return if ended_on.blank? || started_on.blank?
 
@@ -340,7 +353,7 @@ class Task < ApplicationRecord
   end
 
   def end_reason_for_closed
-    return if self.opened?
+    return unless self.closed?
 
     errors.add(:end_reason, "を選択してください。") if self.end_reason_unset?
   end

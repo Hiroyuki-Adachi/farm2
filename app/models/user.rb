@@ -9,6 +9,9 @@
 #  mail_confirmation_expired_at(メールアドレス確認有効期限) :datetime
 #  mail_confirmation_token(メールアドレス確認トークン)      :string(64)
 #  mail_confirmed_at(メールアドレス確認日時)                :datetime
+#  otp_enabled(2段階認証フラグ)                             :boolean          default(FALSE), not null
+#  otp_last_used_at(2段階認証 最終使用日時)                 :datetime
+#  otp_secret(2段階認証 秘密鍵)                             :json
 #  password_digest(パスワード)                              :string(128)      not null
 #  target_from(開始年月)                                    :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
@@ -31,11 +34,14 @@
 #  ix_users_on_mail_confirmation_token  (mail_confirmation_token) UNIQUE WHERE (mail_confirmation_token IS NOT NULL)
 #  ix_users_token                       (token) UNIQUE
 #
-
+require "rotp"
 class User < ApplicationRecord
   before_create :set_token
   before_update :clear_mail_fields, if: -> { mail_changed? && self.mail.present? }
   after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && self.mail_confirmed_at.present? }
+
+  has_secure_password
+  encrypts :otp_secret
 
   enum :permission_id, { visitor: 0, user: 1, checker: 2, manager: 3, admin: 9 }
   enum :theme, { light: 0, dark: 1, auto: 2 }
@@ -97,6 +103,35 @@ class User < ApplicationRecord
     :pending
   end
 
+  def totp
+    return if otp_secret.blank?
+    ROTP::TOTP.new(otp_secret, issuer: self.organization.name)
+  end
+
+  def totp_verify?(code)
+    return false if totp.blank?
+    return false if otp_last_used_at.present? && otp_last_used_at > 30.seconds.ago
+
+    if totp.verify(code, drift_behind: 30, drift_ahead: 30)
+      update(otp_last_used_at: Time.current)
+      true
+    else
+      false
+    end
+  end
+
+  def prepare_totp_secret!
+    update!(otp_secret: ROTP::Base32.random_base32) unless otp_enabled
+  end
+
+  def enable_totp!
+    update!(otp_enabled: true) if otp_secret.present?
+  end
+
+  def destroy_totp!
+    update!(otp_enabled: false, otp_secret: nil, otp_last_used_at: nil)
+  end
+
   private
 
   def set_token
@@ -110,10 +145,6 @@ class User < ApplicationRecord
   end
 
   def set_pc_mail
-    if self.mail.present? && self.worker.present? && self.worker.pc_mail.blank?
-      self.worker.update(pc_mail: mail)
-    end
+    self.worker.update(pc_mail: mail) if self.mail.present? && self.worker.present? && self.worker.pc_mail.blank?
   end
-
-  has_secure_password
 end

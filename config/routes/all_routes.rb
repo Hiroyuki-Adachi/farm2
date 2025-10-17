@@ -163,15 +163,16 @@ resources :personal_informations, param: "token", only: [:show] do
   resources :tasks, controller: "personal_informations/tasks", only: [:show]
 end
 resources :personal_calendars, param: "token", only: [:show]
-resources :users, except: [:show] do
-  resources :permissions, controller: "users/permissions", only: [:new, :create]
-end
 namespace :users do
   resources :qr, only: [:index]
   resources :words, only: [:new, :create, :destroy]
   resources :mails, only: [:new, :create]
   resources :line_hooks, only: [:create]
   resources :themes, only: [:new, :create]
+  resource :mfa, controller: :mfa, only: [:edit, :update, :destroy]
+end
+resources :users, except: [:show] do
+  resources :permissions, controller: "users/permissions", only: [:new, :create]
 end
 resources :work_verifications, param: "work_id", only: [:index, :update, :destroy, :show]
 

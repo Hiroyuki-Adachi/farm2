@@ -1,16 +1,18 @@
 import { Turbo } from "@hotwired/turbo-rails";
+await google.maps.importLibrary("marker");
+await google.maps.importLibrary("drawing");
 
 function initMap(){
     const org = JSON.parse(document.getElementById("location").value);
-    const pos = new google.maps.LatLng(org[0], org[1]);
-  
+    const pos = {lat: org[0], lng: org[1]};
+
     const map = new google.maps.Map(document.getElementById('map'), {
         center: pos,
         zoom: 16,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapId: 'FARM2_MAP'
     });
 
-    const marker = new google.maps.Marker({
+    const marker = new google.maps.marker.AdvancedMarkerElement({
         position: pos,
         title : document.getElementById("organization_name").value,
         map: map

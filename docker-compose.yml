@@ -32,7 +32,6 @@ services:
     environment:
       RUBY_DEBUG_LOCAL_FS_MAP: "/farm2:${PWD}"
       RUBY_DEBUG_PORT: 12345
-      GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
       CHROME_URL: "http://chrome:3333"
       RAILS_ENV: development
       RUBYOPT: "--yjit"

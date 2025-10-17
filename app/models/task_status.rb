@@ -7,7 +7,7 @@ class TaskStatus < ActiveYaml::Base
   enum_accessor :code
 
   scope :closed, -> { where(closed_flag: true) }
-  scope :open, -> { where(closed_flag: false) }
+  scope :open, -> { where(open_flag: true) }
   scope :start, -> { where(start_flag: true) }
   scope :started, -> { where(started_flag: true) }
   scope :workable, -> { where(work_flag: true) }

@@ -9,6 +9,9 @@
 #  mail_confirmation_expired_at(メールアドレス確認有効期限) :datetime
 #  mail_confirmation_token(メールアドレス確認トークン)      :string(64)
 #  mail_confirmed_at(メールアドレス確認日時)                :datetime
+#  otp_enabled(2段階認証フラグ)                             :boolean          default(FALSE), not null
+#  otp_last_used_at(2段階認証 最終使用日時)                 :datetime
+#  otp_secret(2段階認証 秘密鍵)                             :json
 #  password_digest(パスワード)                              :string(128)      not null
 #  target_from(開始年月)                                    :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
@@ -32,6 +35,7 @@
 #  ix_users_token                       (token) UNIQUE
 #
 require 'test_helper'
+require "rotp"
 
 class UserTest < ActiveSupport::TestCase
   setup do
@@ -106,10 +110,10 @@ class UserTest < ActiveSupport::TestCase
 
   test "権限別の判定" do
     {
-      admin:   @admin,
+      admin: @admin,
       manager: @manager,
       checker: @checker,
-      user:    @user,
+      user: @user,
       visitor: @visitor
     }.each do |role, u|
       assert_equal role == :admin,   u.admin?,   "#{role} admin?"
@@ -138,5 +142,71 @@ class UserTest < ActiveSupport::TestCase
     assert @checker.checkable?
     assert_not @user.checkable?
     assert_not @visitor.checkable?
+  end
+
+  test "TOTP対応(フラグ設定)" do
+    user = users(:user_manager)
+    user.prepare_totp_secret!
+    user.update!(otp_enabled: false)
+
+    assert_not user.otp_enabled
+    user.enable_totp!
+    assert user.otp_enabled
+  end
+
+  test "TOTP対応(秘密鍵準備)" do
+    user = users(:user_manager)
+    user.update!(otp_secret: nil)
+    assert_nil user.otp_secret
+
+    user.prepare_totp_secret!
+    assert_not_nil user.otp_secret
+    assert_not_nil user.totp
+    assert_instance_of ROTP::TOTP, user.totp
+    assert_equal user.organization.name, user.totp.issuer
+  end
+
+  test "TOTP対応(シークレット生成:nil対応)" do
+    user = User.new(otp_secret: nil)
+    assert_nil user.totp
+  end
+
+  test "TOTP認証(成功時)" do
+    totp = mock("totp")
+    totp.expects(:verify)
+        .with("123456", has_entries(drift_behind: 30, drift_ahead: 30))
+        .returns(true)
+    @user.stubs(:totp).returns(totp)
+
+    assert_equal true, @user.totp_verify?("123456")
+    assert_in_delta Time.current, @user.otp_last_used_at, 1.second
+  end
+
+  test "TOTP認証(失敗時)" do
+    totp = mock("totp")
+    totp.expects(:verify)
+        .with("999999", has_entries(drift_behind: 30, drift_ahead: 30))
+        .returns(false)
+    @user.stubs(:totp).returns(totp)
+
+    assert_equal false, @user.totp_verify?("999999")
+    assert_nil @user.otp_last_used_at
+  end
+
+  test "TOTP認証(直前の成功から時間が経過していない場合)" do
+    @user.update!(otp_last_used_at: 5.seconds.ago) # ← 30秒以内
+    totp = mock("totp")
+    totp.expects(:verify).never # 早期returnなので呼ばれない
+    @user.stubs(:totp).returns(totp)
+
+    assert_equal false, @user.totp_verify?("123456")
+    assert_equal 5.seconds.ago.to_i, @user.otp_last_used_at.to_i
+  end
+
+  test "TOTP認証(TOTPオブジェクトが存在しない場合)" do
+    @user.stubs(:totp).returns(nil)
+
+    assert_equal false, @user.totp_verify?("123456")
+    assert_nil @user.otp_last_used_at
   end
 end

@@ -58,6 +58,13 @@
     <%= f.text_field :broccoli_mark, {maxlength: 1, class: "form-control"} %>
   </div>
 </div>
+<div class="row">
+  <div class="field mb-6 col-md-6">
+    <%= f.label :pc_mail, class: "col-form-label-lg form-label" %>
+    <%= f.text_field :pc_mail, {maxlength: 50, class: "form-control"} %>
+  </div>
+</div>
+<hr />
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= f.submit '登録', class: "btn btn-warning" %>

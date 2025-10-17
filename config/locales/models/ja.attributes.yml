@@ -107,10 +107,6 @@ ja:
         mobile_mail: "携帯アドレス"  #g
         pc_mail: PCメールアドレス
         display_order: "表示順"  #g
-        bank_code: "金融機関"
-        branch_code: "支店"
-        account_type_id: "預金種別"
-        account_number: "口座番号"
         gender_id: "性別"
         home_id: "世帯"
         token: "アクセストークン"
