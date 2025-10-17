@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_15_112720) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_17_132248) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -1056,6 +1056,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_112720) do
     t.index ["work_id"], name: "index_work_broccolis_on_work_id", unique: true
   end
 
+  create_table "work_categories", comment: "作業カテゴリ", force: :cascade do |t|
+    t.string "name", limit: 10, default: "", null: false, comment: "名称"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
+    t.datetime "discarded_at", comment: "論理削除日時"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "work_chemicals", id: { type: :serial, comment: "薬剤使用データ" }, comment: "薬剤使用データ", force: :cascade do |t|
     t.integer "work_id", null: false, comment: "作業"
     t.integer "chemical_id", null: false, comment: "薬剤"
@@ -1068,6 +1076,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_112720) do
     t.text "remarks", default: "", null: false, comment: "備考"
     t.integer "dilution_id", default: 0, null: false, comment: "希釈"
     t.index ["work_id", "chemical_id", "chemical_group_no"], name: "work_chemicals_2nd_key", unique: true
+  end
+
+  create_table "work_genres", comment: "作業ジャンル", force: :cascade do |t|
+    t.string "name", limit: 10, default: "", null: false, comment: "名称"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
+    t.bigint "work_category_id", null: false, comment: "作業カテゴリ"
+    t.datetime "discarded_at", comment: "論理削除日時"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["work_category_id"], name: "index_work_genres_on_work_category_id"
   end
 
   create_table "work_kind_prices", id: { type: :serial, comment: "作業単価マスタ" }, comment: "作業単価マスタ", force: :cascade do |t|
@@ -1137,9 +1155,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_112720) do
   end
 
   create_table "work_types", id: { type: :serial, comment: "作業分類マスタ" }, comment: "作業分類マスタ", force: :cascade do |t|
-    t.integer "genre", null: false, comment: "作業ジャンル"
     t.string "name", limit: 10, null: false, comment: "作業分類名称"
-    t.boolean "category_flag", default: false, comment: "カテゴリーフラグ"
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.datetime "deleted_at", precision: nil
     t.string "bg_color", limit: 8, comment: "背景色"
@@ -1151,7 +1167,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_112720) do
     t.boolean "other_flag", default: false, null: false, comment: "その他フラグ"
     t.integer "office_role", default: 0, null: false, comment: "事務の役割"
     t.datetime "icon_updated_at"
+    t.bigint "work_genre_id", null: false, comment: "作業ジャンル"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
+    t.index ["work_genre_id"], name: "index_work_types_on_work_genre_id"
   end
 
   create_table "work_verifications", id: { type: :serial, comment: "日報検証" }, comment: "日報検証", force: :cascade do |t|
@@ -1237,4 +1255,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_112720) do
   add_foreign_key "tasks", "task_templates"
   add_foreign_key "tasks", "workers", column: "assignee_id"
   add_foreign_key "tasks", "workers", column: "creator_id"
+  add_foreign_key "work_genres", "work_categories"
+  add_foreign_key "work_types", "work_genres"
 end

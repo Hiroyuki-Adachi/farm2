@@ -1,0 +1,22 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+# == Schema Information
+#
+# Table name: work_categories(作業カテゴリ)
+#
+#  id                         :bigint           not null, primary key
+#  discarded_at(論理削除日時) :datetime
+#  display_order(表示順)      :integer          default(0), not null
+#  name(名称)                 :string(10)       default(""), not null
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value
