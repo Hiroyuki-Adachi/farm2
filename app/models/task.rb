@@ -281,21 +281,10 @@ class Task < ApplicationRecord
   end
 
   def add_work!(actor:, work:, close: false, comment: nil)
-    ActiveRecord::Base.transaction do
-      task_comment = comment.present? ? self.comments.create!(poster: actor, body: comment) : nil
-      if close
-        TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work, comment: task_comment)
-        update!(status: TaskStatus::DONE, started_on: started_on || work.worked_at, ended_on: work.worked_at, end_reason: :completed)
-        return
-      end
-      if status == TaskStatus::DOING
-        TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work, comment: task_comment)
-      elsif [TaskStatus::TO_DO, TaskStatus::REOPEN].include?(status)
-        TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work, comment: task_comment)
-        update!(status: TaskStatus::DOING, started_on: work.worked_at)
-      else
-        raise "Cannot add work when task status is #{status.name}"
-      end
+    if ActiveRecord::Base.connection.transaction_open?
+      add_work_core!(actor: actor, work: work, close: close, comment: comment)
+    else 
+      ActiveRecord::Base.transaction { add_work_core!(actor: actor, work: work, close: close, comment: comment) }
     end
   end
 
@@ -338,6 +327,23 @@ class Task < ApplicationRecord
       yield(created_comment)
     end
     true
+  end
+
+  def add_work_core!(actor:, work:, close: false, comment: nil)
+    task_comment = comment.present? ? self.comments.create!(poster: actor, body: comment) : nil
+    if close
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work, comment: task_comment)
+      update!(status: TaskStatus::DONE, started_on: started_on || work.worked_at, ended_on: work.worked_at, end_reason: :completed)
+      return
+    end
+    if status == TaskStatus::DOING
+      TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work, comment: task_comment)
+    elsif [TaskStatus::TO_DO, TaskStatus::REOPEN].include?(status)
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work, comment: task_comment)
+      update!(status: TaskStatus::DOING, started_on: work.worked_at)
+    else
+      raise "Cannot add work when task status is #{status.name}"
+    end
   end
 
   def ended_on_after_started_on
