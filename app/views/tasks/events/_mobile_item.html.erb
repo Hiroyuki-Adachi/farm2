@@ -8,7 +8,7 @@
                 rounded-3 p-2 shadow-sm w-auto" style="min-width: 48%;">
 
       <div class="small <%= mine ? 'text-primary' : 'text-muted' %>">
-        <span class="fw-bold"><%= event.actor_name %></span>・<%= event.created_at_display %>
+        <span class="fw-bold"><%= event.actor_name %></span> <%= event.created_at_display %>
       </div>
 
       <div class="mt-1 text-break">
@@ -16,7 +16,7 @@
       </div>
 
       <% if event.comment.present? %>
-        <div class="mt-2 p-2 rounded border bg-white text-body small">
+        <div class="mt-2 p-2 rounded border bg-body-secondary text-body small">
           <%= render "tasks/comments/show_for_event", task: task, event: event, comment: event.comment, mobile: true %>
         </div>
       <% end %>
