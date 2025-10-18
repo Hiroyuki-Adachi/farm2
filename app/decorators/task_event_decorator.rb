@@ -30,7 +30,7 @@ class TaskEventDecorator < Draper::Decorator
   end
 
   def actor_name
-    return 'あなた' if object.actor_id == context[:current_worker]&.id
+    return '' if object.actor_id == context[:current_worker]&.id
     object.actor&.name || '（不明）'
   end
 
