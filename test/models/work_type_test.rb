@@ -2,29 +2,25 @@
 #
 # Table name: work_types(作業分類マスタ)
 #
-#  id(作業分類マスタ)          :integer          not null, primary key
-#  bg_color(背景色)            :string(8)
-#  cost_flag(原価フラグ)       :boolean          default(FALSE), not null
-#  deleted_at                  :datetime
-#  display_order(表示順)       :integer          default(0), not null
-#  icon(アイコン)              :binary
-#  icon_name(アイコン名)       :string(40)
-#  icon_updated_at             :datetime
-#  land_flag(土地利用)         :boolean          default(TRUE), not null
-#  name(作業分類名称)          :string(10)       not null
-#  office_role(事務の役割)     :integer          default("none"), not null
-#  other_flag(その他フラグ)    :boolean          default(FALSE), not null
-#  work_flag(日報フラグ)       :boolean          default(TRUE), not null
-#  work_genre_id(作業ジャンル) :bigint           not null
+#  id(作業分類マスタ)            :integer          not null, primary key
+#  bg_color(背景色)              :string(8)
+#  category_flag(カテゴリフラグ) :boolean          default(FALSE), not null
+#  cost_flag(原価フラグ)         :boolean          default(FALSE), not null
+#  deleted_at                    :datetime
+#  display_order(表示順)         :integer          default(0), not null
+#  genre(作業ジャンル)           :integer          default(0), not null
+#  icon(アイコン)                :binary
+#  icon_name(アイコン名)         :string(40)
+#  icon_updated_at               :datetime
+#  land_flag(土地利用)           :boolean          default(TRUE), not null
+#  name(作業分類名称)            :string(10)       not null
+#  office_role(事務の役割)       :integer          default("none"), not null
+#  other_flag(その他フラグ)      :boolean          default(FALSE), not null
+#  work_flag(日報フラグ)         :boolean          default(TRUE), not null
 #
 # Indexes
 #
-#  index_work_types_on_deleted_at     (deleted_at)
-#  index_work_types_on_work_genre_id  (work_genre_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (work_genre_id => work_genres.id)
+#  index_work_types_on_deleted_at  (deleted_at)
 #
 require 'test_helper'
 

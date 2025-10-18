@@ -21,8 +21,8 @@ class AddWorkGenreToWorkType < ActiveRecord::Migration[8.0]
     add_column :work_types, :category_flag, :boolean, null: false, default: false, comment: "カテゴリフラグ"
     WorkType.reset_column_information
     WorkType.find_each do |work_type|
-      genre = WorkGenre.find(work_type.work_genre.id)
-      work_type.update!(genre: genre.id, category_flag: (genre.name == work_type.name))
+      genre = WorkGenre.find(work_type.genre.id)
+      work_type.update!(work_genre_id: genre.id, category_flag: (genre.name == work_type.name))
       work_type.undiscard if work_type.category_flag
     end
     remove_reference :work_types, :work_genre, foreign_key: true
