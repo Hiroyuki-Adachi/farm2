@@ -19,4 +19,7 @@
 #  fk_rails_...  (work_category_id => work_categories.id)
 #
 class WorkGenre < ApplicationRecord
+  include Discard::Model
+
+  belongs_to :category, class_name: "WorkCategory", foreign_key: "work_category_id"
 end

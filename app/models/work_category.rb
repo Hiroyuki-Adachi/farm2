@@ -10,4 +10,5 @@
 #  updated_at                 :datetime         not null
 #
 class WorkCategory < ApplicationRecord
+  include Discard::Model
 end

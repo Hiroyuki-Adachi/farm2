@@ -37,7 +37,7 @@ class WorkResultDecorator < Draper::Decorator
   end
 
   def work_type_name
-    "#{model.work.work_type&.genre_name}(#{model.work.work_type&.name})"
+    "#{model.work.work_type&.category_name}(#{model.work.work_type&.name})"
   end
 
   def work_kind_short_name

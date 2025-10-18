@@ -75,7 +75,7 @@ ja:
         remarks: "記事"  #g
         start_at: "開始時刻"  #g
         end_at: "終了時刻"  #g
-        genre_name: "大分類"
+        category_name: "大分類"
         type_name: "小分類"
         kind_name: "内容"
         workers_count: "人数"

@@ -21,8 +21,8 @@ class ScheduleDecorator < Draper::Decorator
     model.worked_at.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})"
   end
 
-  def genre_name
-    "#{model.work_type&.genre_name}(#{model.work_type&.name})"
+  def category_name
+    "#{model.work_type&.category_name}(#{model.work_type&.name})"
   end
 
   def name

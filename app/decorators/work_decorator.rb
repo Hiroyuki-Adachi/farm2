@@ -49,7 +49,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def work_type_name
-    "#{model.work_type&.genre_name}(#{model.work_type&.name})"
+    "#{model.work_type&.category_name}(#{model.work_type&.name})"
   end
 
   def start_at
@@ -67,7 +67,7 @@ class WorkDecorator < Draper::Decorator
     return result.to_sentence
   end
 
-  def genre_name
+  def category_name
     work_type_name
   end
 

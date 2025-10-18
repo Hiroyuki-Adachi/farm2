@@ -39,7 +39,7 @@
         <tr>
           <td><%= check_box_tag "fixed_works[]", work.id, false, {:id => nil} %></td>
           <td><%=h work.worked_at %></td>
-          <td><%=h work.genre_name %></td>
+          <td><%=h work.category_name %></td>
           <td><%=h work.name %></td>
           <td class="numeric"><%=h work.workers.count %></td>
           <% hours = work.sum_hours.to_f %>

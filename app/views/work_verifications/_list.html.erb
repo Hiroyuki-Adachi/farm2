@@ -13,7 +13,7 @@
     <% @works.each do |work| %>
       <tr>
         <td><%= work.worked_at %>&nbsp;<%= work.work_time %></td>
-        <td><%= work.genre_name %></td>
+        <td><%= work.category_name %></td>
         <td class="numeric"><%= work.id %></td>
         <td>
           <%= link_to "確認", "#", {class: "btn btn-outline-primary btn-sm show-work", data: {url: work_verification_path(work)}} %>
