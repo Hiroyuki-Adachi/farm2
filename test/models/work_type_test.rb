@@ -57,7 +57,7 @@ class WorkTypeTest < ActiveSupport::TestCase
   end
 
   test "作業分類年度別マスタチェック" do
-    work_type = WorkType.find(work_types(:work_types17).id)
+    work_type = WorkType.find(work_types(:work_types23).id)
     assert work_type.exists_term?(2015)
     assert_not work_type.exists_term?(2016)
   end

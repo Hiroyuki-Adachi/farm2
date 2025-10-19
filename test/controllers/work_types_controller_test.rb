@@ -33,7 +33,7 @@ class WorkTypesControllerTest < ActionDispatch::IntegrationTest
     work_type = WorkType.last
     assert_equal @update[:name], work_type.name
     assert_equal @update[:display_order], work_type.display_order
-    assert_equal @update[:genre], work_type.genre
+    assert_equal @update[:work_genre_id], work_type.work_genre_id
   end
 
   test "作業分類マスタ変更(表示)" do

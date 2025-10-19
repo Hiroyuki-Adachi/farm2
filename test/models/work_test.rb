@@ -58,8 +58,9 @@ class WorkTest < ActiveSupport::TestCase
   test "工数統計_ジャンル別" do
     total_hours = Work.joins(:work_results)
         .joins("INNER JOIN work_types ON works.work_type_id = work_types.id")
-        .where(term: 2015, "work_types.genre" => 1).sum("work_results.hours")
-    assert_equal total_hours, Work.total_genre[[1, 2015]]
+        .where(term: 2015, "work_types.work_genre_id" => @work.work_type.work_genre_id)
+        .sum("work_results.hours")
+    assert_equal total_hours, Work.total_genre[[@work.work_type.work_genre_id, 2015]]
   end
 
   test "作業種別キャッシュ" do
