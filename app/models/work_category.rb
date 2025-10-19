@@ -12,5 +12,26 @@
 class WorkCategory < ApplicationRecord
   include Discard::Model
 
-  scope :usual, -> { kept.order(:display_order, :id) }
+  has_many :genres, class_name: "WorkGenre", dependent: :restrict_with_error
+
+  scope :usual_order, -> { order(:display_order, :id) }
+  scope :usual, -> { kept.usual_order }
+  scope :for_index, -> { usual_order }
+
+  def remove_by_policy!
+    with_lock do
+      if genres.kept.exists?
+        errors.add(:base, "作業ジャンルが存在するため削除できません")
+        raise ActiveRecord::RecordNotDestroyed, self
+      end
+
+      if genres.exists?
+        discard!
+        :discarded
+      else
+        destroy!
+        :destroyed
+      end
+    end
+  end
 end

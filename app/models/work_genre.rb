@@ -22,10 +22,30 @@ class WorkGenre < ApplicationRecord
   include Discard::Model
 
   belongs_to :category, class_name: "WorkCategory", foreign_key: "work_category_id"
+  has_many :work_types, class_name: "WorkType", dependent: :restrict_with_error
 
-  scope :usual, -> { kept.joins(:category).order("work_categories.display_order, work_genres.display_order, work_genres.id") }
+  scope :usual_order, -> { joins(:category).order("work_categories.display_order, work_genres.display_order, work_genres.id") }
+  scope :usual, -> { kept.usual_order }
+  scope :for_index, -> { usual_order }
 
   def combine_name
-    "#{category.name} ＞ #{name}"
+    category.name == name ? name : "#{category.name}＞#{name}"
+  end
+
+  def remove_by_policy!
+    with_lock do
+      if work_types.kept.exists?
+        errors.add(:base, "作業分類が存在するため削除できません")
+        raise ActiveRecord::RecordNotDestroyed, self
+      end
+
+      if work_types.exists?
+        discard!
+        :discarded
+      else
+        destroy!
+        :destroyed
+      end
+    end
   end
 end

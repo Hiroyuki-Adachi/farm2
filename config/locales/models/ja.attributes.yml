@@ -84,6 +84,15 @@ ja:
         work_kind_id: "作業種別"
         chemical_group_flag: "土地単位に薬剤を入力する"
 
+      work_category:
+        name: "名称"
+        display_order: "表示順"
+
+      work_genre:
+        name: "名称"
+        display_order: "表示順"
+        work_category_id: "作業カテゴリ"
+
       work_type:
         name: "名称"
         work_genre_id: "作業ジャンル"
