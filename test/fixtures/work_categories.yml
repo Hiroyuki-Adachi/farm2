@@ -15,8 +15,22 @@
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+category_rice:
+  name: "水稲"
+  display_order: '10'
+  discarded_at:
+
+category_change:
+  name: "転作"
+  display_order: '20'
+  discarded_at:
+
+category_by_product:
+  name: "副産物"
+  display_order: '30'
+  discarded_at:
+
+category_management:
+  name: "管理"
+  display_order: '40'
+  discarded_at:

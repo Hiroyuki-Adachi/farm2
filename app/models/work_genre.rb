@@ -22,4 +22,10 @@ class WorkGenre < ApplicationRecord
   include Discard::Model
 
   belongs_to :category, class_name: "WorkCategory", foreign_key: "work_category_id"
+
+  scope :usual, -> { kept.joins(:category).order("work_categories.display_order, work_genres.display_order, work_genres.id") }
+
+  def combine_name
+    "#{category.name} ＞ #{name}"
+  end
 end

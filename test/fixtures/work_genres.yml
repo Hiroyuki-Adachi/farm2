@@ -24,8 +24,26 @@
 #
 #  fk_rails_...  (work_category_id => work_categories.id)
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+genre_rice:
+  name: "水稲"
+  display_order: '10'
+  discarded_at: 
+  category: category_rice
+
+genre_change:
+  name: "転作"
+  display_order: '20'
+  discarded_at: 
+  category: category_change
+
+genre_by_product:
+  name: "副産物"
+  display_order: '30'
+  discarded_at: 
+  category: category_by_product
+
+genre_management:
+  name: "管理"
+  display_order: '40'
+  discarded_at: 
+  category: category_management

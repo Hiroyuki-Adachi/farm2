@@ -86,7 +86,7 @@ ja:
 
       work_type:
         name: "名称"
-        genre: "カテゴリー"
+        work_genre_id: "作業ジャンル"
         display_order: "表示順"
         bg_color: "背景色"
         land_flag: "土地利用"

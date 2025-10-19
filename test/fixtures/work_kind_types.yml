@@ -2,711 +2,710 @@
 #
 # Table name: work_kind_types(作業種別分類対応マスタ)
 #
-#  id(作業種別分類対応マスタ) :integer          not null, primary key
-#  work_kind_id(作業種別)     :integer
-#  work_type_id(作業分類)     :integer
+#  id(作業種別分類対応マスタ)     :integer          not null, primary key
+#  work_category_id(作業カテゴリ) :bigint           not null
+#  work_kind_id(作業種別)         :integer
 #
 # Indexes
 #
-#  index_work_kind_types_on_work_kind_id_and_work_type_id  (work_kind_id,work_type_id) UNIQUE
+#  index_work_kind_types_on_work_category_id  (work_category_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (work_category_id => work_categories.id)
 #
 
 work_kind_types0:
   id: '2'
   work_kind_id: '39'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types1:
   id: '3'
   work_kind_id: '23'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types2:
   id: '4'
   work_kind_id: '8'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types3:
   id: '5'
   work_kind_id: '3'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types4:
   id: '6'
   work_kind_id: '2'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types5:
   id: '7'
   work_kind_id: '1'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types6:
   id: '8'
   work_kind_id: '13'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types7:
   id: '9'
   work_kind_id: '16'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types8:
   id: '10'
   work_kind_id: '6'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types9:
   id: '11'
   work_kind_id: '10'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types10:
   id: '12'
   work_kind_id: '4'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types11:
   id: '13'
   work_kind_id: '15'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types12:
   id: '14'
   work_kind_id: '18'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types13:
   id: '15'
   work_kind_id: '20'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types14:
   id: '16'
   work_kind_id: '11'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types15:
   id: '17'
   work_kind_id: '26'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types16:
   id: '18'
   work_kind_id: '27'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types17:
   id: '19'
   work_kind_id: '28'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types18:
   id: '20'
   work_kind_id: '29'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types19:
   id: '21'
   work_kind_id: '31'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types20:
   id: '22'
   work_kind_id: '32'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types21:
   id: '23'
   work_kind_id: '33'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types22:
   id: '24'
   work_kind_id: '37'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types23:
   id: '25'
   work_kind_id: '34'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types24:
   id: '26'
   work_kind_id: '24'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types25:
   id: '27'
   work_kind_id: '36'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types26:
   id: '28'
   work_kind_id: '25'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types27:
   id: '29'
   work_kind_id: '12'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types28:
   id: '30'
   work_kind_id: '38'
-  work_type_id: '15'
+  category: category_rice
 
 
 work_kind_types29:
   id: '31'
   work_kind_id: '39'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types30:
   id: '32'
   work_kind_id: '23'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types31:
   id: '33'
   work_kind_id: '8'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types32:
   id: '34'
   work_kind_id: '3'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types33:
   id: '35'
   work_kind_id: '2'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types34:
   id: '36'
   work_kind_id: '1'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types35:
   id: '37'
   work_kind_id: '13'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types36:
   id: '38'
   work_kind_id: '16'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types37:
   id: '39'
   work_kind_id: '6'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types38:
   id: '40'
   work_kind_id: '10'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types39:
   id: '41'
   work_kind_id: '4'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types40:
   id: '42'
   work_kind_id: '15'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types41:
   id: '43'
   work_kind_id: '18'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types42:
   id: '44'
   work_kind_id: '20'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types43:
   id: '45'
   work_kind_id: '11'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types44:
   id: '46'
   work_kind_id: '26'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types45:
   id: '47'
   work_kind_id: '27'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types46:
   id: '48'
   work_kind_id: '28'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types47:
   id: '49'
   work_kind_id: '29'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types48:
   id: '50'
   work_kind_id: '31'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types49:
   id: '51'
   work_kind_id: '32'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types50:
   id: '52'
   work_kind_id: '33'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types51:
   id: '53'
   work_kind_id: '37'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types52:
   id: '54'
   work_kind_id: '34'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types53:
   id: '55'
   work_kind_id: '24'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types54:
   id: '56'
   work_kind_id: '36'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types55:
   id: '57'
   work_kind_id: '25'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types56:
   id: '58'
   work_kind_id: '12'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types57:
   id: '59'
   work_kind_id: '38'
-  work_type_id: '16'
+  category: category_change
 
 
 work_kind_types58:
   id: '60'
   work_kind_id: '39'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types59:
   id: '61'
   work_kind_id: '23'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types60:
   id: '62'
   work_kind_id: '8'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types61:
   id: '63'
   work_kind_id: '3'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types62:
   id: '64'
   work_kind_id: '2'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types63:
   id: '65'
   work_kind_id: '1'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types64:
   id: '66'
   work_kind_id: '13'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types65:
   id: '67'
   work_kind_id: '16'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types66:
   id: '68'
   work_kind_id: '6'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types67:
   id: '69'
   work_kind_id: '10'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types68:
   id: '70'
   work_kind_id: '4'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types69:
   id: '71'
   work_kind_id: '15'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types70:
   id: '72'
   work_kind_id: '18'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types71:
   id: '73'
   work_kind_id: '20'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types72:
   id: '74'
   work_kind_id: '11'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types73:
   id: '75'
   work_kind_id: '26'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types74:
   id: '76'
   work_kind_id: '27'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types75:
   id: '77'
   work_kind_id: '28'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types76:
   id: '78'
   work_kind_id: '29'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types77:
   id: '79'
   work_kind_id: '31'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types78:
   id: '80'
   work_kind_id: '32'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types79:
   id: '81'
   work_kind_id: '33'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types80:
   id: '82'
   work_kind_id: '37'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types81:
   id: '83'
   work_kind_id: '34'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types82:
   id: '84'
   work_kind_id: '24'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types83:
   id: '85'
   work_kind_id: '36'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types84:
   id: '86'
   work_kind_id: '25'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types85:
   id: '87'
   work_kind_id: '12'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types86:
   id: '88'
   work_kind_id: '38'
-  work_type_id: '17'
+  category: category_by_product
 
 
 work_kind_types87:
   id: '89'
   work_kind_id: '39'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types88:
   id: '90'
   work_kind_id: '23'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types89:
   id: '91'
   work_kind_id: '8'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types90:
   id: '92'
   work_kind_id: '3'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types91:
   id: '93'
   work_kind_id: '2'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types92:
   id: '94'
   work_kind_id: '1'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types93:
   id: '95'
   work_kind_id: '13'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types94:
   id: '96'
   work_kind_id: '16'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types95:
   id: '97'
   work_kind_id: '6'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types96:
   id: '98'
   work_kind_id: '10'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types97:
   id: '99'
   work_kind_id: '4'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types98:
   id: '100'
   work_kind_id: '15'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types99:
   id: '101'
   work_kind_id: '18'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types100:
   id: '102'
   work_kind_id: '20'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types101:
   id: '103'
   work_kind_id: '11'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types102:
   id: '104'
   work_kind_id: '26'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types103:
   id: '105'
   work_kind_id: '27'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types104:
   id: '106'
   work_kind_id: '28'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types105:
   id: '107'
   work_kind_id: '29'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types106:
   id: '108'
   work_kind_id: '31'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types107:
   id: '109'
   work_kind_id: '32'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types108:
   id: '110'
   work_kind_id: '33'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types109:
   id: '111'
   work_kind_id: '37'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types110:
   id: '112'
   work_kind_id: '34'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types111:
   id: '113'
   work_kind_id: '24'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types112:
   id: '114'
   work_kind_id: '36'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types113:
   id: '115'
   work_kind_id: '25'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types114:
   id: '116'
   work_kind_id: '12'
-  work_type_id: '18'
+  category: category_management
 
 
 work_kind_types115:
   id: '117'
   work_kind_id: '38'
-  work_type_id: '18'
-
-work_kind_types118:
-  id: 118
-  work_kind_id: 42
-  work_type_id: 27
+  category: category_management

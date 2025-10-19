@@ -57,7 +57,7 @@ class WorkKind < ApplicationRecord
   scope :by_type, ->(work_type) {
     kept
       .joins(:work_kind_types)
-      .where(work_kind_types: { work_type_id: work_type&.genre_id })
+      .where(work_kind_types: { work_category_id: work_type&.genre&.work_category_id })
       .order("work_kinds.other_flag, work_kinds.phonetic, work_kinds.display_order, work_kinds.id")
   }
   scope :except_other, -> {kept.where(other_flag: false) }

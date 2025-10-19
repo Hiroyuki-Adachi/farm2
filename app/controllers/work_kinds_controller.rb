@@ -1,5 +1,6 @@
 class WorkKindsController < ApplicationController
   include PermitChecker
+
   before_action :set_work_kind, only: [:edit, :update, :destroy]
   before_action :set_others, only: [:new, :create, :edit, :update]
   before_action :set_cost_types, only: [:new, :create, :edit, :update]
@@ -60,7 +61,7 @@ class WorkKindsController < ApplicationController
   end
 
   def set_others
-    @work_types = WorkType.categories
+    @categories = WorkCategory.usual
     @machine_types = MachineType.order(:display_order, :id)
     @chemical_types = ChemicalType.order(:display_order, :id)
   end

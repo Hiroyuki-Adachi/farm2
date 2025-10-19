@@ -11,4 +11,6 @@
 #
 class WorkCategory < ApplicationRecord
   include Discard::Model
+
+  scope :usual, -> { kept.order(:display_order, :id) }
 end

@@ -6,8 +6,13 @@
     <%= f.text_field :name, {maxlength: 10, size: 15, required: true, class: "form-control"} %>
   </div>
   <div class="field mb-3 col-md-2">
-    <%= f.label :genre, class: "col-form-label-lg form-label" %>
-    <%= f.select(:genre, @categories.map {|category| [category.name, category.genre]}, {}, {class: "form-select"}) %>
+    <%= f.label :work_genre_id, class: "col-form-label-lg form-label" %>
+    <%= f.collection_select :work_genre_id,
+      WorkGenre.usual,
+      :id,
+      :combine_name,
+      { include_blank: true },
+      { class: "form-select", required: true } %>
   </div>
 </div>
 <div class="row">
