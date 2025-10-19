@@ -34,3 +34,13 @@ category_management:
   name: "管理"
   display_order: '40'
   discarded_at:
+
+category_deletable:
+  name: "物理削除可能"
+  display_order: '50'
+  discarded_at:
+
+category_discardable:
+  name: "論理削除可能"
+  display_order: '60'
+  discarded_at:

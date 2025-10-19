@@ -47,3 +47,21 @@ genre_management:
   display_order: '40'
   discarded_at: 
   category: category_management
+
+genre_deletable:
+  name: "物理削除可能"
+  display_order: '50'
+  discarded_at: 
+  category: category_management
+
+genre_discardable:
+  name: "論理削除可能"
+  display_order: '60'
+  discarded_at: 
+  category: category_management
+
+genre_discarded:
+  name: "論理削除済み"
+  display_order: '70'
+  discarded_at: '2024-01-01 00:00:00'
+  category: category_discardable

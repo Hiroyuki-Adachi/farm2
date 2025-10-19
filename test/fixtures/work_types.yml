@@ -236,3 +236,11 @@ work_types18:
   deleted_at: '2014-05-01 00:00:00'
   bg_color: "#ffffff"
   land_flag: f
+
+work_type_discarded:
+  genre: genre_discardable
+  name: "論理削除済み"
+  display_order: 9999
+  deleted_at: '2024-01-01 00:00:00'
+  bg_color: "#ffffff"
+  land_flag: f
