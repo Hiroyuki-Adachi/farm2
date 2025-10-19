@@ -148,7 +148,7 @@ work_types12:
   bg_color: "#ffffff"
   land_flag: f
 
-work_types17:
+work_types23:
   id: '23'
   genre: genre_rice
   name: "きぬ早"
@@ -157,7 +157,7 @@ work_types17:
   bg_color: "#ffffff"
   land_flag: t
 
-work_types18:
+work_types24:
   id: '24'
   genre: genre_rice
   name: "きぬ遅"

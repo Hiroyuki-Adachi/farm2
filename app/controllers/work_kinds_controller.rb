@@ -67,7 +67,7 @@ class WorkKindsController < ApplicationController
   end
 
   def update_others
-    @work_kind.work_types = params[:work_types] ? WorkType.find(params[:work_types]) : []
+    @work_kind.categories = params[:work_categories] ? WorkCategory.find(params[:work_categories]) : []
     @work_kind.machine_types = params[:machine_types] ? MachineType.find(params[:machine_types]) : []
     @work_kind.chemical_types = params[:chemical_types] ? ChemicalType.find(params[:chemical_types]) : []
   end

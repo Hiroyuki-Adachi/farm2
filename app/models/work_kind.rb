@@ -35,7 +35,7 @@ class WorkKind < ApplicationRecord
   has_many :chemical_types, -> {order("chemical_types.display_order")}, through: :chemical_kinds
 
   has_many :work_kind_types, dependent: :destroy
-  has_many :work_types, through: :work_kind_types
+  has_many :categories, through: :work_kind_types
   has_many :work_kind_prices, dependent: :destroy
 
   has_many :calendar_work_kinds, dependent: :destroy

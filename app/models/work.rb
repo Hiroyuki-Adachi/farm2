@@ -395,9 +395,9 @@ SQL
 
   def self.total_genre
     Work.joins(:work_results)
-        .joins(work_type: :genre)
-        .group("work_types.genre_id", :term)
-        .order("work_genres.display_order", :term)
+        .joins(:work_type)
+        .group("work_types.work_genre_id", :term)
+        .order("work_types.work_genre_id", :term)
         .sum("work_results.hours")
   end
 

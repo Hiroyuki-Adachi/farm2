@@ -2,7 +2,6 @@ class WorkTypesController < ApplicationController
   skip_before_action :restrict_remote_ip, only: [:icon]
   before_action :permit_manager, except: [:icon]
   before_action :set_work_type, only: [:edit, :update, :destroy]
-  before_action :set_category, only: [:new, :create, :edit, :update]
 
   helper WorkTypesHelper
 
