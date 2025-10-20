@@ -21,13 +21,13 @@ module StatisticsHelper
     return total_all.map {|t| t[1].to_f}
   end
 
-  def tab2_datasets(total_all, categories, total_genre)
+  def tab2_datasets(total_all, genres, total_genre)
     results = []
-    categories.each_with_index do |category, i|
+    genres.each_with_index do |genre, i|
       results << {
-        label: category.name,
-        data: total_all.map {|t| total_genre[[category.genre, t[0]]].to_f },
-        backgroundColor: COLORS[i],
+        label: genre.combined_name,
+        data: total_all.map {|t| total_genre[[genre.id, t[0]]].to_f },
+        backgroundColor: genre.graph_color.presence || COLORS[i],
         fill: false
       }
     end

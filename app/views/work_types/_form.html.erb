@@ -10,7 +10,7 @@
     <%= f.collection_select :work_genre_id,
       WorkGenre.usual,
       :id,
-      :combine_name,
+      :combined_name,
       { include_blank: true },
       { class: "form-select", required: true } %>
   </div>

@@ -48,6 +48,6 @@ class Works::GenresController < ApplicationController
   end
 
   def work_genre_params
-    params.expect(work_genre: [:name, :display_order, :work_category_id])
+    params.expect(work_genre: [:name, :display_order, :work_category_id, :graph_color])
   end
 end

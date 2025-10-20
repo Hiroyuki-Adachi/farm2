@@ -92,6 +92,7 @@ ja:
         name: "名称"
         display_order: "表示順"
         work_category_id: "作業カテゴリ"
+        graph_color: "グラフ色"
 
       work_type:
         name: "名称"

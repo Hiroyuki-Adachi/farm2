@@ -6,6 +6,7 @@ class CreateWorkGenres < ActiveRecord::Migration[8.0]
       t.string    :name, null: false, limit: 10, default: '', comment: "名称"
       t.integer   :display_order, null: false, default: 0, comment: "表示順"
       t.references :work_category, null: false, foreign_key: true, comment: "作業カテゴリ"
+      t.string :graph_color, limit: 8, null: false, default: "#ffffff", comment: "グラフ色"
       t.datetime :discarded_at, null: true, comment: '論理削除日時'
 
       t.timestamps

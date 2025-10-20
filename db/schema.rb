@@ -1082,6 +1082,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_19_065237) do
     t.string "name", limit: 10, default: "", null: false, comment: "名称"
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.bigint "work_category_id", null: false, comment: "作業カテゴリ"
+    t.string "graph_color", limit: 8, default: "#ffffff", null: false, comment: "グラフ色"
     t.datetime "discarded_at", comment: "論理削除日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -5,6 +5,7 @@
 #  id                             :bigint           not null, primary key
 #  discarded_at(論理削除日時)     :datetime
 #  display_order(表示順)          :integer          default(0), not null
+#  graph_color(グラフ色)          :string(8)        default("#ffffff"), not null
 #  name(名称)                     :string(10)       default(""), not null
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
@@ -28,7 +29,7 @@ class WorkGenre < ApplicationRecord
   scope :usual, -> { kept.usual_order }
   scope :for_index, -> { usual_order }
 
-  def combine_name
+  def combined_name
     category.name == name ? name : "#{category.name}＞#{name}"
   end
 
