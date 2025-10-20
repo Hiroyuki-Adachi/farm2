@@ -3,6 +3,7 @@
   name: "未着手"
   start_flag: true
   started_flag: false
+  open_flag: true
   closed_flag: false
   work_flag: true
   next_statuses: [2, 3, 4, 9]
@@ -14,6 +15,7 @@
   name: "再　開"
   start_flag: true
   started_flag: false
+  open_flag: true
   closed_flag: false
   work_flag: true
   next_statuses: [2, 3, 4, 9]
@@ -25,6 +27,7 @@
   name: "対応中"
   start_flag: false
   started_flag: true
+  open_flag: true
   closed_flag: false
   work_flag: true
   next_statuses: [3, 4, 9]
@@ -36,6 +39,7 @@
   name: "保　留"
   start_flag: false
   started_flag: false
+  open_flag: false
   closed_flag: false
   work_flag: false
   next_statuses: [2, 4, 9]
@@ -47,6 +51,7 @@
   name: "完　了"
   start_flag: false
   started_flag: false
+  open_flag: false
   closed_flag: true
   work_flag: false
   next_statuses: [1]
@@ -58,6 +63,7 @@
   name: "中　止"
   start_flag: false
   started_flag: false
+  open_flag: false
   closed_flag: true
   work_flag: false
   next_statuses: [1]

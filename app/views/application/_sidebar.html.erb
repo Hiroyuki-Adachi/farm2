@@ -147,6 +147,7 @@
       <%= link_to 'QRコード', users_qr_index_path, {class: "dropdown-item", data: {app_controller: :qr}} %>
       <%= link_to '検索ワード設定', new_users_word_path, {class: "dropdown-item", data: {app_controller: :words}} %>
       <%= link_to 'パスワード変更', edit_user_path(current_user), {class: "dropdown-item", data: {app_controller: :users, actions: [:edit]}} %>
+      <%= link_to '2段階認証設定', edit_users_mfa_path, {class: "dropdown-item", data: {app_controller: :mfa}} %>
       <%= link_to '画面テーマ変更', new_users_theme_path, {class: "dropdown-item", data: {app_controller: :themes}} %>
    </div>
   </div>

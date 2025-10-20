@@ -44,14 +44,17 @@ class IpList < ApplicationRecord
     .pluck(:ip_address)
   }
 
+  scope :active, -> {
+    where("current_timestamp <= confirmation_expired_at")
+      .where(expired_on: nil)
+  }
+
   def token=(value)
     @token = value
     self.hashed_token = Digest::SHA256.hexdigest(value)
   end
 
-  def token
-    @token
-  end
+  attr_reader :token
 
   def authenticate?(token)
     self.hashed_token == Digest::SHA256.hexdigest(token)
@@ -88,5 +91,9 @@ class IpList < ApplicationRecord
 
   def self.black_list
     blacks.map { |ip| IPAddr.new(ip) }
+  end
+
+  def self.find_valid(id, remote_ip)
+    active.find_by(id: id, ip_address: remote_ip, white_flag: true)
   end
 end

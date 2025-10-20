@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_29_081900) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_15_112720) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -553,10 +553,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_29_081900) do
     t.integer "daily_worker", limit: 2, default: 0, null: false, comment: "作業日報の作業者名付加情報"
     t.string "consignor_code", limit: 10, comment: "委託者コード"
     t.string "consignor_name", limit: 40, comment: "委託者コード"
-    t.string "bank_code", limit: 4, default: "0000", null: false, comment: "口座の金融機関コード"
-    t.string "branch_code", limit: 3, default: "000", null: false, comment: "口座の支店コード"
-    t.integer "account_type_id", limit: 2, default: 0, null: false, comment: "口座種別"
-    t.string "account_number", limit: 7, default: "0000000", null: false, comment: "口座番号"
     t.integer "term", default: 0, null: false, comment: "現在の年度(期)"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
@@ -1020,6 +1016,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_29_081900) do
     t.datetime "mail_confirmation_expired_at", comment: "メールアドレス確認有効期限"
     t.string "line_id", limit: 50, default: "", null: false
     t.integer "theme", default: 0, null: false, comment: "画面テーマ"
+    t.boolean "otp_enabled", default: false, null: false, comment: "2段階認証フラグ"
+    t.datetime "otp_last_used_at", comment: "2段階認証 最終使用日時"
+    t.json "otp_secret", comment: "2段階認証 秘密鍵"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["mail"], name: "ix_users_on_mail", unique: true, where: "((mail)::text <> ''::text)"
     t.index ["mail_confirmation_token"], name: "ix_users_on_mail_confirmation_token", unique: true, where: "(mail_confirmation_token IS NOT NULL)"
@@ -1194,10 +1193,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_29_081900) do
     t.integer "display_order", comment: "表示順"
     t.boolean "work_flag", default: true, null: false, comment: "作業フラグ"
     t.integer "gender_id", default: 0, null: false, comment: "性別"
-    t.string "bank_code", limit: 4, default: "0000", null: false, comment: "口座(金融機関)"
-    t.string "branch_code", limit: 3, default: "000", null: false, comment: "口座(支店)"
-    t.integer "account_type_id", limit: 2, default: 0, null: false, comment: "口座種別"
-    t.string "account_number", limit: 7, default: "0000000", null: false, comment: "口座番号"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.datetime "deleted_at", precision: nil

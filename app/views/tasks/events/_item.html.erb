@@ -3,7 +3,7 @@
     <div class="<%= mine ? 'bg-primary-subtle text-primary-emphasis border border-primary-subtle' 
                          : 'bg-body-tertiary text-body border border-secondary-subtle' %> rounded-3 p-2 shadow-sm w-auto">
       <div class="small <%= mine ? 'text-primary' : 'text-muted' %>">
-        <span class="fw-bold"><%= event.actor.name %></span>・<%= event.created_at_display %>
+        <span class="fw-bold"><%= event.actor_name %></span> <%= event.created_at_display %>
       </div>
 
       <div class="mt-1">

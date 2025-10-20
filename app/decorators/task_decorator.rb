@@ -101,7 +101,7 @@ class TaskDecorator < Draper::Decorator
   end
 
   def due_status
-    return :closed  if object.closed?
+    return :not_open unless object.open?
     return :unset   if due_on.blank?
     return :expired if due_on < Date.current
     return :today   if due_on == Date.current

@@ -2,7 +2,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["check", "close"]
+  static targets = ["check", "close", "comment"]
 
   connect() {
     this.apply()
@@ -17,11 +17,12 @@ export default class extends Controller {
     const started = this.checkTarget.checked
     if (started) {
       this.closeTarget.disabled = false
-      // started が true のときは close は自由にチェック可（何もしない）
+      this.commentTarget.disabled = false
     } else {
-      // started が false のときは close を外して無効化
       this.closeTarget.checked = false
       this.closeTarget.disabled = true
+      this.commentTarget.disabled = true
+      this.commentTarget.value = ""
     }
   }
 }

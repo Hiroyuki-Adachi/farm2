@@ -3,10 +3,7 @@
 # Table name: workers(作業者マスタ)
 #
 #  id(作業者マスタ)                  :integer          not null, primary key
-#  account_number(口座番号)          :string(7)        default("0000000"), not null
-#  bank_code(口座(金融機関))         :string(4)        default("0000"), not null
 #  birthday(誕生日)                  :date
-#  branch_code(口座(支店))           :string(3)        default("000"), not null
 #  broccoli_mark(ブロッコリ記号)     :string(1)
 #  deleted_at                        :datetime
 #  display_order(表示順)             :integer
@@ -21,7 +18,6 @@
 #  work_flag(作業フラグ)             :boolean          default(TRUE), not null
 #  created_at                        :datetime
 #  updated_at                        :datetime
-#  account_type_id(口座種別)         :integer          default(0), not null
 #  gender_id(性別)                   :integer          default("none"), not null
 #  home_id(世帯)                     :integer
 #  position_id(役職)                 :integer          default("none"), not null
@@ -122,5 +118,12 @@ class Worker < ApplicationRecord
 
   def set_user_permission_id
     self.user.update(permission_id: :checker) unless self.user.checkable?
+  end
+
+  private
+
+  def set_email
+    self.user.email = (self.pc_mail.presence || '') if self.user.present?
+    self.user.save!
   end
 end

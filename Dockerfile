@@ -16,7 +16,7 @@ RUN apt-get update -qq && \
     apt-get install -y build-essential libpq-dev git curl tzdata \
     libsqlite3-dev sqlite3 zlib1g-dev libssl-dev libreadline-dev libyaml-dev \
     libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common \
-    libffi-dev ca-certificates gnupg
+    libffi-dev ca-certificates gnupg vim
 
 #最新版nodejsをインストール
 RUN mkdir -p /etc/apt/keyrings
