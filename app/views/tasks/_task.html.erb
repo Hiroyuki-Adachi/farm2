@@ -1,8 +1,8 @@
 <tr id="<%= dom_id(task) %>">
   <td><%= link_to task.title, task_path(task), data: { turbo_frame: "_top", turbo_prefetch: false } %><%= task.unread_count_badge %><%= task.new_badge %></td>
   <td><%= task.priority_badge %></td>
-  <td><%= task.due_on_short %><%= task.due_badge %></td>
-  <td><%= task.status_badge %></td>
+  <td><%= task.due_on_short %> <%= task.due_badge %></td>
+  <td><%= task.status_badge %> <%= task.end_badge %></td>
   <td><%= task.kind_badge %></td>
   <td><%= task.office_role_name %></td>
   <td><%= task.assignee&.name %></td>

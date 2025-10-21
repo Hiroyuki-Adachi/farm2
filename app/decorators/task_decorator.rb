@@ -29,6 +29,21 @@ class TaskDecorator < Draper::Decorator
     super(object.status)
   end
 
+  def end_badge
+    return "" unless object.closed?
+
+    case object.end_reason.to_sym
+    when :no_action
+      h.content_tag(:span, "不要", class: "badge bg-danger")
+    when :unavailable
+      h.content_tag(:span, "無効", class: "badge text-bg-warning")
+    when :duplicated
+      h.content_tag(:span, "重複", class: "badge bg-secondary")
+    else
+      ""
+    end
+  end
+
   def creator_name
     return object.creator.name if object.creator.present?
     return kind_badge if object.template.present?
