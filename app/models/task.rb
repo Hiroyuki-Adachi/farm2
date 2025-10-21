@@ -74,7 +74,7 @@ class Task < ApplicationRecord
   end
 
   scope :for_index, -> do
-    where('task_status_id NOT IN (:closed_ids) OR (task_status_id IN (:closed_ids) AND created_at > :created_at)', closed_ids: TaskStatus.closed_ids, created_at: Time.zone.today - 30.days)
+    where('task_status_id NOT IN (:closed_ids) OR (task_status_id IN (:closed_ids) AND updated_at > :updated_at)', closed_ids: TaskStatus.closed_ids, updated_at: Time.zone.today - 30.days)
     .usual_order
   end
 
