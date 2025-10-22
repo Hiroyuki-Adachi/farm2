@@ -13,7 +13,7 @@
         <% end %>
         <th style="width:120px;letter-spacing:12px;"><%= category.name %></th>
         <td style="width:560px;">
-        <% WorkType.for_work(category, @work).each do |work_type| %>
+        <% WorkType.for_work(category, @work.model).each do |work_type| %>
         <span class="genre"><%= @work.select_work_type(work_type) %></span>
         <% end %>
         </td>
