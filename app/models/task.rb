@@ -73,9 +73,35 @@ class Task < ApplicationRecord
       .order(Arel.sql("COALESCE(statuses.display_order, 99999999) ASC, due_on ASC NULLS LAST, priority DESC, tasks.id ASC"))
   end
 
-  scope :for_index, -> do
-    where('task_status_id NOT IN (:closed_ids) OR (task_status_id IN (:closed_ids) AND updated_at > :updated_at)', closed_ids: TaskStatus.closed_ids, updated_at: Time.zone.today - 30.days)
-    .usual_order
+  scope :for_index, ->(days: 30) do
+    cutoff     = Time.zone.now - days.days
+    closed_ids = TaskStatus.closed_ids
+
+    task = Task.arel_table
+    task_event = TaskEvent.arel_table
+    task_comment = TaskComment.arel_table
+
+    # --- EXISTS句を事前に定義 ---
+    exists_event = task_event
+      .project(Arel.star)
+      .where(task_event[:task_id].eq(task[:id]).and(task_event[:updated_at].gt(cutoff)))
+      .exists
+
+    exists_comment = task_comment
+      .project(Arel.star)
+      .where(task_comment[:task_id].eq(task[:id]).and(task_comment[:updated_at].gt(cutoff)))
+      .exists
+
+    # --- 条件句を組み立て ---
+    not_closed = task[:task_status_id].not_in(closed_ids)
+    recent_activity =
+      task[:updated_at].gt(cutoff)
+      .or(exists_event)
+      .or(exists_comment)
+
+    closed_and_recent = task[:task_status_id].in(closed_ids).and(recent_activity)
+
+    where(not_closed.or(closed_and_recent)).usual_order
   end
 
   scope :for_work, ->(work) do
