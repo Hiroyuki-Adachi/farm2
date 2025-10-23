@@ -8,7 +8,7 @@ csv_str = CSV.generate do |csv|
     Work.human_attribute_name(:end_at) => ->(w) {w.end_at.strftime("%H:%M")},
     Work.human_attribute_name(:category_name) => ->(w) {w.work_type&.category_name},
     Work.human_attribute_name(:type_name) => ->(w) {w.work_type&.name},
-    Work.human_attribute_name(:kind_name) => ->(w) {"#{w.work_kind&.name}#{"(#{w.name})" if w.name.present?}"},
+    Work.human_attribute_name(:kind_name) => ->(w) {"#{w.work_kind&.name}#{'(' + w.name + ')' if w.name.present?}"},
     Work.human_attribute_name(:workers_count) => ->(w) {@count_workers[w.id] || 0},
     Work.human_attribute_name(:sum_hours) => ->(w) {@sum_hours[w.id] || 0}
   }
