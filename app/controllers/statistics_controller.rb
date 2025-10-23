@@ -10,7 +10,7 @@ class StatisticsController < ApplicationController
   def tab1; end
 
   def tab2
-    @categories = WorkType.categories
+    @genres = WorkGenre.usual
     @total_genre = Work.total_genre
   end
 

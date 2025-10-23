@@ -4,7 +4,7 @@ class WorkTypesControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:users1))
     @work_type = work_types(:work_type_koshi)
-    @update = { name: "試験", display_order: 99, genre: 1 }
+    @update = { name: "試験", display_order: 99, work_genre_id: work_genres(:genre_rice).id }
   end
 
   test "作業分類マスタ一覧" do
@@ -33,7 +33,7 @@ class WorkTypesControllerTest < ActionDispatch::IntegrationTest
     work_type = WorkType.last
     assert_equal @update[:name], work_type.name
     assert_equal @update[:display_order], work_type.display_order
-    assert_equal @update[:genre], work_type.genre
+    assert_equal @update[:work_genre_id], work_type.work_genre_id
   end
 
   test "作業分類マスタ変更(表示)" do
@@ -51,7 +51,7 @@ class WorkTypesControllerTest < ActionDispatch::IntegrationTest
     @work_type.reload
     assert_equal @update[:name], @work_type.name
     assert_equal @update[:display_order], @work_type.display_order
-    assert_equal @update[:genre], @work_type.genre
+    assert_equal @update[:work_genre_id], @work_type.work_genre_id
   end
 
   test "作業分類マスタ削除" do
