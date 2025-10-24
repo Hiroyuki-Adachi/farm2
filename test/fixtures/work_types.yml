@@ -2,32 +2,35 @@
 #
 # Table name: work_types(作業分類マスタ)
 #
-#  id(作業分類マスタ)              :integer          not null, primary key
-#  bg_color(背景色)                :string(8)
-#  category_flag(カテゴリーフラグ) :boolean          default(FALSE)
-#  cost_flag(原価フラグ)           :boolean          default(FALSE), not null
-#  deleted_at                      :datetime
-#  display_order(表示順)           :integer          default(0), not null
-#  genre(作業ジャンル)             :integer          not null
-#  icon(アイコン)                  :binary
-#  icon_name(アイコン名)           :string(40)
-#  icon_updated_at                 :datetime
-#  land_flag(土地利用)             :boolean          default(TRUE), not null
-#  name(作業分類名称)              :string(10)       not null
-#  office_role(事務の役割)         :integer          default("none"), not null
-#  other_flag(その他フラグ)        :boolean          default(FALSE), not null
-#  work_flag(日報フラグ)           :boolean          default(TRUE), not null
+#  id(作業分類マスタ)          :integer          not null, primary key
+#  bg_color(背景色)            :string(8)
+#  cost_flag(原価フラグ)       :boolean          default(FALSE), not null
+#  deleted_at                  :datetime
+#  display_order(表示順)       :integer          default(0), not null
+#  icon(アイコン)              :binary
+#  icon_name(アイコン名)       :string(40)
+#  icon_updated_at             :datetime
+#  land_flag(土地利用)         :boolean          default(TRUE), not null
+#  name(作業分類名称)          :string(10)       not null
+#  office_role(事務の役割)     :integer          default("none"), not null
+#  other_flag(その他フラグ)    :boolean          default(FALSE), not null
+#  work_flag(日報フラグ)       :boolean          default(TRUE), not null
+#  work_genre_id(作業ジャンル) :bigint           not null
 #
 # Indexes
 #
-#  index_work_types_on_deleted_at  (deleted_at)
+#  index_work_types_on_deleted_at     (deleted_at)
+#  index_work_types_on_work_genre_id  (work_genre_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (work_genre_id => work_genres.id)
 #
 
 work_type_koshi:
   id: '1'
-  genre: '1'
+  genre: genre_rice
   name: "コシヒカリ"
-  category_flag: f
   display_order: '10'
   deleted_at: 
   bg_color: "#ffffff"
@@ -35,9 +38,8 @@ work_type_koshi:
 
 work_types1:
   id: '2'
-  genre: '1'
+  genre: genre_rice
   name: "きぬむすめ"
-  category_flag: f
   display_order: '20'
   deleted_at: '2014-05-01 00:00:00'
   bg_color: "#ffffff"
@@ -45,9 +47,8 @@ work_types1:
 
 work_types2:
   id: '4'
-  genre: '1'
+  genre: genre_rice
   name: "直播"
-  category_flag: f
   display_order: '50'
   deleted_at: 
   bg_color: "#ffffff"
@@ -55,9 +56,8 @@ work_types2:
 
 work_type_mugi:
   id: 5
-  genre: '2'
+  genre: genre_change
   name: "麦"
-  category_flag: f
   display_order: '0'
   deleted_at: 
   bg_color: "#ffffff"
@@ -65,9 +65,8 @@ work_type_mugi:
 
 work_type_bokuso:
   id: 6
-  genre: '2'
+  genre: genre_change
   name: "牧草"
-  category_flag: f
   display_order: '70'
   deleted_at: 
   bg_color: "#ffffff"
@@ -75,9 +74,8 @@ work_type_bokuso:
 
 work_types5:
   id: '7'
-  genre: '2'
+  genre: genre_change
   name: "飼料米"
-  category_flag: f
   display_order: '0'
   deleted_at: '2014-05-01 00:00:00'
   bg_color: "#ffffff"
@@ -85,9 +83,8 @@ work_types5:
 
 work_types_wcs:
   id: 8
-  genre: '2'
+  genre: genre_change
   name: "たちあやか"
-  category_flag: f
   display_order: '90'
   deleted_at: 
   bg_color: "#ffffff"
@@ -98,9 +95,8 @@ work_types_wcs:
 
 work_types7:
   id: '9'
-  genre: '3'
+  genre: genre_by_product
   name: "祖飼料"
-  category_flag: f
   display_order: '100'
   deleted_at: 
   bg_color: "#ffffff"
@@ -108,9 +104,8 @@ work_types7:
 
 work_types8:
   id: '10'
-  genre: '3'
+  genre: genre_by_product
   name: "サイレージ"
-  category_flag: f
   display_order: '110'
   deleted_at: 
   bg_color: "#ffffff"
@@ -118,9 +113,8 @@ work_types8:
 
 work_types9:
   id: '11'
-  genre: '4'
+  genre: genre_management
   name: "総務"
-  category_flag: f
   display_order: '200'
   deleted_at: 
   bg_color: "#ffffff"
@@ -129,9 +123,8 @@ work_types9:
 
 work_types10:
   id: '12'
-  genre: '4'
+  genre: genre_management
   name: "営農部"
-  category_flag: f
   display_order: '210'
   deleted_at: 
   bg_color: "#ffffff"
@@ -139,9 +132,8 @@ work_types10:
 
 work_types11:
   id: '13'
-  genre: '4'
+  genre: genre_management
   name: "機械部"
-  category_flag: f
   display_order: '220'
   deleted_at: 
   bg_color: "#ffffff"
@@ -149,69 +141,26 @@ work_types11:
 
 work_types12:
   id: '14'
-  genre: '4'
+  genre: genre_management
   name: "その他"
-  category_flag: f
   display_order: '299'
   deleted_at: 
   bg_color: "#ffffff"
   land_flag: f
 
-work_types13:
-  id: '15'
-  genre: '1'
-  name: "稲作"
-  category_flag: t
-  display_order: '1000'
-  deleted_at: 
-  bg_color: "#ffffff"
-  land_flag: f
-
-work_types14:
-  id: '16'
-  genre: '2'
-  name: "転作"
-  category_flag: t
-  display_order: '1100'
-  deleted_at: 
-  bg_color: "#ffffff"
-  land_flag: f
-
-work_types15:
-  id: '17'
-  genre: '3'
-  name: "副産物"
-  category_flag: t
-  display_order: '1200'
-  deleted_at: 
-  bg_color: "#ffffff"
-  land_flag: f
-
-work_types16:
-  id: '18'
-  genre: '4'
-  name: "共通"
-  category_flag: t
-  display_order: '1300'
-  deleted_at: 
-  bg_color: "#ffffff"
-  land_flag: f
-
-work_types17:
+work_types23:
   id: '23'
-  genre: '1'
+  genre: genre_rice
   name: "きぬ早"
-  category_flag: f
   display_order: '30'
   deleted_at: 
   bg_color: "#ffffff"
   land_flag: t
 
-work_types18:
+work_types24:
   id: '24'
-  genre: '1'
+  genre: genre_rice
   name: "きぬ遅"
-  category_flag: f
   display_order: '40'
   deleted_at: 
   bg_color: "#ffffff"
@@ -219,9 +168,8 @@ work_types18:
 
 work_types19:
   id: '25'
-  genre: '4'
+  genre: genre_management
   name: "企画部"
-  category_flag: f
   display_order: '230'
   deleted_at: 
   bg_color: "#ffffff"
@@ -229,18 +177,16 @@ work_types19:
 
 work_types20:
   id: '26'
-  genre: '4'
+  genre: genre_management
   name: "管理部"
-  category_flag: f
   display_order: '240'
   deleted_at: 
   bg_color: "#ffffff"
   land_flag: f
 
 work_type_broccoli:
-  genre: 2
+  genre: genre_change
   name: "ブロッコリー"
-  category_flag: f
   display_order: 300
   deleted_at: 
   bg_color: "#ffffff"
@@ -248,10 +194,53 @@ work_type_broccoli:
 
 work_type_contract:
   id: 28
-  genre: 3
+  genre: genre_by_product
   name: "受託作業"
-  category_flag: f
   display_order: 320
   deleted_at: 
   bg_color: "#ffffff"
   land_flag: t
+
+work_types15:
+  id: '15'
+  genre: genre_rice
+  name: "水稲"
+  display_order: '1000'
+  deleted_at: '2014-05-01 00:00:00'
+  bg_color: "#ffffff"
+  land_flag: f
+
+work_types16:
+  id: '16'
+  genre: genre_change
+  name: "転作"
+  display_order: '1100'
+  deleted_at: '2014-05-01 00:00:00'
+  bg_color: "#ffffff"
+  land_flag: f
+
+work_types17:
+  id: '17'
+  genre: genre_by_product
+  name: "副産物"
+  display_order: '1200'
+  deleted_at: '2014-05-01 00:00:00'
+  bg_color: "#ffffff"
+  land_flag: f
+
+work_types18:
+  id: '18'
+  genre: genre_management
+  name: "管理"
+  display_order: '1300'
+  deleted_at: '2014-05-01 00:00:00'
+  bg_color: "#ffffff"
+  land_flag: f
+
+work_type_discarded:
+  genre: genre_discardable
+  name: "論理削除済み"
+  display_order: 9999
+  deleted_at: '2024-01-01 00:00:00'
+  bg_color: "#ffffff"
+  land_flag: f

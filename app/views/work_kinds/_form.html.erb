@@ -40,10 +40,10 @@
     <div class="field mb-3 col-md-12">
       <fieldset>
         <legend>該当作業</legend>
-        <% @work_types.each do |work_type| %>
+        <% @categories.each do |category| %>
           <div class="form-check form-check-inline">
-            <%= check_box_tag "work_types[]", work_type.id, @work_kind.work_types.include?(work_type), {id: "work_type_#{work_type.id}", class: "form-check-input"} %>
-            <%= label_tag "work_type_#{work_type.id}", work_type.name, {class: "form-check-label form-label"} %>
+            <%= check_box_tag "work_categories[]", category.id, @work_kind.categories.include?(category), {id: "work_category_#{category.id}", class: "form-check-input"} %>
+            <%= label_tag "work_category_#{category.id}", category.name, {class: "form-check-label form-label"} %>
           </div>
         <% end %>
       </fieldset>

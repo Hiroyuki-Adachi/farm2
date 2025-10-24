@@ -35,7 +35,7 @@ class WorkKind < ApplicationRecord
   has_many :chemical_types, -> {order("chemical_types.display_order")}, through: :chemical_kinds
 
   has_many :work_kind_types, dependent: :destroy
-  has_many :work_types, through: :work_kind_types
+  has_many :categories, through: :work_kind_types
   has_many :work_kind_prices, dependent: :destroy
 
   has_many :calendar_work_kinds, dependent: :destroy
@@ -57,7 +57,7 @@ class WorkKind < ApplicationRecord
   scope :by_type, ->(work_type) {
     kept
       .joins(:work_kind_types)
-      .where(work_kind_types: { work_type_id: work_type&.genre_id })
+      .where(work_kind_types: { work_category_id: work_type&.genre&.work_category_id })
       .order("work_kinds.other_flag, work_kinds.phonetic, work_kinds.display_order, work_kinds.id")
   }
   scope :except_other, -> {kept.where(other_flag: false) }

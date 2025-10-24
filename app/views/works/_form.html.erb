@@ -26,7 +26,7 @@
   data-dependent-select-url-value="<%= work_kinds_works_path %>"
   data-dependent-select-param-name-value="work_type_id"
   data-action="change->dependent-select#fetch">
-  <% WorkType.categories.each do |category| %>
+  <% WorkCategory.usual.each do |category| %>
     <div class="col-md-2">
       <div class="form-check form-check-inline h5">
         <%= category.name %>

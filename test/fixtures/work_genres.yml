@@ -1,0 +1,75 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+# == Schema Information
+#
+# Table name: work_genres(作業ジャンル)
+#
+#  id                             :bigint           not null, primary key
+#  discarded_at(論理削除日時)     :datetime
+#  display_order(表示順)          :integer          default(0), not null
+#  graph_color(グラフ色)          :string(8)        default("#ffffff"), not null
+#  name(名称)                     :string(10)       default(""), not null
+#  created_at                     :datetime         not null
+#  updated_at                     :datetime         not null
+#  work_category_id(作業カテゴリ) :bigint           not null
+#
+# Indexes
+#
+#  index_work_genres_on_work_category_id  (work_category_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (work_category_id => work_categories.id)
+#
+genre_rice:
+  name: "水稲"
+  display_order: '10'
+  discarded_at: 
+  category: category_rice
+  graph_color: "#00ff00"
+
+genre_change:
+  name: "転作"
+  display_order: '20'
+  discarded_at: 
+  category: category_change
+  graph_color: "#0000ff"
+
+genre_by_product:
+  name: "副産物"
+  display_order: '30'
+  discarded_at: 
+  category: category_by_product
+  graph_color: "#ff0000"
+
+genre_management:
+  name: "管理"
+  display_order: '40'
+  discarded_at: 
+  category: category_management
+  graph_color: "#ffff00"
+
+genre_deletable:
+  name: "物理削除可能"
+  display_order: '50'
+  discarded_at: 
+  category: category_management
+  graph_color: "#000000"
+
+genre_discardable:
+  name: "論理削除可能"
+  display_order: '60'
+  discarded_at: 
+  category: category_management
+  graph_color: "#ffffff"
+
+genre_discarded:
+  name: "論理削除済み"
+  display_order: '70'
+  discarded_at: '2024-01-01 00:00:00'
+  category: category_discardable
+  graph_color: "#888888"
