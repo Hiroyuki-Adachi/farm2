@@ -109,7 +109,6 @@ class Drying < ApplicationRecord
   end
 
   def self.calc_total(dryings, home, system)
-    Rails.logger.debug { "dryings:#{dryings.to_json}" }
     rice_totals = {
       adjust: 0.0,
       country: 0.0,
