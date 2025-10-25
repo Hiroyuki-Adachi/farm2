@@ -12,7 +12,7 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
           drying.model.carried_on,
           drying.model.shipped_on,
           drying.drying_type_name(home.id),
-          drying.harvest_weight(current_system) / Drying::KG_PER_BAG_RICE,
+          (drying.harvest_weight(current_system) / Drying::KG_PER_BAG_RICE).floor(1),
           drying.price(current_system, home.id),
           drying.amount(current_system, home.id)
         ]
@@ -25,7 +25,7 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
         drying.model.carried_on,
         drying.model.waste_date,
         drying.waste_name(home.id),
-        drying.waste_weight / Drying::KG_PER_BAG_WASTE,
+        (drying.waste_weight / Drying::KG_PER_BAG_WASTE).floor(1),
         drying.waste_price(current_system, home.id),
         drying.waste_amount(current_system, home.id)
       ]

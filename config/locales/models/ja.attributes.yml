@@ -75,7 +75,7 @@ ja:
         remarks: "記事"  #g
         start_at: "開始時刻"  #g
         end_at: "終了時刻"  #g
-        genre_name: "大分類"
+        category_name: "大分類"
         type_name: "小分類"
         kind_name: "内容"
         workers_count: "人数"
@@ -84,9 +84,19 @@ ja:
         work_kind_id: "作業種別"
         chemical_group_flag: "土地単位に薬剤を入力する"
 
+      work_category:
+        name: "名称"
+        display_order: "表示順"
+
+      work_genre:
+        name: "名称"
+        display_order: "表示順"
+        work_category_id: "作業カテゴリ"
+        graph_color: "グラフ色"
+
       work_type:
         name: "名称"
-        genre: "カテゴリー"
+        work_genre_id: "作業ジャンル"
         display_order: "表示順"
         bg_color: "背景色"
         land_flag: "土地利用"

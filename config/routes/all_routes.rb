@@ -210,6 +210,11 @@ resources :works do
   resources :tasks, controller: "works/tasks", only: [:new, :create]
 end
 
+namespace :work do
+  resources :categories, controller: "/works/categories", only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :genres, controller: "/works/genres", only: [:index, :new, :create, :edit, :update, :destroy]
+end
+
 resources :tasks, except: [:edit, :update] do
   resource :assignee, controller: "tasks/assignees", only: [:edit, :update]
   resource :description, controller: "tasks/descriptions", only: [:edit, :update]

@@ -12,15 +12,13 @@ class WorkVerificationsTest < ApplicationSystemTestCase
     fill_in 'login_name', with: @user.login_name
     fill_in 'password', with: 'password'
     click_button '認証する'
+    assert_selector 'a', exact_text: '作業日報管理', wait: 5
 
     # 検証画面への遷移
-    ensure_sidebar_shown!
-    assert_selector :link, '日報検証', wait: 5
-    click_link '日報検証'
+    ensure_wide!
+    visit work_verifications_path
+    assert_selector 'h1', text: '作業日報検証', wait: 5
 
-    ensure_sidebar_shown!
-    assert_selector 'h1', text: '作業日報検証'
-    
     # 検証対象の作業日報を選択
     find("a.show-work[data-url=\"/work_verifications/#{@work.id}\"]").click
     assert_selector '.modal-dialog', visible: true, wait: 5

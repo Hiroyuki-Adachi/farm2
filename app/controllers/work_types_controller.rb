@@ -2,7 +2,6 @@ class WorkTypesController < ApplicationController
   skip_before_action :restrict_remote_ip, only: [:icon]
   before_action :permit_manager, except: [:icon]
   before_action :set_work_type, only: [:edit, :update, :destroy]
-  before_action :set_category, only: [:new, :create, :edit, :update]
 
   helper WorkTypesHelper
 
@@ -83,16 +82,12 @@ class WorkTypesController < ApplicationController
     @work_type.term_flag = WorkTypeTerm.exists?(term: current_term, work_type_id: @work_type.id)
   end
 
-  def set_category
-    @categories = WorkType.categories
-  end
-
   def work_type_params
     params.expect(work_type:
       [
         :name,
         :display_order,
-        :genre,
+        :work_genre_id,
         :bg_color,
         :land_flag,
         :cost_flag,
