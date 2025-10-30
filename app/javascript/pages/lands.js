@@ -1,9 +1,9 @@
 import "bootstrap";
-await google.maps.importLibrary("drawing");
 
 let landRegion;
 
-function initMap(){
+async function initMap(){
+  await google.maps.importLibrary("drawing");
   const org = JSON.parse(document.getElementById("location").value);
   const pos = {lat: org[0], lng: org[1]};
 
