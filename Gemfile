@@ -69,6 +69,9 @@ gem 'bcrypt', '~> 3.1.7'
 # This gem supports operating on xlsx files (Open XML format).
 gem 'rubyXL'
 
+# ImageProcessing is a Ruby gem for processing images.
+gem "image_processing", "~> 1.2"
+
 # Ruby library for dealing with iCalendar files
 gem 'icalendar'
 
