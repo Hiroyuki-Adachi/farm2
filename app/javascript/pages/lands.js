@@ -1,6 +1,9 @@
 import "bootstrap";
+import { TerraDraw, TerraDrawPolygonMode, TerraDrawSelectMode } from "terra-draw";
+import { TerraDrawGoogleMapsAdapter } from "terra-draw-google-maps-adapter";
 
 let landRegion;
+let draw = null;
 
 async function initMap(){
   await google.maps.importLibrary("drawing");
@@ -34,29 +37,54 @@ async function initMap(){
         fillOpacity: 0.35,
         map: map
     }));
-  }); 
-
-  const drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.POLYGON,
-    drawingControl: true,
-    drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [google.maps.drawing.OverlayType.POLYGON]
-    },
-    polygonOptions: {
-      fillColor: '#99ff99',
-      strokeColor: "#99ff99",
-      editable: true
-    },
-    map: map
   });
 
-  google.maps.event.addListener(drawingManager, 'polygoncomplete', function(arg) {
-    let polygon = [];
-    arg.getPath().getArray().forEach(function(path) {
-      polygon.push(`(${path.lat()},${path.lng()})`);
+  map.addListener("projection_changed", () => {
+    polygon = new TerraDrawPolygonMode({
+      editable: true,
+      styles: (() => {
+        return {
+            fillColor: '#99ff99',
+            outlineColor: '#99ff99',
+        };
+      })(),
     });
-    document.getElementById("land_region").value = `(${polygon.join(",")})`;
+    draw = new TerraDraw({
+      adapter: new TerraDrawGoogleMapsAdapter({ map, lib: google.maps }),
+      modes: [
+        new TerraDrawPolygonMode({
+          editable: true,
+          styles: (() => {
+            return {
+                fillColor: '#99ff99',
+                outlineColor: '#99ff99',
+            };
+          })(),
+        }),
+        new TerraDrawSelectMode({
+          flags: {
+            polygon: {
+              feature: {
+                draggable: true,
+                rotateable: true,
+                coordinates: {
+                  midpoints: true,
+                  draggable: true,
+                  deletable: true,
+                },
+              },
+            }
+          }
+        })
+      ]
+    });
+
+    draw.start();
+
+    draw.on('ready', () => {
+      draw.setMode('polygon');
+    });
+
   });
 }
 
@@ -77,7 +105,9 @@ export const init = () => {
     if(landRegion) {
       landRegion.setMap(null);
       document.getElementById("land_region").value = "";
+      landRegion = null;
     }
+    draw.clear();
   });
 
   let popForm = null;
