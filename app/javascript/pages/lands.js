@@ -1,12 +1,13 @@
 import "bootstrap";
-import { TerraDraw, TerraDrawPolygonMode, TerraDrawSelectMode } from "terra-draw";
+import { TerraDraw, TerraDrawPolygonMode } from "terra-draw";
 import { TerraDrawGoogleMapsAdapter } from "terra-draw-google-maps-adapter";
 
-let landRegion;
+let landRegion = null;
 let draw = null;
 
 async function initMap(){
   await google.maps.importLibrary("drawing");
+  await google.maps.importLibrary("maps");
   const org = JSON.parse(document.getElementById("location").value);
   const pos = {lat: org[0], lng: org[1]};
 
@@ -27,28 +28,19 @@ async function initMap(){
   });
 
   const otherRegions = []
-  document.getElementsByName("other_lands").forEach(function(other) {
+  document.getElementsByName("other_lands").forEach((other) => {
     otherRegions.push(new google.maps.Polygon({
-        paths: convertRegion(other.value),
-        strokeColor: "#ffffff",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#ffffff",
-        fillOpacity: 0.35,
-        map: map
+      paths: convertRegion(other.value),
+      strokeColor: "#ffffff",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#ffffff",
+      fillOpacity: 0.35,
+      map: map
     }));
   });
 
   map.addListener("projection_changed", () => {
-    polygon = new TerraDrawPolygonMode({
-      editable: true,
-      styles: (() => {
-        return {
-            fillColor: '#99ff99',
-            outlineColor: '#99ff99',
-        };
-      })(),
-    });
     draw = new TerraDraw({
       adapter: new TerraDrawGoogleMapsAdapter({ map, lib: google.maps }),
       modes: [
@@ -56,25 +48,10 @@ async function initMap(){
           editable: true,
           styles: (() => {
             return {
-                fillColor: '#99ff99',
-                outlineColor: '#99ff99',
+              fillColor: '#99ff99',
+              outlineColor: '#99ff99',
             };
           })(),
-        }),
-        new TerraDrawSelectMode({
-          flags: {
-            polygon: {
-              feature: {
-                draggable: true,
-                rotateable: true,
-                coordinates: {
-                  midpoints: true,
-                  draggable: true,
-                  deletable: true,
-                },
-              },
-            }
-          }
         })
       ]
     });
@@ -82,9 +59,24 @@ async function initMap(){
     draw.start();
 
     draw.on('ready', () => {
-      draw.setMode('polygon');
+      // 初期描画済の場合は静的モード(編集不可)にする
+      if (document.getElementById("land_region").value == "") {
+        draw.setMode('polygon');
+      } else {
+        draw.setMode('static');
+      }
     });
 
+    draw.on('finish', () => {
+      // 描画完了時、描画モードを静的モードに変更し、座標を設定
+      draw.setMode('static');
+      const features = draw.getSnapshot();
+      const pgGeo = [];
+      features[0].geometry.coordinates[0].slice(0, -1).forEach((geo) => {
+        pgGeo.push(`(${geo[1]},${geo[0]})`);
+      });
+      document.getElementById("land_region").value = `(${pgGeo.join(",")})`;
+    });
   });
 }
 
@@ -102,12 +94,14 @@ function convertRegion(region) {
 
 export const init = () => {
   document.getElementById("clear_region").addEventListener("click", function() {
+    // クリアボタン押下時、地図上のポリゴンがあれば削除
     if(landRegion) {
       landRegion.setMap(null);
       document.getElementById("land_region").value = "";
-      landRegion = null;
     }
+    // 描画中のポリゴンがあればクリアし、描画モードに変更
     draw.clear();
+    draw.setMode('polygon');
   });
 
   let popForm = null;
