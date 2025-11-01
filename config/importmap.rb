@@ -32,3 +32,5 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 pin_all_from "app/javascript/controllers", under: "controllers", preload: false
 pin_all_from "app/javascript/pages", under: "pages", preload: false
 pin "controllers/application", to: "controllers/application.js"
+pin "terra-draw", preload: false # @1.18.1
+pin "terra-draw-google-maps-adapter", preload: false # @1.1.0
