@@ -48,7 +48,7 @@ gem 'activemodel-serializers-xml'
 # ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource for an ActiveRecord-like model.
 gem 'active_hash'
 # TZInfo::Data is the public domain IANA Time Zone Database packaged as a set of Ruby modules for use with TZInfo.
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
+gem 'tzinfo-data', platforms: [:windows]
 # Logical deletion for ActiveRecord. Documentation: https://github.com/jhawthorn/discard
 gem 'discard'
 # A paginator for modern web app frameworks and ORMs
@@ -68,6 +68,9 @@ gem 'bcrypt', '~> 3.1.7'
 
 # This gem supports operating on xlsx files (Open XML format).
 gem 'rubyXL'
+
+# ImageProcessing is a Ruby gem for processing images.
+gem "image_processing", "~> 1.2"
 
 # Ruby library for dealing with iCalendar files
 gem 'icalendar'
