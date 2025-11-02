@@ -2,20 +2,20 @@
 #
 # Table name: task_events(タスクイベント)
 #
-#  id                               :bigint           not null, primary key
-#  due_on_from(変更前の期限)        :date
-#  due_on_to(変更後の期限)          :date
-#  event_type(イベント種別)         :integer          not null
-#  created_at                       :datetime         not null
-#  updated_at                       :datetime         not null
-#  actor_id(実行者)                 :bigint           not null
-#  assignee_from_id(変更前の担当者) :bigint
-#  assignee_to_id(変更後の担当者)   :bigint
-#  status_from_id(変更前ステータス) :integer
-#  status_to_id(変更後ステータス)   :integer
-#  task_comment_id(関連コメント)    :bigint
-#  task_id(対象タスク)              :bigint           not null
-#  work_id(関連作業)                :bigint
+#  id                                 :bigint           not null, primary key
+#  due_on_from(変更前の期限)          :date
+#  due_on_to(変更後の期限)            :date
+#  event_type(イベント種別)           :integer          not null
+#  created_at                         :datetime         not null
+#  updated_at                         :datetime         not null
+#  actor_id(実行者)                   :bigint           not null
+#  assignee_from_id(変更前の担当者ID) :bigint
+#  assignee_to_id(変更後の担当者ID)   :bigint
+#  status_from_id(変更前ステータス)   :integer
+#  status_to_id(変更後ステータス)     :integer
+#  task_comment_id(関連コメントID)    :bigint
+#  task_id(対象タスクID)              :bigint           not null
+#  work_id(関連作業ID)                :bigint
 #
 # Indexes
 #

@@ -8,10 +8,10 @@
 #  description(説明)               :text             default(""), not null
 #  discarded_at(論理削除日時)      :datetime
 #  kind(年次/月次)                 :integer          default("annual"), not null
-#  monthly_stage(期日週)           :integer          default("w1"), not null
-#  months_before_due(事前通知月数) :integer          default(1), not null
+#  monthly_stage(期日週)           :integer          default("w1")
+#  months_before_due(事前通知月数) :integer          default(1)
 #  office_role(役割)               :integer          default("none"), not null
-#  offset(基準からのズレ)          :integer          default(0), not null
+#  offset(基準からのズレ)          :integer          default(0)
 #  priority(優先度)                :integer          default("low"), not null
 #  title(タスク名)                 :string(40)       not null
 #  created_at                      :datetime         not null

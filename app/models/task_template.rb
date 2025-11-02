@@ -8,10 +8,10 @@
 #  description(説明)               :text             default(""), not null
 #  discarded_at(論理削除日時)      :datetime
 #  kind(年次/月次)                 :integer          default("annual"), not null
-#  monthly_stage(期日週)           :integer          default("w1"), not null
-#  months_before_due(事前通知月数) :integer          default(1), not null
+#  monthly_stage(期日週)           :integer          default("w1")
+#  months_before_due(事前通知月数) :integer          default(1)
 #  office_role(役割)               :integer          default("none"), not null
-#  offset(基準からのズレ)          :integer          default(0), not null
+#  offset(基準からのズレ)          :integer          default(0)
 #  priority(優先度)                :integer          default("low"), not null
 #  title(タスク名)                 :string(40)       not null
 #  created_at                      :datetime         not null
@@ -32,7 +32,7 @@ class TaskTemplate < ApplicationRecord
   include Discard::Model
 
   enum :priority, { low: 0, medium: 5, high: 8 }
-  enum :kind, { annual: 0, monthly: 1 }, prefix: true
+  enum :kind, { annual: 0, monthly: 1, any_time: 9 }, prefix: true
   enum :monthly_stage, { w1: 0, w2: 7, w3: 14, w4: 21, month_end: 31 }
 
   has_many :tasks, dependent: :restrict_with_error

@@ -1,13 +1,13 @@
 # == Schema Information
 #
-# Table name: task_comments
+# Table name: task_comments(タスクコメント)
 #
-#  id                  :bigint           not null, primary key
-#  body(コメント本文)  :text             default(""), not null
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  poster_id(投稿者)   :bigint           not null
-#  task_id(対象タスク) :bigint           not null
+#  id                    :bigint           not null, primary key
+#  body(コメント本文)    :text             default(""), not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  poster_id(投稿者ID)   :bigint           not null
+#  task_id(対象タスクID) :bigint           not null
 #
 # Indexes
 #
