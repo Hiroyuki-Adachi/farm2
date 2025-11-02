@@ -71,8 +71,10 @@ class TaskDecorator < Draper::Decorator
         h.content_tag(:span, kind_name, class: "badge text-bg-info")
       when :monthly
         h.content_tag(:span, kind_name, class: "badge text-bg-success")
+      when :any_time
+        h.content_tag(:span, kind_name, class: "badge text-bg-secondary")
       else
-        ""
+        h.content_tag(:span, "（未設定）", class: "badge text-bg-light")
       end
     end
   end
