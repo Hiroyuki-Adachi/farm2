@@ -35,20 +35,27 @@
             (1..12).map { |m| ["#{m}月", m] },
             { include_blank: "選択してください" },
             class: "form-select",
-            data: { pages__task_template_kind_target: "annualOnly" }
+            data: { pages__task_template_kind_target: "onlyAnnual" }
           %>
       <div class="form-text">年次テンプレートでのみ使用します。</div>
     </div>
     <div class="field mb-3 col-md-3">
       <%= f.label :monthly_stage, class: "col-form-label-lg form-label" %>
-      <%= f.select(:monthly_stage, enum_options_for(TaskTemplate, :monthly_stage), {}, class: "form-select") %>
+      <%= f.select(
+        :monthly_stage,
+        enum_options_for(TaskTemplate, :monthly_stage),
+        {},
+        data: { pages__task_template_kind_target: "annualAndMonthly" }, class: "form-select"
+      )
+      %>
+      <div class="form-text">年次と月次のテンプレートで使用します。</div>
     </div>
     <div class="field mb-3 col-md-3">
       <%= f.label :months_before_due, class: "col-form-label-lg form-label" %>
       <%= f.select :months_before_due,
             (1..6).map { |n| [("#{n}ヶ月前"), n] },
             {}, class: "form-select",
-            data: { pages__task_template_kind_target: "annualOnly" } %>
+            data: { pages__task_template_kind_target: "onlyAnnual" } %>
       <div class="form-text">
         期日から何ヶ月前にタスクを生成するかを指定します。<br />年次テンプレートでのみ使用します。
       </div>
@@ -60,7 +67,7 @@
       <div class="d-flex gap-3">
         <% annual_offsets = [[-1, "前年扱い（決算・総会など）"], [0, "当年扱い（人事など）"], [1, "翌年扱い"]] %>
         <% annual_offsets.each do |val, label| %>
-          <div class="form-check" data-pages--task-template-kind-target="annualOnly">
+          <div class="form-check" data-pages--task-template-kind-target="onlyAnnual">
             <%= f.radio_button :annual_offset, val, class: "form-check-input", id: "annual_offset_#{val}" %>
             <%= f.label "annual_offset_#{val}", label, class: "form-check-label", for: "annual_offset_#{val}" %>
           </div>
@@ -68,18 +75,21 @@
 
         <% monthly_offsets = [[-1, "前月扱い（会計・日報の処理など）"], [0, "当月扱い（支払い処理など）"], [1, "翌月扱い"]] %>
         <% monthly_offsets.each do |val, label| %>
-          <div class="form-check" data-pages--task-template-kind-target="monthlyOnly">
+          <div class="form-check" data-pages--task-template-kind-target="onlyMonthly">
             <%= f.radio_button :monthly_offset, val, class: "form-check-input", id: "monthly_offset_#{val}" %>
             <%= f.label "monthly_offset_#{val}", label, class: "form-check-label", for: "monthly_offset_#{val}" %>
           </div>
         <% end %>
       </div>
+      <div class="form-text">年次と月次のテンプレートで使用します。</div>
     </div>
     <div class="field mb-3 col-md-4">
       <%= f.label :active, "有効(生成する)", class: "col-form-label-lg form-label" %>
       <br />
       <%= f.check_box :active, class: "form-check-input", role: "switch", id: "tpl_active" %>
-      <div class="form-text">オフにするとタスクの自動生成を停止します(データは残ります)。</div>
+      <div class="form-text">年次と月次の場合、オフにするとタスクの自動生成を停止します。</div>
+      <div class="form-text">随時の場合、オフにするとタスク登録画面での一覧で表示されなくなります。</div>
+      <div class="form-text">既に生成されたタスクは影響を受けません。</div>
     </div>
   </div>
   <div class="row" data-controller="markdown-preview">

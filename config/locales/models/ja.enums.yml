@@ -113,6 +113,7 @@ ja:
         kinds:
           annual: "年次"
           monthly: "月次"
+          any_time: "随時"
         monthly_stages:
           w1: "第1週の週末"
           w2: "第2週の週末"

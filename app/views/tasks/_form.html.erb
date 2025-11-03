@@ -1,12 +1,15 @@
-<%= form_with model: task, class: "needs-validation", data: { turbo: true, controller: "page-loader", page_loader_modules_value: "pages/tasks" } do |f| %>
+<%= form_with model: task, class: "needs-validation", data: { turbo: true, controller: "pages--task-form form-reset" } do |f| %>
   <%= error_print(f.object) %>
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <div class="mb-3">
-        <%= f.label :title, class: "form-label" %>
-        <%= f.text_field :title, class: "form-control", maxlength: 64, required: true %>
-        <div class="form-text">64文字まで</div>
+      <div class="row g-3">
+        <div class="mb-3 col-md-12">
+          <%= f.label :title, class: "form-label" %>
+          <%= f.text_field :title, class: "form-control", maxlength: 64, required: true,
+          data: { "pages--task-form-target": "titleField" } %>
+          <div class="form-text">64文字まで</div>
+        </div>
       </div>
 
       <div class="row g-3">
@@ -17,15 +20,19 @@
         </div>
         <div class="col-md-2">
           <%= f.label :priority, class: "form-label" %>
-          <%= f.select(:priority, enum_options_for(Task, :priority), {}, class: "form-select") %>
+          <%= f.select(:priority, enum_options_for(Task, :priority), {}, class: "form-select", data: { "pages--task-form-target": "priorityField" }) %>
         </div>
         <div class="col-md-2">
           <%= f.label :office_role, class: "form-label" %>
-          <%= f.select(:office_role, enum_options_for(Task, :office_role), {}, class: "form-select") %>
+          <%= f.select(:office_role, enum_options_for(Task, :office_role), {}, class: "form-select", data: { "pages--task-form-target": "officeRoleField" }) %>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <%= f.label :due_on, class: "form-label" %>
           <%= f.date_field :due_on, class: "form-control" %>
+        </div>
+        <div class="col-md-1 d-flex">
+          <%= f.hidden_field :task_template_id, data: { "pages--task-form-target": "idField" } %>
+          <input type="button" class="btn btn-primary" value="テンプレート" data-bs-toggle="modal" data-bs-target="#template_modal" />
         </div>
       </div>
     </div>
@@ -43,7 +50,7 @@
           class: "form-control",
           rows: 14,
           placeholder: "Markdown で説明を書いてください",
-          data: { "markdown-preview-target": "input", action: "input->markdown-preview#update" } %>
+          data: { "markdown-preview-target": "input", action: "input->markdown-preview#update", "pages--task-form-target": "descriptionField" } %>
         <div class="form-text">
           例: <code>**太字**</code>、<code>`code`</code>、箇条書き、チェックボックス <code>- [ ] todo</code> など
         </div>
@@ -59,6 +66,49 @@
 
   <div class="d-flex gap-2">
     <%= f.submit "作成する", class: "btn btn-warning" %>
+    <input type="reset" value="リセットする" class="btn btn-secondary" />
     <%= link_to "戻る", tasks_path, class: "btn btn-outline-secondary" %>
   </div>
 <% end %>
+
+<div class="modal fade" id="template_modal" tabindex="-1" aria-hidden="true" data-controller="pages--template-picker">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">テンプレートを適用</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <% if @templates.any? %>
+          <table class="table table-hover table-sm align-middle">
+            <thead><tr><th>タイトル</th><th>役割</th><th>優先</th><th></th></tr></thead>
+            <tbody>
+              <% @templates.each do |t| %>
+                <tr>
+                  <td><%= h t.title %></td>
+                  <td><%= t.office_role_name %></td>
+                  <td><%= t.priority_name %></td>
+                  <td class="text-end">
+                    <button type="button" class="btn btn-sm btn-primary"
+                      data-action="pages--template-picker#select"
+                      data-template-title="<%= h "【#{Time.zone.today.strftime('%Jy年%m月')}】#{t.title}" %>"
+                      data-template-description="<%= j t.description %>"
+                      data-template-office-role="<%= t.office_role %>"
+                      data-template-priority="<%= t.priority %>"
+                      data-template-id="<%= t.id %>"
+                    >
+                      適用
+                    </button>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="text-muted mb-0">手動用テンプレートは未登録です。</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
