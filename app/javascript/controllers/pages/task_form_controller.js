@@ -6,7 +6,8 @@ export default class extends Controller {
     "titleField",
     "descriptionField",
     "officeRoleField",
-    "priorityField"
+    "priorityField",
+    "idField"
   ];
 
   connect() {
@@ -25,6 +26,7 @@ export default class extends Controller {
     if (this.hasDescriptionFieldTarget) this.descriptionFieldTarget.value = t.description || "";
     if (this.hasOfficeRoleFieldTarget && t.office_role) this.officeRoleFieldTarget.value = t.office_role;
     if (this.hasPriorityFieldTarget && t.priority)      this.priorityFieldTarget.value   = t.priority;
+    if (this.hasIdFieldTarget && t.id)                  this.idFieldTarget.value         = t.id;
 
     // Markdownプレビュー更新（inputイベントで連携）
     if (this.hasDescriptionFieldTarget) {

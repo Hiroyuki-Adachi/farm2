@@ -15,7 +15,8 @@ export default class extends Controller {
       title:        btn.dataset.templateTitle || "",
       description:  btn.dataset.templateDescription || "",
       office_role:  btn.dataset.templateOfficeRole,
-      priority:     btn.dataset.templatePriority
+      priority:     btn.dataset.templatePriority,
+      id:           btn.dataset.templateId
     };
 
     document.dispatchEvent(new CustomEvent("pages:template:selected", { detail: payload }));

@@ -59,7 +59,8 @@ class TasksController < ApplicationController
         :ended_on,
         :end_reason,
         :office_role,
-        :assignee_id
+        :assignee_id,
+        :task_template_id
       ])
   end
 
