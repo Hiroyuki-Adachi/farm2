@@ -3,11 +3,12 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   connect() {
-    this.element.addEventListener("reset", this.onReset.bind(this));
+    this.boundOnReset = this.onReset.bind(this);
+    this.element.addEventListener("reset", this.boundOnReset);
   }
 
   disconnect() {
-    this.element.removeEventListener("reset", this.onReset.bind(this));
+    this.element.removeEventListener("reset", this.boundOnReset);
   }
 
   onReset(event) {
