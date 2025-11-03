@@ -39,11 +39,7 @@ export default class extends Controller {
       element.querySelectorAll("input, select, textarea").forEach(f => f.disabled = false);
       element.disabled = false;
     });
-    this.annualAndMonthlyTargets.forEach(element => {
-      element.classList.remove("d-none");
-      element.querySelectorAll("input, select, textarea").forEach(f => f.disabled = false);
-      element.disabled = false;
-    });
+    this.showAnnualAndMonthly();
   }
 
   hideAnnual() {
