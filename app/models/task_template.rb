@@ -48,8 +48,10 @@ class TaskTemplate < ApplicationRecord
   before_save :clear_annual_month_fields, if: :kind_monthly?
   before_save :set_offset
 
-  scope :usual, -> { with_discarded.order(active: :desc, id: :desc) }
-  scope :for_creation, -> { kept.where(active: true) }
+  scope :usual_order, -> { order(active: :desc, id: :desc) }
+  scope :usual, -> { with_discarded.usual_order }
+  scope :for_auto_creation, -> { kept.where(active: true, kind: [:annual, :monthly]).usual_order }
+  scope :for_hand_creation, -> { kept.where(active: true, kind: [:any_time]).usual_order }
 
   # 指定年月の期日(due_on)を計算
   def due_on_for(year:, month:)

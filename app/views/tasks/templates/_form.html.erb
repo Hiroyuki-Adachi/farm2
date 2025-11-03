@@ -86,13 +86,10 @@
     <div class="field mb-3 col-md-4">
       <%= f.label :active, "有効(生成する)", class: "col-form-label-lg form-label" %>
       <br />
-      <%= f.check_box :active, 
-        class: "form-check-input", data: { pages__task_template_kind_target: "annualAndMonthly" }, 
-        role: "switch",
-        id: "tpl_active"
-      %>
-      <div class="form-text">オフにするとタスクの自動生成を停止します(データは残ります)。</div>
-      <div class="form-text">年次と月次のテンプレートで使用します。</div>
+      <%= f.check_box :active, class: "form-check-input", role: "switch", id: "tpl_active" %>
+      <div class="form-text">年次と月次の場合、オフにするとタスクの自動生成を停止します。</div>
+      <div class="form-text">随時の場合、オフにするとタスク登録画面での一覧で表示されなくなります。</div>
+      <div class="form-text">既に生成されたタスクは影響を受けません。</div>
     </div>
   </div>
   <div class="row" data-controller="markdown-preview">

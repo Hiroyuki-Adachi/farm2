@@ -36,39 +36,53 @@ export default class extends Controller {
   showAnnual() {
     this.onlyAnnualTargets.forEach(element => {
       element.classList.remove("d-none");
+      element.querySelectorAll("input, select, textarea").forEach(f => f.disabled = false);
+      element.disabled = false;
     });
     this.annualAndMonthlyTargets.forEach(element => {
       element.classList.remove("d-none");
+      element.querySelectorAll("input, select, textarea").forEach(f => f.disabled = false);
+      element.disabled = false;
     });
   }
 
   hideAnnual() {
     this.onlyAnnualTargets.forEach(element => {
       element.classList.add("d-none");
+      element.querySelectorAll("input, select, textarea").forEach(f => f.disabled = true);
+      element.disabled = true;
     });
   }
 
   showMonthly() {
     this.onlyMonthlyTargets.forEach(element => {
       element.classList.remove("d-none");
+      element.querySelectorAll("input, select, textarea").forEach(f => f.disabled = false);
+      element.disabled = false;
     });
   }
 
   hideMonthly() {
     this.onlyMonthlyTargets.forEach(element => {
       element.classList.add("d-none");
+      element.querySelectorAll("input, select, textarea").forEach(f => f.disabled = true);
+      element.disabled = true;
     });
   }
 
   showAnnualAndMonthly() {
     this.annualAndMonthlyTargets.forEach(element => {
       element.classList.remove("d-none");
+      element.querySelectorAll("input, select, textarea").forEach(f => f.disabled = false);
+      element.disabled = false;
     });
   }
 
   hideAnnualAndMonthly() {
     this.annualAndMonthlyTargets.forEach(element => {
       element.classList.add("d-none");
+      element.querySelectorAll("input, select, textarea").forEach(f => f.disabled = true);
+      element.disabled = true;
     });
   }
 }
