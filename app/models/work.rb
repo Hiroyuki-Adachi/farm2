@@ -266,20 +266,22 @@ SQL
 
   def regist_results(params, current_worker)
     workers = []
-    params.each do |param|
-      worker_id = param[:worker_id].to_i
-      workers << worker_id
-      display_order = param[:display_order].to_i
-      hours = param[:hours].to_f
-      work_result = work_results.find_by(worker_id: worker_id)
-      if work_result
-        # hoursが変更された場合にログを出力
-        Rails.application.config.update_logger.info "updated:#{work_result.worker.name}:#{work_result.hours}:#{hours}" if work_result.hours != hours
-        
-        # display_orderまたはhoursが異なる場合のみupdateを実行
-        work_result.update(display_order: display_order, hours: hours) if work_result.display_order != display_order || work_result.hours != hours
-      else
-        WorkResult.create(work_id: id, worker_id: worker_id, display_order: display_order, hours: hours)
+    if params.present?
+      params.each do |param|
+        worker_id = param[:worker_id].to_i
+        workers << worker_id
+        display_order = param[:display_order].to_i
+        hours = param[:hours].to_f
+        work_result = work_results.find_by(worker_id: worker_id)
+        if work_result
+          # hoursが変更された場合にログを出力
+          Rails.application.config.update_logger.info "updated:#{work_result.worker.name}:#{work_result.hours}:#{hours}" if work_result.hours != hours
+          
+          # display_orderまたはhoursが異なる場合のみupdateを実行
+          work_result.update(display_order: display_order, hours: hours) if work_result.display_order != display_order || work_result.hours != hours
+        else
+          WorkResult.create(work_id: id, worker_id: worker_id, display_order: display_order, hours: hours)
+        end
       end
     end
     
@@ -491,9 +493,9 @@ SQL
     if work_search[:work_type_id].present?
       works = work_search[:except] ? works.where.not(work_type_id: work_search[:work_type_id]) : works.where(work_type_id: work_search[:work_type_id]) 
     end
-    works = works.where(work_kind_id: work_search[:work_kind_id])     if work_search[:work_kind_id].present?
-    works = works.where(["worked_at >= ?", work_search[:worked_at1]]) if work_search[:worked_at1].present?
-    works = works.where(["worked_at <= ?", work_search[:worked_at2]]) if work_search[:worked_at2].present?
+    works = works.where(work_kind_id: work_search[:work_kind_id]) if work_search[:work_kind_id].present?
+    works = works.where(worked_at: (work_search[:worked_at1])..) if work_search[:worked_at1].present?
+    works = works.where(worked_at: ..(work_search[:worked_at2])) if work_search[:worked_at2].present?
     return works
   end
 
