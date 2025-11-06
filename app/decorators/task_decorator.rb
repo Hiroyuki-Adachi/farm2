@@ -111,8 +111,8 @@ class TaskDecorator < Draper::Decorator
 
   def text_display
     fw = 'normal'
-    fw = 'bold' if object.high? || object.urgent?
-    fw = 'bold' if [:expired, :today, :soon].include?(due_status)
+    fw = 'highlight' if object.high? || object.urgent?
+    fw = 'highlight' if [:expired, :today, :soon].include?(due_status)
 
     h.content_tag(:span, object.title, class: "fw-#{fw}")
   end
