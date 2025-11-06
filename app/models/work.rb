@@ -99,6 +99,7 @@ SQL
           HAVING COUNT(*) >= ?
       )
 SQL
+
   scope :by_machines, ->(machines) {where([<<SQL.squish, machines.pluck(:id)])}
   EXISTS (
     SELECT * FROM work_results
@@ -118,28 +119,28 @@ SQL
 SQL
   scope :by_land, ->(land) {where("EXISTS (SELECT * FROM work_lands WHERE works.id = work_lands.work_id AND work_lands.land_id = ?)", land.id)}
 
-  scope :by_chemical, ->(term) {
+  scope :by_chemical, ->(term) do
     where(id: WorkChemical.by_term(term).pluck("work_chemicals.work_id").uniq)
       .order(:worked_at, :id)
-  }
+  end
 
   scope :for_cost, ->(term) {where([<<SQL.squish, term, WorkType.land.select(:id)])}
   works.term = ? AND (work_type_id IN (?))
 SQL
 
-  scope :for_broccoli, ->(organization) {
+  scope :for_broccoli, ->(organization) do
     includes(:broccoli)
       .where(
         work_type_id: organization.broccoli_work_type_id,
         work_kind_id: organization.broccoli_work_kind_id
       )
-  }
+  end
 
-  scope :monthly_reports, ->(work_type_id, worked_at) {
+  scope :monthly_reports, ->(work_type_id, worked_at) do
     where(work_type_id: work_type_id)
       .where(worked_at: Date.new(worked_at.year, worked_at.month, 1)..Date.new(worked_at.year, worked_at.month, -1))
       .order(worked_at: :ASC, start_at: :ASC, id: :ASC)
-  }
+  end
 
   scope :landable, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
   scope :machinable, -> {where(<<SQL.squish)}
@@ -148,13 +149,13 @@ SQL
   ))
 SQL
  
-  scope :by_target, ->(term) {
+  scope :by_target, ->(term) do
     joins("INNER JOIN systems ON systems.term = works.term")
      .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
      .where(systems: { term: term })
-  }
+  end
 
-  scope :for_contract, ->(worker, worked_at, work_type_id) {
+  scope :for_contract, ->(worker, worked_at, work_type_id) do
     basic_conditions = where("works.worked_at >= ? AND works.work_type_id = ?", worked_at, work_type_id)
 
     work_lands_table = WorkLand.arel_table
@@ -168,31 +169,31 @@ SQL
                       .exists
 
     basic_conditions.where(exists_subquery)
-  }
+  end
 
-  scope :for_calendar, ->(term, work_kinds) {
+  scope :for_calendar, ->(term, work_kinds) do
     group(:worked_at, :work_kind_id, :work_type_id)
       .select("min(works.id) AS id, works.worked_at, works.work_kind_id, works.work_type_id")
       .includes(:work_kind, :work_type)
       .where(term: term, work_kind_id: work_kinds)
       .order(:worked_at)
-  }
+  end
 
-  scope :for_drying, ->(term, organization) {
+  scope :for_drying, ->(term, organization) do
     select("worked_at")
       .where(term: term, work_kind_id: organization.harvesting_work_kind_id)
       .distinct
       .order(:worked_at)
-  }
+  end
 
-  scope :deliverable, ->(worker_id) {
+  scope :deliverable, ->(worker_id) do
     joins(:work_results)
       .where(created_at: Time.zone.yesterday.all_day)
       .where.not(created_by: worker_id)
       .where(work_results: {worker_id: worker_id})
-  }
+  end
 
-  scope :for_task, ->(task, days: 30) {
+  scope :for_task, ->(task, days: 30) do
     work_table = arel_table
     work_result_table = WorkResult.arel_table
     work_type_table = WorkType.arel_table
@@ -212,7 +213,7 @@ SQL
       .where.not(id: task.works.select(:id)) # 既に紐づいている日報は除外
       .includes(:work_kind, :work_results)
       .order(worked_at: :desc, id: :desc)
-  }
+  end
 
   def workers_count
     work_results.count

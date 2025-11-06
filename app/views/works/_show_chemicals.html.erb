@@ -13,14 +13,14 @@
     </thead>
     <tbody>
       <% [current_organization.chemicals_count, @chemicals.count].max.times do |i| %>
-        <% if @chemicals[i] %>
-          <% chemical = Chemical.find(@chemicals[i][0]) %>
+        <% if i < @chemicals.count %>
+          <% chemical = @chemicals[i] %>
           <td class="chemical"><%= chemical.chemical_type.name %></td>
           <td class="chemical"><%= chemical.name %><%= chemical.unit_scale.zero? ? "(#{chemical.base_base_quantity}#{chemical.base_unit_name})" : '' %></td>
-          <td class="chemical numeric"><%= @chemicals[i][1] %><%= chemical.unit %></td>
-          <td class="chemical numeric"><%= chemical_per_area(@work.sum_areas, @chemicals[i][1], chemical) %></td>
-          <td class="chemical numeric"><%= chemical_dilution(@work.work_chemicals, @chemicals[i][0])%></td>
-        <%  else %>
+          <td class="chemical numeric"><%= chemical.total_quantity %><%= chemical.unit %></td>
+          <td class="chemical numeric"><%= chemical_per_area(@work.sum_areas, chemical) %></td>
+          <td class="chemical numeric"><%= chemical_dilution(@work.work_chemicals, chemical.id) %></td>
+        <% else %>
           <td></td>
           <td></td>
           <td></td>
