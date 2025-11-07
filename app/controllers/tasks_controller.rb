@@ -21,6 +21,7 @@ class TasksController < ApplicationController
       @task.assignee = current_user.worker
       @task.office_role = current_user.worker.office_role
     end
+    @templates = TaskTemplateDecorator.decorate_collection(TaskTemplate.for_hand_creation)
   end
 
   def create
@@ -58,7 +59,8 @@ class TasksController < ApplicationController
         :ended_on,
         :end_reason,
         :office_role,
-        :assignee_id
+        :assignee_id,
+        :task_template_id
       ])
   end
 

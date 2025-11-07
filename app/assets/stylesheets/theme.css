@@ -6,6 +6,7 @@
   --border:     rgba(0,0,0,.08);
   --brand:      #1f8feb;
   --brand-weak: #e7f2fd;
+  --text-highlight: #fe3e3d;
 
   /* 追加のトークン（固定色を置き換える用） */
   --body-bg-grad-1: #f8fbff;
@@ -50,6 +51,8 @@
   --table-row-primary-bg: #0d3e70; /* 深めの青。光度を抑えたPrimary */
   --table-row-primary-fg: #d0e2ff; /* 淡い水色の文字 */
 
+  --text-highlight: #fefe3d;
+
   .btn-outline-dark {
     color: #f8f9fa;
     border-color: #f8f9fa;
@@ -73,4 +76,9 @@ tr.table-row-primary-bg td {
 
 .bg-info {
   color: #000 !important;
+}
+
+.fw-highlight {
+  font-weight: 600;
+  color: var(--text-highlight);
 }

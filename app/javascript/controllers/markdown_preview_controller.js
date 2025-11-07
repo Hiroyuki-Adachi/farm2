@@ -7,8 +7,19 @@ export default class extends Controller {
 
   connect() {
     // 好みでオプション
-    marked.setOptions({ gfm: true, breaks: true })
-    this.update()
+    marked.setOptions({ gfm: true, breaks: true });
+    this.form = this.element.closest("form");
+    if (this.form) this.form.addEventListener("reset", this.onFormReset);
+    this.update();
+  }
+
+  disconnect() {
+    if (this.form) this.form.removeEventListener("reset", this.onFormReset);
+  }
+
+  onFormReset = () => {
+    // リセット後に input の値が初期値へ戻ってから更新したいので 1フレーム待つ
+    requestAnimationFrame(() => this.update());
   }
 
   update() {

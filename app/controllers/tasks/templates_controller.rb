@@ -11,7 +11,7 @@ class Tasks::TemplatesController < ApplicationController
   end
 
   def new
-    @template = TaskTemplate.new(offset: 0)
+    @template = TaskTemplate.new(offset: 0, office_role: current_user.worker.office_role)
   end
 
   def edit; end
