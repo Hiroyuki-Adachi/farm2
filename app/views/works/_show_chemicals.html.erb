@@ -18,7 +18,7 @@
           <td class="chemical"><%= chemical.chemical_type.name %></td>
           <td class="chemical"><%= chemical.name %><%= chemical.unit_scale.zero? ? "(#{chemical.base_base_quantity}#{chemical.base_unit_name})" : '' %></td>
           <td class="chemical numeric"><%= chemical.total_quantity %><%= chemical.unit %></td>
-          <td class="chemical numeric"><%= chemical_per_area(@work.sum_areas, chemical) %></td>
+          <td class="chemical numeric"><%= chemical_per_area(WorkChemical.find_by(work: @work, chemical: chemical)&.areas || 0, chemical) %></td>
           <td class="chemical numeric"><%= chemical_dilution(@work.work_chemicals, chemical.id) %></td>
         <% else %>
           <td></td>

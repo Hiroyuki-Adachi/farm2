@@ -73,6 +73,7 @@ class Land < ApplicationRecord
     kept.where(arel_table[:start_on].lteq(target))
       .where(arel_table[:end_on].gteq(target))
   end
+
   scope :for_personal, ->(home) do
     lands = arel_table
     land_homes = LandHome.arel_table
