@@ -24,31 +24,31 @@ class WorkLand < ApplicationRecord
   has_one    :work_kind, -> {with_deleted}, through: :work
   has_one    :wcs_land, class_name: "WholeCropLand", dependent: :destroy
 
-  scope :for_personal, ->(home, term) {
+  scope :for_personal, ->(home, term) do
     joins(:work).includes(work: :work_kind)
       .joins(:land).includes(:land)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id")
       .where(works: { term: term })
       .where("(lands.manager_id = ? OR EXISTS (SELECT * FROM land_homes WHERE lands.id = land_homes.land_id AND home_id = ? AND manager_flag = true))", home.id, home.id)
       .order("lands.display_order, lands.id, works.worked_at")
-  }
+  end
 
-  scope :for_fix, ->(term, fixed_at, contract_id) {
+  scope :for_fix, ->(term, fixed_at, contract_id) do
     joins(:work)
       .joins(:land)
       .where(works: { work_type_id: contract_id })
       .where("works.fixed_at = ? AND work_lands.fixed_cost IS NOT NULL", fixed_at)
       .where(works: { term: term })
-  }
+  end
 
-  scope :for_cards, ->(land_id, worked_at) {
+  scope :for_cards, ->(land_id, worked_at) do
     joins(:work).includes(:work)
       .joins(:land).includes(:land)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").includes(work: :work_kind)
-      .where("works.worked_at >= ?", worked_at)
+      .where(works: { worked_at: worked_at.. })
       .where(lands: { id: land_id })
       .order("works.worked_at, works.id")
-  }
+  end
 
   def interim_cost
     (work.sum_workers_amount * land.area / work.sum_areas).round
@@ -102,6 +102,7 @@ class WorkLand < ApplicationRecord
   def chemicals
     results = []
     work.work_chemicals.each do |work_chemical|
+      next if chemical_group_no.positive? && work_chemical.chemical_group_no != chemical_group_no
       chemical_term = ChemicalTerm.find_by(chemical_id: work_chemical.chemical_id, term: work_chemical.work.term)
       next unless chemical_term
       chemical_work_type = ChemicalWorkType.find_by(chemical_term_id: chemical_term, work_type_id: work_type_id)
@@ -117,7 +118,7 @@ class WorkLand < ApplicationRecord
                      standard: chemical_work_type.quantity
                    })
     end
-    results.push({chemical: nil, quantity: nil}) if results.count.zero?
+    results.push({chemical: nil, quantity: nil}) if results.none?
     return results
   end
 
