@@ -73,6 +73,7 @@ class Land < ApplicationRecord
     kept.where(arel_table[:start_on].lteq(target))
       .where(arel_table[:end_on].gteq(target))
   end
+
   scope :for_personal, ->(home) do
     lands = arel_table
     land_homes = LandHome.arel_table
@@ -105,7 +106,7 @@ class Land < ApplicationRecord
   accepts_nested_attributes_for :work_lands, allow_destroy: true
   accepts_nested_attributes_for :land_fees, allow_destroy: true
   accepts_nested_attributes_for :plan_lands, allow_destroy: true
-  accepts_nested_attributes_for :land_costs, allow_destroy: true, reject_if: :reject_land_costs
+  accepts_nested_attributes_for :land_costs, allow_destroy: true, reject_if: :reject_land_costs?
   accepts_nested_attributes_for :land_homes, allow_destroy: true
 
   def owner_name
@@ -139,7 +140,7 @@ class Land < ApplicationRecord
     return results.to_json
   end
 
-  def reject_land_costs(attributes)
+  def reject_land_costs?(attributes)
     attributes[:activated_on].blank? || attributes[:work_type_id].blank?
   end
 
@@ -193,6 +194,10 @@ class Land < ApplicationRecord
 
   def region=(value)
     super(value == "" ? nil : value)
+  end
+
+  def work_type(worked_at)
+    land_costs.newest(worked_at).first&.work_type
   end
 
   def self.update_members(land_id, members)

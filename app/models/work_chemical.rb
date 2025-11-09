@@ -33,7 +33,7 @@ class WorkChemical < ApplicationRecord
   validates :quantity, presence: true
   validates :quantity, numericality: { if: proc { |x| x.quantity.present?} }
 
-  scope :by_term, ->(term){
+  scope :by_term, ->(term) do
     joins(:work)
       .eager_load(:work)
       .joins(:chemical).eager_load(:chemical)
@@ -44,14 +44,14 @@ class WorkChemical < ApplicationRecord
       .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
       .where(systems: { term: term })
       .order("works.worked_at, works.id, chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
-  }
+  end
 
-  scope :for_stock, ->(chemical_id, start_date) {
+  scope :for_stock, ->(chemical_id, start_date) do
     joins(:work)
     .includes(:chemical)
     .where("works.worked_at >= ? AND work_chemicals.chemical_id = ?", start_date, chemical_id)
     .order("works.worked_at, works.id")
-  }
+  end
 
   def chemical_display_order
     (chemical_type.display_order * 100_000) + (chemical_type.id * 1000) + (chemical.display_order * 100) + chemical_id
@@ -84,5 +84,16 @@ class WorkChemical < ApplicationRecord
 
   def quantity_for_stock
     return chemical.stock_quantity.zero? ? quantity : quantity * chemical.base_quantity / chemical.stock_quantity
+  end
+
+  def areas
+    if self.chemical_group_no.zero? || work.work_lands.where(chemical_group_no: self.chemical_group_no).empty?
+      chemical_term = ChemicalTerm.find_by(term: work.term, chemical_id: chemical_id)
+      work_type_ids = chemical_term ? chemical_term.work_types.map(&:id) : [work.work_type_id]
+      land_ids = LandCost.by_work_type(work_type_ids, work.worked_at).by_land(work.work_lands.map(&:land_id)).map(&:land_id)
+      Land.where(id: land_ids).sum(:area)
+    else
+      work.sum_areas(chemical_group_no)
+    end
   end
 end
