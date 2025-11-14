@@ -122,7 +122,7 @@ class Task < ApplicationRecord
 
   scope :opened, -> { where(task_status_id: TaskStatus.open_ids).usual_order }
 
-  scope :by_worker, ->(worker) {
+  scope :by_worker, ->(worker) do
     task_table = arel_table
     task_watcher_table = TaskWatcher.arel_table
 
@@ -137,9 +137,9 @@ class Task < ApplicationRecord
     participant
       .where(task_status_id: TaskStatus.open_ids)
       .usual_order
-  }
+  end
   
-  scope :with_watch_flag, ->(worker_id) {
+  scope :with_watch_flag, ->(worker_id) do
     sql = <<-SQL.squish
       #{table_name}.*, 
       EXISTS (
@@ -150,9 +150,9 @@ class Task < ApplicationRecord
     SQL
 
     select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
-  }
+  end
 
-  scope :with_unread_count, ->(worker_id) {
+  scope :with_unread_count, ->(worker_id) do
     sql = <<-SQL.squish
       #{table_name}.*, 
       (SELECT COUNT(DISTINCT tc.id) FROM task_reads tr
@@ -165,7 +165,7 @@ class Task < ApplicationRecord
     SQL
 
     select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
-  }
+  end
 
   def closed?
     self.status.closed_flag

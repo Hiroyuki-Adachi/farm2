@@ -3,6 +3,6 @@ class PersonalInformations::TasksController < PersonalInformationsController
 
   def show
     @task = TaskDecorator.decorate(Task.find(params[:id]))
-    @last_read_at = TaskRead.touch_and_get_previous!(task: @task, worker_id: current_user.worker_id)
+    @last_read_at = TaskRead.touch_and_get_previous!(task: @task.model, worker_id: current_user.worker_id)
   end
 end

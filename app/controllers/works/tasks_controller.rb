@@ -15,7 +15,7 @@ class Works::TasksController < WorksController
       check_task_ids: params[:check_task_ids] || [],
       close_task_ids: params[:close_task_ids] || [],
       task_comments: params[:task_comments] || {},
-      work: @work
+      work: @work.model
     )
     redirect_to work_path(@work)
   end

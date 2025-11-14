@@ -51,7 +51,7 @@ class WorksController < ApplicationController
     url_hash = Rails.application.routes.recognize_path(request.referer)
 
     @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
-    @chemicals = @work.work_chemicals.group(:chemical_id).sum(:quantity).to_a
+    @chemicals = Chemical.with_total_quantity(@work).to_a
     @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
 
     if ["index", "show"].include?(url_hash[:action])
