@@ -2,27 +2,29 @@
 #
 # Table name: tasks(タスク)
 #
-#  id                             :bigint           not null, primary key
-#  description(説明)              :text             default(""), not null
-#  due_on(期限)                   :date
-#  end_reason(完了理由)           :integer          default("unset"), not null
-#  ended_on(完了日)               :date
-#  office_role(役割)              :integer          default("none"), not null
-#  priority(優先度)               :integer          default("low"), not null
-#  started_on(着手日)             :date
-#  title(タスク名)                :string(64)       default(""), not null
-#  created_at                     :datetime         not null
-#  updated_at                     :datetime         not null
-#  assignee_id(担当者)            :bigint
-#  creator_id(作成者)             :bigint
-#  task_status_id(状態)           :integer          default(0), not null
-#  task_template_id(定型タスクID) :bigint
+#  id                              :bigint           not null, primary key
+#  description(説明)               :text             default(""), not null
+#  due_on(期限)                    :date
+#  end_reason(完了理由)            :integer          default("unset"), not null
+#  ended_on(完了日)                :date
+#  kanban_position(カンバンの位置) :integer          default(0), not null
+#  office_role(役割)               :integer          default("none"), not null
+#  priority(優先度)                :integer          default("low"), not null
+#  started_on(着手日)              :date
+#  title(タスク名)                 :string(64)       default(""), not null
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  assignee_id(担当者)             :bigint
+#  creator_id(作成者)              :bigint
+#  task_status_id(状態)            :integer          default(0), not null
+#  task_template_id(定型タスクID)  :bigint
 #
 # Indexes
 #
-#  index_tasks_on_assignee_id       (assignee_id)
-#  index_tasks_on_creator_id        (creator_id)
-#  index_tasks_on_task_template_id  (task_template_id)
+#  index_tasks_on_assignee_id                         (assignee_id)
+#  index_tasks_on_creator_id                          (creator_id)
+#  index_tasks_on_task_status_id_and_kanban_position  (task_status_id,kanban_position)
+#  index_tasks_on_task_template_id                    (task_template_id)
 #
 # Foreign Keys
 #
@@ -72,6 +74,8 @@ class Task < ApplicationRecord
     joins("JOIN (VALUES #{values_sql}) AS statuses(id, display_order) ON statuses.id = tasks.task_status_id")
       .order(Arel.sql("COALESCE(statuses.display_order, 99999999) ASC, due_on ASC NULLS LAST, priority DESC, tasks.id ASC"))
   end
+
+  scope :kanban_order, -> { order(:kanban_position, :id) }
 
   scope :for_index, ->(days: 30) do
     cutoff     = Time.zone.now - days.days
@@ -132,11 +136,7 @@ class Task < ApplicationRecord
             .where(task_watcher_table[:task_id].eq(task_table[:id]))
 
     exists = Arel::Nodes::Exists.new(subq.arel)
-    participant = Task.where(task_table[:assignee_id].eq(worker.id).or(exists))
-
-    participant
-      .where(task_status_id: TaskStatus.open_ids)
-      .usual_order
+    Task.where(task_table[:assignee_id].eq(worker.id).or(exists))
   end
   
   scope :with_watch_flag, ->(worker_id) do
@@ -166,6 +166,8 @@ class Task < ApplicationRecord
 
     select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
   end
+
+  scope :for_kanban, -> { where(task_status_id: TaskStatus.where.not(kanban_column: 0).pluck(:id)) }
 
   def closed?
     self.status.closed_flag
