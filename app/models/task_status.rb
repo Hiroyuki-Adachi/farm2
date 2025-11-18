@@ -4,6 +4,10 @@ class TaskStatus < ActiveYaml::Base
   set_root_path "config/master"
   set_filename "task_status"
 
+  KANBAN_TODO = 1
+  KANBAN_DOING = 2
+  KANBAN_DONE = 3
+
   enum_accessor :code
 
   scope :closed, -> { where(closed_flag: true) }

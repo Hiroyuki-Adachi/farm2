@@ -136,7 +136,7 @@ class Task < ApplicationRecord
             .where(task_watcher_table[:task_id].eq(task_table[:id]))
 
     exists = Arel::Nodes::Exists.new(subq.arel)
-    Task.where(task_table[:assignee_id].eq(worker.id).or(exists))
+    where(task_table[:assignee_id].eq(worker.id).or(exists)).includes(:assignee)
   end
   
   scope :with_watch_flag, ->(worker_id) do
@@ -167,8 +167,12 @@ class Task < ApplicationRecord
     select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
   end
 
-  scope :for_kanban, -> { where(task_status_id: TaskStatus.where.not(kanban_column: 0).pluck(:id)) }
+  scope :for_kanban, ->(kanban_column) { where(task_status_id: TaskStatus.where(kanban_column: kanban_column).pluck(:id)) }
+  scope :kanban_todo, -> { for_kanban(TaskStatus::KANBAN_TODO) }
+  scope :kanban_doing, -> { for_kanban(TaskStatus::KANBAN_DOING) }
+  scope :kanban_done, -> { for_kanban(TaskStatus::KANBAN_DONE) }
 
+  # ステータス判定メソッド群
   def closed?
     self.status.closed_flag
   end

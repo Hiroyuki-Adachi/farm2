@@ -47,7 +47,7 @@
   work_flag: false
   next_statuses: [2, 4, 9]
   display_order: 5
-  kanban_column: 3
+  kanban_column: 0
   btn_class: "btn btn-outline-warning"
   badge_class: "badge bg-warning text-dark"
 - id: 4
@@ -60,7 +60,7 @@
   work_flag: false
   next_statuses: [1]
   display_order: 9
-  kanban_column: 4
+  kanban_column: 3
   btn_class: "btn btn-success"
   badge_class: "badge bg-success"
 - id: 9

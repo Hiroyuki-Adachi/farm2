@@ -158,4 +158,12 @@ class TaskDecorator < Draper::Decorator
 
     h.content_tag(:span, object.unread_count, class: "badge bg-primary rounded-pill")
   end
+
+  def assignee_badge
+    if object.assignee_id == context[:current_worker]&.id
+      h.content_tag(:span, "あなた", class: 'badge bg-danger text-white')
+    else
+      h.content_tag(:span, assignee_from_name, class: 'badge bg-secondary')
+    end
+  end
 end

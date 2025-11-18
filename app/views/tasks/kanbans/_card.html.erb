@@ -1,0 +1,23 @@
+<!-- app/views/tasks/_kanban_card.html.erb -->
+
+<div class="card mb-2 shadow-sm">
+  <div class="card-body p-2">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <div class="small text-muted">
+        <%= task.due_on_short %>
+        <%= task.due_badge %>
+      </div>
+      <%= task.assignee_badge %>
+    </div>
+
+    <div class="fw-semibold mb-1">
+      <%= link_to task.title, task_path(task), class: "text-decoration-none" %>
+    </div>
+
+    <% if task.description.present? %>
+      <p class="mb-0 small text-muted">
+        <%= truncate(task.description, length: 60) %>
+      </p>
+    <% end %>
+  </div>
+</div>

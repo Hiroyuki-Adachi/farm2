@@ -1,0 +1,97 @@
+<h1>カンバン</h1>
+<div class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <%= link_to "タスク一覧へ", tasks_path, class: "btn btn-sm btn-outline-secondary" %>
+  </div>
+
+  <%# 保留中タスクの件数表示 %>
+  <% if @hold_count.to_i > 0 %>
+    <div class="alert alert-warning d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <i class="bi bi-pause-circle-fill me-1"></i>
+        保留中：<strong><%= @hold_count %>件</strong>
+      </div>
+      <%= link_to "保留タスクを表示", tasks_path(status: :hold), class: "btn btn-sm btn-outline-warning" %>
+    </div>
+  <% end %>
+
+  <div class="row g-3">
+    <%# To Do 列 %>
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-header bg-body-secondary">
+          <div class="d-flex justify-content-between align-items-center">
+            <span>
+              <span class="badge bg-secondary me-1">To Do</span>
+              未着手
+            </span>
+            <span class="badge bg-body-tertiary text-muted border">
+              <%= @todo_tasks.size %> 件
+            </span>
+          </div>
+        </div>
+        <div class="card-body p-2" style="max-height: 70vh; overflow-y: auto;">
+          <% if @todo_tasks.any? %>
+            <% @todo_tasks.each do |task| %>
+              <%= render "tasks/kanbans/card", task: task %>
+            <% end %>
+          <% else %>
+            <p class="text-muted small mb-0">未着手のタスクはありません。</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Doing 列 %>
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-header bg-body-secondary">
+          <div class="d-flex justify-content-between align-items-center">
+            <span>
+              <span class="badge bg-primary me-1">Doing</span>
+              対応中
+            </span>
+            <span class="badge bg-body-tertiary text-muted border">
+              <%= @doing_tasks.size %> 件
+            </span>
+          </div>
+        </div>
+        <div class="card-body p-2" style="max-height: 70vh; overflow-y: auto;">
+          <% if @doing_tasks.any? %>
+            <% @doing_tasks.each do |task| %>
+              <%= render "tasks/kanbans/card", task: task %>
+            <% end %>
+          <% else %>
+            <p class="text-muted small mb-0">対応中のタスクはありません。</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <%# Done 列 %>
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-header bg-body-secondary">
+          <div class="d-flex justify-content-between align-items-center">
+            <span>
+              <span class="badge bg-success me-1">Done</span>
+              完了
+            </span>
+            <span class="badge bg-body-tertiary text-muted border">
+              <%= @done_tasks.size %> 件
+            </span>
+          </div>
+        </div>
+        <div class="card-body p-2" style="max-height: 70vh; overflow-y: auto;">
+          <% if @done_tasks.any? %>
+            <% @done_tasks.each do |task| %>
+              <%= render "tasks/kanbans/card", task: task %>
+            <% end %>
+          <% else %>
+            <p class="text-muted small mb-0">完了したタスクはまだありません。</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
