@@ -216,7 +216,7 @@ namespace :work do
 end
 
 namespace :tasks do
-  resources :kanbans, only: [:index, :update]
+  resource :kanbans, only: [:show, :update]
 end
 resources :tasks, except: [:edit, :update] do
   resource :assignee, controller: "tasks/assignees", only: [:edit, :update]
