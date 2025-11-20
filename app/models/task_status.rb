@@ -40,6 +40,11 @@ class TaskStatus < ActiveYaml::Base
     workable.pluck(:id)
   end
 
+  def self.kanban_status_id(old_status_id, next_kanban_column)
+    Rails.logger.debug { "Finding kanban status id for old_status_id=#{old_status_id}, next_kanban_column=#{next_kanban_column}" }
+    self.find(old_status_id).next_statuses.find { |s| s.kanban_column == next_kanban_column }&.id
+  end
+
   def btn_class
     self[:btn_class] || "btn btn-secondary"
   end

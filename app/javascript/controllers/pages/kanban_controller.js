@@ -29,11 +29,10 @@ export default class extends Controller {
   onEnd(event) {
     // ドロップのたびに、全列の state をサーバへ送る
     const columnsPayload = this.columnTargets.map((column) => {
-      const statusId = column.dataset.taskStatusId
       const taskIds = Array.from(column.querySelectorAll("[data-task-id]"))
                            .map(el => el.dataset.taskId)
       return {
-        task_status_id: statusId,
+        task_kanban_column: column.dataset.taskKanbanColumn,
         task_ids: taskIds
       }
     })

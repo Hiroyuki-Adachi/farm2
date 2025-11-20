@@ -7,17 +7,6 @@
     <%= link_to "タスク一覧へ", tasks_path, class: "btn btn-sm btn-outline-secondary" %>
   </div>
 
-  <%# 保留中タスクの件数表示 %>
-  <% if @hold_count.to_i > 0 %>
-    <div class="alert alert-warning d-flex justify-content-between align-items-center mb-4">
-      <div>
-        <i class="bi bi-pause-circle-fill me-1"></i>
-        保留中：<strong><%= @hold_count %>件</strong>
-      </div>
-      <%= link_to "保留タスクを表示", tasks_path(status: :hold), class: "btn btn-sm btn-outline-warning" %>
-    </div>
-  <% end %>
-
   <div class="row g-3">
     <%# To Do 列 %>
     <div class="col-md-4">
@@ -35,7 +24,7 @@
         </div>
         <div class="card-body p-2" style="max-height: 70vh; overflow-y: auto;"
           data-pages--kanban-target="column"
-          data-task-status-id="<%= TaskStatus::REOPEN.id %>">
+          data-task-kanban-column="1">
           <% if @todo_tasks.any? %>
             <% @todo_tasks.each do |task| %>
               <%= render "tasks/kanbans/card", task: task %>
@@ -63,7 +52,7 @@
         </div>
         <div class="card-body p-2" style="max-height: 70vh; overflow-y: auto;"
           data-pages--kanban-target="column"
-          data-task-status-id="<%= TaskStatus::DOING.id %>">
+          data-task-kanban-column="2">
           <% if @doing_tasks.any? %>
             <% @doing_tasks.each do |task| %>
               <%= render "tasks/kanbans/card", task: task %>
@@ -90,8 +79,8 @@
           </div>
         </div>
         <div class="card-body p-2" style="max-height: 70vh; overflow-y: auto;"
-          data-kanban-target="column"
-          data-task-status-id="<%= TaskStatus::DONE.id %>">
+          data-pages--kanban-target="column"
+          data-task-kanban-column="3">
           <% if @done_tasks.any? %>
             <% @done_tasks.each do |task| %>
               <%= render "tasks/kanbans/card", task: task %>

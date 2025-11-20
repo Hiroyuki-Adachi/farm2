@@ -12,6 +12,7 @@
 #  due_on_from(変更前の期限)          :date
 #  due_on_to(変更後の期限)            :date
 #  event_type(イベント種別)           :integer          not null
+#  source(ソース)                     :integer          default(0), not null
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
 #  actor_id(実行者)                   :bigint           not null

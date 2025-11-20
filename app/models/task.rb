@@ -245,8 +245,10 @@ class Task < ApplicationRecord
 
     in_change_tx!(actor: actor, comment: comment) do |c|
       events.create!(
-        actor: actor, event_type: :change_status,
-        status_from_id: self.task_status_id, status_to_id: new_status.id,
+        actor: actor,
+        event_type: :change_status,
+        status_from_id: self.task_status_id,
+        status_to_id: new_status.id,
         comment: c
       )
       self.task_status_id = new_status.id
@@ -309,7 +311,7 @@ class Task < ApplicationRecord
 
   def add_comment!(actor:, body:)
     comment = self.comments.create!(poster: actor, body: body)
-    TaskEvent.create!(task: self, actor: actor, event_type: :add_comment, comment: comment)
+    TaskEvent.create!(task: self, actor: actor, event_type: :add_comment, comment: comment, source: :form)
   end
 
   def add_work!(actor:, work:, close: false, comment: nil)
@@ -349,6 +351,28 @@ class Task < ApplicationRecord
     end
   end
 
+  def move_on_kanban!(new_kanban_column, new_position, actor:)
+    transaction do
+      old_status_id = self.task_status_id
+      old_kanban_column = TaskStatus.find_by(id: old_status_id)&.kanban_column
+
+      if old_kanban_column == new_kanban_column
+        update!(kanban_position: new_position)
+      else
+        new_status_id = TaskStatus.kanban_status_id(old_status_id, new_kanban_column)
+        update!(task_status_id: new_status_id, kanban_position: new_position)
+        TaskEvent.create!(
+          task_id: id,
+          actor_id: actor.id,
+          event_type: :change_status, 
+          status_from_id: old_status_id,
+          status_to_id: new_status_id,
+          source: :kanban
+        )
+      end
+    end
+  end
+
   private
 
   # 共通ラッパ：コメントを（あれば）作ってトランザクション内でyield
@@ -364,14 +388,14 @@ class Task < ApplicationRecord
   def add_work_core!(actor:, work:, close: false, comment: nil)
     task_comment = comment.present? ? self.comments.create!(poster: actor, body: comment) : nil
     if close
-      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work, comment: task_comment)
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work, comment: task_comment, source: :form)
       update!(status: TaskStatus::DONE, started_on: started_on || work.worked_at, ended_on: work.worked_at, end_reason: :completed)
       return
     end
     if status == TaskStatus::DOING
-      TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work, comment: task_comment)
+      TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work, comment: task_comment, source: :form)
     elsif [TaskStatus::TO_DO, TaskStatus::REOPEN].include?(status)
-      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work, comment: task_comment)
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work, comment: task_comment, source: :form)
       update!(status: TaskStatus::DOING, started_on: work.worked_at)
     else
       raise "Cannot add work when task status is #{status.name}"
@@ -409,7 +433,8 @@ class Task < ApplicationRecord
     TaskEvent.create!(
       task: self,
       actor: self.creator,
-      event_type: :task_created
+      event_type: :task_created,
+      source: :form
     )
   end
 

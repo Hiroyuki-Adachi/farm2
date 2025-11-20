@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_17_095634) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_20_102327) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -800,6 +800,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_17_095634) do
     t.date "due_on_from", comment: "変更前の期限"
     t.date "due_on_to", comment: "変更後の期限"
     t.integer "event_type", null: false, comment: "イベント種別"
+    t.integer "source", default: 0, null: false, comment: "ソース"
     t.integer "status_from_id", comment: "変更前ステータス"
     t.integer "status_to_id", comment: "変更後ステータス"
     t.bigint "task_comment_id", comment: "関連コメントID"
