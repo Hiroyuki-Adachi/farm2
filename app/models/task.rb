@@ -170,7 +170,7 @@ class Task < ApplicationRecord
   scope :for_kanban, ->(kanban_column) { where(task_status_id: TaskStatus.where(kanban_column: kanban_column).pluck(:id)) }
   scope :kanban_todo, -> { for_kanban(TaskStatus::KANBAN_TODO) }
   scope :kanban_doing, -> { for_kanban(TaskStatus::KANBAN_DOING) }
-  scope :kanban_done, -> { for_kanban(TaskStatus::KANBAN_DONE) }
+  scope :kanban_done, ->(days: 10) { for_kanban(TaskStatus::KANBAN_DONE).where(ended_on: ..(Time.zone.today - days.days)) }
 
   # ステータス判定メソッド群
   def closed?
