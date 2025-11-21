@@ -352,7 +352,7 @@ class Task < ApplicationRecord
   end
 
   def move_on_kanban!(new_kanban_column, new_position, actor:)
-    transaction do
+    self.class.transaction do
       old_status_id = self.task_status_id
       old_kanban_column = TaskStatus.find_by(id: old_status_id)&.kanban_column
 
