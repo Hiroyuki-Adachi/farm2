@@ -40,6 +40,10 @@ class TaskStatus < ActiveYaml::Base
     workable.pluck(:id)
   end
 
+  def self.kanban_column_ids(kanban_column)
+    self.where(kanban_column: kanban_column).pluck(:id)
+  end
+
   def self.kanban_status(old_status_id, next_kanban_column)
     Rails.logger.debug { "Finding kanban status id for old_status_id=#{old_status_id}, next_kanban_column=#{next_kanban_column}" }
     self.find(old_status_id).next_statuses.find { |s| s.kanban_column == next_kanban_column }

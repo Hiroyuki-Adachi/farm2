@@ -1,0 +1,32 @@
+<tr id="<%= dom_id(task, :gantt_row) %>">
+  <td class="align-middle">
+    <div class="fw-semibold">
+      <%= link_to task.title, task_path(task), class: "text-decoration-none" %>
+    </div>
+    <div class="small text-body-secondary">
+      期限:
+      <%= task.due_on&.strftime("%Y-%m-%d") || "未設定" %>
+      ／ 開始:
+      <%= task.planned_start_on&.strftime("%Y-%m-%d") || "未設定" %>
+    </div>
+  </td>
+
+  <% period = task.gantt_period %>
+
+  <% @dates.each do |date| %>
+    <% in_range = period.cover?(date) %>
+    <% classes = ["gantt-cell"] %>
+    <% if in_range %>
+      <% classes << "gantt-cell--bar" %>
+      <% classes << "gantt-cell--start" if date == period.begin %>
+      <% classes << "gantt-cell--end"   if date == period.end %>
+    <% end %>
+
+    <td class="<%= classes.join(" ") %>"
+      data-gantt-target="cell"
+      data-task-id="<%= task.id %>"
+      data-date="<%= date %>">
+    <%# 中の表示は薄いバーだけ（CSSで色付け） %>
+    </td>
+  <% end %>
+</tr>

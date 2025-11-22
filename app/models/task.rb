@@ -9,6 +9,7 @@
 #  ended_on(完了日)                :date
 #  kanban_position(カンバンの位置) :integer          default(0), not null
 #  office_role(役割)               :integer          default("none"), not null
+#  planned_start_on(開始予定日)    :date             default(Mon, 01 Jan 1900), not null
 #  priority(優先度)                :integer          default("low"), not null
 #  started_on(着手日)              :date
 #  title(タスク名)                 :string(64)       default(""), not null
@@ -55,6 +56,7 @@ class Task < ApplicationRecord
   before_save :clear_end_info
   after_create :create_watcher
   after_create :create_task_event
+  after_create :create_planned_start_on
   after_create :init_task_reads
 
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
@@ -66,6 +68,7 @@ class Task < ApplicationRecord
   validates :end_reason, presence: true
 
   validate :ended_on_after_started_on
+  validate :ended_on_after_planned_start_on
 
   scope :usual_order, -> do
     pairs = TaskStatus.all.map { |s| [s.id, s.display_order] }
@@ -167,7 +170,7 @@ class Task < ApplicationRecord
     select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
   end
 
-  scope :for_kanban, ->(kanban_column) { where(task_status_id: TaskStatus.where(kanban_column: kanban_column).pluck(:id)) }
+  scope :for_kanban, ->(kanban_column) { where(task_status_id: TaskStatus.kanban_column_ids(kanban_column)) }
   scope :kanban_todo, -> { for_kanban(TaskStatus::KANBAN_TODO) }
   scope :kanban_doing, -> { for_kanban(TaskStatus::KANBAN_DOING) }
   scope :kanban_done, ->(days: 15) { for_kanban(TaskStatus::KANBAN_DONE).where(ended_on: (Time.zone.today - days.days)..) }
@@ -404,6 +407,12 @@ class Task < ApplicationRecord
     errors.add(:ended_on, "は着手日以降の日付にしてください。") if ended_on < started_on
   end
 
+  def ended_on_after_planned_start_on
+    return if ended_on.blank?
+
+    errors.add(:ended_on, "は開始予定日以降の日付にしてください。") if ended_on < planned_start_on
+  end
+
   def end_reason_for_closed
     return unless self.closed?
 
@@ -450,5 +459,9 @@ class Task < ApplicationRecord
       self.started_on ||= Time.zone.today
       self.end_reason = end_reason || :other
     end
+  end
+
+  def create_planned_start_on
+    self.update(planned_start_on: self.created_at.to_date)
   end
 end
