@@ -46,10 +46,34 @@ export default class extends Controller {
   }
 
   previewResize() {
-    // ここで対象タスク行のセルに
-    // "gantt-cell--bar", "gantt-cell--start", "gantt-cell--end"
-    // をつけ直す（プレビュー用）
-    // ※サーバにはまだ送らない
+    // ① いったん全セルから preview を外す
+    this.cellTargets.forEach((cell) => {
+      if (cell.dataset.taskId === this.resizeTaskId) {
+        cell.classList.remove("gantt-cell--drag-preview")
+      }
+    })
+
+    // ② 開始〜現在位置の範囲だけ preview クラスを付ける
+    const dates = []
+    this.cellTargets.forEach((cell) => {
+      if (cell.dataset.taskId === this.resizeTaskId) {
+        dates.push(cell.dataset.date)
+      }
+    })
+
+    const from = this.startDate
+    const to   = this.currentDate
+
+    // 日付の大小関係を考慮（逆ドラッグもあるので）
+    const [min, max] = from < to ? [from, to] : [to, from]
+
+    this.cellTargets.forEach((cell) => {
+      if (cell.dataset.taskId !== this.resizeTaskId) return
+      const d = cell.dataset.date
+      if (d >= min && d <= max) {
+        cell.classList.add("gantt-cell--drag-preview")
+      }
+    })
   }
 
   onMouseUp(event) {
