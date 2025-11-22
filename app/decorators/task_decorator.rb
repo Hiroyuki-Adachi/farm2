@@ -109,11 +109,17 @@ class TaskDecorator < Draper::Decorator
     I18n.l(object.ended_on, format: :long)
   end
 
-  def text_display
-    fw = 'normal'
-    fw = 'highlight' if object.high? || object.urgent?
-    fw = 'highlight' if [:expired, :today, :soon].include?(due_status)
+  def highlight?
+    return false if object.assignee_id != context[:current_worker]&.id
+    return true if object.high? || object.urgent?
+    return true if [:expired, :today, :soon].include?(due_status)
+    false
+  end
 
+  def text_display
+    Rails.logger.debug { "TaskDecorator#text_display: highlight?=#{highlight?}" }
+    fw = highlight? ? 'highlight' : 'normal'
+    Rails.logger.debug { "TaskDecorator#text_display: fw=#{fw}" }
     h.content_tag(:span, object.title, class: "fw-#{fw}")
   end
 
@@ -157,5 +163,13 @@ class TaskDecorator < Draper::Decorator
     return "" if object.unread_count.to_i.zero?
 
     h.content_tag(:span, object.unread_count, class: "badge bg-primary rounded-pill")
+  end
+
+  def assignee_badge
+    if object.assignee_id == context[:current_worker]&.id
+      h.content_tag(:span, "あなた", class: 'badge bg-danger text-white')
+    else
+      h.content_tag(:span, assignee_name, class: 'badge bg-secondary')
+    end
   end
 end

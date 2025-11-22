@@ -6,6 +6,7 @@
 #  due_on_from(変更前の期限)          :date
 #  due_on_to(変更後の期限)            :date
 #  event_type(イベント種別)           :integer          not null
+#  source(ソース)                     :integer          default(0), not null
 #  created_at                         :datetime         not null
 #  updated_at                         :datetime         not null
 #  actor_id(実行者)                   :bigint           not null
@@ -42,7 +43,7 @@ class TaskEvent < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   attribute :read_count, :integer
-  attribute :reader_names, :string, array: true, default: []
+  attribute :reader_names, :string, array: true, default: -> { [] }
   attribute :unread_flag, :boolean
   attribute :mine_flag, :boolean
 
@@ -56,11 +57,13 @@ class TaskEvent < ApplicationRecord
   belongs_to_active_hash :status_to, class_name: 'TaskStatus', foreign_key: 'status_to_id', optional: true
 
   enum :event_type, { task_created: 0, change_status: 1, change_assignee: 2, change_due_on: 3, add_work: 8, add_comment: 9 }
+  enum :source, { form: 0, kanban: 1, gantt: 2, calendar: 3, api: 4, system: 5 }, prefix: true
 
   after_commit :clear_if_comment_cleared, on: :update
   after_commit :clear_if_work_deleted, on: :update
 
   scope :usual_order, -> {includes(:actor, :comment).order(created_at: :asc, id: :asc)}
+  scope :show_task, -> { where(source: [:form, :gantt, :calendar, :api]) }
 
   scope :with_read_info, ->(worker_id, last_read_at) {
     sql = <<-SQL.squish
@@ -89,7 +92,7 @@ class TaskEvent < ApplicationRecord
               AND tc.updated_at > :last_read_at
           ) AS unread_flag,
         (#{table_name}.actor_id = :worker_id) AS mine_flag
-      SQL
+    SQL
   
     select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id, last_read_at: last_read_at}])))
   }

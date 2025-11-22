@@ -4,6 +4,10 @@ class TaskStatus < ActiveYaml::Base
   set_root_path "config/master"
   set_filename "task_status"
 
+  KANBAN_TODO = 1
+  KANBAN_DOING = 2
+  KANBAN_DONE = 3
+
   enum_accessor :code
 
   scope :closed, -> { where(closed_flag: true) }
@@ -34,6 +38,11 @@ class TaskStatus < ActiveYaml::Base
 
   def self.workable_ids
     workable.pluck(:id)
+  end
+
+  def self.kanban_status(old_status_id, next_kanban_column)
+    Rails.logger.debug { "Finding kanban status id for old_status_id=#{old_status_id}, next_kanban_column=#{next_kanban_column}" }
+    self.find(old_status_id).next_statuses.find { |s| s.kanban_column == next_kanban_column }
   end
 
   def btn_class

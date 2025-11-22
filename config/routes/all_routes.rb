@@ -215,6 +215,9 @@ namespace :work do
   resources :genres, controller: "/works/genres", only: [:index, :new, :create, :edit, :update, :destroy]
 end
 
+namespace :tasks do
+  resource :kanbans, only: [:show, :update]
+end
 resources :tasks, except: [:edit, :update] do
   resource :assignee, controller: "tasks/assignees", only: [:edit, :update]
   resource :description, controller: "tasks/descriptions", only: [:edit, :update]
