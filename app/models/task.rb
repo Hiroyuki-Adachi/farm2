@@ -249,7 +249,8 @@ class Task < ApplicationRecord
         event_type: :change_status,
         status_from_id: self.task_status_id,
         status_to_id: new_status.id,
-        comment: c
+        comment: c,
+        source: :form
       )
       self.update_for_start_or_end(new_status, new_params[:end_reason])
       self.save!
