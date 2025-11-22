@@ -49,12 +49,18 @@ export default class extends Controller {
       },
       body
     })
-      .then(response => response.text())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status} ${response.statusText}`);
+        }
+        return response.text();
+      })
       .then(html => {
         Turbo.renderStreamMessage(html)
       })
       .catch(error => {
-        console.error("Kanban update error", error)
+        console.error("Kanban update error", error);
+        alert("Failed to update Kanban board. Please try again.");
       })
   }
 }
