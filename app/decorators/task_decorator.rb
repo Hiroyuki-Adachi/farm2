@@ -110,13 +110,16 @@ class TaskDecorator < Draper::Decorator
   end
 
   def highlight?
+    return false if object.assignee_id != context[:current_worker]&.id
     return true if object.high? || object.urgent?
     return true if [:expired, :today, :soon].include?(due_status)
     false
   end
 
   def text_display
+    Rails.logger.debug { "TaskDecorator#text_display: highlight?=#{highlight?}" }
     fw = highlight? ? 'highlight' : 'normal'
+    Rails.logger.debug { "TaskDecorator#text_display: fw=#{fw}" }
     h.content_tag(:span, object.title, class: "fw-#{fw}")
   end
 
