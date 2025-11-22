@@ -79,6 +79,7 @@ class Task < ApplicationRecord
   end
 
   scope :kanban_order, -> { order(:kanban_position, :id) }
+  scope :gantts_order, -> { order(:due_on, :planned_start_on, :id)}
 
   scope :for_index, ->(days: 30) do
     cutoff     = Time.zone.now - days.days
@@ -174,6 +175,13 @@ class Task < ApplicationRecord
   scope :kanban_todo, -> { for_kanban(TaskStatus::KANBAN_TODO) }
   scope :kanban_doing, -> { for_kanban(TaskStatus::KANBAN_DOING) }
   scope :kanban_done, ->(days: 15) { for_kanban(TaskStatus::KANBAN_DONE).where(ended_on: (Time.zone.today - days.days)..) }
+
+  scope :for_gantt, ->(start_date) do 
+    where(
+      arel_table[:due_on].gteq(start_date)
+        .or(arel_table[:planned_start_on].gteq(start_date))
+    )
+  end
 
   # ステータス判定メソッド群
   def closed?
@@ -370,6 +378,19 @@ class Task < ApplicationRecord
         )
       end
     end
+  end
+
+  def gantt_end_on
+    # 期日があれば、それを尊重
+    return due_on if due_on.present?
+
+    # 期日なしなら「とりあえず開始日と同じ」にして、
+    # 1日だけのバー（or 点）のように表示しておく
+    planned_start_on
+  end
+
+  def gantt_period
+    (planned_start_on..gantt_end_on)
   end
 
   private

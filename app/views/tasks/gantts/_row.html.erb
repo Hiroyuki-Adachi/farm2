@@ -21,12 +21,13 @@
       <% classes << "gantt-cell--start" if date == period.begin %>
       <% classes << "gantt-cell--end"   if date == period.end %>
     <% end %>
+    <% classes << "gantt-holiday" if date.saturday? || date.sunday? || HolidayJp.holiday?(date) %>
+    <% classes << "gantt-today" if date == Date.current %>
 
     <td class="<%= classes.join(" ") %>"
-      data-gantt-target="cell"
+      data-pages--gantt-target="cell"
       data-task-id="<%= task.id %>"
       data-date="<%= date %>">
-    <%# 中の表示は薄いバーだけ（CSSで色付け） %>
     </td>
   <% end %>
 </tr>

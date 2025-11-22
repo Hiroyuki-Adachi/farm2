@@ -2,21 +2,13 @@ class Tasks::GanttsController < ApplicationController
   include PermitChecker
 
   def show
-    @worker = current_user.worker
+    worker = current_user.worker
 
-    @start_date = Date.current - 30
-    @end_date   = Date.current + 60
+    @start_date = Date.current.prev_month.beginning_of_month
+    @end_date   = Date.current.advance(months: 2).end_of_month
     @dates      = (@start_date..@end_date).to_a
 
-    base_scope = Task.by_worker(@worker)
-                     .where(
-                       # 期間がどこかでかすっているタスクだけ
-                       arel_table[:due_on].gteq(@start_date)
-                         .or(arel_table[:planned_start_on].gteq(@start_date))
-                     )
-
-    @tasks = base_scope.order(:due_on, :planned_start_on, :id)
-                       .decorate(context: { current_worker: @worker })
+    @tasks = Task.by_worker(worker).for_gantt(@start_date).gantts_order.decorate(context: { current_worker: worker })
   end
 
   def update
