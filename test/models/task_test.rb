@@ -387,7 +387,7 @@ class TaskTest < ActiveSupport::TestCase
     assert_equal TaskStatus::TO_DO.id, task.task_status_id
   end
 
-  test "カンバン移動(ステータス変更も変更した場合)" do
+  test "カンバン移動(ステータスも変更した場合)" do
     worker = workers(:worker1)
     task = Task.create!(
       title: "ステータス変更タスク",
