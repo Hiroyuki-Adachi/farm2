@@ -1,6 +1,7 @@
 // app/javascript/controllers/kanban_controller.js
 import { Controller } from "@hotwired/stimulus"
 import Sortable from "sortablejs"
+import { Turbo } from "@hotwired/turbo-rails"
 
 export default class extends Controller {
   static targets = ["column"]
@@ -12,7 +13,7 @@ export default class extends Controller {
   connect() {
     this.sortables = this.columnTargets.map((column) => {
       return Sortable.create(column, {
-        group: "tasks",     // 列間移動を許可
+        group: "tasks",
         animation: 150,
         ghostClass: "opacity-50",
         onEnd: this.onEnd.bind(this)
@@ -27,12 +28,12 @@ export default class extends Controller {
   }
 
   onEnd(event) {
-    // ドロップのたびに、全列の state をサーバへ送る
     const columnsPayload = this.columnTargets.map((column) => {
+      const kanbanColumn = column.dataset.taskKanbanColumn
       const taskIds = Array.from(column.querySelectorAll("[data-task-id]"))
                            .map(el => el.dataset.taskId)
       return {
-        task_kanban_column: column.dataset.taskKanbanColumn,
+        task_kanban_column: kanbanColumn,
         task_ids: taskIds
       }
     })
@@ -43,15 +44,17 @@ export default class extends Controller {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "X-CSRF-Token": this.csrfTokenValue
+        "X-CSRF-Token": this.csrfTokenValue,
+        "Accept": "text/vnd.turbo-stream.html"
       },
       body
-    }).then((response) => {
-      if (!response.ok) {
-        console.error("Kanban update failed", response.status)
-      }
-    }).catch((error) => {
-      console.error("Kanban update error", error)
     })
+      .then(response => response.text())
+      .then(html => {
+        Turbo.renderStreamMessage(html)
+      })
+      .catch(error => {
+        console.error("Kanban update error", error)
+      })
   }
 }

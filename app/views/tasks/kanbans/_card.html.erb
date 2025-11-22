@@ -1,4 +1,4 @@
-<div class="card mb-2 shadow-sm" data-task-id="<%= task.id %>">
+<div id="<%= dom_id(task, :kanban) %>" class="card mb-2 shadow-sm <%= "border-danger" if task.highlight? %>" data-task-id="<%= task.id %>">
   <div class="card-body p-2">
     <div class="d-flex justify-content-between align-items-start mb-1">
       <div class="small text-muted">

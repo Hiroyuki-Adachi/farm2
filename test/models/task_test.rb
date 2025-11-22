@@ -397,7 +397,6 @@ class TaskTest < ActiveSupport::TestCase
       kanban_position: 0
     )
 
-    # TaskStatus.kanban_status_id の戻り値を明示的に制御しておくとテストが安定する
     new_status_id = TaskStatus::DOING.id
 
     assert_difference "TaskEvent.count", +1 do

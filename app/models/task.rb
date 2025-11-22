@@ -170,7 +170,7 @@ class Task < ApplicationRecord
   scope :for_kanban, ->(kanban_column) { where(task_status_id: TaskStatus.where(kanban_column: kanban_column).pluck(:id)) }
   scope :kanban_todo, -> { for_kanban(TaskStatus::KANBAN_TODO) }
   scope :kanban_doing, -> { for_kanban(TaskStatus::KANBAN_DOING) }
-  scope :kanban_done, ->(days: 10) { for_kanban(TaskStatus::KANBAN_DONE).where(ended_on: ..(Time.zone.today - days.days)) }
+  scope :kanban_done, ->(days: 15) { for_kanban(TaskStatus::KANBAN_DONE).where(ended_on: (Time.zone.today - days.days)..) }
 
   # ステータス判定メソッド群
   def closed?
@@ -251,14 +251,7 @@ class Task < ApplicationRecord
         status_to_id: new_status.id,
         comment: c
       )
-      self.task_status_id = new_status.id
-      if new_status.started_flag
-        self.started_on = Time.zone.today
-      elsif new_status.closed_flag
-        self.ended_on = Time.zone.today
-        self.started_on ||= Time.zone.today
-        self.end_reason = new_params[:end_reason].presence || :other
-      end
+      self.update_for_start_or_end(new_status, new_params[:end_reason])
       self.save!
     end
   end
@@ -359,14 +352,16 @@ class Task < ApplicationRecord
       if old_kanban_column == new_kanban_column
         update!(kanban_position: new_position)
       else
-        new_status_id = TaskStatus.kanban_status_id(old_status_id, new_kanban_column)
-        update!(task_status_id: new_status_id, kanban_position: new_position)
+        new_status = TaskStatus.kanban_status(old_status_id, new_kanban_column)
+        self.kanban_position = new_position
+        self.update_for_start_or_end(new_status, :completed)
+        self.save!
         TaskEvent.create!(
           task_id: id,
           actor_id: actor.id,
           event_type: :change_status, 
           status_from_id: old_status_id,
-          status_to_id: new_status_id,
+          status_to_id: new_status.id,
           source: :kanban
         )
       end
@@ -443,5 +438,16 @@ class Task < ApplicationRecord
     TaskRead.touch_and_get_previous!(task: self, worker_id: self.creator_id, at: self.created_at)
     return if self.assignee.blank? || self.assignee_id == self.creator_id
     TaskRead.touch_and_get_previous!(task: self, worker_id: self.assignee_id, at: Time.at(0))
+  end
+
+  def update_for_start_or_end(new_status, end_reason)
+    self.task_status_id = new_status.id
+    if new_status.started_flag
+      self.started_on ||= Time.zone.today
+    elsif new_status.closed_flag
+      self.ended_on = Time.zone.today
+      self.started_on ||= Time.zone.today
+      self.end_reason = end_reason || :other
+    end
   end
 end

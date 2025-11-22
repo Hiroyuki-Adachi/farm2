@@ -25,12 +25,8 @@
         <div class="card-body p-2" style="max-height: 70vh; overflow-y: auto;"
           data-pages--kanban-target="column"
           data-task-kanban-column="1">
-          <% if @todo_tasks.any? %>
-            <% @todo_tasks.each do |task| %>
-              <%= render "tasks/kanbans/card", task: task %>
-            <% end %>
-          <% else %>
-            <p class="text-muted small mb-0">未着手のタスクはありません。</p>
+          <% @todo_tasks.each do |task| %>
+            <%= render "tasks/kanbans/card", task: task %>
           <% end %>
         </div>
       </div>
@@ -53,12 +49,8 @@
         <div class="card-body p-2" style="max-height: 70vh; overflow-y: auto;"
           data-pages--kanban-target="column"
           data-task-kanban-column="2">
-          <% if @doing_tasks.any? %>
-            <% @doing_tasks.each do |task| %>
-              <%= render "tasks/kanbans/card", task: task %>
-            <% end %>
-          <% else %>
-            <p class="text-muted small mb-0">対応中のタスクはありません。</p>
+          <% @doing_tasks.each do |task| %>
+            <%= render "tasks/kanbans/card", task: task %>
           <% end %>
         </div>
       </div>
@@ -81,12 +73,8 @@
         <div class="card-body p-2" style="max-height: 70vh; overflow-y: auto;"
           data-pages--kanban-target="column"
           data-task-kanban-column="3">
-          <% if @done_tasks.any? %>
-            <% @done_tasks.each do |task| %>
-              <%= render "tasks/kanbans/card", task: task %>
-            <% end %>
-          <% else %>
-            <p class="text-muted small mb-0">完了したタスクはまだありません。</p>
+          <% @done_tasks.each do |task| %>
+            <%= render "tasks/kanbans/card", task: task %>
           <% end %>
         </div>
       </div>
