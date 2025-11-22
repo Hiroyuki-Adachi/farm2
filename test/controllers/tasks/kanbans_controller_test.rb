@@ -70,7 +70,7 @@ class Tasks::KanbansControllerTest < ActionDispatch::IntegrationTest
     task1.reload
     task2.reload
 
-    # 並び順だけ変わって、ステータスは変わってない想定
+    # 並び順とステータスの両方が変わる想定
     assert_equal 1, task1.kanban_position
     assert_equal 0, task2.kanban_position
 
