@@ -1,39 +1,73 @@
 import { Controller } from "@hotwired/stimulus"
 import { Turbo } from "@hotwired/turbo-rails"
 
+// app/javascript/controllers/gantt_controller.js
 export default class extends Controller {
-  static targets = ["cell"]
   static values = {
     updateUrl: String,
     csrfToken: String
   }
+  static targets = ["cell"]
 
   connect() {
-    this.cellTargets.forEach((cell) => {
-      cell.addEventListener("click", this.onCellClick.bind(this))
-    })
+    this.isResizing = false
   }
 
-  disconnect() {
-    this.cellTargets.forEach((cell) => {
-      cell.removeEventListener("click", this.onCellClick.bind(this))
-    })
+  startResize(event) {
+    event.preventDefault()
+
+    const handle = event.currentTarget
+    this.isResizing   = true
+    this.resizeEdge   = handle.classList.contains("gantt-handle--start") ? "start" : "end"
+    this.resizeTaskId = handle.dataset.taskId
+    this.startDate    = handle.dataset.date
+    this.currentDate  = this.startDate
+
+    // window 全体で mousemove / mouseup を見る
+    this._onMouseMove = this.onMouseMove.bind(this)
+    this._onMouseUp   = this.onMouseUp.bind(this)
+    window.addEventListener("mousemove", this._onMouseMove)
+    window.addEventListener("mouseup", this._onMouseUp)
   }
 
-  onCellClick(event) {
-    const cell = event.currentTarget
-    const taskId = cell.dataset.taskId
-    const date   = cell.dataset.date
+  onMouseMove(event) {
+    if (!this.isResizing) return
 
-    if (!taskId || !date) return
+    // いまマウスが乗っているセルを探す
+    const cell = event.target.closest("[data-pages--gantt-target='cell']")
+    if (!cell) return
+    if (cell.dataset.taskId !== this.resizeTaskId) return
 
-    // Shift押しながら → 開始日変更, 通常クリック → 終了日変更
-    const edge = event.shiftKey ? "start" : "end"
+    const date = cell.dataset.date
+    if (!date || date === this.currentDate) return
 
+    this.currentDate = date
+    this.previewResize()
+  }
+
+  previewResize() {
+    // ここで対象タスク行のセルに
+    // "gantt-cell--bar", "gantt-cell--start", "gantt-cell--end"
+    // をつけ直す（プレビュー用）
+    // ※サーバにはまだ送らない
+  }
+
+  onMouseUp(event) {
+    if (!this.isResizing) return
+
+    this.isResizing = false
+    window.removeEventListener("mousemove", this._onMouseMove)
+    window.removeEventListener("mouseup", this._onMouseUp)
+
+    // 最終的に止まった日付でサーバ更新
+    this.sendResize()
+  }
+
+  sendResize() {
     const payload = {
-      task_id: taskId,
-      date: date,
-      edge: edge
+      task_id: this.resizeTaskId,
+      date: this.currentDate,
+      edge: this.resizeEdge // "start" or "end"
     }
 
     fetch(this.updateUrlValue, {
@@ -45,12 +79,8 @@ export default class extends Controller {
       },
       body: JSON.stringify(payload)
     })
-      .then(response => response.text())
-      .then(html => {
-        Turbo.renderStreamMessage(html)
-      })
-      .catch(error => {
-        console.error("Gantt update error", error)
-      })
+      .then(r => r.text())
+      .then(html => Turbo.renderStreamMessage(html))
+      .catch(e => console.error("Gantt resize error", e))
   }
 }

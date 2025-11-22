@@ -37,7 +37,7 @@
       </thead>
       <tbody>
         <% @tasks.each do |task| %>
-          <%= render "tasks/gantts/row", task: task %>
+          <%= render "tasks/gantts/row", task: task, dates: @dates %>
         <% end %>
       </tbody>
     </table>

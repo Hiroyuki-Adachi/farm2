@@ -117,9 +117,7 @@ class TaskDecorator < Draper::Decorator
   end
 
   def text_display
-    Rails.logger.debug { "TaskDecorator#text_display: highlight?=#{highlight?}" }
     fw = highlight? ? 'highlight' : 'normal'
-    Rails.logger.debug { "TaskDecorator#text_display: fw=#{fw}" }
     h.content_tag(:span, object.title, class: "fw-#{fw}")
   end
 

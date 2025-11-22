@@ -13,7 +13,7 @@
 
   <% period = task.gantt_period %>
 
-  <% @dates.each do |date| %>
+  <% dates.each do |date| %>
     <% in_range = period.cover?(date) %>
     <% classes = ["gantt-cell"] %>
     <% if in_range %>
@@ -28,6 +28,24 @@
       data-pages--gantt-target="cell"
       data-task-id="<%= task.id %>"
       data-date="<%= date %>">
+
+      <% if in_range %>
+        <%# 左端だけにつまみを置く %>
+        <% if date == period.begin %>
+          <div class="gantt-handle gantt-handle--start"
+              data-action="mousedown->pages--gantt#startResize"
+              data-task-id="<%= task.id %>"
+              data-date="<%= date %>"></div>
+        <% end %>
+
+        <%# 右端にもつまみ %>
+        <% if date == period.end %>
+          <div class="gantt-handle gantt-handle--end"
+              data-action="mousedown->pages--gantt#startResize"
+              data-task-id="<%= task.id %>"
+              data-date="<%= date %>"></div>
+        <% end %>
+      <% end %>
     </td>
   <% end %>
 </tr>

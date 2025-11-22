@@ -1,13 +1,10 @@
 class Tasks::GanttsController < ApplicationController
   include PermitChecker
 
+  before_action :set_dates
+
   def show
     worker = current_user.worker
-
-    @start_date = Date.current.prev_month.beginning_of_month
-    @end_date   = Date.current.advance(months: 2).end_of_month
-    @dates      = (@start_date..@end_date).to_a
-
     @tasks = Task.by_worker(worker).for_gantt(@start_date).gantts_order.decorate(context: { current_worker: worker })
   end
 
@@ -36,5 +33,13 @@ class Tasks::GanttsController < ApplicationController
     respond_to do |format|
       format.turbo_stream
     end
+  end
+
+  private
+
+  def set_dates
+    @start_date = Date.current.prev_month.beginning_of_month
+    @end_date   = Date.current.advance(months: 2).end_of_month
+    @dates      = (@start_date..@end_date).to_a
   end
 end

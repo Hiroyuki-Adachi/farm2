@@ -16,11 +16,19 @@
 }
 
 table > tbody > tr > td.gantt-cell {
-  cursor: pointer;
-  padding: 0;
-  min-width: 18px;
-  height: 22px;
+  position: relative;
 }
+
+div.gantt-handle {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  width: 4px;
+  cursor: ew-resize;
+}
+
+div.gantt-handle--start { left: 0; }
+div.gantt-handle--end   { right: 0; }
 
 table > tbody > tr > td.gantt-holiday {
   background-color: rgba(var(--bs-secondary-rgb), 0.3);
