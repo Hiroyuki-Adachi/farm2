@@ -383,11 +383,9 @@ class Task < ApplicationRecord
 
   def gantt_end_on
     # 期日があれば、それを尊重
+    return ended_on if closed? && ended_on.present?
     return due_on if due_on.present?
 
-    # 期日なしなら「とりあえず開始日と同じ」にして、
-    # 1日だけのバー（or 点）のように表示しておく
-    # ただし、planned_start_onがデフォルト値（1900-01-01）の場合は、現在日付を返す
     if planned_start_on == Date.new(1900, 1, 1)
       Date.current
     else
