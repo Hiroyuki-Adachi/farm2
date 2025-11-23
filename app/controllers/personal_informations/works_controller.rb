@@ -8,7 +8,7 @@ class PersonalInformations::WorksController < PersonalInformationsController
     to_error_path unless @work.work_results.exists?(worker_id: @worker.id)
 
     @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
-    @chemicals = @work.work_chemicals.group(:chemical_id).sum(:quantity).to_a
+    @chemicals = Chemical.with_total_quantity(@work).to_a
     @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
   end
 
