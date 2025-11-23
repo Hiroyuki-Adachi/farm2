@@ -1,0 +1,21 @@
+<div id="<%= dom_id(task, :kanban) %>" class="card mb-2 shadow-sm <%= "border-danger" if task.highlight? %>" data-task-id="<%= task.id %>">
+  <div class="card-body p-2">
+    <div class="d-flex justify-content-between align-items-start mb-1">
+      <div class="small text-muted">
+        <%= task.due_on_short %>
+        <%= task.due_badge %>
+      </div>
+      <%= task.assignee_badge %>
+    </div>
+
+    <div class="fw-semibold mb-1">
+      <%= link_to task.title, task_path(task, from: :kanban), class: "text-decoration-none" %>
+    </div>
+
+    <% if task.description.present? %>
+      <p class="mb-0 small text-muted">
+        <%= truncate(task.description, length: 60) %>
+      </p>
+    <% end %>
+  </div>
+</div>

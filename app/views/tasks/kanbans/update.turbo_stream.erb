@@ -1,0 +1,5 @@
+<% @tasks.each do |task| %>
+  <%= turbo_stream.replace dom_id(task, :kanban) do %>
+    <%= render "tasks/kanbans/card", task: task %>
+  <% end %>
+<% end %>

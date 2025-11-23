@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_01_130733) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_22_083120) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -800,6 +800,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_01_130733) do
     t.date "due_on_from", comment: "変更前の期限"
     t.date "due_on_to", comment: "変更後の期限"
     t.integer "event_type", null: false, comment: "イベント種別"
+    t.integer "source", default: 0, null: false, comment: "ソース"
     t.integer "status_from_id", comment: "変更前ステータス"
     t.integer "status_to_id", comment: "変更後ステータス"
     t.bigint "task_comment_id", comment: "関連コメントID"
@@ -865,7 +866,9 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_01_130733) do
     t.date "due_on", comment: "期限"
     t.integer "end_reason", default: 0, null: false, comment: "完了理由"
     t.date "ended_on", comment: "完了日"
+    t.integer "kanban_position", default: 0, null: false, comment: "カンバンの位置"
     t.integer "office_role", default: 0, null: false, comment: "役割"
+    t.date "planned_start_on", default: "1900-01-01", null: false, comment: "開始予定日"
     t.integer "priority", default: 0, null: false, comment: "優先度"
     t.date "started_on", comment: "着手日"
     t.integer "task_status_id", default: 0, null: false, comment: "状態"
@@ -874,6 +877,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_01_130733) do
     t.datetime "updated_at", null: false
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
     t.index ["creator_id"], name: "index_tasks_on_creator_id"
+    t.index ["task_status_id", "kanban_position"], name: "index_tasks_on_task_status_id_and_kanban_position"
     t.index ["task_template_id"], name: "index_tasks_on_task_template_id"
   end
 

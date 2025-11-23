@@ -2,27 +2,30 @@
 #
 # Table name: tasks(タスク)
 #
-#  id                             :bigint           not null, primary key
-#  description(説明)              :text             default(""), not null
-#  due_on(期限)                   :date
-#  end_reason(完了理由)           :integer          default("unset"), not null
-#  ended_on(完了日)               :date
-#  office_role(役割)              :integer          default("none"), not null
-#  priority(優先度)               :integer          default("low"), not null
-#  started_on(着手日)             :date
-#  title(タスク名)                :string(64)       default(""), not null
-#  created_at                     :datetime         not null
-#  updated_at                     :datetime         not null
-#  assignee_id(担当者)            :bigint
-#  creator_id(作成者)             :bigint
-#  task_status_id(状態)           :integer          default(0), not null
-#  task_template_id(定型タスクID) :bigint
+#  id                              :bigint           not null, primary key
+#  description(説明)               :text             default(""), not null
+#  due_on(期限)                    :date
+#  end_reason(完了理由)            :integer          default("unset"), not null
+#  ended_on(完了日)                :date
+#  kanban_position(カンバンの位置) :integer          default(0), not null
+#  office_role(役割)               :integer          default("none"), not null
+#  planned_start_on(開始予定日)    :date             default(Mon, 01 Jan 1900), not null
+#  priority(優先度)                :integer          default("low"), not null
+#  started_on(着手日)              :date
+#  title(タスク名)                 :string(64)       default(""), not null
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  assignee_id(担当者)             :bigint
+#  creator_id(作成者)              :bigint
+#  task_status_id(状態)            :integer          default(0), not null
+#  task_template_id(定型タスクID)  :bigint
 #
 # Indexes
 #
-#  index_tasks_on_assignee_id       (assignee_id)
-#  index_tasks_on_creator_id        (creator_id)
-#  index_tasks_on_task_template_id  (task_template_id)
+#  index_tasks_on_assignee_id                         (assignee_id)
+#  index_tasks_on_creator_id                          (creator_id)
+#  index_tasks_on_task_status_id_and_kanban_position  (task_status_id,kanban_position)
+#  index_tasks_on_task_template_id                    (task_template_id)
 #
 # Foreign Keys
 #
@@ -122,7 +125,7 @@ class TaskTest < ActiveSupport::TestCase
     comment = "期限を合わせます"
 
     assert_changes -> { open_task.reload.due_on }, to: new_due do
-      open_task.change_due_on!(new_due, worker1, comment)
+      open_task.change_due_on!(new_due, worker1, comment: comment)
     end
 
     last_event = open_task.events.order(:id).last
@@ -364,5 +367,53 @@ class TaskTest < ActiveSupport::TestCase
 
     task.reload
     assert_equal TaskStatus::TO_DO.id, task.task_status_id
+  end
+
+  test "カンバン移動(位置のみを変更した場合)" do
+    worker = workers(:worker1)
+    task = Task.create!(
+      title: "テストタスク",
+      description: "same column move",
+      task_status_id: TaskStatus::TO_DO.id,
+      assignee_id: worker.id,
+      kanban_position: 0
+    )
+
+    assert_no_difference "TaskEvent.count" do
+      task.move_on_kanban!(TaskStatus::TO_DO.kanban_column, 3, actor: worker)
+    end
+
+    task.reload
+    assert_equal 3, task.kanban_position
+    assert_equal TaskStatus::TO_DO.id, task.task_status_id
+  end
+
+  test "カンバン移動(ステータスも変更した場合)" do
+    worker = workers(:worker1)
+    task = Task.create!(
+      title: "ステータス変更タスク",
+      description: "move to doing column",
+      task_status_id: TaskStatus::TO_DO.id,
+      assignee_id: worker.id,
+      kanban_position: 0
+    )
+
+    new_status_id = TaskStatus::DOING.id
+
+    assert_difference "TaskEvent.count", +1 do
+      task.move_on_kanban!(TaskStatus::DOING.kanban_column, 1, actor: worker)
+    end
+
+    task.reload
+    assert_equal new_status_id, task.task_status_id
+    assert_equal 1, task.kanban_position
+
+    event = TaskEvent.order(:id).last
+    assert_equal task.id, event.task_id
+    assert_equal worker.id, event.actor_id
+    assert_equal :change_status, event.event_type.to_sym
+    assert_equal TaskStatus::TO_DO.id, event.status_from_id
+    assert_equal new_status_id, event.status_to_id
+    assert_equal :kanban, event.source.to_sym
   end
 end
