@@ -269,7 +269,7 @@ class Task < ApplicationRecord
   end
 
   # 期限変更
-  def change_due_on!(new_due_on, actor, comment = nil)
+  def change_due_on!(new_due_on, actor, comment: nil, source: :form)
     self.comment = comment
     if new_due_on.presence&.to_date == due_on
       errors.add(:due_on, "が変更されていません")
@@ -284,7 +284,8 @@ class Task < ApplicationRecord
       events.create!(
         actor: actor, event_type: :change_due_on,
         due_on_from: due_on, due_on_to: new_due_on,
-        comment: c
+        comment: c,
+        source: source
       )
       update!(due_on: new_due_on)
     end

@@ -61,6 +61,19 @@ table > tbody > tr > td.gantt-cell--end {
   border-right: 3px solid rgba(var(--bs-primary-rgb), 1);
 }
 
+table > tbody > tr > td.gantt-cell--bar-closed {
+  background-color: rgba(var(--bs-success-rgb), 0.2) !important;
+  opacity: 1;
+}
+
+table > tbody > tr > td.gantt-cell--start-closed {
+  border-left: 3px solid rgba(var(--bs-success-rgb), 1);
+}
+
+table > tbody > tr > td.gantt-cell--end-closed {
+  border-right: 3px solid rgba(var(--bs-success-rgb), 1);
+}
+
 table > tbody > tr > td.gantt-cell--drag-preview {
   background-color: rgba(13, 110, 253, 0.25);
 }

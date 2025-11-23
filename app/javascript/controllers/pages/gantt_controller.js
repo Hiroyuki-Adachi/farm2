@@ -105,6 +105,6 @@ export default class extends Controller {
     })
       .then(r => r.text())
       .then(html => Turbo.renderStreamMessage(html))
-      .catch(e => console.error("Gantt resize error", e))
+      .catch(e => window.popupAlert("ガントチャートの更新に失敗しました。再度お試しください。"));
   }
 }

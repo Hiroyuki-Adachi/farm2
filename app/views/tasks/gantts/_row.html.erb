@@ -17,9 +17,10 @@
     <% in_range = period.cover?(date) %>
     <% classes = ["gantt-cell"] %>
     <% if in_range %>
-      <% classes << "gantt-cell--bar" %>
-      <% classes << "gantt-cell--start" if date == period.begin %>
-      <% classes << "gantt-cell--end"   if date == period.end %>
+      <% closed = task.closed? ? '-closed' : '' %>
+      <% classes << "gantt-cell--bar#{closed}" %>
+      <% classes << "gantt-cell--start#{closed}" if date == period.begin %>
+      <% classes << "gantt-cell--end#{closed}"   if date == period.end %>
     <% end %>
     <% classes << "gantt-holiday" if date.saturday? || date.sunday? || HolidayJp.holiday?(date) %>
     <% classes << "gantt-today" if date == Date.current %>
@@ -29,7 +30,7 @@
       data-task-id="<%= task.id %>"
       data-date="<%= date %>">
 
-      <% if in_range %>
+      <% if in_range && !task.closed? %>
         <%# 左端だけにつまみを置く %>
         <% if date == period.begin %>
           <div class="gantt-handle gantt-handle--start"

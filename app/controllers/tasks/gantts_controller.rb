@@ -19,11 +19,13 @@ class Tasks::GanttsController < ApplicationController
     end
     return head :unprocessable_entity unless date
 
-    case params[:edge]
-    when "start"
+    case params[:edge].to_sym
+    when :start
+      date = task.due_on if date > task.due_on
       task.update!(planned_start_on: date)
-    when "end"
-      task.update!(due_on: date)
+    when :end
+      date = task.planned_start_on if date < task.planned_start_on
+      task.change_due_on!(date, current_user.worker, source: :gantt)
     else
       return head :unprocessable_entity
     end
@@ -33,6 +35,10 @@ class Tasks::GanttsController < ApplicationController
     respond_to do |format|
       format.turbo_stream
     end
+  rescue StandardError => e
+    respond_to do |format|
+      format.turbo_stream { render plain: "Error updating gantt: #{e.message}", status: :unprocessable_entity }
+    end
   end
 
   private
@@ -41,5 +47,9 @@ class Tasks::GanttsController < ApplicationController
     @start_date = Date.current.prev_month.beginning_of_month
     @end_date   = Date.current.advance(months: 2).end_of_month
     @dates      = (@start_date..@end_date).to_a
+  end
+
+  def menu_name
+    :tasks
   end
 end
