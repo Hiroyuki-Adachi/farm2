@@ -5,7 +5,7 @@ class Tasks::GanttsController < ApplicationController
 
   def show
     worker = current_user.worker
-    @tasks = Task.by_worker(worker).for_gantt(@start_date).gantts_order.decorate(context: { current_worker: worker })
+    @tasks = Task.by_worker(worker).for_gantt(@start_date, @end_date).gantts_order.decorate(context: { current_worker: worker })
   end
 
   def update
