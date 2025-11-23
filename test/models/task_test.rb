@@ -125,7 +125,7 @@ class TaskTest < ActiveSupport::TestCase
     comment = "期限を合わせます"
 
     assert_changes -> { open_task.reload.due_on }, to: new_due do
-      open_task.change_due_on!(new_due, worker1, comment)
+      open_task.change_due_on!(new_due, worker1, comment: comment)
     end
 
     last_event = open_task.events.order(:id).last
