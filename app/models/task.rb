@@ -9,6 +9,7 @@
 #  ended_on(完了日)                :date
 #  kanban_position(カンバンの位置) :integer          default(0), not null
 #  office_role(役割)               :integer          default("none"), not null
+#  planned_start_on(開始予定日)    :date             default(Mon, 01 Jan 1900), not null
 #  priority(優先度)                :integer          default("low"), not null
 #  started_on(着手日)              :date
 #  title(タスク名)                 :string(64)       default(""), not null
@@ -55,6 +56,7 @@ class Task < ApplicationRecord
   before_save :clear_end_info
   after_create :create_watcher
   after_create :create_task_event
+  after_create :create_planned_start_on
   after_create :init_task_reads
 
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
@@ -66,6 +68,7 @@ class Task < ApplicationRecord
   validates :end_reason, presence: true
 
   validate :ended_on_after_started_on
+  validate :ended_on_after_planned_start_on
 
   scope :usual_order, -> do
     pairs = TaskStatus.all.map { |s| [s.id, s.display_order] }
@@ -76,6 +79,7 @@ class Task < ApplicationRecord
   end
 
   scope :kanban_order, -> { order(:kanban_position, :id) }
+  scope :gantts_order, -> { order(:due_on, :planned_start_on, :id)}
 
   scope :for_index, ->(days: 30) do
     cutoff     = Time.zone.now - days.days
@@ -167,10 +171,17 @@ class Task < ApplicationRecord
     select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
   end
 
-  scope :for_kanban, ->(kanban_column) { where(task_status_id: TaskStatus.where(kanban_column: kanban_column).pluck(:id)) }
+  scope :for_kanban, ->(kanban_column) { where(task_status_id: TaskStatus.kanban_column_ids(kanban_column)) }
   scope :kanban_todo, -> { for_kanban(TaskStatus::KANBAN_TODO) }
   scope :kanban_doing, -> { for_kanban(TaskStatus::KANBAN_DOING) }
   scope :kanban_done, ->(days: 15) { for_kanban(TaskStatus::KANBAN_DONE).where(ended_on: (Time.zone.today - days.days)..) }
+
+  scope :for_gantt, ->(start_date, end_date) do
+    where(
+      arel_table[:planned_start_on].lteq(end_date)
+        .and(arel_table[:due_on].gteq(start_date))
+    )
+  end
 
   # ステータス判定メソッド群
   def closed?
@@ -258,7 +269,7 @@ class Task < ApplicationRecord
   end
 
   # 期限変更
-  def change_due_on!(new_due_on, actor, comment = nil)
+  def change_due_on!(new_due_on, actor, comment: nil, source: :form)
     self.comment = comment
     if new_due_on.presence&.to_date == due_on
       errors.add(:due_on, "が変更されていません")
@@ -273,7 +284,8 @@ class Task < ApplicationRecord
       events.create!(
         actor: actor, event_type: :change_due_on,
         due_on_from: due_on, due_on_to: new_due_on,
-        comment: c
+        comment: c,
+        source: source
       )
       update!(due_on: new_due_on)
     end
@@ -369,6 +381,24 @@ class Task < ApplicationRecord
     end
   end
 
+  def gantt_end_on
+    # 期日があれば、それを尊重
+    return due_on if due_on.present?
+
+    # 期日なしなら「とりあえず開始日と同じ」にして、
+    # 1日だけのバー（or 点）のように表示しておく
+    # ただし、planned_start_onがデフォルト値（1900-01-01）の場合は、現在日付を返す
+    if planned_start_on == Date.new(1900, 1, 1)
+      Date.current
+    else
+      planned_start_on
+    end
+  end
+
+  def gantt_period
+    (planned_start_on..gantt_end_on)
+  end
+
   private
 
   # 共通ラッパ：コメントを（あれば）作ってトランザクション内でyield
@@ -402,6 +432,12 @@ class Task < ApplicationRecord
     return if ended_on.blank? || started_on.blank?
 
     errors.add(:ended_on, "は着手日以降の日付にしてください。") if ended_on < started_on
+  end
+
+  def ended_on_after_planned_start_on
+    return if ended_on.blank?
+
+    errors.add(:ended_on, "は開始予定日以降の日付にしてください。") if ended_on < planned_start_on
   end
 
   def end_reason_for_closed
@@ -450,5 +486,9 @@ class Task < ApplicationRecord
       self.started_on ||= Time.zone.today
       self.end_reason = end_reason || :other
     end
+  end
+
+  def create_planned_start_on
+    self.update(planned_start_on: self.created_at.to_date)
   end
 end

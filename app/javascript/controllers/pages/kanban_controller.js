@@ -60,7 +60,7 @@ export default class extends Controller {
       })
       .catch(error => {
         console.error("Kanban update error", error);
-        alert("Failed to update Kanban board. Please try again.");
+        window.popupAlert("カンバンボードの更新に失敗しました。再度お試しください。");
       })
   }
 }

@@ -9,6 +9,7 @@
 #  ended_on(完了日)                :date
 #  kanban_position(カンバンの位置) :integer          default(0), not null
 #  office_role(役割)               :integer          default("none"), not null
+#  planned_start_on(開始予定日)    :date             default(Mon, 01 Jan 1900), not null
 #  priority(優先度)                :integer          default("low"), not null
 #  started_on(着手日)              :date
 #  title(タスク名)                 :string(64)       default(""), not null
@@ -124,7 +125,7 @@ class TaskTest < ActiveSupport::TestCase
     comment = "期限を合わせます"
 
     assert_changes -> { open_task.reload.due_on }, to: new_due do
-      open_task.change_due_on!(new_due, worker1, comment)
+      open_task.change_due_on!(new_due, worker1, comment: comment)
     end
 
     last_event = open_task.events.order(:id).last

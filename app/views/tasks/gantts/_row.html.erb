@@ -1,0 +1,52 @@
+<tr id="<%= dom_id(task, :gantt_row) %>">
+  <td class="align-middle">
+    <div class="fw-semibold">
+      <%= link_to task.title, task_path(task, from: :gantt), class: "text-decoration-none" %>
+    </div>
+    <div class="small text-body-secondary">
+      期限:
+      <%= task.due_on&.strftime("%Y-%m-%d") || "未設定" %>
+      ／ 開始:
+      <%= task.planned_start_on&.strftime("%Y-%m-%d") || "未設定" %>
+    </div>
+  </td>
+
+  <% period = task.gantt_period %>
+
+  <% dates.each do |date| %>
+    <% in_range = period.cover?(date) %>
+    <% classes = ["gantt-cell"] %>
+    <% if in_range %>
+      <% closed = task.closed? ? '-closed' : '' %>
+      <% classes << "gantt-cell--bar#{closed}" %>
+      <% classes << "gantt-cell--start#{closed}" if date == period.begin %>
+      <% classes << "gantt-cell--end#{closed}"   if date == period.end %>
+    <% end %>
+    <% classes << "gantt-holiday" if date.saturday? || date.sunday? || HolidayJp.holiday?(date) %>
+    <% classes << "gantt-today" if date == Date.current %>
+
+    <td class="<%= classes.join(" ") %>"
+      data-pages--gantt-target="cell"
+      data-task-id="<%= task.id %>"
+      data-date="<%= date %>">
+
+      <% if in_range && !task.closed? %>
+        <%# 左端だけにつまみを置く %>
+        <% if date == period.begin %>
+          <div class="gantt-handle gantt-handle--start"
+              data-action="mousedown->pages--gantt#startResize"
+              data-task-id="<%= task.id %>"
+              data-date="<%= date %>"></div>
+        <% end %>
+
+        <%# 右端にもつまみ %>
+        <% if date == period.end %>
+          <div class="gantt-handle gantt-handle--end"
+              data-action="mousedown->pages--gantt#startResize"
+              data-task-id="<%= task.id %>"
+              data-date="<%= date %>"></div>
+        <% end %>
+      <% end %>
+    </td>
+  <% end %>
+</tr>

@@ -9,7 +9,7 @@
     </div>
 
     <div class="fw-semibold mb-1">
-      <%= link_to task.title, task_path(task), class: "text-decoration-none" %>
+      <%= link_to task.title, task_path(task, from: :kanban), class: "text-decoration-none" %>
     </div>
 
     <% if task.description.present? %>

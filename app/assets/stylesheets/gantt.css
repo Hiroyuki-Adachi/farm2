@@ -1,0 +1,83 @@
+.gantt-table {
+  th,
+  td {
+    white-space: nowrap;
+  }
+}
+
+.table-header-adaptive {
+  background-color: var(--bs-tertiary-bg);
+  color: var(--bs-emphasis-color);
+}
+
+/* optional: 下線 */
+.table-header-adaptive th {
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+table > tbody > tr > td.gantt-cell {
+  position: relative;
+}
+
+div.gantt-handle {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  width: 4px;
+  cursor: ew-resize;
+}
+
+div.gantt-handle--start { left: 0; }
+div.gantt-handle--end   { right: 0; }
+
+table > tbody > tr > td.gantt-holiday {
+  background-color: rgba(var(--bs-secondary-rgb), 0.3);
+}
+
+table > thead > tr > th.gantt-sunday {
+  color: var(--bs-danger);
+}
+
+table > thead > tr > th.gantt-saturday {
+  color: var(--bs-primary);
+}
+
+table > tbody > tr > td.gantt-today, table > thead > tr > th.gantt-today {
+  background-color: rgba(var(--bs-danger-rgb), 0.1);
+  border-left: 2px solid var(--bs-danger);
+  border-right: 2px solid var(--bs-danger);
+}
+
+table > tbody > tr > td.gantt-cell--bar {
+  background-color: rgba(var(--bs-primary-rgb), 0.2) !important;
+  opacity: 1;
+}
+
+table > tbody > tr > td.gantt-cell--start {
+  border-left: 3px solid rgba(var(--bs-primary-rgb), 1);
+}
+
+table > tbody > tr > td.gantt-cell--end {
+  border-right: 3px solid rgba(var(--bs-primary-rgb), 1);
+}
+
+table > tbody > tr > td.gantt-cell--bar-closed {
+  background-color: rgba(var(--bs-success-rgb), 0.2) !important;
+  opacity: 1;
+}
+
+table > tbody > tr > td.gantt-cell--start-closed {
+  border-left: 3px solid rgba(var(--bs-success-rgb), 1);
+}
+
+table > tbody > tr > td.gantt-cell--end-closed {
+  border-right: 3px solid rgba(var(--bs-success-rgb), 1);
+}
+
+table > tbody > tr > td.gantt-cell--drag-preview {
+  background-color: rgba(13, 110, 253, 0.25);
+}
+
+table > tbody > tr > td.gantt-cell--bar.gantt-cell--drag-preview {
+  box-shadow: inset 0 0 0 2px rgba(13, 110, 253, 0.6);
+}

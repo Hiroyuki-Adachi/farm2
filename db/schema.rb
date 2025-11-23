@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_20_102327) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_22_083120) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -868,6 +868,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_20_102327) do
     t.date "ended_on", comment: "完了日"
     t.integer "kanban_position", default: 0, null: false, comment: "カンバンの位置"
     t.integer "office_role", default: 0, null: false, comment: "役割"
+    t.date "planned_start_on", default: "1900-01-01", null: false, comment: "開始予定日"
     t.integer "priority", default: 0, null: false, comment: "優先度"
     t.date "started_on", comment: "着手日"
     t.integer "task_status_id", default: 0, null: false, comment: "状態"

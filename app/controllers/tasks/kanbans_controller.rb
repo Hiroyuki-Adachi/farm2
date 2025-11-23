@@ -38,4 +38,10 @@ class Tasks::KanbansController < ApplicationController
       format.html { render plain: "Error updating kanban: #{e.message}", status: :unprocessable_entity }
     end
   end
+
+  private
+
+  def menu_name
+    :tasks
+  end
 end

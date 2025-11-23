@@ -3,6 +3,8 @@ class TasksController < ApplicationController
 
   before_action :set_task, only: [:show, :destroy]
 
+  helper_method :back_path
+
   helper MarkdownHelper
 
   decorates_assigned :task, :tasks
@@ -75,5 +77,13 @@ class TasksController < ApplicationController
 
   def task_comment
     params[:task][:comment]
+  end
+
+  def back_path
+    case params[:from] 
+    when "kanban" then tasks_kanbans_path 
+    when "gantt" then tasks_gantts_path 
+    else tasks_path
+    end
   end
 end
