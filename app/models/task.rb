@@ -176,10 +176,10 @@ class Task < ApplicationRecord
   scope :kanban_doing, -> { for_kanban(TaskStatus::KANBAN_DOING) }
   scope :kanban_done, ->(days: 15) { for_kanban(TaskStatus::KANBAN_DONE).where(ended_on: (Time.zone.today - days.days)..) }
 
-  scope :for_gantt, ->(start_date) do 
+  scope :for_gantt, ->(start_date, end_date) do
     where(
-      arel_table[:due_on].gteq(start_date)
-        .or(arel_table[:planned_start_on].gteq(start_date))
+      arel_table[:planned_start_on].lteq(end_date)
+        .and(arel_table[:due_on].gteq(start_date))
     )
   end
 
