@@ -21,7 +21,7 @@ class Tasks::GanttsController < ApplicationController
 
     case params[:edge].to_sym
     when :start
-      date = task.due_on if date > task.due_on
+      date = task.due_on if task.due_on && date > task.due_on
       task.update!(planned_start_on: date)
     when :end
       date = task.planned_start_on if date < task.planned_start_on
