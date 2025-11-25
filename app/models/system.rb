@@ -73,6 +73,14 @@ class System < ApplicationRecord
     return system
   end
 
+  def get_prev_terms(limit, term: nil)
+    self.class.get_terms(self.organization_id, term || self.term, limit)
+  end
+
+  def self.get_terms(organization_id, start_term, limit)
+    self.where(organization_id:, term: ..start_term).order(start_date: :desc).limit(limit).pluck(:term)
+  end
+
   private
 
   def cache_clear

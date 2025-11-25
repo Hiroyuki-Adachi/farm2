@@ -47,8 +47,14 @@ module StatisticsHelper
     return results
   end
 
-  def tab4_datasets(current_results, previous_results)
+  def tab4_datasets(current_results, previous_results, average_results)
     results = []
+    results << {
+      label: "過去平均",
+      data: (1..12).map { |month| average_results[month - 1].to_f },
+      backgroundColor: COLORS[1],
+      fill: false
+    }
     results << {
       label: "前年度",
       data: (1..12).map { |month| previous_results[month - 1].to_f },
