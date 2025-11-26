@@ -361,8 +361,8 @@ SQL
     broccoli.destroy if work_type_id == organization.broccoli_work_type_id && work_kind_id == organization.broccoli_work_kind_id && broccoli.present?
   end
 
-  def self.total_all
-    Work.joins(:work_results).group(:term).order(:term).sum("work_results.hours")
+  def self.total_all(terms)
+    Work.where(term: terms).joins(:work_results).group(:term).order(:term).sum("work_results.hours")
   end
 
   def self.total_by_worker(worker, term)
@@ -386,14 +386,15 @@ SQL
   end
 
   def self.total_by_month(worker, term)
+    terms = Array(term)
     results = Array.new(12, 0)
 
-    query = Work.joins(:work_results).where(term: term)
+    query = Work.joins(:work_results).where(term: terms)
     query = query.where(work_results: { worker_id: worker.id }) if worker
     query.group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
-      results[k.to_i - 1] = v
+      results[k.to_i - 1] = (v.to_f / terms.length).round(1)
     end
-    return results
+    results
   end
 
   def self.total_genre
