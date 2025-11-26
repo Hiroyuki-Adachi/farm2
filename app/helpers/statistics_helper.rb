@@ -53,7 +53,7 @@ module StatisticsHelper
     results = []
     results << {
       label: "過去平均",
-      data: ALL_MONTHS.map { |month| average_results[month - 1].to_f},
+      data: ALL_MONTHS.map { |month| average_results[month - 1].to_f },
       backgroundColor: COLORS[1],
       fill: false
     }
