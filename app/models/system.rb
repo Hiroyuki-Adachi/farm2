@@ -78,6 +78,7 @@ class System < ApplicationRecord
   end
 
   def self.get_terms(organization_id, start_term, limit)
+    # Get terms up to and including start_term
     self.where(organization_id:, term: ..start_term).order(term: :desc).limit(limit).pluck(:term)
   end
 
