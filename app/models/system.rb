@@ -78,7 +78,7 @@ class System < ApplicationRecord
   end
 
   def self.get_terms(organization_id, start_term, limit)
-    self.where(organization_id:, term: ..start_term).order(start_date: :desc).limit(limit).pluck(:term)
+    self.where(organization_id:, term: ..start_term).order(term: :desc).limit(limit).pluck(:term)
   end
 
   private
