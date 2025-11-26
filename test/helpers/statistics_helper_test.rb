@@ -40,17 +40,29 @@ class StatisticsHelperTest < ActionView::TestCase
     assert_equal "#123456", datasets[1][:backgroundColor]
   end
 
-  def tab3_datasets(total_all, total_age)
-    results = []
-    t("statistics.age").each_with_index do |age, i|
-      results << {
-        label: age,
-        data: total_all.map {|t| total_age[[t[0], i]].to_f },
-        backgroundColor: COLORS[i],
-        fill: false
-      }
+  test "tab3_datasets の構築" do
+    total_all = [[1, 10], [2, 20]]
+
+    # 実際の翻訳を使う（例: ["10代未満", "10代", ...]）
+    ages = t("statistics.age")
+
+    # 各 age index ごとに、1番目の行・2番目の行の値を適当に決める
+    total_age = {}
+    ages.each_index do |i|
+      total_age[[1, i]] = i + 1         # 行1用: 1, 2, 3, ...
+      total_age[[2, i]] = (i + 1) * 10  # 行2用: 10, 20, 30, ...
     end
-    return results
+
+    datasets = tab3_datasets(total_all, total_age)
+
+    # 個数は翻訳の数と一致するはず
+    assert_equal ages.size, datasets.size
+
+    ages.each_with_index do |age, i|
+      assert_equal age, datasets[i][:label]
+      assert_equal [total_age[[1, i]].to_f, total_age[[2, i]].to_f], datasets[i][:data]
+      assert_equal COLORS[i], datasets[i][:backgroundColor]
+    end
   end
 
   test "tab4_datasets の構築" do
