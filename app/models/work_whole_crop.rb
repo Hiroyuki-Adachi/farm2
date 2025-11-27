@@ -42,26 +42,20 @@ class WorkWholeCrop < ApplicationRecord
   end
 
   def weight
-    wcs_rolls.valid.count.zero? ? 0 : (wcs_rolls.sum(:weight) / wcs_rolls.valid.count).floor(1)
+    wcs_rolls.valid.none? ? 0 : (wcs_rolls.sum(:weight) / wcs_rolls.valid.count).floor(1)
   end
 
   def self.whole_crop_params(params)
     params.permit(:id, :work_id)
   end
 
-  def roll_price
-    weight.floor(0) * unit_price
-  end
-
   def price
-    roll_price * rolls
+    (weight.round(0) * unit_price * rolls).round(0)
   end
 
-  def tax_amount
-    (price * tax_rate / 100).floor(0)
-  end
-
-  def amount
-    price + tax_amount
+  def self.update_prices(sys)
+    # rubocop:disable Rails/SkipsModelValidations
+    joins(:work).where(works: { term: sys.term }).update_all("unit_price = #{sys.roll_price}")
+    # rubocop:enable Rails/SkipsModelValidations
   end
 end
