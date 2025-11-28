@@ -58,6 +58,7 @@ s2015:
   dry_adjust_price: 1300
   adjust_price: 400
   waste_price: 300
+  roll_price: 10.5
 
 s2016:
   term: 2016
