@@ -12,7 +12,11 @@ class WholeCropsController < ApplicationController
         @whole_crops = WholeCropDecorator.decorate_collection(whole_crops.usual_order)
       end
       format.csv do
-        @whole_crops = WholeCropDecorator.decorate_collection(whole_crops.where(id: params[:ids]).usual_order)
+        @whole_crops = if params[:ids].present?
+          WholeCropDecorator.decorate_collection(whole_crops.where(id: params[:ids]).usual_order)
+        else
+          WholeCropDecorator.decorate_collection(WorkWholeCrop.none)
+        end
         send_data render_to_string, filename: "whole_crops_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv", type: :csv
       end
     end
