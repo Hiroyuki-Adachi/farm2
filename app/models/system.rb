@@ -12,6 +12,7 @@
 #  half_sum_flag(半端米集計フラグ)      :boolean          default(FALSE), not null
 #  light_oil_price(軽油価格)            :decimal(4, )     default(0), not null
 #  relative_price(縁故米加算額)         :decimal(5, )     default(0), not null
+#  roll_price                           :decimal(4, 1)    default(0.0), not null
 #  seedling_price(育苗費)               :decimal(4, )     default(0), not null
 #  start_date(期首日)                   :date             not null
 #  target_from(開始年月)                :date
@@ -71,6 +72,15 @@ class System < ApplicationRecord
       end
     end
     return system
+  end
+
+  def get_prev_terms(limit, term: nil)
+    self.class.get_terms(self.organization_id, term || self.term, limit)
+  end
+
+  def self.get_terms(organization_id, start_term, limit)
+    # Get terms up to and including start_term
+    self.where(organization_id:, term: ..start_term).order(term: :desc).limit(limit).pluck(:term)
   end
 
   private

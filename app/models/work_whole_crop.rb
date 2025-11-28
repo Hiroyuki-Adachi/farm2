@@ -21,7 +21,8 @@ class WorkWholeCrop < ApplicationRecord
   has_many :wcs_lands, -> {order("whole_crop_lands.display_order")}, class_name: "WholeCropLand", dependent: :destroy
   has_many :wcs_rolls, through: :wcs_lands
 
-  scope :usual, ->(term) {joins(:work).where(works: { term: term }).order("works.worked_at, works.id")}
+  scope :usual_order, -> {joins(:work).order("works.worked_at, works.id")}
+  scope :usual, ->(term) {joins(:work).where(works: { term: term }) }
   scope :for_harvest, ->(term) {
     joins(work: :work_type).where(works: { term: term })
     .order("work_types.display_order, works.worked_at, works.id")
@@ -42,26 +43,20 @@ class WorkWholeCrop < ApplicationRecord
   end
 
   def weight
-    wcs_rolls.valid.count.zero? ? 0 : (wcs_rolls.sum(:weight) / wcs_rolls.valid.count).floor(1)
+    wcs_rolls.valid.none? ? 0 : (wcs_rolls.sum(:weight) / wcs_rolls.valid.count).floor(1)
   end
 
   def self.whole_crop_params(params)
     params.permit(:id, :work_id)
   end
 
-  def roll_price
-    weight.floor(0) * unit_price
-  end
-
   def price
-    roll_price * rolls
+    (weight.round(0) * unit_price * rolls).round(0)
   end
 
-  def tax_amount
-    (price * tax_rate / 100).floor(0)
-  end
-
-  def amount
-    price + tax_amount
+  def self.update_prices(sys)
+    # rubocop:disable Rails/SkipsModelValidations
+    joins(:work).where(works: { term: sys.term }).update_all(["unit_price = ?", sys.roll_price])
+    # rubocop:enable Rails/SkipsModelValidations
   end
 end

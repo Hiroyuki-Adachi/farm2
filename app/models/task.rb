@@ -399,6 +399,7 @@ class Task < ApplicationRecord
 
   private
 
+  # rubocop:disable Naming/PredicateMethod
   # 共通ラッパ：コメントを（あれば）作ってトランザクション内でyield
   def in_change_tx!(actor:, comment:)
     transaction do
@@ -408,6 +409,7 @@ class Task < ApplicationRecord
     end
     true
   end
+  # rubocop:enable Naming/PredicateMethod
 
   def add_work_core!(actor:, work:, close: false, comment: nil)
     task_comment = comment.present? ? self.comments.create!(poster: actor, body: comment) : nil
