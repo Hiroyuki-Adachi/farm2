@@ -21,7 +21,8 @@ class WorkWholeCrop < ApplicationRecord
   has_many :wcs_lands, -> {order("whole_crop_lands.display_order")}, class_name: "WholeCropLand", dependent: :destroy
   has_many :wcs_rolls, through: :wcs_lands
 
-  scope :usual, ->(term) {joins(:work).where(works: { term: term }).order("works.worked_at, works.id")}
+  scope :usual_order, -> {joins(:work).order("works.worked_at, works.id")}
+  scope :usual, ->(term) {joins(:work).where(works: { term: term }) }
   scope :for_harvest, ->(term) {
     joins(work: :work_type).where(works: { term: term })
     .order("work_types.display_order, works.worked_at, works.id")

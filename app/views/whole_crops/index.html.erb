@@ -1,35 +1,70 @@
 <h1>WCS一覧</h1>
-<table class="table table-sm" style="width:auto;">
-  <thead>
-    <tr>
-      <th></th>
-      <th>品種</th>
-      <th>収穫日</th>
-      <th class="numeric">重量</th>
-      <th class="numeric">数量</th>
-      <th class="numeric">単価</th>
-      <th class="numeric">金額</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @whole_crops.each do |whole_crop| %>
+<div data-controller="pages--wcs-filters">
+  <div class="row">
+    <div class="col-md-3">
+      <h5>品種</h5>
+      <% @work_types.each do |work_type| %>
+        <%= tag.label do %>
+        <%= check_box_tag "work_type_ids[]", work_type.id, false, 
+          class: "work-type-filter", 
+          data: { work_type_id: work_type.id, action: "change->pages--wcs-filters#apply" } %>
+        <%= work_type.name %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-md-3">
+      <h5>対象期間</h5>
+      <% @year_months.each do |ym| %>
+        <%= tag.label do %>
+        <%= check_box_tag "worked_months[]", ym, false,
+          class: "worked-month-filter",
+          data: { ym: ym, action: "change->pages--wcs-filters#apply" } %>
+        <%= Date.parse("#{ym}-01").strftime("%Y年%m月") %>
+        <% end %>
+      <% end %>
+    </div>
+    <hr />
+  </div>
+  <%= form_with url: whole_crops_path(format: :csv), method: :get do %>
+  <table class="table table-sm" style="width:auto;">
+    <thead>
       <tr>
-        <td><%= checkbox_tag "whole_crop[][id]", whole_crop.id %></td>
-        <td><%= whole_crop.work.work_type.name %></td>
-        <td><%= whole_crop.work.worked_at %></td>
-        <td class="numeric"><%= whole_crop.weight %></td>
-        <td class="numeric"><%= whole_crop.rolls %></td>
-        <td class="numeric"><%=  whole_crop.unit_price %></td>
-        <td class="numeric"><%= whole_crop.price %></td>
+        <th></th>
+        <th>品種</th>
+        <th>収穫日</th>
+        <th class="numeric">重量</th>
+        <th class="numeric">数量</th>
+        <th class="numeric">単価</th>
+        <th class="numeric">金額</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @whole_crops.each do |whole_crop| %>
+        <tr>
+          <td><%= checkbox_tag "ids[]", whole_crop.id,
+            class: "wcs-row-checkbox",
+            data: {
+              work_type_id: whole_crop.work.work_type_id,
+              worked_month: whole_crop.work.model.worked_at.strftime("%Y-%m")
+            } %>
+          </td>
+          <td><%= whole_crop.work.work_type.name %></td>
+          <td><%= whole_crop.work.worked_at %></td>
+          <td class="numeric"><%= whole_crop.weight %></td>
+          <td class="numeric"><%= whole_crop.rolls %></td>
+          <td class="numeric"><%=  whole_crop.unit_price %></td>
+          <td class="numeric"><%= whole_crop.price %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
-    <%= link_to "CSV出力", whole_crops_path(format: :csv), {class: "btn btn-outline-success"} %>
+    <%= submit_tag "CSV出力", {class: "btn btn-outline-success"} %>
   </div>
   <div class="btn-group mr-2">
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
+<% end %>
