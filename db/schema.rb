@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_22_083120) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_27_101045) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -766,6 +766,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_22_083120) do
     t.decimal "light_oil_price", precision: 4, default: "0", null: false, comment: "軽油価格"
     t.integer "organization_id", default: 0, null: false, comment: "組織"
     t.decimal "relative_price", precision: 5, default: "0", null: false, comment: "縁故米加算額"
+    t.decimal "roll_price", precision: 4, scale: 1, default: "0.0", null: false
     t.integer "seedling_chemical_id", default: 0, comment: "育苗土"
     t.decimal "seedling_price", precision: 4, default: "0", null: false, comment: "育苗費"
     t.date "start_date", null: false, comment: "期首日"

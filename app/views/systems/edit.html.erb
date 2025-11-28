@@ -57,6 +57,10 @@
       <%= f.label :waste_adjust_price, class: "col-form-label-lg form-label" %>
       <%= f.number_field :waste_adjust_price, {min: 0, max: 9999, required: true, class: "form-control"} %>
     </div>
+    <div class="col-md-2 mb-3">
+      <%= f.label :roll_price, class: "col-form-label-lg form-label" %>
+      <%= f.number_field :roll_price, {min: 0, max: 99.9, step: 0.1, required: true, class: "form-control"} %>
+    </div>
   </div>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
