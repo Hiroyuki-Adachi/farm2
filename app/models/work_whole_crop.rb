@@ -56,7 +56,7 @@ class WorkWholeCrop < ApplicationRecord
 
   def self.update_prices(sys)
     # rubocop:disable Rails/SkipsModelValidations
-    joins(:work).where(works: { term: sys.term }).update_all("unit_price = #{sys.roll_price}")
+    joins(:work).where(works: { term: sys.term }).update_all(["unit_price = ?", sys.roll_price])
     # rubocop:enable Rails/SkipsModelValidations
   end
 end
