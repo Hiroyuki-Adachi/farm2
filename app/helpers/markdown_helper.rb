@@ -11,6 +11,16 @@ module MarkdownHelper
   # GFM で欲しい拡張を共通定義
   GFM_EXTENSIONS = %i[TABLE_PREFER_STYLE_ATTRIBUTES FOOTNOTES STRIKETHROUGH TASKLISTS AUTOLINK].freeze
 
+  ALLOWED_TAGS = %w[
+    p br strong em a code pre h1 h2 h3 h4 h5 h6 ul ol li blockquote
+    table thead tbody tr th td hr img div span input del
+  ].freeze
+
+  ALLOWED_ATTRIBUTES = %w[
+    href title src alt class target rel type checked disabled value
+  ].freeze
+
+  # rubocop:disable Naming/MethodParameterName
   # 利用例: <%= markdown_to_html(task.description) %>
   def markdown_to_html(md)
     return "".html_safe if md.blank?
@@ -28,12 +38,11 @@ module MarkdownHelper
     # 最後にサニタイズ（必要なタグ/属性だけ許可）
     sanitize(
       frag.to_html,
-      tags: %w[
-        p br strong em a code pre h1 h2 h3 h4 h5 h6 ul ol li blockquote table thead tbody tr th td hr img div span input
-      ],
-      attributes: %w[href title src alt class target rel type checked disabled value]
+      tags: ALLOWED_TAGS,
+      attributes: ALLOWED_ATTRIBUTES
     )
   end
+  # rubocop:enable Naming/MethodParameterName
 
   private
 
@@ -66,7 +75,7 @@ module MarkdownHelper
   def highlight_codeblocks!(frag)
     frag.css("pre > code").each do |code|
       # 例: <code class="language-ruby"> を想定
-      lang = code["class"].to_s[/\blanguage-([A-Za-z0-9_+\-]+)/, 1]
+      lang = code["class"].to_s[/\blanguage-([A-Za-z0-9_+-]+)/, 1]
       lexer = pick_lexer(lang, code.text)
       highlighted = ROUGE_FORMATTER.format(lexer.lex(code.text))
       code.parent.replace(%(<div class="highlight">#{highlighted}</div>))

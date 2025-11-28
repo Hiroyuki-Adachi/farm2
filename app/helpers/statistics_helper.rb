@@ -1,4 +1,6 @@
 module StatisticsHelper
+  ALL_MONTHS = (1..12)
+
   COLORS = [
     'rgba(99, 200, 132, 1.0)',
     'rgba(99, 132, 200, 1.0)',
@@ -47,17 +49,23 @@ module StatisticsHelper
     return results
   end
 
-  def tab4_datasets(current_results, previous_results)
+  def tab4_datasets(current_results, previous_results, average_results)
     results = []
     results << {
+      label: "過去平均",
+      data: ALL_MONTHS.map { |month| average_results[month - 1].to_f },
+      backgroundColor: COLORS[1],
+      fill: false
+    }
+    results << {
       label: "前年度",
-      data: (1..12).map { |month| previous_results[month - 1].to_f },
+      data: ALL_MONTHS.map { |month| previous_results[month - 1].to_f },
       backgroundColor: 'rgba(192, 192, 192, 1.0)',
       fill: false
     }
     results << {
       label: "今年度",
-      data: (1..12).map { |month| current_results[month - 1].to_f },
+      data: ALL_MONTHS.map { |month| current_results[month - 1].to_f },
       backgroundColor: COLORS[0],
       fill: false
     }

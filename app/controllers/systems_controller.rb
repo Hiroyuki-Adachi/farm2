@@ -32,7 +32,8 @@ class SystemsController < ApplicationController
         :waste_price,
         :relative_price,
         :waste_drying_price,
-        :waste_adjust_price
+        :waste_adjust_price,
+        :roll_price
       ])
   end
 end

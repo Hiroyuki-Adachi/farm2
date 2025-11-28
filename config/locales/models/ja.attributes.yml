@@ -196,6 +196,7 @@ ja:
         relative_price: "縁故米(加算額)"
         waste_drying_price: "くず米金額(乾燥)"
         waste_adjust_price: "くず米金額(調整)"
+        roll_price: "WCSロール単価"
 
       organization:
         name: "組織名称"

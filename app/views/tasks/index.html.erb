@@ -1,21 +1,25 @@
 <h1>タスク一覧</h1>
-
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th><%= I18n.t("activerecord.attributes.task.title") %></th>
-      <th><%= I18n.t("activerecord.attributes.task.priority") %></th>
-      <th><%= I18n.t("activerecord.attributes.task.due_on") %></th>
-      <th><%= I18n.t("activerecord.attributes.task.status") %></th>
-      <th><%= I18n.t("activerecord.attributes.task.kind") %></th>
-      <th><%= I18n.t("activerecord.attributes.task.office_role") %></th>
-      <th><%= I18n.t("activerecord.attributes.task.assignee_id") %></th>
-      <th>監視</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render tasks %> <!-- _task.html.erb を行パーシャルに -->
-  </tbody>
-</table>
-
+<div class="container my-4">
+  <div class="d-flex gap-2 mb-3">
+    <%= link_to "カンバンへ", tasks_kanbans_path, class: "btn btn-sm btn-outline-secondary" %>
+    <%= link_to "ガントチャートへ", tasks_gantts_path, class: "btn btn-sm btn-outline-secondary" %>
+  </div>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th><%= I18n.t("activerecord.attributes.task.title") %></th>
+        <th><%= I18n.t("activerecord.attributes.task.priority") %></th>
+        <th><%= I18n.t("activerecord.attributes.task.due_on") %></th>
+        <th><%= I18n.t("activerecord.attributes.task.status") %></th>
+        <th><%= I18n.t("activerecord.attributes.task.kind") %></th>
+        <th><%= I18n.t("activerecord.attributes.task.office_role") %></th>
+        <th><%= I18n.t("activerecord.attributes.task.assignee_id") %></th>
+        <th>監視</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render tasks %> <!-- _task.html.erb を行パーシャルに -->
+    </tbody>
+  </table>
+</div>
 <%= link_to "新規作成", new_task_path, class: "btn btn-success" %>

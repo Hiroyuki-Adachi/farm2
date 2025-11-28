@@ -2,27 +2,30 @@
 #
 # Table name: tasks(タスク)
 #
-#  id                             :bigint           not null, primary key
-#  description(説明)              :text             default(""), not null
-#  due_on(期限)                   :date
-#  end_reason(完了理由)           :integer          default("unset"), not null
-#  ended_on(完了日)               :date
-#  office_role(役割)              :integer          default("none"), not null
-#  priority(優先度)               :integer          default("low"), not null
-#  started_on(着手日)             :date
-#  title(タスク名)                :string(64)       default(""), not null
-#  created_at                     :datetime         not null
-#  updated_at                     :datetime         not null
-#  assignee_id(担当者)            :bigint
-#  creator_id(作成者)             :bigint
-#  task_status_id(状態)           :integer          default(0), not null
-#  task_template_id(定型タスクID) :bigint
+#  id                              :bigint           not null, primary key
+#  description(説明)               :text             default(""), not null
+#  due_on(期限)                    :date
+#  end_reason(完了理由)            :integer          default("unset"), not null
+#  ended_on(完了日)                :date
+#  kanban_position(カンバンの位置) :integer          default(0), not null
+#  office_role(役割)               :integer          default("none"), not null
+#  planned_start_on(開始予定日)    :date             default(Mon, 01 Jan 1900), not null
+#  priority(優先度)                :integer          default("low"), not null
+#  started_on(着手日)              :date
+#  title(タスク名)                 :string(64)       default(""), not null
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  assignee_id(担当者)             :bigint
+#  creator_id(作成者)              :bigint
+#  task_status_id(状態)            :integer          default(0), not null
+#  task_template_id(定型タスクID)  :bigint
 #
 # Indexes
 #
-#  index_tasks_on_assignee_id       (assignee_id)
-#  index_tasks_on_creator_id        (creator_id)
-#  index_tasks_on_task_template_id  (task_template_id)
+#  index_tasks_on_assignee_id                         (assignee_id)
+#  index_tasks_on_creator_id                          (creator_id)
+#  index_tasks_on_task_status_id_and_kanban_position  (task_status_id,kanban_position)
+#  index_tasks_on_task_template_id                    (task_template_id)
 #
 # Foreign Keys
 #
@@ -53,6 +56,7 @@ class Task < ApplicationRecord
   before_save :clear_end_info
   after_create :create_watcher
   after_create :create_task_event
+  after_create :create_planned_start_on
   after_create :init_task_reads
 
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
@@ -64,6 +68,7 @@ class Task < ApplicationRecord
   validates :end_reason, presence: true
 
   validate :ended_on_after_started_on
+  validate :ended_on_after_planned_start_on
 
   scope :usual_order, -> do
     pairs = TaskStatus.all.map { |s| [s.id, s.display_order] }
@@ -72,6 +77,9 @@ class Task < ApplicationRecord
     joins("JOIN (VALUES #{values_sql}) AS statuses(id, display_order) ON statuses.id = tasks.task_status_id")
       .order(Arel.sql("COALESCE(statuses.display_order, 99999999) ASC, due_on ASC NULLS LAST, priority DESC, tasks.id ASC"))
   end
+
+  scope :kanban_order, -> { order(:kanban_position, :id) }
+  scope :gantts_order, -> { order(:due_on, :planned_start_on, :id)}
 
   scope :for_index, ->(days: 30) do
     cutoff     = Time.zone.now - days.days
@@ -132,11 +140,7 @@ class Task < ApplicationRecord
             .where(task_watcher_table[:task_id].eq(task_table[:id]))
 
     exists = Arel::Nodes::Exists.new(subq.arel)
-    participant = Task.where(task_table[:assignee_id].eq(worker.id).or(exists))
-
-    participant
-      .where(task_status_id: TaskStatus.open_ids)
-      .usual_order
+    where(task_table[:assignee_id].eq(worker.id).or(exists)).includes(:assignee)
   end
   
   scope :with_watch_flag, ->(worker_id) do
@@ -167,6 +171,19 @@ class Task < ApplicationRecord
     select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
   end
 
+  scope :for_kanban, ->(kanban_column) { where(task_status_id: TaskStatus.kanban_column_ids(kanban_column)) }
+  scope :kanban_todo, -> { for_kanban(TaskStatus::KANBAN_TODO) }
+  scope :kanban_doing, -> { for_kanban(TaskStatus::KANBAN_DOING) }
+  scope :kanban_done, ->(days: 15) { for_kanban(TaskStatus::KANBAN_DONE).where(ended_on: (Time.zone.today - days.days)..) }
+
+  scope :for_gantt, ->(start_date, end_date) do
+    where(
+      arel_table[:planned_start_on].lteq(end_date)
+        .and(arel_table[:due_on].gteq(start_date))
+    )
+  end
+
+  # ステータス判定メソッド群
   def closed?
     self.status.closed_flag
   end
@@ -239,24 +256,20 @@ class Task < ApplicationRecord
 
     in_change_tx!(actor: actor, comment: comment) do |c|
       events.create!(
-        actor: actor, event_type: :change_status,
-        status_from_id: self.task_status_id, status_to_id: new_status.id,
-        comment: c
+        actor: actor,
+        event_type: :change_status,
+        status_from_id: self.task_status_id,
+        status_to_id: new_status.id,
+        comment: c,
+        source: :form
       )
-      self.task_status_id = new_status.id
-      if new_status.started_flag
-        self.started_on = Time.zone.today
-      elsif new_status.closed_flag
-        self.ended_on = Time.zone.today
-        self.started_on ||= Time.zone.today
-        self.end_reason = new_params[:end_reason].presence || :other
-      end
+      self.update_for_start_or_end(new_status, new_params[:end_reason])
       self.save!
     end
   end
 
   # 期限変更
-  def change_due_on!(new_due_on, actor, comment = nil)
+  def change_due_on!(new_due_on, actor, comment: nil, source: :form)
     self.comment = comment
     if new_due_on.presence&.to_date == due_on
       errors.add(:due_on, "が変更されていません")
@@ -271,7 +284,8 @@ class Task < ApplicationRecord
       events.create!(
         actor: actor, event_type: :change_due_on,
         due_on_from: due_on, due_on_to: new_due_on,
-        comment: c
+        comment: c,
+        source: source
       )
       update!(due_on: new_due_on)
     end
@@ -303,7 +317,7 @@ class Task < ApplicationRecord
 
   def add_comment!(actor:, body:)
     comment = self.comments.create!(poster: actor, body: body)
-    TaskEvent.create!(task: self, actor: actor, event_type: :add_comment, comment: comment)
+    TaskEvent.create!(task: self, actor: actor, event_type: :add_comment, comment: comment, source: :form)
   end
 
   def add_work!(actor:, work:, close: false, comment: nil)
@@ -343,8 +357,49 @@ class Task < ApplicationRecord
     end
   end
 
+  def move_on_kanban!(new_kanban_column, new_position, actor:)
+    self.class.transaction do
+      old_status_id = self.task_status_id
+      old_kanban_column = TaskStatus.find_by(id: old_status_id)&.kanban_column
+
+      if old_kanban_column == new_kanban_column
+        update!(kanban_position: new_position)
+      else
+        new_status = TaskStatus.kanban_status(old_status_id, new_kanban_column)
+        self.kanban_position = new_position
+        self.update_for_start_or_end(new_status, :completed)
+        self.save!
+        TaskEvent.create!(
+          task_id: id,
+          actor_id: actor.id,
+          event_type: :change_status, 
+          status_from_id: old_status_id,
+          status_to_id: new_status.id,
+          source: :kanban
+        )
+      end
+    end
+  end
+
+  def gantt_end_on
+    # 期日があれば、それを尊重
+    return ended_on if closed? && ended_on.present?
+    return due_on if due_on.present?
+
+    if planned_start_on == Date.new(1900, 1, 1)
+      Date.current
+    else
+      planned_start_on
+    end
+  end
+
+  def gantt_period
+    (planned_start_on..gantt_end_on)
+  end
+
   private
 
+  # rubocop:disable Naming/PredicateMethod
   # 共通ラッパ：コメントを（あれば）作ってトランザクション内でyield
   def in_change_tx!(actor:, comment:)
     transaction do
@@ -354,18 +409,19 @@ class Task < ApplicationRecord
     end
     true
   end
+  # rubocop:enable Naming/PredicateMethod
 
   def add_work_core!(actor:, work:, close: false, comment: nil)
     task_comment = comment.present? ? self.comments.create!(poster: actor, body: comment) : nil
     if close
-      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work, comment: task_comment)
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work, comment: task_comment, source: :form)
       update!(status: TaskStatus::DONE, started_on: started_on || work.worked_at, ended_on: work.worked_at, end_reason: :completed)
       return
     end
     if status == TaskStatus::DOING
-      TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work, comment: task_comment)
+      TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work, comment: task_comment, source: :form)
     elsif [TaskStatus::TO_DO, TaskStatus::REOPEN].include?(status)
-      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work, comment: task_comment)
+      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work, comment: task_comment, source: :form)
       update!(status: TaskStatus::DOING, started_on: work.worked_at)
     else
       raise "Cannot add work when task status is #{status.name}"
@@ -376,6 +432,12 @@ class Task < ApplicationRecord
     return if ended_on.blank? || started_on.blank?
 
     errors.add(:ended_on, "は着手日以降の日付にしてください。") if ended_on < started_on
+  end
+
+  def ended_on_after_planned_start_on
+    return if ended_on.blank?
+
+    errors.add(:ended_on, "は開始予定日以降の日付にしてください。") if ended_on < planned_start_on
   end
 
   def end_reason_for_closed
@@ -403,7 +465,8 @@ class Task < ApplicationRecord
     TaskEvent.create!(
       task: self,
       actor: self.creator,
-      event_type: :task_created
+      event_type: :task_created,
+      source: :form
     )
   end
 
@@ -412,5 +475,20 @@ class Task < ApplicationRecord
     TaskRead.touch_and_get_previous!(task: self, worker_id: self.creator_id, at: self.created_at)
     return if self.assignee.blank? || self.assignee_id == self.creator_id
     TaskRead.touch_and_get_previous!(task: self, worker_id: self.assignee_id, at: Time.at(0))
+  end
+
+  def update_for_start_or_end(new_status, end_reason)
+    self.task_status_id = new_status.id
+    if new_status.started_flag
+      self.started_on ||= Time.zone.today
+    elsif new_status.closed_flag
+      self.ended_on = Time.zone.today
+      self.started_on ||= Time.zone.today
+      self.end_reason = end_reason || :other
+    end
+  end
+
+  def create_planned_start_on
+    self.update(planned_start_on: self.created_at.to_date)
   end
 end

@@ -51,7 +51,7 @@ namespace :calendars do
 end
 resources :contracts, only: [:index]
 resources :minutes, only: [:index, :create, :show, :destroy]
-resources :whole_crops, only: [:index, :create]
+resources :whole_crops, only: [:index]
 resources :total_seedlings, only: [:index]
 resources :total_chemicals, only: [:index]
 resources :total_dryings, only: [:index]
@@ -215,6 +215,10 @@ namespace :work do
   resources :genres, controller: "/works/genres", only: [:index, :new, :create, :edit, :update, :destroy]
 end
 
+namespace :tasks do
+  resource :kanbans, only: [:show, :update]
+  resource :gantts, only: [:show, :update]
+end
 resources :tasks, except: [:edit, :update] do
   resource :assignee, controller: "tasks/assignees", only: [:edit, :update]
   resource :description, controller: "tasks/descriptions", only: [:edit, :update]

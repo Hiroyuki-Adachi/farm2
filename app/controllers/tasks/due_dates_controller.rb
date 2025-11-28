@@ -4,7 +4,7 @@ class Tasks::DueDatesController < TasksController
   def edit; end
 
   def update
-    @task.change_due_on!(new_due_on, current_user.worker, task_comment)
+    @task.change_due_on!(new_due_on, current_user.worker, comment: task_comment)
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to @task, notice: "期限を更新しました" }

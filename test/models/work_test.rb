@@ -52,7 +52,7 @@ class WorkTest < ActiveSupport::TestCase
 
   test "工数統計_総合計" do
     total_hours = Work.joins(:work_results).where(term: 2015).sum("work_results.hours")
-    assert_equal total_hours, Work.total_all[2015]
+    assert_equal total_hours, Work.total_all([2015])[2015]
   end
 
   test "工数統計_ジャンル別" do
