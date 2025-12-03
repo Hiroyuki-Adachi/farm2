@@ -15,11 +15,14 @@ class RegistIpListTest < ActionDispatch::IntegrationTest
     user_token = nil
     user_line_id = nil
 
-    LineHookService.define_singleton_method(:push_message) do |line_id, message|
-      user_line_id = line_id
-      user_token = message.split("\n").last.strip
-      Net::HTTPOK.new("1.1", "200", "OK")
-    end
+    LineHookService.stubs(:push_message)
+      .with do |line_id, message, kwargs|
+        user_line_id = line_id
+        user_token = message.split("\n").last.strip
+        # retry_key が付いてきてもOKにする
+        kwargs[:retry_key].is_a?(String) || kwargs[:retry_key].nil?
+      end
+      .returns(Net::HTTPOK.new("1.1", "200", "OK"))
 
     post ip_lists_path, params: { login_name: @user.login_name }, headers: { 'REMOTE_ADDR' => @ip_address }
     ip = IpList.last

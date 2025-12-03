@@ -14,7 +14,7 @@ class IpListsController < ApplicationController
     return to_error_path unless user.linable? || user.otp_enabled
 
     ip = IpList.white_ip!(request.remote_ip, user)
-    if user.otp_enabled || LineHookService.push_message(user.line_id, I18n.t('line_authentication', token: ip.token)).is_a?(Net::HTTPSuccess)
+    if user.otp_enabled || LineHookService.push_message(user.line_id, I18n.t('line_authentication', token: ip.token), retry_key: SecureRandom.uuid).is_a?(Net::HTTPSuccess)
       redirect_to edit_ip_list_path(ip)
     else
       ip.destroy
