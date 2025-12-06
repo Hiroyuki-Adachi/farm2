@@ -17,7 +17,7 @@ class Tasks::GanttsController < ApplicationController
     rescue StandardError
       nil
     end
-    return head :unprocessable_entity unless date
+    return head :unprocessable_content unless date
 
     case params[:edge].to_sym
     when :start
@@ -27,7 +27,7 @@ class Tasks::GanttsController < ApplicationController
       date = task.planned_start_on if date < task.planned_start_on
       task.change_due_on!(date, current_user.worker, source: :gantt)
     else
-      return head :unprocessable_entity
+      return head :unprocessable_content
     end
 
     @task = task.decorate(context: { current_worker: current_user.worker })
@@ -37,7 +37,7 @@ class Tasks::GanttsController < ApplicationController
     end
   rescue StandardError => e
     respond_to do |format|
-      format.turbo_stream { render plain: "Error updating gantt: #{e.message}", status: :unprocessable_entity }
+      format.turbo_stream { render plain: "Error updating gantt: #{e.message}", status: :unprocessable_content }
     end
   end
 
