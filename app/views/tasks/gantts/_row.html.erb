@@ -4,10 +4,11 @@
       <%= link_to task.title, task_path(task, from: :gantt), class: "text-decoration-none" %>
     </div>
     <div class="small text-body-secondary">
-      期限:
-      <%= task.due_on&.strftime("%Y-%m-%d") || "未設定" %>
-      ／ 開始:
+      開始:
       <%= task.planned_start_on&.strftime("%Y-%m-%d") || "未設定" %>
+      ／ 
+      期限:
+      <%= task.gantt_end_on&.strftime("%Y-%m-%d") || "未設定" %>
     </div>
   </td>
 

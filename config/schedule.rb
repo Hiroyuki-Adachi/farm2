@@ -18,19 +18,19 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-env :PATH, ENV['PATH']
+env :PATH, ENV.fetch('PATH', '')
 env :RAILS_ENV, 'production'
 
 # rbenv 初期化用（bash）
-rbenv_root = "#{ENV['HOME']}/.rbenv"
+rbenv_root = "#{Dir.home}/.rbenv"
 env :RBENV_ROOT, rbenv_root
 set :env_path, "#{rbenv_root}/shims:#{rbenv_root}/bin"
 
 set :output, "/opt/app/farm2/log/cron.log"
 
-job_type :rake,   %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bin/rake :task --silent :output }
-job_type :runner, %q{ cd :path && PATH=:env_path:"$PATH" bin/rails runner -e :environment ':task' :output }
-job_type :script, %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bundle exec bin/:task :output }
+job_type :rake,   ' cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bin/rake :task --silent :output '
+job_type :runner, ' cd :path && PATH=:env_path:"$PATH" bin/rails runner -e :environment \':task\' :output '
+job_type :script, ' cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bundle exec bin/:task :output '
 
 every 1.day, at: '02:20 am' do
   runner "CreateTaskFromTemplateJob.perform_now"
@@ -66,4 +66,8 @@ end
 
 every 1.day, at: '05:40 pm' do
   runner "ScheduleDeliverJob.perform_now(:afternoon)"
+end
+
+every 10.minutes, cron: "*/10 8-20 * * *" do
+  runner "MailsDeliverJob.perform_now"
 end
