@@ -27,13 +27,13 @@ class ImapMailFetcher
     if imap
       begin
         imap.logout
-      rescue StandardError
-        nil
+      rescue StandardError => e
+        Rails.logger.warn("IMAP logout failed: #{e.message}")
       end
       begin
         imap.disconnect
-      rescue StandardError
-        nil
+      rescue StandardError => e
+        Rails.logger.warn("IMAP disconnect failed: #{e.message}")
       end
     end
   end
