@@ -18,7 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-env :PATH, ENV.fetch('PATH')
+env :PATH, ENV.fetch('PATH', '')
 env :RAILS_ENV, 'production'
 
 # rbenv 初期化用（bash）
