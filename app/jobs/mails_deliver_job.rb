@@ -19,7 +19,7 @@ class MailsDeliverJob < ApplicationJob
   def strip_title(mail)
     titles = []
     titles << "件名:#{mail.subject}"
-    titles << "受信日:#{mail.date.strftime('%Y-%m-%d %H:%M:%S')}"
+    titles << "受信日:#{mail.date&.strftime('%Y-%m-%d %H:%M:%S') || 'Unknown'}"
     titles << "送信元:#{extract_address(mail[:from].addrs.first)}"
 
     titles.join("\n")
