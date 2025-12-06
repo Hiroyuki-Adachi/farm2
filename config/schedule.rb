@@ -29,7 +29,7 @@ set :env_path, "#{rbenv_root}/shims:#{rbenv_root}/bin"
 set :output, "/opt/app/farm2/log/cron.log"
 
 job_type :rake,   ' cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bin/rake :task --silent :output '
-job_type :runner, %q( cd :path && PATH=:env_path:"$PATH" bin/rails runner -e :environment ':task' :output )
+job_type :runner, ' cd :path && PATH=:env_path:"$PATH" bin/rails runner -e :environment \':task\' :output '
 job_type :script, ' cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bundle exec bin/:task :output '
 
 every 1.day, at: '02:20 am' do
