@@ -25,7 +25,7 @@ class ScheduleDeliverJob < ApplicationJob
         messages << "#{schedule.start_at}から#{schedule.name}です。"
       end
 
-      LineHookService.push_message(user.line_id, messages.join("\n"))
+      LineHookService.push_message(user.line_id, messages.join("\n"), retry_key: SecureRandom.uuid)
     end
   end
 end

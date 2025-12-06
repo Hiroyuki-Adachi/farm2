@@ -2,7 +2,7 @@ require "test_helper"
 
 class DiskCheckJobTest < ActiveJob::TestCase
   setup do
-    ENV.stubs(:fetch).with('LINE_SECRETARIANT_ID', anything).returns('fake-line-id')
+    Rails.application.credentials.stubs(:dig).with(:line, :secretariant_id).returns("fake-line-id")
     @line_id = 'fake-line-id'
   end
 
@@ -23,7 +23,7 @@ class DiskCheckJobTest < ActiveJob::TestCase
     stub_df('/dev/sda1   40G   10G   30G  25% /')
 
     travel_to Time.zone.local(2023, 10, 1, 12, 0, 0) do
-      LineHookService.expects(:push_message).with(@line_id, includes('🟦'))
+      LineHookService.expects(:push_message).with(@line_id, includes('🟦'), has_key(:retry_key))
       perform_enqueued_jobs { DiskCheckJob.perform_now }
     end
   end
@@ -31,7 +31,7 @@ class DiskCheckJobTest < ActiveJob::TestCase
   test "通知される(空き容量が20%)" do
     stub_df('/dev/sda1   40G   32G   8G  80% /')
 
-    LineHookService.expects(:push_message).with(@line_id, includes('🟧'))
+    LineHookService.expects(:push_message).with(@line_id, includes('🟧'), has_key(:retry_key))
     perform_enqueued_jobs { DiskCheckJob.perform_now }
   end
 
@@ -40,7 +40,7 @@ class DiskCheckJobTest < ActiveJob::TestCase
 
     7.times do |i|
       travel_to Time.zone.local(2023, 10, 1 + i, 12, 0, 0) do
-        LineHookService.expects(:push_message).with(@line_id, includes('🟥'))
+        LineHookService.expects(:push_message).with(@line_id, includes('🟥'), has_key(:retry_key))
         perform_enqueued_jobs { DiskCheckJob.perform_now }
       end
     end
