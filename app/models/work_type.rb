@@ -79,7 +79,7 @@ SQL
   end
 
   def bg_color_term(term)
-    return work_type_terms.find_by(term: term)&.bg_color || self.bg_color
+    return work_type_terms.find_by(term: term)&.bg_color || self.bg_color || '#ffffff'
   end
 
   def bg_color_date(organization, date)

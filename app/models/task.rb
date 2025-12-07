@@ -497,7 +497,8 @@ class Task < ApplicationRecord
       self.started_on ||= Time.zone.today
     elsif new_status.closed_flag
       self.ended_on = Time.zone.today
-      self.started_on ||= Time.zone.today
+      self.started_on = self.ended_on if self.started_on.nil? || self.started_on > self.ended_on
+      self.planned_start_on = self.ended_on if self.planned_start_on > self.ended_on
       self.end_reason = end_reason || :other
     end
   end
