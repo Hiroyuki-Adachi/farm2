@@ -79,7 +79,7 @@ SQL
   end
 
   def bg_color_term(term)
-    return work_type_terms.find_by(term: term)&.bg_color || self.bg_color
+    return work_type_terms.find_by(term: term)&.bg_color || self.bg_color || '#ffffff'
   end
 
   def bg_color_date(organization, date)
@@ -99,6 +99,7 @@ SQL
   end
 
   def fg_color_date(organization, date)
+    Rails.logger.debug { "work_type:#{id} fg_color_date term:#{organization.get_term(date)}" }
     return fg_color_term(organization.get_term(date))
   end
 
