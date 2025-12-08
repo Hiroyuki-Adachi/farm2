@@ -12,7 +12,6 @@ class WorksController < ApplicationController
   before_action :permit_not_visitor, except: [:index, :show]
   before_action :permit_checkable_or_self, only: [:edit, :update, :destroy]
   before_action :permit_visitor, only: :show
-  before_action :set_term, only: :index
   before_action :set_work_types, only: :index
   before_action :permit_this_term, only: [:edit, :update, :destroy]
 
@@ -20,17 +19,42 @@ class WorksController < ApplicationController
 
   def index
     @terms = WorkDecorator.terms
-    @works = Work.usual(@term)
-    @works = @works.by_worker(current_user.worker) if current_user.visitor?
-    @sum_hours = sum_hours(@term)
+
+    # term は params 優先。なければ current_term
+    @term = params[:term].presence || current_term
+
+    # term でベースを絞る
+    base = Work.usual(@term)
+    base = base.by_worker(current_user.worker) if current_user.visitor?
+
+    # 検索条件（ビューでフォームの初期値にも使う）
+    @work_search = {
+      work_type_id: params[:work_type_id],
+      work_kind_id: params[:work_kind_id],
+      worked_at1: params[:worked_at1],
+      worked_at2: params[:worked_at2],
+      except: params[:except]
+    }
+
+    # 検索実行
+    @works = Work.search_for_work(base, @work_search)
+
+    # 集計もここで
+    @sum_hours     = sum_hours(@term)
     @count_workers = count_workers(@term)
-    set_pager
+    @works_count   = @works.count
+    @total_hours   = @works.sum { |w| @sum_hours[w.id] || 0 }
+    @total_workers = @works.sum { |w| @count_workers[w.id] || 0 }
+    @total_hours_member = WorkResult.sum_hours_for_member(@works)
+
+    set_work_types # （この中で @work_types, @work_kinds をセットする今のメソッド）
+
     respond_to do |format|
       format.html do
-        @works = WorkDecorator.decorate_collection(@works.page(@work_search[:page]))
+        @works = WorkDecorator.decorate_collection(@works.page(params[:page]))
       end
       format.csv do
-        render :content_type => 'text/csv; charset=cp943'
+        render content_type: 'text/csv; charset=cp943'
       end
     end
   end
@@ -138,55 +162,6 @@ class WorksController < ApplicationController
 
   def clear_cache
     Rails.cache.clear
-  end
-
-  def set_pager
-    set_search_info
-    do_search
-    set_session
-  end
-
-  def set_term
-    path = Rails.application.routes.recognize_path(request.referer)
-    @term = if path[:controller] == "menu" || session[:work_search].nil?
-              current_term
-            elsif path[:controller] == "works" && path[:action] == "index"
-              params[:term] || current_term
-            else
-              session[:work_search]["term"] || current_term
-            end
-  end
-
-  def set_search_info
-    path = Rails.application.routes.recognize_path(request.referer)
-    @work_search = {}
-    if path[:controller] == "menu" || session[:work_search].nil?
-      session.delete(:work_search)
-      @work_search = {page: 1}
-    elsif path[:controller] == "works" && path[:action] == "index" && params[:format] != "csv"
-      @work_search = {
-        work_type_id: params[:work_type_id],
-        work_kind_id: params[:work_kind_id],
-        worked_at1: params[:worked_at1],
-        worked_at2: params[:worked_at2],
-        except: params[:except],
-        page: params[:page] || 1
-      }
-    else
-      @work_search = session[:work_search]
-    end
-  end
-
-  def do_search
-    @works = Work.search_for_work(@works, @work_search)
-    @works_count = @works.count
-    @total_hours = @works.inject(0) { |a, e| a + (@sum_hours[e.id] || 0)}
-    @total_workers = @works.inject(0) { |a, e| a + (@count_workers[e.id] || 0)}
-    @total_hours_member = WorkResult.sum_hours_for_member(@works)
-  end
-
-  def set_session
-    session[:work_search] = @work_search
   end
 
   def set_work_types
