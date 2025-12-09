@@ -12,7 +12,6 @@ class WorksController < ApplicationController
   before_action :permit_not_visitor, except: [:index, :show]
   before_action :permit_checkable_or_self, only: [:edit, :update, :destroy]
   before_action :permit_visitor, only: :show
-  before_action :set_work_types, only: :index
   before_action :permit_this_term, only: [:edit, :update, :destroy]
 
   helper GmapHelper
