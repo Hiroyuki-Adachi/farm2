@@ -210,6 +210,7 @@ export default class extends Controller {
             myMenu.innerHTML = src.innerHTML
             myMenu.dataset.id = navbarId
             myMenu.style.display = "block"
+            myMenu.style.zIndex = 1050
 
             let left = 0, elm = event.currentTarget
             do { left += elm.offsetLeft || 0; elm = elm.offsetParent } while (elm)

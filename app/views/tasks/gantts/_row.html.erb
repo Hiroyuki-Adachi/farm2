@@ -1,5 +1,5 @@
 <tr id="<%= dom_id(task, :gantt_row) %>">
-  <td class="align-middle">
+  <th class="align-middle row-header">
     <div class="fw-semibold">
       <%= link_to task.title, task_path(task, from: :gantt), class: "text-decoration-none" %>
     </div>
@@ -10,7 +10,7 @@
       期限:
       <%= task.gantt_end_on&.strftime("%Y-%m-%d") || "未設定" %>
     </div>
-  </td>
+  </th>
 
   <% period = task.gantt_period %>
 
