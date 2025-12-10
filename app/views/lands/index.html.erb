@@ -30,7 +30,7 @@
       <td><%= land.owner_id == land.manager_id ? "" : land.manager_name %></td>
       <td><%= land.region.present? ? "◯" : "" %></td>
       <td class="numeric"><%= land.area %></td>
-      <td><%= link_to '修正', edit_land_path(land, home_id: params[:home_id]), {class: "btn btn-success btn-sm"} %></td>
+      <td><%= link_to '修正', edit_land_path(land, home_id: params[:home_id], page: params[:page]), {class: "btn btn-success btn-sm"} %></td>
     </tr>
   <% end %>
   </tbody>

@@ -90,10 +90,11 @@
     </div>
   <% end %>
   <div class="btn-group mr-2">
-    <%= link_to "戻る",  lands_path(home_id: params[:home_id]), class: "btn btn-outline-dark" %>
+    <%= link_to "戻る",  lands_path(home_id: params[:home_id], page: params[:page]), class: "btn btn-outline-dark" %>
   </div>
 </div>
 <%= hidden_field_tag :home_id, params[:home_id] %>
+<%= hidden_field_tag :page, params[:page] %>
 <% end %>
 <div class="modal fade bd-example-modal-lg" id="popup_edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">

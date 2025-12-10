@@ -98,7 +98,7 @@ class WorksController < ApplicationController
   end
 
   def update
-    redirect_to(work_path(@work)) if params[:cancel]
+    redirect_to(work_path(@work, from: :works)) if params[:cancel]
 
     WorkVerification.regist(@work, current_user.worker)
     if params[:regist]
@@ -109,7 +109,7 @@ class WorksController < ApplicationController
       end
     end
 
-    redirect_to(work_path(@work))
+    redirect_to(work_path(@work, from: :works))
   end
 
   def destroy
