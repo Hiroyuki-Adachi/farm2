@@ -81,3 +81,10 @@ table > tbody > tr > td.gantt-cell--drag-preview {
 table > tbody > tr > td.gantt-cell--bar.gantt-cell--drag-preview {
   box-shadow: inset 0 0 0 2px rgba(13, 110, 253, 0.6);
 }
+
+table th.row-header {
+  position: sticky;
+  left: 0;
+  background: var(--bs-tertiary-bg);    /* 背景色指定が必須 */
+  z-index: 4;
+}
