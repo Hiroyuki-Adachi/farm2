@@ -1,8 +1,4 @@
 module WorksHelper
-  def updatable_work(user, work)
-    (user.checkable? || work.created_by == user.worker.id) && work.term == user.term
-  end
-
   def chemical_per_area(areas, chemical)
     area_quantity = areas.zero? ? 0 : (chemical.total_quantity / areas * 10)
     area_quantity *= chemical.base_quantity

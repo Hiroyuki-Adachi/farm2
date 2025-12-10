@@ -1,7 +1,7 @@
 require 'date'
 
 class WorksController < ApplicationController
-  include WorksHelper
+  include UpdatableWork
 
   before_action :set_work, only: [:edit, :show, :update, :destroy, :map]
   before_action :set_results, only: [:show]
@@ -14,6 +14,7 @@ class WorksController < ApplicationController
   before_action :permit_visitor, only: :show
   before_action :permit_this_term, only: [:edit, :update, :destroy]
 
+  helper WorksHelper
   helper GmapHelper
 
   def index
@@ -173,7 +174,7 @@ class WorksController < ApplicationController
   end
 
   def permit_checkable_or_self
-    to_error_path unless updatable_work(current_user, @work)
+    to_error_path unless updatable_work?(@work)
   end
 
   def permit_visitor
