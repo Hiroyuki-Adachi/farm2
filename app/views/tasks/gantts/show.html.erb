@@ -18,7 +18,7 @@
     <table class="table table-sm table-bordered gantt-table mb-0">
       <thead class="table-header-adaptive sticky-top">
         <tr>
-          <th class="row-header" style="min-width: 220px;" rowspan="2">タスク</th>
+          <th class="row-header" style="min-width: 220px;" rowspan="2" scope="col">タスク</th>
           <% @dates.collect {|date| date.month }.uniq.each do |month| %>
             <th class="text-center align-middle small" colspan="<%= @dates.count { |date| date.month == month } %>">
               <%= month %>月
