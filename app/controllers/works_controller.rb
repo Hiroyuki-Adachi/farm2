@@ -72,15 +72,10 @@ class WorksController < ApplicationController
   end
 
   def show
-    url_hash = Rails.application.routes.recognize_path(request.referer)
-
     @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
     @chemicals = Chemical.with_total_quantity(@work).to_a
     @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
 
-    if ["index", "show"].include?(url_hash[:action])
-      session[:work_referer] = url_hash[:controller] == "works" ? nil : request.referer
-    end
     render layout: false
   end
 
@@ -98,7 +93,7 @@ class WorksController < ApplicationController
   end
 
   def update
-    redirect_to(work_path(@work, from: :works)) if params[:cancel]
+    redirect_to(work_path(@work)) if params[:cancel]
 
     WorkVerification.regist(@work, current_user.worker)
     if params[:regist]
@@ -109,7 +104,7 @@ class WorksController < ApplicationController
       end
     end
 
-    redirect_to(work_path(@work, from: :works))
+    redirect_to(work_path(@work))
   end
 
   def destroy

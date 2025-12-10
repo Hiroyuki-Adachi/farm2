@@ -13,7 +13,7 @@
   </thead>
   <tbody>
     <% @works.each do |work| %>
-      <tr data-controller="row-visit" data-row-visit-url-value="<%= work_path(work) %>" data-action="click->row-visit#click keydown->row-visit#keydown" role="button" tabindex="0">
+      <tr data-controller="row-visit" data-row-visit-url-value="<%= work_path(work, back_url: works_path(params.permit!.to_h)) %>" data-action="click->row-visit#click keydown->row-visit#keydown" role="button" tabindex="0">
         <td><%= work.id %></td>
         <td><%= work.worked_at %></td>
         <td><%= work.work_time %></td>

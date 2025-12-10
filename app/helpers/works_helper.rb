@@ -22,4 +22,12 @@ module WorksHelper
     end
     return amount.zero? || counter.zero? ? "" : (amount / counter).round(0).to_fs(:delimited, delimiter: ',') + unit
   end
+
+  def backable?
+    return params[:back_url] != 'false'
+  end
+
+  def back_path
+    return params[:back_url].presence || works_path
+  end
 end
