@@ -24,7 +24,7 @@ module WorksHelper
   end
 
   def backable?
-    return params[:back_url] != 'false'
+    return params[:back_url] != false && params[:back_url] != 'false'
   end
 
   def back_path
