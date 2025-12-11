@@ -14,7 +14,7 @@ class NewsDeliverJob < ApplicationJob
       end
       # LINEに通知する
       next if messages.empty?
-      if LineHookService.push_messages(user.line_id, messages).is_a?(Net::HTTPSuccess)
+      if LineHookService.push_messages(user.line_id, messages, retry_key: SecureRandom.uuid).is_a?(Net::HTTPSuccess)
         # トピックの既読フラグを立てる
         UserTopic.where(id: user_topic_ids).find_each(&:readed!)
       end

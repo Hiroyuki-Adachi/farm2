@@ -10,9 +10,13 @@ class ScheduleDeliverJobTest < ActiveJob::TestCase
     schedule = schedules(:schedule_today)
 
     called_args = nil
-    LineHookService.define_singleton_method(:push_message) do |line_id, message|
-      called_args = [line_id, message]
-    end
+    LineHookService.stubs(:push_message)
+      .with do |line_id, message, kwargs|
+        called_args = [line_id, message]
+        # retry_key が付いてきてもOKにする
+        kwargs[:retry_key].is_a?(String) || kwargs[:retry_key].nil?
+      end
+      .returns(Net::HTTPOK.new("1.1", "200", "OK"))
 
     travel_to schedule.worked_at.change(hour: 8) do
       ScheduleDeliverJob.perform_now(:morning)
@@ -27,9 +31,13 @@ class ScheduleDeliverJobTest < ActiveJob::TestCase
     schedule = schedules(:schedule_tomorrow)
 
     called_args = nil
-    LineHookService.define_singleton_method(:push_message) do |line_id, message|
-      called_args = [line_id, message]
-    end
+    LineHookService.stubs(:push_message)
+      .with do |line_id, message, kwargs|
+        called_args = [line_id, message]
+        # retry_key が付いてきてもOKにする
+        kwargs[:retry_key].is_a?(String) || kwargs[:retry_key].nil?
+      end
+      .returns(Net::HTTPOK.new("1.1", "200", "OK"))
 
     travel_to (schedule.worked_at - 1.day).change(hour: 15) do
       ScheduleDeliverJob.perform_now(:afternoon)
@@ -43,18 +51,8 @@ class ScheduleDeliverJobTest < ActiveJob::TestCase
   test "スケジュールがない場合にはLINE通知されない" do
     ScheduleWorker.where(worker: @user.worker).destroy_all
 
-    called = false
-    LineHookService.define_singleton_method(:push_message) do |*args|
-      called = true
-      raise "should not be called"
-    end
+    LineHookService.expects(:push_message).never
 
     perform_enqueued_jobs { ScheduleDeliverJob.perform_now(:morning) }
-
-    assert_not called, "push_message は呼ばれないはず"
-  end
-
-  teardown do
-    LineHookService.define_singleton_method(:push_message, @original)
   end
 end

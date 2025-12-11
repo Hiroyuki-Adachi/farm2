@@ -7,7 +7,7 @@ class DiskCheckJob < ApplicationJob
   WEEKLY_REPORT_DAYS = [:sun].freeze
 
   def perform
-    line_id = ENV.fetch('LINE_SECRETARIANT_ID', '').freeze
+    line_id = Rails.application.credentials.dig(:line, :secretariant_id).freeze
     return unless line_id
 
     df_output = `df / -h | tail -1`.split
@@ -33,6 +33,6 @@ class DiskCheckJob < ApplicationJob
       空き容量は #{avail} / #{size}（使用率 #{used_pct}）です。
     MSG
 
-    LineHookService.push_message(line_id, message)
+    LineHookService.push_message(line_id, message, retry_key: SecureRandom.uuid)
   end
 end

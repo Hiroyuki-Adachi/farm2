@@ -177,9 +177,23 @@ class Task < ApplicationRecord
   scope :kanban_done, ->(days: 15) { for_kanban(TaskStatus::KANBAN_DONE).where(ended_on: (Time.zone.today - days.days)..) }
 
   scope :for_gantt, ->(start_date, end_date) do
+    t = arel_table
+    gantt_end_on_case =
+      Arel::Nodes::Case.new
+        .when(
+          t[:task_status_id].in(TaskStatus.closed_ids).and(t[:ended_on].not_eq(nil))
+        ).then(t[:ended_on])
+        .when(
+          t[:due_on].not_eq(nil)
+        ).then(t[:due_on])
+        .when(
+          t[:planned_start_on].eq(Date.new(1900, 1, 1))
+        ).then(Arel.sql('CURRENT_DATE'))
+        .else(t[:planned_start_on])
+
     where(
       arel_table[:planned_start_on].lteq(end_date)
-        .and(arel_table[:due_on].gteq(start_date))
+      .and(gantt_end_on_case.gteq(start_date))
     )
   end
 
@@ -483,7 +497,8 @@ class Task < ApplicationRecord
       self.started_on ||= Time.zone.today
     elsif new_status.closed_flag
       self.ended_on = Time.zone.today
-      self.started_on ||= Time.zone.today
+      self.started_on = self.ended_on if self.started_on.nil? || self.started_on > self.ended_on
+      self.planned_start_on = self.ended_on if self.planned_start_on > self.ended_on
       self.end_reason = end_reason || :other
     end
   end
