@@ -21,7 +21,7 @@
             <%= hidden_field_tag :self_flag, work.id, {id: nil} %>
           <% end %>
         </td>
-        <td><%= link_to "修正", work_path(work), {class: "btn btn-outline-success btn-sm"} %></td>
+        <td><%= link_to "修正", work_path(work, back_url: work_verifications_path), {class: "btn btn-outline-success btn-sm"} %></td>
         <td><%= work.creator_short_name %></td>
         <td><%= work.checker_short_names %></td>
       </tr>
