@@ -43,8 +43,8 @@ class WorksController < ApplicationController
     @sum_hours     = sum_hours(@term)
     @count_workers = count_workers(@term)
     @works_count   = @works.count
-    @total_hours   = @works.sum { |w| @sum_hours[w.id] || 0 }
-    @total_workers = @works.sum { |w| @count_workers[w.id] || 0 }
+    @total_hours   = @works.joins(:work_results).sum('work_results.hours')
+    @total_workers = @works.joins(:work_results).distinct.count('work_results.worker_id')
     @total_hours_member = WorkResult.sum_hours_for_member(@works)
 
     set_work_types # （この中で @work_types, @work_kinds をセットする今のメソッド）
