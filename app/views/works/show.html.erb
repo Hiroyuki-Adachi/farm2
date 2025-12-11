@@ -41,7 +41,7 @@
         </section>
       <% end %>
       <section class="no-print">
-        <% if backable?%>
+        <% if backable? %>
           <% if @work.fixed_at.nil? && updatable_work?(@work) %>
             <%= link_to '削除',raw(work_path(id: @work)), class: "btn btn-danger", data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete} %>
           <% end %>
