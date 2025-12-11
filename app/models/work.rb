@@ -215,6 +215,18 @@ SQL
       .order(worked_at: :desc, id: :desc)
   end
 
+  scope :with_work_type, ->(work_type_id, except = false) do
+    next all if work_type_id.blank?
+
+    except ? where.not(work_type_id: work_type_id) : where(work_type_id: work_type_id)
+  end
+
+  scope :with_work_kind, ->(work_kind_id) { work_kind_id.present? ? where(work_kind_id: work_kind_id) : all }
+
+  scope :worked_from, ->(date) { date.present? ? where(worked_at: date..) : all }
+
+  scope :worked_to, ->(date) { date.present? ? where(worked_at: ..date) : all }
+
   def workers_count
     work_results.count
   end
@@ -491,14 +503,12 @@ SQL
       .distinct.count(Work.arel_table[:worked_at])
   end
 
-  def self.search_for_work(works, work_search)
-    if work_search[:work_type_id].present?
-      works = work_search[:except] ? works.where.not(work_type_id: work_search[:work_type_id]) : works.where(work_type_id: work_search[:work_type_id]) 
-    end
-    works = works.where(work_kind_id: work_search[:work_kind_id]) if work_search[:work_kind_id].present?
-    works = works.where(worked_at: (work_search[:worked_at1])..) if work_search[:worked_at1].present?
-    works = works.where(worked_at: ..(work_search[:worked_at2])) if work_search[:worked_at2].present?
-    return works
+  def self.search_for_work(base_relation, params)
+    base_relation
+      .with_work_type(params[:work_type_id], params[:except].present?)
+      .with_work_kind(params[:work_kind_id])
+      .worked_from(params[:worked_at1])
+      .worked_to(params[:worked_at2])
   end
 
   def weather_name

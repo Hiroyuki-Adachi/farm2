@@ -110,7 +110,7 @@ class TaskEventDecorator < Draper::Decorator
     cancel_url = h.link_to('取消', h.task_work_path(task_id: object.task_id, id: object.work_id), data: { turbo_confirm: '作業を取消してよろしいですか？(作業そのものは削除されません)', turbo_method: :delete }, class: 'btn btn-sm p-0 btn-danger') if mine
 
     h.content_tag(:span, "日報") +
-      h.link_to(work_info, h.work_path(object.work), target: :_blank, rel: :noopener) +
+      h.link_to(work_info, h.work_path(object.work, back_url: false), target: :_blank, rel: :noopener) +
       h.content_tag(:span, "に記載済みです。") + cancel_url
   end
   
