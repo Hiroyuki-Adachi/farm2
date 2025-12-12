@@ -32,7 +32,7 @@ class LandsController < ApplicationController
 
   def update
     if @land.update(land_params)
-      redirect_to lands_path(home_id: params[:home_id].presence)
+      redirect_to lands_path(home_id: params[:home_id].presence, page: params[:page]), status: :see_other
     else
       render action: :edit, status: :unprocessable_content
     end

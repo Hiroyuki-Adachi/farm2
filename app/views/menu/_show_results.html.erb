@@ -12,7 +12,7 @@
       <% @results.each do |result| %>
         <tr>
           <td><%= result.worked_at_short %></td>
-          <td><%= link_to result.work_name_short, work_path(result.work), {target: :_blank} %></td>
+          <td><%= link_to result.work_name_short, work_path(result.work, back_url: false), {target: :_blank} %></td>
           <td class="numeric"><%= result.hours %></td>
           <% total_hours += result.model.hours %>
         </tr>

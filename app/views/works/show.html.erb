@@ -41,23 +41,25 @@
         </section>
       <% end %>
       <section class="no-print">
-        <% if @work.fixed_at.nil? && updatable_work(current_user, @work) %>
-          <%= link_to '削除',raw(work_path(id: @work)), class: "btn btn-danger", data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete} %>
+        <% if backable? %>
+          <% if @work.fixed_at.nil? && updatable_work?(@work) %>
+            <%= link_to '削除',raw(work_path(id: @work)), class: "btn btn-danger", data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete} %>
+          <% end %>
+          <% if !current_user.visitor? && @work.term == current_term %>
+            <%= link_to "新規登録", new_work_path, class: "btn btn-success" %>
+          <% end %>
+          <% if updatable_work?(@work) %>
+            <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: raw("execPrint('" + work_print_index_path(work_id: @work.id) + "');") %>
+            <%= button_tag "印刷情報削除", type: :button, class: "btn btn-danger", onclick: raw("cancelPrint('" + work_print_path(work_id: @work.id, id: 0) + "');") %>
+          <% end %>
+          <% if @work.lands.regionable.exists? %>
+            <%= link_to "地図", map_work_path(@work, back_url: false), {class: "btn btn-info", target: "_blank", rel: "noopener noreferrer"} %>
+          <% end %>
+          <% unless params[:target] == 'blank' %>
+            <%= link_to "戻る", back_path, class: "btn btn-default" %>
+          <% end %>
         <% end %>
-        <% if !current_user.visitor? && @work.term == current_term %>
-          <%= link_to "新規登録", new_work_path, class: "btn btn-success" %>
-        <% end %>
-        <% if updatable_work(current_user, @work) %>
-          <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: raw("execPrint('" + work_print_index_path(work_id: @work.id) + "');") %>
-          <%= button_tag "印刷情報削除", type: :button, class: "btn btn-danger", onclick: raw("cancelPrint('" + work_print_path(work_id: @work.id, id: 0) + "');") %>
-        <% end %>
-        <% if @work.lands.regionable.exists? %>
-          <%= link_to "地図", map_work_path(@work), {class: "btn btn-info", target: "_blank", rel: "noopener noreferrer"} %>
-        <% end %>
-        <% unless params[:target] == 'blank' %>
-          <%= link_to "戻る", session[:work_referer] || works_path, class: "btn btn-default" %>
-        <% end %>
-        <%= hidden_field_tag :covering_flag, @work.fixed_at.nil? && updatable_work(current_user, @work) %>
+        <%= hidden_field_tag :covering_flag, @work.fixed_at.nil? && updatable_work?(@work) && backable? %>
         <%= render 'application/popup' %>
       </section>
     </div>
