@@ -1,8 +1,4 @@
 module WorksHelper
-  def updatable_work(user, work)
-    (user.checkable? || work.created_by == user.worker.id) && work.term == user.term
-  end
-
   def chemical_per_area(areas, chemical)
     area_quantity = areas.zero? ? 0 : (chemical.total_quantity / areas * 10)
     area_quantity *= chemical.base_quantity
@@ -25,5 +21,13 @@ module WorksHelper
       end
     end
     return amount.zero? || counter.zero? ? "" : (amount / counter).round(0).to_fs(:delimited, delimiter: ',') + unit
+  end
+
+  def backable?
+    return params[:back_url] != false && params[:back_url] != 'false'
+  end
+
+  def back_path
+    return params[:back_url].presence || works_path
   end
 end

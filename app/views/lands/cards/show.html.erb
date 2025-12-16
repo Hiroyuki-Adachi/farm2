@@ -27,7 +27,7 @@
         <td <%=raw rowspan%> class="numeric"><%= number_with_precision(work_land.work&.daily_weather&.height, precision: 1) %></td>
         <td <%=raw rowspan%> class="numeric"><%= number_with_precision(work_land.work&.daily_weather&.lowest, precision: 1) %></td>
         <td <%=raw rowspan%> class="numeric"><%= number_with_precision(work_land.total_sunshine(current_organization), precision: 2) %></td>
-        <td <%=raw rowspan%>><%= link_to "作業日報", work_path(work_land.work_id), {class: "btn btn-outline-success btn-sm"} %></td>
+        <td <%=raw rowspan%>><%= link_to "作業日報", work_path(work_land.work_id, back_url: false), {class: "btn btn-outline-success btn-sm", target: "_blank"} %></td>
         <td><%= chemicals[0][:chemical]&.chemical_type&.name %></td>
         <td><%= chemicals[0][:chemical]&.name %></td>
         <td class="numeric"><%= number_with_precision(chemicals[0][:quantity], precision: 1) %></td>
