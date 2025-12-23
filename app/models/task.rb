@@ -37,6 +37,8 @@ class Task < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   include Enums::OfficeRole
 
+  UNDEFINED_DATE = Date.new(1900, 1, 1)
+
   attribute :watching, :boolean
   attribute :comment, :string
   attribute :unread_count, :integer
@@ -129,6 +131,7 @@ class Task < ApplicationRecord
   end
 
   scope :opened, -> { where(task_status_id: TaskStatus.open_ids).usual_order }
+  scope :planned_start, -> { where(planned_start_on: ..Time.zone.today) }
 
   scope :by_worker, ->(worker) do
     task_table = arel_table
@@ -187,7 +190,7 @@ class Task < ApplicationRecord
           t[:due_on].not_eq(nil)
         ).then(t[:due_on])
         .when(
-          t[:planned_start_on].eq(Date.new(1900, 1, 1))
+          t[:planned_start_on].eq(UNDEFINED_DATE)
         ).then(Arel.sql('CURRENT_DATE'))
         .else(t[:planned_start_on])
 
@@ -246,7 +249,7 @@ class Task < ApplicationRecord
 
       if new_assignee_id
         TaskWatcher.find_or_create_by!(task: self, worker_id: new_assignee_id)
-        TaskRead.touch_and_get_previous!(task: self, worker_id: new_assignee_id, at: Time.at(0))
+        TaskRead.touch_and_get_previous!(task: self, worker_id: new_assignee_id, at: Time.zone.at(0))
       end
     end
   end
@@ -400,7 +403,7 @@ class Task < ApplicationRecord
     return ended_on if closed? && ended_on.present?
     return due_on if due_on.present?
 
-    if planned_start_on == Date.new(1900, 1, 1)
+    if planned_start_on == UNDEFINED_DATE
       Date.current
     else
       planned_start_on
@@ -495,6 +498,7 @@ class Task < ApplicationRecord
     self.task_status_id = new_status.id
     if new_status.started_flag
       self.started_on ||= Time.zone.today
+      self.planned_start_on = self.started_on if self.planned_start_on > self.started_on || self.planned_start_on == UNDEFINED_DATE
     elsif new_status.closed_flag
       self.ended_on = Time.zone.today
       self.started_on = self.ended_on if self.started_on.nil? || self.started_on > self.ended_on

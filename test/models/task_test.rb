@@ -166,6 +166,7 @@ class TaskTest < ActiveSupport::TestCase
       open_task.change_status!(params, worker1)
     end
     assert_equal Date.current, open_task.started_on
+    assert_equal Date.current, open_task.planned_start_on
 
     last_event = open_task.events.order(:id).last
     assert_equal :change_status, last_event.event_type.to_sym

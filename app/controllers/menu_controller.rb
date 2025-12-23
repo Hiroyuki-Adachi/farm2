@@ -16,7 +16,7 @@ class MenuController < ApplicationController
     @minute = Minute.for_personal(current_user.worker).last&.decorate
     @user_topics = UserTopic.current_topics(current_user).pc
     @tasks = Task.by_worker(current_user.worker)
-      .opened.with_unread_count(current_user.worker.id)
+      .opened.planned_start.with_unread_count(current_user.worker.id)
       .decorate(context: { current_worker: current_user.worker })
   end
 
