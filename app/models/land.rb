@@ -14,6 +14,7 @@
 #  peasant_end_term(小作料期間(至))   :integer          default(9999), not null
 #  peasant_start_term(小作料期間(自)) :integer          default(0), not null
 #  place(番地)                        :string(15)       not null
+#  place_sort_key(番地(ソート用))     :string(20)       default(""), not null
 #  reg_area(登記面積)                 :decimal(5, 2)
 #  region(領域)                       :polygon
 #  start_on(有効期間(自))             :date             default(Mon, 01 Jan 1900), not null
@@ -28,9 +29,10 @@
 #
 # Indexes
 #
-#  index_lands_on_deleted_at  (deleted_at)
-#  index_lands_on_place       (place)
-#  index_lands_on_uuid        (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
+#  index_lands_on_deleted_at      (deleted_at)
+#  index_lands_on_place           (place)
+#  index_lands_on_place_sort_key  (place_sort_key)
+#  index_lands_on_uuid            (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
 #
 
 class Land < ApplicationRecord
@@ -218,5 +220,9 @@ class Land < ApplicationRecord
 
   def set_uuid
     self.uuid = SecureRandom.uuid
+  end
+
+  def init_place_sort_key
+    self.place_sort_key = LandPlaceSortKeyGenerator.generate(self.place)
   end
 end
