@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # タイムゾーンを設定（これをしないと、ビルド時にタイムゾーンの設定を求められる）
 ENV TZ=Asia/Tokyo \
     LANG=C.UTF-8 \
-    RUBY_VERSION=3.4.7 \
+    RUBY_VERSION=4.0.0 \
     PATH="/root/.cargo/bin:${PATH}"
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
