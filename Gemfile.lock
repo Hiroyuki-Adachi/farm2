@@ -246,8 +246,7 @@ GEM
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
-    minitest (6.0.0)
-      prism (~> 1.5)
+    minitest (5.27.0)
     mocha (3.0.1)
       ruby2_keywords (>= 0.0.5)
     multi_xml (0.8.0)
@@ -498,6 +497,7 @@ DEPENDENCIES
   lograge
   loofah (>= 2.3.1)
   mechanize
+  minitest (< 6)
   mocha
   nokogiri
   omniauth
