@@ -32,7 +32,7 @@ module WorksHelper
   end
 
   def health_code_list
-    Health.usual.map { |h| "#{h.code}:#{h.name}" }.join(" ")
+    @health_code_list ||= Health.usual.map { |h| "#{h.code}:#{h.name}" }.join(" ")
   end
 
   def print_remark(results, index)
