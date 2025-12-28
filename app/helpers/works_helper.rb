@@ -30,4 +30,12 @@ module WorksHelper
   def back_path
     return params[:back_url].presence || works_path
   end
+
+  def health_code_list
+    Health.usual.map { |h| "#{h.code}:#{h.name}" }.join(" ")
+  end
+
+  def print_remark(results, index)
+    results[index].remarks.present? ? "(#{results[index].remarks})" : ""
+  end
 end
