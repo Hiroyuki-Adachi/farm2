@@ -36,6 +36,11 @@ module WorksHelper
   end
 
   def print_remark(results, index)
-    results[index].remarks.present? ? "(#{results[index].remarks})" : ""
+    return "" if results.nil?
+
+    record = results[index]
+    return "" if record.nil? || record.remarks.blank?
+
+    "(#{record.remarks})"
   end
 end
