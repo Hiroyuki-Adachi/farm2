@@ -6,7 +6,6 @@
 #  area(面積(α))                      :decimal(5, 2)    not null
 #  broccoli_mark(ブロッコリ記号)      :string(1)
 #  deleted_at                         :datetime
-#  display_order(表示順)              :integer
 #  end_on(有効期間(至))               :date             default(Tue, 31 Dec 2999), not null
 #  group_flag(グループフラグ)         :boolean          default(FALSE), not null
 #  group_order(グループ内並び順)      :integer          default(0), not null
@@ -37,27 +36,19 @@
 require 'test_helper'
 
 class LandTest < ActiveSupport::TestCase
-  test 'validates place, area and display_order' do
+  test '番地と面積の検証' do
     land = Land.new
 
     assert_not land.valid?
     assert_not_empty land.errors[:place]
     assert_not_empty land.errors[:area]
-    assert_not_empty land.errors[:display_order]
 
     land.place = '123'
     land.area = 'foo'
-    land.display_order = 'bar'
     assert_not land.valid?
     assert_not_empty land.errors[:area]
-    assert_not_empty land.errors[:display_order]
 
     land.area = 10.5
-    land.display_order = 1.2
-    assert_not land.valid?
-    assert_not_empty land.errors[:display_order]
-
-    land.display_order = 1
     assert land.valid?
   end
 
@@ -93,15 +84,13 @@ class LandTest < ActiveSupport::TestCase
     existing_member = lands(:lands_group1_2)
     new_member = lands(:lands12)
 
-    Land.update_members(group.id, [{land_id: new_member.id, display_order: 2}])
+    Land.update_members(group.id, [{land_id: new_member.id}])
 
     existing_member.reload
     new_member.reload
 
     assert_nil existing_member.group_id
-    assert_equal 0, existing_member.group_order
     assert_equal group.id, new_member.group_id
-    assert_equal 2, new_member.group_order
   end
 
   test 'expiry?' do
@@ -111,5 +100,62 @@ class LandTest < ActiveSupport::TestCase
     assert_not land.expiry?(Date.new(1899, 12, 31))
     assert_not land.expiry?(Date.new(3000, 1, 1))
   end
-end
 
+  test "数字から始まるものは head_flag=0 になる" do
+    assert_equal "0", AddressSortIndex.build("2713-ﾛ")[0]
+    assert_equal "0", AddressSortIndex.build("2664-1")[0]
+  end
+
+  test "数字から始まらないものは head_flag=1 になる" do
+    assert_equal "1", AddressSortIndex.build("竹内2284-1")[0]
+    assert_equal "1", AddressSortIndex.build("D-463")[0]
+    assert_equal "1", AddressSortIndex.build("園54-15")[0]
+  end
+
+  test "番地の数字は最初に出現した1-4桁を取りゼロ埋めされる" do
+    assert_equal "0095", AddressSortIndex.build("ﾃﾞｼﾞﾏ95-1")[1, 4]
+    assert_equal "0463", AddressSortIndex.build("D-463")[1, 4]
+    assert_equal "0054", AddressSortIndex.build("園54-15")[1, 4]
+    assert_equal "2284", AddressSortIndex.build("竹内2284-1")[1, 4]
+  end
+
+  test "サブ番地が数字のみの場合 subtype=1 で sub_num が入る" do
+    key = AddressSortIndex.build("竹内2284-1")
+    assert_equal "1", key[5] # subtype
+    assert_equal "001", key[6, 3]      # sub_num
+    assert_equal "00", key[9, 2]       # sub_kana
+  end
+
+  test "サブ番地がカナのみの場合 subtype=2 で sub_kana が入る" do
+    key = AddressSortIndex.build("2713-ﾛ")
+    assert_equal "2", key[5]          # subtype
+    assert_equal "000", key[6, 3]     # sub_num
+    assert_operator key[9, 2].to_i, :>, 0 # sub_kana(いろは順番号)が入ってること
+  end
+
+  test "サブ番地が 数字-カナ の場合 数字もカナも反映される" do
+    key = AddressSortIndex.build("2544-1-ﾛ")
+    assert_equal "1", key[5]          # subtype（数字優先）
+    assert_equal "001", key[6, 3]     # sub_num
+    assert_operator key[9, 2].to_i, :>, 0 # sub_kana が入る
+  end
+
+  test "末尾の注記は無視される (例: D-457(R4), D-467(旧))" do
+    key1 = AddressSortIndex.build("D-457(R4)")
+    key2 = AddressSortIndex.build("D-457")
+    assert_equal key2[0, 11], key1[0, 11] # 先頭〜カナ枠まで同じならOK
+
+    key3 = AddressSortIndex.build("D-467(旧)")
+    key4 = AddressSortIndex.build("D-467")
+    assert_equal key4[0, 11], key3[0, 11]
+  end
+
+  test "同じ番地でサブカナが違う場合 いろは順で比較できる" do
+    a = AddressSortIndex.build("2544-1-ｲ")
+    ro = AddressSortIndex.build("2544-1-ﾛ")
+    ha = AddressSortIndex.build("2544-1-ﾊ")
+
+    assert_operator a, :<, ro
+    assert_operator ro, :<, ha
+  end
+end

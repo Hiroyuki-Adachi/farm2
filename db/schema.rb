@@ -438,7 +438,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_24_125131) do
     t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
     t.datetime "created_at", precision: nil
     t.datetime "deleted_at", precision: nil
-    t.integer "display_order", comment: "表示順"
     t.date "end_on", default: "2999-12-31", null: false, comment: "有効期間(至)"
     t.boolean "group_flag", default: false, null: false, comment: "グループフラグ"
     t.integer "group_id", comment: "グループID"
