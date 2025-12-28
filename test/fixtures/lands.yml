@@ -6,7 +6,6 @@
 #  area(面積(α))                      :decimal(5, 2)    not null
 #  broccoli_mark(ブロッコリ記号)      :string(1)
 #  deleted_at                         :datetime
-#  display_order(表示順)              :integer
 #  end_on(有効期間(至))               :date             default(Tue, 31 Dec 2999), not null
 #  group_flag(グループフラグ)         :boolean          default(FALSE), not null
 #  group_order(グループ内並び順)      :integer          default(0), not null
@@ -14,6 +13,7 @@
 #  peasant_end_term(小作料期間(至))   :integer          default(9999), not null
 #  peasant_start_term(小作料期間(自)) :integer          default(0), not null
 #  place(番地)                        :string(15)       not null
+#  place_sort_key(番地(ソート用))     :string(20)       default(""), not null
 #  reg_area(登記面積)                 :decimal(5, 2)
 #  region(領域)                       :polygon
 #  start_on(有効期間(自))             :date             default(Mon, 01 Jan 1900), not null
@@ -28,9 +28,10 @@
 #
 # Indexes
 #
-#  index_lands_on_deleted_at  (deleted_at)
-#  index_lands_on_place       (place)
-#  index_lands_on_uuid        (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
+#  index_lands_on_deleted_at      (deleted_at)
+#  index_lands_on_place           (place)
+#  index_lands_on_place_sort_key  (place_sort_key)
+#  index_lands_on_uuid            (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
 #
 
 lands0:
@@ -39,7 +40,6 @@ lands0:
   owner_id: '17'
   manager_id: '17'
   area: '35.30'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -53,7 +53,6 @@ lands1:
   owner_id: '17'
   manager_id: '17'
   area: '31.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -69,7 +68,6 @@ lands2:
   owner_id: '1'
   manager_id: '1'
   area: '27.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -83,7 +81,6 @@ lands3:
   owner_id: '1'
   manager_id: '1'
   area: '17.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -95,7 +92,6 @@ land_land_cost2:
   owner_id: '1'
   manager_id: '1'
   area: '17.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-20 08:01:28.877914'
@@ -107,7 +103,6 @@ land_land_cost1:
   owner_id: '1'
   manager_id: '1'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   parcel_number: 12341234
   created_at: '2010-07-11 12:42:48'
@@ -121,7 +116,6 @@ lands6:
   owner_id: '17'
   manager_id: '17'
   area: '21.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -134,7 +128,6 @@ lands7:
   owner_id: '18'
   manager_id: '18'
   area: '24.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -147,7 +140,6 @@ lands8:
   owner_id: '17'
   manager_id: '17'
   area: '25.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -160,7 +152,6 @@ lands9:
   owner_id: '17'
   manager_id: '17'
   area: '24.80'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -172,7 +163,6 @@ lands_group1_1:
   owner_id: '18'
   manager_id: '18'
   area: '24.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -184,7 +174,6 @@ lands_group1_2:
   owner_id: '18'
   manager_id: '18'
   area: '20.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -194,7 +183,6 @@ lands_group1_2:
 land_group1:
   place: 5396-ﾛ
   area: 0
-  display_order: '1'
   target_flag: t
   group_flag: t
   created_at: '2010-07-11 12:42:48'
@@ -207,7 +195,6 @@ lands12:
   owner_id: '18'
   manager_id: '18'
   area: '27.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -220,7 +207,6 @@ lands13:
   owner_id: '18'
   manager_id: '18'
   area: '14.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -233,7 +219,6 @@ lands14:
   owner_id: '18'
   manager_id: '18'
   area: '22.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -246,7 +231,6 @@ lands15:
   owner_id: '3'
   manager_id: '3'
   area: '17.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -259,7 +243,6 @@ lands16:
   owner_id: '3'
   manager_id: '3'
   area: '16.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -272,7 +255,6 @@ lands17:
   owner_id: '3'
   manager_id: '3'
   area: '42.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -285,7 +267,6 @@ lands18:
   owner_id: '2'
   manager_id: '2'
   area: '24.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -298,7 +279,6 @@ lands19:
   owner_id: '2'
   manager_id: '2'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -311,7 +291,6 @@ lands20:
   owner_id: '2'
   manager_id: '2'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -324,7 +303,6 @@ lands21:
   owner_id: '2'
   manager_id: '2'
   area: '34.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -337,7 +315,6 @@ lands22:
   owner_id: '2'
   manager_id: '2'
   area: '30.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -350,7 +327,6 @@ lands23:
   owner_id: '18'
   manager_id: '18'
   area: '23.60'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -363,7 +339,6 @@ lands24:
   owner_id: '3'
   manager_id: '3'
   area: '26.30'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -376,7 +351,6 @@ lands25:
   owner_id: '19'
   manager_id: '19'
   area: '24.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-20 12:54:45.714941'
@@ -389,7 +363,6 @@ lands26:
   owner_id: '20'
   manager_id: '20'
   area: '30.80'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -402,7 +375,6 @@ lands27:
   owner_id: '20'
   manager_id: '20'
   area: '39.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -415,7 +387,6 @@ lands28:
   owner_id: '4'
   manager_id: '4'
   area: '12.90'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -428,7 +399,6 @@ lands29:
   owner_id: '4'
   manager_id: '4'
   area: '34.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -441,7 +411,6 @@ lands30:
   owner_id: '4'
   manager_id: '4'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -455,7 +424,6 @@ lands31:
   manager_id: '5'
   area: '34.50'
   reg_area: '35.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -468,7 +436,6 @@ lands32:
   owner_id: '19'
   manager_id: '19'
   area: '8.30'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -481,7 +448,6 @@ lands33:
   owner_id: '21'
   manager_id: '21'
   area: '18.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -495,7 +461,6 @@ lands34:
   manager_id: '5'
   area: '23.70'
   reg_area: 24
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -509,7 +474,6 @@ lands35:
   manager_id: '5'
   area: '29.40'
   reg_area: 30
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -523,7 +487,6 @@ lands36:
   manager_id: '5'
   area: '15.20'
   reg_area: 16
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -536,7 +499,6 @@ lands37:
   owner_id: '20'
   manager_id: '20'
   area: '7.90'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -549,7 +511,6 @@ lands38:
   owner_id: '22'
   manager_id: '22'
   area: '17.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -562,7 +523,6 @@ lands39:
   owner_id: '21'
   manager_id: '21'
   area: '30.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -575,7 +535,6 @@ lands40:
   owner_id: '21'
   manager_id: '21'
   area: '30.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -588,7 +547,6 @@ lands41:
   owner_id: '21'
   manager_id: '21'
   area: '30.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -601,7 +559,6 @@ lands42:
   owner_id: '21'
   manager_id: '21'
   area: '15.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -614,7 +571,6 @@ lands43:
   owner_id: '19'
   manager_id: '19'
   area: '24.80'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -627,7 +583,6 @@ lands44:
   owner_id: '20'
   manager_id: '20'
   area: '6.80'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -640,7 +595,6 @@ lands45:
   owner_id: '6'
   manager_id: '6'
   area: '27.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -653,7 +607,6 @@ lands46:
   owner_id: '6'
   manager_id: '6'
   area: '51.90'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -666,7 +619,6 @@ lands47:
   owner_id: '7'
   manager_id: '7'
   area: '17.90'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -679,7 +631,6 @@ lands48:
   owner_id: '22'
   manager_id: '22'
   area: '73.90'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -692,7 +643,6 @@ lands49:
   owner_id: '20'
   manager_id: '20'
   area: '30.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -705,7 +655,6 @@ lands50:
   owner_id: '20'
   manager_id: '20'
   area: '32.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-20 07:58:44.089369'
@@ -718,7 +667,6 @@ lands51:
   owner_id: '23'
   manager_id: '23'
   area: '19.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -731,7 +679,6 @@ lands52:
   owner_id: '23'
   manager_id: '23'
   area: '24.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -744,7 +691,6 @@ lands53:
   owner_id: '23'
   manager_id: '23'
   area: '24.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -757,7 +703,6 @@ lands54:
   owner_id: '7'
   manager_id: '7'
   area: '13.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -770,7 +715,6 @@ lands55:
   owner_id: '7'
   manager_id: '7'
   area: '19.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -783,7 +727,6 @@ lands56:
   owner_id: '7'
   manager_id: '7'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -796,7 +739,6 @@ lands57:
   owner_id: '7'
   manager_id: '7'
   area: '29.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -809,7 +751,6 @@ lands58:
   owner_id: '7'
   manager_id: '7'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -822,7 +763,6 @@ lands59:
   owner_id: '7'
   manager_id: '7'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -836,7 +776,6 @@ lands60:
   manager_id: '5'
   area: '9.70'
   reg_area: 10
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -849,7 +788,6 @@ lands61:
   owner_id: '6'
   manager_id: '6'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -862,7 +800,6 @@ lands62:
   owner_id: '6'
   manager_id: '6'
   area: '29.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -875,7 +812,6 @@ lands63:
   owner_id: '23'
   manager_id: '23'
   area: '25.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -888,7 +824,6 @@ lands64:
   owner_id: '24'
   manager_id: '24'
   area: '24.30'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2011-11-03 09:57:57.355828'
@@ -901,7 +836,6 @@ lands65:
   owner_id: '24'
   manager_id: '24'
   area: '25.80'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2011-11-03 09:56:55.475867'
@@ -914,7 +848,6 @@ lands66:
   owner_id: '24'
   manager_id: '24'
   area: '11.00'
-  display_order: '1'
   target_flag: f
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -927,7 +860,6 @@ lands67:
   owner_id: '24'
   manager_id: '24'
   area: '12.09'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2011-11-03 09:57:35.965945'
@@ -940,7 +872,6 @@ lands68:
   owner_id: '8'
   manager_id: '8'
   area: '10.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -953,7 +884,6 @@ lands69:
   owner_id: '8'
   manager_id: '8'
   area: '30.00'
-  display_order: '1'
   target_flag: f
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -966,7 +896,6 @@ lands70:
   owner_id: '9'
   manager_id: '9'
   area: '25.70'
-  display_order: '1'
   target_flag: f
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -979,7 +908,6 @@ lands71:
   owner_id: '23'
   manager_id: '23'
   area: '34.80'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -992,7 +920,6 @@ lands72:
   owner_id: '24'
   manager_id: '24'
   area: '45.30'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1005,7 +932,6 @@ lands73:
   owner_id: '8'
   manager_id: '8'
   area: '34.60'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1018,7 +944,6 @@ lands74:
   owner_id: '24'
   manager_id: '24'
   area: '51.00'
-  display_order: '1'
   target_flag: f
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1031,7 +956,6 @@ lands75:
   owner_id: '26'
   manager_id: '26'
   area: '21.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1044,7 +968,6 @@ lands76:
   owner_id: '26'
   manager_id: '26'
   area: '25.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1057,7 +980,6 @@ lands77:
   owner_id: '26'
   manager_id: '26'
   area: '19.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1070,7 +992,6 @@ lands78:
   owner_id: '26'
   manager_id: '26'
   area: '19.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1083,7 +1004,6 @@ lands79:
   owner_id: '10'
   manager_id: '10'
   area: '40.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1096,7 +1016,6 @@ lands80:
   owner_id: '10'
   manager_id: '10'
   area: '12.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1109,7 +1028,6 @@ lands81:
   owner_id: '10'
   manager_id: '10'
   area: '27.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1122,7 +1040,6 @@ lands82:
   owner_id: '9'
   manager_id: '9'
   area: '15.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1135,7 +1052,6 @@ lands83:
   owner_id: '10'
   manager_id: '10'
   area: '29.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1148,7 +1064,6 @@ lands84:
   owner_id: '10'
   manager_id: '10'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1161,7 +1076,6 @@ lands85:
   owner_id: '10'
   manager_id: '10'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1174,7 +1088,6 @@ lands86:
   owner_id: '9'
   manager_id: '9'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1187,7 +1100,6 @@ lands87:
   owner_id: '9'
   manager_id: '9'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1200,7 +1112,6 @@ lands88:
   owner_id: '9'
   manager_id: '9'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1213,7 +1124,6 @@ lands89:
   owner_id: '9'
   manager_id: '9'
   area: '41.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1226,7 +1136,6 @@ lands90:
   owner_id: '25'
   manager_id: '25'
   area: '17.60'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1239,7 +1148,6 @@ lands91:
   owner_id: '27'
   manager_id: '27'
   area: '28.90'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:22.474558'
@@ -1252,7 +1160,6 @@ lands92:
   owner_id: '27'
   manager_id: '27'
   area: '30.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:29.089539'
@@ -1265,7 +1172,6 @@ lands93:
   owner_id: '27'
   manager_id: '27'
   area: '30.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:09.133971'
@@ -1278,7 +1184,6 @@ lands94:
   owner_id: '27'
   manager_id: '27'
   area: '30.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:16.185599'
@@ -1291,7 +1196,6 @@ lands95:
   owner_id: '27'
   manager_id: '27'
   area: '22.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:36.219282'
@@ -1304,7 +1208,6 @@ lands96:
   owner_id: '27'
   manager_id: '27'
   area: '7.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:01.396849'
@@ -1317,7 +1220,6 @@ lands97:
   owner_id: '11'
   manager_id: '11'
   area: '9.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1330,7 +1232,6 @@ lands98:
   owner_id: '11'
   manager_id: '11'
   area: '19.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1343,7 +1244,6 @@ lands99:
   owner_id: '11'
   manager_id: '11'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1356,7 +1256,6 @@ lands100:
   owner_id: '11'
   manager_id: '11'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1369,7 +1268,6 @@ lands101:
   owner_id: '10'
   manager_id: '10'
   area: '10.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1382,7 +1280,6 @@ lands102:
   owner_id: '26'
   manager_id: '26'
   area: '19.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1395,7 +1292,6 @@ lands103:
   owner_id: '26'
   manager_id: '26'
   area: '59.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1408,7 +1304,6 @@ lands104:
   owner_id: '6'
   manager_id: '6'
   area: '15.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1421,7 +1316,6 @@ lands105:
   owner_id: '27'
   manager_id: '27'
   area: '34.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1434,7 +1328,6 @@ lands106:
   owner_id: '27'
   manager_id: '27'
   area: '34.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1447,7 +1340,6 @@ lands107:
   owner_id: '24'
   manager_id: '24'
   area: '10.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1460,7 +1352,6 @@ lands108:
   owner_id: '11'
   manager_id: '11'
   area: '22.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1473,7 +1364,6 @@ lands109:
   owner_id: '11'
   manager_id: '11'
   area: '19.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1486,7 +1376,6 @@ lands110:
   owner_id: '28'
   manager_id: '28'
   area: '37.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1499,7 +1388,6 @@ lands111:
   owner_id: '29'
   manager_id: '29'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1512,7 +1400,6 @@ lands112:
   owner_id: '29'
   manager_id: '29'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1525,7 +1412,6 @@ lands113:
   owner_id: '29'
   manager_id: '29'
   area: '22.90'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1538,7 +1424,6 @@ lands114:
   owner_id: '29'
   manager_id: '29'
   area: '10.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1551,7 +1436,6 @@ lands115:
   owner_id: '12'
   manager_id: '12'
   area: '26.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1564,7 +1448,6 @@ lands116:
   owner_id: '12'
   manager_id: '12'
   area: '34.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1577,7 +1460,6 @@ lands117:
   owner_id: '12'
   manager_id: '12'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1590,7 +1472,6 @@ lands118:
   owner_id: '13'
   manager_id: '13'
   area: '29.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1603,7 +1484,6 @@ lands119:
   owner_id: '12'
   manager_id: '12'
   area: '24.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1616,7 +1496,6 @@ lands120:
   owner_id: '12'
   manager_id: '12'
   area: '28.90'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1629,7 +1508,6 @@ lands121:
   owner_id: '14'
   manager_id: '14'
   area: '19.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1642,7 +1520,6 @@ lands122:
   owner_id: '29'
   manager_id: '29'
   area: '38.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1655,7 +1532,6 @@ lands123:
   owner_id: '28'
   manager_id: '28'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1668,7 +1544,6 @@ lands124:
   owner_id: '28'
   manager_id: '28'
   area: '19.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1681,7 +1556,6 @@ lands125:
   owner_id: '28'
   manager_id: '28'
   area: '23.90'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1694,7 +1568,6 @@ lands126:
   owner_id: '24'
   manager_id: '24'
   area: '25.10'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1707,7 +1580,6 @@ lands127:
   owner_id: '30'
   manager_id: '30'
   area: '24.60'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1720,7 +1592,6 @@ lands128:
   owner_id: '29'
   manager_id: '29'
   area: '40.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1733,7 +1604,6 @@ lands129:
   owner_id: '30'
   manager_id: '30'
   area: '26.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1746,7 +1616,6 @@ lands130:
   owner_id: '30'
   manager_id: '30'
   area: '10.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1759,7 +1628,6 @@ lands131:
   owner_id: '28'
   manager_id: '28'
   area: '13.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1772,7 +1640,6 @@ lands132:
   owner_id: '13'
   manager_id: '13'
   area: '15.10'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1785,7 +1652,6 @@ lands133:
   owner_id: '14'
   manager_id: '14'
   area: '43.10'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1798,7 +1664,6 @@ lands134:
   owner_id: '15'
   manager_id: '15'
   area: '32.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1811,7 +1676,6 @@ lands135:
   owner_id: '15'
   manager_id: '15'
   area: '32.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1824,7 +1688,6 @@ lands136:
   owner_id: '15'
   manager_id: '15'
   area: '21.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1837,7 +1700,6 @@ lands137:
   owner_id: '14'
   manager_id: '14'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1850,7 +1712,6 @@ lands138:
   owner_id: '14'
   manager_id: '14'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1863,7 +1724,6 @@ lands139:
   owner_id: '14'
   manager_id: '14'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1876,7 +1736,6 @@ lands140:
   owner_id: '31'
   manager_id: '31'
   area: '24.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1889,7 +1748,6 @@ lands141:
   owner_id: '25'
   manager_id: '25'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1902,7 +1760,6 @@ lands142:
   owner_id: '30'
   manager_id: '30'
   area: '30.60'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1915,7 +1772,6 @@ lands143:
   owner_id: '31'
   manager_id: '31'
   area: '31.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1928,7 +1784,6 @@ lands144:
   owner_id: '31'
   manager_id: '31'
   area: '30.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1941,7 +1796,6 @@ lands145:
   owner_id: '31'
   manager_id: '31'
   area: '20.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1954,7 +1808,6 @@ lands146:
   owner_id: '13'
   manager_id: '13'
   area: '24.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1967,7 +1820,6 @@ lands147:
   owner_id: '16'
   manager_id: '16'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1980,7 +1832,6 @@ lands148:
   owner_id: '16'
   manager_id: '16'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -1993,7 +1844,6 @@ lands149:
   owner_id: '16'
   manager_id: '16'
   area: '24.90'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2006,7 +1856,6 @@ lands150:
   owner_id: '16'
   manager_id: '16'
   area: '24.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2019,7 +1868,6 @@ lands151:
   owner_id: '15'
   manager_id: '15'
   area: '32.90'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:53:48.762137'
@@ -2032,7 +1880,6 @@ lands152:
   owner_id: '15'
   manager_id: '15'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:54:00.792348'
@@ -2045,7 +1892,6 @@ lands153:
   owner_id: '23'
   manager_id: '23'
   area: '29.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2058,7 +1904,6 @@ lands154:
   owner_id: '15'
   manager_id: '15'
   area: '15.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2071,7 +1916,6 @@ lands155:
   owner_id: '30'
   manager_id: '30'
   area: '27.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2084,7 +1928,6 @@ lands156:
   owner_id: '30'
   manager_id: '30'
   area: '34.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2097,7 +1940,6 @@ lands157:
   owner_id: '20'
   manager_id: '20'
   area: '23.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2110,7 +1952,6 @@ lands158:
   owner_id: '32'
   manager_id: '32'
   area: '14.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2123,7 +1964,6 @@ lands159:
   owner_id: '31'
   manager_id: '31'
   area: '22.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2136,7 +1976,6 @@ lands160:
   owner_id: '31'
   manager_id: '31'
   area: '22.80'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2149,7 +1988,6 @@ lands161:
   owner_id: '16'
   manager_id: '16'
   area: '28.30'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2162,7 +2000,6 @@ lands162:
   owner_id: '13'
   manager_id: '13'
   area: '30.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2175,7 +2012,6 @@ lands163:
   owner_id: '13'
   manager_id: '13'
   area: '30.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2188,7 +2024,6 @@ lands164:
   owner_id: '15'
   manager_id: '15'
   area: '12.60'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2201,7 +2036,6 @@ lands165:
   owner_id: '11'
   manager_id: '11'
   area: '27.10'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2214,7 +2048,6 @@ lands166:
   owner_id: '32'
   manager_id: '32'
   area: '19.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2227,7 +2060,6 @@ lands167:
   owner_id: '32'
   manager_id: '32'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2240,7 +2072,6 @@ lands168:
   owner_id: '32'
   manager_id: '32'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2253,7 +2084,6 @@ lands169:
   owner_id: '32'
   manager_id: '32'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2266,7 +2096,6 @@ lands170:
   owner_id: '32'
   manager_id: '32'
   area: '29.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2279,7 +2108,6 @@ lands171:
   owner_id: '16'
   manager_id: '16'
   area: '20.30'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2292,7 +2120,6 @@ lands172:
   owner_id: '32'
   manager_id: '32'
   area: '18.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2305,7 +2132,6 @@ lands173:
   owner_id: '33'
   manager_id: '33'
   area: '29.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2318,7 +2144,6 @@ lands174:
   owner_id: '33'
   manager_id: '33'
   area: '30.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2331,7 +2156,6 @@ lands175:
   owner_id: '33'
   manager_id: '33'
   area: '14.60'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2344,7 +2168,6 @@ lands176:
   owner_id: '33'
   manager_id: '33'
   area: '21.80'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2357,7 +2180,6 @@ lands177:
   owner_id: '33'
   manager_id: '33'
   area: '24.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2370,7 +2192,6 @@ lands178:
   owner_id: '19'
   manager_id: '19'
   area: '43.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2383,7 +2204,6 @@ lands179:
   owner_id: '21'
   manager_id: '21'
   area: '8.60'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2396,7 +2216,6 @@ lands180:
   owner_id: '31'
   manager_id: '31'
   area: '29.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2409,7 +2228,6 @@ lands181:
   owner_id: '33'
   manager_id: '33'
   area: '13.30'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2422,7 +2240,6 @@ lands182:
   owner_id: '4'
   manager_id: '4'
   area: '15.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2435,7 +2252,6 @@ lands183:
   owner_id: '3'
   manager_id: '3'
   area: '12.60'
-  display_order: '1'
   target_flag: f
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2448,7 +2264,6 @@ lands184:
   owner_id: '21'
   manager_id: '21'
   area: '6.10'
-  display_order: '1'
   target_flag: f
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2461,7 +2276,6 @@ lands185:
   owner_id: '22'
   manager_id: '22'
   area: '24.30'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2474,7 +2288,6 @@ lands186:
   owner_id: '23'
   manager_id: '23'
   area: '21.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2487,7 +2300,6 @@ lands187:
   owner_id: '23'
   manager_id: '23'
   area: '3.90'
-  display_order: '1'
   target_flag: f
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2500,7 +2312,6 @@ lands188:
   owner_id: '25'
   manager_id: '25'
   area: '12.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2513,7 +2324,6 @@ lands189:
   owner_id: '11'
   manager_id: '11'
   area: '13.70'
-  display_order: '1'
   target_flag: f
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2526,7 +2336,6 @@ lands190:
   owner_id: '2'
   manager_id: '2'
   area: '23.10'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2539,7 +2348,6 @@ lands191:
   owner_id: '4'
   manager_id: '4'
   area: '6.70'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
@@ -2552,7 +2360,6 @@ lands192:
   owner_id: '33'
   manager_id: '33'
   area: '31.60'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:27:33.571142'
   updated_at: '2010-07-17 01:27:33.571142'
@@ -2565,7 +2372,6 @@ lands193:
   owner_id: '9'
   manager_id: '9'
   area: '32.10'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:28:10.571305'
   updated_at: '2010-07-17 01:28:10.571305'
@@ -2578,7 +2384,6 @@ lands194:
   owner_id: '32'
   manager_id: '32'
   area: '32.00'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:28:33.928556'
   updated_at: '2010-07-17 01:28:33.928556'
@@ -2591,7 +2396,6 @@ lands195:
   owner_id: '25'
   manager_id: '25'
   area: '31.90'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:28:56.530147'
   updated_at: '2010-07-17 01:28:56.530147'
@@ -2604,7 +2408,6 @@ lands196:
   owner_id: '4'
   manager_id: '4'
   area: '32.50'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:29:36.93869'
   updated_at: '2010-07-17 01:29:36.93869'
@@ -2617,7 +2420,6 @@ lands197:
   owner_id: '6'
   manager_id: '6'
   area: '31.90'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:30:14.67127'
   updated_at: '2010-07-17 01:30:14.67127'
@@ -2630,7 +2432,6 @@ lands198:
   owner_id: '28'
   manager_id: '28'
   area: '32.00'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:30:28.659168'
   updated_at: '2010-07-17 01:30:28.659168'
@@ -2643,7 +2444,6 @@ lands199:
   owner_id: '24'
   manager_id: '24'
   area: '38.00'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:30:45.752164'
   updated_at: '2010-07-17 01:30:45.752164'
@@ -2656,7 +2456,6 @@ lands200:
   owner_id: '19'
   manager_id: '19'
   area: '33.00'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:31:12.325953'
   updated_at: '2010-07-17 01:31:12.325953'
@@ -2669,7 +2468,6 @@ lands201:
   owner_id: '27'
   manager_id: '27'
   area: '32.00'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:32:05.437011'
   updated_at: '2010-07-17 01:32:05.437011'
@@ -2682,7 +2480,6 @@ lands202:
   owner_id: '30'
   manager_id: '30'
   area: '32.00'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:32:22.980306'
   updated_at: '2010-07-17 01:32:22.980306'
@@ -2695,7 +2492,6 @@ lands203:
   owner_id: '15'
   manager_id: '15'
   area: '31.80'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:32:42.63969'
   updated_at: '2010-07-17 01:32:42.63969'
@@ -2708,7 +2504,6 @@ lands204:
   owner_id: '10'
   manager_id: '10'
   area: '32.10'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:33:23.451508'
   updated_at: '2010-07-17 01:33:23.451508'
@@ -2721,7 +2516,6 @@ lands205:
   owner_id: '29'
   manager_id: '29'
   area: '31.90'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:33:49.354291'
   updated_at: '2010-07-17 01:33:49.354291'
@@ -2734,7 +2528,6 @@ lands206:
   owner_id: '21'
   manager_id: '21'
   area: '40.00'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:34:09.790537'
   updated_at: '2010-07-17 01:34:09.790537'
@@ -2747,7 +2540,6 @@ lands207:
   owner_id: '3'
   manager_id: '3'
   area: '31.90'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:34:53.162814'
   updated_at: '2010-07-17 01:34:53.162814'
@@ -2760,7 +2552,6 @@ lands208:
   owner_id: '26'
   manager_id: '26'
   area: '31.90'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:35:16.73863'
   updated_at: '2010-07-17 01:35:16.73863'
@@ -2773,7 +2564,6 @@ lands209:
   owner_id: '22'
   manager_id: '22'
   area: '31.90'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:35:35.657474'
   updated_at: '2010-07-17 01:35:35.657474'
@@ -2786,7 +2576,6 @@ lands210:
   owner_id: '8'
   manager_id: '8'
   area: '31.80'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:35:54.777141'
   updated_at: '2010-07-17 01:35:54.777141'
@@ -2799,7 +2588,6 @@ lands211:
   owner_id: '30'
   manager_id: '30'
   area: '32.00'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:36:12.053809'
   updated_at: '2010-07-17 01:36:12.053809'
@@ -2812,7 +2600,6 @@ lands212:
   owner_id: '20'
   manager_id: '20'
   area: '31.70'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:36:28.608997'
   updated_at: '2010-07-17 01:36:28.608997'
@@ -2825,7 +2612,6 @@ lands213:
   owner_id: '13'
   manager_id: '13'
   area: '33.50'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:36:55.559914'
   updated_at: '2010-07-17 01:36:55.559914'
@@ -2838,7 +2624,6 @@ lands214:
   owner_id: '19'
   manager_id: '19'
   area: '23.90'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:37:11.519249'
   updated_at: '2010-07-17 01:37:11.519249'
@@ -2851,7 +2636,6 @@ lands215:
   owner_id: '16'
   manager_id: '16'
   area: '32.60'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:37:39.598956'
   updated_at: '2010-07-17 01:37:39.598956'
@@ -2864,7 +2648,6 @@ lands216:
   owner_id: '11'
   manager_id: '11'
   area: '13.60'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 01:38:01.01652'
   updated_at: '2010-07-17 01:38:01.01652'
@@ -2877,7 +2660,6 @@ lands217:
   owner_id: '35'
   manager_id: '35'
   area: '52.50'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 02:16:55.138427'
   updated_at: '2010-07-17 02:16:55.138427'
@@ -2890,7 +2672,6 @@ lands218:
   owner_id: '35'
   manager_id: '35'
   area: '52.60'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 02:17:13.81332'
   updated_at: '2010-07-17 02:19:33.615836'
@@ -2903,7 +2684,6 @@ lands219:
   owner_id: '35'
   manager_id: '35'
   area: '34.80'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 02:17:42.942715'
   updated_at: '2010-07-18 15:54:58.477916'
@@ -2916,7 +2696,6 @@ lands220:
   owner_id: '35'
   manager_id: '35'
   area: '23.70'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 02:18:00.526577'
   updated_at: '2010-07-18 15:55:07.088627'
@@ -2929,7 +2708,6 @@ lands221:
   owner_id: '35'
   manager_id: '35'
   area: '28.90'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 02:18:23.015241'
   updated_at: '2010-07-17 02:19:26.712981'
@@ -2942,7 +2720,6 @@ lands222:
   owner_id: '35'
   manager_id: '35'
   area: '24.60'
-  display_order: '200'
   target_flag: t
   created_at: '2010-07-17 02:19:09.855768'
   updated_at: '2010-07-18 15:54:50.806216'
@@ -2955,7 +2732,6 @@ lands223:
   owner_id: '34'
   manager_id: '34'
   area: '40.00'
-  display_order: '901'
   target_flag: t
   created_at: '2010-07-20 07:55:38.511785'
   updated_at: '2011-05-15 00:48:31.965348'
@@ -2968,7 +2744,6 @@ land_max:
   owner_id: '34'
   manager_id: 2
   area: 83.30
-  display_order: '902'
   target_flag: t
   created_at: '2010-07-20 07:56:04.873465'
   updated_at: '2011-05-04 08:31:08.343291'
@@ -2981,7 +2756,6 @@ lands225:
   owner_id: '34'
   manager_id: '34'
   area: '53.44'
-  display_order: '903'
   target_flag: t
   created_at: '2010-07-20 07:56:22.766164'
   updated_at: '2011-05-15 01:05:15.637757'
@@ -2994,7 +2768,6 @@ lands226:
   owner_id: '34'
   manager_id: '34'
   area: '23.54'
-  display_order: '904'
   target_flag: t
   created_at: '2010-07-20 07:56:42.595793'
   updated_at: '2011-05-15 01:39:43.242699'
@@ -3007,7 +2780,6 @@ lands227:
   owner_id: '34'
   manager_id: '34'
   area: '15.80'
-  display_order: '905'
   target_flag: t
   created_at: '2010-07-20 07:57:07.732489'
   updated_at: '2011-05-15 04:46:23.287148'
@@ -3020,7 +2792,6 @@ lands228:
   owner_id: '34'
   manager_id: '34'
   area: '13.50'
-  display_order: '906'
   target_flag: t
   created_at: '2010-07-20 07:57:32.118854'
   updated_at: '2011-05-15 00:52:59.914862'
@@ -3033,7 +2804,6 @@ lands229:
   owner_id: '31'
   manager_id: '31'
   area: '23.80'
-  display_order: '100'
   target_flag: t
   created_at: '2010-07-20 07:59:35.812391'
   updated_at: '2010-07-20 07:59:35.812391'
@@ -3046,7 +2816,6 @@ lands230:
   owner_id: '3'
   manager_id: '3'
   area: '30.30'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-20 12:53:16.286477'
   updated_at: '2010-07-20 12:53:16.286477'
@@ -3060,7 +2829,6 @@ lands231:
   manager_id: '5'
   area: '31.40'
   reg_area: 32
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:45:07.81524'
   updated_at: '2010-07-25 03:45:07.81524'
@@ -3074,7 +2842,6 @@ lands232:
   manager_id: '5'
   area: '29.40'
   reg_area: 30
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:45:40.933709'
   updated_at: '2010-07-25 03:45:40.933709'
@@ -3088,7 +2855,6 @@ lands233:
   manager_id: '5'
   area: '29.40'
   reg_area: 30
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:46:37.501499'
   updated_at: '2010-07-25 03:46:37.501499'
@@ -3102,7 +2868,6 @@ lands234:
   manager_id: '5'
   area: '29.40'
   reg_area: 30
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:47:08.121628'
   updated_at: '2010-07-25 03:47:08.121628'
@@ -3115,7 +2880,6 @@ lands235:
   owner_id: '21'
   manager_id: '21'
   area: '10.50'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:48:10.772897'
   updated_at: '2010-07-25 03:48:10.772897'
@@ -3128,7 +2892,6 @@ lands236:
   owner_id: '20'
   manager_id: '20'
   area: '10.20'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:48:49.479282'
   updated_at: '2010-07-25 03:48:49.479282'
@@ -3141,7 +2904,6 @@ lands237:
   owner_id: '31'
   manager_id: '31'
   area: '11.40'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:51:26.676759'
   updated_at: '2010-07-25 03:51:26.676759'
@@ -3154,7 +2916,6 @@ lands238:
   owner_id: '12'
   manager_id: '12'
   area: '3.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-25 03:53:21.366061'
   updated_at: '2010-07-25 03:53:21.366061'
@@ -3167,7 +2928,6 @@ lands239:
   owner_id: '2'
   manager_id: '2'
   area: '7.00'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-25 04:00:16.488829'
   updated_at: '2010-07-25 04:00:16.488829'
@@ -3180,7 +2940,6 @@ lands240:
   owner_id: '20'
   manager_id: '20'
   area: '52.80'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-25 04:01:18.154277'
   updated_at: '2010-07-25 04:01:18.154277'
@@ -3193,7 +2952,6 @@ lands241:
   owner_id: '20'
   manager_id: '20'
   area: '28.90'
-  display_order: '2'
   target_flag: t
   created_at: '2010-07-25 04:04:42.760407'
   updated_at: '2010-07-25 04:04:42.760407'
@@ -3206,7 +2964,6 @@ lands242:
   owner_id: '20'
   manager_id: '20'
   area: '28.90'
-  display_order: '2'
   target_flag: t
   created_at: '2010-07-25 04:05:10.807155'
   updated_at: '2010-07-25 04:05:10.807155'
@@ -3219,7 +2976,6 @@ lands243:
   owner_id: '20'
   manager_id: '20'
   area: '17.30'
-  display_order: '2'
   target_flag: t
   created_at: '2010-07-25 04:05:28.247461'
   updated_at: '2010-07-25 04:05:28.247461'
@@ -3232,7 +2988,6 @@ lands244:
   owner_id: '20'
   manager_id: '20'
   area: '11.60'
-  display_order: '1'
   target_flag: t
   created_at: '2010-07-25 04:05:54.530166'
   updated_at: '2010-07-25 04:05:54.530166'
@@ -3245,7 +3000,6 @@ lands245:
   owner_id: '26'
   manager_id: '26'
   area: '31.60'
-  display_order: '5'
   target_flag: t
   created_at: '2010-07-25 04:09:29.711885'
   updated_at: '2010-07-25 04:09:29.711885'
@@ -3258,7 +3012,6 @@ lands246:
   owner_id: 33
   manager_id: 33
   area: '38.00'
-  display_order: '2'
   target_flag: t
   created_at: '2010-07-25 04:10:52.0762'
   updated_at: '2010-07-25 04:10:52.0762'
@@ -3272,7 +3025,6 @@ lands247:
   manager_id: '5'
   area: '16.00'
   reg_area: 17.0
-  display_order: '1'
   target_flag: t
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
@@ -3284,7 +3036,6 @@ land_genka1:
   manager_id: '5'
   area: 20.0
   reg_area: 21.0
-  display_order: '1'
   target_flag: t
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
@@ -3296,7 +3047,6 @@ land_genka2:
   manager_id: '5'
   area: 40.0
   reg_area: 41.0
-  display_order: '1'
   target_flag: t
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
@@ -3308,7 +3058,6 @@ land_taue:
   manager_id: '5'
   area: 30.0
   reg_area: 31.0
-  display_order: '1'
   target_flag: t
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'

@@ -70,7 +70,6 @@ class LandsController < ApplicationController
         :manager_id,
         :area,
         :target_flag,
-        :display_order,
         :land_place_id,
         :reg_area,
         :broccoli_mark,

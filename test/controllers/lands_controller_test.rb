@@ -7,7 +7,7 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
     @home = homes(:home1)
     @update = {
       place: "9999", owner_id: @home.id, manager_id: @home.id, area: 55.5,
-      display_order: 99, target_flag: true, reg_area: 66.6
+      target_flag: true, reg_area: 66.6
     }
   end
 
@@ -38,7 +38,6 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:owner_id], land.owner_id
     assert_equal @update[:manager_id], land.manager_id
     assert_equal @update[:area], land.area
-    assert_equal @update[:display_order], land.display_order
     assert_equal @update[:target_flag], land.target_flag
     assert_equal @update[:reg_area], land.reg_area
   end
@@ -59,7 +58,6 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:owner_id], @land.owner_id
     assert_equal @update[:manager_id], @land.manager_id
     assert_equal @update[:area], @land.area
-    assert_equal @update[:display_order], @land.display_order
     assert_equal @update[:target_flag], @land.target_flag
     assert_equal @update[:reg_area], @land.reg_area
   end
