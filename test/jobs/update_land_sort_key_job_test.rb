@@ -7,6 +7,9 @@ class UpdateLandSortKeyJobTest < ActiveJob::TestCase
     land1.expects(:init_place_sort_key).once
     land2.expects(:init_place_sort_key).once
 
+    land1.expects(:save!).once
+    land2.expects(:save!).once
+
     scope = mock("scope")
     scope.expects(:find_each).multiple_yields([land1], [land2])
 
