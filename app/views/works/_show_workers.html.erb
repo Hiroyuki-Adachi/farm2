@@ -1,34 +1,45 @@
-<% worker_count = [current_organization.workers_count, @results.count].max %>
+<% columns_per_row = 2 %>
+<% total_workers = [current_organization.workers_count, @results.count].max %>
+<% worker_y = (total_workers + columns_per_row - 1) / columns_per_row %>
 <div id="content_workers" class="content">
   <table id="detail_workers">
+    <colgroup>
+      <col style="width: 40px;">
+      <col style="width: 240px;">
+      <col style="width: 40px;">
+      <col style="width: 40px;">
+      <col style="width: 40px;">
+      <col style="width: 240px;">
+      <col style="width: 40px;">
+      <col style="width: 40px;">
+    </colgroup>
     <thead>
-    <tr>
-      <th style="width:40px;">&nbsp;</th>
-      <th style="width:230px;">作業者名</th>
-      <th style="width:80px;">時間</th>
-      <th style="width:40px;">体調</th>
-      <th colspan="2">備 考</th>
-    </tr>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">作業者名</th>
+        <th scope="col">時間</th>
+        <th scope="col">体調</th>
+        <th scope="col">No.</th>
+        <th scope="col">作業者名</th>
+        <th scope="col">時間</th>
+        <th scope="col">体調</th>
+      </tr>
     </thead>
     <tbody>
-      <% worker_count.times do |i| %>
-      <tr>
-        <td class="numeric"><%= i + 1 %></td>
-        <td><%=raw @results[i] ? @results[i].worker_name(current_organization) : "" %></td>
-        <td class="numeric"><%=raw @results[i] ? @results[i].hours : "" %></td>
-        <td class="center"><%= @results[i] ? @results[i].health&.code : "" %></td>
-        <td style="width:240px;"><%= @results[i] ? @results[i].remarks : "" %></td>
-        <% if i.zero? %>
-        <td class="remarks" rowspan="<%= worker_count%>" style="width:90px;">
-        体調欄に該当する番号を記入する<br/><br/>
-        <% Health.usual.each do |health| %>
-        <%= health.code %>:<%= health.name %><br />
-        <% end %>
-        </td>
-        <% end %>
-      </tr>
+      <% worker_y.times do |i| %>
+        <tr>
+          <td class="numeric"><%= i + 1 %></td>
+          <td class="cut_name"><div class="ellipsis"><%= print_worker_name(@results, i) %></div></td>
+          <td class="numeric"><%= @results[i] ? @results[i].hours : "" %></td>
+          <td class="center"><%= @results[i] ? @results[i].health&.code : "" %></td>
+          <td class="numeric"><%= i + 1 + worker_y %></td>
+          <td class="cut_name"><div class="ellipsis"><%= print_worker_name(@results, i + worker_y) %></div></td>
+          <td class="numeric"><%= @results[i + worker_y] ? @results[i + worker_y].hours : "" %></td>
+          <td class="center"><%= @results[i + worker_y] ? @results[i + worker_y].health&.code : "" %></td>
+        </tr>
       <% end %>
     </tbody>
   </table>
+  <div>※体調欄に該当する番号を記入する(<%= health_code_list %>)</div>
   <div id="cover_workers" class="cover" onclick="location.href='<%=raw new_work_worker_path(work_id: @work) %>'"></div>
 </div>
