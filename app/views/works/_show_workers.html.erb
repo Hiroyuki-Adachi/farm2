@@ -1,6 +1,6 @@
-<% worker_x = 2 %>
+<% columns_per_row = 2 %>
 <% total_workers = [current_organization.workers_count, @results.count].max %>
-<% worker_y = (total_workers + worker_x - 1) / worker_x %>
+<% worker_y = (total_workers + columns_per_row - 1) / columns_per_row %>
 <div id="content_workers" class="content">
   <table id="detail_workers">
     <colgroup>
@@ -29,11 +29,11 @@
       <% worker_y.times do |i| %>
         <tr>
           <td class="numeric"><%= i + 1 %></td>
-          <td class="cut_name"><div class="ellipsis"><%= @results[i] ? @results[i].worker_name(current_organization) + print_remark(@results, i) : "" %></div></td>
+          <td class="cut_name"><div class="ellipsis"><%= print_worker_name(@results, i) %></div></td>
           <td class="numeric"><%= @results[i] ? @results[i].hours : "" %></td>
           <td class="center"><%= @results[i] ? @results[i].health&.code : "" %></td>
           <td class="numeric"><%= i + 1 + worker_y %></td>
-          <td class="cut_name"><div class="ellipsis"><%= @results[i + worker_y] ? @results[i + worker_y].worker_name(current_organization) + print_remark(@results, i + worker_y) : "" %></div></td>
+          <td class="cut_name"><div class="ellipsis"><%= print_worker_name(@results, i + worker_y) %></div></td>
           <td class="numeric"><%= @results[i + worker_y] ? @results[i + worker_y].hours : "" %></td>
           <td class="center"><%= @results[i + worker_y] ? @results[i + worker_y].health&.code : "" %></td>
         </tr>

@@ -35,12 +35,17 @@ module WorksHelper
     @health_code_list ||= Health.usual.map { |h| "#{h.code}:#{h.name}" }.join(" ")
   end
 
-  def print_remark(results, index)
+  def print_worker_name(results, index)
     return "" if results.nil?
+    return "" if index >= results.size
 
     record = results[index]
-    return "" if record.nil? || record.remarks.blank?
+    return "" if record.nil?
+    worker_name = record.worker_name(current_organization)
+    return "" if worker_name.blank?
 
-    "(#{record.remarks})"
+    return worker_name if record.remarks.blank?
+
+    "#{worker_name}(#{record.remarks})"
   end
 end
