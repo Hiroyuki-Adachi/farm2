@@ -32,6 +32,10 @@ job_type :rake,   ' cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bi
 job_type :runner, ' cd :path && PATH=:env_path:"$PATH" bin/rails runner -e :environment \':task\' :output '
 job_type :script, ' cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bundle exec bin/:task :output '
 
+every 1.day, at: '01:40 am' do
+  runner "UpdateLandSortKeyJob.perform_now"
+end
+
 every 1.day, at: '02:20 am' do
   runner "CreateTaskFromTemplateJob.perform_now"
 end

@@ -158,4 +158,12 @@ class LandTest < ActiveSupport::TestCase
     assert_operator a, :<, ro
     assert_operator ro, :<, ha
   end
+
+  test "init_place_sort_key" do
+    land = Land.new(place: "2544-1-ﾛ")
+
+    land.init_place_sort_key
+
+    assert_equal AddressSortIndex.build("2544-1-ﾛ"), land.place_sort_key
+  end
 end

@@ -70,6 +70,7 @@ class Land < ApplicationRecord
   scope :regionable, -> {kept.where.not(region: nil).where(target_flag: true, group_id: nil)}
   scope :for_place, ->(place) {kept.where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).usual_order}
   scope :by_term, ->(sys) {kept.where(["start_on <= ? AND ? <= end_on", sys.end_date, sys.start_date])}
+  scope :target_place_sort_key, -> { where("place_sort_key = '' OR updated_at > ? ", 1.day.ago) }
   scope :expiry, ->(target = nil) do
     target ||= Date.current
 
