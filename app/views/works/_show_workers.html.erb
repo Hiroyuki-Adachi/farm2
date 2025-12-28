@@ -1,5 +1,6 @@
 <% worker_x = 2 %>
-<% worker_y = [current_organization.workers_count, @results.count].max / worker_x %>
+<% total_workers = [current_organization.workers_count, @results.count].max %>
+<% worker_y = (total_workers + worker_x - 1) / worker_x %>
 <div id="content_workers" class="content">
   <table id="detail_workers">
     <colgroup>
