@@ -99,7 +99,7 @@ export default class extends Controller {
     }
     document.addEventListener("turbo:before-cache", this.beforeCacheHandler, { once:false })
 
-    // ---- あなたの init() の本体を実行（1ページ1回だけ）----
+    // 初期化処理を実行((1ページ1回だけ)
     // 画面ごとに複数の pc-common が同時に走らないように簡易ロック
     if (!document.documentElement.dataset.pcCommonInited) {
       document.documentElement.dataset.pcCommonInited = "1"
@@ -115,7 +115,7 @@ export default class extends Controller {
     }
   }
 
-  // ===== ここに “元 pc-common.js の init()” 相当を移植 =====
+  // PC共通初期化処理
   initPcCommon() {
     // 既存の掃除
     document.querySelectorAll(".modal-backdrop, .offcanvas-backdrop").forEach(bd => bd.remove())
