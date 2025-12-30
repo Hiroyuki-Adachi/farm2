@@ -234,6 +234,7 @@ export default class extends Controller {
     const contentCol     = document.getElementById("content_col")
     const toggleBtn      = document.getElementById("toggle_sidebar")
     const STORE_KEY      = "farm2:sidebar_folded"
+    const closedMenus    = document.querySelectorAll('.nav-link.farm2-navi.js-closed')
     const applySidebarState = (folded) => {
       if (!desktopSidebar || !contentCol) return
       if (folded) {
@@ -242,6 +243,7 @@ export default class extends Controller {
         contentCol.classList.remove("col-lg-10")
         contentCol.classList.add("col-12")
         toggleBtn?.setAttribute("aria-pressed","true")
+        closedMenus.forEach(a => a.classList.remove("d-none"))
         document.documentElement.classList.add("sidebar-collapsed")
       } else {
         desktopSidebar.classList.remove("d-lg-none")
@@ -249,6 +251,7 @@ export default class extends Controller {
         contentCol.classList.remove("col-12")
         contentCol.classList.add("col-lg-10")
         toggleBtn?.setAttribute("aria-pressed","false")
+        closedMenus.forEach(a => a.classList.add("d-none"))
         document.documentElement.classList.remove("sidebar-collapsed")
       }
     }
