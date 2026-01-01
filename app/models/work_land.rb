@@ -30,7 +30,7 @@ class WorkLand < ApplicationRecord
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id")
       .where(works: { term: term })
       .where("(lands.manager_id = ? OR EXISTS (SELECT * FROM land_homes WHERE lands.id = land_homes.land_id AND home_id = ? AND manager_flag = true))", home.id, home.id)
-      .order("lands.display_order, lands.id, works.worked_at")
+      .order("lands.place_sort_key, lands.id, works.worked_at")
   end
 
   scope :for_fix, ->(term, fixed_at, contract_id) do

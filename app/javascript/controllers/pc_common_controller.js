@@ -99,7 +99,7 @@ export default class extends Controller {
     }
     document.addEventListener("turbo:before-cache", this.beforeCacheHandler, { once:false })
 
-    // ---- あなたの init() の本体を実行（1ページ1回だけ）----
+    // 初期化処理を実行((1ページ1回だけ)
     // 画面ごとに複数の pc-common が同時に走らないように簡易ロック
     if (!document.documentElement.dataset.pcCommonInited) {
       document.documentElement.dataset.pcCommonInited = "1"
@@ -115,7 +115,7 @@ export default class extends Controller {
     }
   }
 
-  // ===== ここに “元 pc-common.js の init()” 相当を移植 =====
+  // PC共通初期化処理
   initPcCommon() {
     // 既存の掃除
     document.querySelectorAll(".modal-backdrop, .offcanvas-backdrop").forEach(bd => bd.remove())
@@ -234,6 +234,7 @@ export default class extends Controller {
     const contentCol     = document.getElementById("content_col")
     const toggleBtn      = document.getElementById("toggle_sidebar")
     const STORE_KEY      = "farm2:sidebar_folded"
+    const closedMenus    = document.querySelectorAll('.nav-link.farm2-navi.js-closed')
     const applySidebarState = (folded) => {
       if (!desktopSidebar || !contentCol) return
       if (folded) {
@@ -242,6 +243,7 @@ export default class extends Controller {
         contentCol.classList.remove("col-lg-10")
         contentCol.classList.add("col-12")
         toggleBtn?.setAttribute("aria-pressed","true")
+        closedMenus.forEach(a => a.classList.remove("d-none"))
         document.documentElement.classList.add("sidebar-collapsed")
       } else {
         desktopSidebar.classList.remove("d-lg-none")
@@ -249,6 +251,7 @@ export default class extends Controller {
         contentCol.classList.remove("col-12")
         contentCol.classList.add("col-lg-10")
         toggleBtn?.setAttribute("aria-pressed","false")
+        closedMenus.forEach(a => a.classList.add("d-none"))
         document.documentElement.classList.remove("sidebar-collapsed")
       }
     }

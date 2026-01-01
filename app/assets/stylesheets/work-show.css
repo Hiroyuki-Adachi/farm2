@@ -72,6 +72,14 @@ span.genre {
     white-space: nowrap;
 }
 
+td.cut_name > div.ellipsis {
+  display: block;
+  width: 238px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 div.sub_title {
     font-family: "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;
     font-size: 14pt;

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_27_101045) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_24_125131) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -438,7 +438,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_27_101045) do
     t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
     t.datetime "created_at", precision: nil
     t.datetime "deleted_at", precision: nil
-    t.integer "display_order", comment: "表示順"
     t.date "end_on", default: "2999-12-31", null: false, comment: "有効期間(至)"
     t.boolean "group_flag", default: false, null: false, comment: "グループフラグ"
     t.integer "group_id", comment: "グループID"
@@ -450,6 +449,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_27_101045) do
     t.integer "peasant_end_term", default: 9999, null: false, comment: "小作料期間(至)"
     t.integer "peasant_start_term", default: 0, null: false, comment: "小作料期間(自)"
     t.string "place", limit: 15, null: false, comment: "番地"
+    t.string "place_sort_key", limit: 20, default: "", null: false, comment: "番地(ソート用)"
     t.decimal "reg_area", precision: 5, scale: 2, comment: "登記面積"
     t.polygon "region", comment: "領域"
     t.date "start_on", default: "1900-01-01", null: false, comment: "有効期間(自)"
@@ -458,6 +458,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_27_101045) do
     t.string "uuid", limit: 36, default: "", null: false, comment: "UUID"
     t.index ["deleted_at"], name: "index_lands_on_deleted_at"
     t.index ["place"], name: "index_lands_on_place"
+    t.index ["place_sort_key"], name: "index_lands_on_place_sort_key"
     t.index ["uuid"], name: "index_lands_on_uuid", unique: true, where: "((uuid)::text <> ''::text)"
   end
 
