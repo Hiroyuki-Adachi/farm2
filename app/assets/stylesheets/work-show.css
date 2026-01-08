@@ -74,7 +74,6 @@ span.genre {
 
 td.cut_name > div.ellipsis {
   display: block;
-  width: 238px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
