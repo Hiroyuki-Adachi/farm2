@@ -127,6 +127,4 @@ group :test do
   gem 'mocha'
   # minitest-rails provides a set of Rails generators for Minitest.
   gem 'webmock'
-
-  gem 'minitest', '< 6'
 end

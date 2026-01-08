@@ -59,7 +59,9 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: bundle exec rails jobs:work RAILS_ENV=development
+    environment:
+      RAILS_ENV: development
+    command: bundle exec rails jobs:work
     volumes:
       - type: bind
         source: .
