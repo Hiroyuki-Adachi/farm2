@@ -16,6 +16,9 @@
     <div class="collapse navbar-collapse d-none d-lg-flex">
       <ul class="navbar-nav me-auto" id="navbar_farm2">
         <li class="nav-item">
+          <%= link_to '日報管理', "#", {class: "nav-link farm2-navi d-none js-closed", id: :navbar_daily} %>
+        </li>
+        <li class="nav-item">
           <%= link_to '予定管理', "#", {class: "nav-link farm2-navi", id: :navbar_schedule} %>
         </li>
         <% if current_user.checkable? %>

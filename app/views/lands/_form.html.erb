@@ -34,7 +34,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="field mb-3 col-md-2">
+  <div class="field mb-3 col-md-4">
     <%= f.label :target_flag, class: "col-form-label-lg" %>
     <div class="form-check">
       <%= f.radio_button :target_flag, true %>
@@ -44,10 +44,6 @@
       <%= f.radio_button :target_flag, false %>
       <label for="land_target_flag_false" class="form-check-label form-label">個人管理</label>
     </div>
-  </div>
-  <div class="field mb-3 col-md-2">
-    <%= f.label :display_order, class: "col-form-label-lg form-label" %>
-    <%= f.number_field(:display_order, {maxlength: 4, size: 4, required: true, class: "form-control"}) %>
   </div>
   <div class="field mb-3 col-md-2">
     <%= f.label :broccoli_mark, class: "col-form-label-lg form-label" %>
