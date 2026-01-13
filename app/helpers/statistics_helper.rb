@@ -62,8 +62,8 @@ module StatisticsHelper
       results << {
         label: "#{i + 1}年前",
         data: ALL_MONTHS.map { |month| prev_result[month - 1].to_f },
-        pointBackgroundColor: COLORS[i + 2],
-        borderColor: COLORS[i + 2],
+        pointBackgroundColor: COLORS[(i + 2) % COLORS.length],
+        borderColor: COLORS[(i + 2) % COLORS.length],
         type: 'line',
         fill: false,
         order: 10
