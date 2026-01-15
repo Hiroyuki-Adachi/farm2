@@ -9,6 +9,7 @@
   next_statuses: [2, 3, 4, 9]
   display_order: 1
   kanban_column: 1
+  gantt_flag: true
   btn_class: "btn btn-outline-secondary"
   badge_class: "badge bg-secondary"
 - id: 1
@@ -22,6 +23,7 @@
   next_statuses: [2, 3, 4, 9]
   display_order: 1
   kanban_column: 1
+  gantt_flag: true
   btn_class: "btn btn-warning"
   badge_class: "badge bg-warning text-dark"
 - id: 2
@@ -35,6 +37,7 @@
   next_statuses: [0, 3, 4, 9]
   display_order: 1
   kanban_column: 2
+  gantt_flag: true
   btn_class: "btn btn-primary"
   badge_class: "badge bg-primary"
 - id: 3
@@ -48,6 +51,7 @@
   next_statuses: [2, 4, 9]
   display_order: 5
   kanban_column: 0
+  gantt_flag: false
   btn_class: "btn btn-outline-warning"
   badge_class: "badge bg-warning text-dark"
 - id: 4
@@ -61,6 +65,7 @@
   next_statuses: [1, 2]
   display_order: 9
   kanban_column: 3
+  gantt_flag: true
   btn_class: "btn btn-success"
   badge_class: "badge bg-success"
 - id: 9
@@ -74,5 +79,6 @@
   next_statuses: [1]
   display_order: 9
   kanban_column: 0
+  gantt_flag: false
   btn_class: "btn btn-outline-danger"
   badge_class: "badge bg-danger"
