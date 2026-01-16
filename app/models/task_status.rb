@@ -15,6 +15,7 @@ class TaskStatus < ActiveYaml::Base
   scope :start, -> { where(start_flag: true) }
   scope :started, -> { where(started_flag: true) }
   scope :workable, -> { where(work_flag: true) }
+  scope :gantt, -> { where(gantt_flag: true) }
 
   def self.closed_ids
     closed.pluck(:id)
@@ -38,6 +39,10 @@ class TaskStatus < ActiveYaml::Base
 
   def self.workable_ids
     workable.pluck(:id)
+  end
+
+  def self.gantt_ids
+    gantt.pluck(:id)
   end
 
   def self.kanban_column_ids(kanban_column)
