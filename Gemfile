@@ -125,7 +125,7 @@ group :test do
   gem 'cuprite', '0.15.1'
   # minitest is a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking.
   gem 'mocha'
-  # minitest for mocking capabilities.
+  # minitest-mock provides backward compatibility for the extracted Minitest::Mock (minitest 6+); mocha is used for general mocking.
   gem 'minitest-mock'
   # minitest-rails provides a set of Rails generators for Minitest.
   gem 'webmock'
