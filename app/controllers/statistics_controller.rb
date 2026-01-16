@@ -24,7 +24,10 @@ class StatisticsController < ApplicationController
 
   def tab4
     @current_results = Work.total_by_month(nil, current_term)
-    @previous_results = Work.total_by_month(nil, previous_term)
+    @previous_results = []
+    AVERAGE_TERMS.times do |i|
+      @previous_results << Work.total_by_month(nil, current_term - (i + 1))
+    end
     @average_results = Work.total_by_month(nil, current_system.get_prev_terms(AVERAGE_TERMS, term: previous_term))
   end
 

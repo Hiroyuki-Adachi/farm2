@@ -194,10 +194,8 @@ class Task < ApplicationRecord
         ).then(Arel.sql('CURRENT_DATE'))
         .else(t[:planned_start_on])
 
-    where(
-      arel_table[:planned_start_on].lteq(end_date)
-      .and(gantt_end_on_case.gteq(start_date))
-    )
+    where(t[:planned_start_on].lteq(end_date).and(gantt_end_on_case.gteq(start_date)))
+    .where(t[:task_status_id].in(TaskStatus.gantt_ids))
   end
 
   # ステータス判定メソッド群
