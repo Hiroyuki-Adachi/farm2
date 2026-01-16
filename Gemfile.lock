@@ -502,6 +502,7 @@ DEPENDENCIES
   lograge
   loofah (>= 2.3.1)
   mechanize
+  minitest
   minitest-mock
   mocha
   nokogiri

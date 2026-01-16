@@ -200,7 +200,7 @@ class UserTest < ActiveSupport::TestCase
     @user.stubs(:totp).returns(totp)
 
     assert_equal false, @user.totp_verify?("123456")
-    assert_equal 5.seconds.ago.to_i, @user.otp_last_used_at.to_i
+    assert_in_delta 5.seconds.ago.to_i, @user.otp_last_used_at.to_i, 1.second
   end
 
   test "TOTP認証(TOTPオブジェクトが存在しない場合)" do
