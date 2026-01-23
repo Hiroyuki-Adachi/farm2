@@ -66,15 +66,18 @@ class StatisticsHelperTest < ActionView::TestCase
   end
 
   test "tab4_datasets の構築" do
-    current = (1..12).map { |m| m * 10 }       # [10,20,...120]
-    previous = (1..12).map { |m| m * 5 }       # [5,10,...60]
-    avg = (1..12).map { |m| m * 7 }            # [7,14,...84]
+    current = (1..12).map { |m| m * 10 } # [10,20,...120]
+    previous = []
+    5.times do |_i|
+      previous << (1..12).map { |m| m * 5 } # [5,10,...60]
+    end
+    avg = (1..12).map { |m| m * 7 } # [7,14,...84]
 
     datasets = tab4_datasets(current, previous, avg)
 
-    assert_equal 3, datasets.size
-    assert_equal current.map(&:to_f),  datasets[2][:data]
-    assert_equal previous.map(&:to_f), datasets[1][:data]
-    assert_equal avg.map(&:to_f),      datasets[0][:data]
+    assert_equal 7, datasets.size
+    assert_equal current.map(&:to_f), datasets[6][:data]
+    assert_equal previous[0].map(&:to_f), datasets[1][:data]
+    assert_equal avg.map(&:to_f), datasets[0][:data]
   end
 end
