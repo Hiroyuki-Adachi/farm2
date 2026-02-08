@@ -40,6 +40,7 @@ class Land < ApplicationRecord
 
   self.discard_column = :deleted_at
 
+  before_save :init_place_sort_key, if: :will_save_change_to_place?
   before_create :set_uuid
 
   belongs_to :owner, -> {with_discarded}, class_name: 'Home', foreign_key: :owner_id
@@ -111,11 +112,6 @@ class Land < ApplicationRecord
   accepts_nested_attributes_for :land_costs, allow_destroy: true, reject_if: :reject_land_costs?
   accepts_nested_attributes_for :land_homes, allow_destroy: true
 
-  after_save :init_place_sort_key, if: :should_init_place_sort_key?
-
-  def should_init_place_sort_key?
-    will_save_change_to_place? || place_sort_key.blank?
-  end
   def owner_name
     owner.member_flag ? owner_holder.name : owner.name
   end
