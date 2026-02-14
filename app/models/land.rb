@@ -40,9 +40,12 @@ class Land < ApplicationRecord
 
   self.discard_column = :deleted_at
 
-  before_save :init_place_sort_key, if: :will_save_change_to_place?
+  before_save :init_place_sort_key, if: :needs_place_sort_key_initialization?
   before_create :set_uuid
 
+  def needs_place_sort_key_initialization?
+    place_sort_key.blank? || will_save_change_to_place?
+  end
   belongs_to :owner, -> {with_discarded}, class_name: 'Home', foreign_key: :owner_id
   belongs_to :manager, -> {with_discarded}, class_name: 'Home', foreign_key: :manager_id
   belongs_to :land_place, -> {with_discarded}
