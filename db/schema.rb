@@ -635,7 +635,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_23_071936) do
     t.integer "status", default: 0, null: false, comment: "セッション状態（0: 有効, 1: 使用済み, 2: 期限切れ）"
     t.string "token", null: false, comment: "セッション識別子"
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false, comment: "ユーザーID"
+    t.integer "user_id", comment: "ユーザーID"
     t.index ["token"], name: "index_qr_login_sessions_on_token", unique: true
   end
 

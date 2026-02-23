@@ -89,6 +89,7 @@ resources :schedules, except: [:show] do
 end
 resources :broccoli, param: "work_id", only: [:edit, :update, :destroy]
 resources :sessions, only: [:new, :create, :index]
+resources :sessions, only: [:show], param: :token
 resources :machine_types, except: [:show]
 resources :chemical_types, except: [:show]
 resources :work_kinds, except: [:show]

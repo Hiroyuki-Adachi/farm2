@@ -26,6 +26,16 @@ module ApplicationHelper
     ChunkyPNG::Image.from_datastream(qr.as_png.resize(300, 300).to_datastream).to_data_url
   end
 
+  def qrcode_session_tag(token)
+    payload = {
+      type: "session",
+      value: token,
+      version: 1
+    }
+    qr = ::RQRCode::QRCode.new(payload.to_json)
+    ChunkyPNG::Image.from_datastream(qr.as_png.resize(300, 300).to_datastream).to_data_url
+  end
+
   def hhmm(hours, count = 1)
     Time.at((hours || 0) * 3600 / count).utc.strftime("%H:%M")
   end

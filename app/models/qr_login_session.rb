@@ -4,16 +4,38 @@
 #
 #  id                                                          :bigint           not null, primary key
 #  expires_at(セッション有効期限)                              :datetime         not null
-#  status(セッション状態（0: 有効, 1: 使用済み, 2: 期限切れ）) :integer          default(0), not null
+#  status(セッション状態（0: 有効, 1: 使用済み, 2: 期限切れ）) :integer          default("pending"), not null
 #  token(セッション識別子)                                     :string           not null
 #  created_at                                                  :datetime         not null
 #  updated_at                                                  :datetime         not null
 #  approved_user_id(承認したユーザーID)                        :integer
-#  user_id(ユーザーID)                                         :integer          not null
+#  user_id(ユーザーID)                                         :integer
 #
 # Indexes
 #
 #  index_qr_login_sessions_on_token  (token) UNIQUE
 #
 class QrLoginSession < ApplicationRecord
+  enum :status, { pending: 0, approved: 1, expired: 2 }, default: :pending
+
+  validates :token, presence: true, uniqueness: true
+
+  before_validation :ensure_token, on: :create
+  before_validation :ensure_expires_at, on: :create
+
+  scope :alive, -> { where("expires_at > ?", Time.current).where(status: :pending) }
+
+  def expired?
+    expires_at <= Time.current || status == "expired"
+  end
+
+  private
+
+  def ensure_token
+    self.token ||= SecureRandom.uuid # UUIDv4
+  end
+
+  def ensure_expires_at
+    self.expires_at ||= 5.minutes.from_now
+  end
 end
