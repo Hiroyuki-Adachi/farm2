@@ -1,0 +1,19 @@
+<div class="mt-3" data-controller="qr-login">
+  <button class="btn btn-outline-primary w-100"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#qrLoginCollapse"
+          aria-expanded="false"
+          aria-controls="qrLoginCollapse"
+          data-action="click->qr-login#generate">
+    QRを生成
+  </button>
+
+  <div class="collapse mt-3" id="qrLoginCollapse">
+    <div class="card card-body text-center">
+      <p class="mb-2">このQRをモバイルアプリで読み取ってください。</p>
+      <img hidden data-qr-login-target="image" class="img-fluid mx-auto border" style="max-width: 320px;" alt="QRログイン用QRコード" />
+      <small class="text-muted mt-2" data-qr-login-target="status"></small>
+    </div>
+  </div>
+</div>

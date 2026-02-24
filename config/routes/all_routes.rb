@@ -89,6 +89,8 @@ resources :schedules, except: [:show] do
 end
 resources :broccoli, param: "work_id", only: [:edit, :update, :destroy]
 resources :sessions, only: [:new, :create, :index]
+resources :qr_login_sessions, only: [:create], param: :token
+get 'qr_login_sessions/:token/qrcode.svg', to: 'qr_login_sessions#qrcode', as: :qr_login_session_qrcode
 resources :machine_types, except: [:show]
 resources :chemical_types, except: [:show]
 resources :work_kinds, except: [:show]
