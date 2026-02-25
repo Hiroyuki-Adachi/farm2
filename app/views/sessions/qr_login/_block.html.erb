@@ -1,0 +1,25 @@
+<div class="mt-4" data-controller="pages--qr-login">
+  <div class="card border-secondary">
+    <div class="card-header bg-light">
+      <h5 class="mb-0">QRコードでログイン</h5>
+    </div>
+
+    <div class="card-body text-center">
+
+      <button
+        class="btn btn-outline-primary mb-3"
+        data-action="click->pages--qr-login#generate">
+        QRコードを生成
+      </button>
+
+      <div data-pages--qr-login-target="status"
+           class="text-muted small mb-2">
+      </div>
+
+      <div data-pages--qr-login-target="qrcode">
+        <!-- ここにSVGを表示 -->
+      </div>
+
+    </div>
+  </div>
+</div>

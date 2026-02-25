@@ -52,11 +52,11 @@ export const init = () => {
 
     const normalized = {
       type:    data.type || data.t,
-      version: data.version || data.v,
+      version: data.version || data.ver || data.v,
       id:      data.id,
-      token:   data.token,
-      value:   data.value,
-      exp:     data.exp
+      token:   data.token || data.tk,
+      value:   data.value || data.val,
+      exp:     data.exp || data.e, // 期限（exp: expirationの略）
     };
 
     if (!normalized.type) {

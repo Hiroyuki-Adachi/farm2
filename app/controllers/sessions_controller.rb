@@ -8,16 +8,6 @@ class SessionsController < ApplicationController
 
   def new
     log_out
-    qr_session = QrLoginSession.create!
-    redirect_to session_path(qr_session.token)
-  end
-
-  def show
-    @qr_session = QrLoginSession.find_by(token: params[:token])
-    if @qr_session.nil? || @qr_session.expired?
-      to_error_path
-      return
-    end
   end
 
   def create
