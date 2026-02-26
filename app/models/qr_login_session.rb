@@ -5,10 +5,9 @@
 #  id                                                          :bigint           not null, primary key
 #  expires_at(セッション有効期限)                              :datetime         not null
 #  status(セッション状態（0: 有効, 1: 使用済み, 2: 期限切れ）) :integer          default("pending"), not null
-#  token(セッション識別子)                                     :string           not null
+#  token(セッション識別子)                                     :string(36)       not null
 #  created_at                                                  :datetime         not null
 #  updated_at                                                  :datetime         not null
-#  approved_user_id(承認したユーザーID)                        :integer
 #  user_id(ユーザーID)                                         :integer
 #
 # Indexes

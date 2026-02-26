@@ -629,11 +629,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_23_071936) do
   end
 
   create_table "qr_login_sessions", comment: "QRログインセッション", force: :cascade do |t|
-    t.integer "approved_user_id", comment: "承認したユーザーID"
     t.datetime "created_at", null: false
     t.datetime "expires_at", null: false, comment: "セッション有効期限"
     t.integer "status", default: 0, null: false, comment: "セッション状態（0: 有効, 1: 使用済み, 2: 期限切れ）"
-    t.string "token", null: false, comment: "セッション識別子"
+    t.string "token", limit: 36, null: false, comment: "セッション識別子"
     t.datetime "updated_at", null: false
     t.integer "user_id", comment: "ユーザーID"
     t.index ["token"], name: "index_qr_login_sessions_on_token", unique: true

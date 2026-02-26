@@ -9,6 +9,7 @@ class PersonalInformations::ScansController < PersonalInformationsController
 
     case @data[:type]
     when "lands" then return handle_lands
+    when "session" then return handle_session
     else
       return render json: { error: "Unsupported type", message: 'サポートされていないQRコードです' }, status: :bad_request
     end
@@ -52,5 +53,17 @@ class PersonalInformations::ScansController < PersonalInformationsController
 
     url = personal_information_land_path(personal_information_token: current_user.token, id: land.id)
     render json: { action: "redirect", url: url }, status: :ok
+  end
+
+  def handle_session
+    qr_session = QrLoginSession.find_by(token: @data[:value])
+    return render json: { action: "error", message: "セッションが見つかりません" }, status: :not_found unless qr_session
+
+    qr_session.with_lock do
+      return render json: { action: "error", message: "QRコードの有効期限が切れています" }, status: :unprocessable_content if qr_session.expired?
+      return render json: { action: "error", message: "このQRコードはすでに使用されています" }, status: :unprocessable_content unless qr_session.pending?
+      qr_session.update!(user_id: current_user.id, status: :approved)
+    end
+    render json: { action: "ack", message: "QRコード認証に成功しました" }, status: :ok
   end
 end

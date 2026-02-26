@@ -118,11 +118,6 @@ export const init = () => {
     try { return await res.json(); } catch { return null; }
   }
 
-  function toast(msg) {
-    // 最小限の簡易トースト（BootstrapならAlertでもOK）
-    console.log("[toast]", msg);
-  }
-
   window.toast = (msg) => {
     document.getElementById("popup_alert_message").innerText = msg;
     const popupForm = new bootstrap.Modal(document.getElementById("popup_alert"));
