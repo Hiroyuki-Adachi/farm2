@@ -87,6 +87,9 @@ export const init = () => {
             Turbo.visit(json.url);
             break;
           case "ack":
+            await scanner.stop();
+            video.srcObject?.getTracks().forEach(t => t.stop());
+            video.srcObject = null;
             toast(json.message || "完了しました"); 
             setTimeout(() => { posting = false; }, 1200);
             break;
@@ -118,9 +121,17 @@ export const init = () => {
     try { return await res.json(); } catch { return null; }
   }
 
-  window.toast = (msg) => {
-    document.getElementById("popup_alert_message").innerText = msg;
-    const popupForm = new bootstrap.Modal(document.getElementById("popup_alert"));
-    popupForm.show();
-  };
+  function toast(msg) {
+    const elMsg = document.getElementById("popup_alert_message");
+    const elModal = document.getElementById("popup_alert");
+
+    if (!elMsg || !elModal) {
+      console.log("[toast fallback]", msg);
+      return;
+    }
+
+    elMsg.innerText = msg;
+    const modal = bootstrap.Modal.getOrCreateInstance(elModal);
+    modal.show();
+  }
 };
