@@ -3,12 +3,13 @@ import consumer from "channels/consumer"
 
 export default class extends Controller {
   static targets = ["qrcode", "status"]
+  static values = { url: String }
 
   async generate() {
     try {
       this.statusTarget.textContent = "QRコードを生成しています..."
 
-      const res = await fetch("/sessions/qr_login", {
+      const res = await fetch(this.urlValue, {
         method: "POST",
         headers: {
           "X-CSRF-Token": this.csrfToken(),
@@ -26,7 +27,7 @@ export default class extends Controller {
 
       // QR画像を表示
       this.qrcodeTarget.innerHTML = `
-        <img src="/sessions/qr_login/${token}/qrcode.svg"
+        <img src="${this.urlValue}/${token}/qrcode.svg"
              class="img-fluid"
              alt="QRコード">
       `
@@ -65,7 +66,7 @@ export default class extends Controller {
   async consume() {
     if (!this.currentToken) return
 
-    const res = await fetch(`/sessions/qr_login/${this.currentToken}/consume`, {
+    const res = await fetch(`${this.urlValue}/${this.currentToken}/consume`, {
       method: "POST",
       headers: {
         "X-CSRF-Token": this.csrfToken(),

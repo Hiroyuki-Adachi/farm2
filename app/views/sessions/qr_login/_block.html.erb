@@ -1,4 +1,4 @@
-<div class="mt-4" data-controller="pages--qr-login">
+<div class="mt-4" data-controller="pages--qr-login" data-pages--qr-login-url-value="<%= sessions_qr_login_index_path %>">>
   <div class="card border-secondary">
     <div class="card-header bg-light">
       <h5 class="mb-0">QRコードでログイン</h5>
@@ -12,8 +12,7 @@
         QRコードを生成
       </button>
 
-      <div data-pages--qr-login-target="status"
-           class="text-muted small mb-2">
+      <div data-pages--qr-login-target="status" class="text-muted small mb-2">
       </div>
 
       <div data-pages--qr-login-target="qrcode">
