@@ -5,6 +5,7 @@ class CreateQrLoginSessions < ActiveRecord::Migration[8.1]
       t.integer  :user_id, null: true, comment: 'ユーザーID'
       t.integer  :status, null: false, default: 0, comment: 'セッション状態（0: 有効, 1: 使用済み, 2: 期限切れ）'
       t.datetime :expires_at, null: false, comment: 'セッション有効期限'
+      t.datetime :consumed_at, null: true, comment: 'セッション使用日時'
 
       t.timestamps
     end

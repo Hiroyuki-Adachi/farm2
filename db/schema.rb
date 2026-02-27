@@ -629,6 +629,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_23_071936) do
   end
 
   create_table "qr_login_sessions", comment: "QRログインセッション", force: :cascade do |t|
+    t.datetime "consumed_at", comment: "セッション使用日時"
     t.datetime "created_at", null: false
     t.datetime "expires_at", null: false, comment: "セッション有効期限"
     t.integer "status", default: 0, null: false, comment: "セッション状態（0: 有効, 1: 使用済み, 2: 期限切れ）"
