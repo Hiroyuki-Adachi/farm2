@@ -44,6 +44,10 @@ every 1.day, at: '03:40 am' do
   runner "InitWorkTypeCacheJob.perform_now"
 end
 
+every 1.day, at: '04:40 am' do
+  runner "CleanQrLoginSessionsJob.perform_now"
+end
+
 every 1.day, at: '07:05 am' do
   runner "CrawlJob.perform_now(perform_now: true)"
 end
