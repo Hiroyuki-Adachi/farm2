@@ -16,14 +16,14 @@
 #  index_qr_login_sessions_on_token  (token) UNIQUE
 #
 class QrLoginSession < ApplicationRecord
-  enum :status, { pending: 0, approved: 1, consumed: 2, expired: 3 }, default: :pending
+  enum :status, { pending: 0, approved: 1, consumed: 2 }, default: :pending
 
   validates :token, presence: true, uniqueness: true
 
   before_validation :ensure_token, on: :create
   before_validation :ensure_expires_at, on: :create
 
-  scope :alive, -> { where("expires_at > ?", Time.current).where(status: :pending) }
+  scope :alive, -> { where(expires_at: Time.current..).where(status: :pending) }
 
   scope :deletable, ->(now: Time.current, expired_keep: 1.day, consumed_keep: 30.days) do
     where(consumed_at: nil).where(expires_at: ...(now - expired_keep))
@@ -31,7 +31,11 @@ class QrLoginSession < ApplicationRecord
   end
 
   def expired?
-    expires_at <= Time.current || status == "expired"
+    expires_at < Time.current
+  end
+
+  def usable?
+    pending? && !expired?
   end
 
   private

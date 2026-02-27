@@ -60,10 +60,10 @@ class PersonalInformations::ScansController < PersonalInformationsController
     return render json: { action: "error", message: "セッションが見つかりません" }, status: :not_found unless qr_session
 
     qr_session.with_lock do
-      return render json: { action: "error", message: "QRコードの有効期限が切れています" }, status: :unprocessable_content if qr_session.expired?
-      return render json: { action: "error", message: "このQRコードはすでに使用されています" }, status: :unprocessable_content unless qr_session.pending?
+      return render json: { action: "error", message: "このQRコードは使用できません" }, status: :unprocessable_content unless qr_session.usable?
       qr_session.update!(user_id: current_user.id, status: :approved)
     end
+    QrLoginChannel.broadcast_to(qr_session.token, { type: "approved" })
     render json: { action: "ack", message: "QRコード認証に成功しました" }, status: :ok
   end
 end

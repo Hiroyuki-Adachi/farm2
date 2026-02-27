@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import consumer from "channels/consumer"
 
 export default class extends Controller {
   static targets = ["qrcode", "status"]
@@ -33,6 +34,19 @@ export default class extends Controller {
       this.statusTarget.textContent =
         `有効期限: ${this.formatTime(expiresAt)} まで`
 
+      this.currentToken = token;
+
+      this.subscription = consumer.subscriptions.create(
+        { channel: "QrLoginChannel", token: token },
+        {
+          received: (data) => {
+            console.log("QrLoginChannel Received data:", data);
+            if (data.type === "approved") {
+              this.consume();
+            }
+          }
+        }
+      )
     } catch (error) {
       console.error(error)
       this.statusTarget.textContent = "QR生成エラーが発生しました"
@@ -46,5 +60,28 @@ export default class extends Controller {
   formatTime(isoString) {
     const date = new Date(isoString)
     return date.toLocaleTimeString()
+  }
+
+  async consume() {
+    if (!this.currentToken) return
+
+    const res = await fetch(`/sessions/qr_login/${this.currentToken}/consume`, {
+      method: "POST",
+      headers: {
+        "X-CSRF-Token": this.csrfToken(),
+        "Accept": "application/json"
+      }
+    })
+
+    const json = await res.json().catch(() => ({}))
+
+    if (res.ok && json.action === "redirect") {
+      if (this.subscription) {
+        this.subscription.unsubscribe();
+      }
+      Turbo.visit(json.url)
+    } else {
+      this.statusTarget.textContent = json.message || "ログインに失敗しました"
+    }
   }
 }
