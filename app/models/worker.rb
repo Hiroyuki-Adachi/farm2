@@ -54,12 +54,12 @@ class Worker < ApplicationRecord
   scope :taskable, -> {kept.where.not(office_role: :none)}
   scope :usual, -> {kept.includes(home: :section).where(homes: { company_flag: false }).order('sections.display_order, homes.display_order, workers.display_order')}
   scope :company, -> {kept.joins(:home).eager_load(:home).where(homes: { company_flag: true }).order("workers.display_order")}
-  scope :by_homes, ->(homes) {kept.where(home_id: homes.ids).order("display_order")}
+  scope :by_homes, ->(homes) {kept.where(home_id: homes.ids).order(:display_order)}
   scope :gaps, -> {kept.where.not(broccoli_mark: [nil, ""]).order(:broccoli_mark, :family_phonetic, :first_phonetic, :id)}
 
-  REG_MAIL = /\A([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+\z/
+  REG_MAIL = /\A([a-zA-Z0-9])+([a-zA-Z0-9._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9._-]+)+\z/
   REG_MOBILE = /\A(090|080|070)-\d{4}-\d{4}\z/
-  REG_KANA = /\A[\p{Hiragana}]+/
+  REG_KANA = /\A\p{Hiragana}+/
 
   validates :family_phonetic, presence: true
   validates :family_name, presence: true
@@ -119,8 +119,6 @@ class Worker < ApplicationRecord
   def set_user_permission_id
     self.user.update(permission_id: :checker) unless self.user.checkable?
   end
-
-  private
 
   def set_email
     self.user.email = (self.pc_mail.presence || '') if self.user.present?
