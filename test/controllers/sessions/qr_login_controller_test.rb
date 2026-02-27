@@ -3,9 +3,6 @@ require "test_helper"
 class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
   include ActiveSupport::Testing::TimeHelpers
 
-  QRCODE_PATH  = ->(token) { "/sessions/qr_login/#{token}/qrcode.svg".freeze }
-  CONSUME_PATH = ->(token) { "/sessions/qr_login/#{token}/consume".freeze }
-
   test "QRコードログイン" do
     freeze_time Time.current do
       assert_difference "QrLoginSession.count", +1 do
