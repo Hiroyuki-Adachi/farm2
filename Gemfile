@@ -132,3 +132,5 @@ group :test do
   # minitest-rails provides a set of Rails generators for Minitest.
   gem 'webmock'
 end
+
+gem "solid_cable", "~> 3.0"

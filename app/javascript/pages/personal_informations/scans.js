@@ -52,11 +52,11 @@ export const init = () => {
 
     const normalized = {
       type:    data.type || data.t,
-      version: data.version || data.v,
+      version: data.version || data.ver || data.v,
       id:      data.id,
-      token:   data.token,
-      value:   data.value,
-      exp:     data.exp
+      token:   data.token || data.tk,
+      value:   data.value || data.val,
+      exp:     data.exp || data.e, // 期限（exp: expirationの略）
     };
 
     if (!normalized.type) {
@@ -87,6 +87,9 @@ export const init = () => {
             Turbo.visit(json.url);
             break;
           case "ack":
+            await scanner.stop();
+            video.srcObject?.getTracks().forEach(t => t.stop());
+            video.srcObject = null;
             toast(json.message || "完了しました"); 
             setTimeout(() => { posting = false; }, 1200);
             break;
@@ -119,13 +122,16 @@ export const init = () => {
   }
 
   function toast(msg) {
-    // 最小限の簡易トースト（BootstrapならAlertでもOK）
-    console.log("[toast]", msg);
-  }
+    const elMsg = document.getElementById("popup_alert_message");
+    const elModal = document.getElementById("popup_alert");
 
-  window.toast = (msg) => {
-    document.getElementById("popup_alert_message").innerText = msg;
-    const popupForm = new bootstrap.Modal(document.getElementById("popup_alert"));
-    popupForm.show();
-  };
+    if (!elMsg || !elModal) {
+      console.log("[toast fallback]", msg);
+      return;
+    }
+
+    elMsg.innerText = msg;
+    const modal = bootstrap.Modal.getOrCreateInstance(elModal);
+    modal.show();
+  }
 };
