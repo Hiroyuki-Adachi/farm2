@@ -3,7 +3,7 @@ class CreateQrLoginSessions < ActiveRecord::Migration[8.1]
     create_table :qr_login_sessions, comment: 'QRログインセッション' do |t|
       t.string   :token, null: false, limit: 36, comment: 'セッション識別子'
       t.integer  :user_id, null: true, comment: 'ユーザーID'
-      t.integer  :status, null: false, default: 0, comment: 'セッション状態（0: 未承認, 1: 承認済み, 2: 使用済み）'
+      t.integer  :status, null: false, default: 0, comment: 'セッション状態'
       t.datetime :expires_at, null: false, comment: 'セッション有効期限'
       t.datetime :consumed_at, null: true, comment: 'セッション使用日時'
 
