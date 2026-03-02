@@ -25,7 +25,11 @@ jobs:
 
     env:
       RAILS_ENV: test
+      CI: "true"
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/farm2_test
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
       GOOGLE_CLIENT_ID: ci-dummy-client-id
       GOOGLE_CLIENT_SECRET: ci-dummy-client-secret
 
@@ -54,7 +58,17 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: .ruby-version
           bundler-cache: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install frontend dependencies
+        run: yarn install --frozen-lockfile
 
       - name: Prepare log files required at boot
         run: |
