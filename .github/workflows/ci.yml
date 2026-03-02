@@ -28,6 +28,7 @@ jobs:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/farm2_test
       GOOGLE_CLIENT_ID: ci-dummy-client-id
       GOOGLE_CLIENT_SECRET: ci-dummy-client-secret
+      MAIL_ADDRESS: ci-test@example.com
 
     steps:
       - name: Checkout
