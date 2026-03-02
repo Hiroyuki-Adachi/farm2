@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: groonga/pgroonga:latest-debian-16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: farm2_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d farm2_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/farm2_test
+      GOOGLE_CLIENT_ID: ci-dummy-client-id
+      GOOGLE_CLIENT_SECRET: ci-dummy-client-secret
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect DB adapter from config/database.yml
+        id: db
+        shell: bash
+        run: |
+          adapter=$(ruby -ryaml -rerb -e 'config = YAML.safe_load(ERB.new(File.read("config/database.yml")).result, aliases: true) || {}; test_cfg = config["test"] || config["default"] || {}; puts(test_cfg["adapter"].to_s)')
+          if [[ -z "$adapter" ]]; then
+            echo "Could not determine DB adapter from config/database.yml" >&2
+            exit 1
+          fi
+          echo "adapter=$adapter" >> "$GITHUB_OUTPUT"
+          echo "Detected adapter: $adapter"
+
+      - name: Ensure service matches adapter
+        if: steps.db.outputs.adapter != 'postgresql'
+        run: |
+          echo "This workflow currently provisions PostgreSQL service, but adapter is '${{ steps.db.outputs.adapter }}'." >&2
+          exit 1
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Prepare log files required at boot
+        run: |
+          mkdir -p log
+          touch log/update_worker.log log/access_info.log
+
+      - name: Prepare database
+        run: bundle exec rails db:prepare
+
+      - name: Run tests
+        run: bundle exec rails test
