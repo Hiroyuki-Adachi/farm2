@@ -7,6 +7,11 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'date'
 
+if ENV['SKIP_SEED'] == 'true' || ENV['SKIP_SEEDS'] == 'true'
+  puts 'Skipping seeds because SKIP_SEED/SKIP_SEEDS is true'
+  return
+end
+
 organization = Organization.create!(
   name: "営農組合の名前",
   workers_count: 12,
@@ -28,52 +33,33 @@ system = System.create!(
   organization_id: organization.id
 )
 
-WorkType.create!(
-  [{
-    genre: 1,
-    name: "稲作",
-    category_flag: true,
-    display_order: 10
-  }, {
-    genre: 2,
-    name: "転作",
-    category_flag: true,
-    display_order: 20
-  }, {
-    genre: 3,
-    name: "副産物",
-    category_flag: true,
-    display_order: 30
-  }, {
-    genre: 4,
-    name: "管理",
-    category_flag: true,
-    display_order: 40
-  }]
-)
-WorkType.create!(
-  [{
-    genre: 1,
-    name: "こしひかり",
-    category_flag: false,
-    display_order: 11
-  }, {
-    genre: 2,
-    name: "WCS",
-    category_flag: false,
-    display_order: 21
-  }, {
-    genre: 3,
-    name: "稲わら",
-    category_flag: false,
-    display_order: 31
-  }, {
-    genre: 4,
-    name: "管理部",
-    category_flag: false,
-    display_order: 41
-  }]
-)
+genre_names = %w[稲作 転作 副産物 管理]
+genres = {}
+
+genre_names.each_with_index do |name, index|
+  order = (index + 1) * 10
+  category = WorkCategory.find_or_create_by!(name: name) do |record|
+    record.display_order = order
+  end
+  genres[name] = WorkGenre.find_or_create_by!(name: name, work_category_id: category.id) do |record|
+    record.display_order = order
+    record.graph_color = '#ffffff'
+  end
+end
+
+[
+  { genre_name: "稲作", name: "こしひかり", display_order: 11 },
+  { genre_name: "転作", name: "WCS", display_order: 21 },
+  { genre_name: "副産物", name: "稲わら", display_order: 31 },
+  { genre_name: "管理", name: "管理部", display_order: 41 }
+].each do |attrs|
+  WorkType.find_or_create_by!(
+    name: attrs[:name],
+    work_genre_id: genres.fetch(attrs[:genre_name]).id
+  ) do |record|
+    record.display_order = attrs[:display_order]
+  end
+end
 
 section = Section.create!(
   name: "システム部"

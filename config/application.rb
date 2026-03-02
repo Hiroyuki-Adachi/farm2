@@ -30,6 +30,18 @@ module Farm2
 
     config.action_controller.include_all_helpers = false
 
+    # Allow Active Record Encryption keys to be injected via environment
+    # variables in CI where credentials may not be available.
+    config.active_record.encryption.primary_key =
+      ENV["ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY"] ||
+      Rails.application.credentials.dig(:active_record_encryption, :primary_key)
+    config.active_record.encryption.deterministic_key =
+      ENV["ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY"] ||
+      Rails.application.credentials.dig(:active_record_encryption, :deterministic_key)
+    config.active_record.encryption.key_derivation_salt =
+      ENV["ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT"] ||
+      Rails.application.credentials.dig(:active_record_encryption, :key_derivation_salt)
+
     config.update_logger = Logger.new('log/update_worker.log')
     config.update_logger.level = Logger::INFO
     config.update_logger.formatter = proc do |severity, datetime, _progname, msg|
