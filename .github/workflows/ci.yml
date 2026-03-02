@@ -62,7 +62,7 @@ jobs:
           touch log/update_worker.log log/access_info.log
 
       - name: Prepare database
-        run: bundle exec rails db:prepare
+        run: SKIP_SEED=true SKIP_SEEDS=true bundle exec rails db:prepare
 
       - name: Run tests
         run: bundle exec rails test
