@@ -10,7 +10,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:16
+        image: groonga/pgroonga:latest-debian-16
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
