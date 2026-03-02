@@ -31,6 +31,9 @@ jobs:
       PGUSER: postgres
       PGPASSWORD: postgres
       MAIL_ADDRESS: ci@example.com
+      ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY: 12345678901234567890123456789012
+      ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY: abcdefghijklmnopqrstuvwxyz012345
+      ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT: test-key-derivation-salt-2026
       GOOGLE_CLIENT_ID: ci-dummy-client-id
       GOOGLE_CLIENT_SECRET: ci-dummy-client-secret
 
