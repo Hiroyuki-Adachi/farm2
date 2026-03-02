@@ -54,6 +54,11 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Prepare log files required at boot
+        run: |
+          mkdir -p log
+          touch log/update_worker.log log/access_info.log
+
       - name: Prepare database
         run: bundle exec rails db:prepare
 
