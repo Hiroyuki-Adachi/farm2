@@ -25,7 +25,7 @@ class Crawlers::AgriJournalJob < CrawlJob
   def save_topic(agent, url)
     topic_doc = Nokogiri::HTML(agent.get(url).body)
     topic_date = extract_topic_date(topic_doc)
-    return false if topic_date.nil?
+    return nil if topic_date.nil?
     return nil if topic_date < Time.zone.today - START_DAY
     return Topic.find_or_create_by(url: url) do |topic|
       topic.title = topic_doc.at_css('article#singlearticle h1')&.text
