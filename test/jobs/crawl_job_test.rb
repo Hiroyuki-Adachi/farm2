@@ -33,4 +33,34 @@ class CrawlJobTest < ActiveJob::TestCase
 
     CrawlJob.new.perform
   end
+
+  test "perform_now モードで1ジョブが失敗しても次ジョブを継続する" do
+    failing_job = mock("failing_job")
+    next_job = mock("next_job")
+
+    CrawlJob.stubs(:ordered_classes).returns([failing_job, next_job])
+    failing_job.expects(:perform_now).raises(StandardError.new("boom"))
+    next_job.expects(:perform_now)
+
+    UserWord.expects(:match_all_topics!)
+    Topic.expects(:old).with(CrawlJob::START_DAY).returns(Topic.none)
+    Rails.logger.expects(:error).with(regexp_matches(/\[CrawlJob\].*failed:/))
+
+    CrawlJob.new.perform(perform_now: true)
+  end
+
+  test "perform_later モードで1ジョブが失敗しても次ジョブを継続する" do
+    failing_job = mock("failing_job")
+    next_job = mock("next_job")
+
+    CrawlJob.stubs(:ordered_classes).returns([failing_job, next_job])
+    failing_job.expects(:perform_later).raises(StandardError.new("boom"))
+    next_job.expects(:perform_later)
+
+    UserWord.expects(:match_all_topics!)
+    Topic.expects(:old).with(CrawlJob::START_DAY).returns(Topic.none)
+    Rails.logger.expects(:error).with(regexp_matches(/\[CrawlJob\].*failed:/))
+
+    CrawlJob.new.perform(perform_now: false)
+  end
 end
