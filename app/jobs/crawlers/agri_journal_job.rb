@@ -24,7 +24,8 @@ class Crawlers::AgriJournalJob < CrawlJob
 
   def save_topic(agent, url)
     topic_doc = Nokogiri::HTML(agent.get(url).body)
-    topic_date = Date.strptime(topic_doc.at_css('article#singlearticle p.articledate')&.text, '%Y/%m/%d')
+    topic_date = extract_topic_date(topic_doc)
+    return false if topic_date.nil?
     return nil if topic_date < Time.zone.today - START_DAY
     return Topic.find_or_create_by(url: url) do |topic|
       topic.title = topic_doc.at_css('article#singlearticle h1')&.text
@@ -32,5 +33,19 @@ class Crawlers::AgriJournalJob < CrawlJob
       topic.posted_on = topic_date
       topic.topic_type_id = TopicType::AGRI_JOURNAL.id
     end
+  end
+
+  def extract_topic_date(topic_doc)
+    date_text = topic_doc.at_css('article#singlearticle p.articledate')&.text.to_s
+    raw_date = date_text.match(/\d{4}[^\d]\d{1,2}[^\d]\d{1,2}/)&.to_s
+    meta_published_time = topic_doc.at_css('meta[property="article:published_time"]')&.[]('content')
+    raw_date ||= meta_published_time&.match(/\d{4}-\d{2}-\d{2}/)&.to_s
+
+    return nil if raw_date.blank?
+
+    year, month, day = raw_date.scan(/\d+/).map(&:to_i)
+    Date.new(year, month, day)
+  rescue ArgumentError
+    nil
   end
 end
