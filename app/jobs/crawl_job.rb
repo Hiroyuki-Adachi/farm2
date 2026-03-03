@@ -26,12 +26,21 @@ class CrawlJob < ApplicationJob
   private
 
   def run_crawlers(perform_now:)
+    failures = []
+
     CrawlJob.ordered_classes.each do |job|
       next if job.nil?
 
-      perform_now ? job.perform_now : job.perform_later
-    rescue StandardError => e
-      Rails.logger.error("[CrawlJob] #{job} failed: #{e.class} #{e.message}")
+      begin
+        perform_now ? job.perform_now : job.perform_later
+      rescue StandardError => e
+        Rails.logger.error("[CrawlJob] #{job} failed: #{e.class} #{e.message}")
+        failures << "[#{job}] #{e.class}: #{e.message}"
+      end
+    end
+
+    if failures.any?
+      raise StandardError, "One or more crawlers failed: #{failures.join('; ')}"
     end
   end
 end
