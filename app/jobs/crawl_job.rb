@@ -39,8 +39,6 @@ class CrawlJob < ApplicationJob
       end
     end
 
-    if failures.any?
-      raise StandardError, "One or more crawlers failed: #{failures.join('; ')}"
-    end
+    raise StandardError, "One or more crawlers failed: #{failures.join('; ')}" if failures.any?
   end
 end
