@@ -37,15 +37,10 @@ class Crawlers::AgriJournalJob < CrawlJob
 
   def extract_topic_date(topic_doc)
     date_text = topic_doc.at_css('article#singlearticle p.articledate')&.text.to_s
-    raw_date = date_text.match(/\d{4}[^\d]\d{1,2}[^\d]\d{1,2}/)&.to_s
+    parsed_from_text = parse_crawl_date(date_text)
+    return parsed_from_text if parsed_from_text.present?
+
     meta_published_time = topic_doc.at_css('meta[property="article:published_time"]')&.[]('content')
-    raw_date ||= meta_published_time&.match(/\d{4}-\d{2}-\d{2}/)&.to_s
-
-    return nil if raw_date.blank?
-
-    year, month, day = raw_date.scan(/\d+/).map(&:to_i)
-    Date.new(year, month, day)
-  rescue ArgumentError
-    nil
+    parse_crawl_date(meta_published_time)
   end
 end

@@ -13,7 +13,9 @@ class Crawlers::JaComJob < CrawlJob
         doc = Nokogiri::HTML(agent.get(URI.join(uri, *path).to_s).body)
 
         doc.css('div.newsList__body ul li.newsList__item').each do |topic|
-          topic_date = Date.strptime(topic.at_css('div.newsListDate')&.text, '%Y年%m月%d日')
+          topic_date = parse_crawl_date(topic.at_css('div.newsListDate')&.text)
+          next if topic_date.nil?
+
           throw(:done) if topic_date < Time.zone.today - START_DAY
 
           save_topic(agent, topic.at_css('a')&.[](:href), topic_date)
