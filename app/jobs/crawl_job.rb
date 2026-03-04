@@ -1,5 +1,6 @@
 class CrawlJob < ApplicationJob
   include NormalizesText
+  include ParsesCrawlDate
 
   queue_as :default
 

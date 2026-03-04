@@ -7,7 +7,9 @@ class Crawlers::NaroJob < CrawlJob
     top_doc.css('div.news dl').children.select(&:element?).each_slice(2) do |dt, dd|
       next unless dt&.name == 'dt' && dd&.name == 'dd'
 
-      topic_date = Date.strptime(dt.css('span.news_date').text, '%Y年%m月%d日')
+      topic_date = parse_crawl_date(dt.css('span.news_date').text)
+      next if topic_date.nil?
+
       break if topic_date < Time.zone.today - START_DAY
 
       topic_title = dd.at_css('a')&.text

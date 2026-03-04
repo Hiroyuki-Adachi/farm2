@@ -16,7 +16,9 @@ class Crawlers::AgriMyNaviJob < CrawlJob
         doc = Nokogiri::HTML(agent.get(URI.join(uri, *path).to_s).body)
 
         doc.css('ul.news_archive li').each do |topic|
-          topic_date = Date.strptime(topic.at_css('a p.date')&.text, '%Y年%m月%d日')
+          topic_date = parse_crawl_date(topic.at_css('a p.date')&.text)
+          next if topic_date.nil?
+
           throw(:done) if topic_date < Time.zone.today - START_DAY
 
           save_topic(agent, topic.at_css('a')&.[](:href), topic_date)
