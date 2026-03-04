@@ -16,7 +16,7 @@ class Crawlers::MaffGoJob < CrawlJob
 
   def save_topic(agent, topic_url, topic_title)
     topic_doc = Nokogiri::HTML(agent.get(topic_url).body)
-    raw_date_text = topic_doc.at_css('div.content_utility-date')&.children&.first
+    raw_date_text = topic_doc.at_css('div.content_utility-date')&.children&.first&.text&.strip
     topic_date = parse_crawl_date(raw_date_text)
     return Rails.logger.error("Failed to parse date. Input: #{raw_date_text}") if topic_date.nil?
 
