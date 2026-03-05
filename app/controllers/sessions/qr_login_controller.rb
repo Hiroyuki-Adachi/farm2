@@ -47,8 +47,7 @@ class Sessions::QrLoginController < ApplicationController
     end
 
     reset_session
-    session[:user_id] = user.id
-
+    log_in(user, target: :QR)
     render json: { ok: true, action: "redirect", url: redirect_path }
   end
 
