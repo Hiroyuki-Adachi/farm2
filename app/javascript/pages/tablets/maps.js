@@ -30,9 +30,13 @@ function initMap() {
     if (!land.value) return;
 
     const paths = [];
-    JSON.parse(land.value.replace(/\(/g, "[").replace(/\)/g, "]")).forEach((rg) => {
-      paths.push({ lat: rg[0], lng: rg[1] });
-    });
+    try {
+      JSON.parse(land.value.replace(/\(/g, "[").replace(/\)/g, "]")).forEach((rg) => {
+        paths.push({ lat: rg[0], lng: rg[1] });
+      });
+    } catch (_error) {
+      return;
+    }
 
     const polygon = new google.maps.Polygon({
       paths: paths,
