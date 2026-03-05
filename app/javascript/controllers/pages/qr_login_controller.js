@@ -3,7 +3,7 @@ import consumer from "channels/consumer"
 
 export default class extends Controller {
   static targets = ["qrcode", "status"]
-  static values = { url: String }
+  static values = { url: String, redirectUrl: String }
 
   async generate() {
     try {
@@ -66,7 +66,12 @@ export default class extends Controller {
   async consume() {
     if (!this.currentToken) return
 
-    const res = await fetch(`${this.urlValue}/${this.currentToken}/consume`, {
+    const consumeUrl = new URL(`${this.urlValue}/${this.currentToken}/consume`, window.location.origin)
+    if (this.hasRedirectUrlValue && this.redirectUrlValue) {
+      consumeUrl.searchParams.set("redirect_to", this.redirectUrlValue)
+    }
+
+    const res = await fetch(consumeUrl.toString(), {
       method: "POST",
       headers: {
         "X-CSRF-Token": this.csrfToken(),

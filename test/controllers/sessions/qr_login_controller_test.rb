@@ -112,6 +112,46 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "QRコード消費(タブレット遷移先指定)" do
+    freeze_time Time.current do
+      user = users(:users1)
+      qr = QrLoginSession.create!(
+        status: :approved,
+        user_id: user.id,
+        expires_at: 5.minutes.from_now
+      )
+
+      post consume_sessions_qr_login_path(qr.token),
+           params: { redirect_to: tablets_menu_index_path },
+           headers: { "ACCEPT" => "application/json" }
+
+      assert_response :success
+      json = response.parsed_body
+      assert_equal true, json["ok"]
+      assert_equal tablets_menu_index_path, json["url"]
+    end
+  end
+
+  test "QRコード消費(外部遷移先指定は拒否)" do
+    freeze_time Time.current do
+      user = users(:users1)
+      qr = QrLoginSession.create!(
+        status: :approved,
+        user_id: user.id,
+        expires_at: 5.minutes.from_now
+      )
+
+      post consume_sessions_qr_login_path(qr.token),
+           params: { redirect_to: "https://example.com/evil" },
+           headers: { "ACCEPT" => "application/json" }
+
+      assert_response :success
+      json = response.parsed_body
+      assert_equal true, json["ok"]
+      assert_equal menu_index_path, json["url"]
+    end
+  end
+
   test "QRコード消費(すでに使用済み)" do
     freeze_time Time.current do
       user = users(:users1)

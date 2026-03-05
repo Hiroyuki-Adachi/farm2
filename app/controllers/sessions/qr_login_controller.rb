@@ -49,6 +49,24 @@ class Sessions::QrLoginController < ApplicationController
     reset_session
     session[:user_id] = user.id
 
-    render json: { ok: true, action: "redirect", url: menu_index_path }
+    render json: { ok: true, action: "redirect", url: redirect_path }
+  end
+
+  private
+
+  def redirect_path
+    safe_redirect_to_path(params[:redirect_to]) || menu_index_path
+  end
+
+  def safe_redirect_to_path(path)
+    return if path.blank?
+
+    uri = URI.parse(path)
+    return unless uri.scheme.nil? && uri.host.nil?
+    return unless uri.path.start_with?("/tablets")
+
+    [uri.path, uri.query].compact.join("?")
+  rescue URI::InvalidURIError
+    nil
   end
 end
