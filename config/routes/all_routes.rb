@@ -33,6 +33,7 @@ namespace :gaps do
   end
 end
 namespace :tablets do
+  root "sessions#new"
   resource :session, only: [:new]
   resources :menu, only: [:index]
 end

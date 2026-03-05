@@ -1,7 +1,9 @@
 <div class="mt-4"
      data-controller="pages--qr-login"
      data-pages--qr-login-url-value="<%= sessions_qr_login_index_path %>"
-     data-pages--qr-login-redirect-url-value="<%= local_assigns.fetch(:redirect_url, "") %>">
+     data-pages--qr-login-redirect-url-value="<%= local_assigns.fetch(:redirect_url, "") %>"
+     data-pages--qr-login-auto-generate-value="<%= local_assigns.fetch(:auto_generate, false) %>"
+     data-pages--qr-login-refresh-seconds-value="<%= local_assigns.fetch(:refresh_seconds, 0) %>">
   <div class="card border-secondary">
     <div class="card-header bg-light">
       <h5 class="mb-0">QRコードでログイン</h5>
