@@ -1,0 +1,2 @@
+class TabletsController < ApplicationController
+end

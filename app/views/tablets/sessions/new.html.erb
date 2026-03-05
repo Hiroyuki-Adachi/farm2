@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="content-language" content="ja" />
+  <title>作業日報管理システム(V2) - Tablet</title>
+  <%= action_cable_meta_tag %>
+  <%= csrf_meta_tags %>
+  <%= javascript_importmap_tags %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "pc-common", "data-turbo-track": "reload" %>
+</head>
+<body>
+<main class="container-fluid py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="app-card p-4">
+        <h2 class="text-center mb-4">タブレットログイン</h2>
+        <%= render "sessions/qr_login/block",
+                   redirect_url: tablets_menu_index_path,
+                   auto_generate: true,
+                   refresh_seconds: 180 %>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

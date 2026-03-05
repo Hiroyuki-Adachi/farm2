@@ -3,9 +3,31 @@ import consumer from "channels/consumer"
 
 export default class extends Controller {
   static targets = ["qrcode", "status"]
-  static values = { url: String }
+  static values = { url: String, redirectUrl: String, autoGenerate: Boolean, refreshSeconds: Number }
+
+  connect() {
+    if (this.autoGenerateValue) {
+      this.generate()
+    }
+    if (this.hasRefreshSecondsValue && this.refreshSecondsValue > 0) {
+      this.refreshTimer = setInterval(() => {
+        this.generate()
+      }, this.refreshSecondsValue * 1000)
+    }
+  }
+
+  disconnect() {
+    this.clearSubscription()
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer)
+      this.refreshTimer = null
+    }
+  }
 
   async generate() {
+    if (this.generating) return
+    this.generating = true
+
     try {
       this.statusTarget.textContent = "QRコードを生成しています..."
 
@@ -36,6 +58,7 @@ export default class extends Controller {
         `有効期限: ${this.formatTime(expiresAt)} まで`
 
       this.currentToken = token;
+      this.clearSubscription()
 
       this.subscription = consumer.subscriptions.create(
         { channel: "QrLoginChannel", token: token },
@@ -51,6 +74,8 @@ export default class extends Controller {
     } catch (error) {
       console.error(error)
       this.statusTarget.textContent = "QR生成エラーが発生しました"
+    } finally {
+      this.generating = false
     }
   }
 
@@ -66,7 +91,12 @@ export default class extends Controller {
   async consume() {
     if (!this.currentToken) return
 
-    const res = await fetch(`${this.urlValue}/${this.currentToken}/consume`, {
+    const consumeUrl = new URL(`${this.urlValue}/${this.currentToken}/consume`, window.location.origin)
+    if (this.hasRedirectUrlValue && this.redirectUrlValue) {
+      consumeUrl.searchParams.set("redirect_to", this.redirectUrlValue)
+    }
+
+    const res = await fetch(consumeUrl.toString(), {
       method: "POST",
       headers: {
         "X-CSRF-Token": this.csrfToken(),
@@ -77,12 +107,17 @@ export default class extends Controller {
     const json = await res.json().catch(() => ({}))
 
     if (res.ok && json.action === "redirect") {
-      if (this.subscription) {
-        this.subscription.unsubscribe();
-      }
+      this.clearSubscription()
       Turbo.visit(json.url)
     } else {
       this.statusTarget.textContent = json.message || "ログインに失敗しました"
+    }
+  }
+
+  clearSubscription() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null
     }
   }
 }
