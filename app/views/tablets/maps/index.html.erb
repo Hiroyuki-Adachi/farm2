@@ -1,12 +1,20 @@
-<div class="row mb-2">
-  <div class="col-auto">
-    <%= link_to "戻る", tablets_menu_index_path, class: "btn btn-outline-secondary" %>
-  </div>
-</div>
-
 <div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/tablets/maps">
   <div class="col-12">
     <div id="map" style="height: calc(100vh - 130px); min-height: 420px;"></div>
+  </div>
+</div>
+
+<div class="position-fixed start-0 end-0 bottom-0 p-3">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-3">
+      <button id="clear_selection" type="button" class="btn btn-outline-dark btn-lg">全解除</button>
+      <div class="fs-3 fw-bold">
+        選択面積:
+        <span id="selected_area_value">0.0</span>
+        a
+      </div>
+    </div>
+    <%= link_to "戻る", tablets_menu_index_path, class: "btn btn-outline-secondary btn-lg" %>
   </div>
 </div>
 
