@@ -11,6 +11,7 @@
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "theme", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "pc-common", "data-turbo-track": "reload" %>
+  <%= yield :head %>
   <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path('/images/icons/farm2-32.png') %>">
   <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path('/images/icons/farm2-16.png') %>">
 </head>
