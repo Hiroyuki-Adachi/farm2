@@ -81,6 +81,7 @@ class Sessions::QrLoginController < ApplicationController
   end
 
   def strip_script_name_prefix(path)
+    path = path.to_s
     script_name = request.script_name.to_s
     return path if script_name.blank? || script_name == "/"
     return path unless path.start_with?("#{script_name}/")
