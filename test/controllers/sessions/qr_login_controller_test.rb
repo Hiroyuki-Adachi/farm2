@@ -165,6 +165,50 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "QRコード消費(タブレット遷移先指定, script_name先頭スラッシュなし)" do
+    freeze_time Time.current do
+      user = users(:users1)
+      qr = QrLoginSession.create!(
+        status: :approved,
+        user_id: user.id,
+        expires_at: 5.minutes.from_now
+      )
+
+      post consume_sessions_qr_login_path(qr.token),
+           params: { redirect_to: "/farm2/tablets/menu" },
+           headers: { "ACCEPT" => "application/json" },
+           env: { "SCRIPT_NAME" => "farm2" }
+
+      assert_response :success
+      json = response.parsed_body
+      assert_equal true, json["ok"]
+      assert_equal "/farm2/tablets/menu", json["url"]
+    end
+  end
+
+  test "QRコード消費(タブレット遷移先指定, script_nameなし relative_url_rootあり)" do
+    freeze_time Time.current do
+      user = users(:users1)
+      qr = QrLoginSession.create!(
+        status: :approved,
+        user_id: user.id,
+        expires_at: 5.minutes.from_now
+      )
+
+      Rails.application.config.stub(:relative_url_root, "/farm2") do
+        post consume_sessions_qr_login_path(qr.token),
+             params: { redirect_to: "/farm2/tablets/menu" },
+             headers: { "ACCEPT" => "application/json" },
+             env: { "SCRIPT_NAME" => "" }
+      end
+
+      assert_response :success
+      json = response.parsed_body
+      assert_equal true, json["ok"]
+      assert_equal "/farm2/tablets/menu", json["url"]
+    end
+  end
+
   test "QRコード消費(外部遷移先指定は拒否)" do
     freeze_time Time.current do
       user = users(:users1)
