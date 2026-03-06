@@ -1,4 +1,4 @@
-class Tablets::SessionsController < ApplicationController
+class Tablets::SessionsController < TabletsController
   layout false
   skip_before_action :restrict_remote_ip, only: [:new]
 

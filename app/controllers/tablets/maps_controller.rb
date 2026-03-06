@@ -1,6 +1,5 @@
-class Tablets::MapsController < ApplicationController
+class Tablets::MapsController < TabletsController
   helper GmapHelper
-  layout "tablets"
 
   def index
     @target = Time.zone.today
