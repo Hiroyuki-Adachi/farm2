@@ -65,7 +65,8 @@ class Sessions::QrLoginController < ApplicationController
     normalized_path = strip_script_name_prefix(uri.path)
     return unless normalized_path.start_with?("/tablets")
 
-    [uri.path, uri.query].compact.join("?")
+    safe_path = add_script_name_prefix(normalized_path)
+    [safe_path, uri.query].compact.join("?")
   rescue URI::InvalidURIError
     nil
   end
@@ -87,5 +88,14 @@ class Sessions::QrLoginController < ApplicationController
     return path unless path.start_with?("#{script_name}/")
 
     path.delete_prefix(script_name)
+  end
+
+  def add_script_name_prefix(path)
+    path = path.to_s
+    script_name = request.script_name.to_s
+    return path if script_name.blank? || script_name == "/"
+    return path if path == script_name || path.start_with?("#{script_name}/")
+
+    "#{script_name}#{path.start_with?("/") ? path : "/#{path}"}"
   end
 end
