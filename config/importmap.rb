@@ -34,3 +34,5 @@ pin_all_from "app/javascript/pages", under: "pages", preload: false
 pin "controllers/application", to: "controllers/application.js"
 pin "terra-draw", preload: false # @1.18.1
 pin "terra-draw-google-maps-adapter", preload: false # @1.1.0
+pin "@rails/actioncable", to: "actioncable.esm.js"
+pin_all_from "app/javascript/channels", under: "channels"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_24_125131) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_23_071936) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -628,6 +628,17 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_24_125131) do
     t.index ["work_type_id"], name: "plan_work_types_2nd", unique: true
   end
 
+  create_table "qr_login_sessions", comment: "QRログインセッション", force: :cascade do |t|
+    t.datetime "consumed_at", comment: "セッション使用日時"
+    t.datetime "created_at", null: false
+    t.datetime "expires_at", null: false, comment: "セッション有効期限"
+    t.integer "status", default: 0, null: false, comment: "セッション状態（0: 有効, 1: 使用済み, 2: 期限切れ）"
+    t.string "token", limit: 36, null: false, comment: "セッション識別子"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", comment: "ユーザーID"
+    t.index ["token"], name: "index_qr_login_sessions_on_token", unique: true
+  end
+
   create_table "schedule_workers", id: { type: :serial, comment: "作業予定作業者" }, comment: "作業予定作業者", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.integer "display_order", default: 0, null: false, comment: "表示順"
@@ -693,6 +704,16 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_24_125131) do
     t.datetime "updated_at", precision: nil, null: false
     t.integer "work_type_id", comment: "作業分類"
     t.index ["term", "work_type_id"], name: "index_seedlings_on_term_and_work_type_id", unique: true
+  end
+
+  create_table "solid_cable_messages", comment: "Solid Cableメッセージ", force: :cascade do |t|
+    t.binary "channel", null: false, comment: "チャンネル"
+    t.bigint "channel_hash", null: false, comment: "チャンネルハッシュ"
+    t.datetime "created_at", null: false, comment: "作成日時"
+    t.binary "payload", null: false, comment: "ペイロード"
+    t.index ["channel"], name: "index_solid_cable_messages_on_channel"
+    t.index ["channel_hash"], name: "index_solid_cable_messages_on_channel_hash"
+    t.index ["created_at"], name: "index_solid_cable_messages_on_created_at"
   end
 
   create_table "sorimachi_accounts", comment: "ソリマチ勘定科目", force: :cascade do |t|
