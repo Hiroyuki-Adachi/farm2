@@ -47,8 +47,44 @@ class Sessions::QrLoginController < ApplicationController
     end
 
     reset_session
-    session[:user_id] = user.id
+    log_in(user, target: access_log_target)
+    render json: { ok: true, action: "redirect", url: redirect_path }
+  end
 
-    render json: { ok: true, action: "redirect", url: menu_index_path }
+  private
+
+  def redirect_path
+    safe_redirect_to_path(params[:redirect_to]) || menu_index_path
+  end
+
+  def safe_redirect_to_path(path)
+    return if path.blank?
+
+    uri = URI.parse(path)
+    return unless uri.scheme.nil? && uri.host.nil?
+    normalized_path = strip_script_name_prefix(uri.path)
+    return unless normalized_path.start_with?("/tablets")
+
+    [uri.path, uri.query].compact.join("?")
+  rescue URI::InvalidURIError
+    nil
+  end
+
+  def access_log_target
+    redirect = safe_redirect_to_path(params[:redirect_to]).to_s
+    redirect_path = redirect.split("?", 2).first
+    normalized_path = strip_script_name_prefix(redirect_path)
+    return :TB if normalized_path.start_with?("/tablets")
+    return :SP if normalized_path.start_with?("/personal_informations")
+
+    :PC
+  end
+
+  def strip_script_name_prefix(path)
+    script_name = request.script_name.to_s
+    return path if script_name.blank? || script_name == "/"
+    return path unless path.start_with?("#{script_name}/")
+
+    path.delete_prefix(script_name)
   end
 end

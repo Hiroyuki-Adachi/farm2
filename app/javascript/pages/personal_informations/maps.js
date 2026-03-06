@@ -23,9 +23,13 @@ window.initMap = function() {
   
     document.querySelectorAll('[name="regions"]').forEach(function(land) {
       let paths = [];
-      JSON.parse(land.value.replace(/\(/g, "[").replace(/\)/g, "]")).forEach(function(rg) {
-        paths.push({lat: rg[0], lng: rg[1]});
-      });
+      try {
+        JSON.parse(land.value.replace(/\(/g, "[").replace(/\)/g, "]")).forEach(function(rg) {
+          paths.push({lat: rg[0], lng: rg[1]});
+        });
+      } catch (_error) {
+        return;
+      }
       new google.maps.Polygon({
         paths: paths,
         strokeColor: land.dataset.color,

@@ -5,7 +5,9 @@ class Crawlers::SmartAgriJob < CrawlJob
     agent = Mechanize.new
     search_json = JSON.parse(agent.get(URI.join(TopicType::SMART_AGRI.url, 'api/v2/ajax/post').to_s).body, symbolize_names: true)
     search_json[:data][:posts].each do |topic|
-      topic_date = Time.zone.parse(topic[:published]).to_date
+      topic_date = parse_crawl_date(topic[:published])
+      next if topic_date.nil?
+
       break if topic_date < Time.zone.today - START_DAY
       save_topic(agent, URI.join(TopicType::SMART_AGRI.url, topic[:url]).to_s, topic_date)
     end

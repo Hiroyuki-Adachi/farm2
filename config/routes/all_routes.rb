@@ -32,6 +32,12 @@ namespace :gaps do
     end
   end
 end
+namespace :tablets do
+  root "sessions#new"
+  resource :session, only: [:new]
+  resources :menu, only: [:index]
+  resources :maps, only: [:index]
+end
 resources :ip_lists, only: [:new, :create, :edit, :update]
 resources :zgis, only: [:new, :create]
 resources :work_seedlings, only: [:index]

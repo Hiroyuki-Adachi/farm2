@@ -1,5 +1,3 @@
-require 'wareki'
-
 class Crawlers::MaffGoJob < CrawlJob
   queue_as :default
 
@@ -18,13 +16,10 @@ class Crawlers::MaffGoJob < CrawlJob
 
   def save_topic(agent, topic_url, topic_title)
     topic_doc = Nokogiri::HTML(agent.get(topic_url).body)
-    topic_date = nil
-    begin
-      topic_date = Date.parse(topic_doc.at_css('div.content_utility-date').children[0])
-    rescue StandardError => e
-      Rails.logger.error("Failed to parse date: #{e.message}. Input: #{topic_doc.at_css('div.content_utility-date').children[0]}")
-      return
-    end
+    raw_date_text = topic_doc.at_css('div.content_utility-date')&.children&.first&.text&.strip
+    topic_date = parse_crawl_date(raw_date_text)
+    return Rails.logger.error("Failed to parse date. Input: #{raw_date_text}") if topic_date.nil?
+
     return if topic_date < Time.zone.today - START_DAY
 
     Topic.find_or_create_by(url: topic_url) do |new_topic|
