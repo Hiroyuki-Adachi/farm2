@@ -62,7 +62,8 @@ class Sessions::QrLoginController < ApplicationController
 
     uri = URI.parse(path)
     return unless uri.scheme.nil? && uri.host.nil?
-    return unless uri.path.start_with?("/tablets")
+    normalized_path = strip_script_name_prefix(uri.path)
+    return unless normalized_path.start_with?("/tablets")
 
     [uri.path, uri.query].compact.join("?")
   rescue URI::InvalidURIError
@@ -71,9 +72,19 @@ class Sessions::QrLoginController < ApplicationController
 
   def access_log_target
     redirect = safe_redirect_to_path(params[:redirect_to]).to_s
-    return :TB if redirect.start_with?("/tablets")
-    return :SP if redirect.start_with?("/personal_informations")
+    redirect_path = redirect.split("?", 2).first
+    normalized_path = strip_script_name_prefix(redirect_path)
+    return :TB if normalized_path.start_with?("/tablets")
+    return :SP if normalized_path.start_with?("/personal_informations")
 
     :PC
+  end
+
+  def strip_script_name_prefix(path)
+    script_name = request.script_name.to_s
+    return path if script_name.blank? || script_name == "/"
+    return path unless path.start_with?("#{script_name}/")
+
+    path.delete_prefix(script_name)
   end
 end
