@@ -111,11 +111,19 @@ class Sessions::QrLoginController < ApplicationController
   end
 
   def preferred_base_path_prefix
-    normalized_script_name.presence || normalized_relative_url_root.presence
+    normalized_script_name.presence || normalized_relative_url_root.presence || inferred_request_base_prefix.presence
   end
 
   def base_path_prefixes
-    [normalized_script_name, normalized_relative_url_root].reject(&:blank?).uniq
+    [normalized_script_name, normalized_relative_url_root, inferred_request_base_prefix].reject(&:blank?).uniq
+  end
+
+  def inferred_request_base_prefix
+    path = request.path.to_s
+    return "" if path.blank?
+
+    match = path.match(%r{\A(?<prefix>.*)/sessions/qr_login(?:/|$)})
+    normalize_path_prefix(match&.[](:prefix))
   end
 
   def normalize_path_prefix(path)
