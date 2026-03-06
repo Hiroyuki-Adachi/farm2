@@ -1,51 +1,73 @@
 - id: 1
   code: Area
   name: "土地(面積)"
+  accountable: false
 - id: 10
   code: Land
   name: "土地(管理)"
+  accountable: false
 - id: 15
   code: Peasant
   name: "土地(小作)"
+  accountable: false
 - id: 20
   code: Depreciation
   name: "減価償却"
+  accountable: false
 - id: 30
   code: WorkWorker
   name: "作業(作業者)"
+  accountable: false
 - id: 40
   code: WorkMachine
   name: "作業(機械使用)"
+  accountable: false
 - id: 50
   code: WorkFuel
   name: "作業(燃料)"
+  accountable: false
 - id: 60
   code: WorkChemical
   name: "作業(薬剤)"
+  accountable: false
 - id: 70
   code: Seedling
   name: "育苗"
+  accountable: false
 - id: 80
   code: Dry
   name: "乾燥・調整"
+  accountable: false
 - id: 90
   code: ExpenseDirect
   name: "生産原価"
+  accountable: true
   account: true
 - id: 101
   code: WorkIndirect
   name: "作業(間接)"
+  accountable: false
 - id: 110
   code: ExpenseIndirect
   name: "一般管理費"
+  accountable: true
   account: true
 - id: 200
   code: Sales
   name: "売上"
+  accountable: true
   account: false
 - id: 210
-  code: Subsidy
-  name: "助成金"
+  code: NonOperatingIncome
+  name: "営業外利益"
+  accountable: true
+  account: false
+- id: 220
+  code: NonOperatingLoss
+  name: "営業外損失"
+  accountable: true
+  account: true
 - id: 300
   code: Machine
   name: "機械稼働"
+  accountable: false
