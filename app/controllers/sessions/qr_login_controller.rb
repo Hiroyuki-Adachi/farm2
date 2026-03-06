@@ -54,7 +54,7 @@ class Sessions::QrLoginController < ApplicationController
   private
 
   def redirect_path
-    safe_redirect_to_path(params[:redirect_to]) || menu_index_path
+    safe_redirect_to_path(params[:redirect_to]) || normalize_internal_path(menu_index_path)
   end
 
   def safe_redirect_to_path(path)
@@ -83,19 +83,53 @@ class Sessions::QrLoginController < ApplicationController
 
   def strip_script_name_prefix(path)
     path = path.to_s
-    script_name = request.script_name.to_s
-    return path if script_name.blank? || script_name == "/"
-    return path unless path.start_with?("#{script_name}/")
+    return path if path.blank? || path == "/"
 
-    path.delete_prefix(script_name)
+    base_path_prefixes.each do |prefix|
+      return path.delete_prefix(prefix) if path == prefix || path.start_with?("#{prefix}/")
+    end
+
+    path
   end
 
   def add_script_name_prefix(path)
     path = path.to_s
-    script_name = request.script_name.to_s
-    return path if script_name.blank? || script_name == "/"
-    return path if path == script_name || path.start_with?("#{script_name}/")
+    prefix = preferred_base_path_prefix
+    return path if prefix.blank?
+    return path if path == prefix || path.start_with?("#{prefix}/")
 
-    "#{script_name}#{path.start_with?("/") ? path : "/#{path}"}"
+    "#{prefix}#{path.start_with?("/") ? path : "/#{path}"}"
+  end
+
+  def normalized_script_name
+    script_name = request.script_name.to_s
+    normalize_path_prefix(script_name)
+  end
+
+  def normalized_relative_url_root
+    normalize_path_prefix(Rails.application.config.relative_url_root)
+  end
+
+  def preferred_base_path_prefix
+    normalized_script_name.presence || normalized_relative_url_root.presence
+  end
+
+  def base_path_prefixes
+    [normalized_script_name, normalized_relative_url_root].reject(&:blank?).uniq
+  end
+
+  def normalize_path_prefix(path)
+    path = path.to_s
+    return "" if path.blank? || path == "/"
+
+    path = "/#{path}" unless path.start_with?("/")
+    path.delete_suffix("/")
+  end
+
+  def normalize_internal_path(path)
+    path = path.to_s
+    return "/" if path.blank?
+
+    path.start_with?("/") ? path : "/#{path}"
   end
 end
