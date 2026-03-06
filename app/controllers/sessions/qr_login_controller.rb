@@ -47,7 +47,7 @@ class Sessions::QrLoginController < ApplicationController
     end
 
     reset_session
-    log_in(user, target: :QR)
+    log_in(user, target: access_log_target)
     render json: { ok: true, action: "redirect", url: redirect_path }
   end
 
@@ -67,5 +67,13 @@ class Sessions::QrLoginController < ApplicationController
     [uri.path, uri.query].compact.join("?")
   rescue URI::InvalidURIError
     nil
+  end
+
+  def access_log_target
+    redirect = safe_redirect_to_path(params[:redirect_to]).to_s
+    return :TB if redirect.start_with?("/tablets")
+    return :SP if redirect.start_with?("/personal_informations")
+
+    :PC
   end
 end
