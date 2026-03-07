@@ -1,8 +1,14 @@
-class Tablets::SessionsController < ApplicationController
+class Tablets::SessionsController < TabletsController
+  include IpRestrictedLogin
   layout false
-  skip_before_action :restrict_remote_ip, only: [:new]
 
   def new
     log_out
+  end
+
+  private
+
+  def restrict_remote_ip
+    require_ip_whitelist!(return_to: tablets_menu_index_path)
   end
 end

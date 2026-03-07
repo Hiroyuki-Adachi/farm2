@@ -17,7 +17,7 @@
       <div class="app-card p-4">
         <h2 class="text-center mb-4">タブレットログイン</h2>
         <%= render "sessions/qr_login/block",
-                   redirect_url: tablets_menu_index_path,
+                   redirect_url: "/tablets/menu",
                    auto_generate: true,
                    refresh_seconds: 180 %>
       </div>

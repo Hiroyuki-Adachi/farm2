@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   helper_method :menu_name
 
   before_action :restrict_remote_ip
+  before_action :enforce_access_target, if: :user_present?
   before_action :set_term, if: :user_present?
 
   unless Rails.env.development? || Rails.env.test?
@@ -55,6 +56,30 @@ class ApplicationController < ActionController::Base
 
   def set_term
     @term = current_organization.term
+  end
+
+  def enforce_access_target
+    target = session[:access_target].to_s.upcase
+    return true if target.blank? || target == "PC"
+
+    expected_prefix = case target
+                      when "TB" then "/tablets"
+                      when "SP" then "/personal_informations"
+                      else
+                        nil
+                      end
+    return true unless expected_prefix
+    return true if request_path_matches?(expected_prefix)
+
+    log_out
+    redirect_to root_path
+    false
+  end
+
+  def request_path_matches?(expected_prefix)
+    path = request.path.to_s
+    escaped_prefix = Regexp.escape(expected_prefix)
+    path.match?(%r{\A(?:/[^/]+)?#{escaped_prefix}(?:/|\z)})
   end
 
   def restrict_remote_ip

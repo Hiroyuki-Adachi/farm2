@@ -1,5 +1,3 @@
-class Tablets::MenuController < ApplicationController
-  layout "tablets"
-
+class Tablets::MenuController < TabletsController
   def index; end
 end
