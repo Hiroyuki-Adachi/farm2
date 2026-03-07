@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  include IpRestrictedLogin
   layout false
 
   def index
@@ -23,12 +24,6 @@ class SessionsController < ApplicationController
   private
 
   def restrict_remote_ip
-    if IpList.black_list.any? { |ip| ip.include?(request.remote_ip) }
-      to_error_path
-      return
-    elsif IpList.white_list.none? { |ip| ip.include?(request.remote_ip) }
-      redirect_to new_ip_list_path
-      return
-    end
+    require_ip_whitelist!
   end
 end

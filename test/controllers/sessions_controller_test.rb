@@ -30,6 +30,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     post sessions_path, params: {login_name: @user.login_name, password: "password"}
     assert_redirected_to menu_index_path
     assert_equal @user.id, session[:user_id]
+    assert_equal "PC", session[:access_target]
   end
 
   test "ログアウト" do
