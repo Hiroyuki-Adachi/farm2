@@ -41,7 +41,18 @@ class Sorimachi::ImportsController < ApplicationController
     account_map = selected_account_map
     account_codes = account_map.keys
     @journals = filtered_journals(account_codes).page(params[:page])
-    allocated_sums = SorimachiWorkType.where(sorimachi_journal_id: @journals.map(&:id)).group(:sorimachi_journal_id).sum(:amount)
+    journal_ids = @journals.map(&:id)
+    allocation_sums = SorimachiWorkType.where(sorimachi_journal_id: journal_ids).group(:sorimachi_journal_id, :work_type_id).sum(:amount)
+    allocated_sums = Hash.new(0.to_d)
+    allocations_by_journal = Hash.new {|hash, key| hash[key] = [] }
+    allocation_sums.each do |(journal_id, work_type_id), amount|
+      allocated_sums[journal_id] += amount
+      allocations_by_journal[journal_id] << [work_type_id, amount]
+    end
+    work_type_ids = allocation_sums.keys.map(&:second).uniq
+    ordered_work_types = WorkType.with_deleted.where(id: work_type_ids).usual_order
+    work_type_names = ordered_work_types.pluck(:id, :name).to_h
+    work_type_orders = ordered_work_types.pluck(:id).each_with_index.to_h
     journal_targets = {}
 
     @journal_rows = []
@@ -56,7 +67,14 @@ class Sorimachi::ImportsController < ApplicationController
     end
     @journal_rows.each do |row|
       allocated_amount = allocated_sums[row[:journal_id]] || 0
+      row[:allocated_amount] = allocated_amount
+      row[:target_amount] = journal_targets[row[:journal_id]]
       row[:unallocated] = journal_targets[row[:journal_id]].to_d.round(0) != allocated_amount.to_d.round(0)
+      row[:allocations] = allocations_by_journal[row[:journal_id]]
+        .sort_by {|work_type_id, _amount| [work_type_orders[work_type_id] || Float::INFINITY, work_type_id] }
+        .map do |work_type_id, amount|
+          {name: work_type_names[work_type_id] || work_type_id.to_s, amount: amount}
+        end
     end
   end
 

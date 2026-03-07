@@ -20,6 +20,7 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
     assert_select "button", text: "複写", count: 0
     assert_select "a", text: "自動配賦", count: 1
     assert_select "a", text: "科目初期化", count: 0
+    assert_select "button.toggle-allocation", minimum: 1
   end
 
   test "農業簿記自動配賦(実行)" do

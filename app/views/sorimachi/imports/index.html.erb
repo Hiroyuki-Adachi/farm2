@@ -29,8 +29,43 @@
       <td class="numeric"><%= row[:line] %>-<%= row[:detail] %></td>
       <td><%= row[:accounted_on] ? row[:accounted_on].strftime('%m月%d日') : "決算" %></td>
       <td><%= row[:account_name] %></td>
-      <td class="numeric"><%= number_to_currency(row[:amount], {precision: 0, unit: ""}) %></td>
+      <td class="numeric">
+        <button type="button" class="btn btn-link p-0 text-decoration-none toggle-allocation" data-target="allocation_<%= row[:id] %>">
+          <%= number_to_currency(row[:amount], {precision: 0, unit: ""}) %>
+        </button>
+      </td>
       <td><%= row[:remark1] %><%= row[:remark3].present? ? "／#{row[:remark3]}" : "" %></td>
+    </tr>
+    <tr id="allocation_<%= row[:id] %>" class="allocation-detail-row d-none table-light">
+      <td colspan="5">
+        <% if row[:allocations].present? %>
+          <table class="table table-sm table-bordered mb-2 w-auto d-inline-table">
+            <thead>
+              <tr>
+                <th class="px-2">作業分類</th>
+                <th class="numeric px-2">金額</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% row[:allocations].each do |allocation| %>
+                <tr>
+                  <td class="px-2"><%= allocation[:name] %></td>
+                  <td class="numeric px-2"><%= number_to_currency(allocation[:amount], {precision: 0, unit: ""}) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="small text-muted mb-1">配賦データなし</div>
+        <% end %>
+        <div class="small">
+          合計: <strong><%= number_to_currency(row[:target_amount], {precision: 0, unit: ""}) %></strong>
+          ／ 配賦合計: <strong><%= number_to_currency(row[:allocated_amount], {precision: 0, unit: ""}) %></strong>
+          <% if row[:unallocated] %>
+            <span class="badge bg-warning text-dark ms-1">未配賦</span>
+          <% end %>
+        </div>
+      </td>
     </tr>
   <% end %>
   </tbody>

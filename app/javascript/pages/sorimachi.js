@@ -1,6 +1,23 @@
 import "bootstrap";
 
 export const init = () => {
+  document.querySelectorAll(".toggle-allocation").forEach((button) => {
+    button.addEventListener("click", () => {
+      const targetId = button.dataset.target;
+      if (!targetId) return;
+      const targetRow = document.getElementById(targetId);
+      if (!targetRow) return;
+
+      const opening = targetRow.classList.contains("d-none");
+      document.querySelectorAll(".allocation-detail-row").forEach((row) => {
+        row.classList.add("d-none");
+      });
+      if (opening) {
+        targetRow.classList.remove("d-none");
+      }
+    });
+  });
+
   const totalModal = document.getElementById("total_modal");
   const totalForm = totalModal ? new bootstrap.Modal(totalModal) : null;
   const totalButton = document.getElementById("total_button");
