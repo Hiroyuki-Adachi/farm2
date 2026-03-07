@@ -10,9 +10,9 @@ module IpRestrictedLogin
     end
     return true if IpList.white_list.any? { |ip| ip.include?(request.remote_ip) }
 
-    params = {}
-    params[:return_to] = return_to if return_to.present?
-    redirect_to new_ip_list_path(params)
+    redirect_params = {}
+    redirect_params[:return_to] = return_to if return_to.present?
+    redirect_to new_ip_list_path(redirect_params)
     false
   end
 end
