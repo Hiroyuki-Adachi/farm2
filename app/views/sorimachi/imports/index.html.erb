@@ -47,7 +47,7 @@
     <div class="btn-group mr-2" role="group">
       <%= submit_tag 'インポート', class: "btn btn-danger", data: {wait: true} %>
       <%= link_to "自動配賦", auto_allocate_sorimachi_imports_path(total_cost_type_id: @selected_total_cost_type_id), {class: "btn btn-warning", data: {turbo_method: :post, turbo_confirm: "自動配賦を実行してもよろしいですか？", wait: true}} %>
-      <%= button_tag "簡易集計", type: :button, id: :total_button, class: "btn btn-info", data: {url: sorimachi_totals_path } %>
+      <%= button_tag "簡易集計", type: :button, id: :total_button, class: "btn btn-info", data: {url: sorimachi_totals_path(total_cost_type_id: @selected_total_cost_type_id) } %>
     </div>
     <div class="btn-group mr-2" role="group">
       <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
@@ -55,7 +55,7 @@
   </div>
 <% end %>
 <div class="modal fade" id="total_modal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-xl" role="document" style="max-width: 95vw;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">科目別簡易集計</h5>
