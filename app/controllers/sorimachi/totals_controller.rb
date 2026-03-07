@@ -15,7 +15,11 @@ class Sorimachi::TotalsController < ApplicationController
     @accounts = SorimachiAccount.where(term: current_term, total_cost_type_id: @selected_total_cost_type_id).order(:code)
     @account_totals = build_account_totals(@accounts.map(&:code))
     @journal_totals = build_journal_totals(@accounts.map(&:code))
-    render layout: false
+
+    respond_to do |format|
+      format.html { render layout: false }
+      format.csv { render content_type: "text/csv; charset=cp943" }
+    end
   end
 
   private
