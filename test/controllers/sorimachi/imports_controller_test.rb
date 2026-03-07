@@ -7,7 +7,7 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "農業簿記インポート(表示)" do
-    get sorimachi_imports_path
+    get sorimachi_imports_path, params: {total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id}
     assert_response :success
     assert_select "input[type=radio][name=total_cost_type_id]", minimum: 1
     assert_select "input[type=radio][name=total_cost_type_id][checked=checked]", count: 1
@@ -20,7 +20,7 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
     assert_select "button", text: "複写", count: 0
     assert_select "a", text: "自動配賦", count: 1
     assert_select "a", text: "科目初期化", count: 0
-    assert_select "button.toggle-allocation", minimum: 1
+    assert_select "tbody[id^=row_group_]", minimum: 1
   end
 
   test "農業簿記自動配賦(実行)" do

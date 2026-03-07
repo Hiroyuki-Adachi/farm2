@@ -1,21 +1,77 @@
 import "bootstrap";
 
 export const init = () => {
-  document.querySelectorAll(".toggle-allocation").forEach((button) => {
-    button.addEventListener("click", () => {
-      const targetId = button.dataset.target;
-      if (!targetId) return;
-      const targetRow = document.getElementById(targetId);
-      if (!targetRow) return;
+  const csrfToken = () => {
+    const meta = document.querySelector("meta[name='csrf-token']");
+    return meta ? meta.getAttribute("content") : "";
+  };
 
-      const opening = targetRow.classList.contains("d-none");
-      document.querySelectorAll(".allocation-detail-row").forEach((row) => {
-        row.classList.add("d-none");
+  const submitAllocation = (changed) => {
+    const rowId = changed.dataset.rowId;
+    const journalId = changed.dataset.journalId;
+    const side = changed.dataset.side;
+    const url = changed.dataset.url;
+    const totalCostTypeId = changed.dataset.totalCostTypeId;
+    if (!rowId || !journalId || !side || !url || !totalCostTypeId) return;
+
+    const rowChecks = document.querySelectorAll(`.allocation-checkbox[data-row-id='${rowId}']`);
+    if (changed.checked && changed.dataset.landFlag === "false") {
+      rowChecks.forEach((checkbox) => {
+        if (checkbox !== changed) checkbox.checked = false;
       });
-      if (opening) {
-        targetRow.classList.remove("d-none");
+    } else if (changed.checked) {
+      rowChecks.forEach((checkbox) => {
+        if (checkbox.dataset.landFlag === "false") checkbox.checked = false;
+      });
+    }
+    const selectedWorkTypeIds = Array.from(rowChecks)
+      .filter((checkbox) => checkbox.checked)
+      .map((checkbox) => checkbox.dataset.workTypeId);
+
+    const body = new URLSearchParams();
+    body.append("journal_id", journalId);
+    body.append("side", side);
+    body.append("total_cost_type_id", totalCostTypeId);
+    body.append("work_type_ids_present", "1");
+    selectedWorkTypeIds.forEach((workTypeId) => {
+      body.append("work_type_ids[]", workTypeId);
+    });
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "X-CSRF-Token": csrfToken(),
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+      },
+      body: body.toString()
+    })
+    .then((res) => {
+      if (!res.ok) return null;
+      return res.text();
+    })
+    .then((html) => {
+      if (!html) return;
+      const group = document.getElementById(`row_group_${rowId}`);
+      if (group) {
+        group.outerHTML = html;
       }
     });
+  };
+
+  document.addEventListener("change", (event) => {
+    const checkbox = event.target.closest(".allocation-checkbox");
+    if (!checkbox) return;
+    submitAllocation(checkbox);
+  });
+
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest(".toggle-allocation");
+    if (!button) return;
+    const targetId = button.dataset.target;
+    if (!targetId) return;
+    const detailRow = document.getElementById(targetId);
+    if (!detailRow) return;
+    detailRow.classList.toggle("d-none");
   });
 
   const totalModal = document.getElementById("total_modal");

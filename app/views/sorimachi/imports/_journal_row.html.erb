@@ -1,0 +1,56 @@
+<tbody id="row_group_<%= row[:id] %>">
+  <tr id="tr_<%= row[:id] %>" class="<%= row[:unallocated] ? 'table-warning' : '' %>">
+    <td class="numeric"><%= row[:line] %>-<%= row[:detail] %></td>
+    <td><%= row[:accounted_on] ? row[:accounted_on].strftime('%m月%d日') : "決算" %></td>
+    <td><%= row[:account_name] %></td>
+    <td class="numeric">
+      <button type="button" class="btn btn-link btn-sm p-0 toggle-allocation" data-target="details_<%= row[:id] %>">
+        <%= number_to_currency(row[:amount], {precision: 0, unit: ""}) %>
+      </button>
+    </td>
+    <td><%= row[:remark1] %><%= row[:remark3].present? ? "／#{row[:remark3]}" : "" %></td>
+    <% work_types.each do |work_type| %>
+      <% item = row[:allocation_map][work_type.id] %>
+      <td class="text-center">
+        <input
+          type="checkbox"
+          class="form-check-input allocation-checkbox"
+          data-url="<%= update_allocation_sorimachi_imports_path %>"
+          data-row-id="<%= row[:id] %>"
+          data-journal-id="<%= row[:journal_id] %>"
+          data-side="<%= row[:side] %>"
+          data-work-type-id="<%= work_type.id %>"
+          data-land-flag="<%= work_type.land_flag %>"
+          data-total-cost-type-id="<%= @selected_total_cost_type_id %>"
+          <%= item && item[:amount].to_d.nonzero? ? 'checked' : '' %>
+        >
+      </td>
+    <% end %>
+  </tr>
+  <tr id="details_<%= row[:id] %>" class="allocation-detail-row d-none">
+    <td></td>
+    <td colspan="<%= 4 + work_types.size %>">
+      <% nonzero_allocations = row[:allocations].select { |item| item[:amount].to_d.nonzero? } %>
+      <% if nonzero_allocations.present? %>
+        <table class="table table-sm table-bordered mb-0 w-auto">
+          <thead>
+            <tr>
+              <th>原価</th>
+              <th class="numeric">金額</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% nonzero_allocations.each do |item| %>
+              <tr>
+                <td><%= item[:name] %></td>
+                <td class="numeric"><%= number_to_currency(item[:amount], {precision: 0, unit: ""}) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <span class="text-muted">配賦なし</span>
+      <% end %>
+    </td>
+  </tr>
+</tbody>

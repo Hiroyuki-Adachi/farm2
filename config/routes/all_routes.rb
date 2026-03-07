@@ -2,6 +2,7 @@ namespace :sorimachi do
   resources :imports, only: [:index, :create] do
     collection do
       post :auto_allocate
+      post :update_allocation
     end
   end
   resources :accounts, param: "code", except: [:show, :new]

@@ -9,17 +9,24 @@ module Sorimachi
     end
 
     # Returns a hash of { work_type_id => amount }.
-    def allocate(amount:, accounted_on:)
+    def allocate(amount:, accounted_on:, work_type_ids: nil)
       target_amount = amount.to_d.round(0).to_i
       return {} if target_amount.zero?
 
+      target_work_type_ids = target_work_type_ids(work_type_ids)
+      return {} if target_work_type_ids.blank?
+      if !work_type_ids.nil?
+        non_land_work_type_id = target_work_type_ids.find {|work_type_id| !work_type_land_flags[work_type_id] }
+        return {non_land_work_type_id => target_amount} if non_land_work_type_id
+      end
+
       areas = accounted_on.present? ? areas_for_date(accounted_on) : areas_for_fiscal_year
-      distribute(target_amount, areas)
+      distribute(target_amount, areas, target_work_type_ids)
     end
 
     # Rebuild sorimachi_work_types for the journal and returns created records.
-    def allocate!(journal:, amount:, accounted_on: journal.accounted_on)
-      amounts = allocate(amount: amount, accounted_on: accounted_on)
+    def allocate!(journal:, amount:, accounted_on: journal.accounted_on, work_type_ids: nil)
+      amounts = allocate(amount: amount, accounted_on: accounted_on, work_type_ids: work_type_ids)
       SorimachiWorkType.transaction do
         SorimachiWorkType.where(sorimachi_journal_id: journal.id).delete_all
         amounts.each do |work_type_id, work_amount|
@@ -37,12 +44,24 @@ module Sorimachi
     private
 
     def load_eligible_work_type_ids
-      WorkType
+      scope = WorkType
         .joins(:work_type_terms)
         .where(work_type_terms: { term: @term })
+        .reorder(nil)
         .where(cost_flag: true, deleted_at: nil)
+        .select(:id)
         .distinct
-        .pluck(:id)
+
+      WorkType.where(id: scope).usual_order.pluck(:id)
+    end
+
+    def work_type_land_flags
+      @work_type_land_flags ||= WorkType.with_deleted.where(id: @eligible_work_type_ids).pluck(:id, :land_flag).to_h
+    end
+
+    def target_work_type_ids(work_type_ids)
+      return @eligible_work_type_ids if work_type_ids.nil?
+      @eligible_work_type_ids & work_type_ids.map(&:to_i)
     end
 
     def target_lands_between(start_on, end_on)
@@ -111,9 +130,9 @@ module Sorimachi
       results[work_type_id] += area.to_d * days
     end
 
-    def distribute(total_amount, areas)
-      candidates = areas.select {|_id, area| area.to_d.positive? }
-      fallback_id = @eligible_work_type_ids.min
+    def distribute(total_amount, areas, target_work_type_ids)
+      candidates = areas.select {|work_type_id, area| target_work_type_ids.include?(work_type_id) && area.to_d.positive? }
+      fallback_id = target_work_type_ids.min
       return { fallback_id => total_amount } if candidates.blank? && fallback_id
       return {} if candidates.blank?
 
