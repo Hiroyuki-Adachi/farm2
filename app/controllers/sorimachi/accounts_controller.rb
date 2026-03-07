@@ -72,6 +72,7 @@ class Sorimachi::AccountsController < ApplicationController
   def update
     @account.attributes = sorimachi_account_params
     if @account.save
+      allocate_work_types(@account)
       redirect_to sorimachi_accounts_path
     else
       render action: :edit
@@ -79,7 +80,10 @@ class Sorimachi::AccountsController < ApplicationController
   end
 
   def destroy
-    @account.destroy unless @account.new_record?
+    unless @account.new_record?
+      clear_related_work_types(@account)
+      @account.destroy
+    end
     redirect_to sorimachi_accounts_path
   end
 
@@ -96,10 +100,40 @@ class Sorimachi::AccountsController < ApplicationController
         :term,
         :code,
         :name,
-        :cost_flag,
-        :auto_code,
-        :auto_work_type_id,
         :total_cost_type_id
       ])
+  end
+
+  def allocate_work_types(account)
+    total_cost_type = account.total_cost_type
+    return clear_related_work_types(account) if total_cost_type.nil?
+
+    allocator = Sorimachi::WorkTypeAllocationService.new(term: account.term, system: current_system)
+    journals_for_account(account).find_each do |journal|
+      amount = signed_amount(journal, account.code, total_cost_type.account)
+      allocator.allocate!(journal: journal, amount: amount, accounted_on: journal.accounted_on)
+    end
+  end
+
+  def clear_related_work_types(account)
+    journal_ids = journals_for_account(account).pluck(:id)
+    SorimachiWorkType.where(sorimachi_journal_id: journal_ids).delete_all
+  end
+
+  def journals_for_account(account)
+    SorimachiJournal.where(term: account.term)
+      .where(code01: account.code)
+      .or(SorimachiJournal.where(term: account.term, code12: account.code))
+  end
+
+  def signed_amount(journal, account_code, account_flag)
+    amount = 0.to_d
+    if journal.code01 == account_code
+      amount += account_flag ? journal.amount1 : -journal.amount1
+    end
+    if journal.code12 == account_code
+      amount += account_flag ? -journal.amount2 : journal.amount2
+    end
+    amount
   end
 end

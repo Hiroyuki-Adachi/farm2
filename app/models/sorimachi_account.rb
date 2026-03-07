@@ -2,16 +2,13 @@
 #
 # Table name: sorimachi_accounts(ソリマチ勘定科目)
 #
-#  id                                  :bigint           not null, primary key
-#  auto_code(自動設定コード)           :integer
-#  code(科目コード)                    :integer          default(0), not null
-#  cost_flag(原価計上フラグ)           :boolean          default(FALSE), not null
-#  name(名称)                          :string(10)       default(""), not null
-#  term(年度(期))                      :integer          not null
-#  created_at                          :datetime         not null
-#  updated_at                          :datetime         not null
-#  auto_work_type_id(自動設定作業分類) :integer
-#  total_cost_type_id(原価種別)        :integer          default(0), not null
+#  id                           :bigint           not null, primary key
+#  code(科目コード)             :integer          default(0), not null
+#  name(名称)                   :string(10)       default(""), not null
+#  term(年度(期))               :integer          not null
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
+#  total_cost_type_id(原価種別) :integer          default(0), not null
 #
 # Indexes
 #

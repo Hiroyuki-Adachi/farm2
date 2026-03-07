@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: qr_login_sessions(QRログインセッション)
+#
+#  id                              :bigint           not null, primary key
+#  consumed_at(セッション使用日時) :datetime
+#  expires_at(セッション有効期限)  :datetime         not null
+#  status(セッション状態)          :integer          default("pending"), not null
+#  token(セッション識別子)         :string(36)       not null
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  user_id(ユーザーID)             :integer
+#
+# Indexes
+#
+#  index_qr_login_sessions_on_token  (token) UNIQUE
+#
 require "test_helper"
 
 class QrLoginSessionTest < ActiveSupport::TestCase

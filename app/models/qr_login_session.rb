@@ -2,14 +2,14 @@
 #
 # Table name: qr_login_sessions(QRログインセッション)
 #
-#  id                                                          :bigint           not null, primary key
-#  consumed_at(セッション使用日時)                             :datetime
-#  expires_at(セッション有効期限)                              :datetime         not null
-#  status(セッション状態（0: 有効, 1: 使用済み, 2: 期限切れ）) :integer          default("pending"), not null
-#  token(セッション識別子)                                     :string(36)       not null
-#  created_at                                                  :datetime         not null
-#  updated_at                                                  :datetime         not null
-#  user_id(ユーザーID)                                         :integer
+#  id                              :bigint           not null, primary key
+#  consumed_at(セッション使用日時) :datetime
+#  expires_at(セッション有効期限)  :datetime         not null
+#  status(セッション状態)          :integer          default("pending"), not null
+#  token(セッション識別子)         :string(36)       not null
+#  created_at                      :datetime         not null
+#  updated_at                      :datetime         not null
+#  user_id(ユーザーID)             :integer
 #
 # Indexes
 #

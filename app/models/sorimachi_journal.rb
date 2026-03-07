@@ -84,10 +84,11 @@ class SorimachiJournal < ApplicationRecord
   end
 
   def self.update_cost_flag(term)
-    SorimachiAccount.where(term: term).find_each do |account|
-      SorimachiJournal.where(term: term, code01: account.code).update_all(cost0_flag: account.cost_flag)
-      SorimachiJournal.where(term: term, code12: account.code).update_all(cost1_flag: account.cost_flag)
-    end
+    account_codes = SorimachiAccount.where(term: term).pluck(:code)
+    SorimachiJournal.where(term: term).update_all(cost0_flag: false, cost1_flag: false)
+    return if account_codes.blank?
+    SorimachiJournal.where(term: term, code01: account_codes).update_all(cost0_flag: true)
+    SorimachiJournal.where(term: term, code12: account_codes).update_all(cost1_flag: true)
   end
 
   def self.refresh(term)
@@ -96,13 +97,6 @@ class SorimachiJournal < ApplicationRecord
       if [TotalCostType::EXPENSEDIRECT, TotalCostType::EXPENSEINDIRECT].include?(accounts[journal.code12]) || accounts[journal.code01] == TotalCostType::SALES
         journal.swap
         journal.save!
-      end
-      if journal.account2&.sales? && journal.code13 == journal.account2.auto_code
-        work_type_id = journal.account2.auto_work_type_id
-        SorimachiWorkType.where(sorimachi_journal_id: journal.id, work_type_id: work_type_id).first_or_create
-        journal.details.each do |detail|
-          SorimachiWorkType.where(sorimachi_journal_id: detail.id, work_type_id: work_type_id).first_or_create if detail.cost0_flag
-        end
       end
     end
   end
