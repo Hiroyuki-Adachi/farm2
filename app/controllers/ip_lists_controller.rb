@@ -1,6 +1,7 @@
 class IpListsController < ApplicationController
   layout false
   before_action :set_ip, only: [:edit, :update]
+  before_action :set_return_to
 
   def new; end
 
@@ -15,7 +16,7 @@ class IpListsController < ApplicationController
 
     ip = IpList.white_ip!(request.remote_ip, user)
     if user.otp_enabled || LineHookService.push_message(user.line_id, I18n.t('line_authentication', token: ip.token), retry_key: SecureRandom.uuid).is_a?(Net::HTTPSuccess)
-      redirect_to edit_ip_list_path(ip)
+      redirect_to edit_ip_list_path(ip, return_to: @return_to)
     else
       ip.destroy
       return to_error_path
@@ -26,20 +27,20 @@ class IpListsController < ApplicationController
 
   def update
     if @ip.created_user.otp_enabled
-      return redirect_to new_ip_list_path unless @ip.created_user.totp_verify?(params[:token])
+      return redirect_to new_ip_list_path(return_to: @return_to) unless @ip.created_user.totp_verify?(params[:token])
     elsif !@ip.authenticate?(params[:token])
-      return redirect_to new_ip_list_path
+      return redirect_to new_ip_list_path(return_to: @return_to)
     end
     @ip.updated_expired_on
-    log_in(@ip.created_user)
-    redirect_to menu_index_path
+    log_in(@ip.created_user, target: login_target_for_return_to)
+    redirect_to @return_to.presence || menu_index_path
   end
 
   private
 
   def restrict_remote_ip
     if IpList.white_list.any? { |ip| ip.include?(request.remote_ip) }
-      redirect_to root_path and return
+      redirect_to @return_to.presence || root_path and return
     elsif IpList.black_list.any? { |ip| ip.include?(request.remote_ip) }
       to_error_path and return
     end
@@ -48,5 +49,30 @@ class IpListsController < ApplicationController
   def set_ip
     @ip = IpList.find_valid(params[:id], request.remote_ip)
     to_error_path and return unless @ip
+  end
+
+  def set_return_to
+    @return_to = safe_return_to_path(params[:return_to])
+  end
+
+  def safe_return_to_path(path)
+    return if path.blank?
+
+    uri = URI.parse(path)
+    return unless uri.scheme.nil? && uri.host.nil?
+    return unless uri.path&.start_with?("/")
+
+    normalized = uri.path
+    return unless normalized.start_with?("/tablets")
+
+    [normalized, uri.query].compact.join("?")
+  rescue URI::InvalidURIError
+    nil
+  end
+
+  def login_target_for_return_to
+    return :TB if @return_to&.start_with?("/tablets")
+
+    :PC
   end
 end

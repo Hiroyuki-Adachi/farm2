@@ -3,6 +3,15 @@ require "test_helper"
 class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
   include ActiveSupport::Testing::TimeHelpers
 
+  test "QRコードログイン(非ホワイトIPはID確認へ)" do
+    assert_no_difference "QrLoginSession.count" do
+      post sessions_qr_login_index_path,
+           headers: { "ACCEPT" => "application/json", "REMOTE_ADDR" => "1.1.1.1" }
+    end
+
+    assert_redirected_to new_ip_list_path
+  end
+
   test "QRコードログイン" do
     freeze_time Time.current do
       assert_difference "QrLoginSession.count", +1 do
