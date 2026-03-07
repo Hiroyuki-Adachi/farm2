@@ -25,7 +25,7 @@
   </thead>
   <tbody>
   <% @journal_rows.each do |row| %>
-    <tr id="tr_<%= row[:id] %>">
+    <tr id="tr_<%= row[:id] %>" class="<%= row[:unallocated] ? 'table-warning' : '' %>">
       <td class="numeric"><%= row[:line] %>-<%= row[:detail] %></td>
       <td><%= row[:accounted_on] ? row[:accounted_on].strftime('%m月%d日') : "決算" %></td>
       <td><%= row[:account_name] %></td>
@@ -46,7 +46,7 @@
   <div class="btn-toolbar" role="toolbar">
     <div class="btn-group mr-2" role="group">
       <%= submit_tag 'インポート', class: "btn btn-danger", data: {wait: true} %>
-      <%= link_to "科目初期化", new_sorimachi_account_path, {class: "btn btn-warning", data: {confirm: "勘定科目を初期化してもよろしいですか？", wait: true}} %>
+      <%= link_to "自動配賦", auto_allocate_sorimachi_imports_path(total_cost_type_id: @selected_total_cost_type_id), {class: "btn btn-warning", data: {turbo_method: :post, turbo_confirm: "自動配賦を実行してもよろしいですか？", wait: true}} %>
       <%= button_tag "簡易集計", type: :button, id: :total_button, class: "btn btn-info", data: {url: sorimachi_totals_path } %>
     </div>
     <div class="btn-group mr-2" role="group">

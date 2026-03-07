@@ -6,13 +6,6 @@ class Sorimachi::AccountsControllerTest < ActionDispatch::IntegrationTest
     login_as(@user)
   end
 
-  test "ソリマチ科目初期化" do
-    assert_difference('SorimachiAccount.count', sorimachi_accounts.count - 1) do
-      post sorimachi_accounts_path
-    end
-    assert_redirected_to sorimachi_accounts_path
-  end
-
   test "ソリマチ科目一覧" do
     get sorimachi_accounts_path
     assert_response :success

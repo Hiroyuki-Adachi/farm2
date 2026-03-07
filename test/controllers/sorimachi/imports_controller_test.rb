@@ -18,6 +18,13 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
     assert_select "button", text: "内訳", count: 0
     assert_select "button", text: "計上", count: 0
     assert_select "button", text: "複写", count: 0
+    assert_select "a", text: "自動配賦", count: 1
+    assert_select "a", text: "科目初期化", count: 0
+  end
+
+  test "農業簿記自動配賦(実行)" do
+    post auto_allocate_sorimachi_imports_path, params: {total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id}
+    assert_redirected_to sorimachi_imports_path(total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id)
   end
 
   test "農業簿記インポート(種別絞り込み)" do
@@ -25,6 +32,7 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "td", text: "荷造運賃"
     assert_select "td.numeric", text: "13,196"
+    assert_select "tr.table-warning", minimum: 1
   end
 
   test "農業簿記インポート(実行)" do
