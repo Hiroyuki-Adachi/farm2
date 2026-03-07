@@ -27,7 +27,7 @@
   <% @journal_rows.each do |row| %>
     <tr id="tr_<%= row[:id] %>">
       <td class="numeric"><%= row[:line] %>-<%= row[:detail] %></td>
-      <td><%= row[:detail] == 1 ? (row[:accounted_on] ? row[:accounted_on].strftime('%m月%d日') : "決算") : "" %></td>
+      <td><%= row[:accounted_on] ? row[:accounted_on].strftime('%m月%d日') : "決算" %></td>
       <td><%= row[:account_name] %></td>
       <td class="numeric"><%= number_to_currency(row[:amount], {precision: 0, unit: ""}) %></td>
       <td><%= row[:remark1] %><%= row[:remark3].present? ? "／#{row[:remark3]}" : "" %></td>
