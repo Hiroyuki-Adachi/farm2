@@ -1,9 +1,5 @@
 namespace :sorimachi do
-  resources :imports, only: [:index, :create, :update, :destroy] do
-    member do
-      post :copy
-    end
-  end
+  resources :imports, only: [:index, :create]
   resources :accounts, param: "code", except: [:show]
   resources :totals, only: [:index]
   resources :work_types, param: "sorimachi_journal_id", only: [:edit, :update]

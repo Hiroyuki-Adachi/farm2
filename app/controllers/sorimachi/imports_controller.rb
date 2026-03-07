@@ -1,7 +1,5 @@
 class Sorimachi::ImportsController < ApplicationController
   include PermitManager
-  before_action :set_sorimachi_journal, only: [:update, :destroy, :copy]
-  before_action :set_sorimachi_accounts, only: [:index, :update, :destroy, :copy]
 
   def index
     @journals = SorimachiJournal.usual(current_term).page(params[:page])
@@ -18,30 +16,5 @@ class Sorimachi::ImportsController < ApplicationController
   rescue => e
     @error = e.message
     render action: :index, status: :internal_server_error
-  end
-
-  def update
-    @journal.update_flags
-    render partial: 'detail', locals: {detail: @journal}
-  end
-
-  def destroy
-    @journal.clear_flags
-    render partial: 'detail', locals: {detail: @journal}
-  end
-
-  def copy
-    @journal.copy(current_system)
-    render partial: 'detail', locals: {detail: @journal}
-  end
-
-  private
-
-  def set_sorimachi_journal
-    @journal = SorimachiJournal.find(params[:id])
-  end
-
-  def set_sorimachi_accounts
-    @accounts = SorimachiAccount.to_h(current_term)
   end
 end

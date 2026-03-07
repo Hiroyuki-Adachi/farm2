@@ -6,18 +6,11 @@
 <table class="table table-sm">
   <thead>
     <tr>
-      <th></th>
       <th class="numeric">番号</th>
       <th>日付</th>
-      <th></th>
-      <th>借方科目</th>
-      <th class="numeric">借方金額</th>
-      <th></th>
-      <th>貸方科目</th>
-      <th class="numeric">貸方金額</th>
+      <th>科目</th>
+      <th class="numeric">金額</th>
       <th>備考</th>
-      <th></th>
-      <th>内訳</th>
     </tr>
   </thead>
   <tbody>
@@ -27,7 +20,7 @@
       <%= render(:partial => 'detail', locals: {detail: journal}) %>
     </tr>
     <% details.each do |detail| %>
-      <tr data-detail-line="<%= detail.line %>" style="display:none;" class="bg-light" id="tr_<%= detail.id %>">
+      <tr class="bg-light" id="tr_<%= detail.id %>">
         <%= render(:partial => 'detail', locals: {detail: detail}) %>
       </tr>
     <% end %>
@@ -53,24 +46,6 @@
     </div>
   </div>
 <% end %>
-<!-- Modal -->
-<div class="modal fade" id="kamoku_modal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">内訳登録</h5>
-      </div>
-      <div class="modal-body" id="kamoku_body">
-      </div>
-      <div class="modal-footer">
-        <button id="kamoku_update" type="button" class="btn btn-primary">登録</button>
-        <button id="kamoku_reset" type="button" class="btn btn-warning">リセット</button>
-        <button id="kamoku_delete" type="button" class="btn btn-danger" data-url="<%= sorimachi_import_path("@") %>">削除</button>
-        <button id="kamoku_close" type="button" class="btn btn-secondary">閉じる</button>
-      </div>
-    </div>
-  </div>
-</div>
 <div class="modal fade" id="total_modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
