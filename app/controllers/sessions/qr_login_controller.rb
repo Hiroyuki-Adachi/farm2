@@ -1,5 +1,5 @@
 class Sessions::QrLoginController < ApplicationController
-  skip_before_action :restrict_remote_ip, only: [:create, :qrcode, :consume]
+  include IpRestrictedLogin
 
   def create
     qr_login_session = QrLoginSession.create!
@@ -52,6 +52,10 @@ class Sessions::QrLoginController < ApplicationController
   end
 
   private
+
+  def restrict_remote_ip
+    require_ip_whitelist!
+  end
 
   def redirect_path
     safe_redirect_to_path(params[:redirect_to]) || normalize_internal_path(menu_index_path)

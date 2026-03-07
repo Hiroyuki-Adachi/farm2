@@ -3,6 +3,7 @@ require 'wareki'
 module SessionsHelper
   def log_in(user, target: :PC)
     session[:user_id] = user.id
+    session[:access_target] = target.to_s.upcase
     Rails.application.config.access_logger.info "#{target}-#{user.worker.name}"
   end
 
@@ -67,6 +68,7 @@ module SessionsHelper
 
   def log_out
     session.delete(:user_id)
+    session.delete(:access_target)
     @current_user = nil
   end
 end
