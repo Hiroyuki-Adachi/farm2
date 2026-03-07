@@ -2,7 +2,17 @@
 <% if @error %>
 <div class="alert alert-danger" role="alert"><%= @error %></div>
 <% end %>
-<% if @journals && @journals.count > 0 %>
+<% if @total_cost_types.present? %>
+<%= form_with(url: sorimachi_imports_path, method: :get, local: true, class: "mb-3") do %>
+  <div class="btn-group" role="group" aria-label="原価種別">
+    <% @total_cost_types.each do |total_cost_type| %>
+      <%= radio_button_tag :total_cost_type_id, total_cost_type.id, @selected_total_cost_type_id == total_cost_type.id, id: "total_cost_type_#{total_cost_type.id}", class: "btn-check", autocomplete: "off", onchange: "this.form.submit();" %>
+      <%= label_tag "total_cost_type_#{total_cost_type.id}", total_cost_type.name, class: "btn btn-outline-primary" %>
+    <% end %>
+  </div>
+<% end %>
+<% end %>
+<% if @total_cost_types.present? %>
 <table class="table table-sm">
   <thead>
     <tr>
@@ -14,16 +24,14 @@
     </tr>
   </thead>
   <tbody>
-  <% @journals.each do |journal| %>
-    <% details = @details.select {|detail| detail.line == journal.line} %>
-    <tr id="tr_<%= journal.id %>">
-      <%= render(:partial => 'detail', locals: {detail: journal}) %>
+  <% @journal_rows.each do |row| %>
+    <tr id="tr_<%= row[:id] %>">
+      <td class="numeric"><%= row[:line] %>-<%= row[:detail] %></td>
+      <td><%= row[:detail] == 1 ? (row[:accounted_on] ? row[:accounted_on].strftime('%m月%d日') : "決算") : "" %></td>
+      <td><%= row[:account_name] %></td>
+      <td class="numeric"><%= number_to_currency(row[:amount], {precision: 0, unit: ""}) %></td>
+      <td><%= row[:remark1] %><%= row[:remark3].present? ? "／#{row[:remark3]}" : "" %></td>
     </tr>
-    <% details.each do |detail| %>
-      <tr class="bg-light" id="tr_<%= detail.id %>">
-        <%= render(:partial => 'detail', locals: {detail: detail}) %>
-      </tr>
-    <% end %>
   <% end %>
   </tbody>
 </table>

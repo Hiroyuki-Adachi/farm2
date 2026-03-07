@@ -12,8 +12,7 @@ class Sorimachi::WorkTypesController < ApplicationController
     SorimachiWorkType.transaction do
       SorimachiWorkType.refresh(@journal.id, params[:sorimachi])
     end
-    @accounts = SorimachiAccount.to_h(@journal.term)
-    render partial: 'sorimachi/imports/detail', locals: {detail: @journal}
+    head :ok
   end
 
   private

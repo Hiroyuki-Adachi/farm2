@@ -1,9 +1,0 @@
-<td class="numeric"><%= detail.line %>-<%= detail.detail %></td>
-<td>
-  <% if detail.detail == 1 %>
-  <%= detail.accounted_on ? detail.accounted_on.strftime('%m月%d日') : "決算" %>
-  <% end %>
-</td>
-<td></td>
-<td class="numeric">0</td>
-<td><%= detail.remark1 %><%= detail.remark3.present? ? "／#{detail.remark3}" : "" %></td>

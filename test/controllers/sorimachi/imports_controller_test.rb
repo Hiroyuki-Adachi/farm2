@@ -9,6 +9,8 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
   test "農業簿記インポート(表示)" do
     get sorimachi_imports_path
     assert_response :success
+    assert_select "input[type=radio][name=total_cost_type_id]", minimum: 1
+    assert_select "input[type=radio][name=total_cost_type_id][checked=checked]", count: 1
     assert_select "th", text: "科目"
     assert_select "th", text: "金額"
     assert_select "th", text: "内訳", count: 0
@@ -16,6 +18,13 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
     assert_select "button", text: "内訳", count: 0
     assert_select "button", text: "計上", count: 0
     assert_select "button", text: "複写", count: 0
+  end
+
+  test "農業簿記インポート(種別絞り込み)" do
+    get sorimachi_imports_path, params: {total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id}
+    assert_response :success
+    assert_select "td", text: "荷造運賃"
+    assert_select "td.numeric", text: "13,196"
   end
 
   test "農業簿記インポート(実行)" do
