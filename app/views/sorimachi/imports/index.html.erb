@@ -17,15 +17,15 @@
   <table class="table table-sm mb-0">
     <thead>
       <tr>
-        <th class="numeric" style="position: sticky; top: 0; background: #fff; z-index: 2;">番号</th>
-        <th style="position: sticky; top: 0; background: #fff; z-index: 2;">日付</th>
-        <th style="position: sticky; top: 0; background: #fff; z-index: 2;">科目</th>
-        <th class="numeric" style="position: sticky; top: 0; background: #fff; z-index: 2;">金額</th>
-        <th style="position: sticky; top: 0; background: #fff; z-index: 2;">備考</th>
+        <th class="numeric" style="position: sticky; top: 0; background: var(--bs-body-bg); z-index: 2;">番号</th>
+        <th style="position: sticky; top: 0; background: var(--bs-body-bg); z-index: 2;">日付</th>
+        <th style="position: sticky; top: 0; background: var(--bs-body-bg); z-index: 2;">科目</th>
+        <th class="numeric" style="position: sticky; top: 0; background: var(--bs-body-bg); z-index: 2;">金額</th>
+        <th style="position: sticky; top: 0; background: var(--bs-body-bg); z-index: 2;">備考</th>
         <% @work_types.each do |work_type| %>
-          <th class="text-center" style="position: sticky; top: 0; background: #fff; z-index: 2;"><%= work_type.name[0, 3] %></th>
+          <th class="text-center" style="position: sticky; top: 0; background: var(--bs-body-bg); z-index: 2;"><%= work_type.name[0, 3] %></th>
         <% end %>
-        <th style="position: sticky; top: 0; background: #fff; z-index: 2;">操作</th>
+        <th style="position: sticky; top: 0; background: var(--bs-body-bg); z-index: 2;">操作</th>
       </tr>
     </thead>
     <% @journal_rows.each do |row| %>
