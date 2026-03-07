@@ -19,6 +19,7 @@ class Sorimachi::AccountsControllerTest < ActionDispatch::IntegrationTest
     assert_select "th", text: "種別名"
     assert_select "tbody tr:first-child td:nth-child(1)", text: "720"
     assert_select "tbody tr:first-child td:nth-child(2)", text: "一般管理費"
+    assert_select "table#total-cost-type-summary"
   end
 
   test "ソリマチ科目編集(表示)" do

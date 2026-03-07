@@ -23,6 +23,26 @@ class Sorimachi::AccountsController < ApplicationController
         row[:code]
       ]
     end
+
+    type_totals = {}
+    @journal_rows.each do |row|
+      total_cost_type_id = row[:has_total_cost_type] ? row[:total_cost_type_id] : nil
+      key = total_cost_type_id || -1
+      type_totals[key] ||= {
+        total_cost_type_id: total_cost_type_id,
+        total_cost_type_name: row[:account]&.total_cost_type&.name || "未設定",
+        debit_total: 0,
+        credit_total: 0
+      }
+      type_totals[key][:debit_total] += row[:amount][0]
+      type_totals[key][:credit_total] += row[:amount][1]
+    end
+    @total_cost_type_rows = type_totals.values.sort_by do |row|
+      [
+        row[:total_cost_type_id].nil? ? 1 : 0,
+        row[:total_cost_type_id] || Float::INFINITY
+      ]
+    end
   end
 
   def new
