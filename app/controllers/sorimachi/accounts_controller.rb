@@ -104,12 +104,14 @@ class Sorimachi::AccountsController < ApplicationController
     journals_for_account(account).find_each do |journal|
       amount = signed_amount(journal, account.code, total_cost_type.account)
       allocator.allocate!(journal: journal, amount: amount, accounted_on: journal.accounted_on)
+      journal.update!(allocation_mode: :auto)
     end
   end
 
   def clear_related_work_types(account)
-    journal_ids = journals_for_account(account).pluck(:id)
-    SorimachiWorkType.where(sorimachi_journal_id: journal_ids).delete_all
+    journals = journals_for_account(account)
+    SorimachiWorkType.where(sorimachi_journal_id: journals.select(:id)).delete_all
+    journals.update_all(allocation_mode: SorimachiJournal.allocation_modes[:auto])
   end
 
   def journals_for_account(account)

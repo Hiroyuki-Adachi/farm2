@@ -8,7 +8,7 @@ class Sorimachi::ImportsController < ApplicationController
   def auto_allocate
     prepare_total_cost_type_context
     account_map = selected_account_map
-    journals = filtered_journals(account_map.keys)
+    journals = filtered_journals(account_map.keys).where(allocation_mode: SorimachiJournal.allocation_modes[:auto])
     allocated_sums = SorimachiWorkType.where(sorimachi_journal_id: journals.select(:id)).group(:sorimachi_journal_id).sum(:amount)
     allocator = Sorimachi::WorkTypeAllocationService.new(term: current_term, system: current_system)
 
@@ -17,6 +17,7 @@ class Sorimachi::ImportsController < ApplicationController
       allocated_amount = allocated_sums[journal.id] || 0
       next unless target_amount.to_d.round(0) != allocated_amount.to_d.round(0)
       allocator.allocate!(journal: journal, amount: target_amount, accounted_on: journal.accounted_on)
+      journal.update!(allocation_mode: :auto)
     end
     redirect_to sorimachi_imports_path(total_cost_type_id: @selected_total_cost_type_id)
   end
@@ -32,6 +33,50 @@ class Sorimachi::ImportsController < ApplicationController
       side: params[:side],
       account_map: selected_account_map,
       selected_work_type_ids: selected_work_type_ids
+    )
+    return head :unprocessable_entity if row.nil?
+
+    render partial: "journal_row", locals: {row: row, work_types: @work_types}
+  end
+
+  def update_detail
+    prepare_total_cost_type_context
+    prepare_work_types
+    journal = SorimachiJournal.find_by(id: params[:journal_id], term: current_term)
+    return head :not_found unless journal
+
+    amounts = normalized_detail_amounts
+    SorimachiWorkType.transaction do
+      SorimachiWorkType.refresh(journal.id, {amounts: amounts})
+      journal.update!(allocation_mode: :manual)
+    end
+
+    row = build_row_for_journal(
+      journal: journal,
+      side: params[:side],
+      account_map: selected_account_map
+    )
+    return head :unprocessable_entity if row.nil?
+
+    render partial: "journal_row", locals: {row: row, work_types: @work_types}
+  end
+
+  def reallocate_row
+    prepare_total_cost_type_context
+    prepare_work_types
+    journal = SorimachiJournal.find_by(id: params[:journal_id], term: current_term)
+    return head :not_found unless journal
+
+    account_map = selected_account_map
+    target_amount = journal_target_amount(journal, account_map)
+    allocator = Sorimachi::WorkTypeAllocationService.new(term: current_term, system: current_system)
+    allocator.allocate!(journal: journal, amount: target_amount, accounted_on: journal.accounted_on)
+    journal.update!(allocation_mode: :auto)
+
+    row = build_row_for_journal(
+      journal: journal,
+      side: params[:side],
+      account_map: account_map
     )
     return head :unprocessable_entity if row.nil?
 
@@ -57,7 +102,7 @@ class Sorimachi::ImportsController < ApplicationController
     prepare_total_cost_type_context
     prepare_work_types
     account_map = selected_account_map
-    @journals = filtered_journals(account_map.keys).page(params[:page])
+    @journals = filtered_journals(account_map.keys)
 
     @journal_rows = []
     @journals.each do |journal|
@@ -82,6 +127,7 @@ class Sorimachi::ImportsController < ApplicationController
         accounted_on: journal.accounted_on,
         work_type_ids: normalize_selected_work_type_ids(selected_work_type_ids)
       )
+      journal.update!(allocation_mode: :select)
     end
 
     allocation_sums = SorimachiWorkType.where(sorimachi_journal_id: journal.id, work_type_id: @work_types.map(&:id)).group(:work_type_id).sum(:amount)
@@ -106,6 +152,7 @@ class Sorimachi::ImportsController < ApplicationController
       target_amount: target_amount,
       allocated_amount: allocated_amount,
       unallocated: target_amount.to_d.round(0) != allocated_amount.to_d.round(0),
+      manual_mode: journal.allocation_mode_manual?,
       allocations: allocation_items,
       allocation_map: allocation_map
     }
@@ -175,5 +222,14 @@ class Sorimachi::ImportsController < ApplicationController
     non_land_selected = selected_ids & non_land_ids
     return [non_land_selected.min] if non_land_selected.present?
     selected_ids
+  end
+
+  def normalized_detail_amounts
+    raw = params[:amounts].is_a?(ActionController::Parameters) ? params[:amounts].to_unsafe_h : (params[:amounts] || {})
+    valid_ids = @work_types.map(&:id).map(&:to_s)
+    raw.each_with_object({}) do |(work_type_id, value), hash|
+      next unless valid_ids.include?(work_type_id.to_s)
+      hash[work_type_id.to_s] = value.to_d.round(0).to_i
+    end
   end
 end

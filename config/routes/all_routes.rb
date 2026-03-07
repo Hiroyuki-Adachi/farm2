@@ -3,6 +3,8 @@ namespace :sorimachi do
     collection do
       post :auto_allocate
       post :update_allocation
+      post :update_detail
+      post :reallocate_row
     end
   end
   resources :accounts, param: "code", except: [:show, :new]

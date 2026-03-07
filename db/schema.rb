@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_07_093000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_07_101000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -728,6 +728,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_093000) do
 
   create_table "sorimachi_journals", comment: "ソリマチ仕訳", force: :cascade do |t|
     t.date "accounted_on", comment: "仕訳日"
+    t.integer "allocation_mode", default: 0, null: false
     t.decimal "amount1", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額1"
     t.decimal "amount2", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額2"
     t.decimal "amount3", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額3"
@@ -761,6 +762,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_093000) do
     t.integer "tax11", comment: "消費税1-1"
     t.integer "term", null: false, comment: "年度(期)"
     t.datetime "updated_at", null: false
+    t.index ["term", "allocation_mode"], name: "index_sorimachi_journals_on_term_and_allocation_mode"
     t.index ["term", "line", "detail"], name: "sorimachi_journals_2nd", unique: true
   end
 

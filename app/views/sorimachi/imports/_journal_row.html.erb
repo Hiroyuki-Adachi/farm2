@@ -1,5 +1,5 @@
 <tbody id="row_group_<%= row[:id] %>">
-  <tr id="tr_<%= row[:id] %>" class="<%= row[:unallocated] ? 'table-warning' : '' %>">
+  <tr id="tr_<%= row[:id] %>" class="<%= row[:manual_mode] ? 'table-info' : (row[:unallocated] ? 'table-warning' : '') %>">
     <td class="numeric"><%= row[:line] %>-<%= row[:detail] %></td>
     <td><%= row[:accounted_on] ? row[:accounted_on].strftime('%m月%d日') : "決算" %></td>
     <td><%= row[:account_name] %></td>
@@ -26,31 +26,60 @@
         >
       </td>
     <% end %>
+    <td class="text-nowrap">
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-sm reallocate-row"
+        data-url="<%= reallocate_row_sorimachi_imports_path %>"
+        data-row-id="<%= row[:id] %>"
+        data-journal-id="<%= row[:journal_id] %>"
+        data-side="<%= row[:side] %>"
+        data-total-cost-type-id="<%= @selected_total_cost_type_id %>"
+      >
+        再配賦
+      </button>
+    </td>
   </tr>
   <tr id="details_<%= row[:id] %>" class="allocation-detail-row d-none">
     <td></td>
-    <td colspan="<%= 4 + work_types.size %>">
-      <% nonzero_allocations = row[:allocations].select { |item| item[:amount].to_d.nonzero? } %>
-      <% if nonzero_allocations.present? %>
-        <table class="table table-sm table-bordered mb-0 w-auto">
-          <thead>
+    <td colspan="<%= 5 + work_types.size %>">
+      <table class="table table-sm table-bordered mb-2 w-auto">
+        <thead>
+          <tr>
+            <th>原価</th>
+            <th class="numeric">金額</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% row[:allocations].each do |item| %>
             <tr>
-              <th>原価</th>
-              <th class="numeric">金額</th>
+              <td><%= item[:name] %></td>
+              <td>
+                <input
+                  type="number"
+                  class="form-control form-control-sm text-end detail-amount-input"
+                  data-row-id="<%= row[:id] %>"
+                  data-work-type-id="<%= item[:work_type_id] %>"
+                  step="1"
+                  value="<%= item[:amount].to_d.round(0).to_i %>"
+                >
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            <% nonzero_allocations.each do |item| %>
-              <tr>
-                <td><%= item[:name] %></td>
-                <td class="numeric"><%= number_to_currency(item[:amount], {precision: 0, unit: ""}) %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% else %>
-        <span class="text-muted">配賦なし</span>
-      <% end %>
+          <% end %>
+        </tbody>
+      </table>
+      <button
+        type="button"
+        class="btn btn-primary btn-sm save-allocation-detail"
+        data-url="<%= update_detail_sorimachi_imports_path %>"
+        data-row-id="<%= row[:id] %>"
+        data-journal-id="<%= row[:journal_id] %>"
+        data-side="<%= row[:side] %>"
+        data-total-cost-type-id="<%= @selected_total_cost_type_id %>"
+        data-parent-amount="<%= row[:amount].to_d.round(0).to_i %>"
+      >
+        登録
+      </button>
     </td>
   </tr>
 </tbody>

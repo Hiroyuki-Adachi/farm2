@@ -5,6 +5,13 @@ export const init = () => {
     const meta = document.querySelector("meta[name='csrf-token']");
     return meta ? meta.getAttribute("content") : "";
   };
+  const notify = (message) => {
+    if (window.popupAlert) {
+      window.popupAlert(message);
+      return;
+    }
+    window.alert(message);
+  };
 
   const submitAllocation = (changed) => {
     const rowId = changed.dataset.rowId;
@@ -72,6 +79,95 @@ export const init = () => {
     const detailRow = document.getElementById(targetId);
     if (!detailRow) return;
     detailRow.classList.toggle("d-none");
+  });
+
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest(".save-allocation-detail");
+    if (!button) return;
+
+    const rowId = button.dataset.rowId;
+    const url = button.dataset.url;
+    const journalId = button.dataset.journalId;
+    const side = button.dataset.side;
+    const totalCostTypeId = button.dataset.totalCostTypeId;
+    const parentAmount = Number(button.dataset.parentAmount || 0);
+    if (!rowId || !url || !journalId || !side || !totalCostTypeId) return;
+
+    const inputs = Array.from(document.querySelectorAll(`.detail-amount-input[data-row-id='${rowId}']`));
+    const payload = new URLSearchParams();
+    payload.append("journal_id", journalId);
+    payload.append("side", side);
+    payload.append("total_cost_type_id", totalCostTypeId);
+
+    let total = 0;
+    inputs.forEach((input) => {
+      const workTypeId = input.dataset.workTypeId;
+      const value = Number(input.value || 0);
+      total += value;
+      payload.append(`amounts[${workTypeId}]`, String(value));
+    });
+
+    if (total !== parentAmount) {
+      notify(`合計額(${total})が親の金額(${parentAmount})と一致しません。`);
+      return;
+    }
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "X-CSRF-Token": csrfToken(),
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+      },
+      body: payload.toString()
+    })
+    .then((res) => {
+      if (!res.ok) return null;
+      return res.text();
+    })
+    .then((html) => {
+      if (!html) return;
+      const group = document.getElementById(`row_group_${rowId}`);
+      if (group) {
+        group.outerHTML = html;
+      }
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest(".reallocate-row");
+    if (!button) return;
+
+    const rowId = button.dataset.rowId;
+    const url = button.dataset.url;
+    const journalId = button.dataset.journalId;
+    const side = button.dataset.side;
+    const totalCostTypeId = button.dataset.totalCostTypeId;
+    if (!rowId || !url || !journalId || !side || !totalCostTypeId) return;
+
+    const payload = new URLSearchParams();
+    payload.append("journal_id", journalId);
+    payload.append("side", side);
+    payload.append("total_cost_type_id", totalCostTypeId);
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "X-CSRF-Token": csrfToken(),
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+      },
+      body: payload.toString()
+    })
+    .then((res) => {
+      if (!res.ok) return null;
+      return res.text();
+    })
+    .then((html) => {
+      if (!html) return;
+      const group = document.getElementById(`row_group_${rowId}`);
+      if (group) {
+        group.outerHTML = html;
+      }
+    });
   });
 
   const totalModal = document.getElementById("total_modal");

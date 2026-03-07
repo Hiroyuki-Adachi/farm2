@@ -6,6 +6,7 @@ require 'csv'
 #
 #  id                           :bigint           not null, primary key
 #  accounted_on(仕訳日)         :date
+#  allocation_mode              :integer          default("auto"), not null
 #  amount1(金額1)               :decimal(11, 2)   default(0.0), not null
 #  amount2(金額2)               :decimal(11, 2)   default(0.0), not null
 #  amount3(金額3)               :decimal(11, 2)   default(0.0), not null
@@ -42,10 +43,12 @@ require 'csv'
 #
 # Indexes
 #
-#  sorimachi_journals_2nd  (term,line,detail) UNIQUE
+#  index_sorimachi_journals_on_term_and_allocation_mode  (term,allocation_mode)
+#  sorimachi_journals_2nd                                (term,line,detail) UNIQUE
 #
 class SorimachiJournal < ApplicationRecord
   after_update :clear_work_types
+  enum :allocation_mode, {auto: 0, manual: 1, select: 2}, prefix: :allocation_mode
   scope :usual, ->(term) {where(term: term, detail: 1).order(:line)}
   scope :cost, ->(term) {where(term: term, cost0_flag: true).order(:line, :detail)}
   scope :total, ->(term) {where(term: term, cost0_flag: true).order(:code01).group(:code01).sum(:amount1)}
@@ -71,6 +74,7 @@ class SorimachiJournal < ApplicationRecord
         journal.sorimachi_work_types.destroy_all
         journal.import_value(sorimachi_new)
       end
+      journal.allocation_mode = :auto
       journal.save!
     end
   end
