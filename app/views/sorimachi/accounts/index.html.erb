@@ -4,6 +4,7 @@
     <thead>
       <tr>
         <th class="numeric">コード</th>
+        <th>種別名</th>
         <th>名称</th>
         <th class="numeric">借方合計金額</th>
         <th class="numeric">貸方合計金額</th>
@@ -11,14 +12,15 @@
       </tr>
     </thead>
     <tbody>
-      <% @journals.each do |key, value| %>
+      <% @journal_rows.each do |row| %>
         <tr>
-          <td class="numeric"><%= key %></th>
-          <td><%= @accounts[key] %></td>
-          <td class="numeric"><%= number_to_currency(value[0], {precision: 0, unit: ""}) %></td>
-          <td class="numeric"><%= number_to_currency(value[1], {precision: 0, unit: ""}) %></td>
+          <td class="numeric"><%= row[:code] %></td>
+          <td><%= row[:account]&.total_cost_type&.name %></td>
+          <td><%= row[:account]&.name %></td>
+          <td class="numeric"><%= number_to_currency(row[:amount][0], {precision: 0, unit: ""}) %></td>
+          <td class="numeric"><%= number_to_currency(row[:amount][1], {precision: 0, unit: ""}) %></td>
           <td>
-            <%= link_to '編集', edit_sorimachi_account_path(code: key), {class: "btn btn-success btn-sm"} %>
+            <%= link_to '編集', edit_sorimachi_account_path(code: row[:code]), {class: "btn btn-success btn-sm"} %>
           </td>
         </tr>
       <% end %>

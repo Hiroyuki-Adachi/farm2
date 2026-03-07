@@ -19,6 +19,7 @@
 #
 class SorimachiAccount < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+
   query_constraints :term, :code
   before_destroy :clear_journals
 

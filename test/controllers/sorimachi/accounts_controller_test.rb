@@ -16,6 +16,9 @@ class Sorimachi::AccountsControllerTest < ActionDispatch::IntegrationTest
   test "ソリマチ科目一覧" do
     get sorimachi_accounts_path
     assert_response :success
+    assert_select "th", text: "種別名"
+    assert_select "tbody tr:first-child td:nth-child(1)", text: "720"
+    assert_select "tbody tr:first-child td:nth-child(2)", text: "一般管理費"
   end
 
   test "ソリマチ科目編集(表示)" do

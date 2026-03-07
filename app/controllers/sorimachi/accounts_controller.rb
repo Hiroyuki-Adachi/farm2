@@ -3,8 +3,26 @@ class Sorimachi::AccountsController < ApplicationController
   before_action :set_sorimachi_account, only: [:edit, :update, :destroy]
 
   def index
-    @journals = SorimachiJournal.accounts(current_term)
-    @accounts = SorimachiAccount.to_h(current_term)
+    journals = SorimachiJournal.accounts(current_term)
+    accounts = SorimachiAccount.where(term: current_term).index_by(&:code)
+    @journal_rows = journals.map do |code, amount|
+      account = accounts[code]
+      total_cost_type_id = account&.total_cost_type_id.to_i
+      {
+        code: code,
+        amount: amount,
+        account: account,
+        has_total_cost_type: total_cost_type_id.positive?,
+        total_cost_type_id: total_cost_type_id
+      }
+    end
+    @journal_rows.sort_by! do |row|
+      [
+        row[:has_total_cost_type] ? 0 : 1,
+        row[:has_total_cost_type] ? row[:total_cost_type_id] : Float::INFINITY,
+        row[:code]
+      ]
+    end
   end
 
   def new
