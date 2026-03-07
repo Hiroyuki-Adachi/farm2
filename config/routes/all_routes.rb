@@ -1,10 +1,13 @@
 namespace :sorimachi do
-  resources :imports, only: [:index, :create, :update, :destroy] do
-    member do
-      post :copy
+  resources :imports, only: [:index, :create] do
+    collection do
+      post :auto_allocate
+      post :update_allocation
+      post :update_detail
+      post :reallocate_row
     end
   end
-  resources :accounts, param: "code", except: [:show]
+  resources :accounts, param: "code", except: [:show, :new]
   resources :totals, only: [:index]
   resources :work_types, param: "sorimachi_journal_id", only: [:edit, :update]
 end

@@ -6,6 +6,7 @@ require 'csv'
 #
 #  id                           :bigint           not null, primary key
 #  accounted_on(仕訳日)         :date
+#  allocation_mode              :integer          default("auto"), not null
 #  amount1(金額1)               :decimal(11, 2)   default(0.0), not null
 #  amount2(金額2)               :decimal(11, 2)   default(0.0), not null
 #  amount3(金額3)               :decimal(11, 2)   default(0.0), not null
@@ -42,10 +43,12 @@ require 'csv'
 #
 # Indexes
 #
-#  sorimachi_journals_2nd  (term,line,detail) UNIQUE
+#  index_sorimachi_journals_on_term_and_allocation_mode  (term,allocation_mode)
+#  sorimachi_journals_2nd                                (term,line,detail) UNIQUE
 #
 class SorimachiJournal < ApplicationRecord
   after_update :clear_work_types
+  enum :allocation_mode, {auto: 0, manual: 1, select: 2}, prefix: :allocation_mode
   scope :usual, ->(term) {where(term: term, detail: 1).order(:line)}
   scope :cost, ->(term) {where(term: term, cost0_flag: true).order(:line, :detail)}
   scope :total, ->(term) {where(term: term, cost0_flag: true).order(:code01).group(:code01).sum(:amount1)}
@@ -71,6 +74,7 @@ class SorimachiJournal < ApplicationRecord
         journal.sorimachi_work_types.destroy_all
         journal.import_value(sorimachi_new)
       end
+      journal.allocation_mode = :auto
       journal.save!
     end
   end
@@ -84,10 +88,11 @@ class SorimachiJournal < ApplicationRecord
   end
 
   def self.update_cost_flag(term)
-    SorimachiAccount.where(term: term).find_each do |account|
-      SorimachiJournal.where(term: term, code01: account.code).update_all(cost0_flag: account.cost_flag)
-      SorimachiJournal.where(term: term, code12: account.code).update_all(cost1_flag: account.cost_flag)
-    end
+    account_codes = SorimachiAccount.where(term: term).pluck(:code)
+    SorimachiJournal.where(term: term).update_all(cost0_flag: false, cost1_flag: false)
+    return if account_codes.blank?
+    SorimachiJournal.where(term: term, code01: account_codes).update_all(cost0_flag: true)
+    SorimachiJournal.where(term: term, code12: account_codes).update_all(cost1_flag: true)
   end
 
   def self.refresh(term)
@@ -96,13 +101,6 @@ class SorimachiJournal < ApplicationRecord
       if [TotalCostType::EXPENSEDIRECT, TotalCostType::EXPENSEINDIRECT].include?(accounts[journal.code12]) || accounts[journal.code01] == TotalCostType::SALES
         journal.swap
         journal.save!
-      end
-      if journal.account2&.sales? && journal.code13 == journal.account2.auto_code
-        work_type_id = journal.account2.auto_work_type_id
-        SorimachiWorkType.where(sorimachi_journal_id: journal.id, work_type_id: work_type_id).first_or_create
-        journal.details.each do |detail|
-          SorimachiWorkType.where(sorimachi_journal_id: detail.id, work_type_id: work_type_id).first_or_create if detail.cost0_flag
-        end
       end
     end
   end

@@ -1,24 +1,32 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>コード</th>
-            <th>名称</th>
-            <th class="numeric">金額</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @totals.each do |key, value| %>
+      <div class="table-responsive">
+        <table class="table table-sm">
+          <thead>
             <tr>
-              <td><%= key%></td>
-              <td><%= @accounts[key] %></td>
-              <td class="numeric"><%= number_to_currency(value, {precision: 0, unit: ""}) %></td>
+              <th>コード</th>
+              <th>名称</th>
+              <th class="numeric">合計額</th>
+              <% @work_types.each do |work_type| %>
+                <th class="numeric"><%= work_type.name[0, 3] %></th>
+              <% end %>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @accounts.each do |account| %>
+              <tr>
+                <td><%= account.code %></td>
+                <td><%= account.name %></td>
+                <td class="numeric"><%= number_to_currency(@journal_totals[account.code], {precision: 0, unit: ""}) %></td>
+                <% @work_types.each do |work_type| %>
+                  <td class="numeric"><%= number_to_currency(@account_totals[account.code][work_type.id], {precision: 0, unit: ""}) %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
