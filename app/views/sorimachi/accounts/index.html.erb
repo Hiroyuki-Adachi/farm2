@@ -32,16 +32,14 @@
     <thead>
       <tr>
         <th>種別名</th>
-        <th class="numeric">借方合計金額</th>
-        <th class="numeric">貸方合計金額</th>
+        <th class="numeric">金額</th>
       </tr>
     </thead>
     <tbody>
       <% @total_cost_type_rows.each do |row| %>
         <tr>
           <td><%= row[:total_cost_type_name] %></td>
-          <td class="numeric"><%= number_to_currency(row[:debit_total], {precision: 0, unit: ""}) %></td>
-          <td class="numeric"><%= number_to_currency(row[:credit_total], {precision: 0, unit: ""}) %></td>
+          <td class="numeric"><%= number_to_currency(row[:amount_total], {precision: 0, unit: ""}) %></td>
         </tr>
       <% end %>
     </tbody>

@@ -23,6 +23,7 @@ class Sorimachi::ImportsController < ApplicationController
   def prepare_journal_rows
     @total_cost_types = TotalCostType.accountable.sort_by(&:code)
     @selected_total_cost_type_id = selected_total_cost_type_id
+    @selected_total_cost_type = @total_cost_types.find {|t| t.id == @selected_total_cost_type_id}
 
     account_scope = SorimachiAccount.where(term: current_term, total_cost_type_id: @selected_total_cost_type_id)
     account_map = account_scope.index_by(&:code)
@@ -32,10 +33,10 @@ class Sorimachi::ImportsController < ApplicationController
     @journal_rows = []
     @journals.each do |journal|
       if account_map[journal.code01]
-        @journal_rows << journal_row(journal, account_map[journal.code01], journal.amount1, "debit")
+        @journal_rows << journal_row(journal, account_map[journal.code01], signed_amount(journal.amount1, "debit"), "debit")
       end
       if account_map[journal.code12]
-        @journal_rows << journal_row(journal, account_map[journal.code12], journal.amount2, "credit")
+        @journal_rows << journal_row(journal, account_map[journal.code12], signed_amount(journal.amount2, "credit"), "credit")
       end
     end
   end
@@ -66,5 +67,14 @@ class Sorimachi::ImportsController < ApplicationController
       remark1: journal.remark1,
       remark3: journal.remark3
     }
+  end
+
+  def signed_amount(amount, side)
+    return amount if @selected_total_cost_type&.account.nil?
+    if @selected_total_cost_type.account
+      side == "debit" ? amount : -amount
+    else
+      side == "debit" ? -amount : amount
+    end
   end
 end
