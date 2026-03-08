@@ -33,8 +33,8 @@ class ScheduleDecorator < Draper::Decorator
     end
   end
 
-  def worker_names
-    results = workers.map(&:name)
+  def section_names
+    results = model.sections.map(&:name)
     return results.to_sentence
   end
 
