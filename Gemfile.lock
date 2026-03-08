@@ -115,9 +115,9 @@ GEM
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
     csv (3.3.5)
-    cuprite (0.15.1)
+    cuprite (0.17)
       capybara (~> 3.0)
-      ferrum (~> 0.15.0)
+      ferrum (~> 0.17.0)
     daemons (1.4.1)
     date (3.5.1)
     debug (1.11.1)
@@ -153,8 +153,9 @@ GEM
       logger
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
-    ferrum (0.15)
+    ferrum (0.17.1)
       addressable (~> 2.5)
+      base64 (~> 0.2)
       concurrent-ruby (~> 1.1)
       webrick (~> 1.7)
       websocket-driver (~> 0.7)
@@ -192,8 +193,8 @@ GEM
     jbuilder (2.14.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (2.18.1)
-    json-schema (6.1.0)
+    json (2.19.0)
+    json-schema (6.2.0)
       addressable (~> 2.8)
       bigdecimal (>= 3.1, < 5)
     jwt (3.1.2)
@@ -498,7 +499,7 @@ DEPENDENCIES
   commonmarker
   cssbundling-rails
   csv
-  cuprite (= 0.15.1)
+  cuprite
   daemons
   debug
   delayed_job_active_record

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_23_071936) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_08_160902) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -632,11 +632,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_23_071936) do
     t.datetime "consumed_at", comment: "セッション使用日時"
     t.datetime "created_at", null: false
     t.datetime "expires_at", null: false, comment: "セッション有効期限"
-    t.integer "status", default: 0, null: false, comment: "セッション状態（0: 有効, 1: 使用済み, 2: 期限切れ）"
+    t.integer "status", default: 0, null: false, comment: "セッション状態"
     t.string "token", limit: 36, null: false, comment: "セッション識別子"
     t.datetime "updated_at", null: false
     t.integer "user_id", comment: "ユーザーID"
     t.index ["token"], name: "index_qr_login_sessions_on_token", unique: true
+  end
+
+  create_table "schedule_sections", primary_key: ["schedule_id", "section_id"], comment: "作業予定班", force: :cascade do |t|
+    t.integer "schedule_id", null: false, comment: "作業予定"
+    t.integer "section_id", null: false, comment: "班"
   end
 
   create_table "schedule_workers", id: { type: :serial, comment: "作業予定作業者" }, comment: "作業予定作業者", force: :cascade do |t|
@@ -717,10 +722,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_23_071936) do
   end
 
   create_table "sorimachi_accounts", comment: "ソリマチ勘定科目", force: :cascade do |t|
-    t.integer "auto_code", comment: "自動設定コード"
-    t.integer "auto_work_type_id", comment: "自動設定作業分類"
     t.integer "code", default: 0, null: false, comment: "科目コード"
-    t.boolean "cost_flag", default: false, null: false, comment: "原価計上フラグ"
     t.datetime "created_at", null: false
     t.string "name", limit: 10, default: "", null: false, comment: "名称"
     t.integer "term", null: false, comment: "年度(期)"
@@ -731,6 +733,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_23_071936) do
 
   create_table "sorimachi_journals", comment: "ソリマチ仕訳", force: :cascade do |t|
     t.date "accounted_on", comment: "仕訳日"
+    t.integer "allocation_mode", default: 0, null: false
     t.decimal "amount1", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額1"
     t.decimal "amount2", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額2"
     t.decimal "amount3", precision: 11, scale: 2, default: "0.0", null: false, comment: "金額3"
@@ -764,6 +767,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_23_071936) do
     t.integer "tax11", comment: "消費税1-1"
     t.integer "term", null: false, comment: "年度(期)"
     t.datetime "updated_at", null: false
+    t.index ["term", "allocation_mode"], name: "index_sorimachi_journals_on_term_and_allocation_mode"
     t.index ["term", "line", "detail"], name: "sorimachi_journals_2nd", unique: true
   end
 

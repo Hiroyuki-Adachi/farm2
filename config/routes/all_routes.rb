@@ -1,10 +1,13 @@
 namespace :sorimachi do
-  resources :imports, only: [:index, :create, :update, :destroy] do
-    member do
-      post :copy
+  resources :imports, only: [:index, :create] do
+    collection do
+      post :auto_allocate
+      post :update_allocation
+      post :update_detail
+      post :reallocate_row
     end
   end
-  resources :accounts, param: "code", except: [:show]
+  resources :accounts, param: "code", except: [:show, :new]
   resources :totals, only: [:index]
   resources :work_types, param: "sorimachi_journal_id", only: [:edit, :update]
 end
@@ -165,6 +168,9 @@ resources :personal_informations, param: "token", only: [:show] do
   resources :lands, controller: "personal_informations/lands", only: [:index, :show]
   resources :machines, controller: "personal_informations/machines", only: [:index]
   resources :schedules, controller: "personal_informations/schedules", only: [:index]
+  get "schedules/workers", to: "personal_informations/schedules/workers#index", as: :schedules_workers
+  get "schedules/workers/edit", to: "personal_informations/schedules/workers#edit", as: :schedules_workers_edit
+  patch "schedules/workers/edit", to: "personal_informations/schedules/workers#update"
   resources :statistics, controller: "personal_informations/statistics", only: [:index]
   resources :seedlings, controller: "personal_informations/seedlings", only: [:index]
   resources :contracts, controller: "personal_informations/contracts", only: [:index]

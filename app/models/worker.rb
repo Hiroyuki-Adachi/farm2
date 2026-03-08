@@ -52,7 +52,8 @@ class Worker < ApplicationRecord
   scope :only_deleted, -> { with_discarded.discarded }
 
   scope :taskable, -> {kept.where.not(office_role: :none)}
-  scope :usual, -> {kept.includes(home: :section).where(homes: { company_flag: false }).order('sections.display_order, homes.display_order, workers.display_order')}
+  scope :usual_order, -> {kept.includes(home: :section).order('sections.display_order, homes.display_order, workers.display_order')}
+  scope :usual, -> {kept.where(homes: { company_flag: false }).usual_order }
   scope :company, -> {kept.joins(:home).eager_load(:home).where(homes: { company_flag: true }).order("workers.display_order")}
   scope :by_homes, ->(homes) {kept.where(home_id: homes.ids).order(:display_order)}
   scope :gaps, -> {kept.where.not(broccoli_mark: [nil, ""]).order(:broccoli_mark, :family_phonetic, :first_phonetic, :id)}
