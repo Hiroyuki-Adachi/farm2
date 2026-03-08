@@ -101,21 +101,19 @@
     <%= f.text_field :name, {maxlength: 40, size: 40, class: "form-control"} %>
   </div>
 </div>
-<% if f.object.persisted? %>
-  <% selected_section_ids = f.object.section_ids %>
-  <div class="row">
-    <div class="mb-3 col-md-12">
-      <fieldset>
-        <legend>対象班</legend>
-        <% @sections.each do |section| %>
-          <div class="form-check form-check-inline">
-            <%= check_box_tag "section_ids[]", section.id, selected_section_ids.include?(section.id), {id: "section_#{section.id}", class: "form-check-input"} %>
-            <%= label_tag "section_#{section.id}", section.name, {class: "form-check-label form-label"} %>
-          </div>
-        <% end %>
-      </fieldset>
-    </div>
+<% selected_section_ids = f.object.section_ids || [] %>
+<div class="row">
+  <div class="mb-3 col-md-12">
+    <fieldset>
+      <legend>対象班</legend>
+      <% @sections.each do |section| %>
+        <div class="form-check form-check-inline">
+          <%= check_box_tag "section_ids[]", section.id, selected_section_ids.include?(section.id), {id: "section_#{section.id}", class: "form-check-input"} %>
+          <%= label_tag "section_#{section.id}", section.name, {class: "form-check-label form-label"} %>
+        </div>
+      <% end %>
+    </fieldset>
   </div>
-<% end %>
+</div>
 <%= f.hidden_field :term %>
 <%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
