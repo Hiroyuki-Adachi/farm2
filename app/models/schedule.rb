@@ -109,13 +109,15 @@ SQL
   end
 
   def regist_sections(section_ids)
-    section_ids = Section.where(id: Array(section_ids).map(&:to_i).uniq).pluck(:id)
+    ActiveRecord::Base.transaction do
+      section_ids = Section.where(id: Array(section_ids).map(&:to_i).uniq).pluck(:id)
 
-    schedule_sections.where.not(section_id: section_ids).destroy_all
+      schedule_sections.where.not(section_id: section_ids).destroy_all
 
-    exists_ids = schedule_sections.where(section_id: section_ids).pluck(:section_id)
-    (section_ids - exists_ids).each do |section_id|
-      ScheduleSection.create(schedule_id: id, section_id: section_id)
+      exists_ids = schedule_sections.where(section_id: section_ids).pluck(:section_id)
+      (section_ids - exists_ids).each do |section_id|
+        ScheduleSection.create!(schedule_id: id, section_id: section_id)
+      end
     end
   end
 
