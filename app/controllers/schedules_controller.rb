@@ -34,10 +34,13 @@ class SchedulesController < ApplicationController
   def edit; end
 
   def update
-    if @schedule.update(schedule_params)
-      redirect_to(schedules_path)
-    else
-      render action: :edit, status: :unprocessable_content
+    Schedule.transaction do
+      if @schedule.update(schedule_params)
+        @schedule.model.regist_sections(params[:section_ids])
+        redirect_to(schedules_path)
+      else
+        render action: :edit, status: :unprocessable_content
+      end
     end
   end
 
@@ -74,11 +77,12 @@ class SchedulesController < ApplicationController
   def set_masters
     @work_types = WorkType.usual
     @work_kinds = WorkKind.by_type(@schedule ? @schedule.work_type : @work_types.first) || []
+    @sections = Section.usual_order
   end
 
   def permit_only_self
     return true if current_user.admin?
-    if (current_user.worker.id == @schedule.created_by) || (@schedule.workers.any? { |w| w.id == current_user.worker.id })
+    if (current_user.worker.id == @schedule.created_by) || @schedule.workers.any? { |w| w.id == current_user.worker.id }
       true
     else
       to_error_path

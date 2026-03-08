@@ -33,9 +33,17 @@ class ScheduleDecorator < Draper::Decorator
     end
   end
 
-  def worker_names
-    results = workers.map(&:name)
+  def section_names
+    results = model.sections.map(&:name)
     return results.to_sentence
+  end
+
+  def participants_count
+    model.schedule_workers.size
+  end
+
+  def section_participants_count(section_id)
+    model.schedule_workers.count { |schedule_worker| schedule_worker.worker&.home&.section_id == section_id }
   end
 
   def work_flag

@@ -31,6 +31,8 @@ class Schedule < ApplicationRecord
 
   has_many :schedule_workers, -> {order('schedule_workers.display_order')}, dependent: :destroy
   has_many :workers, -> {with_deleted}, through: :schedule_workers
+  has_many :schedule_sections, dependent: :destroy
+  has_many :sections, through: :schedule_sections
 
   has_one :minute, dependent: :destroy
 
@@ -38,15 +40,15 @@ class Schedule < ApplicationRecord
 
   scope :usual, -> {
                   where(worked_at: (Time.zone.today - DISPLAY_DAYS.days)..)
-                    .includes(:work_type, :work_kind, schedule_workers: [worker: :home])
+                    .includes(:work_type, :work_kind, :sections, schedule_workers: [{worker: :home}])
                     .order(worked_at: :ASC, id: :ASC)
                 }
 
-  scope :by_worker, ->(worker) {where([<<SQL.squish, worker.id, worker.id])}
-      EXISTS (SELECT * FROM schedule_workers
-            WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
-      OR schedules.created_by = ?
-SQL
+  scope :by_worker, ->(worker) {where([<<~SQL.squish, worker.id, worker.id])}
+    EXISTS (SELECT * FROM schedule_workers
+          WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
+    OR schedules.created_by = ?
+  SQL
 
   scope :for_minute, -> {
     where(["(worked_at BETWEEN (current_timestamp + '-1 year') AND current_timestamp) AND (minutes_flag = ?)", true])
@@ -70,6 +72,14 @@ SQL
   }
 
   scope :linable, -> { where(line_flag: true) }
+  scope :by_section, ->(section_id) {
+    joins(:schedule_sections)
+      .includes(:work_kind, schedule_workers: {worker: :home})
+      .where(schedule_sections: {section_id: section_id})
+      .where(worked_at: Time.zone.today..)
+      .distinct
+      .order(worked_at: :asc, id: :asc)
+  }
 
   scope :tomorrow, -> { where(worked_at: Date.tomorrow) }
   scope :today, -> { where(worked_at: Time.zone.today) }
@@ -97,6 +107,19 @@ SQL
     
     # このスケジュールに属さないworker_idを持つschedule_workersを削除
     schedule_workers.where.not(worker_id: workers).destroy_all
+  end
+
+  def regist_sections(section_ids)
+    ActiveRecord::Base.transaction do
+      section_ids = Section.where(id: Array(section_ids).map(&:to_i).uniq).pluck(:id)
+
+      schedule_sections.where.not(section_id: section_ids).destroy_all
+
+      exists_ids = schedule_sections.where(section_id: section_ids).pluck(:section_id)
+      (section_ids - exists_ids).each do |section_id|
+        ScheduleSection.create!(schedule_id: id, section_id: section_id)
+      end
+    end
   end
 
   private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_07_101000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_08_160902) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -637,6 +637,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_07_101000) do
     t.datetime "updated_at", null: false
     t.integer "user_id", comment: "ユーザーID"
     t.index ["token"], name: "index_qr_login_sessions_on_token", unique: true
+  end
+
+  create_table "schedule_sections", primary_key: ["schedule_id", "section_id"], comment: "作業予定班", force: :cascade do |t|
+    t.integer "schedule_id", null: false, comment: "作業予定"
+    t.integer "section_id", null: false, comment: "班"
   end
 
   create_table "schedule_workers", id: { type: :serial, comment: "作業予定作業者" }, comment: "作業予定作業者", force: :cascade do |t|
