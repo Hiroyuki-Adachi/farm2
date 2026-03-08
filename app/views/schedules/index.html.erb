@@ -10,6 +10,7 @@
     <th class="text-nowrap">参加者数</th>
     <% if current_user.manageable? %>
     <th>&nbsp;</th>
+    <th>&nbsp;</th>
     <% end %>
   </tr>
   </thead>
@@ -24,6 +25,7 @@
         <td class="text-center"><%= schedule.participants_count %>名</td>
         <% if current_user.manageable? %>
         <td><%= link_to '修正', edit_schedule_path(schedule), {class: "btn btn-success btn-sm", style: "min-width: 40px;"} %></td>
+        <td><%= link_to '参加者', new_schedule_worker_path(schedule), {class: "btn btn-success btn-sm", style: "min-width: 40px;"} %></td>
         <% end %>
       </tr>
     <% end %>
