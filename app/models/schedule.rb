@@ -72,6 +72,13 @@ SQL
   }
 
   scope :linable, -> { where(line_flag: true) }
+  scope :by_section, ->(section_id) {
+    joins(:schedule_sections)
+      .includes(:work_kind, schedule_workers: {worker: :home})
+      .where(schedule_sections: {section_id: section_id})
+      .distinct
+      .order(worked_at: :asc, id: :asc)
+  }
 
   scope :tomorrow, -> { where(worked_at: Date.tomorrow) }
   scope :today, -> { where(worked_at: Time.zone.today) }

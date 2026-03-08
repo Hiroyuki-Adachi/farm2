@@ -38,6 +38,14 @@ class ScheduleDecorator < Draper::Decorator
     return results.to_sentence
   end
 
+  def participants_count
+    model.schedule_workers.size
+  end
+
+  def section_participants_count(section_id)
+    model.schedule_workers.count { |schedule_worker| schedule_worker.worker&.home&.section_id == section_id }
+  end
+
   def work_flag
     return model.work_flag ? "作業" : "作業以外"
   end

@@ -26,8 +26,8 @@
     <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(<%= link_to '議事録', personal_information_minute_path(@minute.id, personal_information_token: @worker.user.token), {target: :_blank, data: {turbolinks: false}} %>)</li>
   </ul>
 <% end %>
-<% if current_user.worker.position_id > 1 %>
+<% if current_user.worker.leader? || current_user.worker.director? || current_user.worker.advisor? %>
   <div class="text-center mt-4 mb-3">
-    <%= link_to "人員保守", personal_information_schedules_workers_edit_path(personal_information_token: params[:personal_information_token]), class: "btn btn-outline-primary" %>
+    <%= link_to "人員保守", personal_information_schedules_workers_path(personal_information_token: params[:personal_information_token]), class: "btn btn-outline-primary" %>
   </div>
 <% end %>
