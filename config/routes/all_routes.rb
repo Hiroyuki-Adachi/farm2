@@ -168,6 +168,7 @@ resources :personal_informations, param: "token", only: [:show] do
   resources :lands, controller: "personal_informations/lands", only: [:index, :show]
   resources :machines, controller: "personal_informations/machines", only: [:index]
   resources :schedules, controller: "personal_informations/schedules", only: [:index]
+  get "schedules/workers/edit", to: "personal_informations/schedules/workers#edit", as: :schedules_workers_edit
   resources :statistics, controller: "personal_informations/statistics", only: [:index]
   resources :seedlings, controller: "personal_informations/seedlings", only: [:index]
   resources :contracts, controller: "personal_informations/contracts", only: [:index]
