@@ -84,7 +84,7 @@ class Crawlers::YahooAgriJob < CrawlJob
     script = doc.xpath('//script[contains(text(), "window.__PRELOADED_STATE__")]').first
     return {} if script.nil?
 
-    json = script.text[/window\.__PRELOADED_STATE__\s*=\s*(\{.*\})\s*\z/m, 1]
+    json = script.text[/window\.__PRELOADED_STATE__\s*=\s*(\{.*?\})\s*;?/m, 1]
     return {} if json.blank?
 
     JSON.parse(json)
