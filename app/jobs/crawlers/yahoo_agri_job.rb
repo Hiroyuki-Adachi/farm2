@@ -43,7 +43,6 @@ class Crawlers::YahooAgriJob < CrawlJob
     state = extract_preloaded_state(news_doc)
     detail = state['articleDetail'] || {}
     topic_date = parse_crawl_date(detail['createDateTime']) || fallback_topic_date
-    return if topic_date.nil?
 
     Topic.find_or_create_by(url: url) do |topic|
       topic.title = normalize_text(detail['headline'])
