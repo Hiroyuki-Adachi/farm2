@@ -1,5 +1,6 @@
 class PersonalInformations::Topics::WordsController < PersonalInformationsController
   before_action :build_user_words, only: [:edit]
+  before_action :ensure_owned_user_words!, only: [:update]
 
   def edit; end
 
@@ -18,6 +19,37 @@ class PersonalInformations::Topics::WordsController < PersonalInformationsContro
   end
 
   private
+
+  def ensure_owned_user_words!
+    ids = requested_user_word_attributes.filter_map { |attributes| attributes[:id].presence }
+    return if ids.empty?
+    return if @current_user.user_words.where(id: ids).count == ids.size
+
+    to_error_path
+  end
+
+  def requested_user_word_attributes
+    attributes = params.dig(:user, :user_words_attributes)
+
+    case attributes
+    when ActionController::Parameters
+      attributes.values
+    when Hash
+      attributes.values
+    else
+      Array(attributes)
+    end.map do |attribute|
+      next attribute.symbolize_keys if attribute.is_a?(Hash)
+
+      {
+        id: attribute[:id],
+        word: attribute[:word],
+        pc_flag: attribute[:pc_flag],
+        sp_flag: attribute[:sp_flag],
+        line_flag: attribute[:line_flag]
+      }
+    end
+  end
 
   def build_user_words
     @user_words = @current_user.user_words.loaded? ? @current_user.user_words.target : @current_user.user_words.order(:id).to_a

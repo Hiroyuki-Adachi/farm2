@@ -30,4 +30,17 @@ class PersonalInformations::Topics::WordsControllerTest < ActionDispatch::Integr
     assert word2.sp_flag
     assert_not word2.line_flag
   end
+
+  test "検索ワード保守で他ユーザのワードは更新できない" do
+    other_user_word = user_words(:other_user_word)
+
+    assert_no_difference("UserWord.count") do
+      patch personal_information_topics_words_path(personal_information_token: @user.token), params: { user: { user_words_attributes: [
+        { id: other_user_word.id, word: "tampered-word" }
+      ] } }
+    end
+
+    assert_response :service_unavailable
+    assert_equal "other-word", other_user_word.reload.word
+  end
 end

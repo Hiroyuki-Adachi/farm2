@@ -48,3 +48,10 @@ user_word_koshi:
   pc_flag: true
   sp_flag: false
   line_flag: true
+
+other_user_word:
+  word: 'other-word'
+  user_id: 4
+  pc_flag: false
+  sp_flag: true
+  line_flag: false
