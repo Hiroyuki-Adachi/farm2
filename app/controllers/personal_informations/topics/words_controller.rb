@@ -38,15 +38,19 @@ class PersonalInformations::Topics::WordsController < PersonalInformationsContro
       attributes.values
     else
       Array(attributes)
-    end.map do |attribute|
-      next attribute.symbolize_keys if attribute.is_a?(Hash)
+    end.filter_map do |attribute|
+      # Skip unexpected types to avoid errors when accessing keys
+      next unless attribute.is_a?(Hash) || attribute.is_a?(ActionController::Parameters)
+
+      # Normalize to a hash with symbol keys
+      normalized = attribute.is_a?(Hash) ? attribute.symbolize_keys : attribute.to_h.symbolize_keys
 
       {
-        id: attribute[:id],
-        word: attribute[:word],
-        pc_flag: attribute[:pc_flag],
-        sp_flag: attribute[:sp_flag],
-        line_flag: attribute[:line_flag]
+        id: normalized[:id],
+        word: normalized[:word],
+        pc_flag: normalized[:pc_flag],
+        sp_flag: normalized[:sp_flag],
+        line_flag: normalized[:line_flag]
       }
     end
   end
