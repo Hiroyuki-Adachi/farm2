@@ -12,6 +12,16 @@ class Tasks::KanbansControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "カンバン一覧(To Doは開始予定日前を表示しない)" do
+    tasks(:open_task).update!(planned_start_on: Date.current + 1.day)
+
+    get tasks_kanbans_path
+
+    assert_response :success
+    assert_no_match "未着手タスク", @response.body
+    assert_match "worker1のタスク", @response.body
+  end
+
   test "カンバン一覧(権限なし)" do
     login_as(users(:user_user))
     get tasks_kanbans_path
