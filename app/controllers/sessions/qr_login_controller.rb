@@ -1,5 +1,5 @@
 class Sessions::QrLoginController < ApplicationController
-  skip_before_action :restrict_remote_ip, only: [:create, :qrcode, :consume]
+  include IpRestrictedLogin
 
   def create
     qr_login_session = QrLoginSession.create!
@@ -47,8 +47,101 @@ class Sessions::QrLoginController < ApplicationController
     end
 
     reset_session
-    session[:user_id] = user.id
+    log_in(user, target: access_log_target)
+    render json: { ok: true, action: "redirect", url: redirect_path }
+  end
 
-    render json: { ok: true, action: "redirect", url: menu_index_path }
+  private
+
+  def restrict_remote_ip
+    require_ip_whitelist!
+  end
+
+  def redirect_path
+    safe_redirect_to_path(params[:redirect_to]) || normalize_internal_path(menu_index_path)
+  end
+
+  def safe_redirect_to_path(path)
+    return if path.blank?
+
+    uri = URI.parse(path)
+    return unless uri.scheme.nil? && uri.host.nil?
+    normalized_path = strip_script_name_prefix(uri.path)
+    return unless normalized_path.start_with?("/tablets")
+
+    safe_path = add_script_name_prefix(normalized_path)
+    [safe_path, uri.query].compact.join("?")
+  rescue URI::InvalidURIError
+    nil
+  end
+
+  def access_log_target
+    redirect = safe_redirect_to_path(params[:redirect_to]).to_s
+    redirect_path = redirect.split("?", 2).first
+    normalized_path = strip_script_name_prefix(redirect_path)
+    return :TB if normalized_path.start_with?("/tablets")
+    return :SP if normalized_path.start_with?("/personal_informations")
+
+    :PC
+  end
+
+  def strip_script_name_prefix(path)
+    path = path.to_s
+    return path if path.blank? || path == "/"
+
+    base_path_prefixes.each do |prefix|
+      return path.delete_prefix(prefix) if path == prefix || path.start_with?("#{prefix}/")
+    end
+
+    path
+  end
+
+  def add_script_name_prefix(path)
+    path = path.to_s
+    prefix = preferred_base_path_prefix
+    return path if prefix.blank?
+    return path if path == prefix || path.start_with?("#{prefix}/")
+
+    "#{prefix}#{path.start_with?("/") ? path : "/#{path}"}"
+  end
+
+  def normalized_script_name
+    script_name = request.script_name.to_s
+    normalize_path_prefix(script_name)
+  end
+
+  def normalized_relative_url_root
+    normalize_path_prefix(Rails.application.config.relative_url_root)
+  end
+
+  def preferred_base_path_prefix
+    normalized_script_name.presence || normalized_relative_url_root.presence || inferred_request_base_prefix.presence
+  end
+
+  def base_path_prefixes
+    [normalized_script_name, normalized_relative_url_root, inferred_request_base_prefix].reject(&:blank?).uniq
+  end
+
+  def inferred_request_base_prefix
+    path = request.path.to_s
+    return "" if path.blank?
+
+    match = path.match(%r{\A(?<prefix>.*)/sessions/qr_login(?:/|$)})
+    normalize_path_prefix(match&.[](:prefix))
+  end
+
+  def normalize_path_prefix(path)
+    path = path.to_s
+    return "" if path.blank? || path == "/"
+
+    path = "/#{path}" unless path.start_with?("/")
+    path.delete_suffix("/")
+  end
+
+  def normalize_internal_path(path)
+    path = path.to_s
+    return "/" if path.blank?
+
+    path.start_with?("/") ? path : "/#{path}"
   end
 end

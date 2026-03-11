@@ -3,6 +3,15 @@ require "test_helper"
 class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
   include ActiveSupport::Testing::TimeHelpers
 
+  test "QRコードログイン(非ホワイトIPはID確認へ)" do
+    assert_no_difference "QrLoginSession.count" do
+      post sessions_qr_login_index_path,
+           headers: { "ACCEPT" => "application/json", "REMOTE_ADDR" => "1.1.1.1" }
+    end
+
+    assert_redirected_to new_ip_list_path
+  end
+
   test "QRコードログイン" do
     freeze_time Time.current do
       assert_difference "QrLoginSession.count", +1 do
@@ -95,7 +104,12 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
         expires_at: 5.minutes.from_now
       )
 
-      post consume_sessions_qr_login_path(qr.token), headers: { "ACCEPT" => "application/json" }
+      access_logger = Minitest::Mock.new
+      access_logger.expect(:info, nil, ["PC-#{user.worker.name}"])
+
+      Rails.application.config.stub(:access_logger, access_logger) do
+        post consume_sessions_qr_login_path(qr.token), headers: { "ACCEPT" => "application/json" }
+      end
 
       assert_response :success
       json = response.parsed_body
@@ -109,6 +123,119 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
 
       # IntegrationTestでは session をこう見るのが一番確実
       assert_equal user.id, @request.session[:user_id]
+      access_logger.verify
+    end
+  end
+
+  test "QRコード消費(タブレット遷移先指定)" do
+    freeze_time Time.current do
+      user = users(:users1)
+      qr = QrLoginSession.create!(
+        status: :approved,
+        user_id: user.id,
+        expires_at: 5.minutes.from_now
+      )
+
+      access_logger = Minitest::Mock.new
+      access_logger.expect(:info, nil, ["TB-#{user.worker.name}"])
+
+      Rails.application.config.stub(:access_logger, access_logger) do
+        post consume_sessions_qr_login_path(qr.token),
+             params: { redirect_to: tablets_menu_index_path },
+             headers: { "ACCEPT" => "application/json" }
+      end
+
+      assert_response :success
+      json = response.parsed_body
+      assert_equal true, json["ok"]
+      assert_equal tablets_menu_index_path, json["url"]
+      assert_equal "TB", @request.session[:access_target]
+      access_logger.verify
+    end
+  end
+
+  test "QRコード消費(タブレット遷移先指定, script_nameあり)" do
+    freeze_time Time.current do
+      user = users(:users1)
+      qr = QrLoginSession.create!(
+        status: :approved,
+        user_id: user.id,
+        expires_at: 5.minutes.from_now
+      )
+
+      post consume_sessions_qr_login_path(qr.token),
+           params: { redirect_to: tablets_menu_index_path },
+           headers: { "ACCEPT" => "application/json" },
+           env: { "SCRIPT_NAME" => "/farm2" }
+
+      assert_response :success
+      json = response.parsed_body
+      assert_equal true, json["ok"]
+      assert_equal "/farm2/tablets/menu", json["url"]
+    end
+  end
+
+  test "QRコード消費(タブレット遷移先指定, script_name先頭スラッシュなし)" do
+    freeze_time Time.current do
+      user = users(:users1)
+      qr = QrLoginSession.create!(
+        status: :approved,
+        user_id: user.id,
+        expires_at: 5.minutes.from_now
+      )
+
+      post consume_sessions_qr_login_path(qr.token),
+           params: { redirect_to: "/farm2/tablets/menu" },
+           headers: { "ACCEPT" => "application/json" },
+           env: { "SCRIPT_NAME" => "farm2" }
+
+      assert_response :success
+      json = response.parsed_body
+      assert_equal true, json["ok"]
+      assert_equal "/farm2/tablets/menu", json["url"]
+    end
+  end
+
+  test "QRコード消費(タブレット遷移先指定, script_nameなし relative_url_rootあり)" do
+    freeze_time Time.current do
+      user = users(:users1)
+      qr = QrLoginSession.create!(
+        status: :approved,
+        user_id: user.id,
+        expires_at: 5.minutes.from_now
+      )
+
+      Rails.application.config.stub(:relative_url_root, "/farm2") do
+        post consume_sessions_qr_login_path(qr.token),
+             params: { redirect_to: "/farm2/tablets/menu" },
+             headers: { "ACCEPT" => "application/json" },
+             env: { "SCRIPT_NAME" => "" }
+      end
+
+      assert_response :success
+      json = response.parsed_body
+      assert_equal true, json["ok"]
+      assert_equal "/farm2/tablets/menu", json["url"]
+    end
+  end
+
+  test "QRコード消費(外部遷移先指定は拒否)" do
+    freeze_time Time.current do
+      user = users(:users1)
+      qr = QrLoginSession.create!(
+        status: :approved,
+        user_id: user.id,
+        expires_at: 5.minutes.from_now
+      )
+
+      post consume_sessions_qr_login_path(qr.token),
+           params: { redirect_to: "https://example.com/evil" },
+           headers: { "ACCEPT" => "application/json" }
+
+      assert_response :success
+      json = response.parsed_body
+      assert_equal true, json["ok"]
+      assert_equal menu_index_path, json["url"]
     end
   end
 
@@ -129,5 +256,39 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
       json = response.parsed_body
       assert_equal false, json["ok"]
     end
+  end
+
+  test "TBログイン後にPC URLへ書き換えるとログアウトされる" do
+    freeze_time Time.current do
+      user = users(:users1)
+      qr = QrLoginSession.create!(
+        status: :approved,
+        user_id: user.id,
+        expires_at: 5.minutes.from_now
+      )
+
+      post consume_sessions_qr_login_path(qr.token),
+           params: { redirect_to: tablets_menu_index_path },
+           headers: { "ACCEPT" => "application/json" }
+      assert_response :success
+      assert_equal "TB", @request.session[:access_target]
+
+      get menu_index_path
+      assert_redirected_to root_path
+      assert_nil @request.session[:user_id]
+      assert_nil @request.session[:access_target]
+    end
+  end
+
+  test "PCログイン後のURL書き換えは許可される" do
+    user = users(:users1)
+    post sessions_path, params: { login_name: user.login_name, password: "password" }
+    assert_redirected_to menu_index_path
+    assert_equal "PC", @request.session[:access_target]
+
+    get tablets_menu_index_path
+    assert_response :success
+    assert_equal user.id, @request.session[:user_id]
+    assert_equal "PC", @request.session[:access_target]
   end
 end

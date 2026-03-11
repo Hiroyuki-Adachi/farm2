@@ -76,6 +76,10 @@ every 1.day, at: '05:40 pm' do
   runner "ScheduleDeliverJob.perform_now(:afternoon)"
 end
 
+every :friday, at: '07:55 pm' do
+  runner "TopicWeeklyReportJob.perform_now"
+end
+
 every '*/10 8-20 * * *' do
   runner "MailsDeliverJob.perform_now"
 end

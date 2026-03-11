@@ -81,7 +81,7 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    addressable (2.8.8)
+    addressable (2.8.9)
       public_suffix (>= 2.0.2, < 8.0)
     annotaterb (4.22.0)
       activerecord (>= 6.0.0)
@@ -115,9 +115,9 @@ GEM
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
     csv (3.3.5)
-    cuprite (0.15.1)
+    cuprite (0.17)
       capybara (~> 3.0)
-      ferrum (~> 0.15.0)
+      ferrum (~> 0.17.0)
     daemons (1.4.1)
     date (3.5.1)
     debug (1.11.1)
@@ -153,8 +153,9 @@ GEM
       logger
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
-    ferrum (0.15)
+    ferrum (0.17.1)
       addressable (~> 2.5)
+      base64 (~> 0.2)
       concurrent-ruby (~> 1.1)
       webrick (~> 1.7)
       websocket-driver (~> 0.7)
@@ -192,8 +193,8 @@ GEM
     jbuilder (2.14.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (2.18.1)
-    json-schema (6.1.0)
+    json (2.19.0)
+    json-schema (6.2.0)
       addressable (~> 2.8)
       bigdecimal (>= 3.1, < 5)
     jwt (3.1.2)
@@ -233,7 +234,7 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
-    mcp (0.7.1)
+    mcp (0.8.0)
       json-schema (>= 4.1)
     mechanize (2.14.0)
       addressable (~> 2.8)
@@ -251,7 +252,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2026.0224)
+    mime-types-data (3.2026.0303)
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
@@ -322,7 +323,7 @@ GEM
     psych (5.3.1)
       date
       stringio
-    public_suffix (7.0.2)
+    public_suffix (7.0.5)
     puma (7.2.0)
       nio4r (~> 2.0)
     racc (1.8.1)
@@ -392,7 +393,7 @@ GEM
       chunky_png (~> 1.0)
       rqrcode_core (~> 2.0)
     rqrcode_core (2.1.0)
-    rubocop (1.85.0)
+    rubocop (1.85.1)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -498,7 +499,7 @@ DEPENDENCIES
   commonmarker
   cssbundling-rails
   csv
-  cuprite (= 0.15.1)
+  cuprite
   daemons
   debug
   delayed_job_active_record

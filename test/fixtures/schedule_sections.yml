@@ -1,0 +1,15 @@
+# == Schema Information
+#
+# Table name: schedule_sections(作業予定班)
+#
+#  schedule_id(作業予定) :integer          not null, primary key
+#  section_id(班)        :integer          not null, primary key
+#
+
+schedule_section1:
+  schedule: schedule1
+  section: sections0
+
+schedule_section2:
+  schedule: schedule_tomorrow
+  section: sections0

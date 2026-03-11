@@ -1,0 +1,24 @@
+<div class="container py-3">
+  <h1 class="h3 mb-3">人員保守</h1>
+  <p class="text-muted mb-3">
+    <%= @schedule.worked_at %> <%= @schedule.name %>
+  </p>
+
+  <%= form_with url: personal_information_schedules_workers_edit_path(personal_information_token: params[:personal_information_token], schedule_id: @schedule.id), method: :patch do %>
+    <div class="list-group mb-4">
+      <% @workers.each do |worker| %>
+        <label class="list-group-item d-flex align-items-center gap-2">
+          <%= check_box_tag "worker_ids[]", worker.id, @selected_worker_ids.include?(worker.id), class: "form-check-input" %>
+          <span><%= worker.name %></span>
+        </label>
+      <% end %>
+    </div>
+
+    <div class="text-center mb-3">
+      <div class="btn-group" role="group">
+        <%= submit_tag "登録", class: "btn btn-warning" %>
+        <%= link_to "戻る", personal_information_schedules_workers_path(personal_information_token: params[:personal_information_token]), class: "btn btn-outline-dark" %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,21 @@
+<div class="container py-3">
+  <h1 class="h3 mb-3">人員保守対象予定</h1>
+
+  <% if @schedules.present? %>
+    <ul class="list-group mb-4">
+      <% @schedules.each do |schedule| %>
+        <li class="list-group-item">
+          <%= link_to "#{schedule.worked_at} #{schedule.name}",
+              personal_information_schedules_workers_edit_path(personal_information_token: params[:personal_information_token], schedule_id: schedule.id) %>
+          <span class="text-muted">（参加人数：<%= schedule.participants_count %>名、うち班内<%= schedule.section_participants_count(current_user.worker.home.section_id) %>名)</span>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-muted mb-4">対象の作業予定はありません。</p>
+  <% end %>
+
+  <div class="text-center mb-3">
+    <%= link_to "戻る", personal_information_schedules_path(personal_information_token: params[:personal_information_token]), class: "btn btn-outline-dark" %>
+  </div>
+</div>

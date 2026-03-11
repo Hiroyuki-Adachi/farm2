@@ -22,9 +22,13 @@ function initMap(){
     let landRegions = {};
     document.getElementsByName("regions").forEach(function(land) {
       let paths = [];
-      JSON.parse(land.value.replace(/\(/g, "[").replace(/\)/g, "]")).forEach(function(rg) {
-        paths.push({lat: rg[0], lng: rg[1]});
-      });
+      try {
+        JSON.parse(land.value.replace(/\(/g, "[").replace(/\)/g, "]")).forEach(function(rg) {
+          paths.push({lat: rg[0], lng: rg[1]});
+        });
+      } catch (_error) {
+        return;
+      }
       landRegions[land.dataset.id] = new google.maps.Polygon({
         paths: paths,
         strokeColor: land.dataset.color,
@@ -68,8 +72,9 @@ function dispSum() {
 }
   
 export const init = () => {
-    document.getElementById("target").addEventListener("blur", function() {
-        Turbo.visit(`${target.dataset.url}?target=${this.value}`);
+    const targetEl = document.getElementById("target");
+    targetEl.addEventListener("blur", function() {
+        Turbo.visit(`${targetEl.dataset.url}?target=${this.value}`);
     });
 
     initMap();

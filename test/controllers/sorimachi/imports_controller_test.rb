@@ -7,8 +7,33 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "農業簿記インポート(表示)" do
-    get sorimachi_imports_path
+    get sorimachi_imports_path, params: {total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id}
     assert_response :success
+    assert_select "input[type=radio][name=total_cost_type_id]", minimum: 1
+    assert_select "input[type=radio][name=total_cost_type_id][checked=checked]", count: 1
+    assert_select "th", text: "科目"
+    assert_select "th", text: "金額"
+    assert_select "th", text: "内訳", count: 0
+    assert_select "button", text: "明細", count: 0
+    assert_select "button", text: "内訳", count: 0
+    assert_select "button", text: "計上", count: 0
+    assert_select "button", text: "複写", count: 0
+    assert_select "a", text: "自動配賦", count: 1
+    assert_select "a", text: "科目初期化", count: 0
+    assert_select "tbody[id^=row_group_]", minimum: 1
+  end
+
+  test "農業簿記自動配賦(実行)" do
+    post auto_allocate_sorimachi_imports_path, params: {total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id}
+    assert_redirected_to sorimachi_imports_path(total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id)
+  end
+
+  test "農業簿記インポート(種別絞り込み)" do
+    get sorimachi_imports_path, params: {total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id}
+    assert_response :success
+    assert_select "td", text: "荷造運賃"
+    assert_select "td.numeric", text: "13,196"
+    assert_select "tr.table-warning", minimum: 1
   end
 
   test "農業簿記インポート(実行)" do
@@ -38,19 +63,4 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "農業簿記フラグ設定" do
-    journal = sorimachi_journals(:journal2)
-    assert_no_difference('SorimachiJournal.count') do
-      put sorimachi_import_path(id: journal.id)
-    end
-    assert SorimachiJournal.find(journal.id).cost0_flag
-  end
-
-  test "農業簿記フラグ削除" do
-    journal = sorimachi_journals(:journal1)
-    assert_no_difference('SorimachiJournal.count') do
-      delete sorimachi_import_path(id: journal.id)
-    end
-    assert_not SorimachiJournal.find(journal.id).cost0_flag
-  end
 end
