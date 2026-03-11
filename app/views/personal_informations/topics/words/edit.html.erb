@@ -1,0 +1,27 @@
+<div class="container py-3">
+  <h1 class="h3 mb-3">検索ワード保守</h1>
+
+  <%= form_with model: @current_user,
+                url: personal_information_topics_words_path(personal_information_token: params[:personal_information_token]),
+                method: :patch,
+                local: true do |form| %>
+    <%= form.fields_for :user_words, @user_words do |word_form| %>
+      <div class="mb-3">
+        <%= word_form.text_field :word, class: "form-control", maxlength: 10, pattern: ".{2,10}" %>
+        <%= word_form.hidden_field :pc_flag, value: true, id: nil %>
+        <%= word_form.hidden_field :sp_flag, value: true, id: nil %>
+        <%= word_form.hidden_field :line_flag, value: false, id: nil %>
+        <%= word_form.hidden_field :id %>
+      </div>
+    <% end %>
+
+    <div class="text-center mb-3">
+      <div class="btn-group" role="group">
+        <%= form.submit "登録", class: "btn btn-warning" %>
+        <%= link_to "戻る",
+                    personal_information_topics_path(personal_information_token: params[:personal_information_token]),
+                    class: "btn btn-outline-dark" %>
+      </div>
+    </div>
+  <% end %>
+</div>

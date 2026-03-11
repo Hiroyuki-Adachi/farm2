@@ -8,6 +8,9 @@ class PersonalInformations::TopicsControllerTest < ActionDispatch::IntegrationTe
   test "TOPICS(一覧)" do
     get personal_information_topics_path(personal_information_token: @user.token)
     assert_response :success
+    assert_match "検索ワード:", @response.body
+    assert_match "word1", @response.body
+    assert_match "word2", @response.body
   end
 
   test "TOPICS(既読)" do
