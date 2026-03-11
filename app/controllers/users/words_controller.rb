@@ -23,7 +23,7 @@ class Users::WordsController < ApplicationController
   private
 
   def ensure_owned_user_words!
-    ids = requested_user_word_attributes.filter_map { |attributes| attributes[:id].presence }
+    ids = requested_user_word_attributes.filter_map { |attributes| attributes[:id].presence }.uniq
     return if ids.empty?
     return if current_user.user_words.where(id: ids).count == ids.size
 
