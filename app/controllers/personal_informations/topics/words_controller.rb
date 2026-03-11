@@ -23,7 +23,8 @@ class PersonalInformations::Topics::WordsController < PersonalInformationsContro
   def ensure_owned_user_words!
     ids = requested_user_word_attributes.filter_map { |attributes| attributes[:id].presence }
     return if ids.empty?
-    return if @current_user.user_words.where(id: ids).count == ids.size
+    unique_ids = ids.uniq
+    return if @current_user.user_words.where(id: unique_ids).count == unique_ids.size
 
     to_error_path
   end
