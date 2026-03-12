@@ -6,7 +6,6 @@
 #  area(面積(α))                      :decimal(5, 2)    not null
 #  broccoli_mark(ブロッコリ記号)      :string(1)
 #  deleted_at                         :datetime
-#  display_order(表示順)              :integer
 #  end_on(有効期間(至))               :date             default(Tue, 31 Dec 2999), not null
 #  group_flag(グループフラグ)         :boolean          default(FALSE), not null
 #  group_order(グループ内並び順)      :integer          default(0), not null
@@ -14,10 +13,12 @@
 #  peasant_end_term(小作料期間(至))   :integer          default(9999), not null
 #  peasant_start_term(小作料期間(自)) :integer          default(0), not null
 #  place(番地)                        :string(15)       not null
+#  place_sort_key(番地(ソート用))     :string(20)       default(""), not null
 #  reg_area(登記面積)                 :decimal(5, 2)
 #  region(領域)                       :polygon
 #  start_on(有効期間(自))             :date             default(Mon, 01 Jan 1900), not null
 #  target_flag(管理対象フラグ)        :boolean          default(TRUE), not null
+#  uuid(UUID)                         :string(36)       default(""), not null
 #  created_at                         :datetime
 #  updated_at                         :datetime
 #  group_id(グループID)               :integer
@@ -27,18 +28,28 @@
 #
 # Indexes
 #
-#  index_lands_on_deleted_at  (deleted_at)
-#  index_lands_on_place       (place)
+#  index_lands_on_deleted_at      (deleted_at)
+#  index_lands_on_place           (place)
+#  index_lands_on_place_sort_key  (place_sort_key)
+#  index_lands_on_uuid            (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
 #
 
 class Land < ApplicationRecord
   include Discard::Model
+  include AddressSortIndex
+
   self.discard_column = :deleted_at
 
-  belongs_to :owner, -> {with_discarded}, class_name: :Home, foreign_key: :owner_id
-  belongs_to :manager, -> {with_discarded}, class_name: :Home, foreign_key: :manager_id
+  before_save :init_place_sort_key, if: :needs_place_sort_key_initialization?
+  before_create :set_uuid
+
+  def needs_place_sort_key_initialization?
+    place_sort_key.blank? || will_save_change_to_place?
+  end
+  belongs_to :owner, -> {with_discarded}, class_name: 'Home', foreign_key: :owner_id
+  belongs_to :manager, -> {with_discarded}, class_name: 'Home', foreign_key: :manager_id
   belongs_to :land_place, -> {with_discarded}
-  belongs_to :group, class_name: :Land
+  belongs_to :group, class_name: 'Land'
 
   has_one :owner_holder, -> {with_discarded}, through: :owner, source: :holder
   has_one :manager_holder, -> {with_discarded}, through: :manager, source: :holder
@@ -46,7 +57,7 @@ class Land < ApplicationRecord
   has_many :work_lands
   has_many :works, through: :work_lands
   has_many :land_costs, -> {order(:activated_on)}
-  has_many :members, ->{order(:group_order, :display_order, :id)}, dependent: :nullify, foreign_key: :group_id, class_name: :Land
+  has_many :members, ->{order(:group_order, :place_sort_key, :id)}, dependent: :nullify, foreign_key: :group_id, class_name: :Land
   has_many :land_fees
   has_many :plan_lands
   has_many :land_homes, dependent: :destroy
@@ -54,25 +65,54 @@ class Land < ApplicationRecord
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
-  scope :usual, -> {kept.where(target_flag: true).order(:place, :display_order)}
-  scope :list, -> {kept.where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).order(Arel.sql("place, lands.display_order, lands.id"))}
-  scope :group_list, -> {kept.where(group_flag: true).includes(:land_place, :members).order(Arel.sql("place, lands.display_order, lands.id"))}
+  scope :usual_order, -> {order(:place_sort_key, :id)}
+  scope :usual, -> {kept.where(target_flag: true).usual_order}
+  scope :list, -> {kept.where(group_flag: false).includes(:group, :land_place, :owner, :manager, :owner_holder, :manager_holder).usual_order }
+  scope :group_list, -> {kept.where(group_flag: true).includes(:land_place, :members).usual_order }
   scope :for_finance1, -> {kept.where("owner_id = manager_id").where(target_flag: true)}
   scope :for_finance2, -> {kept.where("owner_id <> manager_id").where(target_flag: true)}
   scope :regionable, -> {kept.where.not(region: nil).where(target_flag: true, group_id: nil)}
-  scope :expiry, ->(target) {kept.where("? BETWEEN start_on AND end_on", target)}
-  scope :for_place, ->(place) {kept.where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).order(:place, :display_order)}
+  scope :for_place, ->(place) {kept.where("target_flag = TRUE AND group_id IS NULL AND (place like ? OR area = ?)", "%#{place}%", place.to_f).usual_order}
   scope :by_term, ->(sys) {kept.where(["start_on <= ? AND ? <= end_on", sys.end_date, sys.start_date])}
+  scope :target_place_sort_key, -> { where("place_sort_key = '' OR updated_at > ? ", 1.day.ago) }
+  scope :expiry, ->(target = nil) do
+    target ||= Date.current
+
+    kept.where(arel_table[:start_on].lteq(target))
+      .where(arel_table[:end_on].gteq(target))
+  end
+
+  scope :for_personal, ->(home) do
+    lands = arel_table
+    land_homes = LandHome.arel_table
+
+    exists_land_homes = Arel::Nodes::Exists.new(
+      land_homes.project(Arel.sql('1')).where(
+        land_homes[:land_id].eq(lands[:id])
+          .and(land_homes[:home_id].eq(home.id))
+      )
+    )
+
+    is_manager = lands[:manager_id].eq(home.id)
+    is_owner = lands[:owner_id].eq(home.id)
+
+    kept.where(
+      is_manager.or(is_owner).or(exists_land_homes)
+    )
+  end
 
   validates :place, presence: true
   validates :area, presence: true
-  validates :display_order, presence: true
 
   validates :area, numericality: true, if: proc { |x| x.area.present?}
-  validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
-  validates :parcel_number, uniqueness: true, allow_nil: true
+  validates :parcel_number, numericality: {only_integer: true}, allow_nil: true
+  validates :peasant_start_term, numericality: {only_integer: true}, allow_nil: true
+  validates :peasant_end_term, numericality: {only_integer: true}, allow_nil: true
 
-  accepts_nested_attributes_for :land_costs, allow_destroy: true, reject_if: :reject_land_costs
+  accepts_nested_attributes_for :work_lands, allow_destroy: true
+  accepts_nested_attributes_for :land_fees, allow_destroy: true
+  accepts_nested_attributes_for :plan_lands, allow_destroy: true
+  accepts_nested_attributes_for :land_costs, allow_destroy: true, reject_if: :reject_land_costs?
   accepts_nested_attributes_for :land_homes, allow_destroy: true
 
   def owner_name
@@ -100,13 +140,13 @@ class Land < ApplicationRecord
   end
 
   def self.autocomplete_groups(place)
-    results = Land.where("target_flag = TRUE AND group_flag = FALSE AND (place like ?)", "%#{place}%").order(:place, :display_order).limit(15).map do |land|
+    results = Land.where("target_flag = TRUE AND group_flag = FALSE AND (place like ?)", "%#{place}%").usual_order.limit(15).map do |land|
       {label: land.place + "(#{land.area})", value: land.id, details: {place: land.place, id: land.id, owner: land&.owner&.name || "", area: land.area}}
     end
     return results.to_json
   end
 
-  def reject_land_costs(attributes)
+  def reject_land_costs?(attributes)
     attributes[:activated_on].blank? || attributes[:work_type_id].blank?
   end
 
@@ -129,12 +169,6 @@ class Land < ApplicationRecord
     results[tmp_cost.work_type_id] += (end_date - tmp_date + 1)
 
     return land_fee(start_date.year), results
-  end
-
-  def land_display_order
-    result = (land_place.display_order * LandPlace.maximum(:id)) + land_place_id
-    result = (((result * Land.maximum(:display_order)) + display_order) * Land.maximum(:id)) + id
-    return result
   end
 
   def cost(target)
@@ -162,11 +196,15 @@ class Land < ApplicationRecord
     super(value == "" ? nil : value)
   end
 
+  def work_type(worked_at)
+    land_costs.newest(worked_at).first&.work_type
+  end
+
   def self.update_members(land_id, members)
     Land.where(group_id: land_id, group_flag: false).update(group_id: nil, group_order: 0)
     return unless members
     members.each do |member|
-      Land.where(id: member[:land_id]).update(group_id: land_id, group_order: member[:display_order])
+      Land.where(id: member[:land_id]).update(group_id: land_id)
     end
   end
 
@@ -175,46 +213,14 @@ class Land < ApplicationRecord
   end
 
   def expiry?(date = Time.zone.today)
-    self.start_on <= date && date <= self.end_on
+    date.between?(self.start_on, self.end_on)
   end
 
-  def self.totals(work_kinds, sys)
-    sql = []
-    sql << "SELECT L.place, L.parcel_number, MAX(L.area) AS area, MAX(HO.name) AS _owner_name, COALESCE(MAX(WT.name), '') AS work_type_name"
-    work_kinds.each_with_index do |_work_kind, index|
-      sql << ", MIN(W#{index}.worked_at) AS w#{index}_date"
-    end
-    sql << " FROM lands L"
-    sql << "INNER JOIN work_lands WL ON L.id = WL.land_id"
-    sql << "LEFT OUTER JOIN homes HO ON L.owner_id = HO.id"
-    sql << "LEFT OUTER JOIN land_costs LC "
-    sql << "ON LC.land_id = L.id "
-    sql << "AND EXISTS ( "
-    sql << "    SELECT"
-    sql << "       MAX(activated_on) "
-    sql << "    FROM"
-    sql << "        land_costs LC2 "
-    sql << "    WHERE"
-    sql << "        LC2.land_id = L.id "
-    sql << "        AND activated_on <= '#{sys.start_date}' "
-    sql << "    HAVING MAX(activated_on) = LC.activated_on"
-    sql << ") "
-    sql << "LEFT OUTER JOIN work_types WT"
-    sql << "ON LC.work_type_id = WT.id"
-    work_kinds.each_with_index do |work_kind, index|
-      sql << "LEFT OUTER JOIN works W#{index} ON WL.work_id = W#{index}.id AND W#{index}.work_kind_id = #{work_kind} AND W#{index}.term = #{sys.term}"
-    end
-    sql << "WHERE L.start_on <= '#{sys.end_date}' AND L.end_on >= '#{sys.start_date}'"
-    sql << "GROUP BY L.place, L.id "
-    sql << "HAVING"
-    having = []
-    work_kinds.each_with_index do |_work_kind, index|
-      having << "(MIN(W#{index}.worked_at) IS NOT NULL)"
-    end
-    sql << having.join(" OR ")
-    sql << "ORDER BY"
-    sql << "L.parcel_number, MAX(HO.display_order), L.place, L.id"
+  def set_uuid
+    self.uuid = SecureRandom.uuid
+  end
 
-    return Land.find_by_sql(sql.join("\n"))
+  def init_place_sort_key
+    self.place_sort_key = AddressSortIndex.build(self.place)
   end
 end

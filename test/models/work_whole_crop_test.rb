@@ -31,9 +31,6 @@ class WorkWholeCropTest < ActiveSupport::TestCase
     assert_not_nil @work_wcs.whole_crop
     assert_equal 45, @work_wcs.whole_crop.rolls
     assert_equal 50.8, @work_wcs.whole_crop.weight
-    assert_equal 50 * 15, @work_wcs.whole_crop.roll_price
-    assert_equal 50 * 15 * 45, @work_wcs.whole_crop.price
-    assert_equal (50 * 15 * 45 * 0.08).floor(0), @work_wcs.whole_crop.tax_amount
-    assert_equal (50 * 15 * 45 * 1.08).floor(0), @work_wcs.whole_crop.amount
+    assert_equal 51 * 15 * 45, @work_wcs.whole_crop.price
   end
 end

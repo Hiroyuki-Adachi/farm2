@@ -13,11 +13,11 @@
   </thead>
   <tbody>
     <% @works.each do |work| %>
-      <tr style="cursor:pointer;" data-url="<%= work_path(work) %>" onclick="showWork(this)">
+      <tr data-controller="row-visit" data-row-visit-url-value="<%= work_path(work, back_url: works_path(params.permit(:term, :work_type_id, :work_kind_id, :worked_at1, :worked_at2, :except, :page).to_h)) %>" data-action="click->row-visit#click keydown->row-visit#keydown" role="button" tabindex="0">
         <td><%= work.id %></td>
         <td><%= work.worked_at %></td>
         <td><%= work.work_time %></td>
-        <td><%= work.genre_name %></td>
+        <td><%= work.category_name %></td>
         <td><%= work.name %></td>
         <td class="numeric"><%= @count_workers[work.id] || 0 %></td>
         <td class="numeric"><%= @sum_hours[work.id] || 0 %></td>

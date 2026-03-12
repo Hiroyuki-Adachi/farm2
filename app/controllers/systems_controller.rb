@@ -30,7 +30,10 @@ class SystemsController < ApplicationController
         :dry_adjust_price,
         :half_sum_flag,
         :waste_price,
-        :relative_price
+        :relative_price,
+        :waste_drying_price,
+        :waste_adjust_price,
+        :roll_price
       ])
   end
 end

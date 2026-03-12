@@ -1,9 +1,17 @@
+<div data-controller="page-loader" data-page-loader-modules-value="pages/personal_informations/topics">
+<h1 class="h2">トピック</h1>
+<% if @search_words.present? %>
+  <p class="small text-muted mb-3">検索ワード: <%= @search_words %></p>
+<% end %>
 <ul class="list-group">
   <% @user_topics.each do |user_topic| %>
     <li class="list-group-item">
       <span class='badge bg-primary me-1'><%= user_topic.word %></span>
       <span class='badge bg-secondary me-1'><%= user_topic.topic&.topic_type&.name %></span>
-      <%= link_to user_topic.topic.title, personal_information_topic_path(personal_information_token: @worker.user.token, id: user_topic.topic.id) %>
+      <a href="<%= user_topic.topic.url %>" target="_blank" rel="noopener noreferrer" class="topic-link"
+        data-readed="<%= personal_information_topic_path(personal_information_token: @current_user.token, id: user_topic.topic_id) %>">
+        <%= user_topic.topic.title %>
+      </a>
       <small class="text-muted">(<%= user_topic.topic.posted_on.strftime("%Y-%m-%d") %>)</small>
       <% unless user_topic.read_flag %>
         <span class="badge bg-warning text-dark">未読</span>
@@ -11,3 +19,7 @@
     </li>
   <% end %>
 </ul>
+<div class="text-center mt-4 mb-3">
+  <%= link_to "検索ワード保守", personal_information_edit_topics_words_path(personal_information_token: params[:personal_information_token]), class: "btn btn-outline-primary" %>
+</div>
+</div>

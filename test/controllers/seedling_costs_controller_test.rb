@@ -39,7 +39,7 @@ class SeedlingCostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "育苗担当(実行)(挿入)" do
+  test "育苗担当(実行)(登録)" do
     sowed_on = Time.zone.local(2015, 5, 1)
     seedling_insert = {seedling_homes_attributes: [{home_id: 3, quantity: 200, sowed_on: sowed_on}]}
     assert_difference('SeedlingHome.count') do
@@ -50,6 +50,24 @@ class SeedlingCostsControllerTest < ActionDispatch::IntegrationTest
     seedling_home = SeedlingHome.last
     assert_equal seedling_insert[:seedling_homes_attributes][0][:home_id], seedling_home.home_id
     assert_equal seedling_insert[:seedling_homes_attributes][0][:quantity], seedling_home.quantity
+    assert_equal sowed_on, seedling_home.sowed_on.in_time_zone
+    assert_equal @seedling.id, seedling_home.seedling_id
+  end
+
+  test "育苗担当(実行)(同一世帯への連続登録)" do
+    seedling_insert1 = {seedling_homes_attributes: [{home_id: 3, quantity: 200, sowed_on: Time.zone.local(2015, 5, 1)}]}
+    patch seedling_cost_path(seedling_id: @seedling.id), params: {seedling: seedling_insert1}
+
+    sowed_on = Time.zone.local(2015, 6, 1)
+    seedling_insert2 = {seedling_homes_attributes: [{home_id: 3, quantity: 300, sowed_on: sowed_on}]}
+    assert_difference('SeedlingHome.count') do
+      patch seedling_cost_path(seedling_id: @seedling.id), params: {seedling: seedling_insert2}
+    end
+    assert_redirected_to edit_seedling_cost_path(seedling_id: seedlings(:seedling1).id)
+
+    seedling_home = SeedlingHome.last
+    assert_equal seedling_insert2[:seedling_homes_attributes][0][:home_id], seedling_home.home_id
+    assert_equal seedling_insert2[:seedling_homes_attributes][0][:quantity], seedling_home.quantity
     assert_equal sowed_on, seedling_home.sowed_on.in_time_zone
     assert_equal @seedling.id, seedling_home.seedling_id
   end

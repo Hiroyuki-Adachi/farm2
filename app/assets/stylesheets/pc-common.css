@@ -21,20 +21,13 @@ div.d-table-cell.numeric {
   background-color: gainsboro;
 }
 
-#my_side_wrapper {
-  @media (min-width: 767.98px) {
-    padding-right: 0;
-    max-width: 200px;
-  }
-}
-
 .form-check-input,
 .form-check-label {
   cursor: pointer;
 }
 
 @media print {
-  #my_sidebar {
+  .my-sidebar {
     display: none;
   }
 }
@@ -60,7 +53,7 @@ div.d-table.float-head {
 table.float-head th,
 div.d-table.float-head div.d-table-row.fix-head {
   position: sticky;
-  background-color: white;
+  background-color: var(--sticky-head-bg); /* ← white を置換 */
   z-index: 1;
   top: 0;
 }
@@ -84,3 +77,48 @@ table.tbl-clear-color tbody tr td {
   background-color: unset;
   color: unset;
 }
+
+body {
+  background: linear-gradient(180deg, var(--body-bg-grad-1) 0%, var(--body-bg-grad-2) 100%);
+  min-height: 100vh;
+}
+
+header.navbar {
+  background: linear-gradient(90deg, #fff 0%, var(--brand-weak) 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+.app-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: var(--card-shadow);
+}
+@media (min-width: 768px) {
+  .offcanvas-md {
+    position: static;
+    transform: none !important;
+    visibility: visible !important;
+    border-right: 1px solid var(--border);
+  }
+}
+
+.my-sidebar a.dropdown-item.active {
+  background: var(--surface-2);
+  border-left: 4px solid var(--brand);
+  font-weight: 600;
+}
+.my-sidebar a.dropdown-item { border-left: 4px solid transparent; }
+
+#sidebar_desktop {
+  transition: opacity .18s ease;
+}
+.sidebar-collapsed #sidebar_desktop { opacity: 0; }
+/* サイドバー折りたたみ中は、rowの縦ガターを消す */
+.sidebar-collapsed .main-row { --bs-gutter-y: 0; }
+
+.navbar .btn { white-space: nowrap; }
+
+/* 折りたたみ中、余白が出る場合の保険 */
+.sidebar-collapsed #content_col { padding-top: 0 !important; }

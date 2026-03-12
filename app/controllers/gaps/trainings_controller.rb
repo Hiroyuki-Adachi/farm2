@@ -17,7 +17,7 @@ class Gaps::TrainingsController < GapsController
     if @training.save
       redirect_to gaps_trainings_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

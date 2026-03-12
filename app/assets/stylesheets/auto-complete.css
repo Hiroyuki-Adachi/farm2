@@ -1,67 +1,42 @@
-.autoComplete_wrapper {
-  display: inline-block;
-  position: relative;
-}
-
-.autoComplete_wrapper > ul {
-  position: absolute;
-  max-height: 400px;
-  overflow-y: scroll;
-  box-sizing: border-box;
-  left: 0;
-  right: 0;
-  margin: 0.5rem 0 0 0;
+/* ----- AutoComplete.js リストの基本設定 ----- */
+#autoComplete_list_1 {
+  position: absolute;       /* 入力欄のすぐ下に重ねる */
+  z-index: 1000;            /* 他要素より前面 */
+  margin: 0;
   padding: 0;
-  z-index: 1;
   list-style: none;
-  border-radius: 0.6rem;
+  width: 30vw;
+  max-width: 100%;
+  max-height: 240px;        /* 候補が多い場合にスクロール */
+  overflow-y: auto;
+
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
   background-color: #fff;
-  border: 1px solid rgba(33, 33, 33, 0.07);
-  box-shadow: 0 3px 6px rgba(149, 157, 165, 0.15);
-  outline: none;
-  transition: opacity 0.15s ease-in-out;
-  -moz-transition: opacity 0.15s ease-in-out;
-  -webkit-transition: opacity 0.15s ease-in-out;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+
+  font-size: 0.9rem;
 }
 
-.autoComplete_wrapper > ul[hidden],
-.autoComplete_wrapper > ul:empty {
-  display: block;
-  opacity: 0;
-  transform: scale(0);
-}
-
-.autoComplete_wrapper > ul > li {
-  margin: 0.3rem;
-  padding: 0.3rem 0.5rem;
-  text-align: left;
-  font-size: 1rem;
-  color: #212121;
-  border-radius: 0.35rem;
-  background-color: rgba(255, 255, 255, 1);
+/* 各候補 */
+#autoComplete_list_1 li[role="option"] {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  line-height: 1.4;
+  color: #212529;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: all 0.2s ease;
 }
 
-.autoComplete_wrapper > ul > li mark {
-  background-color: transparent;
-  color: rgba(122, 255, 122, 1);
-  font-weight: bold;
+/* hover or キーボード選択時 */
+#autoComplete_list_1 li[role="option"]:hover,
+#autoComplete_list_1 li[role="option"][aria-selected="true"] {
+  background-color: #0d6efd;  /* Bootstrap primary */
+  color: #fff;
 }
 
-.autoComplete_wrapper > ul > li:hover {
-  cursor: pointer;
-  background-color: rgba(122, 255, 122, 0.15);
-}
-
-.autoComplete_wrapper > ul > li[aria-selected="true"] {
-  background-color: rgba(122, 255, 122, 0.15);
-}
-
-@media only screen and (max-width: 600px) {
-  .autoComplete_wrapper > input {
-    width: 18rem;
-  }
+/* hidden 属性がついてる場合は非表示 */
+#autoComplete_list_1[hidden] {
+  display: none;
 }

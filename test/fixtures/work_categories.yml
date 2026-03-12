@@ -1,0 +1,46 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+# == Schema Information
+#
+# Table name: work_categories(作業カテゴリ)
+#
+#  id                         :bigint           not null, primary key
+#  discarded_at(論理削除日時) :datetime
+#  display_order(表示順)      :integer          default(0), not null
+#  name(名称)                 :string(10)       default(""), not null
+#  created_at                 :datetime         not null
+#  updated_at                 :datetime         not null
+#
+category_rice:
+  name: "水稲"
+  display_order: '10'
+  discarded_at:
+
+category_change:
+  name: "転作"
+  display_order: '20'
+  discarded_at:
+
+category_by_product:
+  name: "副産物"
+  display_order: '30'
+  discarded_at:
+
+category_management:
+  name: "管理"
+  display_order: '40'
+  discarded_at:
+
+category_deletable:
+  name: "物理削除可能"
+  display_order: '50'
+  discarded_at:
+
+category_discardable:
+  name: "論理削除可能"
+  display_order: '60'
+  discarded_at:

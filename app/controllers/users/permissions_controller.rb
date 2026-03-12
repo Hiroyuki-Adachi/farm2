@@ -1,6 +1,5 @@
 class Users::PermissionsController < ApplicationController
   before_action :set_user
-  before_action :set_permission
 
   def new; end
 
@@ -16,10 +15,6 @@ class Users::PermissionsController < ApplicationController
 
   def set_user
     @user = User.find(params[:user_id])
-  end
-
-  def set_permission
-    @permissions = Permission.all
   end
 
   def user_params

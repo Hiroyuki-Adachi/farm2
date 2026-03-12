@@ -1,0 +1,13 @@
+<%= form_with model: task, url: task_priority_path(task), method: :patch do |f| %>
+  <%= error_print(f.object) %>
+
+  <div class="mb-3">
+    <%= f.label :priority %>
+    <%= f.select(:priority, enum_options_for(Task, :priority), {}, class: "form-select") %>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2">
+    <%= f.submit "登録", class: "btn btn-primary" %>
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+  </div>
+<% end %>

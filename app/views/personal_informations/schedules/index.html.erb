@@ -1,12 +1,33 @@
-<ul>
-<% if @schedules.count > 0%>
-  <% @schedules.each do |schedule| %>
-  <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
-  <% end %>
+<% if @tasks.present? %>
+  <h1 class="h2">タスク</h1>
+  <ul>
+    <% @tasks.each do |task| %>
+      <li class="mb-1">
+        <%= link_to task.title, 
+          personal_information_task_path(personal_information_token: params[:personal_information_token], id: task.model.id),
+          data: { turbo_prefetch: false } %>
+          <%= task.new_badge %>
+          <%= task.due_badge %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+<% if @schedules.present? %>
+  <h1 class="h2">作業予定</h1>
+  <ul>
+    <% @schedules.each do |schedule| %>
+    <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
+    <% end %>
+  </ul>
 <% end %>
 <% if @minute.present? %>
-  <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(<%= link_to '議事録', personal_information_minute_path(@minute.id, personal_information_token: @worker.user.token), {target: :_blank, data: {turbolinks: false}} %>)</li>
+  <h1 class="h2">議事録</h1>
+  <ul>
+    <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(<%= link_to '議事録', personal_information_minute_path(@minute.id, personal_information_token: @worker.user.token), {target: :_blank, data: {turbolinks: false}} %>)</li>
+  </ul>
 <% end %>
-  <li>Google カレンダーを使用している方は、<a href="http://www.google.com/calendar/render?cid=<%= @organization.url %>personal_calendars/<%= @worker.user.token %>" target="_blank">こちらのリンク</a>を押すと作業の予定や実績を連動することができます。</li>
-  <li>管理者への連絡は、<%= mail_to @company.pc_mail, "こちらのリンク", subject: "日報システムについて" %>を押してください。</li>
-</ul>
+<% if current_user.worker.leader? || current_user.worker.director? || current_user.worker.advisor? %>
+  <div class="text-center mt-4 mb-3">
+    <%= link_to "人員保守", personal_information_schedules_workers_path(personal_information_token: params[:personal_information_token]), class: "btn btn-outline-primary" %>
+  </div>
+<% end %>

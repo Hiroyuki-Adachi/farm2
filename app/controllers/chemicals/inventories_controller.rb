@@ -15,7 +15,7 @@ class Chemicals::InventoriesController < ApplicationController
     if @inventory.save
       redirect_to edit_chemicals_inventory_path(@inventory)
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -27,7 +27,7 @@ class Chemicals::InventoriesController < ApplicationController
     if @inventory.update(inventory_params)
       redirect_to edit_chemicals_inventory_path(@inventory)
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 
@@ -51,6 +51,6 @@ class Chemicals::InventoriesController < ApplicationController
         :checked_on,
         stocks_attributes: [:inventory, :chemical_id, :_destroy, :id]
       )
-      .merge(chemical_adjust_type_id: ChemicalAdjustType::INVENTORY.id)
+      .merge(chemical_adjust_type_id: :inventory)
   end
 end

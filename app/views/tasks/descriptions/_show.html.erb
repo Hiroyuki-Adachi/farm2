@@ -1,0 +1,20 @@
+<!-- app/views/tasks/descriptions/_show.html.erb -->
+<div class="p-3 position-relative">
+  <div class="d-flex align-items-center justify-content-between mb-2">
+    <h5 class="mb-0"><%= I18n.t("activerecord.attributes.task.description") %></h5>
+  </div>
+
+  <div class="text-body">
+    <% if task.description.present? %>
+      <div class="markdown-body">
+        <%= markdown_to_html(task.description) %>
+      </div>
+    <% else %>
+      <div class="text-muted fst-italic">（説明は未入力です。クリックして編集できます）</div>
+    <% end %>
+  </div>
+
+  <%= link_to "", edit_task_description_path(task),
+        data: { turbo_frame: "task_description" },
+        class: "stretched-link" %>
+</div>

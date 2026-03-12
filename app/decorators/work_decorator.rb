@@ -24,6 +24,10 @@ class WorkDecorator < Draper::Decorator
     model.worked_at.strftime('%Jy年%m月%d日') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})"
   end
 
+  def worked_at_weekday
+    model.worked_at.strftime('%m月%d日') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})"
+  end
+
   def worked_at_short
     model.worked_at&.strftime('%m-%d')
   end
@@ -45,7 +49,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def work_type_name
-    return model.work_type.genre_name + "(#{model.work_type.name})"
+    "#{model.work_type&.category_name}(#{model.work_type&.name})"
   end
 
   def start_at
@@ -63,8 +67,8 @@ class WorkDecorator < Draper::Decorator
     return result.to_sentence
   end
 
-  def genre_name
-    model.work_type.genre_name + "(#{model.work_type.name})"
+  def category_name
+    work_type_name
   end
 
   def select_work_type(work_type)
@@ -74,10 +78,6 @@ class WorkDecorator < Draper::Decorator
       return "◯#{work_type.name}"
     end
     return h.raw("&nbsp;") + work_type.name
-  end
-
-  def weather_name
-    model.weather ? model.weather.name : ""
   end
 
   def self.get_terms(term)
@@ -122,19 +122,19 @@ class WorkDecorator < Draper::Decorator
   end
 
   def exists_workers
-    model.work_results.count.zero? ? "" : "作業"
+    model.work_results.none? ? "" : "作業"
   end
 
   def exists_lands
-    model.work_lands.count.zero? ? "" : "土地"
+    model.work_lands.none? ? "" : "土地"
   end
 
   def exists_machines
-    model.machine_results.count.zero? ? "" : "機械"
+    model.machine_results.none? ? "" : "機械"
   end
 
   def exists_chemicals
-    model.work_chemicals.count.zero? ? "" : "薬品"
+    model.work_chemicals.none? ? "" : "薬品"
   end
 
   def machine_names
@@ -173,7 +173,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def worker_members
-    model.workers.count == 1 ? model.workers[0].name : "#{model.workers.count}名"
+    model.workers.one? ? model.workers[0].name : "#{model.workers.count}名"
   end
 
   def training_name

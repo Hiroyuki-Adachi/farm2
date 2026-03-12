@@ -20,7 +20,7 @@
       </thead>
       <tbody>
         <% @works.each do |work| %>
-          <tr class="<%= work.training && work.training.studied? ? "table-light" : "table-secondary" %>">
+          <tr class="<%= work.training && work.training.studied? ? "table-row-normal" : "table-row-low" %>">
             <td class="text-right"><%= work.worked_at %></td>
             <td><%= work.training_name %></td>
             <td><%= work.training&.training_place %></td>

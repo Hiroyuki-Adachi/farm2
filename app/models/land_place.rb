@@ -13,12 +13,13 @@
 
 class LandPlace < ApplicationRecord
   include Discard::Model
+
   self.discard_column = :deleted_at
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
   
-  scope :usual, -> {kept.order("display_order")}
+  scope :usual, -> {kept.order(display_order: :asc, id: :asc)}
 
   has_many :lands
 end

@@ -1,16 +1,24 @@
 require "application_system_test_case"
 
 class LoginsTest < ApplicationSystemTestCase
+  setup do
+    @user = users(:users1)
+  end
+
   test "ログインからログアウトまで" do
     visit root_path 
     assert_selector '#login_name'
 
-    fill_in 'login_name', with: '1234567890'
+    fill_in 'login_name', with: @user.login_name
     fill_in 'password', with: 'password'
     click_button '認証する'
     assert_selector 'a', text: '作業日報管理'
 
+    ensure_wide!
+
+    assert_selector :link, 'ログアウト', wait: 5
     click_link 'ログアウト'
+
     assert_selector '#login_name'
   end
 end

@@ -3,6 +3,7 @@ require 'rubyXL/convenience_methods'
 
 class ZgisExcelService
   include Workbook
+
   TITLE_ROW = 1
   START_ROW = 2
 
@@ -11,7 +12,7 @@ class ZgisExcelService
 
   def self.call(land_costs, work_types = nil, term = nil)
     z_gis_file = Rails.root.join("tmp/#{SecureRandom.hex(10)}.zip")
-    Zip::File.open(z_gis_file, Zip::File::CREATE) do |zipfile|
+    Zip::File.open(z_gis_file, create: true) do |zipfile|
       zipfile.get_output_stream(PLACE_FILE) do |f|
         f.write(new.call_place(land_costs, work_types, term))
       end
@@ -78,7 +79,7 @@ class ZgisExcelService
   end
 
   def zgis_polygon(land)
-    return "" if land.region.empty?
+    return "" if land.region.blank?
     polygons = land.region_values.map { |region| "#{region[1]} #{region[0]}" }
     return "Polygon((#{polygons.join(',')}))"
   end

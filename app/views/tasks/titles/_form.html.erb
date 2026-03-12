@@ -1,0 +1,13 @@
+<%= form_with model: task, url: task_title_path(task), method: :patch do |f| %>
+  <%= error_print(f.object) %>
+
+  <div class="mb-3">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control", maxlength: 64, required: true %>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2">
+    <%= f.submit "登録", class: "btn btn-primary" %>
+    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+  </div>
+<% end %>

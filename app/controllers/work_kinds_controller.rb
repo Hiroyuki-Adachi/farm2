@@ -1,5 +1,6 @@
 class WorkKindsController < ApplicationController
   include PermitChecker
+
   before_action :set_work_kind, only: [:edit, :update, :destroy]
   before_action :set_others, only: [:new, :create, :edit, :update]
   before_action :set_cost_types, only: [:new, :create, :edit, :update]
@@ -20,7 +21,7 @@ class WorkKindsController < ApplicationController
       update_others
       redirect_to work_kinds_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -29,7 +30,7 @@ class WorkKindsController < ApplicationController
       update_others
       redirect_to work_kinds_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 
@@ -60,13 +61,13 @@ class WorkKindsController < ApplicationController
   end
 
   def set_others
-    @work_types = WorkType.categories
+    @categories = WorkCategory.usual
     @machine_types = MachineType.order(:display_order, :id)
     @chemical_types = ChemicalType.order(:display_order, :id)
   end
 
   def update_others
-    @work_kind.work_types = params[:work_types] ? WorkType.find(params[:work_types]) : []
+    @work_kind.categories = params[:work_categories] ? WorkCategory.find(params[:work_categories]) : []
     @work_kind.machine_types = params[:machine_types] ? MachineType.find(params[:machine_types]) : []
     @work_kind.chemical_types = params[:chemical_types] ? ChemicalType.find(params[:chemical_types]) : []
   end

@@ -32,6 +32,7 @@ SQL
 
   scope :usual, ->(lands, target) {newest(target).where(land_id: lands.ids)}
   scope :by_work_type, ->(work_type_id, target) {newest(target).where(work_type_id: work_type_id)}
+  scope :by_land, ->(land_id) {where(land_id: land_id).order(activated_on: :asc).joins(:work_type)}
 
   scope :total, ->(target) {joins(:land).newest(target).group(:work_type_id).sum("lands.area")}
 

@@ -2,25 +2,23 @@ class WholeCropsController < ApplicationController
   include PermitManager
 
   def index
-    @whole_crops = WorkWholeCrop.usual(current_term)
+    WorkWholeCrop.update_prices(current_system)
+    whole_crops = WorkWholeCrop.usual(current_term)
     respond_to do |format|
       format.html do
-        @whole_crops = WholeCropDecorator.decorate_collection(@whole_crops)
+        @year_months = whole_crops.select("to_char(works.worked_at, 'YYYY-MM')")
+                                  .distinct.order(1).pluck(Arel.sql("to_char(works.worked_at, 'YYYY-MM')"))
+        @work_types = WorkType.where(id: whole_crops.pluck('works.work_type_id').uniq).order(:display_order, :id)
+        @whole_crops = WholeCropDecorator.decorate_collection(whole_crops.usual_order)
       end
-      format.csv {render :content_type => 'text/csv; charset=cp943'}
+      format.csv do
+        @whole_crops = if params[:ids].present?
+          WholeCropDecorator.decorate_collection(whole_crops.where(id: params[:ids]).usual_order)
+        else
+          WholeCropDecorator.decorate_collection(WorkWholeCrop.none)
+        end
+        send_data render_to_string, filename: "whole_crops_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv", type: :csv
+      end
     end
-  end
-
-  def create
-    params.require(:whole_crop).each do |param|
-      WorkWholeCrop.find(param[:id]).update(whole_crop_param(param))
-    end
-    redirect_to whole_crops_path
-  end
-
-  private
-
-  def whole_crop_param(param)
-    param.permit(:id, :tax_rate, :unit_price, :article_name)
   end
 end

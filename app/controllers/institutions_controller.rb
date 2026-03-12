@@ -18,7 +18,7 @@ class InstitutionsController < ApplicationController
     if @institution.save
       redirect_to institutions_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -26,7 +26,7 @@ class InstitutionsController < ApplicationController
     if @institution.update(institution_params)
       redirect_to institutions_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

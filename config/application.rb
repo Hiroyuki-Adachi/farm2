@@ -19,6 +19,7 @@ module Farm2
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.autoload_paths += Dir["#{config.root}/app/services/concerns"]
     config.eager_load_paths += Dir["#{config.root}/lib/**/"]
+    config.autoload_paths << Rails.root.join("app/decorators/concerns")
 
     config.action_view.field_error_proc = proc { |html_tag, _instance| "<span class='field_with_errors'>#{html_tag}</span>".html_safe }
 
@@ -28,6 +29,18 @@ module Farm2
     config.active_record.default_timezone = :local
 
     config.action_controller.include_all_helpers = false
+
+    # Allow Active Record Encryption keys to be injected via environment
+    # variables in CI where credentials may not be available.
+    config.active_record.encryption.primary_key =
+      ENV["ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY"] ||
+      Rails.application.credentials.dig(:active_record_encryption, :primary_key)
+    config.active_record.encryption.deterministic_key =
+      ENV["ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY"] ||
+      Rails.application.credentials.dig(:active_record_encryption, :deterministic_key)
+    config.active_record.encryption.key_derivation_salt =
+      ENV["ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT"] ||
+      Rails.application.credentials.dig(:active_record_encryption, :key_derivation_salt)
 
     config.update_logger = Logger.new('log/update_worker.log')
     config.update_logger.level = Logger::INFO
@@ -55,7 +68,6 @@ module Farm2
       }.to_json + "\n"
     end
 
-    config.active_support.to_time_preserves_timezone = :zone
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

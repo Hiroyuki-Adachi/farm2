@@ -1,5 +1,6 @@
 class LandsController < ApplicationController
   include PermitChecker
+
   before_action :set_land, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
   before_action :set_places, only: [:new, :create, :edit, :update]
@@ -25,15 +26,15 @@ class LandsController < ApplicationController
     if @land.save
       redirect_to lands_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
   def update
     if @land.update(land_params)
-      redirect_to lands_path(home_id: params[:home_id].presence)
+      redirect_to lands_path(home_id: params[:home_id].presence, page: params[:page]), status: :see_other
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 
@@ -69,7 +70,6 @@ class LandsController < ApplicationController
         :manager_id,
         :area,
         :target_flag,
-        :display_order,
         :land_place_id,
         :reg_area,
         :broccoli_mark,

@@ -16,7 +16,7 @@ class CostTypesController < ApplicationController
     if @cost_type.save
       redirect_to cost_types_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -24,7 +24,7 @@ class CostTypesController < ApplicationController
     if @cost_type.update(cost_type_params)
       redirect_to cost_types_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

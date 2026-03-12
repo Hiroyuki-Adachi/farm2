@@ -35,14 +35,22 @@ class SeedlingResultsController < ApplicationController
   end
 
   def set_works
-    @works = Work.by_work_kind_type(current_term, current_organization.rice_planting_id, @seedling_home.work_type_id)
+    @works = Work.by_work_kind_type(current_term, current_organization.rice_planting_id, @seedling_home)
   end
 
   def seedling_results_params
     params
-      .require(:seedling_home)
-      .permit(seedling_results_attributes: [
-                :id, :work_result_id, :display_order, :disposal_flag, :quantity, :_destroy
-              ])
+      .expect(
+        seedling_home: [
+          seedling_results_attributes: [[
+            :id,
+            :work_result_id,
+            :display_order,
+            :disposal_flag,
+            :quantity,
+            :_destroy
+          ]]
+        ]
+      )
   end
 end

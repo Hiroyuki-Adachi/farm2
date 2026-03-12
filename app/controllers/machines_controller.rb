@@ -18,7 +18,7 @@ class MachinesController < ApplicationController
     if @machine.save
       redirect_to machines_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -26,7 +26,7 @@ class MachinesController < ApplicationController
     if @machine.update(machine_params)
       redirect_to machines_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

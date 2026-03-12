@@ -1,13 +1,20 @@
 require "application_system_test_case"
 
 class WorksTest < ApplicationSystemTestCase
+  setup do
+    @user = users(:users1)
+  end
+
   test "ログインから日報入力まで" do
     visit root_path 
+    assert_selector 'body'
 
-    fill_in 'login_name', with: '1234567890'
+    fill_in 'login_name', with: @user.login_name
     fill_in 'password', with: 'password'
     click_button '認証する'
     assert_selector 'a', exact_text: '作業日報管理'
+
+    ensure_sidebar_shown!
 
     click_link '日報入力'
     assert_selector 'h1', exact_text: '作業日報入力'
@@ -38,7 +45,10 @@ class WorksTest < ApplicationSystemTestCase
     find('#cover_lands').click
     assert_selector 'h1', exact_text: '作業日報(作業田)登録'
 
+    find('#land').click
     fill_in 'land', with: '538'
+    assert_selector '[id^="autoComplete_list_"]', wait: 5
+
     find('#autoComplete_result_0').click
     assert_difference 'WorkLand.count', 1 do
       click_button '登録'

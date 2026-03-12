@@ -9,17 +9,21 @@
 #  mail_confirmation_expired_at(メールアドレス確認有効期限) :datetime
 #  mail_confirmation_token(メールアドレス確認トークン)      :string(64)
 #  mail_confirmed_at(メールアドレス確認日時)                :datetime
+#  otp_enabled(2段階認証フラグ)                             :boolean          default(FALSE), not null
+#  otp_last_used_at(2段階認証 最終使用日時)                 :datetime
+#  otp_secret(2段階認証 秘密鍵)                             :json
 #  password_digest(パスワード)                              :string(128)      not null
 #  target_from(開始年月)                                    :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
 #  term(期)                                                 :integer          default(0), not null
+#  theme(画面テーマ)                                        :integer          default("light"), not null
 #  token(アクセストークン)                                  :string(36)       default(""), not null
 #  view_month(表示切替月)                                   :integer          default([1, 4, 8]), not null, is an Array
 #  created_at                                               :datetime         not null
 #  updated_at                                               :datetime         not null
 #  line_id                                                  :string(50)       default(""), not null
 #  organization_id(組織)                                    :integer          default(0), not null
-#  permission_id(権限)                                      :integer          default(0), not null
+#  permission_id(権限)                                      :integer          default("visitor"), not null
 #  worker_id(作業者)                                        :integer
 #
 # Indexes
@@ -43,6 +47,7 @@ users1:
   token: 2e51d555-9cc2-4588-8326-a4dedddd5349
   mail: "user1@example.com"
   mail_confirmed_at: "2015-01-01 00:00:00"
+  theme: light
 
 user_manager:
   id: 2
@@ -54,6 +59,7 @@ user_manager:
   term: 2015
   calendar_term: 2014
   token: e71d3ea1-05b0-4127-b701-631923f53a2f
+  theme: light
 
 user_checker:
   id: 3
@@ -65,6 +71,7 @@ user_checker:
   term: 2015
   calendar_term: 2014
   token: 749a06f5-30da-45b9-b3b1-90d5767ac72f
+  theme: light
 
 user_user:
   id: 4
@@ -76,6 +83,7 @@ user_user:
   term: 2015
   calendar_term: 2014
   token: 4baa7151-e9ab-45fa-9cbe-626df92c18ed
+  theme: light
 
 user_visitor:
   id: 5
@@ -87,6 +95,18 @@ user_visitor:
   term: 2015
   calendar_term: 2014
   token: 04daf6ea-ab96-4f15-9185-65dbd648c5a7
+  theme: light
+
+user_user_other:
+  worker_id: 11
+  login_name: '31415'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 1
+  permission_id: 1
+  term: 2015
+  calendar_term: 2014
+  token: fb7a5630-27c3-9be0-30f6-4257a35286cf
+  theme: light
 
 user31:
   worker_id: 31
@@ -97,6 +117,7 @@ user31:
   term: 2015
   calendar_term: 2014
   token: d8d76740-4a70-4e98-ba9f-f49eb5739b1c
+  theme: light
 
 user2017:
   worker_id: 32
@@ -107,6 +128,7 @@ user2017:
   term: 2017
   calendar_term: 2014
   token: 2d10d73d-7c1b-4205-8fe9-5b6348fcc5ae
+  theme: light
 
 user2017c:
   worker_id: 34
@@ -117,6 +139,7 @@ user2017c:
   term: 2017
   calendar_term: 2014
   token: 8d171996-8d90-4f0e-b8d6-194dad141ad8
+  theme: light
 
 user_line:
   worker_id: 12
@@ -127,6 +150,7 @@ user_line:
   term: 2015
   calendar_term: 2014
   token: a5b3e8d2-01a0-4843-a3a3-89480526d48c
+  theme: light
 
 user_line_id_already_exists:
   worker_id: 13
@@ -137,4 +161,5 @@ user_line_id_already_exists:
   term: 2015
   calendar_term: 2014
   token: 932b9a3f-5946-4be8-82ff-f4d0862932c2
-  line_id: '1234567890'
+  line_id: 'U1234567890'
+  theme: light

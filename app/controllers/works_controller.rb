@@ -1,7 +1,8 @@
 require 'date'
 
 class WorksController < ApplicationController
-  include WorksHelper
+  include UpdatableWork
+
   before_action :set_work, only: [:edit, :show, :update, :destroy, :map]
   before_action :set_results, only: [:show]
   before_action :set_lands, only: [:show]
@@ -11,46 +12,70 @@ class WorksController < ApplicationController
   before_action :permit_not_visitor, except: [:index, :show]
   before_action :permit_checkable_or_self, only: [:edit, :update, :destroy]
   before_action :permit_visitor, only: :show
-  before_action :set_term, only: :index
-  before_action :set_work_types, only: :index
   before_action :permit_this_term, only: [:edit, :update, :destroy]
 
+  helper WorksHelper
   helper GmapHelper
 
   def index
     @terms = WorkDecorator.terms
-    @works = Work.usual(@term)
-    @works = @works.by_worker(current_user.worker) if current_user.visitor?
-    @sum_hours = sum_hours(@term)
+
+    # term は params 優先。なければ current_term
+    @term = params[:term].presence || current_term
+
+    # term でベースを絞る
+    base = Work.usual(@term)
+    base = base.by_worker(current_user.worker) if current_user.visitor?
+
+    # 検索条件（ビューでフォームの初期値にも使う）
+    @work_search = {
+      work_type_id: params[:work_type_id],
+      work_kind_id: params[:work_kind_id],
+      worked_at1: params[:worked_at1],
+      worked_at2: params[:worked_at2],
+      except: params[:except]
+    }
+
+    # 検索実行
+    @works = Work.search_for_work(base, @work_search)
+
+    # 集計もここで
+    @sum_hours     = sum_hours(@term)
     @count_workers = count_workers(@term)
-    set_pager
+    @works_count   = @works.count
+    @total_hours   = @works.joins(:work_results).sum('work_results.hours')
+    @total_workers = @works.joins(:work_results).distinct.count('work_results.worker_id')
+    @total_hours_member = WorkResult.sum_hours_for_member(@works)
+
+    set_work_types # （この中で @work_types, @work_kinds をセットする今のメソッド）
+
     respond_to do |format|
       format.html do
-        @works = WorkDecorator.decorate_collection(@works.page(@work_search[:page]))
+        @works = WorkDecorator.decorate_collection(@works.page(params[:page]))
       end
       format.csv do
-        render :content_type => 'text/csv; charset=cp943'
+        render content_type: 'text/csv; charset=cp943'
       end
     end
   end
 
   def new
-    @work = Work.new(worked_at: Time.zone.today, work_type_id: @work_types.first.id, start_at: '8:00', end_at: '17:00')
+    @work = Work.new(
+      worked_at: Time.zone.today,
+      work_type_id: @work_types.first.id,
+      weather_id: :sunny,
+      start_at: '8:00', end_at: '17:00'
+    )
     @results = []
     @work_lands = []
-    @work_kinds = WorkKind.by_type(@work_types.first)
+    @work_kinds = WorkKind.except_other.by_type(@work_types.first)
   end
 
   def show
-    url_hash = Rails.application.routes.recognize_path(request.referer)
-
     @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
-    @chemicals = @work.work_chemicals.group(:chemical_id).sum(:quantity).to_a
+    @chemicals = Chemical.with_total_quantity(@work).to_a
     @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
 
-    if ["index", "show"].include?(url_hash[:action])
-      session[:work_referer] = url_hash[:controller] == "works" ? nil : request.referer
-    end
     render layout: false
   end
 
@@ -59,12 +84,12 @@ class WorksController < ApplicationController
     if @work.save
       redirect_to(new_work_worker_path(work_id: @work))
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
   def edit
-    @work_kinds = WorkKind.by_type(@work.work_type) || []
+    @work_kinds = WorkKind.except_other.by_type(@work.work_type) || []
   end
 
   def update
@@ -75,7 +100,7 @@ class WorksController < ApplicationController
       if @work.update(work_params)
         @work.refresh_broccoli(current_organization)
       else
-        render action: :edit, status: :unprocessable_entity
+        render action: :edit, status: :unprocessable_content and return
       end
     end
 
@@ -95,7 +120,7 @@ class WorksController < ApplicationController
 
   def work_kinds
     @work_kind_id = params[:work_kind_id]
-    @work_kinds = params[:work_type_id].present? ? WorkKind.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
+    @work_kinds = params[:work_type_id].present? ? WorkKind.except_other.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
     respond_to { |format| format.turbo_stream }
   end
 
@@ -119,8 +144,7 @@ class WorksController < ApplicationController
   end
 
   def set_masters
-    @weathers = Weather.all
-    @work_types = WorkType.usual
+    @work_types = WorkType.usual.by_term(current_term)
   end
 
   def work_params
@@ -135,55 +159,6 @@ class WorksController < ApplicationController
     Rails.cache.clear
   end
 
-  def set_pager
-    set_search_info
-    do_search
-    set_session
-  end
-
-  def set_term
-    path = Rails.application.routes.recognize_path(request.referer)
-    @term = if path[:controller] == "menu" || session[:work_search].nil?
-              current_term
-            elsif path[:controller] == "works" && path[:action] == "index"
-              params[:term] || current_term
-            else
-              session[:work_search]["term"] || current_term
-            end
-  end
-
-  def set_search_info
-    path = Rails.application.routes.recognize_path(request.referer)
-    @work_search = {}
-    if path[:controller] == "menu" || session[:work_search].nil?
-      session.delete(:work_search)
-      @work_search = {page: 1}
-    elsif path[:controller] == "works" && path[:action] == "index" && params[:format] != "csv"
-      @work_search = {
-        work_type_id: params[:work_type_id],
-        work_kind_id: params[:work_kind_id],
-        worked_at1: params[:worked_at1],
-        worked_at2: params[:worked_at2],
-        except: params[:except],
-        page: params[:page] || 1
-      }
-    else
-      @work_search = session[:work_search]
-    end
-  end
-
-  def do_search
-    @works = Work.search_for_work(@works, @work_search)
-    @works_count = @works.count
-    @total_hours = @works.inject(0) { |a, e| a + (@sum_hours[e.id] || 0)}
-    @total_workers = @works.inject(0) { |a, e| a + (@count_workers[e.id] || 0)}
-    @total_hours_member = WorkResult.sum_hours_for_member(@works)
-  end
-
-  def set_session
-    session[:work_search] = @work_search
-  end
-
   def set_work_types
     @work_types = WorkType.by_term(@term).indexes
     @work_kinds = WorkKind.usual
@@ -194,7 +169,7 @@ class WorksController < ApplicationController
   end
 
   def permit_checkable_or_self
-    to_error_path unless updatable_work(current_user, @work)
+    to_error_path unless updatable_work?(@work)
   end
 
   def permit_visitor

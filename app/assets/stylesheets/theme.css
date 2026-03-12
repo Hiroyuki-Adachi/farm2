@@ -1,0 +1,84 @@
+/* Light (デフォルト) */
+:root {
+  /* あなたの既存変数は活かしつつ補強する */
+  --surface:    #f6f8fb;
+  --surface-2:  #ffffff;
+  --border:     rgba(0,0,0,.08);
+  --brand:      #1f8feb;
+  --brand-weak: #e7f2fd;
+  --text-highlight: #fe3e3d;
+
+  /* 追加のトークン（固定色を置き換える用） */
+  --body-bg-grad-1: #f8fbff;
+  --body-bg-grad-2: #f3f6fa;
+  --row-hover:   gainsboro;
+  --card-shadow: 0 6px 18px rgba(0,0,0,.04);
+  --sticky-head-bg: var(--surface-2);
+  --text-strong: #000;   /* 必要なら */
+  --text-muted:  #6c757d;/* 必要なら */
+
+  --table-row-bg: #ffffff;
+  --table-row-fg: #212529;
+  --table-row-low-bg: #f8f9fa;   /* Bootstrapのlight相当 */
+  --table-row-low-fg: #495057;
+
+  --table-row-primary-bg: #cfe2ff; /* table-primary 相当 */
+  --table-row-primary-fg: #084298; /* 文字：Bootstrapのtext-primary */
+}
+
+/* Dark 上書き */
+[data-bs-theme="dark"] {
+  color-scheme: dark; /* フォーム・スクロールバー等のネイティブ要素を暗色系に */
+
+  --surface:    #0f1115;
+  --surface-2:  #141821;
+  --border:     rgba(255,255,255,.12);
+  --brand:      #6fb9ff;
+  --brand-weak: rgba(111,185,255,.15);
+
+  --body-bg-grad-1: #0e1014;
+  --body-bg-grad-2: #0b0d11;
+  --row-hover:   rgba(255,255,255,.06);
+  --card-shadow: 0 6px 18px rgba(0,0,0,.6);
+  --sticky-head-bg: var(--surface-2);
+  --text-strong: #f1f3f5;
+  --text-muted:  #a0a6ad;
+
+  --table-row-bg: #2b2b2b;
+  --table-row-fg: #f8f9fa;
+  --table-row-low-bg: #3c3c3c;
+  --table-row-low-fg: #dee2e6;
+  --table-row-primary-bg: #0d3e70; /* 深めの青。光度を抑えたPrimary */
+  --table-row-primary-fg: #d0e2ff; /* 淡い水色の文字 */
+
+  --text-highlight: #fefe3d;
+
+  .btn-outline-dark {
+    color: #f8f9fa;
+    border-color: #f8f9fa;
+  }
+}
+
+tr.table-row-normal td {
+  background-color: var(--table-row-bg);
+  color: var(--table-row-fg);
+}
+
+tr.table-row-low td {
+  background-color: var(--table-row-low-bg);
+  color: var(--table-row-low-fg);
+}
+
+tr.table-row-primary-bg td {
+  background-color: var(--table-row-primary-bg);
+  color: var(--table-row-primary-fg);
+}
+
+.bg-info {
+  color: #000 !important;
+}
+
+.fw-highlight {
+  font-weight: 600;
+  color: var(--text-highlight);
+}

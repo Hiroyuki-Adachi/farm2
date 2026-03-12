@@ -1,10 +1,13 @@
 namespace :sorimachi do
-  resources :imports, only: [:index, :create, :update, :destroy] do
-    member do
-      post :copy
+  resources :imports, only: [:index, :create] do
+    collection do
+      post :auto_allocate
+      post :update_allocation
+      post :update_detail
+      post :reallocate_row
     end
   end
-  resources :accounts, param: "code", except: [:show]
+  resources :accounts, param: "code", except: [:show, :new]
   resources :totals, only: [:index]
   resources :work_types, param: "sorimachi_journal_id", only: [:edit, :update]
 end
@@ -32,6 +35,12 @@ namespace :gaps do
     end
   end
 end
+namespace :tablets do
+  root "sessions#new"
+  resource :session, only: [:new]
+  resources :menu, only: [:index]
+  resources :maps, only: [:index]
+end
 resources :ip_lists, only: [:new, :create, :edit, :update]
 resources :zgis, only: [:new, :create]
 resources :work_seedlings, only: [:index]
@@ -51,7 +60,7 @@ namespace :calendars do
 end
 resources :contracts, only: [:index]
 resources :minutes, only: [:index, :create, :show, :destroy]
-resources :whole_crops, only: [:index, :create]
+resources :whole_crops, only: [:index]
 resources :total_seedlings, only: [:index]
 resources :total_chemicals, only: [:index]
 resources :total_dryings, only: [:index]
@@ -89,13 +98,20 @@ resources :schedules, except: [:show] do
 end
 resources :broccoli, param: "work_id", only: [:edit, :update, :destroy]
 resources :sessions, only: [:new, :create, :index]
+namespace :sessions do
+  resources :qr_login, param: :token, only: [:create] do
+    member do
+      get :qrcode
+      post :consume
+    end
+  end
+end
+resources :sessions, only: [:show], param: :token
 resources :machine_types, except: [:show]
 resources :chemical_types, except: [:show]
 resources :work_kinds, except: [:show]
 resources :work_types, except: [:show] do
-  member do
-    get :show_icon
-  end
+  get :icon, to: "work_types#icon", as: :icon, on: :member
 end
 namespace :lands do
   resources :cards, param: "land_id", only: [:index, :show]
@@ -149,28 +165,38 @@ end
 resources :fixes, param: "fixed_at", except: [:edit, :update]
 resources :personal_informations, param: "token", only: [:show] do
   resources :works, controller: "personal_informations/works", only: [:show]
-  resources :lands, controller: "personal_informations/lands", only: [:index]
+  resources :lands, controller: "personal_informations/lands", only: [:index, :show]
   resources :machines, controller: "personal_informations/machines", only: [:index]
   resources :schedules, controller: "personal_informations/schedules", only: [:index]
+  get "schedules/workers", to: "personal_informations/schedules/workers#index", as: :schedules_workers
+  get "schedules/workers/edit", to: "personal_informations/schedules/workers#edit", as: :schedules_workers_edit
+  patch "schedules/workers/edit", to: "personal_informations/schedules/workers#update"
   resources :statistics, controller: "personal_informations/statistics", only: [:index]
   resources :seedlings, controller: "personal_informations/seedlings", only: [:index]
   resources :contracts, controller: "personal_informations/contracts", only: [:index]
   resources :dryings, controller: "personal_informations/dryings", only: [:index]
   resources :owned_rices, controller: "personal_informations/owned_rices", only: [:index]
   resources :minutes, controller: "personal_informations/minutes", only: [:show]
-  resources :topics, controller: "personal_informations/topics", only: [:index, :show]
+  get "topics/words/edit", to: "personal_informations/topics/words#edit", as: :edit_topics_words
+  patch "topics/words", to: "personal_informations/topics/words#update", as: :topics_words
+  put "topics/words", to: "personal_informations/topics/words#update"
+  resources :topics, controller: "personal_informations/topics", only: [:index, :update]
   resources :maps, controller: "personal_informations/maps", only: [:index]
   resources :mail_confirmations, controller: "personal_informations/mail_confirmations", param: "mail_token", only: [:edit]
+  resources :scans, controller: "personal_informations/scans", only: [:new, :create]
+  resources :tasks, controller: "personal_informations/tasks", only: [:show]
 end
 resources :personal_calendars, param: "token", only: [:show]
-resources :users, except: [:show] do
-  resources :permissions, controller: "users/permissions", only: [:new, :create]
-end
 namespace :users do
   resources :qr, only: [:index]
-  resources :words, only: [:new, :create, :show, :destroy]
+  resources :words, only: [:new, :create, :destroy]
   resources :mails, only: [:new, :create]
   resources :line_hooks, only: [:create]
+  resources :themes, only: [:new, :create]
+  resource :mfa, controller: :mfa, only: [:edit, :update, :destroy]
+end
+resources :users, except: [:show] do
+  resources :permissions, controller: "users/permissions", only: [:new, :create]
 end
 resources :work_verifications, param: "work_id", only: [:index, :update, :destroy, :show]
 
@@ -206,8 +232,35 @@ resources :works do
   member do
     get :map
   end
+  resources :tasks, controller: "works/tasks", only: [:new, :create]
 end
 
+namespace :work do
+  resources :categories, controller: "/works/categories", only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :genres, controller: "/works/genres", only: [:index, :new, :create, :edit, :update, :destroy]
+end
+
+namespace :tasks do
+  resource :kanbans, only: [:show, :update]
+  resource :gantts, only: [:show, :update]
+end
+resources :tasks, except: [:edit, :update] do
+  resource :assignee, controller: "tasks/assignees", only: [:edit, :update]
+  resource :description, controller: "tasks/descriptions", only: [:edit, :update]
+  resource :due_on, controller: "tasks/due_dates", only: [:edit, :update]
+  resource :office_role, controller: "tasks/office_roles", only: [:edit, :update]
+  resource :priority, controller: "tasks/priorities", only: [:edit, :update]
+  resources :status, controller: "tasks/statuses", only: [:edit, :update], param: "code"
+  resource :title, controller: "tasks/titles", only: [:edit, :update]
+  resource :end_reason, controller: "tasks/end_reasons", only: [:edit, :update]
+  resources :watchers, controller: "tasks/watchers", only: [:create, :destroy]
+  resources :comments, controller: "tasks/comments", only: [:create]
+  resources :works, controller: "tasks/works", only: [:index, :update, :destroy]
+  resources :events, only: [] do
+    resource :comment, controller: "tasks/event_comments", only: [:show, :edit, :create, :update]
+  end
+end
+resources :task_templates, controller: "tasks/templates", except: [:show]
 resources :work_results, only: [:index]
 resources :machine_results, only: [:index]
 resources :work_chemicals, only: [:index]

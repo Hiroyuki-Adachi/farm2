@@ -1,6 +1,8 @@
 class Users::MailsController < ApplicationController
   before_action :set_user, only: [:new, :create]
 
+  helper MailHelper
+
   def new; end
 
   def create
@@ -8,7 +10,8 @@ class Users::MailsController < ApplicationController
       UserMailer.email_confirmation(@user).deliver_later
       redirect_to menu_index_path, notice: 'メールを送信しました。メール内のリンクをクリックしてメールアドレスの変更を完了してください'
     else
-      render :new, status: :unprocessable_entity, alert: 'メールアドレスの変更に失敗しました'
+      flash.now[:alert] = 'メールアドレスの変更に失敗しました'
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -19,6 +22,6 @@ class Users::MailsController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:mail)
+    params.expect(user: [:mail])
   end
 end

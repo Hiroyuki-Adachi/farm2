@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def error_print(record)
-    render(partial: "error_templete", :locals => {:ar => record}) if record&.errors&.any?
+    render(partial: "error_template", :locals => {:ar => record}) if record&.errors&.any?
   end
 
   def data_print(data, kind, url)
@@ -30,10 +30,6 @@ module ApplicationHelper
     Time.at((hours || 0) * 3600 / count).utc.strftime("%H:%M")
   end
 
-  def work_type_icon_tag(work_type)
-    work_type.icon ? tag.img(src: show_icon_work_type_path(work_type), height: 48, width: 48) : image_tag("/images/works/default.png", size: "48x48")
-  end
-
   def chemical_name(chemical)
     chemical.url.present? ? link_to(chemical.name, chemical.url, target: :_blank, rel: "noopener noreferrer") : chemical.name
   end
@@ -42,22 +38,16 @@ module ApplicationHelper
     h(content).gsub(/(?<=\u3000)/, '<br />　')&.html_safe
   end
 
-  def mail_status_badge(user)
-    status = user.current_mail_status
+  def enum_options_for(model_class, attr_name, exclude_keys = [])
+    exclude_keys = Array(exclude_keys).map(&:to_s)
 
-    label, color = case status
-    when :confirmed
-      ["認証済み", :success]
-    when :pending
-      ["認証待ち", :warning]
-    when :expired
-      ["期限切れ", :danger]
-    when :not_entered
-      ["未入力", :secondary]
-    else
-      ["不明", :dark]
-    end
-
-    content_tag(:span, label, class: "badge bg-#{color}")
+    model_class.send(attr_name.to_s.pluralize).keys
+      .reject { |key| exclude_keys.include?(key) }
+      .map do |key|
+        [
+          I18n.t("activerecord.enums.#{model_class.model_name.i18n_key}.#{attr_name.to_s.pluralize}.#{key}"),
+          key
+        ]
+      end
   end
 end

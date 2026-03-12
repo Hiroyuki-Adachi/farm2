@@ -4,7 +4,7 @@ class CostTypesControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:users1))
     @cost_type = cost_types(:cost_types1)
-    @work_kind = work_kinds(:work_kinds1)
+    @work_kind = work_kinds(:work_kind_shirokaki)
     @update = { name: "試験", phonetic: "しけん", display_order: 99, work_kind_ids: [@work_kind.id] }
   end
 

@@ -1,12 +1,13 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 8.0'
+gem 'rails', '~> 8.1.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # delayed_job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background.
 gem 'delayed_job_active_record'
-
+# Use Active Storage variants
+gem 'benchmark'
 # The CSV library provides a complete interface to CSV files and data. 
 gem 'csv'
 
@@ -16,6 +17,8 @@ gem "cssbundling-rails"
 gem 'importmap-rails'
 # propshaft provides a way to bundle JavaScript files in Rails applications.
 gem 'propshaft'
+# Use stimulus for JavaScript
+gem 'stimulus-rails'
 
 # daemons provides an easy way to wrap existing ruby scripts (for example a self-written server) to be run as a daemon and to be controlled by simple start/stop/restart commands.
 gem 'daemons'
@@ -39,14 +42,14 @@ gem 'dotenv-rails'
 # turbo-rails is a set of tools for building modern web applications with Turbo.
 gem 'turbo-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 # This gem provides XML serialization for your Active Model objects and Active Record models.
 gem 'activemodel-serializers-xml'
 # ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource for an ActiveRecord-like model.
 gem 'active_hash'
 # TZInfo::Data is the public domain IANA Time Zone Database packaged as a set of Ruby modules for use with TZInfo.
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
-# Logical deletion for ActiveRecord
+gem 'tzinfo-data', platforms: [:windows]
+# Logical deletion for ActiveRecord. Documentation: https://github.com/jhawthorn/discard
 gem 'discard'
 # A paginator for modern web app frameworks and ORMs
 gem 'kaminari'
@@ -66,6 +69,9 @@ gem 'bcrypt', '~> 3.1.7'
 # This gem supports operating on xlsx files (Open XML format).
 gem 'rubyXL'
 
+# ImageProcessing is a Ruby gem for processing images.
+gem "image_processing", "~> 1.2"
+
 # Ruby library for dealing with iCalendar files
 gem 'icalendar'
 
@@ -83,6 +89,20 @@ gem 'omniauth'
 # OmniAuth strategy for Google OAuth2
 gem 'omniauth-google-oauth2'
 
+# Reduces the size of your HTML output by removing unnecessary whitespace and comments.
+gem "commonmarker"
+# Rouge is a pure-ruby syntax highlighter.
+gem "rouge"
+
+# ROTP is a Ruby implementation of one-time password algorithms (HOTP and TOTP).
+gem "rotp"
+
+group :development, :test do
+  gem 'ruby-lsp'
+  # Debugging tool
+  gem 'debug'
+end
+
 group :development do
   # listen to file modifications
   gem 'listen'
@@ -94,11 +114,8 @@ group :development do
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
-  gem 'ruby-lsp'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
-  gem 'debug'
 end
 
 group :test do
@@ -106,6 +123,14 @@ group :test do
   gem 'capybara'
   # cuprite is a Capybara driver for headless Chrome/Chromium
   gem 'cuprite'
+  # minitest
+  gem 'minitest'
   # minitest is a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking.
   gem 'mocha'
+  # minitest-mock provides backward compatibility for the extracted Minitest::Mock (minitest 6+); mocha is used for general mocking.
+  gem 'minitest-mock'
+  # minitest-rails provides a set of Rails generators for Minitest.
+  gem 'webmock'
 end
+
+gem "solid_cable", "~> 3.0"

@@ -35,8 +35,9 @@ Rails.application.configure do
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
+  config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
 
-  # Change to "debug" to log everything (including potentially personally-identifiable information!)
+  # Change to "debug" to log everything (including potentially personally-identifiable information!).
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "error").to_sym
 
   # Prevent health checks from clogging up the logs.
@@ -49,7 +50,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
-  config.active_job.queue_adapter = :delayed_job
+    config.active_job.queue_adapter = :delayed_job
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -60,8 +61,8 @@ Rails.application.configure do
     user_name: ENV.fetch('MAIL_ADDRESS'),
     oauth2_token: lambda {
       client = OAuth2::Client.new(
-        ENV.fetch('GOOGLE_CLIENT_ID'),
-        ENV.fetch('GOOGLE_CLIENT_SECRET'),
+        Rails.application.credentials.dig(:google_client, :id) || ENV.fetch('GOOGLE_CLIENT_ID'),
+        Rails.application.credentials.dig(:google_client, :secret) || ENV.fetch('GOOGLE_CLIENT_SECRET'),
         site: 'https://accounts.google.com',
         authorize_url: '/o/oauth2/auth',
         token_url: '/o/oauth2/token'
@@ -86,7 +87,7 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "example.com" }
 
-  # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
+  # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
   # config.action_mailer.smtp_settings = {
   #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
   #   password: Rails.application.credentials.dig(:smtp, :password),
@@ -117,4 +118,5 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  config.action_cable.url = "wss://shimo-dekisu.farm/farm2/cable"
 end

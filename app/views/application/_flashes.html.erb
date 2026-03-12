@@ -1,5 +1,5 @@
 <% flash.each do |type, message| %>
-  <% bootstrap_class = case type
+  <% bootstrap_class = case type.to_s
                         when 'notice' then 'alert-success'
                         when 'alert' then 'alert-warning'
                         when 'error' then 'alert-danger'

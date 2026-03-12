@@ -29,8 +29,12 @@ Capybara.register_driver(:better_cuprite) do |app|
   Capybara::Cuprite::Driver.new(
     app,
     window_size: [1200, 800],
-    browser_options: remote_chrome ? { "no-sandbox" => nil } : {},
-    inspector: true, **remote_options
+    browser_options: remote_chrome ? { "no-sandbox" => nil, window_size: [1200, 800] } : {},
+    flatten: false,
+    js_errors: true,
+    timeout: 30,
+    headless: true,
+    **remote_options
   )
 end
 
@@ -41,4 +45,9 @@ Capybara.app_host = "http://#{ENV.fetch('APP_HOST', `hostname`.strip&.downcase |
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :better_cuprite
+  include SystemSidebarHelpers
+  
+  setup do
+    WebMock.allow_net_connect!
+  end
 end

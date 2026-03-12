@@ -15,6 +15,7 @@
 class ChemicalTerm < ApplicationRecord
   belongs_to :chemical, -> {with_deleted}
   has_many :chemical_work_types, dependent: :destroy
+  has_many :work_types, through: :chemical_work_types
   
   scope :usual, ->(term) {
     joins(chemical: :chemical_type).includes(:chemical)

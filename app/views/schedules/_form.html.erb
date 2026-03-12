@@ -1,36 +1,81 @@
-<div class="row">
+<div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/schedule">
   <div class="mb-3 col-md-3">
     <%= f.label :worked_at, '', class: "col-form-label-lg form-label" %>
-    <%= f.date_field :worked_at, {required: true, class: "form-control", min: Date.today} %>
-  </div>
-  <div class="mb-3 col-md-1"></div>
-  <div class="mb-3 col-md-4">
-    <%= f.label :work_flag, '', class: "col-form-label-lg form-label" %>
-    <div class="form-check">
-      <%= f.radio_button :work_flag, true, {class: "form-check-input"} %>
-      <%= label_tag "schedule_work_flag_true", "作業(日当が支払われるもの)", {class: "form-check-label"} %>
-    </div>
-    <div class="form-check">
-      <%= f.radio_button :work_flag, false, {class: "form-check-input"} %>
-      <%= label_tag "schedule_work_flag_false", "作業以外(総会、理事会、監査など)", {class: "form-check-label"} %>
-    </div>
+    <%= f.date_field :worked_at, {required: true, class: "form-control", min: Date.today - Schedule::DISPLAY_DAYS.days} %>
   </div>
   <div class="mb-3 col-md-2">
     <%= f.label :start_at, '', class: "col-form-label-lg form-label" %>
-    <%= f.time_field :start_at, {step: 1800, required: true, class: "form-control"} %>
+    <%= f.time_field :start_at, {required: true, class: "form-control", value: f.object.start_at&.strftime('%H:%M') } %>
   </div>
   <div class="mb-3 col-md-2">
     <%= f.label :end_at, '', class: "col-form-label-lg form-label" %>
-    <%= f.time_field :end_at, {step: 1800, required: true, class: "form-control"} %>
+    <%= f.time_field :end_at, {required: true, class: "form-control", value: f.object.end_at&.strftime('%H:%M')} %>
   </div>
 </div>
 <div class="row">
+  <div class="mb-3 col-md-2">
+    <%= f.label :farming_flag, '', class: "col-form-label-lg form-label" %>
+    <div class="form-check">
+      <%= f.radio_button :farming_flag, true, {class: "form-check-input"} %>
+      <%= label_tag "schedule_farming_flag_true", "営農組合の予定", {class: "form-check-label"} %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :farming_flag, false, {class: "form-check-input"} %>
+      <%= label_tag "schedule_farming_flag_false", "営農組合以外の予定", {class: "form-check-label"} %>
+    </div>
+  </div>
+  <div class="mb-3 col-md-3 farming-visible">
+    <%= f.label :work_flag, '', class: "col-form-label-lg form-label" %>
+    <div class="form-check">
+      <%= f.radio_button :work_flag, true, {class: "form-check-input"} %>
+      <%= label_tag "schedule_work_flag_true", "日当が支払われる作業予定", {class: "form-check-label"} %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :work_flag, false, {class: "form-check-input"} %>
+      <%= label_tag "schedule_work_flag_false", "日当が支払われない作業予定", {class: "form-check-label"} %>
+    </div>
+  </div>
+  <div class="mb-3 col-md-2">
+    <%= f.label :line_flag, '', class: "col-form-label-lg form-label" %>
+    <div class="form-check">
+      <%= f.radio_button :line_flag, true, {class: "form-check-input"} %>
+      <%= label_tag "schedule_line_flag_true", "LINE通知あり", {class: "form-check-label"} %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :line_flag, false, {class: "form-check-input"} %>
+      <%= label_tag "schedule_line_flag_false", "LINE通知なし", {class: "form-check-label"} %>
+    </div>
+  </div>
+  <div class="mb-3 col-md-2 farming-visible">
+    <%= f.label :minutes_flag, '', class: "col-form-label-lg form-label" %>
+    <div class="form-check">
+      <%= f.radio_button :minutes_flag, true, {class: "form-check-input"} %>
+      <%= label_tag "schedule_minutes_flag_true", "議事録あり", {class: "form-check-label"} %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :minutes_flag, false, {class: "form-check-input"} %>
+      <%= label_tag "schedule_minutes_flag_false", "議事録なし", {class: "form-check-label"} %>
+    </div>
+  </div>
+  <div class="mb-3 col-md-3">
+    <%= f.label :calendar_remove_flag, '', class: "col-form-label-lg form-label" %>
+    <div class="form-check">
+      <%= f.radio_button :calendar_remove_flag, true, {class: "form-check-input"} %>
+      <%= label_tag "schedule_calendar_remove_flag_true", "googleカレンダー自動削除あり", {class: "form-check-label"} %>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :calendar_remove_flag, false, {class: "form-check-input"} %>
+      <%= label_tag "schedule_calendar_remove_flag_false", "googleカレンダー自動削除なし", {class: "form-check-label"} %>
+    </div>
+  </div>
+</div>
+<div class="row farming-visible">
   <div class="mb-3 col-md-12">
     <%= f.label :work_type_id, '', class: "col-form-label-lg form-label" %>
   </div>
 </div>
-<div class="row">
-  <% WorkType.categories.each do |category| %>
+<div class="row farming-visible">
+  <% WorkCategory.usual.each do |category| %>
     <div class="mb-3 col-md-2">
       <div class="form-check form-check-inline h5">
         <%= category.name %>
@@ -47,17 +92,28 @@
   <% end %>    
 </div>
 <div class="row">
-  <div class="mb-3 col-md-4">
+  <div class="mb-3 col-md-4 farming-visible">
     <%= f.label :work_kind_id, '', class: "col-form-label-lg form-label" %>
-    <%= f.collection_select(:work_kind_id, @work_kinds, :id, :name, {}, {class: "form-select", id: :work_kind_id}) %>
+    <%= f.collection_select(:work_kind_id, @work_kinds, :id, :name, {}, {required: true, class: "form-select", id: :work_kind_id}) %>
   </div>
   <div class="mb-3 col-md-4">
     <%= f.label :name, '', class: "col-form-label-lg form-label" %>
-    <%= f.text_field :name, {:maxlength => 40, :size => 40, class: "form-control"} %>
+    <%= f.text_field :name, {maxlength: 40, size: 40, class: "form-control"} %>
+  </div>
+</div>
+<% selected_section_ids = f.object.section_ids || [] %>
+<div class="row">
+  <div class="mb-3 col-md-12">
+    <fieldset>
+      <legend>対象班</legend>
+      <% @sections.each do |section| %>
+        <div class="form-check form-check-inline">
+          <%= check_box_tag "section_ids[]", section.id, selected_section_ids.include?(section.id), {id: "section_#{section.id}", class: "form-check-input"} %>
+          <%= label_tag "section_#{section.id}", section.name, {class: "form-check-label form-label"} %>
+        </div>
+      <% end %>
+    </fieldset>
   </div>
 </div>
 <%= f.hidden_field :term %>
 <%= hidden_field_tag :work_kinds_works_path, work_kinds_works_path %>
-<% content_for :head do %>
-<%= javascript_include_tag 'controllers/schedule', "data-turbo-track": "reload", type: :module %>
-<% end %>

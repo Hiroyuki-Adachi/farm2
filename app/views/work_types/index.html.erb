@@ -14,7 +14,7 @@
       <% @work_types.each do |work_type| %>
         <tr>
           <td><%= work_type_icon_tag(work_type) %></td>
-          <td style="background-color: <%= work_type.bg_color %>; color:<%= work_type.fg_color %>;"><%= work_type.genre_name %></td>
+          <td style="background-color: <%= work_type.bg_color %>; color:<%= work_type.fg_color %>;"><%= work_type.category_name %></td>
           <td style="background-color: <%= work_type.bg_color %>; color:<%= work_type.fg_color %>;"><%= work_type.name %></td>
           <td><%= @work_type_terms.include?(work_type.id) ? '●' : '' %></td>
           <td><%= link_to '修正', edit_work_type_path(work_type), {class: "btn btn-success btn-sm"} %></td>

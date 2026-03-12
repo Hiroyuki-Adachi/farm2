@@ -61,7 +61,7 @@ class IpListTest < ActiveSupport::TestCase
     assert_equal '2.3.4.5', ip.ip_address
     assert_equal true, ip.white_flag
     assert_equal @user.id, ip.created_by
-    assert_equal @user.mail, ip.mail
+    assert_equal @user.login_name, ip.mail
     assert_not_nil ip.hashed_token
     assert_operator ip.confirmation_expired_at, :>, Time.current
     assert_nil ip.expired_on

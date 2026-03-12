@@ -12,7 +12,7 @@ class Users::LineHooksControllerTest < ActionDispatch::IntegrationTest
         {
           type: 'message',
           message: { type: 'text', text: 'token=abcdefg' },
-          source: { userId: @line_user_id },
+          source: { userId: @line_user_id, type: 'user' },
           replyToken: @reply_token
         }
       ]
@@ -33,7 +33,25 @@ class Users::LineHooksControllerTest < ActionDispatch::IntegrationTest
         {
           type: 'message',
           message: { type: 'image' },
-          source: { userId: @line_user_id },
+          source: { userId: @line_user_id, type: 'user' },
+          replyToken: @reply_token
+        }
+      ]
+    }
+
+    LineHookService.expects(:new).never
+
+    post users_line_hooks_path, params: payload, as: :json
+    assert_response :success
+  end
+
+    test 'user以外のソースは LineHookService を呼び出さない' do
+    payload = {
+      events: [
+        {
+          type: 'message',
+          message: { type: 'text', text: 'token=abcdefg' },
+          source: { userId: @line_user_id, type: 'group' },
           replyToken: @reply_token
         }
       ]

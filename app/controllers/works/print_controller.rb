@@ -1,6 +1,7 @@
 class Works::PrintController < ApplicationController
-  include WorksHelper
-  protect_from_forgery :except => [:create, :destroy]
+  include UpdatableWork
+
+  protect_from_forgery except: [:create, :destroy]
 
   before_action :set_work
   before_action :permit_checkable_or_self
@@ -22,6 +23,6 @@ class Works::PrintController < ApplicationController
   end
 
   def permit_checkable_or_self
-    to_error_path unless updatable_work(current_user, @work)
+    to_error_path unless updatable_work?(@work)
   end
 end

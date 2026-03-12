@@ -4,7 +4,7 @@
 <h1>収穫一覧(WCS)</h1>
 <% old_work_type_id = nil %>
 <% old_worked_at = nil %>
-<table class="table table-sm table-bordered">
+<table class="table table-sm table-bordered" data-controller="grouped-rows">
   <thead class="thead-dark">
     <tr>
       <th>品種</th>
@@ -19,7 +19,7 @@
   <% @whole_crops.each do |whole_crop| %>
     <% if whole_crop.work.work_type_id != old_work_type_id %>
       <% old_work_type_id = whole_crop.work.work_type_id %>
-      <tr class="tr-total1 table-primary" data-code1="<%= old_work_type_id %>">
+      <tr class="tr-total1 table-row-primary-bg" data-code1="<%= old_work_type_id %>" data-action="click->grouped-rows#toggleTotal1 keydown->grouped-rows#onKeydown">
         <td><%= whole_crop.work.work_type.name %></td>
         <td colspan="2"></td>
         <td class="numeric"><%= format_rolls(@work_type_totals[old_work_type_id][:rolls]) %></td>
@@ -29,7 +29,7 @@
     <% end %>
     <% if whole_crop.work.model.worked_at.beginning_of_month != old_worked_at %>
       <% old_worked_at = whole_crop.work.model.worked_at.beginning_of_month %>
-      <tr class="tr-total2 table-secondary" data-code1="<%= old_work_type_id %>" data-code2="<%= old_worked_at %>">
+      <tr class="tr-total2 table-row-low" data-code1="<%= old_work_type_id %>" data-code2="<%= old_worked_at %>" data-action="click->grouped-rows#toggleTotal2 keydown->grouped-rows#onKeydown">
         <td></td>
         <td><%= old_worked_at.strftime("%Y年 %m月") %></td>
         <td></td>

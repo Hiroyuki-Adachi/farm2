@@ -13,7 +13,7 @@
 #  solving(問題解決の考察)              :text             default(""), not null
 #  created_at                           :datetime         not null
 #  updated_at                           :datetime         not null
-#  accident_type_id(ヒヤリハット種別ID) :integer          default(0), not null
+#  accident_type_id(ヒヤリハット種別ID) :integer          default(NULL), not null
 #  audience_id(対象者ID)                :integer          default(0), not null
 #  investigator_id(調査責任者ID)        :integer          default(0), not null
 #  work_id(対象日報)                    :integer          not null
@@ -21,7 +21,8 @@
 class Accident < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
-  belongs_to_active_hash :accident_type
+  enum :accident_type_id, {rule: 1, hiyari: 2, other: 9}
+
   belongs_to :work
   belongs_to :investigator, class_name: "Worker"
   belongs_to :audience, class_name: "Worker"
@@ -29,4 +30,8 @@ class Accident < ApplicationRecord
   scope :usual, ->(term) {
     joins(:work).where(works: { term: term }).order("works.worked_at, works.start_at, accidents.id")
   }
+
+  def accident_type_name
+    I18n.t("activerecord.enums.accident.accident_types.#{accident_type_id}")
+  end
 end

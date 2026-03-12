@@ -21,7 +21,7 @@ class ChemicalTypesController < ApplicationController
       update_work_kinds
       redirect_to chemical_types_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -30,7 +30,7 @@ class ChemicalTypesController < ApplicationController
       update_work_kinds
       redirect_to chemical_types_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

@@ -8,8 +8,8 @@ class ApplicationMailer < ActionMailer::Base
     Rails.logger.debug { "Using refresh token: #{refresh_token}" }
 
     client = OAuth2::Client.new(
-      ENV.fetch('GOOGLE_CLIENT_ID'),
-      ENV.fetch('GOOGLE_CLIENT_SECRET'),
+      Rails.application.credentials.dig(:google_client, :id) || ENV.fetch('GOOGLE_CLIENT_ID'),
+      Rails.application.credentials.dig(:google_client, :secret) || ENV.fetch('GOOGLE_CLIENT_SECRET'),
       site: 'https://accounts.google.com',
       authorize_url: '/o/oauth2/auth',
       token_url: '/o/oauth2/token'

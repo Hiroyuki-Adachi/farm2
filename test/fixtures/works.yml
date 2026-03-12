@@ -44,7 +44,7 @@ works1:
   weather_id: '1'
   work_type_id: '11'
   name: ''
-  remarks: "サーバ再起動、データバックアップ、プリンタトナー発注。"
+  remarks: "サーバ再起動、データバックアップ。"
   start_at: '2015-03-21 09:00:00'
   end_at: '2015-03-21 10:00:00'
   fixed_at: 
@@ -53,8 +53,7 @@ works1:
   updated_at: '2015-03-21 00:36:44.851955'
 
 
-works2:
-  id: '1479'
+works_land_total_query:
   term: '2015'
   worked_at: '2015-01-05'
   weather_id: '1'
@@ -64,7 +63,7 @@ works2:
   start_at: '2015-03-21 08:00:00'
   end_at: '2015-03-21 17:00:00'
   fixed_at: '2015-02-28'
-  work_kind_id: '3'
+  work_kind_id: 2
   created_at: '2015-03-21 00:39:18.019382'
   updated_at: '2016-06-13 05:42:42.425741'
 
@@ -362,7 +361,7 @@ works20:
   updated_at: '2015-03-22 01:32:28.20475'
 
 
-works21:
+work_verifying:
   id: '1498'
   term: '2015'
   worked_at: '2015-03-14'
@@ -458,7 +457,7 @@ works26:
   updated_at: '2015-04-20 09:28:35.137269'
 
 
-works27:
+work_for_show_user1:
   id: '1504'
   term: '2015'
   worked_at: '2015-04-18'
@@ -5468,3 +5467,42 @@ work_stat_2019_2:
   created_by: 3
   created_at: '2019-01-01 01:19:23'
   updated_at: '2019-01-01 01:19:23'
+
+work_created_yesterday:
+  term: 2020
+  worked_at: '2020-01-01'
+  weather_id: 1
+  work_type_id: 1
+  name: "昨日入力した作業"
+  start_at: '08:00:00'
+  end_at: '17:00:00'
+  work_kind_id: 1
+  created_by: 3
+  created_at: <%= Time.zone.now - 1.day %>
+  updated_at: <%= Time.zone.now - 1.day %>
+
+work_taue:
+  term: '2015'
+  worked_at: '2015-07-21'
+  weather_id: '1'
+  work_type_id: '2'
+  name: "田植え"
+  start_at: '08:30:00'
+  end_at: '15:00:00'
+  fixed_at: 
+  work_kind_id: 1
+  created_at: '2015-07-22 01:32:28.20475'
+  updated_at: '2015-07-22 01:32:28.20475'
+
+work_task_work:
+  term: '2015'
+  worked_at: '2015-08-01'
+  weather_id: '1'
+  work_type_id: '11'
+  name: "作業指示テスト"
+  start_at: '08:30:00'
+  end_at: '15:00:00'
+  fixed_at: 
+  work_kind_id: 1
+  created_at: '2015-08-01 01:32:28.20475'
+  updated_at: '2015-08-01 01:32:28.20475'

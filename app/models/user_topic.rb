@@ -13,6 +13,10 @@
 #  topic_id(トピックID)          :integer          not null
 #  user_id(利用者ID)             :integer          not null
 #
+# Indexes
+#
+#  ix_user_topics_user_id_topic_id  (user_id,topic_id) UNIQUE
+#
 class UserTopic < ApplicationRecord
   belongs_to :user
   belongs_to :topic
@@ -30,5 +34,9 @@ class UserTopic < ApplicationRecord
 
   def readed!
     update(read_flag: true)
+  end
+
+  def readed?
+    read_flag
   end
 end

@@ -30,8 +30,8 @@
           <td class="numeric"><%= number_to_currency(drying.price(current_system, home.id), {precision: 0, unit: ""}) %></td>
           <td class="numeric"><%= number_to_currency(drying.amount(current_system, home.id), {precision: 0, unit: ""}) %></td>
           <td class="numeric"><%= format_waste_bag(drying.waste_weight) %></td>
-          <td class="numeric"><%= number_to_currency(current_system.waste_price, {precision: 0, unit: ""}) %></td>
-          <td class="numeric"><%= number_to_currency(drying.waste_amount(current_system), {precision: 0, unit: ""}) %></td>
+          <td class="numeric"><%= number_to_currency(drying.waste_price(current_system, home.id), {precision: 0, unit: ""}) %></td>
+          <td class="numeric"><%= number_to_currency(drying.waste_amount(current_system, home.id), {precision: 0, unit: ""}) %></td>
           <td class="numeric"><%= number_to_currency(drying.total_amount(current_system, home.id), {precision: 0, unit: ""}) %></td>
         </tr>
       <% end %>

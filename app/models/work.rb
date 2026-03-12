@@ -22,11 +22,11 @@
 #
 
 class Work < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
-
   require 'ostruct'
 
   ENOUGH = WorkVerification::ENOUGH
+  enum :weather_id, { sunny: 1, cloudy: 2, rainy: 3, snow: 4, other: 9 }
+
   after_save :set_chemical_group_no
 
   validates :worked_at, presence: true
@@ -39,7 +39,6 @@ class Work < ApplicationRecord
   belongs_to :creator, -> {with_deleted}, class_name: "Worker", foreign_key: "created_by"
   belongs_to :printer, -> {with_deleted}, class_name: "Worker", foreign_key: "printed_by"
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
-  belongs_to_active_hash :weather
 
   has_many :work_lands, -> {order('work_lands.display_order')}, dependent: :destroy
   has_many :work_results, -> {order('work_results.display_order')}, dependent: :destroy
@@ -60,6 +59,9 @@ class Work < ApplicationRecord
   has_many :checkers, -> {with_deleted}, through: :work_verifications, source: :worker
   has_many :work_types, through: :work_work_types
   has_many :machines, through: :machine_results
+  
+  has_many :events, class_name: 'TaskEvent', dependent: :nullify
+  has_many :tasks, through: :events
 
   scope :no_fixed, ->(term){
     includes(:work_type, :work_kind)
@@ -69,10 +71,11 @@ class Work < ApplicationRecord
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :DESC, id: :DESC)}
   scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
   scope :by_creator, ->(worker) {where(["works.created_by IS NULL OR works.created_by <> ?", worker.id])}
-  scope :by_work_kind_type, ->(term, work_kind_id, work_type_id) {
+  scope :by_work_kind_type, ->(term, work_kind_id, seedling_home) {
     joins(:work_lands)
       .where(term: term, work_kind_id: work_kind_id)
-      .where([<<SQL.squish, work_type_id]).select(:id, :worked_at).distinct
+      .where(works: { worked_at: seedling_home.sowed_on.. })
+      .where([<<SQL.squish, seedling_home.work_type_id]).select(:id, :worked_at).distinct
     EXISTS (
       SELECT * FROM land_costs lc1
       WHERE
@@ -87,7 +90,7 @@ class Work < ApplicationRecord
 SQL
       .order(worked_at: :ASC, id: :ASC)
   }
-  scope :enough_check, ->(worker) {where([<<SQL.squish, worker.id, worker.position == Position::DIRECTOR ? ENOUGH + 1 : ENOUGH])}
+  scope :enough_check, ->(worker) {where([<<SQL.squish, worker.id, worker.position_id == :director ? ENOUGH + 1 : ENOUGH])}
       NOT EXISTS (
         SELECT work_verifications.work_id FROM work_verifications
           WHERE (work_verifications.work_id = works.id)
@@ -96,6 +99,7 @@ SQL
           HAVING COUNT(*) >= ?
       )
 SQL
+
   scope :by_machines, ->(machines) {where([<<SQL.squish, machines.pluck(:id)])}
   EXISTS (
     SELECT * FROM work_results
@@ -115,28 +119,28 @@ SQL
 SQL
   scope :by_land, ->(land) {where("EXISTS (SELECT * FROM work_lands WHERE works.id = work_lands.work_id AND work_lands.land_id = ?)", land.id)}
 
-  scope :by_chemical, ->(term) {
+  scope :by_chemical, ->(term) do
     where(id: WorkChemical.by_term(term).pluck("work_chemicals.work_id").uniq)
-      .order("worked_at, id")
-  }
+      .order(:worked_at, :id)
+  end
 
   scope :for_cost, ->(term) {where([<<SQL.squish, term, WorkType.land.select(:id)])}
   works.term = ? AND (work_type_id IN (?))
 SQL
 
-  scope :for_broccoli, ->(organization) {
+  scope :for_broccoli, ->(organization) do
     includes(:broccoli)
       .where(
         work_type_id: organization.broccoli_work_type_id,
         work_kind_id: organization.broccoli_work_kind_id
       )
-  }
+  end
 
-  scope :monthly_reports, ->(work_type_id, worked_at) {
+  scope :monthly_reports, ->(work_type_id, worked_at) do
     where(work_type_id: work_type_id)
       .where(worked_at: Date.new(worked_at.year, worked_at.month, 1)..Date.new(worked_at.year, worked_at.month, -1))
       .order(worked_at: :ASC, start_at: :ASC, id: :ASC)
-  }
+  end
 
   scope :landable, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
   scope :machinable, -> {where(<<SQL.squish)}
@@ -145,13 +149,13 @@ SQL
   ))
 SQL
  
-  scope :by_target, ->(term) {
+  scope :by_target, ->(term) do
     joins("INNER JOIN systems ON systems.term = works.term")
      .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
      .where(systems: { term: term })
-  }
+  end
 
-  scope :for_contract, ->(worker, worked_at, work_type_id) {
+  scope :for_contract, ->(worker, worked_at, work_type_id) do
     basic_conditions = where("works.worked_at >= ? AND works.work_type_id = ?", worked_at, work_type_id)
 
     work_lands_table = WorkLand.arel_table
@@ -165,22 +169,63 @@ SQL
                       .exists
 
     basic_conditions.where(exists_subquery)
-  }
+  end
 
-  scope :for_calendar, ->(term, work_kinds) {
+  scope :for_calendar, ->(term, work_kinds) do
     group(:worked_at, :work_kind_id, :work_type_id)
       .select("min(works.id) AS id, works.worked_at, works.work_kind_id, works.work_type_id")
       .includes(:work_kind, :work_type)
       .where(term: term, work_kind_id: work_kinds)
       .order(:worked_at)
-  }
+  end
 
-  scope :for_drying, ->(term, organization) {
+  scope :for_drying, ->(term, organization) do
     select("worked_at")
       .where(term: term, work_kind_id: organization.harvesting_work_kind_id)
       .distinct
-      .order("worked_at")
-  }
+      .order(:worked_at)
+  end
+
+  scope :deliverable, ->(worker_id) do
+    joins(:work_results)
+      .where(created_at: Time.zone.yesterday.all_day)
+      .where.not(created_by: worker_id)
+      .where(work_results: {worker_id: worker_id})
+  end
+
+  scope :for_task, ->(task, days: 30) do
+    work_table = arel_table
+    work_result_table = WorkResult.arel_table
+    work_type_table = WorkType.arel_table
+
+    # 担当者一致：EXISTS (SELECT 1 FROM work_results WHERE work_id = works.id AND worker_id = task.assignee_id)
+    exists_work_results = Arel::Nodes::Exists.new(
+      work_result_table.project(Arel.sql("1"))
+        .where(work_result_table[:work_id].eq(work_table[:id]).and(work_result_table[:worker_id].eq(task.assignee_id)))
+    )
+
+    role_none = WorkType.office_roles[:none] 
+
+    joins(:work_type)
+      .where(worked_at: (Time.zone.today - days)..Time.zone.today) # 期間（既定30日）
+      .where(work_type_table[:office_role].not_eq(role_none)) # 作業分類の役割が none 以外
+      .where(exists_work_results) # 担当者が作業者に含まれる
+      .where.not(id: task.works.select(:id)) # 既に紐づいている日報は除外
+      .includes(:work_kind, :work_results)
+      .order(worked_at: :desc, id: :desc)
+  end
+
+  scope :with_work_type, ->(work_type_id, except = false) do
+    next all if work_type_id.blank?
+
+    except ? where.not(work_type_id: work_type_id) : where(work_type_id: work_type_id)
+  end
+
+  scope :with_work_kind, ->(work_kind_id) { work_kind_id.present? ? where(work_kind_id: work_kind_id) : all }
+
+  scope :worked_from, ->(date) { date.present? ? where(worked_at: date..) : all }
+
+  scope :worked_to, ->(date) { date.present? ? where(worked_at: ..date) : all }
 
   def workers_count
     work_results.count
@@ -234,20 +279,22 @@ SQL
 
   def regist_results(params, current_worker)
     workers = []
-    params.each do |param|
-      worker_id = param[:worker_id].to_i
-      workers << worker_id
-      display_order = param[:display_order].to_i
-      hours = param[:hours].to_f
-      work_result = work_results.find_by(worker_id: worker_id)
-      if work_result
-        # hoursが変更された場合にログを出力
-        Rails.application.config.update_logger.info "updated:#{work_result.worker.name}:#{work_result.hours}:#{hours}" if work_result.hours != hours
-        
-        # display_orderまたはhoursが異なる場合のみupdateを実行
-        work_result.update(display_order: display_order, hours: hours) if work_result.display_order != display_order || work_result.hours != hours
-      else
-        WorkResult.create(work_id: id, worker_id: worker_id, display_order: display_order, hours: hours)
+    if params.present?
+      params.each do |param|
+        worker_id = param[:worker_id].to_i
+        workers << worker_id
+        display_order = param[:display_order].to_i
+        hours = param[:hours].to_f
+        work_result = work_results.find_by(worker_id: worker_id)
+        if work_result
+          # hoursが変更された場合にログを出力
+          Rails.application.config.update_logger.info "updated:#{work_result.worker.name}:#{work_result.hours}:#{hours}" if work_result.hours != hours
+          
+          # display_orderまたはhoursが異なる場合のみupdateを実行
+          work_result.update(display_order: display_order, hours: hours) if work_result.display_order != display_order || work_result.hours != hours
+        else
+          WorkResult.create(work_id: id, worker_id: worker_id, display_order: display_order, hours: hours)
+        end
       end
     end
     
@@ -326,8 +373,8 @@ SQL
     broccoli.destroy if work_type_id == organization.broccoli_work_type_id && work_kind_id == organization.broccoli_work_kind_id && broccoli.present?
   end
 
-  def self.total_all
-    Work.joins(:work_results).group(:term).order(:term).sum("work_results.hours")
+  def self.total_all(terms)
+    Work.where(term: terms).joins(:work_results).group(:term).order(:term).sum("work_results.hours")
   end
 
   def self.total_by_worker(worker, term)
@@ -351,49 +398,23 @@ SQL
   end
 
   def self.total_by_month(worker, term)
+    terms = Array(term)
     results = Array.new(12, 0)
 
-    query = Work.joins(:work_results).where(term: term)
-    query = query.where("work_results.worker_id = ?", worker.id) if worker
+    query = Work.joins(:work_results).where(term: terms)
+    query = query.where(work_results: { worker_id: worker.id }) if worker
     query.group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
-      results[k.to_i - 1] = v
+      results[k.to_i - 1] = (v.to_f / terms.length).round(1)
     end
-    return results
+    results
   end
 
   def self.total_genre
     Work.joins(:work_results)
-        .joins("INNER JOIN work_types ON works.work_type_id = work_types.id")
-        .group(:genre, :term)
-        .order("work_types.genre", :term)
+        .joins(:work_type)
+        .group("work_types.work_genre_id", :term)
+        .order("work_types.work_genre_id", :term)
         .sum("work_results.hours")
-  end
-
-  def self.total_age
-    sql = []
-    sql << "SELECT"
-    sql << "   SUM(work_results.hours) AS hours"
-    sql << " , CASE WHEN workers.gender_id = 2 THEN 5"
-    sql << "     ELSE"
-    sql << "       CASE WHEN date_part('year', age(works.worked_at, workers.birthday)) < 40 THEN 0"
-    sql << "            WHEN date_part('year', age(works.worked_at, workers.birthday)) BETWEEN 40 AND 49 THEN 1"
-    sql << "            WHEN date_part('year', age(works.worked_at, workers.birthday)) BETWEEN 50 AND 59 THEN 2"
-    sql << "            WHEN date_part('year', age(works.worked_at, workers.birthday)) BETWEEN 60 AND 69 THEN 3"
-    sql << "       ELSE 4"
-    sql << "   END END AS age_group"
-    sql << ", works.term"
-    sql << " FROM works"
-    sql << " INNER JOIN work_results ON work_results.work_id = works.id"
-    sql << " INNER JOIN workers ON work_results.worker_id = workers.id"
-    sql << " GROUP BY works.term, age_group"
-    sql << " ORDER BY works.term, age_group"
-
-    results = {}
-    Work.find_by_sql(sql.join("\n")).each do |r|
-      results[[r.term, r.age_group]] = r.hours
-    end
-
-    return results
   end
 
   def self.monthly(term, worked_from, worked_to, worker_id)
@@ -482,14 +503,16 @@ SQL
       .distinct.count(Work.arel_table[:worked_at])
   end
 
-  def self.search_for_work(works, work_search)
-    if work_search[:work_type_id].present?
-      works = work_search[:except] ? works.where.not(work_type_id: work_search[:work_type_id]) : works.where(work_type_id: work_search[:work_type_id]) 
-    end
-    works = works.where(work_kind_id: work_search[:work_kind_id])     if work_search[:work_kind_id].present?
-    works = works.where(["worked_at >= ?", work_search[:worked_at1]]) if work_search[:worked_at1].present?
-    works = works.where(["worked_at <= ?", work_search[:worked_at2]]) if work_search[:worked_at2].present?
-    return works
+  def self.search_for_work(base_relation, params)
+    base_relation
+      .with_work_type(params[:work_type_id], params[:except].present?)
+      .with_work_kind(params[:work_kind_id])
+      .worked_from(params[:worked_at1])
+      .worked_to(params[:worked_at2])
+  end
+
+  def weather_name
+    I18n.t("activerecord.enums.work.weather_ids.#{self.weather_id}")
   end
 
   private

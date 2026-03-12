@@ -1,0 +1,42 @@
+ja: 
+  activerecord: 
+    models:
+      chemical: "薬剤"
+      chemical_type: "薬剤種別"
+      home: "世帯"  #g
+      work_result: "作業結果"  #g
+      land: "土地"  #g
+      work: "作業"  #g
+      work_type: "作業分類"  #g
+      worker: "作業者"  #g
+      work_chemical: "薬剤使用量"
+      machine: "機械"
+      machine_type: "機械種別"
+      machine_result: "機械利用結果"
+      work_kind: "作業種別"
+      system: "システム管理"
+      bank: "金融機関"
+      organization: "営農組合"
+      section: "班"
+      user: "利用者"
+      work_broccoli: "ブロッコリー"
+      schedule: "作業計画"
+      land_place: "場所"
+      land_cost: "土地原価"
+      expense: "原価経費"
+      expense_type: "経費種別"
+      system: "システム"
+      owned_rice_price: "保有米(単価)"
+      cost_type: "原価種別"
+      chemical_inventory: "農薬棚卸"
+      chemical_stock: "農薬在庫"
+      sorimachi_journal: "ソリマチ農業簿記"
+      sorimachi_account: "ソリマチ勘定科目"
+      institution: "施設"
+      cleaning: "清掃"
+      training: "研修"
+      accident: "ヒヤリハット"
+      user_word: "利用者ワード"
+      drying: "乾燥調整"
+      task: "タスク管理"
+      task_template: "定型タスク"

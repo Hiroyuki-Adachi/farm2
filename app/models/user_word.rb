@@ -22,13 +22,29 @@ class UserWord < ApplicationRecord
   before_save :trim_word
   after_save :remove_empty_words
 
-  scope :words, -> { 
-    select(:word).joins(user: :worker)
-    .where(workers: { position_id: Position::DIRECTOR.id }).distinct.pluck(:word)
-  }
+  scope :by_word, ->(word) { where(word: word) }
 
   validates :word, length: { maximum: 128 }
   validates :word, uniqueness: { scope: :user_id }
+
+  def self.words
+    distinct.pluck(:word)
+  end
+
+  def self.match_all_topics!
+    words.each do |word|
+      Topic.by_word(word).find_each do |topic|
+        by_word(word).find_each do |user_word|
+          UserTopic.find_or_create_by(user_id: user_word.user_id, topic_id: topic.id) do |user_topic|
+            user_topic.word = word
+            user_topic.pc_flag = user_word.pc_flag
+            user_topic.sp_flag = user_word.sp_flag
+            user_topic.line_flag = user_word.line_flag
+          end
+        end
+      end
+    end
+  end
 
   private
 

@@ -6,8 +6,13 @@
     <%= f.text_field :name, {maxlength: 10, size: 15, required: true, class: "form-control"} %>
   </div>
   <div class="field mb-3 col-md-2">
-    <%= f.label :genre, class: "col-form-label-lg form-label" %>
-    <%= f.select(:genre, @categories.map {|category| [category.name, category.genre]}, {}, {class: "form-select"}) %>
+    <%= f.label :work_genre_id, class: "col-form-label-lg form-label" %>
+    <%= f.collection_select :work_genre_id,
+      WorkGenre.usual,
+      :id,
+      :combined_name,
+      { include_blank: true },
+      { class: "form-select", required: true } %>
   </div>
 </div>
 <div class="row">
@@ -57,6 +62,10 @@
       <%= f.radio_button :work_flag, false %>
       <label for="work_type_work_flag_false" class="form-check-label form-label">日報に表示しない</label>
     </div>
+  </div>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :office_role, class: "col-form-label-lg form-label" %>
+    <%= f.select(:office_role, enum_options_for(WorkType, :office_role), {}, class: "form-select") %>
   </div>
 </div>
 <div class="row">

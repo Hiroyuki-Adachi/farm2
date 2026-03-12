@@ -4,12 +4,6 @@
   url: "https://www.example.com"
   paid_flag: true
 
-- id: 1
-  code: agri_news
-  name: "日本農業新聞"
-  url: "https://www.agrinews.co.jp"
-  paid_flag: true
-
 - id: 2
   code: agri_my_navi
   name: "マイナビ農業"
@@ -32,4 +26,28 @@
   code: ja_com
   name: "JA新聞"
   url: "https://www.jacom.or.jp"
+  paid_flag: false
+
+- id: 6
+  code: nouson_news
+  name: "農村ニュース"
+  url: "https://www.nouson-n.com"
+  paid_flag: false
+
+- id: 7
+  code: naro
+  name: "農研機構"
+  url: "https://www.naro.go.jp"
+  paid_flag: false
+
+- id: 8
+  code: maff_go
+  name: "農林水産省"
+  url: "https://www.maff.go.jp"
+  paid_flag: false
+
+- id: 9
+  code: yahoo_agri
+  name: "Yahoo!農業"
+  url: "https://news.yahoo.co.jp/media/agrinews"
   paid_flag: false

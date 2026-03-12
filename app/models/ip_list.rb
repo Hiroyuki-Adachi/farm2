@@ -40,8 +40,13 @@ class IpList < ApplicationRecord
 
   scope :blacks, -> { 
     where(white_flag: false, expired_on: nil)
-    .where('block_count >= ?', BLOCK_LIMIT)
+    .where(block_count: BLOCK_LIMIT..)
     .pluck(:ip_address)
+  }
+
+  scope :active, -> {
+    where("current_timestamp <= confirmation_expired_at")
+      .where(expired_on: nil)
   }
 
   def token=(value)
@@ -49,9 +54,7 @@ class IpList < ApplicationRecord
     self.hashed_token = Digest::SHA256.hexdigest(value)
   end
 
-  def token
-    @token
-  end
+  attr_reader :token
 
   def authenticate?(token)
     self.hashed_token == Digest::SHA256.hexdigest(token)
@@ -66,7 +69,7 @@ class IpList < ApplicationRecord
     ip = find_or_initialize_by(ip_address: ip_address)
     ip.white_flag = false
     ip.block_count += 1
-    Rails.cache.delete('black_list') if ip.save
+    return ip.save
   end
 
   def self.white_ip!(ip_address, user)
@@ -76,21 +79,21 @@ class IpList < ApplicationRecord
     ip.token = SecureRandom.random_number(10**6).to_s.rjust(6, '0')
     ip.expired_on = nil
     ip.created_by = user.id
-    ip.mail = user.mail
+    ip.mail = user.login_name
     ip.confirmation_expired_at = 10.minutes.from_now
-    Rails.cache.delete('white_list') if ip.save
+    ip.save
     return ip
   end
 
   def self.white_list
-    Rails.cache.fetch('white_list', expires_in: 1.hour) do
-      LOCAL_ADDRESSES | whites.map { |ip| IPAddr.new(ip) }
-    end
+    LOCAL_ADDRESSES | whites.map { |ip| IPAddr.new(ip) }
   end
 
   def self.black_list
-    Rails.cache.fetch('black_list', expires_in: 1.hour) do
-      blacks.map { |ip| IPAddr.new(ip) }
-    end
+    blacks.map { |ip| IPAddr.new(ip) }
+  end
+
+  def self.find_valid(id, remote_ip)
+    active.find_by(id: id, ip_address: remote_ip, white_flag: true)
   end
 end

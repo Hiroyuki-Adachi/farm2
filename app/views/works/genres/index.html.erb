@@ -1,0 +1,28 @@
+<h1>作業ジャンル一覧</h1>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>作業カテゴリ</th>
+      <th>名称</th>
+      <th colspan="2">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @genres.each do |genre| %>
+      <tr>
+        <td><%= genre.category.name %></td>
+        <td><%= genre.name %></td>
+        <td><%= link_to '修正', edit_work_genre_path(genre), {class: "btn btn-success btn-sm"} %></td>
+        <td><%= link_to '削除', genre, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger btn-sm"} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "新規登録", new_work_genre_path, {class: "btn btn-success"}%>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
+  </div>
+</div>

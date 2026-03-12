@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-bs-theme="<%= current_user&.theme || 'light' %>">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <meta http-equiv="content-language" content="ja" />
@@ -7,10 +7,20 @@
   <meta name="apple-mobile-web-app-title" content="作業日報管理">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.3, maximum-scale=10.0, user-scalable=yes" />
   <title>作業日報管理システム(V2)</title>
+  <%= action_cable_meta_tag %>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
   <%= javascript_importmap_tags %>
   <%= stylesheet_link_tag 'application' %>
+  <%= stylesheet_link_tag 'sp' %>
+  <%= stylesheet_link_tag 'theme', 'data-turbo-track': 'reload' %>
+  <script>
+  (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+    key: "<%= Rails.application.credentials.dig(:google_maps, :api_key) %>",
+    v: "weekly",
+  });
+  </script>
   <%= yield :head %>
-  <%= csrf_meta_tags %>
   <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path('/images/icons/farm2-32.png') %>">
   <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path('/images/icons/farm2-16.png') %>">
   <link rel="apple-touch-icon" href="<%= asset_path('/images/icons/farm2-180.png') %>">
@@ -19,13 +29,14 @@
 <% token = params[:token] || params[:personal_information_token] %>
 <body style="padding-top:64px;">
 <main class="container-fluid">
+<% unless params[:simple] %>
 <div id="site-header">
 <nav class="navbar navbar-dark bg-success fixed-top" role="navigation">
   <%= link_to "作業日報(#{current_name})", personal_information_path(token: token), {class: "navbar-brand ms-2"} %>
-  <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarFarm2" aria-bs-controls="navbarFarm2" aria-expanded="false" aria-label="ナビゲーションの切替">
+  <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar_farm2" aria-bs-controls="navbar_farm2" aria-expanded="false" aria-label="ナビゲーションの切替">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarFarm2">
+  <div class="collapse navbar-collapse" id="navbar_farm2">
     <div class="container">
       <div class="row">
         <div class="col-3">
@@ -45,10 +56,10 @@
           </a>
         </div>
         <div class="col-3">
-          <a href="<%= personal_information_seedlings_path(personal_information_token: token)%>">
+          <a href="http://www.google.com/calendar/render?cid=<%= CGI.escape(personal_calendar_url(token: token)) %>&ctz=Asia/Tokyo" target="_blank">
             <figure class="figure text-center">
-              <%= image_tag "/images/menu/jouro.png", {width: 48, height: 48, class: "figure-img"} %>
-              <figcaption class="figure-caption text-white">育 苗</figcaption>
+              <%= image_tag "/images/menu/google-calendar.png", {width: 48, height: 48, class: "figure-img"} %>
+              <figcaption class="figure-caption text-white">カレンダー</figcaption>
             </figure>
           </a>
         </div>
@@ -63,15 +74,15 @@
       </div>
       <div class="row">
         <div class="col-3">
-          <a href="<%= personal_information_dryings_path(personal_information_token: token)%>">
+          <a href="<%= new_personal_information_scan_path(personal_information_token: token) %>">
             <figure class="figure text-center">
-              <%= image_tag "/images/menu/country.png", {width: 48, height: 48, class: "figure-img"} %>
-              <figcaption class="figure-caption text-white">乾 燥</figcaption>
+              <%= image_tag "/images/menu/qrcode.png", {width: 48, height: 48, class: "figure-img"} %>
+              <figcaption class="figure-caption text-white">QRコード</figcaption>
             </figure>
           </a>
         </div>
         <div class="col-3">
-          <a href="line://oaMessage/<%= ENV.fetch('LINE_CHANNEL_ID') %>/?token=<%= token %>">
+          <a href="line://oaMessage/<%= Rails.application.credentials.dig(:line, :channel_id) %>/?token=<%= token %>">
             <figure class="figure text-center">
               <%= image_tag "/images/menu/line-me.png", {width: 48, height: 48, class: "figure-img"} %>
               <figcaption class="figure-caption text-white">LINE</figcaption>
@@ -99,7 +110,12 @@
   </div>
 </nav>
 </div>
+<% end %>
+<div id="flash_messages" class="row">
+  <%= render "application/flashes", locals: {flash: flash} %>
+</div>
 <%= yield %>
 </main>
+<%= render 'application/popup' %>
 </body>
 </html>

@@ -12,8 +12,8 @@ class MinutesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "議事録一覧(検証者以外)" do
-    login_as(users(:user_user))
+  test "議事録一覧(閲覧者はNG)" do
+    login_as(users(:user_visitor))
     get minutes_path
     assert_response :error
   end

@@ -1,0 +1,7 @@
+<%= turbo_stream.update "task_title", partial: "tasks/titles/show" %>
+
+<% frame_id = dom_id(@task, :title_modal_frame) %>
+<% modal_id = dom_id(@task, :title_modal) %>
+<%= turbo_stream.update frame_id do %>
+  <div data-controller="bs-modal" data-bs-modal-id-value="<%= modal_id %>"></div>
+<% end %>

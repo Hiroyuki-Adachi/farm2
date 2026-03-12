@@ -8,6 +8,7 @@ class Works::WorkersController < WorksController
 
   def create
     @work.regist_results(params[:results], current_user.worker)
+    return redirect_to work_path(@work) if @work.work_results.blank?
     redirect_to new_work_health_path(@work)
   end
 end

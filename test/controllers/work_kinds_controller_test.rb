@@ -4,7 +4,7 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:users1)
     login_as(@user)
-    @work_kind = work_kinds(:work_kinds1)
+    @work_kind = work_kinds(:work_kind_shirokaki)
     @update = { name: "試験", phonetic: 'しけん', display_order: 99, price: 1500, land_flag: true }
   end
 

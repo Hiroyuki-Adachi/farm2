@@ -4,6 +4,8 @@ class PersonalInformationsController < ApplicationController
 
   SCHEDULE_DAY = 3
 
+  helper WorkTypesHelper
+
   def show
     worked_from, worked_to = between_worked_at
     @results1 = WorkResultDecorator.decorate_collection(WorkResult.for_personal(@worker, worked_from, worked_to))
@@ -18,7 +20,7 @@ class PersonalInformationsController < ApplicationController
 
   def set_worker
     @current_user = User.find_by(token: params[:token] || params[:personal_information_token])
-    to_error_path unless @current_user&.worker
+    return to_error_path unless @current_user&.worker
     @worker = @current_user.worker
   end
 

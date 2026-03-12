@@ -24,6 +24,7 @@ class LandCostsController < ApplicationController
     redirect_to land_costs_path(land_place_id: params[:land_place_id]) unless params[:land_costs]
     LandCost.transaction do
       params[:land_costs].each_value do |land_cost|
+        next if land_cost[:work_type_id].blank? || land_cost[:land_id].blank? || land_cost[:activated_on].blank?
         if land_cost[:id].present?
           @land_cost = LandCost.find(land_cost[:id])
           session[:land_cost] = @land_cost.attributes unless @land_cost.update_work_type(land_cost_params(land_cost), current_system.start_date)
@@ -73,7 +74,6 @@ class LandCostsController < ApplicationController
 
   def set_land_cost
     @land_cost = session[:land_cost] ? LandCost.new(session[:land_cost]) : nil
-    @land_cost&.valid?
   end
 
   def land_cost_params(params)

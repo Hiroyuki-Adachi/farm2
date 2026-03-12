@@ -1,5 +1,6 @@
 class SectionsController < ApplicationController
   include PermitManager
+
   before_action :set_section, only: [:edit, :update, :destroy]
 
   def index
@@ -17,7 +18,7 @@ class SectionsController < ApplicationController
     if @section.save
       redirect_to sections_path
     else
-      render action: :new, status: :unprocessable_entity
+      render action: :new, status: :unprocessable_content
     end
   end
 
@@ -25,7 +26,7 @@ class SectionsController < ApplicationController
     if @section.update(section_params)
       redirect_to sections_path
     else
-      render action: :edit, status: :unprocessable_entity
+      render action: :edit, status: :unprocessable_content
     end
   end
 

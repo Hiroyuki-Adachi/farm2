@@ -1,0 +1,123 @@
+import { Controller } from "@hotwired/stimulus"
+import consumer from "channels/consumer"
+
+export default class extends Controller {
+  static targets = ["qrcode", "status"]
+  static values = { url: String, redirectUrl: String, autoGenerate: Boolean, refreshSeconds: Number }
+
+  connect() {
+    if (this.autoGenerateValue) {
+      this.generate()
+    }
+    if (this.hasRefreshSecondsValue && this.refreshSecondsValue > 0) {
+      this.refreshTimer = setInterval(() => {
+        this.generate()
+      }, this.refreshSecondsValue * 1000)
+    }
+  }
+
+  disconnect() {
+    this.clearSubscription()
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer)
+      this.refreshTimer = null
+    }
+  }
+
+  async generate() {
+    if (this.generating) return
+    this.generating = true
+
+    try {
+      this.statusTarget.textContent = "QRコードを生成しています..."
+
+      const res = await fetch(this.urlValue, {
+        method: "POST",
+        headers: {
+          "X-CSRF-Token": this.csrfToken(),
+          "Accept": "application/json"
+        }
+      })
+
+      if (!res.ok) {
+        throw new Error("QR生成に失敗しました")
+      }
+
+      const data = await res.json()
+      const token = data.token
+      const expiresAt = data.expires_at
+
+      // QR画像を表示
+      this.qrcodeTarget.innerHTML = `
+        <img src="${this.urlValue}/${token}/qrcode.svg"
+             class="img-fluid"
+             alt="QRコード">
+      `
+
+      this.statusTarget.textContent =
+        `有効期限: ${this.formatTime(expiresAt)} まで`
+
+      this.currentToken = token;
+      this.clearSubscription()
+
+      this.subscription = consumer.subscriptions.create(
+        { channel: "QrLoginChannel", token: token },
+        {
+          received: (data) => {
+            console.log("QrLoginChannel Received data:", data);
+            if (data.type === "approved") {
+              this.consume();
+            }
+          }
+        }
+      )
+    } catch (error) {
+      console.error(error)
+      this.statusTarget.textContent = "QR生成エラーが発生しました"
+    } finally {
+      this.generating = false
+    }
+  }
+
+  csrfToken() {
+    return document.querySelector('meta[name="csrf-token"]').content
+  }
+
+  formatTime(isoString) {
+    const date = new Date(isoString)
+    return date.toLocaleTimeString()
+  }
+
+  async consume() {
+    if (!this.currentToken) return
+
+    const consumeUrl = new URL(`${this.urlValue}/${this.currentToken}/consume`, window.location.origin)
+    if (this.hasRedirectUrlValue && this.redirectUrlValue) {
+      consumeUrl.searchParams.set("redirect_to", this.redirectUrlValue)
+    }
+
+    const res = await fetch(consumeUrl.toString(), {
+      method: "POST",
+      headers: {
+        "X-CSRF-Token": this.csrfToken(),
+        "Accept": "application/json"
+      }
+    })
+
+    const json = await res.json().catch(() => ({}))
+
+    if (res.ok && json.action === "redirect") {
+      this.clearSubscription()
+      Turbo.visit(json.url)
+    } else {
+      this.statusTarget.textContent = json.message || "ログインに失敗しました"
+    }
+  }
+
+  clearSubscription() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null
+    }
+  }
+}

@@ -21,8 +21,8 @@ class ScheduleDecorator < Draper::Decorator
     model.worked_at.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.worked_at.wday]})"
   end
 
-  def genre_name
-    model.work_type.genre_name + "(#{model.work_type.name})"
+  def category_name
+    "#{model.work_type&.category_name}(#{model.work_type&.name})"
   end
 
   def name
@@ -33,9 +33,17 @@ class ScheduleDecorator < Draper::Decorator
     end
   end
 
-  def worker_names
-    results = workers.map(&:home_name)
+  def section_names
+    results = model.sections.map(&:name)
     return results.to_sentence
+  end
+
+  def participants_count
+    model.schedule_workers.size
+  end
+
+  def section_participants_count(section_id)
+    model.schedule_workers.count { |schedule_worker| schedule_worker.worker&.home&.section_id == section_id }
   end
 
   def work_flag
@@ -56,5 +64,13 @@ class ScheduleDecorator < Draper::Decorator
 
   def end_at
     model.end_at.strftime("%H:%M")
+  end
+
+  def line_flag
+    model.line_flag ? "◯" : ""
+  end
+
+  def minutes_flag
+    model.minutes_flag ? "◯" : ""
   end
 end

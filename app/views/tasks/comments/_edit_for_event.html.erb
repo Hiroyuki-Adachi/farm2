@@ -1,0 +1,25 @@
+<!-- app/views/tasks/comments/_edit_for_event.html.erb -->
+<%= form_with url: (@comment.persisted? ?
+                      task_event_comment_path(task, event) :
+                      task_event_comment_path(task, event)),
+              method: (@comment.persisted? ? :patch : :post),
+              data: { controller: "inline-form",
+                      action: "turbo:submit-end->inline-form#afterSubmit" } do |f| %>
+  <%= error_print(f.object) %>
+
+  <div class="mb-2">
+    <%= f.text_area :body, rows: 3, class: "form-control",
+          value: @comment.body,
+          name: "task_comment[body]",
+          data: { inline_form_target: "textarea",
+                  action: "input->inline-form#autosize keydown.ctrl+Enter->inline-form#submit keydown.meta+Enter->inline-form#submit keydown.esc->inline-form#cancel" } %>
+  </div>
+
+  <div class="d-flex gap-2 justify-content-end">
+    <%= link_to "キャンセル",
+          task_event_comment_path(task, event),
+          data: { turbo_frame: dom_id(event, :comment) },
+          class: "btn btn-sm btn-outline-secondary" %>
+    <%= f.submit "保存", class: "btn btn-sm btn-primary" %>
+  </div>
+<% end %>
