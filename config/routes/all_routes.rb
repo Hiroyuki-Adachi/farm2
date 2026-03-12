@@ -213,6 +213,10 @@ resources :machine_price_headers, controller: :machine_prices, path: "machine_pr
   end
 end
 
+namespace :works do
+  resources :supporters, only: [:index]
+end
+
 resources :works do
   resources :print, controller: "works/print", only: [:create, :destroy]
   resources :healths, controller: "works/healths", only: [:new, :create]
