@@ -65,7 +65,7 @@ class WorkResult < ApplicationRecord
       .joins("INNER JOIN sections ON sections.id = homes.section_id")
       .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
       .where(systems: { term: term })
-      .where(workers: { home_id: Home.supporters.select(:id) })
+      .where(workers: { home_id: Home.supporters.reorder(nil).unscope(:includes, :order).select(:id) })
       .order("sections.display_order, homes.display_order, homes.id, works.worked_at, works.id, workers.display_order, workers.id")
   }
 
