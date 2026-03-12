@@ -213,6 +213,10 @@ resources :machine_price_headers, controller: :machine_prices, path: "machine_pr
   end
 end
 
+namespace :works do
+  resources :supporters, only: [:index]
+end
+
 resources :works do
   resources :print, controller: "works/print", only: [:create, :destroy]
   resources :healths, controller: "works/healths", only: [:new, :create]
@@ -224,7 +228,6 @@ resources :works do
   resources :remarks, controller: "works/remarks", only: [:new, :create]
   resources :chemicals, controller: "works/chemicals", only: [:new, :create], as: :use_chemicals
   resources :whole_crops, controller: "works/whole_crops", only: [:new, :create]
-  resources :supporters, controller: "works/supporters", only: [:index]
   collection do
     get :work_types
     get :work_kinds
