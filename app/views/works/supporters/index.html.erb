@@ -16,7 +16,7 @@
   </thead>
   <tbody>
   <% @results.each do |result| %>
-    <% worked_at = result.work.worked_at.to_date %>
+    <% worked_at = result.object.work.worked_at.to_date %>
     <% month_code = "#{result.worker.home_id}_#{worked_at.strftime('%Y%m')}" %>
     <% if result.worker.home_id != old_home_id %>
       <% old_home_id = result.worker.home_id %>
