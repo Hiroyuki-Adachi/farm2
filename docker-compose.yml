@@ -74,7 +74,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: yarn watch:css
+    command: bundle exec rails dartsass:watch
     volumes:
       - type: bind
         source: .
