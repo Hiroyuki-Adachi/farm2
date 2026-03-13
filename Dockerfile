@@ -41,7 +41,6 @@ RUN mkdir /farm2
 # ホストの設定ファイルをコピー
 COPY Gemfile Gemfile.lock /farm2/
 WORKDIR /farm2
-RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # バンドルインストール
 RUN gem update --system
