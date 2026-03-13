@@ -35,21 +35,12 @@ RUN tar xzvf ruby-$RUBY_VERSION.tar.gz
 WORKDIR /tmp/ruby-$RUBY_VERSION
 RUN ./configure --enable-yjit && make && make install
 
-# 最新版yarnをインストール
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/yarn.gpg
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install yarn
-
 # アプリケーションディレクトリを作成
 RUN mkdir /farm2
 
-# Yarn の依存関係をインストール
-COPY package.json yarn.lock /farm2/
-WORKDIR /farm2
-RUN yarn install
-
 # ホストの設定ファイルをコピー
 COPY Gemfile Gemfile.lock /farm2/
+WORKDIR /farm2
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 # バンドルインストール

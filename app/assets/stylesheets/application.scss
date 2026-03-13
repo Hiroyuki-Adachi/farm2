@@ -1,1 +1,2 @@
-@use 'application.bootstrap';
+// Custom Bootstrap variables should be defined before this import.
+@import "bootstrap";

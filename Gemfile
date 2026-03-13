@@ -11,14 +11,15 @@ gem 'benchmark'
 # The CSV library provides a complete interface to CSV files and data. 
 gem 'csv'
 
-# CSSBundling provides a way to bundle CSS files in Rails applications.
-gem "cssbundling-rails"
 # importmap-rails provides a way to bundle JavaScript files in Rails applications.
 gem 'importmap-rails'
 # propshaft provides a way to bundle JavaScript files in Rails applications.
 gem 'propshaft'
 # Use stimulus for JavaScript
 gem 'stimulus-rails'
+gem "dartsass-rails", "~> 0.5.1"
+gem "bootstrap", "~> 5.3"
+gem "autoprefixer-rails", "~> 10.4"
 
 # daemons provides an easy way to wrap existing ruby scripts (for example a self-written server) to be run as a daemon and to be controlled by simple start/stop/restart commands.
 gem 'daemons'
