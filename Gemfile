@@ -102,6 +102,9 @@ group :development, :test do
   gem 'ruby-lsp'
   # Debugging tool
   gem 'debug'
+
+  # Bullet is a Ruby gem to help you kill N+1 queries and unused eager loading.
+  gem 'bullet'
 end
 
 group :development do
