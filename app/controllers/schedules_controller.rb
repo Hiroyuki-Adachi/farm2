@@ -24,10 +24,13 @@ class SchedulesController < ApplicationController
 
   def create
     @schedule = Schedule.new(schedule_params.merge(created_by: current_user.worker.id))
-    if @schedule.save
-      redirect_to(new_schedule_worker_path(schedule_id: @schedule))
-    else
-      render action: :new, status: :unprocessable_content
+    Schedule.transaction do
+      if @schedule.save
+        @schedule.regist_sections(params[:section_ids])
+        redirect_to schedules_path
+      else
+        render action: :new, status: :unprocessable_content
+      end
     end
   end
 
@@ -37,7 +40,7 @@ class SchedulesController < ApplicationController
     Schedule.transaction do
       if @schedule.update(schedule_params)
         @schedule.model.regist_sections(params[:section_ids])
-        redirect_to(schedules_path)
+        redirect_to schedules_path
       else
         render action: :edit, status: :unprocessable_content
       end

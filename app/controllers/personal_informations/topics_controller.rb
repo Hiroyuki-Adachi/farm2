@@ -1,6 +1,7 @@
 class PersonalInformations::TopicsController < PersonalInformationsController
   def index
     @user_topics = UserTopic.current_topics(@worker.user).sp
+    @search_words = @current_user.user_words.order(:id).pluck(:word).join("、")
   end
 
   def update

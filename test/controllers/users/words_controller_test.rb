@@ -68,4 +68,34 @@ class Users::WordsControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil user_topic
     assert user_topic.read_flag
   end
+
+  test "検索ワード(保守)はvisitorでも利用できる" do
+    logout
+    login_as(users(:user_visitor))
+
+    get new_users_word_path
+    assert_response :success
+
+    assert_difference("UserWord.count", 1) do
+      post users_words_path, params: { user: { user_words_attributes: [{ word: "visitor-word" }] } }
+    end
+    assert_redirected_to new_users_word_path
+
+    created_user_word = UserWord.last
+    assert_equal users(:user_visitor).id, created_user_word.user_id
+    assert_equal "visitor-word", created_user_word.word
+  end
+
+  test "検索ワード(保守)で他ユーザのワードは更新できない" do
+    other_user_word = user_words(:other_user_word)
+
+    assert_no_difference("UserWord.count") do
+      post users_words_path, params: { user: { user_words_attributes: [
+        { id: other_user_word.id, word: "tampered-word" }
+      ] } }
+    end
+
+    assert_response :service_unavailable
+    assert_equal "other-word", other_user_word.reload.word
+  end
 end

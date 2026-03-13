@@ -34,7 +34,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Schedule.count') do
       post schedules_path, params: {schedule: @update}
     end
-    assert_redirected_to new_schedule_worker_path(schedule_id: Schedule.maximum(:id))
+    assert_redirected_to schedules_path
 
     # 作成した作業予定を検証
     schedule = Schedule.last
