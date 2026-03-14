@@ -13,15 +13,13 @@ pin "@tarekraafat/autocomplete.js", to: "@tarekraafat--autocomplete.js.js", prel
 pin_all_from "app/javascript/i18n-js", under: "i18n-js"
 pin "@hotwired/turbo-rails", to: "@hotwired--turbo-rails.js" # @8.0.4
 pin "i18n-js" # @4.4.3
-pin "lodash", to: "https://cdn.jsdelivr.net/npm/lodash/lodash.min.js"
 pin "make-plural" # @7.4.0
 pin "bignumber.js" # @9.1.2
-pin "@kurkle/color", to: "@kurkle--color.js" # @0.3.2
+pin "@kurkle/color", to: "@kurkle--color.js" # @0.3.4
 pin "decimal.js" # @10.4.3
 pin "base64-js" # @1.5.1
 pin "ieee754" # @1.2.1
 pin "@hotwired/turbo", to: "@hotwired--turbo.js" # @8.0.4
-pin "chart.js/auto", to: "https://ga.jspm.io/npm:chart.js@4.5.1/auto/auto.js"
 pin "@rails/actioncable", to: "@rails--actioncable.js" # @7.2.102
 pin "bootstrap", to: "bootstrap.bundle.min.js" # @5.3.8
 pin "qr-scanner", to: "/javascripts/qr-scanner/qr-scanner.min.js"
@@ -34,5 +32,7 @@ pin_all_from "app/javascript/pages", under: "pages", preload: false
 pin "controllers/application", to: "controllers/application.js"
 pin "terra-draw", preload: false # @1.18.1
 pin "terra-draw-google-maps-adapter", preload: false # @1.1.0
-pin "@rails/actioncable", to: "actioncable.esm.js"
 pin_all_from "app/javascript/channels", under: "channels"
+pin "chart.js", to: "chart.js.js" # @4.5.1
+pin "chart.js/auto", to: "chart.js--auto.js" # @4.5.1
+pin "chart.js/chunk", to: "chart.js--chunk.js" # @4.5.1
