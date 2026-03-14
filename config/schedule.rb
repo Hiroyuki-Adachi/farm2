@@ -83,3 +83,7 @@ end
 every '*/10 8-20 * * *' do
   runner "MailsDeliverJob.perform_now"
 end
+
+every :monday, at: '09:10 am' do
+  runner "DailyWeatherCheckJob.perform_now"
+end
