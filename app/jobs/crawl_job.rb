@@ -20,7 +20,8 @@ class CrawlJob < ApplicationJob
       Crawlers::JaComJob,
       Crawlers::NousonNewsJob,
       Crawlers::NaroJob,
-      Crawlers::MaffGoJob
+      Crawlers::MaffGoJob,
+      Crawlers::YahooAgriJob
     ]
   end
 

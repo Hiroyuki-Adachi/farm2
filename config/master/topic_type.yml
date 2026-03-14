@@ -45,3 +45,9 @@
   name: "農林水産省"
   url: "https://www.maff.go.jp"
   paid_flag: false
+
+- id: 9
+  code: yahoo_agri
+  name: "Yahoo!農業"
+  url: "https://news.yahoo.co.jp/media/agrinews"
+  paid_flag: false

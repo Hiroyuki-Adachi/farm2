@@ -49,17 +49,18 @@ class Home < ApplicationRecord
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
+  scope :usual_order, -> {includes(:section).order(Arel.sql("sections.display_order, homes.display_order, homes.id"))}
   scope :usual, -> {
     kept
     .includes(:section)
       .where(sections: { work_flag: true })
-      .order(Arel.sql("sections.display_order, homes.display_order, homes.id"))
+      .usual_order
   }
   scope :list, -> {
     kept
     .includes(:section, :holder)
       .where(company_flag: false)
-      .order(Arel.sql("sections.display_order, homes.display_order, homes.id"))
+      .usual_order
   }
   scope :landable, -> {
     kept
@@ -77,6 +78,7 @@ class Home < ApplicationRecord
   }
   scope :for_seedling, -> {kept.where.not(seedling_order: nil).order(seedling_order: :ASC, id: :ASC)}
   scope :for_fee, -> {kept.where("EXISTS (SELECT 1 FROM lands WHERE homes.id = lands.owner_id AND lands.deleted_at IS NULL AND lands.target_flag = TRUE)")}
+  scope :supporters, -> {kept.includes(:section).where(member_flag: false, sections: { work_flag: true }).usual_order}
 
   validates :phonetic,      presence: true
   validates :name,          presence: true

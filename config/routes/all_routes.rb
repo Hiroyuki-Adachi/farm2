@@ -177,6 +177,9 @@ resources :personal_informations, param: "token", only: [:show] do
   resources :dryings, controller: "personal_informations/dryings", only: [:index]
   resources :owned_rices, controller: "personal_informations/owned_rices", only: [:index]
   resources :minutes, controller: "personal_informations/minutes", only: [:show]
+  get "topics/words/edit", to: "personal_informations/topics/words#edit", as: :edit_topics_words
+  patch "topics/words", to: "personal_informations/topics/words#update", as: :topics_words
+  put "topics/words", to: "personal_informations/topics/words#update"
   resources :topics, controller: "personal_informations/topics", only: [:index, :update]
   resources :maps, controller: "personal_informations/maps", only: [:index]
   resources :mail_confirmations, controller: "personal_informations/mail_confirmations", param: "mail_token", only: [:edit]
@@ -208,6 +211,10 @@ resources :machine_price_headers, controller: :machine_prices, path: "machine_pr
     get :show_machine
     get :show_type
   end
+end
+
+namespace :works do
+  resources :supporters, only: [:index]
 end
 
 resources :works do

@@ -50,6 +50,11 @@ class Schedule < ApplicationRecord
     OR schedules.created_by = ?
   SQL
 
+  scope :for_delivery, ->(worker) {where([<<~SQL.squish, worker.id])}
+    EXISTS (SELECT * FROM schedule_workers
+          WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
+  SQL
+
   scope :for_minute, -> {
     where(["(worked_at BETWEEN (current_timestamp + '-1 year') AND current_timestamp) AND (minutes_flag = ?)", true])
     .order(worked_at: :ASC, id: :ASC)
