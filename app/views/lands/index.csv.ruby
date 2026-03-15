@@ -1,6 +1,6 @@
 require "csv"
 
-CSV.generate(encoding: Encoding::SJIS) do |csv|
+CSV.generate(encoding: "windows-31J") do |csv|
   csv << ["地番", "面積", "所有者", "管理者1", "管理者2", "管理者3", "uuid", "QR"]
 
   @lands.each do |land|
