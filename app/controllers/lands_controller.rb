@@ -7,24 +7,26 @@ class LandsController < ApplicationController
   before_action :set_other_lands, only: [:new, :edit]
   helper GmapHelper
 
-  def index
-    @homes = LandDecorator.homes
-    @home_id = params[:home_id]
-    @sum_areas = (@home_id ? Land.usual.where(owner_id: @home_id) : Land.usual).sum(:area)
+def index
+  @homes = LandDecorator.homes
+  @home_id = params[:home_id]
+  @sum_areas = (@home_id ? Land.usual.where(owner_id: @home_id) : Land.usual).sum(:area)
 
-    respond_to do |format|
-      format.html do
-        @lands = @home_id ? Land.list.where(owner_id: @home_id) : Land.list
-        @lands = LandDecorator.decorate_collection(@lands.page(params[:page]))
-      end
-      format.csv do
-        @lands = Land.usual.expiry(nil).includes(owner: :holder)
-        send_data render_to_string, filename: "lands_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv", type: :csv
-      end
+  respond_to do |format|
+    format.html do
+      @lands = @home_id ? Land.list.where(owner_id: @home_id) : Land.list
+      @lands = LandDecorator.decorate_collection(@lands.page(params[:page]))
+    end
+    format.csv do
+      @lands = Land.usual.expiry(nil)
+      @lands = @lands.where(owner_id: @home_id) if @home_id.present?
+      @lands = @lands.includes(owner: :holder)
+      send_data render_to_string, filename: "lands_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv", type: :csv
     end
   end
+end
 
-  def new
+def new
     @land = Land.new
   end
 

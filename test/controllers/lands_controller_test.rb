@@ -39,6 +39,19 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
     assert_equal %Q({"t": "lands", "val": "#{land.uuid}", "v":1}), row[7]
   end
 
+  test "土地マスタ一覧CSV出力(home_id絞り込み)" do
+    get lands_path(format: :csv, home_id: homes(:home1).id)
+
+    assert_response :success
+
+    rows = CSV.parse(response.body.encode(Encoding::UTF_8, Encoding::SJIS))
+    places = rows.drop(1).map { |row| row[0] }
+
+    assert_includes places, lands(:lands2).place
+    assert_includes places, lands(:lands3).place
+    assert_not_includes places, lands(:lands1).place
+  end
+
   test "土地マスタ一覧(検証者以外)" do
     login_as(users(:user_user))
     get lands_path
