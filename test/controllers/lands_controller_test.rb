@@ -26,7 +26,7 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
     rows = CSV.parse(response.body.encode(Encoding::UTF_8, Encoding::SJIS))
     assert_equal ["地番", "面積", "所有者", "管理者1", "管理者2", "管理者3", "uuid", "QR"], rows.first
 
-    land = Land.usual.expiry(nil).includes(owner: :holder).find_by!(id: lands(:lands1).id)
+    land = Land.usual.expiry.includes(owner: :holder).find_by!(id: lands(:lands1).id)
     row = rows.find { |csv_row| csv_row[0] == land.place }
 
     assert_not_nil row
