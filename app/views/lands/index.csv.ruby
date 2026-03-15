@@ -8,7 +8,7 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
 
     csv << [
       land.place,
-      land.area,
+      land.area&.to_s('F'),
       land.owner&.holder_name.to_s,
       "",
       "",
