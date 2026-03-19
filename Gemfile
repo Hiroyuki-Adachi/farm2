@@ -64,7 +64,7 @@ gem 'rqrcode'
 gem 'chunky_png'
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.22'
 
 # This gem supports operating on xlsx files (Open XML format).
 gem 'rubyXL'
