@@ -37,23 +37,15 @@ class TopicWeeklyReportJobTest < ActiveJob::TestCase
     perform_enqueued_jobs { TopicWeeklyReportJob.perform_now }
   end
 
-  test "全トピックタイプが1件以上なら1行サマリを通知する" do
+  test "全トピックタイプが1件以上なら通知しない" do
     job = TopicWeeklyReportJob.new
     topic_types = [TopicType.find(2), TopicType.find(3), TopicType.find(5)]
 
     job.stubs(:report_topic_types).returns(topic_types)
     Topic.stubs(:group).with(:topic_type_id).returns(stub(count: { 2 => 4, 3 => 2, 5 => 1 }))
 
-    captured = {}
-    LineHookService.expects(:push_message).with do |*args|
-      captured[:message] = args[1]
-      true
-    end.once
+    LineHookService.expects(:push_message).never
 
     perform_enqueued_jobs { job.perform_now }
-
-    assert_includes captured[:message], "全トピックタイプで1件以上を確認しました"
-    assert_not_includes captured[:message], "・マイナビ農業:"
-    assert_not_includes captured[:message], "⚠️ニュース0件"
   end
 end

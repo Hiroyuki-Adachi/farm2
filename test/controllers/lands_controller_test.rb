@@ -1,3 +1,4 @@
+require 'csv'
 require 'test_helper'
 
 class LandsControllerTest < ActionDispatch::IntegrationTest
@@ -14,6 +15,41 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
   test "土地マスタ一覧" do
     get lands_path
     assert_response :success
+  end
+
+  test "土地マスタ一覧CSV出力" do
+    get lands_path(format: :csv)
+
+    assert_response :success
+    assert_equal "text/csv", response.media_type
+
+    rows = CSV.parse(response.body.encode(Encoding::UTF_8, Encoding::SJIS))
+    assert_equal ["地番", "面積", "所有者", "管理者1", "管理者2", "管理者3", "uuid", "QR"], rows.first
+
+    land = Land.usual.expiry.includes(owner: :holder).find_by!(id: lands(:lands1).id)
+    row = rows.find { |csv_row| csv_row[0] == land.place }
+
+    assert_not_nil row
+    assert_equal land.area.to_s, row[1]
+    assert_equal land.owner.holder_name, row[2]
+    assert_equal "", row[3]
+    assert_equal "", row[4]
+    assert_equal "", row[5]
+    assert_equal land.uuid, row[6]
+    assert_equal %Q({"t": "lands", "val": "#{land.uuid}", "v":1}), row[7]
+  end
+
+  test "土地マスタ一覧CSV出力(home_id絞り込み)" do
+    get lands_path(format: :csv, home_id: homes(:home1).id)
+
+    assert_response :success
+
+    rows = CSV.parse(response.body.encode(Encoding::UTF_8, Encoding::SJIS))
+    places = rows.drop(1).map { |row| row[0] }
+
+    assert_includes places, lands(:lands2).place
+    assert_includes places, lands(:lands3).place
+    assert_not_includes places, lands(:lands1).place
   end
 
   test "土地マスタ一覧(検証者以外)" do
