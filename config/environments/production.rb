@@ -108,6 +108,11 @@ Rails.application.configure do
 
   host = ENV.fetch("APP_DOMAIN", "example.com")
   base_path = config.relative_url_root.to_s.sub(%r{/*\z}, "")
+  base_path = if base_path.blank? || base_path == "/"
+    ""
+  else
+    base_path.start_with?("/") ? base_path : "/#{base_path}"
+  end
   default_url_options = { host: host, protocol: "https" }
   default_url_options[:script_name] = base_path if base_path.present?
 
