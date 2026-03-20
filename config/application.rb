@@ -29,6 +29,7 @@ module Farm2
     config.active_record.default_timezone = :local
 
     config.action_controller.include_all_helpers = false
+    config.relative_url_root = ENV["RAILS_RELATIVE_URL_ROOT"].presence
 
     # Allow Active Record Encryption keys to be injected via environment
     # variables in CI where credentials may not be available.

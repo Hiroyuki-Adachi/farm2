@@ -107,9 +107,15 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   host = ENV.fetch("APP_DOMAIN", "example.com")
-  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
+  base_path = config.relative_url_root.to_s.sub(%r{/*\z}, "")
+  default_url_options = { host: host, protocol: "https" }
+  default_url_options[:script_name] = base_path if base_path.present?
+
+  config.action_mailer.default_url_options = default_url_options
   Rails.application.routes.default_url_options[:host] = host
-  Rails.application.routes.default_url_options[:protocol] = 'https'
+  Rails.application.routes.default_url_options[:protocol] = "https"
+  Rails.application.routes.default_url_options[:script_name] = base_path if base_path.present?
+
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
@@ -118,5 +124,5 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-  config.action_cable.url = "wss://shimo-dekisu.farm/farm2/cable"
+  config.action_cable.url = "wss://#{host}#{base_path}/cable"
 end
