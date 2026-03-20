@@ -13,4 +13,5 @@ OmniAuth.config.logger = Rails.logger
 relative_url_root = Rails.application.config.relative_url_root.to_s
 relative_url_root = relative_url_root.sub(%r{/*\z}, "")
 
-OmniAuth.config.path_prefix = [relative_url_root.presence, "auth"].compact.join("/")
+path_segments = [relative_url_root.presence, "auth"].compact
+OmniAuth.config.path_prefix = ("/" + path_segments.join("/")).gsub(%r{//+}, "/")
