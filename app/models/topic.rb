@@ -18,6 +18,7 @@
 #
 class Topic < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+
   belongs_to_active_hash :topic_type
   has_many :user_topics, dependent: :destroy
 

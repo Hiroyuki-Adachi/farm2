@@ -1,13 +1,11 @@
 require 'net/http'
-require 'nokogiri'
 require 'csv'
-require 'openssl'
 
 class ImportJmaJob < ApplicationJob
   queue_as :default
 
   START_YEAR = 2010
-  JMA_URL = "https://www.data.jma.go.jp/gmd/risk/obsdl/".freeze
+  JMA_URL = "https://www.data.jma.go.jp/risk/obsdl/".freeze
   ROW_PLACE = 2
   ROW_TYPE = 3
   ROW_KIND = 5
@@ -28,6 +26,7 @@ class ImportJmaJob < ApplicationJob
   TYPE_WIND_DIRECTION = "最多風向".freeze
 
   KIND_QUALITY = "品質".freeze
+
   def perform(*years)
     if years.empty?
       import(Time.zone.today.year - 1)
@@ -61,11 +60,19 @@ class ImportJmaJob < ApplicationJob
   end
 
   def submit(year)
+    cookies = landing_cookies
+    return if cookies.blank?
+
     uri = URI.parse("#{JMA_URL}show/table")
     req = Net::HTTP::Post.new(uri)
+    req["Cookie"] = cookies
+    req["Referer"] = JMA_URL
+    req["Origin"] = "#{uri.scheme}://#{uri.host}"
     req.set_form_data(submit_params(year))
 
-    return Net::HTTP.start(uri.hostname, uri.port, {use_ssl: true, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}) { |http| http.request(req) }
+    Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
+      http.request(req)
+    end
   end
 
   def submit_params(year)
@@ -73,7 +80,7 @@ class ImportJmaJob < ApplicationJob
       "stationNumList" => '["a0694","a1310","s47741"]',
       "aggrgPeriod" => "1",
       "elementNumList" => '[["202",""],["203",""],["101",""],["301",""],["401",""],["305",""],["503",""],["601",""],["605",""]]',
-      "interAnnualFlag" => "1",
+      "interAnnualType" => "1",
       "ymdList" => "[\"#{year}\",\"#{year}\",\"1\",\"12\",\"1\",\"31\"]",
       "optionNumList" => "[]",
       "downloadFlag" => "true",
@@ -86,8 +93,7 @@ class ImportJmaJob < ApplicationJob
       "csvFlag" => "1",
       "jikantaiFlag" => "0",
       "jikantaiList" => "[]",
-      "ymdLiteral" => "1",
-      "PHPSESSID" => sesid.to_s
+      "ymdLiteral" => "1"
     }
   end
 
@@ -107,12 +113,13 @@ class ImportJmaJob < ApplicationJob
   end
 
   def csv_value(csv, type)
-    if (quality(csv, type, PLACE_HIKAWA) >= quality(csv, type, PLACE_IZUMO)) && (quality(csv, type, PLACE_HIKAWA) >= quality(csv, type, PLACE_MATSUE))
-      return csv[csv_pos(type, PLACE_HIKAWA)]
+    if (quality(csv, type, PLACE_HIKAWA) >= quality(csv, type, PLACE_IZUMO)) &&
+       (quality(csv, type, PLACE_HIKAWA) >= quality(csv, type, PLACE_MATSUE))
+      csv[csv_pos(type, PLACE_HIKAWA)]
     elsif quality(csv, type, PLACE_IZUMO) >= quality(csv, type, PLACE_MATSUE)
-      return csv[csv_pos(type, PLACE_IZUMO)]
+      csv[csv_pos(type, PLACE_IZUMO)]
     else
-      return csv[csv_pos(type, PLACE_MATSUE)]
+      csv[csv_pos(type, PLACE_MATSUE)]
     end
   end
 
@@ -121,30 +128,34 @@ class ImportJmaJob < ApplicationJob
   end
 
   def csv_pos(type, place, kind = nil)
-    pos = @csv_places.index {|cp| cp&.start_with?(place)}
+    pos = @csv_places.index { |cp| cp&.start_with?(place) }
     @csv_types.each_with_index do |ct, i|
       next if i < pos
+
       if ct&.start_with?(type)
         pos = i
         break
       end
     end
     return pos if kind.nil?
+
     @csv_kinds.each_with_index do |ck, i|
       next if i < pos
+
       if ck&.start_with?(kind)
         pos = i
         break
       end
     end
-    return pos
+    pos
   end
 
-  def sesid
+  def landing_cookies
     res = Net::HTTP.get_response(URI.parse(JMA_URL))
     return unless res.is_a?(Net::HTTPSuccess)
 
-    elems = Nokogiri::HTML.parse(res.body, nil).css("#sid")
-    return elems[0].attributes["value"].value
+    Array(res.get_fields("set-cookie"))
+      .map { |cookie| cookie.split(";", 2).first }
+      .join("; ")
   end
 end

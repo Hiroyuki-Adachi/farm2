@@ -6,6 +6,8 @@ class TopicWeeklyReportJob < ApplicationJob
     return if line_id.blank?
 
     message = build_message
+    return if message.blank?
+
     LineHookService.push_message(line_id, message, retry_key: SecureRandom.uuid)
   end
 
@@ -21,7 +23,7 @@ class TopicWeeklyReportJob < ApplicationJob
     end
     has_zero = topic_types.any? { |topic_type| counts[topic_type.id].to_i.zero? }
 
-    return "週次ニュース件数チェック (#{Time.zone.today.strftime('%Y-%m-%d')}): 全トピックタイプで1件以上を確認しました" unless has_zero
+    return unless has_zero
 
     [
       "週次ニュース件数レポート (#{Time.zone.today.strftime('%Y-%m-%d')})",

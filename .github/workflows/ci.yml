@@ -65,15 +65,6 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: yarn
-
-      - name: Install frontend dependencies
-        run: yarn install --frozen-lockfile
-
       - name: Prepare log files required at boot
         run: |
           mkdir -p log

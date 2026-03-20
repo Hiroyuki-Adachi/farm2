@@ -48,7 +48,7 @@ class TotalCost < ApplicationRecord
   scope :usual, ->(term) {
     includes(:total_cost_details, :sorimachi_journal, :sorimachi_account, land: :manager, work: :work_kind, work_chemical: :chemical, seedling_home: :home)
       .where(term: term)
-      .order("total_cost_type_id, display_order, fiscal_flag, occurred_on, id")
+      .order(:total_cost_type_id, :display_order, :fiscal_flag, :occurred_on, :id)
   }
   scope :for_worker, ->(term) {
     where(term: term, total_cost_type_id: [TotalCostType::WORKWORKER.id, TotalCostType::WORKINDIRECT.id])
@@ -109,7 +109,7 @@ class TotalCost < ApplicationRecord
   end
 
   def self.make_work(term, fixed_on)
-    Work.by_term(term).where("worked_at <= ?", fixed_on).find_each do |work|
+    Work.by_term(term).where(worked_at: ..fixed_on).find_each do |work|
       make_work_worker(term, work)
     end
   end
