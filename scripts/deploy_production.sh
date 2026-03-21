@@ -8,6 +8,7 @@ APP_ROOT=${APP_ROOT:-/opt/app/farm2}
 DEPLOY_BRANCH=${DEPLOY_BRANCH:-main}
 RAILS_ENV=${RAILS_ENV:-production}
 RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT:-/farm2}
+NGINX_SITE_DIR=${NGINX_SITE_DIR:-/etc/nginx/sites-enabled}
 
 cd "$APP_ROOT"
 
@@ -52,6 +53,16 @@ RAILS_ENV=$RAILS_ENV RAILS_RELATIVE_URL_ROOT=$RAILS_RELATIVE_URL_ROOT bundle exe
 
 echo "-> Register Cron (whenever)"
 RAILS_ENV=$RAILS_ENV bundle exec whenever --update-crontab farm2
+
+echo "-> Deploy nginx config"
+sudo install -m 644 config/nginx/shimo-dekisu.farm.conf "$NGINX_SITE_DIR/shimo-dekisu.farm.conf"
+sudo install -m 644 config/nginx/shimodekisu-farm.mydns.jp.conf "$NGINX_SITE_DIR/shimodekisu-farm.mydns.jp.conf"
+
+ echo "-> Validate nginx config"
+sudo nginx -t
+
+echo "-> Reload nginx"
+sudo systemctl reload nginx
 
 echo "-> Restart Puma"
 sudo systemctl restart puma
