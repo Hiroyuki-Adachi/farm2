@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   prepend_view_path Rails.root.join("frontend")
   include SessionsHelper
-  helper_method :menu_name
+  helper_method :menu_name, :prefixed_path
 
   before_action :restrict_remote_ip
   before_action :enforce_access_target, if: :user_present?
@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
     return true if request_path_matches?(expected_prefix)
 
     log_out
-    redirect_to root_path
+    redirect_to prefixed_path(root_path)
     false
   end
 
@@ -94,7 +94,7 @@ class ApplicationController < ActionController::Base
 
   def restrict_remote_ip
     if session[:user_id].nil? 
-      redirect_to root_path
+      redirect_to prefixed_path(root_path)
       return false
     end
   end
@@ -124,6 +124,20 @@ class ApplicationController < ActionController::Base
 
   def menu_name
     return controller_name
+  end
+
+  def request_path_prefix
+    normalized_path_prefix(request&.script_name) ||
+      normalized_path_prefix(request&.headers&.[]("X-Forwarded-Prefix")) ||
+      normalized_path_prefix(Rails.application.config.relative_url_root)
+  end
+
+  def prefixed_path(path)
+    normalized = path.to_s
+    prefix = request_path_prefix
+    return normalized if prefix.blank? || normalized.blank? || normalized.start_with?(prefix + "/") || normalized == prefix
+
+    normalized.start_with?("/") ? "#{prefix}#{normalized}" : "#{prefix}/#{normalized}"
   end
 
   def normalized_path_prefix(value)
