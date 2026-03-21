@@ -25,7 +25,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  config.assume_ssl = false
+  config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
@@ -113,6 +113,8 @@ Rails.application.configure do
   else
     base_path.start_with?("/") ? base_path : "/#{base_path}"
   end
+  config.action_controller.relative_url_root = base_path
+
   default_url_options = { host: host, protocol: "https" }
   default_url_options[:script_name] = base_path if base_path.present?
 
