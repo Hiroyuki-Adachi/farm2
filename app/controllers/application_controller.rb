@@ -17,6 +17,16 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def default_url_options
+    prefix = normalized_path_prefix(request&.script_name) ||
+             normalized_path_prefix(request&.headers&.[]("X-Forwarded-Prefix")) ||
+             normalized_path_prefix(Rails.application.config.relative_url_root)
+
+    return {} if prefix.blank?
+
+    { script_name: prefix }
+  end
+
   def sum_hours_key(term)
     "sum_hours#{term}"
   end
@@ -114,6 +124,14 @@ class ApplicationController < ActionController::Base
 
   def menu_name
     return controller_name
+  end
+
+  def normalized_path_prefix(value)
+    path = value.to_s.strip
+    return nil if path.blank? || path == "/"
+
+    normalized = path.start_with?("/") ? path : "/#{path}"
+    normalized.sub(%r{/*\z}, "")
   end
 
   def respond_to_format(format, partial: nil)
