@@ -9,6 +9,7 @@ DEPLOY_BRANCH=${DEPLOY_BRANCH:-main}
 RAILS_ENV=${RAILS_ENV:-production}
 RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT:-/farm2}
 NGINX_SITE_DIR=${NGINX_SITE_DIR:-/etc/nginx/sites-enabled}
+HEALTHCHECK_HOST=${HEALTHCHECK_HOST:-${APP_DOMAIN:-$HOSTNAME}}
 
 cd "$APP_ROOT"
 
@@ -76,6 +77,6 @@ if command -v ss >/dev/null && ss -ltn '( sport = :3000 )' | grep -q 3000; then
   curl -fsSI "http://127.0.0.1:3000/" >/dev/null && echo "Puma OK" || (echo "Puma health NG" && exit 1)
 fi
 
-curl -fsSI "https://$HOSTNAME${RAILS_RELATIVE_URL_ROOT}/" >/dev/null && echo "Nginx path OK" || (echo "Nginx health NG" && exit 1)
+curl -fsSI "https://${HEALTHCHECK_HOST}${RAILS_RELATIVE_URL_ROOT}/" >/dev/null && echo "Nginx path OK" || (echo "Nginx health NG" && exit 1)
 
 echo "==== Complete Deploying ===="
