@@ -10,4 +10,8 @@ end
 OmniAuth.config.allowed_request_methods = [:post, :get]
 OmniAuth.config.silence_get_warning = true
 OmniAuth.config.logger = Rails.logger
-OmniAuth.config.path_prefix = Rails.env.production? ? "/farm2/auth" : "/auth"
+relative_url_root = Rails.application.config.relative_url_root.to_s
+relative_url_root = relative_url_root.sub(%r{/*\z}, "")
+
+path_segments = [relative_url_root.presence, "auth"].compact
+OmniAuth.config.path_prefix = ("/" + path_segments.join("/")).gsub(%r{//+}, "/")
