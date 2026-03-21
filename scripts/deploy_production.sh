@@ -70,12 +70,12 @@ sudo systemctl restart puma
 echo "-> Restart delayed_job"
 sudo systemctl restart delayed_job
 
-# 簡易ヘルスチェック（Puma直／Nginx経由どちらか）
+# 簡易ヘルスチェック（Puma直とNginx経由を個別確認）
 echo "-> Health check"
 if command -v ss >/dev/null && ss -ltn '( sport = :3000 )' | grep -q 3000; then
-  curl -fsSI "http://127.0.0.1:3000${RAILS_RELATIVE_URL_ROOT}/" >/dev/null && echo "Puma OK" || (echo "Puma health NG" && exit 1)
-else
-  curl -fsSI "https://$HOSTNAME${RAILS_RELATIVE_URL_ROOT}/" >/dev/null && echo "Nginx path OK" || (echo "Nginx health NG" && exit 1)
+  curl -fsSI "http://127.0.0.1:3000/" >/dev/null && echo "Puma OK" || (echo "Puma health NG" && exit 1)
 fi
+
+curl -fsSI "https://$HOSTNAME${RAILS_RELATIVE_URL_ROOT}/" >/dev/null && echo "Nginx path OK" || (echo "Nginx health NG" && exit 1)
 
 echo "==== Complete Deploying ===="
