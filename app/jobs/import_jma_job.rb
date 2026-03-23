@@ -111,9 +111,10 @@ class ImportJmaJob < ApplicationJob
   end
 
   def end_date_for(year)
-    return Date.new(year, 12, 31) unless year.to_i == Time.zone.today.year
+    year = year.to_i
+    return Date.new(year, 12, 31) unless year == Time.zone.today.year
 
-    Time.zone.yesterday
+    Time.zone.yesterday.to_date
   end
 
   def csv_params(csv)
