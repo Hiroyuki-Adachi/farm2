@@ -19,13 +19,13 @@ Rails.application.configure do
   config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.year.to_i}" }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.asset_host = ENV.fetch("ASSET_HOST", "https://assets.example.com")
+  config.asset_host = ENV["ASSET_HOST"].presence
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  config.assume_ssl = false
+  config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
@@ -107,9 +107,22 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   host = ENV.fetch("APP_DOMAIN", "example.com")
-  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
+  base_path = config.relative_url_root.to_s.sub(%r{/*\z}, "")
+  base_path = if base_path.blank? || base_path == "/"
+    ""
+  else
+    base_path.start_with?("/") ? base_path : "/#{base_path}"
+  end
+  config.action_controller.relative_url_root = base_path
+
+  default_url_options = { host: host, protocol: "https" }
+  default_url_options[:script_name] = base_path if base_path.present?
+
+  config.action_mailer.default_url_options = default_url_options
   Rails.application.routes.default_url_options[:host] = host
-  Rails.application.routes.default_url_options[:protocol] = 'https'
+  Rails.application.routes.default_url_options[:protocol] = "https"
+  Rails.application.routes.default_url_options[:script_name] = base_path if base_path.present?
+
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
@@ -118,5 +131,5 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-  config.action_cable.url = "wss://shimo-dekisu.farm/farm2/cable"
+  config.action_cable.url = "wss://#{host}#{base_path}/cable"
 end

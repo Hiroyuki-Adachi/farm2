@@ -8,6 +8,8 @@ APP_ROOT=${APP_ROOT:-/opt/app/farm2}
 DEPLOY_BRANCH=${DEPLOY_BRANCH:-main}
 RAILS_ENV=${RAILS_ENV:-production}
 RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT:-/farm2}
+NGINX_SITE_DIR=${NGINX_SITE_DIR:-/etc/nginx/sites-enabled}
+HEALTHCHECK_HOST=${HEALTHCHECK_HOST:-${APP_DOMAIN:-$HOSTNAME}}
 
 cd "$APP_ROOT"
 
@@ -53,18 +55,28 @@ RAILS_ENV=$RAILS_ENV RAILS_RELATIVE_URL_ROOT=$RAILS_RELATIVE_URL_ROOT bundle exe
 echo "-> Register Cron (whenever)"
 RAILS_ENV=$RAILS_ENV bundle exec whenever --update-crontab farm2
 
+echo "-> Deploy nginx config"
+sudo install -m 644 config/nginx/shimo-dekisu.farm.conf "$NGINX_SITE_DIR/shimo-dekisu.farm.conf"
+sudo install -m 644 config/nginx/shimodekisu-farm.mydns.jp.conf "$NGINX_SITE_DIR/shimodekisu-farm.mydns.jp.conf"
+
+ echo "-> Validate nginx config"
+sudo nginx -t
+
+echo "-> Reload nginx"
+sudo systemctl reload nginx
+
 echo "-> Restart Puma"
 sudo systemctl restart puma
 
 echo "-> Restart delayed_job"
 sudo systemctl restart delayed_job
 
-# 簡易ヘルスチェック（Puma直／Nginx経由どちらか）
+# 簡易ヘルスチェック（Puma直とNginx経由を個別確認）
 echo "-> Health check"
 if command -v ss >/dev/null && ss -ltn '( sport = :3000 )' | grep -q 3000; then
-  curl -fsSI "http://127.0.0.1:3000${RAILS_RELATIVE_URL_ROOT}/" >/dev/null && echo "Puma OK" || (echo "Puma health NG" && exit 1)
-else
-  curl -fsSI "https://$HOSTNAME${RAILS_RELATIVE_URL_ROOT}/" >/dev/null && echo "Nginx path OK" || (echo "Nginx health NG" && exit 1)
+  curl -fsSI "http://127.0.0.1:3000/" >/dev/null && echo "Puma OK" || (echo "Puma health NG" && exit 1)
 fi
+
+curl -fsSI "https://${HEALTHCHECK_HOST}${RAILS_RELATIVE_URL_ROOT}/" >/dev/null && echo "Nginx path OK" || (echo "Nginx health NG" && exit 1)
 
 echo "==== Complete Deploying ===="

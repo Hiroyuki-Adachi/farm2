@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
+require_relative "../lib/forwarded_prefix_middleware"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -29,6 +30,8 @@ module Farm2
     config.active_record.default_timezone = :local
 
     config.action_controller.include_all_helpers = false
+    config.relative_url_root = ENV["RAILS_RELATIVE_URL_ROOT"].presence
+    config.middleware.insert_before 0, ForwardedPrefixMiddleware
 
     # Allow Active Record Encryption keys to be injected via environment
     # variables in CI where credentials may not be available.
