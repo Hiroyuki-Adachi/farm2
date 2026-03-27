@@ -52,7 +52,7 @@ every 1.day, at: '07:05 am' do
   runner "CrawlJob.perform_now(perform_now: true)"
 end
 
-every 1.day, at: '07:38 am' do
+every 1.day, at: '11:50 pm' do
   runner "ImportJmaJob.perform_now"
 end
 
