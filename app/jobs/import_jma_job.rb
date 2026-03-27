@@ -42,7 +42,13 @@ class ImportJmaJob < ApplicationJob
 
   def import(year)
     res = submit(year)
-    return unless res.is_a?(Net::HTTPSuccess)
+    return if res.nil?
+    unless res.is_a?(Net::HTTPSuccess)
+      Rails.logger.warn("ImportJmaJob: request failed year=#{year} status=#{res.code}")
+      return
+    end
+
+    imported_rows = 0
 
     CSV.parse(res.body.encode(Encoding::UTF_8, Encoding::Shift_JIS)).each_with_index do |csv, i|
       @csv_places = csv if i == ROW_PLACE
@@ -50,6 +56,7 @@ class ImportJmaJob < ApplicationJob
       @csv_kinds = csv if i == ROW_KIND
       next if i < ROW_DATA
 
+      imported_rows += 1
       daily_weather = DailyWeather.find_by(target_date: csv[0])
       if daily_weather
         daily_weather.update(csv_params(csv))
@@ -57,6 +64,10 @@ class ImportJmaJob < ApplicationJob
         DailyWeather.create(csv_params(csv))
       end
     end
+
+    return unless imported_rows.zero?
+
+    Rails.logger.info("ImportJmaJob: no data rows year=#{year} end_date=#{end_date_for(year)}")
   end
 
   def submit(year)
@@ -76,12 +87,14 @@ class ImportJmaJob < ApplicationJob
   end
 
   def submit_params(year)
+    end_date = end_date_for(year)
+
     {
       "stationNumList" => '["a0694","a1310","s47741"]',
       "aggrgPeriod" => "1",
       "elementNumList" => '[["202",""],["203",""],["101",""],["301",""],["401",""],["305",""],["503",""],["601",""],["605",""]]',
       "interAnnualType" => "1",
-      "ymdList" => "[\"#{year}\",\"#{year}\",\"1\",\"12\",\"1\",\"31\"]",
+      "ymdList" => "[\"#{year}\",\"#{end_date.year}\",\"1\",\"#{end_date.month}\",\"1\",\"#{end_date.day}\"]",
       "optionNumList" => "[]",
       "downloadFlag" => "true",
       "rmkFlag" => "1",
@@ -95,6 +108,13 @@ class ImportJmaJob < ApplicationJob
       "jikantaiList" => "[]",
       "ymdLiteral" => "1"
     }
+  end
+
+  def end_date_for(year)
+    year = year.to_i
+    return Date.new(year, 12, 31) unless year == Time.zone.today.year
+
+    Time.zone.yesterday.to_date
   end
 
   def csv_params(csv)
@@ -152,10 +172,20 @@ class ImportJmaJob < ApplicationJob
 
   def landing_cookies
     res = Net::HTTP.get_response(URI.parse(JMA_URL))
-    return unless res.is_a?(Net::HTTPSuccess)
+    unless res.is_a?(Net::HTTPSuccess)
+      Rails.logger.warn("ImportJmaJob: failed to fetch landing page status=#{res&.code || 'none'}")
+      return
+    end
 
-    Array(res.get_fields("set-cookie"))
+    cookies = Array(res.get_fields("set-cookie"))
       .map { |cookie| cookie.split(";", 2).first }
       .join("; ")
+
+    if cookies.blank?
+      Rails.logger.info("ImportJmaJob: landing page returned no cookies")
+      return
+    end
+
+    cookies
   end
 end

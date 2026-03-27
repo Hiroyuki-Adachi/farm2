@@ -33,11 +33,22 @@ class ImportJmaJobTest < ActiveJob::TestCase
   end
 
   test "submit params match current jma contract" do
-    params = ImportJmaJob.new.send(:submit_params, 2025)
+    travel_to Time.zone.local(2026, 3, 23, 9, 0, 0) do
+      params = ImportJmaJob.new.send(:submit_params, 2025)
 
-    assert_equal "1", params["interAnnualType"]
-    assert_nil params["interAnnualFlag"]
-    assert_nil params["PHPSESSID"]
+      assert_equal "1", params["interAnnualType"]
+      assert_nil params["interAnnualFlag"]
+      assert_nil params["PHPSESSID"]
+      assert_equal "[\"2025\",\"2025\",\"1\",\"12\",\"1\",\"31\"]", params["ymdList"]
+    end
+  end
+
+  test "submit params limit current year to yesterday" do
+    travel_to Time.zone.local(2026, 3, 23, 9, 0, 0) do
+      params = ImportJmaJob.new.send(:submit_params, 2026)
+
+      assert_equal "[\"2026\",\"2026\",\"1\",\"3\",\"1\",\"22\"]", params["ymdList"]
+    end
   end
 
   private
