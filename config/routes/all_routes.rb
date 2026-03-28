@@ -123,6 +123,7 @@ namespace :lands do
   resources :fees, only: [:index, :create, :edit, :update]
   resources :totals, only: [:index]
   resources :straws, only: [:index]
+  resources :chemicals, only: [:index]
 end
 resources :lands, except: [:show] do
   resources :owners, controller: "lands/owners", only: [:index, :create, :destroy]
