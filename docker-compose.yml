@@ -5,7 +5,7 @@ x-ssh-agent-env: &ssh_agent_env
 
 x-ssh-agent-volume: &ssh_agent_volume
   type: bind
-  source: ${SSH_AUTH_SOCK:?Host SSH_AUTH_SOCK is required for agent forwarding}
+  source: ${SSH_AUTH_SOCK:-./.dummy-ssh-agent}
   target: /ssh-agent
   read_only: true
 
