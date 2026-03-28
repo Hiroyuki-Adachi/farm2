@@ -2,8 +2,8 @@ class WorkChemicalsController < ApplicationController
   include PermitManager
 
   def index
-    @works = WorkDecorator.decorate_collection(Work.by_chemical(@term).includes(:work_kind))
-    @chemicals = Chemical.by_term(@term)
+    @works = WorkDecorator.decorate_collection(Work.by_chemical(current_term).includes(:work_kind))
+    @chemicals = Chemical.by_term(current_term)
     calc_work_chemicals
     respond_to do |format|
       format.html
@@ -20,7 +20,7 @@ class WorkChemicalsController < ApplicationController
     @work_types = {}
     work_rate_denom = Hash.new { |h, k| h[k] = Hash.new(&h.default_proc) }
     work_rate_numer = Hash.new { |h, k| h[k] = {} }
-    work_chemicals_temp = WorkChemical.by_term(@term)
+    work_chemicals_temp = WorkChemical.by_term(current_term).includes(work: :work_lands)
     work_chemicals_temp.each do |work_chemical|
       next if (work_chemical.work.work_lands&.count || 0).zero?
       LandCost.sum_area_by_lands(work_chemical.work.worked_at, work_chemical.work.lands.ids).each do |work_type_id, area|
