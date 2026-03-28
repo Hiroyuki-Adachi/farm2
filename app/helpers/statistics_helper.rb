@@ -78,4 +78,42 @@ module StatisticsHelper
     }
     return results
   end
+
+  def tab5_labels(total_worker)
+    total_worker.map { |total| total[0] - 2000 }
+  end
+
+  def tab5_datasets(total_worker, total_home)
+    [
+      {
+        label: "本人",
+        data: total_worker.map { |total| total[1].to_f },
+        backgroundColor: COLORS[0],
+        fill: false
+      },
+      {
+        label: "世帯",
+        data: total_home.map { |total| total[1].to_f },
+        backgroundColor: "rgba(192, 192, 192, 1.0)",
+        fill: false
+      }
+    ]
+  end
+
+  def tab6_datasets(total_month1, total_month2)
+    [
+      {
+        label: "前年度",
+        data: total_month1.map(&:to_f),
+        backgroundColor: "rgba(192, 192, 192, 1.0)",
+        fill: true
+      },
+      {
+        label: "今年度",
+        data: total_month2.map(&:to_f),
+        backgroundColor: COLORS[0],
+        fill: true
+      }
+    ]
+  end
 end

@@ -46,6 +46,8 @@ namespace :tablets do
       get :tab2
       get :tab3
       get :tab4
+      get :tab5
+      get :tab6
     end
   end
 end

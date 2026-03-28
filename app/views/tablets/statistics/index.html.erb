@@ -1,5 +1,5 @@
 <div data-controller="page-loader" data-page-loader-modules-value="pages/tablets/statistics">
-  <h1 class="h3 mb-3">統計情報一覧</h1>
+  <h1 class="h3 mb-3">統計情報一覧（<%= current_user.worker.name %>）</h1>
 
   <ul class="nav nav-pills nav-fill gap-2 mb-3 statistics-tablet-tabs">
     <li class="nav-item">
@@ -13,6 +13,12 @@
     </li>
     <li class="nav-item">
       <%= link_to "月別作業時間", "#", class: "nav-link py-3 fs-5", data: { tab: 4, action: tab4_tablets_statistics_path } %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "個人年間推移", "#", class: "nav-link py-3 fs-5", data: { tab: 5, action: tab5_tablets_statistics_path } %>
+    </li>
+    <li class="nav-item">
+      <%= link_to "個人前年同月比", "#", class: "nav-link py-3 fs-5", data: { tab: 6, action: tab6_tablets_statistics_path } %>
     </li>
   </ul>
 
