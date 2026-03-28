@@ -82,7 +82,7 @@ class Lands::ChemicalsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "#map", 1
-    assert_select "input[type=hidden][name=regions][data-id='#{map_land.id}'][data-color='#f8d7da']", 1
+    assert_select "input[type=hidden][name=regions][data-id='#{map_land.id}'][data-color='#ff4d4f']", 1
     assert_select "input[type=hidden][name=regions][data-id='#{map_land.id}'][data-actual]", 1
     assert_select "input[type=hidden][name=regions][data-id='#{excluded_land.id}']", 0
   end

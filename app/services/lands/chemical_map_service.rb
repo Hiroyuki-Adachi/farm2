@@ -10,11 +10,11 @@ class Lands::ChemicalMapService
   end
 
   COLORS = {
-    over_20: "#f8d7da",
-    over_10: "#fff3cd",
-    within_10: "#d1e7dd",
-    under_10: "#cff4fc",
-    under_20: "#cfe2ff"
+    over_20: "#ff4d4f",
+    over_10: "#ffd60a",
+    within_10: "#34c759",
+    under_10: "#64d2ff",
+    under_20: "#0a84ff"
   }.freeze
 
   def self.call(term:, work_kind_id:, chemical_type_id:)
