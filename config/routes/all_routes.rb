@@ -40,6 +40,16 @@ namespace :tablets do
   resource :session, only: [:new]
   resources :menu, only: [:index]
   resources :maps, only: [:index]
+  resources :statistics, only: [:index] do
+    collection do
+      get :tab1
+      get :tab2
+      get :tab3
+      get :tab4
+      get :tab5
+      get :tab6
+    end
+  end
 end
 resources :ip_lists, only: [:new, :create, :edit, :update]
 resources :zgis, only: [:new, :create]

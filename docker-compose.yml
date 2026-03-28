@@ -1,4 +1,14 @@
 name: "farm2"
+
+x-ssh-agent-env: &ssh_agent_env
+  SSH_AUTH_SOCK: /ssh-agent
+
+x-ssh-agent-volume: &ssh_agent_volume
+  type: bind
+  source: ${SSH_AUTH_SOCK:-./.dummy-ssh-agent}
+  target: /ssh-agent
+  read_only: true
+
 services:
   db:
     image: groonga/pgroonga:latest-debian-16
@@ -30,12 +40,14 @@ services:
     tty: true
     stdin_open: true
     environment:
+      <<: *ssh_agent_env
       RUBY_DEBUG_LOCAL_FS_MAP: "/farm2:${PWD}"
       RUBY_DEBUG_PORT: 12345
       CHROME_URL: "http://chrome:3333"
       RAILS_ENV: development
       RUBYOPT: "--yjit"
     volumes:
+      - *ssh_agent_volume
       - type: bind
         source: .
         target: /farm2
@@ -60,9 +72,11 @@ services:
       context: .
       dockerfile: ./Dockerfile
     environment:
+      <<: *ssh_agent_env
       RAILS_ENV: development
     command: bundle exec rails jobs:work
     volumes:
+      - *ssh_agent_volume
       - type: bind
         source: .
         target: /farm2
@@ -74,8 +88,11 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    environment:
+      <<: *ssh_agent_env
     command: bundle exec rails dartsass:watch
     volumes:
+      - *ssh_agent_volume
       - type: bind
         source: .
         target: /farm2
