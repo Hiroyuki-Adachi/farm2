@@ -66,8 +66,6 @@ services:
         condition: service_started
       worker:
         condition: service_started
-    security_opt:
-      - seccomp=unconfined
 
   worker:
     build:
