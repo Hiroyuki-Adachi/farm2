@@ -34,7 +34,7 @@
     extra_data: {
       actual: summary&.actual_display || "0.0",
       standard: summary&.standard_display || "0.0",
-      status: summary&.status || :equal
+      status: summary&.status || :within_10
     }
   ) %>
 <% end %>
