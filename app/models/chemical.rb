@@ -160,6 +160,27 @@ ORDER
     return quantity == 1 ? "" : quantity
   end
 
+
+def self.link_pesticide_masters_by_name_normalized!
+  duplicate_names = PesticideMaster.group(:name_normalized).having("COUNT(*) > 1").pluck(:name_normalized)
+  unique_map = PesticideMaster.where.not(name_normalized: duplicate_names).pluck(:name_normalized, :id).to_h
+
+  updated = 0
+  kept.where(pesticide_master_id: nil, name: unique_map.keys).find_each do |chemical|
+    pesticide_master_id = unique_map[chemical.name]
+    next if pesticide_master_id.nil?
+
+    chemical.update_columns(pesticide_master_id: pesticide_master_id)
+    updated += 1
+  end
+
+  {
+    updated: updated,
+    unmatched: kept.where(pesticide_master_id: nil).count,
+    duplicate_master_names: duplicate_names.size
+  }
+end
+
   attr_writer :this_term_flag
 
   private

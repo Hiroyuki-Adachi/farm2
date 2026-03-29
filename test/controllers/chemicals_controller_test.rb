@@ -41,14 +41,12 @@ class ChemicalsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to chemicals_path
 
-    # 薬剤データの検証
     chemical = Chemical.last
     assert_equal @new_chemical_false[:name], chemical.name
     assert_equal @new_chemical_false[:phonetic], chemical.phonetic
     assert_equal @new_chemical_false[:display_order], chemical.display_order
     assert_equal @new_chemical_false[:chemical_type_id], chemical.chemical_type_id
 
-    # 薬剤利用データの検証
     assert_not ChemicalTerm.exists?(term: @term, chemical_id: chemical)
   end
 
@@ -58,14 +56,12 @@ class ChemicalsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to chemicals_path
 
-    # 薬剤データの検証
     chemical = Chemical.last
     assert_equal @new_chemical_true[:name], chemical.name
     assert_equal @new_chemical_true[:phonetic], chemical.phonetic
     assert_equal @new_chemical_true[:display_order], chemical.display_order
     assert_equal @new_chemical_true[:chemical_type_id], chemical.chemical_type_id
 
-    # 薬剤利用データの検証
     assert ChemicalTerm.exists?(term: @term, chemical_id: chemical)
   end
 
@@ -80,14 +76,12 @@ class ChemicalsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to chemicals_path
 
-    # 薬剤データの検証
     @chemical.reload
     assert_equal @new_chemical_false[:name], @chemical.name
     assert_equal @new_chemical_false[:phonetic], @chemical.phonetic
     assert_equal @new_chemical_false[:display_order], @chemical.display_order
     assert_equal @new_chemical_false[:chemical_type_id], @chemical.chemical_type_id
-    
-    # 薬剤利用データの検証
+
     assert_not ChemicalTerm.exists?(term: @term, chemical_id: @chemical.id)
   end
 
@@ -97,14 +91,12 @@ class ChemicalsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to chemicals_path
 
-    # 薬剤データの検証
     @chemical.reload
     assert_equal @new_chemical_true[:name], @chemical.name
     assert_equal @new_chemical_true[:phonetic], @chemical.phonetic
     assert_equal @new_chemical_true[:display_order], @chemical.display_order
     assert_equal @new_chemical_true[:chemical_type_id], @chemical.chemical_type_id
-    
-    # 薬剤利用データの検証
+
     assert ChemicalTerm.exists?(term: @term, chemical_id: @chemical.id)
   end
 
@@ -115,5 +107,33 @@ class ChemicalsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to chemicals_path
 
     assert_nil Chemical.kept.find_by(id: @chemical.id)
+  end
+
+  test "統合農薬マスタ自動紐づけ" do
+    pesticide_master = PesticideMaster.create!(
+      registration_number: 999999,
+      name: 'ﾗｳﾝﾄﾞｱｯﾌﾟ',
+      pesticide_kind: '除草剤',
+      registrant_name: '試験会社',
+      usage: '除草剤',
+      formulation_name: '液剤',
+      mixture_count: 1,
+      registered_on: Date.new(2026, 3, 29)
+    )
+    chemical = Chemical.create!(
+      name: 'ラウンドアップ',
+      phonetic: 'らうんどあっぷ',
+      display_order: 999,
+      chemical_type: chemical_types(:chemical_types0),
+      base_unit_id: 1
+    )
+
+    assert_equal 'ラウンドアップ', pesticide_master.name_normalized
+    assert_nil chemical.pesticide_master_id
+
+    post link_pesticide_masters_chemicals_path
+
+    assert_redirected_to chemicals_path
+    assert_equal pesticide_master.id, chemical.reload.pesticide_master_id
   end
 end

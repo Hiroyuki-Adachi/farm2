@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_29_180000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_29_195000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -598,11 +598,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_29_180000) do
   create_table "pesticide_masters", comment: "統合農薬マスタ", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "formulation_name", limit: 50, default: "", null: false, comment: "剤型名"
+    t.string "formulation_name_normalized", limit: 50, default: "", null: false, comment: "剤型名(正規化)"
     t.integer "mixture_count", default: 0, null: false, comment: "混合数"
     t.string "name", limit: 255, default: "", null: false, comment: "農薬の名称"
+    t.string "name_normalized", limit: 255, default: "", null: false, comment: "農薬の名称(正規化)"
     t.string "pesticide_kind", limit: 255, default: "", null: false, comment: "農薬の種類"
+    t.string "pesticide_kind_normalized", limit: 255, default: "", null: false, comment: "農薬の種類(正規化)"
     t.date "registered_on", comment: "登録年月日"
     t.string "registrant_name", limit: 255, default: "", null: false, comment: "登録を有する者の名称"
+    t.string "registrant_name_normalized", limit: 255, default: "", null: false, comment: "登録を有する者の名称(正規化)"
     t.integer "registration_number", null: false, comment: "登録番号"
     t.datetime "updated_at", null: false
     t.string "usage", limit: 50, default: "", null: false, comment: "用途"

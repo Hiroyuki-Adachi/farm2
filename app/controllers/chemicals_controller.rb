@@ -8,6 +8,12 @@ class ChemicalsController < ApplicationController
     @chemicals = ChemicalDecorator.decorate_collection(Chemical.list.page(params[:page]))
   end
 
+  def link_pesticide_masters
+    stats = Chemical.link_pesticide_masters_by_name_normalized!
+    redirect_to chemicals_path,
+                notice: "統合農薬マスタを自動紐づけしました。#{stats[:updated]}件更新 / 未紐づけ#{stats[:unmatched]}件 / 統合マスタ重複名#{stats[:duplicate_master_names]}件"
+  end
+
   def new
     @chemical = Chemical.new
   end
@@ -54,11 +60,11 @@ class ChemicalsController < ApplicationController
   def chemical_params
     params.expect(chemical:
       [
-        :name, 
-        :display_order, 
-        :chemical_type_id, 
-        :this_term_flag, 
-        :unit, 
+        :name,
+        :display_order,
+        :chemical_type_id,
+        :this_term_flag,
+        :unit,
         :phonetic,
         :base_quantity,
         :carton_quantity,

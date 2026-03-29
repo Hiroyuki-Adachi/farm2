@@ -9,7 +9,7 @@ class PesticideMastersControllerTest < ActionDispatch::IntegrationTest
   test "統合農薬マスタ一覧" do
     get pesticide_masters_path
     assert_response :success
-    assert_match @pesticide_master.name, response.body
+    assert_match @pesticide_master.name_normalized, response.body
   end
 
   test "統合農薬マスタ照会" do

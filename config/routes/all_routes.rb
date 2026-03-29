@@ -148,6 +148,9 @@ resources :institutions, except: [:show]
 resources :workers, except: [:show]
 resources :machines, except: [:show]
 resources :chemicals, except: [:show] do
+  collection do
+    post :link_pesticide_masters
+  end
   resources :stocks, controller: "chemicals/stocks", except: [:show, :index] do
     collection do
       get :search

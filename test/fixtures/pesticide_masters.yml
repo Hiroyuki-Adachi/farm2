@@ -2,28 +2,37 @@
 #
 # Table name: pesticide_masters(統合農薬マスタ)
 #
-#  id                                    :bigint           not null, primary key
-#  formulation_name(剤型名)              :string(50)       default(""), not null
-#  mixture_count(混合数)                 :integer          default(0), not null
-#  name(農薬の名称)                      :string(255)      default(""), not null
-#  pesticide_kind(農薬の種類)            :string(255)      default(""), not null
-#  registered_on(登録年月日)             :date
-#  registrant_name(登録を有する者の名称) :string(255)      default(""), not null
-#  registration_number(登録番号)         :integer          not null
-#  usage(用途)                           :string(50)       default(""), not null
-#  created_at                            :datetime         not null
-#  updated_at                            :datetime         not null
+#  id                                                       :bigint           not null, primary key
+#  formulation_name(剤型名)                                 :string(50)       default(""), not null
+#  formulation_name_normalized(剤型名(正規化))              :string(50)       default(""), not null
+#  mixture_count(混合数)                                    :integer          default(0), not null
+#  name(農薬の名称)                                         :string(255)      default(""), not null
+#  name_normalized(農薬の名称(正規化))                      :string(255)      default(""), not null
+#  pesticide_kind(農薬の種類)                               :string(255)      default(""), not null
+#  pesticide_kind_normalized(農薬の種類(正規化))            :string(255)      default(""), not null
+#  registered_on(登録年月日)                                :date
+#  registrant_name(登録を有する者の名称)                    :string(255)      default(""), not null
+#  registrant_name_normalized(登録を有する者の名称(正規化)) :string(255)      default(""), not null
+#  registration_number(登録番号)                            :integer          not null
+#  usage(用途)                                              :string(50)       default(""), not null
+#  created_at                                               :datetime         not null
+#  updated_at                                               :datetime         not null
 #
 # Indexes
 #
 #  index_pesticide_masters_on_registration_number  (registration_number) UNIQUE
 #
+
 pesticide_masters1:
   registration_number: 2280
   name: 日農ﾏﾗｿﾝ乳剤
+  name_normalized: 日農マラソン乳剤
   pesticide_kind: ﾏﾗｿﾝ乳剤
+  pesticide_kind_normalized: マラソン乳剤
   registrant_name: 日本農薬株式会社
+  registrant_name_normalized: 日本農薬株式会社
   usage: 殺虫剤
   formulation_name: 乳剤
+  formulation_name_normalized: 乳剤
   mixture_count: 1
   registered_on: 1955-05-23

@@ -1,22 +1,27 @@
 require "csv"
 require "zip"
 require "stringio"
+require "nkf"
 
 # == Schema Information
 #
 # Table name: pesticide_masters(統合農薬マスタ)
 #
-#  id(統合農薬マスタ)                    :bigint           not null, primary key
-#  formulation_name(剤型名)             :string(50)       default(""), not null
-#  mixture_count(混合数)                :integer          default(0), not null
-#  name(農薬の名称)                     :string(255)      default(""), not null
-#  pesticide_kind(農薬の種類)           :string(255)      default(""), not null
-#  registered_on(登録年月日)            :date
-#  registrant_name(登録を有する者の名称) :string(255)      default(""), not null
-#  registration_number(登録番号)        :integer          not null
-#  usage(用途)                          :string(50)       default(""), not null
-#  created_at                           :datetime         not null
-#  updated_at                           :datetime         not null
+#  id                                                       :bigint           not null, primary key
+#  formulation_name(剤型名)                                 :string(50)       default(""), not null
+#  formulation_name_normalized(剤型名(正規化))              :string(50)       default(""), not null
+#  mixture_count(混合数)                                    :integer          default(0), not null
+#  name(農薬の名称)                                         :string(255)      default(""), not null
+#  name_normalized(農薬の名称(正規化))                      :string(255)      default(""), not null
+#  pesticide_kind(農薬の種類)                               :string(255)      default(""), not null
+#  pesticide_kind_normalized(農薬の種類(正規化))            :string(255)      default(""), not null
+#  registered_on(登録年月日)                                :date
+#  registrant_name(登録を有する者の名称)                    :string(255)      default(""), not null
+#  registrant_name_normalized(登録を有する者の名称(正規化)) :string(255)      default(""), not null
+#  registration_number(登録番号)                            :integer          not null
+#  usage(用途)                                              :string(50)       default(""), not null
+#  created_at                                               :datetime         not null
+#  updated_at                                               :datetime         not null
 #
 # Indexes
 #
@@ -24,6 +29,8 @@ require "stringio"
 #
 class PesticideMaster < ApplicationRecord
   has_many :chemicals, dependent: :nullify
+
+  before_validation :set_normalized_attributes
 
   validates :registration_number, presence: true, uniqueness: true
   validates :name, presence: true
@@ -56,30 +63,29 @@ class PesticideMaster < ApplicationRecord
     uploaded_file.rewind if uploaded_file.respond_to?(:rewind)
   end
 
-def self.import_zip!(path)
-  stats = nil
-  Zip::File.open(path) do |zip_file|
-    entry = zip_file.glob("*.csv").first
-    raise ArgumentError, "CSV file not found in /farm2/app/models/pesticide_master.rb" unless entry
+  def self.import_zip!(path)
+    stats = nil
+    Zip::File.open(path) do |zip_file|
+      entry = zip_file.glob("*.csv").first
+      raise ArgumentError, "CSV file not found in #{path}" unless entry
 
-    stats = import_csv!(entry.get_input_stream)
+      stats = import_csv!(entry.get_input_stream)
+    end
+    stats
   end
-  stats
-end
 
-def self.import_zip_buffer!(content)
-  stats = nil
-  Zip::File.open_buffer(content) do |zip_file|
-    entry = zip_file.glob("*.csv").first
-    raise ArgumentError, "CSV file not found in uploaded ZIP" unless entry
+  def self.import_zip_buffer!(content)
+    stats = nil
+    Zip::File.open_buffer(content) do |zip_file|
+      entry = zip_file.glob("*.csv").first
+      raise ArgumentError, "CSV file not found in uploaded ZIP" unless entry
 
-    stats = import_csv!(StringIO.new(entry.get_input_stream.read))
+      stats = import_csv!(StringIO.new(entry.get_input_stream.read))
+    end
+    stats
   end
-  stats
-end
 
-def self.import_csv!(io)
-
+  def self.import_csv!(io)
     rows, total_rows = grouped_rows(io)
     stats = { total_rows: total_rows, imported: 0, created: 0, updated: 0 }
 
@@ -101,6 +107,10 @@ def self.import_csv!(io)
 
   def display_name
     "#{registration_number}: #{name}"
+  end
+
+  def self.normalize_text(text)
+    NKF.nkf("-w -W", text.to_s).strip
   end
 
   def self.grouped_rows(io)
@@ -148,4 +158,13 @@ def self.import_csv!(io)
     Date.strptime(text, "%Y/%m/%d")
   end
   private_class_method :parse_date
+
+  private
+
+  def set_normalized_attributes
+    self.name_normalized = self.class.normalize_text(name)
+    self.pesticide_kind_normalized = self.class.normalize_text(pesticide_kind)
+    self.registrant_name_normalized = self.class.normalize_text(registrant_name)
+    self.formulation_name_normalized = self.class.normalize_text(formulation_name)
+  end
 end

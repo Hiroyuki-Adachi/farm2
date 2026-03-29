@@ -30,6 +30,9 @@
     <%= button_to '昨年度取込', chemicals_annuals_path, method: :post, id: :chemical_annual, data: {turbo_confirm: "実行してもよろしいですか？"}, class: "btn btn-warning", disabled: !this_term? %>
   </div>
   <div class="btn-group mr-2">
+    <%= button_to '統合マスタ自動紐づけ', link_pesticide_masters_chemicals_path, method: :post, data: {turbo_confirm: "統合農薬マスタを自動紐づけしてもよろしいですか？"}, class: "btn btn-info" %>
+  </div>
+  <div class="btn-group mr-2">
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>

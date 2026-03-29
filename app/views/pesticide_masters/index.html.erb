@@ -37,9 +37,9 @@
       <% @pesticide_masters.each do |pesticide_master| %>
         <tr>
           <td><%= link_to pesticide_master.registration_number, pesticide_master_path(pesticide_master) %></td>
-          <td><%= pesticide_master.name %></td>
+          <td><%= pesticide_master.name_normalized %></td>
           <td><%= pesticide_master.usage %></td>
-          <td><%= pesticide_master.formulation_name %></td>
+          <td><%= pesticide_master.formulation_name_normalized %></td>
           <td><%= pesticide_master.registrant_name %></td>
         </tr>
       <% end %>

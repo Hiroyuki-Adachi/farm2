@@ -11,8 +11,16 @@
       <td><%= @pesticide_master.name %></td>
     </tr>
     <tr>
+      <th>農薬名(正規化)</th>
+      <td><%= @pesticide_master.name_normalized %></td>
+    </tr>
+    <tr>
       <th>農薬の種類</th>
       <td><%= @pesticide_master.pesticide_kind %></td>
+    </tr>
+    <tr>
+      <th>農薬の種類(正規化)</th>
+      <td><%= @pesticide_master.pesticide_kind_normalized %></td>
     </tr>
     <tr>
       <th>用途</th>
@@ -23,8 +31,16 @@
       <td><%= @pesticide_master.formulation_name %></td>
     </tr>
     <tr>
+      <th>剤型名(正規化)</th>
+      <td><%= @pesticide_master.formulation_name_normalized %></td>
+    </tr>
+    <tr>
       <th>登録者</th>
       <td><%= @pesticide_master.registrant_name %></td>
+    </tr>
+    <tr>
+      <th>登録者(正規化)</th>
+      <td><%= @pesticide_master.registrant_name_normalized %></td>
     </tr>
     <tr>
       <th>混合数</th>
