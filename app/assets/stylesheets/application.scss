@@ -1,2 +1,4 @@
-// Custom Bootstrap variables should be defined before this import.
-@import "bootstrap";
+// Custom Bootstrap variables should be configured via `@use "bootstrap" with (...)`
+// (or by splitting `@use` statements to expose variables/mixins) rather than by
+// defining variables earlier in this file.
+@use "bootstrap";
