@@ -125,6 +125,7 @@
       <%= link_to '機械マスタ', machines_path, {class: "dropdown-item", data: {app_controller: :machines}} %>
       <%= link_to '薬剤種別マスタ', chemical_types_path, {class: "dropdown-item", data: {app_controller: "chemical_types"}} %>
       <%= link_to '薬剤マスタ', chemicals_path, {class: "dropdown-item", data: {app_controller: :chemicals}} %>
+      <%= link_to '統合農薬マスタ', pesticide_masters_path, {class: "dropdown-item", data: {app_controller: :pesticide_masters}} %>
       <% if current_user.manageable? %>
         <%= link_to '原価種別マスタ', cost_types_path, {class: "dropdown-item", data: {app_controller: "cost_types"}} %>
         <%= link_to '保有米単価マスタ', owned_rice_prices_path, {class: "dropdown-item", data: {app_controller: :owned_rice_prices}} %>

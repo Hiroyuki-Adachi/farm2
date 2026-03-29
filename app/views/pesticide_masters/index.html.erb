@@ -1,0 +1,51 @@
+<h1>統合農薬マスタ一覧</h1>
+<% if @error %>
+  <div class="alert alert-danger" role="alert"><%= @error %></div>
+<% end %>
+
+<%= form_with(url: pesticide_masters_path, data: {turbo_confirm: "インポートを実行してもよろしいですか？"}, html: {multipart: true, class: "mb-3"}) do %>
+  <div class="row align-items-end g-2">
+    <div class="col-md-5">
+      <%= file_field_tag :import_file, class: "form-control", accept: ".zip,.csv" %>
+    </div>
+    <div class="col-md-7 text-muted small">
+      独法のCSVまたはZIPを指定すると、ZIPは自動解凍して登録番号単位で取り込みます。
+    </div>
+  </div>
+  <div class="btn-toolbar mt-2">
+    <div class="btn-group mr-2">
+      <%= submit_tag "インポート", class: "btn btn-warning", data: {wait: true} %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to "戻る", menu_index_path, class: "btn btn-outline-dark" %>
+    </div>
+  </div>
+<% end %>
+
+<% if @pesticide_masters.any? %>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th>登録番号</th>
+        <th>農薬名</th>
+        <th>用途</th>
+        <th>剤型</th>
+        <th>登録者</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @pesticide_masters.each do |pesticide_master| %>
+        <tr>
+          <td><%= link_to pesticide_master.registration_number, pesticide_master_path(pesticide_master) %></td>
+          <td><%= pesticide_master.name %></td>
+          <td><%= pesticide_master.usage %></td>
+          <td><%= pesticide_master.formulation_name %></td>
+          <td><%= pesticide_master.registrant_name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate(@pesticide_masters) %>
+<% else %>
+  <p>統合農薬マスタはまだ登録されていません。</p>
+<% end %>

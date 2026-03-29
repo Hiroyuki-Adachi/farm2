@@ -2,27 +2,33 @@
 #
 # Table name: chemicals(薬剤マスタ)
 #
-#  id(薬剤マスタ)             :integer          not null, primary key
-#  aqueous_flag(水溶フラグ)   :boolean          default(FALSE), not null
-#  base_quantity(消費数)      :decimal(6, )     default(0), not null
-#  carton_quantity(購買数)    :decimal(6, )     default(0), not null
-#  carton_unit(購買単位)      :string(2)        default(""), not null
-#  deleted_at                 :datetime
-#  display_order(表示順)      :integer          default(0), not null
-#  name(薬剤名称)             :string(20)       not null
-#  phonetic(薬剤ふりがな)     :string(40)       default(""), not null
-#  stock_quantity(在庫数)     :decimal(6, )     default(0), not null
-#  stock_unit(在庫単位)       :string(2)        default(""), not null
-#  unit(単位)                 :string(2)        default("袋"), not null
-#  url(URL)                   :string(255)      default(""), not null
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#  base_unit_id(基本単位)     :integer          default(0), not null
-#  chemical_type_id(薬剤種別) :integer          not null
+#  id(薬剤マスタ)                      :integer          not null, primary key
+#  aqueous_flag(水溶フラグ)            :boolean          default(FALSE), not null
+#  base_quantity(消費数)               :decimal(6, )     default(0), not null
+#  carton_quantity(購買数)             :decimal(6, )     default(0), not null
+#  carton_unit(購買単位)               :string(2)        default(""), not null
+#  deleted_at                          :datetime
+#  display_order(表示順)               :integer          default(0), not null
+#  name(薬剤名称)                      :string(20)       not null
+#  phonetic(薬剤ふりがな)              :string(40)       default(""), not null
+#  stock_quantity(在庫数)              :decimal(6, )     default(0), not null
+#  stock_unit(在庫単位)                :string(2)        default(""), not null
+#  unit(単位)                          :string(2)        default("袋"), not null
+#  url(URL)                            :string(255)      default(""), not null
+#  created_at                          :datetime
+#  updated_at                          :datetime
+#  base_unit_id(基本単位)              :integer          default(0), not null
+#  chemical_type_id(薬剤種別)          :integer          not null
+#  pesticide_master_id(統合農薬マスタ) :bigint
 #
 # Indexes
 #
-#  index_chemicals_on_deleted_at  (deleted_at)
+#  index_chemicals_on_deleted_at           (deleted_at)
+#  index_chemicals_on_pesticide_master_id  (pesticide_master_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (pesticide_master_id => pesticide_masters.id)
 #
 
 class Chemical < ApplicationRecord
@@ -36,6 +42,7 @@ class Chemical < ApplicationRecord
   after_save :save_term
 
   belongs_to :chemical_type
+  belongs_to :pesticide_master, optional: true
   belongs_to_active_hash :base_unit
   has_many :chemical_terms, dependent: :destroy
   has_many :stocks, class_name: 'ChemicalStock', dependent: :destroy

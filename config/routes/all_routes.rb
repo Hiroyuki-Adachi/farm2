@@ -122,6 +122,7 @@ end
 resources :sessions, only: [:show], param: :token
 resources :machine_types, except: [:show]
 resources :chemical_types, except: [:show]
+resources :pesticide_masters, only: [:index, :show, :create]
 resources :work_kinds, except: [:show]
 resources :work_types, except: [:show] do
   get :icon, to: "work_types#icon", as: :icon, on: :member
