@@ -40,6 +40,9 @@ namespace :tablets do
   resource :session, only: [:new]
   resources :menu, only: [:index]
   resources :maps, only: [:index]
+  namespace :lands do
+    resources :chemicals, only: [:index]
+  end
 end
 resources :ip_lists, only: [:new, :create, :edit, :update]
 resources :zgis, only: [:new, :create]

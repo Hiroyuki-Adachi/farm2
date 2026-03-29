@@ -1,6 +1,5 @@
-class Lands::ChemicalsController < ApplicationController
+class Tablets::Lands::ChemicalsController < TabletsController
   include PermitUser
-
   helper GmapHelper
 
   def index
@@ -31,9 +30,5 @@ class Lands::ChemicalsController < ApplicationController
     return @chemical_types.first&.id if selected_id.zero?
 
     @chemical_types.find_by(id: selected_id)&.id || @chemical_types.first&.id
-  end
-
-  def menu_name
-    return :lands_chemicals
   end
 end
