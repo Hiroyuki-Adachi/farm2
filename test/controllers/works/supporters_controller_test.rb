@@ -13,6 +13,12 @@ class Works::SupportersControllerTest < ActionDispatch::IntegrationTest
     assert_select "th", text: "世帯"
     assert_select "td", text: "2017年2月"
     assert_select "td", text: "非組合員"
-    assert_operator response.body.index("2017年2月"), :<, response.body.index("非組合員")
+    assert_select "tbody tr" do |rows|
+      assert rows.any? { |row|
+        month_cell = row.at("td:nth-child(1)")&.text&.strip
+        type_cell  = row.at("td:nth-child(2)")&.text&.strip
+        month_cell == "2017年2月" && type_cell == "非組合員"
+      }, "Expected a row with '2017年2月' in first column and '非組合員' in second column"
+    end
   end
 end
