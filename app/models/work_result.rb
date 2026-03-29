@@ -66,7 +66,7 @@ class WorkResult < ApplicationRecord
       .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
       .where(systems: { term: term })
       .where(workers: { home_id: Home.supporters.reorder(nil).unscope(:includes, :order).select(:id) })
-      .order("sections.display_order, homes.display_order, homes.id, works.worked_at, works.id, workers.display_order, workers.id")
+      .order(Arel.sql("date_trunc('month', works.worked_at), sections.display_order, homes.display_order, homes.id, works.worked_at, works.id, workers.display_order, workers.id"))
   }
 
   scope :by_home_for_fix, ->(term, fixed_at) {

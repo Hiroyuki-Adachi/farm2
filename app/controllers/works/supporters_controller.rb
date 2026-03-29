@@ -12,8 +12,8 @@ class Works::SupportersController < ApplicationController
     home_totals = {}
     month_totals = {}
     results.each do |result|
-      home_totals = set_totals(home_totals, result, result.worker.home_id)
       month_totals = set_totals(month_totals, result, month_code(result))
+      home_totals = set_totals(home_totals, result, home_code(result))
     end
 
     [home_totals, month_totals]
@@ -30,6 +30,10 @@ class Works::SupportersController < ApplicationController
 
   def month_code(result)
     worked_at = result.object.work.worked_at.to_date
-    "#{result.worker.home_id}_#{worked_at.strftime('%Y%m')}"
+    worked_at.strftime('%Y%m')
+  end
+
+  def home_code(result)
+    "#{month_code(result)}_#{result.worker.home_id}"
   end
 end
