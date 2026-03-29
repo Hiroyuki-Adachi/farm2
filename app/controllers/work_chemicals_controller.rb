@@ -22,8 +22,9 @@ class WorkChemicalsController < ApplicationController
     work_rate_numer = Hash.new { |h, k| h[k] = {} }
     work_chemicals_temp = WorkChemical.by_term(current_term).includes(work: :work_lands)
     work_chemicals_temp.each do |work_chemical|
-      next if (work_chemical.work.work_lands&.count || 0).zero?
-      LandCost.sum_area_by_lands(work_chemical.work.worked_at, work_chemical.work.lands.ids).each do |work_type_id, area|
+      next if work_chemical.work.work_lands.empty?
+      land_ids = work_chemical.work.work_lands.map(&:land_id)
+      LandCost.sum_area_by_lands(work_chemical.work.worked_at, land_ids).each do |work_type_id, area|
         chemical_work_type = ChemicalWorkType.by_work_chemical(work_chemical, work_type_id)
         next unless chemical_work_type
         @work_areas["#{work_chemical.work_id},#{work_type_id},#{work_chemical.chemical_id}"] = area

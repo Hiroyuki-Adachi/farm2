@@ -84,11 +84,32 @@ class Lands::ChemicalMapService
     end
   end
 
+  def work_type_ids_by_land_id_for(work)
+    land_ids = work.work_lands.map(&:land_id)
+    return {} if land_ids.empty?
+
+    @land_cost_cache ||= Hash.new { |hash, key| hash[key] = {} }
+    cache_for_date = @land_cost_cache[work.worked_at]
+
+    missing_ids = land_ids - cache_for_date.keys
+
+    if missing_ids.any?
+      LandCost.newest(work.worked_at)
+              .where(land_id: missing_ids)
+              .pluck(:land_id, :work_type_id)
+              .each do |land_id, work_type_id|
+        cache_for_date[land_id] = work_type_id
+      end
+    end
+
+    cache_for_date.slice(*land_ids)
+  end
+
   def land_infos_for(work)
     land_ids = work.work_lands.map(&:land_id)
     return [] if land_ids.empty?
 
-    work_type_ids_by_land_id = LandCost.newest(work.worked_at).where(land_id: land_ids).pluck(:land_id, :work_type_id).to_h
+    work_type_ids_by_land_id = work_type_ids_by_land_id_for(work)
 
     work.work_lands.filter_map do |work_land|
       work_type_id = work_type_ids_by_land_id[work_land.land_id]
