@@ -40,6 +40,9 @@ namespace :tablets do
   resource :session, only: [:new]
   resources :menu, only: [:index]
   resources :maps, only: [:index]
+  namespace :lands do
+    resources :chemicals, only: [:index]
+  end
   resources :statistics, only: [:index] do
     collection do
       get :tab1
@@ -133,6 +136,7 @@ namespace :lands do
   resources :fees, only: [:index, :create, :edit, :update]
   resources :totals, only: [:index]
   resources :straws, only: [:index]
+  resources :chemicals, only: [:index]
 end
 resources :lands, except: [:show] do
   resources :owners, controller: "lands/owners", only: [:index, :create, :destroy]

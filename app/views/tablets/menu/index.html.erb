@@ -12,7 +12,16 @@
     <% end %>
   </div>
 </div>
+<div class="row g-3 mt-1">
+  <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+    <%= link_to tablets_lands_chemicals_path, class: "btn btn-success w-100 py-4 text-start" do %>
+      <span class="d-block fs-5 fw-bold">農薬散布地図</span>
+      <span class="d-block small opacity-75">田植え圃場を確認</span>
+    <% end %>
+  </div>
+</div>
 <div class="row g-3">
+
   <div class="col-6 col-sm-4 col-md-3 col-lg-2">
     <%= link_to new_tablets_session_path, class: "btn btn-danger w-100 py-4 text-start" do %>
       <span class="d-block fs-5 fw-bold">ログアウト</span>

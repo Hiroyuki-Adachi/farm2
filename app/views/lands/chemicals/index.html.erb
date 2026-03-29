@@ -1,0 +1,45 @@
+<div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/lands-chemicals">
+  <div class="col-md-12">
+    <h1>農地別農薬散布状況地図(田植え)</h1>
+  </div>
+</div>
+<% if @chemical_types.present? %>
+  <%= form_with(url: lands_chemicals_path, method: :get, local: true, class: "mb-3") do %>
+    <div class="btn-group" role="group" aria-label="農薬種別">
+      <% @chemical_types.each do |chemical_type| %>
+        <%= radio_button_tag :chemical_type_id, chemical_type.id, @selected_chemical_type_id == chemical_type.id,
+          id: "chemical_type_#{chemical_type.id}", class: "btn-check", autocomplete: "off", onchange: "this.form.submit();" %>
+        <%= label_tag "chemical_type_#{chemical_type.id}", chemical_type.name, class: "btn btn-outline-primary" %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+<div class="row mb-3">
+  <div class="col-md-12">
+    <div id="map" class="ratio ratio-16x9"></div>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-md-12">
+    <h3 id="land_info">&nbsp;</h3>
+  </div>
+</div>
+<%= hidden_field_tag :location, "[#{current_location}]" %>
+<%= hidden_field_tag :organization_name, current_organization.name %>
+<% @lands.each do |land| %>
+  <% summary = @land_chemical_summaries[land.id] %>
+  <%= land_region_hidden_field(
+    land,
+    color: summary&.color || "#ffffff",
+    extra_data: {
+      actual: summary&.actual_display || "0.0",
+      standard: summary&.standard_display || "0.0",
+      status: summary&.status || :within_10
+    }
+  ) %>
+<% end %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', menu_index_path, {class: "btn btn-outline-dark"} %>
+  </div>
+</div>
