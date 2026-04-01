@@ -78,6 +78,7 @@ gem 'icalendar'
 
 # Use Puma as the app server
 gem 'puma'
+gem 'webpush'
 
 # Rubyzip is a ruby library for reading and writing zip files.
 gem 'rubyzip'

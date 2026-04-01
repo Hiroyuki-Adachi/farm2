@@ -182,6 +182,9 @@ resources :personal_informations, param: "token", only: [:show] do
   resources :lands, controller: "personal_informations/lands", only: [:index, :show]
   resources :machines, controller: "personal_informations/machines", only: [:index]
   resources :schedules, controller: "personal_informations/schedules", only: [:index]
+  resource :push_subscription, controller: "personal_informations/push_subscriptions", only: [:create, :destroy] do
+    patch :permission
+  end
   get "schedules/workers", to: "personal_informations/schedules/workers#index", as: :schedules_workers
   get "schedules/workers/edit", to: "personal_informations/schedules/workers#edit", as: :schedules_workers_edit
   patch "schedules/workers/edit", to: "personal_informations/schedules/workers#update"

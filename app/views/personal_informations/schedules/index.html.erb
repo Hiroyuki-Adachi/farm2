@@ -1,33 +1,65 @@
-<% if @tasks.present? %>
-  <h1 class="h2">タスク</h1>
-  <ul>
-    <% @tasks.each do |task| %>
-      <li class="mb-1">
-        <%= link_to task.title, 
-          personal_information_task_path(personal_information_token: params[:personal_information_token], id: task.model.id),
-          data: { turbo_prefetch: false } %>
-          <%= task.new_badge %>
-          <%= task.due_badge %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
-<% if @schedules.present? %>
-  <h1 class="h2">作業予定</h1>
-  <ul>
-    <% @schedules.each do |schedule| %>
-    <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
-    <% end %>
-  </ul>
-<% end %>
-<% if current_user.worker.leader? || current_user.worker.director? || current_user.worker.advisor? %>
-  <div class="text-center mt-4 mb-3">
-    <%= link_to "人員保守", personal_information_schedules_workers_path(personal_information_token: params[:personal_information_token]), class: "btn btn-outline-primary" %>
-  </div>
-<% end %>
-<% if @minute.present? %>
-  <h1 class="h2">議事録</h1>
-  <ul>
-    <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(<%= link_to '議事録', personal_information_minute_path(@minute.id, personal_information_token: @worker.user.token), {target: :_blank, data: {turbolinks: false}} %>)</li>
-  </ul>
-<% end %>
+<% token = params[:token] || params[:personal_information_token] %>
+<div data-controller="page-loader"
+     data-page-loader-modules-value="pages/personal_informations/schedules"
+     data-push-subscription-url="<%= personal_information_push_subscription_path(personal_information_token: token) %>"
+     data-push-subscription-permission-url="<%= permission_personal_information_push_subscription_path(personal_information_token: token) %>"
+     data-push-subscription-service-worker-url="<%= prefixed_path('/service-worker.js') %>"
+     data-push-subscription-vapid-public-key="<%= WebPushService.vapid_public_key %>">
+  <% if @push_notification_enabled %>
+    <div class="alert <%= @current_user.push_notification_granted? ? 'alert-success' : 'alert-secondary' %> mb-4" data-push-notification-panel>
+      <div class="fw-bold mb-1">スマホ通知</div>
+      <p class="mb-2" data-push-notification-status>
+        <% if !@push_notification_configured %>
+          この環境では通知設定が未構成です。
+        <% elsif @current_user.push_notification_granted? %>
+          この端末で作業予定の通知を受け取れます。
+        <% elsif @current_user.push_notification_permission == "denied" %>
+          通知が拒否されています。ブラウザ設定から許可してください。
+        <% elsif @current_user.push_notification_permission == "unsupported" %>
+          この端末ではブラウザ通知を利用できません。
+        <% else %>
+          LINE未連携の場合、この端末で作業予定の通知を受け取れます。
+        <% end %>
+      </p>
+      <% if @push_notification_configured %>
+        <button type="button" class="btn btn-sm btn-outline-primary" data-push-notification-enable>
+          通知を有効化する
+        </button>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @tasks.present? %>
+    <h1 class="h2">タスク</h1>
+    <ul>
+      <% @tasks.each do |task| %>
+        <li class="mb-1">
+          <%= link_to task.title,
+            personal_information_task_path(personal_information_token: token, id: task.model.id),
+            data: { turbo_prefetch: false } %>
+            <%= task.new_badge %>
+            <%= task.due_badge %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+  <% if @schedules.present? %>
+    <h1 class="h2">作業予定</h1>
+    <ul>
+      <% @schedules.each do |schedule| %>
+      <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
+      <% end %>
+    </ul>
+  <% end %>
+  <% if current_user.worker.leader? || current_user.worker.director? || current_user.worker.advisor? %>
+    <div class="text-center mt-4 mb-3">
+      <%= link_to "人員保守", personal_information_schedules_workers_path(personal_information_token: token), class: "btn btn-outline-primary" %>
+    </div>
+  <% end %>
+  <% if @minute.present? %>
+    <h1 class="h2">議事録</h1>
+    <ul>
+      <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(<%= link_to '議事録', personal_information_minute_path(@minute.id, personal_information_token: @worker.user.token), {target: :_blank, data: {turbolinks: false}} %>)</li>
+    </ul>
+  <% end %>
+</div>
