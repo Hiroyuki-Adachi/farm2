@@ -78,6 +78,7 @@ gem 'icalendar'
 
 # Use Puma as the app server
 gem 'puma'
+# Webpush is a Ruby gem for sending web push notifications.
 gem 'webpush'
 
 # Rubyzip is a ruby library for reading and writing zip files.
