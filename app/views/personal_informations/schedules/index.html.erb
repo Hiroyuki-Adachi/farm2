@@ -5,7 +5,14 @@
      data-push-subscription-permission-url="<%= permission_personal_information_push_subscription_path(personal_information_token: token) %>"
      data-push-subscription-service-worker-url="<%= prefixed_path('/service-worker.js') %>"
      data-push-subscription-vapid-public-key="<%= WebPushService.vapid_public_key %>">
-  <% if @push_notification_enabled %>
+  <% if @current_user.linable? %>
+    <div class="alert alert-success mb-4">
+      <div class="fw-bold mb-1">LINE通知</div>
+      <p class="mb-0">
+        LINEで作業通知を受け取れます。
+      </p>
+    </div>
+  <% elsif @push_notification_enabled %>
     <div class="alert <%= @current_user.push_notification_granted? ? 'alert-success' : 'alert-secondary' %> mb-4" data-push-notification-panel>
       <div class="fw-bold mb-1">スマホ通知</div>
       <p class="mb-2" data-push-notification-status>
