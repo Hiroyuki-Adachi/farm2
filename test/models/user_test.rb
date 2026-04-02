@@ -13,6 +13,8 @@
 #  otp_last_used_at(2段階認証 最終使用日時)                 :datetime
 #  otp_secret(2段階認証 秘密鍵)                             :json
 #  password_digest(パスワード)                              :string(128)      not null
+#  push_notification_permission(通知許可状態)               :string           default("default"), not null
+#  push_notification_requested_at(通知許可確認日時)         :datetime
 #  target_from(開始年月)                                    :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
 #  term(期)                                                 :integer          default(0), not null

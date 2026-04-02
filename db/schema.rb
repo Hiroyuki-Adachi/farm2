@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_08_160902) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -153,6 +153,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_08_160902) do
     t.datetime "deleted_at", precision: nil
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.string "name", limit: 20, null: false, comment: "薬剤名称"
+    t.bigint "pesticide_master_id", comment: "統合農薬マスタ"
     t.string "phonetic", limit: 40, default: "", null: false, comment: "薬剤ふりがな"
     t.decimal "stock_quantity", precision: 6, default: "0", null: false, comment: "在庫数"
     t.string "stock_unit", limit: 2, default: "", null: false, comment: "在庫単位"
@@ -160,6 +161,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_08_160902) do
     t.datetime "updated_at", precision: nil
     t.string "url", limit: 255, default: "", null: false, comment: "URL"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
+    t.index ["pesticide_master_id"], name: "index_chemicals_on_pesticide_master_id"
   end
 
   create_table "cleaning_cleaning_targets", comment: "清掃対象", force: :cascade do |t|
@@ -591,6 +593,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_08_160902) do
     t.integer "owned_rice_price_id", default: 0, null: false, comment: "保有米単価"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["home_id", "owned_rice_price_id"], name: "owned_rices_2nd", unique: true
+  end
+
+  create_table "pesticide_masters", comment: "統合農薬マスタ", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "formulation_name", limit: 50, default: "", null: false, comment: "剤型名"
+    t.string "formulation_name_normalized", limit: 50, default: "", null: false, comment: "剤型名(正規化)"
+    t.integer "mixture_count", default: 0, null: false, comment: "混合数"
+    t.string "name", limit: 255, default: "", null: false, comment: "農薬の名称"
+    t.string "name_normalized", limit: 255, default: "", null: false, comment: "農薬の名称(正規化)"
+    t.string "pesticide_kind", limit: 255, default: "", null: false, comment: "農薬の種類"
+    t.string "pesticide_kind_normalized", limit: 255, default: "", null: false, comment: "農薬の種類(正規化)"
+    t.date "registered_on", comment: "登録年月日"
+    t.string "registrant_name", limit: 255, default: "", null: false, comment: "登録を有する者の名称"
+    t.string "registrant_name_normalized", limit: 255, default: "", null: false, comment: "登録を有する者の名称(正規化)"
+    t.integer "registration_number", null: false, comment: "登録番号"
+    t.datetime "updated_at", null: false
+    t.string "usage", limit: 50, default: "", null: false, comment: "用途"
+    t.index ["registration_number"], name: "index_pesticide_masters_on_registration_number", unique: true
   end
 
   create_table "plan_lands", id: false, comment: "作付計画", force: :cascade do |t|
@@ -1025,6 +1045,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_08_160902) do
     t.json "otp_secret", comment: "2段階認証 秘密鍵"
     t.string "password_digest", limit: 128, null: false, comment: "パスワード"
     t.integer "permission_id", default: 0, null: false, comment: "権限"
+    t.string "push_notification_permission", default: "default", null: false, comment: "通知許可状態"
+    t.datetime "push_notification_requested_at", comment: "通知許可確認日時"
     t.date "target_from", default: "2010-01-01", null: false, comment: "開始年月"
     t.date "target_to", default: "2010-12-31", null: false, comment: "終了年月"
     t.integer "term", default: 0, null: false, comment: "期"
@@ -1038,6 +1060,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_08_160902) do
     t.index ["mail_confirmation_token"], name: "ix_users_on_mail_confirmation_token", unique: true, where: "(mail_confirmation_token IS NOT NULL)"
     t.index ["token"], name: "ix_users_token", unique: true
     t.index ["worker_id"], name: "index_users_on_worker_id", unique: true
+  end
+
+  create_table "web_push_subscriptions", comment: "WebPush購読情報", force: :cascade do |t|
+    t.string "auth", null: false, comment: "認証鍵"
+    t.datetime "created_at", null: false
+    t.text "endpoint", null: false, comment: "Push endpoint"
+    t.datetime "expiration_time", comment: "購読有効期限"
+    t.datetime "last_used_at", comment: "最終送信日時"
+    t.string "p256dh", null: false, comment: "公開鍵"
+    t.datetime "updated_at", null: false
+    t.string "user_agent", comment: "利用端末"
+    t.bigint "user_id", null: false, comment: "利用者"
+    t.index ["endpoint"], name: "index_web_push_subscriptions_on_endpoint", unique: true
+    t.index ["user_id", "endpoint"], name: "index_web_push_subscriptions_on_user_id_and_endpoint", unique: true
+    t.index ["user_id"], name: "index_web_push_subscriptions_on_user_id"
   end
 
   create_table "whole_crop_lands", comment: "WCS土地", force: :cascade do |t|
@@ -1254,6 +1291,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_08_160902) do
     t.date "worked_at", null: false, comment: "作業日"
   end
 
+  add_foreign_key "chemicals", "pesticide_masters"
   add_foreign_key "task_comments", "tasks"
   add_foreign_key "task_comments", "workers", column: "poster_id"
   add_foreign_key "task_events", "task_comments"
@@ -1270,6 +1308,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_08_160902) do
   add_foreign_key "tasks", "task_templates"
   add_foreign_key "tasks", "workers", column: "assignee_id"
   add_foreign_key "tasks", "workers", column: "creator_id"
+  add_foreign_key "web_push_subscriptions", "users"
   add_foreign_key "work_genres", "work_categories"
   add_foreign_key "work_kind_types", "work_categories"
   add_foreign_key "work_types", "work_genres"
