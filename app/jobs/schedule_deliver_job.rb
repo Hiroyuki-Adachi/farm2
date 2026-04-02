@@ -45,7 +45,7 @@ class ScheduleDeliverJob < ApplicationJob
       url: personal_information_schedules_path(personal_information_token: user.token)
     }
 
-    user.web_push_subscriptions.find_each do |subscription|
+    user.web_push_subscriptions.each do |subscription|
       WebPushService.push(subscription, payload)
     end
   end
