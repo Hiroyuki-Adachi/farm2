@@ -1,3 +1,5 @@
+require "webpush"
+
 class WebPushService
   class << self
     def configured?
@@ -11,7 +13,7 @@ class WebPushService
     def push(subscription, payload)
       return false unless configured?
 
-      WebPush.payload_send(
+      Webpush.payload_send(
         message: payload.to_json,
         endpoint: subscription.endpoint,
         p256dh: subscription.p256dh,
@@ -25,7 +27,7 @@ class WebPushService
       )
       subscription.touch(:last_used_at)
       true
-    rescue WebPush::ExpiredSubscription, WebPush::InvalidSubscription, WebPush::ResponseError => e
+    rescue Webpush::ExpiredSubscription, Webpush::InvalidSubscription, Webpush::ResponseError => e
       Rails.logger.warn("[WebPush] subscription expired endpoint=#{subscription.endpoint} error=#{e.class}")
       subscription.destroy!
       false
