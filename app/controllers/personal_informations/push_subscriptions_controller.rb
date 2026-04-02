@@ -2,11 +2,24 @@ class PersonalInformations::PushSubscriptionsController < PersonalInformationsCo
   def create
     return render json: { error: "web push not configured" }, status: :service_unavailable unless WebPushService.configured?
 
-    subscription = @current_user.web_push_subscriptions.find_or_initialize_by(endpoint: subscription_params[:endpoint])
-    subscription.assign_attributes(subscription_params)
-    subscription.save!
-    @current_user.update!(push_notification_permission: "granted", push_notification_requested_at: Time.current)
+    begin
+      WebPushSubscription.transaction do
+        subscription = WebPushSubscription.find_or_initialize_by(endpoint: subscription_params[:endpoint])
+        subscription.assign_attributes(subscription_params)
+        subscription.user = @current_user
+        subscription.save!
 
+        @current_user.update!(push_notification_permission: "granted", push_notification_requested_at: Time.current)
+      end
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique => e
+      error_messages =
+        if e.respond_to?(:record) && e.record && e.record.respond_to?(:errors)
+          e.record.errors.full_messages
+        else
+          [e.message]
+        end
+      return render json: { error: error_messages }, status: :unprocessable_entity
+    end
     render json: { status: "ok" }
   end
 
