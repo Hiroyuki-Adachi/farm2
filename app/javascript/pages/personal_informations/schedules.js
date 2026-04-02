@@ -74,12 +74,14 @@ const subscribe = async ({ subscriptionUrl, serviceWorkerUrl, vapidPublicKey }) 
   }
 
   const payload = subscription.toJSON();
+  const expirationTime =
+    payload.expirationTime != null ? new Date(payload.expirationTime).toISOString() : null;
   return jsonRequest(subscriptionUrl, "POST", {
     subscription: {
       endpoint: payload.endpoint,
       p256dh: payload.keys?.p256dh,
       auth: payload.keys?.auth,
-      expiration_time: payload.expirationTime,
+      expiration_time: expirationTime,
       user_agent: navigator.userAgent
     }
   });
