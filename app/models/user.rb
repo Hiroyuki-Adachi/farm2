@@ -13,6 +13,8 @@
 #  otp_last_used_at(2段階認証 最終使用日時)                 :datetime
 #  otp_secret(2段階認証 秘密鍵)                             :json
 #  password_digest(パスワード)                              :string(128)      not null
+#  push_notification_permission(通知許可状態)               :string           default("default"), not null
+#  push_notification_requested_at(通知許可確認日時)         :datetime
 #  target_from(開始年月)                                    :date             default(Fri, 01 Jan 2010), not null
 #  target_to(終了年月)                                      :date             default(Fri, 31 Dec 2010), not null
 #  term(期)                                                 :integer          default(0), not null
@@ -47,6 +49,8 @@ class User < ApplicationRecord
   enum :theme, { light: 0, dark: 1, auto: 2 }
 
   scope :linable, -> { where.not(line_id: '') }
+  scope :without_line, -> { where(line_id: '') }
+  scope :web_push_notifiable, -> { without_line.where(id: WebPushSubscription.select(:user_id)) }
 
   belongs_to :worker
   belongs_to :organization
@@ -54,12 +58,14 @@ class User < ApplicationRecord
   has_many :calendar_work_kinds, dependent: :destroy
   has_many :user_words, dependent: :destroy
   has_many :user_topics, dependent: :destroy
+  has_many :web_push_subscriptions, dependent: :destroy
   has_many :topics, through: :user_topics
 
   accepts_nested_attributes_for :user_words
 
   validates :login_name, uniqueness: true
   validates :password, length: { maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED }
+  validates :push_notification_permission, inclusion: { in: %w[default granted denied unsupported] }
 
   def login_name=(value)
     super(value.downcase)
@@ -94,6 +100,10 @@ class User < ApplicationRecord
 
   def linable?
     self.line_id.present?
+  end
+
+  def push_notification_granted?
+    self.push_notification_permission == "granted"
   end
 
   def current_mail_status

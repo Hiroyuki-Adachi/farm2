@@ -40,6 +40,19 @@ namespace :tablets do
   resource :session, only: [:new]
   resources :menu, only: [:index]
   resources :maps, only: [:index]
+  namespace :lands do
+    resources :chemicals, only: [:index]
+  end
+  resources :statistics, only: [:index] do
+    collection do
+      get :tab1
+      get :tab2
+      get :tab3
+      get :tab4
+      get :tab5
+      get :tab6
+    end
+  end
 end
 resources :ip_lists, only: [:new, :create, :edit, :update]
 resources :zgis, only: [:new, :create]
@@ -123,6 +136,7 @@ namespace :lands do
   resources :fees, only: [:index, :create, :edit, :update]
   resources :totals, only: [:index]
   resources :straws, only: [:index]
+  resources :chemicals, only: [:index]
 end
 resources :lands, except: [:show] do
   resources :owners, controller: "lands/owners", only: [:index, :create, :destroy]
@@ -168,6 +182,9 @@ resources :personal_informations, param: "token", only: [:show] do
   resources :lands, controller: "personal_informations/lands", only: [:index, :show]
   resources :machines, controller: "personal_informations/machines", only: [:index]
   resources :schedules, controller: "personal_informations/schedules", only: [:index]
+  resource :push_subscription, controller: "personal_informations/push_subscriptions", only: [:create, :destroy] do
+    patch :permission
+  end
   get "schedules/workers", to: "personal_informations/schedules/workers#index", as: :schedules_workers
   get "schedules/workers/edit", to: "personal_informations/schedules/workers#edit", as: :schedules_workers_edit
   patch "schedules/workers/edit", to: "personal_informations/schedules/workers#update"
