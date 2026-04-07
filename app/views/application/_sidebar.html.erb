@@ -46,6 +46,7 @@
         <%= link_to '土地カルテ', lands_cards_path, {class: "dropdown-item", data: {app_controller: :cards}} %>
         <%= link_to '土地集計', lands_totals_path, {class: "dropdown-item", data: {app_controller: :totals}} %>
       <% end %>
+      <%= link_to '農地別農薬散布状況地図', lands_chemicals_path, {class: "dropdown-item", data: {app_controller: "lands_chemicals"}} %>
       <% if current_user.manageable? %>
         <%= link_to '集計対象期間変更', edit_menu_path(current_system), {class: "dropdown-item", data: {app_controller: :menu, actions: [:edit]}} %>
         <%= link_to '日当一覧', work_results_path, {class: "dropdown-item", data: {app_controller: "work_results", wait: true}} %>

@@ -1,5 +1,6 @@
 class Lands::OwnersController < ApplicationController
   include PermitChecker
+
   before_action :set_land, only: [:index, :create]
 
   def index
