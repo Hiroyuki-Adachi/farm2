@@ -75,4 +75,9 @@ module SessionsHelper
   def feature_enabled?(feature)
     current_organization.public_send(:"enable_#{feature}")
   end
+
+  def harvest_management_available?
+    feature_enabled?(:drying) || feature_enabled?(:whole_crop) ||
+      feature_enabled?(:owned_rice) || feature_enabled?(:straw)
+  end
 end

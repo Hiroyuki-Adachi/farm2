@@ -23,7 +23,7 @@
   <% end %>
     </div>
   </div>
-  <% if current_user.checkable? && (feature_enabled?(:drying) || feature_enabled?(:whole_crop) || feature_enabled?(:owned_rice) || feature_enabled?(:straw)) %>
+  <% if current_user.checkable? && harvest_management_available? %>
     <div aria-labelledby="navbar_harvest" class="mt-2" style="display:none;">
       <span class="h5">収穫管理</span>
       <div class="ms-3 navbar">
