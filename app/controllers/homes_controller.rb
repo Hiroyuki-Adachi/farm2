@@ -1,21 +1,22 @@
 class HomesController < ApplicationController
   include PermitChecker
+
   before_action :set_home, only: [:edit, :update, :destroy]
   before_action :set_sections, only: [:new, :create, :edit, :update]
   helper GmapHelper
 
   def index
-    @homes = Home.list.page(params[:page])
+    @homes = current_organization.homes.list.page(params[:page])
   end
 
   def new
-    @home = Home.new
+    @home = current_organization.homes.new
   end
 
   def edit; end
 
   def create
-    @home = Home.new(home_params)
+    @home = current_organization.homes.new(home_params)
     if @home.save
       redirect_to homes_path
     else
@@ -39,11 +40,11 @@ class HomesController < ApplicationController
   private
 
   def set_home
-    @home = Home.find(params[:id])
+    @home = current_organization.homes.find(params[:id])
   end
 
   def set_sections
-    @sections = Section.list
+    @sections = current_organization.sections.list
   end
 
   def home_params

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_18_000004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -359,6 +359,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.point "location", comment: "位置"
     t.boolean "member_flag", default: true, null: false, comment: "組合員フラグ"
     t.string "name", limit: 10, comment: "世帯名"
+    t.integer "organization_id", default: 1, null: false, comment: "組織"
     t.integer "owned_rice_order", comment: "出力順(保有米)"
     t.boolean "owner_flag", default: false, null: false, comment: "所有者フラグ"
     t.string "phonetic", limit: 15, comment: "世帯名(よみ)"
@@ -370,6 +371,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.boolean "worker_payment_flag", default: false, null: false, comment: "個人支払フラグ"
     t.string "zip_code", limit: 7, comment: "郵便番号"
     t.index ["deleted_at"], name: "index_homes_on_deleted_at"
+    t.index ["organization_id"], name: "index_homes_on_organization_id"
   end
 
   create_table "institutions", comment: "施設マスタ", force: :cascade do |t|
@@ -572,6 +574,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.string "url", comment: "URL"
     t.integer "whole_crop_work_kind_id", comment: "WCS収穫分類"
     t.integer "workers_count", default: 12, null: false, comment: "作業日報の作業者数"
+    t.boolean "enable_broccoli", default: true, null: false, comment: "ブロッコリー機能"
+    t.boolean "enable_whole_crop", default: true, null: false, comment: "WCS機能"
+    t.boolean "enable_drying", default: true, null: false, comment: "乾燥調整機能"
+    t.boolean "enable_owned_rice", default: true, null: false, comment: "保有米機能"
+    t.boolean "enable_straw", default: true, null: false, comment: "稲わら機能"
+    t.boolean "enable_sorimachi", default: true, null: false, comment: "ソリマチ連携機能"
+    t.boolean "enable_cost", default: true, null: false, comment: "原価管理機能"
+    t.boolean "enable_gap", default: true, null: false, comment: "GAP関連機能"
   end
 
   create_table "owned_rice_prices", comment: "保有米単価", force: :cascade do |t|
@@ -697,9 +707,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.datetime "deleted_at", precision: nil
     t.integer "display_order", default: 1, null: false, comment: "表示順"
     t.string "name", limit: 40, null: false, comment: "班名称"
+    t.integer "organization_id", default: 1, null: false, comment: "組織"
     t.datetime "updated_at", precision: nil
     t.boolean "work_flag", default: true, null: false, comment: "作業班フラグ"
     t.index ["deleted_at"], name: "index_sections_on_deleted_at"
+    t.index ["organization_id"], name: "index_sections_on_organization_id"
   end
 
   create_table "seedling_homes", id: { type: :serial, comment: "育苗担当世帯" }, comment: "育苗担当世帯", force: :cascade do |t|
@@ -1265,11 +1277,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.string "mobile", limit: 15, comment: "携帯番号"
     t.string "mobile_mail", limit: 50, comment: "メールアドレス(携帯)"
     t.integer "office_role", default: 0, null: false, comment: "事務の役割"
+    t.integer "organization_id", default: 1, null: false, comment: "組織"
     t.string "pc_mail", limit: 50, comment: "メールアドレス(PC)"
     t.integer "position_id", default: 0, null: false, comment: "役職"
     t.datetime "updated_at", precision: nil
     t.boolean "work_flag", default: true, null: false, comment: "作業フラグ"
     t.index ["deleted_at"], name: "index_workers_on_deleted_at"
+    t.index ["organization_id"], name: "index_workers_on_organization_id"
   end
 
   create_table "works", id: { type: :serial, comment: "作業データ" }, comment: "作業データ", force: :cascade do |t|

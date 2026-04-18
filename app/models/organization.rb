@@ -51,6 +51,10 @@ class Organization < ApplicationRecord
   belongs_to :contract, class_name: "WorkType"
   belongs_to :harvesting, class_name: "WorkKind"
 
+  has_many :sections, dependent: :restrict_with_error
+  has_many :homes, dependent: :restrict_with_error
+  has_many :workers, dependent: :restrict_with_error
+
   def self.term
     Rails.cache.fetch(:organization_term, expires_in: 1.hour) do
       Organization.first.term

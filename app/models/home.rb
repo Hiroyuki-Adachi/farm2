@@ -38,6 +38,8 @@ class Home < ApplicationRecord
 
   REG_PHONE = /\A\d{2,4}-\d{2,4}-\d{4}\z/
 
+  belongs_to :organization
+
   has_many :workers, -> {order(:display_order)}
   has_many :owned_lands,    -> {order(:place)}, class_name: 'Land', foreign_key: :owner_id
   has_many :managed_lands,  -> {order(:place)}, class_name: 'Land', foreign_key: :manager_id
@@ -48,6 +50,8 @@ class Home < ApplicationRecord
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
+
+  scope :by_organization, ->(organization) { where(organization_id: organization.id) }
 
   scope :usual_order, -> {includes(:section).order(Arel.sql("sections.display_order, homes.display_order, homes.id"))}
   scope :usual, -> {

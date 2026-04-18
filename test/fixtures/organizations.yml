@@ -49,3 +49,11 @@ org:
   cleaning_id: 21
   training_id: 27
   location: "(35.472840, 133.050677)"
+  enable_broccoli: true
+  enable_whole_crop: true
+  enable_drying: true
+  enable_owned_rice: true
+  enable_straw: true
+  enable_sorimachi: true
+  enable_cost: true
+  enable_gap: true

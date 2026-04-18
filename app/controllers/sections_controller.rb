@@ -4,17 +4,17 @@ class SectionsController < ApplicationController
   before_action :set_section, only: [:edit, :update, :destroy]
 
   def index
-    @sections = Section.list
+    @sections = current_organization.sections.list
   end
 
   def new
-    @section = Section.new
+    @section = current_organization.sections.new
   end
 
   def edit; end
 
   def create
-    @section = Section.new(section_params)
+    @section = current_organization.sections.new(section_params)
     if @section.save
       redirect_to sections_path
     else
@@ -38,7 +38,7 @@ class SectionsController < ApplicationController
   private
 
   def set_section
-    @section = Section.find(params[:id])
+    @section = current_organization.sections.find(params[:id])
   end
 
   def section_params

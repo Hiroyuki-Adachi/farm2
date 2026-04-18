@@ -37,6 +37,7 @@ ja:
         drying_order: "出力順(乾燥調整用)"
         owned_rice_order: "出力順(保有米用)"
         seedling_order: "出力順(育苗用)"
+        organization_id: "組織"
 
       work_result: 
         home_name: "世帯"
@@ -123,6 +124,7 @@ ja:
         position_id: "役職"
         broccoli_mark: "ブロッコリ記号"
         office_role: "事務の役割"
+        organization_id: "組織"
 
       machine:
         name: 名称
@@ -217,11 +219,20 @@ ja:
         cleaning_id: "清掃作業を選択"
         straw_id: "稲わらを選択"
         training_id: "講習会・研修を選択"
+        enable_broccoli: "ブロッコリー機能"
+        enable_whole_crop: "WCS機能"
+        enable_drying: "乾燥調整機能"
+        enable_owned_rice: "保有米機能"
+        enable_straw: "稲わら機能"
+        enable_sorimachi: "ソリマチ連携機能"
+        enable_cost: "原価管理機能"
+        enable_gap: "GAP関連機能"
 
       section:
         name: 名称
         display_order: 表示順
         work_flag: "作業"
+        organization_id: "組織"
 
       work_chemical:
         worked_at: "作業日"  #g

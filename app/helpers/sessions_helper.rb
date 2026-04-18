@@ -71,4 +71,8 @@ module SessionsHelper
     session.delete(:access_target)
     @current_user = nil
   end
+
+  def feature_enabled?(feature)
+    current_organization.public_send(:"enable_#{feature}")
+  end
 end

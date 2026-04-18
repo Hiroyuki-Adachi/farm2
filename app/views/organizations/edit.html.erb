@@ -91,6 +91,60 @@
       <%= f.collection_select(:training_id, @work_kinds, :id, :name, {include_blank: true}, {class: "form-select"}) %>
     </div>
   </div>
+  <hr>
+  <h5>機能制限設定</h5>
+  <div class="row">
+    <div class="field mb-3 col-md-3">
+      <div class="form-check form-switch">
+        <%= f.check_box :enable_broccoli, class: "form-check-input", role: "switch" %>
+        <%= f.label :enable_broccoli, class: "form-check-label" %>
+      </div>
+    </div>
+    <div class="field mb-3 col-md-3">
+      <div class="form-check form-switch">
+        <%= f.check_box :enable_whole_crop, class: "form-check-input", role: "switch" %>
+        <%= f.label :enable_whole_crop, class: "form-check-label" %>
+      </div>
+    </div>
+    <div class="field mb-3 col-md-3">
+      <div class="form-check form-switch">
+        <%= f.check_box :enable_drying, class: "form-check-input", role: "switch" %>
+        <%= f.label :enable_drying, class: "form-check-label" %>
+      </div>
+    </div>
+    <div class="field mb-3 col-md-3">
+      <div class="form-check form-switch">
+        <%= f.check_box :enable_owned_rice, class: "form-check-input", role: "switch" %>
+        <%= f.label :enable_owned_rice, class: "form-check-label" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field mb-3 col-md-3">
+      <div class="form-check form-switch">
+        <%= f.check_box :enable_straw, class: "form-check-input", role: "switch" %>
+        <%= f.label :enable_straw, class: "form-check-label" %>
+      </div>
+    </div>
+    <div class="field mb-3 col-md-3">
+      <div class="form-check form-switch">
+        <%= f.check_box :enable_sorimachi, class: "form-check-input", role: "switch" %>
+        <%= f.label :enable_sorimachi, class: "form-check-label" %>
+      </div>
+    </div>
+    <div class="field mb-3 col-md-3">
+      <div class="form-check form-switch">
+        <%= f.check_box :enable_cost, class: "form-check-input", role: "switch" %>
+        <%= f.label :enable_cost, class: "form-check-label" %>
+      </div>
+    </div>
+    <div class="field mb-3 col-md-3">
+      <div class="form-check form-switch">
+        <%= f.check_box :enable_gap, class: "form-check-input", role: "switch" %>
+        <%= f.label :enable_gap, class: "form-check-label" %>
+      </div>
+    </div>
+  </div>
   <div class="btn-toolbar">
     <div class="btn-group mr-2">
       <%= f.submit '登録', class: "btn btn-danger" %>

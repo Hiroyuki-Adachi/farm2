@@ -5,17 +5,17 @@ class WorkersController < ApplicationController
   before_action :set_homes, only: [:new, :create, :edit, :update]
 
   def index
-    @workers = WorkerDecorator.decorate_collection(Worker.usual.page(params[:page]))
+    @workers = WorkerDecorator.decorate_collection(current_organization.workers.usual.page(params[:page]))
   end
 
   def new
-    @worker = Worker.new
+    @worker = current_organization.workers.new
   end
 
   def edit; end
 
   def create
-    @worker = Worker.new(worker_params)
+    @worker = current_organization.workers.new(worker_params)
     if params[:holder]
       @worker.home.holder = @worker
       @worker.home.save!
@@ -47,11 +47,11 @@ class WorkersController < ApplicationController
   private
 
   def set_worker
-    @worker = Worker.find(params[:id])
+    @worker = current_organization.workers.find(params[:id])
   end
 
   def set_homes
-    @homes = Home.usual
+    @homes = current_organization.homes.usual
   end
 
   def worker_params

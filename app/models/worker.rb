@@ -36,6 +36,7 @@ class Worker < ApplicationRecord
   self.discard_column = :deleted_at
 
   belongs_to :home, -> {with_deleted}
+  belongs_to :organization
 
   enum :gender_id, {none: 0, male: 1, female: 2}, prefix: true
   enum :position_id, {none: 0, member: 1, leader: 2, director: 3, advisor: 9}, prefix: true
@@ -51,6 +52,7 @@ class Worker < ApplicationRecord
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
+  scope :by_organization, ->(organization) { where(organization_id: organization.id) }
   scope :taskable, -> {kept.where.not(office_role: :none)}
   scope :usual_order, -> {kept.includes(home: :section).order('sections.display_order, homes.display_order, workers.display_order')}
   scope :usual, -> {kept.where(homes: { company_flag: false }).usual_order }

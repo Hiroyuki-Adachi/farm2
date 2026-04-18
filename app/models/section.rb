@@ -20,6 +20,8 @@ class Section < ApplicationRecord
 
   self.discard_column = :deleted_at
 
+  belongs_to :organization
+
   has_many :homes, -> {order("homes.display_order, homes.id")}
   has_many :schedule_sections
   has_many :schedules, through: :schedule_sections
@@ -27,6 +29,7 @@ class Section < ApplicationRecord
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
+  scope :by_organization, ->(organization) { where(organization_id: organization.id) }
   scope :list, -> { kept.order(display_order: :asc) }
   scope :usual_order, -> { kept.order(work_flag: :desc, display_order: :asc) }
   scope :usual, ->{ kept.where(work_flag: true).usual_order}

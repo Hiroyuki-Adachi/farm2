@@ -23,17 +23,25 @@
   <% end %>
     </div>
   </div>
-  <% if current_user.checkable? %>
+  <% if current_user.checkable? && (feature_enabled?(:drying) || feature_enabled?(:whole_crop) || feature_enabled?(:owned_rice) || feature_enabled?(:straw)) %>
     <div aria-labelledby="navbar_harvest" class="mt-2" style="display:none;">
       <span class="h5">収穫管理</span>
       <div class="ms-3 navbar">
         <%= link_to '育苗一覧', seedling_results_path, {class: "dropdown-item", data: {app_controller: "seedling_results"}} %>
         <% if current_user.manageable? %>
-          <%= link_to '乾燥調整一覧', dryings_path, {class: "dropdown-item", data: {app_controller: :dryings}} %>
-          <%= link_to '収穫一覧(水稲)', harvest_rices_path, {class: "dropdown-item", data: {app_controller: "harvest_rices"}} %>
-          <%= link_to '収穫一覧(WCS)', harvest_whole_crops_path, {class: "dropdown-item", data: {app_controller: "harvest_whole_crops"}} %>
-          <%= link_to '保有米一覧', owned_rices_path, {class: "dropdown-item", data: {app_controller: :owned_rices}} %>
-          <%= link_to '稲わら面積一覧', lands_straws_path, {class: "dropdown-item", data: {app_controller: "straws"}} %>
+          <% if feature_enabled?(:drying) %>
+            <%= link_to '乾燥調整一覧', dryings_path, {class: "dropdown-item", data: {app_controller: :dryings}} %>
+            <%= link_to '収穫一覧(水稲)', harvest_rices_path, {class: "dropdown-item", data: {app_controller: "harvest_rices"}} %>
+          <% end %>
+          <% if feature_enabled?(:whole_crop) %>
+            <%= link_to '収穫一覧(WCS)', harvest_whole_crops_path, {class: "dropdown-item", data: {app_controller: "harvest_whole_crops"}} %>
+          <% end %>
+          <% if feature_enabled?(:owned_rice) %>
+            <%= link_to '保有米一覧', owned_rices_path, {class: "dropdown-item", data: {app_controller: :owned_rices}} %>
+          <% end %>
+          <% if feature_enabled?(:straw) %>
+            <%= link_to '稲わら面積一覧', lands_straws_path, {class: "dropdown-item", data: {app_controller: "straws"}} %>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -67,8 +75,12 @@
       <%= link_to '新規確定', new_fix_path, {class: "dropdown-item", data: {app_controller: :fixes, actions: [:new], wait: true}} %>
       <%= link_to '確定一覧', fixes_path, {class: "dropdown-item", data: {app_controller: :fixes, actions: [:index, :show]}} %>
       <%= link_to '育苗集計', total_seedlings_path, {class: "dropdown-item", data: {app_controller: :total_seedlings}} %>
-      <%= link_to '乾燥調整一覧', total_dryings_path, {class: "dropdown-item", data: {app_controller: :total_dryings}} %>
-      <%= link_to 'WCS一覧', whole_crops_path, {class: "dropdown-item", data: {app_controller: :whole_crops}} %>
+      <% if feature_enabled?(:drying) %>
+        <%= link_to '乾燥調整一覧', total_dryings_path, {class: "dropdown-item", data: {app_controller: :total_dryings}} %>
+      <% end %>
+      <% if feature_enabled?(:whole_crop) %>
+        <%= link_to 'WCS一覧', whole_crops_path, {class: "dropdown-item", data: {app_controller: :whole_crops}} %>
+      <% end %>
       <%= link_to '外注集計一覧', works_supporters_path, {class: "dropdown-item", data: {app_controller: :supporters}} %>
     </div>
   </div>
@@ -80,16 +92,20 @@
       <%= link_to '在庫確認', chemicals_stocks_path, {class: "dropdown-item", data: {app_controller: :stocks}} %>
     </div>
   </div>
+  <% if feature_enabled?(:cost) %>
   <div aria-labelledby="navbar_cost" class="mt-2" style="display:none;">
     <span class="h5">原価管理</span>
     <div class="ms-3 navbar">
       <%= link_to '薬剤原価', chemical_costs_path, {class: "dropdown-item", data: {app_controller: "chemical_costs", wait: true}} %>
       <%= link_to '育苗原価', seedling_costs_path, {class: "dropdown-item", data: {app_controller: "seedling_costs"}} %>
       <%= link_to '原価一覧', total_costs_path, {class: "dropdown-item", data: {app_controller: "total_costs"}} %>
-      <%= link_to '農業簿記', sorimachi_imports_path, {class: "dropdown-item", data: {app_controller: :imports}} %>
-      <%= link_to '勘定科目', sorimachi_accounts_path, {class: "dropdown-item", data: {app_controller: :accounts}} %>
+      <% if feature_enabled?(:sorimachi) %>
+        <%= link_to '農業簿記', sorimachi_imports_path, {class: "dropdown-item", data: {app_controller: :imports}} %>
+        <%= link_to '勘定科目', sorimachi_accounts_path, {class: "dropdown-item", data: {app_controller: :accounts}} %>
+      <% end %>
     </div>
   </div>
+  <% end %>
   <% if this_term? %>
   <div aria-labelledby="navbar_plan" class="mt-2" style="display:none;">
     <span class="h5">生産計画</span>
@@ -100,6 +116,7 @@
     </div>
   </div>
   <% end %>
+  <% if feature_enabled?(:gap) %>
   <div aria-labelledby="navbar_gap" class="mt-2" style="display:none;">
     <span class="h5">GAP関連</span>
     <div class="ms-3 navbar">
@@ -112,6 +129,7 @@
       <%= link_to 'ヒヤリハット', gaps_accidents_path, {class: "dropdown-item", data: {app_controller: :gaps_accidents}} %>
     </div>
   </div>
+  <% end %>
   <% end %>
   <% if current_user.checkable? %>
   <div aria-labelledby="navbar_master" class="mt-2" style="display:none;">
