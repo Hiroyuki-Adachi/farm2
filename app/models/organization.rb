@@ -8,6 +8,14 @@
 #  consignor_code(委託者コード)              :string(10)
 #  consignor_name(委託者コード)              :string(40)
 #  daily_worker(作業日報の作業者名付加情報)  :integer          default("no_print"), not null
+#  enable_broccoli(ブロッコリ機能)           :boolean          default(FALSE), not null
+#  enable_cleaning(清掃機能)                 :boolean          default(FALSE), not null
+#  enable_contract(受託機能)                 :boolean          default(FALSE), not null
+#  enable_drying(乾燥機能)                   :boolean          default(FALSE), not null
+#  enable_maintenance(機械保守機能)          :boolean          default(FALSE), not null
+#  enable_straw(稲わら機能)                  :boolean          default(FALSE), not null
+#  enable_training(訓練機能)                 :boolean          default(FALSE), not null
+#  enable_whole_crop(WCS機能)               :boolean          default(FALSE), not null
 #  lands_count(作業日報の土地数)             :integer          default(17), not null
 #  location(位置)                            :point            default(#<struct ActiveRecord::Point x=35.0, y=135.0>), not null
 #  machines_count(作業日報の機械数)          :integer          default(8), not null
@@ -50,6 +58,12 @@ class Organization < ApplicationRecord
   belongs_to :whole_crop, class_name: "WorkKind"
   belongs_to :contract, class_name: "WorkType"
   belongs_to :harvesting, class_name: "WorkKind"
+
+  has_many :sections, dependent: :restrict_with_error
+  has_many :homes, dependent: :restrict_with_error
+  has_many :workers, dependent: :restrict_with_error
+  has_many :lands, dependent: :restrict_with_error
+  has_many :machines, dependent: :restrict_with_error
 
   def self.term
     Rails.cache.fetch(:organization_term, expires_in: 1.hour) do

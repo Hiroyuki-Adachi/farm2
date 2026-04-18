@@ -119,6 +119,7 @@ ja:
         display_order: "表示順"  #g
         gender_id: "性別"
         home_id: "世帯"
+        organization_id: "組織"
         token: "アクセストークン"
         position_id: "役職"
         broccoli_mark: "ブロッコリ記号"
@@ -217,6 +218,14 @@ ja:
         cleaning_id: "清掃作業を選択"
         straw_id: "稲わらを選択"
         training_id: "講習会・研修を選択"
+        enable_broccoli: "ブロッコリ機能"
+        enable_drying: "乾燥機能"
+        enable_whole_crop: "WCS機能"
+        enable_contract: "受託機能"
+        enable_maintenance: "機械保守機能"
+        enable_cleaning: "清掃機能"
+        enable_training: "訓練機能"
+        enable_straw: "稲わら機能"
 
       section:
         name: 名称

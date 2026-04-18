@@ -17,6 +17,7 @@
 #
 
 taueki_1:
+  organization_id: 1
   id: 2
   name: 8条(旧NSU87)
   display_order: '7'
@@ -27,10 +28,12 @@ taueki_1:
   created_at: '2010-07-15 14:34:42'
   updated_at: '2016-06-07 14:10:01.733301'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 't'
 
 
 machines1:
+  organization_id: 1
   id: '4'
   name: "MZ65幅広T#3"
   display_order: '3'
@@ -41,10 +44,12 @@ machines1:
   created_at: '2010-07-15 14:34:42'
   updated_at: '2016-06-07 12:28:13.892558'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 't'
 
 
 machines2:
+  organization_id: 1
   id: '5'
   name: "ハンクロMZ65#2"
   display_order: '2'
@@ -55,10 +60,12 @@ machines2:
   created_at: '2010-07-15 14:34:42'
   updated_at: '2016-06-07 12:27:58.98196'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines3:
+  organization_id: 1
   id: '6'
   name: "AR698#1"
   display_order: '11'
@@ -69,10 +76,12 @@ machines3:
   created_at: '2010-07-15 14:34:42'
   updated_at: '2016-06-14 11:53:31.78904'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines4:
+  organization_id: 1
   id: '7'
   name: "ERN698#2"
   display_order: '12'
@@ -83,10 +92,12 @@ machines4:
   created_at: '2010-07-15 14:34:42'
   updated_at: '2016-06-14 11:53:49.464841'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines5:
+  organization_id: 1
   id: '8'
   name: WCS
   display_order: '17'
@@ -97,10 +108,12 @@ machines5:
   created_at: '2010-07-15 14:34:42'
   updated_at: '2013-07-13 02:36:37.326315'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines6:
+  organization_id: 1
   id: '9'
   name: OKリース(4t)
   display_order: '35'
@@ -111,10 +124,12 @@ machines6:
   created_at: '2010-07-19 10:19:32.947907'
   updated_at: '2013-07-13 02:44:30.225226'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines7:
+  organization_id: 1
   id: '10'
   name: フォークリフト
   display_order: '32'
@@ -125,10 +140,12 @@ machines7:
   created_at: '2010-07-19 10:50:02.251704'
   updated_at: '2013-07-13 02:41:42.841148'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines8:
+  organization_id: 1
   id: '11'
   name: 散布機
   display_order: '31'
@@ -139,10 +156,12 @@ machines8:
   created_at: '2010-07-19 10:50:19.40446'
   updated_at: '2013-07-13 02:41:26.993127'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines9:
+  organization_id: 1
   id: '12'
   name: ''
   display_order: '33'
@@ -153,10 +172,12 @@ machines9:
   created_at: '2010-07-19 11:04:01.884798'
   updated_at: '2016-06-07 12:29:25.471834'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines10:
+  organization_id: 1
   id: '14'
   name: "#1"
   display_order: '36'
@@ -167,10 +188,12 @@ machines10:
   created_at: '2010-07-19 11:04:42.738313'
   updated_at: '2013-07-13 02:44:50.021214'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines11:
+  organization_id: 1
   id: '15'
   name: 集草機
   display_order: '20'
@@ -181,10 +204,12 @@ machines11:
   created_at: '2010-09-19 23:38:28.371425'
   updated_at: '2013-07-13 02:39:24.140077'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines12:
+  organization_id: 1
   id: '16'
   name: ラップマシン
   display_order: '18'
@@ -195,10 +220,12 @@ machines12:
   created_at: '2010-09-19 23:38:54.697253'
   updated_at: '2013-07-13 02:38:10.004682'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines13:
+  organization_id: 1
   id: '17'
   name: タイヤローダー
   display_order: '19'
@@ -209,10 +236,12 @@ machines13:
   created_at: '2010-09-19 23:39:04.787005'
   updated_at: '2013-07-13 02:37:57.180992'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines14:
+  organization_id: 1
   id: '18'
   name: "MZ655#1"
   display_order: '1'
@@ -223,10 +252,12 @@ machines14:
   created_at: '2011-12-09 10:03:45.696324'
   updated_at: '2016-06-07 12:27:31.317865'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines15:
+  organization_id: 1
   id: '19'
   name: 8条(新EP87)
   display_order: '5'
@@ -237,10 +268,12 @@ machines15:
   created_at: '2012-07-14 07:38:38.598912'
   updated_at: '2016-06-07 14:11:43.104714'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines16:
+  organization_id: 1
   id: '20'
   name: 田植機(除草機)
   display_order: '10'
@@ -251,10 +284,12 @@ machines16:
   created_at: '2012-07-21 00:06:12.890608'
   updated_at: '2012-07-21 00:06:51.038704'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines17:
+  organization_id: 1
   id: '22'
   name: ロールべーラ
   display_order: '16'
@@ -265,10 +300,12 @@ machines17:
   created_at: '2013-07-13 02:35:43.198642'
   updated_at: '2013-07-13 02:35:43.198642'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines18:
+  organization_id: 1
   id: '23'
   name: グレイタスローダ
   display_order: '20'
@@ -279,10 +316,12 @@ machines18:
   created_at: '2013-07-13 02:40:27.824761'
   updated_at: '2013-07-13 02:40:27.824761'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines19:
+  organization_id: 1
   id: '24'
   name: ''
   display_order: '34'
@@ -293,10 +332,12 @@ machines19:
   created_at: '2013-07-13 02:43:49.413117'
   updated_at: '2016-06-07 12:29:47.543989'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines20:
+  organization_id: 1
   id: '25'
   name: ''
   display_order: '40'
@@ -307,10 +348,12 @@ machines20:
   created_at: '2014-07-20 07:36:57.419755'
   updated_at: '2016-06-07 12:30:04.796801'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines21:
+  organization_id: 1
   id: '26'
   name: ''
   display_order: '0'
@@ -321,10 +364,12 @@ machines21:
   created_at: '2015-12-17 08:56:43.037151'
   updated_at: '2016-06-07 12:28:24.709321'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 
 machines22:
+  organization_id: 1
   id: '27'
   name: 中家ドウフン
   display_order: '0'
@@ -335,9 +380,11 @@ machines22:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 machine_hour:
+  organization_id: 1
   name: "テスト時間ごと"
   display_order: 1
   validity_start_at: '2010-01-01'
@@ -347,9 +394,11 @@ machine_hour:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 machine_area:
+  organization_id: 1
   name: "テスト面積ごと"
   display_order: 2
   validity_start_at: '2010-01-01'
@@ -359,9 +408,11 @@ machine_area:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 machine_day:
+  organization_id: 1
   name: "テスト日数ごと"
   display_order: 3
   validity_start_at: '2010-01-01'
@@ -371,9 +422,11 @@ machine_day:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 machine_hour_t:
+  organization_id: 1
   name: "テスト時間ごと"
   display_order: 1
   validity_start_at: '2010-01-01'
@@ -383,9 +436,11 @@ machine_hour_t:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 machine_area_t:
+  organization_id: 1
   name: "テスト面積ごと"
   display_order: 2
   validity_start_at: '2010-01-01'
@@ -395,9 +450,11 @@ machine_area_t:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'
 
 machine_day_t:
+  organization_id: 1
   name: "テスト日数ごと"
   display_order: 3
   validity_start_at: '2010-01-01'
@@ -407,4 +464,5 @@ machine_day_t:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
+  organization_id: 1
   diesel_flag: 'f'

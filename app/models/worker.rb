@@ -20,11 +20,13 @@
 #  updated_at                        :datetime
 #  gender_id(性別)                   :integer          default("none"), not null
 #  home_id(世帯)                     :integer
+#  organization_id(組織)             :integer          default(0), not null
 #  position_id(役職)                 :integer          default("none"), not null
 #
 # Indexes
 #
-#  index_workers_on_deleted_at  (deleted_at)
+#  index_workers_on_deleted_at          (deleted_at)
+#  index_workers_on_organization_id     (organization_id)
 #
 
 require 'securerandom'
@@ -32,6 +34,7 @@ require 'securerandom'
 class Worker < ApplicationRecord
   include Discard::Model
   include Enums::OfficeRole
+  include OrganizationScopeable
 
   self.discard_column = :deleted_at
 

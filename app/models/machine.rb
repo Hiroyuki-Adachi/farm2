@@ -14,10 +14,16 @@
 #  updated_at                        :datetime
 #  home_id(所有者)                   :integer          default(0), not null
 #  machine_type_id(機械種別)         :integer          default(0), not null
+#  organization_id(組織)             :integer          default(0), not null
+#
+# Indexes
+#
+#  index_machines_on_organization_id  (organization_id)
 #
 
 class Machine < ApplicationRecord
   include Discard::Model
+  include OrganizationScopeable
 
   self.discard_column = :deleted_at
 

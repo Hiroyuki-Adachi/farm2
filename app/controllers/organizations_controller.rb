@@ -46,7 +46,15 @@ class OrganizationsController < ApplicationController
         :cleaning_id,
         :straw_id,
         :training_id,
-        :location
+        :location,
+        :enable_broccoli,
+        :enable_drying,
+        :enable_whole_crop,
+        :enable_contract,
+        :enable_maintenance,
+        :enable_cleaning,
+        :enable_training,
+        :enable_straw
       ])
   end
 end

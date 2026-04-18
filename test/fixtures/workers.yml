@@ -28,1236 +28,1585 @@
 #
 
 worker1:
+  organization_id: 1
   id: 1
   family_phonetic: ごとう
   family_name: 後藤
   first_phonetic: はるみ
   first_name: 晴美
   birthday: 
+  organization_id: 1
   home_id: 1
   mobile: 080-2892-4444
   mobile_mail:
+  organization_id: 1
   pc_mail:
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1980-01-01'
   gender_id: 1
   office_role: 1 
 
 worker2:
+  organization_id: 1
   id: 2
   family_phonetic: やまもと
   family_name: 山本
   first_phonetic: けんぞう
   first_name: 健蔵
   birthday: 
+  organization_id: 1
   home_id: 2
   mobile: 080-9339-2113
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1960-01-01'
   gender_id: 1
   office_role: 2
 
 worker3:
+  organization_id: 1
   id: 3
   family_phonetic: たかはし
   family_name: 高橋
   first_phonetic: まゆみ
   first_name: 真由美
   birthday: 
+  organization_id: 1
   home_id: 3
   mobile: 080-4668-7772
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1990-01-01'
   gender_id: 2
   office_role: 3
 
 worker4:
+  organization_id: 1
   id: 4
   family_phonetic: やまもと
   family_name: 山本
   first_phonetic: きんいち
   first_name: 勤一
   birthday: 
+  organization_id: 1
   home_id: 4
   mobile: 080-4111-4443
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker5:
+  organization_id: 1
   id: 5
   family_phonetic: さいとう
   family_name: 斎藤
   first_phonetic: さだのり
   first_name: 定徳
   birthday: 
+  organization_id: 1
   home_id: 5
   mobile: 080-6213-3472
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker6:
+  organization_id: 1
   id: 6
   family_phonetic: すずき
   family_name: 鈴木
   first_phonetic: ようじ
   first_name: 洋治
   birthday: 
+  organization_id: 1
   home_id: 6
   mobile: 080-4444-1111
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
   
 worker7:
+  organization_id: 1
   id: 7
   family_phonetic: さとう
   family_name: 佐藤
   first_phonetic: たけよし
   first_name: 武義
   birthday: 
+  organization_id: 1
   home_id: 7
   mobile: 080-8888-9333
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker8:
+  organization_id: 1
   id: 8
   family_phonetic: おおむら
   family_name: 大村
   first_phonetic: みつお
   first_name: 三津男
   birthday: 
+  organization_id: 1
   home_id: 8
   mobile: 080-4448-8333
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker9:
+  organization_id: 1
   id: 9
   family_phonetic: のむら
   family_name: 野村
   first_phonetic: しげお
   first_name: 重雄
   birthday: 
+  organization_id: 1
   home_id: 9
   mobile: 080-7777-3888
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker10:
+  organization_id: 1
   id: 10
   family_phonetic: おおむら
   family_name: 大村
   first_phonetic: のりやす
   first_name: 範保
   birthday: 
+  organization_id: 1
   home_id: 10
   mobile: 080-9422-4422
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker11:
+  organization_id: 1
   id: 11
   family_phonetic: さとう
   family_name: 佐藤
   first_phonetic: ゆたか
   first_name: 豊
   birthday: 
+  organization_id: 1
   home_id: 11
   mobile: 080-1221-0080
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker12:
+  organization_id: 1
   id: 12
   family_phonetic: いしもと
   family_name: 石本
   first_phonetic: ゆうじ
   first_name: 裕治
   birthday: 
+  organization_id: 1
   home_id: 12
   mobile: 080-4694-5000
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker13:
+  organization_id: 1
   id: 13
   family_phonetic: さとう
   family_name: 佐藤
   first_phonetic: みよこ
   first_name: 美代子
   birthday: 
+  organization_id: 1
   home_id: 13
   mobile: 080-5123-6123
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker14:
+  organization_id: 1
   id: 14
   family_phonetic: いしもと
   family_name: 石本
   first_phonetic: よしゆき
   first_name: 芳之
   birthday: 
+  organization_id: 1
   home_id: 14
   mobile: 080-4477-3445
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker15:
+  organization_id: 1
   id: 15
   family_phonetic: たけだ
   family_name: 竹田
   first_phonetic: いさむ
   first_name: 勇
   birthday: 
+  organization_id: 1
   home_id: 15
   mobile: 080-1116-3332
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 3
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-07-16 09:01:38.623449
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker17:
+  organization_id: 1
   id: 17
   family_phonetic: たなか
   family_name: 田中
   first_phonetic: みつお
   first_name: 満男
   birthday: 
+  organization_id: 1
   home_id: 17
   mobile: 080-6888-6666
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker18:
+  organization_id: 1
   id: 18
   family_phonetic: すずき
   family_name: 鈴木
   first_phonetic: まさとし
   first_name: 允利
   birthday: 
+  organization_id: 1
   home_id: 18
   mobile: 090-6471-1049
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker19:
+  organization_id: 1
   id: 19
   family_phonetic: ながしま
   family_name: 長島
   first_phonetic: ひろゆき
   first_name: 寛幸
   birthday: 
+  organization_id: 1
   home_id: 19
   mobile: 090-3444-5809
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-19 10:44:26.528643
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker20:
+  organization_id: 1
   id: 20
   family_phonetic: たなか
   family_name: 田中
   first_phonetic: よしゆき
   first_name: 良幸
   birthday: 
+  organization_id: 1
   home_id: 20
   mobile: 070-7481-3649
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
   
 worker21:
+  organization_id: 1
   id: 21
   family_phonetic: すずき
   family_name: 鈴木
   first_phonetic: せいじ
   first_name: 誠治
   birthday: 
+  organization_id: 1
   home_id: 21
   mobile: 090-8581-0204
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
   
 worker22:
+  organization_id: 1
   id: 22
   family_phonetic: すずき
   family_name: 鈴木
   first_phonetic: えいじ
   first_name: 栄治
   birthday: 
+  organization_id: 1
   home_id: 22
   mobile: 090-0046-4410
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
   
 worker23:
+  organization_id: 1
   id: 23
   family_phonetic: すずき
   family_name: 鈴木
   first_phonetic: けんじ
   first_name: 健二
   birthday: 
+  organization_id: 1
   home_id: 23
   mobile: 090-1680-9845
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker24:
+  organization_id: 1
   id: 24
   family_phonetic: あらき
   family_name: 荒木
   first_phonetic: たつふみ
   first_name: 達文
   birthday: 
+  organization_id: 1
   home_id: 24
   mobile: 090-0398-5493
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker25:
+  organization_id: 1
   id: 25
   family_phonetic: あらき
   family_name: 荒木
   first_phonetic: なおゆき
   first_name: 直行
   birthday: 
+  organization_id: 1
   home_id: 25
   mobile: 070-0963-9828
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker26:
+  organization_id: 1
   id: 26
   family_phonetic: おおむら
   family_name: 大村
   first_phonetic: てるお
   first_name: 輝夫
   birthday: 
+  organization_id: 1
   home_id: 26
   mobile: 070-1819-0223
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker27:
+  organization_id: 1
   id: 27
   family_phonetic: たしろ
   family_name: 田代
   first_phonetic: よしはる
   first_name: 善治
   birthday: 
+  organization_id: 1
   home_id: 27
   mobile: 090-3590-2943
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker28:
+  organization_id: 1
   id: 28
   family_phonetic: はやかわ
   family_name: 早川
   first_phonetic: かずよし
   first_name: 一吉
   birthday: 
+  organization_id: 1
   home_id: 28
   mobile: 070-8401-9885
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker29:
+  organization_id: 1
   id: 29
   family_phonetic: たなか
   family_name: 田中
   first_phonetic: たかし
   first_name: 孝
   birthday: 
+  organization_id: 1
   home_id: 29
   mobile: 090-1806-0779
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker30:
+  organization_id: 1
   id: 30
   family_phonetic: さとう
   family_name: 佐藤
   first_phonetic: まさる
   first_name: 勝
   birthday: 
+  organization_id: 1
   home_id: 30
   mobile: 090-1958-5057
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker31:
+  organization_id: 1
   id: 31
   family_phonetic: うえむら
   family_name: 上村
   first_phonetic: てつや
   first_name: 徹也
   birthday: 
+  organization_id: 1
   home_id: 31
   mobile: 090-3739-7873
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2015-12-17 08:50:10.460973
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker32:
+  organization_id: 1
   id: 32
   family_phonetic: すずき
   family_name: 鈴木
   first_phonetic: ふみお
   first_name: 文男
   birthday: 
+  organization_id: 1
   home_id: 32
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker22:
+  organization_id: 1
   id: 22
   family_phonetic: ながしま
   family_name: 長島
   first_phonetic: しんいち
   first_name: 新一
   birthday: 
+  organization_id: 1
   home_id: 22
   mobile: 090-1329-0805
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-19 10:44:03.814998
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker34:
+  organization_id: 1
   id: 34
   family_phonetic: やまもと
   family_name: 山本
   first_phonetic: よしなり
   first_name: 宣成
   birthday: 
+  organization_id: 1
   home_id: 4
   mobile: 080-5246-0309
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker35:
+  organization_id: 1
   id: 35
   family_phonetic: さとう
   family_name: 佐藤
   first_phonetic: けんいち
   first_name: 健一
   birthday: 
+  organization_id: 1
   home_id: 7
   mobile: 080-5798-7150
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker36:
+  organization_id: 1
   id: 36
   family_phonetic: さとう
   family_name: 佐藤
   first_phonetic: とおる
   first_name: 徹
   birthday: 
+  organization_id: 1
   home_id: 13
   mobile: 080-4596-5402
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker37:
+  organization_id: 1
   id: 37
   family_phonetic: やまもと
   family_name: 山本
   first_phonetic: しんじ
   first_name: 真治
   birthday: 
+  organization_id: 1
   home_id: 16
   mobile: 080-6824-2369
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker38:
+  organization_id: 1
   id: 38
   family_phonetic: たなか
   family_name: 田中
   first_phonetic: さとし
   first_name: 智志
   birthday: 
+  organization_id: 1
   home_id: 17
   mobile: 080-1915-8563
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker39:
+  organization_id: 1
   id: 39
   family_phonetic: すずき
   family_name: 鈴木
   first_phonetic: ともひで
   first_name: 朋秀
   birthday: 
+  organization_id: 1
   home_id: 18
   mobile: 080-6824-2369
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker40:
+  organization_id: 1
   id: 40
   family_phonetic: あらき
   family_name: 荒木
   first_phonetic: たかひこ
   first_name: 貴彦
   birthday: 
+  organization_id: 1
   home_id: 24
   mobile: 080-4532-3544
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker41:
+  organization_id: 1
   id: 41
   family_phonetic: はやかわ
   family_name: 早川
   first_phonetic: ひろゆき
   first_name: 博之
   birthday: 
+  organization_id: 1
   home_id: 28
   mobile: 080-8718-2539
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker42:
+  organization_id: 1
   id: 42
   family_phonetic: すずき
   family_name: 鈴木
   first_phonetic: ともこ
   first_name: 智子
   birthday: 
+  organization_id: 1
   home_id: 21
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker43:
+  organization_id: 1
   id: 43
   family_phonetic: いしもと
   family_name: 石本
   first_phonetic: まゆみ
   first_name: 真由美
   birthday: 
+  organization_id: 1
   home_id: 12
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-19 11:38:12.229411
   updated_at: 2010-07-19 11:38:12.229411
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker44:
+  organization_id: 1
   id: 44
   family_phonetic: たなか
   family_name: 田中
   first_phonetic: みどり
   first_name: みどり
   birthday: 
+  organization_id: 1
   home_id: 29
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-19 11:38:39.100383
   updated_at: 2010-07-19 11:38:39.100383
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker45:
+  organization_id: 1
   id: 45
   family_phonetic: おおむら
   family_name: 大村
   first_phonetic: ちよこ
   first_name: 千代子
   birthday: 
+  organization_id: 1
   home_id: 8
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-19 11:45:48.770313
   updated_at: 2010-07-19 11:45:48.770313
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker46:
+  organization_id: 1
   id: 46
   family_phonetic: すずき
   family_name: 鈴木
   first_phonetic: きよこ
   first_name: きよ子
   birthday: 
+  organization_id: 1
   home_id: 6
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-19 11:46:46.324567
   updated_at: 2010-07-19 11:46:46.324567
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker47:
+  organization_id: 1
   id: 47
   family_phonetic: さとう
   family_name: 佐藤
   first_phonetic: ゆきの
   first_name: 雪乃
   birthday: 
+  organization_id: 1
   home_id: 11
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2010-07-19 12:16:06.937903
   updated_at: 2010-07-19 13:35:37.890246
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker48:
+  organization_id: 1
   id: 48
   family_phonetic: あらき
   family_name: 荒木
   first_phonetic: よしえ
   first_name: 嘉得
   birthday: 
+  organization_id: 1
   home_id: 24
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 0
   work_flag: t
   gender_id: 0
   created_at: 2011-05-08 09:09:44.094912
   updated_at: 2011-05-08 09:09:44.094912
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker49:
+  organization_id: 1
   id: 49
   family_phonetic: おおむら
   family_name: 大村
   first_phonetic: けいこ
   first_name: 恵子
   birthday: 
+  organization_id: 1
   home_id: 26
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 0
   work_flag: t
   gender_id: 0
   created_at: 2011-05-09 23:35:00.892503
   updated_at: 2011-05-09 23:35:00.892503
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker50:
+  organization_id: 1
   id: 50
   family_phonetic: おおむら
   family_name: 大村
   first_phonetic: なおと
   first_name: 直人
   birthday: 
+  organization_id: 1
   home_id: 26
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2011-06-25 00:23:45.882427
   updated_at: 2011-06-25 00:23:45.882427
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker51:
+  organization_id: 1
   id: 51
   family_phonetic: たしろ
   family_name: 田代
   first_phonetic: いさお
   first_name: 功
   birthday: 
+  organization_id: 1
   home_id: 27
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2011-12-04 07:20:52.590354
   updated_at: 2011-12-04 07:20:52.590354
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker52:
+  organization_id: 1
   id: 52
   family_phonetic: たけだ
   family_name: 竹田
   first_phonetic: ようこ
   first_name: 洋子
   birthday: 
+  organization_id: 1
   home_id: 15
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 1
   work_flag: t
   gender_id: 0
   created_at: 2011-12-26 09:46:27.221566
   updated_at: 2013-07-16 09:02:07.485254
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker54:
+  organization_id: 1
   id: 54
   family_phonetic: たなか
   family_name: 田中
   first_phonetic: あけみ
   first_name: 明美
   birthday: 
+  organization_id: 1
   home_id: 20
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 0
   work_flag: t
   gender_id: 0
   created_at: 2011-12-26 09:49:22.436485
   updated_at: 2011-12-26 09:49:22.436485
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker44:
+  organization_id: 1
   id: 44
   family_phonetic: すずき
   family_name: 鈴木
   first_phonetic: さよこ
   first_name: 小夜子
   birthday: 
+  organization_id: 1
   home_id: 32
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 10
   work_flag: t
   gender_id: 0
   created_at: 2012-07-14 07:34:29.890144
   updated_at: 2012-07-14 07:34:29.890144
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker56:
+  organization_id: 1
   id: 56
   family_phonetic: おおむら
   family_name: 大村
   first_phonetic: えいこ
   first_name: 栄子
   birthday: 
+  organization_id: 1
   home_id: 10
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 0
   work_flag: t
   gender_id: 0
   created_at: 2012-07-15 05:05:23.435815
   updated_at: 2012-07-15 05:05:23.435815
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker57:
+  organization_id: 1
   id: 57
   family_phonetic: さとう
   family_name: 佐藤
   first_phonetic: なおひと
   first_name: 直人
   birthday: 
+  organization_id: 1
   home_id: 30
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2012-10-02 07:24:30.738494
   updated_at: 2012-10-02 07:24:30.738494
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker58:
+  organization_id: 1
   id: 58
   family_phonetic: さとう
   family_name: 佐藤
   first_phonetic: ひでひと
   first_name: 秀人
   birthday: 
+  organization_id: 1
   home_id: 30
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 0
   work_flag: t
   gender_id: 0
   created_at: 2012-10-02 07:26:54.472357
   updated_at: 2012-10-02 07:26:54.472357
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker60:
+  organization_id: 1
   id: 60
   family_phonetic: おおむら
   family_name: 大村
   first_phonetic: じゅん
   first_name: 準
   birthday: 
+  organization_id: 1
   home_id: 8
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 3
   work_flag: t
   gender_id: 2
   created_at: 2013-07-09 01:05:02.902932
   updated_at: 2013-07-09 01:05:02.902932
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker61:
+  organization_id: 1
   id: 61
   family_phonetic: たけだ
   family_name: 竹田
   first_phonetic: ともみ
   first_name: 友美
   birthday: 
+  organization_id: 1
   home_id: 15
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 2
   created_at: 2013-07-16 09:00:48.638123
   updated_at: 2013-07-16 09:02:32.862635
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker62:
+  organization_id: 1
   id: 62
   family_phonetic: のむら
   family_name: 野村
   first_phonetic: ゆきこ
   first_name: ゆきこ
   birthday: 
+  organization_id: 1
   home_id: 9
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 2
   created_at: 2014-01-20 08:24:18.408287
   updated_at: 2015-03-21 09:53:17.563115
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker63:
+  organization_id: 1
   id: 63
   family_phonetic: すずき
   family_name: 鈴木
   first_phonetic: たくや
   first_name: 拓哉
   birthday: 
+  organization_id: 1
   home_id: 21
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 20
   work_flag: t
   gender_id: 0
   created_at: 2014-05-06 06:42:47.698017
   updated_at: 2014-05-06 06:42:47.698017
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker64:
+  organization_id: 1
   id: 64
   family_phonetic: あらき
   family_name: 荒木
   first_phonetic: ゆみこ
   first_name: 由美子
   birthday: 
+  organization_id: 1
   home_id: 25
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 2
   created_at: 2015-01-12 06:49:22.583886
   updated_at: 2015-01-12 06:49:22.583886
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
   
 worker65:
+  organization_id: 1
   id: 65
   family_phonetic: のむら
   family_name: 野村
   first_phonetic: ゆうさく
   first_name: ユウサク
   birthday: 
+  organization_id: 1
   home_id: 9
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 3
   work_flag: t
   gender_id: 0
   created_at: 2015-03-21 09:52:02.423872
   updated_at: 2015-03-21 09:52:02.423872
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker66:
+  organization_id: 1
   id: 66
   family_phonetic: さとう
   family_name: 佐藤
   first_phonetic: ひろみ
   first_name: 博美
   birthday: 
+  organization_id: 1
   home_id: 30
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 0
   work_flag: t
   gender_id: 0
   created_at: 2015-12-19 07:01:07.68698
   updated_at: 2015-12-19 07:01:07.68698
   deleted_at: 
+  organization_id: 1
   birthday: '1950-01-01'
 
 worker67:
+  organization_id: 1
   id: 67
   family_phonetic: すずき
   family_name: 鈴木
   first_phonetic: あけみ
   first_name: あけみ
   birthday: 
+  organization_id: 1
   home_id: 22
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 2
   created_at: 2016-01-11 08:40:04.804056
   updated_at: 2016-01-11 08:40:04.804056
   deleted_at: 
+  organization_id: 1
   
 worker_farm:
+  organization_id: 1
   id: 68
   family_phonetic: じむきょく
   family_name: 事務局
   first_phonetic: じむきょく
   first_name: 事務局
   birthday: 
+  organization_id: 1
   home_id: 37
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: test@example.com
   display_order: 1
   work_flag: t
@@ -1265,20 +1614,27 @@ worker_farm:
   created_at: 2016-01-11 08:40:04.804056
   updated_at: 2016-01-11 08:40:04.804056
   deleted_at: 
+  organization_id: 1
   
 worker_not_worker:
+  organization_id: 1
   family_phonetic: あおき
   family_name: 青木
   first_phonetic: さぶろう
   first_name: 三郎
   birthday: 
+  organization_id: 1
   home: home_not_worker
   mobile: 
+  organization_id: 1
   mobile_mail: 
+  organization_id: 1
   pc_mail: 
+  organization_id: 1
   display_order: 2
   work_flag: t
   gender_id: 0
   created_at: 2016-01-11 08:40:04.804056
   updated_at: 2016-01-11 08:40:04.804056
   deleted_at: 
+  organization_id: 1

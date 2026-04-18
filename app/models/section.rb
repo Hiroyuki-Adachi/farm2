@@ -9,14 +9,17 @@
 #  work_flag(作業班フラグ) :boolean          default(TRUE), not null
 #  created_at              :datetime
 #  updated_at              :datetime
+#  organization_id(組織)   :integer          default(0), not null
 #
 # Indexes
 #
-#  index_sections_on_deleted_at  (deleted_at)
+#  index_sections_on_deleted_at        (deleted_at)
+#  index_sections_on_organization_id   (organization_id)
 #
 
 class Section < ApplicationRecord
   include Discard::Model
+  include OrganizationScopeable
 
   self.discard_column = :deleted_at
 

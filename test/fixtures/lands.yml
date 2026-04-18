@@ -35,6 +35,7 @@
 #
 
 lands0:
+  organization_id: 1
   id: '1'
   place: 5386-ﾛ
   owner_id: '17'
@@ -44,10 +45,12 @@ lands0:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
   land_place_id: land_places(:land_place0).id
 
 
 lands1:
+  organization_id: 1
   id: '2'
   place: 5386-ｲ
   owner_id: '17'
@@ -57,12 +60,14 @@ lands1:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
   land_place_id: land_places(:land_place0).id
   region: "((35.474177,133.047340), (35.472866,133.047340), (35.472648,133.049056))"
   uuid: "16c773fe-31cd-4c24-82b7-a125ee405bc7"
 
 
 lands2:
+  organization_id: 1
   id: '3'
   place: 5382-ﾊ
   owner_id: '1'
@@ -72,10 +77,12 @@ lands2:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
   land_place_id: land_places(:land_place0).id
 
 
 lands3:
+  organization_id: 1
   id: '4'
   place: 5382-ﾛ
   owner_id: '1'
@@ -85,9 +92,11 @@ lands3:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 land_land_cost2:
+  organization_id: 1
   place: 5382-ﾆ
   owner_id: '1'
   manager_id: '1'
@@ -96,9 +105,11 @@ land_land_cost2:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-20 08:01:28.877914'
   deleted_at: 
+  organization_id: 1
 
 
 land_land_cost1:
+  organization_id: 1
   place: 5382-ｲ
   owner_id: '1'
   manager_id: '1'
@@ -108,9 +119,11 @@ land_land_cost1:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands6:
+  organization_id: 1
   id: '7'
   place: '6381'
   owner_id: '17'
@@ -120,9 +133,11 @@ lands6:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands7:
+  organization_id: 1
   id: '8'
   place: '6394'
   owner_id: '18'
@@ -132,9 +147,11 @@ lands7:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands8:
+  organization_id: 1
   id: '9'
   place: 5395-ﾛ
   owner_id: '17'
@@ -144,9 +161,11 @@ lands8:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands9:
+  organization_id: 1
   id: '10'
   place: 5395-ｲ
   owner_id: '17'
@@ -156,9 +175,11 @@ lands9:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands_group1_1:
+  organization_id: 1
   place: 5396-ｲ
   owner_id: '18'
   manager_id: '18'
@@ -167,9 +188,11 @@ lands_group1_1:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
   group: land_group1
 
 lands_group1_2:
+  organization_id: 1
   place: 5396-ﾛ
   owner_id: '18'
   manager_id: '18'
@@ -178,9 +201,11 @@ lands_group1_2:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
   group: land_group1
 
 land_group1:
+  organization_id: 1
   place: 5396-ﾛ
   area: 0
   target_flag: t
@@ -188,8 +213,10 @@ land_group1:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 lands12:
+  organization_id: 1
   id: '13'
   place: 5396-ﾊ
   owner_id: '18'
@@ -199,9 +226,11 @@ lands12:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands13:
+  organization_id: 1
   id: '14'
   place: 5396-ﾆ
   owner_id: '18'
@@ -211,9 +240,11 @@ lands13:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands14:
+  organization_id: 1
   id: '15'
   place: 5402-1-ｲ
   owner_id: '18'
@@ -223,9 +254,11 @@ lands14:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands15:
+  organization_id: 1
   id: '16'
   place: 5405-1-ﾆ
   owner_id: '3'
@@ -235,9 +268,11 @@ lands15:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands16:
+  organization_id: 1
   id: '17'
   place: 5405-1-ﾊ
   owner_id: '3'
@@ -247,9 +282,11 @@ lands16:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands17:
+  organization_id: 1
   id: '18'
   place: 5405-1-ｲ
   owner_id: '3'
@@ -259,9 +296,11 @@ lands17:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands18:
+  organization_id: 1
   id: '19'
   place: 5446-ﾊ
   owner_id: '2'
@@ -271,9 +310,11 @@ lands18:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands19:
+  organization_id: 1
   id: '20'
   place: 5446-ﾛ
   owner_id: '2'
@@ -283,9 +324,11 @@ lands19:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands20:
+  organization_id: 1
   id: '21'
   place: 5446-ｲ
   owner_id: '2'
@@ -295,9 +338,11 @@ lands20:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands21:
+  organization_id: 1
   id: '22'
   place: 5460-ｲ
   owner_id: '2'
@@ -307,9 +352,11 @@ lands21:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands22:
+  organization_id: 1
   id: '23'
   place: 5460-ﾛ
   owner_id: '2'
@@ -319,9 +366,11 @@ lands22:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands23:
+  organization_id: 1
   id: '24'
   place: '6459'
   owner_id: '18'
@@ -331,9 +380,11 @@ lands23:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands24:
+  organization_id: 1
   id: '25'
   place: '6458'
   owner_id: '3'
@@ -343,9 +394,11 @@ lands24:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands25:
+  organization_id: 1
   id: '26'
   place: 5292-1
   owner_id: '19'
@@ -355,9 +408,11 @@ lands25:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-20 12:54:45.714941'
   deleted_at: 
+  organization_id: 1
 
 
 lands26:
+  organization_id: 1
   id: '27'
   place: 5291-ﾛ
   owner_id: '20'
@@ -367,9 +422,11 @@ lands26:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands27:
+  organization_id: 1
   id: '28'
   place: 5291-ｲ
   owner_id: '20'
@@ -379,9 +436,11 @@ lands27:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands28:
+  organization_id: 1
   id: '29'
   place: 5422-ﾊ
   owner_id: '4'
@@ -391,9 +450,11 @@ lands28:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands29:
+  organization_id: 1
   id: '30'
   place: 5422-ﾛ
   owner_id: '4'
@@ -403,9 +464,11 @@ lands29:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands30:
+  organization_id: 1
   id: '31'
   place: 5422-ｲ
   owner_id: '4'
@@ -415,9 +478,11 @@ lands30:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands31:
+  organization_id: 1
   id: '32'
   place: 5423-1
   owner_id: '5'
@@ -428,9 +493,11 @@ lands31:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands32:
+  organization_id: 1
   id: '33'
   place: 5295-1
   owner_id: '19'
@@ -440,9 +507,11 @@ lands32:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands33:
+  organization_id: 1
   id: '34'
   place: 5295-2
   owner_id: '21'
@@ -452,9 +521,11 @@ lands33:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands34:
+  organization_id: 1
   id: '35'
   place: 5431-1
   owner_id: '5'
@@ -465,9 +536,11 @@ lands34:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands35:
+  organization_id: 1
   id: '36'
   place: 5427-1-ｲ
   owner_id: '5'
@@ -478,9 +551,11 @@ lands35:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands36:
+  organization_id: 1
   id: '37'
   place: 5478-1
   owner_id: '5'
@@ -491,9 +566,11 @@ lands36:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands37:
+  organization_id: 1
   id: '38'
   place: 5477-1
   owner_id: '20'
@@ -503,9 +580,11 @@ lands37:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands38:
+  organization_id: 1
   id: '39'
   place: 5493-1
   owner_id: '22'
@@ -515,9 +594,11 @@ lands38:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands39:
+  organization_id: 1
   id: '40'
   place: 5492-1-ｲ
   owner_id: '21'
@@ -527,9 +608,11 @@ lands39:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands40:
+  organization_id: 1
   id: '41'
   place: 5492-1-ﾛ
   owner_id: '21'
@@ -539,9 +622,11 @@ lands40:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands41:
+  organization_id: 1
   id: '42'
   place: 5492-1-ﾊ
   owner_id: '21'
@@ -551,9 +636,11 @@ lands41:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands42:
+  organization_id: 1
   id: '43'
   place: 5492-1-ﾆ
   owner_id: '21'
@@ -563,9 +650,11 @@ lands42:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands43:
+  organization_id: 1
   id: '44'
   place: 5484-1
   owner_id: '19'
@@ -575,9 +664,11 @@ lands43:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands44:
+  organization_id: 1
   id: '45'
   place: 5486-1
   owner_id: '20'
@@ -587,9 +678,11 @@ lands44:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands45:
+  organization_id: 1
   id: '46'
   place: 5573-1-ﾛ
   owner_id: '6'
@@ -599,9 +692,11 @@ lands45:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands46:
+  organization_id: 1
   id: '47'
   place: 5573-1-ｲ
   owner_id: '6'
@@ -611,9 +706,11 @@ lands46:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands47:
+  organization_id: 1
   id: '48'
   place: '6575'
   owner_id: '7'
@@ -623,9 +720,11 @@ lands47:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands48:
+  organization_id: 1
   id: '49'
   place: '6576'
   owner_id: '22'
@@ -635,9 +734,11 @@ lands48:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands49:
+  organization_id: 1
   id: '50'
   place: 5577-1
   owner_id: '20'
@@ -647,9 +748,11 @@ lands49:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands50:
+  organization_id: 1
   id: '51'
   place: '6676'
   owner_id: '20'
@@ -659,9 +762,11 @@ lands50:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-20 07:58:44.089369'
   deleted_at: 
+  organization_id: 1
 
 
 lands51:
+  organization_id: 1
   id: '52'
   place: 5496-1-ﾊ
   owner_id: '23'
@@ -671,9 +776,11 @@ lands51:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands52:
+  organization_id: 1
   id: '53'
   place: 5496-1-ﾛ
   owner_id: '23'
@@ -683,9 +790,11 @@ lands52:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands53:
+  organization_id: 1
   id: '54'
   place: 5496-1-ｲ
   owner_id: '23'
@@ -695,9 +804,11 @@ lands53:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands54:
+  organization_id: 1
   id: '55'
   place: 5582-ﾊ
   owner_id: '7'
@@ -707,9 +818,11 @@ lands54:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands55:
+  organization_id: 1
   id: '56'
   place: 5582-ﾛ
   owner_id: '7'
@@ -719,9 +832,11 @@ lands55:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands56:
+  organization_id: 1
   id: '57'
   place: 5582-ｲ
   owner_id: '7'
@@ -731,9 +846,11 @@ lands56:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands57:
+  organization_id: 1
   id: '58'
   place: 5580-1-ﾊ
   owner_id: '7'
@@ -743,9 +860,11 @@ lands57:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands58:
+  organization_id: 1
   id: '59'
   place: 5580-1-ﾛ
   owner_id: '7'
@@ -755,9 +874,11 @@ lands58:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands59:
+  organization_id: 1
   id: '60'
   place: 5580-1-ｲ
   owner_id: '7'
@@ -767,9 +888,11 @@ lands59:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands60:
+  organization_id: 1
   id: '61'
   place: '6685'
   owner_id: '5'
@@ -780,9 +903,11 @@ lands60:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands61:
+  organization_id: 1
   id: '62'
   place: 5684-ｲ
   owner_id: '6'
@@ -792,9 +917,11 @@ lands61:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands62:
+  organization_id: 1
   id: '63'
   place: 5684-ﾛ
   owner_id: '6'
@@ -804,9 +931,11 @@ lands62:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands63:
+  organization_id: 1
   id: '64'
   place: 5510-1
   owner_id: '23'
@@ -816,9 +945,11 @@ lands63:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands64:
+  organization_id: 1
   id: '65'
   place: 5509-1-ﾛ
   owner_id: '24'
@@ -828,9 +959,11 @@ lands64:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2011-11-03 09:57:57.355828'
   deleted_at: 
+  organization_id: 1
 
 
 lands65:
+  organization_id: 1
   id: '66'
   place: 5509-1-ｲ
   owner_id: '24'
@@ -840,9 +973,11 @@ lands65:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2011-11-03 09:56:55.475867'
   deleted_at: 
+  organization_id: 1
 
 
 lands66:
+  organization_id: 1
   id: '67'
   place: 5509-1-ﾆ
   owner_id: '24'
@@ -852,9 +987,11 @@ lands66:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands67:
+  organization_id: 1
   id: '68'
   place: 5509-1-ﾊ
   owner_id: '24'
@@ -864,9 +1001,11 @@ lands67:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2011-11-03 09:57:35.965945'
   deleted_at: 
+  organization_id: 1
 
 
 lands68:
+  organization_id: 1
   id: '69'
   place: 5594-1-ﾛ
   owner_id: '8'
@@ -876,9 +1015,11 @@ lands68:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands69:
+  organization_id: 1
   id: '70'
   place: 5594-1-ｲ
   owner_id: '8'
@@ -888,9 +1029,11 @@ lands69:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands70:
+  organization_id: 1
   id: '71'
   place: '6596'
   owner_id: '9'
@@ -900,9 +1043,11 @@ lands70:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands71:
+  organization_id: 1
   id: '73'
   place: '6687'
   owner_id: '23'
@@ -912,9 +1057,11 @@ lands71:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands72:
+  organization_id: 1
   id: '74'
   place: '6688'
   owner_id: '24'
@@ -924,9 +1071,11 @@ lands72:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands73:
+  organization_id: 1
   id: '75'
   place: '6689'
   owner_id: '8'
@@ -936,9 +1085,11 @@ lands73:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands74:
+  organization_id: 1
   id: '76'
   place: 5512-ｲ
   owner_id: '24'
@@ -948,9 +1099,11 @@ lands74:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands75:
+  organization_id: 1
   id: '77'
   place: 5513-1-ﾆ
   owner_id: '26'
@@ -960,9 +1113,11 @@ lands75:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands76:
+  organization_id: 1
   id: '78'
   place: 5513-1-ﾊ
   owner_id: '26'
@@ -972,9 +1127,11 @@ lands76:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands77:
+  organization_id: 1
   id: '79'
   place: 5513-1-ﾛ
   owner_id: '26'
@@ -984,9 +1141,11 @@ lands77:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands78:
+  organization_id: 1
   id: '80'
   place: 5513-1-ｲ
   owner_id: '26'
@@ -996,9 +1155,11 @@ lands78:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands79:
+  organization_id: 1
   id: '81'
   place: 5601-ｲ
   owner_id: '10'
@@ -1008,9 +1169,11 @@ lands79:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands80:
+  organization_id: 1
   id: '82'
   place: 5601-ﾊ
   owner_id: '10'
@@ -1020,9 +1183,11 @@ lands80:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands81:
+  organization_id: 1
   id: '83'
   place: 5601-ﾆ
   owner_id: '10'
@@ -1032,9 +1197,11 @@ lands81:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands82:
+  organization_id: 1
   id: '84'
   place: '6599'
   owner_id: '9'
@@ -1044,9 +1211,11 @@ lands82:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands83:
+  organization_id: 1
   id: '85'
   place: 5598-1-ﾊ
   owner_id: '10'
@@ -1056,9 +1225,11 @@ lands83:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands84:
+  organization_id: 1
   id: '86'
   place: 5598-1-ﾛ
   owner_id: '10'
@@ -1068,9 +1239,11 @@ lands84:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands85:
+  organization_id: 1
   id: '87'
   place: 5598-1-ｲ
   owner_id: '10'
@@ -1080,9 +1253,11 @@ lands85:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands86:
+  organization_id: 1
   id: '88'
   place: 5692-ｲ
   owner_id: '9'
@@ -1092,9 +1267,11 @@ lands86:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands87:
+  organization_id: 1
   id: '89'
   place: 5692-ﾛ
   owner_id: '9'
@@ -1104,9 +1281,11 @@ lands87:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands88:
+  organization_id: 1
   id: '90'
   place: 5692-ﾊ
   owner_id: '9'
@@ -1116,9 +1295,11 @@ lands88:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands89:
+  organization_id: 1
   id: '91'
   place: 5692-ﾆ
   owner_id: '9'
@@ -1128,9 +1309,11 @@ lands89:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands90:
+  organization_id: 1
   id: '92'
   place: 5693-1
   owner_id: '25'
@@ -1140,9 +1323,11 @@ lands90:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands91:
+  organization_id: 1
   id: '93'
   place: 5519-1-ﾍ
   owner_id: '27'
@@ -1152,9 +1337,11 @@ lands91:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:22.474558'
   deleted_at: 
+  organization_id: 1
 
 
 lands92:
+  organization_id: 1
   id: '94'
   place: 5519-1-ﾎ
   owner_id: '27'
@@ -1164,9 +1351,11 @@ lands92:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:29.089539'
   deleted_at: 
+  organization_id: 1
 
 
 lands93:
+  organization_id: 1
   id: '95'
   place: 5519-1-ﾆ
   owner_id: '27'
@@ -1176,9 +1365,11 @@ lands93:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:09.133971'
   deleted_at: 
+  organization_id: 1
 
 
 lands94:
+  organization_id: 1
   id: '96'
   place: 5519-1-ﾊ
   owner_id: '27'
@@ -1188,9 +1379,11 @@ lands94:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:16.185599'
   deleted_at: 
+  organization_id: 1
 
 
 lands95:
+  organization_id: 1
   id: '97'
   place: 5519-1-ﾛ
   owner_id: '27'
@@ -1200,9 +1393,11 @@ lands95:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:36.219282'
   deleted_at: 
+  organization_id: 1
 
 
 lands96:
+  organization_id: 1
   id: '98'
   place: 5519-1-ｲ
   owner_id: '27'
@@ -1212,9 +1407,11 @@ lands96:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:01.396849'
   deleted_at: 
+  organization_id: 1
 
 
 lands97:
+  organization_id: 1
   id: '99'
   place: 5607-ｲ
   owner_id: '11'
@@ -1224,9 +1421,11 @@ lands97:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands98:
+  organization_id: 1
   id: '100'
   place: 5607-ﾛ
   owner_id: '11'
@@ -1236,9 +1435,11 @@ lands98:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands99:
+  organization_id: 1
   id: '101'
   place: 5607-ﾊ
   owner_id: '11'
@@ -1248,9 +1449,11 @@ lands99:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands100:
+  organization_id: 1
   id: '102'
   place: 5607-ﾆ
   owner_id: '11'
@@ -1260,9 +1463,11 @@ lands100:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands101:
+  organization_id: 1
   id: '103'
   place: '6608'
   owner_id: '10'
@@ -1272,9 +1477,11 @@ lands101:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands102:
+  organization_id: 1
   id: '104'
   place: 5609-1-ﾛ
   owner_id: '26'
@@ -1284,9 +1491,11 @@ lands102:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands103:
+  organization_id: 1
   id: '105'
   place: 5609-1-ｲ
   owner_id: '26'
@@ -1296,9 +1505,11 @@ lands103:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands104:
+  organization_id: 1
   id: '106'
   place: '6714'
   owner_id: '6'
@@ -1308,9 +1519,11 @@ lands104:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands105:
+  organization_id: 1
   id: '107'
   place: 5713-ｲ
   owner_id: '27'
@@ -1320,9 +1533,11 @@ lands105:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands106:
+  organization_id: 1
   id: '108'
   place: 5713-ﾛ
   owner_id: '27'
@@ -1332,9 +1547,11 @@ lands106:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands107:
+  organization_id: 1
   id: '109'
   place: '6712'
   owner_id: '24'
@@ -1344,9 +1561,11 @@ lands107:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands108:
+  organization_id: 1
   id: '110'
   place: 5711-ﾛ
   owner_id: '11'
@@ -1356,9 +1575,11 @@ lands108:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands109:
+  organization_id: 1
   id: '111'
   place: 5711-ｲ
   owner_id: '11'
@@ -1368,9 +1589,11 @@ lands109:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands110:
+  organization_id: 1
   id: '112'
   place: 5527-1
   owner_id: '28'
@@ -1380,9 +1603,11 @@ lands110:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands111:
+  organization_id: 1
   id: '113'
   place: 5526-1-ﾆ
   owner_id: '29'
@@ -1392,9 +1617,11 @@ lands111:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands112:
+  organization_id: 1
   id: '114'
   place: 5526-1-ﾊ
   owner_id: '29'
@@ -1404,9 +1631,11 @@ lands112:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands113:
+  organization_id: 1
   id: '115'
   place: 5526-1-ﾛ
   owner_id: '29'
@@ -1416,9 +1645,11 @@ lands113:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands114:
+  organization_id: 1
   id: '116'
   place: 5526-1-ｲ
   owner_id: '29'
@@ -1428,9 +1659,11 @@ lands114:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands115:
+  organization_id: 1
   id: '117'
   place: 5613-ﾛ
   owner_id: '12'
@@ -1440,9 +1673,11 @@ lands115:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands116:
+  organization_id: 1
   id: '118'
   place: 5613-ﾊ
   owner_id: '12'
@@ -1452,9 +1687,11 @@ lands116:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands117:
+  organization_id: 1
   id: '119'
   place: 5613-ﾆ
   owner_id: '12'
@@ -1464,9 +1701,11 @@ lands117:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands118:
+  organization_id: 1
   id: '120'
   place: '6612'
   owner_id: '13'
@@ -1476,9 +1715,11 @@ lands118:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands119:
+  organization_id: 1
   id: '121'
   place: '6611'
   owner_id: '12'
@@ -1488,9 +1729,11 @@ lands119:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands120:
+  organization_id: 1
   id: '122'
   place: '6716'
   owner_id: '12'
@@ -1500,9 +1743,11 @@ lands120:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands121:
+  organization_id: 1
   id: '123'
   place: '6717'
   owner_id: '14'
@@ -1512,9 +1757,11 @@ lands121:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands122:
+  organization_id: 1
   id: '124'
   place: '6718'
   owner_id: '29'
@@ -1524,9 +1771,11 @@ lands122:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands123:
+  organization_id: 1
   id: '125'
   place: 5719-ｲ
   owner_id: '28'
@@ -1536,9 +1785,11 @@ lands123:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands124:
+  organization_id: 1
   id: '126'
   place: 5719-ﾛ
   owner_id: '28'
@@ -1548,9 +1799,11 @@ lands124:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands125:
+  organization_id: 1
   id: '127'
   place: 5719-ﾊ
   owner_id: '28'
@@ -1560,9 +1813,11 @@ lands125:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands126:
+  organization_id: 1
   id: '128'
   place: 5530-1
   owner_id: '24'
@@ -1572,9 +1827,11 @@ lands126:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands127:
+  organization_id: 1
   id: '129'
   place: 5530-2
   owner_id: '30'
@@ -1584,9 +1841,11 @@ lands127:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands128:
+  organization_id: 1
   id: '130'
   place: 5531-1
   owner_id: '29'
@@ -1596,9 +1855,11 @@ lands128:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands129:
+  organization_id: 1
   id: '131'
   place: 5532-1-ｲ
   owner_id: '30'
@@ -1608,9 +1869,11 @@ lands129:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands130:
+  organization_id: 1
   id: '132'
   place: 5532-1-ﾛ
   owner_id: '30'
@@ -1620,9 +1883,11 @@ lands130:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands131:
+  organization_id: 1
   id: '133'
   place: 5520-1
   owner_id: '28'
@@ -1632,9 +1897,11 @@ lands131:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands132:
+  organization_id: 1
   id: '134'
   place: '6623'
   owner_id: '13'
@@ -1644,9 +1911,11 @@ lands132:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands133:
+  organization_id: 1
   id: '135'
   place: '6628'
   owner_id: '14'
@@ -1656,9 +1925,11 @@ lands133:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands134:
+  organization_id: 1
   id: '136'
   place: 5629-1
   owner_id: '15'
@@ -1668,9 +1939,11 @@ lands134:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands135:
+  organization_id: 1
   id: '137'
   place: 5632-1
   owner_id: '15'
@@ -1680,9 +1953,11 @@ lands135:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands136:
+  organization_id: 1
   id: '138'
   place: '6733'
   owner_id: '15'
@@ -1692,9 +1967,11 @@ lands136:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands137:
+  organization_id: 1
   id: '139'
   place: 5732-ｲ
   owner_id: '14'
@@ -1704,9 +1981,11 @@ lands137:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands138:
+  organization_id: 1
   id: '140'
   place: 5732-ﾛ
   owner_id: '14'
@@ -1716,9 +1995,11 @@ lands138:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands139:
+  organization_id: 1
   id: '141'
   place: 5732-ﾊ
   owner_id: '14'
@@ -1728,9 +2009,11 @@ lands139:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands140:
+  organization_id: 1
   id: '142'
   place: 5542-1
   owner_id: '31'
@@ -1740,9 +2023,11 @@ lands140:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands141:
+  organization_id: 1
   id: '143'
   place: '6541'
   owner_id: '25'
@@ -1752,9 +2037,11 @@ lands141:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands142:
+  organization_id: 1
   id: '144'
   place: '6540'
   owner_id: '30'
@@ -1764,9 +2051,11 @@ lands142:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands143:
+  organization_id: 1
   id: '145'
   place: 5539-1-ﾊ
   owner_id: '31'
@@ -1776,9 +2065,11 @@ lands143:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands144:
+  organization_id: 1
   id: '146'
   place: 5539-1-ﾛ
   owner_id: '31'
@@ -1788,9 +2079,11 @@ lands144:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands145:
+  organization_id: 1
   id: '147'
   place: 5539-1-ｲ
   owner_id: '31'
@@ -1800,9 +2093,11 @@ lands145:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands146:
+  organization_id: 1
   id: '148'
   place: '6637'
   owner_id: '13'
@@ -1812,9 +2107,11 @@ lands146:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands147:
+  organization_id: 1
   id: '149'
   place: 5636-ｲ
   owner_id: '16'
@@ -1824,9 +2121,11 @@ lands147:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands148:
+  organization_id: 1
   id: '150'
   place: 5636-ﾛ
   owner_id: '16'
@@ -1836,9 +2135,11 @@ lands148:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands149:
+  organization_id: 1
   id: '151'
   place: 5636-ﾊ
   owner_id: '16'
@@ -1848,9 +2149,11 @@ lands149:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands150:
+  organization_id: 1
   id: '152'
   place: 5636-ﾆ
   owner_id: '16'
@@ -1860,9 +2163,11 @@ lands150:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands151:
+  organization_id: 1
   id: '153'
   place: 5635-1-ｲ
   owner_id: '15'
@@ -1872,9 +2177,11 @@ lands151:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:53:48.762137'
   deleted_at: 
+  organization_id: 1
 
 
 lands152:
+  organization_id: 1
   id: '154'
   place: 5635-1-ﾛ
   owner_id: '15'
@@ -1884,9 +2191,11 @@ lands152:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:54:00.792348'
   deleted_at: 
+  organization_id: 1
 
 
 lands153:
+  organization_id: 1
   id: '155'
   place: '6734'
   owner_id: '23'
@@ -1896,9 +2205,11 @@ lands153:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands154:
+  organization_id: 1
   id: '156'
   place: '6735'
   owner_id: '15'
@@ -1908,9 +2219,11 @@ lands154:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands155:
+  organization_id: 1
   id: '157'
   place: 5544-1-ｲ
   owner_id: '30'
@@ -1920,9 +2233,11 @@ lands155:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands156:
+  organization_id: 1
   id: '158'
   place: 5544-1-ﾛ
   owner_id: '30'
@@ -1932,9 +2247,11 @@ lands156:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands157:
+  organization_id: 1
   id: '159'
   place: '6545'
   owner_id: '20'
@@ -1944,9 +2261,11 @@ lands157:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands158:
+  organization_id: 1
   id: '160'
   place: '6546'
   owner_id: '32'
@@ -1956,9 +2275,11 @@ lands158:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands159:
+  organization_id: 1
   id: '161'
   place: 5547-ｲ
   owner_id: '31'
@@ -1968,9 +2289,11 @@ lands159:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands160:
+  organization_id: 1
   id: '162'
   place: 5547-ﾛ
   owner_id: '31'
@@ -1980,9 +2303,11 @@ lands160:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands161:
+  organization_id: 1
   id: '163'
   place: '6642'
   owner_id: '16'
@@ -1992,9 +2317,11 @@ lands161:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands162:
+  organization_id: 1
   id: '164'
   place: 5643-ｲ
   owner_id: '13'
@@ -2004,9 +2331,11 @@ lands162:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands163:
+  organization_id: 1
   id: '165'
   place: 5643-ﾛ
   owner_id: '13'
@@ -2016,9 +2345,11 @@ lands163:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands164:
+  organization_id: 1
   id: '166'
   place: 5644-1
   owner_id: '15'
@@ -2028,9 +2359,11 @@ lands164:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands165:
+  organization_id: 1
   id: '167'
   place: '6745'
   owner_id: '11'
@@ -2040,9 +2373,11 @@ lands165:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands166:
+  organization_id: 1
   id: '168'
   place: 5553-1-ｲ
   owner_id: '32'
@@ -2052,9 +2387,11 @@ lands166:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands167:
+  organization_id: 1
   id: '169'
   place: 5553-1-ﾛ
   owner_id: '32'
@@ -2064,9 +2401,11 @@ lands167:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands168:
+  organization_id: 1
   id: '170'
   place: 5553-1-ﾊ
   owner_id: '32'
@@ -2076,9 +2415,11 @@ lands168:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands169:
+  organization_id: 1
   id: '171'
   place: 5553-1-ﾆ
   owner_id: '32'
@@ -2088,9 +2429,11 @@ lands169:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands170:
+  organization_id: 1
   id: '172'
   place: 5553-1-ﾎ
   owner_id: '32'
@@ -2100,9 +2443,11 @@ lands170:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands171:
+  organization_id: 1
   id: '173'
   place: '6650'
   owner_id: '16'
@@ -2112,9 +2457,11 @@ lands171:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands172:
+  organization_id: 1
   id: '174'
   place: '6648'
   owner_id: '32'
@@ -2124,9 +2471,11 @@ lands172:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands173:
+  organization_id: 1
   id: '175'
   place: '6557'
   owner_id: '33'
@@ -2136,9 +2485,11 @@ lands173:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands174:
+  organization_id: 1
   id: '176'
   place: 5556-1-ｲ
   owner_id: '33'
@@ -2148,9 +2499,11 @@ lands174:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands175:
+  organization_id: 1
   id: '177'
   place: 5556-1-ﾛ
   owner_id: '33'
@@ -2160,9 +2513,11 @@ lands175:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands176:
+  organization_id: 1
   id: '178'
   place: 5654-ﾛ
   owner_id: '33'
@@ -2172,9 +2527,11 @@ lands176:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands177:
+  organization_id: 1
   id: '179'
   place: 5654-ｲ
   owner_id: '33'
@@ -2184,9 +2541,11 @@ lands177:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands178:
+  organization_id: 1
   id: '180'
   place: '6655'
   owner_id: '19'
@@ -2196,9 +2555,11 @@ lands178:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands179:
+  organization_id: 1
   id: '181'
   place: '6657'
   owner_id: '21'
@@ -2208,9 +2569,11 @@ lands179:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands180:
+  organization_id: 1
   id: '182'
   place: '6671'
   owner_id: '31'
@@ -2220,9 +2583,11 @@ lands180:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands181:
+  organization_id: 1
   id: '185'
   place: '6670'
   owner_id: '33'
@@ -2232,9 +2597,11 @@ lands181:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands182:
+  organization_id: 1
   id: '186'
   place: '6570'
   owner_id: '4'
@@ -2244,9 +2611,11 @@ lands182:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands183:
+  organization_id: 1
   id: '187'
   place: 5405-1-ﾛ
   owner_id: '3'
@@ -2256,9 +2625,11 @@ lands183:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands184:
+  organization_id: 1
   id: '188'
   place: 5492-1-ﾎ
   owner_id: '21'
@@ -2268,9 +2639,11 @@ lands184:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands185:
+  organization_id: 1
   id: '189'
   place: '6497'
   owner_id: '22'
@@ -2280,9 +2653,11 @@ lands185:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands186:
+  organization_id: 1
   id: '190'
   place: 5498-ｲ
   owner_id: '23'
@@ -2292,9 +2667,11 @@ lands186:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands187:
+  organization_id: 1
   id: '191'
   place: 5498-ﾛ
   owner_id: '23'
@@ -2304,9 +2681,11 @@ lands187:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands188:
+  organization_id: 1
   id: '192'
   place: 5507-1
   owner_id: '25'
@@ -2316,9 +2695,11 @@ lands188:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands189:
+  organization_id: 1
   id: '193'
   place: 5607-ﾎ
   owner_id: '11'
@@ -2328,9 +2709,11 @@ lands189:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands190:
+  organization_id: 1
   id: '194'
   place: 5415-1-ｲ
   owner_id: '2'
@@ -2340,9 +2723,11 @@ lands190:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands191:
+  organization_id: 1
   id: '195'
   place: '6421'
   owner_id: '4'
@@ -2352,9 +2737,11 @@ lands191:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
+  organization_id: 1
 
 
 lands192:
+  organization_id: 1
   id: '196'
   place: "ﾃﾞｼﾞﾏ63"
   owner_id: '33'
@@ -2364,9 +2751,11 @@ lands192:
   created_at: '2010-07-17 01:27:33.571142'
   updated_at: '2010-07-17 01:27:33.571142'
   deleted_at: 
+  organization_id: 1
 
 
 lands193:
+  organization_id: 1
   id: '197'
   place: "ﾃﾞｼﾞﾏ64"
   owner_id: '9'
@@ -2376,9 +2765,11 @@ lands193:
   created_at: '2010-07-17 01:28:10.571305'
   updated_at: '2010-07-17 01:28:10.571305'
   deleted_at: 
+  organization_id: 1
 
 
 lands194:
+  organization_id: 1
   id: '198'
   place: "ﾃﾞｼﾞﾏ65"
   owner_id: '32'
@@ -2388,9 +2779,11 @@ lands194:
   created_at: '2010-07-17 01:28:33.928556'
   updated_at: '2010-07-17 01:28:33.928556'
   deleted_at: 
+  organization_id: 1
 
 
 lands195:
+  organization_id: 1
   id: '199'
   place: "ﾃﾞｼﾞﾏ66-1"
   owner_id: '25'
@@ -2400,9 +2793,11 @@ lands195:
   created_at: '2010-07-17 01:28:56.530147'
   updated_at: '2010-07-17 01:28:56.530147'
   deleted_at: 
+  organization_id: 1
 
 
 lands196:
+  organization_id: 1
   id: '200'
   place: "ﾃﾞｼﾞﾏ70"
   owner_id: '4'
@@ -2412,9 +2807,11 @@ lands196:
   created_at: '2010-07-17 01:29:36.93869'
   updated_at: '2010-07-17 01:29:36.93869'
   deleted_at: 
+  organization_id: 1
 
 
 lands197:
+  organization_id: 1
   id: '201'
   place: "ﾃﾞｼﾞﾏ71"
   owner_id: '6'
@@ -2424,9 +2821,11 @@ lands197:
   created_at: '2010-07-17 01:30:14.67127'
   updated_at: '2010-07-17 01:30:14.67127'
   deleted_at: 
+  organization_id: 1
 
 
 lands198:
+  organization_id: 1
   id: '202'
   place: "ﾃﾞｼﾞﾏ72"
   owner_id: '28'
@@ -2436,9 +2835,11 @@ lands198:
   created_at: '2010-07-17 01:30:28.659168'
   updated_at: '2010-07-17 01:30:28.659168'
   deleted_at: 
+  organization_id: 1
 
 
 lands199:
+  organization_id: 1
   id: '203'
   place: "ﾃﾞｼﾞﾏ59"
   owner_id: '24'
@@ -2448,9 +2849,11 @@ lands199:
   created_at: '2010-07-17 01:30:45.752164'
   updated_at: '2010-07-17 01:30:45.752164'
   deleted_at: 
+  organization_id: 1
 
 
 lands200:
+  organization_id: 1
   id: '204'
   place: "ﾃﾞｼﾞﾏ58-1"
   owner_id: '19'
@@ -2460,9 +2863,11 @@ lands200:
   created_at: '2010-07-17 01:31:12.325953'
   updated_at: '2010-07-17 01:31:12.325953'
   deleted_at: 
+  organization_id: 1
 
 
 lands201:
+  organization_id: 1
   id: '205'
   place: "ﾃﾞｼﾞﾏ56-1"
   owner_id: '27'
@@ -2472,9 +2877,11 @@ lands201:
   created_at: '2010-07-17 01:32:05.437011'
   updated_at: '2010-07-17 01:32:05.437011'
   deleted_at: 
+  organization_id: 1
 
 
 lands202:
+  organization_id: 1
   id: '206'
   place: "ﾃﾞｼﾞﾏ53"
   owner_id: '30'
@@ -2484,9 +2891,11 @@ lands202:
   created_at: '2010-07-17 01:32:22.980306'
   updated_at: '2010-07-17 01:32:22.980306'
   deleted_at: 
+  organization_id: 1
 
 
 lands203:
+  organization_id: 1
   id: '207'
   place: "ﾃﾞｼﾞﾏ52"
   owner_id: '15'
@@ -2496,9 +2905,11 @@ lands203:
   created_at: '2010-07-17 01:32:42.63969'
   updated_at: '2010-07-17 01:32:42.63969'
   deleted_at: 
+  organization_id: 1
 
 
 lands204:
+  organization_id: 1
   id: '208'
   place: "ﾃﾞｼﾞﾏ51"
   owner_id: '10'
@@ -2508,9 +2919,11 @@ lands204:
   created_at: '2010-07-17 01:33:23.451508'
   updated_at: '2010-07-17 01:33:23.451508'
   deleted_at: 
+  organization_id: 1
 
 
 lands205:
+  organization_id: 1
   id: '209'
   place: "ﾃﾞｼﾞﾏ50-1"
   owner_id: '29'
@@ -2520,9 +2933,11 @@ lands205:
   created_at: '2010-07-17 01:33:49.354291'
   updated_at: '2010-07-17 01:33:49.354291'
   deleted_at: 
+  organization_id: 1
 
 
 lands206:
+  organization_id: 1
   id: '210'
   place: "ﾃﾞｼﾞﾏ33-1"
   owner_id: '21'
@@ -2532,9 +2947,11 @@ lands206:
   created_at: '2010-07-17 01:34:09.790537'
   updated_at: '2010-07-17 01:34:09.790537'
   deleted_at: 
+  organization_id: 1
 
 
 lands207:
+  organization_id: 1
   id: '211'
   place: "ﾃﾞｼﾞﾏ34-1"
   owner_id: '3'
@@ -2544,9 +2961,11 @@ lands207:
   created_at: '2010-07-17 01:34:53.162814'
   updated_at: '2010-07-17 01:34:53.162814'
   deleted_at: 
+  organization_id: 1
 
 
 lands208:
+  organization_id: 1
   id: '212'
   place: "ﾃﾞｼﾞﾏ36-1"
   owner_id: '26'
@@ -2559,6 +2978,7 @@ lands208:
 
 
 lands209:
+  organization_id: 1
   id: '213'
   place: "ﾃﾞｼﾞﾏ36-1"
   owner_id: '22'
@@ -2568,9 +2988,11 @@ lands209:
   created_at: '2010-07-17 01:35:35.657474'
   updated_at: '2010-07-17 01:35:35.657474'
   deleted_at: 
+  organization_id: 1
 
 
 lands210:
+  organization_id: 1
   id: '214'
   place: "ﾃﾞｼﾞﾏ37-1"
   owner_id: '8'
@@ -2580,9 +3002,11 @@ lands210:
   created_at: '2010-07-17 01:35:54.777141'
   updated_at: '2010-07-17 01:35:54.777141'
   deleted_at: 
+  organization_id: 1
 
 
 lands211:
+  organization_id: 1
   id: '215'
   place: "ﾃﾞｼﾞﾏ39-1"
   owner_id: '30'
@@ -2592,9 +3016,11 @@ lands211:
   created_at: '2010-07-17 01:36:12.053809'
   updated_at: '2010-07-17 01:36:12.053809'
   deleted_at: 
+  organization_id: 1
 
 
 lands212:
+  organization_id: 1
   id: '216'
   place: "ﾃﾞｼﾞﾏ40-1"
   owner_id: '20'
@@ -2604,9 +3030,11 @@ lands212:
   created_at: '2010-07-17 01:36:28.608997'
   updated_at: '2010-07-17 01:36:28.608997'
   deleted_at: 
+  organization_id: 1
 
 
 lands213:
+  organization_id: 1
   id: '217'
   place: "ﾃﾞｼﾞﾏ42-1"
   owner_id: '13'
@@ -2616,9 +3044,11 @@ lands213:
   created_at: '2010-07-17 01:36:55.559914'
   updated_at: '2010-07-17 01:36:55.559914'
   deleted_at: 
+  organization_id: 1
 
 
 lands214:
+  organization_id: 1
   id: '218'
   place: "ﾃﾞｼﾞﾏ44"
   owner_id: '19'
@@ -2628,9 +3058,11 @@ lands214:
   created_at: '2010-07-17 01:37:11.519249'
   updated_at: '2010-07-17 01:37:11.519249'
   deleted_at: 
+  organization_id: 1
 
 
 lands215:
+  organization_id: 1
   id: '219'
   place: "ﾃﾞｼﾞﾏ22"
   owner_id: '16'
@@ -2640,9 +3072,11 @@ lands215:
   created_at: '2010-07-17 01:37:39.598956'
   updated_at: '2010-07-17 01:37:39.598956'
   deleted_at: 
+  organization_id: 1
 
 
 lands216:
+  organization_id: 1
   id: '220'
   place: "ﾃﾞｼﾞﾏ21-1"
   owner_id: '11'
@@ -2652,9 +3086,11 @@ lands216:
   created_at: '2010-07-17 01:38:01.01652'
   updated_at: '2010-07-17 01:38:01.01652'
   deleted_at: 
+  organization_id: 1
 
 
 lands217:
+  organization_id: 1
   id: '221'
   place: "ﾃﾞｼﾞﾏ95-1"
   owner_id: '35'
@@ -2664,9 +3100,11 @@ lands217:
   created_at: '2010-07-17 02:16:55.138427'
   updated_at: '2010-07-17 02:16:55.138427'
   deleted_at: 
+  organization_id: 1
 
 
 lands218:
+  organization_id: 1
   id: '222'
   place: "ﾃﾞｼﾞﾏ93-1"
   owner_id: '35'
@@ -2676,9 +3114,11 @@ lands218:
   created_at: '2010-07-17 02:17:13.81332'
   updated_at: '2010-07-17 02:19:33.615836'
   deleted_at: 
+  organization_id: 1
 
 
 lands219:
+  organization_id: 1
   id: '223'
   place: "ﾃﾞｼﾞﾏ61-1"
   owner_id: '35'
@@ -2688,9 +3128,11 @@ lands219:
   created_at: '2010-07-17 02:17:42.942715'
   updated_at: '2010-07-18 15:54:58.477916'
   deleted_at: 
+  organization_id: 1
 
 
 lands220:
+  organization_id: 1
   id: '224'
   place: "ﾃﾞｼﾞﾏ62"
   owner_id: '35'
@@ -2700,9 +3142,11 @@ lands220:
   created_at: '2010-07-17 02:18:00.526577'
   updated_at: '2010-07-18 15:55:07.088627'
   deleted_at: 
+  organization_id: 1
 
 
 lands221:
+  organization_id: 1
   id: '225'
   place: "ﾃﾞｼﾞﾏ73"
   owner_id: '35'
@@ -2712,9 +3156,11 @@ lands221:
   created_at: '2010-07-17 02:18:23.015241'
   updated_at: '2010-07-17 02:19:26.712981'
   deleted_at: 
+  organization_id: 1
 
 
 lands222:
+  organization_id: 1
   id: '228'
   place: "ﾃﾞｼﾞﾏ47"
   owner_id: '35'
@@ -2724,9 +3170,11 @@ lands222:
   created_at: '2010-07-17 02:19:09.855768'
   updated_at: '2010-07-18 15:54:50.806216'
   deleted_at: 
+  organization_id: 1
 
 
 lands223:
+  organization_id: 1
   id: '229'
   place: "岡保香・1851-1・5"
   owner_id: '34'
@@ -2736,9 +3184,11 @@ lands223:
   created_at: '2010-07-20 07:55:38.511785'
   updated_at: '2011-05-15 00:48:31.965348'
   deleted_at: 
+  organization_id: 1
 
 
 land_max:
+  organization_id: 1
   id: '230'
   place: "土江"
   owner_id: '34'
@@ -2751,6 +3201,7 @@ land_max:
 
 
 lands225:
+  organization_id: 1
   id: '231'
   place: "福田政夫・ヒラタ5838-1"
   owner_id: '34'
@@ -2763,6 +3214,7 @@ lands225:
 
 
 lands226:
+  organization_id: 1
   id: '232'
   place: "橋本満穂・園　54-15"
   owner_id: '34'
@@ -2772,9 +3224,11 @@ lands226:
   created_at: '2010-07-20 07:56:42.595793'
   updated_at: '2011-05-15 01:39:43.242699'
   deleted_at: 
+  organization_id: 1
 
 
 lands227:
+  organization_id: 1
   id: '233'
   place: "立石住義"
   owner_id: '34'
@@ -2784,9 +3238,11 @@ lands227:
   created_at: '2010-07-20 07:57:07.732489'
   updated_at: '2011-05-15 04:46:23.287148'
   deleted_at: 
+  organization_id: 1
 
 
 lands228:
+  organization_id: 1
   id: '234'
   place: "吾郷教悦・2559"
   owner_id: '34'
@@ -2796,9 +3252,11 @@ lands228:
   created_at: '2010-07-20 07:57:32.118854'
   updated_at: '2011-05-15 00:52:59.914862'
   deleted_at: 
+  organization_id: 1
 
 
 lands229:
+  organization_id: 1
   id: '235'
   place: '6649'
   owner_id: '31'
@@ -2808,9 +3266,11 @@ lands229:
   created_at: '2010-07-20 07:59:35.812391'
   updated_at: '2010-07-20 07:59:35.812391'
   deleted_at: 
+  organization_id: 1
 
 
 lands230:
+  organization_id: 1
   id: '237'
   place: '1431'
   owner_id: '3'
@@ -2823,6 +3283,7 @@ lands230:
 
 
 lands231:
+  organization_id: 1
   id: '238'
   place: 5461-ｲ
   owner_id: '5'
@@ -2833,9 +3294,11 @@ lands231:
   created_at: '2010-07-25 03:45:07.81524'
   updated_at: '2010-07-25 03:45:07.81524'
   deleted_at: 
+  organization_id: 1
 
 
 lands232:
+  organization_id: 1
   id: '239'
   place: 5461-ﾛ
   owner_id: '5'
@@ -2846,9 +3309,11 @@ lands232:
   created_at: '2010-07-25 03:45:40.933709'
   updated_at: '2010-07-25 03:45:40.933709'
   deleted_at: 
+  organization_id: 1
 
 
 lands233:
+  organization_id: 1
   id: '240'
   place: 5461-ﾊ
   owner_id: '5'
@@ -2859,9 +3324,11 @@ lands233:
   created_at: '2010-07-25 03:46:37.501499'
   updated_at: '2010-07-25 03:46:37.501499'
   deleted_at: 
+  organization_id: 1
 
 
 lands234:
+  organization_id: 1
   id: '241'
   place: 5461-ﾆ
   owner_id: '5'
@@ -2872,9 +3339,11 @@ lands234:
   created_at: '2010-07-25 03:47:08.121628'
   updated_at: '2010-07-25 03:47:08.121628'
   deleted_at: 
+  organization_id: 1
 
 
 lands235:
+  organization_id: 1
   id: '242'
   place: 5484-2
   owner_id: '21'
@@ -2884,9 +3353,11 @@ lands235:
   created_at: '2010-07-25 03:48:10.772897'
   updated_at: '2010-07-25 03:48:10.772897'
   deleted_at: 
+  organization_id: 1
 
 
 lands236:
+  organization_id: 1
   id: '243'
   place: 5484-3
   owner_id: '20'
@@ -2896,9 +3367,11 @@ lands236:
   created_at: '2010-07-25 03:48:49.479282'
   updated_at: '2010-07-25 03:48:49.479282'
   deleted_at: 
+  organization_id: 1
 
 
 lands237:
+  organization_id: 1
   id: '244'
   place: 5536-1
   owner_id: '31'
@@ -2908,9 +3381,11 @@ lands237:
   created_at: '2010-07-25 03:51:26.676759'
   updated_at: '2010-07-25 03:51:26.676759'
   deleted_at: 
+  organization_id: 1
 
 
 lands238:
+  organization_id: 1
   id: '245'
   place: 5618-4
   owner_id: '12'
@@ -2920,9 +3395,11 @@ lands238:
   created_at: '2010-07-25 03:53:21.366061'
   updated_at: '2010-07-25 03:53:21.366061'
   deleted_at: 
+  organization_id: 1
 
 
 lands239:
+  organization_id: 1
   id: '246'
   place: '6411'
   owner_id: '2'
@@ -2932,9 +3409,11 @@ lands239:
   created_at: '2010-07-25 04:00:16.488829'
   updated_at: '2010-07-25 04:00:16.488829'
   deleted_at: 
+  organization_id: 1
 
 
 lands240:
+  organization_id: 1
   id: '247'
   place: "ﾋﾗﾀ5838-1"
   owner_id: '20'
@@ -2944,9 +3423,11 @@ lands240:
   created_at: '2010-07-25 04:01:18.154277'
   updated_at: '2010-07-25 04:01:18.154277'
   deleted_at: 
+  organization_id: 1
 
 
 lands241:
+  organization_id: 1
   id: '248'
   place: "ﾋﾗﾀ5818-1-ｲ"
   owner_id: '20'
@@ -2956,9 +3437,11 @@ lands241:
   created_at: '2010-07-25 04:04:42.760407'
   updated_at: '2010-07-25 04:04:42.760407'
   deleted_at: 
+  organization_id: 1
 
 
 lands242:
+  organization_id: 1
   id: '249'
   place: "ﾋﾗﾀ5818-1-ﾛ"
   owner_id: '20'
@@ -2968,9 +3451,11 @@ lands242:
   created_at: '2010-07-25 04:05:10.807155'
   updated_at: '2010-07-25 04:05:10.807155'
   deleted_at: 
+  organization_id: 1
 
 
 lands243:
+  organization_id: 1
   id: '250'
   place: "ﾋﾗﾀ5818-1-ﾊ"
   owner_id: '20'
@@ -2980,9 +3465,11 @@ lands243:
   created_at: '2010-07-25 04:05:28.247461'
   updated_at: '2010-07-25 04:05:28.247461'
   deleted_at: 
+  organization_id: 1
 
 
 lands244:
+  organization_id: 1
   id: '251'
   place: "ﾋﾗﾀ5818-2"
   owner_id: '20'
@@ -2992,9 +3479,11 @@ lands244:
   created_at: '2010-07-25 04:05:54.530166'
   updated_at: '2010-07-25 04:05:54.530166'
   deleted_at: 
+  organization_id: 1
 
 
 lands245:
+  organization_id: 1
   id: '252'
   place: "ﾃﾞｼﾞﾏ35-1"
   owner_id: '26'
@@ -3004,9 +3493,11 @@ lands245:
   created_at: '2010-07-25 04:09:29.711885'
   updated_at: '2010-07-25 04:09:29.711885'
   deleted_at: 
+  organization_id: 1
 
 
 lands246:
+  organization_id: 1
   id: '253'
   place: "ﾃﾞｼﾞﾏ49"
   owner_id: 33
@@ -3016,9 +3507,11 @@ lands246:
   created_at: '2010-07-25 04:10:52.0762'
   updated_at: '2010-07-25 04:10:52.0762'
   deleted_at: 
+  organization_id: 1
 
 
 lands247:
+  organization_id: 1
   id: '254'
   place: 5427-1-ﾛ
   owner_id: '5'
@@ -3029,8 +3522,10 @@ lands247:
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
   deleted_at: 
+  organization_id: 1
 
 land_genka1:
+  organization_id: 1
   place: "1111-1"
   owner_id: '5'
   manager_id: '5'
@@ -3040,8 +3535,10 @@ land_genka1:
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
   deleted_at: 
+  organization_id: 1
 
 land_genka2:
+  organization_id: 1
   place: "1111-2"
   owner_id: '5'
   manager_id: '5'
@@ -3051,8 +3548,10 @@ land_genka2:
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
   deleted_at: 
+  organization_id: 1
 
 land_taue:
+  organization_id: 1
   place: "1111-3"
   owner_id: '5'
   manager_id: '5'
@@ -3062,3 +3561,4 @@ land_taue:
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
   deleted_at:
+  organization_id: 1

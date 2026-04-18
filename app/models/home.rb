@@ -23,16 +23,19 @@
 #  zip_code(郵便番号)                  :string(7)
 #  created_at                          :datetime
 #  updated_at                          :datetime
+#  organization_id(組織)               :integer          default(0), not null
 #  section_id(班／町内)                :integer
 #  worker_id(世帯主(代表者))           :integer
 #
 # Indexes
 #
-#  index_homes_on_deleted_at  (deleted_at)
+#  index_homes_on_deleted_at        (deleted_at)
+#  index_homes_on_organization_id   (organization_id)
 #
 
 class Home < ApplicationRecord
   include Discard::Model
+  include OrganizationScopeable
 
   self.discard_column = :deleted_at
 

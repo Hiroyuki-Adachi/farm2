@@ -24,19 +24,22 @@
 #  group_id(グループID)               :integer
 #  land_place_id(土地)                :integer
 #  manager_id(管理者)                 :integer
+#  organization_id(組織)              :integer          default(0), not null
 #  owner_id(所有者)                   :integer
 #
 # Indexes
 #
-#  index_lands_on_deleted_at      (deleted_at)
-#  index_lands_on_place           (place)
-#  index_lands_on_place_sort_key  (place_sort_key)
-#  index_lands_on_uuid            (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
+#  index_lands_on_deleted_at          (deleted_at)
+#  index_lands_on_organization_id     (organization_id)
+#  index_lands_on_place               (place)
+#  index_lands_on_place_sort_key      (place_sort_key)
+#  index_lands_on_uuid                (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
 #
 
 class Land < ApplicationRecord
   include Discard::Model
   include AddressSortIndex
+  include OrganizationScopeable
 
   self.discard_column = :deleted_at
 
