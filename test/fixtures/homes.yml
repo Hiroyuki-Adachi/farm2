@@ -40,10 +40,8 @@ home1:
   zip_code: 6910003
   address1: ○○市△△町1-2383
   address2: 
-  organization_id: 1
   telephone: 072-762-0066
   fax: 
-  organization_id: 1
   section_id: 1
   display_order: 1
   member_flag: t
@@ -52,7 +50,6 @@ home1:
   created_at: 2010-07-11 12:42:48
   updated_at: 2016-03-19 10:14:35.174495
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   seedling_order: 1
 
@@ -65,10 +62,8 @@ home2:
   zip_code: 6910003
   address1: ○○市△△町1-2414
   address2: 
-  organization_id: 1
   telephone: 072-762-3999
   fax: 
-  organization_id: 1
   section_id: 1
   display_order: 2
   member_flag: t
@@ -77,7 +72,6 @@ home2:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home3:
@@ -89,10 +83,8 @@ home3:
   zip_code: 6910003
   address1: ○○市△△町1-2404
   address2: 
-  organization_id: 1
   telephone: 072-762-5300
   fax: 
-  organization_id: 1
   section_id: 1
   display_order: 3
   member_flag: t
@@ -101,7 +93,6 @@ home3:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home4:
@@ -113,10 +104,8 @@ home4:
   zip_code: 6910003
   address1: ○○市△△町1-2420
   address2: 
-  organization_id: 1
   telephone: 072-762-4508
   fax: 
-  organization_id: 1
   section_id: 1
   display_order: 4
   member_flag: t
@@ -125,7 +114,6 @@ home4:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home5:
@@ -137,10 +125,8 @@ home5:
   zip_code: 6910003
   address1: ○○市△△町1-2430
   address2: 
-  organization_id: 1
   telephone: 072-762-3978
   fax: 
-  organization_id: 1
   section_id: 1
   display_order: 5
   member_flag: t
@@ -149,7 +135,6 @@ home5:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 10
 
@@ -162,10 +147,8 @@ home6:
   zip_code: 6910003
   address1: ○○市△△町1-2571
   address2: 
-  organization_id: 1
   telephone: 072-762-3979
   fax: 
-  organization_id: 1
   section_id: 2
   display_order: 6
   member_flag: t
@@ -174,7 +157,6 @@ home6:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:22:41.108239
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home7:
@@ -186,10 +168,8 @@ home7:
   zip_code: 6910003
   address1: ○○市△△町1-2585
   address2: 
-  organization_id: 1
   telephone: 072-762-3987
   fax: 
-  organization_id: 1
   section_id: 3
   display_order: 7
   member_flag: t
@@ -198,7 +178,6 @@ home7:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:25:08.10974
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home8:
@@ -210,10 +189,8 @@ home8:
   zip_code: 6910003
   address1: ○○市△△町1-2590
   address2: 
-  organization_id: 1
   telephone: 072-763-2901
   fax: 
-  organization_id: 1
   section_id: 3
   display_order: 8
   member_flag: t
@@ -222,7 +199,6 @@ home8:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:25:21.106871
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home9:
@@ -234,10 +210,8 @@ home9:
   zip_code: 6910003
   address1: ○○市△△町1-2591
   address2: 
-  organization_id: 1
   telephone: 072-762-5311
   fax: 
-  organization_id: 1
   section_id: 4
   display_order: 9
   member_flag: t
@@ -246,7 +220,6 @@ home9:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:25:40.638722
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home10:
@@ -258,10 +231,8 @@ home10:
   zip_code: 6910003
   address1: ○○市△△町1-2600
   address2: 
-  organization_id: 1
   telephone: 072-762-3985
   fax: 
-  organization_id: 1
   section_id: 4
   display_order: 10
   member_flag: t
@@ -270,7 +241,6 @@ home10:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:25:52.006322
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 20
 
@@ -283,10 +253,8 @@ home11:
   zip_code: 6910003
   address1: ○○市△△町1-2606
   address2: 
-  organization_id: 1
   telephone: 072-762-5305
   fax: 
-  organization_id: 1
   section_id: 4
   display_order: 11
   member_flag: t
@@ -295,7 +263,6 @@ home11:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:26:01.87718
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home12:
@@ -307,10 +274,8 @@ home12:
   zip_code: 6910003
   address1: ○○市△△町1-2616
   address2: 
-  organization_id: 1
   telephone: 072-762-3973
   fax: 
-  organization_id: 1
   section_id: 5
   display_order: 12
   member_flag: t
@@ -319,7 +284,6 @@ home12:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:26:18.539551
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 30
 
@@ -332,10 +296,8 @@ home13:
   zip_code: 6910003
   address1: ○○市△△町1-2617
   address2: 
-  organization_id: 1
   telephone: 072-762-3972
   fax: 
-  organization_id: 1
   section_id: 5
   display_order: 13
   member_flag: t
@@ -344,7 +306,6 @@ home13:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:26:30.232926
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home14:
@@ -356,10 +317,8 @@ home14:
   zip_code: 6910003
   address1: ○○市△△町1-2620
   address2: 
-  organization_id: 1
   telephone: 072-762-3983
   fax: 
-  organization_id: 1
   section_id: 5
   display_order: 14
   member_flag: t
@@ -368,7 +327,6 @@ home14:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:26:44.034591
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home15:
@@ -380,10 +338,8 @@ home15:
   zip_code: 6910003
   address1: ○○市△△町1-2630
   address2: 
-  organization_id: 1
   telephone: 072-762-3982
   fax: 
-  organization_id: 1
   section_id: 5
   display_order: 15
   member_flag: t
@@ -392,7 +348,6 @@ home15:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:26:58.570884
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 40
 
@@ -405,10 +360,8 @@ home16:
   zip_code: 6910003
   address1: ○○市△△町1-2626
   address2: 
-  organization_id: 1
   telephone: 072-762-3996
   fax: 
-  organization_id: 1
   section_id: 5
   display_order: 16
   member_flag: t
@@ -417,7 +370,6 @@ home16:
   created_at: 2010-07-11 12:42:48
   updated_at: 2016-03-19 10:15:22.288612
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 50
 
@@ -430,10 +382,8 @@ home17:
   zip_code: 6910003
   address1: ○○市△△町1-2388
   address2: 
-  organization_id: 1
   telephone: 072-762-5303
   fax: 
-  organization_id: 1
   section_id: 2
   display_order: 17
   member_flag: t
@@ -442,7 +392,6 @@ home17:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:23:01.385857
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home18:
@@ -454,10 +403,8 @@ home18:
   zip_code: 6910003
   address1: ○○市△△町1-2400
   address2: 
-  organization_id: 1
   telephone: 072-762-5301
   fax: 
-  organization_id: 1
   section_id: 2
   display_order: 18
   member_flag: t
@@ -466,7 +413,6 @@ home18:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:23:19.571431
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home19:
@@ -478,10 +424,8 @@ home19:
   zip_code: 6910003
   address1: ○○市△△町1-2481
   address2: 
-  organization_id: 1
   telephone: 072-762-5319
   fax: 
-  organization_id: 1
   section_id: 2
   display_order: 19
   member_flag: t
@@ -490,7 +434,6 @@ home19:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:23:34.623072
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home20:
@@ -502,10 +445,8 @@ home20:
   zip_code: 6910003
   address1: ○○市△△町1-2488
   address2: 
-  organization_id: 1
   telephone: 072-762-3977
   fax: 
-  organization_id: 1
   section_id: 2
   display_order: 20
   member_flag: t
@@ -514,7 +455,6 @@ home20:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:23:55.63099
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 60
 
@@ -527,10 +467,8 @@ home21:
   zip_code: 6910003
   address1: ○○市△△町1-2489
   address2: 
-  organization_id: 1
   telephone: 072-762-3976
   fax: 
-  organization_id: 1
   section_id: 2
   display_order: 21
   member_flag: t
@@ -539,7 +477,6 @@ home21:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:24:34.510657
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home22:
@@ -551,10 +488,8 @@ home22:
   zip_code: 6910003
   address1: ○○市△△町1-2500
   address2: 
-  organization_id: 1
   telephone: 072-762-5316
   fax: 
-  organization_id: 1
   section_id: 1
   display_order: 22
   member_flag: t
@@ -563,7 +498,6 @@ home22:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home23:
@@ -575,10 +509,8 @@ home23:
   zip_code: 6910003
   address1: ○○市△△町1-2501
   address2: 
-  organization_id: 1
   telephone: 072-762-5317
   fax: 
-  organization_id: 1
   section_id: 1
   display_order: 23
   member_flag: t
@@ -587,7 +519,6 @@ home23:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 70
 
@@ -600,10 +531,8 @@ home24:
   zip_code: 6910003
   address1: ○○市△△町1-2505
   address2: 
-  organization_id: 1
   telephone: 072-762-2860
   fax: 
-  organization_id: 1
   section_id: 1
   display_order: 24
   member_flag: t
@@ -612,7 +541,6 @@ home24:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 80
 
@@ -625,10 +553,8 @@ home25:
   zip_code: 6910003
   address1: ○○市△△町1-2506
   address2: 
-  organization_id: 1
   telephone: 072-762-5310
   fax: 
-  organization_id: 1
   section_id: 1
   display_order: 25
   member_flag: t
@@ -637,7 +563,6 @@ home25:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home26:
@@ -649,10 +574,8 @@ home26:
   zip_code: 6910003
   address1: ○○市△△町1-2515
   address2: 
-  organization_id: 1
   telephone: 072-762-3984
   fax: 
-  organization_id: 1
   section_id: 1
   display_order: 26
   member_flag: t
@@ -661,7 +584,6 @@ home26:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-13 14:27:43.23003
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 90
 
@@ -674,10 +596,8 @@ home27:
   zip_code: 6910003
   address1: ○○市△△町1-2516
   address2: 
-  organization_id: 1
   telephone: 072-763-0390
   fax: 
-  organization_id: 1
   section_id: 1
   display_order: 27
   member_flag: t
@@ -686,7 +606,6 @@ home27:
   created_at: 2010-07-11 12:42:48
   updated_at: 2010-07-11 12:42:48
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 100
 
@@ -699,7 +618,6 @@ home28:
   zip_code: 6910003
   address1: ○○市△△町1-2522
   address2: 
-  organization_id: 1
   telephone: 072-762-3974
   fax: 072-762-3871
   section_id: 6
@@ -710,7 +628,6 @@ home28:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:27:45.209744
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 110
 
@@ -723,10 +640,8 @@ home29:
   zip_code: 6910003
   address1: ○○市△△町1-2525
   address2: 
-  organization_id: 1
   telephone: 072-762-3975
   fax: 
-  organization_id: 1
   section_id: 6
   display_order: 29
   member_flag: t
@@ -735,7 +650,6 @@ home29:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:28:13.530099
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 120
 
@@ -748,10 +662,8 @@ home30:
   zip_code: 6910003
   address1: ○○市△△町1-2533
   address2: 
-  organization_id: 1
   telephone: 072-762-3997
   fax: 
-  organization_id: 1
   section_id: 6
   display_order: 30
   member_flag: t
@@ -760,7 +672,6 @@ home30:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:28:55.232448
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 130
 
@@ -773,10 +684,8 @@ home31:
   zip_code: 6910003
   address1: ○○市△△町1-2535
   address2: 
-  organization_id: 1
   telephone: 072-762-5306
   fax: 
-  organization_id: 1
   section_id: 6
   display_order: 31
   member_flag: t
@@ -785,7 +694,6 @@ home31:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:29:12.53829
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 140
 
@@ -798,10 +706,8 @@ home32:
   zip_code: 6910003
   address1: ○○市△△町1-2550
   address2: 
-  organization_id: 1
   telephone: 072-762-5308
   fax: 
-  organization_id: 1
   section_id: 6
   display_order: 32
   member_flag: t
@@ -810,7 +716,6 @@ home32:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:29:25.204253
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home33:
@@ -822,10 +727,8 @@ home33:
   zip_code: 6910003
   address1: ○○市△△町1-2555
   address2: 
-  organization_id: 1
   telephone: 072-762-5309
   fax: 
-  organization_id: 1
   section_id: 6
   display_order: 33
   member_flag: t
@@ -834,7 +737,6 @@ home33:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:29:46.964267
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 150
 
@@ -845,15 +747,10 @@ home_kumiai:
   name: 営農組合
   worker_id: 68
   zip_code: 
-  organization_id: 1
   address1: 
-  organization_id: 1
   address2: 
-  organization_id: 1
   telephone: 
-  organization_id: 1
   fax: 
-  organization_id: 1
   section_id: 10
   display_order: 99
   member_flag: f
@@ -862,7 +759,6 @@ home_kumiai:
   created_at: 2016-06-07 05:13:13.62213
   updated_at: 2016-06-07 05:13:13.62213
   deleted_at: 
-  organization_id: 1
   owner_flag: t
 
 home_not_worker:
@@ -873,10 +769,8 @@ home_not_worker:
   zip_code: 6910011
   address1: ○○市△△町1-2555
   address2: 
-  organization_id: 1
   telephone: 072-762-5309
   fax: 
-  organization_id: 1
   section_id: 6
   display_order: 33
   member_flag: f
@@ -885,6 +779,5 @@ home_not_worker:
   created_at: 2010-07-11 12:42:48
   updated_at: 2013-02-02 10:29:46.964267
   deleted_at: 
-  organization_id: 1
   owner_flag: t
   drying_order: 150

@@ -22,11 +22,8 @@ sections0:
   display_order: '10'
   work_flag: t
   created_at: 
-  organization_id: 1
   updated_at: 
-  organization_id: 1
   deleted_at: 
-  organization_id: 1
 
 
 sections1:
@@ -36,11 +33,8 @@ sections1:
   display_order: '20'
   work_flag: t
   created_at: 
-  organization_id: 1
   updated_at: 
-  organization_id: 1
   deleted_at: 
-  organization_id: 1
 
 
 sections2:
@@ -50,11 +44,8 @@ sections2:
   display_order: '30'
   work_flag: t
   created_at: 
-  organization_id: 1
   updated_at: 
-  organization_id: 1
   deleted_at: 
-  organization_id: 1
 
 
 sections3:
@@ -64,11 +55,8 @@ sections3:
   display_order: '40'
   work_flag: t
   created_at: 
-  organization_id: 1
   updated_at: 
-  organization_id: 1
   deleted_at: 
-  organization_id: 1
 
 
 sections4:
@@ -78,11 +66,8 @@ sections4:
   display_order: '50'
   work_flag: t
   created_at: 
-  organization_id: 1
   updated_at: 
-  organization_id: 1
   deleted_at: 
-  organization_id: 1
 
 
 sections5:
@@ -92,11 +77,8 @@ sections5:
   display_order: '60'
   work_flag: t
   created_at: 
-  organization_id: 1
   updated_at: 
-  organization_id: 1
   deleted_at: 
-  organization_id: 1
 
 
 sections6:
@@ -106,11 +88,8 @@ sections6:
   display_order: '70'
   work_flag: f
   created_at: 
-  organization_id: 1
   updated_at: 
-  organization_id: 1
   deleted_at: 
-  organization_id: 1
 
 
 sections7:
@@ -120,11 +99,8 @@ sections7:
   display_order: '90'
   work_flag: f
   created_at: 
-  organization_id: 1
   updated_at: 
-  organization_id: 1
   deleted_at: 
-  organization_id: 1
 
 
 sections8:
@@ -136,7 +112,6 @@ sections8:
   created_at: '2016-06-07 05:13:13.61343'
   updated_at: '2016-06-07 05:13:13.61343'
   deleted_at: 
-  organization_id: 1
 
 section_removale:
   organization_id: 1
@@ -147,4 +122,3 @@ section_removale:
   created_at: '2016-06-07 05:13:13.61343'
   updated_at: '2016-06-07 05:13:13.61343'
   deleted_at: 
-  organization_id: 1

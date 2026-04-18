@@ -28,7 +28,6 @@ taueki_1:
   created_at: '2010-07-15 14:34:42'
   updated_at: '2016-06-07 14:10:01.733301'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 't'
 
 
@@ -44,7 +43,6 @@ machines1:
   created_at: '2010-07-15 14:34:42'
   updated_at: '2016-06-07 12:28:13.892558'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 't'
 
 
@@ -60,7 +58,6 @@ machines2:
   created_at: '2010-07-15 14:34:42'
   updated_at: '2016-06-07 12:27:58.98196'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -76,7 +73,6 @@ machines3:
   created_at: '2010-07-15 14:34:42'
   updated_at: '2016-06-14 11:53:31.78904'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -92,7 +88,6 @@ machines4:
   created_at: '2010-07-15 14:34:42'
   updated_at: '2016-06-14 11:53:49.464841'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -108,7 +103,6 @@ machines5:
   created_at: '2010-07-15 14:34:42'
   updated_at: '2013-07-13 02:36:37.326315'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -124,7 +118,6 @@ machines6:
   created_at: '2010-07-19 10:19:32.947907'
   updated_at: '2013-07-13 02:44:30.225226'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -140,7 +133,6 @@ machines7:
   created_at: '2010-07-19 10:50:02.251704'
   updated_at: '2013-07-13 02:41:42.841148'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -156,7 +148,6 @@ machines8:
   created_at: '2010-07-19 10:50:19.40446'
   updated_at: '2013-07-13 02:41:26.993127'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -172,7 +163,6 @@ machines9:
   created_at: '2010-07-19 11:04:01.884798'
   updated_at: '2016-06-07 12:29:25.471834'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -188,7 +178,6 @@ machines10:
   created_at: '2010-07-19 11:04:42.738313'
   updated_at: '2013-07-13 02:44:50.021214'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -204,7 +193,6 @@ machines11:
   created_at: '2010-09-19 23:38:28.371425'
   updated_at: '2013-07-13 02:39:24.140077'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -220,7 +208,6 @@ machines12:
   created_at: '2010-09-19 23:38:54.697253'
   updated_at: '2013-07-13 02:38:10.004682'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -236,7 +223,6 @@ machines13:
   created_at: '2010-09-19 23:39:04.787005'
   updated_at: '2013-07-13 02:37:57.180992'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -252,7 +238,6 @@ machines14:
   created_at: '2011-12-09 10:03:45.696324'
   updated_at: '2016-06-07 12:27:31.317865'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -268,7 +253,6 @@ machines15:
   created_at: '2012-07-14 07:38:38.598912'
   updated_at: '2016-06-07 14:11:43.104714'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -284,7 +268,6 @@ machines16:
   created_at: '2012-07-21 00:06:12.890608'
   updated_at: '2012-07-21 00:06:51.038704'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -300,7 +283,6 @@ machines17:
   created_at: '2013-07-13 02:35:43.198642'
   updated_at: '2013-07-13 02:35:43.198642'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -316,7 +298,6 @@ machines18:
   created_at: '2013-07-13 02:40:27.824761'
   updated_at: '2013-07-13 02:40:27.824761'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -332,7 +313,6 @@ machines19:
   created_at: '2013-07-13 02:43:49.413117'
   updated_at: '2016-06-07 12:29:47.543989'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -348,7 +328,6 @@ machines20:
   created_at: '2014-07-20 07:36:57.419755'
   updated_at: '2016-06-07 12:30:04.796801'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -364,7 +343,6 @@ machines21:
   created_at: '2015-12-17 08:56:43.037151'
   updated_at: '2016-06-07 12:28:24.709321'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 
@@ -380,7 +358,6 @@ machines22:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 machine_hour:
@@ -394,7 +371,6 @@ machine_hour:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 machine_area:
@@ -408,7 +384,6 @@ machine_area:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 machine_day:
@@ -422,7 +397,6 @@ machine_day:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 machine_hour_t:
@@ -436,7 +410,6 @@ machine_hour_t:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 machine_area_t:
@@ -450,7 +423,6 @@ machine_area_t:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'
 
 machine_day_t:
@@ -464,5 +436,4 @@ machine_day_t:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
-  organization_id: 1
   diesel_flag: 'f'

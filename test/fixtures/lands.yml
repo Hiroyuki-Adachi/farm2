@@ -45,7 +45,6 @@ lands0:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
   land_place_id: land_places(:land_place0).id
 
 
@@ -60,7 +59,6 @@ lands1:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
   land_place_id: land_places(:land_place0).id
   region: "((35.474177,133.047340), (35.472866,133.047340), (35.472648,133.049056))"
   uuid: "16c773fe-31cd-4c24-82b7-a125ee405bc7"
@@ -77,7 +75,6 @@ lands2:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
   land_place_id: land_places(:land_place0).id
 
 
@@ -92,7 +89,6 @@ lands3:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 land_land_cost2:
@@ -105,7 +101,6 @@ land_land_cost2:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-20 08:01:28.877914'
   deleted_at: 
-  organization_id: 1
 
 
 land_land_cost1:
@@ -119,7 +114,6 @@ land_land_cost1:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands6:
@@ -133,7 +127,6 @@ lands6:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands7:
@@ -147,7 +140,6 @@ lands7:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands8:
@@ -161,7 +153,6 @@ lands8:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands9:
@@ -175,7 +166,6 @@ lands9:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands_group1_1:
@@ -188,7 +178,6 @@ lands_group1_1:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
   group: land_group1
 
 lands_group1_2:
@@ -201,7 +190,6 @@ lands_group1_2:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
   group: land_group1
 
 land_group1:
@@ -213,7 +201,6 @@ land_group1:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 lands12:
   organization_id: 1
@@ -226,7 +213,6 @@ lands12:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands13:
@@ -240,7 +226,6 @@ lands13:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands14:
@@ -254,7 +239,6 @@ lands14:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands15:
@@ -268,7 +252,6 @@ lands15:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands16:
@@ -282,7 +265,6 @@ lands16:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands17:
@@ -296,7 +278,6 @@ lands17:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands18:
@@ -310,7 +291,6 @@ lands18:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands19:
@@ -324,7 +304,6 @@ lands19:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands20:
@@ -338,7 +317,6 @@ lands20:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands21:
@@ -352,7 +330,6 @@ lands21:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands22:
@@ -366,7 +343,6 @@ lands22:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands23:
@@ -380,7 +356,6 @@ lands23:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands24:
@@ -394,7 +369,6 @@ lands24:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands25:
@@ -408,7 +382,6 @@ lands25:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-20 12:54:45.714941'
   deleted_at: 
-  organization_id: 1
 
 
 lands26:
@@ -422,7 +395,6 @@ lands26:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands27:
@@ -436,7 +408,6 @@ lands27:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands28:
@@ -450,7 +421,6 @@ lands28:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands29:
@@ -464,7 +434,6 @@ lands29:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands30:
@@ -478,7 +447,6 @@ lands30:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands31:
@@ -493,7 +461,6 @@ lands31:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands32:
@@ -507,7 +474,6 @@ lands32:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands33:
@@ -521,7 +487,6 @@ lands33:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands34:
@@ -536,7 +501,6 @@ lands34:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands35:
@@ -551,7 +515,6 @@ lands35:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands36:
@@ -566,7 +529,6 @@ lands36:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands37:
@@ -580,7 +542,6 @@ lands37:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands38:
@@ -594,7 +555,6 @@ lands38:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands39:
@@ -608,7 +568,6 @@ lands39:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands40:
@@ -622,7 +581,6 @@ lands40:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands41:
@@ -636,7 +594,6 @@ lands41:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands42:
@@ -650,7 +607,6 @@ lands42:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands43:
@@ -664,7 +620,6 @@ lands43:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands44:
@@ -678,7 +633,6 @@ lands44:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands45:
@@ -692,7 +646,6 @@ lands45:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands46:
@@ -706,7 +659,6 @@ lands46:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands47:
@@ -720,7 +672,6 @@ lands47:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands48:
@@ -734,7 +685,6 @@ lands48:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands49:
@@ -748,7 +698,6 @@ lands49:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands50:
@@ -762,7 +711,6 @@ lands50:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-20 07:58:44.089369'
   deleted_at: 
-  organization_id: 1
 
 
 lands51:
@@ -776,7 +724,6 @@ lands51:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands52:
@@ -790,7 +737,6 @@ lands52:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands53:
@@ -804,7 +750,6 @@ lands53:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands54:
@@ -818,7 +763,6 @@ lands54:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands55:
@@ -832,7 +776,6 @@ lands55:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands56:
@@ -846,7 +789,6 @@ lands56:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands57:
@@ -860,7 +802,6 @@ lands57:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands58:
@@ -874,7 +815,6 @@ lands58:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands59:
@@ -888,7 +828,6 @@ lands59:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands60:
@@ -903,7 +842,6 @@ lands60:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands61:
@@ -917,7 +855,6 @@ lands61:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands62:
@@ -931,7 +868,6 @@ lands62:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands63:
@@ -945,7 +881,6 @@ lands63:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands64:
@@ -959,7 +894,6 @@ lands64:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2011-11-03 09:57:57.355828'
   deleted_at: 
-  organization_id: 1
 
 
 lands65:
@@ -973,7 +907,6 @@ lands65:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2011-11-03 09:56:55.475867'
   deleted_at: 
-  organization_id: 1
 
 
 lands66:
@@ -987,7 +920,6 @@ lands66:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands67:
@@ -1001,7 +933,6 @@ lands67:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2011-11-03 09:57:35.965945'
   deleted_at: 
-  organization_id: 1
 
 
 lands68:
@@ -1015,7 +946,6 @@ lands68:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands69:
@@ -1029,7 +959,6 @@ lands69:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands70:
@@ -1043,7 +972,6 @@ lands70:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands71:
@@ -1057,7 +985,6 @@ lands71:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands72:
@@ -1071,7 +998,6 @@ lands72:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands73:
@@ -1085,7 +1011,6 @@ lands73:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands74:
@@ -1099,7 +1024,6 @@ lands74:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands75:
@@ -1113,7 +1037,6 @@ lands75:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands76:
@@ -1127,7 +1050,6 @@ lands76:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands77:
@@ -1141,7 +1063,6 @@ lands77:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands78:
@@ -1155,7 +1076,6 @@ lands78:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands79:
@@ -1169,7 +1089,6 @@ lands79:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands80:
@@ -1183,7 +1102,6 @@ lands80:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands81:
@@ -1197,7 +1115,6 @@ lands81:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands82:
@@ -1211,7 +1128,6 @@ lands82:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands83:
@@ -1225,7 +1141,6 @@ lands83:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands84:
@@ -1239,7 +1154,6 @@ lands84:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands85:
@@ -1253,7 +1167,6 @@ lands85:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands86:
@@ -1267,7 +1180,6 @@ lands86:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands87:
@@ -1281,7 +1193,6 @@ lands87:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands88:
@@ -1295,7 +1206,6 @@ lands88:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands89:
@@ -1309,7 +1219,6 @@ lands89:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands90:
@@ -1323,7 +1232,6 @@ lands90:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands91:
@@ -1337,7 +1245,6 @@ lands91:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:22.474558'
   deleted_at: 
-  organization_id: 1
 
 
 lands92:
@@ -1351,7 +1258,6 @@ lands92:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:29.089539'
   deleted_at: 
-  organization_id: 1
 
 
 lands93:
@@ -1365,7 +1271,6 @@ lands93:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:09.133971'
   deleted_at: 
-  organization_id: 1
 
 
 lands94:
@@ -1379,7 +1284,6 @@ lands94:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:16.185599'
   deleted_at: 
-  organization_id: 1
 
 
 lands95:
@@ -1393,7 +1297,6 @@ lands95:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:36.219282'
   deleted_at: 
-  organization_id: 1
 
 
 lands96:
@@ -1407,7 +1310,6 @@ lands96:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:50:01.396849'
   deleted_at: 
-  organization_id: 1
 
 
 lands97:
@@ -1421,7 +1323,6 @@ lands97:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands98:
@@ -1435,7 +1336,6 @@ lands98:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands99:
@@ -1449,7 +1349,6 @@ lands99:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands100:
@@ -1463,7 +1362,6 @@ lands100:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands101:
@@ -1477,7 +1375,6 @@ lands101:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands102:
@@ -1491,7 +1388,6 @@ lands102:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands103:
@@ -1505,7 +1401,6 @@ lands103:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands104:
@@ -1519,7 +1414,6 @@ lands104:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands105:
@@ -1533,7 +1427,6 @@ lands105:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands106:
@@ -1547,7 +1440,6 @@ lands106:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands107:
@@ -1561,7 +1453,6 @@ lands107:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands108:
@@ -1575,7 +1466,6 @@ lands108:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands109:
@@ -1589,7 +1479,6 @@ lands109:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands110:
@@ -1603,7 +1492,6 @@ lands110:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands111:
@@ -1617,7 +1505,6 @@ lands111:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands112:
@@ -1631,7 +1518,6 @@ lands112:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands113:
@@ -1645,7 +1531,6 @@ lands113:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands114:
@@ -1659,7 +1544,6 @@ lands114:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands115:
@@ -1673,7 +1557,6 @@ lands115:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands116:
@@ -1687,7 +1570,6 @@ lands116:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands117:
@@ -1701,7 +1583,6 @@ lands117:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands118:
@@ -1715,7 +1596,6 @@ lands118:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands119:
@@ -1729,7 +1609,6 @@ lands119:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands120:
@@ -1743,7 +1622,6 @@ lands120:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands121:
@@ -1757,7 +1635,6 @@ lands121:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands122:
@@ -1771,7 +1648,6 @@ lands122:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands123:
@@ -1785,7 +1661,6 @@ lands123:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands124:
@@ -1799,7 +1674,6 @@ lands124:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands125:
@@ -1813,7 +1687,6 @@ lands125:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands126:
@@ -1827,7 +1700,6 @@ lands126:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands127:
@@ -1841,7 +1713,6 @@ lands127:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands128:
@@ -1855,7 +1726,6 @@ lands128:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands129:
@@ -1869,7 +1739,6 @@ lands129:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands130:
@@ -1883,7 +1752,6 @@ lands130:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands131:
@@ -1897,7 +1765,6 @@ lands131:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands132:
@@ -1911,7 +1778,6 @@ lands132:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands133:
@@ -1925,7 +1791,6 @@ lands133:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands134:
@@ -1939,7 +1804,6 @@ lands134:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands135:
@@ -1953,7 +1817,6 @@ lands135:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands136:
@@ -1967,7 +1830,6 @@ lands136:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands137:
@@ -1981,7 +1843,6 @@ lands137:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands138:
@@ -1995,7 +1856,6 @@ lands138:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands139:
@@ -2009,7 +1869,6 @@ lands139:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands140:
@@ -2023,7 +1882,6 @@ lands140:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands141:
@@ -2037,7 +1895,6 @@ lands141:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands142:
@@ -2051,7 +1908,6 @@ lands142:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands143:
@@ -2065,7 +1921,6 @@ lands143:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands144:
@@ -2079,7 +1934,6 @@ lands144:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands145:
@@ -2093,7 +1947,6 @@ lands145:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands146:
@@ -2107,7 +1960,6 @@ lands146:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands147:
@@ -2121,7 +1973,6 @@ lands147:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands148:
@@ -2135,7 +1986,6 @@ lands148:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands149:
@@ -2149,7 +1999,6 @@ lands149:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands150:
@@ -2163,7 +2012,6 @@ lands150:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands151:
@@ -2177,7 +2025,6 @@ lands151:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:53:48.762137'
   deleted_at: 
-  organization_id: 1
 
 
 lands152:
@@ -2191,7 +2038,6 @@ lands152:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-25 03:54:00.792348'
   deleted_at: 
-  organization_id: 1
 
 
 lands153:
@@ -2205,7 +2051,6 @@ lands153:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands154:
@@ -2219,7 +2064,6 @@ lands154:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands155:
@@ -2233,7 +2077,6 @@ lands155:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands156:
@@ -2247,7 +2090,6 @@ lands156:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands157:
@@ -2261,7 +2103,6 @@ lands157:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands158:
@@ -2275,7 +2116,6 @@ lands158:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands159:
@@ -2289,7 +2129,6 @@ lands159:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands160:
@@ -2303,7 +2142,6 @@ lands160:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands161:
@@ -2317,7 +2155,6 @@ lands161:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands162:
@@ -2331,7 +2168,6 @@ lands162:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands163:
@@ -2345,7 +2181,6 @@ lands163:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands164:
@@ -2359,7 +2194,6 @@ lands164:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands165:
@@ -2373,7 +2207,6 @@ lands165:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands166:
@@ -2387,7 +2220,6 @@ lands166:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands167:
@@ -2401,7 +2233,6 @@ lands167:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands168:
@@ -2415,7 +2246,6 @@ lands168:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands169:
@@ -2429,7 +2259,6 @@ lands169:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands170:
@@ -2443,7 +2272,6 @@ lands170:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands171:
@@ -2457,7 +2285,6 @@ lands171:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands172:
@@ -2471,7 +2298,6 @@ lands172:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands173:
@@ -2485,7 +2311,6 @@ lands173:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands174:
@@ -2499,7 +2324,6 @@ lands174:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands175:
@@ -2513,7 +2337,6 @@ lands175:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands176:
@@ -2527,7 +2350,6 @@ lands176:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands177:
@@ -2541,7 +2363,6 @@ lands177:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands178:
@@ -2555,7 +2376,6 @@ lands178:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands179:
@@ -2569,7 +2389,6 @@ lands179:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands180:
@@ -2583,7 +2402,6 @@ lands180:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands181:
@@ -2597,7 +2415,6 @@ lands181:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands182:
@@ -2611,7 +2428,6 @@ lands182:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands183:
@@ -2625,7 +2441,6 @@ lands183:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands184:
@@ -2639,7 +2454,6 @@ lands184:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands185:
@@ -2653,7 +2467,6 @@ lands185:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands186:
@@ -2667,7 +2480,6 @@ lands186:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands187:
@@ -2681,7 +2493,6 @@ lands187:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands188:
@@ -2695,7 +2506,6 @@ lands188:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands189:
@@ -2709,7 +2519,6 @@ lands189:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands190:
@@ -2723,7 +2532,6 @@ lands190:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands191:
@@ -2737,7 +2545,6 @@ lands191:
   created_at: '2010-07-11 12:42:48'
   updated_at: '2010-07-11 12:42:48'
   deleted_at: 
-  organization_id: 1
 
 
 lands192:
@@ -2751,7 +2558,6 @@ lands192:
   created_at: '2010-07-17 01:27:33.571142'
   updated_at: '2010-07-17 01:27:33.571142'
   deleted_at: 
-  organization_id: 1
 
 
 lands193:
@@ -2765,7 +2571,6 @@ lands193:
   created_at: '2010-07-17 01:28:10.571305'
   updated_at: '2010-07-17 01:28:10.571305'
   deleted_at: 
-  organization_id: 1
 
 
 lands194:
@@ -2779,7 +2584,6 @@ lands194:
   created_at: '2010-07-17 01:28:33.928556'
   updated_at: '2010-07-17 01:28:33.928556'
   deleted_at: 
-  organization_id: 1
 
 
 lands195:
@@ -2793,7 +2597,6 @@ lands195:
   created_at: '2010-07-17 01:28:56.530147'
   updated_at: '2010-07-17 01:28:56.530147'
   deleted_at: 
-  organization_id: 1
 
 
 lands196:
@@ -2807,7 +2610,6 @@ lands196:
   created_at: '2010-07-17 01:29:36.93869'
   updated_at: '2010-07-17 01:29:36.93869'
   deleted_at: 
-  organization_id: 1
 
 
 lands197:
@@ -2821,7 +2623,6 @@ lands197:
   created_at: '2010-07-17 01:30:14.67127'
   updated_at: '2010-07-17 01:30:14.67127'
   deleted_at: 
-  organization_id: 1
 
 
 lands198:
@@ -2835,7 +2636,6 @@ lands198:
   created_at: '2010-07-17 01:30:28.659168'
   updated_at: '2010-07-17 01:30:28.659168'
   deleted_at: 
-  organization_id: 1
 
 
 lands199:
@@ -2849,7 +2649,6 @@ lands199:
   created_at: '2010-07-17 01:30:45.752164'
   updated_at: '2010-07-17 01:30:45.752164'
   deleted_at: 
-  organization_id: 1
 
 
 lands200:
@@ -2863,7 +2662,6 @@ lands200:
   created_at: '2010-07-17 01:31:12.325953'
   updated_at: '2010-07-17 01:31:12.325953'
   deleted_at: 
-  organization_id: 1
 
 
 lands201:
@@ -2877,7 +2675,6 @@ lands201:
   created_at: '2010-07-17 01:32:05.437011'
   updated_at: '2010-07-17 01:32:05.437011'
   deleted_at: 
-  organization_id: 1
 
 
 lands202:
@@ -2891,7 +2688,6 @@ lands202:
   created_at: '2010-07-17 01:32:22.980306'
   updated_at: '2010-07-17 01:32:22.980306'
   deleted_at: 
-  organization_id: 1
 
 
 lands203:
@@ -2905,7 +2701,6 @@ lands203:
   created_at: '2010-07-17 01:32:42.63969'
   updated_at: '2010-07-17 01:32:42.63969'
   deleted_at: 
-  organization_id: 1
 
 
 lands204:
@@ -2919,7 +2714,6 @@ lands204:
   created_at: '2010-07-17 01:33:23.451508'
   updated_at: '2010-07-17 01:33:23.451508'
   deleted_at: 
-  organization_id: 1
 
 
 lands205:
@@ -2933,7 +2727,6 @@ lands205:
   created_at: '2010-07-17 01:33:49.354291'
   updated_at: '2010-07-17 01:33:49.354291'
   deleted_at: 
-  organization_id: 1
 
 
 lands206:
@@ -2947,7 +2740,6 @@ lands206:
   created_at: '2010-07-17 01:34:09.790537'
   updated_at: '2010-07-17 01:34:09.790537'
   deleted_at: 
-  organization_id: 1
 
 
 lands207:
@@ -2961,7 +2753,6 @@ lands207:
   created_at: '2010-07-17 01:34:53.162814'
   updated_at: '2010-07-17 01:34:53.162814'
   deleted_at: 
-  organization_id: 1
 
 
 lands208:
@@ -2988,7 +2779,6 @@ lands209:
   created_at: '2010-07-17 01:35:35.657474'
   updated_at: '2010-07-17 01:35:35.657474'
   deleted_at: 
-  organization_id: 1
 
 
 lands210:
@@ -3002,7 +2792,6 @@ lands210:
   created_at: '2010-07-17 01:35:54.777141'
   updated_at: '2010-07-17 01:35:54.777141'
   deleted_at: 
-  organization_id: 1
 
 
 lands211:
@@ -3016,7 +2805,6 @@ lands211:
   created_at: '2010-07-17 01:36:12.053809'
   updated_at: '2010-07-17 01:36:12.053809'
   deleted_at: 
-  organization_id: 1
 
 
 lands212:
@@ -3030,7 +2818,6 @@ lands212:
   created_at: '2010-07-17 01:36:28.608997'
   updated_at: '2010-07-17 01:36:28.608997'
   deleted_at: 
-  organization_id: 1
 
 
 lands213:
@@ -3044,7 +2831,6 @@ lands213:
   created_at: '2010-07-17 01:36:55.559914'
   updated_at: '2010-07-17 01:36:55.559914'
   deleted_at: 
-  organization_id: 1
 
 
 lands214:
@@ -3058,7 +2844,6 @@ lands214:
   created_at: '2010-07-17 01:37:11.519249'
   updated_at: '2010-07-17 01:37:11.519249'
   deleted_at: 
-  organization_id: 1
 
 
 lands215:
@@ -3072,7 +2857,6 @@ lands215:
   created_at: '2010-07-17 01:37:39.598956'
   updated_at: '2010-07-17 01:37:39.598956'
   deleted_at: 
-  organization_id: 1
 
 
 lands216:
@@ -3086,7 +2870,6 @@ lands216:
   created_at: '2010-07-17 01:38:01.01652'
   updated_at: '2010-07-17 01:38:01.01652'
   deleted_at: 
-  organization_id: 1
 
 
 lands217:
@@ -3100,7 +2883,6 @@ lands217:
   created_at: '2010-07-17 02:16:55.138427'
   updated_at: '2010-07-17 02:16:55.138427'
   deleted_at: 
-  organization_id: 1
 
 
 lands218:
@@ -3114,7 +2896,6 @@ lands218:
   created_at: '2010-07-17 02:17:13.81332'
   updated_at: '2010-07-17 02:19:33.615836'
   deleted_at: 
-  organization_id: 1
 
 
 lands219:
@@ -3128,7 +2909,6 @@ lands219:
   created_at: '2010-07-17 02:17:42.942715'
   updated_at: '2010-07-18 15:54:58.477916'
   deleted_at: 
-  organization_id: 1
 
 
 lands220:
@@ -3142,7 +2922,6 @@ lands220:
   created_at: '2010-07-17 02:18:00.526577'
   updated_at: '2010-07-18 15:55:07.088627'
   deleted_at: 
-  organization_id: 1
 
 
 lands221:
@@ -3156,7 +2935,6 @@ lands221:
   created_at: '2010-07-17 02:18:23.015241'
   updated_at: '2010-07-17 02:19:26.712981'
   deleted_at: 
-  organization_id: 1
 
 
 lands222:
@@ -3170,7 +2948,6 @@ lands222:
   created_at: '2010-07-17 02:19:09.855768'
   updated_at: '2010-07-18 15:54:50.806216'
   deleted_at: 
-  organization_id: 1
 
 
 lands223:
@@ -3184,7 +2961,6 @@ lands223:
   created_at: '2010-07-20 07:55:38.511785'
   updated_at: '2011-05-15 00:48:31.965348'
   deleted_at: 
-  organization_id: 1
 
 
 land_max:
@@ -3224,7 +3000,6 @@ lands226:
   created_at: '2010-07-20 07:56:42.595793'
   updated_at: '2011-05-15 01:39:43.242699'
   deleted_at: 
-  organization_id: 1
 
 
 lands227:
@@ -3238,7 +3013,6 @@ lands227:
   created_at: '2010-07-20 07:57:07.732489'
   updated_at: '2011-05-15 04:46:23.287148'
   deleted_at: 
-  organization_id: 1
 
 
 lands228:
@@ -3252,7 +3026,6 @@ lands228:
   created_at: '2010-07-20 07:57:32.118854'
   updated_at: '2011-05-15 00:52:59.914862'
   deleted_at: 
-  organization_id: 1
 
 
 lands229:
@@ -3266,7 +3039,6 @@ lands229:
   created_at: '2010-07-20 07:59:35.812391'
   updated_at: '2010-07-20 07:59:35.812391'
   deleted_at: 
-  organization_id: 1
 
 
 lands230:
@@ -3294,7 +3066,6 @@ lands231:
   created_at: '2010-07-25 03:45:07.81524'
   updated_at: '2010-07-25 03:45:07.81524'
   deleted_at: 
-  organization_id: 1
 
 
 lands232:
@@ -3309,7 +3080,6 @@ lands232:
   created_at: '2010-07-25 03:45:40.933709'
   updated_at: '2010-07-25 03:45:40.933709'
   deleted_at: 
-  organization_id: 1
 
 
 lands233:
@@ -3324,7 +3094,6 @@ lands233:
   created_at: '2010-07-25 03:46:37.501499'
   updated_at: '2010-07-25 03:46:37.501499'
   deleted_at: 
-  organization_id: 1
 
 
 lands234:
@@ -3339,7 +3108,6 @@ lands234:
   created_at: '2010-07-25 03:47:08.121628'
   updated_at: '2010-07-25 03:47:08.121628'
   deleted_at: 
-  organization_id: 1
 
 
 lands235:
@@ -3353,7 +3121,6 @@ lands235:
   created_at: '2010-07-25 03:48:10.772897'
   updated_at: '2010-07-25 03:48:10.772897'
   deleted_at: 
-  organization_id: 1
 
 
 lands236:
@@ -3367,7 +3134,6 @@ lands236:
   created_at: '2010-07-25 03:48:49.479282'
   updated_at: '2010-07-25 03:48:49.479282'
   deleted_at: 
-  organization_id: 1
 
 
 lands237:
@@ -3381,7 +3147,6 @@ lands237:
   created_at: '2010-07-25 03:51:26.676759'
   updated_at: '2010-07-25 03:51:26.676759'
   deleted_at: 
-  organization_id: 1
 
 
 lands238:
@@ -3395,7 +3160,6 @@ lands238:
   created_at: '2010-07-25 03:53:21.366061'
   updated_at: '2010-07-25 03:53:21.366061'
   deleted_at: 
-  organization_id: 1
 
 
 lands239:
@@ -3409,7 +3173,6 @@ lands239:
   created_at: '2010-07-25 04:00:16.488829'
   updated_at: '2010-07-25 04:00:16.488829'
   deleted_at: 
-  organization_id: 1
 
 
 lands240:
@@ -3423,7 +3186,6 @@ lands240:
   created_at: '2010-07-25 04:01:18.154277'
   updated_at: '2010-07-25 04:01:18.154277'
   deleted_at: 
-  organization_id: 1
 
 
 lands241:
@@ -3437,7 +3199,6 @@ lands241:
   created_at: '2010-07-25 04:04:42.760407'
   updated_at: '2010-07-25 04:04:42.760407'
   deleted_at: 
-  organization_id: 1
 
 
 lands242:
@@ -3451,7 +3212,6 @@ lands242:
   created_at: '2010-07-25 04:05:10.807155'
   updated_at: '2010-07-25 04:05:10.807155'
   deleted_at: 
-  organization_id: 1
 
 
 lands243:
@@ -3465,7 +3225,6 @@ lands243:
   created_at: '2010-07-25 04:05:28.247461'
   updated_at: '2010-07-25 04:05:28.247461'
   deleted_at: 
-  organization_id: 1
 
 
 lands244:
@@ -3479,7 +3238,6 @@ lands244:
   created_at: '2010-07-25 04:05:54.530166'
   updated_at: '2010-07-25 04:05:54.530166'
   deleted_at: 
-  organization_id: 1
 
 
 lands245:
@@ -3493,7 +3251,6 @@ lands245:
   created_at: '2010-07-25 04:09:29.711885'
   updated_at: '2010-07-25 04:09:29.711885'
   deleted_at: 
-  organization_id: 1
 
 
 lands246:
@@ -3507,7 +3264,6 @@ lands246:
   created_at: '2010-07-25 04:10:52.0762'
   updated_at: '2010-07-25 04:10:52.0762'
   deleted_at: 
-  organization_id: 1
 
 
 lands247:
@@ -3522,7 +3278,6 @@ lands247:
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
   deleted_at: 
-  organization_id: 1
 
 land_genka1:
   organization_id: 1
@@ -3535,7 +3290,6 @@ land_genka1:
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
   deleted_at: 
-  organization_id: 1
 
 land_genka2:
   organization_id: 1
@@ -3548,7 +3302,6 @@ land_genka2:
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
   deleted_at: 
-  organization_id: 1
 
 land_taue:
   organization_id: 1
@@ -3561,4 +3314,3 @@ land_taue:
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
   deleted_at:
-  organization_id: 1
