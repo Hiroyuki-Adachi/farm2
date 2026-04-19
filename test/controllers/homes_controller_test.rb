@@ -42,6 +42,11 @@ class HomesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "別組織の世帯マスタ変更(表示)" do
+    get edit_home_path(homes(:home_other_org))
+    assert_response :error
+  end
+
   test "世帯マスタ変更(実行)" do
     assert_no_difference('Home.count') do
       patch home_path(@home), params: {home: @update}

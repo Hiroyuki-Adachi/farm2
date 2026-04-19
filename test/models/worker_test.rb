@@ -20,11 +20,17 @@
 #  updated_at                        :datetime
 #  gender_id(性別)                   :integer          default("none"), not null
 #  home_id(世帯)                     :integer
+#  organization_id(組織)             :bigint           default(3), not null
 #  position_id(役職)                 :integer          default("none"), not null
 #
 # Indexes
 #
-#  index_workers_on_deleted_at  (deleted_at)
+#  index_workers_on_deleted_at       (deleted_at)
+#  index_workers_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 require 'test_helper'
 

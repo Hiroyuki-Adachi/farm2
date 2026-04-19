@@ -84,3 +84,15 @@ s2017:
   light_oil_price: 100
   seedling_price: 400
   relative_price: 1000
+
+s2015_org2:
+  term: 2015
+  target_from: 2015-01-01
+  target_to: 2015-12-31
+  start_date: 2015-01-01
+  end_date: 2015-12-31
+  organization_id: 2
+  default_price: 1100
+  default_fee: 15000
+  light_oil_price: 120
+  relative_price: 1000

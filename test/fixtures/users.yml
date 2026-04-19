@@ -165,3 +165,15 @@ user_line_id_already_exists:
   token: 932b9a3f-5946-4be8-82ff-f4d0862932c2
   line_id: 'U1234567890'
   theme: light
+
+user_admin_org2:
+  id: 9100
+  worker_id: 9100
+  login_name: 'org2admin'
+  password_digest: <%= BCrypt::Password.create('password', cost: 5) %>
+  organization_id: 2
+  permission_id: 9
+  term: 2015
+  calendar_term: 2014
+  token: 232b9a3f-5946-4be8-82ff-f4d0862932c2
+  theme: light

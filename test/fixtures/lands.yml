@@ -24,14 +24,20 @@
 #  group_id(グループID)               :integer
 #  land_place_id(土地)                :integer
 #  manager_id(管理者)                 :integer
+#  organization_id(組織)              :bigint           default(3), not null
 #  owner_id(所有者)                   :integer
 #
 # Indexes
 #
-#  index_lands_on_deleted_at      (deleted_at)
-#  index_lands_on_place           (place)
-#  index_lands_on_place_sort_key  (place_sort_key)
-#  index_lands_on_uuid            (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
+#  index_lands_on_deleted_at       (deleted_at)
+#  index_lands_on_organization_id  (organization_id)
+#  index_lands_on_place            (place)
+#  index_lands_on_place_sort_key   (place_sort_key)
+#  index_lands_on_uuid             (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 lands0:
@@ -3062,3 +3068,12 @@ land_taue:
   created_at: '2010-08-20 23:40:01.492837'
   updated_at: '2010-08-20 23:40:01.492837'
   deleted_at:
+
+land_other_org:
+  id: 9100
+  place: "9999-1"
+  owner_id: 9100
+  manager_id: 9100
+  area: 10.0
+  target_flag: t
+  organization_id: 2

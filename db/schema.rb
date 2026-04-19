@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_19_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -153,7 +153,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.datetime "deleted_at", precision: nil
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.string "name", limit: 20, null: false, comment: "薬剤名称"
-    t.bigint "pesticide_master_id", comment: "統合農薬マスタ"
     t.string "phonetic", limit: 40, default: "", null: false, comment: "薬剤ふりがな"
     t.decimal "stock_quantity", precision: 6, default: "0", null: false, comment: "在庫数"
     t.string "stock_unit", limit: 2, default: "", null: false, comment: "在庫単位"
@@ -161,7 +160,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.datetime "updated_at", precision: nil
     t.string "url", limit: 255, default: "", null: false, comment: "URL"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
-    t.index ["pesticide_master_id"], name: "index_chemicals_on_pesticide_master_id"
   end
 
   create_table "cleaning_cleaning_targets", comment: "清掃対象", force: :cascade do |t|
@@ -359,6 +357,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.point "location", comment: "位置"
     t.boolean "member_flag", default: true, null: false, comment: "組合員フラグ"
     t.string "name", limit: 10, comment: "世帯名"
+    t.bigint "organization_id", default: 3, null: false, comment: "組織"
     t.integer "owned_rice_order", comment: "出力順(保有米)"
     t.boolean "owner_flag", default: false, null: false, comment: "所有者フラグ"
     t.string "phonetic", limit: 15, comment: "世帯名(よみ)"
@@ -370,6 +369,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.boolean "worker_payment_flag", default: false, null: false, comment: "個人支払フラグ"
     t.string "zip_code", limit: 7, comment: "郵便番号"
     t.index ["deleted_at"], name: "index_homes_on_deleted_at"
+    t.index ["organization_id"], name: "index_homes_on_organization_id"
   end
 
   create_table "institutions", comment: "施設マスタ", force: :cascade do |t|
@@ -446,6 +446,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.integer "group_order", default: 0, null: false, comment: "グループ内並び順"
     t.integer "land_place_id", comment: "土地"
     t.integer "manager_id", comment: "管理者"
+    t.bigint "organization_id", default: 3, null: false, comment: "組織"
     t.integer "owner_id", comment: "所有者"
     t.integer "parcel_number", comment: "耕地番号"
     t.integer "peasant_end_term", default: 9999, null: false, comment: "小作料期間(至)"
@@ -459,6 +460,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.datetime "updated_at", precision: nil
     t.string "uuid", limit: 36, default: "", null: false, comment: "UUID"
     t.index ["deleted_at"], name: "index_lands_on_deleted_at"
+    t.index ["organization_id"], name: "index_lands_on_organization_id"
     t.index ["place"], name: "index_lands_on_place"
     t.index ["place_sort_key"], name: "index_lands_on_place_sort_key"
     t.index ["uuid"], name: "index_lands_on_uuid", unique: true, where: "((uuid)::text <> ''::text)"
@@ -593,24 +595,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.integer "owned_rice_price_id", default: 0, null: false, comment: "保有米単価"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["home_id", "owned_rice_price_id"], name: "owned_rices_2nd", unique: true
-  end
-
-  create_table "pesticide_masters", comment: "統合農薬マスタ", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "formulation_name", limit: 50, default: "", null: false, comment: "剤型名"
-    t.string "formulation_name_normalized", limit: 50, default: "", null: false, comment: "剤型名(正規化)"
-    t.integer "mixture_count", default: 0, null: false, comment: "混合数"
-    t.string "name", limit: 255, default: "", null: false, comment: "農薬の名称"
-    t.string "name_normalized", limit: 255, default: "", null: false, comment: "農薬の名称(正規化)"
-    t.string "pesticide_kind", limit: 255, default: "", null: false, comment: "農薬の種類"
-    t.string "pesticide_kind_normalized", limit: 255, default: "", null: false, comment: "農薬の種類(正規化)"
-    t.date "registered_on", comment: "登録年月日"
-    t.string "registrant_name", limit: 255, default: "", null: false, comment: "登録を有する者の名称"
-    t.string "registrant_name_normalized", limit: 255, default: "", null: false, comment: "登録を有する者の名称(正規化)"
-    t.integer "registration_number", null: false, comment: "登録番号"
-    t.datetime "updated_at", null: false
-    t.string "usage", limit: 50, default: "", null: false, comment: "用途"
-    t.index ["registration_number"], name: "index_pesticide_masters_on_registration_number", unique: true
   end
 
   create_table "plan_lands", id: false, comment: "作付計画", force: :cascade do |t|
@@ -1265,11 +1249,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.string "mobile", limit: 15, comment: "携帯番号"
     t.string "mobile_mail", limit: 50, comment: "メールアドレス(携帯)"
     t.integer "office_role", default: 0, null: false, comment: "事務の役割"
+    t.bigint "organization_id", default: 3, null: false, comment: "組織"
     t.string "pc_mail", limit: 50, comment: "メールアドレス(PC)"
     t.integer "position_id", default: 0, null: false, comment: "役職"
     t.datetime "updated_at", precision: nil
     t.boolean "work_flag", default: true, null: false, comment: "作業フラグ"
     t.index ["deleted_at"], name: "index_workers_on_deleted_at"
+    t.index ["organization_id"], name: "index_workers_on_organization_id"
   end
 
   create_table "works", id: { type: :serial, comment: "作業データ" }, comment: "作業データ", force: :cascade do |t|
@@ -1279,6 +1265,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.time "end_at", null: false, comment: "終了時刻"
     t.date "fixed_at", comment: "確定日"
     t.string "name", limit: 40, null: false, comment: "作業名称"
+    t.bigint "organization_id", default: 3, null: false, comment: "組織"
     t.datetime "printed_at", precision: nil, comment: "印刷日時"
     t.integer "printed_by", comment: "印刷者"
     t.text "remarks", comment: "備考"
@@ -1289,9 +1276,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.integer "work_kind_id", default: 0, null: false, comment: "作業種別"
     t.integer "work_type_id", comment: "作業分類"
     t.date "worked_at", null: false, comment: "作業日"
+    t.index ["organization_id", "term"], name: "index_works_on_organization_id_and_term"
+    t.index ["organization_id"], name: "index_works_on_organization_id"
   end
 
-  add_foreign_key "chemicals", "pesticide_masters"
+  add_foreign_key "homes", "organizations"
+  add_foreign_key "lands", "organizations"
   add_foreign_key "task_comments", "tasks"
   add_foreign_key "task_comments", "workers", column: "poster_id"
   add_foreign_key "task_events", "task_comments"
@@ -1312,4 +1302,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
   add_foreign_key "work_genres", "work_categories"
   add_foreign_key "work_kind_types", "work_categories"
   add_foreign_key "work_types", "work_genres"
+  add_foreign_key "workers", "organizations"
+  add_foreign_key "works", "organizations"
 end

@@ -50,6 +50,11 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "別組織の作業者マスタ変更(表示)" do
+    get edit_worker_path(workers(:worker_other_org))
+    assert_response :error
+  end
+
   test "作業者マスタ変更(実行)" do
     assert_no_difference('Worker.kept.count') do
       patch worker_path(@worker), params: {worker: @update}

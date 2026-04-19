@@ -9,7 +9,8 @@ class InitWorkTypeCacheJobTest < ActiveJob::TestCase
     work2.expects(:regist_work_work_types)
 
     relation = mock("relation")
-    Work.expects(:no_fixed).with(term).returns(relation)
+    Work.expects(:for_organization).with(organizations(:org)).returns(relation)
+    relation.expects(:no_fixed).with(term).returns(relation)
     relation.expects(:landable).returns(relation)
     relation.expects(:find_each).multiple_yields([work1], [work2])
 

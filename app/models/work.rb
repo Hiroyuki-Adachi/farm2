@@ -16,9 +16,19 @@
 #  worked_at(作業日)                       :date             not null
 #  created_at                              :datetime
 #  updated_at                              :datetime
+#  organization_id(組織)                   :bigint           default(3), not null
 #  weather_id(天気)                        :integer
 #  work_kind_id(作業種別)                  :integer          default(0), not null
 #  work_type_id(作業分類)                  :integer
+#
+# Indexes
+#
+#  index_works_on_organization_id           (organization_id)
+#  index_works_on_organization_id_and_term  (organization_id,term)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 class Work < ApplicationRecord
@@ -33,6 +43,7 @@ class Work < ApplicationRecord
   validates :weather_id,   presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
 
+  belongs_to :organization, optional: true
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
   belongs_to :fix, class_name: "Fix", foreign_key: [:term, :fixed_at]
@@ -63,6 +74,7 @@ class Work < ApplicationRecord
   has_many :events, class_name: 'TaskEvent', dependent: :nullify
   has_many :tasks, through: :events
 
+  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
   scope :no_fixed, ->(term){
     includes(:work_type, :work_kind)
       .where(term: term, fixed_at: nil).order(worked_at: :ASC, start_at: :ASC, id: :ASC)

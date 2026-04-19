@@ -23,12 +23,18 @@
 #  zip_code(郵便番号)                  :string(7)
 #  created_at                          :datetime
 #  updated_at                          :datetime
+#  organization_id(組織)               :bigint           default(3), not null
 #  section_id(班／町内)                :integer
 #  worker_id(世帯主(代表者))           :integer
 #
 # Indexes
 #
-#  index_homes_on_deleted_at  (deleted_at)
+#  index_homes_on_deleted_at       (deleted_at)
+#  index_homes_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 home1:
@@ -274,6 +280,19 @@ home12:
   deleted_at: 
   owner_flag: t
   drying_order: 30
+
+home_other_org:
+  id: 9100
+  phonetic: べつそしき
+  name: 別組織世帯
+  worker_id: 9100
+  section_id: 1
+  display_order: 100
+  member_flag: t
+  worker_payment_flag: f
+  company_flag: f
+  owner_flag: t
+  organization_id: 2
 
 home13:
   id: 13
