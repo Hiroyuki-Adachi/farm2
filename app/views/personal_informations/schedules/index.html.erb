@@ -42,8 +42,8 @@
     </div>
   <% end %>
 
+  <h1 class="h2">タスク</h1>
   <% if @tasks.present? %>
-    <h1 class="h2">タスク</h1>
     <ul>
       <% @tasks.each do |task| %>
         <li class="mb-1">
@@ -55,24 +55,33 @@
         </li>
       <% end %>
     </ul>
+  <% else %>
+    <p>タスクはありません。</p>
   <% end %>
+
+  <h1 class="h2">作業予定</h1>
   <% if @schedules.present? %>
-    <h1 class="h2">作業予定</h1>
     <ul>
       <% @schedules.each do |schedule| %>
       <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
       <% end %>
     </ul>
+  <% else %>
+    <p>作業予定はありません。</p>
   <% end %>
+
   <% if current_user.worker.leader? || current_user.worker.director? || current_user.worker.advisor? %>
     <div class="text-center mt-4 mb-3">
       <%= link_to "人員保守", personal_information_schedules_workers_path(personal_information_token: token), class: "btn btn-outline-primary" %>
     </div>
   <% end %>
+
+  <h1 class="h2">議事録</h1>
   <% if @minute.present? %>
-    <h1 class="h2">議事録</h1>
     <ul>
       <li><%= @minute.schedule.worked_at %>に<%= @minute.schedule.name %>がありました(<%= link_to '議事録', personal_information_minute_path(@minute.id, personal_information_token: @worker.user.token), {target: :_blank, data: {turbolinks: false}} %>)</li>
     </ul>
+  <% else %>
+    <p>議事録はありません。</p>
   <% end %>
 </div>
