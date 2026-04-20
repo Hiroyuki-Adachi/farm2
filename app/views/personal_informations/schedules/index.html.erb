@@ -63,7 +63,7 @@
   <% if @schedules.present? %>
     <ul>
       <% @schedules.each do |schedule| %>
-      <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
+        <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
       <% end %>
     </ul>
   <% else %>
