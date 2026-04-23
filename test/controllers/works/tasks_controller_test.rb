@@ -17,6 +17,17 @@ class Works::TasksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "作業変更(タスク)(表示)(開始予定日前のタスクは表示しない)" do
+    work = works(:work_task_work)
+    tasks(:task33).update!(planned_start_on: work.worked_at + 1.day)
+
+    get new_work_task_path(work_id: work)
+
+    assert_response :success
+    assert_match "task31", @response.body
+    assert_no_match "task33", @response.body
+  end
+
   test "作業変更(タスク)(更新)" do
     work = works(:work_task_work)
     task1 = tasks(:task31) 

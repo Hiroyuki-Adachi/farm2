@@ -125,6 +125,7 @@ class Task < ApplicationRecord
     new_work_link = task_table[:office_role].eq(work.work_type.office_role) # 役割が一致
               .and(task_table[:office_role].not_eq(Task.office_roles[:none])) # 役割が「なし」ではない
               .and(task_table[:assignee_id].in(worker_ids_subq)) # 作業者が担当者に含まれる
+              .and(task_table[:planned_start_on].lteq(work.worked_at)) # 作業日までに開始予定
 
     base = where(task_status_id: TaskStatus.workable_ids).where(new_work_link)
     base.select(task_table[Arel.star])
