@@ -151,7 +151,7 @@ SQL
  
   scope :by_target, ->(term) do
     joins("INNER JOIN systems ON systems.term = works.term")
-     .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
+     .where("works.worked_at BETWEEN systems.start_date AND systems.end_date")
      .where(systems: { term: term })
   end
 

@@ -26,8 +26,6 @@ organization = Organization.create!(
 
 system = System.create!(
   term: Date.today.year,
-  target_from: Date.new(Date.today.year, 1, 1),
-  target_to: Date.new(Date.today.year, 12, 31),
   start_date: Date.new(Date.today.year, 1, 1),
   end_date: Date.new(Date.today.year, 12, 31),
   organization_id: organization.id
@@ -89,8 +87,6 @@ User.create!(
   password_confirmation: "SYSTEM",
   worker_id: worker.id,
   term: system.term,
-  target_from: system.target_from,
-  target_to: system.target_to,
   organization_id: organization.id,
   permission_id: :admin
 )

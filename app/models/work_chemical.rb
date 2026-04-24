@@ -41,7 +41,7 @@ class WorkChemical < ApplicationRecord
       .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
       .joins("INNER JOIN systems ON systems.term = works.term")
-      .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
+      .where("works.worked_at BETWEEN systems.start_date AND systems.end_date")
       .where(systems: { term: term })
       .order("works.worked_at, works.id, chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
   end
