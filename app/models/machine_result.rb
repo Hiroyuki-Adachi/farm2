@@ -40,7 +40,7 @@ class MachineResult < ApplicationRecord
    .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
    .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
    .joins("INNER JOIN systems ON systems.term = works.term")
-   .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
+   .where("works.worked_at BETWEEN systems.start_date AND systems.end_date")
    .where("homes.company_flag = FALSE")
    .where(systems: { term: term })
    .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
