@@ -3,42 +3,97 @@ class Crawlers::JaComJob < CrawlJob
 
   def perform
     agent = Mechanize.new
+    doc = Nokogiri::HTML(agent.get(latest_url).body)
 
-    uri = TopicType::JA_COM.url
-    page = 1
+    each_topic(doc) do |topic_url, topic_date|
+      next if topic_date.nil?
+      break if topic_date < Time.zone.today - START_DAY
 
-    catch(:done) do
-      loop do
-        path = page > 1 ? ["news_#{page}.php"] : ['news.php']
-        doc = Nokogiri::HTML(agent.get(URI.join(uri, *path).to_s).body)
-
-        doc.css('div.newsList__body ul li.newsList__item').each do |topic|
-          topic_date = parse_crawl_date(topic.at_css('div.newsListDate')&.text)
-          next if topic_date.nil?
-
-          throw(:done) if topic_date < Time.zone.today - START_DAY
-
-          save_topic(agent, topic.at_css('a')&.[](:href), topic_date)
-        end
-
-        page += 1
-      end
+      save_topic(agent, topic_url, topic_date)
     end
   end
 
   private
 
+  def latest_url
+    URI.join(TopicType::JA_COM.url, '/latest').to_s
+  end
+
+  def each_topic(doc)
+    topics = article_topics(doc)
+    topics = fallback_topics(doc) if topics.empty?
+
+    topics.each do |topic_url, topic_date|
+      next if topic_url.blank?
+
+      yield topic_url, topic_date
+    end
+  end
+
+  def article_topics(doc)
+    doc.css('main article').filter_map do |topic|
+      topic_url = build_topic_url(topic.at_css('a[href]')&.[]('href'))
+      topic_date = parse_crawl_date(topic.at_css('time[datetime]')&.[]('datetime'))
+      [topic_url, topic_date]
+    end
+  end
+
+  def fallback_topics(doc)
+    detail_paths = doc.css('a[href]').map { |node| node['href'] }
+      .select { |href| detail_path?(href) }
+      .uniq
+    topic_dates = doc.css('time[datetime]').map { |node| parse_crawl_date(node['datetime']) }
+
+    detail_paths.zip(topic_dates).map do |path, topic_date|
+      [build_topic_url(path), topic_date]
+    end
+  end
+
+  def detail_path?(href)
+    return false if href.blank?
+    return false unless href.match?(%r{^/(?:jinji|articles|byougaichu)/[^/]+$})
+    return false if href.match?(%r{^/jinji/(?:all|fuho|jinji_)})
+
+    href != '/byougaichu/byogaichu-taisaku'
+  end
+
+  def build_topic_url(path)
+    return if path.blank?
+
+    URI.join(TopicType::JA_COM.url, path).to_s
+  rescue URI::InvalidURIError
+    nil
+  end
+
+  def article_url(news_doc, fallback_url)
+    news_doc.at_css('meta[property="og:url"]')&.[]('content').presence || fallback_url
+  end
+
+  def article_title(news_doc)
+    news_doc.at_css('main h1')&.text.to_s.strip
+  end
+
+  def article_posted_on(news_doc, fallback_date)
+    parse_crawl_date(news_doc.at_css('meta[property="article:published_time"]')&.[]('content')) || fallback_date
+  end
+
+  def article_content(news_doc)
+    content = news_doc.css('main p.whitespace-pre-wrap').map { |node| node.text.strip }.reject(&:blank?)
+    normalize_text(content.join('　'))
+  end
+
   def save_topic(agent, url, topic_date)
     news_doc = Nokogiri::HTML(agent.get(url).body)
-    return Topic.find_or_create_by(url: url) do |t|
-      h1 = news_doc.at_css('h1.contArticle__head__title')
-      h1.search('span').remove
-      t.title = h1.text
-      news_doc.css('div.contArticle__body').css('p').each do |br|
-        br.add_next_sibling(Nokogiri::XML::Text.new('　', news_doc))
-      end
-      t.content = normalize_text(news_doc.at_css('div.contArticle__body')&.text)
-      t.posted_on = topic_date
+    article_url = article_url(news_doc, url)
+    title = article_title(news_doc)
+    content = article_content(news_doc)
+
+    return if title.blank? || content.blank?
+
+    Topic.find_or_create_by(url: article_url) do |t|
+      t.title = title
+      t.content = content
+      t.posted_on = article_posted_on(news_doc, topic_date)
       t.topic_type_id = TopicType::JA_COM.id
     end
   end
