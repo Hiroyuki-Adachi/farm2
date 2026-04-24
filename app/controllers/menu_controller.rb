@@ -1,6 +1,6 @@
 class MenuController < ApplicationController
   before_action :permit_manager, except: [:index, :edit_term, :update]
-  before_action :set_system, only: [:edit, :edit_term]
+  before_action :set_system, only: [:edit_term]
 
   SCHEDULE_DAY = 7
 
@@ -20,8 +20,6 @@ class MenuController < ApplicationController
       .decorate(context: { current_worker: current_user.worker })
   end
 
-  def edit; end
-
   def edit_term
     @terms = WorkDecorator.terms
   end
@@ -34,23 +32,22 @@ class MenuController < ApplicationController
       return
     end
     @organization = current_organization
-    @system = System.init(@organization.id, system_params[:term], system_params[:target_from], system_params[:target_to])
+    @system = System.init(@organization.id, system_params[:term])
     if @system.valid?
       @system.save!
       @organization.update(term: @system.term)
       User.update_all(term: @system.term, updated_at: DateTime.now)
       redirect_to(menu_index_path, :notice => '設定を変更しました。')
-    elsif system_params[:term]
-      render :action => :edit_term
     else
-      render :action => :edit
+      @terms = WorkDecorator.terms
+      render :action => :edit_term
     end
   end
 
   private
 
   def system_params
-    params.expect(system: [:term, :target_from, :target_to])
+    params.expect(system: [:term])
   end
 
   def permit_manager

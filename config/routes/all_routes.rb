@@ -217,7 +217,7 @@ resources :users, except: [:show] do
 end
 resources :work_verifications, param: "work_id", only: [:index, :update, :destroy, :show]
 
-resources :menu, only: [:index, :edit, :update] do
+resources :menu, only: [:index, :update] do
   member do
     get :edit_term
   end

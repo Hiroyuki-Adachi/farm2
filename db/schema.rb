@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_24_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -153,7 +153,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.datetime "deleted_at", precision: nil
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.string "name", limit: 20, null: false, comment: "薬剤名称"
-    t.bigint "pesticide_master_id", comment: "統合農薬マスタ"
     t.string "phonetic", limit: 40, default: "", null: false, comment: "薬剤ふりがな"
     t.decimal "stock_quantity", precision: 6, default: "0", null: false, comment: "在庫数"
     t.string "stock_unit", limit: 2, default: "", null: false, comment: "在庫単位"
@@ -161,7 +160,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.datetime "updated_at", precision: nil
     t.string "url", limit: 255, default: "", null: false, comment: "URL"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
-    t.index ["pesticide_master_id"], name: "index_chemicals_on_pesticide_master_id"
   end
 
   create_table "cleaning_cleaning_targets", comment: "清掃対象", force: :cascade do |t|
@@ -595,24 +593,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.index ["home_id", "owned_rice_price_id"], name: "owned_rices_2nd", unique: true
   end
 
-  create_table "pesticide_masters", comment: "統合農薬マスタ", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "formulation_name", limit: 50, default: "", null: false, comment: "剤型名"
-    t.string "formulation_name_normalized", limit: 50, default: "", null: false, comment: "剤型名(正規化)"
-    t.integer "mixture_count", default: 0, null: false, comment: "混合数"
-    t.string "name", limit: 255, default: "", null: false, comment: "農薬の名称"
-    t.string "name_normalized", limit: 255, default: "", null: false, comment: "農薬の名称(正規化)"
-    t.string "pesticide_kind", limit: 255, default: "", null: false, comment: "農薬の種類"
-    t.string "pesticide_kind_normalized", limit: 255, default: "", null: false, comment: "農薬の種類(正規化)"
-    t.date "registered_on", comment: "登録年月日"
-    t.string "registrant_name", limit: 255, default: "", null: false, comment: "登録を有する者の名称"
-    t.string "registrant_name_normalized", limit: 255, default: "", null: false, comment: "登録を有する者の名称(正規化)"
-    t.integer "registration_number", null: false, comment: "登録番号"
-    t.datetime "updated_at", null: false
-    t.string "usage", limit: 50, default: "", null: false, comment: "用途"
-    t.index ["registration_number"], name: "index_pesticide_masters_on_registration_number", unique: true
-  end
-
   create_table "plan_lands", id: false, comment: "作付計画", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "land_id", null: false, comment: "土地"
@@ -816,8 +796,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.integer "seedling_chemical_id", default: 0, comment: "育苗土"
     t.decimal "seedling_price", precision: 4, default: "0", null: false, comment: "育苗費"
     t.date "start_date", null: false, comment: "期首日"
-    t.date "target_from", comment: "開始年月"
-    t.date "target_to", comment: "終了年月"
     t.integer "term", null: false, comment: "年度(期)"
     t.datetime "updated_at", precision: nil
     t.decimal "waste_adjust_price", precision: 4, default: "0", null: false, comment: "くず米金額(調整)"
@@ -1047,8 +1025,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.integer "permission_id", default: 0, null: false, comment: "権限"
     t.string "push_notification_permission", default: "default", null: false, comment: "通知許可状態"
     t.datetime "push_notification_requested_at", comment: "通知許可確認日時"
-    t.date "target_from", default: "2010-01-01", null: false, comment: "開始年月"
-    t.date "target_to", default: "2010-12-31", null: false, comment: "終了年月"
     t.integer "term", default: 0, null: false, comment: "期"
     t.integer "theme", default: 0, null: false, comment: "画面テーマ"
     t.string "token", limit: 36, default: "", null: false, comment: "アクセストークン"
@@ -1291,7 +1267,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_01_090500) do
     t.date "worked_at", null: false, comment: "作業日"
   end
 
-  add_foreign_key "chemicals", "pesticide_masters"
   add_foreign_key "task_comments", "tasks"
   add_foreign_key "task_comments", "workers", column: "poster_id"
   add_foreign_key "task_events", "task_comments"
