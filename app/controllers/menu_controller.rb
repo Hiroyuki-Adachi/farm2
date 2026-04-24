@@ -1,5 +1,4 @@
 class MenuController < ApplicationController
-  before_action :permit_manager, except: [:index, :edit_term, :update]
   before_action :set_system, only: [:edit_term]
 
   SCHEDULE_DAY = 7
