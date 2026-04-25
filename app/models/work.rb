@@ -243,6 +243,17 @@ SQL
     end
   end
 
+  def chemical_work_lands
+    work_lands.includes(:land).select { |work_land| work_land.land_cost.present? }
+  end
+
+  def chemical_sum_areas(group = nil)
+    target_work_lands = chemical_work_lands
+    target_work_lands = target_work_lands.select { |work_land| work_land.chemical_group_no == group } if group
+
+    target_work_lands.sum { |work_land| work_land.land.area }
+  end
+
   def price
     work_kind.term_price(term)
   end
