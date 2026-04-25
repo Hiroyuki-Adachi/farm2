@@ -70,11 +70,9 @@
     <p>作業予定はありません。</p>
   <% end %>
 
-  <% if current_user.worker.leader? || current_user.worker.director? || current_user.worker.advisor? %>
-    <div class="text-center mt-4 mb-3">
-      <%= link_to "人員保守", personal_information_schedules_workers_path(personal_information_token: token), class: "btn btn-outline-primary" %>
-    </div>
-  <% end %>
+  <div class="text-center mt-4 mb-3">
+    <%= link_to "人員保守", personal_information_schedules_workers_path(personal_information_token: token), class: "btn btn-outline-primary" %>
+  </div>
 
   <h1 class="h2">議事録</h1>
   <% if @minute.present? %>
