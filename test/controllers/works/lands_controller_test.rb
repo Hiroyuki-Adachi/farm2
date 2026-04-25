@@ -17,6 +17,23 @@ class Works::LandsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to works_path
   end
 
+  test "作業変更(土地)(autocomplete)" do
+    get autocomplete_work_lands_path(work_id: @work)
+
+    assert_response :success
+    assert_equal "application/json", response.media_type
+
+    results = response.parsed_body
+    land = lands(:lands0)
+    assert_includes results, {
+      "id" => land.id,
+      "place" => land.place,
+      "owner" => land.owner.name,
+      "area" => "35.3"
+    }
+    assert_not_includes results.map { |result| result["id"] }, lands(:lands66).id
+  end
+
   test "作業変更(土地)(変更)" do
     land = lands(:lands0)
     work_lands = [{land_id: land.id, display_order: 3}]
