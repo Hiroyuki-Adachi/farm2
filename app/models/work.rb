@@ -243,6 +243,20 @@ SQL
     end
   end
 
+  def chemical_work_lands
+    @chemical_work_lands ||= begin
+      land_ids_with_cost = LandCost.newest(worked_at).select(:land_id)
+      work_lands.includes(:land).where(land_id: land_ids_with_cost)
+    end
+  end
+
+  def chemical_sum_areas(group = nil)
+    target_work_lands = chemical_work_lands
+    target_work_lands = target_work_lands.where(chemical_group_no: group) if group
+
+    target_work_lands.joins(:land).sum('lands.area') || 0
+  end
+
   def price
     work_kind.term_price(term)
   end

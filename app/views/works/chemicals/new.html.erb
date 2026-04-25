@@ -3,12 +3,14 @@
 
 <%= form_with(model: @work.model, url: {action: :create}, html: {method: :post}) do |f| %>
   <%= render partial: 'show_work', locals: {f: f} %>
+  <% chemical_work_lands = @work.chemical_work_lands %>
+  <% chemical_sum_areas = @work.chemical_sum_areas %>
   <% group_count = [@work.work_chemicals.maximum(:chemical_group_no).to_i, current_organization.chemical_group_count].max %>
   <div class="row">
     <div class="col-md-2 h3">総面積</div>
     <div class="col-md-2 h3">
-      <%= @work.sum_areas %>a(<span id="group_areas_span"><%= @work.chemical_group_flag ? @work.sum_areas(1) : @work.sum_areas %></span>a)
-      <%= hidden_field_tag :sum_areas, @work.sum_areas %>
+      <%= chemical_sum_areas %>a(<span id="group_areas_span"><%= @work.chemical_group_flag ? @work.chemical_sum_areas(1) : chemical_sum_areas %></span>a)
+      <%= hidden_field_tag :sum_areas, chemical_sum_areas %>
     </div>
     <div class="col-md-8 mb-3">
       <% group_count.times do |index| %>
@@ -30,10 +32,11 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-check-inline">
-          <% @work.work_lands.each do |work_land| %>
+          <% chemical_work_lands.each do |work_land| %>
+          <% land_cost = work_land.land_cost %>
           <%= hidden_field_tag "work_lands[#{work_land.id}]", work_land.chemical_group_no, {id: "work_land_hidden_#{work_land.id}" } %>
           <%= check_box_tag "work_lands[#{work_land.id}]", 1, work_land.chemical_group_no == 1, 
-            {data: {work_type_id: work_land.land_cost.work_type_id, area: work_land.land.area, id: "work_land_hidden_#{work_land.id}"},
+            {data: {work_type_id: land_cost.work_type_id, area: work_land.land.area, id: "work_land_hidden_#{work_land.id}"},
              class: "form-check-input ms-3 chemical-land", id: "work_land_#{work_land.id}"} %>
           <%= label_tag "work_land_#{work_land.id}", work_land.land.place, {class: "form-check-label"} %>
           <% end %>
@@ -73,7 +76,7 @@
               <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][quantity]", work_chemical&.quantity,
                 {min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
                 data: {id: chemical.id, index: index + 1}} %>
-              <%= hidden_field_tag "group_areas[#{index + 1}]", @work.sum_areas(index + 1), data: {group: index + 1} %>
+              <%= hidden_field_tag "group_areas[#{index + 1}]", @work.chemical_sum_areas(index + 1), data: {group: index + 1} %>
             </td>
             <td class="text-center col-data" data-index="<%= index %>" style="display:none; white-space: nowrap;">
               <%= hidden_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_id]", Dilution::NONE.id %>
