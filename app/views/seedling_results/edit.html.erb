@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <%= shf.fields_for :seedling_results do |srf| %>
+        <%= shf.fields_for :seedling_results, @seedling_results do |srf| %>
         <% work_results = srf.object.work_result&.work&.work_results&.includes(:worker) || [] %>
         <tr>
           <td><%= srf.check_box :_destroy, {id: nil} %></td>
@@ -32,7 +32,6 @@
           <td>
             <%= srf.check_box :disposal_flag %>
             <%= srf.hidden_field :id, {id: nil} %>
-            <%= srf.hidden_field :display_order, {value: srf.index, id: nil} %>
           </td>
         </tr>
         <% end %>

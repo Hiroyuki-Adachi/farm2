@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_24_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_28_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -693,7 +693,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_24_000000) do
 
   create_table "seedling_results", id: { type: :serial, comment: "育苗結果" }, comment: "育苗結果", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
-    t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.boolean "disposal_flag", default: false, null: false, comment: "廃棄フラグ"
     t.decimal "quantity", precision: 3, default: "0", null: false, comment: "苗箱数"
     t.integer "seedling_home_id", comment: "育苗担当"
