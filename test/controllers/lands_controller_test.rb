@@ -83,6 +83,11 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "別組織の土地マスタ変更(表示)" do
+    get edit_land_path(lands(:land_other_org))
+    assert_response :error
+  end
+
   test "土地マスタ変更(実行)" do
     assert_no_difference('Land.kept.count') do
       patch land_path(@land), params: {id: @land, land: @update}

@@ -59,6 +59,11 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "別組織の作業照会" do
+    get work_path(works(:work_other_org))
+    assert_response :error
+  end
+
   test "作業変更(表示)(未確定)" do
     get edit_work_path(works(:work_not_fixed))
     assert_response :success

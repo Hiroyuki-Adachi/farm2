@@ -28,22 +28,22 @@ class ApplicationController < ActionController::Base
   end
 
   def sum_hours_key(term)
-    "sum_hours#{term}"
+    "sum_hours_#{current_user.organization_id}_#{term}"
   end
 
   def count_workers_key(term)
-    "count_workers#{term}"
+    "count_workers_#{current_user.organization_id}_#{term}"
   end
 
   def sum_hours(term)
     Rails.cache.fetch(sum_hours_key(term), expires_in: 1.hour) do
-      WorkResult.where(work_id: Work.usual(term).select(:id)).group(:work_id).sum(:hours).to_h
+      WorkResult.where(work_id: Work.for_organization(current_user.organization_id).usual(term).select(:id)).group(:work_id).sum(:hours).to_h
     end
   end
 
   def count_workers(term)
     Rails.cache.fetch(count_workers_key(term), expires_in: 1.hour) do
-      WorkResult.where(work_id: Work.usual(term).select(:id)).group(:work_id).count(:worker_id).to_h
+      WorkResult.where(work_id: Work.for_organization(current_user.organization_id).usual(term).select(:id)).group(:work_id).count(:worker_id).to_h
     end
   end
 

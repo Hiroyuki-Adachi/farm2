@@ -24,14 +24,20 @@
 #  group_id(グループID)               :integer
 #  land_place_id(土地)                :integer
 #  manager_id(管理者)                 :integer
+#  organization_id(組織)              :bigint           default(1), not null
 #  owner_id(所有者)                   :integer
 #
 # Indexes
 #
-#  index_lands_on_deleted_at      (deleted_at)
-#  index_lands_on_place           (place)
-#  index_lands_on_place_sort_key  (place_sort_key)
-#  index_lands_on_uuid            (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
+#  index_lands_on_deleted_at       (deleted_at)
+#  index_lands_on_organization_id  (organization_id)
+#  index_lands_on_place            (place)
+#  index_lands_on_place_sort_key   (place_sort_key)
+#  index_lands_on_uuid             (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 require 'test_helper'
 
@@ -99,6 +105,30 @@ class LandTest < ActiveSupport::TestCase
     assert land.expiry?(Date.new(2020, 1, 1))
     assert_not land.expiry?(Date.new(1899, 12, 31))
     assert_not land.expiry?(Date.new(3000, 1, 1))
+  end
+
+  test "別組織の所有者を指定した場合は無効" do
+    land = lands(:lands0)
+    land.owner = homes(:home_other_org)
+
+    assert_not land.valid?
+    assert_includes land.errors[:owner_id], "は同じ組織の世帯を指定してください。"
+  end
+
+  test "別組織の管理者を指定した場合は無効" do
+    land = lands(:lands0)
+    land.manager = homes(:home_other_org)
+
+    assert_not land.valid?
+    assert_includes land.errors[:manager_id], "は同じ組織の世帯を指定してください。"
+  end
+
+  test "別組織のグループ土地を指定した場合は無効" do
+    land = lands(:lands0)
+    land.group = lands(:land_other_org)
+
+    assert_not land.valid?
+    assert_includes land.errors[:group_id], "は同じ組織の土地を指定してください。"
   end
 
   test "数字から始まるものは head_flag=0 になる" do

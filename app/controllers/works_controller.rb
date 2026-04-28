@@ -24,7 +24,7 @@ class WorksController < ApplicationController
     @term = params[:term].presence || current_term
 
     # term でベースを絞る
-    base = Work.usual(@term)
+    base = Work.for_organization(current_organization).usual(@term)
     base = base.by_worker(current_user.worker) if current_user.visitor?
 
     # 検索条件（ビューでフォームの初期値にも使う）
@@ -80,7 +80,7 @@ class WorksController < ApplicationController
   end
 
   def create
-    @work = Work.new(work_params.merge(created_by: current_user.worker.id, term: current_term))
+    @work = Work.new(work_params.merge(created_by: current_user.worker.id, term: current_term, organization_id: current_organization.id))
     if @work.save
       redirect_to(new_work_worker_path(work_id: @work))
     else
@@ -131,7 +131,10 @@ class WorksController < ApplicationController
   private
 
   def set_work
-    @work = Work.find(params[:work_id] || params[:id]).decorate
+    work = Work.for_organization(current_organization).find_by(id: params[:work_id] || params[:id])
+    return to_error_path unless work
+
+    @work = work.decorate
   end
 
   def set_results

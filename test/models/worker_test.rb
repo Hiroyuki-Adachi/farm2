@@ -20,11 +20,17 @@
 #  updated_at                        :datetime
 #  gender_id(性別)                   :integer          default("none"), not null
 #  home_id(世帯)                     :integer
+#  organization_id(組織)             :bigint           default(1), not null
 #  position_id(役職)                 :integer          default("none"), not null
 #
 # Indexes
 #
-#  index_workers_on_deleted_at  (deleted_at)
+#  index_workers_on_deleted_at       (deleted_at)
+#  index_workers_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 require 'test_helper'
 
@@ -78,5 +84,12 @@ class WorkerTest < ActiveSupport::TestCase
     @worker.office_role = :finance
     @worker.save!
     assert_equal :admin, @worker.user.permission_id.to_sym
+  end
+
+  test "別組織の世帯を指定した場合は無効" do
+    @worker.home = homes(:home_other_org)
+
+    assert_not @worker.valid?
+    assert_includes @worker.errors[:home_id], "は同じ組織の世帯を指定してください。"
   end
 end

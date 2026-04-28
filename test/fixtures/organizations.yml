@@ -49,3 +49,15 @@ org:
   cleaning_id: 21
   training_id: 27
   location: "(35.472840, 133.050677)"
+
+org2:
+  id: 2
+  name: "別組織"
+  workers_count: 12
+  lands_count: 17
+  machines_count: 6
+  chemicals_count: 4
+  chemical_group_count: 2
+  daily_worker: 0
+  term: 2015
+  location: "(35.472840, 133.050677)"

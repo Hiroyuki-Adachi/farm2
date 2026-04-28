@@ -23,12 +23,18 @@
 #  zip_code(郵便番号)                  :string(7)
 #  created_at                          :datetime
 #  updated_at                          :datetime
+#  organization_id(組織)               :bigint           default(1), not null
 #  section_id(班／町内)                :integer
 #  worker_id(世帯主(代表者))           :integer
 #
 # Indexes
 #
-#  index_homes_on_deleted_at  (deleted_at)
+#  index_homes_on_deleted_at       (deleted_at)
+#  index_homes_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 class Home < ApplicationRecord
@@ -38,6 +44,7 @@ class Home < ApplicationRecord
 
   REG_PHONE = /\A\d{2,4}-\d{2,4}-\d{4}\z/
 
+  belongs_to :organization, optional: true
   has_many :workers, -> {order(:display_order)}
   has_many :owned_lands,    -> {order(:place)}, class_name: 'Land', foreign_key: :owner_id
   has_many :managed_lands,  -> {order(:place)}, class_name: 'Land', foreign_key: :manager_id
@@ -48,6 +55,7 @@ class Home < ApplicationRecord
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
+  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
 
   scope :usual_order, -> {includes(:section).order(Arel.sql("sections.display_order, homes.display_order, homes.id"))}
   scope :usual, -> {

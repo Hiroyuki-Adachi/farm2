@@ -13,6 +13,8 @@ class Works::LandsController < WorksController
 
   def autocomplete
     logger.debug("Works::LandsController#autocomplete")
-    render json: Land.to_autocomplete(Land.usual.expiry(@work.model.worked_at).includes(:owner))
+    render json: Land.to_autocomplete(
+      Land.for_organization(current_organization).usual.expiry(@work.model.worked_at).includes(:owner)
+    )
   end
 end
