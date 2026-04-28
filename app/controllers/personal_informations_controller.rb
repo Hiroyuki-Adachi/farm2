@@ -2,7 +2,7 @@ class PersonalInformationsController < ApplicationController
   before_action :set_worker
   layout 'sm'
 
-  SCHEDULE_DAY = 3
+  SCHEDULE_DAY = 7
 
   helper WorkTypesHelper
 

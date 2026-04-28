@@ -182,8 +182,6 @@ ja:
 
       system:
         term: 年度
-        target_from: 期間(自)
-        target_to: 期間(至)
         start_date: "期首"
         end_date: "期末"
         default_price: "工賃(初期値)"
@@ -234,8 +232,6 @@ ja:
         password: "パスワード"
         password_confirmation: "パスワード(確認)"
         term: "年度"
-        target_from: "期間(自)"
-        target_to: "期間(至)"
         organization_id: "組織"
         permission_id: "権限"
         mail: "メールアドレス"

@@ -13,11 +13,6 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "集計対象期間変更画面表示" do
-    get edit_menu_path(@system.id)
-    assert_response :success
-  end
-
   test "対象年度変更画面表示" do
     get edit_term_menu_path(@system.id)
     assert_response :success
