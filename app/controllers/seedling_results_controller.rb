@@ -40,7 +40,7 @@ class SeedlingResultsController < ApplicationController
   end
 
   def set_seedling_results
-    @seedling_results = @seedling_home.seedling_results.for_seedling_use.to_a
+    @seedling_results = @seedling_home.seedling_results.includes(work_result: :work).for_seedling_use.to_a
     @seedling_results << @seedling_home.seedling_results.build
   end
 
