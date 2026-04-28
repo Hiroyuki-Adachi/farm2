@@ -24,7 +24,7 @@
 #  group_id(グループID)               :integer
 #  land_place_id(土地)                :integer
 #  manager_id(管理者)                 :integer
-#  organization_id(組織)              :bigint           default(3), not null
+#  organization_id(組織)              :bigint           default(1), not null
 #  owner_id(所有者)                   :integer
 #
 # Indexes

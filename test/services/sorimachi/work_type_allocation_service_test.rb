@@ -64,8 +64,6 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
   def create_system(term:)
     System.create!(
       term: term,
-      target_from: Date.new(term, 1, 1),
-      target_to: Date.new(term, 12, 31),
       start_date: Date.new(term, 1, 1),
       end_date: Date.new(term, 12, 31),
       organization_id: 1

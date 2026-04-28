@@ -1,5 +1,4 @@
 class PersonalInformations::Schedules::WorkersController < PersonalInformationsController
-  before_action :permit_position
   before_action :set_schedule, only: [:edit, :update]
   before_action :set_workers, only: [:edit, :update]
 
@@ -23,12 +22,6 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
 
   private
 
-  def permit_position
-    return if @worker.leader? || @worker.director? || @worker.advisor?
-
-    to_error_path
-  end
-
   def set_schedule
     @schedule = Schedule.find_by(id: params[:schedule_id])
     return to_error_path if @schedule.blank?
@@ -38,7 +31,15 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
   end
 
   def set_workers
-    @workers = Worker.usual_order.where(homes: {section_id: @worker.home.section_id, company_flag: false})
+    @workers = if permitted_position?
+                 Worker.usual_order.where(homes: {section_id: @worker.home.section_id, company_flag: false})
+               else
+                 Worker.usual_order.where(home_id: @worker.home_id)
+               end
+  end
+
+  def permitted_position?
+    @worker.leader? || @worker.director? || @worker.advisor?
   end
 
   def sync_schedule_workers!(selected_ids, section_worker_ids)

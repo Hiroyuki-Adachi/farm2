@@ -15,8 +15,6 @@
 #  roll_price                           :decimal(4, 1)    default(0.0), not null
 #  seedling_price(育苗費)               :decimal(4, )     default(0), not null
 #  start_date(期首日)                   :date             not null
-#  target_from(開始年月)                :date
-#  target_to(終了年月)                  :date
 #  term(年度(期))                       :integer          not null
 #  waste_adjust_price(くず米金額(調整)) :decimal(4, )     default(0), not null
 #  waste_drying_price(くず米金額(乾燥)) :decimal(4, )     default(0), not null
@@ -33,8 +31,6 @@
 
 s2014:
   term: 2014
-  target_from: 2014-01-01
-  target_to: 2014-12-31
   start_date: 2014-01-01
   end_date: 2014-12-31
   organization_id: 1
@@ -45,8 +41,6 @@ s2014:
 
 s2015:
   term: 2015
-  target_from: 2015-01-01
-  target_to: 2015-12-31
   start_date: 2015-01-01
   end_date: 2015-12-31
   organization_id: 1
@@ -62,8 +56,6 @@ s2015:
 
 s2016:
   term: 2016
-  target_from: 2016-01-01
-  target_to: 2016-12-31
   start_date: 2016-01-01
   end_date: 2016-12-31
   organization_id: 1
@@ -74,8 +66,6 @@ s2016:
 
 s2017:
   term: 2017
-  target_from: 2017-01-01
-  target_to: 2017-12-31
   start_date: 2017-01-01
   end_date: 2017-12-31
   organization_id: 1
@@ -87,8 +77,6 @@ s2017:
 
 s2015_org2:
   term: 2015
-  target_from: 2015-01-01
-  target_to: 2015-12-31
   start_date: 2015-01-01
   end_date: 2015-12-31
   organization_id: 2

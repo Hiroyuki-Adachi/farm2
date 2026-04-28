@@ -20,7 +20,7 @@
 #  updated_at                        :datetime
 #  gender_id(性別)                   :integer          default("none"), not null
 #  home_id(世帯)                     :integer
-#  organization_id(組織)             :bigint           default(3), not null
+#  organization_id(組織)             :bigint           default(1), not null
 #  position_id(役職)                 :integer          default("none"), not null
 #
 # Indexes

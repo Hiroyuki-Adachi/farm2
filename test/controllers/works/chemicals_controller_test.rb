@@ -11,6 +11,21 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "作業変更(薬品)(表示)(作付明細なしの農地は除外)" do
+    land_without_cost = lands(:land_land_cost2)
+    work_land = @work.work_lands.create!(
+      land: land_without_cost,
+      work_type: work_types(:work_type_koshi),
+      display_order: 99
+    )
+
+    get new_work_use_chemical_path(work_id: @work)
+
+    assert_response :success
+    assert_select "#work_land_#{work_land.id}", false
+    assert_no_match land_without_cost.place, response.body
+  end
+
   test "作業変更(薬品)(表示)(確定済)" do
     get new_work_use_chemical_path(work_id: works(:work_fixed))
     assert_redirected_to works_path

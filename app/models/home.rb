@@ -23,7 +23,7 @@
 #  zip_code(郵便番号)                  :string(7)
 #  created_at                          :datetime
 #  updated_at                          :datetime
-#  organization_id(組織)               :bigint           default(3), not null
+#  organization_id(組織)               :bigint           default(1), not null
 #  section_id(班／町内)                :integer
 #  worker_id(世帯主(代表者))           :integer
 #

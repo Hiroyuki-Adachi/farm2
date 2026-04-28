@@ -16,7 +16,7 @@
 #  worked_at(作業日)                       :date             not null
 #  created_at                              :datetime
 #  updated_at                              :datetime
-#  organization_id(組織)                   :bigint           default(3), not null
+#  organization_id(組織)                   :bigint           default(1), not null
 #  weather_id(天気)                        :integer
 #  work_kind_id(作業種別)                  :integer          default(0), not null
 #  work_type_id(作業分類)                  :integer
@@ -163,7 +163,7 @@ SQL
  
   scope :by_target, ->(term) do
     joins("INNER JOIN systems ON systems.term = works.term")
-     .where("works.worked_at BETWEEN systems.target_from AND systems.target_to")
+     .where("works.worked_at BETWEEN systems.start_date AND systems.end_date")
      .where(systems: { term: term })
   end
 
@@ -253,6 +253,20 @@ SQL
     else
       lands.sum(:area) || 0
     end
+  end
+
+  def chemical_work_lands
+    @chemical_work_lands ||= begin
+      land_ids_with_cost = LandCost.newest(worked_at).select(:land_id)
+      work_lands.includes(:land).where(land_id: land_ids_with_cost)
+    end
+  end
+
+  def chemical_sum_areas(group = nil)
+    target_work_lands = chemical_work_lands
+    target_work_lands = target_work_lands.where(chemical_group_no: group) if group
+
+    target_work_lands.joins(:land).sum('lands.area') || 0
   end
 
   def price

@@ -15,8 +15,6 @@
 #  roll_price                           :decimal(4, 1)    default(0.0), not null
 #  seedling_price(育苗費)               :decimal(4, )     default(0), not null
 #  start_date(期首日)                   :date             not null
-#  target_from(開始年月)                :date
-#  target_to(終了年月)                  :date
 #  term(年度(期))                       :integer          not null
 #  waste_adjust_price(くず米金額(調整)) :decimal(4, )     default(0), not null
 #  waste_drying_price(くず米金額(乾燥)) :decimal(4, )     default(0), not null
@@ -33,9 +31,6 @@
 
 class System < ApplicationRecord
   validates :term,        presence: true
-  validates :target_from, presence: true
-  validates :target_to,   presence: true
-
   after_save :cache_clear
 
   validates :term, numericality: {only_integer: true, greater_than: 2000, less_than: 2100}
@@ -52,23 +47,15 @@ class System < ApplicationRecord
     System.where(organization_id: organization_id).maximum(:end_date)
   end
 
-  def self.init(organization_id, term, target_from = nil, target_to = nil)
+  def self.init(organization_id, term)
     if term
       system = System.find_by(term: term, organization_id: organization_id)
       pre_system = System.find_by(term: term.to_i - 1, organization_id: organization_id)
       if pre_system && system.nil?
         system = System.new(pre_system.attributes.except("id", "created_at", "updated_at"))
         system.term = term
-        system.target_from = pre_system.start_date + 1.year
-        system.target_to   = pre_system.end_date + 1.year
         system.start_date  = pre_system.start_date + 1.year
         system.end_date    = pre_system.end_date + 1.year
-      end
-    else
-      system = System.find_by(term: term)
-      if system
-        system.target_from = Date.strptime(target_from, "%Y-%m")
-        system.target_to   = Date.strptime(target_to, "%Y-%m")
       end
     end
     return system

@@ -16,7 +16,7 @@
 #  worked_at(作業日)                       :date             not null
 #  created_at                              :datetime
 #  updated_at                              :datetime
-#  organization_id(組織)                   :bigint           default(3), not null
+#  organization_id(組織)                   :bigint           default(1), not null
 #  weather_id(天気)                        :integer
 #  work_kind_id(作業種別)                  :integer          default(0), not null
 #  work_type_id(作業分類)                  :integer

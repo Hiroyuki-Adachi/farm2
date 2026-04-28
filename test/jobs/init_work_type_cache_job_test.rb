@@ -16,8 +16,6 @@ class InitWorkTypeCacheJobTest < ActiveJob::TestCase
 
     System.create(
       term: term,
-      target_from: '2024-01-01',
-      target_to: '2024-12-31',
       start_date: '2024-01-01',
       end_date: '2024-12-31',
       organization_id: organizations(:org).id

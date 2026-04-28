@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_19_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_28_011000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -357,7 +357,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_090000) do
     t.point "location", comment: "位置"
     t.boolean "member_flag", default: true, null: false, comment: "組合員フラグ"
     t.string "name", limit: 10, comment: "世帯名"
-    t.bigint "organization_id", default: 3, null: false, comment: "組織"
+    t.bigint "organization_id", default: 1, null: false, comment: "組織"
     t.integer "owned_rice_order", comment: "出力順(保有米)"
     t.boolean "owner_flag", default: false, null: false, comment: "所有者フラグ"
     t.string "phonetic", limit: 15, comment: "世帯名(よみ)"
@@ -446,7 +446,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_090000) do
     t.integer "group_order", default: 0, null: false, comment: "グループ内並び順"
     t.integer "land_place_id", comment: "土地"
     t.integer "manager_id", comment: "管理者"
-    t.bigint "organization_id", default: 3, null: false, comment: "組織"
+    t.bigint "organization_id", default: 1, null: false, comment: "組織"
     t.integer "owner_id", comment: "所有者"
     t.integer "parcel_number", comment: "耕地番号"
     t.integer "peasant_end_term", default: 9999, null: false, comment: "小作料期間(至)"
@@ -697,7 +697,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_090000) do
 
   create_table "seedling_results", id: { type: :serial, comment: "育苗結果" }, comment: "育苗結果", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
-    t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.boolean "disposal_flag", default: false, null: false, comment: "廃棄フラグ"
     t.decimal "quantity", precision: 3, default: "0", null: false, comment: "苗箱数"
     t.integer "seedling_home_id", comment: "育苗担当"
@@ -800,8 +799,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_090000) do
     t.integer "seedling_chemical_id", default: 0, comment: "育苗土"
     t.decimal "seedling_price", precision: 4, default: "0", null: false, comment: "育苗費"
     t.date "start_date", null: false, comment: "期首日"
-    t.date "target_from", comment: "開始年月"
-    t.date "target_to", comment: "終了年月"
     t.integer "term", null: false, comment: "年度(期)"
     t.datetime "updated_at", precision: nil
     t.decimal "waste_adjust_price", precision: 4, default: "0", null: false, comment: "くず米金額(調整)"
@@ -1031,8 +1028,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_090000) do
     t.integer "permission_id", default: 0, null: false, comment: "権限"
     t.string "push_notification_permission", default: "default", null: false, comment: "通知許可状態"
     t.datetime "push_notification_requested_at", comment: "通知許可確認日時"
-    t.date "target_from", default: "2010-01-01", null: false, comment: "開始年月"
-    t.date "target_to", default: "2010-12-31", null: false, comment: "終了年月"
     t.integer "term", default: 0, null: false, comment: "期"
     t.integer "theme", default: 0, null: false, comment: "画面テーマ"
     t.string "token", limit: 36, default: "", null: false, comment: "アクセストークン"
@@ -1249,7 +1244,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_090000) do
     t.string "mobile", limit: 15, comment: "携帯番号"
     t.string "mobile_mail", limit: 50, comment: "メールアドレス(携帯)"
     t.integer "office_role", default: 0, null: false, comment: "事務の役割"
-    t.bigint "organization_id", default: 3, null: false, comment: "組織"
+    t.bigint "organization_id", default: 1, null: false, comment: "組織"
     t.string "pc_mail", limit: 50, comment: "メールアドレス(PC)"
     t.integer "position_id", default: 0, null: false, comment: "役職"
     t.datetime "updated_at", precision: nil
@@ -1265,7 +1260,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_19_090000) do
     t.time "end_at", null: false, comment: "終了時刻"
     t.date "fixed_at", comment: "確定日"
     t.string "name", limit: 40, null: false, comment: "作業名称"
-    t.bigint "organization_id", default: 3, null: false, comment: "組織"
+    t.bigint "organization_id", default: 1, null: false, comment: "組織"
     t.datetime "printed_at", precision: nil, comment: "印刷日時"
     t.integer "printed_by", comment: "印刷者"
     t.text "remarks", comment: "備考"
