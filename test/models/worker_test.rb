@@ -85,4 +85,11 @@ class WorkerTest < ActiveSupport::TestCase
     @worker.save!
     assert_equal :admin, @worker.user.permission_id.to_sym
   end
+
+  test "別組織の世帯を指定した場合は無効" do
+    @worker.home = homes(:home_other_org)
+
+    assert_not @worker.valid?
+    assert_includes @worker.errors[:home_id], "は同じ組織の世帯を指定してください。"
+  end
 end

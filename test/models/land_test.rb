@@ -107,6 +107,30 @@ class LandTest < ActiveSupport::TestCase
     assert_not land.expiry?(Date.new(3000, 1, 1))
   end
 
+  test "別組織の所有者を指定した場合は無効" do
+    land = lands(:lands0)
+    land.owner = homes(:home_other_org)
+
+    assert_not land.valid?
+    assert_includes land.errors[:owner_id], "は同じ組織の世帯を指定してください。"
+  end
+
+  test "別組織の管理者を指定した場合は無効" do
+    land = lands(:lands0)
+    land.manager = homes(:home_other_org)
+
+    assert_not land.valid?
+    assert_includes land.errors[:manager_id], "は同じ組織の世帯を指定してください。"
+  end
+
+  test "別組織のグループ土地を指定した場合は無効" do
+    land = lands(:lands0)
+    land.group = lands(:land_other_org)
+
+    assert_not land.valid?
+    assert_includes land.errors[:group_id], "は同じ組織の土地を指定してください。"
+  end
+
   test "数字から始まるものは head_flag=0 になる" do
     assert_equal "0", AddressSortIndex.build("2713-ﾛ")[0]
     assert_equal "0", AddressSortIndex.build("2664-1")[0]
