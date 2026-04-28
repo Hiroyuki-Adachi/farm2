@@ -2,7 +2,7 @@ class SeedlingResultsController < ApplicationController
   include PermitChecker
   helper TotalSeedlingsHelper
   before_action :set_seedling_home, only: [:edit, :update]
-  before_action :set_works, only: [:edit]
+  before_action :set_works, only: [:edit, :update]
 
   def index
     @seedling_homes = SeedlingHome.usual(current_term)
@@ -10,13 +10,14 @@ class SeedlingResultsController < ApplicationController
   end
 
   def edit
-    @seedling_home.seedling_results.build
+    set_seedling_results
   end
 
   def update
     if @seedling_home.update(seedling_results_params)
       redirect_to edit_seedling_result_path(seedling_home_id: @seedling_home.id)
     else
+      set_seedling_results
       render action: :edit
     end
   end
@@ -38,6 +39,11 @@ class SeedlingResultsController < ApplicationController
     @works = Work.by_work_kind_type(current_term, current_organization.rice_planting_id, @seedling_home)
   end
 
+  def set_seedling_results
+    @seedling_results = @seedling_home.seedling_results.for_seedling_use.to_a
+    @seedling_results << @seedling_home.seedling_results.build
+  end
+
   def seedling_results_params
     params
       .expect(
@@ -45,7 +51,6 @@ class SeedlingResultsController < ApplicationController
           seedling_results_attributes: [[
             :id,
             :work_result_id,
-            :display_order,
             :disposal_flag,
             :quantity,
             :_destroy
