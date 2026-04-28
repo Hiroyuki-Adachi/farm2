@@ -1,4 +1,4 @@
-class AddOrganizationToCoreTables < ActiveRecord::Migration[8.0]
+class AddOrganizationToCoreTables < ActiveRecord::Migration[8.1]
   def up
     default_org_id = select_value("SELECT id FROM organizations ORDER BY id LIMIT 1").to_i
     raise ActiveRecord::IrreversibleMigration, "organizations is empty" if default_org_id.zero?
