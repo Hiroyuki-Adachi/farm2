@@ -25,6 +25,7 @@ class WorkKind < ApplicationRecord
 
   self.discard_column = :deleted_at
 
+  before_validation :clear_aggregation_flag_unless_landable
   after_save :save_price
 
   belongs_to :cost_type
@@ -54,7 +55,7 @@ class WorkKind < ApplicationRecord
   scope :only_deleted, -> { with_discarded.discarded }
 
   scope :usual, -> { except_other.order(:phonetic, :display_order, :id) }
-  scope :aggregatable, -> { kept.where(aggregation_flag: true).order(:phonetic, :display_order, :id) }
+  scope :aggregatable, -> { kept.where(land_flag: true, aggregation_flag: true).order(:phonetic, :display_order, :id) }
   scope :landable, ->{kept.where(land_flag: true)}
   scope :by_type, ->(work_type) {
     kept
@@ -89,6 +90,10 @@ class WorkKind < ApplicationRecord
   end
 
   private
+
+  def clear_aggregation_flag_unless_landable
+    self.aggregation_flag = false unless land_flag
+  end
 
   def save_price
     work_kind_price = WorkKindPrice.find_by(work_kind_id: id, term: @term)

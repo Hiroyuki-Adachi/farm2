@@ -24,4 +24,10 @@ class Statistics::AreasController < ApplicationController
         []
       end
   end
+
+  private
+
+  def menu_name
+    return :statistics_areas
+  end
 end
