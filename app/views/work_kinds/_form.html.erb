@@ -30,7 +30,7 @@
           <%= f.check_box :land_flag, {class: "form-check-input"}, true, false %>
         </div>
       <% else %>
-        <%= f.hidden_field :land_flag, false %>
+        <%= f.hidden_field :land_flag, value: false %>
       <% end %>
     </div>
     <div class="field mb-3 col-md-2">
