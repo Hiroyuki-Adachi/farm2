@@ -164,6 +164,11 @@ namespace :chemicals do
   resources :annuals, only: [:create]
 end
 resources :sections, except: [:show]
+namespace :statistics do
+  resources :work_days, only: [:index]
+  resources :workers, only: [:index]
+  resources :areas, only: [:index]
+end
 resources :statistics, only: [:index] do
   collection do
     get :tab1
@@ -171,10 +176,6 @@ resources :statistics, only: [:index] do
     get :tab3
     get :tab4
   end
-end
-namespace :statistics do
-  resources :work_days, only: [:index]
-  resources :workers, only: [:index]
 end
 resources :fixes, param: "fixed_at", except: [:edit, :update]
 resources :personal_informations, param: "token", only: [:show] do
