@@ -10,14 +10,20 @@
     </div>
   <% end %>
 <% end %>
-<div class="row">
-  <div class="col-md-12">
-    <canvas id="chart"
-      data-chart-rendered="0"
-      data-labels="<%= @terms.to_json %>"
-      data-values="<%= @terms.map { |term| @hours_per_10a[term] }.to_json %>"
-      data-title="<%= @work_kinds.find { |work_kind| work_kind.id == @selected_work_kind_id }&.name %>"></canvas>
+<% if @work_kinds.present? %>
+  <div class="row">
+    <div class="col-md-12">
+      <canvas id="chart"
+        data-chart-rendered="0"
+        data-labels="<%= @terms.to_json %>"
+        data-values="<%= @terms.map { |term| @hours_per_10a[term] }.to_json %>"
+        data-title="<%= @work_kinds.find { |work_kind| work_kind.id == @selected_work_kind_id }&.name %>"></canvas>
+    </div>
   </div>
-</div>
+<% else %>
+  <div class="alert alert-secondary" role="status">
+    集計対象の作業種別がないため、グラフを表示できません。
+  </div>
+<% end %>
 <hr />
 <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
