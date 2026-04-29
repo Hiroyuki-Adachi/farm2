@@ -1,1 +1,13 @@
 <h1>年度別作業効率一覧</h1>
+<% if @work_kinds.present? %>
+  <%= form_with(url: statistics_areas_path, method: :get, local: true, class: "mb-3") do %>
+    <div class="btn-group" role="group" aria-label="作業種別">
+      <% @work_kinds.each do |work_kind| %>
+        <%= radio_button_tag :work_kind_id, work_kind.id, @selected_work_kind_id == work_kind.id,
+          id: "work_kind_#{work_kind.id}", class: "btn-check", autocomplete: "off", onchange: "this.form.submit();" %>
+        <%= label_tag "work_kind_#{work_kind.id}", work_kind.name, class: "btn btn-outline-primary" %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+<%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
