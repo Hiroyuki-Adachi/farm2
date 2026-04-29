@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_28_011000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_29_105425) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -1135,6 +1135,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_28_011000) do
   end
 
   create_table "work_kinds", id: { type: :serial, comment: "作業種別マスタ" }, comment: "作業種別マスタ", force: :cascade do |t|
+    t.boolean "aggregation_flag", default: false, null: false, comment: "集計対象フラグ"
     t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
     t.integer "cost_type_id", comment: "原価種別"
     t.datetime "created_at", precision: nil

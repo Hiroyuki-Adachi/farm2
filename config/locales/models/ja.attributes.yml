@@ -164,6 +164,7 @@ ja:
         broccoli_mark: "ブロッコリ記号"
         phonetic: "名称(ふりがな)"
         cost_type_id: "原価種別"
+        aggregation_flag: "集計対象フラグ"
 
       bank:
         code: "コード"
