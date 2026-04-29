@@ -73,6 +73,77 @@ class WorkTest < ActiveSupport::TestCase
     assert_equal total_hours, Work.total_genre[[@work.work_type.work_genre_id, 2015]]
   end
 
+  test "年度別作業効率_10aあたり時間" do
+    work_kind = WorkKind.new(
+      name: "効率",
+      phonetic: "こうりつ",
+      display_order: 999,
+      cost_type: cost_types(:cost_types1),
+      aggregation_flag: true
+    )
+    work_kind.term = 2015
+    work_kind.price = 1000
+    work_kind.save!
+
+    work = Work.create!(
+      organization: organizations(:org),
+      term: 2015,
+      worked_at: Date.new(2015, 5, 1),
+      weather_id: :sunny,
+      work_type: work_types(:work_type_koshi),
+      work_kind: work_kind,
+      name: "",
+      remarks: "",
+      start_at: "08:00",
+      end_at: "17:00"
+    )
+    WorkResult.create!(work: work, worker: workers(:worker1), hours: 2.0, display_order: 1)
+    WorkResult.create!(work: work, worker: workers(:worker2), hours: 3.0, display_order: 2)
+    WorkLand.create!(work: work, land: lands(:lands0), display_order: 1)
+    WorkLand.create!(work: work, land: lands(:lands1), display_order: 2)
+
+    other_organization_work = Work.create!(
+      organization: organizations(:org2),
+      term: 2015,
+      worked_at: Date.new(2015, 5, 2),
+      weather_id: :sunny,
+      work_type: work_types(:work_type_koshi),
+      work_kind: work_kind,
+      name: "",
+      remarks: "",
+      start_at: "08:00",
+      end_at: "17:00"
+    )
+    WorkResult.create!(work: other_organization_work, worker: workers(:worker1), hours: 10.0, display_order: 1)
+    WorkLand.create!(work: other_organization_work, land: lands(:lands0), display_order: 1)
+    zero_area_land = Land.create!(
+      place: "効率0",
+      owner: homes(:home1),
+      manager: homes(:home1),
+      area: 0,
+      target_flag: true
+    )
+    zero_area_work = Work.create!(
+      organization: organizations(:org),
+      term: 2015,
+      worked_at: Date.new(2015, 5, 3),
+      weather_id: :sunny,
+      work_type: work_types(:work_type_koshi),
+      work_kind: work_kind,
+      name: "",
+      remarks: "",
+      start_at: "08:00",
+      end_at: "17:00"
+    )
+    WorkResult.create!(work: zero_area_work, worker: workers(:worker3), hours: 10.0, display_order: 1)
+    WorkLand.create!(work: zero_area_work, land: zero_area_land, display_order: 1)
+
+    results = Work.hours_per_10a_by_work_kind(work_kind.id, [2014, 2015], organization: organizations(:org))
+
+    assert_equal 0, results[2014]
+    assert_equal 0.75, results[2015]
+  end
+
   test "作業種別キャッシュ" do
     w = works(:work_for_work_type_cache)
     w.regist_work_work_types
