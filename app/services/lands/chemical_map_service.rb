@@ -10,11 +10,13 @@ class Lands::ChemicalMapService
   end
 
   COLORS = {
-    over_20: "#ff4d4f",
+    over_50: "#ff4d4f",
+    over_25: "#ff9500",
     over_10: "#ffd60a",
     within_10: "#34c759",
     under_10: "#64d2ff",
-    under_20: "#0a84ff"
+    under_25: "#0a84ff",
+    under_50: "#003a8c"
   }.freeze
 
   def self.call(term:, work_kind_id:, chemical_type_id:)
@@ -148,11 +150,13 @@ class Lands::ChemicalMapService
   end
 
   def status_for(ratio)
-    return :over_20 if ratio > 0.2
+    return :over_50 if ratio > 0.5
+    return :over_25 if ratio > 0.25
     return :over_10 if ratio > 0.1
     return :within_10 if ratio >= -0.1
-    return :under_10 if ratio >= -0.2
+    return :under_10 if ratio >= -0.25
+    return :under_25 if ratio >= -0.5
 
-    :under_20
+    :under_50
   end
 end

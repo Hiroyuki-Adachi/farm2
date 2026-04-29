@@ -28,7 +28,7 @@ class Tablets::Lands::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     ChemicalWorkType.create!(chemical_term: chemical_term, work_type: work_types(:work_type_koshi), quantity: 1.0)
 
     WorkLand.create!(work: taue_work, land: map_land, work_type_id: 11)
-    WorkChemical.create!(work: taue_work, chemical: chemical, quantity: 4.0)
+    WorkChemical.create!(work: taue_work, chemical: chemical, quantity: 5.0)
 
     get tablets_lands_chemicals_path
 

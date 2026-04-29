@@ -24,14 +24,20 @@
 #  group_id(グループID)               :integer
 #  land_place_id(土地)                :integer
 #  manager_id(管理者)                 :integer
+#  organization_id(組織)              :bigint           default(1), not null
 #  owner_id(所有者)                   :integer
 #
 # Indexes
 #
-#  index_lands_on_deleted_at      (deleted_at)
-#  index_lands_on_place           (place)
-#  index_lands_on_place_sort_key  (place_sort_key)
-#  index_lands_on_uuid            (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
+#  index_lands_on_deleted_at       (deleted_at)
+#  index_lands_on_organization_id  (organization_id)
+#  index_lands_on_place            (place)
+#  index_lands_on_place_sort_key   (place_sort_key)
+#  index_lands_on_uuid             (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 class Land < ApplicationRecord
@@ -46,6 +52,7 @@ class Land < ApplicationRecord
   def needs_place_sort_key_initialization?
     place_sort_key.blank? || will_save_change_to_place?
   end
+  belongs_to :organization, optional: true
   belongs_to :owner, -> {with_discarded}, class_name: 'Home', foreign_key: :owner_id
   belongs_to :manager, -> {with_discarded}, class_name: 'Home', foreign_key: :manager_id
   belongs_to :land_place, -> {with_discarded}
@@ -64,6 +71,7 @@ class Land < ApplicationRecord
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
+  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
 
   scope :usual_order, -> {order(:place_sort_key, :id)}
   scope :usual, -> {kept.where(target_flag: true).usual_order}
@@ -108,6 +116,8 @@ class Land < ApplicationRecord
   validates :parcel_number, numericality: {only_integer: true}, allow_nil: true
   validates :peasant_start_term, numericality: {only_integer: true}, allow_nil: true
   validates :peasant_end_term, numericality: {only_integer: true}, allow_nil: true
+  validate :homes_belong_to_same_organization
+  validate :group_belongs_to_same_organization
 
   accepts_nested_attributes_for :work_lands, allow_destroy: true
   accepts_nested_attributes_for :land_fees, allow_destroy: true
@@ -222,5 +232,23 @@ class Land < ApplicationRecord
 
   def init_place_sort_key
     self.place_sort_key = AddressSortIndex.build(self.place)
+  end
+
+  def homes_belong_to_same_organization
+    return if organization_id.blank?
+    return if owner.blank? || owner.organization_id == organization_id
+
+    errors.add(:owner_id, "は同じ組織の世帯を指定してください。")
+  end
+
+  def group_belongs_to_same_organization
+    return if organization_id.blank? || manager.blank? && group.blank?
+
+    if manager.present? && manager.organization_id != organization_id
+      errors.add(:manager_id, "は同じ組織の世帯を指定してください。")
+    end
+    if group.present? && group.organization_id != organization_id
+      errors.add(:group_id, "は同じ組織の土地を指定してください。")
+    end
   end
 end
