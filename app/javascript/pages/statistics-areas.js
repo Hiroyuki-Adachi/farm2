@@ -45,11 +45,7 @@ export const init = () => {
   };
   requestAnimationFrame(() => chart.resize());
 
-  form?.addEventListener("change", async (event) => {
-    const input = event.target.closest("input[name='work_kind_id']");
-    if (!input || !input.checked) return;
-
-    event.preventDefault();
+  const updateChart = async (input) => {
     canvas.dataset.chartRendered = "0";
 
     if (currentAbort) currentAbort.abort();
@@ -87,5 +83,21 @@ export const init = () => {
         canvas.removeAttribute("data-loading");
       }
     }
+  };
+
+  form?.addEventListener("change", async (event) => {
+    const input = event.target.closest("input[name='work_kind_id']");
+    if (!input || !input.checked) return;
+
+    event.preventDefault();
+    await updateChart(input);
+  });
+
+  form?.addEventListener("submit", async (event) => {
+    const input = form.querySelector("input[name='work_kind_id']:checked");
+    if (!input) return;
+
+    event.preventDefault();
+    await updateChart(input);
   });
 };
