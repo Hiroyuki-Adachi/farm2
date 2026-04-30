@@ -447,10 +447,10 @@ SQL
     base = where(term: terms, work_kind_id: work_kind_id)
     base = base.for_organization(organization) if organization
 
-    works_with_area = WorkLand.joins(:land)
-      .select(:work_id)
-      .group(:work_id)
+    works_with_area = base.joins(work_lands: :land)
+      .group(:id)
       .having("SUM(lands.area) > 0")
+      .select(:id)
 
     hours = base.where(id: works_with_area).joins(:work_results).group(:term).sum("work_results.hours")
     areas = base.joins(work_lands: :land).group(:term).sum("lands.area")
