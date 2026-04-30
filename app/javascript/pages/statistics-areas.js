@@ -85,7 +85,10 @@ export const init = () => {
     }
   };
 
-  form?.addEventListener("change", async (event) => {
+  if (!form || form.dataset.statisticsAreasBound === "1") return;
+  form.dataset.statisticsAreasBound = "1";
+
+  form.addEventListener("change", async (event) => {
     const input = event.target.closest("input[name='work_kind_id']");
     if (!input || !input.checked) return;
 
