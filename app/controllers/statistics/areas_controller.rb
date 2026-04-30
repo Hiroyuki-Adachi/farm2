@@ -23,14 +23,11 @@ class Statistics::AreasController < ApplicationController
       else
         []
       end
-<<<<<<< HEAD
   end
 
   private
 
   def menu_name
     return :statistics_areas
-=======
->>>>>>> 3a103e4fcb34da1e82c8dac5733c3e528aff3f47
   end
 end
