@@ -21,7 +21,7 @@ class Statistics::AreasController < ApplicationController
           organization: current_organization
         )
       else
-        []
+        @terms.index_with { 0 }
       end
   end
 
