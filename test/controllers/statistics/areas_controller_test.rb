@@ -31,4 +31,17 @@ class Statistics::AreasControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "input[type=radio][name=work_kind_id][checked=checked][value=?]", work_kinds(:work_kind_taue).id.to_s, 1
   end
+
+  test "選択された作業種別のグラフデータをJSONで返す" do
+    work_kinds(:work_kind_taue).update_columns(aggregation_flag: true)
+
+    get statistics_areas_path(format: :json), params: {work_kind_id: work_kinds(:work_kind_taue).id}
+
+    assert_response :success
+    json = JSON.parse(@response.body)
+    system = System.find_by!(term: users(:users1).term, organization_id: users(:users1).organization_id)
+    assert_equal system.get_prev_terms(10).sort, json["labels"]
+    assert_equal json["labels"].length, json["values"].length
+    assert_equal work_kinds(:work_kind_taue).name, json["title"]
+  end
 end

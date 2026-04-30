@@ -11,6 +11,7 @@ class Statistics::AreasController < ApplicationController
       else
         allowed_work_kind_ids.first
       end
+    @selected_work_kind = @work_kinds.find { |work_kind| work_kind.id == @selected_work_kind_id }
 
     @terms = current_system.get_prev_terms(10).sort
     @hours_per_10a =
@@ -23,6 +24,17 @@ class Statistics::AreasController < ApplicationController
       else
         @terms.index_with { 0 }
       end
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: {
+          labels: @terms,
+          values: @terms.map { |term| @hours_per_10a[term] },
+          title: @selected_work_kind&.name
+        }
+      end
+    end
   end
 
   private
