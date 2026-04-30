@@ -45,47 +45,51 @@ export const init = () => {
   };
   requestAnimationFrame(() => chart.resize());
 
-  form?.addEventListener("change", async (event) => {
-    const input = event.target.closest("input[name='work_kind_id']");
-    if (!input || !input.checked) return;
+  if (form && form.dataset.statisticsAreasChangeBound !== "1") {
+    form.dataset.statisticsAreasChangeBound = "1";
 
-    event.preventDefault();
-    canvas.dataset.chartRendered = "0";
+    form.addEventListener("change", async (event) => {
+      const input = event.target.closest("input[name='work_kind_id']");
+      if (!input || !input.checked) return;
 
-    if (currentAbort) currentAbort.abort();
-    currentAbort = new AbortController();
-    const thisKey = (activeKey = Symbol("statisticsAreasFetch"));
-    const url = new URL(form.action, window.location.href);
-    url.searchParams.set(input.name, input.value);
+      event.preventDefault();
+      canvas.dataset.chartRendered = "0";
 
-    try {
-      canvas.setAttribute("data-loading", "1");
+      if (currentAbort) currentAbort.abort();
+      currentAbort = new AbortController();
+      const thisKey = (activeKey = Symbol("statisticsAreasFetch"));
+      const url = new URL(form.action, window.location.href);
+      url.searchParams.set(input.name, input.value);
 
-      const res = await fetch(url, {
-        signal: currentAbort.signal,
-        cache: "no-store",
-        headers: { Accept: "application/json" }
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      try {
+        canvas.setAttribute("data-loading", "1");
 
-      const json = await res.json();
-      if (thisKey !== activeKey) return;
+        const res = await fetch(url, {
+          signal: currentAbort.signal,
+          cache: "no-store",
+          headers: { Accept: "application/json" }
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-      chart.data.labels = json.labels;
-      chart.data.datasets[0].label = `${json.title || "作業効率"} 10aあたり時間`;
-      chart.data.datasets[0].data = json.values;
-      chart.update();
+        const json = await res.json();
+        if (thisKey !== activeKey) return;
 
-      window.history.replaceState(null, "", url);
-    } catch (err) {
-      if (err.name !== "AbortError") {
-        console.error("[statistics-areas] fetch/render error:", err);
-        window.popupAlert?.(`グラフの描画に失敗しました(${err.message})`);
+        chart.data.labels = json.labels;
+        chart.data.datasets[0].label = `${json.title || "作業効率"} 10aあたり時間`;
+        chart.data.datasets[0].data = json.values;
+        chart.update();
+
+        window.history.replaceState(null, "", url);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          console.error("[statistics-areas] fetch/render error:", err);
+          window.popupAlert?.(`グラフの描画に失敗しました(${err.message})`);
+        }
+      } finally {
+        if (thisKey === activeKey) {
+          canvas.removeAttribute("data-loading");
+        }
       }
-    } finally {
-      if (thisKey === activeKey) {
-        canvas.removeAttribute("data-loading");
-      }
-    }
-  });
+    });
+  }
 };
