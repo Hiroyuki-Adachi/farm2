@@ -1,16 +1,30 @@
 export const init = () => {
-    document.getElementById("work_kind_land_flag").addEventListener("change", (event) => {
-        changeLandFlag(event.target);
-    });
+    const landFlag = document.getElementById("work_kind_land_flag");
+    const aggregationFlag = document.getElementById("work_kind_aggregation_flag");
 
-    changeLandFlag(document.getElementById("work_kind_land_flag"));
+    if (landFlag) {
+        landFlag.addEventListener("change", (event) => {
+            changeLandFlag(event.target);
+        });
+
+        changeLandFlag(landFlag);
+    } else if (aggregationFlag) {
+        aggregationFlag.checked = false;
+        aggregationFlag.disabled = true;
+    }
 };
 
 const changeLandFlag = (checkbox) => {
+    const aggregationFlag = document.getElementById("work_kind_aggregation_flag");
+
+    if (!aggregationFlag) {
+        return;
+    }
+
     if (checkbox.checked) {
-        document.getElementById("work_kind_aggregation_flag").disabled = false;
+        aggregationFlag.disabled = false;
     } else {
-        document.getElementById("work_kind_aggregation_flag").checked = false;
-        document.getElementById("work_kind_aggregation_flag").disabled = true;
+        aggregationFlag.checked = false;
+        aggregationFlag.disabled = true;
     }
 }
