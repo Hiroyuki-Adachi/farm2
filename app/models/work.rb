@@ -443,6 +443,26 @@ SQL
         .sum("work_results.hours")
   end
 
+  def self.hours_per_10a_by_work_kind(work_kind_id, terms, organization: nil)
+    base = where(term: terms, work_kind_id: work_kind_id)
+    base = base.for_organization(organization) if organization
+
+    works_with_area = base.joins(work_lands: :land)
+      .group(:id)
+      .having("SUM(lands.area) > 0")
+      .select(:id)
+
+    hours = base.where(id: works_with_area).joins(:work_results).group(:term).sum("work_results.hours")
+    areas = base.joins(work_lands: :land).group(:term).sum("lands.area")
+
+    terms.sort.index_with do |term|
+      area = areas[term].to_d
+      next 0 if area.zero?
+
+      (hours[term].to_d / area * 10).round(2).to_f
+    end
+  end
+
   def self.monthly(term, worked_from, worked_to, worker_id)
     results = Work.where(worked_at: worked_from..worked_to).where(term: term)
     results = results.where(id: WorkResult.select(:work_id).group(:work_id).having("count(*) = 1"))

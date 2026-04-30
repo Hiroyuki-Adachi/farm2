@@ -54,7 +54,7 @@
         <%= link_to '苗使用量一覧', work_seedlings_path, {class: "dropdown-item", data: {app_controller: "work_seedlings"}} %>
         <%= link_to '世帯別作業一覧', statistics_work_days_path, {class: "dropdown-item", data: {app_controller: "work_days"}} %>
         <%= link_to '作業者別作業一覧', statistics_workers_path, {class: "dropdown-item", data: {app_controller: "statistics_workers"}} %>
-        <!-- <%= link_to 'Z-GIS出力', new_zgi_path, {class: "dropdown-item", data: {app_controller: "zgis"}} %> -->
+        <%= link_to '年度別作業効率一覧', statistics_areas_path, {class: "dropdown-item", data: {app_controller: "statistics_areas"}} %>
         <%= link_to 'カレンダー', calendars_path, {class: "dropdown-item", data: {app_controller: "calendars"}} %>
       <% end %>
     </div>
