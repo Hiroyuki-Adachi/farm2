@@ -147,7 +147,7 @@ class Schedule < ApplicationRecord
   def set_organization
     return unless new_record? || organization_id.blank?
 
-    self.organization_id = Worker.find_by(id: created_by)&.organization_id if created_by.present?
+    self.organization_id = Worker.with_deleted.find_by(id: created_by)&.organization_id if created_by.present?
     self.organization_id ||= Organization.order(:id).pick(:id)
   end
 
