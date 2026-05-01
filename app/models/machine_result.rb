@@ -66,12 +66,13 @@ class MachineResult < ApplicationRecord
       .order("works.worked_at, machines.display_order, machines.id")
   }
 
-  scope :for_fix, ->(term, fixed_at) {
-    joins(:machine)
+  scope :for_fix, ->(term, fixed_at, organization = nil) {
+    base = joins(:machine)
       .joins(:work_result)
       .joins(:work)
       .where("works.fixed_at = ? AND machine_results.fixed_price IS NOT NULL", fixed_at)
       .where(works: { term: term })
+    organization ? base.where(works: { organization_id: organization.is_a?(Organization) ? organization.id : organization }) : base
   }
 
   scope :by_works, ->(works) {joins(:work_result).where(work_results: { work_id: works.ids }).order("machine_results.id")}

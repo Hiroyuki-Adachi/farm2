@@ -5,9 +5,9 @@ class TotalCostsMakeJobTest < ActiveJob::TestCase
 
   test "原価計算JOB" do
     perform_enqueued_jobs do
-      TotalCostsMakeJob.perform_later(2017, '2017-12-31')
+      TotalCostsMakeJob.perform_later(organizations(:org).id, 2017, '2017-12-31')
     end
 
-    assert_not_empty TotalCost.where(term: 2017)
+    assert_not_empty TotalCost.for_organization(organizations(:org)).where(term: 2017)
   end
 end

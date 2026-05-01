@@ -17,6 +17,7 @@
 #  updated_at                      :datetime         not null
 #  assignee_id(担当者)             :bigint
 #  creator_id(作成者)              :bigint
+#  organization_id(組織)           :bigint           default(1), not null
 #  task_status_id(状態)            :integer          default(0), not null
 #  task_template_id(定型タスクID)  :bigint
 #
@@ -24,6 +25,8 @@
 #
 #  index_tasks_on_assignee_id                         (assignee_id)
 #  index_tasks_on_creator_id                          (creator_id)
+#  index_tasks_on_organization_id                     (organization_id)
+#  index_tasks_on_organization_id_and_task_status_id  (organization_id,task_status_id)
 #  index_tasks_on_task_status_id_and_kanban_position  (task_status_id,kanban_position)
 #  index_tasks_on_task_template_id                    (task_template_id)
 #
@@ -31,6 +34,7 @@
 #
 #  fk_rails_...  (assignee_id => workers.id)
 #  fk_rails_...  (creator_id => workers.id)
+#  fk_rails_...  (organization_id => organizations.id)
 #  fk_rails_...  (task_template_id => task_templates.id)
 #
 class Task < ApplicationRecord
@@ -46,6 +50,7 @@ class Task < ApplicationRecord
   belongs_to :assignee, class_name: 'Worker', optional: true
   belongs_to :creator, class_name: 'Worker', optional: true
   belongs_to :template, class_name: 'TaskTemplate', foreign_key: 'task_template_id', optional: true
+  belongs_to :organization
   belongs_to_active_hash :status, class_name: 'TaskStatus', foreign_key: 'task_status_id'
 
   has_many :task_watchers, dependent: :destroy
@@ -55,6 +60,7 @@ class Task < ApplicationRecord
   has_many :works, through: :events, source: :work
   has_many :reads, class_name: 'TaskRead', dependent: :destroy
 
+  before_validation :set_organization
   before_save :clear_end_info
   after_create :create_watcher
   after_create :create_task_event
@@ -69,8 +75,11 @@ class Task < ApplicationRecord
   validates :priority, presence: true
   validates :end_reason, presence: true
 
+  validate :members_belong_to_same_organization
   validate :ended_on_after_started_on
   validate :ended_on_after_planned_start_on
+
+  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
 
   scope :usual_order, -> do
     pairs = TaskStatus.all.map { |s| [s.id, s.display_order] }
@@ -326,7 +335,7 @@ class Task < ApplicationRecord
   def create_watcher_by_role
     return if self.office_role_none?
 
-    Worker.where(office_role: self.office_role).find_each do |worker|
+    Worker.for_organization(organization_id).where(office_role: self.office_role).find_each do |worker|
       task_watchers.find_or_create_by(worker_id: worker.id)
     end
   end
@@ -360,7 +369,7 @@ class Task < ApplicationRecord
 
   def self.add_works!(actor:, check_task_ids:, work:, close_task_ids: [], task_comments: {})
     ActiveRecord::Base.transaction do
-      Task.where(id: check_task_ids).find_each do |task|
+      Task.for_organization(work.organization_id).where(id: check_task_ids).find_each do |task|
         next if task.events.exists?(work_id: work.id)
 
         task.add_work!(
@@ -414,6 +423,24 @@ class Task < ApplicationRecord
   end
 
   private
+
+  def set_organization
+    self.organization_id ||= creator&.organization_id || assignee&.organization_id || template&.organization_id
+  end
+
+  def members_belong_to_same_organization
+    return if organization_id.blank?
+
+    if creator.present? && creator.organization_id != organization_id
+      errors.add(:creator_id, "は同じ組織の作業者を選択してください。")
+    end
+    if assignee.present? && assignee.organization_id != organization_id
+      errors.add(:assignee_id, "は同じ組織の作業者を選択してください。")
+    end
+    if template.present? && template.organization_id != organization_id
+      errors.add(:task_template_id, "は同じ組織の定型タスクを選択してください。")
+    end
+  end
 
   # rubocop:disable Naming/PredicateMethod
   # 共通ラッパ：コメントを（あれば）作ってトランザクション内でyield

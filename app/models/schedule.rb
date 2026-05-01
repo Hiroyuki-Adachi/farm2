@@ -16,8 +16,18 @@
 #  worked_at(作業予定日)                      :date             not null
 #  created_at                                 :datetime         not null
 #  updated_at                                 :datetime         not null
+#  organization_id(組織)                      :bigint           default(1), not null
 #  work_kind_id(作業種別)                     :integer          default(0), not null
 #  work_type_id(作業分類)                     :integer
+#
+# Indexes
+#
+#  index_schedules_on_organization_id                (organization_id)
+#  index_schedules_on_organization_id_and_worked_at  (organization_id,worked_at)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 class Schedule < ApplicationRecord
@@ -28,6 +38,7 @@ class Schedule < ApplicationRecord
 
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
+  belongs_to :organization
 
   has_many :schedule_workers, -> {order('schedule_workers.display_order')}, dependent: :destroy
   has_many :workers, -> {with_deleted}, through: :schedule_workers
@@ -37,6 +48,8 @@ class Schedule < ApplicationRecord
   has_one :minute, dependent: :destroy
 
   before_save :for_farming_flag
+
+  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
 
   scope :usual, -> {
                   where(worked_at: (Time.zone.today - DISPLAY_DAYS.days)..)
@@ -60,12 +73,13 @@ class Schedule < ApplicationRecord
     .order(worked_at: :ASC, id: :ASC)
   }
 
-  scope :for_calendar, ->(term, work_kinds) {
+  scope :for_calendar, ->(term, work_kinds, organization) {
     group(:worked_at, :work_kind_id)
       .select("min(schedules.id) AS id, schedules.worked_at, schedules.work_kind_id")
-      .joins("INNER JOIN systems ON systems.term = #{term}")
+      .joins("INNER JOIN systems ON systems.term = #{term} AND systems.organization_id = schedules.organization_id")
       .includes(:work_kind, :minute)
       .where(work_kind_id: work_kinds, work_flag: false)
+      .where(organization_id: organization.is_a?(Organization) ? organization.id : organization)
       .where("schedules.worked_at BETWEEN systems.start_date AND systems.end_date")
   }
 

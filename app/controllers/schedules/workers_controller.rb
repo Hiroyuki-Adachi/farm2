@@ -12,7 +12,7 @@ class Schedules::WorkersController < ApplicationController
   private
 
   def set_schedule
-    @schedule = Schedule.find(params[:schedule_id]).decorate
+    @schedule = Schedule.for_organization(current_organization).find(params[:schedule_id]).decorate
     @schedule_workers = @schedule.model.schedule_workers
     @sections = Section.usual.pluck(:name, :id).unshift(['すべて', 0])
   end

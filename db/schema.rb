@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_29_105425) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_01_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -321,16 +321,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_29_105425) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "fixes", primary_key: ["term", "fixed_at"], comment: "確定データ", force: :cascade do |t|
+  create_table "fixes", primary_key: ["organization_id", "term", "fixed_at"], comment: "確定データ", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.date "fixed_at", null: false, comment: "確定日"
     t.integer "fixed_by", comment: "確定者"
     t.integer "hours", null: false, comment: "合計作業工数"
     t.decimal "machines_amount", precision: 8, null: false, comment: "合計機械利用料"
+    t.bigint "organization_id", default: 1, null: false, comment: "組織"
     t.integer "term", default: 0, null: false, comment: "年度(期)"
     t.datetime "updated_at", precision: nil, null: false
     t.decimal "works_amount", precision: 8, null: false, comment: "合計作業日当"
     t.integer "works_count", null: false, comment: "合計作業数"
+    t.index ["organization_id"], name: "index_fixes_on_organization_id"
   end
 
   create_table "healths", comment: "健康", force: :cascade do |t|
@@ -667,6 +669,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_29_105425) do
     t.boolean "line_flag", default: true, null: false, comment: "LINEフラグ"
     t.boolean "minutes_flag", default: true, null: false, comment: "議事録フラグ"
     t.string "name", limit: 40, null: false, comment: "作業名称"
+    t.bigint "organization_id", default: 1, null: false, comment: "組織"
     t.time "start_at", default: "2000-01-01 08:00:00", null: false, comment: "開始予定時刻"
     t.integer "term", null: false, comment: "年度(期)"
     t.datetime "updated_at", precision: nil, null: false
@@ -674,6 +677,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_29_105425) do
     t.integer "work_kind_id", default: 0, null: false, comment: "作業種別"
     t.integer "work_type_id", comment: "作業分類"
     t.date "worked_at", null: false, comment: "作業予定日"
+    t.index ["organization_id", "worked_at"], name: "index_schedules_on_organization_id_and_worked_at"
+    t.index ["organization_id"], name: "index_schedules_on_organization_id"
   end
 
   create_table "sections", id: { type: :serial, comment: "班／町内マスタ" }, comment: "班／町内マスタ", force: :cascade do |t|
@@ -896,6 +901,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_29_105425) do
     t.date "ended_on", comment: "完了日"
     t.integer "kanban_position", default: 0, null: false, comment: "カンバンの位置"
     t.integer "office_role", default: 0, null: false, comment: "役割"
+    t.bigint "organization_id", default: 1, null: false, comment: "組織"
     t.date "planned_start_on", default: "1900-01-01", null: false, comment: "開始予定日"
     t.integer "priority", default: 0, null: false, comment: "優先度"
     t.date "started_on", comment: "着手日"
@@ -905,6 +911,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_29_105425) do
     t.datetime "updated_at", null: false
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
     t.index ["creator_id"], name: "index_tasks_on_creator_id"
+    t.index ["organization_id", "task_status_id"], name: "index_tasks_on_organization_id_and_task_status_id"
+    t.index ["organization_id"], name: "index_tasks_on_organization_id"
     t.index ["task_status_id", "kanban_position"], name: "index_tasks_on_task_status_id_and_kanban_position"
     t.index ["task_template_id"], name: "index_tasks_on_task_template_id"
   end
@@ -944,6 +952,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_29_105425) do
     t.integer "machine_id", comment: "機械"
     t.boolean "member_flag", default: false, null: false, comment: "組合員支払フラグ"
     t.date "occurred_on", null: false, comment: "発生日"
+    t.bigint "organization_id", default: 1, null: false, comment: "組織"
     t.integer "seedling_home_id", comment: "育苗担当"
     t.integer "sorimachi_account_id", comment: "ソリマチ勘定科目"
     t.integer "sorimachi_journal_id", comment: "ソリマチ仕訳"
@@ -953,6 +962,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_29_105425) do
     t.integer "whole_crop_land_id", comment: "WCS土地"
     t.integer "work_chemical_id", comment: "薬剤使用"
     t.integer "work_id", comment: "作業"
+    t.index ["organization_id", "term", "occurred_on"], name: "index_total_costs_on_organization_id_and_term_and_occurred_on"
+    t.index ["organization_id"], name: "index_total_costs_on_organization_id"
     t.index ["term", "occurred_on"], name: "index_total_costs_on_term_and_occurred_on"
   end
 
@@ -1276,8 +1287,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_29_105425) do
     t.index ["organization_id"], name: "index_works_on_organization_id"
   end
 
+  add_foreign_key "fixes", "organizations"
   add_foreign_key "homes", "organizations"
   add_foreign_key "lands", "organizations"
+  add_foreign_key "schedules", "organizations"
   add_foreign_key "task_comments", "tasks"
   add_foreign_key "task_comments", "workers", column: "poster_id"
   add_foreign_key "task_events", "task_comments"
@@ -1291,9 +1304,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_29_105425) do
   add_foreign_key "task_templates", "organizations"
   add_foreign_key "task_watchers", "tasks"
   add_foreign_key "task_watchers", "workers"
+  add_foreign_key "tasks", "organizations"
   add_foreign_key "tasks", "task_templates"
   add_foreign_key "tasks", "workers", column: "assignee_id"
   add_foreign_key "tasks", "workers", column: "creator_id"
+  add_foreign_key "total_costs", "organizations"
   add_foreign_key "web_push_subscriptions", "users"
   add_foreign_key "work_genres", "work_categories"
   add_foreign_key "work_kind_types", "work_categories"

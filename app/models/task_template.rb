@@ -118,7 +118,8 @@ class TaskTemplate < ApplicationRecord
       priority: priority,
       office_role: office_role,
       task_status_id: TaskStatus::TO_DO.id,
-      template: self
+      template: self,
+      organization_id: organization_id
     )
   end
 

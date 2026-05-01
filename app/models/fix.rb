@@ -11,27 +11,39 @@
 #  works_count(合計作業数)         :integer          not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
+#  organization_id(組織)           :bigint           default(1), not null, primary key
+#
+# Indexes
+#
+#  index_fixes_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 class Fix < ApplicationRecord
-  self.primary_key = [:term, :fixed_at]
+  self.primary_key = [:organization_id, :term, :fixed_at]
   before_destroy :clear_fix
 
+  belongs_to :organization
   belongs_to :fixer, -> {with_deleted}, class_name: "Worker", foreign_key: "fixed_by"
 
-  scope :usual, ->(term) {where(term: term).order(fixed_at: :ASC)}
+  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
+  scope :usual, ->(organization, term) {for_organization(organization).where(term: term).order(fixed_at: :ASC)}
 
   def to_param
     return fixed_at.strftime("%Y-%m-%d")
   end
 
-  def self.do_fix(term, fixed_at, fixed_by, works_ids)
+  def self.do_fix(organization, term, fixed_at, fixed_by, works_ids)
+    organization_id = organization.is_a?(Organization) ? organization.id : organization
     hours = 0
     works_amount = 0
     works_count = 0
     machines_amount = 0
 
-    Work.find(works_ids).each do |work|
+    Work.for_organization(organization_id).where(id: works_ids).find_each do |work|
       work.work_results.each do |result|
         amount = result.hours * work.work_kind.term_price(term)
         result.update(fixed_hours: result.hours, fixed_price: work.work_kind.term_price(term), fixed_amount: amount)
@@ -49,13 +61,13 @@ class Fix < ApplicationRecord
       works_count += 1
     end
 
-    Fix.create(term: term, fixed_at: fixed_at, works_count: works_count, hours: hours, works_amount: works_amount, machines_amount: machines_amount, fixed_by: fixed_by)
+    Fix.create(organization_id: organization_id, term: term, fixed_at: fixed_at, works_count: works_count, hours: hours, works_amount: works_amount, machines_amount: machines_amount, fixed_by: fixed_by)
   end
 
   private
 
   def clear_fix
-    Work.where(term: term, fixed_at: fixed_at).find_each do |work|
+    Work.for_organization(organization_id).where(term: term, fixed_at: fixed_at).find_each do |work|
       work.work_results.each do |result|
         result.update(fixed_hours: nil, fixed_price: nil, fixed_amount: nil)
       end

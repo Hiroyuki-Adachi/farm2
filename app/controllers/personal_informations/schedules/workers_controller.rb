@@ -3,7 +3,7 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
   before_action :set_workers, only: [:edit, :update]
 
   def index
-    @schedules = ScheduleDecorator.decorate_collection(Schedule.by_section(@worker.home.section_id))
+    @schedules = ScheduleDecorator.decorate_collection(Schedule.for_organization(@worker.organization_id).by_section(@worker.home.section_id))
   end
 
   def edit
@@ -23,7 +23,7 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
   private
 
   def set_schedule
-    @schedule = Schedule.find_by(id: params[:schedule_id])
+    @schedule = Schedule.for_organization(@worker.organization_id).find_by(id: params[:schedule_id])
     return to_error_path if @schedule.blank?
     return if @schedule.schedule_sections.exists?(section_id: @worker.home.section_id)
 
