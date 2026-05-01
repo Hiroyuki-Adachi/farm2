@@ -1,13 +1,14 @@
 <h1 data-controller="page-loader" data-page-loader-modules-value="pages/statistics-areas">年度別作業効率一覧</h1>
 <% if @work_kinds.present? %>
-  <%= form_with(url: statistics_areas_path, method: :get, local: true, class: "mb-3") do %>
+  <%= form_with(url: statistics_areas_path, method: :get, local: true, class: "mb-3", data: {statistics_areas_target: "form"}) do %>
     <div class="btn-group" role="group" aria-label="作業種別">
       <% @work_kinds.each do |work_kind| %>
         <%= radio_button_tag :work_kind_id, work_kind.id, @selected_work_kind_id == work_kind.id,
-          id: "work_kind_#{work_kind.id}", class: "btn-check", autocomplete: "off", onchange: "this.form.submit();" %>
+          id: "work_kind_#{work_kind.id}", class: "btn-check", autocomplete: "off" %>
         <%= label_tag "work_kind_#{work_kind.id}", work_kind.name, class: "btn btn-outline-primary" %>
       <% end %>
     </div>
+    <%= submit_tag "表示", class: "btn btn-outline-secondary ms-2" %>
   <% end %>
 <% end %>
 <div class="row">
@@ -16,7 +17,7 @@
       data-chart-rendered="0"
       data-labels="<%= @terms.to_json %>"
       data-values="<%= @terms.map { |term| @hours_per_10a[term] }.to_json %>"
-      data-title="<%= @work_kinds.find { |work_kind| work_kind.id == @selected_work_kind_id }&.name %>"></canvas>
+      data-title="<%= @selected_work_kind&.name %>"></canvas>
   </div>
 </div>
 <hr />
