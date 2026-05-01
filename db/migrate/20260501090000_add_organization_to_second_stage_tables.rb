@@ -61,10 +61,10 @@ class AddOrganizationToSecondStageTables < ActiveRecord::Migration[8.1]
     add_index :tasks, [:organization_id, :task_status_id]
     add_index :total_costs, [:organization_id, :term, :occurred_on]
 
-    change_column_default :schedules, :organization_id, 1
-    change_column_default :tasks, :organization_id, 1
-    change_column_default :total_costs, :organization_id, 1
-    change_column_default :fixes, :organization_id, 1
+    change_column_default :schedules, :organization_id, default_org_id
+    change_column_default :tasks, :organization_id, default_org_id
+    change_column_default :total_costs, :organization_id, default_org_id
+    change_column_default :fixes, :organization_id, default_org_id
 
     execute "ALTER TABLE fixes DROP CONSTRAINT IF EXISTS fixes_pkey"
     execute "ALTER TABLE fixes ADD PRIMARY KEY (organization_id, term, fixed_at)"
