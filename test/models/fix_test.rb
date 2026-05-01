@@ -11,11 +11,7 @@
 #  works_count(合計作業数)         :integer          not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
-#  organization_id(組織)           :bigint           default(1), not null, primary key
-#
-# Indexes
-#
-#  index_fixes_on_organization_id  (organization_id)
+#  organization_id(組織)           :bigint           default(3), not null, primary key
 #
 # Foreign Keys
 #

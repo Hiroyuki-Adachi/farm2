@@ -17,7 +17,7 @@
 #  updated_at                      :datetime         not null
 #  assignee_id(担当者)             :bigint
 #  creator_id(作成者)              :bigint
-#  organization_id(組織)           :bigint           default(1), not null
+#  organization_id(組織)           :bigint           default(3), not null
 #  task_status_id(状態)            :integer          default(0), not null
 #  task_template_id(定型タスクID)  :bigint
 #
@@ -425,7 +425,15 @@ class Task < ApplicationRecord
   private
 
   def set_organization
-    self.organization_id ||= creator&.organization_id || assignee&.organization_id || template&.organization_id
+    derived_organization_id = creator&.organization_id || assignee&.organization_id || template&.organization_id
+    return if derived_organization_id.blank?
+
+    organization_id_default = self.class.column_defaults['organization_id']
+    should_assign_organization =
+      organization_id.blank? ||
+      (new_record? && organization_id == organization_id_default)
+
+    self.organization_id = derived_organization_id if should_assign_organization
   end
 
   def members_belong_to_same_organization
