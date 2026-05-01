@@ -76,7 +76,7 @@ class Schedule < ApplicationRecord
   scope :for_calendar, ->(term, work_kinds, organization) {
     group(:worked_at, :work_kind_id)
       .select("min(schedules.id) AS id, schedules.worked_at, schedules.work_kind_id")
-      .joins("INNER JOIN systems ON systems.term = #{term} AND systems.organization_id = schedules.organization_id")
+      .joins(sanitize_sql_array(["INNER JOIN systems ON systems.term = ? AND systems.organization_id = schedules.organization_id", term]))
       .includes(:work_kind, :minute)
       .where(work_kind_id: work_kinds, work_flag: false)
       .where(organization_id: organization.is_a?(Organization) ? organization.id : organization)
