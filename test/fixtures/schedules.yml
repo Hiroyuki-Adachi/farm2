@@ -16,7 +16,7 @@
 #  worked_at(作業予定日)                      :date             not null
 #  created_at                                 :datetime         not null
 #  updated_at                                 :datetime         not null
-#  organization_id(組織)                      :bigint           default(1), not null
+#  organization_id(組織)                      :bigint           default(3), not null
 #  work_kind_id(作業種別)                     :integer          default(0), not null
 #  work_type_id(作業分類)                     :integer
 #
@@ -31,6 +31,7 @@
 #
 
 schedule1:
+  organization_id: 1
   term: 0
   worked_at: '2015-04-01'
   work_type_id: 12
@@ -46,6 +47,7 @@ schedule1:
   created_by: 1
 
 schedule_meeting:
+  organization_id: 1
   term: 0
   worked_at: '2015-05-01'
   work_type_id: 12
@@ -58,6 +60,7 @@ schedule_meeting:
   created_by: 1
 
 schedule_tomorrow:
+  organization_id: 1
   term: 0
   worked_at: '2015-05-02'
   work_type_id: 12
@@ -70,6 +73,7 @@ schedule_tomorrow:
   created_by: 1
 
 schedule_today:
+  organization_id: 1
   term: 0
   worked_at: '2015-05-01'
   work_type_id: 12

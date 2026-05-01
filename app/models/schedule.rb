@@ -16,7 +16,7 @@
 #  worked_at(作業予定日)                      :date             not null
 #  created_at                                 :datetime         not null
 #  updated_at                                 :datetime         not null
-#  organization_id(組織)                      :bigint           default(1), not null
+#  organization_id(組織)                      :bigint           default(3), not null
 #  work_kind_id(作業種別)                     :integer          default(0), not null
 #  work_type_id(作業分類)                     :integer
 #
@@ -47,6 +47,7 @@ class Schedule < ApplicationRecord
 
   has_one :minute, dependent: :destroy
 
+  before_validation :set_organization
   before_save :for_farming_flag
 
   scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
@@ -142,6 +143,13 @@ class Schedule < ApplicationRecord
   end
 
   private
+
+  def set_organization
+    return unless new_record? || organization_id.blank?
+
+    self.organization_id = Worker.find_by(id: created_by)&.organization_id if created_by.present?
+    self.organization_id ||= Organization.order(:id).pick(:id)
+  end
 
   def for_farming_flag
     if farming_flag_changed? && !farming_flag

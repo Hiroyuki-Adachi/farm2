@@ -23,7 +23,7 @@
 #  updated_at                      :datetime         not null
 #  assignee_id(担当者)             :bigint
 #  creator_id(作成者)              :bigint
-#  organization_id(組織)           :bigint           default(1), not null
+#  organization_id(組織)           :bigint           default(3), not null
 #  task_status_id(状態)            :integer          default(0), not null
 #  task_template_id(定型タスクID)  :bigint
 #
@@ -44,6 +44,7 @@
 #  fk_rails_...  (task_template_id => task_templates.id)
 #
 open_task:
+  organization_id: 1
   title: "未着手タスク"
   description: ""
   priority: low
@@ -55,6 +56,7 @@ open_task:
   updated_at: <%= Time.zone.now - 2.days %>
 
 started_task:
+  organization_id: 1
   title: "進行中タスク"
   description: ""
   priority: medium
@@ -67,6 +69,7 @@ started_task:
   updated_at: <%= Time.zone.now - 2.days %>
 
 closed_task:
+  organization_id: 1
   title: "完了タスク"
   description: ""
   priority: high
@@ -80,6 +83,7 @@ closed_task:
   updated_at: <%= Time.zone.now - 1.day %>
 
 worker1_task:
+  organization_id: 1
   title: "worker1のタスク"
   description: ""
   priority: low
@@ -91,6 +95,7 @@ worker1_task:
   updated_at: <%= Time.zone.now - 2.days %>
 
 comment_task:
+  organization_id: 1
   title: "コメント付きタスク"
   description: ""
   priority: medium
@@ -102,6 +107,7 @@ comment_task:
   updated_at: <%= Time.zone.now - 2.days %>
 
 due_on_task:
+  organization_id: 1
   title: "期限付きタスク"
   description: ""
   priority: high
@@ -114,6 +120,7 @@ due_on_task:
   updated_at: <%= Time.zone.now - 2.days %>
 
 work_task:
+  organization_id: 1
   title: "作業付きタスク"
   description: ""
   priority: medium
@@ -127,6 +134,7 @@ work_task:
   office_role: general
 
 task31:
+  organization_id: 1
   title: "task31"
   description: ""
   priority: medium
@@ -140,6 +148,7 @@ task31:
   office_role: general
 
 task32:
+  organization_id: 1
   title: "task32"
   description: ""
   priority: medium
@@ -153,6 +162,7 @@ task32:
   office_role: general
 
 task33:
+  organization_id: 1
   title: "task33"
   description: ""
   priority: medium
@@ -166,6 +176,7 @@ task33:
   office_role: general
 
 task_template:
+  organization_id: 1
   title: "定型タスク付きタスク"
   description: ""
   priority: low

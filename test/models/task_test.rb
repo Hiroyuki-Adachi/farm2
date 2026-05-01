@@ -17,7 +17,7 @@
 #  updated_at                      :datetime         not null
 #  assignee_id(担当者)             :bigint
 #  creator_id(作成者)              :bigint
-#  organization_id(組織)           :bigint           default(1), not null
+#  organization_id(組織)           :bigint           default(3), not null
 #  task_status_id(状態)            :integer          default(0), not null
 #  task_template_id(定型タスクID)  :bigint
 #
