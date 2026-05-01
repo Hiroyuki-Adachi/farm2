@@ -11,6 +11,15 @@
 #  works_count(合計作業数)         :integer          not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
+#  organization_id(組織)           :bigint           default(1), not null, primary key
+#
+# Indexes
+#
+#  index_fixes_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 require 'test_helper'
@@ -19,19 +28,20 @@ class FixTest < ActiveSupport::TestCase
   setup do
     @fixed_at = Date.new(2015, 3, 31)
     @term = 2015
+    @organization = organizations(:org)
     @worker_id = users(:users1).worker_id
     @no_fix_works = [works(:work_no_fix1).id, works(:work_no_fix2).id]
   end
     
   test "確定" do
     assert_difference('Fix.count') do
-      Fix.do_fix(@term, @fixed_at, @worker_id, @no_fix_works)
+      Fix.do_fix(@organization, @term, @fixed_at, @worker_id, @no_fix_works)
     end
     assert_equal @fixed_at, Work.find(works(:work_no_fix1).id).fixed_at
     assert_equal @fixed_at, Work.find(works(:work_no_fix2).id).fixed_at
 
     # 確定データの確認
-    created_fix = Fix.find_by(fixed_at: @fixed_at)
+    created_fix = Fix.find_by(organization: @organization, fixed_at: @fixed_at)
     assert_not_nil created_fix
     assert_equal @worker_id, created_fix.fixed_by
     assert_equal @term, created_fix.term

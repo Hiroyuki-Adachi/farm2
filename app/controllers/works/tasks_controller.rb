@@ -23,6 +23,6 @@ class Works::TasksController < WorksController
   private
 
   def set_tasks
-    @tasks = Task.for_work(@work)
+    @tasks = Task.for_organization(current_organization).for_work(@work)
   end
 end

@@ -11,9 +11,19 @@
 #  works_count(合計作業数)         :integer          not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
+#  organization_id(組織)           :bigint           default(1), not null, primary key
+#
+# Indexes
+#
+#  index_fixes_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 fix1:
+  organization_id: 1
   term: 2015
   fixed_at: '2015-02-28'
   works_count: 7
@@ -22,4 +32,3 @@ fix1:
   machines_amount: 20000
   created_at: '2016-06-13 05:42:42.597341'
   updated_at: '2016-06-13 05:42:42.597341'
-

@@ -43,10 +43,10 @@ class Work < ApplicationRecord
   validates :weather_id,   presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
 
-  belongs_to :organization, optional: true
+  belongs_to :organization
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
-  belongs_to :fix, class_name: "Fix", foreign_key: [:term, :fixed_at]
+  belongs_to :fix, class_name: "Fix", foreign_key: [:organization_id, :term, :fixed_at]
   belongs_to :creator, -> {with_deleted}, class_name: "Worker", foreign_key: "created_by"
   belongs_to :printer, -> {with_deleted}, class_name: "Worker", foreign_key: "printed_by"
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
@@ -79,7 +79,11 @@ class Work < ApplicationRecord
     includes(:work_type, :work_kind)
       .where(term: term, fixed_at: nil).order(worked_at: :ASC, start_at: :ASC, id: :ASC)
   }
-  scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
+  scope :fixed, ->(term, fixed_at, organization = nil) do
+    base = where(term: term, fixed_at: fixed_at)
+    base = base.for_organization(organization) if organization
+    base.order(worked_at: :ASC, start_at: :ASC, id: :ASC)
+  end
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :DESC, id: :DESC)}
   scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
   scope :by_creator, ->(worker) {where(["works.created_by IS NULL OR works.created_by <> ?", worker.id])}

@@ -5,11 +5,11 @@ class Tasks::GanttsController < ApplicationController
 
   def show
     worker = current_user.worker
-    @tasks = Task.by_worker(worker).for_gantt(@start_date, @end_date).gantts_order.decorate(context: { current_worker: worker })
+    @tasks = Task.for_organization(current_organization).by_worker(worker).for_gantt(@start_date, @end_date).gantts_order.decorate(context: { current_worker: worker })
   end
 
   def update
-    task = Task.find_by(id: params[:task_id])
+    task = Task.for_organization(current_organization).find_by(id: params[:task_id])
     return head :not_found unless task
 
     date = begin

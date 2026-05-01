@@ -33,12 +33,13 @@ class WorkLand < ApplicationRecord
       .order("lands.place_sort_key, lands.id, works.worked_at")
   end
 
-  scope :for_fix, ->(term, fixed_at, contract_id) do
-    joins(:work)
+  scope :for_fix, ->(term, fixed_at, contract_id, organization = nil) do
+    base = joins(:work)
       .joins(:land)
       .where(works: { work_type_id: contract_id })
       .where("works.fixed_at = ? AND work_lands.fixed_cost IS NOT NULL", fixed_at)
       .where(works: { term: term })
+    organization ? base.where(works: { organization_id: organization.is_a?(Organization) ? organization.id : organization }) : base
   end
 
   scope :for_cards, ->(land_id, worked_at) do

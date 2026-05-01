@@ -17,6 +17,7 @@
 #  updated_at                      :datetime         not null
 #  assignee_id(担当者)             :bigint
 #  creator_id(作成者)              :bigint
+#  organization_id(組織)           :bigint           default(1), not null
 #  task_status_id(状態)            :integer          default(0), not null
 #  task_template_id(定型タスクID)  :bigint
 #
@@ -24,6 +25,8 @@
 #
 #  index_tasks_on_assignee_id                         (assignee_id)
 #  index_tasks_on_creator_id                          (creator_id)
+#  index_tasks_on_organization_id                     (organization_id)
+#  index_tasks_on_organization_id_and_task_status_id  (organization_id,task_status_id)
 #  index_tasks_on_task_status_id_and_kanban_position  (task_status_id,kanban_position)
 #  index_tasks_on_task_template_id                    (task_template_id)
 #
@@ -31,6 +34,7 @@
 #
 #  fk_rails_...  (assignee_id => workers.id)
 #  fk_rails_...  (creator_id => workers.id)
+#  fk_rails_...  (organization_id => organizations.id)
 #  fk_rails_...  (task_template_id => task_templates.id)
 #
 require "test_helper"

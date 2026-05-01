@@ -5,12 +5,13 @@ class MinutesController < ApplicationController
   skip_before_action :restrict_remote_ip, only: [:show]
 
   def index
-    @schedules = ScheduleDecorator.decorate_collection(Schedule.for_minute)
+    @schedules = ScheduleDecorator.decorate_collection(Schedule.for_organization(current_organization).for_minute)
   end
 
   def create
+    schedule = Schedule.for_organization(current_organization).find(params[:minute][:schedule_id])
     Minute.create(
-      schedule_id: params[:minute][:schedule_id],
+      schedule_id: schedule.id,
       pdf_name: params[:minute][:pdf].original_filename,
       pdf: params[:minute][:pdf].read
     )

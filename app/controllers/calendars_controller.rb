@@ -13,8 +13,8 @@ class CalendarsController < ApplicationController
     @year = current_user.calendar_term
     @calendar_work_kinds = CalendarWorkKind.usual(current_user).to_a
     @work_kind_ids = @calendar_work_kinds.map(&:work_kind_id)
-    @schedules = Schedule.for_calendar(@year, @work_kind_ids)
-    @works = Work.for_calendar(@year, @work_kind_ids - @schedules.map(&:work_kind_id))
+    @schedules = Schedule.for_calendar(@year, @work_kind_ids, current_organization)
+    @works = Work.for_organization(current_organization).for_calendar(@year, @work_kind_ids - @schedules.map(&:work_kind_id))
     @works = WorkDecorator.decorate_collection(@works)
   end
 end
