@@ -426,7 +426,14 @@ class Task < ApplicationRecord
 
   def set_organization
     derived_organization_id = creator&.organization_id || assignee&.organization_id || template&.organization_id
-    self.organization_id = derived_organization_id if derived_organization_id.present? && (new_record? || organization_id.blank?)
+    return if derived_organization_id.blank?
+
+    organization_id_default = self.class.column_defaults['organization_id']
+    should_assign_organization =
+      organization_id.blank? ||
+      (new_record? && organization_id == organization_id_default)
+
+    self.organization_id = derived_organization_id if should_assign_organization
   end
 
   def members_belong_to_same_organization
