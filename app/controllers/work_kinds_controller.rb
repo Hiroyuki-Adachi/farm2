@@ -55,7 +55,8 @@ class WorkKindsController < ApplicationController
         :land_flag,
         :broccoli_mark,
         :phonetic,
-        :cost_type_id
+        :cost_type_id,
+        :aggregation_flag
       ])
       .merge(term: current_term)
   end

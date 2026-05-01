@@ -16,6 +16,7 @@
 #  depreciation_id(減価償却)              :integer
 #  land_id(土地)                          :integer
 #  machine_id(機械)                       :integer
+#  organization_id(組織)                  :bigint           default(3), not null
 #  seedling_home_id(育苗担当)             :integer
 #  sorimachi_account_id(ソリマチ勘定科目) :integer
 #  sorimachi_journal_id(ソリマチ仕訳)     :integer
@@ -26,5 +27,11 @@
 #
 # Indexes
 #
-#  index_total_costs_on_term_and_occurred_on  (term,occurred_on)
+#  index_total_costs_on_organization_id                           (organization_id)
+#  index_total_costs_on_organization_id_and_term_and_occurred_on  (organization_id,term,occurred_on)
+#  index_total_costs_on_term_and_occurred_on                      (term,occurred_on)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #

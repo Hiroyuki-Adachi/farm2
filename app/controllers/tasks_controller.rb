@@ -11,6 +11,7 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task
+              .for_organization(current_organization)
               .for_index
               .includes(:assignee)
               .with_watch_flag(current_user.worker.id)
@@ -27,7 +28,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = Task.new(task_params.merge(organization_id: current_organization.id))
     @task.creator = current_user.worker 
 
     if @task.save
@@ -69,9 +70,9 @@ class TasksController < ApplicationController
   def set_task
     @task = 
       if params[:task_id]
-        Task.find(params[:task_id])
+        Task.for_organization(current_organization).find(params[:task_id])
       else
-        Task.includes(:assignee, :creator).find(params[:id])
+        Task.for_organization(current_organization).includes(:assignee, :creator).find(params[:id])
       end
   end
 

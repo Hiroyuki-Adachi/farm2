@@ -6,7 +6,7 @@ class CreateTaskFromTemplateJobTest < ActiveJob::TestCase
   test "ジョブによってタスクが生成される" do
     # 2025-02-08 が第2土曜 → 1か月前の 2025-01-08 が生成基準日
     target_template = task_templates(:template1)
-    worker_count = Worker.where(office_role: target_template.office_role).count
+    worker_count = Worker.for_organization(target_template.organization_id).where(office_role: target_template.office_role).count
 
     travel_to Date.new(2025, 1, 8) do
       assert_difference("TaskWatcher.count", worker_count) do
@@ -22,7 +22,7 @@ class CreateTaskFromTemplateJobTest < ActiveJob::TestCase
       assert_match target_template.title, task.title
       assert_equal target_template.description, task.description
 
-      target_worker = Worker.find_by(office_role: target_template.office_role)
+      target_worker = Worker.for_organization(target_template.organization_id).find_by(office_role: target_template.office_role)
       assert TaskWatcher.exists?(worker: target_worker, task: task)
     end
   end
