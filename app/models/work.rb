@@ -43,7 +43,7 @@ class Work < ApplicationRecord
   validates :weather_id,   presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
 
-  belongs_to :organization, optional: true
+  belongs_to :organization
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
   belongs_to :fix, class_name: "Fix", foreign_key: [:organization_id, :term, :fixed_at]
