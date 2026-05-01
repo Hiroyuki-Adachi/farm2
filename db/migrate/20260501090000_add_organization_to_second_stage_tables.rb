@@ -6,7 +6,7 @@ class AddOrganizationToSecondStageTables < ActiveRecord::Migration[8.1]
     add_reference :schedules, :organization, null: false, default: default_org_id, foreign_key: true, comment: "組織"
     add_reference :tasks, :organization, null: false, default: default_org_id, foreign_key: true, comment: "組織"
     add_reference :total_costs, :organization, null: false, default: default_org_id, foreign_key: true, comment: "組織"
-    add_reference :fixes, :organization, null: false, default: default_org_id, foreign_key: true, comment: "組織"
+    add_reference :fixes, :organization, null: false, default: default_org_id, foreign_key: true, index: false, comment: "組織"
 
     execute <<~SQL.squish
       UPDATE schedules
