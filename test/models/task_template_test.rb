@@ -192,6 +192,7 @@ class TaskTemplateTest < ActiveSupport::TestCase
         attrs[:priority] == t.priority &&
         attrs[:office_role] == t.office_role && 
         attrs[:task_status_id].to_i == TaskStatus::TO_DO.id &&
+        attrs[:organization_id] == t.organization_id &&
         rel == t
     end.returns(:task_double)
 

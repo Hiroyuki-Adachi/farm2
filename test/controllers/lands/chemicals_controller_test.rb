@@ -75,7 +75,7 @@ class Lands::ChemicalsControllerTest < ActionDispatch::IntegrationTest
 
     WorkLand.create!(work: taue_work, land: map_land, work_type_id: 11)
     WorkLand.create!(work: other_kind_work, land: excluded_land, work_type_id: 11)
-    WorkChemical.create!(work: taue_work, chemical: chemical, quantity: 4.0)
+    WorkChemical.create!(work: taue_work, chemical: chemical, quantity: 5.0)
     WorkChemical.create!(work: other_kind_work, chemical: chemical, quantity: 4.0)
 
     get lands_chemicals_path

@@ -4,7 +4,7 @@ class SchedulesController < ApplicationController
   before_action :permit_only_self, only: [:edit, :update, :destroy]
 
   def index
-    @schedules = Schedule.usual
+    @schedules = Schedule.for_organization(current_organization).usual
     @schedules = @schedules.by_worker(current_user.worker) unless current_user.admin?
     @schedules = ScheduleDecorator.decorate_collection(@schedules.page(params[:page] || 1))
   end
@@ -18,12 +18,13 @@ class SchedulesController < ApplicationController
       farming_flag: true,
       line_flag: true,
       minutes_flag: true,
-      calendar_remove_flag: false
+      calendar_remove_flag: false,
+      organization_id: current_organization.id
     ).decorate
   end
 
   def create
-    @schedule = Schedule.new(schedule_params.merge(created_by: current_user.worker.id))
+    @schedule = Schedule.new(schedule_params.merge(created_by: current_user.worker.id, organization_id: current_organization.id))
     Schedule.transaction do
       if @schedule.save
         @schedule.regist_sections(params[:section_ids])
@@ -55,7 +56,7 @@ class SchedulesController < ApplicationController
   private
 
   def set_schedule
-    @schedule = Schedule.find(params[:id]).decorate
+    @schedule = Schedule.for_organization(current_organization).find(params[:id]).decorate
   end
 
   def schedule_params

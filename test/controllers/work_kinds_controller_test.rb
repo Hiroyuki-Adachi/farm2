@@ -5,7 +5,7 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
     @user = users(:users1)
     login_as(@user)
     @work_kind = work_kinds(:work_kind_shirokaki)
-    @update = { name: "試験", phonetic: 'しけん', display_order: 99, price: 1500, land_flag: true }
+    @update = { name: "試験", phonetic: 'しけん', display_order: 99, price: 1500, land_flag: true, aggregation_flag: true }
   end
 
   test "作業種別マスタ一覧" do
@@ -37,6 +37,7 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:phonetic], work_kind.phonetic
     assert_equal @update[:display_order], work_kind.display_order
     assert_equal @update[:land_flag], work_kind.land_flag
+    assert_equal @update[:aggregation_flag], work_kind.aggregation_flag
     
     work_kind_price = WorkKindPrice.last
     assert_equal @user.term, work_kind_price.term
@@ -62,6 +63,7 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:phonetic], @work_kind.phonetic
     assert_equal @update[:display_order], @work_kind.display_order
     assert_equal @update[:land_flag], @work_kind.land_flag
+    assert_equal @update[:aggregation_flag], @work_kind.aggregation_flag
 
     work_kind_price = WorkKindPrice.find_by(term: @user.term, work_kind_id: @work_kind)
     assert_equal @update[:price], work_kind_price.price

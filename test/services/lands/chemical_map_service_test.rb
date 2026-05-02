@@ -51,7 +51,7 @@ class Lands::ChemicalMapServiceTest < ActiveSupport::TestCase
 
     assert_in_delta 4.5, summaries.fetch(land1.id).actual.to_f, 0.001
     assert_in_delta 1.5, summaries.fetch(land1.id).standard.to_f, 0.001
-    assert_equal :over_20, summaries.fetch(land1.id).status
+    assert_equal :over_50, summaries.fetch(land1.id).status
 
     assert_in_delta 3.5, summaries.fetch(land2.id).actual.to_f, 0.001
     assert_in_delta 3.5, summaries.fetch(land2.id).standard.to_f, 0.001
@@ -99,6 +99,29 @@ class Lands::ChemicalMapServiceTest < ActiveSupport::TestCase
     assert_in_delta 2.0, summaries.fetch(land1.id).actual.to_f, 0.001
     assert_in_delta 1.0, summaries.fetch(land1.id).standard.to_f, 0.001
     assert_nil summaries[land2.id]
+  end
+
+  test "基準量との差分率を7段階の色に分類する" do
+    service = Lands::ChemicalMapService.new(term: 2015, work_kind_id: work_kinds(:work_kind_taue).id, chemical_type_id: chemical_types(:chemical_types0).id)
+
+    assert_equal :over_50, service.send(:status_for, 0.5001.to_d)
+    assert_equal :over_25, service.send(:status_for, 0.5.to_d)
+    assert_equal :over_10, service.send(:status_for, 0.25.to_d)
+    assert_equal :within_10, service.send(:status_for, 0.1.to_d)
+    assert_equal :within_10, service.send(:status_for, -0.1.to_d)
+    assert_equal :under_10, service.send(:status_for, -0.1001.to_d)
+    assert_equal :under_10, service.send(:status_for, -0.25.to_d)
+    assert_equal :under_25, service.send(:status_for, -0.2501.to_d)
+    assert_equal :under_25, service.send(:status_for, -0.5.to_d)
+    assert_equal :under_50, service.send(:status_for, -0.5001.to_d)
+
+    assert_equal "#ff4d4f", Lands::ChemicalMapService::COLORS.fetch(:over_50)
+    assert_equal "#ff9500", Lands::ChemicalMapService::COLORS.fetch(:over_25)
+    assert_equal "#ffd60a", Lands::ChemicalMapService::COLORS.fetch(:over_10)
+    assert_equal "#34c759", Lands::ChemicalMapService::COLORS.fetch(:within_10)
+    assert_equal "#64d2ff", Lands::ChemicalMapService::COLORS.fetch(:under_10)
+    assert_equal "#0a84ff", Lands::ChemicalMapService::COLORS.fetch(:under_25)
+    assert_equal "#003a8c", Lands::ChemicalMapService::COLORS.fetch(:under_50)
   end
 
   private

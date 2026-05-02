@@ -16,9 +16,19 @@
 #  worked_at(作業日)                       :date             not null
 #  created_at                              :datetime
 #  updated_at                              :datetime
+#  organization_id(組織)                   :bigint           default(1), not null
 #  weather_id(天気)                        :integer
 #  work_kind_id(作業種別)                  :integer          default(0), not null
 #  work_type_id(作業分類)                  :integer
+#
+# Indexes
+#
+#  index_works_on_organization_id           (organization_id)
+#  index_works_on_organization_id_and_term  (organization_id,term)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 class Work < ApplicationRecord
@@ -33,9 +43,10 @@ class Work < ApplicationRecord
   validates :weather_id,   presence: true
   validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
 
+  belongs_to :organization
   belongs_to :work_type, -> {with_deleted}
   belongs_to :work_kind, -> {with_deleted}
-  belongs_to :fix, class_name: "Fix", foreign_key: [:term, :fixed_at]
+  belongs_to :fix, class_name: "Fix", foreign_key: [:organization_id, :term, :fixed_at]
   belongs_to :creator, -> {with_deleted}, class_name: "Worker", foreign_key: "created_by"
   belongs_to :printer, -> {with_deleted}, class_name: "Worker", foreign_key: "printed_by"
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
@@ -63,11 +74,16 @@ class Work < ApplicationRecord
   has_many :events, class_name: 'TaskEvent', dependent: :nullify
   has_many :tasks, through: :events
 
+  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
   scope :no_fixed, ->(term){
     includes(:work_type, :work_kind)
       .where(term: term, fixed_at: nil).order(worked_at: :ASC, start_at: :ASC, id: :ASC)
   }
-  scope :fixed, ->(term, fixed_at){where(term: term, fixed_at: fixed_at).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
+  scope :fixed, ->(term, fixed_at, organization = nil) do
+    base = where(term: term, fixed_at: fixed_at)
+    base = base.for_organization(organization) if organization
+    base.order(worked_at: :ASC, start_at: :ASC, id: :ASC)
+  end
   scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :DESC, id: :DESC)}
   scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
   scope :by_creator, ->(worker) {where(["works.created_by IS NULL OR works.created_by <> ?", worker.id])}
@@ -429,6 +445,26 @@ SQL
         .group("work_types.work_genre_id", :term)
         .order("work_types.work_genre_id", :term)
         .sum("work_results.hours")
+  end
+
+  def self.hours_per_10a_by_work_kind(work_kind_id, terms, organization: nil)
+    base = where(term: terms, work_kind_id: work_kind_id)
+    base = base.for_organization(organization) if organization
+
+    works_with_area = base.joins(work_lands: :land)
+      .group(:id)
+      .having("SUM(lands.area) > 0")
+      .select(:id)
+
+    hours = base.where(id: works_with_area).joins(:work_results).group(:term).sum("work_results.hours")
+    areas = base.joins(work_lands: :land).group(:term).sum("lands.area")
+
+    terms.sort.index_with do |term|
+      area = areas[term].to_d
+      next 0 if area.zero?
+
+      (hours[term].to_d / area * 10).round(2).to_f
+    end
   end
 
   def self.monthly(term, worked_from, worked_to, worker_id)

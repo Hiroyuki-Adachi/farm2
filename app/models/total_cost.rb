@@ -15,6 +15,7 @@
 #  depreciation_id(減価償却)              :integer
 #  land_id(土地)                          :integer
 #  machine_id(機械)                       :integer
+#  organization_id(組織)                  :bigint           default(3), not null
 #  seedling_home_id(育苗担当)             :integer
 #  sorimachi_account_id(ソリマチ勘定科目) :integer
 #  sorimachi_journal_id(ソリマチ仕訳)     :integer
@@ -25,13 +26,20 @@
 #
 # Indexes
 #
-#  index_total_costs_on_term_and_occurred_on  (term,occurred_on)
+#  index_total_costs_on_organization_id                           (organization_id)
+#  index_total_costs_on_organization_id_and_term_and_occurred_on  (organization_id,term,occurred_on)
+#  index_total_costs_on_term_and_occurred_on                      (term,occurred_on)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 class TotalCost < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   belongs_to :work, optional: true
+  belongs_to :organization
   belongs_to :sorimachi_account, optional: true
   belongs_to :sorimachi_journal, optional: true
   belongs_to :depreciation, optional: true
@@ -45,33 +53,37 @@ class TotalCost < ApplicationRecord
 
   delegate :name, to: :total_cost_type, prefix: true
 
-  scope :usual, ->(term) {
+  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
+
+  scope :usual, ->(organization, term) {
     includes(:total_cost_details, :sorimachi_journal, :sorimachi_account, land: :manager, work: :work_kind, work_chemical: :chemical, seedling_home: :home)
+      .for_organization(organization)
       .where(term: term)
       .order(:total_cost_type_id, :display_order, :fiscal_flag, :occurred_on, :id)
   }
-  scope :for_worker, ->(term) {
-    where(term: term, total_cost_type_id: [TotalCostType::WORKWORKER.id, TotalCostType::WORKINDIRECT.id])
+  scope :for_worker, ->(organization, term) {
+    for_organization(organization).where(term: term, total_cost_type_id: [TotalCostType::WORKWORKER.id, TotalCostType::WORKINDIRECT.id])
   }
 
   scope :direct, -> {where(total_cost_type_id: 10..110)}
   scope :sales, -> {where(total_cost_type_id: 200..299)}
 
-  def self.sum_work_results(term)
-    return for_worker(term)
+  def self.sum_work_results(organization, term)
+    return for_worker(organization, term)
       .joins(:total_cost_details)
       .group("total_costs.cost_type_id", "total_cost_details.work_type_id")
       .sum("total_cost_details.cost")
   end
 
-  def self.make(term, fixed_on)
-    TotalCost.where(term: term).destroy_all
-    make_work(term, fixed_on)
-    make_details(term)
+  def self.make(organization, term, fixed_on)
+    organization_id = organization.is_a?(Organization) ? organization.id : organization
+    TotalCost.for_organization(organization_id).where(term: term).destroy_all
+    make_work(organization_id, term, fixed_on)
+    make_details(organization_id, term)
   end
 
-  def self.created_at(term)
-    TotalCost.where(term: term).minimum(:created_at)
+  def self.created_at(organization, term)
+    TotalCost.for_organization(organization).where(term: term).minimum(:created_at)
   end
 
   def cost(work_type_id)
@@ -108,14 +120,14 @@ class TotalCost < ApplicationRecord
     return numer / denom
   end
 
-  def self.make_work(term, fixed_on)
-    Work.by_term(term).where(worked_at: ..fixed_on).find_each do |work|
+  def self.make_work(organization, term, fixed_on)
+    Work.for_organization(organization).by_term(term).where(worked_at: ..fixed_on).find_each do |work|
       make_work_worker(term, work)
     end
   end
 
-  def self.make_details(term)
-    TotalCost.where(term: term).find_each do |tc|
+  def self.make_details(organization, term)
+    TotalCost.for_organization(organization).where(term: term).find_each do |tc|
       tc.total_cost_details.each do |tcd|
         next if tcd.rate.zero?
         tcd.cost = tc.cost(tcd.work_type_id)
@@ -131,6 +143,7 @@ class TotalCost < ApplicationRecord
       total_cost_type_id: work.total_cost_type.id,
       occurred_on: work.worked_at,
       work_id: work.id,
+      organization_id: work.organization_id,
       amount: work.sum_workers_amount,
       display_order: work.work_kind_order,
       cost_type_id: work.work_kind.cost_type_id,

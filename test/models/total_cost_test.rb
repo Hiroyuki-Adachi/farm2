@@ -15,6 +15,7 @@
 #  depreciation_id(減価償却)              :integer
 #  land_id(土地)                          :integer
 #  machine_id(機械)                       :integer
+#  organization_id(組織)                  :bigint           default(3), not null
 #  seedling_home_id(育苗担当)             :integer
 #  sorimachi_account_id(ソリマチ勘定科目) :integer
 #  sorimachi_journal_id(ソリマチ仕訳)     :integer
@@ -25,7 +26,13 @@
 #
 # Indexes
 #
-#  index_total_costs_on_term_and_occurred_on  (term,occurred_on)
+#  index_total_costs_on_organization_id                           (organization_id)
+#  index_total_costs_on_organization_id_and_term_and_occurred_on  (organization_id,term,occurred_on)
+#  index_total_costs_on_term_and_occurred_on                      (term,occurred_on)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 require 'test_helper'
@@ -35,6 +42,7 @@ class TotalCostTest < ActiveSupport::TestCase
     @term = 2017
     @sys = systems(:s2017)
     @land = lands(:land_genka2)
+    @organization = organizations(:org)
   end
 
   test "原価計算_作業費_作業者" do
@@ -43,11 +51,11 @@ class TotalCostTest < ActiveSupport::TestCase
         TotalCost.make_work_worker(@term, works(:work_genka))
       end
     end
-    total_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::WORKWORKER.id)
+    total_cost = TotalCost.find_by(organization: @organization, term: @term, total_cost_type_id: TotalCostType::WORKWORKER.id)
     assert_equal 6000, total_cost.amount
 
     assert_no_difference('TotalCostDetail.count') do
-      TotalCost.make_details(@term)
+      TotalCost.make_details(@organization, @term)
     end
     assert_in_delta 4000, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 5).cost, 1
     assert_in_delta 2000, TotalCostDetail.find_by(total_cost_id: total_cost.id, work_type_id: 6).cost, 1
@@ -60,7 +68,7 @@ class TotalCostTest < ActiveSupport::TestCase
       end
     end
 
-    total_cost = TotalCost.find_by(term: @term, total_cost_type_id: TotalCostType::WORKWORKER.id)
+    total_cost = TotalCost.find_by(organization: @organization, term: @term, total_cost_type_id: TotalCostType::WORKWORKER.id)
     assert_equal 3000, total_cost.amount
   end
 end

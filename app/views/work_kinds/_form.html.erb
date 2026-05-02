@@ -1,6 +1,6 @@
 <%= error_print(@work_kind) %>
 <%= form_with(model: @work_kind) do |f| %>
-  <div class="row">
+  <div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/work-kinds">
     <div class="field mb-3 col-md-4">
         <%= f.label :name, class: "col-form-label-lg form-label" %>
         <%= f.text_field :name, {maxlength: 40, size: 20, required: true, class: "form-control"} %>
@@ -25,11 +25,19 @@
     </div>
     <div class="field mb-3 col-md-2">
       <% if current_organization.lands_count > 0 %>
-        <%= f.label :land_flag, class: "col-form-label-lg form-label" %>
-        <%= f.check_box :land_flag %>
+        <div class="form-check">
+          <%= f.label :land_flag, class: "col-form-label-lg form-label" %>
+          <%= f.check_box :land_flag, {class: "form-check-input"}, true, false %>
+        </div>
       <% else %>
-        <%= f.hidden_field land_flag, false %>
+        <%= f.hidden_field :land_flag, value: false %>
       <% end %>
+    </div>
+    <div class="field mb-3 col-md-2">
+      <div class="form-check">
+        <%= f.label :aggregation_flag, class: "col-form-label-lg form-label" %>
+        <%= f.check_box :aggregation_flag, {class: "form-check-input"}, true, false  %>
+      </div>
     </div>
     <div class="field mb-3 col-md-2">
       <%= f.label :cost_type_id, class: "col-form-label-lg form-label" %>

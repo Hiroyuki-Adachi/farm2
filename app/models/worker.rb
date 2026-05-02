@@ -20,11 +20,17 @@
 #  updated_at                        :datetime
 #  gender_id(性別)                   :integer          default("none"), not null
 #  home_id(世帯)                     :integer
+#  organization_id(組織)             :bigint           default(1), not null
 #  position_id(役職)                 :integer          default("none"), not null
 #
 # Indexes
 #
-#  index_workers_on_deleted_at  (deleted_at)
+#  index_workers_on_deleted_at       (deleted_at)
+#  index_workers_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 require 'securerandom'
@@ -35,6 +41,7 @@ class Worker < ApplicationRecord
 
   self.discard_column = :deleted_at
 
+  belongs_to :organization, optional: true
   belongs_to :home, -> {with_deleted}
 
   enum :gender_id, {none: 0, male: 1, female: 2}, prefix: true
@@ -50,6 +57,7 @@ class Worker < ApplicationRecord
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
+  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
 
   scope :taskable, -> {kept.where.not(office_role: :none)}
   scope :usual_order, -> {kept.includes(home: :section).order('sections.display_order, homes.display_order, workers.display_order')}
@@ -78,6 +86,7 @@ class Worker < ApplicationRecord
   validates :display_order, numericality: {only_integer: true}, :if => proc { |x| x.display_order.present?}
   validates :broccoli_mark, uniqueness: true, :if => proc { |x| x.broccoli_mark.present?}
   validate :office_role_only_user
+  validate :home_belongs_to_same_organization
 
   def name
     "#{family_name} #{first_name}"
@@ -115,6 +124,12 @@ class Worker < ApplicationRecord
 
   def office_role_only_user
     errors.add(:office_role, "を設定する場合は、先にユーザを登録してください。") if self.user.blank? && !self.office_role_none?
+  end
+
+  def home_belongs_to_same_organization
+    return if organization_id.blank? || home.blank? || home.organization_id == organization_id
+
+    errors.add(:home_id, "は同じ組織の世帯を指定してください。")
   end
 
   def set_user_permission_id

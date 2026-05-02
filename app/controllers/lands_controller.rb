@@ -8,17 +8,18 @@ class LandsController < ApplicationController
   helper GmapHelper
 
   def index
-    @homes = LandDecorator.homes
+    base = Land.for_organization(current_organization)
+    @homes = LandDecorator.homes(current_organization)
     @home_id = params[:home_id]
-    @sum_areas = (@home_id ? Land.usual.where(owner_id: @home_id) : Land.usual).sum(:area)
+    @sum_areas = (@home_id ? base.usual.where(owner_id: @home_id) : base.usual).sum(:area)
 
     respond_to do |format|
       format.html do
-        @lands = @home_id ? Land.list.where(owner_id: @home_id) : Land.list
+        @lands = @home_id ? base.list.where(owner_id: @home_id) : base.list
         @lands = LandDecorator.decorate_collection(@lands.page(params[:page]))
       end
       format.csv do
-        @lands = Land.usual.expiry
+        @lands = base.usual.expiry
         @lands = @lands.where(owner_id: @home_id) if @home_id.present?
         @lands = @lands.includes(owner: :holder)
         send_data render_to_string, filename: "lands_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv", type: :csv
@@ -33,7 +34,7 @@ class LandsController < ApplicationController
   def edit; end
 
   def create
-    @land = Land.new(land_params)
+    @land = Land.new(land_params.merge(organization_id: current_organization.id))
     if @land.save
       redirect_to lands_path
     else
@@ -57,12 +58,14 @@ class LandsController < ApplicationController
   private
 
   def set_land
-    @land = Land.find(params[:id])
+    @land = Land.for_organization(current_organization).find_by(id: params[:id])
+    return to_error_path unless @land
+
     throw(:abort) if @land.group_flag
   end
 
   def set_homes
-    @homes = Home.landable.includes(:holder)
+    @homes = Home.for_organization(current_organization).landable.includes(:holder)
   end
 
   def set_places
@@ -70,7 +73,7 @@ class LandsController < ApplicationController
   end
 
   def set_other_lands
-    @other_lands = Land.regionable.where.not(id: @land).expiry(Time.zone.today)
+    @other_lands = Land.for_organization(current_organization).regionable.where.not(id: @land).expiry(Time.zone.today)
   end
 
   def land_params

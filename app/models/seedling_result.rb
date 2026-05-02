@@ -3,7 +3,6 @@
 # Table name: seedling_results(育苗結果)
 #
 #  id(育苗結果)               :integer          not null, primary key
-#  display_order(表示順)      :integer          default(0), not null
 #  disposal_flag(廃棄フラグ)  :boolean          default(FALSE), not null
 #  quantity(苗箱数)           :decimal(3, )     default(0), not null
 #  created_at                 :datetime         not null
@@ -17,6 +16,10 @@ class SeedlingResult < ApplicationRecord
   belongs_to :work_result
 
   scope :total, ->(seedling_homes) {where(seedling_home_id: seedling_homes.pluck(:id)).group(:seedling_home_id).sum(:quantity)}
+  scope :for_seedling_use, -> {
+    joins(work_result: :work)
+      .order("works.worked_at ASC, works.id ASC, seedling_results.id ASC")
+  }
 
   scope :by_work_day, ->(seedling_home) {
     joins(work_result: :work)
