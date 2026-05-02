@@ -133,6 +133,17 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "TB", session[:access_target]
   end
 
+  test "番号認証(LINE認証)(return_to指定がタブレット以外ならメニューへ遷移)" do
+    ip = IpList.white_ip!(@ip_address, @user)
+    patch ip_list_path(id: ip.id), params: { token: ip.token, return_to: homes_path }, headers: { "REMOTE_ADDR" => @ip_address }
+    assert_redirected_to menu_index_path
+
+    ip.reload
+    assert_not_nil ip.expired_on
+    assert_equal @user.id, session[:user_id]
+    assert_equal "PC", session[:access_target]
+  end
+
   test "番号認証(LINE認証)(エラー)" do
     ip = IpList.white_ip!(@ip_address, @user)
     ip.token = "123456"
