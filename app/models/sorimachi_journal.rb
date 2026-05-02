@@ -204,7 +204,11 @@ class SorimachiJournal < ApplicationRecord
   private
 
   def term_check
-    errors.add(:term, "の対応に誤りがあります。") if self.accounted_on.present? && self.accounted_on.year != self.term
+    return if accounted_on.blank?
+
+    return if System.where(term: term).where("start_date <= ? AND end_date >= ?", accounted_on, accounted_on).exists?
+
+    errors.add(:term, "の対応に誤りがあります。")
   end
 
   def clear_work_types

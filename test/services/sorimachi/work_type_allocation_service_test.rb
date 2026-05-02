@@ -62,11 +62,12 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
   private
 
   def create_system(term:)
+    organization = Organization.create!(name: "配賦テスト#{term}", term: term)
     System.create!(
       term: term,
       start_date: Date.new(term, 1, 1),
       end_date: Date.new(term, 12, 31),
-      organization_id: 1
+      organization_id: organization.id
     )
   end
 
