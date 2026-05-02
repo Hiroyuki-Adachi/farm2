@@ -166,7 +166,7 @@ SQL
 SQL
  
   scope :by_target, ->(term) do
-    joins("INNER JOIN systems ON systems.term = works.term")
+    joins("INNER JOIN systems ON systems.term = works.term AND systems.organization_id = works.organization_id")
      .where("works.worked_at BETWEEN systems.start_date AND systems.end_date")
      .where(systems: { term: term })
   end
