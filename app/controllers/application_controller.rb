@@ -148,7 +148,7 @@ class ApplicationController < ActionController::Base
     return fallback unless uri.path&.start_with?("/")
 
     normalized = [uri.path, uri.query].compact.join("?")
-    return normalized if allowed_paths.blank? && allowed_path_prefixes.blank?
+    return normalized if allowed_paths.nil? && allowed_path_prefixes.nil?
     return normalized if allowed_paths&.any? { |allowed_path| uri.path == allowed_path.to_s }
     return normalized if allowed_path_prefixes&.any? { |prefix| uri.path.start_with?(prefix.to_s) }
 
