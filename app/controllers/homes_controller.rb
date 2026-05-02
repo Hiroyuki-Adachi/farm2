@@ -3,6 +3,7 @@ class HomesController < ApplicationController
 
   before_action :set_home, only: [:edit, :update, :destroy]
   before_action :set_sections, only: [:new, :create, :edit, :update]
+  before_action :set_return_to, only: [:edit, :update, :destroy]
   helper GmapHelper
 
   def index
@@ -26,7 +27,7 @@ class HomesController < ApplicationController
 
   def update
     if @home.update(home_params)
-      redirect_to homes_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -34,10 +35,14 @@ class HomesController < ApplicationController
 
   def destroy
     @home.discard
-    redirect_to homes_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private
+
+  def set_return_to
+    @return_to = safe_return_to_path(params[:return_to], fallback: homes_path, allowed_paths: [homes_path])
+  end
 
   def set_home
     @home = Home.for_organization(current_organization).find_by(id: params[:id])

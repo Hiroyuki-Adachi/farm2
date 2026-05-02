@@ -42,6 +42,14 @@ class HomesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "世帯マスタ変更(表示)(戻り先を保持)" do
+    get edit_home_path(@home, return_to: homes_path(page: 2))
+
+    assert_response :success
+    assert_select "input[type=hidden][name=return_to][value=?]", homes_path(page: 2), 1
+    assert_select "a[href=?]", homes_path(page: 2), text: "戻る"
+  end
+
   test "別組織の世帯マスタ変更(表示)" do
     get edit_home_path(homes(:home_other_org))
     assert_response :error
@@ -59,6 +67,20 @@ class HomesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:section_id], @home.section_id
     assert_equal @update[:member_flag], @home.member_flag
     assert_equal @update[:display_order], @home.display_order
+  end
+
+  test "世帯マスタ変更(実行)(元のページへ戻る)" do
+    assert_no_difference('Home.count') do
+      patch home_path(@home), params: {home: @update, return_to: homes_path(page: 2)}
+    end
+    assert_redirected_to homes_path(page: 2)
+  end
+
+  test "世帯マスタ変更(実行)(不正な戻り先は一覧へ戻る)" do
+    assert_no_difference('Home.count') do
+      patch home_path(@home), params: {home: @update, return_to: "https://example.com/"}
+    end
+    assert_redirected_to homes_path
   end
 
   test "世帯マスタ削除" do
