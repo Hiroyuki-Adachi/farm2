@@ -206,10 +206,7 @@ class SorimachiJournal < ApplicationRecord
   def term_check
     return if accounted_on.blank?
 
-    systems = System.where(term: term).to_a
-    if systems.one? && accounted_on.between?(systems.first.start_date, systems.first.end_date)
-      return
-    end
+    return if System.where(term: term).where("start_date <= ? AND end_date >= ?", accounted_on, accounted_on).exists?
 
     errors.add(:term, "の対応に誤りがあります。")
   end
