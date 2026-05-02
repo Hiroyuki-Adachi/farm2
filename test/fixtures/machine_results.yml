@@ -145,6 +145,19 @@ machine_results8:
   created_at: '2015-03-22 01:12:31.373253'
   updated_at: '2015-03-22 01:12:31.373253'
 
+machine_result_other_org:
+  id: 9000
+  machine: machine_other_org
+  work_result: work_result_other_org
+  display_order: 1
+  hours: 4.0
+  fixed_quantity: 4.00
+  fixed_adjust_id: 1
+  fixed_price: 1000
+  fixed_amount: 4000
+  created_at: '2015-04-01 12:00:00'
+  updated_at: '2015-04-01 12:00:00'
+
 
 machine_results9:
   id: '1034'

@@ -73,11 +73,11 @@ ORDER
     .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   end
 
-  scope :by_term, ->(term) do
+  scope :by_term, ->(term, organization = nil) do
     kept
     joins(:chemical_type)
       .with_deleted
-      .where(chemicals: { id: WorkChemical.by_term(term).pluck("work_chemicals.chemical_id").uniq })
+      .where(chemicals: { id: WorkChemical.by_term(term, organization).pluck("work_chemicals.chemical_id").uniq })
       .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   end
 

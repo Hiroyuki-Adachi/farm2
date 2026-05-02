@@ -3,9 +3,9 @@ class MachineResultsController < ApplicationController
 
   def index
     @results = if params[:fixed_at]
-                 MachineResult.by_home_for_fix(@term, Date.strptime(params[:fixed_at], '%Y-%m-%d'))
+                 MachineResult.by_home_for_fix(@term, Date.strptime(params[:fixed_at], '%Y-%m-%d'), current_organization)
                else
-                 MachineResult.by_home(@term).to_a.uniq { |result| [result.work.id, result.machine_id]}
+                 MachineResult.by_home(@term, current_organization).to_a.uniq { |result| [result.work.id, result.machine_id]}
                end
     @owner_totals = calc_totals(@results)
 

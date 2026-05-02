@@ -135,8 +135,8 @@ SQL
 SQL
   scope :by_land, ->(land) {where("EXISTS (SELECT * FROM work_lands WHERE works.id = work_lands.work_id AND work_lands.land_id = ?)", land.id)}
 
-  scope :by_chemical, ->(term) do
-    where(id: WorkChemical.by_term(term).pluck("work_chemicals.work_id").uniq)
+  scope :by_chemical, ->(term, organization = nil) do
+    where(id: WorkChemical.by_term(term, organization).pluck("work_chemicals.work_id").uniq)
       .order(:worked_at, :id)
   end
 

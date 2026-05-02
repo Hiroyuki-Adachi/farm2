@@ -53,3 +53,11 @@ work_chemical_test:
   area_flag: false
   magnification: 2000
   dilution_id: 2
+
+work_chemical_other_org:
+  work: work_other_org
+  chemical_id: 3
+  quantity: 20
+  created_at: '2015-07-15 14:03:52'
+  updated_at: '2015-07-15 14:03:52'
+  chemical_group_no: 1

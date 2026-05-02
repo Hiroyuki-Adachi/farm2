@@ -33,8 +33,8 @@ class MachineResult < ApplicationRecord
   has_one :machine_type, -> {with_deleted}, through: :machine
   has_one :work_kind, -> {with_deleted}, through: :work
 
-  scope :by_home, ->(term) {
-    joins(:machine).eager_load(:machine)
+  scope :by_home, ->(term, organization = nil) {
+    base = joins(:machine).eager_load(:machine)
    .joins(:work_result).eager_load(:work_result)
    .joins(:work_type).eager_load(:work_type)
    .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
@@ -44,10 +44,17 @@ class MachineResult < ApplicationRecord
    .where("homes.company_flag = FALSE")
    .where(systems: { term: term })
    .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
+
+    if organization
+      organization_id = organization.is_a?(Organization) ? organization.id : organization
+      base.where(works: { organization_id: organization_id })
+    else
+      base
+    end
   }
 
-  scope :by_home_for_fix, ->(term, fixed_at) {
-    joins(:machine).eager_load(:machine)
+  scope :by_home_for_fix, ->(term, fixed_at, organization = nil) {
+    base = joins(:machine).eager_load(:machine)
    .joins(:work_result).eager_load(:work_result)
    .joins(:work_type).eager_load(:work_type)
    .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
@@ -55,6 +62,13 @@ class MachineResult < ApplicationRecord
    .where("homes.company_flag = FALSE AND works.term = ?", term)
    .where("works.fixed_at = ? AND machine_results.fixed_price IS NOT NULL", fixed_at)
    .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
+
+    if organization
+      organization_id = organization.is_a?(Organization) ? organization.id : organization
+      base.where(works: { organization_id: organization_id })
+    else
+      base
+    end
   }
 
   scope :for_personal, ->(home, worked_at) {
