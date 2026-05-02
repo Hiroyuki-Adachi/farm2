@@ -52,22 +52,7 @@ class IpListsController < ApplicationController
   end
 
   def set_return_to
-    @return_to = safe_return_to_path(params[:return_to])
-  end
-
-  def safe_return_to_path(path)
-    return if path.blank?
-
-    uri = URI.parse(path)
-    return unless uri.scheme.nil? && uri.host.nil?
-    return unless uri.path&.start_with?("/")
-
-    normalized = uri.path
-    return unless normalized.start_with?("/tablets")
-
-    [normalized, uri.query].compact.join("?")
-  rescue URI::InvalidURIError
-    nil
+    @return_to = safe_return_to_path(params[:return_to], allowed_path_prefixes: ["/tablets"])
   end
 
   def login_target_for_return_to

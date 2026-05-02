@@ -140,7 +140,7 @@ class ApplicationController < ActionController::Base
     normalized.start_with?("/") ? "#{prefix}#{normalized}" : "#{prefix}/#{normalized}"
   end
 
-  def safe_return_to_path(path, fallback: nil, allowed_paths: nil)
+  def safe_return_to_path(path, fallback: nil, allowed_paths: nil, allowed_path_prefixes: nil)
     return fallback if path.blank?
 
     uri = URI.parse(path)
@@ -148,9 +148,11 @@ class ApplicationController < ActionController::Base
     return fallback unless uri.path&.start_with?("/")
 
     normalized = [uri.path, uri.query].compact.join("?")
-    return normalized if allowed_paths.blank?
+    return normalized if allowed_paths.blank? && allowed_path_prefixes.blank?
+    return normalized if allowed_paths&.any? { |allowed_path| uri.path == allowed_path.to_s }
+    return normalized if allowed_path_prefixes&.any? { |prefix| uri.path.start_with?(prefix.to_s) }
 
-    allowed_paths.any? { |allowed_path| uri.path == allowed_path.to_s } ? normalized : fallback
+    fallback
   rescue URI::InvalidURIError
     fallback
   end
