@@ -1,6 +1,8 @@
 class LandPlacesController < ApplicationController
   include PermitManager
+  include ReturnToIndex
   before_action :set_land_place, only: [:edit, :update, :destroy]
+  keeps_index_return_to path_method: :land_places_path
 
   def index
     @land_places = LandPlace.usual
@@ -24,7 +26,7 @@ class LandPlacesController < ApplicationController
 
   def update
     if @land_place.update(land_place_params)
-      redirect_to land_places_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -32,7 +34,7 @@ class LandPlacesController < ApplicationController
 
   def destroy
     @land_place.discard
-    redirect_to land_places_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private

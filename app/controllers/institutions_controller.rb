@@ -1,6 +1,8 @@
 class InstitutionsController < ApplicationController
   include PermitManager
+  include ReturnToIndex
   before_action :set_institution, only: [:edit, :update, :destroy]
+  keeps_index_return_to path_method: :institutions_path
   helper GmapHelper
 
   def index
@@ -24,7 +26,7 @@ class InstitutionsController < ApplicationController
 
   def update
     if @institution.update(institution_params)
-      redirect_to institutions_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -32,7 +34,7 @@ class InstitutionsController < ApplicationController
 
   def destroy
     @institution.destroy
-    redirect_to institutions_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private

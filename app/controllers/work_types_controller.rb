@@ -1,7 +1,10 @@
 class WorkTypesController < ApplicationController
+  include ReturnToIndex
+
   skip_before_action :restrict_remote_ip, only: [:icon]
   before_action :permit_manager, except: [:icon]
   before_action :set_work_type, only: [:edit, :update, :destroy]
+  keeps_index_return_to path_method: :work_types_path
 
   helper WorkTypesHelper
 
@@ -38,7 +41,7 @@ class WorkTypesController < ApplicationController
       @work_type.icon_name = icon.original_filename
     end
     if @work_type.save
-      redirect_to work_types_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -46,7 +49,7 @@ class WorkTypesController < ApplicationController
 
   def destroy
     @work_type.discard
-    redirect_to work_types_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   def icon

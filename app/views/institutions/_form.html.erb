@@ -1,5 +1,6 @@
 <%= error_print(@institution) %>
 <%= form_with(model: @institution, data: {controller: "page-loader", page_loader_modules_value: "pages/institutions"}) do |f| %>
+<%= hidden_field_tag :return_to, @return_to if @return_to.present? %>
 <div class="row">
   <div class="field col-md-3">
     <%= f.label :name, class: "col-form-label-lg form-label" %>
@@ -30,11 +31,11 @@
   </div>
   <% unless @institution.new_record? %>
     <div class="btn-group mr-2">
-      <%= link_to '削除', @institution, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+      <%= link_to '削除', institution_path(@institution, return_to: @return_to), {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
     </div>
   <% end %>
   <div class="btn-group mr-2">
-    <%= link_to "戻る", institutions_path, class: "btn btn-outline-dark" %>
+    <%= link_to "戻る", @return_to.presence || institutions_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
 <% end %>

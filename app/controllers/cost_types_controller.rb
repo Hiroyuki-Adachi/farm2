@@ -1,7 +1,9 @@
 class CostTypesController < ApplicationController
   include PermitManager
+  include ReturnToIndex
   before_action :set_cost_type, only: [:edit, :update, :destroy]
   before_action :set_work_kinds, only: [:new, :edit, :create, :update, :destroy]
+  keeps_index_return_to path_method: :cost_types_path
 
   def index
     @cost_types = CostType.usual
@@ -22,7 +24,7 @@ class CostTypesController < ApplicationController
 
   def update
     if @cost_type.update(cost_type_params)
-      redirect_to cost_types_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -32,7 +34,7 @@ class CostTypesController < ApplicationController
 
   def destroy
     @cost_type.destroy
-    redirect_to cost_types_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private

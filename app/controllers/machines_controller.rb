@@ -1,7 +1,9 @@
 class MachinesController < ApplicationController
   include PermitChecker
+  include ReturnToIndex
   before_action :set_machine, only: [:edit, :update, :destroy]
   before_action :set_masters, only: [:new, :create, :edit, :update]
+  keeps_index_return_to path_method: :machines_path
 
   def index
     @machines = MachineDecorator.decorate_collection(Machine.includes(:owner).usual.page(params[:page]))
@@ -24,7 +26,7 @@ class MachinesController < ApplicationController
 
   def update
     if @machine.update(machine_params)
-      redirect_to machines_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -32,7 +34,7 @@ class MachinesController < ApplicationController
 
   def destroy
     @machine.discard
-    redirect_to machines_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private

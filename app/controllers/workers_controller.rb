@@ -1,8 +1,10 @@
 class WorkersController < ApplicationController
   include PermitChecker
+  include ReturnToIndex
 
   before_action :set_worker, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
+  keeps_index_return_to path_method: :workers_path
 
   def index
     @workers = WorkerDecorator.decorate_collection(Worker.for_organization(current_organization).usual.page(params[:page]))
@@ -33,7 +35,7 @@ class WorkersController < ApplicationController
       @worker.home.save!
     end
     if @worker.update(worker_params)
-      redirect_to workers_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -41,7 +43,7 @@ class WorkersController < ApplicationController
 
   def destroy
     @worker.discard
-    redirect_to workers_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private
