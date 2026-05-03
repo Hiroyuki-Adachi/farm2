@@ -20,7 +20,9 @@ class WorkKindPrice < ApplicationRecord
   validates :price, presence: true
   validates :price, numericality: true, if: proc { |x| x.price.present?}
 
-  scope :usual, ->(work_kind) {where("work_kind_id = ? and term <= ?", work_kind.id, Organization.term).order("term DESC")}
+  scope :usual, ->(work_kind, organization = nil) do
+    where("work_kind_id = ? and term <= ?", work_kind.id, Organization.term(organization)).order("term DESC")
+  end
 
   def self.price(work_kind, term)
     work_kind_price = WorkKindPrice.find_by(work_kind_id: work_kind.id, term: term)

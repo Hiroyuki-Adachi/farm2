@@ -8,7 +8,6 @@ class WorksController < ApplicationController
   before_action :set_lands, only: [:show]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :check_fixed, only: [:edit, :update, :destroy]
-  before_action :clear_cache, only: [:update, :create, :destroy]
   before_action :permit_not_visitor, except: [:index, :show]
   before_action :permit_checkable_or_self, only: [:edit, :update, :destroy]
   before_action :permit_visitor, only: :show
@@ -156,10 +155,6 @@ class WorksController < ApplicationController
 
   def check_fixed
     redirect_to works_path if @work.fixed_at
-  end
-
-  def clear_cache
-    Rails.cache.clear
   end
 
   def set_work_types

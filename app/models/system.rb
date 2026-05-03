@@ -31,8 +31,6 @@
 
 class System < ApplicationRecord
   validates :term,        presence: true
-  after_save :cache_clear
-
   validates :term, numericality: {only_integer: true, greater_than: 2000, less_than: 2100}
   validate :validate_period_dates
   validate :validate_period_continuity
@@ -129,7 +127,4 @@ class System < ApplicationRecord
       .first
   end
 
-  def cache_clear
-    Rails.cache.clear
-  end
 end
