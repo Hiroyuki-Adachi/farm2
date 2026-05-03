@@ -54,8 +54,8 @@ class WorkResultsTest < ApplicationSystemTestCase
 
   private
 
-  def within_table(&blk)
-    within('table[data-controller="grouped-rows"]', &blk)
+  def within_table(&)
+    within('table[data-controller="grouped-rows"]', &)
   end
 
   def expect_all_hidden(selector)

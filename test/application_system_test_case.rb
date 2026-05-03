@@ -38,6 +38,7 @@ Capybara.register_driver(:better_cuprite) do |app|
   )
 end
 
+Capybara.save_path = nil
 Capybara.server_host = "0.0.0.0"
 Capybara.default_normalize_ws = true
 Capybara.default_driver = Capybara.javascript_driver = :better_cuprite
