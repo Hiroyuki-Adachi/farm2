@@ -2,7 +2,7 @@ module ReturnToIndex
   extend ActiveSupport::Concern
 
   class_methods do
-    def keeps_index_return_to(path_method:, only: [:edit, :update, :destroy])
+    def keeps_index_return_to(path_method:, only: [:new, :create, :edit, :update, :destroy])
       before_action only: only do
         set_index_return_to(path_method)
       end
