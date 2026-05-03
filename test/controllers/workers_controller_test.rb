@@ -102,4 +102,13 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
 
     assert_nil Worker.kept.find_by(id: @worker.id)
   end
+
+  test "作業者マスタ削除(元のページへ戻る)" do
+    assert_difference('Worker.kept.count', -1) do
+      delete worker_path(@worker), params: {return_to: workers_path(page: 2)}
+    end
+    assert_redirected_to workers_path(page: 2)
+
+    assert_nil Worker.kept.find_by(id: @worker.id)
+  end
 end
