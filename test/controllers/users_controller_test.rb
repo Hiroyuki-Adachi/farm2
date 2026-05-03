@@ -83,6 +83,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'returnuser', user.login_name
   end
 
+  test "ユーザ変更(実行)(不正な戻り先は一覧へ戻る)" do
+    user = users(:user_manager)
+
+    patch user_path(user), params: {user: {login_name: 'safeuser', password: "AAAA", password_confirmation: "AAAA"}, return_to: "https://example.com/"}
+    assert_redirected_to users_path
+
+    user.reload
+    assert_equal 'safeuser', user.login_name
+  end
+
   test "ユーザ削除" do
     assert_difference('User.count', -1) do
       delete user_path(@user)
