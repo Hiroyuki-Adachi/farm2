@@ -54,6 +54,13 @@ class WorkTypesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:work_genre_id], @work_type.work_genre_id
   end
 
+  test "作業分類マスタ変更(実行)(元のページへ戻る)" do
+    assert_no_difference('WorkType.kept.count') do
+      patch work_type_path(@work_type), params: {work_type: @update, return_to: work_types_path(page: 2)}
+    end
+    assert_redirected_to work_types_path(page: 2)
+  end
+
   test "作業分類マスタ削除" do
     assert_difference('WorkType.kept.count', -1) do
       delete work_type_path(@work_type)
