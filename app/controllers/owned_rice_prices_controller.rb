@@ -1,5 +1,8 @@
 class OwnedRicePricesController < ApplicationController
   include PermitManager
+  include ReturnToIndex
+
+  keeps_index_return_to path_method: :owned_rice_prices_path, only: [:edit, :create, :update, :destroy]
 
   def index
     @work_types = WorkType.indexes
@@ -14,7 +17,7 @@ class OwnedRicePricesController < ApplicationController
   def create
     @owned_rice_price = OwnedRicePrice.new(owned_rice_price_params)
     if @owned_rice_price.save
-      redirect_to owned_rice_prices_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -23,7 +26,7 @@ class OwnedRicePricesController < ApplicationController
   def update
     @owned_rice_price = OwnedRicePrice.find(params[:id])
     if @owned_rice_price.update(owned_rice_price_params)
-      redirect_to owned_rice_prices_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -31,7 +34,7 @@ class OwnedRicePricesController < ApplicationController
 
   def destroy
     OwnedRicePrice.find(params[:id]).destroy
-    redirect_to owned_rice_prices_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private

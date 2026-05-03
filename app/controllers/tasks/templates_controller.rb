@@ -1,7 +1,9 @@
 class Tasks::TemplatesController < ApplicationController
   include PermitManager
+  include ReturnToIndex
 
   before_action :set_template, only: [:edit, :update, :destroy]
+  keeps_index_return_to path_method: :task_templates_path
 
   decorates_assigned :template, with: TaskTemplateDecorator
   decorates_assigned :templates, with: TaskTemplateDecorator
@@ -28,7 +30,7 @@ class Tasks::TemplatesController < ApplicationController
   def update
     if @template.update(template_params)
       @template.undiscard
-      redirect_to task_templates_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -36,7 +38,7 @@ class Tasks::TemplatesController < ApplicationController
 
   def destroy
     @template.destroy_or_archive!
-    redirect_to task_templates_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private

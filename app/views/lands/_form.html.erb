@@ -82,15 +82,15 @@
   </div>
   <% unless @land.new_record? %>
     <div class="btn-group mr-2">
-      <%= link_to '削除', @land, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+      <%= link_to '削除', land_path(@land, return_to: @return_to), {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
     </div>
   <% end %>
   <div class="btn-group mr-2">
-    <%= link_to "戻る",  lands_path(home_id: params[:home_id], page: params[:page]), class: "btn btn-outline-dark" %>
+    <%= link_to "戻る", @return_to.presence || lands_path, class: "btn btn-outline-dark" %>
   </div>
 </div>
 <%= hidden_field_tag :home_id, params[:home_id] %>
-<%= hidden_field_tag :page, params[:page] %>
+<%= hidden_field_tag :return_to, @return_to if @return_to.present? %>
 <% end %>
 <div class="modal fade bd-example-modal-lg" id="popup_edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">

@@ -73,6 +73,15 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "作業種別マスタ変更(実行)(元のページへ戻る)" do
+    WorkKindPrice.where(work_kind_id: @work_kind).update_all(price: 1000)
+
+    assert_no_difference('WorkKind.kept.count') do
+      patch work_kind_path(@work_kind), params: {work_kind: @update, return_to: work_kinds_path(page: 2)}
+    end
+    assert_redirected_to work_kinds_path(page: 2)
+  end
+
   test "作業種別マスタ削除" do
     assert_difference('WorkKind.kept.count', -1) do
       delete work_kind_path(@work_kind)

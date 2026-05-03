@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :set_return_to, only: [:new, :create, :edit, :update, :destroy]
   before_action :permit_admin, only: [:index, :new, :create, :destroy]
   before_action :permit_self, only: [:edit, :update]
 
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
       )
     )
     if @user.save
-      redirect_to users_path
+      redirect_to @return_to
     else
       render action: :new, status: :unprocessable_content
     end
@@ -31,7 +32,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to current_user.id == @user.id ? menu_index_path : users_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -39,10 +40,15 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to users_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private
+
+  def set_return_to
+    fallback = (action_name.in?(["edit", "update"]) && @user&.id == current_user.id) ? menu_index_path : users_path
+    @return_to = safe_return_to_path(params[:return_to], fallback: fallback, allowed_paths: [users_path, menu_index_path])
+  end
 
   def set_user
     @user = User.find(params[:id])

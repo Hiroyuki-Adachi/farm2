@@ -62,6 +62,13 @@ class MachinesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:home_id], @machine.home_id
   end
 
+  test "機械種別マスタ変更(実行)(元のページへ戻る)" do
+    assert_no_difference('Machine.kept.count') do
+      patch machine_path(@machine), params: {id: @machine, machine: @update, return_to: machines_path(page: 2)}
+    end
+    assert_redirected_to machines_path(page: 2)
+  end
+
   test "機械種別マスタ削除" do
     assert_difference('Machine.kept.count', -1) do
       delete machine_path(@machine)

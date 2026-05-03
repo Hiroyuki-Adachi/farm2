@@ -1,8 +1,10 @@
 class ChemicalsController < ApplicationController
   include PermitChecker
+  include ReturnToIndex
   before_action :set_chemical, only: [:edit, :update, :destroy]
   before_action :set_chemical_types, only: [:new, :create, :edit, :update]
   before_action :set_base_units, only: [:new, :edit]
+  keeps_index_return_to path_method: :chemicals_path
 
   def index
     @chemicals = ChemicalDecorator.decorate_collection(Chemical.list.page(params[:page]))
@@ -25,7 +27,7 @@ class ChemicalsController < ApplicationController
 
   def update
     if @chemical.update(chemical_params)
-      redirect_to chemicals_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -33,7 +35,7 @@ class ChemicalsController < ApplicationController
 
   def destroy
     @chemical.discard
-    redirect_to chemicals_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private

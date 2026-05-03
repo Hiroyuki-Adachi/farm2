@@ -50,6 +50,14 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "作業者マスタ変更(表示)(戻り先を保持)" do
+    get edit_worker_path(@worker, return_to: workers_path(page: 2))
+
+    assert_response :success
+    assert_select "input[type=hidden][name=return_to][value=?]", workers_path(page: 2), 1
+    assert_select "a[href=?]", workers_path(page: 2), text: "戻る"
+  end
+
   test "別組織の作業者マスタ変更(表示)" do
     get edit_worker_path(workers(:worker_other_org))
     assert_response :error
@@ -72,11 +80,34 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:office_role], @worker.office_role.to_sym
   end
 
+  test "作業者マスタ変更(実行)(元のページへ戻る)" do
+    assert_no_difference('Worker.kept.count') do
+      patch worker_path(@worker), params: {worker: @update, return_to: workers_path(page: 2)}
+    end
+    assert_redirected_to workers_path(page: 2)
+  end
+
+  test "作業者マスタ変更(実行)(不正な戻り先は一覧へ戻る)" do
+    assert_no_difference('Worker.kept.count') do
+      patch worker_path(@worker), params: {worker: @update, return_to: "https://example.com/"}
+    end
+    assert_redirected_to workers_path
+  end
+
   test "作業者マスタ削除" do
     assert_difference('Worker.kept.count', -1) do
       delete worker_path(@worker)
     end
     assert_redirected_to workers_path
+
+    assert_nil Worker.kept.find_by(id: @worker.id)
+  end
+
+  test "作業者マスタ削除(元のページへ戻る)" do
+    assert_difference('Worker.kept.count', -1) do
+      delete worker_path(@worker), params: {return_to: workers_path(page: 2)}
+    end
+    assert_redirected_to workers_path(page: 2)
 
     assert_nil Worker.kept.find_by(id: @worker.id)
   end

@@ -13,7 +13,7 @@
       <tr>
         <td><%= institution.name %></td>
         <td><%= institution.enable?(current_term) ? "◯" : "" %></td>
-        <td><%= link_to '修正', edit_institution_path(institution), {class: "btn btn-success btn-sm"} %></td>
+        <td><%= link_to '修正', edit_institution_path(institution, return_to: request.fullpath), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>
   </tbody>

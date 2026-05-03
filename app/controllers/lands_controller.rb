@@ -1,10 +1,12 @@
 class LandsController < ApplicationController
   include PermitChecker
+  include ReturnToIndex
 
   before_action :set_land, only: [:edit, :update, :destroy]
   before_action :set_homes, only: [:new, :create, :edit, :update]
   before_action :set_places, only: [:new, :create, :edit, :update]
   before_action :set_other_lands, only: [:new, :edit]
+  keeps_index_return_to path_method: :lands_path
   helper GmapHelper
 
   def index
@@ -44,7 +46,7 @@ class LandsController < ApplicationController
 
   def update
     if @land.update(land_params)
-      redirect_to lands_path(home_id: params[:home_id].presence, page: params[:page]), status: :see_other
+      redirect_to @return_to, status: :see_other
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -52,7 +54,7 @@ class LandsController < ApplicationController
 
   def destroy
     @land.discard
-    redirect_to lands_path(home_id: params[:home_id].presence), status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private

@@ -1,7 +1,9 @@
 class MachineTypesController < ApplicationController
   include PermitChecker
+  include ReturnToIndex
   before_action :set_machine_type, only: [:edit, :update, :destroy]
   before_action :set_work_kinds, only: [:new, :create, :edit, :update]
+  keeps_index_return_to path_method: :machine_types_path
 
   def index
     @machine_types = MachineType.includes(:machines).order(:display_order)
@@ -27,7 +29,7 @@ class MachineTypesController < ApplicationController
   def update
     if @machine_type.update(machine_type_params)
       update_work_kinds
-      redirect_to machine_types_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -35,7 +37,7 @@ class MachineTypesController < ApplicationController
 
   def destroy
     @machine_type.destroy
-    redirect_to machine_types_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private

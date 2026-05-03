@@ -1,9 +1,10 @@
 class HomesController < ApplicationController
   include PermitChecker
+  include ReturnToIndex
 
   before_action :set_home, only: [:edit, :update, :destroy]
   before_action :set_sections, only: [:new, :create, :edit, :update]
-  before_action :set_return_to, only: [:edit, :update, :destroy]
+  keeps_index_return_to path_method: :homes_path
   helper GmapHelper
 
   def index
@@ -39,10 +40,6 @@ class HomesController < ApplicationController
   end
 
   private
-
-  def set_return_to
-    @return_to = safe_return_to_path(params[:return_to], fallback: homes_path, allowed_paths: [homes_path])
-  end
 
   def set_home
     @home = Home.for_organization(current_organization).find_by(id: params[:id])

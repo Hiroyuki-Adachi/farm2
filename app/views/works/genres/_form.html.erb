@@ -1,5 +1,6 @@
 <%= error_print(@genre) %>
 <%= form_with(model: @genre) do |f| %>
+<%= hidden_field_tag :return_to, @return_to if @return_to.present? %>
 <div class="row">
   <div class="mb-3 col-md-4">
     <%= f.label :name, class: "col-form-label-lg form-label" %>
@@ -31,11 +32,11 @@
   </div>
   <% if !@genre.new_record? && !@genre.work_types.kept.any? %>
     <div class="btn-group mr-2">
-      <%= link_to '削除', @genre, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+      <%= link_to '削除', work_genre_path(@genre, return_to: @return_to), {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
     </div>
   <% end %>
   <div class="btn-group mr-2">
-    <%= link_to "戻る", work_genres_path, {class: "btn btn-outline-dark"}%>
+    <%= link_to "戻る", @return_to.presence || work_genres_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
 <% end %>

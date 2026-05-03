@@ -1,7 +1,9 @@
 class Works::GenresController < ApplicationController
   include PermitManager
+  include ReturnToIndex
 
   before_action :set_work_genre, only: [:edit, :update, :destroy]
+  keeps_index_return_to path_method: :work_genres_path
 
   def index
     @genres = WorkGenre.for_index
@@ -24,7 +26,7 @@ class Works::GenresController < ApplicationController
 
   def update
     if @genre.update(work_genre_params)
-      redirect_to(work_genres_path)
+      redirect_to(@return_to)
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -33,9 +35,9 @@ class Works::GenresController < ApplicationController
   def destroy
     case @genre.remove_by_policy!
     when :discarded
-      redirect_to work_genres_path, notice: "作業ジャンルを論理削除しました（子はすべて論理削除済みでした）"
+      redirect_to @return_to, notice: "作業ジャンルを論理削除しました（子はすべて論理削除済みでした）"
     when :destroyed
-      redirect_to work_genres_path, notice: "作業ジャンルを物理削除しました（子データは存在しませんでした）"
+      redirect_to @return_to, notice: "作業ジャンルを物理削除しました（子データは存在しませんでした）"
     end
   rescue ActiveRecord::RecordNotDestroyed
     render action: :edit, status: :unprocessable_content

@@ -23,6 +23,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "ユーザ新規作成(表示)(戻り先を保持)" do
+    get new_user_path, params: {worker_id: workers(:worker5).id, return_to: users_path(page: 2)}
+
+    assert_response :success
+    assert_select "input[type=hidden][name=return_to][value=?]", users_path(page: 2), 1
+    assert_select "a[href=?]", users_path(page: 2), text: "戻る"
+  end
+
   test "ユーザ新規作成(実行)" do
     assert_difference('User.count') do
       post users_path, params: {user: @create}
@@ -34,9 +42,24 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal @create[:login_name], user.login_name
   end
 
+  test "ユーザ新規作成(実行)(元のページへ戻る)" do
+    assert_difference('User.count') do
+      post users_path, params: {user: @create, return_to: users_path(page: 2)}
+    end
+    assert_redirected_to users_path(page: 2)
+  end
+
   test "ユーザ変更(表示)" do
     get edit_user_path(@user)
     assert_response :success
+  end
+
+  test "ユーザ変更(表示)(戻り先を保持)" do
+    get edit_user_path(users(:user_manager), return_to: users_path(page: 2))
+
+    assert_response :success
+    assert_select "input[type=hidden][name=return_to][value=?]", users_path(page: 2), 1
+    assert_select "a[href=?]", users_path(page: 2), text: "戻る"
   end
 
   test "ユーザ変更(実行)" do
@@ -50,11 +73,41 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'updateuser', @user.login_name
   end
 
+  test "ユーザ変更(実行)(元のページへ戻る)" do
+    user = users(:user_manager)
+
+    patch user_path(user), params: {user: {login_name: 'returnuser', password: "AAAA", password_confirmation: "AAAA"}, return_to: users_path(page: 2)}
+    assert_redirected_to users_path(page: 2)
+
+    user.reload
+    assert_equal 'returnuser', user.login_name
+  end
+
+  test "ユーザ変更(実行)(不正な戻り先は一覧へ戻る)" do
+    user = users(:user_manager)
+
+    patch user_path(user), params: {user: {login_name: 'safeuser', password: "AAAA", password_confirmation: "AAAA"}, return_to: "https://example.com/"}
+    assert_redirected_to users_path
+
+    user.reload
+    assert_equal 'safeuser', user.login_name
+  end
+
   test "ユーザ削除" do
     assert_difference('User.count', -1) do
       delete user_path(@user)
     end
     assert_redirected_to users_path
     assert_nil User.find_by(id: @user.id)
+  end
+
+  test "ユーザ削除(元のページへ戻る)" do
+    user = users(:user_visitor)
+
+    assert_difference('User.count', -1) do
+      delete user_path(user), params: {return_to: users_path(page: 2)}
+    end
+    assert_redirected_to users_path(page: 2)
+    assert_nil User.find_by(id: user.id)
   end
 end
