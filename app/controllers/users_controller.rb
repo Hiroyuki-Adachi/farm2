@@ -32,7 +32,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to current_user.id == @user.id ? menu_index_path : @return_to
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
