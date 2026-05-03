@@ -70,7 +70,8 @@ class WorkKind < ApplicationRecord
   attr_accessor :term
 
   def term_price(term)
-    WorkKindPrice.price(self, term)
+    @term_prices ||= {}
+    @term_prices[term] ||= WorkKindPrice.price(self, term)
   end
 
   def price
@@ -94,5 +95,6 @@ class WorkKind < ApplicationRecord
     else
       WorkKindPrice.create(work_kind_id: id, term: @term, price: @price)
     end
+    @term_prices[@term] = @price if defined?(@term_prices) && @term.present?
   end
 end
