@@ -123,7 +123,7 @@ class ApplicationController < ActionController::Base
       logger.error "No exception object given (manual trigger)"
     end
     logger.error "Request: #{request.method} #{request.fullpath} from #{request.remote_ip}"
-    logger.error "Params: #{request.params}"
+    logger.error "Params: #{request.filtered_parameters}"
     logger.error "User: #{@current_user&.id}"
 
     render file: Rails.public_path.join('503.html'), layout: false, status: :service_unavailable
