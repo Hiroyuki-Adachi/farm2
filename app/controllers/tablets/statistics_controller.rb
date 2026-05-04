@@ -22,14 +22,14 @@ class Tablets::StatisticsController < StatisticsController
   end
 
   def tab5
-    @total_worker = Work.total_by_worker(current_user.worker, current_term)
-    @total_home = Work.total_by_home(current_user.worker, current_term)
+    @total_worker = Work.total_by_worker(current_user.worker, current_term, organization: current_organization)
+    @total_home = Work.total_by_home(current_user.worker, current_term, organization: current_organization)
     render template: "tablets/statistics/tab5"
   end
 
   def tab6
-    @total_month1 = Work.total_by_month(current_user.worker, previous_term)
-    @total_month2 = Work.total_by_month(current_user.worker, current_term)
+    @total_month1 = Work.total_by_month(current_user.worker, previous_term, organization: current_organization)
+    @total_month2 = Work.total_by_month(current_user.worker, current_term, organization: current_organization)
     render template: "tablets/statistics/tab6"
   end
 end

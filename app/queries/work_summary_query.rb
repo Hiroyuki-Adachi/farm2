@@ -1,31 +1,31 @@
 class WorkSummaryQuery
-  def total_all(terms)
-    Work.where(term: terms).joins(:work_results).group(:term).order(:term).sum("work_results.hours")
+  def total_all(terms, organization: nil)
+    base_scope(organization).where(term: terms).joins(:work_results).group(:term).order(:term).sum("work_results.hours")
   end
 
-  def total_by_worker(worker, term)
+  def total_by_worker(worker, term, organization: nil)
     results = empty_term_totals(term)
-    Work.joins(:work_results).where(["work_results.worker_id = ? AND works.term >= ?", worker.id, term - 9])
+    base_scope(organization).joins(:work_results).where(["work_results.worker_id = ? AND works.term >= ?", worker.id, term - 9])
       .group(:term).order(:term).sum("work_results.hours").each do |k, v|
       results[k.to_i] = v
     end
     results
   end
 
-  def total_by_home(worker, term)
+  def total_by_home(worker, term, organization: nil)
     results = empty_term_totals(term)
-    Work.joins(work_results: :worker).where(["workers.home_id = ? AND work_results.worker_id <> ? AND works.term >= ?", worker.home_id, worker.id, term - 9])
+    base_scope(organization).joins(work_results: :worker).where(["workers.home_id = ? AND work_results.worker_id <> ? AND works.term >= ?", worker.home_id, worker.id, term - 9])
       .group(:term).order(:term).sum("work_results.hours").each do |k, v|
       results[k.to_i] = v
     end
     results
   end
 
-  def total_by_month(worker, term)
+  def total_by_month(worker, term, organization: nil)
     terms = Array(term)
     results = Array.new(12, 0)
 
-    query = Work.joins(:work_results).where(term: terms)
+    query = base_scope(organization).joins(:work_results).where(term: terms)
     query = query.where(work_results: { worker_id: worker.id }) if worker
     query.group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
       results[k.to_i - 1] = (v.to_f / terms.length).round(1)
@@ -33,8 +33,8 @@ class WorkSummaryQuery
     results
   end
 
-  def total_genre
-    Work.joins(:work_results)
+  def total_genre(organization: nil)
+    base_scope(organization).joins(:work_results)
         .joins(:work_type)
         .group("work_types.work_genre_id", :term)
         .order("work_types.work_genre_id", :term)
@@ -62,6 +62,10 @@ class WorkSummaryQuery
   end
 
   private
+
+  def base_scope(organization)
+    organization ? Work.for_organization(organization) : Work.all
+  end
 
   def empty_term_totals(term)
     results = {}

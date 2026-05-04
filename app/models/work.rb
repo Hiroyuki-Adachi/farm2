@@ -327,24 +327,24 @@ SQL
     broccoli.destroy if work_type_id == organization.broccoli_work_type_id && work_kind_id == organization.broccoli_work_kind_id && broccoli.present?
   end
 
-  def self.total_all(terms)
-    WorkSummaryQuery.new.total_all(terms)
+  def self.total_all(terms, organization: nil)
+    WorkSummaryQuery.new.total_all(terms, organization: organization)
   end
 
-  def self.total_by_worker(worker, term)
-    WorkSummaryQuery.new.total_by_worker(worker, term)
+  def self.total_by_worker(worker, term, organization: nil)
+    WorkSummaryQuery.new.total_by_worker(worker, term, organization: organization)
   end
 
-  def self.total_by_home(worker, term)
-    WorkSummaryQuery.new.total_by_home(worker, term)
+  def self.total_by_home(worker, term, organization: nil)
+    WorkSummaryQuery.new.total_by_home(worker, term, organization: organization)
   end
 
-  def self.total_by_month(worker, term)
-    WorkSummaryQuery.new.total_by_month(worker, term)
+  def self.total_by_month(worker, term, organization: nil)
+    WorkSummaryQuery.new.total_by_month(worker, term, organization: organization)
   end
 
-  def self.total_genre
-    WorkSummaryQuery.new.total_genre
+  def self.total_genre(organization: nil)
+    WorkSummaryQuery.new.total_genre(organization: organization)
   end
 
   def self.hours_per_10a_by_work_kind(work_kind_id, terms, organization: nil)

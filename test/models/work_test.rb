@@ -73,6 +73,56 @@ class WorkTest < ActiveSupport::TestCase
     assert_equal total_hours, Work.total_genre[[@work.work_type.work_genre_id, 2015]]
   end
 
+  test "工数統計は組織で絞り込める" do
+    work_type = work_types(:work_type_koshi)
+    org_work = create_summary_work(
+      organization: organizations(:org),
+      worker: workers(:worker1),
+      work_type: work_type,
+      worked_at: Date.new(2026, 1, 15),
+      hours: 2
+    )
+    create_summary_work(
+      organization: organizations(:org2),
+      worker: workers(:worker1),
+      work_type: work_type,
+      worked_at: Date.new(2026, 1, 15),
+      hours: 7
+    )
+
+    assert_equal 2, Work.total_all([2026], organization: organizations(:org))[2026]
+    assert_equal 2, Work.total_by_worker(workers(:worker1), 2026, organization: organizations(:org))[2026]
+    assert_equal 2.0, Work.total_by_month(nil, 2026, organization: organizations(:org))[0]
+    assert_equal 2, Work.total_genre(organization: organizations(:org))[[work_type.work_genre_id, 2026]]
+    assert_includes Work.for_organization(organizations(:org)), org_work
+  end
+
+  test "世帯別工数統計は組織で絞り込める" do
+    same_home_worker = Worker.create!(
+      organization: organizations(:org),
+      home: workers(:worker1).home,
+      family_name: "集計",
+      first_name: "太郎",
+      family_phonetic: "しゅうけい",
+      first_phonetic: "たろう",
+      display_order: 99
+    )
+    create_summary_work(
+      organization: organizations(:org),
+      worker: same_home_worker,
+      worked_at: Date.new(2026, 1, 15),
+      hours: 3
+    )
+    create_summary_work(
+      organization: organizations(:org2),
+      worker: same_home_worker,
+      worked_at: Date.new(2026, 1, 15),
+      hours: 8
+    )
+
+    assert_equal 3, Work.total_by_home(workers(:worker1), 2026, organization: organizations(:org))[2026]
+  end
+
   test "年度別作業効率_10aあたり時間" do
     work_kind = WorkKind.new(
       name: "効率",
@@ -356,5 +406,21 @@ class WorkTest < ActiveSupport::TestCase
       start_at: "08:00",
       end_at: "17:00"
     )
+  end
+
+  def create_summary_work(organization:, worker:, worked_at:, hours:, work_type: work_types(:work_type_koshi))
+    work = Work.create!(
+      organization: organization,
+      term: worked_at.year,
+      worked_at: worked_at,
+      weather_id: :sunny,
+      work_type: work_type,
+      work_kind: work_kinds(:work_kind_every_term),
+      name: "組織別集計テスト",
+      start_at: "08:00",
+      end_at: "17:00"
+    )
+    WorkResult.create!(work: work, worker: worker, hours: hours, display_order: 1)
+    work
   end
 end
