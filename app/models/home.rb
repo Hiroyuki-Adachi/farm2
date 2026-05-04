@@ -94,6 +94,7 @@ class Home < ApplicationRecord
   validates :phonetic, format: { with: /\A[\p{Hiragana}ー－]+\z/ }, if: proc { |x| x.phonetic.present?}
   validates :telephone, format: {with: REG_PHONE}, if: proc { |x| x.telephone.present? }
   validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
+  validate :section_belongs_to_same_organization
 
   def holder_name
     holder ? holder.name : ''
@@ -167,5 +168,13 @@ class Home < ApplicationRecord
 
   def total_peasant_fee(term)
     LandFee.where(term: term, land_id: owned_lands.ids).sum(:peasant_fee)
+  end
+
+  private
+
+  def section_belongs_to_same_organization
+    return if organization_id.blank? || section.blank? || section.organization_id == organization_id
+
+    errors.add(:section_id, "は同じ組織の班を指定してください。")
   end
 end

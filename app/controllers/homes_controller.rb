@@ -47,7 +47,7 @@ class HomesController < ApplicationController
   end
 
   def set_sections
-    @sections = Section.list
+    @sections = Section.for_organization(current_organization).list
   end
 
   def home_params

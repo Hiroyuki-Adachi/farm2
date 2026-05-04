@@ -286,7 +286,7 @@ home_other_org:
   phonetic: べつそしき
   name: 別組織世帯
   worker_id: 9100
-  section_id: 1
+  section_id: 9100
   display_order: 100
   member_flag: t
   worker_payment_flag: f
