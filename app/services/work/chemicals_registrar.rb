@@ -5,7 +5,11 @@ class Work::ChemicalsRegistrar
   end
 
   def call
+    return if @params.blank?
+
     @params.each do |chemical_id, chemicals|
+      next if chemicals.blank?
+
       chemical_id = chemical_id.to_i
       chemicals.each do |chemical_group_no, quantity|
         chemical_group_no = chemical_group_no.to_i
