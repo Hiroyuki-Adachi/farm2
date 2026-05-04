@@ -131,7 +131,7 @@ class Schedule < ApplicationRecord
 
   def regist_sections(section_ids)
     ActiveRecord::Base.transaction do
-      section_ids = Section.where(id: Array(section_ids).map(&:to_i).uniq).pluck(:id)
+      section_ids = Section.for_organization(organization_id).where(id: Array(section_ids).map(&:to_i).uniq).pluck(:id)
 
       schedule_sections.where.not(section_id: section_ids).destroy_all
 

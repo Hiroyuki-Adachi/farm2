@@ -14,7 +14,7 @@ class Schedules::WorkersController < ApplicationController
   def set_schedule
     @schedule = Schedule.for_organization(current_organization).find(params[:schedule_id]).decorate
     @schedule_workers = @schedule.model.schedule_workers
-    @sections = Section.usual.pluck(:name, :id).unshift(['すべて', 0])
+    @sections = Section.for_organization(current_organization).usual.pluck(:name, :id).unshift(['すべて', 0])
   end
 
   def menu_name

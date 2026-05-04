@@ -81,7 +81,7 @@ class SchedulesController < ApplicationController
   def set_masters
     @work_types = WorkType.usual
     @work_kinds = WorkKind.by_type(@schedule ? @schedule.work_type : @work_types.first) || []
-    @sections = Section.usual_order
+    @sections = Section.for_organization(current_organization).usual_order
   end
 
   def permit_only_self

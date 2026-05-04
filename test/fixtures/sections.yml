@@ -9,10 +9,16 @@
 #  work_flag(作業班フラグ) :boolean          default(TRUE), not null
 #  created_at              :datetime
 #  updated_at              :datetime
+#  organization_id(組織)   :bigint           default(3), not null
 #
 # Indexes
 #
-#  index_sections_on_deleted_at  (deleted_at)
+#  index_sections_on_deleted_at       (deleted_at)
+#  index_sections_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 sections0:
@@ -20,6 +26,7 @@ sections0:
   name: 1班
   display_order: '10'
   work_flag: t
+  organization_id: 1
   created_at: 
   updated_at: 
   deleted_at: 
@@ -30,6 +37,7 @@ sections1:
   name: 2班
   display_order: '20'
   work_flag: t
+  organization_id: 1
   created_at: 
   updated_at: 
   deleted_at: 
@@ -40,6 +48,7 @@ sections2:
   name: 3班
   display_order: '30'
   work_flag: t
+  organization_id: 1
   created_at: 
   updated_at: 
   deleted_at: 
@@ -50,6 +59,7 @@ sections3:
   name: 4班
   display_order: '40'
   work_flag: t
+  organization_id: 1
   created_at: 
   updated_at: 
   deleted_at: 
@@ -60,6 +70,7 @@ sections4:
   name: 5班
   display_order: '50'
   work_flag: t
+  organization_id: 1
   created_at: 
   updated_at: 
   deleted_at: 
@@ -70,6 +81,7 @@ sections5:
   name: 6班
   display_order: '60'
   work_flag: t
+  organization_id: 1
   created_at: 
   updated_at: 
   deleted_at: 
@@ -80,6 +92,7 @@ sections6:
   name: "委託"
   display_order: '70'
   work_flag: f
+  organization_id: 1
   created_at: 
   updated_at: 
   deleted_at: 
@@ -90,6 +103,7 @@ sections7:
   name: "理事"
   display_order: '90'
   work_flag: f
+  organization_id: 1
   created_at: 
   updated_at: 
   deleted_at: 
@@ -100,6 +114,7 @@ sections8:
   name: "特別"
   display_order: '99'
   work_flag: f
+  organization_id: 1
   created_at: '2016-06-07 05:13:13.61343'
   updated_at: '2016-06-07 05:13:13.61343'
   deleted_at: 
@@ -109,6 +124,17 @@ section_removale:
   name: "削除可能"
   display_order: '100'
   work_flag: f
+  organization_id: 1
   created_at: '2016-06-07 05:13:13.61343'
   updated_at: '2016-06-07 05:13:13.61343'
   deleted_at: 
+
+section_other_org:
+  id: 9100
+  name: 別組織1班
+  display_order: 10
+  work_flag: t
+  organization_id: 2
+  created_at:
+  updated_at:
+  deleted_at:
