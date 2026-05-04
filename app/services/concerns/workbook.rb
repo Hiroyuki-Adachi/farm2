@@ -1,6 +1,9 @@
+require 'rubyXL'
+
 module Workbook
   HOLIDAY_TOP_ROW = 3
-  RUBYXL_WARNING_MUTEX = Mutex.new
+
+  RubyXL::Workbook.define_relationship(RubyXL::SheetMetadata)
 
   def setup_workbook(workbook)
     workbook.calc_pr.full_calc_on_load = true
@@ -22,24 +25,10 @@ module Workbook
   end
 
   def parse_workbook(path)
-    with_suppressed_rubyxl_warnings { RubyXL::Parser.parse(path) }
+    RubyXL::Parser.parse(path)
   end
 
   def parse_workbook_buffer(data)
-    with_suppressed_rubyxl_warnings { RubyXL::Parser.parse_buffer(data) }
+    RubyXL::Parser.parse_buffer(data)
   end
-
-  private
-
-  # rubocop:disable Style/ClassVars
-  def with_suppressed_rubyxl_warnings
-    RUBYXL_WARNING_MUTEX.synchronize do
-      previous = RubyXL.class_variable_get(:@@suppress_warnings)
-      RubyXL.class_variable_set(:@@suppress_warnings, true)
-      yield
-    ensure
-      RubyXL.class_variable_set(:@@suppress_warnings, previous)
-    end
-  end
-  # rubocop:enable Style/ClassVars
 end

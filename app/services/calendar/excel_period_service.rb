@@ -46,8 +46,16 @@ class Calendar::ExcelPeriodService
   end
 
   def fill_title(data_sheet, first_month)
-    data_sheet[TITLE_ROW][0].change_contents(title)
+    fill_header_title(data_sheet)
     data_sheet[YEAR_ROW][YEAR_COLUMN].change_contents(@year)
+    fill_first_month(data_sheet, first_month)
+  end
+
+  def fill_header_title(data_sheet)
+    data_sheet[TITLE_ROW][0].change_contents(title)
+  end
+
+  def fill_first_month(data_sheet, first_month)
     data_sheet[YEAR_ROW][FIRST_MONTH_COLUMN].change_contents(first_month)
   end
 
@@ -55,7 +63,7 @@ class Calendar::ExcelPeriodService
     @works.each do |work|
       offset = work.model.worked_at.month - first_month
       next if offset.negative?
-      break if offset >= self.class::MAX_MONTHS
+      next if offset >= self.class::MAX_MONTHS
 
       work_cell(data_sheet, work, offset).change_contents(work_label(work))
     end
