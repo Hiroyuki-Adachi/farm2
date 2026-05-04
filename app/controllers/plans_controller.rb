@@ -1,6 +1,6 @@
 class PlansController < ApplicationController
   include PermitManager
-  before_action :permit_this_term
+  before_action :authorize_current_term!
   before_action :save_system
 
   protected

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
   before_action :set_return_to, only: [:new, :create, :edit, :update, :destroy]
-  before_action :permit_admin, only: [:index, :new, :create, :destroy]
+  before_action :authorize_admin!, only: [:index, :new, :create, :destroy]
   before_action :permit_self, only: [:edit, :update]
 
   def index

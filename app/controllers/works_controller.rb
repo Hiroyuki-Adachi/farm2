@@ -11,7 +11,7 @@ class WorksController < ApplicationController
   before_action :permit_not_visitor, except: [:index, :show]
   before_action :permit_checkable_or_self, only: [:edit, :update, :destroy]
   before_action :permit_visitor, only: :show
-  before_action :permit_this_term, only: [:edit, :update, :destroy]
+  before_action :authorize_current_term!, only: [:edit, :update, :destroy]
 
   helper WorksHelper
   helper GmapHelper
@@ -174,7 +174,7 @@ class WorksController < ApplicationController
     to_error_path if current_user.visitor? && !@work.work_results.exists?(worker_id: current_user.worker.id)
   end
 
-  def permit_this_term
+  def authorize_current_term!
     to_error_path unless @work.present? && @work.term == current_term
   end
 

@@ -1,4 +1,6 @@
 class PersonalCalendarsController < ApplicationController
+  skip_before_action :authenticate_user!
+
   def show
     @worker = User.find_by(token: params[:token])&.worker
     if @worker
@@ -15,8 +17,6 @@ class PersonalCalendarsController < ApplicationController
   end
 
   private
-
-  def restrict_remote_ip; end
 
   def worked_from
     Date.new(Time.zone.today.year - 1, 1, 1)

@@ -1,7 +1,9 @@
 class IpListsController < ApplicationController
   layout false
-  before_action :set_ip, only: [:edit, :update]
+  skip_before_action :authenticate_user!, only: %i[new create edit update]
   before_action :set_return_to
+  before_action :check_ip_access!
+  before_action :set_ip, only: [:edit, :update]
 
   def new; end
 
@@ -38,7 +40,7 @@ class IpListsController < ApplicationController
 
   private
 
-  def restrict_remote_ip
+  def check_ip_access!
     if IpList.white_list.any? { |ip| ip.include?(request.remote_ip) }
       redirect_to @return_to.presence || root_path and return
     elsif IpList.black_list.any? { |ip| ip.include?(request.remote_ip) }
