@@ -175,7 +175,6 @@ class WorksController < ApplicationController
   end
 
   def authorize_current_term!
-    super
     to_error_path unless @work.present? && @work.term == current_term
   end
 
