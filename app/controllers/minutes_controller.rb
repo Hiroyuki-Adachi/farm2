@@ -2,7 +2,7 @@ class MinutesController < ApplicationController
   before_action :set_minute, only: [:show, :destroy]
   before_action :permit_checker, only: [:index, :create, :destroy]
   before_action :permit_show, only: [:show]
-  skip_before_action :restrict_remote_ip, only: [:show]
+  skip_before_action :authenticate_user!, only: [:show]
 
   def index
     @schedules = ScheduleDecorator.decorate_collection(Schedule.for_organization(current_organization).for_minute)

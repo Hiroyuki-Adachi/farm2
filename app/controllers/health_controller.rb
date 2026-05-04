@@ -1,5 +1,5 @@
 class HealthController < ApplicationController
-  skip_before_action :restrict_remote_ip
+  skip_before_action :authenticate_user!
 
   def index
     Rails.application.config.access_logger.info "GS-Health Check"

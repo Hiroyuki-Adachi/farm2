@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
   include IpRestrictedLogin
   layout false
+  skip_before_action :authenticate_user!
+  before_action :check_login_ip_access!
 
   def index
     log_out
@@ -23,7 +25,7 @@ class SessionsController < ApplicationController
 
   private
 
-  def restrict_remote_ip
+  def check_login_ip_access!
     require_ip_whitelist!
   end
 end

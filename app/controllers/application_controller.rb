@@ -7,12 +7,12 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   helper_method :menu_name, :prefixed_path
 
-  before_action :restrict_remote_ip
-  before_action :enforce_access_target, if: :user_present?
+  before_action :authenticate_user!
+  before_action :check_access_target!, if: :user_signed_in?
   before_action :set_term, if: :user_present?
 
   unless Rails.env.development? || Rails.env.test?
-    rescue_from StandardError, with: :handle_error
+    rescue_from StandardError, with: :handle_internal_error
   end
 
   protected
@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def permit_admin
+  def authorize_admin!
     return to_error_path unless current_user.admin?
   end
 
@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
     @term = current_organization.term
   end
 
-  def enforce_access_target
+  def check_access_target!
     target = session[:access_target].to_s.upcase
     return true if target.blank? || target == "PC"
 
@@ -99,18 +99,22 @@ class ApplicationController < ActionController::Base
     path.match?(%r{\A(?:/[^/]+)?#{escaped_prefix}(?:/|\z)})
   end
 
-  def restrict_remote_ip
-    if session[:user_id].nil? 
+  def authenticate_user!
+    if session[:user_id].nil?
       redirect_to prefixed_path(root_path)
       return false
     end
   end
 
-  def permit_this_term
+  def authorize_current_term!
     return to_error_path unless this_term?
   end
 
   def to_error_path(exception = nil)
+    render_service_unavailable(exception)
+  end
+
+  def render_service_unavailable(exception = nil)
     logger.error "[503] Service Unavailable"
     if exception
       logger.error "Exception: #{exception.class} - #{exception.message}"
@@ -127,6 +131,10 @@ class ApplicationController < ActionController::Base
 
   def user_present?
     session[:user_id].present?
+  end
+
+  def user_signed_in?
+    user_present?
   end
 
   def menu_name
@@ -180,13 +188,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def handle_error(exception = nil)
+  def handle_internal_error(exception = nil)
     logger.error "[500] Internal Server Error"
 
     logger.error({
-      error: exception.class.name,
-      message: exception.message,
-      stack_trace: exception.backtrace.take(5),
+      error: exception&.class&.name,
+      message: exception&.message,
+      stack_trace: exception&.backtrace&.take(5),
       path: request.fullpath,
       time: Time.current,
       severity: :ERROR

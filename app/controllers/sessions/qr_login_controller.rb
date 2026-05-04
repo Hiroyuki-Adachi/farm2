@@ -1,5 +1,7 @@
 class Sessions::QrLoginController < ApplicationController
   include IpRestrictedLogin
+  skip_before_action :authenticate_user!
+  before_action :check_login_ip_access!
 
   def create
     qr_login_session = QrLoginSession.create!
@@ -53,7 +55,7 @@ class Sessions::QrLoginController < ApplicationController
 
   private
 
-  def restrict_remote_ip
+  def check_login_ip_access!
     require_ip_whitelist!
   end
 

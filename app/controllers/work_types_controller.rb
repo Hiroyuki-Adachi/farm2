@@ -1,7 +1,7 @@
 class WorkTypesController < ApplicationController
   include ReturnToIndex
 
-  skip_before_action :restrict_remote_ip, only: [:icon]
+  skip_before_action :authenticate_user!, only: [:icon]
   before_action :permit_manager, except: [:icon]
   before_action :set_work_type, only: [:edit, :update, :destroy]
   keeps_index_return_to path_method: :work_types_path
