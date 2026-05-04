@@ -308,95 +308,19 @@ SQL
   end
 
   def regist_results(params, current_worker)
-    workers = []
-    if params.present?
-      params.each do |param|
-        worker_id = param[:worker_id].to_i
-        workers << worker_id
-        display_order = param[:display_order].to_i
-        hours = param[:hours].to_f
-        work_result = work_results.find_by(worker_id: worker_id)
-        if work_result
-          # hoursが変更された場合にログを出力
-          Rails.application.config.update_logger.info "updated:#{work_result.worker.name}:#{work_result.hours}:#{hours}" if work_result.hours != hours
-          
-          # display_orderまたはhoursが異なる場合のみupdateを実行
-          work_result.update(display_order: display_order, hours: hours) if work_result.display_order != display_order || work_result.hours != hours
-        else
-          WorkResult.create(work_id: id, worker_id: worker_id, display_order: display_order, hours: hours)
-        end
-      end
-    end
-    
-    # この作業に属さないworker_idを持つwork_resultsを削除
-    work_results.where.not(worker_id: workers).destroy_all
-
-    WorkVerification.regist(self, current_worker)
-
-    # printed_atとprinted_byをリセット
-    self.printed_at = nil
-    self.printed_by = nil
-    save!
+    Work::ResultsRegistrar.new(self, params, current_worker).call
   end
 
   def regist_lands(params)
-    lands = []
-    params.each do |param|
-      land_id = param[:land_id]
-      lands << land_id
-      display_order = param[:display_order].to_i
-  
-      work_land = work_lands.find_by(land_id: land_id)
-      if work_land
-        work_land.update(display_order: display_order) if work_land.display_order != display_order
-      else
-        WorkLand.create(work_id: id, land_id: land_id, display_order: display_order)
-      end
-    end
-  
-    # 提供されたland_idリストに含まれないwork_landsを削除
-    work_lands.where.not(land_id: lands).destroy_all
-  
-    # 必要に応じて追加の処理を呼び出し
-    regist_work_work_types
+    Work::LandsRegistrar.new(self, params).call
   end
 
   def regist_machines(params)
-    params.each do |machine_id, work_result|
-      work_result.each do |work_result_id, hour|
-        hour = hour.to_f
-        machine_result = MachineResult.find_by(work_result_id: work_result_id, machine_id: machine_id)
-        if machine_result
-          if hour.positive?
-            machine_result.update(hours: hour) if machine_result.hours != hour
-          else
-            machine_result.destroy
-          end
-        elsif hour.positive?
-          MachineResult.create(work_result_id: work_result_id, machine_id: machine_id, hours: hour)
-        end
-      end
-    end
+    Work::MachinesRegistrar.new(params).call
   end
 
   def regist_chemicals(params)
-    params.each do |chemical_id, chemicals|
-      chemical_id = chemical_id.to_i
-      chemicals.each do |chemical_group_no, quantity|
-        chemical_group_no = chemical_group_no.to_i
-        work_chemical = work_chemicals.find_by(chemical_id: chemical_id, chemical_group_no: chemical_group_no)
-        if work_chemical
-          if quantity[:quantity].to_f.positive?
-            work_chemical.update(quantity_params(quantity, {}))
-          else
-            work_chemical.destroy
-          end
-        else
-          add_params = {work_id: id, chemical_id: chemical_id, chemical_group_no: chemical_group_no}
-          WorkChemical.create(quantity_params(quantity, add_params)) if quantity[:quantity].to_f.positive?
-        end
-      end
-    end
+    Work::ChemicalsRegistrar.new(self, params).call
   end
 
   def refresh_broccoli(organization)
@@ -404,67 +328,27 @@ SQL
   end
 
   def self.total_all(terms)
-    Work.where(term: terms).joins(:work_results).group(:term).order(:term).sum("work_results.hours")
+    WorkSummaryQuery.new.total_all(terms)
   end
 
   def self.total_by_worker(worker, term)
-    results = {}
-    10.times.each {|i| results[term - (9 - i)] = 0}
-    Work.joins(:work_results).where(["work_results.worker_id = ? AND works.term >= ?", worker.id, term - 9])
-      .group(:term).order(:term).sum("work_results.hours").each do |k, v|
-      results[k.to_i] = v
-    end
-    return results
+    WorkSummaryQuery.new.total_by_worker(worker, term)
   end
 
   def self.total_by_home(worker, term)
-    results = {}
-    10.times.each {|i| results[term - (9 - i)] = 0}
-    Work.joins(work_results: :worker).where(["workers.home_id = ? AND work_results.worker_id <> ? AND works.term >= ?", worker.home_id, worker.id, term - 9])
-      .group(:term).order(:term).sum("work_results.hours").each do |k, v|
-      results[k.to_i] = v
-    end
-    return results
+    WorkSummaryQuery.new.total_by_home(worker, term)
   end
 
   def self.total_by_month(worker, term)
-    terms = Array(term)
-    results = Array.new(12, 0)
-
-    query = Work.joins(:work_results).where(term: terms)
-    query = query.where(work_results: { worker_id: worker.id }) if worker
-    query.group("date_part('month', works.worked_at)").sum("work_results.hours").each do |k, v|
-      results[k.to_i - 1] = (v.to_f / terms.length).round(1)
-    end
-    results
+    WorkSummaryQuery.new.total_by_month(worker, term)
   end
 
   def self.total_genre
-    Work.joins(:work_results)
-        .joins(:work_type)
-        .group("work_types.work_genre_id", :term)
-        .order("work_types.work_genre_id", :term)
-        .sum("work_results.hours")
+    WorkSummaryQuery.new.total_genre
   end
 
   def self.hours_per_10a_by_work_kind(work_kind_id, terms, organization: nil)
-    base = where(term: terms, work_kind_id: work_kind_id)
-    base = base.for_organization(organization) if organization
-
-    works_with_area = base.joins(work_lands: :land)
-      .group(:id)
-      .having("SUM(lands.area) > 0")
-      .select(:id)
-
-    hours = base.where(id: works_with_area).joins(:work_results).group(:term).sum("work_results.hours")
-    areas = base.joins(work_lands: :land).group(:term).sum("lands.area")
-
-    terms.sort.index_with do |term|
-      area = areas[term].to_d
-      next 0 if area.zero?
-
-      (hours[term].to_d / area * 10).round(2).to_f
-    end
+    WorkSummaryQuery.new.hours_per_10a_by_work_kind(work_kind_id, terms, organization: organization)
   end
 
   def self.monthly(term, worked_from, worked_to, worker_id)
@@ -513,16 +397,7 @@ SQL
   end
 
   def regist_work_work_types
-    work_work_types.delete_all
-    wts = []
-    lands.each do |land|
-      wt = land.cost(worked_at)&.work_type
-      work_lands.find_by(land_id: land)&.update(work_type_id: wt.id) if wt
-      wts << wt
-    end
-    wts.compact.uniq.each do |wt|
-      work_work_types.create(work_type_id: wt.id)
-    end
+    Work::WorkTypesRegistrar.new(self).call
   end
 
   def machine_types
@@ -554,11 +429,7 @@ SQL
   end
 
   def self.search_for_work(base_relation, params)
-    base_relation
-      .with_work_type(params[:work_type_id], params[:except].present?)
-      .with_work_kind(params[:work_kind_id])
-      .worked_from(params[:worked_at1])
-      .worked_to(params[:worked_at2])
+    WorkSearchQuery.new(base_relation, params).call
   end
 
   def weather_name
@@ -566,10 +437,6 @@ SQL
   end
 
   private
-
-  def quantity_params(quantity, add_params)
-    quantity.permit(:quantity, :dilution_id, :magnification, :remarks).merge(add_params)
-  end
 
   def set_chemical_group_no
     return if self.chemical_group_flag
