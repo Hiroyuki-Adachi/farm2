@@ -1,6 +1,6 @@
 class IpListsController < ApplicationController
   layout false
-  skip_before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: %i[new create edit update]
   before_action :set_return_to
   before_action :check_ip_access!
   before_action :set_ip, only: [:edit, :update]
