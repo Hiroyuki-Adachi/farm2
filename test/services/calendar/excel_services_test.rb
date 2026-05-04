@@ -7,7 +7,7 @@ class Calendar::ExcelServicesTest < ActiveSupport::TestCase
   WorkModelDouble = Struct.new(:worked_at, keyword_init: true)
   WorkDouble = Struct.new(:model, :work_kind, :exact_work_type_name, :sum_areas, keyword_init: true)
 
-  test 'call generates expected workbook' do
+  test '呼び出しによって期待されるワークブックが生成される' do
     calendar_work_kind = build_calendar_work_kind(work_kinds(:work_kind_taue))
     work_date = Date.new(2023, 1, 15)
     work = build_work(work_date, exact_work_type_name: '代掻', sum_areas: 10)
@@ -22,7 +22,7 @@ class Calendar::ExcelServicesTest < ActiveSupport::TestCase
     assert_equal '代掻(10a)', sheet[(work_date.day * 2) + 4][2].value
   end
 
-  test 'month workbook can be generated without works' do
+  test '月間ワークブックは作業なしでも生成可能である' do
     calendar_work_kind = build_calendar_work_kind(work_kinds(:work_kind_taue))
 
     excel = Calendar::ExcelMonthService.call([calendar_work_kind], [], 2023)
@@ -34,7 +34,7 @@ class Calendar::ExcelServicesTest < ActiveSupport::TestCase
     assert_equal 1, sheet[5][2].value
   end
 
-  test 'half workbook joins work kind names and ignores works after six months' do
+  test '半期ワークブックは作業種類名を結合し、6か月後の作業を無視する' do
     calendar_work_kinds = [
       build_calendar_work_kind(work_kinds(:work_kind_taue)),
       build_calendar_work_kind(work_kinds(:work_kind_shirokaki))
@@ -51,7 +51,7 @@ class Calendar::ExcelServicesTest < ActiveSupport::TestCase
     assert_nil sheet[(seventh_month_work.model.worked_at.day * 2) + 4][20]&.value
   end
 
-  test 'year workbook includes work kind name in work label' do
+  test '年間ワークブックには作業種類名が含まれる' do
     work_date = Date.new(2023, 4, 10)
     work = build_work(
       work_date,
