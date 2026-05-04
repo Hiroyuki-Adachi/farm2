@@ -1,5 +1,9 @@
+require 'rubyXL'
+
 module Workbook
   HOLIDAY_TOP_ROW = 3
+
+  RubyXL::Workbook.define_relationship(RubyXL::SheetMetadata)
 
   def setup_workbook(workbook)
     workbook.calc_pr.full_calc_on_load = true
@@ -18,5 +22,13 @@ module Workbook
       holiday_sheet[holiday_row][5].change_contents("休日")
       holiday_row += 1
     end
+  end
+
+  def parse_workbook(path)
+    RubyXL::Parser.parse(path)
+  end
+
+  def parse_workbook_buffer(data)
+    RubyXL::Parser.parse_buffer(data)
   end
 end
