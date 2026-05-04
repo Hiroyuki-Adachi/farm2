@@ -54,10 +54,10 @@ class WorkSummaryQuery
     areas = base.joins(work_lands: :land).group(:term).sum("lands.area")
 
     terms.sort.index_with do |term|
-      area = areas[term].to_d
+      area = areas.fetch(term, 0).to_d
       next 0 if area.zero?
 
-      (hours[term].to_d / area * 10).round(2).to_f
+      (hours.fetch(term, 0).to_d / area * 10).round(2).to_f
     end
   end
 
