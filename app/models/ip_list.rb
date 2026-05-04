@@ -61,7 +61,7 @@ class IpList < ApplicationRecord
   end
 
   def updated_expired_on
-    Rails.cache.delete('white_list') if update(expired_on: Time.now.advance(months: 1).to_date)
+    update(expired_on: Time.now.advance(months: 1).to_date)
   end
 
   def self.block_ip!(ip_address)

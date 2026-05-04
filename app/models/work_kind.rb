@@ -70,15 +70,8 @@ class WorkKind < ApplicationRecord
   attr_accessor :term
 
   def term_price(term)
-    cache_key = price_cache_key(term)
-    price_value = 0
-    if Rails.cache.exist?(cache_key)
-      price_value = Rails.cache.read(cache_key)
-    else
-      price_value = WorkKindPrice.price(self, term)
-      Rails.cache.write(cache_key, price_value, expires_in: 1.hour)
-    end
-    return price_value
+    @term_prices ||= {}
+    @term_prices[term] ||= WorkKindPrice.price(self, term)
   end
 
   def price
@@ -102,10 +95,6 @@ class WorkKind < ApplicationRecord
     else
       WorkKindPrice.create(work_kind_id: id, term: @term, price: @price)
     end
-    Rails.cache.write(price_cache_key(@term), @price, expires_in: 1.hour)
-  end
-
-  def price_cache_key(term)
-    "work_kind_price_#{id}_#{term}"
+    @term_prices[@term] = @price if defined?(@term_prices) && @term.present?
   end
 end

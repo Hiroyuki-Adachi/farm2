@@ -32,8 +32,6 @@
 class Organization < ApplicationRecord
   enum :daily_worker, {no_print: 0, print_home: 1, print_section: 2}
 
-  after_save :save_term
-
   validates :name, presence: true
   validates :workers_count, presence: true
   validates :lands_count, presence: true
@@ -51,14 +49,8 @@ class Organization < ApplicationRecord
   belongs_to :contract, class_name: "WorkType"
   belongs_to :harvesting, class_name: "WorkKind"
 
-  def self.term
-    Rails.cache.fetch(:organization_term, expires_in: 1.hour) do
-      Organization.first.term
-    end
-  end
-
-  def save_term
-    Rails.cache.write(:organization_term, term, expires_in: 1.hour)
+  def self.term(organization = nil)
+    organization&.term || Organization.first.term
   end
 
   def get_system(date)

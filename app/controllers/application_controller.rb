@@ -27,23 +27,30 @@ class ApplicationController < ActionController::Base
     { script_name: prefix }
   end
 
-  def sum_hours_key(term)
-    "sum_hours_#{current_user.organization_id}_#{term}"
-  end
-
-  def count_workers_key(term)
-    "count_workers_#{current_user.organization_id}_#{term}"
-  end
-
   def sum_hours(term)
-    Rails.cache.fetch(sum_hours_key(term), expires_in: 1.hour) do
-      WorkResult.where(work_id: Work.for_organization(current_user.organization_id).usual(term).select(:id)).group(:work_id).sum(:hours).to_h
-    end
+    work_result_totals(term)[:sum_hours]
   end
 
   def count_workers(term)
-    Rails.cache.fetch(count_workers_key(term), expires_in: 1.hour) do
-      WorkResult.where(work_id: Work.for_organization(current_user.organization_id).usual(term).select(:id)).group(:work_id).count(:worker_id).to_h
+    work_result_totals(term)[:count_workers]
+  end
+
+  def work_result_totals(term)
+    @work_result_totals ||= {}
+    @work_result_totals[term] ||= begin
+      totals = {sum_hours: {}, count_workers: {}}
+      work_ids = Work.for_organization(current_user.organization_id).usual(term).select(:id)
+
+      WorkResult
+        .where(work_id: work_ids)
+        .group(:work_id)
+        .pluck(:work_id, Arel.sql("SUM(hours)"), Arel.sql("COUNT(worker_id)"))
+        .each do |work_id, sum_hours, count_workers|
+          totals[:sum_hours][work_id] = sum_hours
+          totals[:count_workers][work_id] = count_workers
+        end
+
+      totals
     end
   end
 
