@@ -316,7 +316,7 @@ SQL
   end
 
   def regist_machines(params)
-    Work::MachinesRegistrar.new(params).call
+    Work::MachinesRegistrar.new(self, params).call
   end
 
   def regist_chemicals(params)
