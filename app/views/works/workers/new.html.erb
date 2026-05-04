@@ -37,7 +37,7 @@
         <div class="md-col-5">
           <% Section.for_organization(current_organization).usual.pluck(:name, :id).unshift(['すべて', 0]).each do |section| %>
             <div class="form-check form-check-inline ps-2">
-              <%= radio_button_tag :section, section[1], {class: "form-check-input"} %>
+              <%= radio_button_tag :section, section[1], false, {class: "form-check-input"} %>
               <%= label_tag "section_#{section[1]}", section[0], {class: "form-check-label"} %>
             </div>
           <% end %>
