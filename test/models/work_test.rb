@@ -73,6 +73,56 @@ class WorkTest < ActiveSupport::TestCase
     assert_equal total_hours, Work.total_genre[[@work.work_type.work_genre_id, 2015]]
   end
 
+  test "工数統計は組織で絞り込める" do
+    work_type = work_types(:work_type_koshi)
+    org_work = create_summary_work(
+      organization: organizations(:org),
+      worker: workers(:worker1),
+      work_type: work_type,
+      worked_at: Date.new(2026, 1, 15),
+      hours: 2
+    )
+    create_summary_work(
+      organization: organizations(:org2),
+      worker: workers(:worker1),
+      work_type: work_type,
+      worked_at: Date.new(2026, 1, 15),
+      hours: 7
+    )
+
+    assert_equal 2, Work.total_all([2026], organization: organizations(:org))[2026]
+    assert_equal 2, Work.total_by_worker(workers(:worker1), 2026, organization: organizations(:org))[2026]
+    assert_equal 2.0, Work.total_by_month(nil, 2026, organization: organizations(:org))[0]
+    assert_equal 2, Work.total_genre(organization: organizations(:org))[[work_type.work_genre_id, 2026]]
+    assert_includes Work.for_organization(organizations(:org)), org_work
+  end
+
+  test "世帯別工数統計は組織で絞り込める" do
+    same_home_worker = Worker.create!(
+      organization: organizations(:org),
+      home: workers(:worker1).home,
+      family_name: "集計",
+      first_name: "太郎",
+      family_phonetic: "しゅうけい",
+      first_phonetic: "たろう",
+      display_order: 99
+    )
+    create_summary_work(
+      organization: organizations(:org),
+      worker: same_home_worker,
+      worked_at: Date.new(2026, 1, 15),
+      hours: 3
+    )
+    create_summary_work(
+      organization: organizations(:org2),
+      worker: same_home_worker,
+      worked_at: Date.new(2026, 1, 15),
+      hours: 8
+    )
+
+    assert_equal 3, Work.total_by_home(workers(:worker1), 2026, organization: organizations(:org))[2026]
+  end
+
   test "年度別作業効率_10aあたり時間" do
     work_kind = WorkKind.new(
       name: "効率",
@@ -220,7 +270,7 @@ class WorkTest < ActiveSupport::TestCase
   test "機械登録" do
     params = ActionController::Parameters.new(
       {
-        machine_hours: 
+        machine_hours:
           {
             machines(:machine_hour_t).id.to_s => {work_results(:work_result_for_price1).id.to_s => 2.5},
             machines(:machine_area_t).id.to_s => {work_results(:work_result_for_price2).id.to_s => 3.0},
@@ -244,5 +294,133 @@ class WorkTest < ActiveSupport::TestCase
     # 削除データの確認
     deleted_machine = MachineResult.find_by(work_result_id: work_results(:work_result_for_price2).id, machine_id: machines(:machine_day_t).id)
     assert_nil deleted_machine
+  end
+
+  test "機械登録で別作業の作業結果は更新しない" do
+    other_machine_result = machine_results(:machine_result_genka1)
+    params = ActionController::Parameters.new(
+      {
+        machine_hours:
+          {
+            machines(:machine_hour_t).id.to_s => {work_results(:work_result_genka1).id.to_s => 0}
+          }
+      }
+    )
+
+    @work.regist_machines(params[:machine_hours])
+
+    assert MachineResult.exists?(other_machine_result.id)
+    assert_equal 3, other_machine_result.reload.hours
+  end
+
+  test "農薬登録" do
+    work = works(:work_chemical_test)
+    existing = work_chemicals(:work_chemical_test)
+    params = ActionController::Parameters.new(
+      {
+        chemicals:
+          {
+            chemicals(:chemical_amistar).id.to_s => {
+              "1" => {quantity: 150, dilution_id: 2, magnification: 1000, remarks: "updated"}
+            },
+            chemicals(:chemical_genka).id.to_s => {
+              "1" => {quantity: 5, dilution_id: 1, magnification: 500, remarks: "created"}
+            }
+          }
+      }
+    )
+
+    work.regist_chemicals(params[:chemicals])
+
+    assert_equal 2, work.work_chemicals.count
+    assert_equal 150, existing.reload.quantity
+    created = WorkChemical.find_by!(work: work, chemical: chemicals(:chemical_genka), chemical_group_no: 1)
+    assert_equal 5, created.quantity
+    assert_equal "created", created.remarks
+  end
+
+  test "農薬登録で数量0は削除する" do
+    work = works(:work_chemical_test)
+    existing = work_chemicals(:work_chemical_test)
+    params = ActionController::Parameters.new(
+      {
+        chemicals:
+          {
+            chemicals(:chemical_amistar).id.to_s => {
+              "1" => {quantity: 0, dilution_id: 2, magnification: 1000, remarks: ""}
+            }
+          }
+      }
+    )
+
+    work.regist_chemicals(params[:chemicals])
+
+    assert_not WorkChemical.exists?(existing.id)
+  end
+
+  test "作業検索条件" do
+    work_type = work_types(:work_type_koshi)
+    other_work_type = work_types(:work_type_broccoli)
+    work_kind = work_kinds(:work_kind_every_term)
+    other_work_kind = work_kinds(:work_kind_broccoli)
+
+    target = create_search_work(work_type: work_type, work_kind: work_kind, worked_at: Date.new(2026, 1, 15))
+    other_type = create_search_work(work_type: other_work_type, work_kind: work_kind, worked_at: Date.new(2026, 1, 15))
+    other_kind = create_search_work(work_type: work_type, work_kind: other_work_kind, worked_at: Date.new(2026, 1, 15))
+    out_of_range = create_search_work(work_type: work_type, work_kind: work_kind, worked_at: Date.new(2026, 2, 1))
+    base = Work.where(id: [target.id, other_type.id, other_kind.id, out_of_range.id])
+    params = ActionController::Parameters.new(
+      work_type_id: work_type.id,
+      work_kind_id: work_kind.id,
+      worked_at1: Date.new(2026, 1, 1),
+      worked_at2: Date.new(2026, 1, 31)
+    )
+
+    assert_equal [target.id], Work.search_for_work(base, params).pluck(:id)
+  end
+
+  test "作業検索条件で作業分類を除外する" do
+    work_type = work_types(:work_type_koshi)
+    other_work_type = work_types(:work_type_broccoli)
+    work_kind = work_kinds(:work_kind_every_term)
+
+    excluded = create_search_work(work_type: work_type, work_kind: work_kind, worked_at: Date.new(2026, 1, 15))
+    included = create_search_work(work_type: other_work_type, work_kind: work_kind, worked_at: Date.new(2026, 1, 15))
+    base = Work.where(id: [excluded.id, included.id])
+    params = ActionController::Parameters.new(work_type_id: work_type.id, except: "1")
+
+    assert_equal [included.id], Work.search_for_work(base, params).pluck(:id)
+  end
+
+  private
+
+  def create_search_work(work_type:, work_kind:, worked_at:)
+    Work.create!(
+      organization: organizations(:org),
+      term: worked_at.year,
+      worked_at: worked_at,
+      weather_id: :sunny,
+      work_type: work_type,
+      work_kind: work_kind,
+      name: "検索条件テスト",
+      start_at: "08:00",
+      end_at: "17:00"
+    )
+  end
+
+  def create_summary_work(organization:, worker:, worked_at:, hours:, work_type: work_types(:work_type_koshi))
+    work = Work.create!(
+      organization: organization,
+      term: worked_at.year,
+      worked_at: worked_at,
+      weather_id: :sunny,
+      work_type: work_type,
+      work_kind: work_kinds(:work_kind_every_term),
+      name: "組織別集計テスト",
+      start_at: "08:00",
+      end_at: "17:00"
+    )
+    WorkResult.create!(work: work, worker: worker, hours: hours, display_order: 1)
+    work
   end
 end
