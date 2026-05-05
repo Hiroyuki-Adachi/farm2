@@ -66,35 +66,62 @@ class TaskEvent < ApplicationRecord
   scope :show_task, -> { where(source: [:form, :gantt, :calendar, :api]) }
 
   scope :with_read_info, ->(worker_id, last_read_at) {
-    sql = <<-SQL.squish
-        #{table_name}.*, 
-        COALESCE(
-        (SELECT COUNT(DISTINCT tr.worker_id) FROM task_comments tc
-          INNER JOIN task_reads tr ON tc.task_id = tr.task_id
-            AND tc.updated_at <= tr.last_read_at
-            AND tr.worker_id != :worker_id
-          WHERE tc.task_id = #{table_name}.task_id
-            AND tc.id = #{table_name}.task_comment_id
-        ), 0) AS read_count,
-        (SELECT ARRAY_AGG(DISTINCT (w.family_name || ' ' || w.first_name))
-          FROM task_comments tc
-          INNER JOIN task_reads tr ON tc.task_id = tr.task_id
-            AND tc.updated_at <= tr.last_read_at
-            AND tr.worker_id != :worker_id
-          INNER JOIN workers w ON w.id = tr.worker_id
-          WHERE tc.task_id = #{table_name}.task_id
-            AND tc.id = #{table_name}.task_comment_id
-        ) AS reader_names,
-        EXISTS(SELECT 1 FROM task_comments tc
-            WHERE tc.task_id = #{table_name}.task_id
-              AND tc.id = #{table_name}.task_comment_id
-              AND tc.poster_id != :worker_id
-              AND tc.updated_at > :last_read_at
-          ) AS unread_flag,
-        (#{table_name}.actor_id = :worker_id) AS mine_flag
-    SQL
-  
-    select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id, last_read_at: last_read_at}])))
+    task_events = arel_table
+    task_comments = TaskComment.arel_table.alias("tc")
+    task_reads = TaskRead.arel_table.alias("tr")
+    workers = Worker.arel_table.alias("w")
+
+    read_join_condition = task_comments[:task_id].eq(task_reads[:task_id])
+      .and(task_comments[:updated_at].lteq(task_reads[:last_read_at]))
+      .and(task_reads[:worker_id].not_eq(worker_id))
+
+    read_where_condition = task_comments[:task_id].eq(task_events[:task_id])
+      .and(task_comments[:id].eq(task_events[:task_comment_id]))
+
+    read_count = Arel::SelectManager.new
+    read_count.from(task_comments)
+    read_count.project(task_reads[:worker_id].count(true))
+    read_count.join(task_reads).on(read_join_condition)
+    read_count.where(read_where_condition)
+
+    reader_name = Arel::Nodes::InfixOperation.new(
+      "||",
+      Arel::Nodes::InfixOperation.new("||", workers[:family_name], Arel::Nodes.build_quoted(" ")),
+      workers[:first_name]
+    )
+
+    reader_names = Arel::SelectManager.new
+    reader_names.from(task_comments)
+    reader_names.project(
+      Arel::Nodes::NamedFunction.new("ARRAY_AGG", [Arel.sql("DISTINCT #{reader_name.to_sql}")])
+    )
+    reader_names.join(task_reads).on(read_join_condition)
+    reader_names.join(workers).on(workers[:id].eq(task_reads[:worker_id]))
+    reader_names.where(read_where_condition)
+
+    unread_comments = TaskComment.arel_table.alias("tc")
+    unread_query = Arel::SelectManager.new
+    unread_query.from(unread_comments)
+    unread_query.project(Arel.sql("1"))
+    unread_query.where(
+        unread_comments[:task_id].eq(task_events[:task_id])
+          .and(unread_comments[:id].eq(task_events[:task_comment_id]))
+          .and(unread_comments[:poster_id].not_eq(worker_id))
+          .and(unread_comments[:updated_at].gt(last_read_at))
+      )
+
+    read_count_with_default = Arel::Nodes::NamedFunction.new(
+      "COALESCE",
+      [Arel::Nodes::Grouping.new(read_count.ast), Arel::Nodes.build_quoted(0)]
+    )
+
+    select(
+      task_events[Arel.star],
+      Arel::Nodes::As.new(read_count_with_default, Arel.sql("read_count")),
+      Arel::Nodes::As.new(Arel::Nodes::Grouping.new(reader_names.ast), Arel.sql("reader_names")),
+      Arel::Nodes::As.new(unread_query.exists, Arel.sql("unread_flag")),
+      Arel::Nodes::As.new(task_events[:actor_id].eq(worker_id), Arel.sql("mine_flag"))
+    )
   }
 
   def last?

@@ -88,52 +88,101 @@ class Work < ApplicationRecord
   scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
   scope :by_creator, ->(worker) {where(["works.created_by IS NULL OR works.created_by <> ?", worker.id])}
   scope :by_work_kind_type, ->(term, work_kind_id, seedling_home) {
+    works = arel_table
+    work_lands = WorkLand.arel_table
+    land_costs = LandCost.arel_table.alias("lc1")
+    latest_land_costs = LandCost.arel_table.alias("lc2")
+    latest_activated_on = latest_land_costs[:activated_on].maximum
+
+    latest_land_cost_query = Arel::SelectManager.new
+    latest_land_cost_query.from(latest_land_costs)
+    latest_land_cost_query.project(latest_land_costs[:land_id], latest_activated_on)
+    latest_land_cost_query.where(
+        latest_land_costs[:land_id].eq(land_costs[:land_id])
+          .and(latest_land_costs[:activated_on].lteq(works[:worked_at]))
+      )
+    latest_land_cost_query.group(latest_land_costs[:land_id])
+    latest_land_cost_query.having(latest_activated_on.eq(land_costs[:activated_on]))
+
+    land_cost_query = Arel::SelectManager.new
+    land_cost_query.from(land_costs)
+    land_cost_query.project(Arel.star)
+    land_cost_query.where(
+        land_costs[:work_type_id].eq(seedling_home.work_type_id)
+          .and(land_costs[:land_id].eq(work_lands[:land_id]))
+          .and(latest_land_cost_query.exists)
+      )
+
     joins(:work_lands)
       .where(term: term, work_kind_id: work_kind_id)
       .where(works: { worked_at: seedling_home.sowed_on.. })
-      .where([<<SQL.squish, seedling_home.work_type_id]).select(:id, :worked_at).distinct
-    EXISTS (
-      SELECT * FROM land_costs lc1
-      WHERE
-        lc1.work_type_id = ? AND lc1.land_id = work_lands.land_id
-        AND EXISTS (
-        SELECT land_id, MAX(activated_on)
-          FROM land_costs lc2
-          WHERE lc2.land_id = lc1.land_id AND lc2.activated_on <= works.worked_at
-          GROUP BY lc2.land_id
-          HAVING MAX(lc2.activated_on) = lc1.activated_on
-    ))
-SQL
+      .where(land_cost_query.exists)
+      .select(:id, :worked_at)
+      .distinct
       .order(worked_at: :ASC, id: :ASC)
   }
-  scope :enough_check, ->(worker) {where([<<SQL.squish, worker.id, worker.position_id == :director ? ENOUGH + 1 : ENOUGH])}
-      NOT EXISTS (
-        SELECT work_verifications.work_id FROM work_verifications
-          WHERE (work_verifications.work_id = works.id)
-            AND (work_verifications.worker_id <> ?)
-          GROUP BY work_verifications.work_id
-          HAVING COUNT(*) >= ?
+  scope :enough_check, ->(worker) {
+    work_verifications = WorkVerification.arel_table
+    required_count = worker.position_id == :director ? ENOUGH + 1 : ENOUGH
+    verification_exists = work_verifications
+      .project(work_verifications[:work_id])
+      .where(
+        work_verifications[:work_id].eq(arel_table[:id])
+          .and(work_verifications[:worker_id].not_eq(worker.id))
       )
-SQL
+      .group(work_verifications[:work_id])
+      .having(Arel::Nodes::NamedFunction.new("COUNT", [Arel.star]).gteq(required_count))
+      .exists
 
-  scope :by_machines, ->(machines) {where([<<SQL.squish, machines.pluck(:id)])}
-  EXISTS (
-    SELECT * FROM work_results
-      INNER JOIN machine_results ON work_results.id = machine_results.work_result_id 
-                                AND work_results.work_id = works.id
-      WHERE machine_results.machine_id IN (?))
-SQL
+    where(Arel::Nodes::Not.new(verification_exists))
+  }
+
+  scope :by_machines, ->(machines) {
+    work_results = WorkResult.arel_table
+    machine_results = MachineResult.arel_table
+
+    machine_result_exists = machine_results
+      .project(Arel.star)
+      .join(work_results).on(machine_results[:work_result_id].eq(work_results[:id]))
+      .where(
+        work_results[:work_id].eq(arel_table[:id])
+          .and(machine_results[:machine_id].in(machines.pluck(:id)))
+      )
+      .exists
+
+    where(machine_result_exists)
+  }
   scope :by_types, ->(work_types) {where(works: { work_type_id: work_types.ids })}
 
-  scope :by_worker, ->(worker) {where([<<SQL.squish, worker.id])}
-    EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND work_results.worker_id = ?)
-SQL
+  scope :by_worker, ->(worker) {
+    work_results = WorkResult.arel_table
+    worker_exists = work_results
+      .project(Arel.star)
+      .where(
+        work_results[:work_id].eq(arel_table[:id])
+          .and(work_results[:worker_id].eq(worker.id))
+      )
+      .exists
+
+    where(worker_exists)
+  }
 
   scope :not_printed, -> {where(<<SQL.squish)}
       (works.printed_at IS NULL)
     OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)
 SQL
-  scope :by_land, ->(land) {where("EXISTS (SELECT * FROM work_lands WHERE works.id = work_lands.work_id AND work_lands.land_id = ?)", land.id)}
+  scope :by_land, ->(land) {
+    work_lands = WorkLand.arel_table
+    land_exists = work_lands
+      .project(Arel.star)
+      .where(
+        work_lands[:work_id].eq(arel_table[:id])
+          .and(work_lands[:land_id].eq(land.id))
+      )
+      .exists
+
+    where(land_exists)
+  }
 
   scope :by_chemical, ->(term, organization = nil) do
     where(id: WorkChemical.by_term(term, organization).pluck("work_chemicals.work_id").uniq)
@@ -158,7 +207,15 @@ SQL
       .order(worked_at: :ASC, start_at: :ASC, id: :ASC)
   end
 
-  scope :landable, -> {where("EXISTS (SELECT * FROM work_lands WHERE work_lands.work_id = works.id)")}
+  scope :landable, -> {
+    work_lands = WorkLand.arel_table
+    where(
+      work_lands
+        .project(Arel.star)
+        .where(work_lands[:work_id].eq(arel_table[:id]))
+        .exists
+    )
+  }
   scope :machinable, -> {where(<<SQL.squish)}
   EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND EXISTS (
     SELECT * FROM machine_results WHERE work_results.id = machine_results.work_result_id
@@ -166,9 +223,19 @@ SQL
 SQL
  
   scope :by_target, ->(term) do
-    joins("INNER JOIN systems ON systems.term = works.term AND systems.organization_id = works.organization_id")
-     .where("works.worked_at BETWEEN systems.start_date AND systems.end_date")
-     .where(systems: { term: term })
+    works = arel_table
+    systems = System.arel_table
+    systems_join = works
+      .join(systems)
+      .on(
+        systems[:term].eq(works[:term])
+          .and(systems[:organization_id].eq(works[:organization_id]))
+      )
+      .join_sources
+
+    joins(systems_join)
+      .where(works[:worked_at].gteq(systems[:start_date]).and(works[:worked_at].lteq(systems[:end_date])))
+      .where(systems: { term: term })
   end
 
   scope :for_contract, ->(worker, worked_at, work_type_id) do

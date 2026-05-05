@@ -20,15 +20,22 @@ class LandCost < ApplicationRecord
 
   validates :activated_on, presence: true
 
-  scope :newest, ->(target) {where([<<SQL.squish, target])}
-  EXISTS (
-    SELECT land_id, MAX(activated_on)
-      FROM land_costs lc2
-      WHERE lc2.land_id = land_costs.land_id AND activated_on <= ?
-      GROUP BY land_id
-      HAVING MAX(activated_on) = land_costs.activated_on
-  )
-SQL
+  scope :newest, ->(target) {
+    latest_land_costs = arel_table.alias("lc2")
+    latest_activated_on = latest_land_costs[:activated_on].maximum
+
+    newest_query = Arel::SelectManager.new
+    newest_query.from(latest_land_costs)
+    newest_query.project(latest_land_costs[:land_id], latest_activated_on)
+    newest_query.where(
+        latest_land_costs[:land_id].eq(arel_table[:land_id])
+          .and(latest_land_costs[:activated_on].lteq(target))
+      )
+    newest_query.group(latest_land_costs[:land_id])
+    newest_query.having(latest_activated_on.eq(arel_table[:activated_on]))
+
+    where(newest_query.exists)
+  }
 
   scope :usual, ->(lands, target) {newest(target).where(land_id: lands.ids)}
   scope :by_work_type, ->(work_type_id, target) {newest(target).where(work_type_id: work_type_id)}

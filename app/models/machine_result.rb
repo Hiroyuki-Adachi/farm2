@@ -34,14 +34,35 @@ class MachineResult < ApplicationRecord
   has_one :work_kind, -> {with_deleted}, through: :work
 
   scope :by_home, ->(term, organization = nil) {
+    machines = Machine.arel_table
+    homes = Home.arel_table
+    machine_types = MachineType.arel_table
+    works = Work.arel_table
+    systems = System.arel_table
+    homes_join = arel_table
+      .join(homes)
+      .on(homes[:id].eq(machines[:home_id]))
+      .join_sources
+    machine_types_join = arel_table
+      .join(machine_types)
+      .on(machine_types[:id].eq(machines[:machine_type_id]))
+      .join_sources
+    systems_join = works
+      .join(systems)
+      .on(
+        systems[:term].eq(works[:term])
+          .and(systems[:organization_id].eq(works[:organization_id]))
+      )
+      .join_sources
+
     base = joins(:machine).eager_load(:machine)
    .joins(:work_result).eager_load(:work_result)
    .joins(:work_type).eager_load(:work_type)
-   .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
-   .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
-   .joins("INNER JOIN systems ON systems.term = works.term AND systems.organization_id = works.organization_id")
-   .where("works.worked_at BETWEEN systems.start_date AND systems.end_date")
-   .where("homes.company_flag = FALSE")
+   .joins(homes_join).preload(:owner)
+   .joins(machine_types_join)
+   .joins(systems_join)
+   .where(works[:worked_at].gteq(systems[:start_date]).and(works[:worked_at].lteq(systems[:end_date])))
+   .where(homes[:company_flag].eq(false))
    .where(systems: { term: term })
    .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
 
@@ -54,13 +75,27 @@ class MachineResult < ApplicationRecord
   }
 
   scope :by_home_for_fix, ->(term, fixed_at, organization = nil) {
+    machines = Machine.arel_table
+    homes = Home.arel_table
+    machine_types = MachineType.arel_table
+    works = Work.arel_table
+
+    homes_join = arel_table
+      .join(homes)
+      .on(homes[:id].eq(machines[:home_id]))
+      .join_sources
+    machine_types_join = arel_table
+      .join(machine_types)
+      .on(machine_types[:id].eq(machines[:machine_type_id]))
+      .join_sources
+
     base = joins(:machine).eager_load(:machine)
    .joins(:work_result).eager_load(:work_result)
    .joins(:work_type).eager_load(:work_type)
-   .joins("INNER JOIN homes ON homes.id = machines.home_id").preload(:owner)
-   .joins("INNER JOIN machine_types ON machine_types.id = machines.machine_type_id")
-   .where("homes.company_flag = FALSE AND works.term = ?", term)
-   .where("works.fixed_at = ? AND machine_results.fixed_price IS NOT NULL", fixed_at)
+   .joins(homes_join).preload(:owner)
+   .joins(machine_types_join)
+   .where(homes[:company_flag].eq(false).and(works[:term].eq(term)))
+   .where(works[:fixed_at].eq(fixed_at).and(arel_table[:fixed_price].not_eq(nil)))
    .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
 
     if organization

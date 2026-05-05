@@ -34,14 +34,28 @@ class WorkChemical < ApplicationRecord
   validates :quantity, numericality: { if: proc { |x| x.quantity.present?} }
 
   scope :by_term, ->(term, organization = nil) do
+    works = Work.arel_table
+    chemicals = Chemical.arel_table
+    chemical_types = ChemicalType.arel_table
+    work_types = WorkType.arel_table
+    work_kinds = WorkKind.arel_table
+    systems = System.arel_table
+    systems_join = works
+      .join(systems)
+      .on(
+        systems[:term].eq(works[:term])
+          .and(systems[:organization_id].eq(works[:organization_id]))
+      )
+      .join_sources
+
     base = joins(:work)
       .eager_load(:work)
       .joins(:chemical).eager_load(:chemical)
-      .joins("INNER JOIN chemical_types ON chemicals.chemical_type_id = chemical_types.id").preload(:chemical_type)
-      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
-      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
-      .joins("INNER JOIN systems ON systems.term = works.term AND systems.organization_id = works.organization_id")
-      .where("works.worked_at BETWEEN systems.start_date AND systems.end_date")
+      .joins(arel_table.join(chemical_types).on(chemicals[:chemical_type_id].eq(chemical_types[:id])).join_sources).preload(:chemical_type)
+      .joins(arel_table.join(work_types).on(works[:work_type_id].eq(work_types[:id])).join_sources).preload(:work_type)
+      .joins(arel_table.join(work_kinds).on(works[:work_kind_id].eq(work_kinds[:id])).join_sources).preload(:work_kind)
+      .joins(systems_join)
+      .where(works[:worked_at].gteq(systems[:start_date]).and(works[:worked_at].lteq(systems[:end_date])))
       .where(systems: { term: term })
       .order("works.worked_at, works.id, chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
 
