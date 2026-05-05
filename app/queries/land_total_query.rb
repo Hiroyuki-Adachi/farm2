@@ -9,6 +9,7 @@ class LandTotalQuery
   def call
     return [] if @work_kind_ids.empty?
 
+    sql = nil
     sql = build_sql
     ApplicationRecord.connection.select_all(sql).map do |row|
       Result.new(
