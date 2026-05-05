@@ -29,7 +29,7 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
     @organization.reload
     assert_equal new_term, @organization.term
 
-    User.where(organization_id: @organization.id).each do |user|
+    User.where(organization_id: @organization.id).find_each do |user|
       assert_equal new_term, user.term
     end
     other_user_terms.each do |id, term|
@@ -53,7 +53,7 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
 
     @organization.reload
     assert_equal old_term, @organization.term
-    User.where.not(id: @user.id).each do |user|
+    User.where.not(id: @user.id).find_each do |user|
       assert_equal old_term, user.term
     end
   end
@@ -73,7 +73,7 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
     @organization.reload
     assert_equal old_term, @organization.term
 
-    User.where.not(id: user.id).each do |user|
+    User.where.not(id: user.id).find_each do |user|
       assert_equal old_term, user.term
     end
   end

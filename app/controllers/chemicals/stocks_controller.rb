@@ -1,5 +1,6 @@
 class Chemicals::StocksController < ApplicationController
   include PermitManager
+
   before_action :set_chemical_term, only: [:search, :new, :edit, :create, :update]
   before_action :set_stock, only: [:edit, :update, :destroy]
 

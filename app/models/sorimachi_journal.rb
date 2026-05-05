@@ -193,8 +193,11 @@ class SorimachiJournal < ApplicationRecord
       end
     end
     unless sum_amount == cost_amount
-      sorimachi_work_type = SorimachiWorkType.where(sorimachi_journal_id: id, work_type_id: max_work_type_id).first
-      sorimachi_work_type&.increment!(:amount, cost_amount - sum_amount)
+      sorimachi_work_type = SorimachiWorkType.find_by(sorimachi_journal_id: id, work_type_id: max_work_type_id)
+      if sorimachi_work_type
+        sorimachi_work_type.amount += (cost_amount - sum_amount)
+        sorimachi_work_type.save!
+      end
     end
     reload
   end
@@ -218,7 +221,7 @@ class SorimachiJournal < ApplicationRecord
   def term_check
     return if accounted_on.blank?
 
-    return if System.where(term: term).where("start_date <= ? AND end_date >= ?", accounted_on, accounted_on).exists?
+    return if System.where(term: term).where(start_date: ..accounted_on).exists?(end_date: accounted_on..)
 
     errors.add(:term, "の対応に誤りがあります。")
   end
