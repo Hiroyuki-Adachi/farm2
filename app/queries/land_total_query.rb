@@ -2,11 +2,13 @@ class LandTotalQuery
   Result = Struct.new(:place, :parcel_number, :area, :owner_name, :work_type_name, :w_date, keyword_init: true)
 
   def initialize(work_kind_ids, sys)
-    @work_kind_ids = work_kind_ids
+    @work_kind_ids = work_kind_ids.filter_map { |id| Integer(id, exception: false) }.select(&:positive?).uniq
     @sys = sys
   end
 
   def call
+    return [] if @work_kind_ids.empty?
+
     sql = build_sql
     ApplicationRecord.connection.select_all(sql).map do |row|
       Result.new(

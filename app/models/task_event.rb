@@ -93,7 +93,7 @@ class TaskEvent < ApplicationRecord
     reader_names = Arel::SelectManager.new
     reader_names.from(task_comments)
     reader_names.project(
-      Arel::Nodes::NamedFunction.new("ARRAY_AGG", [Arel::Nodes::Distinct.new(reader_name)])
+      Arel::Nodes::NamedFunction.new("ARRAY_AGG", [Arel.sql("DISTINCT #{reader_name.to_sql}")])
     )
     reader_names.join(task_reads).on(read_join_condition)
     reader_names.join(workers).on(workers[:id].eq(task_reads[:worker_id]))
@@ -112,13 +112,13 @@ class TaskEvent < ApplicationRecord
 
     read_count_with_default = Arel::Nodes::NamedFunction.new(
       "COALESCE",
-      [read_count, Arel::Nodes.build_quoted(0)]
+      [Arel::Nodes::Grouping.new(read_count.ast), Arel::Nodes.build_quoted(0)]
     )
 
     select(
       task_events[Arel.star],
       Arel::Nodes::As.new(read_count_with_default, Arel.sql("read_count")),
-      Arel::Nodes::As.new(reader_names, Arel.sql("reader_names")),
+      Arel::Nodes::As.new(Arel::Nodes::Grouping.new(reader_names.ast), Arel.sql("reader_names")),
       Arel::Nodes::As.new(unread_query.exists, Arel.sql("unread_flag")),
       Arel::Nodes::As.new(task_events[:actor_id].eq(worker_id), Arel.sql("mine_flag"))
     )

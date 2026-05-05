@@ -77,6 +77,38 @@ class TaskTest < ActiveSupport::TestCase
     assert_equal 1, created_task.reads.where(worker_id: worker2.id).count
   end
 
+  test "with_watch_flagは閲覧者フラグを返す" do
+    watched_task = Task.with_watch_flag(workers(:worker1).id).find(tasks(:worker1_task).id)
+    unwatched_task = Task.with_watch_flag(workers(:worker2).id).find(tasks(:worker1_task).id)
+
+    assert watched_task.watching
+    assert_not unwatched_task.watching
+  end
+
+  test "with_unread_countは未読の他者コメントだけを数える" do
+    reader = workers(:worker1)
+    other = workers(:worker2)
+    read_at = Time.zone.local(2026, 1, 1, 9, 0, 0)
+    task = Task.create!(
+      organization_id: reader.organization_id,
+      title: "未読数テスト",
+      task_status_id: TaskStatus::TO_DO.id,
+      priority: :low,
+      end_reason: :unset,
+      assignee: reader,
+      creator: reader
+    )
+
+    TaskRead.find_or_create_by!(task: task, worker: reader).update!(last_read_at: read_at)
+    TaskComment.create!(task: task, poster: other, body: "既読済み", created_at: read_at - 1.minute, updated_at: read_at - 1.minute)
+    TaskComment.create!(task: task, poster: other, body: "未読", created_at: read_at + 1.minute, updated_at: read_at + 1.minute)
+    TaskComment.create!(task: task, poster: reader, body: "自分のコメント", created_at: read_at + 2.minutes, updated_at: read_at + 2.minutes)
+
+    result = Task.with_unread_count(reader.id).find(task.id)
+
+    assert_equal 1, result.unread_count
+  end
+
   test "担当者変更処理" do
     worker1 = workers(:worker1)
     worker2 = workers(:worker2)

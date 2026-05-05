@@ -16,4 +16,18 @@ class LandTotalQueryTest < ActiveSupport::TestCase
     assert_equal work_land.land.area, result.area
     assert_equal work_land.land.owner.name, result.owner_name
   end
+
+  test "作業種別IDはSQL識別子に使う前に整数へ正規化する" do
+    safe_id = work_kinds(:work_kind_shirokaki).id
+    query = LandTotalQuery.new(["#{safe_id};DROP TABLE works", "0", "-1", safe_id.to_s], systems(:s2015))
+    sql = query.send(:build_sql)
+
+    assert_includes sql, %("W#{safe_id}")
+    assert_not_includes sql, "DROP TABLE"
+    assert_equal [safe_id], query.instance_variable_get(:@work_kind_ids)
+  end
+
+  test "有効な作業種別IDがない場合は空配列を返す" do
+    assert_equal [], LandTotalQuery.new(["x", "0", "-1"], systems(:s2015)).call
+  end
 end
