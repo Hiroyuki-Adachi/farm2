@@ -24,14 +24,6 @@ AllCops:
 
 ### ルールのカスタマイズ
 
-# 設定が厳しいので一旦全てfalseにする
-Metrics:
-  Enabled: false
-
-# 一行あたりの文字数
-Layout/LineLength:
-  Enabled: false
-
 # メソッドの改行ルール
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
