@@ -2,7 +2,8 @@ class WorkChemicalsController < ApplicationController
   include PermitManager
 
   def index
-    @works = WorkDecorator.decorate_collection(Work.by_chemical(current_term, current_organization).includes(:work_kind))
+    @works = WorkDecorator.decorate_collection(Work.by_chemical(current_term,
+                                                                current_organization).includes(:work_kind))
     @chemicals = Chemical.by_term(current_term, current_organization)
     calc_work_chemicals
     respond_to do |format|
@@ -13,6 +14,7 @@ class WorkChemicalsController < ApplicationController
 
   private
 
+  # rubocop:disable Style/CombinableLoops
   def calc_work_chemicals
     @work_chemicals = {}
     @total_chemicals = {}
@@ -44,7 +46,10 @@ class WorkChemicalsController < ApplicationController
         numer = work_rate_numer[work_chemical.work_id][work_chemical.chemical_id]
         next if numer.blank?
 
-        work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type.id] = 0 if work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type.id] == {}
+        if work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type.id] == {}
+          work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type.id] =
+            0
+        end
         quantity = work_chemical.quantity * work_rate_denom[work_chemical.work_id][work_chemical.chemical_id][work_type.id] / numer
         @work_chemicals["#{work_chemical.work_id},#{work_type.id},#{work_chemical.chemical_id}"] = quantity
         @total_chemicals[work_chemical.chemical_id] ||= 0
@@ -52,4 +57,5 @@ class WorkChemicalsController < ApplicationController
       end
     end
   end
+  # rubocop:enable Style/CombinableLoops
 end
