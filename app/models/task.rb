@@ -193,7 +193,7 @@ class Task < ApplicationRecord
 
     select(
       tasks[Arel.star],
-      Arel::Nodes::As.new(unread_count, Arel.sql("unread_count"))
+      Arel::Nodes::As.new(Arel::Nodes::Grouping.new(unread_count.ast), Arel.sql("unread_count"))
     )
   end
 
