@@ -6,19 +6,10 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 17
+# Offense count: 1
 Rails/HasManyOrHasOneDependent:
   Exclude:
-    - 'app/models/chemical_type.rb'
-    - 'app/models/home.rb'
-    - 'app/models/land.rb'
-    - 'app/models/land_place.rb'
-    - 'app/models/machine.rb'
-    - 'app/models/machine_type.rb'
-    - 'app/models/section.rb'
     - 'app/models/sorimachi_journal.rb'
-    - 'app/models/work_type.rb'
-    - 'app/models/worker.rb'
 
 # Offense count: 4
 Rails/HelperInstanceVariable:

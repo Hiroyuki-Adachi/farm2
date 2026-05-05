@@ -21,5 +21,5 @@ class LandPlace < ApplicationRecord
 
   scope :usual, -> { kept.order(display_order: :asc, id: :asc) }
 
-  has_many :lands
+  has_many :lands, dependent: :restrict_with_error
 end

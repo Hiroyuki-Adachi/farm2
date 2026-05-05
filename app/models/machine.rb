@@ -21,7 +21,7 @@ class Machine < ApplicationRecord
 
   self.discard_column = :deleted_at
 
-  has_many  :machine_results
+  has_many  :machine_results, dependent: :restrict_with_error
   has_many  :work_results, through: :machine_results
 
   belongs_to :machine_type

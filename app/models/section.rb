@@ -28,8 +28,8 @@ class Section < ApplicationRecord
 
   belongs_to :organization
 
-  has_many :homes, -> { order("homes.display_order, homes.id") }
-  has_many :schedule_sections
+  has_many :homes, -> { order("homes.display_order, homes.id") }, dependent: :restrict_with_error
+  has_many :schedule_sections, dependent: :destroy
   has_many :schedules, through: :schedule_sections
 
   scope :with_deleted, -> { with_discarded }

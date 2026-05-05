@@ -39,7 +39,7 @@ class WorkType < ApplicationRecord
   belongs_to :genre, class_name: "WorkGenre", foreign_key: "work_genre_id"
 
   has_one :plan, class_name: "PlanWorkType", dependent: :destroy
-  has_many :work_type_terms
+  has_many :work_type_terms, dependent: :destroy
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }

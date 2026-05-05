@@ -53,7 +53,7 @@ class Worker < ApplicationRecord
   has_many :works, -> { order(:worked_at) }, through: :work_results
   has_many :task_reads, dependent: :destroy
 
-  has_one :user
+  has_one :user, dependent: :restrict_with_error
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }

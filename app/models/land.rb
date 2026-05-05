@@ -61,12 +61,12 @@ class Land < ApplicationRecord
   has_one :owner_holder, -> { with_discarded }, through: :owner, source: :holder
   has_one :manager_holder, -> { with_discarded }, through: :manager, source: :holder
 
-  has_many :work_lands
+  has_many :work_lands, dependent: :restrict_with_error
   has_many :works, through: :work_lands
-  has_many :land_costs, -> { order(:activated_on) }
+  has_many :land_costs, -> { order(:activated_on) }, dependent: :destroy
   has_many :members, -> { order(:group_order, :place_sort_key, :id) }, dependent: :nullify, foreign_key: :group_id, class_name: :Land
-  has_many :land_fees
-  has_many :plan_lands
+  has_many :land_fees, dependent: :destroy
+  has_many :plan_lands, dependent: :destroy
   has_many :land_homes, dependent: :destroy
 
   scope :with_deleted, -> { with_discarded }
