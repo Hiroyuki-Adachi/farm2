@@ -81,18 +81,18 @@ class Task < ApplicationRecord
 
   scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
 
-  scope :usual_order, -> do
+  scope :usual_order, lambda {
     pairs = TaskStatus.all.map { |s| [s.id, s.display_order] }
     values_sql = pairs.map { |id, display_order| "(#{Integer(id)}, #{Integer(display_order)})" }.join(",")
 
     joins("JOIN (VALUES #{values_sql}) AS statuses(id, display_order) ON statuses.id = tasks.task_status_id")
       .order(Arel.sql("COALESCE(statuses.display_order, 99999999) ASC, due_on ASC NULLS LAST, priority DESC, tasks.id ASC"))
-  end
+  }
 
   scope :kanban_order, -> { order(:kanban_position, :id) }
-  scope :gantts_order, -> { order(:due_on, :planned_start_on, :id)}
+  scope :gantts_order, -> { order(:due_on, :planned_start_on, :id) }
 
-  scope :for_index, ->(days: 30) do
+  scope :for_index, lambda { |days: 30|
     cutoff     = Time.zone.now - days.days
     closed_ids = TaskStatus.closed_ids
 
@@ -115,15 +115,15 @@ class Task < ApplicationRecord
     not_closed = task[:task_status_id].not_in(closed_ids)
     recent_activity =
       task[:updated_at].gt(cutoff)
-      .or(exists_event)
-      .or(exists_comment)
+        .or(exists_event)
+        .or(exists_comment)
 
     closed_and_recent = task[:task_status_id].in(closed_ids).and(recent_activity)
 
     where(not_closed.or(closed_and_recent)).usual_order
-  end
+  }
 
-  scope :for_work, ->(work) do
+  scope :for_work, lambda { |work|
     task_table = arel_table
     work_result_table = WorkResult.arel_table
 
@@ -132,31 +132,31 @@ class Task < ApplicationRecord
 
     # 新しく紐づけ可能なタスクの条件
     new_work_link = task_table[:office_role].eq(work.work_type.office_role) # 役割が一致
-              .and(task_table[:office_role].not_eq(Task.office_roles[:none])) # 役割が「なし」ではない
-              .and(task_table[:assignee_id].in(worker_ids_subq)) # 作業者が担当者に含まれる
-              .and(task_table[:planned_start_on].lteq(work.worked_at)) # 作業日までに開始予定
+      .and(task_table[:office_role].not_eq(Task.office_roles[:none])) # 役割が「なし」ではない
+      .and(task_table[:assignee_id].in(worker_ids_subq)) # 作業者が担当者に含まれる
+      .and(task_table[:planned_start_on].lteq(work.worked_at)) # 作業日までに開始予定
 
     base = where(task_status_id: TaskStatus.workable_ids).where(new_work_link)
     base.select(task_table[Arel.star])
-  end
+  }
 
   scope :opened, -> { where(task_status_id: TaskStatus.open_ids).usual_order }
   scope :planned_start, -> { where(planned_start_on: ..Time.zone.today) }
 
-  scope :by_worker, ->(worker) do
+  scope :by_worker, lambda { |worker|
     task_table = arel_table
     task_watcher_table = TaskWatcher.arel_table
 
     subq = TaskWatcher
-            .select(1)
-            .where(task_watcher_table[:worker_id].eq(worker.id))
-            .where(task_watcher_table[:task_id].eq(task_table[:id]))
+      .select(1)
+      .where(task_watcher_table[:worker_id].eq(worker.id))
+      .where(task_watcher_table[:task_id].eq(task_table[:id]))
 
     exists = Arel::Nodes::Exists.new(subq.arel)
     where(task_table[:assignee_id].eq(worker.id).or(exists)).includes(:assignee)
-  end
-  
-  scope :with_watch_flag, ->(worker_id) do
+  }
+
+  scope :with_watch_flag, lambda { |worker_id|
     tasks = arel_table
     task_watchers = TaskWatcher.arel_table
     watching_exists = task_watchers
@@ -171,9 +171,9 @@ class Task < ApplicationRecord
       tasks[Arel.star],
       Arel::Nodes::As.new(watching_exists, Arel.sql("watching"))
     )
-  end
+  }
 
-  scope :with_unread_count, ->(worker_id) do
+  scope :with_unread_count, lambda { |worker_id|
     tasks = arel_table
     task_reads = TaskRead.arel_table.alias("tr")
     task_comments = TaskComment.arel_table.alias("tc")
@@ -195,14 +195,14 @@ class Task < ApplicationRecord
       tasks[Arel.star],
       Arel::Nodes::As.new(Arel::Nodes::Grouping.new(unread_count.ast), Arel.sql("unread_count"))
     )
-  end
+  }
 
   scope :for_kanban, ->(kanban_column) { where(task_status_id: TaskStatus.kanban_column_ids(kanban_column)) }
   scope :kanban_todo, -> { for_kanban(TaskStatus::KANBAN_TODO) }
   scope :kanban_doing, -> { for_kanban(TaskStatus::KANBAN_DOING) }
   scope :kanban_done, ->(days: 15) { for_kanban(TaskStatus::KANBAN_DONE).where(ended_on: (Time.zone.today - days.days)..) }
 
-  scope :for_gantt, ->(start_date, end_date) do
+  scope :for_gantt, lambda { |start_date, end_date|
     t = arel_table
     gantt_end_on_case =
       Arel::Nodes::Case.new
@@ -218,28 +218,28 @@ class Task < ApplicationRecord
         .else(t[:planned_start_on])
 
     where(t[:planned_start_on].lteq(end_date).and(gantt_end_on_case.gteq(start_date)))
-    .where(t[:task_status_id].in(TaskStatus.gantt_ids))
-  end
+      .where(t[:task_status_id].in(TaskStatus.gantt_ids))
+  }
 
   # ステータス判定メソッド群
   def closed?
-    self.status.closed_flag
+    status.closed_flag
   end
 
   def start?
-    self.status.start_flag
+    status.start_flag
   end
 
   def started?
-    self.status.started_flag
+    status.started_flag
   end
 
   def open?
-    self.status.open_flag
+    status.open_flag
   end
 
   def workable?
-    self.status.work_flag
+    status.work_flag
   end
 
   def overdue?
@@ -255,7 +255,7 @@ class Task < ApplicationRecord
       errors.add(:assignee_id, "が変更されていません")
       raise ActiveRecord::RecordInvalid, self
     end
-    if self.closed?
+    if closed?
       errors.add(:assignee_id, "を変更できません（タスクが完了しています）")
       raise ActiveRecord::RecordInvalid, self
     end
@@ -283,11 +283,11 @@ class Task < ApplicationRecord
       errors.add(:status, "が不正な値です")
       raise ActiveRecord::RecordInvalid, self
     end
-    if new_status.code == self.status.code
+    if new_status.code == status.code
       errors.add(:status, "が変更されていません")
       raise ActiveRecord::RecordInvalid, self
     end
-    if self.status.next_statuses.pluck(:id).exclude?(new_status.id)
+    if status.next_statuses.pluck(:id).exclude?(new_status.id)
       errors.add(:status, "が不正な値です")
       raise ActiveRecord::RecordInvalid, self
     end
@@ -296,13 +296,13 @@ class Task < ApplicationRecord
       events.create!(
         actor: actor,
         event_type: :change_status,
-        status_from_id: self.task_status_id,
+        status_from_id: task_status_id,
         status_to_id: new_status.id,
         comment: c,
         source: :form
       )
-      self.update_for_start_or_end(new_status, new_params[:end_reason])
-      self.save!
+      update_for_start_or_end(new_status, new_params[:end_reason])
+      save!
     end
   end
 
@@ -313,7 +313,7 @@ class Task < ApplicationRecord
       errors.add(:due_on, "が変更されていません")
       raise ActiveRecord::RecordInvalid, self
     end
-    if self.closed?
+    if closed?
       errors.add(:due_on, "を変更できません（タスクが完了しています）")
       raise ActiveRecord::RecordInvalid, self
     end
@@ -330,7 +330,7 @@ class Task < ApplicationRecord
   end
 
   def deletable?(user)
-    (user.admin? || (self.creator_id == user.worker_id)) && !self.closed?
+    (user.admin? || (creator_id == user.worker_id)) && !closed?
   end
 
   def watching_by?(user)
@@ -346,22 +346,22 @@ class Task < ApplicationRecord
   end
 
   def create_watcher_by_role
-    return if self.office_role_none?
+    return if office_role_none?
 
-    Worker.for_organization(organization_id).where(office_role: self.office_role).find_each do |worker|
+    Worker.for_organization(organization_id).where(office_role: office_role).find_each do |worker|
       task_watchers.find_or_create_by(worker_id: worker.id)
     end
   end
 
   def add_comment!(actor:, body:)
-    comment = self.comments.create!(poster: actor, body: body)
+    comment = comments.create!(poster: actor, body: body)
     TaskEvent.create!(task: self, actor: actor, event_type: :add_comment, comment: comment, source: :form)
   end
 
   def add_work!(actor:, work:, close: false, comment: nil)
     if ActiveRecord::Base.connection.transaction_open?
       add_work_core!(actor: actor, work: work, close: close, comment: comment)
-    else 
+    else
       ActiveRecord::Base.transaction { add_work_core!(actor: actor, work: work, close: close, comment: comment) }
     end
   end
@@ -371,7 +371,7 @@ class Task < ApplicationRecord
     return if event.nil?
 
     if event.last? && event.change_status?
-      self.update!(status: event.status_from)
+      update!(status: event.status_from)
       event.status_to = nil
       event.status_from = nil
       event.event_type = :add_work
@@ -397,7 +397,7 @@ class Task < ApplicationRecord
 
   def move_on_kanban!(new_kanban_column, new_position, actor:)
     self.class.transaction do
-      old_status_id = self.task_status_id
+      old_status_id = task_status_id
       old_kanban_column = TaskStatus.find_by(id: old_status_id)&.kanban_column
 
       if old_kanban_column == new_kanban_column
@@ -405,12 +405,12 @@ class Task < ApplicationRecord
       else
         new_status = TaskStatus.kanban_status(old_status_id, new_kanban_column)
         self.kanban_position = new_position
-        self.update_for_start_or_end(new_status, :completed)
-        self.save!
+        update_for_start_or_end(new_status, :completed)
+        save!
         TaskEvent.create!(
           task_id: id,
           actor_id: actor.id,
-          event_type: :change_status, 
+          event_type: :change_status,
           status_from_id: old_status_id,
           status_to_id: new_status.id,
           source: :kanban
@@ -476,7 +476,7 @@ class Task < ApplicationRecord
   # rubocop:enable Naming/PredicateMethod
 
   def add_work_core!(actor:, work:, close: false, comment: nil)
-    task_comment = comment.present? ? self.comments.create!(poster: actor, body: comment) : nil
+    task_comment = comment.present? ? comments.create!(poster: actor, body: comment) : nil
     if close
       TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work, comment: task_comment, source: :form)
       update!(status: TaskStatus::DONE, started_on: started_on || work.worked_at, ended_on: work.worked_at, end_reason: :completed)
@@ -505,56 +505,58 @@ class Task < ApplicationRecord
   end
 
   def end_reason_for_closed
-    return unless self.closed?
+    return unless closed?
 
-    errors.add(:end_reason, "を選択してください。") if self.end_reason_unset?
+    errors.add(:end_reason, "を選択してください。") if end_reason_unset?
   end
 
   def clear_end_info
-    unless self.closed?
+    unless closed?
       self.end_reason = :unset
       self.ended_on = nil
     end
-    self.started_on = nil if self.start?
+    self.started_on = nil if start?
   end
 
   def create_watcher
-    self.task_watchers.find_or_create_by(worker_id: self.assignee_id) if self.assignee.present?
-    self.task_watchers.find_or_create_by(worker_id: self.creator_id) if self.creator.present?
+    task_watchers.find_or_create_by(worker_id: assignee_id) if assignee.present?
+    task_watchers.find_or_create_by(worker_id: creator_id) if creator.present?
   end
 
   def create_task_event
-    return if self.creator.nil?
+    return if creator.nil?
 
     TaskEvent.create!(
       task: self,
-      actor: self.creator,
+      actor: creator,
       event_type: :task_created,
       source: :form
     )
   end
 
   def init_task_reads
-    return if self.creator.blank?
-    TaskRead.touch_and_get_previous!(task: self, worker_id: self.creator_id, at: self.created_at)
-    return if self.assignee.blank? || self.assignee_id == self.creator_id
-    TaskRead.touch_and_get_previous!(task: self, worker_id: self.assignee_id, at: Time.at(0))
+    return if creator.blank?
+
+    TaskRead.touch_and_get_previous!(task: self, worker_id: creator_id, at: created_at)
+    return if assignee.blank? || assignee_id == creator_id
+
+    TaskRead.touch_and_get_previous!(task: self, worker_id: assignee_id, at: Time.at(0))
   end
 
   def update_for_start_or_end(new_status, end_reason)
     self.task_status_id = new_status.id
     if new_status.started_flag
       self.started_on ||= Time.zone.today
-      self.planned_start_on = self.started_on if self.planned_start_on > self.started_on || self.planned_start_on == UNDEFINED_DATE
+      self.planned_start_on = self.started_on if planned_start_on > self.started_on || planned_start_on == UNDEFINED_DATE
     elsif new_status.closed_flag
       self.ended_on = Time.zone.today
-      self.started_on = self.ended_on if self.started_on.nil? || self.started_on > self.ended_on
-      self.planned_start_on = self.ended_on if self.planned_start_on > self.ended_on
+      self.started_on = ended_on if self.started_on.nil? || self.started_on > ended_on
+      self.planned_start_on = ended_on if planned_start_on > ended_on
       self.end_reason = end_reason || :other
     end
   end
 
   def create_planned_start_on
-    self.update(planned_start_on: self.created_at.to_date)
+    update(planned_start_on: created_at.to_date)
   end
 end

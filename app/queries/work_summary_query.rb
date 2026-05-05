@@ -35,10 +35,10 @@ class WorkSummaryQuery
 
   def total_genre(organization: nil)
     base_scope(organization).joins(:work_results)
-        .joins(:work_type)
-        .group("work_types.work_genre_id", :term)
-        .order("work_types.work_genre_id", :term)
-        .sum("work_results.hours")
+      .joins(:work_type)
+      .group("work_types.work_genre_id", :term)
+      .order("work_types.work_genre_id", :term)
+      .sum("work_results.hours")
   end
 
   def hours_per_10a_by_work_kind(work_kind_id, terms, organization: nil)
@@ -69,7 +69,7 @@ class WorkSummaryQuery
 
   def empty_term_totals(term)
     results = {}
-    10.times.each {|i| results[term - (9 - i)] = 0}
+    10.times.each { |i| results[term - (9 - i)] = 0 }
     results
   end
 end

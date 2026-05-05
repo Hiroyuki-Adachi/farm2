@@ -7,7 +7,7 @@ class Works::MachinesController < WorksController
   def new
     @company_machines = Machine.by_work(@work.model).of_company
     @owner_machines = Machine.by_work(@work.model).of_owners(@work.model)
-    @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select {|m| m.leasable?(@work.model.worked_at)}
+    @lease_machines = Machine.by_work(@work.model).of_no_owners(@work.model).select { |m| m.leasable?(@work.model.worked_at) }
   end
 
   def create

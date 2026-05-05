@@ -7,7 +7,7 @@ class WorkVerificationsTest < ApplicationSystemTestCase
   end
 
   test "ログインから日報検証まで" do
-    visit root_path 
+    visit root_path
 
     fill_in 'login_name', with: @user.login_name
     fill_in 'password', with: 'password'

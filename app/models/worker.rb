@@ -42,15 +42,15 @@ class Worker < ApplicationRecord
   self.discard_column = :deleted_at
 
   belongs_to :organization, optional: true
-  belongs_to :home, -> {with_deleted}
+  belongs_to :home, -> { with_deleted }
 
-  enum :gender_id, {none: 0, male: 1, female: 2}, prefix: true
-  enum :position_id, {none: 0, member: 1, leader: 2, director: 3, advisor: 9}, prefix: true
+  enum :gender_id, { none: 0, male: 1, female: 2 }, prefix: true
+  enum :position_id, { none: 0, member: 1, leader: 2, director: 3, advisor: 9 }, prefix: true
 
   before_save :set_user_permission_id, if: -> { user.present? }
 
   has_many :work_results, dependent: :restrict_with_error
-  has_many :works, -> {order(:worked_at)}, through: :work_results
+  has_many :works, -> { order(:worked_at) }, through: :work_results
   has_many :task_reads, dependent: :destroy
 
   has_one :user
@@ -59,12 +59,12 @@ class Worker < ApplicationRecord
   scope :only_deleted, -> { with_discarded.discarded }
   scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
 
-  scope :taskable, -> {kept.where.not(office_role: :none)}
-  scope :usual_order, -> {kept.includes(home: :section).order('sections.display_order, homes.display_order, workers.display_order')}
-  scope :usual, -> {kept.where(homes: { company_flag: false }).usual_order }
-  scope :company, -> {kept.joins(:home).eager_load(:home).where(homes: { company_flag: true }).order("workers.display_order")}
-  scope :by_homes, ->(homes) {kept.where(home_id: homes.ids).order(:display_order)}
-  scope :gaps, -> {kept.where.not(broccoli_mark: [nil, ""]).order(:broccoli_mark, :family_phonetic, :first_phonetic, :id)}
+  scope :taskable, -> { kept.where.not(office_role: :none) }
+  scope :usual_order, -> { kept.includes(home: :section).order('sections.display_order, homes.display_order, workers.display_order') }
+  scope :usual, -> { kept.where(homes: { company_flag: false }).usual_order }
+  scope :company, -> { kept.joins(:home).eager_load(:home).where(homes: { company_flag: true }).order("workers.display_order") }
+  scope :by_homes, ->(homes) { kept.where(home_id: homes.ids).order(:display_order) }
+  scope :gaps, -> { kept.where.not(broccoli_mark: [nil, ""]).order(:broccoli_mark, :family_phonetic, :first_phonetic, :id) }
 
   REG_MAIL = /\A([a-zA-Z0-9])+([a-zA-Z0-9._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9._-]+)+\z/
   REG_MOBILE = /\A(090|080|070)-\d{4}-\d{4}\z/
@@ -76,15 +76,15 @@ class Worker < ApplicationRecord
   validates :first_name, presence: true
   validates :display_order, presence: true
 
-  validates :family_phonetic, format: {with: REG_KANA}, :if => proc { |x| x.family_phonetic.present?}
-  validates :first_phonetic,  format: {with: REG_KANA}, :if => proc { |x| x.first_phonetic.present?}
+  validates :family_phonetic, format: { with: REG_KANA }, if: proc { |x| x.family_phonetic.present? }
+  validates :first_phonetic,  format: { with: REG_KANA }, if: proc { |x| x.first_phonetic.present? }
 
-  validates :mobile, format: {with: REG_MOBILE}, :if => proc { |x| x.mobile.present?}
-  validates :pc_mail, format: {with: REG_MAIL}, :if => proc { |x| x.pc_mail.present?}
-  validates :mobile_mail, format: {with: REG_MAIL}, :if => proc { |x| x.mobile_mail.present?}
+  validates :mobile, format: { with: REG_MOBILE }, if: proc { |x| x.mobile.present? }
+  validates :pc_mail, format: { with: REG_MAIL }, if: proc { |x| x.pc_mail.present? }
+  validates :mobile_mail, format: { with: REG_MAIL }, if: proc { |x| x.mobile_mail.present? }
 
-  validates :display_order, numericality: {only_integer: true}, :if => proc { |x| x.display_order.present?}
-  validates :broccoli_mark, uniqueness: true, :if => proc { |x| x.broccoli_mark.present?}
+  validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
+  validates :broccoli_mark, uniqueness: true, if: proc { |x| x.broccoli_mark.present? }
   validate :office_role_only_user
   validate :home_belongs_to_same_organization
 
@@ -101,29 +101,29 @@ class Worker < ApplicationRecord
   end
 
   def member?
-    self.position_id_member?
+    position_id_member?
   end
 
   def leader?
-    self.position_id_leader?
+    position_id_leader?
   end
 
   def director?
-    self.position_id_director?
+    position_id_director?
   end
 
   def advisor?
-    self.position_id_advisor?
+    position_id_advisor?
   end
 
   def position_name
-    I18n.t("activerecord.enums.worker.position_ids.#{self.position_id}")
+    I18n.t("activerecord.enums.worker.position_ids.#{position_id}")
   end
 
   private
 
   def office_role_only_user
-    errors.add(:office_role, "を設定する場合は、先にユーザを登録してください。") if self.user.blank? && !self.office_role_none?
+    errors.add(:office_role, "を設定する場合は、先にユーザを登録してください。") if user.blank? && !office_role_none?
   end
 
   def home_belongs_to_same_organization
@@ -133,11 +133,11 @@ class Worker < ApplicationRecord
   end
 
   def set_user_permission_id
-    self.user.update(permission_id: :checker) unless self.user.checkable?
+    user.update(permission_id: :checker) unless user.checkable?
   end
 
   def set_email
-    self.user.email = (self.pc_mail.presence || '') if self.user.present?
-    self.user.save!
+    user.email = (pc_mail.presence || '') if user.present?
+    user.save!
   end
 end

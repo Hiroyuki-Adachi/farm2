@@ -24,10 +24,10 @@ class Drying < ApplicationRecord
   KG_PER_BAG_RICE = 30
   KG_PER_BAG_WASTE = 25
 
-  enum :drying_type_id, {unset: 0, country: 1, self: 2, another: 3, adjust: 4}
+  enum :drying_type_id, { unset: 0, country: 1, self: 2, another: 3, adjust: 4 }
 
-  belongs_to :work_type, -> {with_deleted}
-  belongs_to :home, -> {with_deleted}
+  belongs_to :work_type, -> { with_deleted }
+  belongs_to :home, -> { with_deleted }
   has_many   :drying_moths, dependent: :destroy
   has_many   :drying_lands, dependent: :destroy
   has_one    :adjustment,   dependent: :destroy
@@ -38,43 +38,46 @@ class Drying < ApplicationRecord
   accepts_nested_attributes_for :drying_lands
   accepts_nested_attributes_for :adjustment
 
-  scope :by_home, ->(term, home) {
+  scope :by_home, lambda { |term, home|
     left_joins(:adjustment)
       .where(["dryings.term = ? AND (dryings.home_id = ? OR adjustments.home_id = ?)", term, home.id, home.id])
       .order(:carried_on).order(:id)
   }
 
-  scope :for_harvest, ->(term) {
+  scope :for_harvest, lambda { |term|
     joins(:home, :work_type)
       .where(dryings: { term: term })
       .order(Arel.sql("work_types.display_order, dryings.carried_on, homes.drying_order, dryings.id"))
   }
 
   def rice_bag
-    return (rice_weight || 0) / KG_PER_BAG_RICE
+    (rice_weight || 0) / KG_PER_BAG_RICE
   end
 
   def rice_weight
-    return drying_moths.sum(:rice_weight)
+    drying_moths.sum(:rice_weight)
   end
 
   def harvest_weight(system)
     return rice_weight || 0 if country?
-    return adjustment&.rice_weight(system) || 0
+
+    adjustment&.rice_weight(system) || 0
   end
 
   def waste_weight
     return 0 if country?
-    return adjustment&.waste_weight || 0
+
+    adjustment&.waste_weight || 0
   end
 
   def waste_date
     return adjustment&.waste_date if adjustment&.waste_date.present?
-    return shipped_on
+
+    shipped_on
   end
 
   def adjust_only?(home_id)
-    return another? && adjustment&.home_id == home_id
+    another? && adjustment&.home_id == home_id
   end
 
   def delete_child
@@ -88,7 +91,8 @@ class Drying < ApplicationRecord
 
   def price(system, home_id)
     return system.adjust_price if adjust_only?(home_id)
-    return self? ? system.dry_adjust_price : system.dry_price
+
+    self? ? system.dry_adjust_price : system.dry_price
   end
 
   def amount(system, home_id)
@@ -97,7 +101,8 @@ class Drying < ApplicationRecord
 
   def waste_price(sys, home_id)
     return sys.waste_adjust_price if adjust_only?(home_id)
-    return self? ? sys.waste_price : sys.waste_drying_price
+
+    self? ? sys.waste_price : sys.waste_drying_price
   end
 
   def waste_amount(sys, home_id)
@@ -143,19 +148,19 @@ class Drying < ApplicationRecord
         shipped_totals[:country] += drying.harvest_weight(system)
       end
     end
-    return rice_totals, waste_totals, shipped_totals
+    [rice_totals, waste_totals, shipped_totals]
   end
 
   def copy
     Drying.create(
-      carried_on: self.carried_on,
-      term: self.term,
-      home_id: self.home_id,
-      copy_flag: Drying.where(carried_on: self.carried_on, home_id: self.home_id).maximum(:copy_flag) + 1
+      carried_on: carried_on,
+      term: term,
+      home_id: home_id,
+      copy_flag: Drying.where(carried_on: carried_on, home_id: home_id).maximum(:copy_flag) + 1
     )
   end
 
   def drying_type_name
-    I18n.t("activerecord.enums.drying.drying_type_ids.#{self.drying_type_id}")
+    I18n.t("activerecord.enums.drying.drying_type_ids.#{drying_type_id}")
   end
 end

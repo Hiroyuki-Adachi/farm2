@@ -13,6 +13,8 @@ class Works::GenresController < ApplicationController
     @genre = WorkGenre.new
   end
 
+  def edit; end
+
   def create
     @genre = WorkGenre.new(work_genre_params)
     if @genre.save
@@ -21,8 +23,6 @@ class Works::GenresController < ApplicationController
       render action: :new, status: :unprocessable_content
     end
   end
-
-  def edit; end
 
   def update
     if @genre.update(work_genre_params)

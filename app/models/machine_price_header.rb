@@ -24,9 +24,9 @@ class MachinePriceHeader < ApplicationRecord
 
   has_many :details, class_name: "MachinePriceDetail", dependent: :destroy
 
-  scope :show_type, ->(machine_type, base_date){where("machine_type_id = ? AND validated_at <= ?", machine_type, base_date).order("validated_at DESC")}
-  scope :show_machine, ->(machine, base_date){where("machine_id = ? AND validated_at <= ?", machine, base_date).order("validated_at DESC")}
-  scope :histories, ->(machine_price){where("(machine_id = ? AND machine_id <> 0) OR (machine_type_id = ? AND machine_type_id <> 0)", machine_price.machine_id, machine_price.machine_type_id).order("validated_at ASC")}
+  scope :show_type, ->(machine_type, base_date) { where("machine_type_id = ? AND validated_at <= ?", machine_type, base_date).order("validated_at DESC") }
+  scope :show_machine, ->(machine, base_date) { where("machine_id = ? AND validated_at <= ?", machine, base_date).order("validated_at DESC") }
+  scope :histories, ->(machine_price) { where("(machine_id = ? AND machine_id <> 0) OR (machine_type_id = ? AND machine_type_id <> 0)", machine_price.machine_id, machine_price.machine_type_id).order("validated_at ASC") }
 
   def machine?
     !machine_id.zero?
@@ -42,7 +42,7 @@ class MachinePriceHeader < ApplicationRecord
     (machine? ? machine.machine_type.work_kinds : machine_type.work_kinds).each do |work_kind|
       results << work_kind_struct.new(work_kind.id, work_kind.name)
     end
-    return results
+    results
   end
 
   def details_form
@@ -50,19 +50,19 @@ class MachinePriceHeader < ApplicationRecord
     MachinePriceDetail.lease_ids.each do |lease_code, lease_id|
       result = {}
       work_kinds.each do |work_kind|
-        result[work_kind.id] = {adjust_id: 0, price: 0}
+        result[work_kind.id] = { adjust_id: 0, price: 0 }
         detail = details.find_by(lease_id: lease_code, work_kind_id: work_kind.id)
-        result[work_kind.id] = {adjust_id: detail.adjust_id, price: detail.price} if detail
+        result[work_kind.id] = { adjust_id: detail.adjust_id, price: detail.price } if detail
       end
       results[lease_id] = result
     end
-    return results
+    results
   end
 
   attr_writer :details_form
 
   def name
-    return machine_id.zero? ? machine_type.name : machine.usual_name
+    machine_id.zero? ? machine_type.name : machine.usual_name
   end
 
   private
@@ -71,6 +71,7 @@ class MachinePriceHeader < ApplicationRecord
     @details_form.each do |lease_id, v1|
       lease_code = MachinePriceDetail.lease_ids.key(lease_id.to_i)
       next if lease_code.nil?
+
       v1.each do |work_kind_id, v2|
         detail = MachinePriceDetail.find_by(machine_price_header_id: id, lease_id: lease_code, work_kind_id: work_kind_id)
         if detail.present?

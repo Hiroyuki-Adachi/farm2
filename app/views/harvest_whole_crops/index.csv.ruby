@@ -5,6 +5,7 @@ CSV.generate(encoding: "windows-31J") do |csv|
   @whole_crops.each do |whole_crop|
     whole_crop.wcs_lands.each do |wcs_land|
       next if wcs_land.rolls.zero?
+
       csv << [
         whole_crop.work.work_type.name,
         whole_crop.work.worked_at,

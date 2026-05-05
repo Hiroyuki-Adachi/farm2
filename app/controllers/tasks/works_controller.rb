@@ -18,7 +18,7 @@ class Tasks::WorksController < TasksController
       render :index, status: :unprocessable_content
     end
   end
-    
+
   def destroy
     event = @task.events.find_by(work_id: @work.id)
     return redirect_to task_path(@task), notice: "変更または削除されています。" if event.nil? || (event.actor_id != current_user.worker_id)
@@ -46,7 +46,7 @@ class Tasks::WorksController < TasksController
   end
 
   private
-    
+
   def set_work
     @work = Work.find(params[:id])
   end

@@ -7,6 +7,13 @@ class WorkVerificationsController < ApplicationController
     respond_to_format(:html)
   end
 
+  def show
+    @work = @work.decorate
+    @results = WorkResultDecorator.decorate_collection(@work.work_results.includes(:worker) || [])
+    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land) || [])
+    respond_to_format(:html, partial: "show")
+  end
+
   def update
     WorkVerification.regist(@work, current_user.worker)
     reload
@@ -15,13 +22,6 @@ class WorkVerificationsController < ApplicationController
   def destroy
     WorkVerification.where(work_id: @work.id, worker_id: current_user.worker.id).destroy_all
     reload
-  end
-
-  def show
-    @work = @work.decorate
-    @results = WorkResultDecorator.decorate_collection(@work.work_results.includes(:worker) || [])
-    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land) || [])
-    respond_to_format(:html, partial: "show")
   end
 
   private

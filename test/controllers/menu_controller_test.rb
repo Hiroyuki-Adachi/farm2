@@ -23,7 +23,7 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
     System.where(term: new_term).destroy_all
 
     assert_difference('System.count', 1) do
-      patch menu_path(@system.id), params: {system: {term: new_term}}
+      patch menu_path(@system.id), params: { system: { term: new_term } }
     end
     @organization.reload
     assert_equal new_term, @organization.term
@@ -41,7 +41,7 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
     now_term = systems(:s2014).term
     old_term = systems(:s2015).term
     assert_no_difference('System.count') do
-      patch menu_path(@system.id), params: {system: {term: now_term}}
+      patch menu_path(@system.id), params: { system: { term: now_term } }
     end
 
     @user.reload
@@ -60,7 +60,7 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
     old_term = systems(:s2015).term
     now_term = systems(:s2014).term
     assert_no_difference('System.count') do
-      patch menu_path(@system.id), params: {system: {term: now_term}}
+      patch menu_path(@system.id), params: { system: { term: now_term } }
     end
 
     user.reload

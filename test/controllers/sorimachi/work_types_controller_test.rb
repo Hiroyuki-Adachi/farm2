@@ -14,8 +14,8 @@ class Sorimachi::WorkTypesControllerTest < ActionDispatch::IntegrationTest
   test "農業簿記内訳(更新)" do
     amount = 1000
     sorimachi = {
-      work_types: {1 => 1},
-      amounts: {1 => amount}
+      work_types: { 1 => 1 },
+      amounts: { 1 => amount }
     }
     assert_difference('SorimachiWorkType.count') do
       put sorimachi_work_type_path(sorimachi_journal_id: @journal.id), params: {

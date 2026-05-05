@@ -67,9 +67,9 @@ class WorkTest < ActiveSupport::TestCase
 
   test "工数統計_ジャンル別" do
     total_hours = Work.joins(:work_results)
-        .joins("INNER JOIN work_types ON works.work_type_id = work_types.id")
-        .where(term: 2015, "work_types.work_genre_id" => @work.work_type.work_genre_id)
-        .sum("work_results.hours")
+      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id")
+      .where(term: 2015, "work_types.work_genre_id" => @work.work_type.work_genre_id)
+      .sum("work_results.hours")
     assert_equal total_hours, Work.total_genre[[@work.work_type.work_genre_id, 2015]]
   end
 
@@ -207,10 +207,10 @@ class WorkTest < ActiveSupport::TestCase
     old_result = WorkResult.find_by(work_id: @work.id, worker_id: workers(:worker1).id)
     params = ActionController::Parameters.new(
       {
-        results: 
+        results:
           [
-            {worker_id: workers(:worker1).id, hours: 1.5, display_order: 1},
-            {worker_id: workers(:worker4).id, hours: 4.5, display_order: 2}
+            { worker_id: workers(:worker1).id, hours: 1.5, display_order: 1 },
+            { worker_id: workers(:worker4).id, hours: 4.5, display_order: 2 }
           ]
       }
     )
@@ -242,10 +242,10 @@ class WorkTest < ActiveSupport::TestCase
     old_work_land = WorkLand.find_by(work_id: @work.id, land_id: lands(:lands0).id)
     params = ActionController::Parameters.new(
       {
-        work_lands: 
+        work_lands:
           [
-            {land_id: lands(:lands0).id, display_order: 1},
-            {land_id: lands(:lands3).id, display_order: 2}
+            { land_id: lands(:lands0).id, display_order: 1 },
+            { land_id: lands(:lands3).id, display_order: 2 }
           ]
       }
     )
@@ -272,9 +272,9 @@ class WorkTest < ActiveSupport::TestCase
       {
         machine_hours:
           {
-            machines(:machine_hour_t).id.to_s => {work_results(:work_result_for_price1).id.to_s => 2.5},
-            machines(:machine_area_t).id.to_s => {work_results(:work_result_for_price2).id.to_s => 3.0},
-            machines(:machine_day_t).id.to_s => {work_results(:work_result_for_price2).id.to_s => 0}
+            machines(:machine_hour_t).id.to_s => { work_results(:work_result_for_price1).id.to_s => 2.5 },
+            machines(:machine_area_t).id.to_s => { work_results(:work_result_for_price2).id.to_s => 3.0 },
+            machines(:machine_day_t).id.to_s => { work_results(:work_result_for_price2).id.to_s => 0 }
           }
       }
     )
@@ -302,7 +302,7 @@ class WorkTest < ActiveSupport::TestCase
       {
         machine_hours:
           {
-            machines(:machine_hour_t).id.to_s => {work_results(:work_result_genka1).id.to_s => 0}
+            machines(:machine_hour_t).id.to_s => { work_results(:work_result_genka1).id.to_s => 0 }
           }
       }
     )
@@ -321,10 +321,10 @@ class WorkTest < ActiveSupport::TestCase
         chemicals:
           {
             chemicals(:chemical_amistar).id.to_s => {
-              "1" => {quantity: 150, dilution_id: 2, magnification: 1000, remarks: "updated"}
+              "1" => { quantity: 150, dilution_id: 2, magnification: 1000, remarks: "updated" }
             },
             chemicals(:chemical_genka).id.to_s => {
-              "1" => {quantity: 5, dilution_id: 1, magnification: 500, remarks: "created"}
+              "1" => { quantity: 5, dilution_id: 1, magnification: 500, remarks: "created" }
             }
           }
       }
@@ -347,7 +347,7 @@ class WorkTest < ActiveSupport::TestCase
         chemicals:
           {
             chemicals(:chemical_amistar).id.to_s => {
-              "1" => {quantity: 0, dilution_id: 2, magnification: 1000, remarks: ""}
+              "1" => { quantity: 0, dilution_id: 2, magnification: 1000, remarks: "" }
             }
           }
       }

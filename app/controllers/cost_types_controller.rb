@@ -13,6 +13,8 @@ class CostTypesController < ApplicationController
     @cost_type = CostType.new
   end
 
+  def edit; end
+
   def create
     @cost_type = CostType.new(cost_type_params)
     if @cost_type.save
@@ -30,8 +32,6 @@ class CostTypesController < ApplicationController
     end
   end
 
-  def edit; end
-
   def destroy
     @cost_type.destroy
     redirect_to @return_to, status: :see_other
@@ -48,6 +48,6 @@ class CostTypesController < ApplicationController
   end
 
   def cost_type_params
-    params.expect(cost_type: [:name, :phonetic, :display_order, {work_kind_ids: []}])
+    params.expect(cost_type: [:name, :phonetic, :display_order, { work_kind_ids: [] }])
   end
 end

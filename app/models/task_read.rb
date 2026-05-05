@@ -29,6 +29,6 @@ class TaskRead < ApplicationRecord
     prev = rec.last_read_at || Time.zone.at(0)
     rec.last_read_at = [prev, at].max
     rec.save!
-    return prev
+    prev
   end
 end

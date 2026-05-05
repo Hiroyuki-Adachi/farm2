@@ -10,6 +10,10 @@ class Chemicals::StoresController < ApplicationController
     @inventory = ChemicalInventory.new
   end
 
+  def edit
+    @inventory.stocks.build
+  end
+
   def create
     @inventory = ChemicalInventory.new(inventory_params)
     if @inventory.save
@@ -17,10 +21,6 @@ class Chemicals::StoresController < ApplicationController
     else
       render action: :new, status: :unprocessable_content
     end
-  end
-
-  def edit
-    @inventory.stocks.build
   end
 
   def update

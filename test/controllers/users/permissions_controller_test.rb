@@ -14,7 +14,7 @@ class Users::PermissionsControllerTest < ActionDispatch::IntegrationTest
   test "権限変更(実行)" do
     user = { permission_id: :manager }
     assert_no_difference('User.count') do
-      post user_permissions_path(user_id: @user.id), params: {user: user}
+      post user_permissions_path(user_id: @user.id), params: { user: user }
     end
     assert_redirected_to users_path
 

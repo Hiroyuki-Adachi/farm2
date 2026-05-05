@@ -26,10 +26,10 @@ class Gaps::CleaningsController < GapsController
   def cleaning_params
     params.expect(cleaning:
       [
-        :target, 
+        :target,
         :method,
-        {cleaning_target_ids: [],
-         institution_ids: []}
+        { cleaning_target_ids: [],
+          institution_ids: [] }
       ])
       .merge(work_id: params[:id])
   end

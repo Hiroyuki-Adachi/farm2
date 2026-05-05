@@ -23,8 +23,8 @@ class MachinePriceDetail < ApplicationRecord
   belongs_to :work_kind
   belongs_to_active_hash :adjust
 
-  enum :lease_id, {normal: 1, lease: 2}
+  enum :lease_id, { normal: 1, lease: 2 }
 
   validates :price, presence: true
-  validates :price, numericality: true, if: proc { |x| x.price.present?}
+  validates :price, numericality: true, if: proc { |x| x.price.present? }
 end

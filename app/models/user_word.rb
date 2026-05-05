@@ -49,13 +49,13 @@ class UserWord < ApplicationRecord
   private
 
   def trim_word
-    self.word = self.word.strip
+    self.word = word.strip
   end
 
   def remove_empty_words
-    if self.word.blank?
-      self.destroy
-      UserTopic.where(user_id: self.user_id, word: self.word_before_last_save)&.destroy_all
+    if word.blank?
+      destroy
+      UserTopic.where(user_id: user_id, word: word_before_last_save)&.destroy_all
     end
   end
 end

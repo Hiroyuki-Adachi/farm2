@@ -6,7 +6,7 @@ class LandTotalQueryTest < ActiveSupport::TestCase
     work = works(:works_land_total_query)
     work_land = work_lands(:work_land_land_total_query)
     results = LandTotalQuery.new(work_kinds, systems(:s2015)).call
-    result = results.find {|result| result.place == work_land.land.place}
+    result = results.find { |result| result.place == work_land.land.place }
 
     assert_not_nil result
     assert_equal work.worked_at, result.w_date[work_kinds(:work_kind_shirokaki).id]

@@ -18,6 +18,7 @@ class Crawlers::NousonNewsJob < CrawlJob
       next if topic_date.nil?
 
       break if topic_date < Time.zone.today - START_DAY
+
       save_topic(agent, content.at_css('a')&.[](:href), topic_date)
     end
   end

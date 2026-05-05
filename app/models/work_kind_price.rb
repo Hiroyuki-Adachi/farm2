@@ -18,17 +18,19 @@ class WorkKindPrice < ApplicationRecord
   belongs_to :work_kind
 
   validates :price, presence: true
-  validates :price, numericality: true, if: proc { |x| x.price.present?}
+  validates :price, numericality: true, if: proc { |x| x.price.present? }
 
-  scope :usual, ->(work_kind, organization = nil) do
+  scope :usual, lambda { |work_kind, organization = nil|
     where("work_kind_id = ? and term <= ?", work_kind.id, Organization.term(organization)).order("term DESC")
-  end
+  }
 
   def self.price(work_kind, term)
     work_kind_price = WorkKindPrice.find_by(work_kind_id: work_kind.id, term: term)
     return work_kind_price.price if work_kind_price
+
     system = System.find_by(term: term)
     return system.default_price if system
-    return 0
+
+    0
   end
 end

@@ -34,6 +34,6 @@ class Lands::ChemicalsController < ApplicationController
   end
 
   def menu_name
-    return :lands_chemicals
+    :lands_chemicals
   end
 end

@@ -31,7 +31,7 @@
 
 class System < ApplicationRecord
   validates :term,        presence: true
-  validates :term, numericality: {only_integer: true, greater_than: 2000, less_than: 2100}
+  validates :term, numericality: { only_integer: true, greater_than: 2000, less_than: 2100 }
   validate :validate_period_dates
   validate :validate_period_continuity
   validate :validate_period_order
@@ -59,16 +59,16 @@ class System < ApplicationRecord
         system.end_date    = pre_system.end_date + 1.year
       end
     end
-    return system
+    system
   end
 
   def get_prev_terms(limit, term: nil)
-    self.class.get_terms(self.organization_id, term || self.term, limit)
+    self.class.get_terms(organization_id, term || self.term, limit)
   end
 
   def self.get_terms(organization_id, start_term, limit)
     # Get terms up to and including start_term
-    self.where(organization_id:, term: ..start_term).order(term: :desc).limit(limit).pluck(:term)
+    where(organization_id:, term: ..start_term).order(term: :desc).limit(limit).pluck(:term)
   end
 
   private

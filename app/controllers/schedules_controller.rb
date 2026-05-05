@@ -23,6 +23,8 @@ class SchedulesController < ApplicationController
     ).decorate
   end
 
+  def edit; end
+
   def create
     @schedule = Schedule.new(schedule_params.merge(created_by: current_user.worker.id, organization_id: current_organization.id))
     Schedule.transaction do
@@ -34,8 +36,6 @@ class SchedulesController < ApplicationController
       end
     end
   end
-
-  def edit; end
 
   def update
     Schedule.transaction do
@@ -52,7 +52,7 @@ class SchedulesController < ApplicationController
     @schedule.destroy
     redirect_to schedules_path, status: :see_other
   end
-  
+
   private
 
   def set_schedule
@@ -75,7 +75,7 @@ class SchedulesController < ApplicationController
         :minutes_flag
       ]
     )
-    .merge(term: 0)
+      .merge(term: 0)
   end
 
   def set_masters
@@ -86,6 +86,7 @@ class SchedulesController < ApplicationController
 
   def permit_only_self
     return true if current_user.admin?
+
     if (current_user.worker.id == @schedule.created_by) || @schedule.workers.any? { |w| w.id == current_user.worker.id }
       true
     else

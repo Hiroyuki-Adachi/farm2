@@ -43,6 +43,7 @@ class ImportJmaJob < ApplicationJob
   def import(year)
     res = submit(year)
     return if res.nil?
+
     unless res.is_a?(Net::HTTPSuccess)
       Rails.logger.warn("ImportJmaJob: request failed year=#{year} status=#{res.code}")
       return

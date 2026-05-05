@@ -27,7 +27,7 @@ class Gaps::CleaningsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('CleaningCleaningTarget.count') do
       assert_difference('CleaningInstitution.count') do
         assert_difference('Cleaning.count') do
-          put gaps_cleaning_path(id: @work), params: {cleaning: cleaning}
+          put gaps_cleaning_path(id: @work), params: { cleaning: cleaning }
         end
       end
     end

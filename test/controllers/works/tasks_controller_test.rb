@@ -9,7 +9,7 @@ class Works::TasksControllerTest < ActionDispatch::IntegrationTest
     work = works(:work_taue)
     get new_work_task_path(work_id: work)
     assert_redirected_to work_path(id: work)
-  end  
+  end
 
   test "作業変更(タスク)(表示)(タスクあり)" do
     work = works(:work_task_work)
@@ -30,8 +30,8 @@ class Works::TasksControllerTest < ActionDispatch::IntegrationTest
 
   test "作業変更(タスク)(更新)" do
     work = works(:work_task_work)
-    task1 = tasks(:task31) 
-    task3 = tasks(:task33) 
+    task1 = tasks(:task31)
+    task3 = tasks(:task33)
     assert_not work.tasks.include?(task1)
     assert_not work.tasks.include?(task3)
 

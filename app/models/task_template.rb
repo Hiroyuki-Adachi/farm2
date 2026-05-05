@@ -77,6 +77,7 @@ class TaskTemplate < ApplicationRecord
       else
         # 年次は annual_month を使用（今年/来年分を見る）
         return list unless annual_month
+
         [Date.new(today.year, annual_month, 1),
          Date.new(today.year + 1, annual_month, 1)]
       end
@@ -104,14 +105,14 @@ class TaskTemplate < ApplicationRecord
     return nil if same_task_exists?(due_on: due_on)
 
     title_date = due_on + (kind_annual? ? offset.years : offset.months)
-    task_title = 
+    task_title =
       if kind_annual?
         "【#{title_date.strftime('%Jy年')}】#{title}"
       else
         "【#{title_date.strftime('%Jy年%m月')}】#{title}"
       end
-    
-    return Task.create!(
+
+    Task.create!(
       title: task_title,
       description: description,
       due_on: due_on,
@@ -124,20 +125,20 @@ class TaskTemplate < ApplicationRecord
   end
 
   def same_task_exists?(due_on:)
-    return tasks.exists?(due_on: due_on.all_month) if self.kind_monthly?
+    return tasks.exists?(due_on: due_on.all_month) if kind_monthly?
 
     target_system = System.get_system(due_on, organization_id)
     return true unless target_system
 
-    return tasks.exists?(due_on: target_system.start_date..target_system.end_date)
+    tasks.exists?(due_on: target_system.start_date..target_system.end_date)
   end
 
   def annual_offset
-    self.offset
+    offset
   end
 
   def monthly_offset
-    self.offset
+    offset
   end
 
   private

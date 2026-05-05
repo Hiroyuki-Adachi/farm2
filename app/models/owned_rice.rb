@@ -20,20 +20,20 @@ class OwnedRice < ApplicationRecord
 
   OWNED_RICE_COUNT = 2 # 10a当たりの保有米数
 
-  scope :usual, ->(term) {
+  scope :usual, lambda { |term|
     joins(:owned_rice_price)
       .where(owned_rice_prices: { term: term })
   }
 
-  scope :by_home, ->(term, home_id) {
+  scope :by_home, lambda { |term, home_id|
     joins(:owned_rice_price)
       .where(["owned_rice_prices.term = ? AND owned_rices.home_id = ?", term, home_id])
       .order("owned_rice_prices.display_order, owned_rice_prices.id")
   }
 
-  scope :available, -> {where("owned_rices.owned_count > 0")}
+  scope :available, -> { where("owned_rices.owned_count > 0") }
 
-  scope :for_finance, ->(term) {
+  scope :for_finance, lambda { |term|
     joins(:owned_rice_price)
       .joins(:home)
       .where(owned_rice_prices: { term: term })

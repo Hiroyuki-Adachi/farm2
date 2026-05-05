@@ -27,7 +27,7 @@ class Statistics::AreasControllerTest < ActionDispatch::IntegrationTest
     work_kinds(:work_kind_taue).update!(aggregation_flag: true)
     work_kinds(:work_kinds2).update!(aggregation_flag: true)
 
-    get statistics_areas_path, params: {work_kind_id: work_kinds(:work_kind_taue).id}
+    get statistics_areas_path, params: { work_kind_id: work_kinds(:work_kind_taue).id }
 
     assert_response :success
     assert_select "input[type=radio][name=work_kind_id][checked=checked][value=?]", work_kinds(:work_kind_taue).id.to_s, 1
@@ -36,7 +36,7 @@ class Statistics::AreasControllerTest < ActionDispatch::IntegrationTest
   test "選択された作業種別のグラフデータをJSONで返す" do
     work_kinds(:work_kind_taue).update!(aggregation_flag: true)
 
-    get statistics_areas_path(format: :json), params: {work_kind_id: work_kinds(:work_kind_taue).id}
+    get statistics_areas_path(format: :json), params: { work_kind_id: work_kinds(:work_kind_taue).id }
 
     assert_response :success
     json = JSON.parse(@response.body)

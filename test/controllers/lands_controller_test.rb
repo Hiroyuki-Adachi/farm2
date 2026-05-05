@@ -65,7 +65,7 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
 
   test "土地マスタ新規作成(実行)" do
     assert_difference('Land.kept.count') do
-      post lands_path, params: {land: @update}
+      post lands_path, params: { land: @update }
     end
     assert_redirected_to lands_path
 
@@ -90,7 +90,7 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
 
   test "土地マスタ変更(実行)" do
     assert_no_difference('Land.kept.count') do
-      patch land_path(@land), params: {id: @land, land: @update}
+      patch land_path(@land), params: { id: @land, land: @update }
     end
     assert_redirected_to lands_path
 
@@ -107,7 +107,7 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
     return_to = lands_path(home_id: @home.id, page: 2)
 
     assert_no_difference('Land.kept.count') do
-      patch land_path(@land), params: {id: @land, land: @update, return_to: return_to}
+      patch land_path(@land), params: { id: @land, land: @update, return_to: return_to }
     end
     assert_redirected_to return_to
   end
@@ -125,7 +125,7 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
     return_to = lands_path(home_id: @home.id, page: 2)
 
     assert_difference('Land.kept.count', -1) do
-      delete land_path(@land), params: {return_to: return_to}
+      delete land_path(@land), params: { return_to: return_to }
     end
     assert_redirected_to return_to
 

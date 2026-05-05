@@ -4,9 +4,9 @@ class MachinesControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:users1))
     @machine = machines(:machines1)
-    @update = { 
-      name: "試験", display_order: 99, 
-      validity_start_at: "2010-01-01", validity_end_at: "2020-12-31", 
+    @update = {
+      name: "試験", display_order: 99,
+      validity_start_at: "2010-01-01", validity_end_at: "2020-12-31",
       machine_type_id: machine_types(:machine_types0).id, home_id: homes(:home1).id
     }
   end
@@ -29,7 +29,7 @@ class MachinesControllerTest < ActionDispatch::IntegrationTest
 
   test "機械マスタ新規作成(実行)" do
     assert_difference('Machine.kept.count') do
-      post machines_path, params: {machine: @update}
+      post machines_path, params: { machine: @update }
     end
     assert_redirected_to machines_path
 
@@ -49,7 +49,7 @@ class MachinesControllerTest < ActionDispatch::IntegrationTest
 
   test "機械種別マスタ変更(実行)" do
     assert_no_difference('Machine.kept.count') do
-      patch machine_path(@machine), params: {id: @machine, machine: @update}
+      patch machine_path(@machine), params: { id: @machine, machine: @update }
     end
     assert_redirected_to machines_path
 
@@ -64,7 +64,7 @@ class MachinesControllerTest < ActionDispatch::IntegrationTest
 
   test "機械種別マスタ変更(実行)(元のページへ戻る)" do
     assert_no_difference('Machine.kept.count') do
-      patch machine_path(@machine), params: {id: @machine, machine: @update, return_to: machines_path(page: 2)}
+      patch machine_path(@machine), params: { id: @machine, machine: @update, return_to: machines_path(page: 2) }
     end
     assert_redirected_to machines_path(page: 2)
   end

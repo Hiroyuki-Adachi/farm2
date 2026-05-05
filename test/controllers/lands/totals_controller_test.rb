@@ -17,7 +17,7 @@ class Lands::TotalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "土地統計一覧(実行)" do
-    get lands_totals_path, params: {work_kinds: [work_kinds(:work_kind_taue).id]}
+    get lands_totals_path, params: { work_kinds: [work_kinds(:work_kind_taue).id] }
     assert_response :success
   end
 end

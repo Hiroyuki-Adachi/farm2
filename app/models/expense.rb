@@ -21,7 +21,7 @@
 
 class Expense < ApplicationRecord
   has_many :expense_work_types, dependent: :destroy
-  has_many :work_types, -> {order(:display_order)}, through: :expense_work_types
+  has_many :work_types, -> { order(:display_order) }, through: :expense_work_types
   belongs_to :expense_type
   belongs_to :chemical_type, optional: true
   belongs_to :chemical, optional: true
@@ -30,9 +30,9 @@ class Expense < ApplicationRecord
   validates :content, presence: true, unless: :chemical?
   validates :amount, presence: true
 
-  scope :usual, ->(term) {includes(:chemical).where(term: term).order(payed_on: :ASC, id: :ASC)}
-  scope :cost, ->(term) {where(term: term, cost_flag: true).order(:id)}
-  scope :chemicals, ->(term) {
+  scope :usual, ->(term) { includes(:chemical).where(term: term).order(payed_on: :ASC, id: :ASC) }
+  scope :cost, ->(term) { where(term: term, cost_flag: true).order(:id) }
+  scope :chemicals, lambda { |term|
     joins(:expense_type)
       .where(term: term, cost_flag: false)
       .where(expense_types: { chemical_flag: true })
@@ -44,7 +44,7 @@ class Expense < ApplicationRecord
     work_amount = amount
     work_amount -= discount if discount.present?
     work_amount -= (amount * discount_numor / discount_denom).round if discount_rate?
-    return work_amount
+    work_amount
   end
 
   def discount_rate?
@@ -64,7 +64,7 @@ class Expense < ApplicationRecord
   end
 
   def self.chemical_prices(term)
-    prices = Hash.new { |h, k| h[k] = {}}
+    prices = Hash.new { |h, k| h[k] = {} }
     results = {}
     Expense.chemicals(term).each do |expense|
       prices[expense.chemical_id][:sum_amount] ||= 0
@@ -74,8 +74,9 @@ class Expense < ApplicationRecord
     end
     prices.each do |chemical_id, price|
       next if price[:sum_quantity].zero?
+
       results[chemical_id] ||= (price[:sum_amount] / price[:sum_quantity]).round
     end
-    return results
+    results
   end
 end

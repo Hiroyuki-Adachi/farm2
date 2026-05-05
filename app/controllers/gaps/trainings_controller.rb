@@ -44,8 +44,8 @@ class Gaps::TrainingsController < GapsController
         :training_place,
         :studying_place,
         :remarks,
-        {training_type_ids: []}
+        { training_type_ids: [] }
       ])
-    .merge(work_id: params[:id])
+      .merge(work_id: params[:id])
   end
 end

@@ -47,7 +47,8 @@ class TaskDecorator < Draper::Decorator
   def creator_name
     return object.creator.name if object.creator.present?
     return kind_badge if object.template.present?
-    return "（未設定）"
+
+    "（未設定）"
   end
 
   def assignee_name
@@ -113,6 +114,7 @@ class TaskDecorator < Draper::Decorator
     return false if object.assignee_id != context[:current_worker]&.id
     return true if object.high? || object.urgent?
     return true if [:expired, :today, :soon].include?(due_status)
+
     false
   end
 
@@ -127,6 +129,7 @@ class TaskDecorator < Draper::Decorator
     return :expired if due_on < Date.current
     return :today   if due_on == Date.current
     return :soon    if due_on <= Date.current + SOON_DAYS
+
     :ok
   end
 
@@ -135,7 +138,7 @@ class TaskDecorator < Draper::Decorator
     when :expired then h.content_tag(:span, "期限切れ", class: "badge bg-danger")
     when :today   then h.content_tag(:span, "今日が期限", class: "badge bg-warning text-dark")
     when :soon    then h.content_tag(:span, "期限が近い", class: "badge bg-primary")
-    else ""      
+    else ""
     end
   end
 

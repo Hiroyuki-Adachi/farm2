@@ -1,6 +1,6 @@
 class Tasks::WatchersController < TasksController
   before_action :set_task
-    
+
   def create
     @task.task_watchers.create!(worker: current_user.worker)
     respond_to do |format|
@@ -8,7 +8,7 @@ class Tasks::WatchersController < TasksController
       format.html { redirect_to @task, notice: "タスクを監視リストに追加しました。" }
     end
   end
-    
+
   def destroy
     watcher = @task.watching_by(current_user)
     watcher.destroy! if watcher.present?

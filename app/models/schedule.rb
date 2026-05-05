@@ -32,16 +32,16 @@
 
 class Schedule < ApplicationRecord
   validates :worked_at, presence: true
-  validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
+  validates :name, length: { maximum: 40 }, if: proc { |x| x.name.present? }
 
   DISPLAY_DAYS = 60
 
-  belongs_to :work_type, -> {with_deleted}
-  belongs_to :work_kind, -> {with_deleted}
+  belongs_to :work_type, -> { with_deleted }
+  belongs_to :work_kind, -> { with_deleted }
   belongs_to :organization
 
-  has_many :schedule_workers, -> {order('schedule_workers.display_order')}, dependent: :destroy
-  has_many :workers, -> {with_deleted}, through: :schedule_workers
+  has_many :schedule_workers, -> { order('schedule_workers.display_order') }, dependent: :destroy
+  has_many :workers, -> { with_deleted }, through: :schedule_workers
   has_many :schedule_sections, dependent: :destroy
   has_many :sections, through: :schedule_sections
 
@@ -52,29 +52,29 @@ class Schedule < ApplicationRecord
 
   scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
 
-  scope :usual, -> {
+  scope :usual, lambda {
                   where(worked_at: (Time.zone.today - DISPLAY_DAYS.days)..)
-                    .includes(:work_type, :work_kind, :sections, schedule_workers: [{worker: :home}])
+                    .includes(:work_type, :work_kind, :sections, schedule_workers: [{ worker: :home }])
                     .order(worked_at: :ASC, id: :ASC)
                 }
 
-  scope :by_worker, ->(worker) {where([<<~SQL.squish, worker.id, worker.id])}
+  scope :by_worker, ->(worker) { where([<<~SQL.squish, worker.id, worker.id]) }
     EXISTS (SELECT * FROM schedule_workers
           WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
     OR schedules.created_by = ?
   SQL
 
-  scope :for_delivery, ->(worker) {where([<<~SQL.squish, worker.id])}
+  scope :for_delivery, ->(worker) { where([<<~SQL.squish, worker.id]) }
     EXISTS (SELECT * FROM schedule_workers
           WHERE schedule_workers.schedule_id = schedules.id AND schedule_workers.worker_id = ?)
   SQL
 
-  scope :for_minute, -> {
+  scope :for_minute, lambda {
     where(["(worked_at BETWEEN (current_timestamp + '-1 year') AND current_timestamp) AND (minutes_flag = ?)", true])
-    .order(worked_at: :ASC, id: :ASC)
+      .order(worked_at: :ASC, id: :ASC)
   }
 
-  scope :for_calendar, ->(term, work_kinds, organization) {
+  scope :for_calendar, lambda { |term, work_kinds, organization|
     group(:worked_at, :work_kind_id)
       .select("min(schedules.id) AS id, schedules.worked_at, schedules.work_kind_id")
       .joins(sanitize_sql_array(["INNER JOIN systems ON systems.term = ? AND systems.organization_id = schedules.organization_id", term]))
@@ -84,18 +84,18 @@ class Schedule < ApplicationRecord
       .where("schedules.worked_at BETWEEN systems.start_date AND systems.end_date")
   }
 
-  scope :for_training, ->(work) {
+  scope :for_training, lambda { |work|
     where(worked_at: work.worked_at..)
-    .where("work_flag = FALSE")
-    .includes(:work_kind, :schedule_workers)
-    .order(worked_at: :ASC, id: :ASC)
+      .where("work_flag = FALSE")
+      .includes(:work_kind, :schedule_workers)
+      .order(worked_at: :ASC, id: :ASC)
   }
 
   scope :linable, -> { where(line_flag: true) }
-  scope :by_section, ->(section_id) {
+  scope :by_section, lambda { |section_id|
     joins(:schedule_sections)
-      .includes(:work_kind, schedule_workers: {worker: :home})
-      .where(schedule_sections: {section_id: section_id})
+      .includes(:work_kind, schedule_workers: { worker: :home })
+      .where(schedule_sections: { section_id: section_id })
       .where(worked_at: Time.zone.today..)
       .distinct
       .order(worked_at: :asc, id: :asc)
@@ -103,10 +103,10 @@ class Schedule < ApplicationRecord
 
   scope :tomorrow, -> { where(worked_at: Date.tomorrow) }
   scope :today, -> { where(worked_at: Time.zone.today) }
-  scope :am_only, -> {
+  scope :am_only, lambda {
     where("EXTRACT(HOUR FROM start_at) < 12")
   }
-  scope :pm_only, -> {
+  scope :pm_only, lambda {
     where("EXTRACT(HOUR FROM start_at) >= 12")
   }
 
@@ -124,7 +124,7 @@ class Schedule < ApplicationRecord
         ScheduleWorker.create(schedule_id: id, worker_id: worker_id, display_order: display_order)
       end
     end
-    
+
     # このスケジュールに属さないworker_idを持つschedule_workersを削除
     schedule_workers.where.not(worker_id: workers).destroy_all
   end

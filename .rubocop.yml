@@ -23,6 +23,14 @@ AllCops:
     - "config/puma.rb"
 
 ### ルールのカスタマイズ
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/AbcSize:
+  Max: 25
+
+Style/Lambda:
+  Enabled: false
 
 # メソッドの改行ルール
 Layout/MultilineMethodCallIndentation:

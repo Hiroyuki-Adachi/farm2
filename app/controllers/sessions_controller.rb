@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
       log_in(user)
       redirect_to prefixed_path(menu_index_path)
     else
-      render partial: 'flash', content_type: 'text/vnd.turbo-stream.html', locals: {message: I18n.t("session.login_error") }
+      render partial: 'flash', content_type: 'text/vnd.turbo-stream.html', locals: { message: I18n.t("session.login_error") }
     end
   end
 

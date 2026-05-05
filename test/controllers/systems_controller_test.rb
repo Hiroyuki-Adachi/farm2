@@ -19,7 +19,7 @@ class SystemsControllerTest < ActionDispatch::IntegrationTest
 
   test "システム変更実行" do
     assert_no_difference('System.count') do
-      patch system_path(@system), params: {system: {dry_price: 1500}}
+      patch system_path(@system), params: { system: { dry_price: 1500 } }
     end
     assert_redirected_to menu_index_path
 

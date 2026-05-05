@@ -10,7 +10,7 @@ class WorkSeedlingsController < ApplicationController
         # このブロックはERBテンプレートの自動レンダリングのために意図的に空にしています。
       end
       format.csv do
-        render :content_type => 'text/csv; charset=cp943'
+        render content_type: 'text/csv; charset=cp943'
       end
     end
   end
@@ -26,6 +26,6 @@ class WorkSeedlingsController < ApplicationController
         work_areas[work_type_id][work.id] = area
       end
     end
-    return work_seedlings, work_areas
+    [work_seedlings, work_areas]
   end
 end

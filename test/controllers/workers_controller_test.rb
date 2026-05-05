@@ -4,7 +4,7 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:users1))
     @worker = workers(:worker1)
-    @update = { 
+    @update = {
       family_name: "試験", first_name: "太郎", family_phonetic: "しけん", first_phonetic: "たろう",
       home_id: 6, display_order: 99, position_id: :none, gender_id: :none, office_role: :none
     }
@@ -28,7 +28,7 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
 
   test "作業者マスタ新規作成(実行)" do
     assert_difference('Worker.kept.count') do
-      post workers_path, params: {worker: @update}
+      post workers_path, params: { worker: @update }
     end
     assert_redirected_to workers_path
 
@@ -65,7 +65,7 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
 
   test "作業者マスタ変更(実行)" do
     assert_no_difference('Worker.kept.count') do
-      patch worker_path(@worker), params: {worker: @update}
+      patch worker_path(@worker), params: { worker: @update }
     end
     assert_redirected_to workers_path
 
@@ -82,14 +82,14 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
 
   test "作業者マスタ変更(実行)(元のページへ戻る)" do
     assert_no_difference('Worker.kept.count') do
-      patch worker_path(@worker), params: {worker: @update, return_to: workers_path(page: 2)}
+      patch worker_path(@worker), params: { worker: @update, return_to: workers_path(page: 2) }
     end
     assert_redirected_to workers_path(page: 2)
   end
 
   test "作業者マスタ変更(実行)(不正な戻り先は一覧へ戻る)" do
     assert_no_difference('Worker.kept.count') do
-      patch worker_path(@worker), params: {worker: @update, return_to: "https://example.com/"}
+      patch worker_path(@worker), params: { worker: @update, return_to: "https://example.com/" }
     end
     assert_redirected_to workers_path
   end
@@ -105,7 +105,7 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
 
   test "作業者マスタ削除(元のページへ戻る)" do
     assert_difference('Worker.kept.count', -1) do
-      delete worker_path(@worker), params: {return_to: workers_path(page: 2)}
+      delete worker_path(@worker), params: { return_to: workers_path(page: 2) }
     end
     assert_redirected_to workers_path(page: 2)
 

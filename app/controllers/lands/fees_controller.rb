@@ -9,13 +9,13 @@ class Lands::FeesController < ApplicationController
     @home = Home.find(params[:id])
   end
 
+  def create
+    # TODO: 一括作成
+  end
+
   def update
     LandFee.upsert(params[:id], fee_params)
     redirect_to(lands_fees_path)
-  end
-
-  def create
-    # TODO: 一括作成
   end
 
   private

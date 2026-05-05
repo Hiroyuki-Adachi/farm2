@@ -30,17 +30,17 @@ class MachineResultDecorator < Draper::Decorator
   end
 
   def price
-    h.number_to_currency(model.price, {precision: 0, unit: ""})
+    h.number_to_currency(model.price, { precision: 0, unit: "" })
   end
 
   def quantity
     case model.adjust
     when Adjust::HOUR
-      h.number_to_currency(model.quantity, {precision: 1, unit: ""})
+      h.number_to_currency(model.quantity, { precision: 1, unit: "" })
     when Adjust::DAY
-      h.number_to_currency(model.quantity, {precision: 0, unit: ""})
+      h.number_to_currency(model.quantity, { precision: 0, unit: "" })
     when Adjust::AREA
-      h.number_to_currency(model.quantity, {precision: 3, unit: ""})
+      h.number_to_currency(model.quantity, { precision: 3, unit: "" })
     end
   end
 
@@ -49,7 +49,7 @@ class MachineResultDecorator < Draper::Decorator
   end
 
   def amount
-    h.number_to_currency(model.amount, {precision: 0, unit: ""})
+    h.number_to_currency(model.amount, { precision: 0, unit: "" })
   end
 
   def unit

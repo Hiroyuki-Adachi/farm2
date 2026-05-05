@@ -10,7 +10,7 @@ class LandCostsControllerTest < ActionDispatch::IntegrationTest
         land_id: @cost1.land_id, activated_on: @cost1.activated_on
       },
       1 => {
-        work_type_id: work_types(:work_types2).id, 
+        work_type_id: work_types(:work_types2).id,
         land_id: lands(:lands2).id, activated_on: @cost1.activated_on
       }
     }
@@ -20,8 +20,8 @@ class LandCostsControllerTest < ActionDispatch::IntegrationTest
         land_id: @cost1.land_id, activated_on: @cost1.activated_on
       }
     }
-    @land_update = {land_costs_attributes: [{activated_on: Date.new(2015, 5, 5), work_type_id: work_types(:work_types1).id}]}
-    @land_delete = {land_costs_attributes: [{id: @cost1.id, _destroy: 1}]}
+    @land_update = { land_costs_attributes: [{ activated_on: Date.new(2015, 5, 5), work_type_id: work_types(:work_types1).id }] }
+    @land_delete = { land_costs_attributes: [{ id: @cost1.id, _destroy: 1 }] }
     travel_to(Date.new(2015, 1, 1))
   end
 
@@ -44,7 +44,7 @@ class LandCostsControllerTest < ActionDispatch::IntegrationTest
 
   test "土地原価新規作成(実行)" do
     assert_difference('LandCost.count') do
-      post land_costs_path, params: {land_costs: @land_costs1}
+      post land_costs_path, params: { land_costs: @land_costs1 }
     end
     assert_redirected_to land_costs_path
 
@@ -57,14 +57,14 @@ class LandCostsControllerTest < ActionDispatch::IntegrationTest
     @cost1.activated_on = Date.new(2014, 12, 1)
     @cost1.save
     assert_no_difference('LandCost.count') do
-      post land_costs_path, params: {land_costs: @land_costs2}
+      post land_costs_path, params: { land_costs: @land_costs2 }
     end
 
     # 期首日より前は追加となる。
     @cost1.work_type_id = work_types(:work_types2).id
     @cost1.save
     assert_difference('LandCost.count') do
-      post land_costs_path, params: {land_costs: @land_costs2}
+      post land_costs_path, params: { land_costs: @land_costs2 }
     end
 
     land_cost = LandCost.last
@@ -80,7 +80,7 @@ class LandCostsControllerTest < ActionDispatch::IntegrationTest
 
   test "土地原価履歴(更新:追加)" do
     assert_difference('LandCost.count') do
-      patch land_cost_path(land_id: lands(:land_land_cost1).id), params: {land: @land_update}
+      patch land_cost_path(land_id: lands(:land_land_cost1).id), params: { land: @land_update }
     end
     assert_redirected_to land_costs_path(format: :html)
 
@@ -92,7 +92,7 @@ class LandCostsControllerTest < ActionDispatch::IntegrationTest
 
   test "土地原価履歴(更新:削除)" do
     assert_difference('LandCost.count', -1) do
-      patch land_cost_path(land_id: lands(:land_land_cost1).id), params: {land: @land_delete}
+      patch land_cost_path(land_id: lands(:land_land_cost1).id), params: { land: @land_delete }
     end
     assert_redirected_to land_costs_path(format: :html)
 

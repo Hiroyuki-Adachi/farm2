@@ -56,11 +56,11 @@ class ChemicalsController < ApplicationController
   def chemical_params
     params.expect(chemical:
       [
-        :name, 
-        :display_order, 
-        :chemical_type_id, 
-        :this_term_flag, 
-        :unit, 
+        :name,
+        :display_order,
+        :chemical_type_id,
+        :this_term_flag,
+        :unit,
         :phonetic,
         :base_quantity,
         :carton_quantity,

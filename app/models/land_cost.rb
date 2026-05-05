@@ -15,12 +15,12 @@
 #
 
 class LandCost < ApplicationRecord
-  belongs_to :land, -> {with_deleted}
-  belongs_to :work_type, -> {with_deleted}
+  belongs_to :land, -> { with_deleted }
+  belongs_to :work_type, -> { with_deleted }
 
   validates :activated_on, presence: true
 
-  scope :newest, ->(target) {
+  scope :newest, lambda { |target|
     latest_land_costs = arel_table.alias("lc2")
     latest_activated_on = latest_land_costs[:activated_on].maximum
 
@@ -37,11 +37,11 @@ class LandCost < ApplicationRecord
     where(newest_query.exists)
   }
 
-  scope :usual, ->(lands, target) {newest(target).where(land_id: lands.ids)}
-  scope :by_work_type, ->(work_type_id, target) {newest(target).where(work_type_id: work_type_id)}
-  scope :by_land, ->(land_id) {where(land_id: land_id).order(activated_on: :asc).joins(:work_type)}
+  scope :usual, ->(lands, target) { newest(target).where(land_id: lands.ids) }
+  scope :by_work_type, ->(work_type_id, target) { newest(target).where(work_type_id: work_type_id) }
+  scope :by_land, ->(land_id) { where(land_id: land_id).order(activated_on: :asc).joins(:work_type) }
 
-  scope :total, ->(target) {joins(:land).newest(target).group(:work_type_id).sum("lands.area")}
+  scope :total, ->(target) { joins(:land).newest(target).group(:work_type_id).sum("lands.area") }
 
   def self.sum_area_by_lands(target, land_ids)
     LandCost.newest(target).where(land_id: land_ids).group(:work_type_id).joins(:land).sum(:area)
@@ -49,10 +49,10 @@ class LandCost < ApplicationRecord
 
   def self.sum_area_by_work_type(target, work_type_id)
     LandCost.by_work_type(work_type_id, target)
-    .joins(:land)
-    .where("lands.deleted_at IS NULL AND target_flag = true")
-    .where("? BETWEEN lands.start_on AND lands.end_on", target)
-    .sum(:area)
+      .joins(:land)
+      .where("lands.deleted_at IS NULL AND target_flag = true")
+      .where("? BETWEEN lands.start_on AND lands.end_on", target)
+      .sum(:area)
   end
 
   def self.sum_area_for_harvest(worked_at, work_kind_id)
@@ -61,17 +61,18 @@ class LandCost < ApplicationRecord
       work.lands.each do |land|
         land_cost = land.cost(worked_at)
         next if land_cost.nil?
+
         results[land_cost.work_type_id] = 0 unless results[land_cost.work_type_id]
         results[land_cost.work_type_id] += land.area
       end
     end
 
-    return results
+    results
   end
 
   def self.for_straws(term, work_type_id)
     LandCost.newest(Date.new(term.to_i, 4, 1)).joins(:land).where([<<SQL.squish, work_type_id, term]).group("land_costs.work_type_id").sum("lands.area")
-      EXISTS (SELECT * FROM work_lands 
+      EXISTS (SELECT * FROM work_lands#{' '}
         INNER JOIN works ON works.id = work_lands.work_id AND works.work_type_id = ? AND works.term = ?
         WHERE lands.id = work_lands.land_id
       )
@@ -95,11 +96,11 @@ SQL
       end
       results << result
     end
-    return results
+    results
   end
 
   def update_work_type(params, start_date)
-    return if work_type_id == params[:work_type_id].to_i 
+    return if work_type_id == params[:work_type_id].to_i
 
     if activated_on < start_date
       land_cost = LandCost.new(params)

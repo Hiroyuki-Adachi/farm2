@@ -21,7 +21,7 @@ class Work::ChemicalsRegistrar
             work_chemical.destroy
           end
         else
-          add_params = {work_id: @work.id, chemical_id: chemical_id, chemical_group_no: chemical_group_no}
+          add_params = { work_id: @work.id, chemical_id: chemical_id, chemical_group_no: chemical_group_no }
           WorkChemical.create(quantity_params(quantity, add_params)) if quantity[:quantity].to_f.positive?
         end
       end

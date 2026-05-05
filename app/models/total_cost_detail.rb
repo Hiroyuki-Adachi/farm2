@@ -21,7 +21,7 @@ class TotalCostDetail < ApplicationRecord
   belongs_to :total_cost
   belongs_to :work_type
 
-  scope :lands, ->(term, days, organization = nil) {
+  scope :lands, lambda { |term, days, organization = nil|
     base = joins(:total_cost)
       .where(total_costs: { term: term, total_cost_type_id: TotalCostType::LAND.id })
     base = base.where(total_costs: { organization_id: organization.is_a?(Organization) ? organization.id : organization }) if organization
@@ -30,7 +30,7 @@ class TotalCostDetail < ApplicationRecord
       .sum("total_cost_details.area * total_cost_details.rate / #{days}")
   }
 
-  scope :total_machines, ->(term, organization = nil) {
+  scope :total_machines, lambda { |term, organization = nil|
     base = joins(:total_cost).includes(:total_cost)
       .where(total_costs: { term: term, total_cost_type_id: TotalCostType::MACHINE.id })
     base = base.where(total_costs: { organization_id: organization.is_a?(Organization) ? organization.id : organization }) if organization
@@ -39,7 +39,7 @@ class TotalCostDetail < ApplicationRecord
       .sum("total_cost_details.cost")
   }
 
-  scope :areas, ->(term, days, organization = nil) {
+  scope :areas, lambda { |term, days, organization = nil|
     base = joins(:total_cost)
       .where(total_costs: { term: term, total_cost_type_id: TotalCostType::AREA.id })
     base = base.where(total_costs: { organization_id: organization.is_a?(Organization) ? organization.id : organization }) if organization

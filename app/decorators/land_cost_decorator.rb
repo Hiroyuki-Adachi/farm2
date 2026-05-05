@@ -11,6 +11,6 @@ class LandCostDecorator < Draper::Decorator
   #   end
 
   def activated_on
-    object&.activated_on&.strftime('%Jy(%Y)年%m月') 
+    object&.activated_on&.strftime('%Jy(%Y)年%m月')
   end
 end

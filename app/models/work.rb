@@ -41,20 +41,20 @@ class Work < ApplicationRecord
 
   validates :worked_at, presence: true
   validates :weather_id,   presence: true
-  validates :name, length: {maximum: 40}, if: proc { |x| x.name.present?}
+  validates :name, length: { maximum: 40 }, if: proc { |x| x.name.present? }
 
   belongs_to :organization
-  belongs_to :work_type, -> {with_deleted}
-  belongs_to :work_kind, -> {with_deleted}
+  belongs_to :work_type, -> { with_deleted }
+  belongs_to :work_kind, -> { with_deleted }
   belongs_to :fix, class_name: "Fix", foreign_key: [:organization_id, :term, :fixed_at]
-  belongs_to :creator, -> {with_deleted}, class_name: "Worker", foreign_key: "created_by"
-  belongs_to :printer, -> {with_deleted}, class_name: "Worker", foreign_key: "printed_by"
+  belongs_to :creator, -> { with_deleted }, class_name: "Worker", foreign_key: "created_by"
+  belongs_to :printer, -> { with_deleted }, class_name: "Worker", foreign_key: "printed_by"
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
 
-  has_many :work_lands, -> {order('work_lands.display_order')}, dependent: :destroy
-  has_many :work_results, -> {order('work_results.display_order')}, dependent: :destroy
+  has_many :work_lands, -> { order('work_lands.display_order') }, dependent: :destroy
+  has_many :work_results, -> { order('work_results.display_order') }, dependent: :destroy
   has_many :work_chemicals, dependent: :destroy
-  has_many :work_verifications, -> {order('work_verifications.id')}, dependent: :destroy
+  has_many :work_verifications, -> { order('work_verifications.id') }, dependent: :destroy
   has_many :work_work_types, dependent: :destroy
   has_many :machine_remarks, dependent: :destroy
   has_one :broccoli, class_name: "WorkBroccoli", dependent: :destroy
@@ -63,31 +63,31 @@ class Work < ApplicationRecord
   has_one :training, dependent: :destroy
   has_one :accident, dependent: :destroy
 
-  has_many :workers, -> {with_deleted}, through: :work_results
-  has_many :lands, -> {with_deleted}, through: :work_lands
-  has_many :chemicals, -> {with_deleted}, through: :work_chemicals
+  has_many :workers, -> { with_deleted }, through: :work_results
+  has_many :lands, -> { with_deleted }, through: :work_lands
+  has_many :chemicals, -> { with_deleted }, through: :work_chemicals
   has_many :machine_results, through: :work_results
-  has_many :checkers, -> {with_deleted}, through: :work_verifications, source: :worker
+  has_many :checkers, -> { with_deleted }, through: :work_verifications, source: :worker
   has_many :work_types, through: :work_work_types
   has_many :machines, through: :machine_results
-  
+
   has_many :events, class_name: 'TaskEvent', dependent: :nullify
   has_many :tasks, through: :events
 
   scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
-  scope :no_fixed, ->(term){
+  scope :no_fixed, lambda  { |term|
     includes(:work_type, :work_kind)
       .where(term: term, fixed_at: nil).order(worked_at: :ASC, start_at: :ASC, id: :ASC)
   }
-  scope :fixed, ->(term, fixed_at, organization = nil) do
+  scope :fixed, lambda { |term, fixed_at, organization = nil|
     base = where(term: term, fixed_at: fixed_at)
     base = base.for_organization(organization) if organization
     base.order(worked_at: :ASC, start_at: :ASC, id: :ASC)
-  end
-  scope :usual, ->(term){where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :DESC, id: :DESC)}
-  scope :by_term, ->(term){where(term: term).order(worked_at: :ASC, start_at: :ASC, id: :ASC)}
-  scope :by_creator, ->(worker) {where(["works.created_by IS NULL OR works.created_by <> ?", worker.id])}
-  scope :by_work_kind_type, ->(term, work_kind_id, seedling_home) {
+  }
+  scope :usual, ->(term) { where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :DESC, id: :DESC) }
+  scope :by_term, ->(term) { where(term: term).order(worked_at: :ASC, start_at: :ASC, id: :ASC) }
+  scope :by_creator, ->(worker) { where(["works.created_by IS NULL OR works.created_by <> ?", worker.id]) }
+  scope :by_work_kind_type, lambda { |term, work_kind_id, seedling_home|
     works = arel_table
     work_lands = WorkLand.arel_table
     land_costs = LandCost.arel_table.alias("lc1")
@@ -121,7 +121,7 @@ class Work < ApplicationRecord
       .distinct
       .order(worked_at: :ASC, id: :ASC)
   }
-  scope :enough_check, ->(worker) {
+  scope :enough_check, lambda { |worker|
     work_verifications = WorkVerification.arel_table
     required_count = worker.position_id == :director ? ENOUGH + 1 : ENOUGH
     verification_exists = work_verifications
@@ -137,7 +137,7 @@ class Work < ApplicationRecord
     where(Arel::Nodes::Not.new(verification_exists))
   }
 
-  scope :by_machines, ->(machines) {
+  scope :by_machines, lambda { |machines|
     work_results = WorkResult.arel_table
     machine_results = MachineResult.arel_table
 
@@ -152,9 +152,9 @@ class Work < ApplicationRecord
 
     where(machine_result_exists)
   }
-  scope :by_types, ->(work_types) {where(works: { work_type_id: work_types.ids })}
+  scope :by_types, ->(work_types) { where(works: { work_type_id: work_types.ids }) }
 
-  scope :by_worker, ->(worker) {
+  scope :by_worker, lambda { |worker|
     work_results = WorkResult.arel_table
     worker_exists = work_results
       .project(Arel.star)
@@ -167,11 +167,11 @@ class Work < ApplicationRecord
     where(worker_exists)
   }
 
-  scope :not_printed, -> {where(<<SQL.squish)}
+  scope :not_printed, -> { where(<<SQL.squish) }
       (works.printed_at IS NULL)
     OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)
 SQL
-  scope :by_land, ->(land) {
+  scope :by_land, lambda { |land|
     work_lands = WorkLand.arel_table
     land_exists = work_lands
       .project(Arel.star)
@@ -184,30 +184,30 @@ SQL
     where(land_exists)
   }
 
-  scope :by_chemical, ->(term, organization = nil) do
+  scope :by_chemical, lambda { |term, organization = nil|
     where(id: WorkChemical.by_term(term, organization).pluck("work_chemicals.work_id").uniq)
       .order(:worked_at, :id)
-  end
+  }
 
-  scope :for_cost, ->(term) {where([<<SQL.squish, term, WorkType.land.select(:id)])}
+  scope :for_cost, ->(term) { where([<<SQL.squish, term, WorkType.land.select(:id)]) }
   works.term = ? AND (work_type_id IN (?))
 SQL
 
-  scope :for_broccoli, ->(organization) do
+  scope :for_broccoli, lambda { |organization|
     includes(:broccoli)
       .where(
         work_type_id: organization.broccoli_work_type_id,
         work_kind_id: organization.broccoli_work_kind_id
       )
-  end
+  }
 
-  scope :monthly_reports, ->(work_type_id, worked_at) do
+  scope :monthly_reports, lambda { |work_type_id, worked_at|
     where(work_type_id: work_type_id)
       .where(worked_at: Date.new(worked_at.year, worked_at.month, 1)..Date.new(worked_at.year, worked_at.month, -1))
       .order(worked_at: :ASC, start_at: :ASC, id: :ASC)
-  end
+  }
 
-  scope :landable, -> {
+  scope :landable, lambda {
     work_lands = WorkLand.arel_table
     where(
       work_lands
@@ -216,13 +216,13 @@ SQL
         .exists
     )
   }
-  scope :machinable, -> {where(<<SQL.squish)}
+  scope :machinable, -> { where(<<SQL.squish) }
   EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND EXISTS (
     SELECT * FROM machine_results WHERE work_results.id = machine_results.work_result_id
   ))
 SQL
- 
-  scope :by_target, ->(term) do
+
+  scope :by_target, lambda { |term|
     works = arel_table
     systems = System.arel_table
     systems_join = works
@@ -236,47 +236,47 @@ SQL
     joins(systems_join)
       .where(works[:worked_at].gteq(systems[:start_date]).and(works[:worked_at].lteq(systems[:end_date])))
       .where(systems: { term: term })
-  end
+  }
 
-  scope :for_contract, ->(worker, worked_at, work_type_id) do
+  scope :for_contract, lambda { |worker, worked_at, work_type_id|
     basic_conditions = where("works.worked_at >= ? AND works.work_type_id = ?", worked_at, work_type_id)
 
     work_lands_table = WorkLand.arel_table
     lands_table = Land.arel_table
 
     exists_subquery = work_lands_table
-                      .project(Arel.star)
-                      .join(lands_table).on(work_lands_table[:land_id].eq(lands_table[:id]))
-                      .where(work_lands_table[:work_id].eq(arel_table[:id]))
-                      .where(lands_table[:manager_id].eq(worker.home_id))
-                      .exists
+      .project(Arel.star)
+      .join(lands_table).on(work_lands_table[:land_id].eq(lands_table[:id]))
+      .where(work_lands_table[:work_id].eq(arel_table[:id]))
+      .where(lands_table[:manager_id].eq(worker.home_id))
+      .exists
 
     basic_conditions.where(exists_subquery)
-  end
+  }
 
-  scope :for_calendar, ->(term, work_kinds) do
+  scope :for_calendar, lambda { |term, work_kinds|
     group(:worked_at, :work_kind_id, :work_type_id)
       .select("min(works.id) AS id, works.worked_at, works.work_kind_id, works.work_type_id")
       .includes(:work_kind, :work_type)
       .where(term: term, work_kind_id: work_kinds)
       .order(:worked_at)
-  end
+  }
 
-  scope :for_drying, ->(term, organization) do
+  scope :for_drying, lambda { |term, organization|
     select("worked_at")
       .where(term: term, work_kind_id: organization.harvesting_work_kind_id)
       .distinct
       .order(:worked_at)
-  end
+  }
 
-  scope :deliverable, ->(worker_id) do
+  scope :deliverable, lambda { |worker_id|
     joins(:work_results)
       .where(created_at: Time.zone.yesterday.all_day)
       .where.not(created_by: worker_id)
-      .where(work_results: {worker_id: worker_id})
-  end
+      .where(work_results: { worker_id: worker_id })
+  }
 
-  scope :for_task, ->(task, days: 30) do
+  scope :for_task, lambda { |task, days: 30|
     work_table = arel_table
     work_result_table = WorkResult.arel_table
     work_type_table = WorkType.arel_table
@@ -287,7 +287,7 @@ SQL
         .where(work_result_table[:work_id].eq(work_table[:id]).and(work_result_table[:worker_id].eq(task.assignee_id)))
     )
 
-    role_none = WorkType.office_roles[:none] 
+    role_none = WorkType.office_roles[:none]
 
     joins(:work_type)
       .where(worked_at: (Time.zone.today - days)..Time.zone.today) # 期間（既定30日）
@@ -296,13 +296,13 @@ SQL
       .where.not(id: task.works.select(:id)) # 既に紐づいている日報は除外
       .includes(:work_kind, :work_results)
       .order(worked_at: :desc, id: :desc)
-  end
+  }
 
-  scope :with_work_type, ->(work_type_id, except = false) do
+  scope :with_work_type, lambda { |work_type_id, except = false|
     next all if work_type_id.blank?
 
     except ? where.not(work_type_id: work_type_id) : where(work_type_id: work_type_id)
-  end
+  }
 
   scope :with_work_kind, ->(work_kind_id) { work_kind_id.present? ? where(work_kind_id: work_kind_id) : all }
 
@@ -345,15 +345,15 @@ SQL
   end
 
   def sum_workers_amount
-    work_results.inject(0) { |amount, result| amount + result.worker_amount} || 0
+    work_results.inject(0) { |amount, result| amount + result.worker_amount } || 0
   end
 
   def sum_machines_amount
-    machine_results.to_a.uniq(&:machine_id).inject(0) { |a, e| a + e.amount} || 0
+    machine_results.to_a.uniq(&:machine_id).inject(0) { |a, e| a + e.amount } || 0
   end
 
   def sum_machines_fuel
-    machine_results.to_a.uniq(&:machine_id).inject(0) { |a, e| a + e.fuel_usage} || 0
+    machine_results.to_a.uniq(&:machine_id).inject(0) { |a, e| a + e.fuel_usage } || 0
   end
 
   def self.for_verifications(user)
@@ -371,7 +371,7 @@ SQL
       params << result
       result = result.next_month.end_of_month.to_date
     end
-    return params
+    params
   end
 
   def regist_results(params, current_worker)
@@ -444,21 +444,23 @@ SQL
         wts << land.cost(worked_at)&.work_type
       end
     end
-    return wts.compact.uniq
+    wts.compact.uniq
   end
 
   def exact_work_types
     return [work_type] if work_lands.empty?
     return work_types if work_types.exists?
+
     wts = lands.map do |land|
       land.cost(worked_at)&.work_type
     end
     return wts.compact.uniq if wts.compact.length.positive?
-    return [work_type]
+
+    [work_type]
   end
 
   def sum_seedlings(work_type_id)
-    work_results.joins(seedling_results: {seedling_home: :seedling})
+    work_results.joins(seedling_results: { seedling_home: :seedling })
       .where(["seedling_results.disposal_flag = FALSE AND seedlings.work_type_id = ?", work_type_id])
       .sum("seedling_results.quantity")
   end
@@ -474,20 +476,21 @@ SQL
   def maintenances
     results = [name, remarks]
     results << machine_remarks.pluck(:care_remarks)
-    return results.flatten.uniq.delete_if(&:empty?)
+    results.flatten.uniq.delete_if(&:empty?)
   end
 
   def machine_numbers
     results = {}
     machines.includes(:machine_type).find_each do |machine|
       next if machine.machine_type.nil? || machine.machine_type.code.nil? || machine.number.nil?
+
       if results.key?(machine.machine_type.code)
         results[machine.machine_type.code.intern] << machine.number
       else
         results[machine.machine_type.code.intern] = [machine.number]
       end
     end
-    return results
+    results
   end
 
   def self.work_days
@@ -500,14 +503,15 @@ SQL
   end
 
   def weather_name
-    I18n.t("activerecord.enums.work.weather_ids.#{self.weather_id}")
+    I18n.t("activerecord.enums.work.weather_ids.#{weather_id}")
   end
 
   private
 
   def set_chemical_group_no
-    return if self.chemical_group_flag
-    self.work_lands.each do |work_land|
+    return if chemical_group_flag
+
+    work_lands.each do |work_land|
       work_land.update(chemical_group_no: 0)
     end
   end

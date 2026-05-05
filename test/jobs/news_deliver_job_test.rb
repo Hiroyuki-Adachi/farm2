@@ -15,9 +15,9 @@ class NewsDeliverJobTest < ActiveJob::TestCase
 
   test "記事のLINE配信でエラーが発生した場合" do
     LineHookService.stubs(:push_messages).returns(Net::HTTPServerError.new(1.0, "500", "Error"))
-  
+
     perform_enqueued_jobs { NewsDeliverJob.perform_now }
-  
+
     assert_not user_topics(:free_unread).reload.read_flag
   end
 end

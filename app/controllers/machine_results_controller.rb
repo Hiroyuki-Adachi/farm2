@@ -5,7 +5,7 @@ class MachineResultsController < ApplicationController
     @results = if params[:fixed_at]
                  MachineResult.by_home_for_fix(@term, Date.strptime(params[:fixed_at], '%Y-%m-%d'), current_organization)
                else
-                 MachineResult.by_home(@term, current_organization).to_a.uniq { |result| [result.work.id, result.machine_id]}
+                 MachineResult.by_home(@term, current_organization).to_a.uniq { |result| [result.work.id, result.machine_id] }
                end
     @owner_totals = calc_totals(@results)
 
@@ -14,7 +14,7 @@ class MachineResultsController < ApplicationController
         @results = MachineResultDecorator.decorate_collection(@results)
       end
       format.csv do
-        render :content_type => 'text/csv; charset=cp943'
+        render content_type: 'text/csv; charset=cp943'
       end
     end
   end
@@ -27,7 +27,7 @@ class MachineResultsController < ApplicationController
       owner_totals = set_totals(owner_totals, result, result.owner.id)
     end
 
-    return owner_totals
+    owner_totals
   end
 
   def set_totals(totals, result, key)
@@ -35,6 +35,6 @@ class MachineResultsController < ApplicationController
       count: (totals[key] ? totals[key][:count] : 0) + 1,
       amount: (totals[key] ? totals[key][:amount] : 0) + result.amount
     }
-    return totals
+    totals
   end
 end

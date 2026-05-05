@@ -30,7 +30,7 @@
 #
 
 class Organization < ApplicationRecord
-  enum :daily_worker, {no_print: 0, print_home: 1, print_section: 2}
+  enum :daily_worker, { no_print: 0, print_home: 1, print_section: 2 }
 
   validates :name, presence: true
   validates :workers_count, presence: true
@@ -39,8 +39,8 @@ class Organization < ApplicationRecord
   validates :chemicals_count, presence: true
   validates :daily_worker, presence: true
 
-  validates :name, length: {maximum: 20}, if: proc { |x| x.name.present?}
-  validates :url, length: {maximum: 255}, if: proc { |x| x.name.present?}
+  validates :name, length: { maximum: 20 }, if: proc { |x| x.name.present? }
+  validates :url, length: { maximum: 255 }, if: proc { |x| x.name.present? }
 
   belongs_to :broccoli_work_type, class_name: "WorkType"
   belongs_to :broccoli_work_kind, class_name: "WorkKind"
@@ -54,7 +54,7 @@ class Organization < ApplicationRecord
   end
 
   def get_system(date)
-    System.get_system(date, self.id)
+    System.get_system(date, id)
   end
 
   def get_term(date)

@@ -15,7 +15,7 @@
 
 class WorkVerification < ApplicationRecord
   belongs_to :work
-  belongs_to :worker, -> {with_deleted}
+  belongs_to :worker, -> { with_deleted }
 
   ENOUGH = 2
 

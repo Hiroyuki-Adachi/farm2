@@ -15,18 +15,18 @@ class SeedlingResult < ApplicationRecord
   belongs_to :seedling_home
   belongs_to :work_result
 
-  scope :total, ->(seedling_homes) {where(seedling_home_id: seedling_homes.pluck(:id)).group(:seedling_home_id).sum(:quantity)}
-  scope :for_seedling_use, -> {
+  scope :total, ->(seedling_homes) { where(seedling_home_id: seedling_homes.pluck(:id)).group(:seedling_home_id).sum(:quantity) }
+  scope :for_seedling_use, lambda {
     joins(work_result: :work)
       .order("works.worked_at ASC, works.id ASC, seedling_results.id ASC")
   }
 
-  scope :by_work_day, ->(seedling_home) {
+  scope :by_work_day, lambda { |seedling_home|
     joins(work_result: :work)
-    .where(seedling_home_id: seedling_home.id)
-    .group("works.worked_at")
-    .order("works.worked_at")
-    .sum(:quantity)
+      .where(seedling_home_id: seedling_home.id)
+      .group("works.worked_at")
+      .order("works.worked_at")
+      .sum(:quantity)
   }
 
   def work_id
@@ -35,6 +35,6 @@ class SeedlingResult < ApplicationRecord
 
   def self.dispose?(seedling_home, worked_at)
     joins(work_result: :work)
-    .exists?(["seedling_results.seedling_home_id = ? AND works.worked_at = ? AND disposal_flag = TRUE", seedling_home.id, worked_at])
+      .exists?(["seedling_results.seedling_home_id = ? AND works.worked_at = ? AND disposal_flag = TRUE", seedling_home.id, worked_at])
   end
 end

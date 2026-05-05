@@ -18,6 +18,6 @@ class Schedules::WorkersController < ApplicationController
   end
 
   def menu_name
-    return "schedules"
+    "schedules"
   end
 end

@@ -40,6 +40,6 @@ class Statistics::AreasController < ApplicationController
   private
 
   def menu_name
-    return :statistics_areas
+    :statistics_areas
   end
 end

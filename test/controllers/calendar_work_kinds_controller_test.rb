@@ -25,7 +25,7 @@ class CalendarWorkKindsControllerTest < ActionDispatch::IntegrationTest
       post calendar_work_kinds_path, params: {
         calendar_term: @calendar_term,
         work_kind_id: [@work_kind.id],
-        text_color: {@work_kind.id => @text_color}
+        text_color: { @work_kind.id => @text_color }
       }
     end
     assert_redirected_to calendars_path

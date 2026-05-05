@@ -45,29 +45,29 @@ class WorkType < ApplicationRecord
   scope :only_deleted, -> { with_discarded.discarded }
 
   scope :usual_order, -> { joins(genre: :category).order("work_categories.display_order ASC, work_types.display_order ASC, work_types.id ASC") }
-  scope :usual, -> {kept.where(work_flag: true).usual_order}
-  scope :indexes, -> {kept.usual_order}
-  scope :land, -> {kept.where(land_flag: true).usual_order}
-  scope :cost, -> {kept.where(cost_flag: true).usual_order}
-  scope :select_category, ->(category) {kept.joins(:genre).where("work_flag = true AND work_genres.work_category_id = ?", category.id).usual_order}
-  scope :by_term, ->(term) {
+  scope :usual, -> { kept.where(work_flag: true).usual_order }
+  scope :indexes, -> { kept.usual_order }
+  scope :land, -> { kept.where(land_flag: true).usual_order }
+  scope :cost, -> { kept.where(cost_flag: true).usual_order }
+  scope :select_category, ->(category) { kept.joins(:genre).where("work_flag = true AND work_genres.work_category_id = ?", category.id).usual_order }
+  scope :by_term, lambda { |term|
     where("EXISTS (SELECT * FROM work_type_terms WTT WHERE work_types.id = WTT.work_type_id AND WTT.term = ?)", term)
-    .with_discarded
-    .usual_order
+      .with_discarded
+      .usual_order
   }
-  scope :for_work, ->(category, work) {
+  scope :for_work, lambda { |category, work|
     joins(:genre)
-    .where(<<SQL.squish, category: category.id, term: work.term, id: work.work_type_id, work_category: work.work_type.genre.work_category_id)
+      .where(<<SQL.squish, category: category.id, term: work.term, id: work.work_type_id, work_category: work.work_type.genre.work_category_id)
     (work_flag = TRUE AND work_genres.work_category_id = :category AND EXISTS (SELECT * FROM work_type_terms WTT WHERE work_types.id = WTT.work_type_id AND WTT.term = :term)) OR (work_types.id = :id AND :category = :work_category)
 SQL
-    .with_deleted
-    .order(display_order: :ASC, id: :ASC)
+      .with_deleted
+      .order(display_order: :ASC, id: :ASC)
   }
 
   attr_accessor :term, :term_flag
 
   def cost_only?
-    return self.cost_flag && !self.land_flag
+    cost_flag && !land_flag
   end
 
   def category_name
@@ -79,38 +79,39 @@ SQL
   end
 
   def bg_color_term(term)
-    return work_type_terms.find_by(term: term)&.bg_color || self.bg_color || '#ffffff'
+    work_type_terms.find_by(term: term)&.bg_color || bg_color || '#ffffff'
   end
 
   def bg_color_date(organization, date)
-    return bg_color_term(organization.get_term(date))
+    bg_color_term(organization.get_term(date))
   end
 
   def fg_color
-    return WorkType.to_fg_color(self.bg_color)
+    WorkType.to_fg_color(bg_color)
   end
 
   def exists_term?(term)
-    return work_type_terms.exists?(term: term)
+    work_type_terms.exists?(term: term)
   end
 
   def fg_color_term(term)
-    return WorkType.to_fg_color(self.bg_color_term(term))
+    WorkType.to_fg_color(bg_color_term(term))
   end
 
   def fg_color_date(organization, date)
-    return fg_color_term(organization.get_term(date))
+    fg_color_term(organization.get_term(date))
   end
 
   def icon_fingerprint
     return nil if icon.blank?
+
     @icon_fingerprint ||= Digest::SHA256.hexdigest(icon)
   end
 
   def self.to_fg_color(bg_color)
-    rgb = {r: 255, g: 255, b: 255 }
+    rgb = { r: 255, g: 255, b: 255 }
     lum = 135
-  
+
     if bg_color[0, 1] == '#' && bg_color.length == 7
       rgb[:r] = bg_color[1, 2].to_i(16)
       rgb[:g] = bg_color[3, 2].to_i(16)
@@ -118,8 +119,8 @@ SQL
     end
 
     yuv = (0.2126 * rgb[:r]) + (0.7152 * rgb[:g]) + (0.0722 * rgb[:b])
-  
-    return yuv >= lum ? 'black' : 'white'
+
+    yuv >= lum ? 'black' : 'white'
   end
 
   def self.find_other
@@ -127,20 +128,20 @@ SQL
   end
 
   def icon_last_modified
-    self.icon_updated_at
+    icon_updated_at
   end
 
   private
 
   def update_cost_flag
-    self.cost_flag = true if self.land_flag
+    self.cost_flag = true if land_flag
   end
 
   def save_work_type_term
-    work_term = WorkTypeTerm.find_by(term: @term, work_type_id: self.id)
+    work_term = WorkTypeTerm.find_by(term: @term, work_type_id: id)
     if @term_flag
-      work_term ||= WorkTypeTerm.new(term: @term, work_type_id: self.id)
-      work_term.bg_color = self.bg_color
+      work_term ||= WorkTypeTerm.new(term: @term, work_type_id: id)
+      work_term.bg_color = bg_color
       work_term.save!
     elsif work_term
       work_term.destroy

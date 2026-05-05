@@ -13,7 +13,7 @@
 class WholeCropRoll < ApplicationRecord
   MAX_ROLLS = 5
 
-  scope :valid, -> {where("weight > ?", 0)}
+  scope :valid, -> { where("weight > ?", 0) }
 
   belongs_to :wcs_land, class_name: "WholeCropLand", foreign_key: "whole_crop_land_id"
 

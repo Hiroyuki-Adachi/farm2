@@ -16,11 +16,11 @@
 #
 
 class Seedling < ApplicationRecord
-  belongs_to :work_type, -> {with_deleted}
+  belongs_to :work_type, -> { with_deleted }
   has_many :seedling_homes, dependent: :destroy
 
-  scope :usual, ->(term, work_types) {where(term: term, work_type_id: work_types.ids)}
-  scope :by_term, ->(term) {where(term: term)}
+  scope :usual, ->(term, work_types) { where(term: term, work_type_id: work_types.ids) }
+  scope :by_term, ->(term) { where(term: term) }
 
   accepts_nested_attributes_for :seedling_homes, allow_destroy: true, reject_if: :reject_seedling_homes
 

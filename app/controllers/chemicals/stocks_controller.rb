@@ -22,6 +22,10 @@ class Chemicals::StocksController < ApplicationController
     render :form, layout: false
   end
 
+  def edit
+    render :form, layout: false
+  end
+
   def create
     @stock = ChemicalStock.new(stock_params)
     if @stock.save
@@ -29,10 +33,6 @@ class Chemicals::StocksController < ApplicationController
     else
       render json: nil, status: :internal_server_error
     end
-  end
-
-  def edit
-    render :form, layout: false
   end
 
   def update

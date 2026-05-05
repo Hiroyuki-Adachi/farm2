@@ -3,11 +3,11 @@ require 'test_helper'
 class SeedlingCostsControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:users1))
-    @update_chemical = {price: 1000}
+    @update_chemical = { price: 1000 }
     @chemical_id = chemical_terms(:chemical_term_3_2015).chemical_id
-    @update_system = {seedling_chemical_id: @chemical_id, seedling_price: 2000}
+    @update_system = { seedling_chemical_id: @chemical_id, seedling_price: 2000 }
     @work_type_id = work_types(:work_type_koshi).id
-    @update_seedlings = [{soil_quantity: 20, seed_cost: 30, work_type_id: @work_type_id, term: 2015}]
+    @update_seedlings = [{ soil_quantity: 20, seed_cost: 30, work_type_id: @work_type_id, term: 2015 }]
     @seedling = seedlings(:seedling1)
   end
 
@@ -25,7 +25,7 @@ class SeedlingCostsControllerTest < ActionDispatch::IntegrationTest
   test "育苗原価登録(実行)" do
     assert_no_difference('System.count') do
       assert_no_difference('ChemicalTerm.count') do
-        post seedling_costs_path, params: {chemical: @update_chemical, system: @update_system, seedlings: @update_seedlings}
+        post seedling_costs_path, params: { chemical: @update_chemical, system: @update_system, seedlings: @update_seedlings }
       end
     end
     assert_redirected_to seedling_costs_path
@@ -41,9 +41,9 @@ class SeedlingCostsControllerTest < ActionDispatch::IntegrationTest
 
   test "育苗担当(実行)(登録)" do
     sowed_on = Time.zone.local(2015, 5, 1)
-    seedling_insert = {seedling_homes_attributes: [{home_id: 3, quantity: 200, sowed_on: sowed_on}]}
+    seedling_insert = { seedling_homes_attributes: [{ home_id: 3, quantity: 200, sowed_on: sowed_on }] }
     assert_difference('SeedlingHome.count') do
-      patch seedling_cost_path(seedling_id: @seedling.id), params: {seedling: seedling_insert}
+      patch seedling_cost_path(seedling_id: @seedling.id), params: { seedling: seedling_insert }
     end
     assert_redirected_to edit_seedling_cost_path(seedling_id: seedlings(:seedling1).id)
 
@@ -55,13 +55,13 @@ class SeedlingCostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "育苗担当(実行)(同一世帯への連続登録)" do
-    seedling_insert1 = {seedling_homes_attributes: [{home_id: 3, quantity: 200, sowed_on: Time.zone.local(2015, 5, 1)}]}
-    patch seedling_cost_path(seedling_id: @seedling.id), params: {seedling: seedling_insert1}
+    seedling_insert1 = { seedling_homes_attributes: [{ home_id: 3, quantity: 200, sowed_on: Time.zone.local(2015, 5, 1) }] }
+    patch seedling_cost_path(seedling_id: @seedling.id), params: { seedling: seedling_insert1 }
 
     sowed_on = Time.zone.local(2015, 6, 1)
-    seedling_insert2 = {seedling_homes_attributes: [{home_id: 3, quantity: 300, sowed_on: sowed_on}]}
+    seedling_insert2 = { seedling_homes_attributes: [{ home_id: 3, quantity: 300, sowed_on: sowed_on }] }
     assert_difference('SeedlingHome.count') do
-      patch seedling_cost_path(seedling_id: @seedling.id), params: {seedling: seedling_insert2}
+      patch seedling_cost_path(seedling_id: @seedling.id), params: { seedling: seedling_insert2 }
     end
     assert_redirected_to edit_seedling_cost_path(seedling_id: seedlings(:seedling1).id)
 
@@ -74,9 +74,9 @@ class SeedlingCostsControllerTest < ActionDispatch::IntegrationTest
 
   test "育苗担当(実行)(削除)" do
     seedling_home = seedling_homes(:seedling_home1)
-    seedling_delete = {seedling_homes_attributes: [{id: seedling_home.id, _destroy: 1}]}
+    seedling_delete = { seedling_homes_attributes: [{ id: seedling_home.id, _destroy: 1 }] }
     assert_difference('SeedlingHome.count', -1) do
-      patch seedling_cost_path(seedling_id: @seedling.id), params: {seedling: seedling_delete}
+      patch seedling_cost_path(seedling_id: @seedling.id), params: { seedling: seedling_delete }
     end
     assert_redirected_to edit_seedling_cost_path(seedling_id: @seedling.id)
 

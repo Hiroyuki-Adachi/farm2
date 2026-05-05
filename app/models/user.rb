@@ -37,8 +37,8 @@
 require "rotp"
 class User < ApplicationRecord
   before_create :set_token
-  before_update :clear_mail_fields, if: -> { mail_changed? && self.mail.present? }
-  after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && self.mail_confirmed_at.present? }
+  before_update :clear_mail_fields, if: -> { mail_changed? && mail.present? }
+  after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && mail_confirmed_at.present? }
 
   has_secure_password
   encrypts :otp_secret
@@ -82,14 +82,14 @@ class User < ApplicationRecord
   end
 
   def mail_confirmed?
-    self.mail_confirmed_at.present?
+    mail_confirmed_at.present?
   end
 
   def mail_confirm!(mail_confirmation_token)
     return false if self.mail_confirmation_token != mail_confirmation_token
-    return false if self.mail_confirmation_expired_at.nil? || self.mail_confirmation_expired_at < Time.current
+    return false if mail_confirmation_expired_at.nil? || mail_confirmation_expired_at < Time.current
 
-    self.update(mail_confirmed_at: Time.current)
+    update(mail_confirmed_at: Time.current)
   end
 
   def self.find_by_mail(mail)
@@ -97,23 +97,25 @@ class User < ApplicationRecord
   end
 
   def linable?
-    self.line_id.present?
+    line_id.present?
   end
 
   def push_notification_granted?
-    self.push_notification_permission == "granted"
+    push_notification_permission == "granted"
   end
 
   def current_mail_status
     return :not_entered if mail.blank?
     return :confirmed if mail_confirmed_at.present?
     return :expired if mail_confirmation_expired_at.present? && mail_confirmation_expired_at < Time.current
+
     :pending
   end
 
   def totp
     return if otp_secret.blank?
-    ROTP::TOTP.new(otp_secret, issuer: self.organization.name)
+
+    ROTP::TOTP.new(otp_secret, issuer: organization.name)
   end
 
   def totp_verify?(code)
@@ -153,6 +155,6 @@ class User < ApplicationRecord
   end
 
   def set_pc_mail
-    self.worker.update(pc_mail: mail) if self.mail.present? && self.worker.present? && self.worker.pc_mail.blank?
+    worker.update(pc_mail: mail) if mail.present? && worker.present? && worker.pc_mail.blank?
   end
 end

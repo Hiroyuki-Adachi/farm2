@@ -25,7 +25,7 @@ class WorkTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "作業分類マスタ新規作成(実行)" do
     assert_difference('WorkType.kept.count') do
-      post work_types_path, params: {work_type: @update}
+      post work_types_path, params: { work_type: @update }
     end
     assert_redirected_to work_types_path
 
@@ -43,7 +43,7 @@ class WorkTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "作業分類マスタ変更(実行)" do
     assert_no_difference('WorkType.kept.count') do
-      patch work_type_path(@work_type), params: {work_type: @update}
+      patch work_type_path(@work_type), params: { work_type: @update }
     end
     assert_redirected_to work_types_path
 
@@ -56,7 +56,7 @@ class WorkTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "作業分類マスタ変更(実行)(元のページへ戻る)" do
     assert_no_difference('WorkType.kept.count') do
-      patch work_type_path(@work_type), params: {work_type: @update, return_to: work_types_path(page: 2)}
+      patch work_type_path(@work_type), params: { work_type: @update, return_to: work_types_path(page: 2) }
     end
     assert_redirected_to work_types_path(page: 2)
   end

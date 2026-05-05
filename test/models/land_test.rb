@@ -66,7 +66,7 @@ class LandTest < ActiveSupport::TestCase
     fee, results = land.costs(start_date, end_date)
 
     assert_equal land_fees(:land_fee1), fee
-    expected_results = {5 => 30, 8 => 62}
+    expected_results = { 5 => 30, 8 => 62 }
     assert_equal(expected_results, results)
   end
 
@@ -90,7 +90,7 @@ class LandTest < ActiveSupport::TestCase
     existing_member = lands(:lands_group1_2)
     new_member = lands(:lands12)
 
-    Land.update_members(group.id, [{land_id: new_member.id}])
+    Land.update_members(group.id, [{ land_id: new_member.id }])
 
     existing_member.reload
     new_member.reload

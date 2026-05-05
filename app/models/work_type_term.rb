@@ -14,5 +14,5 @@
 #  work_type_terms_2nd  (term,work_type_id) UNIQUE
 #
 class WorkTypeTerm < ApplicationRecord
-  belongs_to :work_type, -> {with_deleted}
+  belongs_to :work_type, -> { with_deleted }
 end

@@ -17,7 +17,7 @@ class Crawlers::NaroJobTest < ActiveJob::TestCase
       assert_expected_topic
     end
   end
-  
+
   private
 
   def stub_pages(list:, item:)

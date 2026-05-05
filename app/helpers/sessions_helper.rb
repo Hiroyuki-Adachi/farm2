@@ -13,6 +13,7 @@ module SessionsHelper
 
   def current_user
     return @current_user if @current_user.present?
+
     @current_user = User.find(session[:user_id]) if session[:user_id]
   end
 
@@ -34,11 +35,11 @@ module SessionsHelper
 
   def current_term_jp
     current_system.start_date.strftime('%Jy年')
-  end 
+  end
 
   def next_term_jp
     next_system.start_date.strftime('%Jy年')
-  end 
+  end
 
   def previous_term
     current_term - 1

@@ -26,9 +26,9 @@ class Lands::OwnersController < ApplicationController
 
   def owners_params
     params
-    .require(:land)
-    .permit(
-      land_homes_attributes: [:home_id, :place, :area, :_destroy, :id, :manager_flag, :owner_flag]
-    )
+      .require(:land)
+      .permit(
+        land_homes_attributes: [:home_id, :place, :area, :_destroy, :id, :manager_flag, :owner_flag]
+      )
   end
 end

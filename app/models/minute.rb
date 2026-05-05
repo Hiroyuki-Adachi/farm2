@@ -17,7 +17,7 @@
 class Minute < ApplicationRecord
   belongs_to :schedule
 
-  scope :for_personal, ->(worker) {
+  scope :for_personal, lambda { |worker|
     joins(:schedule).where([<<SQL.squish, worker.id]).order("schedules.worked_at, minutes.id").select("minutes.id, minutes.schedule_id")
     EXISTS (SELECT * FROM schedule_workers
       WHERE schedules.id = schedule_workers.schedule_id AND schedule_workers.worker_id = ?
@@ -26,6 +26,6 @@ SQL
   }
 
   def member?(worker)
-    return schedule.workers.include?(worker)
+    schedule.workers.include?(worker)
   end
 end

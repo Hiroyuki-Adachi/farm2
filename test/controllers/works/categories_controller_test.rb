@@ -5,7 +5,7 @@ class Works::CategoriesControllerTest < ActionDispatch::IntegrationTest
     @user = users(:users1)
     login_as(@user)
     @category = work_categories(:category_rice)
-    @update = { name: "試験", display_order: 99}
+    @update = { name: "試験", display_order: 99 }
   end
 
   test "作業カテゴリ一覧" do
@@ -26,7 +26,7 @@ class Works::CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "作業カテゴリ新規作成(実行)" do
     assert_difference('WorkCategory.kept.count') do
-      post work_categories_path, params: {work_category: @update}
+      post work_categories_path, params: { work_category: @update }
     end
     assert_redirected_to work_categories_path
 
@@ -42,7 +42,7 @@ class Works::CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "作業カテゴリ変更(実行)" do
     assert_no_difference('WorkCategory.kept.count') do
-      patch work_category_path(@category), params: {work_category: @update}
+      patch work_category_path(@category), params: { work_category: @update }
     end
     assert_redirected_to work_categories_path
 

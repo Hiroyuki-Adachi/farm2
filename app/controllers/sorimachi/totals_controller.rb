@@ -5,7 +5,7 @@ class Sorimachi::TotalsController < ApplicationController
     total_cost_types = TotalCostType.accountable.sort_by(&:code)
     selected_id = params[:total_cost_type_id].to_i
     @selected_total_cost_type_id = total_cost_types.map(&:id).include?(selected_id) ? selected_id : total_cost_types.first&.id
-    @selected_total_cost_type = total_cost_types.find {|type| type.id == @selected_total_cost_type_id}
+    @selected_total_cost_type = total_cost_types.find { |type| type.id == @selected_total_cost_type_id }
 
     @work_types = WorkType
       .by_term(current_term)
@@ -38,12 +38,12 @@ class Sorimachi::TotalsController < ApplicationController
       .where(sorimachi_journal_id: journals.map(&:id), work_type_id: @work_types.map(&:id))
       .group(:sorimachi_journal_id, :work_type_id)
       .sum(:amount)
-    allocations_by_journal = Hash.new {|hash, key| hash[key] = [] }
+    allocations_by_journal = Hash.new { |hash, key| hash[key] = [] }
     allocation_sums.each do |(journal_id, work_type_id), amount|
       allocations_by_journal[journal_id] << [work_type_id, amount]
     end
 
-    totals = Hash.new {|hash, key| hash[key] = Hash.new(0) }
+    totals = Hash.new { |hash, key| hash[key] = Hash.new(0) }
     journals.each do |journal|
       target_codes = []
       target_codes << journal.code01 if account_codes.include?(journal.code01)
@@ -81,6 +81,7 @@ class Sorimachi::TotalsController < ApplicationController
 
   def signed_amount(amount, side)
     return amount if @selected_total_cost_type&.account.nil?
+
     if @selected_total_cost_type.account
       side == "debit" ? amount : -amount
     else

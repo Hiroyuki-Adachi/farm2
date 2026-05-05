@@ -27,7 +27,7 @@ class MenuController < ApplicationController
     if !current_user.manageable? || current_organization.term + 1 != system_params[:term].to_i
       current_user.term = system_params[:term]
       current_user.save!
-      redirect_to(menu_index_path, :notice => '設定を変更しました。')
+      redirect_to(menu_index_path, notice: '設定を変更しました。')
       return
     end
     @organization = current_organization
@@ -36,10 +36,10 @@ class MenuController < ApplicationController
       @system.save!
       @organization.update(term: @system.term)
       User.update_all(term: @system.term, updated_at: DateTime.now)
-      redirect_to(menu_index_path, :notice => '設定を変更しました。')
+      redirect_to(menu_index_path, notice: '設定を変更しました。')
     else
       @terms = WorkDecorator.terms
-      render :action => :edit_term
+      render action: :edit_term
     end
   end
 

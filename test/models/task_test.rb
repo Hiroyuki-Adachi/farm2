@@ -265,7 +265,7 @@ class TaskTest < ActiveSupport::TestCase
     end
     assert task2.errors.any?
   end
-  
+
   test "コメント追加" do
     task = tasks(:open_task)
     worker = workers(:worker1)

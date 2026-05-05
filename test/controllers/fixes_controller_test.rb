@@ -31,7 +31,7 @@ class FixesControllerTest < ActionDispatch::IntegrationTest
   test "新規確定(実行)" do
     fixed_at = '2015-03-31'
     assert_enqueued_jobs 1 do
-      post fixes_path, params: {fixed_at: fixed_at, fixed_works: @no_fix_works}
+      post fixes_path, params: { fixed_at: fixed_at, fixed_works: @no_fix_works }
     end
     assert_redirected_to fixes_path
   end

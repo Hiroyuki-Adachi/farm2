@@ -8,7 +8,7 @@ class WorkerDecorator < Draper::Decorator
   def home_name
     home_name = model.home.name
     home_name += "(#{model.first_name[0]})" unless model.id == model.home.worker_id
-    return home_name
+    home_name
   end
 
   def disp_name
