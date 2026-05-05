@@ -11,11 +11,14 @@ module SessionsHelper
     !current_user.nil?
   end
 
+  # current_user はリクエスト内で再利用するためインスタンス変数でメモ化する
+  # rubocop:disable Rails/HelperInstanceVariable
   def current_user
     return @current_user if @current_user.present?
 
     @current_user = User.find(session[:user_id]) if session[:user_id]
   end
+  # rubocop:enable Rails/HelperInstanceVariable
 
   def current_organization
     @current_organization ||= Organization.find(current_user.organization_id)

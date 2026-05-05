@@ -55,8 +55,9 @@ class SorimachiJournal < ApplicationRecord
 
   has_many :sorimachi_work_types, dependent: :destroy
   has_many :work_types, through: :sorimachi_work_types
-  has_many :details, foreign_key: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line],
-                     dependent: :destroy
+  # rubocop:disable Rails/HasManyOrHasOneDependent
+  has_many :details, foreign_key: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line]
+  # rubocop:enable Rails/HasManyOrHasOneDependent
 
   validate :term_check
 
