@@ -26,10 +26,10 @@ require 'securerandom'
 class WorkResult < ApplicationRecord
   belongs_to :work
   belongs_to :health
-  belongs_to :worker, -> {with_deleted}
-  has_one    :home, -> {with_deleted}, through: :worker
-  has_one    :work_type, -> {with_deleted}, through: :work
-  has_one    :work_kind, -> {with_deleted}, through: :work
+  belongs_to :worker, -> { with_deleted }
+  has_one    :home, -> { with_deleted }, through: :worker
+  has_one    :work_type, -> { with_deleted }, through: :work
+  has_one    :work_kind, -> { with_deleted }, through: :work
 
   before_create :set_uuid
 
@@ -38,9 +38,9 @@ class WorkResult < ApplicationRecord
   has_many  :seedling_results, dependent: :destroy
 
   validates :hours, presence: true
-  validates :hours, numericality: true, if: proc {|x| x.hours.present?}
+  validates :hours, numericality: true, if: proc { |x| x.hours.present? }
 
-  scope :by_worker_and_work, ->(worker, work) {where(worker_id: worker, work_id: work)}
+  scope :by_worker_and_work, ->(worker, work) { where(worker_id: worker, work_id: work) }
 
   scope :by_home, lambda { |term|
     works = Work.arel_table
@@ -134,7 +134,9 @@ class WorkResult < ApplicationRecord
   end
 
   def worker_amount
-    self&.worker&.home&.member_flag ? amount : 0
+    return 0 unless worker&.home&.member_flag
+
+    amount
   end
 
   def set_uuid
