@@ -2,7 +2,7 @@ require 'test_helper'
 class MenuControllerTest < ActionDispatch::IntegrationTest
   def setup
     @organization = Organization.find(1)
-    User.where(organization_id: @organization).update_all(term: systems(:s2015).term)
+    User.where(organization_id: @organization.id).find_each { |user| user.update!(term: systems(:s2015).term) }
     @user = users(:users1)
     login_as(@user)
     @system = System.find_by(term: @organization.term, organization_id: @organization.id)
@@ -21,6 +21,7 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
   test "対象年度変更(実行:新規)" do
     new_term = systems(:s2015).term + 1
     System.where(term: new_term).destroy_all
+    other_user_terms = User.where.not(organization_id: @organization.id).pluck(:id, :term).to_h
 
     assert_difference('System.count', 1) do
       patch menu_path(@system.id), params: { system: { term: new_term } }
@@ -28,8 +29,11 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
     @organization.reload
     assert_equal new_term, @organization.term
 
-    User.all.each do |user|
+    User.where(organization_id: @organization.id).each do |user|
       assert_equal new_term, user.term
+    end
+    other_user_terms.each do |id, term|
+      assert_equal term, User.find(id).term
     end
 
     new_system = System.last

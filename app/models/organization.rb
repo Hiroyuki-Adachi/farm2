@@ -49,6 +49,9 @@ class Organization < ApplicationRecord
   belongs_to :contract, class_name: "WorkType"
   belongs_to :harvesting, class_name: "WorkKind"
 
+  has_many :users, dependent: :destroy
+  has_many :systems, dependent: :destroy
+
   def self.term(organization = nil)
     organization&.term || Organization.first.term
   end
@@ -59,5 +62,15 @@ class Organization < ApplicationRecord
 
   def get_term(date)
     get_system(date || Time.zone.today)&.term
+  end
+
+  def update_term!(term)
+    transaction do
+      update!(term: term)
+
+      users.find_each do |user|
+        user.update!(term: term)
+      end
+    end
   end
 end

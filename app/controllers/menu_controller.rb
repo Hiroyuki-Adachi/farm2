@@ -33,9 +33,10 @@ class MenuController < ApplicationController
     @organization = current_organization
     @system = System.init(@organization.id, system_params[:term])
     if @system.valid?
-      @system.save!
-      @organization.update(term: @system.term)
-      User.update_all(term: @system.term, updated_at: DateTime.now)
+      ActiveRecord::Base.transaction do
+        @system.save!
+        @organization.update_term!(@system.term)
+      end
       redirect_to(menu_index_path, notice: '設定を変更しました。')
     else
       @terms = WorkDecorator.terms
