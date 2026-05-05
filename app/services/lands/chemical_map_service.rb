@@ -97,9 +97,9 @@ class Lands::ChemicalMapService
 
     if missing_ids.any?
       LandCost.newest(work.worked_at)
-              .where(land_id: missing_ids)
-              .pluck(:land_id, :work_type_id)
-              .each do |land_id, work_type_id|
+        .where(land_id: missing_ids)
+        .pluck(:land_id, :work_type_id)
+        .each do |land_id, work_type_id|
         cache_for_date[land_id] = work_type_id
       end
     end

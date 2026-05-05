@@ -12,9 +12,9 @@ class Users::WordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "検索ワード(保守)(追加パターン)" do
-    user_words = [{word: "test", pc_flag: true, sp_flag: false, line_flag: false}]
+    user_words = [{ word: "test", pc_flag: true, sp_flag: false, line_flag: false }]
     assert_difference('UserWord.count', 1) do
-      post users_words_path, params: { user: {user_words_attributes: user_words }}
+      post users_words_path, params: { user: { user_words_attributes: user_words } }
     end
     assert_redirected_to new_users_word_path
 
@@ -31,10 +31,10 @@ class Users::WordsControllerTest < ActionDispatch::IntegrationTest
     word2 = user_words(:words2)
     new_word2 = "TEST"
     assert_difference('UserWord.count', -1) do
-      post users_words_path, params: { user: {user_words_attributes: [
-        {id: word1.id, word: "", pc_flag: true, sp_flag: false, line_flag: false},
-        {id: word2.id, word: new_word2, pc_flag: true, sp_flag: false, line_flag: true}
-      ] }}
+      post users_words_path, params: { user: { user_words_attributes: [
+        { id: word1.id, word: "", pc_flag: true, sp_flag: false, line_flag: false },
+        { id: word2.id, word: new_word2, pc_flag: true, sp_flag: false, line_flag: true }
+      ] } }
     end
     assert_redirected_to new_users_word_path
 
@@ -52,10 +52,10 @@ class Users::WordsControllerTest < ActionDispatch::IntegrationTest
     word2 = user_words(:words2)
     new_word = "TEST"
     assert_raises(ActiveRecord::RecordNotUnique) do
-      post users_words_path, params: { user: {user_words_attributes: [
-        {id: word1.id, word: new_word},
-        {id: word2.id, word: new_word}
-      ] }}
+      post users_words_path, params: { user: { user_words_attributes: [
+        { id: word1.id, word: new_word },
+        { id: word2.id, word: new_word }
+      ] } }
     end
   end
 

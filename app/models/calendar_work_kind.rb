@@ -18,7 +18,7 @@ class CalendarWorkKind < ApplicationRecord
   belongs_to :user
   belongs_to :work_kind
 
-  scope :usual, ->(user) {where(user_id: user)}
+  scope :usual, ->(user) { where(user_id: user) }
 
   def self.regist(user_id, params)
     work_kinds = []

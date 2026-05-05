@@ -19,7 +19,7 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
 
   test "班マスタ新規作成(実行)" do
     assert_difference('Section.kept.count') do
-      post sections_path, params: {section: @update}
+      post sections_path, params: { section: @update }
     end
     assert_redirected_to sections_path
 
@@ -37,7 +37,7 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
 
   test "班マスタ変更(実行)" do
     assert_no_difference('Section.kept.count') do
-      patch section_path(@section), params: {section: @update}
+      patch section_path(@section), params: { section: @update }
     end
     assert_redirected_to sections_path
 

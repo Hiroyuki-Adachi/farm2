@@ -37,7 +37,7 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
       Net::HTTPOK.new("1.1", "200", "OK")
     end
     assert_difference('IpList.count') do
-      post ip_lists_path, params: {login_name: @user.login_name}, headers: { 'REMOTE_ADDR' => @ip_address }
+      post ip_lists_path, params: { login_name: @user.login_name }, headers: { 'REMOTE_ADDR' => @ip_address }
     end
 
     ip = IpList.last
@@ -53,7 +53,7 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_no_difference('IpList.count') do
-      post ip_lists_path, params: {login_name: @user.login_name}, headers: { 'REMOTE_ADDR' => @ip_address }
+      post ip_lists_path, params: { login_name: @user.login_name }, headers: { 'REMOTE_ADDR' => @ip_address }
     end
 
     assert_response :service_unavailable
@@ -62,7 +62,7 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
   test "ID認証画面(LINE未登録)" do
     @user.update(line_id: '')
     assert_no_difference('IpList.count') do
-      post ip_lists_path, params: {login_name: @user.login_name}, headers: { 'REMOTE_ADDR' => @ip_address }
+      post ip_lists_path, params: { login_name: @user.login_name }, headers: { 'REMOTE_ADDR' => @ip_address }
     end
 
     assert_response :service_unavailable
@@ -70,7 +70,7 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
 
   test "ID認証画面(LINE送信)(未登録)" do
     assert_difference('IpList.count') do
-      post ip_lists_path, params: {login_name: 'invalid_name'}, headers: { 'REMOTE_ADDR' => @ip_address }
+      post ip_lists_path, params: { login_name: 'invalid_name' }, headers: { 'REMOTE_ADDR' => @ip_address }
     end
     assert_response :service_unavailable
 
@@ -83,7 +83,7 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
     @user.update(otp_enabled: true, line_id: '')
 
     assert_difference('IpList.count') do
-      post ip_lists_path, params: {login_name: @user.login_name}, headers: { 'REMOTE_ADDR' => @ip_address }
+      post ip_lists_path, params: { login_name: @user.login_name }, headers: { 'REMOTE_ADDR' => @ip_address }
     end
 
     ip = IpList.last
@@ -113,7 +113,7 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
 
   test "番号認証(LINE認証)" do
     ip = IpList.white_ip!(@ip_address, @user)
-    patch ip_list_path(id: ip.id), params: {token: ip.token}, headers: { 'REMOTE_ADDR' => @ip_address }
+    patch ip_list_path(id: ip.id), params: { token: ip.token }, headers: { 'REMOTE_ADDR' => @ip_address }
     assert_redirected_to menu_index_path
 
     ip.reload
@@ -149,7 +149,7 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
     ip.token = "123456"
     ip.save!
 
-    patch ip_list_path(id: ip.id), params: {token: '654321'}, headers: { 'REMOTE_ADDR' => @ip_address }
+    patch ip_list_path(id: ip.id), params: { token: '654321' }, headers: { 'REMOTE_ADDR' => @ip_address }
     assert_redirected_to new_ip_list_path
 
     ip.reload
@@ -163,8 +163,8 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
 
     totp = mock("totp")
     totp.expects(:verify)
-        .with("123456", has_entries(drift_behind: 30, drift_ahead: 30))
-        .returns(true)
+      .with("123456", has_entries(drift_behind: 30, drift_ahead: 30))
+      .returns(true)
     @user.stubs(:totp).returns(totp)
 
     ip.stubs(:created_user).returns(@user)
@@ -185,8 +185,8 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
 
     totp = mock("totp")
     totp.expects(:verify)
-        .with("123456", has_entries(drift_behind: 30, drift_ahead: 30))
-        .returns(false)
+      .with("123456", has_entries(drift_behind: 30, drift_ahead: 30))
+      .returns(false)
     @user.stubs(:totp).returns(totp)
 
     ip.stubs(:created_user).returns(@user)

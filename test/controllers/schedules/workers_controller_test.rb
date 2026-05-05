@@ -22,9 +22,9 @@ class Schedules::WorkersControllerTest < ActionDispatch::IntegrationTest
 
   test "作業予定登録(実行)" do
     schedule = Schedule.create(@update)
-    schedule_worker = {worker_id: workers(:worker3).id, display_order: 3}
+    schedule_worker = { worker_id: workers(:worker3).id, display_order: 3 }
     assert_difference('ScheduleWorker.count') do
-      post schedule_workers_path(schedule_id: schedule.id), params: {schedule_workers: [schedule_worker]}
+      post schedule_workers_path(schedule_id: schedule.id), params: { schedule_workers: [schedule_worker] }
     end
     assert_redirected_to schedules_path
 

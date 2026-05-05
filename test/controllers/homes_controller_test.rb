@@ -4,7 +4,7 @@ class HomesControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:users1))
     @home = homes(:home1)
-    @update = {name: "試験", phonetic: "しけん", section_id: 1, member_flag: true, display_order: 99}
+    @update = { name: "試験", phonetic: "しけん", section_id: 1, member_flag: true, display_order: 99 }
   end
 
   test "世帯マスタ一覧" do
@@ -25,7 +25,7 @@ class HomesControllerTest < ActionDispatch::IntegrationTest
 
   test "世帯マスタ新規作成(実行)" do
     assert_difference('Home.count') do
-      post homes_path, params: {home: @update}
+      post homes_path, params: { home: @update }
     end
     assert_redirected_to homes_path
 
@@ -57,7 +57,7 @@ class HomesControllerTest < ActionDispatch::IntegrationTest
 
   test "世帯マスタ変更(実行)" do
     assert_no_difference('Home.count') do
-      patch home_path(@home), params: {home: @update}
+      patch home_path(@home), params: { home: @update }
     end
     assert_redirected_to homes_path
 
@@ -71,14 +71,14 @@ class HomesControllerTest < ActionDispatch::IntegrationTest
 
   test "世帯マスタ変更(実行)(元のページへ戻る)" do
     assert_no_difference('Home.count') do
-      patch home_path(@home), params: {home: @update, return_to: homes_path(page: 2)}
+      patch home_path(@home), params: { home: @update, return_to: homes_path(page: 2) }
     end
     assert_redirected_to homes_path(page: 2)
   end
 
   test "世帯マスタ変更(実行)(不正な戻り先は一覧へ戻る)" do
     assert_no_difference('Home.count') do
-      patch home_path(@home), params: {home: @update, return_to: "https://example.com/"}
+      patch home_path(@home), params: { home: @update, return_to: "https://example.com/" }
     end
     assert_redirected_to homes_path
   end

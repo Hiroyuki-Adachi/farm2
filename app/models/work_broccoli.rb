@@ -28,20 +28,21 @@ class WorkBroccoli < ApplicationRecord
 
   has_many :harvests, class_name: "BroccoliHarvest", dependent: :destroy
 
-  scope :for_sales, ->(term) {
+  scope :for_sales, lambda { |term|
     joins(:work)
       .where(["works.term = ? AND work_broccolis.sale > 0", term])
   }
 
   def harvest(rank, size)
     return nil unless harvests
-    harvests.find { |h| h.broccoli_rank_id == rank.id && h.broccoli_size_id == size.id}
+
+    harvests.find { |h| h.broccoli_rank_id == rank.id && h.broccoli_size_id == size.id }
   end
 
   def regist_harvests(params)
     params.each do |rank_id, sizes|
       sizes.each do |size_id, inspection|
-        harvest = BroccoliHarvest.find_or_initialize_by(broccoli_rank_id: rank_id, broccoli_size_id: size_id, work_broccoli_id: self.id)
+        harvest = BroccoliHarvest.find_or_initialize_by(broccoli_rank_id: rank_id, broccoli_size_id: size_id, work_broccoli_id: id)
         if inspection.to_i.positive?
           harvest.inspection = inspection
           harvest.save!

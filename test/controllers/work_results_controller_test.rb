@@ -9,7 +9,7 @@ class WorkResultsControllerTest < ActionDispatch::IntegrationTest
     get work_results_path
     assert_response :success
 
-    get work_results_path, params: {fixed_at: "2015-02-28"}
+    get work_results_path, params: { fixed_at: "2015-02-28" }
     assert_response :success
   end
 end

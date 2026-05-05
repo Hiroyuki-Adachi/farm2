@@ -62,10 +62,10 @@ class TaskEvent < ApplicationRecord
   after_commit :clear_if_comment_cleared, on: :update
   after_commit :clear_if_work_deleted, on: :update
 
-  scope :usual_order, -> {includes(:actor, :comment).order(created_at: :asc, id: :asc)}
+  scope :usual_order, -> { includes(:actor, :comment).order(created_at: :asc, id: :asc) }
   scope :show_task, -> { where(source: [:form, :gantt, :calendar, :api]) }
 
-  scope :with_read_info, ->(worker_id, last_read_at) {
+  scope :with_read_info, lambda { |worker_id, last_read_at|
     task_events = arel_table
     task_comments = TaskComment.arel_table.alias("tc")
     task_reads = TaskRead.arel_table.alias("tr")

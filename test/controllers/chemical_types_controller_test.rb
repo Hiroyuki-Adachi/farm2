@@ -19,7 +19,7 @@ class ChemicalTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "薬剤種別マスタ新規作成(実行)" do
     assert_difference('ChemicalType.count') do
-      post chemical_types_path, params: {chemical_type: @update}
+      post chemical_types_path, params: { chemical_type: @update }
     end
     assert_redirected_to chemical_types_path
 
@@ -36,7 +36,7 @@ class ChemicalTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "薬剤種別マスタ変更(実行)" do
     assert_no_difference('ChemicalType.count') do
-      patch chemical_type_path(@chemical_type), params: {chemical_type: @update}
+      patch chemical_type_path(@chemical_type), params: { chemical_type: @update }
     end
     assert_redirected_to chemical_types_path
 

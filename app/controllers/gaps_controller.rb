@@ -4,6 +4,6 @@ class GapsController < ApplicationController
   private
 
   def menu_name
-    return "gaps_#{controller_name}"
+    "gaps_#{controller_name}"
   end
 end

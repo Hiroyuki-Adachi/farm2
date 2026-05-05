@@ -19,6 +19,6 @@ class Cleaning < ApplicationRecord
   has_many :cleaning_targets, through: :cleaning_cleaning_targets
 
   def cleaning_target_names
-    return cleaning_targets.pluck(:name)
+    cleaning_targets.pluck(:name)
   end
 end

@@ -35,7 +35,7 @@ class Tasks::EventCommentsController < TasksController
     @comment = @task.comments.build(comment_params.merge(poster: current_user.worker))
     ActiveRecord::Base.transaction do
       @comment.save!
-      @event.update!(comment: @comment) 
+      @event.update!(comment: @comment)
     end
 
     render turbo_stream: turbo_stream.update(

@@ -26,10 +26,10 @@ require 'securerandom'
 class WorkResult < ApplicationRecord
   belongs_to :work
   belongs_to :health
-  belongs_to :worker, -> {with_deleted}
-  has_one    :home, -> {with_deleted}, through: :worker
-  has_one    :work_type, -> {with_deleted}, through: :work
-  has_one    :work_kind, -> {with_deleted}, through: :work
+  belongs_to :worker, -> { with_deleted }
+  has_one    :home, -> { with_deleted }, through: :worker
+  has_one    :work_type, -> { with_deleted }, through: :work
+  has_one    :work_kind, -> { with_deleted }, through: :work
 
   before_create :set_uuid
 
@@ -38,11 +38,11 @@ class WorkResult < ApplicationRecord
   has_many  :seedling_results, dependent: :destroy
 
   validates :hours, presence: true
-  validates :hours, numericality: true, :if => proc{|x| x.hours.present?}
+  validates :hours, numericality: true, if: proc { |x| x.hours.present? }
 
-  scope :by_worker_and_work, ->(worker, work) {where(worker_id: worker, work_id: work)}
+  scope :by_worker_and_work, ->(worker, work) { where(worker_id: worker, work_id: work) }
 
-  scope :by_home, ->(term) {
+  scope :by_home, lambda { |term|
     works = Work.arel_table
     workers = Worker.arel_table
     work_types = WorkType.arel_table
@@ -70,7 +70,7 @@ class WorkResult < ApplicationRecord
       .order("sections.display_order, homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }
 
-  scope :by_supporter_home, ->(term) {
+  scope :by_supporter_home, lambda { |term|
     works = Work.arel_table
     workers = Worker.arel_table
     work_types = WorkType.arel_table
@@ -99,7 +99,7 @@ class WorkResult < ApplicationRecord
       .order(Arel.sql("date_trunc('month', works.worked_at), sections.display_order, homes.display_order, homes.id, works.worked_at, works.id, workers.display_order, workers.id"))
   }
 
-  scope :by_home_for_fix, ->(term, fixed_at) {
+  scope :by_home_for_fix, lambda { |term, fixed_at|
     joins(:work).includes(:work)
       .joins(:worker).includes(:worker)
       .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
@@ -116,7 +116,7 @@ class WorkResult < ApplicationRecord
       .order("works.worked_at, work_results.id")
   }
 
-  scope :for_menu, ->(worker, term) {
+  scope :for_menu, lambda { |worker, term|
     joins(:work).includes(work: :work_kind).includes(work: :work_type)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id")
       .joins("INNER JOIN work_types ON works.work_type_id = work_types.id")
@@ -134,7 +134,9 @@ class WorkResult < ApplicationRecord
   end
 
   def worker_amount
-    self&.worker&.home&.member_flag ? amount : 0
+    return 0 unless worker&.home&.member_flag
+
+    amount
   end
 
   def set_uuid
@@ -152,9 +154,10 @@ class WorkResult < ApplicationRecord
   end
 
   def health_mark
-    return '◯' if self.health.well_flag
-    return self.remarks if self.health.other_flag
-    return self.health.name
+    return '◯' if health.well_flag
+    return remarks if health.other_flag
+
+    health.name
   end
 
   def self.sum_hours_for_member(works)
@@ -183,6 +186,6 @@ class WorkResult < ApplicationRecord
       end
       results[work.worked_at] = result
     end
-    return results, workers.uniq
+    [results, workers.uniq]
   end
 end

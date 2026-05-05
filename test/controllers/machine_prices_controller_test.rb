@@ -5,35 +5,35 @@ class MachinePricesControllerTest < ActionDispatch::IntegrationTest
     login_as(users(:users1))
     @machine_price_t = machine_price_headers(:machine_price_header_t)
     @machine_price_m = machine_price_headers(:machine_price_header_m)
-    @price_detail = {1 => {0 => {adjust_id: 1, price: 500}}}
+    @price_detail = { 1 => { 0 => { adjust_id: 1, price: 500 } } }
   end
 
   test "機械使用料マスタ一覧" do
-    get machine_price_headers_path, params: {id: @machine_price_t.id}
+    get machine_price_headers_path, params: { id: @machine_price_t.id }
     assert_response :success
   end
 
   test "機械使用料照会" do
-    get show_type_machine_price_headers_path, params: {machine_type_id: @machine_price_t.machine_type_id}
+    get show_type_machine_price_headers_path, params: { machine_type_id: @machine_price_t.machine_type_id }
     assert_response :success
 
-    get show_machine_machine_price_headers_path, params: {machine_id: @machine_price_m.machine_id}
+    get show_machine_machine_price_headers_path, params: { machine_id: @machine_price_m.machine_id }
     assert_response :success
   end
 
   test "機械使用料新規作成(表示)" do
-    get new_machine_price_header_path, params: {machine_type_id: machine_types(:machine_types3).id}
+    get new_machine_price_header_path, params: { machine_type_id: machine_types(:machine_types3).id }
     assert_response :success
 
-    get new_machine_price_header_path, params: {machine_id: machines(:machines3).id}
+    get new_machine_price_header_path, params: { machine_id: machines(:machines3).id }
     assert_response :success
   end
 
   test "機械使用料新規作成(実行)(種別)" do
-    new_machine_price_header = {machine_type_id: @machine_price_t.machine_type_id, validated_at: "2010-01-01"}
+    new_machine_price_header = { machine_type_id: @machine_price_t.machine_type_id, validated_at: "2010-01-01" }
     assert_difference('MachinePriceDetail.count') do
       assert_difference('MachinePriceHeader.count') do
-        post machine_price_headers_path, params: {machine_price_header: new_machine_price_header, details_form: @price_detail}
+        post machine_price_headers_path, params: { machine_price_header: new_machine_price_header, details_form: @price_detail }
       end
     end
     assert_redirected_to show_type_machine_price_headers_path(machine_type_id: @machine_price_t.machine_type_id)
@@ -49,10 +49,10 @@ class MachinePricesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "機械使用料新規作成(実行)(機械)" do
-    new_machine_price_header = {machine_id: @machine_price_m.machine_id, validated_at: "2010-01-01"}
+    new_machine_price_header = { machine_id: @machine_price_m.machine_id, validated_at: "2010-01-01" }
     assert_difference('MachinePriceDetail.count') do
       assert_difference('MachinePriceHeader.count') do
-        post machine_price_headers_path, params: {machine_price_header: new_machine_price_header, details_form: @price_detail}
+        post machine_price_headers_path, params: { machine_price_header: new_machine_price_header, details_form: @price_detail }
       end
     end
     assert_redirected_to show_machine_machine_price_headers_path(machine_id: @machine_price_m.machine_id)
@@ -76,10 +76,10 @@ class MachinePricesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "機械使用料変更(実行)(種別)" do
-    new_machine_price_header = {machine_type_id: @machine_price_t.machine_type_id, validated_at: "2010-01-01"}
+    new_machine_price_header = { machine_type_id: @machine_price_t.machine_type_id, validated_at: "2010-01-01" }
     assert_no_difference('MachinePriceDetail.count') do
       assert_no_difference('MachinePriceHeader.count') do
-        patch machine_price_header_path(@machine_price_t), params: {machine_price_header: new_machine_price_header, details_form: @price_detail}
+        patch machine_price_header_path(@machine_price_t), params: { machine_price_header: new_machine_price_header, details_form: @price_detail }
       end
     end
     assert_redirected_to show_type_machine_price_headers_path(machine_type_id: @machine_price_t.machine_type_id)
@@ -93,10 +93,10 @@ class MachinePricesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "機械使用料変更(実行)(機械)" do
-    new_machine_price_header = {machine_id: @machine_price_m.machine_id, validated_at: "2010-01-01"}
+    new_machine_price_header = { machine_id: @machine_price_m.machine_id, validated_at: "2010-01-01" }
     assert_no_difference('MachinePriceDetail.count') do
       assert_no_difference('MachinePriceHeader.count') do
-        patch machine_price_header_path(@machine_price_m), params: {machine_price_header: new_machine_price_header, details_form: @price_detail}
+        patch machine_price_header_path(@machine_price_m), params: { machine_price_header: new_machine_price_header, details_form: @price_detail }
       end
     end
     assert_redirected_to show_machine_machine_price_headers_path(machine_id: @machine_price_m.machine_id)

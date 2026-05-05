@@ -15,7 +15,7 @@
 
 class WorkVerification < ApplicationRecord
   belongs_to :work
-  belongs_to :worker, -> {with_deleted}
+  belongs_to :worker, -> { with_deleted }
 
   ENOUGH = 2
 
@@ -25,10 +25,10 @@ class WorkVerification < ApplicationRecord
     Rails.application.config.update_logger.info "verified: #{worker.name}"
     verification = WorkVerification.find_by(work_id: work.id, worker_id: worker.id)
     if verification
-      verification.touch
+      verification.updated_at = Time.current
       verification.save!
     elsif WorkVerification.where(work_id: work.id).count < ENOUGH
-      WorkVerification.create(work_id: work.id, worker_id: worker.id)
+      WorkVerification.create!(work_id: work.id, worker_id: worker.id)
     end
   end
 end

@@ -44,64 +44,64 @@ class Chemical < ApplicationRecord
 
   validates :name,          presence: true
   validates :display_order, presence: true
-  validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
+  validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
   validates :phonetic,      presence: true
-  validates :phonetic, format: { with: /\A[\p{Hiragana}ー－A-Z0-9]+\z/ }, if: proc { |x| x.phonetic.present?}
+  validates :phonetic, format: { with: /\A[\p{Hiragana}ー－A-Z0-9]+\z/ }, if: proc { |x| x.phonetic.present? }
 
   attr_accessor :term
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
-  scope :usual, ->(work) do
+  scope :usual, lambda { |work|
     kept.joins(:chemical_type)
       .where(<<-WHERE, work.term, ChemicalWorkType.by_work(work).map(&:chemical).map(&:id), work.work_kind.chemical_kinds.pluck(:chemical_type_id), work.chemicals.pluck(:chemical_id))
             (
                   chemicals.id IN (SELECT chemical_id FROM chemical_terms WHERE term = ?)
               AND chemicals.id IN (?)
               AND chemicals.chemical_type_id IN (?)
-            ) 
+            )#{' '}
          OR chemicals.id IN (?)
-WHERE
+      WHERE
       .order(Arel.sql(<<-ORDER))
         chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id
-ORDER
-  end
+      ORDER
+  }
 
-  scope :list, -> do
+  scope :list, lambda {
     kept.includes(:chemical_type)
-    .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
-  end
+      .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
+  }
 
-  scope :by_term, ->(term, organization = nil) do
+  scope :by_term, lambda { |term, organization = nil|
     kept
     joins(:chemical_type)
       .with_deleted
       .where(chemicals: { id: WorkChemical.by_term(term, organization).pluck("work_chemicals.chemical_id").uniq })
       .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
-  end
+  }
 
-  scope :for_stock, ->(term) do
+  scope :for_stock, lambda { |term|
     joins(:chemical_type)
       .with_deleted
       .where(chemicals: { id: ChemicalTerm.where(term: term).select("chemical_id") })
       .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
-  end
+  }
 
-  scope :by_type, ->(chemical_type_id) {where(chemical_type_id: chemical_type_id).order(:phonetic, :display_order, :id)}
+  scope :by_type, ->(chemical_type_id) { where(chemical_type_id: chemical_type_id).order(:phonetic, :display_order, :id) }
 
-  scope :by_work_kind, ->(work_kind_id) do
+  scope :by_work_kind, lambda { |work_kind_id|
     joins(chemical_type: :chemical_kinds).includes(:chemical_type)
       .where(chemical_kinds: { work_kind_id: work_kind_id })
       .order("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.id")
-  end
+  }
 
-  scope :with_total_quantity, ->(work) do
+  scope :with_total_quantity, lambda { |work|
     joins(:work_chemicals)
-    .where(work_chemicals: { work_id: work.id })
-    .select('chemicals.*', 'SUM(work_chemicals.quantity) AS total_quantity')
-    .group('chemicals.id')
-  end
+      .where(work_chemicals: { work_id: work.id })
+      .select('chemicals.*', 'SUM(work_chemicals.quantity) AS total_quantity')
+      .group('chemicals.id')
+  }
 
   def this_term_flag
     this_term?(@term)
@@ -136,13 +136,14 @@ ORDER
   end
 
   def unit_scale
-    return Unit.find_by(code: unit).scale
+    Unit.find_by(code: unit).scale
   end
 
   def unit_name(quantity)
     return base_unit.mega_name if quantity >= 1_000_000
     return base_unit.kilo_name if quantity >= 1_000
-    return base_unit.name
+
+    base_unit.name
   end
 
   def unit_quantity(quantity)
@@ -150,7 +151,8 @@ ORDER
     return "" if quantity == 1_000_000
     return quantity / 1_000 if quantity > 1_000
     return "" if quantity == 1_000
-    return quantity == 1 ? "" : quantity
+
+    quantity == 1 ? "" : quantity
   end
 
   attr_writer :this_term_flag

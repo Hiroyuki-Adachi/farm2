@@ -48,14 +48,16 @@ require 'csv'
 #
 class SorimachiJournal < ApplicationRecord
   after_update :clear_work_types
-  enum :allocation_mode, {auto: 0, manual: 1, select: 2}, prefix: :allocation_mode
-  scope :usual, ->(term) {where(term: term, detail: 1).order(:line)}
-  scope :cost, ->(term) {where(term: term, cost0_flag: true).order(:line, :detail)}
-  scope :total, ->(term) {where(term: term, cost0_flag: true).order(:code01).group(:code01).sum(:amount1)}
+  enum :allocation_mode, { auto: 0, manual: 1, select: 2 }, prefix: :allocation_mode
+  scope :usual, ->(term) { where(term: term, detail: 1).order(:line) }
+  scope :cost, ->(term) { where(term: term, cost0_flag: true).order(:line, :detail) }
+  scope :total, ->(term) { where(term: term, cost0_flag: true).order(:code01).group(:code01).sum(:amount1) }
 
   has_many :sorimachi_work_types, dependent: :destroy
   has_many :work_types, through: :sorimachi_work_types
+  # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :details, foreign_key: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line]
+  # rubocop:enable Rails/HasManyOrHasOneDependent
 
   validate :term_check
 
@@ -71,6 +73,7 @@ class SorimachiJournal < ApplicationRecord
         journal.term = term
       else
         next if journal == sorimachi_new
+
         journal.sorimachi_work_types.destroy_all
         journal.import_value(sorimachi_new)
       end
@@ -81,6 +84,7 @@ class SorimachiJournal < ApplicationRecord
 
   def self.details(journals)
     return [] unless journals.exists?
+
     SorimachiJournal.where(term: journals.first.term)
       .where(line: journals.map(&:line))
       .where("detail > 1")
@@ -91,14 +95,16 @@ class SorimachiJournal < ApplicationRecord
     account_codes = SorimachiAccount.where(term: term).pluck(:code)
     SorimachiJournal.where(term: term).update_all(cost0_flag: false, cost1_flag: false)
     return if account_codes.blank?
+
     SorimachiJournal.where(term: term, code01: account_codes).update_all(cost0_flag: true)
     SorimachiJournal.where(term: term, code12: account_codes).update_all(cost1_flag: true)
   end
 
   def self.refresh(term)
-    accounts = SorimachiAccount.where(term: term).to_h{|a| [a.code, a.total_cost_type]}
+    accounts = SorimachiAccount.where(term: term).to_h { |a| [a.code, a.total_cost_type] }
     SorimachiJournal.where(term: term).find_each do |journal|
-      if [TotalCostType::EXPENSEDIRECT, TotalCostType::EXPENSEINDIRECT].include?(accounts[journal.code12]) || accounts[journal.code01] == TotalCostType::SALES
+      if [TotalCostType::EXPENSEDIRECT,
+          TotalCostType::EXPENSEINDIRECT].include?(accounts[journal.code12]) || accounts[journal.code01] == TotalCostType::SALES
         journal.swap
         journal.save!
       end
@@ -108,59 +114,63 @@ class SorimachiJournal < ApplicationRecord
   def self.accounts(term)
     t1 = SorimachiJournal.where(term: term).order(:code01).group(:code01).sum(:amount1)
     t2 = SorimachiJournal.where(term: term).order(:code12).group(:code12).sum(:amount2)
-    return t1.merge(t2).to_h {|k, _v| [k, [t1[k] || 0, t2[k] || 0]]}
+    t1.merge(t2).to_h { |k, _v| [k, [t1[k] || 0, t2[k] || 0]] }
   end
 
   def cost_amount
-    self.cost0_flag ? amount1 : amount2
+    cost0_flag ? amount1 : amount2
   end
 
   def update_flags
-    if self.account1.present?
+    if account1.present?
       self.cost0_flag = true
-      self.save!
-    elsif self.account2.present?
+      save!
+    elsif account2.present?
       self.cost1_flag = true
-      self.save!
+      save!
     end
   end
 
   def clear_flags
-    self.update(cost0_flag: false, cost1_flag: false)
+    update(cost0_flag: false, cost1_flag: false)
   end
 
   def swap
-    self.amount1, self.amount2 = -self.amount2, -self.amount1
-    self.code01, self.code12 = self.code12, self.code01
-    self.code02, self.code13 = self.code13, self.code02
-    self.code03, self.code14 = self.code14, self.code03
-    self.code04, self.code15 = self.code15, self.code04
-    self.code05, self.code16 = self.code16, self.code05
-    self.code06, self.code17 = self.code17, self.code06
-    self.code07, self.code18 = self.code18, self.code07
-    self.cost0_flag, self.cost1_flag = self.cost1_flag, self.cost0_flag
-    self.tax01, self.tax11 = self.tax11, self.tax01
+    self.amount1 = -amount2
+    self.amount2 = -amount1
+    self.code01, self.code12 = code12, code01
+    self.code02, self.code13 = code13, code02
+    self.code03, self.code14 = code14, code03
+    self.code04, self.code15 = code15, code04
+    self.code05, self.code16 = code16, code05
+    self.code06, self.code17 = code17, code06
+    self.code07, self.code18 = code18, code07
+    self.cost0_flag, self.cost1_flag = cost1_flag, cost0_flag
+    self.tax01, self.tax11 = tax11, tax01
   end
 
   def import_value(value)
     my_attributes = SorimachiJournal.updatable_attributes
-    my_attributes.delete_if{|v| ['line', 'detail'].include?(v)}
+    my_attributes.delete_if { |v| ['line', 'detail'].include?(v) }
     my_attributes.each do |key|
-      self.attributes = {key => value.send(key)}
+      self.attributes = { key => value.send(key) }
     end
   end
 
   def copy(sys)
-    copy_src = SorimachiJournal.where("term = ? AND id < ? AND (cost0_flag = true OR cost1_flag = true)", self.term, self.id).order(id: :desc).first
+    copy_src = SorimachiJournal.where("term = ? AND id < ? AND (cost0_flag = true OR cost1_flag = true)", term,
+                                      id).order(id: :desc).first
     return unless copy_src
-    self.work_types.destroy_all
+
+    work_types.destroy_all
     sum_area = 0
     max_work_type_id = 0
     max_area = 0
-    land_costs = LandCost.total(self.accounted_on || sys.end_date)
+    land_costs = LandCost.total(accounted_on || sys.end_date)
     land_costs.each do |land_cost|
       next unless copy_src.work_types.ids.include?(land_cost[0])
-      sum_area += land_cost[1] 
+
+      sum_area += land_cost[1]
       if max_area < land_cost[1]
         max_area = land_cost[1]
         max_work_type_id = land_cost[0]
@@ -170,34 +180,39 @@ class SorimachiJournal < ApplicationRecord
     unless sum_area.zero?
       land_costs.each do |land_cost|
         next unless copy_src.work_types.ids.include?(land_cost[0])
-        amount = (self.cost_amount * land_cost[1] / sum_area).round
+
+        amount = (cost_amount * land_cost[1] / sum_area).round
         next if amount.zero?
+
         SorimachiWorkType.create(
-          sorimachi_journal_id: self.id, 
-          work_type_id: land_cost[0], 
+          sorimachi_journal_id: id,
+          work_type_id: land_cost[0],
           amount: amount
         )
         sum_amount += amount
       end
     end
-    unless sum_amount == self.cost_amount
-      sorimachi_work_type = SorimachiWorkType.where(sorimachi_journal_id: self.id, work_type_id: max_work_type_id).first
-      sorimachi_work_type&.increment!(:amount, self.cost_amount - sum_amount)
+    unless sum_amount == cost_amount
+      sorimachi_work_type = SorimachiWorkType.find_by(sorimachi_journal_id: id, work_type_id: max_work_type_id)
+      if sorimachi_work_type
+        sorimachi_work_type.amount += (cost_amount - sum_amount)
+        sorimachi_work_type.save!
+      end
     end
-    self.reload
+    reload
   end
 
   def ==(other)
-    return self.amount1 == other.amount1 &&
-           self.amount2 == other.amount2 && 
-           self.code01 == other.code01 &&
-           self.code12 == other.code12
+    amount1 == other.amount1 &&
+      amount2 == other.amount2 &&
+      code01 == other.code01 &&
+      code12 == other.code12
   end
 
   def self.updatable_attributes
     ['line', 'detail', 'accounted_on',
-     'code01', 'code02', 'code03', 'code04', 'tax01', 'code05', 'code06', 'code07', 'amount1', 
-     'code11', 'code12', 'code13', 'code14', 'code15', 'tax11', 'code16', 'code17', 'code18', 'amount2', 
+     'code01', 'code02', 'code03', 'code04', 'tax01', 'code05', 'code06', 'code07', 'amount1',
+     'code11', 'code12', 'code13', 'code14', 'code15', 'tax11', 'code16', 'code17', 'code18', 'amount2',
      'code21', 'remark1', 'remark2', 'remark3', 'code31', 'amount3', 'remark4']
   end
 
@@ -206,12 +221,12 @@ class SorimachiJournal < ApplicationRecord
   def term_check
     return if accounted_on.blank?
 
-    return if System.where(term: term).where("start_date <= ? AND end_date >= ?", accounted_on, accounted_on).exists?
+    return if System.where(term: term).where(start_date: ..accounted_on).exists?(end_date: accounted_on..)
 
     errors.add(:term, "の対応に誤りがあります。")
   end
 
   def clear_work_types
-    self.sorimachi_work_types.destroy_all if !self.cost0_flag && !self.cost1_flag
+    sorimachi_work_types.destroy_all if !cost0_flag && !cost1_flag
   end
 end

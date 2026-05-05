@@ -23,13 +23,13 @@ AllCops:
     - "config/puma.rb"
 
 ### ルールのカスタマイズ
+Metrics/MethodLength:
+  Max: 20
 
-# 設定が厳しいので一旦全てfalseにする
-Metrics:
-  Enabled: false
+Metrics/AbcSize:
+  Max: 25
 
-# 一行あたりの文字数
-Layout/LineLength:
+Style/Lambda:
   Enabled: false
 
 # メソッドの改行ルール
@@ -92,3 +92,7 @@ Rails/LexicallyScopedActionFilter:
 # DBの未使用カラムのチェック
 Rails/UnusedIgnoredColumns:
   Enabled: true
+
+# has_manyのinverse_ofのチェック（複雑なアソシエーションが多いので一旦false）
+Rails/InverseOf:
+  Enabled: false

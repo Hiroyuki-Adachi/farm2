@@ -12,9 +12,9 @@ class MachineDecorator < Draper::Decorator
 
   def price_tag
     if model.owner.company_flag
-      return h.raw("&nbsp;")
+      h.raw("&nbsp;")
     else
-      return h.link_to('料金設定', h.show_machine_machine_price_headers_path(machine_id: model), {class: "btn btn-success btn-sm"}) 
+      h.link_to('料金設定', h.show_machine_machine_price_headers_path(machine_id: model), { class: "btn btn-success btn-sm" })
     end
   end
 
@@ -24,10 +24,10 @@ class MachineDecorator < Draper::Decorator
       operators << WorkerDecorator.decorate(result.worker).short_name if model.work_results.include?(result)
     end
 
-    return operators.to_sentence
+    operators.to_sentence
   end
 
   def remarks(work)
-    return MachineRemark.find_by(machine_id: model.id, work_id: work)
+    MachineRemark.find_by(machine_id: model.id, work_id: work)
   end
 end

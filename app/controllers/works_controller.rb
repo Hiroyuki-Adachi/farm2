@@ -58,6 +58,14 @@ class WorksController < ApplicationController
     end
   end
 
+  def show
+    @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
+    @chemicals = Chemical.with_total_quantity(@work).to_a
+    @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
+
+    render layout: false
+  end
+
   def new
     @work = Work.new(
       worked_at: Time.zone.today,
@@ -70,12 +78,8 @@ class WorksController < ApplicationController
     @work_kinds = WorkKind.except_other.by_type(@work_types.first)
   end
 
-  def show
-    @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
-    @chemicals = Chemical.with_total_quantity(@work).to_a
-    @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
-
-    render layout: false
+  def edit
+    @work_kinds = WorkKind.except_other.by_type(@work.work_type) || []
   end
 
   def create
@@ -85,10 +89,6 @@ class WorksController < ApplicationController
     else
       render action: :new, status: :unprocessable_content
     end
-  end
-
-  def edit
-    @work_kinds = WorkKind.except_other.by_type(@work.work_type) || []
   end
 
   def update
@@ -179,6 +179,6 @@ class WorksController < ApplicationController
   end
 
   def menu_name
-    return :works
+    :works
   end
 end

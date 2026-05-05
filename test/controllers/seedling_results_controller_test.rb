@@ -41,9 +41,9 @@ class SeedlingResultsControllerTest < ActionDispatch::IntegrationTest
 
   test "育苗使用(担当:更新)(登録)" do
     work_result = work_results(:work_results300)
-    seedling_result_insert = {seedling_results_attributes: [{work_result_id: work_result.id, quantity: 100}]}
+    seedling_result_insert = { seedling_results_attributes: [{ work_result_id: work_result.id, quantity: 100 }] }
     assert_difference('SeedlingResult.count') do
-      patch seedling_result_path(seedling_home_id: @seedling_home), params: {seedling_home: seedling_result_insert}
+      patch seedling_result_path(seedling_home_id: @seedling_home), params: { seedling_home: seedling_result_insert }
     end
     assert_redirected_to edit_seedling_result_path(seedling_home_id: @seedling_home)
 
@@ -55,10 +55,10 @@ class SeedlingResultsControllerTest < ActionDispatch::IntegrationTest
 
   test "育苗使用(担当:更新)(削除)" do
     seedling_home1_genka = seedling_results(:seedling_home1_genka)
-    seedling_result_delete = {seedling_results_attributes: [{_destroy: true, id: seedling_home1_genka.id}]}
+    seedling_result_delete = { seedling_results_attributes: [{ _destroy: true, id: seedling_home1_genka.id }] }
     assert_no_difference('WorkResult.count') do
       assert_difference('SeedlingResult.count', -1) do
-        patch seedling_result_path(seedling_home_id: @seedling_home), params: {seedling_home: seedling_result_delete}
+        patch seedling_result_path(seedling_home_id: @seedling_home), params: { seedling_home: seedling_result_delete }
       end
     end
     assert_redirected_to edit_seedling_result_path(seedling_home_id: @seedling_home)

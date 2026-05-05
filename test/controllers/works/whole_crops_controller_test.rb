@@ -19,11 +19,11 @@ class Works::WholeCropsControllerTest < ActionDispatch::IntegrationTest
         display_order: 1,
         rolls: 200,
         wcs_rolls: [
-          {display_order: 1, weight: 290},
-          {display_order: 2, weight: 300},
-          {display_order: 3, weight: 295},
-          {display_order: 4, weight: 298},
-          {display_order: 5, weight: 295}
+          { display_order: 1, weight: 290 },
+          { display_order: 2, weight: 300 },
+          { display_order: 3, weight: 295 },
+          { display_order: 4, weight: 298 },
+          { display_order: 5, weight: 295 }
         ]
       }]
     }

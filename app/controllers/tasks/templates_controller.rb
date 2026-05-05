@@ -65,6 +65,6 @@ class Tasks::TemplatesController < ApplicationController
   end
 
   def menu_name
-    return :task_templates
+    :task_templates
   end
 end

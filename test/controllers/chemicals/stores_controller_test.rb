@@ -5,7 +5,7 @@ class Chemicals::StoresControllerTest < ActionDispatch::IntegrationTest
     login_as(users(:users1))
     @inventory = chemical_inventories(:store1)
   end
-    
+
   test "農薬納品一覧" do
     get chemicals_stores_path
     assert_response :success
@@ -23,9 +23,9 @@ class Chemicals::StoresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "農薬納品新規作成(実行)" do
-    chemical_inventory = {checked_on: '2015-01-10', name: "当初納品"}
+    chemical_inventory = { checked_on: '2015-01-10', name: "当初納品" }
     assert_difference('ChemicalInventory.count') do
-      post chemicals_stores_path, params: {chemical_inventory: chemical_inventory}
+      post chemicals_stores_path, params: { chemical_inventory: chemical_inventory }
     end
     created_chemical_inventory = ChemicalInventory.last
     assert_redirected_to edit_chemicals_store_path(created_chemical_inventory)
@@ -46,7 +46,7 @@ class Chemicals::StoresControllerTest < ActionDispatch::IntegrationTest
       checked_on: '2015-12-01',
       name: "期末納品",
       stocks_attributes: [
-        {chemical_id: chemical_id, stored_stock: stored_stock}
+        { chemical_id: chemical_id, stored_stock: stored_stock }
       ]
     }
 

@@ -9,7 +9,7 @@ class TotalDryingsController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.csv {render :content_type => 'text/csv; charset=cp943'}
+      format.csv { render content_type: 'text/csv; charset=cp943' }
     end
   end
 end

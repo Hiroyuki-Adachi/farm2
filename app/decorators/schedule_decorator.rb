@@ -35,7 +35,7 @@ class ScheduleDecorator < Draper::Decorator
 
   def section_names
     results = model.sections.map(&:name)
-    return results.to_sentence
+    results.to_sentence
   end
 
   def participants_count
@@ -47,7 +47,7 @@ class ScheduleDecorator < Draper::Decorator
   end
 
   def work_flag
-    return model.work_flag ? "作業" : "作業以外"
+    model.work_flag ? "作業" : "作業以外"
   end
 
   def work_time

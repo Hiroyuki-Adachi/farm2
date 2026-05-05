@@ -25,12 +25,12 @@ class OwnedRicesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "保有米変更(実行)" do
-    new_owned_rice = {@owned_rice_price.id => {
+    new_owned_rice = { @owned_rice_price.id => {
       home_id: @home.id, owned_rice_price_id: @owned_rice_price.id, id: @owned_rice.id,
       owned_count: 20
-    }}
+    } }
     assert_no_difference('OwnedRice.count') do
-      patch owned_rice_path(@home.id), params: {owned_rices: new_owned_rice}
+      patch owned_rice_path(@home.id), params: { owned_rices: new_owned_rice }
     end
     assert_redirected_to owned_rices_path
 
@@ -40,12 +40,12 @@ class OwnedRicesControllerTest < ActionDispatch::IntegrationTest
 
   test "保有米作成(実行)" do
     new_home = homes(:home2)
-    new_owned_rice = {@owned_rice_price.id => {
+    new_owned_rice = { @owned_rice_price.id => {
       home_id: new_home.id, owned_rice_price_id: @owned_rice_price.id,
       owned_count: 5
-    }}
+    } }
     assert_difference('OwnedRice.count') do
-      patch owned_rice_path(new_home.id), params: {owned_rices: new_owned_rice}
+      patch owned_rice_path(new_home.id), params: { owned_rices: new_owned_rice }
     end
     assert_redirected_to owned_rices_path
 

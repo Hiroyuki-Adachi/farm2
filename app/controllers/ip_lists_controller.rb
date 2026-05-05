@@ -7,6 +7,8 @@ class IpListsController < ApplicationController
 
   def new; end
 
+  def edit; end
+
   def create
     user = User.find_by(login_name: params[:login_name])
     unless user
@@ -21,11 +23,9 @@ class IpListsController < ApplicationController
       redirect_to edit_ip_list_path(ip, return_to: @return_to)
     else
       ip.destroy
-      return to_error_path
+      to_error_path
     end
   end
-
-  def edit; end
 
   def update
     if @ip.created_user.otp_enabled

@@ -21,5 +21,5 @@ class Health < ApplicationRecord
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
-  scope :usual, -> {kept.order(:display_order)}
+  scope :usual, -> { kept.order(:display_order) }
 end

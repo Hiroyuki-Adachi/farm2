@@ -27,7 +27,7 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
   test "作業種別マスタ新規作成(実行)" do
     assert_difference('WorkKind.kept.count') do
       assert_difference('WorkKindPrice.count') do
-        post work_kinds_path, params: {work_kind: @update}
+        post work_kinds_path, params: { work_kind: @update }
       end
     end
     assert_redirected_to work_kinds_path
@@ -38,7 +38,7 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:display_order], work_kind.display_order
     assert_equal @update[:land_flag], work_kind.land_flag
     assert_equal @update[:aggregation_flag], work_kind.aggregation_flag
-    
+
     work_kind_price = WorkKindPrice.last
     assert_equal @user.term, work_kind_price.term
     assert_equal work_kind.id, work_kind_price.work_kind_id
@@ -54,7 +54,7 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
     WorkKindPrice.where(work_kind_id: @work_kind).update_all(price: 1000)
 
     assert_no_difference('WorkKind.kept.count') do
-      patch work_kind_path(@work_kind), params: {work_kind: @update}
+      patch work_kind_path(@work_kind), params: { work_kind: @update }
     end
     assert_redirected_to work_kinds_path
 
@@ -77,7 +77,7 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
     WorkKindPrice.where(work_kind_id: @work_kind).update_all(price: 1000)
 
     assert_no_difference('WorkKind.kept.count') do
-      patch work_kind_path(@work_kind), params: {work_kind: @update, return_to: work_kinds_path(page: 2)}
+      patch work_kind_path(@work_kind), params: { work_kind: @update, return_to: work_kinds_path(page: 2) }
     end
     assert_redirected_to work_kinds_path(page: 2)
   end

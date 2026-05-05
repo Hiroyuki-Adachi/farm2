@@ -32,19 +32,19 @@ class IpList < ApplicationRecord
 
   belongs_to :created_user, class_name: 'User', foreign_key: 'created_by'
 
-  scope :whites, -> { 
+  scope :whites, lambda {
     where('expired_on IS NOT NULL AND expired_on >= ?', Date.today)
-    .where(white_flag: true)
-    .pluck(:ip_address)
+      .where(white_flag: true)
+      .pluck(:ip_address)
   }
 
-  scope :blacks, -> { 
+  scope :blacks, lambda {
     where(white_flag: false, expired_on: nil)
-    .where(block_count: BLOCK_LIMIT..)
-    .pluck(:ip_address)
+      .where(block_count: BLOCK_LIMIT..)
+      .pluck(:ip_address)
   }
 
-  scope :active, -> {
+  scope :active, lambda {
     where("current_timestamp <= confirmation_expired_at")
       .where(expired_on: nil)
   }
@@ -57,7 +57,7 @@ class IpList < ApplicationRecord
   attr_reader :token
 
   def authenticate?(token)
-    self.hashed_token == Digest::SHA256.hexdigest(token)
+    hashed_token == Digest::SHA256.hexdigest(token)
   end
 
   def updated_expired_on
@@ -66,14 +66,16 @@ class IpList < ApplicationRecord
 
   def self.block_ip!(ip_address)
     return if LOCAL_ADDRESSES.any? { |ip| ip.include?(ip_address) }
+
     ip = find_or_initialize_by(ip_address: ip_address)
     ip.white_flag = false
     ip.block_count += 1
-    return ip.save
+    ip.save
   end
 
   def self.white_ip!(ip_address, user)
     return if LOCAL_ADDRESSES.any? { |ip| ip.include?(ip_address) }
+
     ip = find_or_initialize_by(ip_address: ip_address)
     ip.white_flag = true
     ip.token = SecureRandom.random_number(10**6).to_s.rjust(6, '0')
@@ -82,7 +84,7 @@ class IpList < ApplicationRecord
     ip.mail = user.login_name
     ip.confirmation_expired_at = 10.minutes.from_now
     ip.save
-    return ip
+    ip
   end
 
   def self.white_list

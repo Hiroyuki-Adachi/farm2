@@ -15,7 +15,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     records = service.allocate!(journal: journal, amount: 800, accounted_on: journal.accounted_on)
 
     assert_equal 2, records.count
-    assert_equal 800, records.sum {|record| record.amount.to_i }
+    assert_equal 800, records.sum { |record| record.amount.to_i }
     assert_equal 500, records.find_by(work_type_id: work_type1.id).amount.to_i
     assert_equal 300, records.find_by(work_type_id: work_type2.id).amount.to_i
   end
@@ -35,7 +35,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     records = service.allocate!(journal: journal, amount: 219, accounted_on: nil)
 
     assert_equal 2, records.count
-    assert_equal 219, records.sum {|record| record.amount.to_i }
+    assert_equal 219, records.sum { |record| record.amount.to_i }
     assert_equal 73, records.find_by(work_type_id: work_type1.id).amount.to_i
     assert_equal 146, records.find_by(work_type_id: work_type2.id).amount.to_i
   end
@@ -54,7 +54,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     records = service.allocate!(journal: journal, amount: 1, accounted_on: journal.accounted_on)
 
     assert_equal 1, records.count
-    assert_equal 1, records.sum {|record| record.amount.to_i }
+    assert_equal 1, records.sum { |record| record.amount.to_i }
     assert_nil records.find_by(work_type_id: work_type1.id)
     assert_equal 1, records.find_by(work_type_id: work_type2.id).amount.to_i
   end

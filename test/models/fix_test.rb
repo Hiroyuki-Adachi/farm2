@@ -28,7 +28,7 @@ class FixTest < ActiveSupport::TestCase
     @worker_id = users(:users1).worker_id
     @no_fix_works = [works(:work_no_fix1).id, works(:work_no_fix2).id]
   end
-    
+
   test "確定" do
     assert_difference('Fix.count') do
       Fix.do_fix(@organization, @term, @fixed_at, @worker_id, @no_fix_works)

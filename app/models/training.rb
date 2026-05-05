@@ -23,10 +23,10 @@ class Training < ApplicationRecord
   belongs_to :study, class_name: "Schedule", foreign_key: 'schedule_id'
 
   def studied_on
-    self.study&.worked_at
+    study&.worked_at
   end
 
   def studied?
-    !self.worker_id.nil?
+    !worker_id.nil?
   end
 end

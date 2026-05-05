@@ -13,7 +13,7 @@ class PersonalCalendarsControllerTest < ActionDispatch::IntegrationTest
     travel_to Time.zone.local(2015, 3, 22) do
       get personal_calendar_path(token: @user.token)
       body = response.body
-    
+
       assert_response :success
       assert_match %r{^text/calendar}, response.header["Content-Type"]
     end
@@ -23,7 +23,7 @@ class PersonalCalendarsControllerTest < ActionDispatch::IntegrationTest
     assert_includes flattened_body, work.name
     assert_includes flattened_body, work.remarks
     assert_includes flattened_body, personal_information_work_url(personal_information_token: @user.token, id: work.id)
-    assert_includes body, "SUMMARY:"  
+    assert_includes body, "SUMMARY:"
     assert_includes body, "END:VCALENDAR"
   end
 
@@ -33,7 +33,7 @@ class PersonalCalendarsControllerTest < ActionDispatch::IntegrationTest
     travel_to schedule.worked_at - 1.day do
       get personal_calendar_path(token: @user.token)
       body = response.body
-    
+
       assert_response :success
       assert_match %r{^text/calendar}, response.header["Content-Type"]
     end
@@ -50,7 +50,7 @@ class PersonalCalendarsControllerTest < ActionDispatch::IntegrationTest
     travel_to schedule.worked_at + 1.day do
       get personal_calendar_path(token: @user.token)
       body = response.body
-    
+
       assert_response :success
       assert_match %r{^text/calendar}, response.header["Content-Type"]
     end
@@ -70,7 +70,7 @@ class PersonalCalendarsControllerTest < ActionDispatch::IntegrationTest
     travel_to schedule.worked_at + 1.day do
       get personal_calendar_path(token: @user.token)
       body = response.body
-    
+
       assert_response :success
       assert_match %r{^text/calendar}, response.header["Content-Type"]
     end

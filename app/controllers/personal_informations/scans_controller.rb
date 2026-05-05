@@ -8,10 +8,10 @@ class PersonalInformations::ScansController < PersonalInformationsController
     return render json: { error: "Invalid QR payload", message: 'QRコードの内容が不正です' }, status: :unprocessable_content unless @data.is_a?(Hash) && @data.key?(:type)
 
     case @data[:type]
-    when "lands" then return handle_lands
-    when "session" then return handle_session
+    when "lands" then handle_lands
+    when "session" then handle_session
     else
-      return render json: { error: "Unsupported type", message: 'サポートされていないQRコードです' }, status: :bad_request
+      render json: { error: "Unsupported type", message: 'サポートされていないQRコードです' }, status: :bad_request
     end
   end
 
@@ -44,7 +44,7 @@ class PersonalInformations::ScansController < PersonalInformationsController
 
     return if @data[:type].present?
 
-    return render json: { error: "Missing type", message: "typeがありません" }, status: :unprocessable_content
+    render json: { error: "Missing type", message: "typeがありません" }, status: :unprocessable_content
   end
 
   def handle_lands
@@ -61,6 +61,7 @@ class PersonalInformations::ScansController < PersonalInformationsController
 
     qr_session.with_lock do
       return render json: { action: "error", message: "このQRコードは使用できません" }, status: :unprocessable_content unless qr_session.usable?
+
       qr_session.update!(user_id: current_user.id, status: :approved)
     end
     QrLoginChannel.broadcast_to(qr_session.token, { type: "approved" })

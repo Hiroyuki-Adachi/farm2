@@ -1,5 +1,5 @@
 class Dilution < ActiveYaml::Base
-  include ActiveHash::Enum 
+  include ActiveHash::Enum
 
   set_root_path "config/master"
   set_filename "dilution"

@@ -21,39 +21,39 @@ class Machine < ApplicationRecord
 
   self.discard_column = :deleted_at
 
-  has_many  :machine_results
+  has_many  :machine_results, dependent: :restrict_with_error
   has_many  :work_results, through: :machine_results
 
   belongs_to :machine_type
   has_many :machine_kinds, through: :machine_type
-  has_many :price_headers, -> {order("machine_price_headers.validated_at DESC")}, class_name: 'MachinePriceHeader', dependent: :destroy
+  has_many :price_headers, -> { order("machine_price_headers.validated_at DESC") }, class_name: 'MachinePriceHeader', dependent: :destroy
 
-  belongs_to :owner, -> {with_discarded}, class_name: 'Home', foreign_key: :home_id
+  belongs_to :owner, -> { with_discarded }, class_name: 'Home', foreign_key: :home_id
 
   validates :validity_start_at, presence: true
   validates :validity_end_at, presence: true
   validates :display_order, presence: true
-  validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
+  validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
-  scope :by_work, ->(work) {
+  scope :by_work, lambda { |work|
     kept
       .includes(:machine_type, :machine_kinds)
       .where("(machine_kinds.work_kind_id = ? and validity_start_at <= ? and ? <= validity_end_at) OR (machines.id in (?))", work.work_kind_id, work.worked_at, work.worked_at, work.machine_results.pluck(:machine_id))
       .order("machine_types.display_order, machines.display_order")
   }
-  scope :diesel, -> {kept.where(diesel_flag: true)}
+  scope :diesel, -> { kept.where(diesel_flag: true) }
 
-  scope :of_company, -> {kept.where(home_id: Home.company)}
-  scope :of_owners, ->(work) {kept.where(home_id: work.workers.pluck(:home_id).uniq)}
-  scope :of_no_owners, ->(work) {kept.where.not(home_id: work.workers.pluck(:home_id).uniq)}
-  scope :between_term, ->(system) {
+  scope :of_company, -> { kept.where(home_id: Home.company) }
+  scope :of_owners, ->(work) { kept.where(home_id: work.workers.pluck(:home_id).uniq) }
+  scope :of_no_owners, ->(work) { kept.where.not(home_id: work.workers.pluck(:home_id).uniq) }
+  scope :between_term, lambda { |system|
     kept.where(["validity_start_at <= ? AND validity_end_at >= ?", system.start_date, system.end_date])
   }
 
-  scope :by_results, ->(results) {
+  scope :by_results, lambda { |results|
     kept
       .joins(:machine_results)
       .where(machine_results: { work_result_id: results.ids })
@@ -61,7 +61,7 @@ class Machine < ApplicationRecord
       .distinct
   }
 
-  scope :usual, -> {
+  scope :usual, lambda {
     kept
       .includes(:machine_type)
       .order("machine_types.display_order, machines.display_order, machines.id")
@@ -74,16 +74,20 @@ class Machine < ApplicationRecord
   def price_details(work)
     header = price_headers.where(validated_at: ..work.worked_at).order(validated_at: :DESC).first
     return header.details if header
-    return machine_type&.price_details(work)
+
+    machine_type&.price_details(work)
   end
 
   def leasable?(worked_at)
     return false if company?
+
     header = price_headers.where(validated_at: ..worked_at).order(validated_at: :DESC).first
     return header.details.exists?(lease_id: :lease) if header
+
     header = machine_type.price_headers.where(validated_at: ..worked_at).order(validated_at: :DESC).first
     return header.details.exists?(lease_id: :lease) if header
-    return false
+
+    false
   end
 
   def hours(results)
@@ -109,8 +113,7 @@ class Machine < ApplicationRecord
   def machine_order
     max_machine = Machine.maximum(:id)
     result = machine_type.machine_type_order
-    result = (((result * Machine.maximum(:display_order)) + display_order) * max_machine) + id
-    return result
+    (((result * Machine.maximum(:display_order)) + display_order) * max_machine) + id
   end
 
   def code

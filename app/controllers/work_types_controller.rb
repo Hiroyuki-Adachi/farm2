@@ -99,7 +99,7 @@ class WorkTypesController < ApplicationController
         :term_flag,
         :office_role
       ])
-    .merge(term: current_term)
+      .merge(term: current_term)
   end
 
   def permit_manager

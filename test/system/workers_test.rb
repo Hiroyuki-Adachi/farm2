@@ -6,7 +6,7 @@ class WorkersTest < ApplicationSystemTestCase
   end
 
   test "ログインから作業者保守" do
-    visit root_path 
+    visit root_path
     assert_selector 'body'
 
     fill_in 'login_name', with: @user.login_name

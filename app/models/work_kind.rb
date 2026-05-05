@@ -31,10 +31,10 @@ class WorkKind < ApplicationRecord
   belongs_to :cost_type
 
   has_many :machine_kinds, dependent: :destroy
-  has_many :machine_types, -> {order("machine_types.display_order")}, through: :machine_kinds 
+  has_many :machine_types, -> { order("machine_types.display_order") }, through: :machine_kinds
 
   has_many :chemical_kinds, dependent: :destroy
-  has_many :chemical_types, -> {order("chemical_types.display_order")}, through: :chemical_kinds
+  has_many :chemical_types, -> { order("chemical_types.display_order") }, through: :chemical_kinds
 
   has_many :work_kind_types, dependent: :destroy
   has_many :categories, through: :work_kind_types
@@ -45,26 +45,26 @@ class WorkKind < ApplicationRecord
   validates :name, presence: true
   validates :price, presence: true
   validates :phonetic, presence: true
-  validates :phonetic, format: { with: /\A[\p{Hiragana}ー－A-Z0-9]+\z/ }, if: proc { |x| x.phonetic.present?}
+  validates :phonetic, format: { with: /\A[\p{Hiragana}ー－A-Z0-9]+\z/ }, if: proc { |x| x.phonetic.present? }
   validates :display_order, presence: true
 
   validates :price, numericality: true, if: proc { |x| x.price.present? && @term.present? }
-  validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
+  validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
   scope :usual, -> { except_other.order(:phonetic, :display_order, :id) }
   scope :aggregatable, -> { kept.where(land_flag: true, aggregation_flag: true).order(:phonetic, :display_order, :id) }
-  scope :landable, ->{kept.where(land_flag: true)}
-  scope :by_type, ->(work_type) {
+  scope :landable, -> { kept.where(land_flag: true) }
+  scope :by_type, lambda { |work_type|
     kept
       .joins(:work_kind_types)
       .where(work_kind_types: { work_category_id: work_type&.genre&.work_category_id })
       .order("work_kinds.other_flag, work_kinds.phonetic, work_kinds.display_order, work_kinds.id")
   }
-  scope :except_other, -> {kept.where(other_flag: false) }
-  scope :gaps, -> {kept.where.not(broccoli_mark: [nil, ""]).group(:broccoli_mark).order(:broccoli_mark).select("broccoli_mark, MAX(name) AS name")}
+  scope :except_other, -> { kept.where(other_flag: false) }
+  scope :gaps, -> { kept.where.not(broccoli_mark: [nil, ""]).group(:broccoli_mark).order(:broccoli_mark).select("broccoli_mark, MAX(name) AS name") }
 
   attr_writer :price
   attr_accessor :term

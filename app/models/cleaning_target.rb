@@ -9,5 +9,5 @@
 #  updated_at            :datetime         not null
 #
 class CleaningTarget < ApplicationRecord
-  scope :usual, -> {order(display_order: :ASC)}
+  scope :usual, -> { order(display_order: :ASC) }
 end

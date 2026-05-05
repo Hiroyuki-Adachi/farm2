@@ -13,6 +13,8 @@ class UsersController < ApplicationController
     @user.worker_id = params[:worker_id]
   end
 
+  def edit; end
+
   def create
     @user = User.new(
       user_params.merge(
@@ -27,8 +29,6 @@ class UsersController < ApplicationController
       render action: :new, status: :unprocessable_content
     end
   end
-
-  def edit; end
 
   def update
     if @user.update(user_params)

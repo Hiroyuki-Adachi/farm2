@@ -7,6 +7,7 @@ CSV.generate(encoding: "UTF-8") do |csv|
       @work_types[work.id].each do |work_type|
         work_chemical = @work_chemicals["#{work.id},#{work_type.id},#{chemical.id}"]
         next if work_chemical.to_i.zero?
+
         csv << [
           chemical.chemical_type.name,
           chemical.name,

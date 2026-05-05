@@ -18,12 +18,12 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
 
   test "乾燥作成" do
     new_drying = {
-      term: systems(:s2015).term, 
-      carried_on: works(:work_harvest1).worked_at, 
+      term: systems(:s2015).term,
+      carried_on: works(:work_harvest1).worked_at,
       home_id: homes(:home5).id
     }
     assert_difference('Drying.count') do
-      post dryings_path, params: {drying: new_drying}
+      post dryings_path, params: { drying: new_drying }
     end
     assert_redirected_to dryings_path
 
@@ -46,21 +46,21 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
   test "乾燥登録(カントリー)" do
     drying = dryings(:drying2)
     new_drying = {
-      term: systems(:s2015).term, 
+      term: systems(:s2015).term,
       shipped_on: drying.carried_on + 1,
       drying_type_id: :country,
       drying_moths_attributes: [
-        {moth_count: 1, moth_no: 1000, water_content: 14.1, moth_weight: 760, rice_weight: 529.2},
-        {moth_count: 2, moth_no: 1001, water_content: 14.9, moth_weight: 688, rice_weight: 487.7},
-        {moth_count: 3},
-        {moth_count: 4}
+        { moth_count: 1, moth_no: 1000, water_content: 14.1, moth_weight: 760, rice_weight: 529.2 },
+        { moth_count: 2, moth_no: 1001, water_content: 14.9, moth_weight: 688, rice_weight: 487.7 },
+        { moth_count: 3 },
+        { moth_count: 4 }
       ]
     }
 
     assert_difference('Adjustment.count', -1) do
       assert_difference('DryingMoth.count', 4) do
         assert_no_difference('Drying.count') do
-          patch drying_path(drying.id), params: {drying: new_drying}
+          patch drying_path(drying.id), params: { drying: new_drying }
         end
       end
     end
@@ -101,7 +101,7 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
   test "乾燥登録(乾燥調整)" do
     drying = dryings(:drying1)
     new_drying = {
-      term: systems(:s2015).term, 
+      term: systems(:s2015).term,
       shipped_on: drying.carried_on + 1,
       drying_type_id: :self,
       adjustment_attributes: {
@@ -111,7 +111,7 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Adjustment.count', 1) do
       assert_difference('DryingMoth.count', -4) do
         assert_no_difference('Drying.count') do
-          patch drying_path(drying.id), params: {drying: new_drying}
+          patch drying_path(drying.id), params: { drying: new_drying }
         end
       end
     end
@@ -135,7 +135,7 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
   test "乾燥登録(乾燥のみ)" do
     drying = dryings(:drying1)
     new_drying = {
-      term: systems(:s2015).term, 
+      term: systems(:s2015).term,
       shipped_on: drying.carried_on + 1,
       drying_type_id: :another,
       adjustment_attributes: {
@@ -145,7 +145,7 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Adjustment.count', 1) do
       assert_difference('DryingMoth.count', -4) do
         assert_no_difference('Drying.count') do
-          patch drying_path(drying.id), params: {drying: new_drying}
+          patch drying_path(drying.id), params: { drying: new_drying }
         end
       end
     end

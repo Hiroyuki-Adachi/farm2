@@ -10,8 +10,10 @@ class OwnedRicePricesController < ApplicationController
   end
 
   def edit
-    @owned_rice_price = OwnedRicePrice.find_by(term: current_term, work_type_id: params[:id])
-    @owned_rice_price ||= OwnedRicePrice.new(term: current_term, work_type_id: params[:id])
+    @owned_rice_price = OwnedRicePrice.find_or_initialize_by(
+      term: current_term,
+      work_type_id: params[:id]
+    )
   end
 
   def create

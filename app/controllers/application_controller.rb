@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   def work_result_totals(term)
     @work_result_totals ||= {}
     @work_result_totals[term] ||= begin
-      totals = {sum_hours: {}, count_workers: {}}
+      totals = { sum_hours: {}, count_workers: {} }
       work_ids = Work.for_organization(current_user.organization_id).usual(term).select(:id)
 
       WorkResult
@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize_admin!
-    return to_error_path unless current_user.admin?
+    to_error_path unless current_user.admin?
   end
 
   def make_months
@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
       results << [head.strftime("%Y年 %m月"), head]
       head = head.next_month
     end
-    return results
+    results
   end
 
   private
@@ -102,12 +102,12 @@ class ApplicationController < ActionController::Base
   def authenticate_user!
     if session[:user_id].nil?
       redirect_to prefixed_path(root_path)
-      return false
+      false
     end
   end
 
   def authorize_current_term!
-    return to_error_path unless this_term?
+    to_error_path unless this_term?
   end
 
   def to_error_path(exception = nil)
@@ -138,7 +138,7 @@ class ApplicationController < ActionController::Base
   end
 
   def menu_name
-    return controller_name
+    controller_name
   end
 
   def request_path_prefix

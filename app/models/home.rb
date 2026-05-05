@@ -45,55 +45,55 @@ class Home < ApplicationRecord
   REG_PHONE = /\A\d{2,4}-\d{2,4}-\d{4}\z/
 
   belongs_to :organization, optional: true
-  has_many :workers, -> {order(:display_order)}
-  has_many :owned_lands,    -> {order(:place)}, class_name: 'Land', foreign_key: :owner_id
-  has_many :managed_lands,  -> {order(:place)}, class_name: 'Land', foreign_key: :manager_id
-  has_many :sub_lands,    -> {order(:place)}, class_name: 'LandHome'
+  has_many :workers, -> { order(:display_order) }, dependent: :restrict_with_error
+  has_many :owned_lands,    -> { order(:place) }, class_name: 'Land', dependent: :restrict_with_error, foreign_key: :owner_id
+  has_many :managed_lands,  -> { order(:place) }, class_name: 'Land', dependent: :restrict_with_error, foreign_key: :manager_id
+  has_many :sub_lands,    -> { order(:place) }, class_name: 'LandHome', dependent: :destroy
 
-  belongs_to :holder,  -> {with_discarded}, class_name: 'Worker', foreign_key: :worker_id, optional: true
-  belongs_to :section, -> {with_discarded}
+  belongs_to :holder,  -> { with_discarded }, class_name: 'Worker', foreign_key: :worker_id, optional: true
+  belongs_to :section, -> { with_discarded }
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
   scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
 
-  scope :usual_order, -> {includes(:section).order(Arel.sql("sections.display_order, homes.display_order, homes.id"))}
-  scope :usual, -> {
+  scope :usual_order, -> { includes(:section).order(Arel.sql("sections.display_order, homes.display_order, homes.id")) }
+  scope :usual, lambda {
     kept
-    .includes(:section)
+      .includes(:section)
       .where(sections: { work_flag: true })
       .usual_order
   }
-  scope :list, -> {
+  scope :list, lambda {
     kept
-    .includes(:section, :holder)
+      .includes(:section, :holder)
       .where(company_flag: false)
       .usual_order
   }
-  scope :landable, -> {
+  scope :landable, lambda {
     kept
-    .joins(:section).includes(:section)
+      .joins(:section).includes(:section)
       .order(Arel.sql("homes.company_flag, sections.display_order, homes.display_order, homes.id"))
   }
-  scope :machine_owners, -> {kept.where(owner_flag: true).order(Arel.sql("company_flag DESC, display_order, id"))}
-  scope :company, ->{kept.where(company_flag: true)}
-  scope :for_finance1, -> {kept.where(member_flag: true, owner_flag: true).order(finance_order: :ASC, id: :ASC)}
-  scope :for_drying, -> {kept.where.not(drying_order: nil).order(:drying_order, id: :ASC)}
-  scope :for_owned_rice, -> {
+  scope :machine_owners, -> { kept.where(owner_flag: true).order(Arel.sql("company_flag DESC, display_order, id")) }
+  scope :company, -> { kept.where(company_flag: true) }
+  scope :for_finance1, -> { kept.where(member_flag: true, owner_flag: true).order(finance_order: :ASC, id: :ASC) }
+  scope :for_drying, -> { kept.where.not(drying_order: nil).order(:drying_order, id: :ASC) }
+  scope :for_owned_rice, lambda {
     kept
-    .where(member_flag: true, owner_flag: true)
+      .where(member_flag: true, owner_flag: true)
       .order(owned_rice_order: :ASC, display_order: :ASC, id: :ASC)
   }
-  scope :for_seedling, -> {kept.where.not(seedling_order: nil).order(seedling_order: :ASC, id: :ASC)}
-  scope :for_fee, -> {kept.where("EXISTS (SELECT 1 FROM lands WHERE homes.id = lands.owner_id AND lands.deleted_at IS NULL AND lands.target_flag = TRUE)")}
-  scope :supporters, -> {kept.includes(:section).where(member_flag: false, sections: { work_flag: true }).usual_order}
+  scope :for_seedling, -> { kept.where.not(seedling_order: nil).order(seedling_order: :ASC, id: :ASC) }
+  scope :for_fee, -> { kept.where("EXISTS (SELECT 1 FROM lands WHERE homes.id = lands.owner_id AND lands.deleted_at IS NULL AND lands.target_flag = TRUE)") }
+  scope :supporters, -> { kept.includes(:section).where(member_flag: false, sections: { work_flag: true }).usual_order }
 
   validates :phonetic,      presence: true
   validates :name,          presence: true
   validates :display_order, presence: true
-  validates :phonetic, format: { with: /\A[\p{Hiragana}ー－]+\z/ }, if: proc { |x| x.phonetic.present?}
-  validates :telephone, format: {with: REG_PHONE}, if: proc { |x| x.telephone.present? }
-  validates :display_order, numericality: {only_integer: true}, if: proc { |x| x.display_order.present?}
+  validates :phonetic, format: { with: /\A[\p{Hiragana}ー－]+\z/ }, if: proc { |x| x.phonetic.present? }
+  validates :telephone, format: { with: REG_PHONE }, if: proc { |x| x.telephone.present? }
+  validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
   validate :section_belongs_to_same_organization
 
   def holder_name
@@ -127,7 +127,7 @@ class Home < ApplicationRecord
       .where("? BETWEEN lands.peasant_start_term AND lands.peasant_end_term", term)
       .sum(:area)
 
-    return area
+    area
   end
 
   def owned_rice_limit(term)
@@ -135,11 +135,11 @@ class Home < ApplicationRecord
   end
 
   def owned_count(system)
-    OwnedRice.by_home(system.term, self.id).sum(:owned_count)
+    OwnedRice.by_home(system.term, id).sum(:owned_count)
   end
 
   def owned_price(system)
-    OwnedRice.by_home(system.term, self.id).inject(0) {|sum, e| sum + e.owned_price}
+    OwnedRice.by_home(system.term, id).inject(0) { |sum, e| sum + e.owned_price }
   end
 
   def relative_count(system)

@@ -18,6 +18,7 @@ class TaskTemplateDecorator < Draper::Decorator
   def row_class
     return "table-danger"  if object.discarded?
     return "table-warning" unless object.active?
+
     ""
   end
 end

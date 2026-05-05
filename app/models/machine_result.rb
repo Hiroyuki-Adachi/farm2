@@ -23,17 +23,17 @@
 class MachineResult < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
-  belongs_to  :machine, -> {with_deleted}
+  belongs_to  :machine, -> { with_deleted }
   belongs_to  :work_result
   belongs_to_active_hash  :fixed_adjust, class_name: "Adjust"
 
   has_one :work, through: :work_result
-  has_one :owner, -> {with_deleted}, through: :machine
-  has_one :work_type, -> {with_deleted}, through: :work
-  has_one :machine_type, -> {with_deleted}, through: :machine
-  has_one :work_kind, -> {with_deleted}, through: :work
+  has_one :owner, -> { with_deleted }, through: :machine
+  has_one :work_type, -> { with_deleted }, through: :work
+  has_one :machine_type, -> { with_deleted }, through: :machine
+  has_one :work_kind, -> { with_deleted }, through: :work
 
-  scope :by_home, ->(term, organization = nil) {
+  scope :by_home, lambda { |term, organization = nil|
     machines = Machine.arel_table
     homes = Home.arel_table
     machine_types = MachineType.arel_table
@@ -56,15 +56,15 @@ class MachineResult < ApplicationRecord
       .join_sources
 
     base = joins(:machine).eager_load(:machine)
-   .joins(:work_result).eager_load(:work_result)
-   .joins(:work_type).eager_load(:work_type)
-   .joins(homes_join).preload(:owner)
-   .joins(machine_types_join)
-   .joins(systems_join)
-   .where(works[:worked_at].gteq(systems[:start_date]).and(works[:worked_at].lteq(systems[:end_date])))
-   .where(homes[:company_flag].eq(false))
-   .where(systems: { term: term })
-   .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
+      .joins(:work_result).eager_load(:work_result)
+      .joins(:work_type).eager_load(:work_type)
+      .joins(homes_join).preload(:owner)
+      .joins(machine_types_join)
+      .joins(systems_join)
+      .where(works[:worked_at].gteq(systems[:start_date]).and(works[:worked_at].lteq(systems[:end_date])))
+      .where(homes[:company_flag].eq(false))
+      .where(systems: { term: term })
+      .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
 
     if organization
       organization_id = organization.is_a?(Organization) ? organization.id : organization
@@ -74,7 +74,7 @@ class MachineResult < ApplicationRecord
     end
   }
 
-  scope :by_home_for_fix, ->(term, fixed_at, organization = nil) {
+  scope :by_home_for_fix, lambda { |term, fixed_at, organization = nil|
     machines = Machine.arel_table
     homes = Home.arel_table
     machine_types = MachineType.arel_table
@@ -90,13 +90,13 @@ class MachineResult < ApplicationRecord
       .join_sources
 
     base = joins(:machine).eager_load(:machine)
-   .joins(:work_result).eager_load(:work_result)
-   .joins(:work_type).eager_load(:work_type)
-   .joins(homes_join).preload(:owner)
-   .joins(machine_types_join)
-   .where(homes[:company_flag].eq(false).and(works[:term].eq(term)))
-   .where(works[:fixed_at].eq(fixed_at).and(arel_table[:fixed_price].not_eq(nil)))
-   .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
+      .joins(:work_result).eager_load(:work_result)
+      .joins(:work_type).eager_load(:work_type)
+      .joins(homes_join).preload(:owner)
+      .joins(machine_types_join)
+      .where(homes[:company_flag].eq(false).and(works[:term].eq(term)))
+      .where(works[:fixed_at].eq(fixed_at).and(arel_table[:fixed_price].not_eq(nil)))
+      .order("homes.display_order, homes.id, machines.display_order, machines.id, works.worked_at, works.id")
 
     if organization
       organization_id = organization.is_a?(Organization) ? organization.id : organization
@@ -106,7 +106,7 @@ class MachineResult < ApplicationRecord
     end
   }
 
-  scope :for_personal, ->(home, worked_at) {
+  scope :for_personal, lambda { |home, worked_at|
     joins(:work).eager_load(:work)
       .joins(:machine).eager_load(:machine)
       .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
@@ -115,7 +115,7 @@ class MachineResult < ApplicationRecord
       .order("works.worked_at, machines.display_order, machines.id")
   }
 
-  scope :for_fix, ->(term, fixed_at, organization = nil) {
+  scope :for_fix, lambda { |term, fixed_at, organization = nil|
     base = joins(:machine)
       .joins(:work_result)
       .joins(:work)
@@ -124,35 +124,35 @@ class MachineResult < ApplicationRecord
     organization ? base.where(works: { organization_id: organization.is_a?(Organization) ? organization.id : organization }) : base
   }
 
-  scope :by_works, ->(works) {joins(:work_result).where(work_results: { work_id: works.ids }).order("machine_results.id")}
-  scope :by_work_machine, ->(work, machine) {joins(:work_result).find_by(["machine_results.machine_id = ? AND work_results.work_id = ?", machine.id, work.id])}
+  scope :by_works, ->(works) { joins(:work_result).where(work_results: { work_id: works.ids }).order("machine_results.id") }
+  scope :by_work_machine, ->(work, machine) { joins(:work_result).find_by(["machine_results.machine_id = ? AND work_results.work_id = ?", machine.id, work.id]) }
 
   def sum_hours
-    work.machine_results.inject(0) {|a, e| a + (e.machine_id == machine_id ? e.hours : 0) }
+    work.machine_results.inject(0) { |a, e| a + (e.machine_id == machine_id ? e.hours : 0) }
   end
 
   def price
     @price = fixed_price if work.fixed_at
     calc_amount unless @price
-    return @price
+    @price
   end
 
   def adjust
     @adjust = fixed_adjust if work.fixed_at
     calc_amount unless @adjust
-    return @adjust
+    @adjust
   end
 
   def quantity
     @quantity = fixed_quantity if work.fixed_at
     calc_amount unless @quantity
-    return @quantity
+    @quantity
   end
 
   def amount
     @amount = fixed_amount if work.fixed_at
     calc_amount unless @amount
-    return @amount
+    @amount
   end
 
   private

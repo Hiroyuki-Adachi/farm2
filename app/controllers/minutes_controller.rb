@@ -8,6 +8,10 @@ class MinutesController < ApplicationController
     @schedules = ScheduleDecorator.decorate_collection(Schedule.for_organization(current_organization).for_minute)
   end
 
+  def show
+    send_data @minute.pdf, type: 'application/pdf', filename: @minute.pdf_name, disposition: :attachment
+  end
+
   def create
     schedule = Schedule.for_organization(current_organization).find(params[:minute][:schedule_id])
     Minute.create(
@@ -16,10 +20,6 @@ class MinutesController < ApplicationController
       pdf: params[:minute][:pdf].read
     )
     redirect_to minutes_path
-  end
-
-  def show
-    send_data @minute.pdf, type: 'application/pdf', filename: @minute.pdf_name, disposition: :attachment
   end
 
   def destroy
@@ -38,7 +38,7 @@ class MinutesController < ApplicationController
   end
 
   def permit_checker
-    return to_error_path unless current_user.checkable?
+    to_error_path unless current_user.checkable?
   end
 
   def permit_show
@@ -48,6 +48,7 @@ class MinutesController < ApplicationController
     end
     return true if @current_user&.checkable?
     return true if @current_user && Minute.for_personal(@current_user.worker).exists?
+
     to_error_path
   end
 end

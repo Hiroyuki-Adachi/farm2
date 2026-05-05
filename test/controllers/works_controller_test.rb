@@ -29,7 +29,7 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
 
   test "作業登録(実行)" do
     assert_difference('Work.count') do
-      post works_path, params: {work: @update, regist: true}
+      post works_path, params: { work: @update, regist: true }
     end
 
     work = Work.last
@@ -82,7 +82,7 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
   test "作業変更(実行)(未確定)" do
     original_work = works(:work_not_fixed)
 
-    put work_path(original_work), params: {work: @update, regist: true}
+    put work_path(original_work), params: { work: @update, regist: true }
     assert_redirected_to work_path(id: original_work)
 
     # 作業情報が更新されていること
@@ -108,7 +108,7 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
     original_work = works(:work_fixed)
 
     # 確定済の作業も更新可能であること
-    put work_path(original_work), params: {work: @update, regist: true}
+    put work_path(original_work), params: { work: @update, regist: true }
     assert_redirected_to works_path
 
     # 作業情報が更新されていること

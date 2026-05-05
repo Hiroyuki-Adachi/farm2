@@ -14,6 +14,6 @@
 #
 
 class LandHome < ApplicationRecord
-  belongs_to :home, -> {with_deleted}
+  belongs_to :home, -> { with_deleted }
   belongs_to :land
 end

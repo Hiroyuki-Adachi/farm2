@@ -7,7 +7,7 @@ class WholeCropsController < ApplicationController
     respond_to do |format|
       format.html do
         @year_months = whole_crops.select("to_char(works.worked_at, 'YYYY-MM')")
-                                  .distinct.order(1).pluck(Arel.sql("to_char(works.worked_at, 'YYYY-MM')"))
+          .distinct.order(1).pluck(Arel.sql("to_char(works.worked_at, 'YYYY-MM')"))
         @work_types = WorkType.where(id: whole_crops.pluck('works.work_type_id').uniq).order(:display_order, :id)
         @whole_crops = WholeCropDecorator.decorate_collection(whole_crops.usual_order)
       end

@@ -28,8 +28,8 @@ class Section < ApplicationRecord
 
   belongs_to :organization
 
-  has_many :homes, -> {order("homes.display_order, homes.id")}
-  has_many :schedule_sections
+  has_many :homes, -> { order("homes.display_order, homes.id") }, dependent: :restrict_with_error
+  has_many :schedule_sections, dependent: :destroy
   has_many :schedules, through: :schedule_sections
 
   scope :with_deleted, -> { with_discarded }
@@ -38,5 +38,5 @@ class Section < ApplicationRecord
 
   scope :list, -> { kept.order(display_order: :asc) }
   scope :usual_order, -> { kept.order(work_flag: :desc, display_order: :asc) }
-  scope :usual, ->{ kept.where(work_flag: true).usual_order}
+  scope :usual, -> { kept.where(work_flag: true).usual_order }
 end

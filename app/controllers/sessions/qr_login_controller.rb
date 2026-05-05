@@ -68,6 +68,7 @@ class Sessions::QrLoginController < ApplicationController
 
     uri = URI.parse(path)
     return unless uri.scheme.nil? && uri.host.nil?
+
     normalized_path = strip_script_name_prefix(uri.path)
     return unless normalized_path.start_with?("/tablets")
 

@@ -21,13 +21,13 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ログイン実行(認証エラー)" do
-    post sessions_path, params: {login_name: @user.login_name, password: "hogehoge"}
+    post sessions_path, params: { login_name: @user.login_name, password: "hogehoge" }
     assert_select 'div.alert.alert-danger', I18n.t("session.login_error")
     assert_nil session[:user_id]
   end
 
   test "ログイン実行(成功)" do
-    post sessions_path, params: {login_name: @user.login_name, password: "password"}
+    post sessions_path, params: { login_name: @user.login_name, password: "password" }
     assert_redirected_to menu_index_path
     assert_equal @user.id, session[:user_id]
     assert_equal "PC", session[:access_target]

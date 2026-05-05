@@ -9,7 +9,7 @@ class TotalOwnedRicesController < ApplicationController
         @home_relatives = save_relatives(@home_totals)
       end
       format.csv do
-        render :content_type => 'text/csv; charset=cp943'
+        render content_type: 'text/csv; charset=cp943'
       end
     end
   end
@@ -22,7 +22,7 @@ class TotalOwnedRicesController < ApplicationController
       home_totals = save_totals(home_totals, owned_rice, owned_rice.home_id)
     end
 
-    return home_totals
+    home_totals
   end
 
   def save_totals(totals, owned_rice, key)
@@ -30,7 +30,7 @@ class TotalOwnedRicesController < ApplicationController
       owned_count: (totals[key] ? totals[key][:owned_count] : 0) + owned_rice.owned_count,
       owned_price: (totals[key] ? totals[key][:owned_price] : 0) + owned_rice.owned_price
     }
-    return totals
+    totals
   end
 
   def save_relatives(totals)
@@ -41,6 +41,6 @@ class TotalOwnedRicesController < ApplicationController
         totals[k][:owned_price] += results[k] * current_system.relative_price
       end
     end
-    return results
+    results
   end
 end

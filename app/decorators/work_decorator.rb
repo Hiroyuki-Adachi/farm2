@@ -13,7 +13,7 @@ class WorkDecorator < Draper::Decorator
       terms << [term, term]
       term += 1
     end
-    return terms
+    terms
   end
 
   def worked_at
@@ -64,7 +64,7 @@ class WorkDecorator < Draper::Decorator
     result = model.work_chemicals.map do |work_chemical|
       "#{work_chemical.chemical.name}(#{work_chemical.chemical.chemical_type.name}):#{work_chemical.quantity}"
     end
-    return result.to_sentence
+    result.to_sentence
   end
 
   def category_name
@@ -77,12 +77,12 @@ class WorkDecorator < Draper::Decorator
     elsif model.work_types.ids.include?(work_type.id)
       return "◯#{work_type.name}"
     end
-    return h.raw("&nbsp;") + work_type.name
+
+    h.raw("&nbsp;") + work_type.name
   end
 
   def self.get_terms(term)
-    terms = Work.get_terms(term).map { |t| [t.strftime('%Jy年%m月'), t.strftime('%Y-%m-%d')] }
-    return terms
+    Work.get_terms(term).map { |t| [t.strftime('%Jy年%m月'), t.strftime('%Y-%m-%d')] }
   end
 
   def sum_hours
@@ -118,7 +118,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def checker_short_names
-    model.checkers.map { |checker| checker.decorate.short_name}.to_sentence
+    model.checkers.map { |checker| checker.decorate.short_name }.to_sentence
   end
 
   def exists_workers
@@ -142,11 +142,11 @@ class WorkDecorator < Draper::Decorator
   end
 
   def gap_worker_names
-    model.workers.map { |worker| worker.broccoli_mark.presence || worker.name}.sort.to_sentence
+    model.workers.map { |worker| worker.broccoli_mark.presence || worker.name }.sort.to_sentence
   end
 
   def gap_land_places
-    model.lands.map { |land| land.broccoli_mark.presence || land.place}.sort.to_sentence
+    model.lands.map { |land| land.broccoli_mark.presence || land.place }.sort.to_sentence
   end
 
   def gap_work_kind_name
@@ -161,7 +161,7 @@ class WorkDecorator < Draper::Decorator
     results = model.machine_numbers.map do |key, value|
       "#{key}-#{value.sort.join(',')}"
     end
-    return results.join('、')
+    results.join('、')
   end
 
   def machine_type_names
@@ -169,7 +169,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def worker_names
-    model.workers.map(&:name).join('、') 
+    model.workers.map(&:name).join('、')
   end
 
   def worker_members
@@ -185,6 +185,6 @@ class WorkDecorator < Draper::Decorator
   end
 
   def type_and_kind_name
-    return "#{model.work_type&.name}:#{self.name}"
+    "#{model.work_type&.name}:#{name}"
   end
 end

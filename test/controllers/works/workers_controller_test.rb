@@ -20,7 +20,7 @@ class Works::WorkersControllerTest < ActionDispatch::IntegrationTest
   test "作業変更(作業者)(変更)" do
     worker_id = workers(:worker2).id
     results = [
-      {worker_id: worker_id, hours: 1.5, display_order: 1}
+      { worker_id: worker_id, hours: 1.5, display_order: 1 }
     ]
     assert_difference('WorkVerification.count') do
       assert_no_difference('WorkResult.count') do

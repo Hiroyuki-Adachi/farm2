@@ -13,15 +13,6 @@ class DryingsController < ApplicationController
     @dryings = Drying.where(term: current_term).to_a
   end
 
-  def create
-    @drying = Drying.new(drying_params)
-    if @drying.save
-      redirect_to dryings_path
-    else
-      render action: :index
-    end
-  end
-
   def show
     @home = Home.find(params[:id])
     @dryings = DryingDecorator.decorate_collection(Drying.by_home(current_term, @home))
@@ -30,6 +21,15 @@ class DryingsController < ApplicationController
 
   def edit
     @drying = @drying.decorate
+  end
+
+  def create
+    @drying = Drying.new(drying_params)
+    if @drying.save
+      redirect_to dryings_path
+    else
+      render action: :index
+    end
   end
 
   def update
@@ -75,17 +75,17 @@ class DryingsController < ApplicationController
   def default_moths
     moths = []
     DryingMoth::MAX_COUNT.times do |i|
-      moths << {moth_count: (i + 1)}
+      moths << { moth_count: (i + 1) }
     end
-    return moths
+    moths
   end
 
   def default_lands
     lands = []
     DryingLand::MAX_COUNT.times do |i|
-      lands << {display_order: i}
+      lands << { display_order: i }
     end
-    return lands
+    lands
   end
 
   def set_homes

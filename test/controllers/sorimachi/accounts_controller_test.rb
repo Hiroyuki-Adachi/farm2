@@ -23,7 +23,7 @@ class Sorimachi::AccountsControllerTest < ActionDispatch::IntegrationTest
 
   test "ソリマチ科目編集(勘定科目)" do
     account = sorimachi_accounts(:sorimachi_accounts_2015)
-    sorimachi_account = {name: 'TEST', total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id}
+    sorimachi_account = { name: 'TEST', total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id }
     assert_no_difference('SorimachiAccount.count') do
       put sorimachi_account_path(code: account.code), params: {
         sorimachi_account: sorimachi_account
@@ -37,7 +37,7 @@ class Sorimachi::AccountsControllerTest < ActionDispatch::IntegrationTest
 
   test "ソリマチ科目編集(仕訳)" do
     journal = sorimachi_journals(:journal1)
-    sorimachi_account = {code: journal.code01, name: 'TEST', total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id}
+    sorimachi_account = { code: journal.code01, name: 'TEST', total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id }
     assert_difference('SorimachiAccount.count') do
       put sorimachi_account_path(code: journal.code01), params: {
         sorimachi_account: sorimachi_account

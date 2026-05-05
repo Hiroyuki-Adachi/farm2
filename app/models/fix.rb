@@ -23,13 +23,13 @@ class Fix < ApplicationRecord
   before_destroy :clear_fix
 
   belongs_to :organization
-  belongs_to :fixer, -> {with_deleted}, class_name: "Worker", foreign_key: "fixed_by"
+  belongs_to :fixer, -> { with_deleted }, class_name: "Worker", foreign_key: "fixed_by"
 
   scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
-  scope :usual, ->(organization, term) {for_organization(organization).where(term: term).order(fixed_at: :ASC)}
+  scope :usual, ->(organization, term) { for_organization(organization).where(term: term).order(fixed_at: :ASC) }
 
   def to_param
-    return fixed_at.strftime("%Y-%m-%d")
+    fixed_at.strftime("%Y-%m-%d")
   end
 
   def self.do_fix(organization, term, fixed_at, fixed_by, works_ids)

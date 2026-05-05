@@ -13,7 +13,8 @@ module DryingsHelper
 
   def format_rice_percentage(rice_weight, waste_weight)
     return "" if ((rice_weight || 0) + (waste_weight || 0)).zero?
-    return format("%.2f", (waste_weight || 0) / ((rice_weight || 0) + (waste_weight || 0)) * 100)
+
+    format("%.2f", (waste_weight || 0) / ((rice_weight || 0) + (waste_weight || 0)) * 100)
   end
 
   def calc_amount(weight, price)
@@ -25,11 +26,11 @@ module DryingsHelper
   end
 
   def format_amount(weight, price)
-    number_to_currency(calc_amount(weight, price), {precision: 0, unit: ""})
+    number_to_currency(calc_amount(weight, price), { precision: 0, unit: "" })
   end
 
   def format_waste_amount(weight, price)
-    number_to_currency(calc_waste_amount(weight, price), {precision: 0, unit: ""})
+    number_to_currency(calc_waste_amount(weight, price), { precision: 0, unit: "" })
   end
 
   def format_area(area)

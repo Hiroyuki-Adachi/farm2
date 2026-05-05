@@ -14,6 +14,8 @@ class Gaps::AccidentsController < GapsController
     @accident = Accident.new(accident_type_id: :rule)
   end
 
+  def edit; end
+
   def create
     @accident = Accident.new(accident_params)
     if @accident.save
@@ -22,8 +24,6 @@ class Gaps::AccidentsController < GapsController
       render action: :new, status: :unprocessable_content
     end
   end
-
-  def edit; end
 
   def update
     if @accident.update(accident_params)
@@ -46,6 +46,7 @@ class Gaps::AccidentsController < GapsController
 
   def audiences
     return if params[:work_id].blank?
+
     @workers = WorkerDecorator.decorate_collection(Work.find(params[:work_id]).workers)
     @worker_id = params[:id]
     respond_to { |format| format.turbo_stream }

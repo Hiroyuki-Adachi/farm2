@@ -13,6 +13,8 @@ class Works::CategoriesController < ApplicationController
     @category = WorkCategory.new
   end
 
+  def edit; end
+
   def create
     @category = WorkCategory.new(work_category_params)
     if @category.save
@@ -21,8 +23,6 @@ class Works::CategoriesController < ApplicationController
       render action: :new, status: :unprocessable_content
     end
   end
-
-  def edit; end
 
   def update
     if @category.update(work_category_params)

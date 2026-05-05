@@ -23,9 +23,9 @@ class Chemicals::InventoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "農薬棚卸新規作成(実行)" do
-    chemical_inventory = {checked_on: '2015-01-05', name: "当初在庫"}
+    chemical_inventory = { checked_on: '2015-01-05', name: "当初在庫" }
     assert_difference('ChemicalInventory.count') do
-      post chemicals_inventories_path, params: {chemical_inventory: chemical_inventory}
+      post chemicals_inventories_path, params: { chemical_inventory: chemical_inventory }
     end
 
     created_chemical_inventory = ChemicalInventory.last
@@ -46,7 +46,7 @@ class Chemicals::InventoriesControllerTest < ActionDispatch::IntegrationTest
       checked_on: '2015-12-25',
       name: "期末在庫",
       stocks_attributes: [
-        {chemical_id: chemical_id, inventory: 100.2}
+        { chemical_id: chemical_id, inventory: 100.2 }
       ]
     }
 

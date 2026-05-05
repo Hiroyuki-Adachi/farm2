@@ -36,9 +36,9 @@ class Works::LandsControllerTest < ActionDispatch::IntegrationTest
 
   test "作業変更(土地)(変更)" do
     land = lands(:lands0)
-    work_lands = [{land_id: land.id, display_order: 3}]
+    work_lands = [{ land_id: land.id, display_order: 3 }]
     assert_difference('WorkLand.count', -1) do
-      post work_lands_path(work_id: @work), params: {work_lands: work_lands, regist_lands: true}
+      post work_lands_path(work_id: @work), params: { work_lands: work_lands, regist_lands: true }
     end
     assert_redirected_to work_path(id: @work)
 

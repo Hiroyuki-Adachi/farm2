@@ -20,9 +20,9 @@ class ZgisExcelService
         f.write(new.call_color(work_types, term))
       end
     end
-    return z_gis_file
+    z_gis_file
   end
-    
+
   def call_place(land_costs, work_types, term)
     workbook = RubyXL::Parser.parse("app/views/plans/excels/#{PLACE_FILE}")
     setup_workbook(workbook)
@@ -31,7 +31,7 @@ class ZgisExcelService
     fill_lands(workbook[0], land_costs)
     fill_work_types(workbook[1], work_types, term) if work_types
 
-    return workbook.stream.read
+    workbook.stream.read
   end
 
   def call_color(work_types, term)
@@ -40,7 +40,7 @@ class ZgisExcelService
 
     fill_colors(workbook[0], work_types, term) if work_types
 
-    return workbook.stream.read
+    workbook.stream.read
   end
 
   private
@@ -80,7 +80,8 @@ class ZgisExcelService
 
   def zgis_polygon(land)
     return "" if land.region.blank?
+
     polygons = land.region_values.map { |region| "#{region[1]} #{region[0]}" }
-    return "Polygon((#{polygons.join(',')}))"
+    "Polygon((#{polygons.join(',')}))"
   end
 end

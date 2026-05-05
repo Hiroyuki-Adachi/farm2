@@ -32,7 +32,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
 
   test "作業予定登録(実行)" do
     assert_difference('Schedule.count') do
-      post schedules_path, params: {schedule: @update}
+      post schedules_path, params: { schedule: @update }
     end
     assert_redirected_to schedules_path
 
@@ -71,7 +71,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
 
   test "作業予定変更(実行)" do
     assert_no_difference('Schedule.count') do
-      patch schedule_path(@schedule), params: {schedule: @update}
+      patch schedule_path(@schedule), params: { schedule: @update }
     end
     assert_redirected_to schedules_path
 
