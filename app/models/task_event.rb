@@ -92,7 +92,9 @@ class TaskEvent < ApplicationRecord
 
     reader_names = Arel::SelectManager.new
     reader_names.from(task_comments)
-    reader_names.project(Arel::Nodes::NamedFunction.new("ARRAY_AGG", [Arel.sql("DISTINCT #{reader_name.to_sql}")]))
+    reader_names.project(
+      Arel::Nodes::NamedFunction.new("ARRAY_AGG", [Arel::Nodes::Distinct.new(reader_name)])
+    )
     reader_names.join(task_reads).on(read_join_condition)
     reader_names.join(workers).on(workers[:id].eq(task_reads[:worker_id]))
     reader_names.where(read_where_condition)
