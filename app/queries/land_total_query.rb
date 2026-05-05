@@ -31,38 +31,72 @@ class LandTotalQuery
   private
 
   def build_sql
-    sql = []
-    sql << "SELECT L.place, L.parcel_number, MAX(L.area) AS area, MAX(HO.name) AS owner_name, COALESCE(MAX(WT.name), '') AS work_type_name"
-    @work_kind_ids.each do |id|
-      sql << ", MIN(W#{id}.worked_at) AS w#{id}_date"
-    end
-    sql << " FROM lands L"
-    sql << "INNER JOIN work_lands WL ON L.id = WL.land_id"
-    sql << "LEFT OUTER JOIN homes HO ON L.owner_id = HO.id"
-    sql << "LEFT OUTER JOIN land_costs LC "
-    sql << "ON LC.land_id = L.id "
-    sql << "AND EXISTS ( "
-    sql << "    SELECT"
-    sql << "       MAX(activated_on) "
-    sql << "    FROM"
-    sql << "        land_costs LC2 "
-    sql << "    WHERE"
-    sql << "        LC2.land_id = L.id "
-    sql << "        AND activated_on <= '#{@sys.start_date}' "
-    sql << "    HAVING MAX(activated_on) = LC.activated_on"
-    sql << ") "
-    sql << "LEFT OUTER JOIN work_types WT"
-    sql << "ON LC.work_type_id = WT.id"
-    @work_kind_ids.each do |id|
-      sql << "LEFT OUTER JOIN works W#{id} ON WL.work_id = W#{id}.id AND W#{id}.work_kind_id = #{id} AND W#{id}.term = #{@sys.term}"
-    end
-    sql << "WHERE L.start_on <= '#{@sys.end_date}' AND L.end_on >= '#{@sys.start_date}'"
-    sql << "GROUP BY L.place, L.id "
-    sql << "HAVING"
-    sql << @work_kind_ids.map { |id| "(MIN(W#{id}.worked_at) IS NOT NULL)" }.join(" OR ")
-    sql << "ORDER BY"
-    sql << "L.parcel_number, MAX(HO.display_order), L.place, L.id"
+    lands = Land.arel_table.alias("L")
+    work_lands = WorkLand.arel_table.alias("WL")
+    owners = Home.arel_table.alias("HO")
+    land_costs = LandCost.arel_table.alias("LC")
+    latest_land_costs = LandCost.arel_table.alias("LC2")
+    work_types = WorkType.arel_table.alias("WT")
 
-    return sql.join("\n")
+    latest_activated_on = latest_land_costs[:activated_on].maximum
+    latest_land_cost_query = Arel::SelectManager.new
+    latest_land_cost_query.from(latest_land_costs)
+    latest_land_cost_query.project(latest_activated_on)
+    latest_land_cost_query.where(
+        latest_land_costs[:land_id].eq(lands[:id])
+          .and(latest_land_costs[:activated_on].lteq(@sys.start_date))
+      )
+    latest_land_cost_query.having(latest_activated_on.eq(land_costs[:activated_on]))
+
+    max_area = lands[:area].maximum
+    max_owner_name = owners[:name].maximum
+    max_work_type_name = work_types[:name].maximum
+    max_owner_display_order = owners[:display_order].maximum
+
+    worked_at_columns = []
+    work_joins = @work_kind_ids.map do |id|
+      work = Work.arel_table.alias("W#{id}")
+      min_worked_at = work[:worked_at].minimum
+      worked_at_columns << min_worked_at
+
+      [
+        work,
+        min_worked_at.as("w#{id}_date"),
+        work_lands[:work_id].eq(work[:id])
+          .and(work[:work_kind_id].eq(id))
+          .and(work[:term].eq(@sys.term))
+      ]
+    end
+
+    query = Arel::SelectManager.new
+    query.from(lands)
+    query.project(
+      lands[:place],
+      lands[:parcel_number],
+      max_area.as("area"),
+      max_owner_name.as("owner_name"),
+      Arel::Nodes::NamedFunction.new(
+        "COALESCE",
+        [max_work_type_name, Arel::Nodes.build_quoted("")]
+      ).as("work_type_name"),
+      *work_joins.map { |(_, projection, _)| projection }
+    )
+
+    query.join(work_lands).on(lands[:id].eq(work_lands[:land_id]))
+    query.join(owners, Arel::Nodes::OuterJoin).on(lands[:owner_id].eq(owners[:id]))
+    query.join(land_costs, Arel::Nodes::OuterJoin).on(
+      land_costs[:land_id].eq(lands[:id]).and(latest_land_cost_query.exists)
+    )
+    query.join(work_types, Arel::Nodes::OuterJoin).on(land_costs[:work_type_id].eq(work_types[:id]))
+    work_joins.each do |work, _, join_condition|
+      query.join(work, Arel::Nodes::OuterJoin).on(join_condition)
+    end
+
+    query.where(lands[:start_on].lteq(@sys.end_date).and(lands[:end_on].gteq(@sys.start_date)))
+    query.group(lands[:place], lands[:id])
+    query.having(worked_at_columns.map { |worked_at| worked_at.not_eq(nil) }.reduce(&:or))
+    query.order(lands[:parcel_number], max_owner_display_order, lands[:place], lands[:id])
+
+    query.to_sql
   end
 end

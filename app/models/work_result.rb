@@ -43,27 +43,57 @@ class WorkResult < ApplicationRecord
   scope :by_worker_and_work, ->(worker, work) {where(worker_id: worker, work_id: work)}
 
   scope :by_home, ->(term) {
+    works = Work.arel_table
+    workers = Worker.arel_table
+    work_types = WorkType.arel_table
+    work_kinds = WorkKind.arel_table
+    homes = Home.arel_table
+    systems = System.arel_table
+    sections = Section.arel_table
+    systems_join = works
+      .join(systems)
+      .on(
+        systems[:term].eq(works[:term])
+          .and(systems[:organization_id].eq(works[:organization_id]))
+      )
+      .join_sources
+
     joins(:work)
       .joins(:worker)
-      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
-      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
-      .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
-      .joins("INNER JOIN systems ON systems.term = works.term AND systems.organization_id = works.organization_id")
-      .joins("INNER JOIN sections ON sections.id = homes.section_id")
-      .where("works.worked_at BETWEEN systems.start_date AND systems.end_date")
+      .joins(arel_table.join(work_types).on(works[:work_type_id].eq(work_types[:id])).join_sources).preload(:work_type)
+      .joins(arel_table.join(work_kinds).on(works[:work_kind_id].eq(work_kinds[:id])).join_sources).preload(:work_kind)
+      .joins(arel_table.join(homes).on(homes[:id].eq(workers[:home_id])).join_sources).preload(:home)
+      .joins(systems_join)
+      .joins(arel_table.join(sections).on(sections[:id].eq(homes[:section_id])).join_sources)
+      .where(works[:worked_at].gteq(systems[:start_date]).and(works[:worked_at].lteq(systems[:end_date])))
       .where(systems: { term: term })
       .order("sections.display_order, homes.display_order, homes.id, workers.display_order, workers.id, works.worked_at, works.id")
   }
 
   scope :by_supporter_home, ->(term) {
+    works = Work.arel_table
+    workers = Worker.arel_table
+    work_types = WorkType.arel_table
+    work_kinds = WorkKind.arel_table
+    homes = Home.arel_table
+    systems = System.arel_table
+    sections = Section.arel_table
+    systems_join = works
+      .join(systems)
+      .on(
+        systems[:term].eq(works[:term])
+          .and(systems[:organization_id].eq(works[:organization_id]))
+      )
+      .join_sources
+
     joins(:work)
       .joins(:worker)
-      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
-      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
-      .joins("INNER JOIN homes ON homes.id = workers.home_id").preload(:home)
-      .joins("INNER JOIN systems ON systems.term = works.term AND systems.organization_id = works.organization_id")
-      .joins("INNER JOIN sections ON sections.id = homes.section_id")
-      .where("works.worked_at BETWEEN systems.start_date AND systems.end_date")
+      .joins(arel_table.join(work_types).on(works[:work_type_id].eq(work_types[:id])).join_sources).preload(:work_type)
+      .joins(arel_table.join(work_kinds).on(works[:work_kind_id].eq(work_kinds[:id])).join_sources).preload(:work_kind)
+      .joins(arel_table.join(homes).on(homes[:id].eq(workers[:home_id])).join_sources).preload(:home)
+      .joins(systems_join)
+      .joins(arel_table.join(sections).on(sections[:id].eq(homes[:section_id])).join_sources)
+      .where(works[:worked_at].gteq(systems[:start_date]).and(works[:worked_at].lteq(systems[:end_date])))
       .where(systems: { term: term })
       .where(workers: { home_id: Home.supporters.reorder(nil).unscope(:includes, :order).select(:id) })
       .order(Arel.sql("date_trunc('month', works.worked_at), sections.display_order, homes.display_order, homes.id, works.worked_at, works.id, workers.display_order, workers.id"))

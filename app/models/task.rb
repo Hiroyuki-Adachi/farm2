@@ -157,31 +157,44 @@ class Task < ApplicationRecord
   end
   
   scope :with_watch_flag, ->(worker_id) do
-    sql = <<-SQL.squish
-      #{table_name}.*, 
-      EXISTS (
-        SELECT 1 FROM task_watchers tw
-        WHERE tw.task_id = #{table_name}.id
-          AND tw.worker_id = :worker_id
-      ) AS watching
-    SQL
+    tasks = arel_table
+    task_watchers = TaskWatcher.arel_table
+    watching_exists = task_watchers
+      .project(Arel.sql("1"))
+      .where(
+        task_watchers[:task_id].eq(tasks[:id])
+          .and(task_watchers[:worker_id].eq(worker_id))
+      )
+      .exists
 
-    select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
+    select(
+      tasks[Arel.star],
+      Arel::Nodes::As.new(watching_exists, Arel.sql("watching"))
+    )
   end
 
   scope :with_unread_count, ->(worker_id) do
-    sql = <<-SQL.squish
-      #{table_name}.*, 
-      (SELECT COUNT(DISTINCT tc.id) FROM task_reads tr
-        LEFT OUTER JOIN task_comments tc ON tc.task_id = #{table_name}.id
-          AND tc.poster_id <> :worker_id
-        WHERE tr.task_id = #{table_name}.id
-          AND tr.worker_id = :worker_id
-          AND tr.last_read_at < tc.updated_at
-      ) AS unread_count
-    SQL
+    tasks = arel_table
+    task_reads = TaskRead.arel_table.alias("tr")
+    task_comments = TaskComment.arel_table.alias("tc")
 
-    select(Arel.sql(ApplicationRecord.sanitize_sql_array([sql, {worker_id: worker_id}])))
+    unread_count = Arel::SelectManager.new
+    unread_count.from(task_reads)
+    unread_count.project(task_comments[:id].count(true))
+    unread_count.join(task_comments, Arel::Nodes::OuterJoin).on(
+        task_comments[:task_id].eq(tasks[:id])
+          .and(task_comments[:poster_id].not_eq(worker_id))
+      )
+    unread_count.where(
+        task_reads[:task_id].eq(tasks[:id])
+          .and(task_reads[:worker_id].eq(worker_id))
+          .and(task_reads[:last_read_at].lt(task_comments[:updated_at]))
+      )
+
+    select(
+      tasks[Arel.star],
+      Arel::Nodes::As.new(unread_count, Arel.sql("unread_count"))
+    )
   end
 
   scope :for_kanban, ->(kanban_column) { where(task_status_id: TaskStatus.kanban_column_ids(kanban_column)) }

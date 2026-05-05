@@ -130,9 +130,21 @@ class Land < ApplicationRecord
   end
 
   def self.for_plan(user_id, term)
-    self.regionable
-    .joins("LEFT OUTER JOIN plan_lands ON plan_lands.land_id = lands.id AND plan_lands.user_id = #{user_id} AND plan_lands.term = #{term}")
-    .select("lands.*, plan_lands.work_type_id")
+    lands = arel_table
+    plan_lands = PlanLand.arel_table
+
+    plan_lands_join = lands
+      .join(plan_lands, Arel::Nodes::OuterJoin)
+      .on(
+        plan_lands[:land_id].eq(lands[:id])
+          .and(plan_lands[:user_id].eq(user_id))
+          .and(plan_lands[:term].eq(term))
+      )
+      .join_sources
+
+    regionable
+      .joins(plan_lands_join)
+      .select(lands[Arel.star], plan_lands[:work_type_id])
   end
 
   def manager_name
