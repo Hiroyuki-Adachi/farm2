@@ -45,6 +45,7 @@ class UserTest < ActiveSupport::TestCase
     @user    = users(:user_user)
     @visitor = users(:user_visitor)
   end
+
   test "メールアドレス設定" do
     user = users(:user_manager)
     user.mail = 'user@example.com'

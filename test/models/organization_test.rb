@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class OrganizationTest < ActiveSupport::TestCase
-  test "update_term! updates organization and its users" do
+  test "update_term! は組織と所属ユーザーの年度を更新する" do
     organization = organizations(:org)
     other_user = users(:user_admin_org2)
     other_user_term = other_user.term

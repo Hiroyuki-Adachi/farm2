@@ -58,7 +58,7 @@ class LandTest < ActiveSupport::TestCase
     assert land.valid?
   end
 
-  test 'costs aggregates days per work type' do
+  test '作業種別ごとの費用集計' do
     land = lands(:land_genka2)
     start_date = Date.new(2017, 11, 1)
     end_date = Date.new(2018, 1, 31)
@@ -70,7 +70,7 @@ class LandTest < ActiveSupport::TestCase
     assert_equal(expected_results, results)
   end
 
-  test 'region values and center' do
+  test '領域の値と中心点' do
     land = lands(:lands1)
 
     expected_region_values = [
@@ -85,7 +85,7 @@ class LandTest < ActiveSupport::TestCase
     assert_in_delta 133.048198, center[1], 1e-6
   end
 
-  test 'update members' do
+  test 'メンバーの更新' do
     group = lands(:land_group1)
     existing_member = lands(:lands_group1_2)
     new_member = lands(:lands12)
