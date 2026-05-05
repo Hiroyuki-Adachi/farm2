@@ -6,60 +6,10 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-Rails/HasManyOrHasOneDependent:
-  Exclude:
-    - 'app/models/sorimachi_journal.rb'
-
 # Offense count: 4
 Rails/HelperInstanceVariable:
   Exclude:
     - 'app/helpers/sessions_helper.rb'
-
-# Offense count: 67
-# Configuration parameters: IgnoreScopes.
-Rails/InverseOf:
-  Exclude:
-    - 'app/models/adjustment.rb'
-    - 'app/models/chemical_term.rb'
-    - 'app/models/chemical_type.rb'
-    - 'app/models/drying.rb'
-    - 'app/models/expense_work_type.rb'
-    - 'app/models/fix.rb'
-    - 'app/models/home.rb'
-    - 'app/models/ip_list.rb'
-    - 'app/models/land.rb'
-    - 'app/models/land_cost.rb'
-    - 'app/models/land_home.rb'
-    - 'app/models/machine.rb'
-    - 'app/models/machine_remark.rb'
-    - 'app/models/machine_result.rb'
-    - 'app/models/machine_type.rb'
-    - 'app/models/plan_seedling.rb'
-    - 'app/models/plan_work_type.rb'
-    - 'app/models/schedule.rb'
-    - 'app/models/schedule_worker.rb'
-    - 'app/models/section.rb'
-    - 'app/models/seedling.rb'
-    - 'app/models/seedling_home.rb'
-    - 'app/models/sorimachi_journal.rb'
-    - 'app/models/task.rb'
-    - 'app/models/task_event.rb'
-    - 'app/models/total_cost.rb'
-    - 'app/models/training.rb'
-    - 'app/models/whole_crop_land.rb'
-    - 'app/models/whole_crop_roll.rb'
-    - 'app/models/work.rb'
-    - 'app/models/work_broccoli.rb'
-    - 'app/models/work_genre.rb'
-    - 'app/models/work_kind_type.rb'
-    - 'app/models/work_land.rb'
-    - 'app/models/work_result.rb'
-    - 'app/models/work_type.rb'
-    - 'app/models/work_type_term.rb'
-    - 'app/models/work_verification.rb'
-    - 'app/models/work_whole_crop.rb'
-    - 'app/models/worker.rb'
 
 # Offense count: 1
 Rails/OutputSafety:

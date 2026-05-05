@@ -55,7 +55,8 @@ class SorimachiJournal < ApplicationRecord
 
   has_many :sorimachi_work_types, dependent: :destroy
   has_many :work_types, through: :sorimachi_work_types
-  has_many :details, foreign_key: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line]
+  has_many :details, foreign_key: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line],
+                     dependent: :destroy
 
   validate :term_check
 
@@ -101,7 +102,8 @@ class SorimachiJournal < ApplicationRecord
   def self.refresh(term)
     accounts = SorimachiAccount.where(term: term).to_h { |a| [a.code, a.total_cost_type] }
     SorimachiJournal.where(term: term).find_each do |journal|
-      if [TotalCostType::EXPENSEDIRECT, TotalCostType::EXPENSEINDIRECT].include?(accounts[journal.code12]) || accounts[journal.code01] == TotalCostType::SALES
+      if [TotalCostType::EXPENSEDIRECT,
+          TotalCostType::EXPENSEINDIRECT].include?(accounts[journal.code12]) || accounts[journal.code01] == TotalCostType::SALES
         journal.swap
         journal.save!
       end
@@ -155,7 +157,8 @@ class SorimachiJournal < ApplicationRecord
   end
 
   def copy(sys)
-    copy_src = SorimachiJournal.where("term = ? AND id < ? AND (cost0_flag = true OR cost1_flag = true)", term, id).order(id: :desc).first
+    copy_src = SorimachiJournal.where("term = ? AND id < ? AND (cost0_flag = true OR cost1_flag = true)", term,
+                                      id).order(id: :desc).first
     return unless copy_src
 
     work_types.destroy_all
