@@ -15,7 +15,8 @@ class OwnedRicesController < ApplicationController
   end
 
   def update
-    return to_error_path unless owned_rice_home_ids.all? { |home_id| Home.for_organization(current_organization).exists?(id: home_id) }
+    home_ids = owned_rice_home_ids.uniq
+    return to_error_path unless Home.for_organization(current_organization).where(id: home_ids).count == home_ids.size
 
     params.require(:owned_rices).each_value do |v|
       OwnedRice.regist(v[:id], v.permit(:home_id, :owned_rice_price_id, :owned_count), current_organization)
