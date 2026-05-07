@@ -1,7 +1,10 @@
 class SchedulesController < ApplicationController
+  include ReturnToIndex
+
   before_action :set_schedule, only: [:edit, :update, :destroy]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :permit_only_self, only: [:edit, :update, :destroy]
+  keeps_index_return_to path_method: :schedules_path
 
   def index
     @schedules = Schedule.for_organization(current_organization).usual
@@ -30,7 +33,7 @@ class SchedulesController < ApplicationController
     Schedule.transaction do
       if @schedule.save
         @schedule.regist_sections(params[:section_ids])
-        redirect_to schedules_path
+        redirect_to @return_to
       else
         render action: :new, status: :unprocessable_content
       end
@@ -41,7 +44,7 @@ class SchedulesController < ApplicationController
     Schedule.transaction do
       if @schedule.update(schedule_params)
         @schedule.model.regist_sections(params[:section_ids])
-        redirect_to schedules_path
+        redirect_to @return_to
       else
         render action: :edit, status: :unprocessable_content
       end
@@ -50,7 +53,7 @@ class SchedulesController < ApplicationController
 
   def destroy
     @schedule.destroy
-    redirect_to schedules_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private
