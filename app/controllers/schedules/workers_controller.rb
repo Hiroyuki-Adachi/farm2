@@ -1,12 +1,15 @@
 class Schedules::WorkersController < ApplicationController
   include PermitUser
+  include ReturnToIndex
+
   before_action :set_schedule, only: [:new, :create]
+  keeps_index_return_to path_method: :schedules_path, only: [:new, :create]
 
   def new; end
 
   def create
     @schedule.regist_workers(params[:schedule_workers])
-    redirect_to(schedules_path)
+    redirect_to(@return_to)
   end
 
   private
