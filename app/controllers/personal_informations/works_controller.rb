@@ -13,7 +13,7 @@ class PersonalInformations::WorksController < PersonalInformationsController
   end
 
   def set_work
-    @work = Work.find(params[:id]).decorate
+    @work = Work.for_organization(current_organization).find(params[:id]).decorate
   end
 
   def set_results

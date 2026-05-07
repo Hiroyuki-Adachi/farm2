@@ -36,7 +36,7 @@ class WorkVerificationsController < ApplicationController
   end
 
   def set_work
-    @work = Work.where(fixed_at: nil, term: current_term).find(params[:work_id])
+    @work = Work.for_organization(current_organization).where(fixed_at: nil, term: current_term).find(params[:work_id])
     to_error_path if @work.nil?
   end
 end

@@ -71,9 +71,11 @@ class WorkLand < ApplicationRecord
     local_cost + (work.sum_workers_amount - work.work_lands.sum(&:interim_cost))
   end
 
-  def self.by_worked_at(worked_at)
+  def self.by_worked_at(worked_at, organization = nil)
     lands = []
-    Work.where(worked_at: worked_at).find_each do |work|
+    base = Work.where(worked_at: worked_at)
+    base = base.for_organization(organization) if organization
+    base.find_each do |work|
       lands << work.lands.to_a
     end
     lands.flatten.uniq

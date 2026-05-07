@@ -38,6 +38,12 @@ class Drying < ApplicationRecord
   accepts_nested_attributes_for :drying_lands
   accepts_nested_attributes_for :adjustment
 
+  validate :homes_belong_to_same_organization
+
+  scope :for_organization, lambda { |organization|
+    joins(:home).where(homes: { organization_id: organization.is_a?(Organization) ? organization.id : organization })
+  }
+
   scope :by_home, lambda { |term, home|
     left_joins(:adjustment)
       .where(["dryings.term = ? AND (dryings.home_id = ? OR adjustments.home_id = ?)", term, home.id, home.id])
@@ -82,7 +88,7 @@ class Drying < ApplicationRecord
 
   def delete_child
     if country?
-      adjustment.destroy
+      adjustment&.destroy
     else
       drying_moths.destroy_all
     end
@@ -162,5 +168,14 @@ class Drying < ApplicationRecord
 
   def drying_type_name
     I18n.t("activerecord.enums.drying.drying_type_ids.#{drying_type_id}")
+  end
+
+  private
+
+  def homes_belong_to_same_organization
+    return if home.blank?
+    return if adjustment.blank? || adjustment.home.blank? || adjustment.home.organization_id == home.organization_id
+
+    errors.add(:base, "調整先の世帯は乾燥担当世帯と同じ組織にしてください。")
   end
 end

@@ -38,9 +38,30 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "別組織の乾燥照会" do
+    get drying_path(id: homes(:home_other_org).id)
+
+    assert_response :not_found
+  end
+
   test "乾燥編集" do
     get edit_drying_path(id: dryings(:drying1).id)
     assert_response :success
+  end
+
+  test "別組織の乾燥編集" do
+    drying = Drying.create!(
+      term: systems(:s2015).term,
+      work_type_id: work_types(:work_type_koshi).id,
+      home_id: homes(:home_other_org).id,
+      drying_type_id: :country,
+      carried_on: Date.new(2015, 8, 31),
+      shipped_on: Date.new(2015, 9, 1)
+    )
+
+    get edit_drying_path(id: drying.id)
+
+    assert_response :not_found
   end
 
   test "乾燥登録(カントリー)" do
@@ -202,5 +223,18 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal drying.term, copy_drying.term
     assert_equal drying.carried_on, copy_drying.carried_on
     assert_equal drying.home_id, copy_drying.home_id
+  end
+
+  test "別組織の世帯では乾燥作成できない" do
+    new_drying = {
+      term: systems(:s2015).term,
+      carried_on: Date.new(2015, 8, 31),
+      home_id: homes(:home_other_org).id
+    }
+
+    assert_no_difference('Drying.count') do
+      post dryings_path, params: { drying: new_drying }
+    end
+    assert_response :error
   end
 end

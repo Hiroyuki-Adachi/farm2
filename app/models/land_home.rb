@@ -16,4 +16,14 @@
 class LandHome < ApplicationRecord
   belongs_to :home, -> { with_deleted }
   belongs_to :land
+
+  validate :home_belongs_to_same_organization
+
+  private
+
+  def home_belongs_to_same_organization
+    return if land.blank? || home.blank? || land.organization_id == home.organization_id
+
+    errors.add(:home_id, "は土地と同じ組織の世帯を選択してください。")
+  end
 end

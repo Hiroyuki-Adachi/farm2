@@ -3,7 +3,7 @@ class Tasks::WorksController < TasksController
   before_action :set_work, only: [:update, :destroy]
 
   def index
-    @works = WorkDecorator.decorate_collection(Work.for_task(@task))
+    @works = WorkDecorator.decorate_collection(Work.for_organization(current_organization).for_task(@task))
   end
 
   def update
@@ -48,6 +48,6 @@ class Tasks::WorksController < TasksController
   private
 
   def set_work
-    @work = Work.find(params[:id])
+    @work = Work.for_organization(current_organization).find(params[:id])
   end
 end

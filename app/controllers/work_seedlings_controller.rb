@@ -3,7 +3,7 @@ class WorkSeedlingsController < ApplicationController
 
   def index
     @work_types = WorkType.land
-    @work_seedlings, @work_areas = calc_seedlings(Work.where(work_kind_id: current_organization.rice_planting_id).by_term(@term))
+    @work_seedlings, @work_areas = calc_seedlings(Work.for_organization(current_organization).where(work_kind_id: current_organization.rice_planting_id).by_term(@term))
 
     respond_to do |format|
       format.html do

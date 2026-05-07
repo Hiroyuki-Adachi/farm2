@@ -87,7 +87,7 @@ class Work < ApplicationRecord
   scope :usual, ->(term) { where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :DESC, id: :DESC) }
   scope :by_term, ->(term) { where(term: term).order(worked_at: :ASC, start_at: :ASC, id: :ASC) }
   scope :by_creator, ->(worker) { where(["works.created_by IS NULL OR works.created_by <> ?", worker.id]) }
-  scope :by_work_kind_type, lambda { |term, work_kind_id, seedling_home|
+  scope :by_work_kind_type, lambda { |term, work_kind_id, seedling_home, organization = nil|
     works = arel_table
     work_lands = WorkLand.arel_table
     land_costs = LandCost.arel_table.alias("lc1")
@@ -113,13 +113,14 @@ class Work < ApplicationRecord
           .and(latest_land_cost_query.exists)
       )
 
-    joins(:work_lands)
+    base = joins(:work_lands)
       .where(term: term, work_kind_id: work_kind_id)
       .where(works: { worked_at: seedling_home.sowed_on.. })
       .where(land_cost_query.exists)
       .select(:id, :worked_at)
       .distinct
       .order(worked_at: :ASC, id: :ASC)
+    organization ? base.for_organization(organization) : base
   }
   scope :enough_check, lambda { |worker|
     work_verifications = WorkVerification.arel_table
@@ -265,6 +266,7 @@ SQL
   scope :for_drying, lambda { |term, organization|
     select("worked_at")
       .where(term: term, work_kind_id: organization.harvesting_work_kind_id)
+      .for_organization(organization)
       .distinct
       .order(:worked_at)
   }
@@ -359,6 +361,7 @@ SQL
   def self.for_verifications(user)
     Work.includes(:work_results, :creator)
       .includes(:machine_results, :work_lands, :work_type, :work_chemicals, :checkers)
+      .for_organization(user.organization_id)
       .no_fixed(user.term).by_creator(user.worker).enough_check(user.worker).not_printed
   end
 
@@ -437,9 +440,11 @@ SQL
     work_type&.land_flag ? TotalCostType::WORKWORKER : TotalCostType::WORKINDIRECT
   end
 
-  def self.types_by_worked_at(worked_at)
+  def self.types_by_worked_at(worked_at, organization = nil)
     wts = []
-    Work.where(worked_at: worked_at).find_each do |work|
+    base = Work.where(worked_at: worked_at)
+    base = base.for_organization(organization) if organization
+    base.find_each do |work|
       work.lands.each do |land|
         wts << land.cost(worked_at)&.work_type
       end
