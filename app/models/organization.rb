@@ -53,7 +53,7 @@ class Organization < ApplicationRecord
   has_many :systems, dependent: :destroy
 
   def self.term(organization = nil)
-    organization&.term || Organization.first.term
+    organization&.term || 0
   end
 
   def get_system(date)

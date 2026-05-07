@@ -10,4 +10,10 @@ class PersonalInformations::WorksControllerTest < ActionDispatch::IntegrationTes
     get personal_information_work_path(personal_information_token: @user.token, id: work.id)
     assert_response :success
   end
+
+  test "個人情報で別組織の日報は参照できない" do
+    get personal_information_work_path(personal_information_token: @user.token, id: works(:work_other_org).id)
+
+    assert_response :not_found
+  end
 end

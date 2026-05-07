@@ -18,6 +18,16 @@ class Works::PrintControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil work.printed_at
   end
 
+  test "別組織の日報は印刷できない" do
+    work = works(:work_other_org)
+
+    post work_print_index_path(work_id: work.id)
+
+    assert_response :not_found
+    assert_nil work.reload.printed_at
+    assert_nil work.printed_by
+  end
+
   test "印刷取消" do
     work = Work.find(works(:works5).id)
 
@@ -29,5 +39,13 @@ class Works::PrintControllerTest < ActionDispatch::IntegrationTest
     work.reload
     assert_nil work.printed_at
     assert_nil work.printed_by
+  end
+
+  test "別組織の日報は印刷取消できない" do
+    work = works(:work_other_org)
+
+    delete work_print_path(work_id: work.id, id: 0)
+
+    assert_response :not_found
   end
 end

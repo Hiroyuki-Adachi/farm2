@@ -10,11 +10,11 @@ class DryingsController < ApplicationController
   def index
     @works = WorkDecorator.decorate_collection(Work.for_drying(current_term, current_organization))
     @new_drying = Drying.new(term: current_term)
-    @dryings = Drying.where(term: current_term).to_a
+    @dryings = Drying.for_organization(current_organization).where(term: current_term).to_a
   end
 
   def show
-    @home = Home.find(params[:id])
+    @home = Home.for_organization(current_organization).find(params[:id])
     @dryings = DryingDecorator.decorate_collection(Drying.by_home(current_term, @home))
     @total_dryings, @waste_totals, @shipped_totals = Drying.calc_total(@dryings, @home, current_system)
   end
@@ -25,6 +25,8 @@ class DryingsController < ApplicationController
 
   def create
     @drying = Drying.new(drying_params)
+    return to_error_path unless Home.for_organization(current_organization).exists?(id: @drying.home_id)
+
     if @drying.save
       redirect_to dryings_path
     else
@@ -69,7 +71,7 @@ class DryingsController < ApplicationController
   end
 
   def set_drying
-    @drying = Drying.find(params[:id])
+    @drying = Drying.for_organization(current_organization).find(params[:id])
   end
 
   def default_moths
@@ -89,15 +91,15 @@ class DryingsController < ApplicationController
   end
 
   def set_homes
-    @homes = Home.for_drying.includes(:holder)
+    @homes = Home.for_organization(current_organization).for_drying.includes(:holder)
   end
 
   def set_lands
-    @lands = WorkLand.by_worked_at(@drying.carried_on)
+    @lands = WorkLand.by_worked_at(@drying.carried_on, current_organization)
   end
 
   def set_work_types
-    @work_types = Work.types_by_worked_at(@drying.carried_on)
+    @work_types = Work.types_by_worked_at(@drying.carried_on, current_organization)
   end
 
   def build_drying

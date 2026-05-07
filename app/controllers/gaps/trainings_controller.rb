@@ -3,7 +3,7 @@ class Gaps::TrainingsController < GapsController
 
   def index
     @works = WorkDecorator.decorate_collection(
-      Work.by_term(current_term).where(work_kind_id: current_organization.training_id).includes(:training, :workers)
+      Work.for_organization(current_organization).by_term(current_term).where(work_kind_id: current_organization.training_id).includes(:training, :workers)
       .includes(:work_kind)
     )
   end
@@ -29,7 +29,7 @@ class Gaps::TrainingsController < GapsController
   private
 
   def set_traning
-    @work = Work.find(params[:id]).decorate
+    @work = Work.for_organization(current_organization).find(params[:id]).decorate
     @training = @work&.training || Training.new
     @schedules = Schedule.for_training(@work)
   end

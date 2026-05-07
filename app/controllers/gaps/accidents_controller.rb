@@ -39,7 +39,7 @@ class Gaps::AccidentsController < GapsController
   end
 
   def works
-    @works = WorkDecorator.decorate_collection(Work.usual(current_term).where(worked_at: params[:worked_at]))
+    @works = WorkDecorator.decorate_collection(Work.for_organization(current_organization).usual(current_term).where(worked_at: params[:worked_at]))
     @work_id = params[:id]
     respond_to { |format| format.turbo_stream }
   end
@@ -47,7 +47,7 @@ class Gaps::AccidentsController < GapsController
   def audiences
     return if params[:work_id].blank?
 
-    @workers = WorkerDecorator.decorate_collection(Work.find(params[:work_id]).workers)
+    @workers = WorkerDecorator.decorate_collection(Work.for_organization(current_organization).find(params[:work_id]).workers)
     @worker_id = params[:id]
     respond_to { |format| format.turbo_stream }
   end
@@ -55,8 +55,8 @@ class Gaps::AccidentsController < GapsController
   private
 
   def set_accident
-    @accident = Accident.find(params[:id])
-    @works = WorkDecorator.decorate_collection(Work.usual(@accident.work.term).where(worked_at: @accident.work.worked_at))
+    @accident = Accident.joins(:work).where(works: { organization_id: current_organization.id }).find(params[:id])
+    @works = WorkDecorator.decorate_collection(Work.for_organization(current_organization).usual(@accident.work.term).where(worked_at: @accident.work.worked_at))
     @workers = WorkerDecorator.decorate_collection(@accident.work.workers)
   end
 

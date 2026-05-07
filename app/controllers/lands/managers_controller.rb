@@ -13,13 +13,14 @@ class Lands::ManagersController < ApplicationController
   end
 
   def destroy
-    LandHome.where(land_id: params[:land_id], manager_flag: true).destroy_all
+    land = Land.for_organization(current_organization).find(params[:land_id])
+    land.land_homes.where(manager_flag: true).destroy_all
   end
 
   private
 
   def set_land
-    @land = Land.find(params[:land_id])
+    @land = Land.for_organization(current_organization).find(params[:land_id])
     @manager_flag = true
     @owner_flag = false
   end

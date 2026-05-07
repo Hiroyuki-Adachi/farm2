@@ -2,11 +2,11 @@ class Lands::FeesController < ApplicationController
   include PermitManager
 
   def index
-    @homes = Home.for_fee.landable
+    @homes = Home.for_organization(current_organization).for_fee.landable
   end
 
   def edit
-    @home = Home.find(params[:id])
+    @home = Home.for_organization(current_organization).find(params[:id])
   end
 
   def create
@@ -14,6 +14,7 @@ class Lands::FeesController < ApplicationController
   end
 
   def update
+    Home.for_organization(current_organization).find(params[:id])
     LandFee.save_all_from_params(params[:id], fee_params)
     redirect_to(lands_fees_path)
   end

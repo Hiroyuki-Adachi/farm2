@@ -23,20 +23,21 @@ class SeedlingResultsController < ApplicationController
   end
 
   def work_results
+    work = Work.for_organization(current_organization).find(params[:work_id])
     render turbo_stream: turbo_stream.replace(
       "work_results_#{params[:index]}", partial: 'work_results',
-                                        locals: { data_index: params[:index], work_results: Work.find(params[:work_id]).work_results.includes(:worker), work_result_id: 0 }
+                                        locals: { data_index: params[:index], work_results: work.work_results.includes(:worker), work_result_id: 0 }
     )
   end
 
   private
 
   def set_seedling_home
-    @seedling_home = SeedlingHome.find(params[:seedling_home_id])
+    @seedling_home = SeedlingHome.joins(:home).where(homes: { organization_id: current_organization.id }).find(params[:seedling_home_id])
   end
 
   def set_works
-    @works = Work.by_work_kind_type(current_term, current_organization.rice_planting_id, @seedling_home)
+    @works = Work.by_work_kind_type(current_term, current_organization.rice_planting_id, @seedling_home, current_organization)
   end
 
   def set_seedling_results

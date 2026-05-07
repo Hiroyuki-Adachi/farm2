@@ -11,6 +11,7 @@ module UpdatableWork
     return false unless current_user && work
 
     (current_user.checkable? || work.created_by == current_user.worker.id) &&
-      work.term == current_user.term
+      work.term == current_user.term &&
+      work.organization_id == current_user.organization_id
   end
 end

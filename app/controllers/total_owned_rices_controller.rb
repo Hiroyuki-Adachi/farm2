@@ -2,7 +2,7 @@ class TotalOwnedRicesController < ApplicationController
   include PermitManager
 
   def index
-    @owned_rices = OwnedRice.for_finance(current_term)
+    @owned_rices = OwnedRice.for_finance(current_term, current_organization)
     respond_to do |format|
       format.html do
         @home_totals = calc_totals(@owned_rices)
@@ -36,8 +36,9 @@ class TotalOwnedRicesController < ApplicationController
   def save_relatives(totals)
     results = {}
     totals.each do |k, v|
-      if v[:owned_count] > Home.find(k).owned_rice_limit(current_term)
-        results[k] = v[:owned_count] - Home.find(k).owned_rice_limit(current_term)
+      home = Home.for_organization(current_organization).find(k)
+      if v[:owned_count] > home.owned_rice_limit(current_term)
+        results[k] = v[:owned_count] - home.owned_rice_limit(current_term)
         totals[k][:owned_price] += results[k] * current_system.relative_price
       end
     end

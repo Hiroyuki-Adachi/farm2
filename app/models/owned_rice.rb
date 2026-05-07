@@ -20,29 +20,36 @@ class OwnedRice < ApplicationRecord
 
   OWNED_RICE_COUNT = 2 # 10a当たりの保有米数
 
-  scope :usual, lambda { |term|
-    joins(:owned_rice_price)
+  scope :usual, lambda { |term, organization = nil|
+    base = joins(:owned_rice_price)
       .where(owned_rice_prices: { term: term })
+    organization ? base.joins(:home).where(homes: { organization_id: organization.is_a?(Organization) ? organization.id : organization }) : base
   }
 
-  scope :by_home, lambda { |term, home_id|
-    joins(:owned_rice_price)
+  scope :by_home, lambda { |term, home_id, organization = nil|
+    base = joins(:owned_rice_price)
       .where(["owned_rice_prices.term = ? AND owned_rices.home_id = ?", term, home_id])
       .order("owned_rice_prices.display_order, owned_rice_prices.id")
+    organization ? base.joins(:home).where(homes: { organization_id: organization.is_a?(Organization) ? organization.id : organization }) : base
   }
 
   scope :available, -> { where("owned_rices.owned_count > 0") }
 
-  scope :for_finance, lambda { |term|
-    joins(:owned_rice_price)
+  scope :for_finance, lambda { |term, organization = nil|
+    base = joins(:owned_rice_price)
       .joins(:home)
       .where(owned_rice_prices: { term: term })
       .where("owned_rices.owned_count > 0")
       .order("homes.finance_order, homes.id, owned_rice_prices.display_order, owned_rice_prices.id")
+    organization ? base.where(homes: { organization_id: organization.is_a?(Organization) ? organization.id : organization }) : base
   }
 
-  def self.regist(id, params)
-    owned_rice = OwnedRice.find_by(id: id) if id
+  def self.regist(id, params, organization = nil)
+    owned_rice = if id && organization
+                   OwnedRice.joins(:home).where(homes: { organization_id: organization.is_a?(Organization) ? organization.id : organization }).find_by(id: id)
+                 elsif id
+                   OwnedRice.find_by(id: id)
+                 end
     if owned_rice
       owned_rice.update(params)
     else
