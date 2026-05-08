@@ -6,7 +6,7 @@ class LoginsTest < ApplicationSystemTestCase
   end
 
   test "ログインからログアウトまで" do
-    visit root_path 
+    visit root_path
     assert_selector '#login_name'
 
     fill_in 'login_name', with: @user.login_name

@@ -18,6 +18,7 @@ CSV.generate(encoding: Encoding::SJIS) do |csv|
         ]
       end
       next unless current_system.waste_price.positive? && drying.waste_weight.positive?
+
       csv << [
         home&.finance_code,
         home&.name,

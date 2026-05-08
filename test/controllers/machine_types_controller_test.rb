@@ -4,7 +4,7 @@ class MachineTypesControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:users1))
     @machine_type = machine_types(:machine_types1)
-    @update = {name: "試験", display_order: 99}
+    @update = { name: "試験", display_order: 99 }
   end
 
   test "機械種別マスタ一覧" do
@@ -19,7 +19,7 @@ class MachineTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "機械種別マスタ新規作成(実行)" do
     assert_difference('MachineType.count') do
-      post machine_types_path, params: {machine_type: @update}
+      post machine_types_path, params: { machine_type: @update }
     end
     assert_redirected_to machine_types_path
 
@@ -35,7 +35,7 @@ class MachineTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "機械種別マスタ変更(実行)" do
     assert_no_difference('MachineType.count') do
-      patch machine_type_path(@machine_type), params: {machine_type: @update}
+      patch machine_type_path(@machine_type), params: { machine_type: @update }
     end
     assert_redirected_to machine_types_path
 

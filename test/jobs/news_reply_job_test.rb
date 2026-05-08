@@ -38,7 +38,7 @@ class NewsReplyJobTest < ActiveJob::TestCase
     perform_enqueued_jobs do
       NewsReplyJob.perform_now(-999, @word)
     end
-    
+
     assert_not was_called.call
   end
 
@@ -106,7 +106,6 @@ class NewsReplyJobTest < ActiveJob::TestCase
       called_flag = true
       Net::HTTPOK.new("1.1", "200", "OK")
     end
-    called_flag_ref = -> { called_flag }
-    return called_flag_ref
+    -> { called_flag }
   end
 end

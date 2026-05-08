@@ -1,4 +1,5 @@
 <%= form_with(model: @template,  data: {controller: "pages--task-template-kind"}) do |f| %>
+  <%= hidden_field_tag :return_to, @return_to if @return_to.present? %>
   <%= error_print(f.object) %>
   <div class="row">
     <div class="field mb-3 col-md-12">
@@ -117,11 +118,11 @@
     </div>
     <% if !@template.new_record? && !@template.discarded? %>
       <div class="btn-group mr-2">
-        <%= link_to '削除', @template, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+        <%= link_to '削除', task_template_path(@template, return_to: @return_to), {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
       </div>
     <% end %>
     <div class="btn-group mr-2">
-      <%= link_to '戻る', task_templates_path, {class: "btn btn-outline-dark"} %>
+      <%= link_to '戻る', @return_to.presence || task_templates_path, {class: "btn btn-outline-dark"} %>
     </div>
   </div>
 <% end %>

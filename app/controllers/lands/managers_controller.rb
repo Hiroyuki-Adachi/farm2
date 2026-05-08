@@ -13,22 +13,23 @@ class Lands::ManagersController < ApplicationController
   end
 
   def destroy
-    LandHome.where(land_id: params[:land_id], manager_flag: true).destroy_all
+    land = Land.for_organization(current_organization).find(params[:land_id])
+    land.land_homes.where(manager_flag: true).destroy_all
   end
 
   private
 
   def set_land
-    @land = Land.find(params[:land_id])
+    @land = Land.for_organization(current_organization).find(params[:land_id])
     @manager_flag = true
     @owner_flag = false
   end
 
   def managers_params
     params
-    .require(:land)
-    .permit(
-      land_homes_attributes: [:home_id, :place, :area, :_destroy, :id, :manager_flag, :owner_flag]
-    )
+      .require(:land)
+      .permit(
+        land_homes_attributes: [:home_id, :place, :area, :_destroy, :id, :manager_flag, :owner_flag]
+      )
   end
 end

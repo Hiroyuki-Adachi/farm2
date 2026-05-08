@@ -22,9 +22,9 @@
 #
 
 class PlanWorkType < ApplicationRecord
-  belongs_to :work_type, -> {with_deleted}
+  belongs_to :work_type, -> { with_deleted }
 
-  scope :usual, -> {joins(:work_type).includes(:work_type).where.not(month: 0).order("plan_work_types.month, work_types.genre, work_types.display_order, plan_work_types.id")}
+  scope :usual, -> { joins(:work_type).includes(:work_type).where.not(month: 0).order("plan_work_types.month, work_types.genre, work_types.display_order, plan_work_types.id") }
 
   def self.create_all(params)
     params.each do |work_type_id, param|

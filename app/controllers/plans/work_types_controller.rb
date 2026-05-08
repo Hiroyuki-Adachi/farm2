@@ -19,6 +19,6 @@ class Plans::WorkTypesController < PlansController
   private
 
   def menu_name
-    return :plan_work_types
+    :plan_work_types
   end
 end

@@ -17,7 +17,7 @@ class CostType < ApplicationRecord
 
   validates :name, presence: true
   validates :phonetic, presence: true
-  validates :phonetic, format: { with: /\A[\p{Hiragana}ー－A-Z0-9]+\z/ }, if: proc { |x| x.phonetic.present?}
+  validates :phonetic, format: { with: /\A[\p{Hiragana}ー－A-Z0-9]+\z/ }, if: proc { |x| x.phonetic.present? }
   validates :display_order, presence: true
 
   scope :usual, -> { order(display_order: :asc) }
@@ -27,7 +27,7 @@ class CostType < ApplicationRecord
   private
 
   def save_work_kinds
-    WorkKind.where(cost_type_id: self.id).update_all(cost_type_id: nil)
-    WorkKind.where(id: @work_kind_ids).update_all(cost_type_id: self.id)
+    WorkKind.where(cost_type_id: id).update_all(cost_type_id: nil)
+    WorkKind.where(id: @work_kind_ids).update_all(cost_type_id: id)
   end
 end

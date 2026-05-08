@@ -19,9 +19,9 @@
         <td><%= worker.login_name %></td>
         <td>
           <% if worker.user %>
-          <%= link_to '修正', edit_user_path(worker.user), {class: "btn btn-success btn-sm"} %>
+          <%= link_to '修正', edit_user_path(worker.user, return_to: request.fullpath), {class: "btn btn-success btn-sm"} %>
           <% else %>
-          <%= link_to '作成', new_user_path(worker_id: worker), {class: "btn btn-success btn-sm"} %>
+          <%= link_to '作成', new_user_path(worker_id: worker, return_to: request.fullpath), {class: "btn btn-success btn-sm"} %>
           <% end %>
         </td>
         <td>
@@ -31,7 +31,7 @@
         </td>
         <td>
           <% if worker.user %>
-            <%= link_to '削除', worker.user, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger btn-sm"} %>
+            <%= link_to '削除', user_path(worker.user, return_to: request.fullpath), {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger btn-sm"} %>
           <% end %>
         </td>
       </tr>

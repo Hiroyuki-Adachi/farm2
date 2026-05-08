@@ -30,9 +30,7 @@
 #
 
 class Organization < ApplicationRecord
-  enum :daily_worker, {no_print: 0, print_home: 1, print_section: 2}
-
-  after_save :save_term
+  enum :daily_worker, { no_print: 0, print_home: 1, print_section: 2 }
 
   validates :name, presence: true
   validates :workers_count, presence: true
@@ -41,8 +39,8 @@ class Organization < ApplicationRecord
   validates :chemicals_count, presence: true
   validates :daily_worker, presence: true
 
-  validates :name, length: {maximum: 20}, if: proc { |x| x.name.present?}
-  validates :url, length: {maximum: 255}, if: proc { |x| x.name.present?}
+  validates :name, length: { maximum: 20 }, if: proc { |x| x.name.present? }
+  validates :url, length: { maximum: 255 }, if: proc { |x| x.name.present? }
 
   belongs_to :broccoli_work_type, class_name: "WorkType"
   belongs_to :broccoli_work_kind, class_name: "WorkKind"
@@ -51,21 +49,28 @@ class Organization < ApplicationRecord
   belongs_to :contract, class_name: "WorkType"
   belongs_to :harvesting, class_name: "WorkKind"
 
-  def self.term
-    Rails.cache.fetch(:organization_term, expires_in: 1.hour) do
-      Organization.first.term
-    end
-  end
+  has_many :users, dependent: :destroy
+  has_many :systems, dependent: :destroy
 
-  def save_term
-    Rails.cache.write(:organization_term, term, expires_in: 1.hour)
+  def self.term(organization = nil)
+    organization&.term || 0
   end
 
   def get_system(date)
-    System.get_system(date, self.id)
+    System.get_system(date, id)
   end
 
   def get_term(date)
     get_system(date || Time.zone.today)&.term
+  end
+
+  def update_term!(term)
+    transaction do
+      update!(term: term)
+
+      users.find_each do |user|
+        user.update!(term: term)
+      end
+    end
   end
 end

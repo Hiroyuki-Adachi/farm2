@@ -32,7 +32,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
 
   test "作業予定登録(実行)" do
     assert_difference('Schedule.count') do
-      post schedules_path, params: {schedule: @update}
+      post schedules_path, params: { schedule: @update }
     end
     assert_redirected_to schedules_path
 
@@ -56,6 +56,13 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "作業予定変更(表示)(戻り先を保持)" do
+    get edit_schedule_path(@schedule, return_to: schedules_path(page: 2))
+    assert_response :success
+    assert_select "input[name=return_to][value='#{schedules_path(page: 2)}']"
+    assert_includes @response.body, %(href="#{schedules_path(page: 2)}")
+  end
+
   test "作業予定変更(表示)(本人不在の場合はNG)" do
     ScheduleWorker.where(schedule_id: @schedule.id, worker_id: @user.worker.id).destroy_all
     get edit_schedule_path(@schedule)
@@ -71,7 +78,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
 
   test "作業予定変更(実行)" do
     assert_no_difference('Schedule.count') do
-      patch schedule_path(@schedule), params: {schedule: @update}
+      patch schedule_path(@schedule), params: { schedule: @update }
     end
     assert_redirected_to schedules_path
 
@@ -89,6 +96,13 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:minutes_flag], @schedule.minutes_flag
   end
 
+  test "作業予定変更(実行)(戻り先を保持)" do
+    assert_no_difference('Schedule.count') do
+      patch schedule_path(@schedule), params: { schedule: @update, return_to: schedules_path(page: 2) }
+    end
+    assert_redirected_to schedules_path(page: 2)
+  end
+
   test "作業予定削除" do
     assert_difference('Schedule.count', -1) do
       delete schedule_path(@schedule)
@@ -96,5 +110,12 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to schedules_path
 
     assert_nil Schedule.find_by(id: @schedule)
+  end
+
+  test "作業予定削除(戻り先を保持)" do
+    assert_difference('Schedule.count', -1) do
+      delete schedule_path(@schedule), params: { return_to: schedules_path(page: 2) }
+    end
+    assert_redirected_to schedules_path(page: 2)
   end
 end

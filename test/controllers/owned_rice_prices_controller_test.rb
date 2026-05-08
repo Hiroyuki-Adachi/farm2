@@ -23,7 +23,7 @@ class OwnedRicePricesControllerTest < ActionDispatch::IntegrationTest
       owned_price: 6500, term: 2015
     }
     assert_difference('OwnedRicePrice.count') do
-      post owned_rice_prices_path, params: {owned_rice_price: new_owned_rice_price}
+      post owned_rice_prices_path, params: { owned_rice_price: new_owned_rice_price }
     end
     assert_redirected_to owned_rice_prices_path
 
@@ -47,7 +47,7 @@ class OwnedRicePricesControllerTest < ActionDispatch::IntegrationTest
       owned_price: 7000, term: 2015
     }
     assert_no_difference('OwnedRicePrice.count') do
-      patch owned_rice_price_path(@owned_rice_price.id), params: {owned_rice_price: new_owned_rice_price}
+      patch owned_rice_price_path(@owned_rice_price.id), params: { owned_rice_price: new_owned_rice_price }
     end
     assert_redirected_to owned_rice_prices_path
 

@@ -16,7 +16,7 @@
 
 class ExpenseWorkType < ApplicationRecord
   belongs_to :expense
-  belongs_to :work_type, -> {with_deleted}
+  belongs_to :work_type, -> { with_deleted }
 
   def true_rate
     rate.nil? || rate.zero? ? 1 : rate

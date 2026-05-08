@@ -22,5 +22,5 @@ class OwnedRicePrice < ApplicationRecord
 
   has_many   :owned_rices, dependent: :destroy
 
-  scope :usual, ->(term) {where(term: term).order(:display_order)}
+  scope :usual, ->(term) { where(term: term).order(:display_order) }
 end

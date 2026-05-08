@@ -41,6 +41,13 @@ class WorkVerificationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @user.worker.id, verification.worker_id
   end
 
+  test "別組織の日報は検証できない" do
+    assert_no_difference('WorkVerification.count') do
+      patch work_verification_path(work_id: works(:work_other_org).id)
+    end
+    assert_response :not_found
+  end
+
   test "日報検証(取消)" do
     work = works(:work_verified)
     assert_difference('WorkVerification.count', -1) do
@@ -49,5 +56,12 @@ class WorkVerificationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     assert_nil WorkVerification.find_by(work_id: work.id, worker_id: @user.worker.id)
+  end
+
+  test "別組織の日報は検証取消できない" do
+    assert_no_difference('WorkVerification.count') do
+      delete work_verification_path(work_id: works(:work_other_org).id)
+    end
+    assert_response :not_found
   end
 end

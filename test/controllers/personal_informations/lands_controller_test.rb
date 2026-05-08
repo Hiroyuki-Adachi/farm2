@@ -16,4 +16,10 @@ class PersonalInformations::LandsControllerTest < ActionDispatch::IntegrationTes
       assert_response :success
     end
   end
+
+  test "個人情報で別組織の土地は参照できない" do
+    get personal_information_land_path(personal_information_token: @user.token, id: lands(:land_other_org).id)
+
+    assert_response :not_found
+  end
 end

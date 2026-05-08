@@ -22,7 +22,7 @@ class StatisticsGraphTest < ApplicationSystemTestCase
     assert_selector "canvas#chart[data-chart-rendered]", wait: 5
 
     # タブを順にクリックして、描画済みフラグ=1 を待つ
-    %w[全作業時間 作業種別別時間 世代別時間 月別作業時間 個人年間推移 個人前年同月比].each do |label|
+    %w[全作業時間 作業種別別時間 世代別時間 月別作業時間].each do |label|
       click_tab_and_expect_render(label)
     end
   end

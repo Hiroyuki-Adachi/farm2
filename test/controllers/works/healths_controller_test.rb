@@ -14,9 +14,9 @@ class Works::HealthsControllerTest < ActionDispatch::IntegrationTest
 
   test "作業変更(健康)(変更)" do
     result = work_results(:work_results_not_fixed)
-    health = {health_id: 2, remarks: "TEST"}
+    health = { health_id: 2, remarks: "TEST" }
     assert_no_difference('WorkResult.count') do
-      post work_healths_path(work_id: @work.id), params: {results: {result.id => health}}
+      post work_healths_path(work_id: @work.id), params: { results: { result.id => health } }
     end
     assert_redirected_to new_work_task_path(work_id: @work)
 

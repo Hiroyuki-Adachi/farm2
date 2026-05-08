@@ -35,11 +35,11 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     chemical = chemicals(:chemicals3)
     chemicals = { chemical.id => { 1 => {
       dilution_id: 1, magnification: 10, dilution_amount: 10, quantity: 10
-    }}}
+    } } }
     assert_difference('WorkChemical.count') do
       post work_use_chemicals_path(work_id: @work), params: {
         chemicals: chemicals,
-        work: {chemical_group_flag: false}
+        work: { chemical_group_flag: false }
       }
     end
     assert_redirected_to work_path(id: @work)
@@ -56,14 +56,14 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     chemical = chemicals(:chemicals3)
     chemicals = { chemical.id => { 1 => {
       dilution_id: 1, magnification: 10, dilution_amount: 10, quantity: 10
-    }}}
+    } } }
     chemical_group_no = 1
 
     # 薬剤グループの指定で値に反映される
     post work_use_chemicals_path(work_id: @work), params: {
       chemicals: chemicals,
-      work: {chemical_group_flag: true},
-      work_lands: { work_lands_not_fixed1.id => chemical_group_no}
+      work: { chemical_group_flag: true },
+      work_lands: { work_lands_not_fixed1.id => chemical_group_no }
     }
     work_lands_not_fixed1.reload
     assert_equal chemical_group_no, work_lands_not_fixed1.chemical_group_no
@@ -71,7 +71,7 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     # 薬剤グループ解除でゼロが設定される
     post work_use_chemicals_path(work_id: @work), params: {
       chemicals: chemicals,
-      work: {chemical_group_flag: false}
+      work: { chemical_group_flag: false }
     }
     work_lands_not_fixed1.reload
     assert_equal 0, work_lands_not_fixed1.chemical_group_no

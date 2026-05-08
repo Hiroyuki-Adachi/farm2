@@ -19,9 +19,11 @@ class WholeCropLand < ApplicationRecord
   belongs_to :work_whole_crop
   belongs_to :work_land
 
-  has_many :wcs_rolls, -> {order("whole_crop_rolls.display_order")}, class_name: "WholeCropRoll", dependent: :destroy
+  validate :work_land_belongs_to_same_organization
 
-  scope :for_sales, ->(term) {
+  has_many :wcs_rolls, -> { order("whole_crop_rolls.display_order") }, class_name: "WholeCropRoll", dependent: :destroy
+
+  scope :for_sales, lambda { |term|
     joins(work_whole_crop: :work).where(works: { term: term }).where.not(rolls: 0)
   }
 
@@ -29,7 +31,7 @@ class WholeCropLand < ApplicationRecord
     params.each do |param|
       wcs_land = nil
       if param[:id].present?
-        wcs_land = WholeCropLand.find(param[:id])
+        wcs_land = whole_crop.wcs_lands.find(param[:id])
         wcs_land.update(wcs_lands_param(whole_crop, param))
       else
         wcs_land = WholeCropLand.create(wcs_lands_param(whole_crop, param))
@@ -44,5 +46,14 @@ class WholeCropLand < ApplicationRecord
 
   def price
     (rolls * work_whole_crop.roll_price * (100 + work_whole_crop.tax_rate) / 100).floor(0)
+  end
+
+  private
+
+  def work_land_belongs_to_same_organization
+    return if work_whole_crop&.work.blank? || work_land&.work.blank?
+    return if work_whole_crop.work.organization_id == work_land.work.organization_id
+
+    errors.add(:work_land_id, "はWCS作業と同じ組織の作業地を選択してください。")
   end
 end

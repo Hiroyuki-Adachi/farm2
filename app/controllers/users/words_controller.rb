@@ -13,7 +13,7 @@ class Users::WordsController < ApplicationController
       render turbo_stream: turbo_stream.update('flash_messages', partial: 'application/flashes')
     end
   end
-  
+
   def destroy
     UserTopic.find_by(user_id: current_user.id, topic_id: params[:id])&.readed!
     @user_topics = UserTopic.current_topics(current_user)

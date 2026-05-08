@@ -9,6 +9,11 @@ class SeedlingCostsController < ApplicationController
     @lands = LandCost.total(Time.zone.today)
   end
 
+  def edit
+    @homes = Home.for_seedling
+    @seedling.seedling_homes.build
+  end
+
   def create
     ActiveRecord::Base.transaction do
       current_system.update(system_params)
@@ -21,11 +26,6 @@ class SeedlingCostsController < ApplicationController
       end
     end
     redirect_to seedling_costs_path
-  end
-
-  def edit
-    @homes = Home.for_seedling
-    @seedling.seedling_homes.build
   end
 
   def update

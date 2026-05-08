@@ -30,14 +30,14 @@ class PersonalInformations::Schedules::WorkersControllerTest < ActionDispatch::I
     patch personal_information_schedules_workers_edit_path(
       personal_information_token: @user.token,
       schedule_id: @schedule.id
-    ), params: {worker_ids: [workers(:worker2).id, workers(:worker3).id]}
+    ), params: { worker_ids: [workers(:worker2).id, workers(:worker3).id] }
 
     assert_redirected_to personal_information_schedules_workers_path(personal_information_token: @user.token)
 
-    section_worker_ids = Worker.joins(:home).where(homes: {section_id: @user.worker.home.section_id}).pluck(:id)
+    section_worker_ids = Worker.joins(:home).where(homes: { section_id: @user.worker.home.section_id }).pluck(:id)
     schedule_worker_ids = ScheduleWorker.where(schedule_id: @schedule.id, worker_id: section_worker_ids)
-                                        .order(:display_order)
-                                        .pluck(:worker_id)
+      .order(:display_order)
+      .pluck(:worker_id)
     assert_equal [workers(:worker2).id, workers(:worker3).id], schedule_worker_ids
   end
 
@@ -61,7 +61,7 @@ class PersonalInformations::Schedules::WorkersControllerTest < ActionDispatch::I
     patch personal_information_schedules_workers_edit_path(
       personal_information_token: user.token,
       schedule_id: @schedule.id
-    ), params: {worker_ids: [workers(:worker2).id, workers(:worker34).id]}
+    ), params: { worker_ids: [workers(:worker2).id, workers(:worker34).id] }
 
     assert_redirected_to personal_information_schedules_workers_path(personal_information_token: user.token)
     assert_not ScheduleWorker.exists?(schedule_id: @schedule.id, worker_id: workers(:worker4).id)

@@ -27,31 +27,52 @@ class WorkChemical < ApplicationRecord
   belongs_to_active_hash :dilution
   has_one    :stock, dependent: :destroy, class_name: 'ChemicalStock'
   has_one    :chemical_type, through: :chemical
-  has_one    :work_type, -> {with_deleted}, through: :work
-  has_one    :work_kind, -> {with_deleted}, through: :work
+  has_one    :work_type, -> { with_deleted }, through: :work
+  has_one    :work_kind, -> { with_deleted }, through: :work
 
   validates :quantity, presence: true
-  validates :quantity, numericality: { if: proc { |x| x.quantity.present?} }
+  validates :quantity, numericality: { if: proc { |x| x.quantity.present? } }
 
-  scope :by_term, ->(term) do
-    joins(:work)
+  scope :by_term, lambda { |term, organization = nil|
+    works = Work.arel_table
+    chemicals = Chemical.arel_table
+    chemical_types = ChemicalType.arel_table
+    work_types = WorkType.arel_table
+    work_kinds = WorkKind.arel_table
+    systems = System.arel_table
+    systems_join = works
+      .join(systems)
+      .on(
+        systems[:term].eq(works[:term])
+          .and(systems[:organization_id].eq(works[:organization_id]))
+      )
+      .join_sources
+
+    base = joins(:work)
       .eager_load(:work)
       .joins(:chemical).eager_load(:chemical)
-      .joins("INNER JOIN chemical_types ON chemicals.chemical_type_id = chemical_types.id").preload(:chemical_type)
-      .joins("INNER JOIN work_types ON works.work_type_id = work_types.id").preload(:work_type)
-      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
-      .joins("INNER JOIN systems ON systems.term = works.term")
-      .where("works.worked_at BETWEEN systems.start_date AND systems.end_date")
+      .joins(arel_table.join(chemical_types).on(chemicals[:chemical_type_id].eq(chemical_types[:id])).join_sources).preload(:chemical_type)
+      .joins(arel_table.join(work_types).on(works[:work_type_id].eq(work_types[:id])).join_sources).preload(:work_type)
+      .joins(arel_table.join(work_kinds).on(works[:work_kind_id].eq(work_kinds[:id])).join_sources).preload(:work_kind)
+      .joins(systems_join)
+      .where(works[:worked_at].gteq(systems[:start_date]).and(works[:worked_at].lteq(systems[:end_date])))
       .where(systems: { term: term })
       .order("works.worked_at, works.id, chemical_types.display_order, chemical_types.id, chemicals.display_order, chemicals.id")
-  end
 
-  scope :for_stock, ->(chemical_id, start_date) do
+    if organization
+      organization_id = organization.is_a?(Organization) ? organization.id : organization
+      base.where(works: { organization_id: organization_id })
+    else
+      base
+    end
+  }
+
+  scope :for_stock, lambda { |chemical_id, start_date|
     joins(:work)
-    .includes(:chemical)
-    .where("works.worked_at >= ? AND work_chemicals.chemical_id = ?", start_date, chemical_id)
-    .order("works.worked_at, works.id")
-  end
+      .includes(:chemical)
+      .where("works.worked_at >= ? AND work_chemicals.chemical_id = ?", start_date, chemical_id)
+      .order("works.worked_at, works.id")
+  }
 
   def chemical_display_order
     (chemical_type.display_order * 100_000) + (chemical_type.id * 1000) + (chemical.display_order * 100) + chemical_id
@@ -59,35 +80,35 @@ class WorkChemical < ApplicationRecord
 
   def quantity10
     sum_area = work.chemical_group_flag ? work.sum_areas(chemical_group_no) : work.sum_areas
-    return sum_area.zero? ? 0 : (quantity / sum_area * 10).round(1)
+    sum_area.zero? ? 0 : (quantity / sum_area * 10).round(1)
   end
 
   def dilution_amount
-    return dilution? && chemical.unit_scale.positive? ? (quantity * magnification / chemical.unit_scale).round(1) : quantity
+    dilution? && chemical.unit_scale.positive? ? (quantity * magnification / chemical.unit_scale).round(1) : quantity
   end
 
   def dilution?
-    return dilution.dilution
+    dilution.dilution
   end
 
   def dilution_none?
-    return dilution == Dilution::NONE
+    dilution == Dilution::NONE
   end
 
   def dilution_l?
-    return dilution == Dilution::L
+    dilution == Dilution::L
   end
 
   def dilution_mag?
-    return dilution == Dilution::MAG
+    dilution == Dilution::MAG
   end
 
   def quantity_for_stock
-    return chemical.stock_quantity.zero? ? quantity : quantity * chemical.base_quantity / chemical.stock_quantity
+    chemical.stock_quantity.zero? ? quantity : quantity * chemical.base_quantity / chemical.stock_quantity
   end
 
   def areas
-    if self.chemical_group_no.zero? || work.work_lands.where(chemical_group_no: self.chemical_group_no).empty?
+    if chemical_group_no.zero? || work.work_lands.where(chemical_group_no: chemical_group_no).empty?
       chemical_term = ChemicalTerm.find_by(term: work.term, chemical_id: chemical_id)
       work_type_ids = chemical_term ? chemical_term.work_types.map(&:id) : [work.work_type_id]
       land_ids = LandCost.by_work_type(work_type_ids, work.worked_at).by_land(work.work_lands.map(&:land_id)).map(&:land_id)

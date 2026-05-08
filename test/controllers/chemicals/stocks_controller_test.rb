@@ -19,7 +19,7 @@ class Chemicals::StocksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "農薬在庫(AJAX)" do
-    get load_chemicals_stocks_path, params: {term: 2015, chemical_type_id: 3}
+    get load_chemicals_stocks_path, params: { term: 2015, chemical_type_id: 3 }
     assert_response :success
   end
 
@@ -81,7 +81,7 @@ class Chemicals::StocksControllerTest < ActionDispatch::IntegrationTest
       delete chemical_stock_path(chemical_id: @chemical_term.id, id: @stock.id)
     end
     assert_response :success
-    
+
     assert_nil ChemicalStock.find_by(id: @stock.id)
   end
 end

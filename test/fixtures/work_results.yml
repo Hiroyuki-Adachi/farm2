@@ -122,6 +122,18 @@ work_results6:
   created_at: '2015-03-21 00:49:51.615724'
   updated_at: '2016-06-13 05:42:42.519341'
 
+work_result_other_org:
+  id: 9000
+  work: work_other_org
+  worker: worker_other_org
+  hours: 4.0
+  display_order: 1
+  fixed_hours: 4.0
+  fixed_price: 1000
+  fixed_amount: 4000
+  created_at: '2015-04-01 12:00:00'
+  updated_at: '2015-04-01 12:00:00'
+
 
 work_results7:
   id: '5217'

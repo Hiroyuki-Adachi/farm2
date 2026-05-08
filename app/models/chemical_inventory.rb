@@ -11,13 +11,13 @@
 #
 
 class ChemicalInventory < ApplicationRecord
-  enum :chemical_adjust_type_id, {inventory: 1, stored: 2, shipping: 3}
+  enum :chemical_adjust_type_id, { inventory: 1, stored: 2, shipping: 3 }
 
-  validates :name, presence: true, length: {maximum: 40}
+  validates :name, presence: true, length: { maximum: 40 }
   validates :checked_on, presence: true
   has_many :stocks, class_name: 'ChemicalStock', dependent: :destroy
   accepts_nested_attributes_for :stocks, allow_destroy: true
 
-  scope :inventories, -> {where(chemical_adjust_type_id: :inventory).order(:checked_on)}
-  scope :stores, -> {where(chemical_adjust_type_id: :stored).order(:checked_on)}
+  scope :inventories, -> { where(chemical_adjust_type_id: :inventory).order(:checked_on) }
+  scope :stores, -> { where(chemical_adjust_type_id: :stored).order(:checked_on) }
 end

@@ -1,5 +1,5 @@
 class OrganizationsController < ApplicationController
-  before_action :permit_admin, only: [:edit, :update]
+  before_action :authorize_admin!, only: [:edit, :update]
   before_action :set_masters, only: [:edit]
   before_action :set_organization
   helper GmapHelper

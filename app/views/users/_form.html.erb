@@ -1,5 +1,6 @@
 <%= error_print(@user) %>
 <%= form_with(model: @user) do |f| %>
+<%= hidden_field_tag :return_to, @return_to if @return_to.present? %>
 <div class="row">
   <div class="col-md-3">
     <div class="field mb-3">
@@ -42,12 +43,7 @@
     <%= f.submit '登録', class: "btn btn-warning" %>
   </div>
   <div class="btn-group mr-2">
-    <% if action_name == "new" ||  action_name == "create" %>
-      <%= link_to '戻る', users_path(), {class: "btn btn-outline-dark"} %>
-    <% end %>
-    <% if action_name == "edit" || action_name == "update" %>
-      <%= link_to "戻る", "#", :onclick => raw("javascript:history.back();return false;"), class: "btn btn-outline-dark" %>
-    <% end %>
+    <%= link_to '戻る', @return_to.presence || users_path, {class: "btn btn-outline-dark"} %>
   </div>
 </div>
 <% end %>

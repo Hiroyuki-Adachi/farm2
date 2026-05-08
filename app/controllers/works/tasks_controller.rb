@@ -6,6 +6,7 @@ class Works::TasksController < WorksController
 
   def new
     redirect_to work_path(@work) and return unless @tasks.exists?
+
     @tasks = @tasks.usual_order
   end
 

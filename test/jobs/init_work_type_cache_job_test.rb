@@ -14,12 +14,7 @@ class InitWorkTypeCacheJobTest < ActiveJob::TestCase
     relation.expects(:landable).returns(relation)
     relation.expects(:find_each).multiple_yields([work1], [work2])
 
-    System.create(
-      term: term,
-      start_date: '2024-01-01',
-      end_date: '2024-12-31',
-      organization_id: organizations(:org).id
-    )
+    create_systems_until(term, organizations(:org))
 
     travel_to Time.zone.local(2024, 3, 22) do
       perform_enqueued_jobs { InitWorkTypeCacheJob.perform_now }
@@ -28,5 +23,21 @@ class InitWorkTypeCacheJobTest < ActiveJob::TestCase
 
   test "キュー名が default である" do
     assert_equal "default", InitWorkTypeCacheJob.queue_name
+  end
+
+  private
+
+  def create_systems_until(term, organization)
+    previous = System.where(organization_id: organization.id).order(:term).last
+
+    ((previous.term + 1)..term).each do |target_term|
+      System.create!(
+        term: target_term,
+        start_date: previous.end_date.next_day,
+        end_date: previous.end_date.next_day.next_year.prev_day,
+        organization_id: organization.id
+      )
+      previous = System.find_by!(term: target_term, organization_id: organization.id)
+    end
   end
 end

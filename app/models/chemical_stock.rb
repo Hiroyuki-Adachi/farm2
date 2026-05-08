@@ -23,11 +23,11 @@ class ChemicalStock < ApplicationRecord
   belongs_to :work_chemical
   belongs_to :chemical_inventory
 
-  validates :chemical_id, uniqueness: {scope: :chemical_inventory}, if: :valid_chemical_id?
+  validates :chemical_id, uniqueness: { scope: :chemical_inventory }, if: :valid_chemical_id?
 
-  scope :usual, ->(chemical_id) {
+  scope :usual, lambda { |chemical_id|
     where(chemical_id: chemical_id)
-    .order(:stock_on, :id)
+      .order(:stock_on, :id)
   }
 
   before_save :save_inventory
@@ -67,6 +67,7 @@ class ChemicalStock < ApplicationRecord
   def self.create_begin(organization_id, chemical_id, start_date)
     System.where("start_date > ? AND organization_id = ?", start_date, organization_id).order(:start_date).each do |sys|
       next if ChemicalStock.exists?(["chemical_id = ? AND stock_on = ?", chemical_id, sys.start_date])
+
       ChemicalStock.create(
         name: "期首在庫",
         stock_on: sys.start_date,
@@ -107,6 +108,7 @@ class ChemicalStock < ApplicationRecord
 
   def stored_stock
     return nil if stored.nil?
+
     chemical.stock_quantity.zero? ? stored : stored * chemical.stock_quantity / chemical.carton_quantity
   end
 

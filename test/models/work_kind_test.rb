@@ -48,13 +48,13 @@ class WorkKindTest < ActiveSupport::TestCase
   end
 
   test "各年の単価設定" do
-    work_kind = WorkKind.find(work_kinds(:work_kind_every_term).id) 
+    work_kind = WorkKind.find(work_kinds(:work_kind_every_term).id)
     assert_equal 2010, work_kind.term_price(2010)
     assert_equal 2015, work_kind.term_price(2015)
   end
 
   test "初年度のみ単価設定" do
-    work_kind = WorkKind.find(work_kinds(:work_kind_first_term).id) 
+    work_kind = WorkKind.find(work_kinds(:work_kind_first_term).id)
     assert_equal work_kind_prices(:work_kind_prices_first_0).price, work_kind.term_price(2010)
     assert_equal systems(:s2015).default_price, work_kind.term_price(2015)
   end

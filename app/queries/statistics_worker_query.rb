@@ -13,7 +13,7 @@ class StatisticsWorkerQuery
     workers = Worker.arel_table
     homes = Home.arel_table
     sections = Section.arel_table
-    
+
     # サブクエリ: WR
     wr_subquery = works
       .project(

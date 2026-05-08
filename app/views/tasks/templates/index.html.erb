@@ -16,7 +16,7 @@
         <td><%= template.priority_name %></td>
         <td><%= template.office_role_name %></td>
         <td><%= template.kind_name %></td>
-        <td><%= link_to '修正', edit_task_template_path(template), {class: "btn btn-success btn-sm"} %></td>
+        <td><%= link_to '修正', edit_task_template_path(template, return_to: request.fullpath), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>
   </tbody>

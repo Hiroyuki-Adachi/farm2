@@ -30,7 +30,7 @@ class InstitutionsControllerTest < ActionDispatch::IntegrationTest
 
   test "施設マスタ新規作成(実行)" do
     assert_difference('Institution.count') do
-      post institutions_path, params: {institution: @update}
+      post institutions_path, params: { institution: @update }
     end
     assert_redirected_to institutions_path
 
@@ -48,7 +48,7 @@ class InstitutionsControllerTest < ActionDispatch::IntegrationTest
 
   test "施設マスタ変更(実行)" do
     assert_no_difference('Institution.count') do
-      patch institution_path(@institution.id), params: {institution: @update}
+      patch institution_path(@institution.id), params: { institution: @update }
     end
     assert_redirected_to institutions_path
 

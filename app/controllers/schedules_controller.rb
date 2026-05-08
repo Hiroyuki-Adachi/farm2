@@ -1,7 +1,10 @@
 class SchedulesController < ApplicationController
+  include ReturnToIndex
+
   before_action :set_schedule, only: [:edit, :update, :destroy]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :permit_only_self, only: [:edit, :update, :destroy]
+  keeps_index_return_to path_method: :schedules_path
 
   def index
     @schedules = Schedule.for_organization(current_organization).usual
@@ -23,25 +26,25 @@ class SchedulesController < ApplicationController
     ).decorate
   end
 
+  def edit; end
+
   def create
     @schedule = Schedule.new(schedule_params.merge(created_by: current_user.worker.id, organization_id: current_organization.id))
     Schedule.transaction do
       if @schedule.save
         @schedule.regist_sections(params[:section_ids])
-        redirect_to schedules_path
+        redirect_to @return_to
       else
         render action: :new, status: :unprocessable_content
       end
     end
   end
 
-  def edit; end
-
   def update
     Schedule.transaction do
       if @schedule.update(schedule_params)
         @schedule.model.regist_sections(params[:section_ids])
-        redirect_to schedules_path
+        redirect_to @return_to
       else
         render action: :edit, status: :unprocessable_content
       end
@@ -50,9 +53,9 @@ class SchedulesController < ApplicationController
 
   def destroy
     @schedule.destroy
-    redirect_to schedules_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
-  
+
   private
 
   def set_schedule
@@ -75,17 +78,18 @@ class SchedulesController < ApplicationController
         :minutes_flag
       ]
     )
-    .merge(term: 0)
+      .merge(term: 0)
   end
 
   def set_masters
     @work_types = WorkType.usual
     @work_kinds = WorkKind.by_type(@schedule ? @schedule.work_type : @work_types.first) || []
-    @sections = Section.usual_order
+    @sections = Section.for_organization(current_organization).usual_order
   end
 
   def permit_only_self
     return true if current_user.admin?
+
     if (current_user.worker.id == @schedule.created_by) || @schedule.workers.any? { |w| w.id == current_user.worker.id }
       true
     else

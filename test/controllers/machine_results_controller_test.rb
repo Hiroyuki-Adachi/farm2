@@ -9,7 +9,7 @@ class MachineResultsControllerTest < ActionDispatch::IntegrationTest
     get machine_results_path
     assert_response :success
 
-    get machine_results_path, params: {fixed_at: "2015-02-28"}
+    get machine_results_path, params: { fixed_at: "2015-02-28" }
     assert_response :success
   end
 end

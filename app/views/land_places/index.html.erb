@@ -11,7 +11,7 @@
     <% @land_places.each do |land_place| %>
       <tr>
         <td><%= land_place.name %></td>
-        <td><%= link_to '修正', edit_land_place_path(land_place), {class: "btn btn-success btn-sm"} %></td>
+        <td><%= link_to '修正', edit_land_place_path(land_place, return_to: request.fullpath), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>
   </tbody>

@@ -7,12 +7,12 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   helper_method :menu_name, :prefixed_path
 
-  before_action :restrict_remote_ip
-  before_action :enforce_access_target, if: :user_present?
+  before_action :authenticate_user!
+  before_action :check_access_target!, if: :user_signed_in?
   before_action :set_term, if: :user_present?
 
   unless Rails.env.development? || Rails.env.test?
-    rescue_from StandardError, with: :handle_error
+    rescue_from StandardError, with: :handle_internal_error
   end
 
   protected
@@ -27,28 +27,35 @@ class ApplicationController < ActionController::Base
     { script_name: prefix }
   end
 
-  def sum_hours_key(term)
-    "sum_hours_#{current_user.organization_id}_#{term}"
-  end
-
-  def count_workers_key(term)
-    "count_workers_#{current_user.organization_id}_#{term}"
-  end
-
   def sum_hours(term)
-    Rails.cache.fetch(sum_hours_key(term), expires_in: 1.hour) do
-      WorkResult.where(work_id: Work.for_organization(current_user.organization_id).usual(term).select(:id)).group(:work_id).sum(:hours).to_h
-    end
+    work_result_totals(term)[:sum_hours]
   end
 
   def count_workers(term)
-    Rails.cache.fetch(count_workers_key(term), expires_in: 1.hour) do
-      WorkResult.where(work_id: Work.for_organization(current_user.organization_id).usual(term).select(:id)).group(:work_id).count(:worker_id).to_h
+    work_result_totals(term)[:count_workers]
+  end
+
+  def work_result_totals(term)
+    @work_result_totals ||= {}
+    @work_result_totals[term] ||= begin
+      totals = { sum_hours: {}, count_workers: {} }
+      work_ids = Work.for_organization(current_user.organization_id).usual(term).select(:id)
+
+      WorkResult
+        .where(work_id: work_ids)
+        .group(:work_id)
+        .pluck(:work_id, Arel.sql("SUM(hours)"), Arel.sql("COUNT(worker_id)"))
+        .each do |work_id, sum_hours, count_workers|
+          totals[:sum_hours][work_id] = sum_hours
+          totals[:count_workers][work_id] = count_workers
+        end
+
+      totals
     end
   end
 
-  def permit_admin
-    return to_error_path unless current_user.admin?
+  def authorize_admin!
+    to_error_path unless current_user.admin?
   end
 
   def make_months
@@ -59,7 +66,7 @@ class ApplicationController < ActionController::Base
       results << [head.strftime("%Y年 %m月"), head]
       head = head.next_month
     end
-    return results
+    results
   end
 
   private
@@ -68,7 +75,7 @@ class ApplicationController < ActionController::Base
     @term = current_organization.term
   end
 
-  def enforce_access_target
+  def check_access_target!
     target = session[:access_target].to_s.upcase
     return true if target.blank? || target == "PC"
 
@@ -92,18 +99,22 @@ class ApplicationController < ActionController::Base
     path.match?(%r{\A(?:/[^/]+)?#{escaped_prefix}(?:/|\z)})
   end
 
-  def restrict_remote_ip
-    if session[:user_id].nil? 
+  def authenticate_user!
+    if session[:user_id].nil?
       redirect_to prefixed_path(root_path)
-      return false
+      false
     end
   end
 
-  def permit_this_term
-    return to_error_path unless this_term?
+  def authorize_current_term!
+    to_error_path unless this_term?
   end
 
   def to_error_path(exception = nil)
+    render_service_unavailable(exception)
+  end
+
+  def render_service_unavailable(exception = nil)
     logger.error "[503] Service Unavailable"
     if exception
       logger.error "Exception: #{exception.class} - #{exception.message}"
@@ -112,7 +123,7 @@ class ApplicationController < ActionController::Base
       logger.error "No exception object given (manual trigger)"
     end
     logger.error "Request: #{request.method} #{request.fullpath} from #{request.remote_ip}"
-    logger.error "Params: #{request.params}"
+    logger.error "Params: #{request.filtered_parameters}"
     logger.error "User: #{@current_user&.id}"
 
     render file: Rails.public_path.join('503.html'), layout: false, status: :service_unavailable
@@ -122,8 +133,12 @@ class ApplicationController < ActionController::Base
     session[:user_id].present?
   end
 
+  def user_signed_in?
+    user_present?
+  end
+
   def menu_name
-    return controller_name
+    controller_name
   end
 
   def request_path_prefix
@@ -138,6 +153,23 @@ class ApplicationController < ActionController::Base
     return normalized if prefix.blank? || normalized.blank? || normalized.start_with?(prefix + "/") || normalized == prefix
 
     normalized.start_with?("/") ? "#{prefix}#{normalized}" : "#{prefix}/#{normalized}"
+  end
+
+  def safe_return_to_path(path, fallback: nil, allowed_paths: nil, allowed_path_prefixes: nil)
+    return fallback if path.blank?
+
+    uri = URI.parse(path)
+    return fallback unless uri.scheme.nil? && uri.host.nil?
+    return fallback unless uri.path&.start_with?("/")
+
+    normalized = [uri.path, uri.query].compact.join("?")
+    return normalized if allowed_paths.nil? && allowed_path_prefixes.nil?
+    return normalized if allowed_paths&.any? { |allowed_path| uri.path == allowed_path.to_s }
+    return normalized if allowed_path_prefixes&.any? { |prefix| uri.path.start_with?(prefix.to_s) }
+
+    fallback
+  rescue URI::InvalidURIError
+    fallback
   end
 
   def normalized_path_prefix(value)
@@ -156,13 +188,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def handle_error(exception = nil)
+  def handle_internal_error(exception = nil)
     logger.error "[500] Internal Server Error"
 
     logger.error({
-      error: exception.class.name,
-      message: exception.message,
-      stack_trace: exception.backtrace.take(5),
+      error: exception&.class&.name,
+      message: exception&.message,
+      stack_trace: exception&.backtrace&.take(5),
       path: request.fullpath,
       time: Time.current,
       severity: :ERROR

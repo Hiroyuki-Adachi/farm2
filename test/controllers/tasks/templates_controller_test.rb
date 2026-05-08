@@ -4,7 +4,7 @@ class Tasks::TemplatesControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:users1))
     @template = task_templates(:template1)
-    @update = { 
+    @update = {
       organization_id: 1, title: "月次タスク", kind: :monthly, monthly_stage: :w3, priority: :high,
       months_before_due: 1, office_role: :general, offset: 0, active: true
     }
@@ -28,7 +28,7 @@ class Tasks::TemplatesControllerTest < ActionDispatch::IntegrationTest
 
   test "定型タスク新規作成(実行)" do
     assert_difference('TaskTemplate.kept.count') do
-      post task_templates_path, params: {task_template: @update}
+      post task_templates_path, params: { task_template: @update }
     end
     assert_redirected_to task_templates_path
 
@@ -52,7 +52,7 @@ class Tasks::TemplatesControllerTest < ActionDispatch::IntegrationTest
 
   test "定型タスク変更(実行)" do
     assert_no_difference('TaskTemplate.kept.count') do
-      patch task_template_path(@template), params: {task_template: @update}
+      patch task_template_path(@template), params: { task_template: @update }
     end
     assert_redirected_to task_templates_path
 

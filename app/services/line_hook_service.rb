@@ -32,7 +32,7 @@ class LineHookService
     end
 
     self.class.send_reply(reply_token, "#{user.worker.name}さん、こんにちは😀\n\n#{I18n.t('line_hook.help')}")
-    return true
+    true
   rescue StandardError => e
     Rails.logger.error("LineHookService Error: #{e.message}")
     false
@@ -51,6 +51,7 @@ class LineHookService
 
   def self.push_message(line_id, message, retry_key: nil)
     return if message.blank?
+
     push_messages(line_id, [message], retry_key: retry_key)
   end
 

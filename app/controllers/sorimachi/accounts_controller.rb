@@ -1,5 +1,6 @@
 class Sorimachi::AccountsController < ApplicationController
   include PermitManager
+
   before_action :set_sorimachi_account, only: [:edit, :update, :destroy]
 
   def index
@@ -54,12 +55,12 @@ class Sorimachi::AccountsController < ApplicationController
     end
   end
 
+  def edit; end
+
   def create
     SorimachiAccount.import(current_term)
     redirect_to sorimachi_accounts_path
   end
-
-  def edit; end
 
   def update
     @account.attributes = sorimachi_account_params
@@ -82,8 +83,10 @@ class Sorimachi::AccountsController < ApplicationController
   private
 
   def set_sorimachi_account
-    @account = SorimachiAccount.find_by(term: current_term, code: params[:code])
-    @account = SorimachiAccount.new(term: current_term, code: params[:code]) unless @account
+    @account = SorimachiAccount.find_or_initialize_by(
+      term: current_term,
+      code: params[:code]
+    )
   end
 
   def sorimachi_account_params

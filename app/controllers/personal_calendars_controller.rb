@@ -1,4 +1,6 @@
 class PersonalCalendarsController < ApplicationController
+  skip_before_action :authenticate_user!
+
   def show
     @worker = User.find_by(token: params[:token])&.worker
     if @worker
@@ -16,8 +18,6 @@ class PersonalCalendarsController < ApplicationController
 
   private
 
-  def restrict_remote_ip; end
-
   def worked_from
     Date.new(Time.zone.today.year - 1, 1, 1)
   end
@@ -30,7 +30,7 @@ class PersonalCalendarsController < ApplicationController
     @schedules.each do |schedule|
       calendar.add_event(make_event_for_schedule(schedule))
     end
-    return calendar
+    calendar
   end
 
   def make_event_for_work(result)
@@ -43,7 +43,7 @@ class PersonalCalendarsController < ApplicationController
     event.description = <<~DESCRIPTION
       ■備考
       　#{work.remarks}
-      
+
       ■詳細
       #{url}
     DESCRIPTION
@@ -51,7 +51,7 @@ class PersonalCalendarsController < ApplicationController
     event.created = work.created_at
     event.last_modified = work.updated_at
     event.url = url
-    return event
+    event
   end
 
   def make_event_for_schedule(schedule)
@@ -63,7 +63,7 @@ class PersonalCalendarsController < ApplicationController
     event.uid = schedule.uuid&.upcase
     event.created = schedule_model.created_at
     event.last_modified = schedule_model.updated_at
-    return event
+    event
   end
 
   def create_calendar
@@ -78,7 +78,7 @@ class PersonalCalendarsController < ApplicationController
         s.dtstart      = '19700101T000000'
       end
     end
-    return calendar
+    calendar
   end
 
   def to_datetime(date, time)

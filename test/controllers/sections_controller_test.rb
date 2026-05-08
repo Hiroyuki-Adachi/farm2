@@ -19,7 +19,7 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
 
   test "班マスタ新規作成(実行)" do
     assert_difference('Section.kept.count') do
-      post sections_path, params: {section: @update}
+      post sections_path, params: { section: @update }
     end
     assert_redirected_to sections_path
 
@@ -27,6 +27,7 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:name], section.name
     assert_equal @update[:display_order], section.display_order
     assert_equal @update[:work_flag], section.work_flag
+    assert_equal users(:users1).organization_id, section.organization_id
   end
 
   test "班マスタ変更(表示)" do
@@ -36,7 +37,7 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
 
   test "班マスタ変更(実行)" do
     assert_no_difference('Section.kept.count') do
-      patch section_path(@section), params: {section: @update}
+      patch section_path(@section), params: { section: @update }
     end
     assert_redirected_to sections_path
 
@@ -53,5 +54,10 @@ class SectionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to sections_path
 
     assert_nil Section.kept.find_by(id: @section.id)
+  end
+
+  test "他組織の班は編集できない" do
+    get edit_section_path(sections(:section_other_org))
+    assert_response :not_found
   end
 end

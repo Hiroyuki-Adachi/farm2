@@ -65,7 +65,7 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
 
   test "土地マスタ新規作成(実行)" do
     assert_difference('Land.kept.count') do
-      post lands_path, params: {land: @update}
+      post lands_path, params: { land: @update }
     end
     assert_redirected_to lands_path
 
@@ -90,7 +90,7 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
 
   test "土地マスタ変更(実行)" do
     assert_no_difference('Land.kept.count') do
-      patch land_path(@land), params: {id: @land, land: @update}
+      patch land_path(@land), params: { id: @land, land: @update }
     end
     assert_redirected_to lands_path
 
@@ -103,11 +103,31 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:reg_area], @land.reg_area
   end
 
+  test "土地マスタ変更(実行)(検索条件とページを保持して戻る)" do
+    return_to = lands_path(home_id: @home.id, page: 2)
+
+    assert_no_difference('Land.kept.count') do
+      patch land_path(@land), params: { id: @land, land: @update, return_to: return_to }
+    end
+    assert_redirected_to return_to
+  end
+
   test "土地マスタ削除" do
     assert_difference('Land.kept.count', -1) do
       delete land_path(@land)
     end
     assert_redirected_to lands_path
+
+    assert_nil Land.kept.find_by(id: @land.id)
+  end
+
+  test "土地マスタ削除(検索条件とページを保持して戻る)" do
+    return_to = lands_path(home_id: @home.id, page: 2)
+
+    assert_difference('Land.kept.count', -1) do
+      delete land_path(@land), params: { return_to: return_to }
+    end
+    assert_redirected_to return_to
 
     assert_nil Land.kept.find_by(id: @land.id)
   end

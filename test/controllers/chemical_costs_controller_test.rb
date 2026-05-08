@@ -19,13 +19,13 @@ class ChemicalCostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "薬剤原価新規作成(表示)" do
-    get new_chemical_cost_path, params: {chemical_term_id: @chemical_term_id, work_type_id: 1}, as: :turbo_stream
+    get new_chemical_cost_path, params: { chemical_term_id: @chemical_term_id, work_type_id: 1 }, as: :turbo_stream
     assert_response :success
     assert_equal "text/vnd.turbo-stream.html; charset=utf-8", response.content_type
   end
 
   test "薬剤原価新規作成(実行)" do
-    chemical_work_type = {chemical_term_id: @chemical_term_id, work_type_id: 1, quantity: 1}
+    chemical_work_type = { chemical_term_id: @chemical_term_id, work_type_id: 1, quantity: 1 }
     assert_difference('ChemicalWorkType.count') do
       post chemical_costs_path, params: {
         chemical_work_type: chemical_work_type,
@@ -40,7 +40,7 @@ class ChemicalCostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "薬剤原価新規作成(戻る)" do
-    chemical_work_type = {chemical_term_id: @chemical_term_id, work_type_id: 2, quantity: 1}
+    chemical_work_type = { chemical_term_id: @chemical_term_id, work_type_id: 2, quantity: 1 }
     assert_no_difference('ChemicalWorkType.count') do
       post chemical_costs_path, params: {
         chemical_work_type: chemical_work_type,
@@ -50,7 +50,7 @@ class ChemicalCostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "薬剤原価新規作成(実行)(値がゼロ)" do
-    chemical_work_type = {chemical_term_id: @chemical_term_id, work_type_id: 4, quantity: 0}
+    chemical_work_type = { chemical_term_id: @chemical_term_id, work_type_id: 4, quantity: 0 }
     assert_no_difference('ChemicalWorkType.count') do
       post chemical_costs_path, params: {
         chemical_work_type: chemical_work_type,

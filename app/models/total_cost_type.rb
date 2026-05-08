@@ -6,5 +6,5 @@ class TotalCostType < ActiveYaml::Base
 
   enum_accessor :code
 
-  scope :accountable, -> {where(accountable: true).order(:id)}
+  scope :accountable, -> { where(accountable: true).order(:id) }
 end

@@ -38,6 +38,7 @@ Capybara.register_driver(:better_cuprite) do |app|
   )
 end
 
+Capybara.save_path = nil
 Capybara.server_host = "0.0.0.0"
 Capybara.default_normalize_ws = true
 Capybara.default_driver = Capybara.javascript_driver = :better_cuprite
@@ -46,7 +47,7 @@ Capybara.app_host = "http://#{ENV.fetch('APP_HOST', `hostname`.strip&.downcase |
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :better_cuprite
   include SystemSidebarHelpers
-  
+
   setup do
     WebMock.allow_net_connect!
   end

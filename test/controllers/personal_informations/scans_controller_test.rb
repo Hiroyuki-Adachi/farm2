@@ -96,7 +96,7 @@ class PersonalInformations::ScansControllerTest < ActionDispatch::IntegrationTes
       qr = QrLoginSession.create!(status: :pending, expires_at: 5.minutes.from_now)
 
       called = false
-      QrLoginChannel.stub(:broadcast_to, ->(token, payload) {
+      QrLoginChannel.stub(:broadcast_to, lambda { |token, payload|
         called = true
         assert_equal qr.token, token
         assert_equal({ type: "approved" }, payload)

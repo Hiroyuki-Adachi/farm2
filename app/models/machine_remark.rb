@@ -17,13 +17,14 @@
 #
 
 class MachineRemark < ApplicationRecord
-  belongs_to  :machine, -> {with_deleted}
+  belongs_to  :machine, -> { with_deleted }
   belongs_to  :work
 
   def self.regist(work, remarks)
     work.machine_remarks.destroy_all
     remarks.each_value do |remark|
       next unless remark[:care_remarks].present? || remark[:danger_remarks].present? || remark[:other_remarks].present?
+
       MachineRemark.create(
         remark.permit(:work_id, :machine_id, :care_remarks, :danger_remarks, :other_remarks)
       )
@@ -31,8 +32,9 @@ class MachineRemark < ApplicationRecord
   end
 
   def remarks
-    return self.danger_remarks if self.danger_remarks.present?
-    return self.care_remarks   if self.care_remarks.present?
-    return self.other_remarks
+    return danger_remarks if danger_remarks.present?
+    return care_remarks   if care_remarks.present?
+
+    other_remarks
   end
 end

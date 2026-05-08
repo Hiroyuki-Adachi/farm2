@@ -2,7 +2,7 @@ module Enums
   module OfficeRole
     extend ActiveSupport::Concern
 
-    OFFICE_ROLE = {none: 0, finance: 1, general: 2, president: 9}.freeze
+    OFFICE_ROLE = { none: 0, finance: 1, general: 2, president: 9 }.freeze
 
     included do
       enum :office_role, OFFICE_ROLE, prefix: true

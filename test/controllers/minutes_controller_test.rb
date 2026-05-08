@@ -31,7 +31,7 @@ class MinutesControllerTest < ActionDispatch::IntegrationTest
 
   test "議事録PDF参照(TOKEN)" do
     logout
-    get minute_path(@minute.id), params: {token: @user.token}
+    get minute_path(@minute.id), params: { token: @user.token }
     assert_response :success
   end
 

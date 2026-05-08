@@ -9,7 +9,7 @@ class LandPlacesControllerTest < ActionDispatch::IntegrationTest
   test "場所マスタ一覧" do
     get land_places_path
     assert_response :success
-    assert_select "table.table tbody tr", minimum: 1 
+    assert_select "table.table tbody tr", minimum: 1
   end
 
   test "場所マスタ一覧(管理者以外)" do
@@ -24,9 +24,9 @@ class LandPlacesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "場所マスタ新規作成(実行)" do
-    new_land_place = {name: "中央", display_order: 2, remarks: "備考です"}
+    new_land_place = { name: "中央", display_order: 2, remarks: "備考です" }
     assert_difference('LandPlace.kept.count') do
-      post land_places_path, params: {land_place: new_land_place}
+      post land_places_path, params: { land_place: new_land_place }
     end
     assert_redirected_to land_places_path
 
@@ -42,8 +42,8 @@ class LandPlacesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "場所マスタ変更(実行)" do
-    new_land_place = {name: "東側", display_order: 99, remarks: "ダミー備考だよ!!"}
-    patch land_place_path(@land_place), params: {land_place: new_land_place}
+    new_land_place = { name: "東側", display_order: 99, remarks: "ダミー備考だよ!!" }
+    patch land_place_path(@land_place), params: { land_place: new_land_place }
     assert_redirected_to land_places_path
 
     @land_place.reload

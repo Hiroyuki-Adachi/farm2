@@ -60,7 +60,7 @@ class FixesController < ApplicationController
     @work_hours = WorkResult.by_works(current_term, @fixed_at, current_organization)
     @machines = MachineResult.for_fix(current_term, @fixed_at, current_organization).group(:home_id).sum(:fixed_amount)
     @contracts = WorkLand.for_fix(current_term, @fixed_at, current_organization.contract_work_type_id, current_organization)
-                  .group("lands.manager_id").sum("work_lands.fixed_cost")
+      .group("lands.manager_id").sum("work_lands.fixed_cost")
   end
 
   def set_dryings

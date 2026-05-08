@@ -13,11 +13,11 @@
 #
 
 class ChemicalTerm < ApplicationRecord
-  belongs_to :chemical, -> {with_deleted}
+  belongs_to :chemical, -> { with_deleted }
   has_many :chemical_work_types, dependent: :destroy
   has_many :work_types, through: :chemical_work_types
-  
-  scope :usual, ->(term) {
+
+  scope :usual, lambda { |term|
     joins(chemical: :chemical_type).includes(:chemical)
       .where(term: term)
       .order(Arel.sql(<<SQL.squish))
@@ -25,7 +25,7 @@ class ChemicalTerm < ApplicationRecord
 SQL
   }
 
-  scope :by_type, ->(term, chemical_type_id) {
+  scope :by_type, lambda { |term, chemical_type_id|
     joins(:chemical)
       .where(term: term)
       .where(chemicals: { chemical_type_id: chemical_type_id })
@@ -33,7 +33,7 @@ SQL
       .select("chemicals.*, chemical_terms.id AS chemical_term_id")
   }
 
-  scope :land, ->{joins(:chemical).where(<<SQL.squish)}
+  scope :land, -> { joins(:chemical).where(<<SQL.squish) }
   EXISTS (SELECT * FROM chemical_kinds WHERE chemical_kinds.chemical_type_id = chemicals.chemical_type_id)
 SQL
 

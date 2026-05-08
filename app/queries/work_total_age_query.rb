@@ -1,4 +1,8 @@
 class WorkTotalAgeQuery
+  def initialize(organization: nil)
+    @organization = organization
+  end
+
   def call
     sql = build_sql
     ApplicationRecord.connection.select_all(sql).each_with_object({}) do |row, results|
@@ -36,9 +40,19 @@ class WorkTotalAgeQuery
     sql << " INNER JOIN work_results ON work_results.work_id = works.id"
     sql << " INNER JOIN workers ON work_results.worker_id = workers.id"
     sql << " INNER JOIN homes ON workers.home_id = homes.id"
+    sql << organization_condition if @organization
     sql << " GROUP BY works.term, age_group"
     sql << " ORDER BY works.term, age_group"
 
     sql.join("\n")
+  end
+
+  def organization_condition
+    organization_id = @organization.is_a?(Organization) ? @organization.id : @organization
+    ApplicationRecord.sanitize_sql_array([
+      " WHERE works.organization_id = ? AND workers.organization_id = ?",
+      organization_id,
+      organization_id
+    ])
   end
 end

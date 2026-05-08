@@ -2,7 +2,7 @@ class Gaps::CleaningsController < GapsController
   before_action :set_work, only: [:edit, :update]
 
   def index
-    @works = WorkDecorator.decorate_collection(Work.by_term(current_term).where(work_kind_id: current_organization.cleaning_id))
+    @works = WorkDecorator.decorate_collection(Work.for_organization(current_organization).by_term(current_term).where(work_kind_id: current_organization.cleaning_id))
   end
 
   def edit; end
@@ -19,17 +19,17 @@ class Gaps::CleaningsController < GapsController
   private
 
   def set_work
-    @work = Work.find(params[:id]).decorate
+    @work = Work.for_organization(current_organization).find(params[:id]).decorate
     @cleaning = @work.model.cleaning || Cleaning.new(work_id: params[:id])
   end
 
   def cleaning_params
     params.expect(cleaning:
       [
-        :target, 
+        :target,
         :method,
-        {cleaning_target_ids: [],
-         institution_ids: []}
+        { cleaning_target_ids: [],
+          institution_ids: [] }
       ])
       .merge(work_id: params[:id])
   end

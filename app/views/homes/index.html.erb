@@ -17,7 +17,7 @@
         <td><%= home.holder_name %></td>
         <td><%= home.telephone %></td>
         <td><%= home.section.name %></td>
-        <td><%= link_to '修正', edit_home_path(home), {class: "btn btn-success btn-sm"} %></td>
+        <td><%= link_to '修正', edit_home_path(home, return_to: request.fullpath), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>
   </tbody>

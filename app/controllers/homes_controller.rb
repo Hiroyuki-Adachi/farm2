@@ -1,8 +1,10 @@
 class HomesController < ApplicationController
   include PermitChecker
+  include ReturnToIndex
 
   before_action :set_home, only: [:edit, :update, :destroy]
   before_action :set_sections, only: [:new, :create, :edit, :update]
+  keeps_index_return_to path_method: :homes_path
   helper GmapHelper
 
   def index
@@ -26,7 +28,7 @@ class HomesController < ApplicationController
 
   def update
     if @home.update(home_params)
-      redirect_to homes_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -34,7 +36,7 @@ class HomesController < ApplicationController
 
   def destroy
     @home.discard
-    redirect_to homes_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private
@@ -45,7 +47,7 @@ class HomesController < ApplicationController
   end
 
   def set_sections
-    @sections = Section.list
+    @sections = Section.for_organization(current_organization).list
   end
 
   def home_params

@@ -4,11 +4,11 @@ module ApplicationHelper
   include SessionsHelper
 
   def hbr(text)
-    return simple_format(h(text))
+    simple_format(h(text))
   end
 
   def error_print(record)
-    render(partial: "error_template", :locals => {:ar => record}) if record&.errors&.any?
+    render(partial: "error_template", locals: { ar: record }) if record&.errors&.any?
   end
 
   def data_print(data, kind, url)

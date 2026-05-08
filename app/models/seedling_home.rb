@@ -12,19 +12,19 @@
 #
 
 class SeedlingHome < ApplicationRecord
-  belongs_to :home, -> {with_deleted}
+  belongs_to :home, -> { with_deleted }
   belongs_to :seedling
   has_many :seedling_results, dependent: :destroy
 
   accepts_nested_attributes_for :seedling_results, allow_destroy: true, reject_if: :reject_seedling_results
 
-  scope :total, ->(seedlings) {where(seedling_id: seedlings.ids).group(:seedling_id).sum(:quantity)}
-  scope :usual, ->(term) {
-    includes({seedling: :work_type}, :home)
-      .where(seedlings: {term: term})
+  scope :total, ->(seedlings) { where(seedling_id: seedlings.ids).group(:seedling_id).sum(:quantity) }
+  scope :usual, lambda { |term|
+    includes({ seedling: :work_type }, :home)
+      .where(seedlings: { term: term })
       .order("homes.display_order, homes.id, seedling_homes.sowed_on, work_types.display_order, work_types.id")
   }
-  scope :by_home, ->(home) {where(home_id: home.id)}
+  scope :by_home, ->(home) { where(home_id: home.id) }
 
   delegate :name, to: :home, prefix: true
   delegate :work_type_name, to: :seedling
@@ -41,7 +41,8 @@ class SeedlingHome < ApplicationRecord
   def cost_quantity
     result_quantity = seedling_results.sum(:quantity)
     return quantity if quantity <= result_quantity
-    return dispose? ? quantity : result_quantity
+
+    dispose? ? quantity : result_quantity
   end
 
   delegate :home_display_order, to: :home

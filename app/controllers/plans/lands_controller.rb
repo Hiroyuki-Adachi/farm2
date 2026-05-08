@@ -30,7 +30,7 @@ class Plans::LandsController < PlansController
   private
 
   def menu_name
-    return :plan_lands
+    :plan_lands
   end
 
   def current_date

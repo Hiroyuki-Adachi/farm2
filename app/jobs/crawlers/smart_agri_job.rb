@@ -9,6 +9,7 @@ class Crawlers::SmartAgriJob < CrawlJob
       next if topic_date.nil?
 
       break if topic_date < Time.zone.today - START_DAY
+
       save_topic(agent, URI.join(TopicType::SMART_AGRI.url, topic[:url]).to_s, topic_date)
     end
   end
