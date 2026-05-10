@@ -41,7 +41,7 @@ class WorkSummaryQuery
       .sum("work_results.hours")
   end
 
-  def hours_per_10a_by_work_kind(work_kind_id, terms, organization: nil)
+  def area_per_hour_by_work_kind(work_kind_id, terms, organization: nil)
     base = Work.where(term: terms, work_kind_id: work_kind_id)
     base = base.for_organization(organization) if organization
 
@@ -51,13 +51,13 @@ class WorkSummaryQuery
       .select(:id)
 
     hours = base.where(id: works_with_area).joins(:work_results).group(:term).sum("work_results.hours")
-    areas = base.joins(work_lands: :land).group(:term).sum("lands.area")
+    areas = base.where(id: works_with_area).joins(work_lands: :land).group(:term).sum("lands.area")
 
     terms.sort.index_with do |term|
-      area = areas.fetch(term, 0).to_d
-      next 0 if area.zero?
+      hour = hours.fetch(term, 0).to_d
+      next 0 if hour.zero?
 
-      (hours.fetch(term, 0).to_d / area * 10).round(2).to_f
+      (areas.fetch(term, 0).to_d / hour).round(2).to_f
     end
   end
 

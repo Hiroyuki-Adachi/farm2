@@ -417,8 +417,8 @@ SQL
     WorkSummaryQuery.new.total_genre(organization: organization)
   end
 
-  def self.hours_per_10a_by_work_kind(work_kind_id, terms, organization: nil)
-    WorkSummaryQuery.new.hours_per_10a_by_work_kind(work_kind_id, terms, organization: organization)
+  def self.area_per_hour_by_work_kind(work_kind_id, terms, organization: nil)
+    WorkSummaryQuery.new.area_per_hour_by_work_kind(work_kind_id, terms, organization: organization)
   end
 
   def self.monthly(term, worked_from, worked_to, worker_id)
