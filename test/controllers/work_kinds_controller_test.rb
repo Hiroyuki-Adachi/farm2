@@ -73,6 +73,28 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "作業種別マスタ変更で集計対象を解除できる" do
+    @work_kind.update!(land_flag: true, aggregation_flag: true)
+
+    patch work_kind_path(@work_kind), params: {
+      work_kind: @update.merge(aggregation_flag: "false")
+    }
+
+    assert_redirected_to work_kinds_path
+    assert_not @work_kind.reload.aggregation_flag
+  end
+
+  test "作業種別マスタ変更で集計対象が未送信でも解除できる" do
+    @work_kind.update!(land_flag: true, aggregation_flag: true)
+
+    patch work_kind_path(@work_kind), params: {
+      work_kind: @update.except(:aggregation_flag)
+    }
+
+    assert_redirected_to work_kinds_path
+    assert_not @work_kind.reload.aggregation_flag
+  end
+
   test "作業種別マスタ変更(実行)(元のページへ戻る)" do
     WorkKindPrice.where(work_kind_id: @work_kind).update_all(price: 1000)
 

@@ -37,7 +37,8 @@
     <div class="field mb-3 col-md-2">
       <div class="form-check">
         <%= f.label :aggregation_flag, class: "col-form-label-lg form-label" %>
-        <%= f.check_box :aggregation_flag, {class: "form-check-input"}, true, false  %>
+        <%= f.hidden_field :aggregation_flag, value: false %>
+        <%= f.check_box :aggregation_flag, {class: "form-check-input", include_hidden: false}, true, false  %>
       </div>
     </div>
     <div class="field mb-3 col-md-2">
