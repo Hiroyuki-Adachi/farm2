@@ -1,7 +1,9 @@
 class ChemicalTypesController < ApplicationController
   include PermitChecker
+  include ReturnToIndex
   before_action :set_chemical_type, only: [:edit, :update, :destroy]
   before_action :set_work_kinds, only: [:new, :create, :edit, :update]
+  keeps_index_return_to path_method: :chemical_types_path
 
   def index
     @chemical_types = ChemicalType.includes(:chemicals).order(:display_order)
@@ -28,7 +30,7 @@ class ChemicalTypesController < ApplicationController
   def update
     if @chemical_type.update(chemical_type_params)
       update_work_kinds
-      redirect_to chemical_types_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -36,7 +38,7 @@ class ChemicalTypesController < ApplicationController
 
   def destroy
     @chemical_type.destroy
-    redirect_to chemical_types_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private

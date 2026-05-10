@@ -1,6 +1,7 @@
 class Users::MfaController < ApplicationController
   def edit
     return if current_user.otp_enabled
+
     current_user.prepare_totp_secret!
     @provisioning_uri = current_user.totp.provisioning_uri(current_user.worker.name)
   end

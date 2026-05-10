@@ -33,10 +33,10 @@ class Plans::WorkTypesControllerTest < ActionDispatch::IntegrationTest
   test "作付予定(作成)(追加)" do
     # 追加パターン
     work_type = {
-      @work_type.id => {term_flag: true, bg_color: "ffffff"}
+      @work_type.id => { term_flag: true, bg_color: "ffffff" }
     }
     assert_difference('WorkTypeTerm.count') do
-      post plans_work_types_path, params: {work_types: work_type}
+      post plans_work_types_path, params: { work_types: work_type }
     end
     assert_redirected_to new_plans_work_type_path
 
@@ -47,10 +47,10 @@ class Plans::WorkTypesControllerTest < ActionDispatch::IntegrationTest
 
     # 追加後の更新パターン
     work_type = {
-      @work_type.id => {term_flag: true, bg_color: "000000"}
+      @work_type.id => { term_flag: true, bg_color: "000000" }
     }
     assert_no_difference('WorkTypeTerm.count') do
-      post plans_work_types_path, params: {work_types: work_type}
+      post plans_work_types_path, params: { work_types: work_type }
     end
     assert_redirected_to new_plans_work_type_path
 

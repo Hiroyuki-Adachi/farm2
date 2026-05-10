@@ -19,14 +19,14 @@ require 'date'
 require 'securerandom'
 class ScheduleWorker < ApplicationRecord
   belongs_to :schedule
-  belongs_to :worker, -> {with_deleted}
-  has_one    :home, -> {with_deleted}, through: :worker
-  has_one    :work_type, -> {with_deleted}, through: :schedule
-  has_one    :work_kind, -> {with_deleted}, through: :schedule
+  belongs_to :worker, -> { with_deleted }
+  has_one    :home, -> { with_deleted }, through: :worker
+  has_one    :work_type, -> { with_deleted }, through: :schedule
+  has_one    :work_kind, -> { with_deleted }, through: :schedule
 
   before_create :set_uuid
 
-  scope :for_personal, ->(worker, day) {
+  scope :for_personal, lambda { |worker, day|
     joins(:schedule)
       .eager_load(:schedule)
       .joins("INNER JOIN work_kinds ON schedules.work_kind_id = work_kinds.id").preload(:work_kind)
@@ -35,7 +35,7 @@ class ScheduleWorker < ApplicationRecord
       .order("schedules.worked_at, schedule_workers.id")
   }
 
-  scope :for_calendar, ->(worker) {
+  scope :for_calendar, lambda { |worker|
     joins(:schedule)
       .eager_load(:schedule)
       .joins("INNER JOIN work_kinds ON schedules.work_kind_id = work_kinds.id").preload(:work_kind)

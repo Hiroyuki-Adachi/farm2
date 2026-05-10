@@ -11,11 +11,15 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task
-              .for_organization(current_organization)
-              .for_index
-              .includes(:assignee)
-              .with_watch_flag(current_user.worker.id)
-              .with_unread_count(current_user.worker.id)
+      .for_organization(current_organization)
+      .for_index
+      .includes(:assignee)
+      .with_watch_flag(current_user.worker.id)
+      .with_unread_count(current_user.worker.id)
+  end
+
+  def show
+    @last_read_at = TaskRead.touch_and_get_previous!(task: @task, worker_id: current_user.worker_id)
   end
 
   def new
@@ -29,7 +33,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params.merge(organization_id: current_organization.id))
-    @task.creator = current_user.worker 
+    @task.creator = current_user.worker
 
     if @task.save
       redirect_to tasks_path, notice: "タスクを作成しました。"
@@ -38,20 +42,16 @@ class TasksController < ApplicationController
     end
   end
 
-  def show
-    @last_read_at = TaskRead.touch_and_get_previous!(task: @task, worker_id: current_user.worker_id)
-  end
-
   def destroy
     to_error_path unless @task.deletable?(current_user)
     @task.destroy
     redirect_to tasks_path, notice: "タスクを削除しました。"
   end
-  
+
   private
 
   def task_params
-    params.expect(task: 
+    params.expect(task:
       [
         :title,
         :description,
@@ -68,7 +68,7 @@ class TasksController < ApplicationController
   end
 
   def set_task
-    @task = 
+    @task =
       if params[:task_id]
         Task.for_organization(current_organization).find(params[:task_id])
       else
@@ -81,9 +81,9 @@ class TasksController < ApplicationController
   end
 
   def back_path
-    case params[:from] 
-    when "kanban" then tasks_kanbans_path 
-    when "gantt" then tasks_gantts_path 
+    case params[:from]
+    when "kanban" then tasks_kanbans_path
+    when "gantt" then tasks_gantts_path
     else tasks_path
     end
   end

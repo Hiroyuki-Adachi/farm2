@@ -23,10 +23,10 @@ class QrLoginSession < ApplicationRecord
   before_validation :ensure_token, on: :create
   before_validation :ensure_expires_at, on: :create
 
-  scope :deletable, ->(now: Time.current, expired_keep: 1.day, consumed_keep: 30.days) do
+  scope :deletable, lambda { |now: Time.current, expired_keep: 1.day, consumed_keep: 30.days|
     where(consumed_at: nil).where(expires_at: ...(now - expired_keep))
       .or(where.not(consumed_at: nil).where(consumed_at: ...(now - consumed_keep)))
-  end
+  }
 
   def expired?
     expires_at < Time.current

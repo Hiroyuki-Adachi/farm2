@@ -20,7 +20,7 @@ class OrganizationsControllerTest < ActionDispatch::IntegrationTest
   test "管理マスタ変更実行" do
     organization_name = "テスト営農組合"
     assert_no_difference('Organization.count') do
-      patch organization_path(@organization), params: { organization: {name: organization_name}}
+      patch organization_path(@organization), params: { organization: { name: organization_name } }
     end
     assert_redirected_to menu_index_path
 

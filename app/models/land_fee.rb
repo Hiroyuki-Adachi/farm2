@@ -18,13 +18,14 @@
 class LandFee < ApplicationRecord
   belongs_to :land
 
-  def self.upsert(_home_id, params)
-    params.each do |param|
-      fee = LandFee.find_by(id: param[1][:id])
+  def self.save_all_from_params(_home_id, params)
+    params.each_value do |attributes|
+      fee = LandFee.find_by(id: attributes[:id])
+
       if fee
-        fee.update(param[1])
+        fee.update(attributes)
       else
-        LandFee.create(param[1])
+        LandFee.create(attributes)
       end
     end
   end

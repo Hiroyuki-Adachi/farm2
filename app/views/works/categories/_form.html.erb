@@ -1,5 +1,6 @@
 <%= error_print(@category) %>
 <%= form_with(model: @category) do |f| %>
+<%= hidden_field_tag :return_to, @return_to if @return_to.present? %>
 <div class="row">
   <div class="mb-3 col-md-4">
     <%= f.label :name, class: "col-form-label-lg form-label" %>
@@ -16,11 +17,11 @@
   </div>
   <% if !@category.new_record? && !@category.genres.kept.any? %>
     <div class="btn-group mr-2">
-      <%= link_to '削除', @category, {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+      <%= link_to '削除', work_category_path(@category, return_to: @return_to), {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
     </div>
   <% end %>
   <div class="btn-group mr-2">
-    <%= link_to "戻る", work_categories_path, {class: "btn btn-outline-dark"}%>
+    <%= link_to "戻る", @return_to.presence || work_categories_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
 <% end %>

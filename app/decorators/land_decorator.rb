@@ -11,7 +11,7 @@ class LandDecorator < Draper::Decorator
   #   end
 
   def area
-    return h.h(format("%.1f", model.area))
+    h.h(format("%.1f", model.area))
   end
 
   def self.homes(organization = nil)
@@ -23,6 +23,6 @@ class LandDecorator < Draper::Decorator
     homes.find_each do |h|
       hs << [h.owner_name, h.id]
     end
-    return hs
+    hs
   end
 end

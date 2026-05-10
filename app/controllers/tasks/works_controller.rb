@@ -3,7 +3,7 @@ class Tasks::WorksController < TasksController
   before_action :set_work, only: [:update, :destroy]
 
   def index
-    @works = WorkDecorator.decorate_collection(Work.for_task(@task))
+    @works = WorkDecorator.decorate_collection(Work.for_organization(current_organization).for_task(@task))
   end
 
   def update
@@ -18,7 +18,7 @@ class Tasks::WorksController < TasksController
       render :index, status: :unprocessable_content
     end
   end
-    
+
   def destroy
     event = @task.events.find_by(work_id: @work.id)
     return redirect_to task_path(@task), notice: "変更または削除されています。" if event.nil? || (event.actor_id != current_user.worker_id)
@@ -46,8 +46,8 @@ class Tasks::WorksController < TasksController
   end
 
   private
-    
+
   def set_work
-    @work = Work.find(params[:id])
+    @work = Work.for_organization(current_organization).find(params[:id])
   end
 end

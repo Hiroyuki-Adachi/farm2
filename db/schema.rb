@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_01_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_04_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -685,9 +685,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_090000) do
     t.datetime "deleted_at", precision: nil
     t.integer "display_order", default: 1, null: false, comment: "表示順"
     t.string "name", limit: 40, null: false, comment: "班名称"
+    t.bigint "organization_id", default: 3, null: false, comment: "組織"
     t.datetime "updated_at", precision: nil
     t.boolean "work_flag", default: true, null: false, comment: "作業班フラグ"
     t.index ["deleted_at"], name: "index_sections_on_deleted_at"
+    t.index ["organization_id"], name: "index_sections_on_organization_id"
   end
 
   create_table "seedling_homes", id: { type: :serial, comment: "育苗担当世帯" }, comment: "育苗担当世帯", force: :cascade do |t|
@@ -1290,6 +1292,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_01_090000) do
   add_foreign_key "homes", "organizations"
   add_foreign_key "lands", "organizations"
   add_foreign_key "schedules", "organizations"
+  add_foreign_key "sections", "organizations"
   add_foreign_key "task_comments", "tasks"
   add_foreign_key "task_comments", "workers", column: "poster_id"
   add_foreign_key "task_events", "task_comments"

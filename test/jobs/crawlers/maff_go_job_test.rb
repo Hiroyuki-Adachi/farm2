@@ -17,7 +17,7 @@ class Crawlers::MaffGoJobTest < ActiveJob::TestCase
       assert_expected_topic
     end
   end
-  
+
   private
 
   def stub_pages(list:, item:)

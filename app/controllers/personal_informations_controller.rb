@@ -1,4 +1,5 @@
 class PersonalInformationsController < ApplicationController
+  skip_before_action :authenticate_user!
   before_action :set_worker
   layout 'sm'
 
@@ -16,11 +17,10 @@ class PersonalInformationsController < ApplicationController
 
   protected
 
-  def restrict_remote_ip; end
-
   def set_worker
     @current_user = User.find_by(token: params[:token] || params[:personal_information_token])
     return to_error_path unless @current_user&.worker
+
     @worker = @current_user.worker
   end
 
@@ -29,17 +29,18 @@ class PersonalInformationsController < ApplicationController
     y = Time.zone.today.year
     case month_type(m)
     when 0
-      return Date.new(y - 1, 12, 1), Date.new(y, 1, 1)
+      [Date.new(y - 1, 12, 1), Date.new(y, 1, 1)]
     when 1
-      return Date.new(y, 1, 1), Date.new(y, 7, 1)
+      [Date.new(y, 1, 1), Date.new(y, 7, 1)]
     else
-      return Date.new(y, 7, 1), Date.new(y, 12, 1)
+      [Date.new(y, 7, 1), Date.new(y, 12, 1)]
     end
   end
 
   def month_type(month)
     return 0 if @current_user.view_month[0] <= month && month < @current_user.view_month[1]
     return 1 if @current_user.view_month[1] <= month && month < @current_user.view_month[2]
-    return 2
+
+    2
   end
 end

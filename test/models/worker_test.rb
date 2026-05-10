@@ -38,7 +38,7 @@ class WorkerTest < ActiveSupport::TestCase
   setup do
     @worker = workers(:worker1)
   end
-    
+
   test "有効な値" do
     assert @worker.valid?
   end

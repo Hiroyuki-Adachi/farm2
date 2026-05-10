@@ -3,7 +3,7 @@ module WorkTypesHelper
     if work_type.icon.present?
       path = "/work_types/#{work_type.id}/icon?v=#{ERB::Util.url_encode(work_type.icon_fingerprint)}"
       image_tag(
-        path, 
+        path,
         size: "48x48",
         loading: "lazy",
         decoding: "async",

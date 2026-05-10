@@ -37,6 +37,7 @@ class MailsDeliverJob < ApplicationJob
 
   def extract_address(address)
     return 'Unknown' if address.nil?
+
     address.display_name.present? ? "#{address.display_name} <#{address.address}>" : address.address
   end
 end

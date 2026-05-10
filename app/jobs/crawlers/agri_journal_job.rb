@@ -27,9 +27,10 @@ class Crawlers::AgriJournalJob < CrawlJob
     topic_date = extract_topic_date(topic_doc)
     return nil if topic_date.nil?
     return nil if topic_date < Time.zone.today - START_DAY
-    return Topic.find_or_create_by(url: url) do |topic|
+
+    Topic.find_or_create_by(url: url) do |topic|
       topic.title = topic_doc.at_css('article#singlearticle h1')&.text
-      topic.content = topic_doc.css('article#singlearticle > p:not([class])').map { |p| normalize_text(p.text)}.join('　')
+      topic.content = topic_doc.css('article#singlearticle > p:not([class])').map { |p| normalize_text(p.text) }.join('　')
       topic.posted_on = topic_date
       topic.topic_type_id = TopicType::AGRI_JOURNAL.id
     end

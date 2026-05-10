@@ -19,7 +19,7 @@ class Works::PrintController < ApplicationController
   private
 
   def set_work
-    @work = Work.find(params[:work_id]).decorate
+    @work = Work.for_organization(current_organization).find(params[:work_id]).decorate
   end
 
   def permit_checkable_or_self

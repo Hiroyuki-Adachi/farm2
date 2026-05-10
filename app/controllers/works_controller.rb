@@ -8,11 +8,10 @@ class WorksController < ApplicationController
   before_action :set_lands, only: [:show]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :check_fixed, only: [:edit, :update, :destroy]
-  before_action :clear_cache, only: [:update, :create, :destroy]
   before_action :permit_not_visitor, except: [:index, :show]
   before_action :permit_checkable_or_self, only: [:edit, :update, :destroy]
   before_action :permit_visitor, only: :show
-  before_action :permit_this_term, only: [:edit, :update, :destroy]
+  before_action :authorize_current_term!, only: [:edit, :update, :destroy]
 
   helper WorksHelper
   helper GmapHelper
@@ -59,6 +58,14 @@ class WorksController < ApplicationController
     end
   end
 
+  def show
+    @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
+    @chemicals = Chemical.with_total_quantity(@work).to_a
+    @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
+
+    render layout: false
+  end
+
   def new
     @work = Work.new(
       worked_at: Time.zone.today,
@@ -71,12 +78,8 @@ class WorksController < ApplicationController
     @work_kinds = WorkKind.except_other.by_type(@work_types.first)
   end
 
-  def show
-    @machines =  MachineDecorator.decorate_collection(Machine.by_results(@results.object))
-    @chemicals = Chemical.with_total_quantity(@work).to_a
-    @checkers = WorkVerificationDecorator.decorate_collection(@work.work_verifications)
-
-    render layout: false
+  def edit
+    @work_kinds = WorkKind.except_other.by_type(@work.work_type) || []
   end
 
   def create
@@ -86,10 +89,6 @@ class WorksController < ApplicationController
     else
       render action: :new, status: :unprocessable_content
     end
-  end
-
-  def edit
-    @work_kinds = WorkKind.except_other.by_type(@work.work_type) || []
   end
 
   def update
@@ -158,10 +157,6 @@ class WorksController < ApplicationController
     redirect_to works_path if @work.fixed_at
   end
 
-  def clear_cache
-    Rails.cache.clear
-  end
-
   def set_work_types
     @work_types = WorkType.by_term(@term).indexes
     @work_kinds = WorkKind.usual
@@ -179,11 +174,11 @@ class WorksController < ApplicationController
     to_error_path if current_user.visitor? && !@work.work_results.exists?(worker_id: current_user.worker.id)
   end
 
-  def permit_this_term
+  def authorize_current_term!
     to_error_path unless @work.present? && @work.term == current_term
   end
 
   def menu_name
-    return :works
+    :works
   end
 end

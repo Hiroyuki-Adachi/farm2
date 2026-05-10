@@ -16,6 +16,7 @@ module SystemSidebarHelpers
       w = page.evaluate_script("window.innerWidth") || 0
       break if w >= 992
       break if (Process.clock_gettime(Process::CLOCK_MONOTONIC) - start) > timeout
+
       sleep 0.05
     end
   end

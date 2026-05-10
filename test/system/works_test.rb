@@ -6,7 +6,7 @@ class WorksTest < ApplicationSystemTestCase
   end
 
   test "ログインから日報入力まで" do
-    visit root_path 
+    visit root_path
     assert_selector 'body'
 
     fill_in 'login_name', with: @user.login_name

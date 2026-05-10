@@ -18,8 +18,8 @@ class LandPlace < ApplicationRecord
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
-  
-  scope :usual, -> {kept.order(display_order: :asc, id: :asc)}
 
-  has_many :lands
+  scope :usual, -> { kept.order(display_order: :asc, id: :asc) }
+
+  has_many :lands, dependent: :restrict_with_error
 end

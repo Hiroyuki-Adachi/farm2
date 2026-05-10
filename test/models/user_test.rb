@@ -45,6 +45,7 @@ class UserTest < ActiveSupport::TestCase
     @user    = users(:user_user)
     @visitor = users(:user_visitor)
   end
+
   test "メールアドレス設定" do
     user = users(:user_manager)
     user.mail = 'user@example.com'
@@ -174,8 +175,8 @@ class UserTest < ActiveSupport::TestCase
   test "TOTP認証(成功時)" do
     totp = mock("totp")
     totp.expects(:verify)
-        .with("123456", has_entries(drift_behind: 30, drift_ahead: 30))
-        .returns(true)
+      .with("123456", has_entries(drift_behind: 30, drift_ahead: 30))
+      .returns(true)
     @user.stubs(:totp).returns(totp)
 
     assert_equal true, @user.totp_verify?("123456")
@@ -185,8 +186,8 @@ class UserTest < ActiveSupport::TestCase
   test "TOTP認証(失敗時)" do
     totp = mock("totp")
     totp.expects(:verify)
-        .with("999999", has_entries(drift_behind: 30, drift_ahead: 30))
-        .returns(false)
+      .with("999999", has_entries(drift_behind: 30, drift_ahead: 30))
+      .returns(false)
     @user.stubs(:totp).returns(totp)
 
     assert_equal false, @user.totp_verify?("999999")

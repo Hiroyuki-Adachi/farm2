@@ -12,15 +12,15 @@ class WorkLandDecorator < Draper::Decorator
   #   end
 
   def area
-    return format("%.2f", model.land.area)
+    format("%.2f", model.land.area)
   end
 
   def place
-    return model.land.place
+    model.land.place
   end
 
   def place_name
-    return model.land.place + (model.land.owner ? "(#{model.land.owner.name})" : "")
+    model.land.place + (model.land.owner ? "(#{model.land.owner.name})" : "")
   end
 
   def worked_at_short

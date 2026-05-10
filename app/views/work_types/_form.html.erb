@@ -1,5 +1,6 @@
 <%= error_print(@work_type) %>
 <%= form_with(model: @work_type, html: {multipart: true}) do |f| %>
+<%= hidden_field_tag :return_to, @return_to if @return_to.present? %>
 <div class="row">
   <div class="mb-3 col-md-2">
     <%= f.label :name, class: "col-form-label-lg form-label" %>
@@ -79,7 +80,7 @@
     <%= f.submit '登録', class: "btn btn-warning" %>
   </div>
   <div class="btn-group mr-2">
-    <%= link_to "戻る", work_types_path, {class: "btn btn-outline-dark"}%>
+    <%= link_to "戻る", @return_to.presence || work_types_path, {class: "btn btn-outline-dark"}%>
   </div>
 </div>
 <% end %>

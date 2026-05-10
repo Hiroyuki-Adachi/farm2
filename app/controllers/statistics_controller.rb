@@ -14,26 +14,26 @@ class StatisticsController < ApplicationController
 
   def tab2
     @genres = WorkGenre.usual
-    @total_genre = Work.total_genre
+    @total_genre = Work.total_genre(organization: current_organization)
   end
 
   def tab3
-    @total_age = WorkTotalAgeQuery.new.call
+    @total_age = WorkTotalAgeQuery.new(organization: current_organization).call
     @age_groups = t("statistics.age")
   end
 
   def tab4
-    @current_results = Work.total_by_month(nil, current_term)
+    @current_results = Work.total_by_month(nil, current_term, organization: current_organization)
     @previous_results = []
     AVERAGE_TERMS.times do |i|
-      @previous_results << Work.total_by_month(nil, current_term - (i + 1))
+      @previous_results << Work.total_by_month(nil, current_term - (i + 1), organization: current_organization)
     end
-    @average_results = Work.total_by_month(nil, current_system.get_prev_terms(AVERAGE_TERMS, term: previous_term))
+    @average_results = Work.total_by_month(nil, current_system.get_prev_terms(AVERAGE_TERMS, term: previous_term), organization: current_organization)
   end
 
   private
 
   def set_total
-    @total_all = Work.total_all(current_system.get_prev_terms(TOTAL_LIMIT))
+    @total_all = Work.total_all(current_system.get_prev_terms(TOTAL_LIMIT), organization: current_organization)
   end
 end

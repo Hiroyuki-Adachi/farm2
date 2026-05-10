@@ -21,14 +21,14 @@ class FixDecorator < Draper::Decorator
   end
 
   def hours
-    h.number_to_currency(model.hours, {precision: 1, unit: ""})
+    h.number_to_currency(model.hours, { precision: 1, unit: "" })
   end
 
   def works_amount
-    h.number_to_currency(model.works_amount, {precision: 0, unit: ""})
+    h.number_to_currency(model.works_amount, { precision: 0, unit: "" })
   end
 
   def machines_amount
-    h.number_to_currency(model.machines_amount, {precision: 0, unit: ""})
+    h.number_to_currency(model.machines_amount, { precision: 0, unit: "" })
   end
 end

@@ -1,20 +1,22 @@
 class SectionsController < ApplicationController
   include PermitManager
+  include ReturnToIndex
 
   before_action :set_section, only: [:edit, :update, :destroy]
+  keeps_index_return_to path_method: :sections_path
 
   def index
-    @sections = Section.list
+    @sections = Section.for_organization(current_organization).list
   end
 
   def new
-    @section = Section.new
+    @section = Section.new(organization_id: current_organization.id)
   end
 
   def edit; end
 
   def create
-    @section = Section.new(section_params)
+    @section = Section.new(section_params.merge(organization_id: current_organization.id))
     if @section.save
       redirect_to sections_path
     else
@@ -24,7 +26,7 @@ class SectionsController < ApplicationController
 
   def update
     if @section.update(section_params)
-      redirect_to sections_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -32,13 +34,13 @@ class SectionsController < ApplicationController
 
   def destroy
     @section.discard
-    redirect_to sections_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private
 
   def set_section
-    @section = Section.find(params[:id])
+    @section = Section.for_organization(current_organization).find(params[:id])
   end
 
   def section_params

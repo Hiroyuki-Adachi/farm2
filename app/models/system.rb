@@ -31,9 +31,10 @@
 
 class System < ApplicationRecord
   validates :term,        presence: true
-  after_save :cache_clear
-
-  validates :term, numericality: {only_integer: true, greater_than: 2000, less_than: 2100}
+  validates :term, numericality: { only_integer: true, greater_than: 2000, less_than: 2100 }
+  validate :validate_period_dates
+  validate :validate_period_continuity
+  validate :validate_period_order
 
   def self.get_system(date, organization_id)
     System.find_by("start_date <= ? AND end_date >= ? AND organization_id = ?", date, date, organization_id)
@@ -58,21 +59,72 @@ class System < ApplicationRecord
         system.end_date    = pre_system.end_date + 1.year
       end
     end
-    return system
+    system
   end
 
   def get_prev_terms(limit, term: nil)
-    self.class.get_terms(self.organization_id, term || self.term, limit)
+    self.class.get_terms(organization_id, term || self.term, limit)
   end
 
   def self.get_terms(organization_id, start_term, limit)
     # Get terms up to and including start_term
-    self.where(organization_id:, term: ..start_term).order(term: :desc).limit(limit).pluck(:term)
+    where(organization_id:, term: ..start_term).order(term: :desc).limit(limit).pluck(:term)
   end
 
   private
 
-  def cache_clear
-    Rails.cache.clear
+  def validate_period_dates
+    return if start_date.blank? || end_date.blank?
+
+    errors.add(:start_date, "は月初にしてください。") unless start_date.day == 1
+    errors.add(:end_date, "は期首日以降にしてください。") if end_date < start_date
+    errors.add(:end_date, "は月末にしてください。") unless end_date == end_date.end_of_month
   end
+
+  def validate_period_continuity
+    return if start_date.blank? || end_date.blank? || organization_id.blank? || term.blank?
+
+    if previous_system && start_date != previous_system.end_date.next_day
+      errors.add(:start_date, "は前期の期末日の翌日にしてください。")
+    end
+
+    if next_system_for_validation && next_system_for_validation.start_date != end_date.next_day
+      errors.add(:end_date, "は次期の期首日の前日にしてください。")
+    end
+  end
+
+  def validate_period_order
+    return if start_date.blank? || end_date.blank? || organization_id.blank? || term.blank?
+
+    same_organization = self.class.where(organization_id: organization_id).where.not(id: id)
+
+    if same_organization.where("start_date <= ? AND end_date >= ?", end_date, start_date).exists?
+      errors.add(:base, "期首日と期末日が他の期と重複しています。")
+    end
+
+    if same_organization.where("term < ? AND end_date >= ?", term, start_date).exists?
+      errors.add(:start_date, "は前期以前の期間より後にしてください。")
+    end
+
+    if same_organization.where("term > ? AND start_date <= ?", term, end_date).exists?
+      errors.add(:end_date, "は次期以降の期間より前にしてください。")
+    end
+  end
+
+  def previous_system
+    self.class
+      .where(organization_id: organization_id)
+      .where("term < ?", term)
+      .order(term: :desc)
+      .first
+  end
+
+  def next_system_for_validation
+    self.class
+      .where(organization_id: organization_id)
+      .where("term > ?", term)
+      .order(term: :asc)
+      .first
+  end
+
 end

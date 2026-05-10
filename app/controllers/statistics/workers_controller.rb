@@ -6,6 +6,6 @@ class Statistics::WorkersController < ApplicationController
   private
 
   def menu_name
-    return :statistics_workers
+    :statistics_workers
   end
 end

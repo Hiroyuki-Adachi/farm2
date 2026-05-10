@@ -22,7 +22,12 @@ module Farm2
     config.eager_load_paths += Dir["#{config.root}/lib/**/"]
     config.autoload_paths << Rails.root.join("app/decorators/concerns")
 
-    config.action_view.field_error_proc = proc { |html_tag, _instance| "<span class='field_with_errors'>#{html_tag}</span>".html_safe }
+    # field_error_proc receives Rails-generated form HTML and must return HTML-safe markup.
+    # rubocop:disable Rails/OutputSafety
+    config.action_view.field_error_proc = proc { |html_tag, _instance|
+      "<span class='field_with_errors'>#{html_tag}</span>".html_safe
+    }
+    # rubocop:enable Rails/OutputSafety
 
     config.i18n.default_locale = :ja
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}").to_s]

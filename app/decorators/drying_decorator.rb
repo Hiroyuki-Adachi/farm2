@@ -40,11 +40,13 @@ class DryingDecorator < Draper::Decorator
 
   def all_rice_weight(sys)
     return model.rice_weight || 0 unless model.self?
+
     model&.adjustment&.rice_weight(sys) || 0
   end
 
   def all_rice_bag(sys)
     return model.rice_bag unless model.self?
+
     (model&.adjustment&.rice_weight(sys) || 0) / Drying::KG_PER_BAG_RICE
   end
 
@@ -66,11 +68,13 @@ class DryingDecorator < Draper::Decorator
 
   def drying_type_name(home_id)
     return I18n.t("activerecord.enums.drying.drying_type_ids.adjust") if model.adjust_only?(home_id)
-    return model.drying_type_name
+
+    model.drying_type_name
   end
 
   def waste_name(home_id)
     return I18n.t("activerecord.enums.drying.waste_names.adjust") if model.adjust_only?(home_id)
-    return I18n.t("activerecord.enums.drying.waste_names.#{model.drying_type_id}")
+
+    I18n.t("activerecord.enums.drying.waste_names.#{model.drying_type_id}")
   end
 end

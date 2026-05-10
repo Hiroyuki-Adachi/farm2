@@ -26,15 +26,15 @@ class Lands::FeesControllerTest < ActionDispatch::IntegrationTest
     land_genka2 = lands(:land_genka2)
     update = {
       land_genka2.id => {
-        manage_fee: 30000,
-        peasant_fee: 40000,
+        manage_fee: 30_000,
+        peasant_fee: 40_000,
         term: 2015,
         id: nil,
         land_id: land_genka2.id
       }
     }
     assert_difference('LandFee.count') do
-      patch lands_fee_path(id: @home_id), params: {land_fees: update}
+      patch lands_fee_path(id: @home_id), params: { land_fees: update }
     end
     assert_redirected_to lands_fees_path
 

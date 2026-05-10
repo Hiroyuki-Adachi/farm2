@@ -10,7 +10,7 @@ class HarvestWholeCropsController < ApplicationController
         @whole_crops = WholeCropDecorator.decorate_collection(@whole_crops)
       end
       format.csv do
-        render :content_type => 'text/csv; charset=cp943'
+        render content_type: 'text/csv; charset=cp943'
       end
     end
   end
@@ -19,7 +19,7 @@ class HarvestWholeCropsController < ApplicationController
 
   def calc_totals(whole_crops)
     work_type_totals = {}
-    month_totals = Hash.new { |h, k| h[k] = {}}
+    month_totals = Hash.new { |h, k| h[k] = {} }
     whole_crops.each do |whole_crop|
       work_type_totals = set_totals1(work_type_totals, whole_crop, whole_crop.work.work_type_id)
       month_totals = set_totals2(
@@ -30,7 +30,7 @@ class HarvestWholeCropsController < ApplicationController
       )
     end
 
-    return work_type_totals, month_totals
+    [work_type_totals, month_totals]
   end
 
   def set_totals1(totals, whole_crop, key)
@@ -38,7 +38,7 @@ class HarvestWholeCropsController < ApplicationController
       rolls: (totals[key] ? totals[key][:rolls] : 0) + whole_crop.rolls,
       areas: (totals[key] ? totals[key][:areas] : 0) + whole_crop.work.sum_areas
     }
-    return totals
+    totals
   end
 
   def set_totals2(totals, whole_crop, key1, key2)
@@ -46,6 +46,6 @@ class HarvestWholeCropsController < ApplicationController
       rolls: (totals[key1][key2] ? totals[key1][key2][:rolls] : 0) + whole_crop.rolls,
       areas: (totals[key1][key2] ? totals[key1][key2][:areas] : 0) + whole_crop.work.sum_areas
     }
-    return totals
+    totals
   end
 end

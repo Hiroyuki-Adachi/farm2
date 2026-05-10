@@ -17,11 +17,12 @@ class WorkResultDecorator < Draper::Decorator
     elsif organization.print_section?
       return "#{model.worker.name}(#{model.worker.home.section.name})"
     end
-    return model.worker.name
+
+    model.worker.name
   end
 
   def home_name
-    return model.worker.home.name
+    model.worker.home.name
   end
 
   def name
@@ -29,7 +30,7 @@ class WorkResultDecorator < Draper::Decorator
   end
 
   def worked_at
-    return model.work.worked_at.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.work.worked_at.wday]})"
+    model.work.worked_at.strftime('%Y-%m-%d') + "(#{I18n.t('date.abbr_day_names')[model.work.worked_at.wday]})"
   end
 
   def worked_at_short
@@ -44,12 +45,10 @@ class WorkResultDecorator < Draper::Decorator
     work.work_kind.name.slice(0, 7)
   end
 
-  def work_name
-    return work.name
-  end
+  delegate :name, to: :work, prefix: true
 
   def work_short_name
-    return work.model.name.slice(0..9)
+    work.model.name.slice(0..9)
   end
 
   def work_name_short
@@ -57,14 +56,14 @@ class WorkResultDecorator < Draper::Decorator
   end
 
   def hours
-    return "%.1f" % model.hours
+    "%.1f" % model.hours
   end
 
   def price
-    return h.number_to_currency(model.price, {precision: 0, unit: ""})
+    h.number_to_currency(model.price, { precision: 0, unit: "" })
   end
 
   def amount
-    return h.number_to_currency(model.amount, {precision: 0, unit: ""})
+    h.number_to_currency(model.amount, { precision: 0, unit: "" })
   end
 end

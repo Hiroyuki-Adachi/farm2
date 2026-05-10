@@ -6,7 +6,7 @@ class Sorimachi::TotalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "農業簿記簡易集計(表示)" do
-    get sorimachi_totals_path, params: {total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id}
+    get sorimachi_totals_path, params: { total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id }
     assert_response :success
     assert_select "th", text: "コード"
     assert_select "th", text: "名称"

@@ -27,7 +27,7 @@ class CostTypesControllerTest < ActionDispatch::IntegrationTest
   test "原価種別マスタ新規作成(実行)" do
     assert_no_difference('WorkKind.count') do
       assert_difference('CostType.count') do
-        post cost_types_path, params: {cost_type: @update}
+        post cost_types_path, params: { cost_type: @update }
       end
     end
     assert_redirected_to cost_types_path
@@ -49,7 +49,7 @@ class CostTypesControllerTest < ActionDispatch::IntegrationTest
   test "原価種別マスタ変更(実行)" do
     assert_no_difference('WorkKind.count') do
       assert_no_difference('CostType.count') do
-        patch cost_type_path(@cost_type), params: {cost_type: @update}
+        patch cost_type_path(@cost_type), params: { cost_type: @update }
       end
     end
     assert_redirected_to cost_types_path

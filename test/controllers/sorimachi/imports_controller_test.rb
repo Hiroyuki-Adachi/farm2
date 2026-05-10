@@ -7,7 +7,7 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "農業簿記インポート(表示)" do
-    get sorimachi_imports_path, params: {total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id}
+    get sorimachi_imports_path, params: { total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id }
     assert_response :success
     assert_select "input[type=radio][name=total_cost_type_id]", minimum: 1
     assert_select "input[type=radio][name=total_cost_type_id][checked=checked]", count: 1
@@ -24,12 +24,12 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "農業簿記自動配賦(実行)" do
-    post auto_allocate_sorimachi_imports_path, params: {total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id}
+    post auto_allocate_sorimachi_imports_path, params: { total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id }
     assert_redirected_to sorimachi_imports_path(total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id)
   end
 
   test "農業簿記インポート(種別絞り込み)" do
-    get sorimachi_imports_path, params: {total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id}
+    get sorimachi_imports_path, params: { total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id }
     assert_response :success
     assert_select "td", text: "荷造運賃"
     assert_select "td.numeric", text: "13,196"
@@ -40,10 +40,10 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
     csv_path = Rails.root.join("test/fixtures/files/sorimachi.csv").to_s
     csv_data = CSV.read(csv_path, encoding: "cp932", headers: SorimachiJournal.updatable_attributes, skip_lines: %r{^//})
     last_data = csv_data[-1]
-    
+
     SorimachiJournal.where(term: @user.term).destroy_all
     assert_difference('SorimachiJournal.count', csv_data.size) do
-      post sorimachi_imports_path, params: {import_file: fixture_file_upload(csv_path, 'text/csv')}
+      post sorimachi_imports_path, params: { import_file: fixture_file_upload(csv_path, 'text/csv') }
     end
     assert_redirected_to sorimachi_imports_path
 

@@ -10,13 +10,13 @@ class ChangeTermTest < ActionDispatch::IntegrationTest
   end
 
   test "対象年度変更(実行:新規)" do
-    post sessions_path, params: {login_name: @user.login_name, password: "password"}
+    post sessions_path, params: { login_name: @user.login_name, password: "password" }
     follow_redirect!
     assert_response :success
 
     new_term = systems(:s2017).term + 1
     assert_difference('System.count', 1) do
-      patch menu_path(@system), params: {system: {term: new_term}}
+      patch menu_path(@system), params: { system: { term: new_term } }
     end
     follow_redirect!
     assert_response :success

@@ -14,7 +14,7 @@ class Crawlers::AgriJournalJobTest < ActiveJob::TestCase
       assert_difference "Topic.count", +1 do
         Crawlers::AgriJournalJob.perform_now
       end
-  
+
       assert_expected_topic
     end
   end

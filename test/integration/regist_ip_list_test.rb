@@ -31,7 +31,7 @@ class RegistIpListTest < ActionDispatch::IntegrationTest
     assert_equal @user.line_id, user_line_id
     assert_not_nil user_token
 
-    patch ip_list_path(id: ip.id), params: {token: user_token}, headers: { 'REMOTE_ADDR' => @ip_address }
+    patch ip_list_path(id: ip.id), params: { token: user_token }, headers: { 'REMOTE_ADDR' => @ip_address }
     assert_redirected_to menu_index_path
   end
 end

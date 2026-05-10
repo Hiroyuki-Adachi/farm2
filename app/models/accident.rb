@@ -21,13 +21,13 @@
 class Accident < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
-  enum :accident_type_id, {rule: 1, hiyari: 2, other: 9}
+  enum :accident_type_id, { rule: 1, hiyari: 2, other: 9 }
 
   belongs_to :work
   belongs_to :investigator, class_name: "Worker"
   belongs_to :audience, class_name: "Worker"
 
-  scope :usual, ->(term) {
+  scope :usual, lambda { |term|
     joins(:work).where(works: { term: term }).order("works.worked_at, works.start_at, accidents.id")
   }
 

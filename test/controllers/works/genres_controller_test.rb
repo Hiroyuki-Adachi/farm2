@@ -26,7 +26,7 @@ class Works::GenresControllerTest < ActionDispatch::IntegrationTest
 
   test "作業ジャンル新規作成(実行)" do
     assert_difference('WorkGenre.kept.count') do
-      post work_genres_path, params: {work_genre: @update}
+      post work_genres_path, params: { work_genre: @update }
     end
     assert_redirected_to work_genres_path
 
@@ -43,7 +43,7 @@ class Works::GenresControllerTest < ActionDispatch::IntegrationTest
 
   test "作業ジャンル変更(実行)" do
     assert_no_difference('WorkGenre.kept.count') do
-      patch work_genre_path(@genre), params: {work_genre: @update}
+      patch work_genre_path(@genre), params: { work_genre: @update }
     end
     assert_redirected_to work_genres_path
 

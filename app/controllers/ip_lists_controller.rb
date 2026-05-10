@@ -1,9 +1,13 @@
 class IpListsController < ApplicationController
   layout false
-  before_action :set_ip, only: [:edit, :update]
+  skip_before_action :authenticate_user!, only: %i[new create edit update]
   before_action :set_return_to
+  before_action :check_ip_access!
+  before_action :set_ip, only: [:edit, :update]
 
   def new; end
+
+  def edit; end
 
   def create
     user = User.find_by(login_name: params[:login_name])
@@ -19,11 +23,9 @@ class IpListsController < ApplicationController
       redirect_to edit_ip_list_path(ip, return_to: @return_to)
     else
       ip.destroy
-      return to_error_path
+      to_error_path
     end
   end
-
-  def edit; end
 
   def update
     if @ip.created_user.otp_enabled
@@ -38,7 +40,7 @@ class IpListsController < ApplicationController
 
   private
 
-  def restrict_remote_ip
+  def check_ip_access!
     if IpList.white_list.any? { |ip| ip.include?(request.remote_ip) }
       redirect_to @return_to.presence || root_path and return
     elsif IpList.black_list.any? { |ip| ip.include?(request.remote_ip) }
@@ -52,22 +54,7 @@ class IpListsController < ApplicationController
   end
 
   def set_return_to
-    @return_to = safe_return_to_path(params[:return_to])
-  end
-
-  def safe_return_to_path(path)
-    return if path.blank?
-
-    uri = URI.parse(path)
-    return unless uri.scheme.nil? && uri.host.nil?
-    return unless uri.path&.start_with?("/")
-
-    normalized = uri.path
-    return unless normalized.start_with?("/tablets")
-
-    [normalized, uri.query].compact.join("?")
-  rescue URI::InvalidURIError
-    nil
+    @return_to = safe_return_to_path(params[:return_to], allowed_path_prefixes: ["/tablets"])
   end
 
   def login_target_for_return_to

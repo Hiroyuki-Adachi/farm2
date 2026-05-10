@@ -11,7 +11,7 @@
     <% @chemical_types.each do |chemical_type| %>
       <tr>
         <td><%=h chemical_type.name %></td>
-        <td><%= link_to '修正', edit_chemical_type_path(chemical_type), {class: "btn btn-success btn-sm"} %></td>
+        <td><%= link_to '修正', edit_chemical_type_path(chemical_type, return_to: request.fullpath), {class: "btn btn-success btn-sm"} %></td>
         <td><%= chemical_type.delete_link %></td>
       </tr>
     <% end %>

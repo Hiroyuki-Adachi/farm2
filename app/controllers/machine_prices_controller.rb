@@ -25,6 +25,8 @@ class MachinePricesController < ApplicationController
                      end
   end
 
+  def edit; end
+
   def create
     @machine_price = MachinePriceHeader.new(machine_price_header_params)
     @machine_price.details_form = params[:details_form]
@@ -39,8 +41,6 @@ class MachinePricesController < ApplicationController
       render action: :new, status: :unprocessable_content
     end
   end
-
-  def edit; end
 
   def update
     @machine_price.details_form = params[:details_form]

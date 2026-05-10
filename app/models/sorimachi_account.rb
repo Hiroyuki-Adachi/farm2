@@ -23,11 +23,11 @@ class SorimachiAccount < ApplicationRecord
   belongs_to_active_hash :total_cost_type, optional: true
 
   def self.import_old(term)
-    accounts = open('test/fixtures/sorimachi_accounts.yml', 'r') {|f| YAML.load(f)}
+    accounts = open('test/fixtures/sorimachi_accounts.yml', 'r') { |f| YAML.load(f) }
     accounts.each_value do |value|
       account = SorimachiAccount.find_by(term: term, code: value['code'])
       if account
-        value.delete_if {|v| ['term', 'code'].include?(v) }
+        value.delete_if { |v| ['term', 'code'].include?(v) }
         account.attributes = value
       else
         account = SorimachiAccount.new(value)
@@ -41,6 +41,7 @@ class SorimachiAccount < ApplicationRecord
     SorimachiAccount.where(term: term - 1).find_each do |sorimachi_account|
       account = SorimachiAccount.find_by(term: term, code: sorimachi_account.code)
       next if account
+
       account = SorimachiAccount.new(sorimachi_account.attributes)
       account.term = term
       account.id = nil
@@ -49,16 +50,16 @@ class SorimachiAccount < ApplicationRecord
   end
 
   def self.to_h(term)
-    SorimachiAccount.where(term: term).order(:code).to_h {|a| [a.code, a.name]}
+    SorimachiAccount.where(term: term).order(:code).to_h { |a| [a.code, a.name] }
   end
 
   def sales?
-    self.total_cost_type == TotalCostType::SALES
+    total_cost_type == TotalCostType::SALES
   end
 
   private
 
   def clear_journals
-    SorimachiJournal.where("term = ? AND (code01 = ? OR code12 = ?)", self.term, self.code, self.code).find_each(&:clear_flags)
+    SorimachiJournal.where("term = ? AND (code01 = ? OR code12 = ?)", term, code, code).find_each(&:clear_flags)
   end
 end

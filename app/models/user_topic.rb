@@ -21,7 +21,7 @@ class UserTopic < ApplicationRecord
   belongs_to :user
   belongs_to :topic
 
-  scope :current_topics, ->(user) { 
+  scope :current_topics, lambda { |user|
     where(user_id: user.id).joins(:topic).order('topics.posted_on desc, topics.id desc').limit(10).includes(:topic)
   }
   scope :pc, -> { where(pc_flag: true) }

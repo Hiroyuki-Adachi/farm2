@@ -55,21 +55,21 @@ class TotalCost < ApplicationRecord
 
   scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
 
-  scope :usual, ->(organization, term) {
+  scope :usual, lambda { |organization, term|
     includes(:total_cost_details, :sorimachi_journal, :sorimachi_account, land: :manager, work: :work_kind, work_chemical: :chemical, seedling_home: :home)
       .for_organization(organization)
       .where(term: term)
       .order(:total_cost_type_id, :display_order, :fiscal_flag, :occurred_on, :id)
   }
-  scope :for_worker, ->(organization, term) {
+  scope :for_worker, lambda { |organization, term|
     for_organization(organization).where(term: term, total_cost_type_id: [TotalCostType::WORKWORKER.id, TotalCostType::WORKINDIRECT.id])
   }
 
-  scope :direct, -> {where(total_cost_type_id: 10..110)}
-  scope :sales, -> {where(total_cost_type_id: 200..299)}
+  scope :direct, -> { where(total_cost_type_id: 10..110) }
+  scope :sales, -> { where(total_cost_type_id: 200..299) }
 
   def self.sum_work_results(organization, term)
-    return for_worker(organization, term)
+    for_worker(organization, term)
       .joins(:total_cost_details)
       .group("total_costs.cost_type_id", "total_cost_details.work_type_id")
       .sum("total_cost_details.cost")
@@ -90,7 +90,8 @@ class TotalCost < ApplicationRecord
     work_type = WorkType.find(work_type_id)
     return amount if work_type.cost_only?
     return nil unless total_cost_details.exists?(work_type_id: work_type_id)
-    return dif_amount * rate(work_type_id)
+
+    dif_amount * rate(work_type_id)
   end
 
   def dif_amount
@@ -98,14 +99,15 @@ class TotalCost < ApplicationRecord
     total_cost_details.each do |tcd|
       detail_amount += tcd.cost if tcd.rate.zero?
     end
-    return amount - detail_amount
+    amount - detail_amount
   end
 
   def base_cost(work_type_id)
     cost = cost(work_type_id)
     sum_area = LandCost.sum_area_by_work_type(occurred_on, work_type_id)
     return 0 if sum_area.zero?
-    return cost && !sum_area.zero? ? cost / sum_area * 10 : 0
+
+    cost && !sum_area.zero? ? cost / sum_area * 10 : 0
   end
 
   def rate(work_type_id)
@@ -113,11 +115,12 @@ class TotalCost < ApplicationRecord
     denom = 0
     total_cost_details.each do |tcd|
       next if tcd.rate.zero?
+
       denom += (tcd.rate * tcd.area)
       numer = tcd.rate * tcd.area if tcd.work_type_id == work_type_id
     end
 
-    return numer / denom
+    numer / denom
   end
 
   def self.make_work(organization, term, fixed_on)
@@ -130,6 +133,7 @@ class TotalCost < ApplicationRecord
     TotalCost.for_organization(organization).where(term: term).find_each do |tc|
       tc.total_cost_details.each do |tcd|
         next if tcd.rate.zero?
+
         tcd.cost = tc.cost(tcd.work_type_id)
         tcd.base_cost = tc.base_cost(tcd.work_type_id)
         tcd.save!
@@ -183,8 +187,10 @@ class TotalCost < ApplicationRecord
   def self.make_details_for_indirect(total_cost_id, occurred_on)
     WorkType.land.each do |work_type|
       next unless work_type.cost_flag
+
       area = LandCost.sum_area_by_work_type(occurred_on, work_type.id)
       next unless area.positive?
+
       TotalCostDetail.create(
         total_cost_id: total_cost_id,
         work_type_id: work_type.id,

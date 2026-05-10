@@ -29,7 +29,7 @@ class Gaps::TrainingsControllerTest < ActionDispatch::IntegrationTest
     }
     assert_difference('TrainingTrainingType.count') do
       assert_difference('Training.count') do
-        put gaps_training_path(id: @work1), params: {training: training}
+        put gaps_training_path(id: @work1), params: { training: training }
       end
     end
     assert_redirected_to gaps_trainings_path

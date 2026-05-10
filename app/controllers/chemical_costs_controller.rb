@@ -22,15 +22,15 @@ class ChemicalCostsController < ApplicationController
   def create
     @chemical_work_type = ChemicalWorkType.new(chemical_work_type_params)
     if params[:regist]
-      @chemical_work_type.save! 
+      @chemical_work_type.save!
     else
       @chemical_work_type.quantity = 0
     end
     respond_to do |format|
-      format.turbo_stream do 
+      format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
-          "td_#{@chemical_work_type.chemical_term_id}_#{@chemical_work_type.work_type_id}", 
-          partial: 'show', locals: {chemical_work_type: @chemical_work_type}
+          "td_#{@chemical_work_type.chemical_term_id}_#{@chemical_work_type.work_type_id}",
+          partial: 'show', locals: { chemical_work_type: @chemical_work_type }
         )
       end
     end
@@ -39,10 +39,10 @@ class ChemicalCostsController < ApplicationController
   def update
     @chemical_work_type.update(chemical_work_type_params) if params[:regist]
     respond_to do |format|
-      format.turbo_stream do 
+      format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
-          "td_#{@chemical_work_type.chemical_term_id}_#{@chemical_work_type.work_type_id}", 
-          partial: 'show', locals: {chemical_work_type: @chemical_work_type}
+          "td_#{@chemical_work_type.chemical_term_id}_#{@chemical_work_type.work_type_id}",
+          partial: 'show', locals: { chemical_work_type: @chemical_work_type }
         )
       end
     end

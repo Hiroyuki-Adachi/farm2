@@ -200,7 +200,8 @@ resources :personal_informations, param: "token", only: [:show] do
   put "topics/words", to: "personal_informations/topics/words#update"
   resources :topics, controller: "personal_informations/topics", only: [:index, :update]
   resources :maps, controller: "personal_informations/maps", only: [:index]
-  resources :mail_confirmations, controller: "personal_informations/mail_confirmations", param: "mail_token", only: [:edit]
+  resources :mail_confirmations, controller: "personal_informations/mail_confirmations", param: "mail_token",
+                                 only: [:edit]
   resources :scans, controller: "personal_informations/scans", only: [:new, :create]
   resources :tasks, controller: "personal_informations/tasks", only: [:show]
 end

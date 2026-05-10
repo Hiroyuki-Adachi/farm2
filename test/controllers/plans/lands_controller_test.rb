@@ -40,7 +40,7 @@ class Plans::LandsControllerTest < ActionDispatch::IntegrationTest
     work_type = work_types(:work_types2)
     PlanLand.delete_all
     assert_difference('PlanLand.count') do
-      post plans_lands_path(mode: @mode), params: {land: {land.id => work_type.id}}
+      post plans_lands_path(mode: @mode), params: { land: { land.id => work_type.id } }
     end
     assert_redirected_to new_plans_land_path(mode: @mode)
 

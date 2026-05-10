@@ -32,7 +32,7 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
 
   def set_workers
     @workers = if permitted_position?
-                 Worker.usual_order.where(homes: {section_id: @worker.home.section_id, company_flag: false})
+                 Worker.usual_order.where(homes: { section_id: @worker.home.section_id, company_flag: false })
                else
                  Worker.usual_order.where(home_id: @worker.home_id)
                end

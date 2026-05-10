@@ -6,7 +6,7 @@ class MenuTest < ApplicationSystemTestCase
   end
 
   test "ログインから各メニューの表示" do
-    visit root_path 
+    visit root_path
 
     fill_in 'login_name', with: @user.login_name
     fill_in 'password', with: 'password'

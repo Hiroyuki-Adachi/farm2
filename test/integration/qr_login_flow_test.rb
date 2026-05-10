@@ -26,7 +26,7 @@ class QrLoginFlowTest < ActionDispatch::IntegrationTest
       payload = { type: "session", value: token, version: 1 }
 
       called = false
-      QrLoginChannel.stub(:broadcast_to, ->(tok, data) {
+      QrLoginChannel.stub(:broadcast_to, lambda { |tok, data|
         called = true
         assert_equal token, tok
         assert_equal({ type: "approved" }, data)

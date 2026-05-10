@@ -1,9 +1,11 @@
 class WorkKindsController < ApplicationController
   include PermitChecker
+  include ReturnToIndex
 
   before_action :set_work_kind, only: [:edit, :update, :destroy]
   before_action :set_others, only: [:new, :create, :edit, :update]
   before_action :set_cost_types, only: [:new, :create, :edit, :update]
+  keeps_index_return_to path_method: :work_kinds_path
 
   def index
     @work_kinds = WorkKind.usual.page(params[:page])
@@ -28,7 +30,7 @@ class WorkKindsController < ApplicationController
   def update
     if @work_kind.update(work_kind_params)
       update_others
-      redirect_to work_kinds_path
+      redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
     end
@@ -36,7 +38,7 @@ class WorkKindsController < ApplicationController
 
   def destroy
     @work_kind.discard
-    redirect_to work_kinds_path, status: :see_other
+    redirect_to @return_to, status: :see_other
   end
 
   private

@@ -1,7 +1,7 @@
 class LandCostsController < ApplicationController
   include PermitManager
 
-  before_action :permit_this_term
+  before_action :authorize_current_term!
   before_action :set_work_types, only: [:index]
   before_action :set_land_cost, only: [:index]
   before_action :set_land, only: [:edit, :update]
@@ -12,7 +12,7 @@ class LandCostsController < ApplicationController
   def index
     @land_places = LandPlace.usual
     @land_place_id = (params[:land_place_id] || @land_places.first.id).to_i
-    @lands = Land.where(land_place_id: @land_place_id).by_term(current_system).usual
+    @lands = Land.for_organization(current_organization).where(land_place_id: @land_place_id).by_term(current_system).usual
     @costs = LandCost.usual(@lands, Time.zone.today)
     respond_to do |format|
       format.turbo_stream
@@ -20,13 +20,18 @@ class LandCostsController < ApplicationController
     end
   end
 
+  def edit
+    @land.land_costs.build
+  end
+
   def create
     redirect_to land_costs_path(land_place_id: params[:land_place_id]) unless params[:land_costs]
     LandCost.transaction do
       params[:land_costs].each_value do |land_cost|
         next if land_cost[:work_type_id].blank? || land_cost[:land_id].blank? || land_cost[:activated_on].blank?
+
         if land_cost[:id].present?
-          @land_cost = LandCost.find(land_cost[:id])
+          @land_cost = LandCost.joins(:land).where(lands: { organization_id: current_organization.id }).find(land_cost[:id])
           session[:land_cost] = @land_cost.attributes unless @land_cost.update_work_type(land_cost_params(land_cost), current_system.start_date)
         else
           @land_cost = LandCost.new(land_cost_params(land_cost))
@@ -35,10 +40,6 @@ class LandCostsController < ApplicationController
       end
     end
     redirect_to land_costs_path(land_place_id: params[:land_place_id])
-  end
-
-  def edit
-    @land.land_costs.build
   end
 
   def update
@@ -51,14 +52,14 @@ class LandCostsController < ApplicationController
 
   def map
     @target = params[:target].presence || Time.zone.today
-    @costs = LandCost.usual(Land.regionable.expiry(@target), @target).includes(land: [:owner, {manager: :holder}], work_type: [])
+    @costs = LandCost.usual(Land.for_organization(current_organization).regionable.expiry(@target), @target).includes(land: [:owner, { manager: :holder }], work_type: [])
     @work_types = WorkType.land.by_term(current_organization.get_term(@target))
   end
 
   def work_types
     render turbo_stream: turbo_stream.replace(
-      "work_types_#{params[:index]}", partial: 'work_types', 
-                                      locals: {data_index: params[:index], activate_date: params[:date], work_type_id: params[:work_type_id]}
+      "work_types_#{params[:index]}", partial: 'work_types',
+                                      locals: { data_index: params[:index], activate_date: params[:date], work_type_id: params[:work_type_id] }
     )
   end
 
@@ -69,7 +70,7 @@ class LandCostsController < ApplicationController
   end
 
   def set_land
-    @land = Land.find(params[:land_id])
+    @land = Land.for_organization(current_organization).find(params[:land_id])
   end
 
   def set_land_cost

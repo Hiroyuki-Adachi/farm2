@@ -20,7 +20,7 @@ class Works::MachinesControllerTest < ActionDispatch::IntegrationTest
   test "作業変更(機械)(変更)" do
     machine = machines(:machines1)
     work_result = work_results(:work_results_not_fixed)
-    machine_hours = { machine.id => { work_result.id => 5 }}
+    machine_hours = { machine.id => { work_result.id => 5 } }
     assert_difference('MachineResult.count') do
       post work_machines_path(work_id: @work), params: {
         machine_hours: machine_hours

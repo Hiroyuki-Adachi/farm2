@@ -3,14 +3,14 @@ class WorkSeedlingsController < ApplicationController
 
   def index
     @work_types = WorkType.land
-    @work_seedlings, @work_areas = calc_seedlings(Work.where(work_kind_id: current_organization.rice_planting_id).by_term(@term))
+    @work_seedlings, @work_areas = calc_seedlings(Work.for_organization(current_organization).where(work_kind_id: current_organization.rice_planting_id).by_term(@term))
 
     respond_to do |format|
       format.html do
         # このブロックはERBテンプレートの自動レンダリングのために意図的に空にしています。
       end
       format.csv do
-        render :content_type => 'text/csv; charset=cp943'
+        render content_type: 'text/csv; charset=cp943'
       end
     end
   end
@@ -26,6 +26,6 @@ class WorkSeedlingsController < ApplicationController
         work_areas[work_type_id][work.id] = area
       end
     end
-    return work_seedlings, work_areas
+    [work_seedlings, work_areas]
   end
 end

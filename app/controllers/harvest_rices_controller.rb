@@ -11,7 +11,7 @@ class HarvestRicesController < ApplicationController
 
   def calc_totals(dryings)
     work_type_totals = {}
-    carried_on_totals = Hash.new { |h, k| h[k] = {}}
+    carried_on_totals = Hash.new { |h, k| h[k] = {} }
     areas = {}
     dryings.each do |drying|
       areas[drying.carried_on] = LandCost.sum_area_for_harvest(drying.carried_on, current_organization.harvesting_work_kind_id) unless areas[drying.carried_on]
@@ -19,7 +19,7 @@ class HarvestRicesController < ApplicationController
       carried_on_totals = set_totals2(carried_on_totals, drying, drying.work_type_id, drying.carried_on)
     end
 
-    return work_type_totals, carried_on_totals, areas
+    [work_type_totals, carried_on_totals, areas]
   end
 
   def set_totals1(totals, drying, key)
@@ -28,7 +28,7 @@ class HarvestRicesController < ApplicationController
       base_weight: (totals[key] ? totals[key][:base_weight] : 0) + (drying&.adjustment&.rice_weight(current_system) || 0),
       waste_weight: (totals[key] ? totals[key][:waste_weight] : 0) + (drying&.adjustment&.waste_weight || 0)
     }
-    return totals
+    totals
   end
 
   def set_totals2(totals, drying, key1, key2)
@@ -37,6 +37,6 @@ class HarvestRicesController < ApplicationController
       base_weight: (totals[key1][key2] ? totals[key1][key2][:base_weight] : 0) + (drying&.adjustment&.rice_weight(current_system) || 0),
       waste_weight: (totals[key1][key2] ? totals[key1][key2][:waste_weight] : 0) + (drying&.adjustment&.waste_weight || 0)
     }
-    return totals
+    totals
   end
 end

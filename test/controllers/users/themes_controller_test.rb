@@ -14,7 +14,7 @@ class Users::ThemesControllerTest < ActionDispatch::IntegrationTest
   test "画面テーマ変更(実行)" do
     user = { theme: :dark }
     assert_no_difference('User.count') do
-      post users_themes_path, params: {user: user}
+      post users_themes_path, params: { user: user }
     end
     assert_redirected_to menu_index_path
 
