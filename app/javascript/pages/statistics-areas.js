@@ -20,7 +20,7 @@ export const init = () => {
       labels,
       datasets: [
         {
-          label: `${title} 10aあたり時間`,
+          label: `${title} 1時間あたり作業面積`,
           data: values,
           backgroundColor: "rgba(99, 200, 132, 0.8)",
           fill: false
@@ -33,7 +33,7 @@ export const init = () => {
           beginAtZero: true,
           title: {
             display: true,
-            text: "時間"
+            text: "作業面積(a/時間)"
           }
         }
       }
@@ -68,7 +68,7 @@ export const init = () => {
       if (thisKey !== activeKey) return;
 
       chart.data.labels = json.labels;
-      chart.data.datasets[0].label = `${json.title || "作業効率"} 10aあたり時間`;
+      chart.data.datasets[0].label = `${json.title || "作業効率"} 1時間あたり作業面積`;
       chart.data.datasets[0].data = json.values;
       chart.update();
 

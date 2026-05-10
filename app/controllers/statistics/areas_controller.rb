@@ -14,9 +14,9 @@ class Statistics::AreasController < ApplicationController
     @selected_work_kind = @work_kinds.find { |work_kind| work_kind.id == @selected_work_kind_id }
 
     @terms = current_system.get_prev_terms(10).sort
-    @hours_per_10a =
+    @area_per_hour =
       if @selected_work_kind_id.present?
-        Work.hours_per_10a_by_work_kind(
+        Work.area_per_hour_by_work_kind(
           @selected_work_kind_id,
           @terms,
           organization: current_organization
@@ -30,7 +30,7 @@ class Statistics::AreasController < ApplicationController
       format.json do
         render json: {
           labels: @terms,
-          values: @terms.map { |term| @hours_per_10a[term] },
+          values: @terms.map { |term| @area_per_hour[term] },
           title: @selected_work_kind&.name
         }
       end
