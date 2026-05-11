@@ -15,7 +15,17 @@
 #  updated_at                      :datetime         not null
 #  chemical_id(薬剤)               :integer          not null
 #  chemical_inventory_id(薬剤棚卸) :integer
+#  organization_id(組織)           :bigint           not null
 #  work_chemical_id(薬剤使用)      :integer
+#
+# Indexes
+#
+#  idx_on_organization_id_chemical_id_stock_on_ccf855096c  (organization_id,chemical_id,stock_on)
+#  index_chemical_stocks_on_organization_id                (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 require 'test_helper'

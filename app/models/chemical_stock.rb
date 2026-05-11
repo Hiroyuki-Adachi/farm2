@@ -15,18 +15,33 @@
 #  updated_at                      :datetime         not null
 #  chemical_id(薬剤)               :integer          not null
 #  chemical_inventory_id(薬剤棚卸) :integer
+#  organization_id(組織)           :bigint           not null
 #  work_chemical_id(薬剤使用)      :integer
+#
+# Indexes
+#
+#  idx_on_organization_id_chemical_id_stock_on_ccf855096c  (organization_id,chemical_id,stock_on)
+#  index_chemical_stocks_on_organization_id                (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 class ChemicalStock < ApplicationRecord
+  belongs_to :organization
   belongs_to :chemical
   belongs_to :work_chemical
   belongs_to :chemical_inventory
 
-  validates :chemical_id, uniqueness: { scope: :chemical_inventory }, if: :valid_chemical_id?
+  validates :chemical_id, uniqueness: { scope: [:organization_id, :chemical_inventory_id] }, if: :valid_chemical_id?
+  validate :associations_same_organization
 
-  scope :usual, lambda { |chemical_id|
+  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
+
+  scope :usual, lambda { |chemical_id, organization = nil|
     where(chemical_id: chemical_id)
+      .then { |base| organization ? base.for_organization(organization) : base }
       .order(:stock_on, :id)
   }
 
@@ -37,6 +52,7 @@ class ChemicalStock < ApplicationRecord
     if chemical_inventory_id
       self.name = chemical_inventory.name
       self.stock_on = chemical_inventory.checked_on
+      self.organization_id = chemical_inventory.organization_id
     end
   end
 
@@ -47,11 +63,11 @@ class ChemicalStock < ApplicationRecord
   end
 
   def self.refresh(organization_id, chemical_id)
-    start_date = ChemicalStock.where(chemical_id: chemical_id).minimum(:stock_on)
-    from_work(chemical_id, start_date)
+    start_date = ChemicalStock.for_organization(organization_id).where(chemical_id: chemical_id).minimum(:stock_on)
+    from_work(organization_id, chemical_id, start_date)
     create_begin(organization_id, chemical_id, start_date)
     tmp_stock = 0
-    ChemicalStock.usual(chemical_id).each do |stock|
+    ChemicalStock.usual(chemical_id, organization_id).each do |stock|
       if stock.inventory.nil?
         stock.adjust = (stock.stored || 0) - (stock.using || 0) - (stock.shipping || 0)
         stock.stock = tmp_stock + stock.adjust
@@ -66,21 +82,23 @@ class ChemicalStock < ApplicationRecord
 
   def self.create_begin(organization_id, chemical_id, start_date)
     System.where("start_date > ? AND organization_id = ?", start_date, organization_id).order(:start_date).each do |sys|
-      next if ChemicalStock.exists?(["chemical_id = ? AND stock_on = ?", chemical_id, sys.start_date])
+      next if ChemicalStock.exists?(chemical_id: chemical_id, organization_id: organization_id, stock_on: sys.start_date)
 
       ChemicalStock.create(
         name: "期首在庫",
         stock_on: sys.start_date,
-        chemical_id: chemical_id
+        chemical_id: chemical_id,
+        organization_id: organization_id
       )
     end
   end
 
-  def self.from_work(chemical_id, start_date)
-    ChemicalStock.where(chemical_id: chemical_id).where.not(work_chemical_id: nil).update_all("\"using\" = 0")
-    WorkChemical.for_stock(chemical_id, start_date).each do |work_chemical|
+  def self.from_work(organization_id, chemical_id, start_date)
+    ChemicalStock.for_organization(organization_id).where(chemical_id: chemical_id).where.not(work_chemical_id: nil).update_all("\"using\" = 0")
+    WorkChemical.for_stock(chemical_id, start_date, organization_id).each do |work_chemical|
       stock = ChemicalStock.find_by(work_chemical_id: work_chemical.id)
       if stock
+        stock.organization_id = organization_id
         stock.stock_on = work_chemical.work.worked_at
         stock.name = "#{work_chemical.work.work_type.name}(#{work_chemical.work.work_kind.name})"
         stock.using = work_chemical.quantity_for_stock
@@ -89,13 +107,14 @@ class ChemicalStock < ApplicationRecord
         ChemicalStock.create(
           work_chemical_id: work_chemical.id,
           chemical_id: chemical_id,
+          organization_id: organization_id,
           stock_on: work_chemical.work.worked_at,
           name: "#{work_chemical.work.work_type.name}(#{work_chemical.work.work_kind.name})",
           using: work_chemical.quantity_for_stock
         )
       end
     end
-    ChemicalStock.where(chemical_id: chemical_id).where.not(work_chemical_id: nil).where(using: 0).destroy_all
+    ChemicalStock.for_organization(organization_id).where(chemical_id: chemical_id).where.not(work_chemical_id: nil).where(using: 0).destroy_all
   end
 
   def editable?
@@ -115,5 +134,15 @@ class ChemicalStock < ApplicationRecord
   def stored_stock=(value)
     self.stored = 0
     @stored_stock_value = value
+  end
+
+  private
+
+  def associations_same_organization
+    return if organization_id.blank?
+
+    errors.add(:chemical_id, :invalid) if chemical.present? && chemical.organization_id != organization_id
+    errors.add(:chemical_inventory_id, :invalid) if chemical_inventory.present? && chemical_inventory.organization_id != organization_id
+    errors.add(:work_chemical_id, :invalid) if work_chemical.present? && work_chemical.work.organization_id != organization_id
   end
 end

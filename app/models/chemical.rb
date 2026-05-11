@@ -19,10 +19,16 @@
 #  updated_at                 :datetime
 #  base_unit_id(基本単位)     :integer          default(0), not null
 #  chemical_type_id(薬剤種別) :integer          not null
+#  organization_id(組織)      :bigint           not null
 #
 # Indexes
 #
-#  index_chemicals_on_deleted_at  (deleted_at)
+#  index_chemicals_on_deleted_at       (deleted_at)
+#  index_chemicals_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 class Chemical < ApplicationRecord
@@ -35,6 +41,7 @@ class Chemical < ApplicationRecord
 
   after_save :save_term
 
+  belongs_to :organization
   belongs_to :chemical_type
   belongs_to_active_hash :base_unit
   has_many :chemical_terms, dependent: :destroy
@@ -53,11 +60,14 @@ class Chemical < ApplicationRecord
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
+  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
+
   scope :usual, lambda { |work|
     kept.joins(:chemical_type)
-      .where(<<-WHERE, work.term, ChemicalWorkType.by_work(work).map(&:chemical).map(&:id), work.work_kind.chemical_kinds.pluck(:chemical_type_id), work.chemicals.pluck(:chemical_id))
+      .for_organization(work.organization_id)
+      .where(<<-WHERE, work.term, work.organization_id, ChemicalWorkType.by_work(work).map(&:chemical).map(&:id), work.work_kind.chemical_kinds.pluck(:chemical_type_id), work.chemicals.pluck(:chemical_id))
             (
-                  chemicals.id IN (SELECT chemical_id FROM chemical_terms WHERE term = ?)
+                  chemicals.id IN (SELECT chemical_id FROM chemical_terms WHERE term = ? AND organization_id = ?)
               AND chemicals.id IN (?)
               AND chemicals.chemical_type_id IN (?)
             )#{' '}
@@ -68,8 +78,9 @@ class Chemical < ApplicationRecord
       ORDER
   }
 
-  scope :list, lambda {
+  scope :list, lambda { |organization = nil|
     kept.includes(:chemical_type)
+      .then { |base| organization ? base.for_organization(organization) : base }
       .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 
@@ -81,10 +92,11 @@ class Chemical < ApplicationRecord
       .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 
-  scope :for_stock, lambda { |term|
+  scope :for_stock, lambda { |term, organization = nil|
     joins(:chemical_type)
       .with_deleted
-      .where(chemicals: { id: ChemicalTerm.where(term: term).select("chemical_id") })
+      .then { |base| organization ? base.for_organization(organization) : base }
+      .where(chemicals: { id: ChemicalTerm.usual(term, organization).select("chemical_id") })
       .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 
@@ -108,7 +120,7 @@ class Chemical < ApplicationRecord
   end
 
   def this_term?(term)
-    chemical_terms.exists?(term: term)
+    chemical_terms.exists?(term: term, organization_id: organization_id)
   end
 
   def base_unit_name
@@ -161,9 +173,9 @@ class Chemical < ApplicationRecord
 
   def save_term
     if ActiveRecord::Type::Boolean.new.cast(@this_term_flag)
-      ChemicalTerm.create(term: @term, chemical_id: id) unless chemical_terms.exists?(term: @term)
+      chemical_terms.create(term: @term, organization_id: organization_id) unless chemical_terms.exists?(term: @term, organization_id: organization_id)
     else
-      chemical_terms.where(term: @term).destroy_all
+      chemical_terms.where(term: @term, organization_id: organization_id).destroy_all
     end
   end
 end

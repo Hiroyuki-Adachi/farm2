@@ -2,512 +2,618 @@
 #
 # Table name: chemical_terms(薬剤年度別利用マスタ)
 #
-#  id                :integer          not null, primary key
-#  price(価格)       :decimal(6, )     default(0), not null
-#  term(年度(期))    :integer          not null
-#  chemical_id(薬剤) :integer          not null
+#  id                    :integer          not null, primary key
+#  price(価格)           :decimal(6, )     default(0), not null
+#  term(年度(期))        :integer          not null
+#  chemical_id(薬剤)     :integer          not null
+#  organization_id(組織) :bigint           not null
 #
 # Indexes
 #
-#  index_chemical_terms_on_chemical_id_and_term  (chemical_id,term) UNIQUE
+#  idx_on_organization_id_chemical_id_term_38ad97d24a  (organization_id,chemical_id,term) UNIQUE
+#  index_chemical_terms_on_organization_id             (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 chemical_term_3_2010:
+  organization_id: 1
   chemical_id: '3'
   term: '2010'
 
 
 chemical_term_3_2011:
+  organization_id: 1
   chemical_id: '3'
   term: '2011'
 
 
 chemical_term_3_2014:
+  organization_id: 1
   chemical_id: '3'
   term: '2014'
 
 
 chemical_term_3_2013:
+  organization_id: 1
   chemical_id: '3'
   term: '2013'
 
 
 chemical_term_3_2015:
+  organization_id: 1
   chemical_id: '3'
   term: '2015'
 
 
 chemical_term_3_2012:
+  organization_id: 1
   chemical_id: '3'
   term: '2012'
 
 
 chemical_term_3_2016:
+  organization_id: 1
   chemical_id: '3'
   term: '2016'
 
 
 chemical_term_4_2012:
+  organization_id: 1
   chemical_id: '4'
   term: '2010'
 
 
 chemical_term_4_2011:
+  organization_id: 1
   chemical_id: '4'
   term: '2011'
 
 
 chemical_term_4_2014:
+  organization_id: 1
   chemical_id: '4'
   term: '2014'
 
 
 chemical_term_4_2013:
+  organization_id: 1
   chemical_id: '4'
   term: '2013'
 
 
 chemical_term_4_2015:
+  organization_id: 1
   chemical_id: '4'
   term: '2015'
 
 
 chemical_term_4_2012:
+  organization_id: 1
   chemical_id: '4'
   term: '2012'
 
 
 chemical_term_4_2016:
+  organization_id: 1
   chemical_id: '4'
   term: '2016'
 
 
 chemical_terms14:
+  organization_id: 1
   chemical_id: '6'
   term: '2010'
 
 
 chemical_terms15:
+  organization_id: 1
   chemical_id: '6'
   term: '2011'
 
 
 chemical_terms16:
+  organization_id: 1
   chemical_id: '6'
   term: '2014'
 
 
 chemical_terms17:
+  organization_id: 1
   chemical_id: '6'
   term: '2013'
 
 
 chemical_terms18:
+  organization_id: 1
   chemical_id: '6'
   term: '2015'
 
 
 chemical_terms19:
+  organization_id: 1
   chemical_id: '6'
   term: '2012'
 
 
 chemical_terms20:
+  organization_id: 1
   chemical_id: '6'
   term: '2016'
 
 
 chemical_terms21:
+  organization_id: 1
   chemical_id: '8'
   term: '2010'
 
 
 chemical_terms22:
+  organization_id: 1
   chemical_id: '8'
   term: '2011'
 
 
 chemical_terms23:
+  organization_id: 1
   chemical_id: '8'
   term: '2014'
 
 
 chemical_terms24:
+  organization_id: 1
   chemical_id: '8'
   term: '2013'
 
 
 chemical_terms25:
+  organization_id: 1
   chemical_id: '8'
   term: '2015'
 
 
 chemical_terms26:
+  organization_id: 1
   chemical_id: '8'
   term: '2012'
 
 
 chemical_terms27:
+  organization_id: 1
   chemical_id: '8'
   term: '2016'
 
 
 chemical_terms28:
+  organization_id: 1
   chemical_id: '9'
   term: '2010'
 
 
 chemical_terms29:
+  organization_id: 1
   chemical_id: '9'
   term: '2011'
 
 
 chemical_terms30:
+  organization_id: 1
   chemical_id: '9'
   term: '2014'
 
 
 chemical_terms31:
+  organization_id: 1
   chemical_id: '9'
   term: '2013'
 
 
 chemical_terms32:
+  organization_id: 1
   chemical_id: '9'
   term: '2015'
 
 
 chemical_terms33:
+  organization_id: 1
   chemical_id: '9'
   term: '2012'
 
 
 chemical_terms34:
+  organization_id: 1
   chemical_id: '9'
   term: '2016'
 
 
 chemical_terms35:
+  organization_id: 1
   chemical_id: '7'
   term: '2010'
 
 
 chemical_terms36:
+  organization_id: 1
   chemical_id: '7'
   term: '2011'
 
 
 chemical_terms37:
+  organization_id: 1
   chemical_id: '7'
   term: '2014'
 
 
 chemical_terms38:
+  organization_id: 1
   chemical_id: '7'
   term: '2013'
 
 
 chemical_terms39:
+  organization_id: 1
   chemical_id: '7'
   term: '2015'
 
 
 chemical_terms40:
+  organization_id: 1
   chemical_id: '7'
   term: '2012'
 
 
 chemical_terms41:
+  organization_id: 1
   chemical_id: '7'
   term: '2016'
 
 
 chemical_terms56:
+  organization_id: 1
   chemical_id: '1'
   term: '2010'
 
 
 chemical_terms57:
+  organization_id: 1
   chemical_id: '1'
   term: '2011'
 
 
 chemical_terms58:
+  organization_id: 1
   chemical_id: '1'
   term: '2014'
 
 
 chemical_terms59:
+  organization_id: 1
   chemical_id: '1'
   term: '2013'
 
 
 chemical_terms60:
+  organization_id: 1
   chemical_id: '1'
   term: '2015'
 
 
 chemical_terms61:
+  organization_id: 1
   chemical_id: '1'
   term: '2012'
 
 
 chemical_terms62:
+  organization_id: 1
   chemical_id: '1'
   term: '2016'
 
 
 chemical_terms63:
+  organization_id: 1
   chemical_id: '13'
   term: '2010'
 
 
 chemical_terms64:
+  organization_id: 1
   chemical_id: '13'
   term: '2011'
 
 
 chemical_terms65:
+  organization_id: 1
   chemical_id: '13'
   term: '2014'
 
 
 chemical_terms66:
+  organization_id: 1
   chemical_id: '13'
   term: '2013'
 
 
 chemical_terms67:
+  organization_id: 1
   chemical_id: '13'
   term: '2015'
 
 
 chemical_terms68:
+  organization_id: 1
   chemical_id: '13'
   term: '2012'
 
 
 chemical_terms69:
+  organization_id: 1
   chemical_id: '13'
   term: '2016'
 
 
 chemical_terms70:
+  organization_id: 1
   chemical_id: '2'
   term: '2010'
 
 
 chemical_terms71:
+  organization_id: 1
   chemical_id: '2'
   term: '2011'
 
 
 chemical_terms72:
+  organization_id: 1
   chemical_id: '2'
   term: '2014'
 
 
 chemical_terms73:
+  organization_id: 1
   chemical_id: '2'
   term: '2013'
 
 
 chemical_terms74:
+  organization_id: 1
   chemical_id: '2'
   term: '2015'
 
 
 chemical_terms75:
+  organization_id: 1
   chemical_id: '2'
   term: '2012'
 
 
 chemical_terms76:
+  organization_id: 1
   chemical_id: '2'
   term: '2016'
 
 
 chemical_terms77:
+  organization_id: 1
   chemical_id: '5'
   term: '2010'
 
 
 chemical_terms78:
+  organization_id: 1
   chemical_id: '5'
   term: '2011'
 
 
 chemical_terms79:
+  organization_id: 1
   chemical_id: '5'
   term: '2014'
 
 
 chemical_terms80:
+  organization_id: 1
   chemical_id: '5'
   term: '2013'
 
 
 chemical_terms81:
+  organization_id: 1
   chemical_id: '5'
   term: '2015'
 
 
 chemical_terms82:
+  organization_id: 1
   chemical_id: '5'
   term: '2012'
 
 
 chemical_terms83:
+  organization_id: 1
   chemical_id: '5'
   term: '2016'
 
 
 chemical_terms84:
+  organization_id: 1
   chemical_id: '14'
   term: '2010'
 
 
 chemical_terms85:
+  organization_id: 1
   chemical_id: '14'
   term: '2011'
 
 
 chemical_terms86:
+  organization_id: 1
   chemical_id: '14'
   term: '2014'
 
 
 chemical_terms87:
+  organization_id: 1
   chemical_id: '14'
   term: '2013'
 
 
 chemical_terms88:
+  organization_id: 1
   chemical_id: '14'
   term: '2015'
 
 
 chemical_terms89:
+  organization_id: 1
   chemical_id: '14'
   term: '2012'
 
 
 chemical_terms90:
+  organization_id: 1
   chemical_id: '14'
   term: '2016'
 
 
 chemical_terms91:
+  organization_id: 1
   chemical_id: '15'
   term: '2010'
 
 
 chemical_terms92:
+  organization_id: 1
   chemical_id: '15'
   term: '2011'
 
 
 chemical_terms93:
+  organization_id: 1
   chemical_id: '15'
   term: '2014'
 
 
 chemical_terms94:
+  organization_id: 1
   chemical_id: '15'
   term: '2013'
 
 
 chemical_terms95:
+  organization_id: 1
   chemical_id: '15'
   term: '2015'
 
 
 chemical_terms96:
+  organization_id: 1
   chemical_id: '15'
   term: '2012'
 
 
 chemical_terms97:
+  organization_id: 1
   chemical_id: '15'
   term: '2016'
 
 
 chemical_terms98:
+  organization_id: 1
   chemical_id: '16'
   term: '2010'
 
 
 chemical_terms99:
+  organization_id: 1
   chemical_id: '16'
   term: '2011'
 
 
 chemical_terms100:
+  organization_id: 1
   chemical_id: '16'
   term: '2014'
 
 
 chemical_terms101:
+  organization_id: 1
   chemical_id: '16'
   term: '2013'
 
 
 chemical_terms102:
+  organization_id: 1
   chemical_id: '16'
   term: '2015'
 
 
 chemical_terms103:
+  organization_id: 1
   chemical_id: '16'
   term: '2012'
 
 
 chemical_terms104:
+  organization_id: 1
   chemical_id: '16'
   term: '2016'
 
 
 chemical_terms105:
+  organization_id: 1
   chemical_id: '17'
   term: '2010'
 
 
 chemical_terms106:
+  organization_id: 1
   chemical_id: '17'
   term: '2011'
 
 
 chemical_terms107:
+  organization_id: 1
   chemical_id: '17'
   term: '2014'
 
 
 chemical_terms108:
+  organization_id: 1
   chemical_id: '17'
   term: '2013'
 
 
 chemical_terms109:
+  organization_id: 1
   chemical_id: '17'
   term: '2015'
 
 
 chemical_terms110:
+  organization_id: 1
   chemical_id: '17'
   term: '2012'
 
 
 chemical_terms111:
+  organization_id: 1
   chemical_id: '17'
   term: '2016'
 
 
 chemical_term_genka:
+  organization_id: 1
   chemical: chemical_genka
   term: 2017
   price: 600
 
 chemical_term_amistar:
+  organization_id: 1
   chemical: chemical_amistar
   term: 2016
   price: 600
