@@ -14,7 +14,7 @@ class PersonalInformationsControllerTest < ActionDispatch::IntegrationTest
     get manifest_personal_information_path(token: @user.token, format: :json)
 
     assert_response :success
-    assert_equal "application/json; charset=utf-8", response.content_type
+    assert_equal "application/manifest+json; charset=utf-8", response.content_type
 
     manifest = JSON.parse(response.body)
     assert_equal personal_information_path(token: @user.token), manifest["start_url"]

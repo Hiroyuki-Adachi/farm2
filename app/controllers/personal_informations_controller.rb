@@ -41,7 +41,7 @@ class PersonalInformationsController < ApplicationController
           purpose: "any maskable"
         }
       ]
-    }
+    }, content_type: "application/manifest+json"
   end
 
   protected
