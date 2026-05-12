@@ -49,11 +49,11 @@ class ChemicalStock < ApplicationRecord
   before_save :save_stored
 
   def save_inventory
-    if chemical_inventory_id
-      self.name = chemical_inventory.name
-      self.stock_on = chemical_inventory.checked_on
-      self.organization_id = chemical_inventory.organization_id
-    end
+    return unless chemical_inventory
+
+    self.name = chemical_inventory.name
+    self.stock_on = chemical_inventory.checked_on
+    self.organization_id = chemical_inventory.organization_id
   end
 
   def save_stored
