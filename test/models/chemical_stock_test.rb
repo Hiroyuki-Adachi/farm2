@@ -65,6 +65,38 @@ class ChemicalStockTest < ActiveSupport::TestCase
     assert_equal stock6.inventory - stock5.stock, stock6.adjust
   end
 
+  test "在庫がない薬剤でも作業実績から在庫を作成する" do
+    chemical_id = 4
+    work_chemical = work_chemicals(:work_chemical_stock)
+    ChemicalStock.for_organization(1).where(chemical_id: chemical_id).destroy_all
+
+    before_count = ChemicalStock.for_organization(1).where(chemical_id: chemical_id).count
+    ChemicalStock.refresh(1, chemical_id)
+    assert_operator ChemicalStock.for_organization(1).where(chemical_id: chemical_id).count, :>, before_count
+
+    stock = ChemicalStock.for_organization(1).find_by(work_chemical_id: work_chemical.id)
+    assert_not_nil stock
+    assert_equal work_chemical.quantity, stock.using
+    assert_equal work_chemical.work.worked_at, stock.stock_on
+  end
+
+  test "作業実績から作る在庫は他組織の既存行を更新しない" do
+    work_chemical = work_chemicals(:work_chemical_stock)
+    other_stock = chemical_stocks(:stock_for_test)
+    other_stock.update_columns(
+      organization_id: 2,
+      work_chemical_id: work_chemical.id,
+      chemical_id: work_chemical.chemical_id,
+      using: 999
+    )
+
+    ChemicalStock.refresh(1, work_chemical.chemical_id)
+
+    other_stock.reload
+    assert_equal 2, other_stock.organization_id
+    assert_equal 999, other_stock.using
+  end
+
   test "納品" do
     stock_quantity = 4
     stock_for_test = chemical_stocks(:stock_for_test)

@@ -64,6 +64,9 @@ class ChemicalStock < ApplicationRecord
 
   def self.refresh(organization_id, chemical_id)
     start_date = ChemicalStock.for_organization(organization_id).where(chemical_id: chemical_id).minimum(:stock_on)
+    start_date ||= System.min_date(organization_id)
+    return if start_date.nil?
+
     from_work(organization_id, chemical_id, start_date)
     create_begin(organization_id, chemical_id, start_date)
     tmp_stock = 0
@@ -96,7 +99,7 @@ class ChemicalStock < ApplicationRecord
   def self.from_work(organization_id, chemical_id, start_date)
     ChemicalStock.for_organization(organization_id).where(chemical_id: chemical_id).where.not(work_chemical_id: nil).update_all("\"using\" = 0")
     WorkChemical.for_stock(chemical_id, start_date, organization_id).each do |work_chemical|
-      stock = ChemicalStock.find_by(work_chemical_id: work_chemical.id)
+      stock = ChemicalStock.for_organization(organization_id).find_by(work_chemical_id: work_chemical.id)
       if stock
         stock.organization_id = organization_id
         stock.stock_on = work_chemical.work.worked_at

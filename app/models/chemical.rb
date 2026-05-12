@@ -93,10 +93,13 @@ class Chemical < ApplicationRecord
   }
 
   scope :for_stock, lambda { |term, organization = nil|
+    chemical_terms = ChemicalTerm.where(term: term)
+    chemical_terms = chemical_terms.for_organization(organization) if organization
+
     joins(:chemical_type)
       .with_deleted
       .then { |base| organization ? base.for_organization(organization) : base }
-      .where(chemicals: { id: ChemicalTerm.usual(term, organization).select("chemical_id") })
+      .where(chemicals: { id: chemical_terms.select(:chemical_id) })
       .order(Arel.sql("chemical_types.display_order, chemical_types.id, chemicals.phonetic, chemicals.display_order, chemicals.id"))
   }
 
