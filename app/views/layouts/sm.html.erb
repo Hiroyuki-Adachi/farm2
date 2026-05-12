@@ -1,3 +1,4 @@
+<% token = params[:token] || params[:personal_information_token] %>
 <!DOCTYPE html>
 <html lang="ja" data-bs-theme="<%= current_user&.theme || 'light' %>">
 <head>
@@ -24,9 +25,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path('/images/icons/farm2-32.png') %>">
   <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path('/images/icons/farm2-16.png') %>">
   <link rel="apple-touch-icon" href="<%= asset_path('/images/icons/farm2-180.png') %>">
-  <link rel="manifest" href="<%= asset_path('/manifest.json') %>">
+  <link rel="manifest" href="<%= manifest_personal_information_path(token: token) %>">
 </head>
-<% token = params[:token] || params[:personal_information_token] %>
 <body style="padding-top:64px;">
 <main class="container-fluid">
 <% unless params[:simple] %>

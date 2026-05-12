@@ -15,6 +15,35 @@ class PersonalInformationsController < ApplicationController
     Rails.application.config.access_logger.info "SP-#{@worker.name}" unless request.referer
   end
 
+  def manifest
+    personal_url = personal_information_path(token: params[:token])
+
+    render json: {
+      name: "作業日報管理",
+      short_name: "作業日報",
+      id: personal_url,
+      start_url: personal_url,
+      scope: personal_url,
+      display: "standalone",
+      theme_color: "#198754",
+      background_color: "#ffffff",
+      icons: [
+        {
+          src: view_context.asset_path("/images/icons/farm2-192.png"),
+          sizes: "192x192",
+          type: "image/png",
+          purpose: "any maskable"
+        },
+        {
+          src: view_context.asset_path("/images/icons/farm2-512.png"),
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "any maskable"
+        }
+      ]
+    }, content_type: "application/manifest+json"
+  end
+
   protected
 
   def set_worker
