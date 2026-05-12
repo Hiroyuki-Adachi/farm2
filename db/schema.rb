@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_04_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_11_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -94,7 +94,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_04_090000) do
     t.integer "chemical_adjust_type_id", default: 0, null: false, comment: "在庫調整種別"
     t.datetime "created_at", null: false
     t.string "name", limit: 40, default: "", null: false, comment: "棚卸名称"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.datetime "updated_at", null: false
+    t.index ["organization_id", "checked_on"], name: "index_chemical_inventories_on_organization_id_and_checked_on"
+    t.index ["organization_id"], name: "index_chemical_inventories_on_organization_id"
   end
 
   create_table "chemical_kinds", id: { type: :serial, comment: "作業種別薬剤種別利用マスタ" }, comment: "作業種別薬剤種別利用マスタ", force: :cascade do |t|
@@ -110,6 +113,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_04_090000) do
     t.datetime "created_at", null: false
     t.decimal "inventory", precision: 8, scale: 1, comment: "棚卸量"
     t.string "name", limit: 40, default: "", null: false, comment: "在庫名称"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.decimal "shipping", precision: 7, scale: 1, comment: "出庫量"
     t.decimal "stock", precision: 8, scale: 1, default: "0.0", null: false, comment: "在庫量"
     t.date "stock_on", null: false, comment: "在庫日"
@@ -117,13 +121,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_04_090000) do
     t.datetime "updated_at", null: false
     t.decimal "using", precision: 7, scale: 1, comment: "使用量"
     t.integer "work_chemical_id", comment: "薬剤使用"
+    t.index ["organization_id", "chemical_id", "stock_on"], name: "idx_on_organization_id_chemical_id_stock_on_ccf855096c"
+    t.index ["organization_id"], name: "index_chemical_stocks_on_organization_id"
   end
 
   create_table "chemical_terms", id: :serial, comment: "薬剤年度別利用マスタ", force: :cascade do |t|
     t.integer "chemical_id", null: false, comment: "薬剤"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.decimal "price", precision: 6, default: "0", null: false, comment: "価格"
     t.integer "term", null: false, comment: "年度(期)"
-    t.index ["chemical_id", "term"], name: "index_chemical_terms_on_chemical_id_and_term", unique: true
+    t.index ["organization_id", "chemical_id", "term"], name: "idx_on_organization_id_chemical_id_term_38ad97d24a", unique: true
+    t.index ["organization_id"], name: "index_chemical_terms_on_organization_id"
   end
 
   create_table "chemical_types", id: { type: :serial, comment: "薬剤種別マスタ" }, comment: "薬剤種別マスタ", force: :cascade do |t|
@@ -153,6 +161,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_04_090000) do
     t.datetime "deleted_at", precision: nil
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.string "name", limit: 20, null: false, comment: "薬剤名称"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.string "phonetic", limit: 40, default: "", null: false, comment: "薬剤ふりがな"
     t.decimal "stock_quantity", precision: 6, default: "0", null: false, comment: "在庫数"
     t.string "stock_unit", limit: 2, default: "", null: false, comment: "在庫単位"
@@ -160,6 +169,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_04_090000) do
     t.datetime "updated_at", precision: nil
     t.string "url", limit: 255, default: "", null: false, comment: "URL"
     t.index ["deleted_at"], name: "index_chemicals_on_deleted_at"
+    t.index ["organization_id"], name: "index_chemicals_on_organization_id"
   end
 
   create_table "cleaning_cleaning_targets", comment: "清掃対象", force: :cascade do |t|
@@ -1288,6 +1298,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_04_090000) do
     t.index ["organization_id"], name: "index_works_on_organization_id"
   end
 
+  add_foreign_key "chemical_inventories", "organizations"
+  add_foreign_key "chemical_stocks", "organizations"
+  add_foreign_key "chemical_terms", "organizations"
+  add_foreign_key "chemicals", "organizations"
   add_foreign_key "fixes", "organizations"
   add_foreign_key "homes", "organizations"
   add_foreign_key "lands", "organizations"

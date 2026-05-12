@@ -67,10 +67,11 @@ class WorkChemical < ApplicationRecord
     end
   }
 
-  scope :for_stock, lambda { |chemical_id, start_date|
+  scope :for_stock, lambda { |chemical_id, start_date, organization = nil|
     joins(:work)
       .includes(:chemical)
       .where("works.worked_at >= ? AND work_chemicals.chemical_id = ?", start_date, chemical_id)
+      .then { |base| organization ? base.where(works: { organization_id: organization.is_a?(Organization) ? organization.id : organization }) : base }
       .order("works.worked_at, works.id")
   }
 
@@ -109,7 +110,7 @@ class WorkChemical < ApplicationRecord
 
   def areas
     if chemical_group_no.zero? || work.work_lands.where(chemical_group_no: chemical_group_no).empty?
-      chemical_term = ChemicalTerm.find_by(term: work.term, chemical_id: chemical_id)
+      chemical_term = ChemicalTerm.find_by(term: work.term, chemical_id: chemical_id, organization_id: work.organization_id)
       work_type_ids = chemical_term ? chemical_term.work_types.map(&:id) : [work.work_type_id]
       land_ids = LandCost.by_work_type(work_type_ids, work.worked_at).by_land(work.work_lands.map(&:land_id)).map(&:land_id)
       Land.where(id: land_ids).sum(:area)

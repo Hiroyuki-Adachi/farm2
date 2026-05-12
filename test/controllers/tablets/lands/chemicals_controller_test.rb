@@ -23,8 +23,8 @@ class Tablets::Lands::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     map_land = lands(:lands1)
     LandCost.create!(land: map_land, work_type: work_types(:work_type_koshi), activated_on: Date.new(2015, 1, 1))
 
-    chemical = Chemical.create!(chemical_type: chemical_types(:chemical_types0), name: "試験表示薬剤T", phonetic: "しけんひょうじやくざいてぃ", display_order: 999)
-    chemical_term = ChemicalTerm.create!(chemical: chemical, term: 2015)
+    chemical = Chemical.create!(organization: organizations(:org), chemical_type: chemical_types(:chemical_types0), name: "試験表示薬剤T", phonetic: "しけんひょうじやくざいてぃ", display_order: 999)
+    chemical_term = ChemicalTerm.create!(organization: organizations(:org), chemical: chemical, term: 2015)
     ChemicalWorkType.create!(chemical_term: chemical_term, work_type: work_types(:work_type_koshi), quantity: 1.0)
 
     WorkLand.create!(work: taue_work, land: map_land, work_type_id: 11)

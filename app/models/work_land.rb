@@ -110,7 +110,7 @@ class WorkLand < ApplicationRecord
     work.work_chemicals.each do |work_chemical|
       next if chemical_group_no.positive? && work_chemical.chemical_group_no != chemical_group_no
 
-      chemical_term = ChemicalTerm.find_by(chemical_id: work_chemical.chemical_id, term: work_chemical.work.term)
+      chemical_term = ChemicalTerm.find_by(chemical_id: work_chemical.chemical_id, term: work_chemical.work.term, organization_id: work_chemical.work.organization_id)
       next unless chemical_term
 
       chemical_work_type = ChemicalWorkType.find_by(chemical_term_id: chemical_term, work_type_id: work_type_id)

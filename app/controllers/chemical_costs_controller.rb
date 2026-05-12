@@ -5,7 +5,7 @@ class ChemicalCostsController < ApplicationController
   before_action :destroy_chemical_work_type, only: [:create]
 
   def index
-    @chemical_terms = ChemicalTerm.land.usual(current_term)
+    @chemical_terms = ChemicalTerm.land.usual(current_term, current_organization)
     @chemical_work_types = ChemicalWorkType.by_chemical_terms(@chemical_terms).includes(:chemical_term, :work_type)
   end
 
@@ -59,17 +59,19 @@ class ChemicalCostsController < ApplicationController
   end
 
   def set_chemical_work_type
-    @chemical_work_type = ChemicalWorkType.find(params[:id])
+    @chemical_work_type = ChemicalWorkType.joins(:chemical_term).where(chemical_terms: { organization_id: current_organization.id }).find(params[:id])
   end
 
   def destroy_chemical_work_type
-    ChemicalWorkType.where(
+    ChemicalWorkType.joins(:chemical_term).where(chemical_terms: { organization_id: current_organization.id }).where(
       chemical_term_id: chemical_work_type_params[:chemical_term_id],
       work_type_id: chemical_work_type_params[:work_type_id]
     ).destroy_all
   end
 
   def chemical_work_type_params
-    params.expect(chemical_work_type: [:chemical_term_id, :work_type_id, :quantity])
+    permitted = params.expect(chemical_work_type: [:chemical_term_id, :work_type_id, :quantity])
+    permitted[:chemical_term_id] = ChemicalTerm.for_organization(current_organization).find(permitted[:chemical_term_id]).id
+    permitted
   end
 end
