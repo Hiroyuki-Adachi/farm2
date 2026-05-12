@@ -179,7 +179,8 @@ resources :statistics, only: [:index] do
 end
 resources :fixes, param: "fixed_at", except: [:edit, :update]
 resources :personal_informations, param: "token", only: [:show] do
-  get "manifest.json", to: "personal_informations#manifest", on: :member, as: :manifest
+  get "manifest(.:format)", to: "personal_informations#manifest", on: :member, as: :manifest,
+                             defaults: { format: :json }
   resources :works, controller: "personal_informations/works", only: [:show]
   resources :lands, controller: "personal_informations/lands", only: [:index, :show]
   resources :machines, controller: "personal_informations/machines", only: [:index]
