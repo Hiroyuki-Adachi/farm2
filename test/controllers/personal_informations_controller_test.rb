@@ -11,7 +11,7 @@ class PersonalInformationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "個人情報のmanifest" do
-    get manifest_personal_information_path(token: @user.token, format: :json)
+    get manifest_personal_information_path(token: @user.token)
 
     assert_response :success
     assert_equal "application/manifest+json", response.media_type
