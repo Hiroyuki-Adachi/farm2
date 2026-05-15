@@ -19,13 +19,20 @@
 #  updated_at                 :datetime
 #  base_unit_id(基本単位)     :integer          default(0), not null
 #  chemical_type_id(薬剤種別) :integer          not null
+#  organization_id(組織)      :bigint           not null
 #
 # Indexes
 #
-#  index_chemicals_on_deleted_at  (deleted_at)
+#  index_chemicals_on_deleted_at       (deleted_at)
+#  index_chemicals_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 chemicals0:
+  organization_id: 1
   id: '1'
   name: キチット（1㎏）
   phonetic: 'きちっと'
@@ -37,6 +44,7 @@ chemicals0:
 
 
 chemicals1:
+  organization_id: 1
   id: '2'
   name: Gオンコル(1kg)
   phonetic: 'Gおんこる'
@@ -48,6 +56,7 @@ chemicals1:
 
 
 chemicals2:
+  organization_id: 1
   id: '3'
   name: セラコートRワン
   phonetic: 'さらこーとRわん'
@@ -59,6 +68,7 @@ chemicals2:
 
 
 chemicals3:
+  organization_id: 1
   id: '4'
   unit: 
   name: 米育ち一発024号
@@ -78,6 +88,7 @@ chemicals3:
 
 
 chemicals4:
+  organization_id: 1
   id: '5'
   name: いずも稲作名人
   phonetic: 'いずもいなさくめいじん'
@@ -94,6 +105,7 @@ chemicals4:
 
 
 chemicals5:
+  organization_id: 1
   id: '6'
   name: オンコル5(3kg)
   phonetic: 'おんこる'
@@ -105,6 +117,7 @@ chemicals5:
 
 
 chemicals6:
+  organization_id: 1
   id: '7'
   name: バッチリ
   phonetic: 'ばっちり'
@@ -116,6 +129,7 @@ chemicals6:
 
 
 chemicals7:
+  organization_id: 1
   id: '8'
   name: 硫安
   phonetic: 'りゅうあん'
@@ -127,6 +141,7 @@ chemicals7:
 
 
 chemicals8:
+  organization_id: 1
   id: '9'
   name: いーね463
   phonetic: 'いーね'
@@ -138,6 +153,7 @@ chemicals8:
 
 
 chemicals9:
+  organization_id: 1
   id: '10'
   name: V550
   phonetic: 'V550'
@@ -149,6 +165,7 @@ chemicals9:
 
 
 chemicals10:
+  organization_id: 1
   id: '11'
   name: V550
   phonetic: 'V550'
@@ -160,6 +177,7 @@ chemicals10:
 
 
 chemicals11:
+  organization_id: 1
   id: '12'
   name: 苗（コシヒカリ）
   phonetic: 'いね'
@@ -171,6 +189,7 @@ chemicals11:
 
 
 chemicals12:
+  organization_id: 1
   id: '13'
   name: サラブレッド（1㎏）
   phonetic: 'さらぶれっど'
@@ -182,6 +201,7 @@ chemicals12:
 
 
 chemicals13:
+  organization_id: 1
   id: '14'
   name: グランドオリゼメート
   phonetic: 'ぐらんどおりぜめーと'
@@ -193,6 +213,7 @@ chemicals13:
 
 
 chemicals14:
+  organization_id: 1
   id: '15'
   name: フルターボ
   phonetic: 'ふるたーぼ'
@@ -204,6 +225,7 @@ chemicals14:
 
 
 chemicals15:
+  organization_id: 1
   id: '16'
   name: オサキニ
   phonetic: 'おさきに'
@@ -215,6 +237,7 @@ chemicals15:
 
 
 chemicals16:
+  organization_id: 1
   id: '17'
   name: ユーコート844
   phonetic: 'ゆーこーと'
@@ -225,6 +248,7 @@ chemicals16:
   deleted_at: 
 
 chemical_genka:
+  organization_id: 1
   name: "原価テスト用ダミー"
   phonetic: 'げんかてすと'
   display_order: 99
@@ -234,6 +258,7 @@ chemical_genka:
   deleted_at: 
 
 chemical_amistar:
+  organization_id: 1
   name: "アミスターダミー"
   phonetic: 'あみすたーだみー'
   display_order: 0

@@ -49,7 +49,7 @@ class WorkKindsController < ApplicationController
   end
 
   def work_kind_params
-    params.expect(work_kind:
+    permitted = params.expect(work_kind:
       [
         :name,
         :display_order,
@@ -60,7 +60,8 @@ class WorkKindsController < ApplicationController
         :cost_type_id,
         :aggregation_flag
       ])
-      .merge(term: current_term)
+    permitted[:aggregation_flag] = false unless permitted.key?(:aggregation_flag)
+    permitted.merge(term: current_term)
   end
 
   def set_others

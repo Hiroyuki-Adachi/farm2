@@ -123,7 +123,7 @@ class WorkTest < ActiveSupport::TestCase
     assert_equal 3, Work.total_by_home(workers(:worker1), 2026, organization: organizations(:org))[2026]
   end
 
-  test "年度別作業効率_10aあたり時間" do
+  test "年度別作業効率_1時間あたり作業面積" do
     work_kind = WorkKind.new(
       name: "効率",
       phonetic: "こうりつ",
@@ -188,10 +188,10 @@ class WorkTest < ActiveSupport::TestCase
     WorkResult.create!(work: zero_area_work, worker: workers(:worker3), hours: 10.0, display_order: 1)
     WorkLand.create!(work: zero_area_work, land: zero_area_land, display_order: 1)
 
-    results = Work.hours_per_10a_by_work_kind(work_kind.id, [2014, 2015], organization: organizations(:org))
+    results = Work.area_per_hour_by_work_kind(work_kind.id, [2014, 2015], organization: organizations(:org))
 
     assert_equal 0, results[2014]
-    assert_equal 0.75, results[2015]
+    assert_equal 13.4, results[2015]
   end
 
   test "作業種別キャッシュ" do

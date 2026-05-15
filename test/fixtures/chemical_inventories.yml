@@ -8,6 +8,16 @@
 #  created_at                            :datetime         not null
 #  updated_at                            :datetime         not null
 #  chemical_adjust_type_id(在庫調整種別) :integer          default(NULL), not null
+#  organization_id(組織)                 :bigint           not null
+#
+# Indexes
+#
+#  index_chemical_inventories_on_organization_id                 (organization_id)
+#  index_chemical_inventories_on_organization_id_and_checked_on  (organization_id,checked_on)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 # This model initially had no columns defined. If you add columns to the
@@ -16,26 +26,31 @@
 #
 
 inventory1:
+  organization_id: 1
   checked_on: '2015-12-15'
   name: '年末棚卸'
   chemical_adjust_type_id: 1
 
 store1:
+  organization_id: 1
   checked_on: '2015-12-16'
   name: '年末納品'
   chemical_adjust_type_id: 2
 
 inventory21:
+  organization_id: 1
   checked_on: '2015-01-01'
   name: '初期在庫'
   chemical_adjust_type_id: 1
 
 store2:
+  organization_id: 1
   checked_on: '2015-03-01'
   name: '納品1'
   chemical_adjust_type_id: 2
 
 inventory22:
+  organization_id: 1
   checked_on: '2015-12-31'
   name: '年末棚卸'
   chemical_adjust_type_id: 1
