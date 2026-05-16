@@ -145,6 +145,9 @@ end
 resources :homes, except: [:show]
 resources :institutions, except: [:show]
 resources :workers, except: [:show]
+namespace :machines do
+  resources :trucks, only: [:index, :create]
+end
 resources :machines, except: [:show]
 resources :chemicals, except: [:show] do
   resources :stocks, controller: "chemicals/stocks", except: [:show, :index] do
@@ -180,7 +183,7 @@ end
 resources :fixes, param: "fixed_at", except: [:edit, :update]
 resources :personal_informations, param: "token", only: [:show] do
   get "manifest(.:format)", to: "personal_informations#manifest", on: :member, as: :manifest,
-                             defaults: { format: :json }
+                            defaults: { format: :json }
   resources :works, controller: "personal_informations/works", only: [:show]
   resources :lands, controller: "personal_informations/lands", only: [:index, :show]
   resources :machines, controller: "personal_informations/machines", only: [:index]

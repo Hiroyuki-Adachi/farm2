@@ -26,6 +26,7 @@
 #  rice_planting_id(田植作業種別)            :integer
 #  straw_id(稲わらid)                        :integer
 #  training_id(訓練id)                       :integer
+#  truck_id(軽トラID)                        :integer
 #  whole_crop_work_kind_id(WCS収穫分類)      :integer
 #
 
@@ -48,6 +49,7 @@ class Organization < ApplicationRecord
   belongs_to :whole_crop, class_name: "WorkKind"
   belongs_to :contract, class_name: "WorkType"
   belongs_to :harvesting, class_name: "WorkKind"
+  belongs_to :truck, class_name: "MachineType"
 
   has_many :users, dependent: :destroy
   has_many :systems, dependent: :destroy
