@@ -82,7 +82,7 @@ class Machine < ApplicationRecord
       .where(homes: { organization_id: organization.id })
     trucks = trucks.where(homes: { section_id: section.id }) if section
 
-    trucks.order("sections.display_order, homes.display_order, machines.display_order, machines.id")
+    trucks.preload(:owner).order("sections.display_order, homes.display_order, machines.display_order, machines.id")
   }
 
   def company?
