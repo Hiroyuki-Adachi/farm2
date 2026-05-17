@@ -7,6 +7,25 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     organizations(:org).update!(truck_id: @truck_type.id)
     create_truck(homes(:home1))
     create_truck(homes(:home6))
+    MachineKind.create!(machine_type: @truck_type, work_kind: work_kinds(:work_kind_shirokaki))
+    MachineKind.create!(machine_type: @truck_type, work_kind: work_kinds(:work_kind_taue))
+  end
+
+  test "軽トラックの機械種別に紐づく作業種別トグルを表示する" do
+    get works_trucks_path
+
+    assert_response :success
+    assert_select "#truck-work-kind-tabs a", 2
+    assert_select "#truck-work-kind-tabs a:nth-child(1)", work_kinds(:work_kind_shirokaki).name
+    assert_select "#truck-work-kind-tabs a:nth-child(2)", work_kinds(:work_kind_taue).name
+    assert_select "#truck-work-kind-tabs a.btn-primary", work_kinds(:work_kind_shirokaki).name
+  end
+
+  test "作業種別パラメータで選択状態を切り替える" do
+    get works_trucks_path, params: { work_kind_id: work_kinds(:work_kind_taue).id }
+
+    assert_response :success
+    assert_select "#truck-work-kind-tabs a.btn-primary", work_kinds(:work_kind_taue).name
   end
 
   test "軽トラック利用一覧に月トグルを表示する" do

@@ -2,6 +2,8 @@ class Works::TrucksController < ApplicationController
   include PermitChecker
 
   def index
+    @work_kinds = truck_work_kinds
+    @selected_work_kind = selected_work_kind
     @months = truck_months
     @selected_month = selected_month
     @sections = truck_sections
@@ -13,6 +15,20 @@ class Works::TrucksController < ApplicationController
 
   def menu_name
     :works_trucks
+  end
+
+  def truck_work_kinds
+    current_organization.truck.work_kinds
+  end
+
+  def selected_work_kind
+    selected_work_kind_param || @work_kinds.first
+  end
+
+  def selected_work_kind_param
+    return if params[:work_kind_id].blank?
+
+    @work_kinds.find { |work_kind| work_kind.id == params.expect(:work_kind_id).to_i }
   end
 
   def truck_months
