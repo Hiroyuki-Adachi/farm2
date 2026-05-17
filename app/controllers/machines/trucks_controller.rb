@@ -1,6 +1,8 @@
 class Machines::TrucksController < ApplicationController
   include PermitChecker
 
+  before_action :ensure_truck_configured
+
   TRUCK_VALIDITY_END = Date.new(2099, 12, 31)
 
   def index
@@ -22,6 +24,10 @@ class Machines::TrucksController < ApplicationController
 
   def menu_name
     :machine_types
+  end
+
+  def ensure_truck_configured
+    render_service_unavailable unless current_organization.truck
   end
 
   def truck_homes

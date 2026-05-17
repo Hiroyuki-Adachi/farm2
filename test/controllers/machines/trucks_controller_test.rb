@@ -16,6 +16,24 @@ class Machines::TrucksControllerTest < ActionDispatch::IntegrationTest
     )
   end
 
+  test "軽トラック機械種別が未設定の場合は 503 を返す" do
+    organizations(:org).update!(truck_id: nil)
+
+    get machines_trucks_path
+
+    assert_response :service_unavailable
+  end
+
+  test "軽トラック機械種別が未設定の場合は登録しない" do
+    organizations(:org).update!(truck_id: nil)
+
+    assert_no_difference("Machine.count") do
+      post machines_trucks_path, params: { home_ids: [homes(:home2).id] }
+    end
+
+    assert_response :service_unavailable
+  end
+
   test "軽トラック保守一覧に所有状態を表示する" do
     get machines_trucks_path
 
