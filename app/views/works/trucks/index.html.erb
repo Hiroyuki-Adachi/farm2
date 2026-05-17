@@ -1,8 +1,23 @@
 <h1>軽トラック利用一覧</h1>
-<table class="table table-striped">
+<div id="truck-month-tabs" class="btn-group mb-2" role="group" aria-label="表示月">
+  <% @months.each do |month| %>
+    <% active = month == @selected_month %>
+    <%= link_to "#{month.month}月", works_trucks_path(month: month, section_id: @selected_section&.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}" %>
+  <% end %>
+</div>
+<% if @sections.present? %>
+  <div id="truck-section-tabs" class="btn-group mb-2 d-block" role="group" aria-label="表示班">
+    <% @sections.each do |section| %>
+      <% active = section == @selected_section %>
+      <%= link_to section.name, works_trucks_path(month: @selected_month, section_id: section.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}" %>
+    <% end %>
+  </div>
+<% end %>
+<table class="table">
   <thead>
     <tr>
       <th>作業日</th>
+      <th>作業内容</th>
       <% @trucks.each do |truck| %>
         <th><%= truck.owner.name %></th>
       <% end %>
@@ -11,6 +26,6 @@
 </table>
 <div id="btn_toolbar" class="btn-toolbar">
   <div class="btn-group mr-2">
-    <%= link_to '戻る', menu_index_path, {class: "btn btn-outline-dark"} %>
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"} %>
   </div>
 </div>
