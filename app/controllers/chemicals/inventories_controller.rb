@@ -3,11 +3,11 @@ class Chemicals::InventoriesController < ApplicationController
   before_action :set_inventory, only: [:edit, :update, :destroy]
 
   def index
-    @inventories = ChemicalInventory.inventories
+    @inventories = ChemicalInventory.for_organization(current_organization).inventories
   end
 
   def new
-    @inventory = ChemicalInventory.new
+    @inventory = ChemicalInventory.new(organization: current_organization)
   end
 
   def edit
@@ -39,7 +39,7 @@ class Chemicals::InventoriesController < ApplicationController
   private
 
   def set_inventory
-    @inventory = ChemicalInventory.find(params[:id])
+    @inventory = ChemicalInventory.for_organization(current_organization).find(params[:id])
     to_error_path unless @inventory.inventory?
   end
 
@@ -51,6 +51,6 @@ class Chemicals::InventoriesController < ApplicationController
         :checked_on,
         stocks_attributes: [:inventory, :chemical_id, :_destroy, :id]
       )
-      .merge(chemical_adjust_type_id: :inventory)
+      .merge(chemical_adjust_type_id: :inventory, organization_id: current_organization.id)
   end
 end

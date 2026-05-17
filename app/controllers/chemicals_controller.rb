@@ -7,11 +7,11 @@ class ChemicalsController < ApplicationController
   keeps_index_return_to path_method: :chemicals_path
 
   def index
-    @chemicals = ChemicalDecorator.decorate_collection(Chemical.list.page(params[:page]))
+    @chemicals = ChemicalDecorator.decorate_collection(Chemical.list(current_organization).page(params[:page]))
   end
 
   def new
-    @chemical = Chemical.new
+    @chemical = Chemical.new(organization: current_organization)
   end
 
   def edit; end
@@ -41,7 +41,7 @@ class ChemicalsController < ApplicationController
   private
 
   def set_chemical
-    @chemical = Chemical.kept.find(params[:id])
+    @chemical = Chemical.kept.for_organization(current_organization).find(params[:id])
     @chemical.term = current_term
   end
 
@@ -71,6 +71,6 @@ class ChemicalsController < ApplicationController
         :stock_unit,
         :url
       ])
-      .merge(term: current_term)
+      .merge(term: current_term, organization_id: current_organization.id)
   end
 end

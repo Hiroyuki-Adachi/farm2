@@ -3,11 +3,11 @@ class Chemicals::StoresController < ApplicationController
   before_action :set_inventory, only: [:edit, :update, :destroy]
 
   def index
-    @inventories = ChemicalInventory.stores
+    @inventories = ChemicalInventory.for_organization(current_organization).stores
   end
 
   def new
-    @inventory = ChemicalInventory.new
+    @inventory = ChemicalInventory.new(organization: current_organization)
   end
 
   def edit
@@ -39,7 +39,7 @@ class Chemicals::StoresController < ApplicationController
   private
 
   def set_inventory
-    @inventory = ChemicalInventory.find(params[:id])
+    @inventory = ChemicalInventory.for_organization(current_organization).find(params[:id])
   end
 
   def inventory_params
@@ -50,6 +50,6 @@ class Chemicals::StoresController < ApplicationController
         :checked_on,
         stocks_attributes: [:stored_stock, :chemical_id, :_destroy, :id]
       )
-      .merge(chemical_adjust_type_id: :stored)
+      .merge(chemical_adjust_type_id: :stored, organization_id: current_organization.id)
   end
 end

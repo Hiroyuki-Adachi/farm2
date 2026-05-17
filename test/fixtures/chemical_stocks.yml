@@ -15,7 +15,17 @@
 #  updated_at                      :datetime         not null
 #  chemical_id(薬剤)               :integer          not null
 #  chemical_inventory_id(薬剤棚卸) :integer
+#  organization_id(組織)           :bigint           not null
 #  work_chemical_id(薬剤使用)      :integer
+#
+# Indexes
+#
+#  idx_on_organization_id_chemical_id_stock_on_ccf855096c  (organization_id,chemical_id,stock_on)
+#  index_chemical_stocks_on_organization_id                (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 # This model initially had no columns defined. If you add columns to the
@@ -23,6 +33,7 @@
 # below each fixture, per the syntax in the comments below
 #
 stock_inventory:
+  organization_id: 1
   chemical_id: '3'
   chemical_inventory: inventory1
   stock_on: '2015-12-15'
@@ -30,6 +41,7 @@ stock_inventory:
   inventory: 200
 
 stock_store:
+  organization_id: 1
   chemical_id: '3'
   chemical_inventory: store1
   stock_on: '2015-12-16'
@@ -37,12 +49,14 @@ stock_store:
   stored: 300
 
 stock_edit:
+  organization_id: 1
   chemical_id: '3'
   stock_on: '2015-12-17'
   name: '手入力'
   stored: 500
 
 stock_model1:
+  organization_id: 1
   chemical_id: '4'
   stock_on: '2015-01-01'
   chemical_inventory: inventory21
@@ -50,6 +64,7 @@ stock_model1:
   inventory: 60
 
 stock_model2:
+  organization_id: 1
   chemical_id: '4'
   chemical_inventory: store2
   stock_on: '2015-03-01'
@@ -57,18 +72,21 @@ stock_model2:
   stored: 20
 
 stock_model4:
+  organization_id: 1
   chemical_id: '4'
   name: '手入力入庫'
   stock_on: '2015-04-01'
   stored: 15
 
 stock_model5:
+  organization_id: 1
   chemical_id: '4'
   name: '手入力出庫'
   stock_on: '2015-05-01'
   shipping: 20
 
 stock_model6:
+  organization_id: 1
   chemical_id: '4'
   name: '年末棚卸'
   chemical_inventory: inventory22
@@ -76,6 +94,7 @@ stock_model6:
   inventory: 20
 
 stock_for_test:
+  organization_id: 1
   chemical_id: '5'
   stock_on: '2015-12-16'
   name: '年末納品'

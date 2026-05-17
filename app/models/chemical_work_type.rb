@@ -25,8 +25,8 @@ class ChemicalWorkType < ApplicationRecord
   scope :usable, ->(chemical_term) { where(chemical_term_id: chemical_term).where("quantity > 0") }
   scope :by_work, lambda { |work|
     joins(chemical_term: :chemical)
-      .where(["chemical_work_types.work_type_id IN (?) AND chemical_work_types.quantity > 0 AND chemical_terms.term = ?",
-              work.exact_work_types.map(&:id), work.term])
+      .where(["chemical_work_types.work_type_id IN (?) AND chemical_work_types.quantity > 0 AND chemical_terms.term = ? AND chemical_terms.organization_id = ?",
+              work.exact_work_types.map(&:id), work.term, work.organization_id])
   }
 
   def self.regist_quantity(params)
@@ -46,19 +46,27 @@ class ChemicalWorkType < ApplicationRecord
 
   def self.by_work_chemical(work_chemical, work_type_id)
     joins(chemical_term: :chemical)
-      .find_by(<<SQL.squish, work_type_id, work_chemical.work.term, work_chemical.chemical_id)
+      .find_by(<<SQL.squish, work_type_id, work_chemical.work.term, work_chemical.chemical_id, work_chemical.work.organization_id)
           chemical_work_types.work_type_id = ?#{' '}
       AND chemical_terms.term = ?
       AND chemical_terms.chemical_id = ?
+      AND chemical_terms.organization_id = ?
 SQL
   end
 
-  def self.annual_update(old_term, new_term)
-    ChemicalWorkType.joins(:chemical_term).where(chemical_terms: { term: old_term }).find_each do |chemical_work_type|
+  def self.annual_update(old_term, new_term, organization = nil)
+    organization_id = organization.is_a?(Organization) ? organization.id : organization
+    base = ChemicalWorkType.joins(:chemical_term).where(chemical_terms: { term: old_term })
+    base = base.where(chemical_terms: { organization_id: organization_id }) if organization_id
+    base.find_each do |chemical_work_type|
       next if chemical_work_type.quantity.zero?
       next unless WorkTypeTerm.where(term: new_term, work_type_id: chemical_work_type.work_type_id)
 
-      chemical_term = ChemicalTerm.find_by(chemical_id: chemical_work_type.chemical_term.chemical_id, term: new_term)
+      chemical_term = ChemicalTerm.find_by(
+        chemical_id: chemical_work_type.chemical_term.chemical_id,
+        term: new_term,
+        organization_id: chemical_work_type.chemical_term.organization_id
+      )
       next if chemical_term.nil?
       next if ChemicalWorkType.exists?(chemical_term_id: chemical_term, work_type_id: chemical_work_type.work_type_id)
 

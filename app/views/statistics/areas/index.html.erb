@@ -16,7 +16,7 @@
     <canvas id="chart"
       data-chart-rendered="0"
       data-labels="<%= @terms.to_json %>"
-      data-values="<%= @terms.map { |term| @hours_per_10a[term] }.to_json %>"
+      data-values="<%= @terms.map { |term| @area_per_hour[term] }.to_json %>"
       data-title="<%= @selected_work_kind&.name %>"></canvas>
   </div>
 </div>

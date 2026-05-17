@@ -30,9 +30,9 @@ class Lands::ChemicalMapServiceTest < ActiveSupport::TestCase
     chemical2 = create_chemical(name: "試験薬剤い", phonetic: "しけんやくざいい")
     chemical3 = create_chemical(name: "試験薬剤う", phonetic: "しけんやくざいう")
 
-    term1 = ChemicalTerm.create!(chemical: chemical1, term: 2015)
-    term2 = ChemicalTerm.create!(chemical: chemical2, term: 2015)
-    term3 = ChemicalTerm.create!(chemical: chemical3, term: 2015)
+    term1 = ChemicalTerm.create!(organization: organizations(:org), chemical: chemical1, term: 2015)
+    term2 = ChemicalTerm.create!(organization: organizations(:org), chemical: chemical2, term: 2015)
+    term3 = ChemicalTerm.create!(organization: organizations(:org), chemical: chemical3, term: 2015)
 
     ChemicalWorkType.create!(chemical_term: term1, work_type: work_types(:work_type_koshi), quantity: 1.0)
     ChemicalWorkType.create!(chemical_term: term2, work_type: work_types(:work_type_koshi), quantity: 0.5)
@@ -86,7 +86,7 @@ class Lands::ChemicalMapServiceTest < ActiveSupport::TestCase
     LandCost.create!(land: land2, work_type: work_types(:work_type_koshi), activated_on: Date.new(2015, 1, 1))
 
     chemical = create_chemical(name: "試験薬剤え", phonetic: "しけんやくざいえ")
-    term = ChemicalTerm.create!(chemical: chemical, term: 2015)
+    term = ChemicalTerm.create!(organization: organizations(:org), chemical: chemical, term: 2015)
     ChemicalWorkType.create!(chemical_term: term, work_type: work_types(:work_type_koshi), quantity: 1.0)
     WorkChemical.create!(work: work, chemical: chemical, quantity: 2.0, chemical_group_no: 1)
 
@@ -142,6 +142,7 @@ class Lands::ChemicalMapServiceTest < ActiveSupport::TestCase
 
   def create_chemical(name:, phonetic:)
     Chemical.create!(
+      organization: organizations(:org),
       chemical_type: chemical_types(:chemical_types0),
       name: name,
       phonetic: phonetic,

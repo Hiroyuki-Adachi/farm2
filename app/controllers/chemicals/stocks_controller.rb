@@ -7,19 +7,19 @@ class Chemicals::StocksController < ApplicationController
   def index; end
 
   def load
-    @chemicals = ChemicalTerm.by_type(params[:term], params[:chemical_type_id])
+    @chemicals = ChemicalTerm.by_type(params[:term], params[:chemical_type_id], current_organization)
     render action: :load, layout: false
   end
 
   def search
     ChemicalStock.refresh(current_organization.id, @chemical_term.chemical_id)
-    @stocks = ChemicalStock.usual(@chemical_term.chemical_id).where(stock_on: @target_system.start_date..@target_system.end_date)
+    @stocks = ChemicalStock.usual(@chemical_term.chemical_id, current_organization).where(stock_on: @target_system.start_date..@target_system.end_date)
     @stocks = ChemicalStockDecorator.decorate_collection(@stocks)
     render action: :search, layout: false
   end
 
   def new
-    @stock = ChemicalStock.new
+    @stock = ChemicalStock.new(organization: current_organization)
     render :form, layout: false
   end
 
@@ -60,15 +60,15 @@ class Chemicals::StocksController < ApplicationController
           :stored,
           :shipping
         ])
-      .merge(chemical_id: @chemical_term.chemical_id)
+      .merge(chemical_id: @chemical_term.chemical_id, organization_id: current_organization.id)
   end
 
   def set_chemical_term
-    @chemical_term = ChemicalTerm.find(params[:chemical_id])
+    @chemical_term = ChemicalTerm.for_organization(current_organization).find(params[:chemical_id])
     @target_system = System.find_by(term: @chemical_term.term, organization_id: current_organization.id)
   end
 
   def set_stock
-    @stock = ChemicalStock.find(params[:id])
+    @stock = ChemicalStock.for_organization(current_organization).find(params[:id])
   end
 end
