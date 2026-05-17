@@ -135,7 +135,10 @@ class Works::TrucksController < ApplicationController
   end
 
   def machine_hour_params
-    params.fetch(:machine_hours, ActionController::Parameters.new).permit!.to_h
+    machine_hours = params[:machine_hours]
+    machine_hours = ActionController::Parameters.new unless machine_hours.is_a?(ActionController::Parameters)
+
+    machine_hours.permit!.to_h
   end
 
   def filter_params
