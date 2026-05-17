@@ -8,7 +8,9 @@
       <%= link_to '日報一覧', works_path, {class: "dropdown-item", data: {app_controller:  "works", actions: [:index]}} %>
       <% if current_user.checkable? %>
         <%= link_to '日報検証', work_verifications_path, {class: "dropdown-item", data: {app_controller: "work_verifications"}} %>
-        <%= link_to '軽トラック賃借一覧', works_trucks_path, {class: "dropdown-item", data: {app_controller: "works_trucks"}} %>
+        <% if current_organization.truck_id.present? %>
+          <%= link_to '軽トラック賃借一覧', works_trucks_path, {class: "dropdown-item", data: {app_controller: "works_trucks"}} %>
+        <% end %>
       <% end %>
     </div>
   </div>
