@@ -1,6 +1,8 @@
 class Works::TrucksController < ApplicationController
   include PermitChecker
 
+  before_action :ensure_truck_configured
+
   def index
     set_truck_context
   end
@@ -16,6 +18,10 @@ class Works::TrucksController < ApplicationController
 
   def menu_name
     :works_trucks
+  end
+
+  def ensure_truck_configured
+    render_service_unavailable unless current_organization.truck
   end
 
   def set_truck_context

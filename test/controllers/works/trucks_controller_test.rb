@@ -12,6 +12,14 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     @truck_work_type = work_types(:work_type_koshi)
   end
 
+  test "軽トラック機械種別が未設定の場合は 503 を返す" do
+    organizations(:org).update!(truck_id: nil)
+
+    get works_trucks_path
+
+    assert_response :service_unavailable
+  end
+
   test "軽トラックの機械種別に紐づく作業種別トグルを表示する" do
     get works_trucks_path
 
