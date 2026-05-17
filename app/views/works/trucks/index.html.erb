@@ -41,7 +41,7 @@
         <td><%= work.worked_at_long %></td>
         <td><%= work.work_type_name %></td>
         <% @trucks.each do |truck| %>
-          <% work_result = @work_result_by_work_id_and_home_id[[work.id, truck.home_id]] %>
+          <% work_result = @work_result_by_work_id_and_machine_id[[work.id, truck.id]] %>
           <% machine_result = @machine_result_hours[[truck.id, work_result.id]] if work_result %>
           <td>
             <% if work_result %>

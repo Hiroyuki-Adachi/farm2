@@ -24,6 +24,19 @@ class Works::TrucksInputsControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[name^=?]", "machine_hours[#{@home6_truck.id}]", count: 0
   end
 
+  test "同一世帯に複数作業者がいる場合は既存賃借量のある work_result を表示する" do
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    first_work_result = create_work_result(work, workers(:worker1), display_order: 1)
+    second_work_result = create_work_result(work, create_worker_for_home1, display_order: 2)
+    MachineResult.create!(machine: @home1_truck, work_result: second_work_result, hours: 2.0)
+
+    get works_trucks_path, params: { work_kind_id: work_kinds(:work_kind_shirokaki).id, month: "2015-02-01" }
+
+    assert_response :success
+    assert_select "input[name=?][value=?]", "machine_hours[#{@home1_truck.id}][#{second_work_result.id}]", "2.0"
+    assert_select "input[name=?]", "machine_hours[#{@home1_truck.id}][#{first_work_result.id}]", count: 0
+  end
+
   test "締め済み作業の時間入力欄は readonly で表示する" do
     work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki), fixed_at: Date.new(2015, 2, 28))
     work_result = create_work_result(work, workers(:worker1))
@@ -54,8 +67,20 @@ class Works::TrucksInputsControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
-  def create_work_result(work, worker)
-    WorkResult.create!(work: work, worker: worker, health: @health, hours: 1.0, display_order: 1)
+  def create_work_result(work, worker, display_order: 1)
+    WorkResult.create!(work: work, worker: worker, health: @health, hours: 1.0, display_order: display_order)
+  end
+
+  def create_worker_for_home1
+    Worker.create!(
+      family_name: "軽",
+      first_name: "次郎",
+      family_phonetic: "けい",
+      first_phonetic: "じろう",
+      home: homes(:home1),
+      organization: organizations(:org),
+      display_order: 2
+    )
   end
 
   def create_work(worked_at, work_kind, fixed_at: nil)

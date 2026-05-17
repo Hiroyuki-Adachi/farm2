@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ClassLength
 class Works::TrucksController < ApplicationController
   include PermitChecker
 
@@ -27,8 +26,8 @@ class Works::TrucksController < ApplicationController
     @sections = truck_sections
     @selected_section = selected_section
     @trucks = Machine.trucks(current_organization, section: @selected_section)
-    @work_result_by_work_id_and_home_id = work_result_by_work_id_and_home_id
     @machine_result_hours = machine_result_hours
+    @work_result_by_work_id_and_machine_id = work_result_by_work_id_and_machine_id
     @works = WorkDecorator.decorate_collection(truck_works)
   end
 
@@ -89,16 +88,35 @@ class Works::TrucksController < ApplicationController
       .order(:worked_at, :id)
   end
 
-  def work_result_by_work_id_and_home_id
-    @work_result_by_work_id_and_home_id ||= WorkResult.joins(:worker)
+  def work_result_by_work_id_and_machine_id
+    @work_result_by_work_id_and_machine_id ||= work_result_groups.each_with_object({}) do |group, hash|
+      (work_id, home_id), results = group
+
+      @trucks.select { |truck| truck.home_id == home_id }.each do |truck|
+        hash[[work_id, truck.id]] = canonical_work_result(truck, results)
+      end
+    end
+  end
+
+  def canonical_work_result(truck, results)
+    results.find { |result| @machine_result_hours.key?([truck.id, result.id]) } || results.first
+  end
+
+  def work_result_groups
+    @work_result_groups ||= truck_work_results.group_by { |result| [result.work_id, result.worker.home_id] }
+  end
+
+  def truck_work_results
+    @truck_work_results ||= WorkResult.joins(:worker)
       .where(work_id: truck_works.select(:id))
       .includes(:worker, :work)
-      .index_by { |result| [result.work_id, result.worker.home_id] }
+      .order(:work_id, :display_order, :id)
+      .to_a
   end
 
   def machine_result_hours
     @machine_result_hours ||= MachineResult
-      .where(work_result_id: @work_result_by_work_id_and_home_id.values.map(&:id), machine_id: @trucks.map(&:id))
+      .where(work_result_id: truck_work_results.map(&:id), machine_id: @trucks.map(&:id))
       .index_by { |result| [result.machine_id, result.work_result_id] }
   end
 
@@ -106,7 +124,7 @@ class Works::TrucksController < ApplicationController
     Work::TrucksRegistrar.new(
       machine_hours: machine_hour_params,
       trucks: @trucks,
-      work_results: @work_result_by_work_id_and_home_id.values
+      work_results: @work_result_by_work_id_and_machine_id.values.uniq
     ).call
   end
 
@@ -142,4 +160,3 @@ class Works::TrucksController < ApplicationController
     @sections.find { |section| section.id == params.expect(:section_id).to_i }
   end
 end
-# rubocop:enable Metrics/ClassLength
