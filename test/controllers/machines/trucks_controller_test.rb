@@ -26,6 +26,12 @@ class Machines::TrucksControllerTest < ActionDispatch::IntegrationTest
                   "home_ids[]", homes(:home2).id.to_s, count: 0
   end
 
+  test "軽トラック保守一覧(検証者以外)" do
+    login_as(users(:user_user))
+    get machines_trucks_path
+    assert_response :error
+  end
+
   test "チェック状態に合わせて軽トラックを追加削除する" do
     assert_difference("Machine.kept.count", 0) do
       post machines_trucks_path, params: { home_ids: [homes(:home2).id] }
