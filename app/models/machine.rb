@@ -26,7 +26,9 @@ class Machine < ApplicationRecord
 
   belongs_to :machine_type
   has_many :machine_kinds, through: :machine_type
-  has_many :price_headers, -> { order("machine_price_headers.validated_at DESC") }, class_name: 'MachinePriceHeader', dependent: :destroy
+  has_many :price_headers, -> {
+    order("machine_price_headers.validated_at DESC")
+  }, class_name: 'MachinePriceHeader', dependent: :destroy
 
   belongs_to :owner, -> { with_discarded }, class_name: 'Home', foreign_key: :home_id
 
@@ -67,7 +69,14 @@ class Machine < ApplicationRecord
       .order("machine_types.display_order, machines.display_order, machines.id")
   }
 
-  def company?
+  scope :trucks, ->(organization) {
+    kept.where(machine_type_id: organization.truck_id).joins(owner: :section)
+      .where(sections: { organization_id: organization.id })
+      .where(homes: { organization_id: organization.id })
+      .order("sections.display_order, homes.display_order, machines.display_order, machines.id")
+  }
+
+  def company?(q)
     owner.company_flag?
   end
 

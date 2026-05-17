@@ -239,6 +239,7 @@ end
 
 namespace :works do
   resources :supporters, only: [:index]
+  resources :trucks, only: [:index, :create]
 end
 
 resources :works do

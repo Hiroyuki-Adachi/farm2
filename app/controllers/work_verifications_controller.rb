@@ -1,5 +1,6 @@
 class WorkVerificationsController < ApplicationController
   include PermitChecker
+
   before_action :load_works, only: [:index]
   before_action :set_work, only: [:show, :update, :destroy]
 
