@@ -48,6 +48,7 @@ class Machines::TrucksController < ApplicationController
 
   def truck_result_home_ids
     @truck_result_home_ids ||= truck_machines.kept
+      .where(home_id: truck_homes_by_id.keys)
       .joins(:machine_results)
       .distinct
       .pluck(:home_id)
