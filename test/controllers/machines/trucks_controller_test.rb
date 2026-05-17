@@ -26,6 +26,19 @@ class Machines::TrucksControllerTest < ActionDispatch::IntegrationTest
                   "home_ids[]", homes(:home2).id.to_s, count: 0
   end
 
+  test "別組織の所有者は表示せず登録も受け付けない" do
+    get machines_trucks_path
+
+    assert_response :success
+    assert_select "td", text: homes(:home_other_org).name, count: 0
+
+    assert_no_difference("Machine.kept.count") do
+      post machines_trucks_path, params: { home_ids: [homes(:home1).id, homes(:home_other_org).id] }
+    end
+
+    assert_nil Machine.kept.find_by(machine_type_id: @truck_type.id, home_id: homes(:home_other_org).id)
+  end
+
   test "軽トラック保守一覧(検証者以外)" do
     login_as(users(:user_user))
     get machines_trucks_path

@@ -4,8 +4,8 @@ class Machines::TrucksController < ApplicationController
   TRUCK_VALIDITY_END = Date.new(2099, 12, 31)
 
   def index
-    @homes = Home.machine_owners
-    @truck_home_ids = truck_machines.kept.pluck(:home_id)
+    @homes = truck_homes
+    @truck_home_ids = truck_home_machines.select(&:kept?).map(&:home_id)
     @truck_result_home_ids = truck_result_home_ids
   end
 
@@ -24,8 +24,12 @@ class Machines::TrucksController < ApplicationController
     :machine_types
   end
 
+  def truck_homes
+    Home.for_organization(current_organization).machine_owners
+  end
+
   def truck_homes_by_id
-    @truck_homes_by_id ||= Home.machine_owners.index_by(&:id)
+    @truck_homes_by_id ||= truck_homes.index_by(&:id)
   end
 
   def checked_home_ids
