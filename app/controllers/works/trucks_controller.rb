@@ -9,6 +9,7 @@ class Works::TrucksController < ApplicationController
     @sections = truck_sections
     @selected_section = selected_section
     @trucks = Machine.trucks(current_organization, section: @selected_section)
+    @works = WorkDecorator.decorate_collection(truck_works)
   end
 
   private
@@ -62,6 +63,16 @@ class Works::TrucksController < ApplicationController
     return today.beginning_of_month if today.between?(current_system.start_date, current_system.end_date)
 
     @months.first
+  end
+
+  def truck_works
+    return Work.none unless @selected_work_kind && @selected_month
+
+    Work.for_organization(current_organization)
+      .includes(:work_type, :work_kind)
+      .where(work_kind_id: @selected_work_kind.id)
+      .where(worked_at: @selected_month..@selected_month.end_of_month)
+      .order(:worked_at, :id)
   end
 
   def truck_sections
