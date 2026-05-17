@@ -46,6 +46,7 @@ class OrganizationsController < ApplicationController
         :cleaning_id,
         :straw_id,
         :training_id,
+        :truck_id,
         :location
       ])
   end
