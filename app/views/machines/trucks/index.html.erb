@@ -5,13 +5,16 @@
       <tr>
         <th>所有者</th>
         <th>所有</th>
+        <th>備考</th>
       </tr>
     </thead>
     <tbody>
       <% @homes.each do |home| %>
         <tr>
           <td><%= home.name %></td>
-          <td><%= check_box_tag "home_ids[]", home.id, @truck_home_ids.include?(home.id), {id: "home_#{home.id}", class: "form-check-input"} %></td>
+          <% locked = @truck_result_home_ids.include?(home.id) %>
+          <td><%= check_box_tag "home_ids[]", home.id, @truck_home_ids.include?(home.id), {id: "home_#{home.id}", class: "form-check-input", disabled: locked} %></td>
+          <td><%= "賃借量が登録されています" if locked %></td>
         </tr>
       <% end %>
     </tbody>

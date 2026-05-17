@@ -6,6 +6,7 @@ class Machines::TrucksController < ApplicationController
   def index
     @homes = Home.machine_owners
     @truck_home_ids = truck_machines.kept.pluck(:home_id)
+    @truck_result_home_ids = truck_result_home_ids
   end
 
   def create
@@ -35,12 +36,21 @@ class Machines::TrucksController < ApplicationController
     Machine.with_discarded.where(machine_type_id: current_organization.truck_id)
   end
 
+  def truck_result_home_ids
+    @truck_result_home_ids ||= truck_machines.kept
+      .joins(:machine_results)
+      .distinct
+      .pluck(:home_id)
+  end
+
   def truck_home_machines
     @truck_home_machines ||= truck_machines.where(home_id: truck_homes_by_id.keys).to_a
   end
 
   def discard_unchecked_trucks
     truck_home_machines.each do |machine|
+      next if truck_result_home_ids.include?(machine.home_id)
+
       machine.discard if machine.kept? && checked_home_ids.exclude?(machine.home_id)
     end
   end

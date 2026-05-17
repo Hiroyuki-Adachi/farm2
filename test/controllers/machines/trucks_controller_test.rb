@@ -32,6 +32,27 @@ class Machines::TrucksControllerTest < ActionDispatch::IntegrationTest
     assert_response :error
   end
 
+  test "賃借量が登録されている軽トラックはチェックを外せない" do
+    create_machine_result(@truck)
+
+    get machines_trucks_path
+
+    assert_response :success
+    assert_select "input#home_#{homes(:home1).id}[disabled=disabled]"
+    assert_select "td", "賃借量が登録されています"
+  end
+
+  test "賃借量が登録されている軽トラックは登録時に所有解除しない" do
+    create_machine_result(@truck)
+
+    assert_no_difference("Machine.kept.count") do
+      post machines_trucks_path, params: { home_ids: [] }
+    end
+
+    assert_redirected_to machines_trucks_path
+    assert_predicate @truck.reload, :kept?
+  end
+
   test "チェック状態に合わせて軽トラックを追加削除する" do
     assert_difference("Machine.kept.count", 0) do
       post machines_trucks_path, params: { home_ids: [homes(:home2).id] }
@@ -59,5 +80,19 @@ class Machines::TrucksControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to machines_trucks_path
     assert_predicate @truck.reload, :kept?
+  end
+
+  private
+
+  def create_machine_result(machine)
+    health = Health.create!(code: "T", name: "良好", display_order: 999, well_flag: true)
+    work_result = WorkResult.find_or_create_by!(work: works(:works1), worker: workers(:worker1)) do |result|
+      result.health = health
+      result.hours = 1.0
+      result.display_order = 1
+    end
+    MachineResult.find_or_create_by!(machine: machine, work_result: work_result) do |result|
+      result.hours = 1.0
+    end
   end
 end
