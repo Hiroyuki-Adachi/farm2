@@ -39,7 +39,10 @@ class Machines::TrucksController < ApplicationController
   end
 
   def checked_home_ids
-    @checked_home_ids ||= params.fetch(:home_ids, []).map(&:to_i) & truck_homes_by_id.keys
+    @checked_home_ids ||= begin
+      home_ids = params.key?(:home_ids) ? params.expect(home_ids: []) : []
+      home_ids.map(&:to_i) & truck_homes_by_id.keys
+    end
   end
 
   def truck_machines
