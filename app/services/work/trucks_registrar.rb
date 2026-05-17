@@ -1,4 +1,8 @@
 class Work::TrucksRegistrar
+  MIN_HOURS = BigDecimal("0")
+  MAX_HOURS = BigDecimal("9.5")
+  HOUR_STEP = BigDecimal("0.5")
+
   def initialize(machine_hours:, trucks:, work_results:)
     @machine_hours = machine_hours
     @trucks = trucks
@@ -39,7 +43,7 @@ class Work::TrucksRegistrar
 
   def save_machine_result(machine_id, work_result_id, hours_value)
     hours = parse_hours(hours_value)
-    return unless hours
+    return unless valid_hours?(hours)
 
     machine_result = MachineResult.find_by(machine_id: machine_id, work_result_id: work_result_id)
     if hours.zero?
@@ -49,6 +53,10 @@ class Work::TrucksRegistrar
     else
       MachineResult.create!(machine_id: machine_id, work_result_id: work_result_id, hours: hours)
     end
+  end
+
+  def valid_hours?(hours)
+    hours&.finite? && hours.between?(MIN_HOURS, MAX_HOURS) && (hours % HOUR_STEP).zero?
   end
 
   def parse_hours(hours_value)

@@ -69,6 +69,29 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
     assert_nil MachineResult.find_by(machine: @home1_truck, work_result: other_home_work_result)
   end
 
+  test "範囲外または 0.5 刻みではない賃借量は無視する" do
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    work_result = create_work_result(work, workers(:worker1))
+    existing_result = MachineResult.create!(machine: @home1_truck, work_result: work_result, hours: 1.5)
+    invalid_work = create_work(Date.new(2015, 2, 6), work_kinds(:work_kind_shirokaki))
+    invalid_work_result = create_work_result(invalid_work, workers(:worker1))
+
+    assert_no_difference("MachineResult.count") do
+      post works_trucks_path, params: filter_params.merge(
+        machine_hours: {
+          @home1_truck.id => {
+            work_result.id => "10.0",
+            invalid_work_result.id => "1.25"
+          }
+        }
+      )
+    end
+
+    assert_redirected_to works_trucks_path(filter_params)
+    assert_equal 1.5, existing_result.reload.hours
+    assert_nil MachineResult.find_by(machine: @home1_truck, work_result: invalid_work_result)
+  end
+
   test "締め済み work の machine_result 更新は無視する" do
     work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki), fixed_at: Date.new(2015, 2, 28))
     work_result = create_work_result(work, workers(:worker1))
