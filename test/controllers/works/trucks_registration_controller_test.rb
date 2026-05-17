@@ -55,6 +55,20 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
     assert_nil MachineResult.find_by(id: machine_result.id)
   end
 
+  test "軽トラ所有者と作業者世帯が一致しない machine_result 登録は無視する" do
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    other_home_work_result = create_work_result(work, workers(:worker6))
+
+    assert_no_difference("MachineResult.count") do
+      post works_trucks_path, params: filter_params.merge(
+        machine_hours: { @home1_truck.id => { other_home_work_result.id => "2.5" } }
+      )
+    end
+
+    assert_redirected_to works_trucks_path(filter_params)
+    assert_nil MachineResult.find_by(machine: @home1_truck, work_result: other_home_work_result)
+  end
+
   test "締め済み work の machine_result 更新は無視する" do
     work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki), fixed_at: Date.new(2015, 2, 28))
     work_result = create_work_result(work, workers(:worker1))

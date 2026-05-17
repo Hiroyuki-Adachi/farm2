@@ -18,19 +18,21 @@ class Work::TrucksRegistrar
   attr_reader :machine_hours, :trucks, :work_results
 
   def save_machine_hours_for_machine(machine_id, work_result_hours)
-    return unless trucks.any? { |truck| truck.id == machine_id }
+    truck = trucks.find { |current_truck| current_truck.id == machine_id }
+    return unless truck
 
     work_result_hours.each do |work_result_id, hours_value|
-      work_result = editable_work_result(work_result_id.to_i)
+      work_result = editable_work_result(work_result_id.to_i, truck)
       next unless work_result
 
       save_machine_result(machine_id, work_result.id, hours_value)
     end
   end
 
-  def editable_work_result(work_result_id)
+  def editable_work_result(work_result_id, truck)
     work_result = work_results.find { |result| result.id == work_result_id }
     return if work_result&.work&.fixed_at.present?
+    return if work_result&.worker&.home_id != truck.home_id
 
     work_result
   end
