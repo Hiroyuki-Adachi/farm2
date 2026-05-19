@@ -40,7 +40,7 @@
     <% menu_items = [
       { href: personal_information_schedules_path(personal_information_token: token), image: "/images/menu/calendar.png", label: "予 定" },
       { href: personal_information_lands_path(personal_information_token: token), image: "/images/menu/tanbo.png", label: "農 地" },
-      { href: "http://www.google.com/calendar/render?cid=#{CGI.escape(personal_calendar_url(token: token))}&ctz=Asia/Tokyo", image: "/images/menu/google-calendar.png", label: "カレンダー", html_options: { target: "_blank", rel: "noopener" } },
+      { href: "https://www.google.com/calendar/render?cid=#{CGI.escape(personal_calendar_url(token: token))}&ctz=Asia/Tokyo", image: "/images/menu/google-calendar.png", label: "カレンダー", html_options: { target: "_blank", rel: "noopener" } },
       { href: personal_information_statistics_path(personal_information_token: token), image: "/images/menu/graph.png", label: "集 計" },
       { href: new_personal_information_scan_path(personal_information_token: token), image: "/images/menu/qrcode.png", label: "QRコード" },
       { href: "line://oaMessage/#{Rails.application.credentials.dig(:line, :channel_id)}/?token=#{token}", image: "/images/menu/line-me.png", label: "LINE" },
