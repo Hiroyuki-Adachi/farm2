@@ -1,12 +1,19 @@
 class Gaps::MonthlyReportsController < GapsController
   def index
-    @works = WorkDecorator.decorate_collection(Work.monthly_reports(params[:work_type_id], params[:worked_at].to_date)) if params[:work_type_id].present? && params[:worked_at].present?
+    if params[:work_type_id].present? && params[:worked_at].present?
+      works = Work.monthly_reports(
+        params.expect(:work_type_id),
+        params.expect(:worked_at).to_date,
+        current_organization
+      )
+      @works = WorkDecorator.decorate_collection(works)
+    end
   end
 
   def months
     @months = []
-    Work.where(work_type_id: params[:id], term: current_term)
-      .select("TO_CHAR(worked_at, 'YYYY/MM') AS yyyymm").distinct("yyyymm").order("yyyymm").each do |work|
+    Work.for_organization(current_organization).where(work_type_id: params[:id], term: current_term)
+      .select("TO_CHAR(worked_at, 'YYYY/MM') AS yyyymm").distinct("yyyymm").order(:yyyymm).each do |work|
       yyyy, mm = work.yyyymm.split('/')
       @months << ["#{yyyy}年 #{mm}月", Date.new(yyyy.to_i, mm.to_i, 1)]
     end
