@@ -5,12 +5,13 @@ class UsersController < ApplicationController
   before_action :permit_self, only: [:edit, :update]
 
   def index
-    @workers = WorkerDecorator.decorate_collection(Worker.includes(:user).usual.page(params[:page]))
+    workers = Worker.for_organization(current_organization).includes(:user).usual.page(params[:page])
+    @workers = WorkerDecorator.decorate_collection(workers)
   end
 
   def new
     @user = User.new
-    @user.worker_id = params[:worker_id]
+    @user.worker_id = Worker.for_organization(current_organization).find_by(id: params[:worker_id])&.id
   end
 
   def edit; end
@@ -46,16 +47,30 @@ class UsersController < ApplicationController
   private
 
   def set_return_to
-    fallback = (action_name.in?(["edit", "update"]) && @user&.id == current_user.id) ? menu_index_path : users_path
-    @return_to = safe_return_to_path(params[:return_to], fallback: fallback, allowed_paths: [users_path, menu_index_path])
+    fallback = action_name.in?(["edit", "update"]) && @user&.id == current_user.id ? menu_index_path : users_path
+    @return_to = safe_return_to_path(
+      params[:return_to],
+      fallback: fallback,
+      allowed_paths: [users_path, menu_index_path]
+    )
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id], organization_id: current_organization.id)
+    to_error_path unless @user
   end
 
   def user_params
-    params.expect(user: [:login_name, :password, :password_confirmation, :worker_id])
+    permitted = params.expect(user: [:login_name, :password, :password_confirmation, :worker_id])
+    if permitted[:worker_id].present?
+      worker = Worker.for_organization(current_organization).find_by(id: permitted[:worker_id])
+      if worker
+        permitted[:worker_id] = worker.id
+      else
+        permitted.delete(:worker_id)
+      end
+    end
+    permitted
   end
 
   def permit_self

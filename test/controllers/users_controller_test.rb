@@ -63,10 +63,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ユーザ変更(実行)" do
-    patch user_path(@user), params: { user: { login_name: 'updateuser', password: "AAAA", password_confirmation: "AAA" } }
+    patch user_path(@user),
+          params: { user: { login_name: 'updateuser', password: "AAAA", password_confirmation: "AAA" } }
     assert_response :unprocessable_content
 
-    patch user_path(@user), params: { user: { login_name: 'updateuser', password: "AAAA", password_confirmation: "AAAA" } }
+    patch user_path(@user),
+          params: { user: { login_name: 'updateuser', password: "AAAA", password_confirmation: "AAAA" } }
     assert_redirected_to menu_index_path
 
     @user.reload
@@ -76,7 +78,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "ユーザ変更(実行)(元のページへ戻る)" do
     user = users(:user_manager)
 
-    patch user_path(user), params: { user: { login_name: 'returnuser', password: "AAAA", password_confirmation: "AAAA" }, return_to: users_path(page: 2) }
+    patch user_path(user),
+          params: {
+            user: { login_name: 'returnuser', password: "AAAA", password_confirmation: "AAAA" },
+            return_to: users_path(page: 2)
+          }
     assert_redirected_to users_path(page: 2)
 
     user.reload
@@ -86,7 +92,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "ユーザ変更(実行)(不正な戻り先は一覧へ戻る)" do
     user = users(:user_manager)
 
-    patch user_path(user), params: { user: { login_name: 'safeuser', password: "AAAA", password_confirmation: "AAAA" }, return_to: "https://example.com/" }
+    patch user_path(user),
+          params: {
+            user: { login_name: 'safeuser', password: "AAAA", password_confirmation: "AAAA" },
+            return_to: "https://example.com/"
+          }
     assert_redirected_to users_path
 
     user.reload
@@ -109,5 +119,19 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to users_path(page: 2)
     assert_nil User.find_by(id: user.id)
+  end
+  test "ユーザ一覧に他組織の作業者を表示しない" do
+    get users_path
+
+    assert_response :success
+    assert_no_match workers(:worker_other_org).name, @response.body
+    assert_no_match homes(:home_other_org).name, @response.body
+    assert_no_match users(:user_admin_org2).login_name, @response.body
+  end
+
+  test "他組織のユーザは直接指定しても変更できない" do
+    get edit_user_path(users(:user_admin_org2))
+
+    assert_response :service_unavailable
   end
 end
