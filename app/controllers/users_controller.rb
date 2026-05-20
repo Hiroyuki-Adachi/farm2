@@ -63,7 +63,12 @@ class UsersController < ApplicationController
   def user_params
     permitted = params.expect(user: [:login_name, :password, :password_confirmation, :worker_id])
     if permitted[:worker_id].present?
-      permitted[:worker_id] = Worker.for_organization(current_organization).find_by(id: permitted[:worker_id])&.id
+      worker = Worker.for_organization(current_organization).find_by(id: permitted[:worker_id])
+      if worker
+        permitted[:worker_id] = worker.id
+      else
+        permitted.delete(:worker_id)
+      end
     end
     permitted
   end
