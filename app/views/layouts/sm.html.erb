@@ -37,75 +37,32 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbar_farm2">
-    <div class="container">
-      <div class="row">
-        <div class="col-3">
-          <a href="<%= personal_information_schedules_path(personal_information_token: token)%>">
-            <figure class="figure text-center">
-              <%= image_tag "/images/menu/calendar.png", {width: 48, height: 48, class: "figure-img"} %>
-              <figcaption class="figure-caption text-white">予 定</figcaption>
-            </figure>
-          </a>
+    <% menu_items = [
+      { href: personal_information_schedules_path(personal_information_token: token), image: "/images/menu/calendar.png", label: "予 定" },
+      { href: personal_information_lands_path(personal_information_token: token), image: "/images/menu/tanbo.png", label: "農 地" },
+      { href: "https://www.google.com/calendar/render?cid=#{CGI.escape(personal_calendar_url(token: token))}&ctz=Asia/Tokyo", image: "/images/menu/google-calendar.png", label: "カレンダー", html_options: { target: "_blank", rel: "noopener" } },
+      { href: personal_information_statistics_path(personal_information_token: token), image: "/images/menu/graph.png", label: "集 計" },
+      { href: new_personal_information_scan_path(personal_information_token: token), image: "/images/menu/qrcode.png", label: "QRコード" },
+      { href: "line://oaMessage/#{Rails.application.credentials.dig(:line, :channel_id)}/?token=#{token}", image: "/images/menu/line-me.png", label: "LINE" },
+      { href: personal_information_topics_path(personal_information_token: token), image: "/images/menu/website_news.png", label: "TOPIC" },
+      { href: personal_information_maps_path(personal_information_token: token), image: "/images/menu/google-map.png", label: "地 図" },
+      { href: personal_information_machines_path(personal_information_token: token), image: "/images/menu/car_kei_truck.png", label: "軽トラ" }
+    ] %>
+    <div class="container-fluid">
+      <% menu_items.each_slice(4) do |items| %>
+        <div class="row">
+          <% items.each do |item| %>
+            <div class="col-3 text-center">
+              <%= link_to item[:href], item[:html_options] || {} do %>
+                <figure class="figure text-center">
+                  <%= image_tag item[:image], {width: 48, height: 48, class: "figure-img"} %>
+                  <figcaption class="figure-caption text-white"><%= item[:label] %></figcaption>
+                </figure>
+              <% end %>
+            </div>
+          <% end %>
         </div>
-        <div class="col-3">
-          <a href="<%= personal_information_lands_path(personal_information_token: token)%>">
-            <figure class="figure text-center">
-              <%= image_tag "/images/menu/tanbo.png", {width: 48, height: 48, class: "figure-img"} %>
-              <figcaption class="figure-caption text-white">農 地</figcaption>
-            </figure>
-          </a>
-        </div>
-        <div class="col-3">
-          <a href="http://www.google.com/calendar/render?cid=<%= CGI.escape(personal_calendar_url(token: token)) %>&ctz=Asia/Tokyo" target="_blank">
-            <figure class="figure text-center">
-              <%= image_tag "/images/menu/google-calendar.png", {width: 48, height: 48, class: "figure-img"} %>
-              <figcaption class="figure-caption text-white">カレンダー</figcaption>
-            </figure>
-          </a>
-        </div>
-        <div class="col-3">
-          <a href="<%= personal_information_statistics_path(personal_information_token: token)%>">
-            <figure class="figure text-center">
-              <%= image_tag "/images/menu/graph.png", {width: 48, height: 48, class: "figure-img"} %>
-              <figcaption class="figure-caption text-white">集 計</figcaption>
-            </figure>
-          </a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-3">
-          <a href="<%= new_personal_information_scan_path(personal_information_token: token) %>">
-            <figure class="figure text-center">
-              <%= image_tag "/images/menu/qrcode.png", {width: 48, height: 48, class: "figure-img"} %>
-              <figcaption class="figure-caption text-white">QRコード</figcaption>
-            </figure>
-          </a>
-        </div>
-        <div class="col-3">
-          <a href="line://oaMessage/<%= Rails.application.credentials.dig(:line, :channel_id) %>/?token=<%= token %>">
-            <figure class="figure text-center">
-              <%= image_tag "/images/menu/line-me.png", {width: 48, height: 48, class: "figure-img"} %>
-              <figcaption class="figure-caption text-white">LINE</figcaption>
-            </figure>
-          </a>
-        </div>
-        <div class="col-3">
-          <a href="<%= personal_information_topics_path(personal_information_token: token)%>">
-            <figure class="figure text-center">
-              <%= image_tag "/images/menu/website_news.png", {width: 48, height: 48, class: "figure-img"} %>
-              <figcaption class="figure-caption text-white">TOPIC</figcaption>
-            </figure>
-          </a>
-        </div>
-        <div class="col-3">
-          <a href="<%= personal_information_maps_path(personal_information_token: token)%>">
-            <figure class="figure text-center">
-              <%= image_tag "/images/menu/google-map.png", {width: 48, height: 48, class: "figure-img"} %>
-              <figcaption class="figure-caption text-white">地 図</figcaption>
-            </figure>
-          </a>
-        </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </nav>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_11_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_16_144004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -581,6 +581,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_11_090000) do
     t.integer "straw_id", comment: "稲わらid"
     t.integer "term", default: 0, null: false, comment: "現在の年度(期)"
     t.integer "training_id", comment: "訓練id"
+    t.integer "truck_id", comment: "軽トラID"
     t.datetime "updated_at", precision: nil
     t.string "url", comment: "URL"
     t.integer "whole_crop_work_kind_id", comment: "WCS収穫分類"

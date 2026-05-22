@@ -1,0 +1,64 @@
+<h1>軽トラック利用一覧</h1>
+<% if @work_kinds.present? %>
+  <div id="truck-work-kind-tabs" class="btn-group mb-2 d-block" role="group" aria-label="作業種別">
+    <% @work_kinds.each do |work_kind| %>
+      <% active = work_kind == @selected_work_kind %>
+      <%= link_to work_kind.name, works_trucks_path(work_kind_id: work_kind.id, month: @selected_month, section_id: @selected_section&.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}" %>
+    <% end %>
+  </div>
+<% end %>
+<div id="truck-month-tabs" class="btn-group mb-2" role="group" aria-label="表示月">
+  <% @months.each do |month| %>
+    <% active = month == @selected_month %>
+    <%= link_to "#{month.month}月", works_trucks_path(work_kind_id: @selected_work_kind&.id, month: month, section_id: @selected_section&.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}" %>
+  <% end %>
+</div>
+<% if @sections.present? %>
+  <div id="truck-section-tabs" class="btn-group mb-2 d-block" role="group" aria-label="表示班">
+    <% @sections.each do |section| %>
+      <% active = section == @selected_section %>
+      <%= link_to section.name, works_trucks_path(work_kind_id: @selected_work_kind&.id, month: @selected_month, section_id: section.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}" %>
+    <% end %>
+  </div>
+<% end %>
+<%= form_with url: works_trucks_path, method: :post do %>
+  <%= hidden_field_tag :work_kind_id, @selected_work_kind&.id %>
+  <%= hidden_field_tag :month, @selected_month %>
+  <%= hidden_field_tag :section_id, @selected_section&.id %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>作業日</th>
+      <th>作業分類</th>
+      <% @trucks.each do |truck| %>
+        <th><%= truck.owner.name %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @works.each do |work| %>
+      <tr>
+        <td><%= work.worked_at_long %></td>
+        <td><%= work.work_type_name %></td>
+        <% @trucks.each do |truck| %>
+          <% work_result = @work_result_by_work_id_and_machine_id[[work.id, truck.id]] %>
+          <% machine_result = @machine_result_hours[[truck.id, work_result.id]] if work_result %>
+          <td>
+            <% if work_result %>
+              <%= number_field_tag "machine_hours[#{truck.id}][#{work_result.id}]", machine_result&.hours || 0, {min: 0, max: 9.5, step: 0.5, required: true, readonly: work.fixed_at.present?, class: "form-control form-control-sm", style: "width: 80px;"} %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div id="btn_toolbar" class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= submit_tag "登録", class: "btn btn-success" %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"} %>
+  </div>
+</div>
+<% end %>

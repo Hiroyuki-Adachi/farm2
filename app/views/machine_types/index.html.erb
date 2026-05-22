@@ -29,6 +29,11 @@
   <div class="btn-group mr-2">
     <%= link_to '新規登録', new_machine_type_path, class: "btn btn-success" %>
   </div>
+  <% if current_organization.truck_id %>
+  <div class="btn-group mr-2">
+    <%= link_to '軽トラック', machines_trucks_path, class: "btn btn-info" %>
+  </div>
+  <% end %>
   <div class="btn-group mr-2">
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>
   </div>

@@ -1,6 +1,7 @@
 class MachineTypesController < ApplicationController
   include PermitChecker
   include ReturnToIndex
+
   before_action :set_machine_type, only: [:edit, :update, :destroy]
   before_action :set_work_kinds, only: [:new, :create, :edit, :update]
   keeps_index_return_to path_method: :machine_types_path

@@ -202,10 +202,11 @@ SQL
       )
   }
 
-  scope :monthly_reports, lambda { |work_type_id, worked_at|
-    where(work_type_id: work_type_id)
+  scope :monthly_reports, lambda { |work_type_id, worked_at, organization = nil|
+    base = where(work_type_id: work_type_id)
       .where(worked_at: Date.new(worked_at.year, worked_at.month, 1)..Date.new(worked_at.year, worked_at.month, -1))
       .order(worked_at: :ASC, start_at: :ASC, id: :ASC)
+    organization ? base.for_organization(organization) : base
   }
 
   scope :landable, lambda {
@@ -498,8 +499,10 @@ SQL
     results
   end
 
-  def self.work_days
-    Work.joins(:workers).group(Work.arel_table[:term], Worker.arel_table[:home_id])
+  def self.work_days(organization = nil)
+    base = Work.joins(:workers)
+    base = base.for_organization(organization) if organization
+    base.group(Work.arel_table[:term], Worker.arel_table[:home_id])
       .distinct.count(Work.arel_table[:worked_at])
   end
 
