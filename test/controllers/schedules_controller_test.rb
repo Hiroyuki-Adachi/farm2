@@ -5,7 +5,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     @user = users(:user_user)
     login_as(@user)
     @schedule = schedules(:schedule1)
-    @update = { worked_at: "2015-05-06", work_type_id: work_types(:work_type_koshi).id,
+    @update = { worked_at: "2015-05-06", work_type_id: work_types(:work_types23).id,
                 start_at: "08:00:00", end_at: "17:00:00",
                 calendar_remove_flag: false,
                 farming_flag: true,
@@ -28,6 +28,22 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
   test "作業予定登録(表示)" do
     get new_schedule_path
     assert_response :success
+  end
+
+  test "作業予定作業分類切替" do
+    get work_types_schedules_path(format: :turbo_stream), params: { term: 2015 }
+    assert_response :success
+    assert_includes @response.body, "schedule_work_types"
+    assert_includes @response.body, work_types(:work_types23).name
+  end
+
+  test "作業予定登録は作業予定日の年度で有効な作業分類のみ許可" do
+    invalid_update = @update.merge(work_type_id: work_types(:work_type_koshi).id)
+
+    assert_no_difference('Schedule.count') do
+      post schedules_path, params: { schedule: invalid_update }
+    end
+    assert_response :unprocessable_content
   end
 
   test "作業予定登録(実行)" do
@@ -71,7 +87,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
 
   test "作業予定変更(表示)(本人不在でも作成者の場合はOK)" do
     ScheduleWorker.where(schedule_id: @schedule.id, worker_id: @user.worker.id).destroy_all
-    @schedule.update(created_by: @user.worker.id)
+    @schedule.update_column(:created_by, @user.worker.id)
     get edit_schedule_path(@schedule)
     assert_response :success
   end

@@ -3,6 +3,20 @@
     <%= f.label :worked_at, '', class: "col-form-label-lg form-label" %>
     <%= f.date_field :worked_at, {required: true, class: "form-control", min: Date.today - Schedule::DISPLAY_DAYS.days} %>
   </div>
+  <div class="mb-3 col-md-3 farming-visible"
+    data-controller="dependent-select"
+    data-dependent-select-url-value="<%= work_types_schedules_path %>"
+    data-dependent-select-param-name-value="term"
+    data-dependent-select-radio-name-value="schedule_work_type_term"
+    data-action="change->dependent-select#fetch">
+    <%= label_tag :schedule_work_type_term, "対象年度", class: "col-form-label-lg form-label" %>
+    <% @available_schedule_systems.each do |system| %>
+      <div class="form-check form-check-inline">
+        <%= radio_button_tag :schedule_work_type_term, system.term, system.term == @schedule_work_type_term, {id: "schedule_work_type_term_#{system.term}", class: "form-check-input"} %>
+        <%= label_tag "schedule_work_type_term_#{system.term}", schedule_term_label(system), {class: "form-check-label"} %>
+      </div>
+    <% end %>
+  </div>
   <div class="mb-3 col-md-2">
     <%= f.label :start_at, '', class: "col-form-label-lg form-label" %>
     <%= f.time_field :start_at, {required: true, class: "form-control", value: f.object.start_at&.strftime('%H:%M') } %>
@@ -75,7 +89,7 @@
   </div>
 </div>
 <div class="farming-visible">
-  <%= render 'work_types', f: f %>
+  <%= render 'work_types', work_types: @work_types, selected_work_type_id: @work_type_id %>
 </div>
 <div class="row">
   <div class="mb-3 col-md-4 farming-visible">

@@ -1,17 +1,27 @@
+<div id="schedule_work_types"
+  data-controller="dependent-select"
+  data-dependent-select-url-value="<%= work_kinds_works_path %>"
+  data-dependent-select-param-name-value="work_type_id"
+  data-dependent-select-radio-name-value="schedule[work_type_id]"
+  data-action="change->dependent-select#fetch">
 <% WorkCategory.usual.each do |category| %>
+  <% category_work_types = work_types.select { |work_type| work_type.genre.work_category_id == category.id } %>
+  <% next if category_work_types.empty? %>
+
   <div class="row">
     <div class="mb-3 col-md-2">
-        <div class="form-check form-check-inline h5">
+      <div class="form-check form-check-inline h5">
         <%= category.name %>
-        </div>
+      </div>
     </div>
     <div class="mb-3 col-md-10">
-        <% WorkType.select_category(category).each do |work_type| %>
+      <% category_work_types.each do |work_type| %>
         <div class="form-check form-check-inline">
-            <%= f.radio_button :work_type_id, work_type.id, {id: "work_type_#{work_type.id}", class: "form-check-input"} %>
-            <%= label_tag "work_type_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
-        </div>        
-        <% end %>
+          <%= radio_button_tag "schedule[work_type_id]", work_type.id, work_type.id == selected_work_type_id, {id: "work_type_#{work_type.id}", class: "form-check-input", required: true} %>
+          <%= label_tag "work_type_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>
+</div>

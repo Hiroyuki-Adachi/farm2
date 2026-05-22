@@ -33,6 +33,7 @@
 class Schedule < ApplicationRecord
   validates :worked_at, presence: true
   validates :name, length: { maximum: 40 }, if: proc { |x| x.name.present? }
+  validate :validate_work_type_term, if: :farming_flag?
 
   DISPLAY_DAYS = 60
 
@@ -158,5 +159,19 @@ class Schedule < ApplicationRecord
       self.minutes_flag = false
       self.work_flag = false
     end
+  end
+
+  def validate_work_type_term
+    return if worked_at.blank? || organization_id.blank? || work_type_id.blank?
+
+    term = Organization.find(organization_id).get_term(worked_at)
+    if term.blank?
+      errors.add(:worked_at, "に対応する年度がありません。")
+      return
+    end
+
+    return if WorkType.usual.by_term(term).exists?(id: work_type_id)
+
+    errors.add(:work_type_id, "は作業予定日の年度で使用できません。")
   end
 end

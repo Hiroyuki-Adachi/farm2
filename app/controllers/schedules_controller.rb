@@ -35,6 +35,7 @@ class SchedulesController < ApplicationController
         @schedule.regist_sections(params[:section_ids])
         redirect_to @return_to
       else
+        @schedule = @schedule.decorate
         render action: :new, status: :unprocessable_content
       end
     end
@@ -54,6 +55,28 @@ class SchedulesController < ApplicationController
   def destroy
     @schedule.destroy
     redirect_to @return_to, status: :see_other
+  end
+
+  def work_types
+    @available_schedule_systems = available_schedule_systems
+    @schedule_work_type_term = schedule_work_type_term(params[:term])
+    @work_types = schedule_work_types(@schedule_work_type_term)
+    @work_type_id = selected_work_type_id(@work_types, params[:work_type_id])
+    @work_kinds = work_kinds_for(@work_type_id)
+
+    render turbo_stream: [
+      turbo_stream.replace(
+        "schedule_work_types",
+        partial: "schedules/work_types",
+        locals: {
+          work_types: @work_types,
+          selected_work_type_id: @work_type_id
+        }
+      ),
+      turbo_stream.update("work_kind_id") do
+        helpers.options_from_collection_for_select(@work_kinds, :id, :name)
+      end
+    ]
   end
 
   private
@@ -82,9 +105,62 @@ class SchedulesController < ApplicationController
   end
 
   def set_masters
-    @work_types = WorkType.usual
-    @work_kinds = WorkKind.by_type(@schedule ? @schedule.work_type : @work_types.first) || []
+    @available_schedule_systems = available_schedule_systems
+    @schedule_work_type_term = schedule_work_type_term(params[:schedule_work_type_term])
+    @work_types = schedule_work_types(@schedule_work_type_term)
+    @work_type_id = selected_work_type_id(@work_types, @schedule&.work_type_id)
+    @work_kinds = work_kinds_for(@work_type_id)
     @sections = Section.for_organization(current_organization).usual_order
+  end
+
+  def available_schedule_systems
+    systems = [current_system]
+    systems << next_system if next_system
+
+    schedule_system = current_organization.get_system(schedule_worked_at)
+    systems << schedule_system if schedule_system
+
+    systems.compact.uniq(&:term).sort_by(&:term)
+  end
+
+  def schedule_work_type_term(term)
+    term = term.presence&.to_i
+    return term if @available_schedule_systems&.any? { |system| system.term == term }
+
+    schedule_term = current_organization.get_term(schedule_worked_at)
+    return schedule_term if @available_schedule_systems&.any? { |system| system.term == schedule_term }
+
+    current_term
+  end
+
+  def schedule_worked_at
+    schedule = @schedule&.respond_to?(:model) ? @schedule.model : @schedule
+    schedule&.worked_at
+  end
+
+  def schedule_work_types(term)
+    WorkType.usual.by_term(term).includes(genre: :category)
+  end
+
+  def selected_work_type_id(work_types, work_type_id)
+    work_type_id = work_type_id.presence&.to_i
+    return work_type_id if work_types.any? { |work_type| work_type.id == work_type_id }
+
+    work_types.first&.id
+  end
+
+  def schedule_term_label(system)
+    return "今年度" if system.term == current_term
+    return "翌年度" if system.term == next_term
+
+    "#{system.term}年度"
+  end
+  helper_method :schedule_term_label
+
+  def work_kinds_for(work_type_id)
+    return [] if work_type_id.blank?
+
+    WorkKind.by_type(WorkType.find(work_type_id)) || []
   end
 
   def permit_only_self
