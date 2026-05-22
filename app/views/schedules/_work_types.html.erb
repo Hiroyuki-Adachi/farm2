@@ -1,0 +1,17 @@
+<% WorkCategory.usual.each do |category| %>
+  <div class="row">
+    <div class="mb-3 col-md-2">
+        <div class="form-check form-check-inline h5">
+        <%= category.name %>
+        </div>
+    </div>
+    <div class="mb-3 col-md-10">
+        <% WorkType.select_category(category).each do |work_type| %>
+        <div class="form-check form-check-inline">
+            <%= f.radio_button :work_type_id, work_type.id, {id: "work_type_#{work_type.id}", class: "form-check-input"} %>
+            <%= label_tag "work_type_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
+        </div>        
+        <% end %>
+    </div>
+  </div>
+<% end %>
