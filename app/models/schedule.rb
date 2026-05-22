@@ -33,7 +33,7 @@
 class Schedule < ApplicationRecord
   validates :worked_at, presence: true
   validates :name, length: { maximum: 40 }, if: proc { |x| x.name.present? }
-  validate :validate_work_type_term, if: :farming_flag?
+  validate :validate_work_type_term, if: :validate_work_type_term?
 
   DISPLAY_DAYS = 60
 
@@ -159,6 +159,16 @@ class Schedule < ApplicationRecord
       self.minutes_flag = false
       self.work_flag = false
     end
+  end
+
+  def validate_work_type_term?
+    return false unless farming_flag?
+    return true if new_record?
+
+    will_save_change_to_worked_at? ||
+      will_save_change_to_work_type_id? ||
+      will_save_change_to_organization_id? ||
+      will_save_change_to_farming_flag?
   end
 
   def validate_work_type_term
