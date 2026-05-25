@@ -106,12 +106,15 @@ class User < ApplicationRecord
   end
 
   def login_locked?
-    return false if locked_at.blank?
+    locked_at.present? && locked_at > LOGIN_LOCKOUT_DURATION.ago
+  end
 
-    return true if locked_at > LOGIN_LOCKOUT_DURATION.ago
+  def unlock_if_expired!
+    return false if locked_at.blank?
+    return false if login_locked?
 
     reset_login_failures!
-    false
+    true
   end
 
   def register_failed_login!
