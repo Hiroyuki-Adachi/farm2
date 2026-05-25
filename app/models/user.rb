@@ -110,11 +110,18 @@ class User < ApplicationRecord
   end
 
   def unlock_if_expired!
-    return false if locked_at.blank?
-    return false if login_locked?
+    unlocked = false
 
-    reset_login_failures!
-    true
+    with_lock do
+      reload
+      next if locked_at.blank?
+      next if login_locked?
+
+      reset_login_failures!
+      unlocked = true
+    end
+
+    unlocked
   end
 
   def register_failed_login!
