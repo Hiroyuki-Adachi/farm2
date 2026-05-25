@@ -119,9 +119,18 @@ class User < ApplicationRecord
 
   def register_failed_login!
     with_lock do
-      self.failed_login_attempts += 1
-      self.locked_at = Time.current if failed_login_attempts >= MAX_FAILED_LOGIN_ATTEMPTS
-      save!(validate: false)
+      now = Time.current
+      new_failed_login_attempts = failed_login_attempts.to_i + 1
+      new_locked_at = new_failed_login_attempts >= MAX_FAILED_LOGIN_ATTEMPTS ? now : locked_at
+
+      update_columns(
+        failed_login_attempts: new_failed_login_attempts,
+        locked_at: new_locked_at,
+        updated_at: now
+      )
+
+      self.failed_login_attempts = new_failed_login_attempts
+      self.locked_at = new_locked_at
     end
   end
 
