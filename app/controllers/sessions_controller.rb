@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(login_name: params[:login_name].downcase)
+    user = User.find_by(login_name: params[:login_name].to_s.downcase)
     if user&.login_locked?
       render partial: 'flash', content_type: 'text/vnd.turbo-stream.html', locals: { message: I18n.t("session.locked") }
     elsif user&.authenticate(params[:password])
