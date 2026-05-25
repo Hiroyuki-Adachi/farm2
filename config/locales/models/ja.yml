@@ -21,6 +21,7 @@ ja:
 
   session:
     login_error: "IDまたはpasswordが間違っています。"
+    locked: "ログインに複数回失敗したため、一時的にロックされています。しばらく待ってから再度お試しください。"
 
   line_hook:
     already_linked: "あなたのユーザ情報は既に登録済です。"

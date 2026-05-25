@@ -15,11 +15,17 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(login_name: params[:login_name].downcase)
-    if user&.authenticate(params[:password])
+    if user&.login_locked?
+      render partial: 'flash', content_type: 'text/vnd.turbo-stream.html', locals: { message: I18n.t("session.locked") }
+    elsif user&.authenticate(params[:password])
+      user.reset_login_failures!
       log_in(user)
       redirect_to prefixed_path(menu_index_path)
     else
-      render partial: 'flash', content_type: 'text/vnd.turbo-stream.html', locals: { message: I18n.t("session.login_error") }
+      user&.register_failed_login!
+
+      message = user&.login_locked? ? I18n.t("session.locked") : I18n.t("session.login_error")
+      render partial: 'flash', content_type: 'text/vnd.turbo-stream.html', locals: { message: message }
     end
   end
 

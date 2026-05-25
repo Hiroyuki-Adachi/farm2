@@ -4,6 +4,8 @@
 #
 #  id(利用者マスタ)                                         :integer          not null, primary key
 #  calendar_term(期(カレンダー))                            :integer          default(2018), not null
+#  failed_login_attempts(ログイン失敗回数)                  :integer          default(0), not null
+#  locked_at(ログインロック日時)                            :datetime
 #  login_name(ログイン名)                                   :string(12)       not null
 #  mail(メールアドレス)                                     :string(255)      default(""), not null
 #  mail_confirmation_expired_at(メールアドレス確認有効期限) :datetime
@@ -36,6 +38,9 @@
 #
 require "rotp"
 class User < ApplicationRecord
+  MAX_FAILED_LOGIN_ATTEMPTS = 5
+  LOGIN_LOCKOUT_DURATION = 15.minutes
+
   before_create :set_token
   before_update :clear_mail_fields, if: -> { mail_changed? && mail.present? }
   after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && mail_confirmed_at.present? }
@@ -98,6 +103,27 @@ class User < ApplicationRecord
 
   def linable?
     line_id.present?
+  end
+
+  def login_locked?
+    return false if locked_at.blank?
+
+    return true if locked_at > LOGIN_LOCKOUT_DURATION.ago
+
+    reset_login_failures!
+    false
+  end
+
+  def register_failed_login!
+    with_lock do
+      self.failed_login_attempts += 1
+      self.locked_at = Time.current if failed_login_attempts >= MAX_FAILED_LOGIN_ATTEMPTS
+      save!(validate: false)
+    end
+  end
+
+  def reset_login_failures!
+    update_columns(failed_login_attempts: 0, locked_at: nil, updated_at: Time.current)
   end
 
   def push_notification_granted?

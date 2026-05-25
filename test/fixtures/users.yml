@@ -4,6 +4,8 @@
 #
 #  id(利用者マスタ)                                         :integer          not null, primary key
 #  calendar_term(期(カレンダー))                            :integer          default(2018), not null
+#  failed_login_attempts(ログイン失敗回数)                  :integer          default(0), not null
+#  locked_at(ログインロック日時)                            :datetime
 #  login_name(ログイン名)                                   :string(12)       not null
 #  mail(メールアドレス)                                     :string(255)      default(""), not null
 #  mail_confirmation_expired_at(メールアドレス確認有効期限) :datetime
