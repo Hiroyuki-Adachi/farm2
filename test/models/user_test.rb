@@ -169,9 +169,10 @@ class UserTest < ActiveSupport::TestCase
     @user.update!(failed_login_attempts: User::MAX_FAILED_LOGIN_ATTEMPTS, locked_at: (User::LOGIN_LOCKOUT_DURATION + 1.minute).ago)
 
     assert_changes -> { @user.reload.failed_login_attempts }, from: User::MAX_FAILED_LOGIN_ATTEMPTS, to: 0 do
-      assert_not @user.login_locked?
+      assert @user.unlock_if_expired!
     end
     assert_nil @user.reload.locked_at
+    assert_not @user.reload.login_locked?
   end
 
   test "ログイン成功でロック情報をリセットする" do

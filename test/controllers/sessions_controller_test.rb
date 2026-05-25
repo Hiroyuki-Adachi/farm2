@@ -49,7 +49,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
     post sessions_path, params: { login_name: @user.login_name, password: "hogehoge" }
 
-    assert_select 'div.alert.alert-danger', I18n.t("session.locked")
+    assert_select 'div.alert.alert-danger', I18n.t("session.login_error")
     assert_nil session[:user_id]
     assert_equal User::MAX_FAILED_LOGIN_ATTEMPTS, @user.reload.failed_login_attempts
     assert_not_nil @user.locked_at
@@ -60,7 +60,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
     post sessions_path, params: { login_name: @user.login_name, password: "password" }
 
-    assert_select 'div.alert.alert-danger', I18n.t("session.locked")
+    assert_select 'div.alert.alert-danger', I18n.t("session.login_error")
     assert_nil session[:user_id]
     assert_equal User::MAX_FAILED_LOGIN_ATTEMPTS, @user.reload.failed_login_attempts
   end
