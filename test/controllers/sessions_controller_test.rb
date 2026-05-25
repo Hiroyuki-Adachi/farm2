@@ -24,13 +24,59 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     post sessions_path, params: { login_name: @user.login_name, password: "hogehoge" }
     assert_select 'div.alert.alert-danger', I18n.t("session.login_error")
     assert_nil session[:user_id]
+    assert_equal 1, @user.reload.failed_login_attempts
   end
 
   test "ログイン実行(成功)" do
+    @user.update!(failed_login_attempts: 2, locked_at: nil)
+
     post sessions_path, params: { login_name: @user.login_name, password: "password" }
     assert_redirected_to menu_index_path
     assert_equal @user.id, session[:user_id]
     assert_equal "PC", session[:access_target]
+    assert_equal 0, @user.reload.failed_login_attempts
+    assert_nil @user.locked_at
+  end
+
+  test "ログイン実行(閾値到達でロック)" do
+    (User::MAX_FAILED_LOGIN_ATTEMPTS - 1).times do
+      post sessions_path, params: { login_name: @user.login_name, password: "hogehoge" }
+    end
+
+    @user.reload
+    assert_equal User::MAX_FAILED_LOGIN_ATTEMPTS - 1, @user.failed_login_attempts
+    assert_nil @user.locked_at
+
+    post sessions_path, params: { login_name: @user.login_name, password: "hogehoge" }
+
+    assert_select 'div.alert.alert-danger', I18n.t("session.login_error")
+    assert_nil session[:user_id]
+    assert_equal User::MAX_FAILED_LOGIN_ATTEMPTS, @user.reload.failed_login_attempts
+    assert_not_nil @user.locked_at
+  end
+
+  test "ログイン実行(ロック中)" do
+    @user.update!(failed_login_attempts: User::MAX_FAILED_LOGIN_ATTEMPTS, locked_at: Time.current)
+
+    post sessions_path, params: { login_name: @user.login_name, password: "password" }
+
+    assert_select 'div.alert.alert-danger', I18n.t("session.login_error")
+    assert_nil session[:user_id]
+    assert_equal User::MAX_FAILED_LOGIN_ATTEMPTS, @user.reload.failed_login_attempts
+  end
+
+  test "ログイン実行(ロック期限切れ後は再ログインできる)" do
+    @user.update!(
+      failed_login_attempts: User::MAX_FAILED_LOGIN_ATTEMPTS,
+      locked_at: (User::LOGIN_LOCKOUT_DURATION + 1.minute).ago
+    )
+
+    post sessions_path, params: { login_name: @user.login_name, password: "password" }
+
+    assert_redirected_to menu_index_path
+    assert_equal @user.id, session[:user_id]
+    assert_equal 0, @user.reload.failed_login_attempts
+    assert_nil @user.locked_at
   end
 
   test "ログアウト" do

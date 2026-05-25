@@ -4,6 +4,8 @@
 #
 #  id(利用者マスタ)                                         :integer          not null, primary key
 #  calendar_term(期(カレンダー))                            :integer          default(2018), not null
+#  failed_login_attempts(ログイン失敗回数)                  :integer          default(0), not null
+#  locked_at(ログインロック日時)                            :datetime
 #  login_name(ログイン名)                                   :string(12)       not null
 #  mail(メールアドレス)                                     :string(255)      default(""), not null
 #  mail_confirmation_expired_at(メールアドレス確認有効期限) :datetime
@@ -143,6 +145,43 @@ class UserTest < ActiveSupport::TestCase
     assert @checker.checkable?
     assert_not @user.checkable?
     assert_not @visitor.checkable?
+  end
+
+  test "ログイン失敗回数が閾値未満ならロックしない" do
+    assert_changes -> { @user.reload.failed_login_attempts }, from: 0, to: 1 do
+      @user.register_failed_login!
+    end
+    assert_nil @user.reload.locked_at
+    assert_not @user.login_locked?
+  end
+
+  test "ログイン失敗回数が閾値に達するとロックする" do
+    (User::MAX_FAILED_LOGIN_ATTEMPTS - 1).times { @user.register_failed_login! }
+
+    assert_changes -> { @user.reload.locked_at.present? }, from: false, to: true do
+      @user.register_failed_login!
+    end
+    assert_equal User::MAX_FAILED_LOGIN_ATTEMPTS, @user.reload.failed_login_attempts
+    assert @user.login_locked?
+  end
+
+  test "ロック期限切れなら自動解除される" do
+    @user.update!(failed_login_attempts: User::MAX_FAILED_LOGIN_ATTEMPTS, locked_at: (User::LOGIN_LOCKOUT_DURATION + 1.minute).ago)
+
+    assert_changes -> { @user.reload.failed_login_attempts }, from: User::MAX_FAILED_LOGIN_ATTEMPTS, to: 0 do
+      assert @user.unlock_if_expired!
+    end
+    assert_nil @user.reload.locked_at
+    assert_not @user.reload.login_locked?
+  end
+
+  test "ログイン成功でロック情報をリセットする" do
+    @user.update!(failed_login_attempts: 3, locked_at: Time.current)
+
+    @user.reset_login_failures!
+
+    assert_equal 0, @user.reload.failed_login_attempts
+    assert_nil @user.locked_at
   end
 
   test "TOTP対応(フラグ設定)" do
