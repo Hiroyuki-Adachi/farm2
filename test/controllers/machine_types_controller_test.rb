@@ -12,6 +12,12 @@ class MachineTypesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "機械種別マスタ一覧(検証者以外)" do
+    login_as(users(:user_user))
+    get machine_types_path
+    assert_response :error
+  end
+
   test "機械種別マスタ新規作成(表示)" do
     get new_machine_type_path
     assert_response :success

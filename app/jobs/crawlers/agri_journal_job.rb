@@ -11,7 +11,10 @@ class Crawlers::AgriJournalJob < CrawlJob
         path = page > 1 ? ["allposts/page/#{page}"] : ['allposts']
         doc = Nokogiri::HTML(agent.get(URI.join(uri, *path).to_s).body)
 
-        doc.css('section.articles02 section>a').each do |topic|
+        topic_links = doc.css('section.articles02 section>a, section.articles article.article-item a.article-title-link')
+        break if topic_links.empty?
+
+        topic_links.each do |topic|
           throw(:done) if save_topic(agent, topic[:href]).nil?
         end
 
@@ -30,7 +33,7 @@ class Crawlers::AgriJournalJob < CrawlJob
 
     Topic.find_or_create_by(url: url) do |topic|
       topic.title = topic_doc.at_css('article#singlearticle h1')&.text
-      topic.content = topic_doc.css('article#singlearticle > p:not([class])').map { |p| normalize_text(p.text) }.join('　')
+      topic.content = extract_topic_content(topic_doc)
       topic.posted_on = topic_date
       topic.topic_type_id = TopicType::AGRI_JOURNAL.id
     end
@@ -43,5 +46,12 @@ class Crawlers::AgriJournalJob < CrawlJob
 
     meta_published_time = topic_doc.at_css('meta[property="article:published_time"]')&.[]('content')
     parse_crawl_date(meta_published_time)
+  end
+
+  def extract_topic_content(topic_doc)
+    topic_doc.css('article#singlearticle > p.lead, article#singlearticle > p:not([class])')
+      .map { |p| normalize_text(p.text) }
+      .reject(&:blank?)
+      .join('　')
   end
 end

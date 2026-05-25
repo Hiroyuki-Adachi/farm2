@@ -46,8 +46,12 @@ class Home < ApplicationRecord
 
   belongs_to :organization, optional: true
   has_many :workers, -> { order(:display_order) }, dependent: :restrict_with_error
-  has_many :owned_lands,    -> { order(:place) }, class_name: 'Land', dependent: :restrict_with_error, foreign_key: :owner_id
-  has_many :managed_lands,  -> { order(:place) }, class_name: 'Land', dependent: :restrict_with_error, foreign_key: :manager_id
+  has_many :owned_lands, -> {
+    order(:place)
+  }, class_name: 'Land', dependent: :restrict_with_error, foreign_key: :owner_id
+  has_many :managed_lands, -> {
+    order(:place)
+  }, class_name: 'Land', dependent: :restrict_with_error, foreign_key: :manager_id
   has_many :sub_lands,    -> { order(:place) }, class_name: 'LandHome', dependent: :destroy
 
   belongs_to :holder,  -> { with_discarded }, class_name: 'Worker', foreign_key: :worker_id, optional: true
@@ -55,7 +59,9 @@ class Home < ApplicationRecord
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
-  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
+  scope :for_organization, ->(organization) {
+    where(organization_id: organization.is_a?(Organization) ? organization.id : organization)
+  }
 
   scope :usual_order, -> { includes(:section).order(Arel.sql("sections.display_order, homes.display_order, homes.id")) }
   scope :usual, lambda {
@@ -75,7 +81,7 @@ class Home < ApplicationRecord
       .joins(:section).includes(:section)
       .order(Arel.sql("homes.company_flag, sections.display_order, homes.display_order, homes.id"))
   }
-  scope :machine_owners, -> { kept.where(owner_flag: true).order(Arel.sql("company_flag DESC, display_order, id")) }
+  scope :machine_owners, -> { kept.where(owner_flag: true).usual_order }
   scope :company, -> { kept.where(company_flag: true) }
   scope :for_finance1, -> { kept.where(member_flag: true, owner_flag: true).order(finance_order: :ASC, id: :ASC) }
   scope :for_drying, -> { kept.where.not(drying_order: nil).order(:drying_order, id: :ASC) }
@@ -85,7 +91,9 @@ class Home < ApplicationRecord
       .order(owned_rice_order: :ASC, display_order: :ASC, id: :ASC)
   }
   scope :for_seedling, -> { kept.where.not(seedling_order: nil).order(seedling_order: :ASC, id: :ASC) }
-  scope :for_fee, -> { kept.where("EXISTS (SELECT 1 FROM lands WHERE homes.id = lands.owner_id AND lands.deleted_at IS NULL AND lands.target_flag = TRUE)") }
+  scope :for_fee, -> {
+    kept.where("EXISTS (SELECT 1 FROM lands WHERE homes.id = lands.owner_id AND lands.deleted_at IS NULL AND lands.target_flag = TRUE)")
+  }
   scope :supporters, -> { kept.includes(:section).where(member_flag: false, sections: { work_flag: true }).usual_order }
 
   validates :phonetic,      presence: true

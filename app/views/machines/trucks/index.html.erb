@@ -1,0 +1,30 @@
+<h1>軽トラック保守</h1>
+<%= form_with url: machines_trucks_path, method: :post do %>
+  <table>
+    <thead>
+      <tr>
+        <th>所有者</th>
+        <th>所有</th>
+        <th>備考</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @homes.each do |home| %>
+        <tr>
+          <td><%= home.name %></td>
+          <% locked = @truck_result_home_ids.include?(home.id) %>
+          <td><%= check_box_tag "home_ids[]", home.id, @truck_home_ids.include?(home.id), {id: "home_#{home.id}", class: "form-check-input", disabled: locked} %></td>
+          <td><%= "賃借量が登録されています" if locked %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag "登録", class: "btn btn-success" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to "戻る", machine_types_path, {class: "btn btn-outline-dark"}%>
+    </div>
+  </div>
+<% end %>

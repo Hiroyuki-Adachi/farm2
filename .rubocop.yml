@@ -24,7 +24,12 @@ AllCops:
 
 ### ルールのカスタマイズ
 Metrics/MethodLength:
-  Max: 20
+  Max: 30
+  CountComments: false
+
+Metrics/ClassLength:
+  Max: 200
+  CountComments: false
 
 Metrics/AbcSize:
   Max: 25

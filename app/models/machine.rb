@@ -26,7 +26,9 @@ class Machine < ApplicationRecord
 
   belongs_to :machine_type
   has_many :machine_kinds, through: :machine_type
-  has_many :price_headers, -> { order("machine_price_headers.validated_at DESC") }, class_name: 'MachinePriceHeader', dependent: :destroy
+  has_many :price_headers, -> {
+    order("machine_price_headers.validated_at DESC")
+  }, class_name: 'MachinePriceHeader', dependent: :destroy
 
   belongs_to :owner, -> { with_discarded }, class_name: 'Home', foreign_key: :home_id
 
@@ -41,7 +43,14 @@ class Machine < ApplicationRecord
   scope :by_work, lambda { |work|
     kept
       .includes(:machine_type, :machine_kinds)
-      .where("(machine_kinds.work_kind_id = ? and validity_start_at <= ? and ? <= validity_end_at) OR (machines.id in (?))", work.work_kind_id, work.worked_at, work.worked_at, work.machine_results.pluck(:machine_id))
+      .where(
+        "(machine_kinds.work_kind_id = ? and validity_start_at <= ? and ? <= validity_end_at) " \
+        "OR (machines.id in (?))",
+        work.work_kind_id,
+        work.worked_at,
+        work.worked_at,
+        work.machine_results.pluck(:machine_id)
+      )
       .order("machine_types.display_order, machines.display_order")
   }
   scope :diesel, -> { kept.where(diesel_flag: true) }
@@ -65,6 +74,15 @@ class Machine < ApplicationRecord
     kept
       .includes(:machine_type)
       .order("machine_types.display_order, machines.display_order, machines.id")
+  }
+
+  scope :trucks, lambda { |organization, section: nil|
+    trucks = kept.where(machine_type_id: organization.truck_id).joins(owner: :section)
+      .where(sections: { organization_id: organization.id })
+      .where(homes: { organization_id: organization.id })
+    trucks = trucks.where(homes: { section_id: section.id }) if section
+
+    trucks.preload(:owner).order("sections.display_order, homes.display_order, machines.display_order, machines.id")
   }
 
   def company?

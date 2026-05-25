@@ -107,9 +107,11 @@ class MachineResult < ApplicationRecord
   }
 
   scope :for_personal, lambda { |home, worked_at|
-    joins(:work).eager_load(:work)
-      .joins(:machine).eager_load(:machine)
-      .joins("INNER JOIN work_kinds ON works.work_kind_id = work_kinds.id").preload(:work_kind)
+    joins(:work)
+      .includes(work: [:work_type, :work_kind])
+      .joins(:machine)
+      .includes(machine: [:owner, :machine_type])
+      .includes(work_result: :worker)
       .where("works.worked_at >= ?", worked_at)
       .where(machines: { home_id: home.id })
       .order("works.worked_at, machines.display_order, machines.id")

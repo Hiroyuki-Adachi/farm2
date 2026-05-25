@@ -216,6 +216,7 @@ ja:
         cleaning_id: "清掃作業を選択"
         straw_id: "稲わらを選択"
         training_id: "講習会・研修を選択"
+        truck_id: "軽トラを選択"
 
       section:
         name: 名称
