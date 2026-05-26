@@ -1,6 +1,12 @@
 class SchedulesController < ApplicationController
   include ReturnToIndex
 
+  ScheduleTermOption = Struct.new(:term, :disabled, keyword_init: true) do
+    def disabled?
+      disabled
+    end
+  end
+
   before_action :set_schedule, only: [:edit, :update, :destroy]
   before_action :set_masters, only: [:new, :create, :edit, :update]
   before_action :permit_only_self, only: [:edit, :update, :destroy]
@@ -115,20 +121,27 @@ class SchedulesController < ApplicationController
 
   def available_schedule_systems
     systems = [current_system]
-    systems << next_system if next_system
+    systems << next_system
 
     schedule_system = current_organization.get_system(schedule_worked_at)
     systems << schedule_system if schedule_system
 
-    systems.compact.uniq(&:term).sort_by(&:term)
+    systems.compact.uniq(&:term).sort_by(&:term).map do |system|
+      ScheduleTermOption.new(term: system.term, disabled: false)
+    end.tap do |options|
+      next options if options.any? { |option| option.term == next_term }
+
+      options << ScheduleTermOption.new(term: next_term, disabled: true)
+      options.sort_by!(&:term)
+    end
   end
 
   def schedule_work_type_term(term)
     term = term.presence&.to_i
-    return term if @available_schedule_systems&.any? { |system| system.term == term }
+    return term if @available_schedule_systems&.any? { |option| option.term == term && !option.disabled? }
 
     schedule_term = current_organization.get_term(schedule_worked_at)
-    return schedule_term if @available_schedule_systems&.any? { |system| system.term == schedule_term }
+    return schedule_term if @available_schedule_systems&.any? { |option| option.term == schedule_term && !option.disabled? }
 
     current_term
   end
@@ -149,11 +162,11 @@ class SchedulesController < ApplicationController
     work_types.first&.id
   end
 
-  def schedule_term_label(system)
-    return "今年度" if system.term == current_term
-    return "翌年度" if system.term == next_term
+  def schedule_term_label(option)
+    return "今年度" if option.term == current_term
+    return "翌年度" if option.term == next_term
 
-    "#{system.term}年度"
+    "#{option.term}年度"
   end
   helper_method :schedule_term_label
 

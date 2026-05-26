@@ -30,6 +30,15 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "作業予定登録表示は翌年度が存在しない場合に翌年度を選択不可にする" do
+    System.where(organization_id: @user.organization_id).where("term > ?", @user.term).delete_all
+
+    get new_schedule_path
+    assert_response :success
+    assert_select "input#schedule_work_type_term_#{@user.term + 1}[disabled=disabled]"
+    assert_select "label[for=schedule_work_type_term_#{@user.term + 1}]", "翌年度"
+  end
+
   test "作業予定作業分類切替" do
     get work_types_schedules_path(format: :turbo_stream), params: { term: 2015 }
     assert_response :success
