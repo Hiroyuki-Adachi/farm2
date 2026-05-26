@@ -1,7 +1,7 @@
 class SchedulesController < ApplicationController
   include ReturnToIndex
 
-  ScheduleTermOption = Struct.new(:term, :disabled, keyword_init: true) do
+  ScheduleTermOption = Struct.new(:term, :start_date, :end_date, :disabled, keyword_init: true) do
     def disabled?
       disabled
     end
@@ -20,7 +20,7 @@ class SchedulesController < ApplicationController
 
   def new
     @schedule = Schedule.new(
-      worked_at: Time.zone.today,
+      worked_at: default_schedule_worked_at,
       work_type_id: @work_types.first.id,
       term: 0,
       work_flag: true,
@@ -66,6 +66,7 @@ class SchedulesController < ApplicationController
   def work_types
     @available_schedule_systems = available_schedule_systems
     @schedule_work_type_term = schedule_work_type_term(params[:term])
+    @schedule_term_option = schedule_term_option(@schedule_work_type_term)
     @work_types = schedule_work_types(@schedule_work_type_term)
     @work_type_id = selected_work_type_id(@work_types, params[:work_type_id])
     @work_kinds = work_kinds_for(@work_type_id)
@@ -113,6 +114,7 @@ class SchedulesController < ApplicationController
   def set_masters
     @available_schedule_systems = available_schedule_systems
     @schedule_work_type_term = schedule_work_type_term(params[:schedule_work_type_term])
+    @schedule_term_option = schedule_term_option(@schedule_work_type_term)
     @work_types = schedule_work_types(@schedule_work_type_term)
     @work_type_id = selected_work_type_id(@work_types, @schedule&.work_type_id)
     @work_kinds = work_kinds_for(@work_type_id)
@@ -127,7 +129,12 @@ class SchedulesController < ApplicationController
     systems << schedule_system if schedule_system
 
     systems.compact.uniq(&:term).sort_by(&:term).map do |system|
-      ScheduleTermOption.new(term: system.term, disabled: false)
+      ScheduleTermOption.new(
+        term: system.term,
+        start_date: system.start_date,
+        end_date: system.end_date,
+        disabled: false
+      )
     end.tap do |options|
       next options if options.any? { |option| option.term == next_term }
 
@@ -144,6 +151,17 @@ class SchedulesController < ApplicationController
     return schedule_term if @available_schedule_systems&.any? { |option| option.term == schedule_term && !option.disabled? }
 
     current_term
+  end
+
+  def schedule_term_option(term)
+    @available_schedule_systems.find { |option| option.term == term }
+  end
+
+  def default_schedule_worked_at
+    today = Time.zone.today
+    return today if @schedule_term_option&.start_date && today.between?(@schedule_term_option.start_date, @schedule_term_option.end_date)
+
+    @schedule_term_option&.start_date || today
   end
 
   def schedule_worked_at

@@ -28,6 +28,8 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
   test "作業予定登録(表示)" do
     get new_schedule_path
     assert_response :success
+    assert_select "input#schedule_worked_at[min=?][max=?]", systems(:s2015).start_date.to_s, systems(:s2015).end_date.to_s
+    assert_select "input#schedule_work_type_term_2016[data-start-date=?][data-end-date=?]", systems(:s2016).start_date.to_s, systems(:s2016).end_date.to_s
   end
 
   test "作業予定登録表示は翌年度が存在しない場合に翌年度を選択不可にする" do
@@ -48,6 +50,15 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
 
   test "作業予定登録は作業予定日の年度で有効な作業分類のみ許可" do
     invalid_update = @update.merge(work_type_id: work_types(:work_type_koshi).id)
+
+    assert_no_difference('Schedule.count') do
+      post schedules_path, params: { schedule: invalid_update }
+    end
+    assert_response :unprocessable_content
+  end
+
+  test "作業予定登録はsystemsの期間外の日付を許可しない" do
+    invalid_update = @update.merge(worked_at: "2018-01-01")
 
     assert_no_difference('Schedule.count') do
       post schedules_path, params: { schedule: invalid_update }

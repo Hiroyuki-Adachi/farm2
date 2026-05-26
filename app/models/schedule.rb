@@ -33,6 +33,7 @@
 class Schedule < ApplicationRecord
   validates :worked_at, presence: true
   validates :name, length: { maximum: 40 }, if: proc { |x| x.name.present? }
+  validate :validate_worked_at_system_period, if: :validate_worked_at_system_period?
   validate :validate_work_type_term, if: :validate_work_type_term?
 
   DISPLAY_DAYS = 60
@@ -161,6 +162,20 @@ class Schedule < ApplicationRecord
     end
   end
 
+  def validate_worked_at_system_period?
+    return true if new_record?
+
+    will_save_change_to_worked_at? ||
+      will_save_change_to_organization_id?
+  end
+
+  def validate_worked_at_system_period
+    return if worked_at.blank? || organization_id.blank?
+    return if schedule_system_for_worked_at
+
+    errors.add(:worked_at, "に対応する年度がありません。")
+  end
+
   def validate_work_type_term?
     return false unless farming_flag?
     return true if new_record?
@@ -174,14 +189,15 @@ class Schedule < ApplicationRecord
   def validate_work_type_term
     return if worked_at.blank? || organization_id.blank? || work_type_id.blank?
 
-    term = Organization.find(organization_id).get_term(worked_at)
-    if term.blank?
-      errors.add(:worked_at, "に対応する年度がありません。")
-      return
-    end
+    system = schedule_system_for_worked_at
+    return if system.blank?
 
-    return if WorkType.usual.by_term(term).exists?(id: work_type_id)
+    return if WorkType.usual.by_term(system.term).exists?(id: work_type_id)
 
     errors.add(:work_type_id, "は作業予定日の年度で使用できません。")
+  end
+
+  def schedule_system_for_worked_at
+    System.get_system(worked_at, organization_id)
   end
 end
