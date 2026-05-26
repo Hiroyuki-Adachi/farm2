@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # タイムゾーン / 言語 / Ruby / Rust PATH
 ENV TZ=Asia/Tokyo \
     LANG=C.UTF-8 \
-    RUBY_VERSION=4.0.4 \
+    RUBY_VERSION=4.0.5 \
     PATH="/root/.cargo/bin:${PATH}"
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
