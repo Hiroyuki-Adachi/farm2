@@ -36,6 +36,21 @@ const changeWorkedAtRange = (option) => {
     workedAt.min = startDate;
     workedAt.max = endDate;
 
-    if (workedAt.value && workedAt.value < startDate) workedAt.value = startDate;
-    if (workedAt.value && workedAt.value > endDate) workedAt.value = endDate;
+    if (!workedAt.value || (workedAt.value >= startDate && workedAt.value <= endDate)) return;
+
+    const today = localDateString(new Date());
+    if (today >= startDate && today <= endDate) {
+        workedAt.value = today;
+    } else if (workedAt.value < startDate) {
+        workedAt.value = startDate;
+    } else {
+        workedAt.value = endDate;
+    }
+}
+
+const localDateString = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
 }
