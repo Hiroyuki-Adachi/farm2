@@ -116,7 +116,7 @@ class SchedulesController < ApplicationController
     @schedule_work_type_term = schedule_work_type_term(params[:schedule_work_type_term])
     @schedule_term_option = schedule_term_option(@schedule_work_type_term)
     @work_types = schedule_work_types(@schedule_work_type_term)
-    @work_type_id = selected_work_type_id(@work_types, @schedule&.work_type_id)
+    @work_type_id = selected_work_type_id(@work_types, schedule_work_type_id)
     @work_kinds = work_kinds_for(@work_type_id)
     @sections = Section.for_organization(current_organization).usual_order
   end
@@ -151,6 +151,10 @@ class SchedulesController < ApplicationController
     return schedule_term if @available_schedule_systems&.any? { |option| option.term == schedule_term && !option.disabled? }
 
     current_term
+  end
+
+  def schedule_work_type_id
+    params.dig(:schedule, :work_type_id).presence || @schedule&.work_type_id
   end
 
   def schedule_term_option(term)

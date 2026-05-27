@@ -55,6 +55,17 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_includes @response.body, work_types(:work_types23).name
   end
 
+  test "作業予定登録失敗時は送信した作業分類を保持する" do
+    WorkTypeTerm.create!(term: @user.term, work_type: work_types(:work_type_koshi))
+    invalid_update = @update.merge(name: "あ" * 41, work_type_id: work_types(:work_types23).id)
+
+    assert_no_difference('Schedule.count') do
+      post schedules_path, params: { schedule_work_type_term: @user.term, schedule: invalid_update }
+    end
+    assert_response :unprocessable_content
+    assert_select "input#work_type_#{work_types(:work_types23).id}[checked=checked]"
+  end
+
   test "作業予定登録は作業予定日の年度で有効な作業分類のみ許可" do
     invalid_update = @update.merge(work_type_id: work_types(:work_type_koshi).id)
 
