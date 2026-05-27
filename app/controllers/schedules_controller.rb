@@ -169,6 +169,14 @@ class SchedulesController < ApplicationController
   end
 
   def schedule_worked_at
+    worked_at = params.dig(:schedule, :worked_at).presence
+    if worked_at.present?
+      begin
+        return worked_at.to_date
+      rescue ArgumentError, NoMethodError
+      end
+    end
+
     schedule = @schedule&.respond_to?(:model) ? @schedule.model : @schedule
     schedule&.worked_at
   end
