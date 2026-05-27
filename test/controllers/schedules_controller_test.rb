@@ -5,7 +5,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     @user = users(:user_user)
     login_as(@user)
     @schedule = schedules(:schedule1)
-    @update = { worked_at: "2015-05-06", work_type_id: work_types(:work_type_koshi).id,
+    @update = { worked_at: "2015-05-06", work_type_id: work_types(:work_types23).id,
                 start_at: "08:00:00", end_at: "17:00:00",
                 calendar_remove_flag: false,
                 farming_flag: true,
@@ -28,6 +28,60 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
   test "作業予定登録(表示)" do
     get new_schedule_path
     assert_response :success
+    assert_select "input#schedule_worked_at[min=?][max=?]", systems(:s2015).start_date.to_s, systems(:s2015).end_date.to_s
+    assert_select "input#schedule_work_type_term_2016[data-start-date=?][data-end-date=?]", systems(:s2016).start_date.to_s, systems(:s2016).end_date.to_s
+  end
+
+  test "作業予定登録表示は作業分類が存在しない年度でも表示できる" do
+    WorkTypeTerm.where(term: @user.term).delete_all
+
+    get new_schedule_path
+    assert_response :success
+  end
+
+  test "作業予定登録表示は翌年度が存在しない場合に翌年度を選択不可にする" do
+    System.where(organization_id: @user.organization_id).where("term > ?", @user.term).delete_all
+
+    get new_schedule_path
+    assert_response :success
+    assert_select "input#schedule_work_type_term_#{@user.term + 1}[disabled=disabled]"
+    assert_select "label[for=schedule_work_type_term_#{@user.term + 1}]", "翌年度"
+  end
+
+  test "作業予定作業分類切替" do
+    get work_types_schedules_path(format: :turbo_stream), params: { term: 2015 }
+    assert_response :success
+    assert_includes @response.body, "schedule_work_types"
+    assert_includes @response.body, work_types(:work_types23).name
+  end
+
+  test "作業予定登録失敗時は送信した作業分類を保持する" do
+    WorkTypeTerm.create!(term: @user.term, work_type: work_types(:work_type_koshi))
+    invalid_update = @update.merge(name: "あ" * 41, work_type_id: work_types(:work_types23).id)
+
+    assert_no_difference('Schedule.count') do
+      post schedules_path, params: { schedule_work_type_term: @user.term, schedule: invalid_update }
+    end
+    assert_response :unprocessable_content
+    assert_select "input#work_type_#{work_types(:work_types23).id}[checked=checked]"
+  end
+
+  test "作業予定登録は作業予定日の年度で有効な作業分類のみ許可" do
+    invalid_update = @update.merge(work_type_id: work_types(:work_type_koshi).id)
+
+    assert_no_difference('Schedule.count') do
+      post schedules_path, params: { schedule: invalid_update }
+    end
+    assert_response :unprocessable_content
+  end
+
+  test "作業予定登録はsystemsの期間外の日付を許可しない" do
+    invalid_update = @update.merge(worked_at: "2018-01-01")
+
+    assert_no_difference('Schedule.count') do
+      post schedules_path, params: { schedule: invalid_update }
+    end
+    assert_response :unprocessable_content
   end
 
   test "作業予定登録(実行)" do
@@ -71,7 +125,7 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
 
   test "作業予定変更(表示)(本人不在でも作成者の場合はOK)" do
     ScheduleWorker.where(schedule_id: @schedule.id, worker_id: @user.worker.id).destroy_all
-    @schedule.update(created_by: @user.worker.id)
+    @schedule.update_column(:created_by, @user.worker.id)
     get edit_schedule_path(@schedule)
     assert_response :success
   end

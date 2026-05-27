@@ -4,7 +4,7 @@ class Schedules::WorkersControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:user_checker))
     @schedule = schedules(:schedule1)
-    @update = { worked_at: "2015-05-07", work_type_id: work_types(:work_type_koshi).id,
+    @update = { worked_at: "2015-05-07", work_type_id: work_types(:work_types23).id,
                 start_at: "08:00:00", end_at: "17:00:00",
                 work_kind_id: work_kinds(:work_kind_taue).id, name: "テスト2", term: 2015 }
   end

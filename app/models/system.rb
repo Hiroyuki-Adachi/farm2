@@ -30,7 +30,7 @@
 #
 
 class System < ApplicationRecord
-  validates :term,        presence: true
+  validates :term, presence: true
   validates :term, numericality: { only_integer: true, greater_than: 2000, less_than: 2100 }
   validate :validate_period_dates
   validate :validate_period_continuity
@@ -84,9 +84,7 @@ class System < ApplicationRecord
   def validate_period_continuity
     return if start_date.blank? || end_date.blank? || organization_id.blank? || term.blank?
 
-    if previous_system && start_date != previous_system.end_date.next_day
-      errors.add(:start_date, "は前期の期末日の翌日にしてください。")
-    end
+    errors.add(:start_date, "は前期の期末日の翌日にしてください。") if previous_system && start_date != previous_system.end_date.next_day
 
     if next_system_for_validation && next_system_for_validation.start_date != end_date.next_day
       errors.add(:end_date, "は次期の期首日の前日にしてください。")
@@ -114,7 +112,7 @@ class System < ApplicationRecord
   def previous_system
     self.class
       .where(organization_id: organization_id)
-      .where("term < ?", term)
+      .where(term: ...term)
       .order(term: :desc)
       .first
   end
@@ -126,5 +124,4 @@ class System < ApplicationRecord
       .order(term: :asc)
       .first
   end
-
 end

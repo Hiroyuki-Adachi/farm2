@@ -1,7 +1,23 @@
 <div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/schedule">
   <div class="mb-3 col-md-3">
     <%= f.label :worked_at, '', class: "col-form-label-lg form-label" %>
-    <%= f.date_field :worked_at, {required: true, class: "form-control", min: Date.today - Schedule::DISPLAY_DAYS.days} %>
+    <%= f.date_field :worked_at, {required: true, class: "form-control", min: @schedule_term_option&.start_date, max: @schedule_term_option&.end_date} %>
+  </div>
+  <div class="mb-3 col-md-3 farming-visible"
+    data-controller="dependent-select"
+    data-dependent-select-url-value="<%= work_types_schedules_path %>"
+    data-dependent-select-param-name-value="term"
+    data-dependent-select-radio-name-value="schedule_work_type_term"
+    data-action="change->dependent-select#fetch">
+    <fieldset>
+      <legend class="col-form-label-lg form-label">対象年度</legend>
+      <% @available_schedule_systems.each do |option| %>
+        <div class="form-check form-check-inline">
+          <%= radio_button_tag :schedule_work_type_term, option.term, option.term == @schedule_work_type_term, {id: "schedule_work_type_term_#{option.term}", class: "form-check-input", disabled: option.disabled?, data: {start_date: option.start_date&.to_s, end_date: option.end_date&.to_s}} %>
+          <%= label_tag "schedule_work_type_term_#{option.term}", schedule_term_label(option), {class: "form-check-label#{' text-muted' if option.disabled?}"} %>
+        </div>
+      <% end %>
+    </fieldset>
   </div>
   <div class="mb-3 col-md-2">
     <%= f.label :start_at, '', class: "col-form-label-lg form-label" %>
@@ -74,22 +90,8 @@
     <%= f.label :work_type_id, '', class: "col-form-label-lg form-label" %>
   </div>
 </div>
-<div class="row farming-visible">
-  <% WorkCategory.usual.each do |category| %>
-    <div class="mb-3 col-md-2">
-      <div class="form-check form-check-inline h5">
-        <%= category.name %>
-      </div>
-    </div>
-    <div class="mb-3 col-md-10">
-      <% WorkType.select_category(category).each do |work_type| %>
-        <div class="form-check form-check-inline">
-          <%= f.radio_button :work_type_id, work_type.id, {id: "work_type_#{work_type.id}", class: "form-check-input"} %>
-          <%= label_tag "work_type_#{work_type.id}", work_type.name, {class: "form-check-label"} %>
-        </div>        
-      <% end %>
-    </div>
-  <% end %>    
+<div class="farming-visible">
+  <%= render 'work_types', work_types: @work_types, selected_work_type_id: @work_type_id %>
 </div>
 <div class="row">
   <div class="mb-3 col-md-4 farming-visible">
