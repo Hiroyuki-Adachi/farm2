@@ -18,7 +18,7 @@ export const init = () => {
 const changeVisible = (value) => {
     document.querySelectorAll('.farming-visible').forEach((element) => {
         if (value === "true") {
-            element.style.display = "block";
+            element.style.display = "";
         } else {
             element.style.display = "none";
         }
