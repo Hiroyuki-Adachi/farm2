@@ -9,7 +9,7 @@
     data-dependent-select-param-name-value="term"
     data-dependent-select-radio-name-value="schedule_work_type_term"
     data-action="change->dependent-select#fetch">
-    <%= label_tag :schedule_work_type_term, "対象年度", class: "col-form-label-lg form-label" %>
+    <%= label_tag nil, "対象年度", class: "col-form-label-lg form-label" %>
     <% @available_schedule_systems.each do |option| %>
       <div class="form-check form-check-inline">
         <%= radio_button_tag :schedule_work_type_term, option.term, option.term == @schedule_work_type_term, {id: "schedule_work_type_term_#{option.term}", class: "form-check-input", disabled: option.disabled?, data: {start_date: option.start_date&.to_s, end_date: option.end_date&.to_s}} %>
