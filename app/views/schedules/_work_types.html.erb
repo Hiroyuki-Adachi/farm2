@@ -4,8 +4,9 @@
   data-dependent-select-param-name-value="work_type_id"
   data-dependent-select-radio-name-value="schedule[work_type_id]"
   data-action="change->dependent-select#fetch">
+<% work_types_by_category_id = work_types.group_by { |work_type| work_type.genre.work_category_id } %>
 <% WorkCategory.usual.each do |category| %>
-  <% category_work_types = work_types.select { |work_type| work_type.genre.work_category_id == category.id } %>
+  <% category_work_types = work_types_by_category_id[category.id] || [] %>
   <% next if category_work_types.empty? %>
 
   <div class="row">
