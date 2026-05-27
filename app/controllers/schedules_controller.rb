@@ -21,7 +21,7 @@ class SchedulesController < ApplicationController
   def new
     @schedule = Schedule.new(
       worked_at: default_schedule_worked_at,
-      work_type_id: @work_types.first.id,
+      work_type_id: @work_types.first&.id,
       term: 0,
       work_flag: true,
       farming_flag: true,

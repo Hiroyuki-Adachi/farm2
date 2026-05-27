@@ -32,6 +32,13 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
     assert_select "input#schedule_work_type_term_2016[data-start-date=?][data-end-date=?]", systems(:s2016).start_date.to_s, systems(:s2016).end_date.to_s
   end
 
+  test "作業予定登録表示は作業分類が存在しない年度でも表示できる" do
+    WorkTypeTerm.where(term: @user.term).delete_all
+
+    get new_schedule_path
+    assert_response :success
+  end
+
   test "作業予定登録表示は翌年度が存在しない場合に翌年度を選択不可にする" do
     System.where(organization_id: @user.organization_id).where("term > ?", @user.term).delete_all
 
