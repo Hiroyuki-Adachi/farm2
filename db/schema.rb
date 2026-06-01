@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_16_144004) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_25_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -1037,7 +1037,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_16_144004) do
   create_table "users", id: { type: :serial, comment: "利用者マスタ" }, comment: "利用者マスタ", force: :cascade do |t|
     t.integer "calendar_term", default: 2018, null: false, comment: "期(カレンダー)"
     t.datetime "created_at", precision: nil, null: false
+    t.integer "failed_login_attempts", default: 0, null: false, comment: "ログイン失敗回数"
     t.string "line_id", limit: 50, default: "", null: false
+    t.datetime "locked_at", comment: "ログインロック日時"
     t.string "login_name", limit: 12, null: false, comment: "ログイン名"
     t.string "mail", limit: 255, default: "", null: false, comment: "メールアドレス"
     t.datetime "mail_confirmation_expired_at", comment: "メールアドレス確認有効期限"

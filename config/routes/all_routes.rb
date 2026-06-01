@@ -107,6 +107,9 @@ resources :banks, param: :code, except: [:show] do
 end
 
 resources :schedules, except: [:show] do
+  collection do
+    get :work_types
+  end
   resources :workers, controller: "schedules/workers", only: [:new, :create]
 end
 resources :broccoli, param: "work_id", only: [:edit, :update, :destroy]
