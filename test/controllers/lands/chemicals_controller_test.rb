@@ -86,4 +86,17 @@ class Lands::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[type=hidden][name=regions][data-id='#{map_land.id}'][data-actual]", 1
     assert_select "input[type=hidden][name=regions][data-id='#{excluded_land.id}']", 0
   end
+
+  test "農薬散布地図に他組織の土地を表示しない" do
+    other_land = lands(:land_other_org)
+    other_land.update!(region: "((35.474177,133.047340), (35.472866,133.047340), (35.472648,133.049056))")
+    other_work = works(:work_other_org)
+    other_work.update!(work_kind: work_kinds(:work_kind_taue))
+    WorkLand.create!(work: other_work, land: other_land, work_type_id: work_types(:work_type_koshi).id)
+
+    get lands_chemicals_path
+
+    assert_response :success
+    assert_select "input[type=hidden][name=regions][data-id='#{other_land.id}']", 0
+  end
 end

@@ -7,11 +7,12 @@ class Lands::ChemicalsController < ApplicationController
     @chemical_types = ChemicalType.usual.where(id: current_organization.rice_planting.chemical_types.select(:id))
     @selected_chemical_type_id = selected_chemical_type_id
     @land_chemical_summaries = Lands::ChemicalMapService.call(
+      organization: current_organization,
       term: current_term,
       work_kind_id: current_organization.rice_planting_id,
       chemical_type_id: @selected_chemical_type_id
     )
-    @lands = Land.regionable
+    @lands = Land.for_organization(current_organization).regionable
       .includes(:owner)
       .where(id: target_land_ids)
       .usual_order
@@ -21,7 +22,13 @@ class Lands::ChemicalsController < ApplicationController
 
   def target_land_ids
     WorkLand.joins(:work)
-      .where(works: { term: current_term, work_kind_id: current_organization.rice_planting_id })
+      .where(
+        works: {
+          organization_id: current_organization.id,
+          term: current_term,
+          work_kind_id: current_organization.rice_planting_id
+        }
+      )
       .select(:land_id)
       .distinct
   end
