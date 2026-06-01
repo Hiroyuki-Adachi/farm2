@@ -3,6 +3,6 @@ class Tablets::MapsController < TabletsController
 
   def index
     @target = Time.zone.today
-    @lands = Land.regionable.expiry(@target).includes(:owner)
+    @lands = Land.for_organization(current_organization).regionable.expiry(@target).includes(:owner)
   end
 end

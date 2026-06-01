@@ -44,6 +44,7 @@ class Lands::ChemicalMapServiceTest < ActiveSupport::TestCase
     WorkChemical.create!(work: work, chemical: chemical3, quantity: 6.0)
 
     summaries = Lands::ChemicalMapService.call(
+      organization: organizations(:org),
       term: 2015,
       work_kind_id: work_kinds(:work_kind_taue).id,
       chemical_type_id: chemical_types(:chemical_types0).id
@@ -91,6 +92,7 @@ class Lands::ChemicalMapServiceTest < ActiveSupport::TestCase
     WorkChemical.create!(work: work, chemical: chemical, quantity: 2.0, chemical_group_no: 1)
 
     summaries = Lands::ChemicalMapService.call(
+      organization: organizations(:org),
       term: 2015,
       work_kind_id: work_kinds(:work_kind_taue).id,
       chemical_type_id: chemical_types(:chemical_types0).id
@@ -102,7 +104,12 @@ class Lands::ChemicalMapServiceTest < ActiveSupport::TestCase
   end
 
   test "基準量との差分率を7段階の色に分類する" do
-    service = Lands::ChemicalMapService.new(term: 2015, work_kind_id: work_kinds(:work_kind_taue).id, chemical_type_id: chemical_types(:chemical_types0).id)
+    service = Lands::ChemicalMapService.new(
+      organization: organizations(:org),
+      term: 2015,
+      work_kind_id: work_kinds(:work_kind_taue).id,
+      chemical_type_id: chemical_types(:chemical_types0).id
+    )
 
     assert_equal :over_50, service.send(:status_for, 0.5001.to_d)
     assert_equal :over_25, service.send(:status_for, 0.5.to_d)
@@ -122,6 +129,34 @@ class Lands::ChemicalMapServiceTest < ActiveSupport::TestCase
     assert_equal "#64d2ff", Lands::ChemicalMapService::COLORS.fetch(:under_10)
     assert_equal "#0a84ff", Lands::ChemicalMapService::COLORS.fetch(:under_25)
     assert_equal "#003a8c", Lands::ChemicalMapService::COLORS.fetch(:under_50)
+  end
+
+  test "他組織の作業を集計しない" do
+    other_land = lands(:land_other_org)
+    other_work = works(:work_other_org)
+    other_work.update!(work_kind: work_kinds(:work_kind_taue))
+    WorkLand.create!(work: other_work, land: other_land, work_type_id: work_types(:work_type_koshi).id)
+    LandCost.create!(land: other_land, work_type: work_types(:work_type_koshi), activated_on: Date.new(2015, 1, 1))
+
+    chemical = Chemical.create!(
+      organization: organizations(:org2),
+      chemical_type: chemical_types(:chemical_types0),
+      name: "別組織薬剤",
+      phonetic: "べつそしきやくざい",
+      display_order: 999
+    )
+    chemical_term = ChemicalTerm.create!(organization: organizations(:org2), chemical: chemical, term: 2015)
+    ChemicalWorkType.create!(chemical_term: chemical_term, work_type: work_types(:work_type_koshi), quantity: 1.0)
+    WorkChemical.create!(work: other_work, chemical: chemical, quantity: 5.0)
+
+    summaries = Lands::ChemicalMapService.call(
+      organization: organizations(:org),
+      term: 2015,
+      work_kind_id: work_kinds(:work_kind_taue).id,
+      chemical_type_id: chemical_types(:chemical_types0).id
+    )
+
+    assert_not summaries.key?(other_land.id)
   end
 
   private
