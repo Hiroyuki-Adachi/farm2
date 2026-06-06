@@ -19,11 +19,12 @@ class Lands::ChemicalMapService
     under_50: "#003a8c"
   }.freeze
 
-  def self.call(term:, work_kind_id:, chemical_type_id:)
-    new(term: term, work_kind_id: work_kind_id, chemical_type_id: chemical_type_id).call
+  def self.call(organization:, term:, work_kind_id:, chemical_type_id:)
+    new(organization: organization, term: term, work_kind_id: work_kind_id, chemical_type_id: chemical_type_id).call
   end
 
-  def initialize(term:, work_kind_id:, chemical_type_id:)
+  def initialize(organization:, term:, work_kind_id:, chemical_type_id:)
+    @organization = organization
     @term = term
     @work_kind_id = work_kind_id
     @chemical_type_id = chemical_type_id
@@ -46,12 +47,12 @@ class Lands::ChemicalMapService
   private
 
   def works
-    @works ||= Work.where(term: @term, work_kind_id: @work_kind_id)
+    @works ||= Work.for_organization(@organization).where(term: @term, work_kind_id: @work_kind_id)
       .includes(work_lands: :land, work_chemicals: :chemical)
   end
 
   def chemical_terms_by_chemical_id
-    @chemical_terms_by_chemical_id ||= ChemicalTerm.joins(:chemical)
+    @chemical_terms_by_chemical_id ||= ChemicalTerm.for_organization(@organization).joins(:chemical)
       .where(term: @term, chemicals: { chemical_type_id: @chemical_type_id })
       .includes(:chemical, :chemical_work_types)
       .index_by(&:chemical_id)

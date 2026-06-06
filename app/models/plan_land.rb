@@ -28,9 +28,9 @@ class PlanLand < ApplicationRecord
     end
   end
 
-  def self.clear_all(user_id, term, target)
+  def self.clear_all(user_id, term, target, organization)
     PlanLand.where(user_id: user_id, term: term).delete_all
-    Land.regionable.expiry(target).each do |land|
+    Land.for_organization(organization).regionable.expiry(target).each do |land|
       land_cost = land.cost(target)
       PlanLand.create(user_id: user_id, term: term, land_id: land.id, work_type_id: land_cost.work_type_id) if land_cost
     end
