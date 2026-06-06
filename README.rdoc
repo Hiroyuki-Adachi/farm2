@@ -17,8 +17,23 @@
 - Z-GIS
 - ソリマチ会計
 - Excel
-- LINE
+- Google OAuth / Google Maps
+- LINE (Messaging API)
+- Web Push
+- メール送信
 
 技術スタック:
 - Ruby 4.0 系
+  - importmap / Hotwire
 - Rails 8.1 系
+- Boostrap 5系
+- PostgreSQL
+
+開発・検証:
+- Docker Compose による開発環境
+- バックグラウンドジョブ: delayed_job_active_record
+- テスト: Minitest / Capybara / Cuprite
+- 品質チェック: RuboCop / importmap audit
+
+主な起動コマンド:
+- docker compose up
