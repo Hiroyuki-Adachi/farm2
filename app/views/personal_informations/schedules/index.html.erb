@@ -66,6 +66,8 @@
         <li><%= schedule.worked_at %>から、<%= schedule.name %>の予定です。</li>
       <% end %>
     </ul>
+  <% elsif @section_schedules_exist %>
+    <p>班の作業予定があります。人員保守から参加者を登録してください。</p>
   <% else %>
     <p>作業予定はありません。</p>
   <% end %>

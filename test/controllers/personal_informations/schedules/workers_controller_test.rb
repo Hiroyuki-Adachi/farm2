@@ -68,4 +68,52 @@ class PersonalInformations::Schedules::WorkersControllerTest < ActionDispatch::I
     assert ScheduleWorker.exists?(schedule_id: @schedule.id, worker_id: workers(:worker34).id)
     assert ScheduleWorker.exists?(schedule_id: @schedule.id, worker_id: workers(:worker2).id)
   end
+
+  test "個人情報(人員保守対象予定一覧表示: 出役予定より先の予定も表示)" do
+    travel_to Time.zone.local(2015, 5, 1) do
+      schedule = schedules(:schedule_tomorrow)
+      schedule.update_columns(worked_at: Time.zone.today + 30.days)
+      ScheduleSection.find_or_create_by!(schedule: schedule, section_id: @user.worker.home.section_id)
+
+      get personal_information_schedules_workers_path(personal_information_token: @user.token)
+
+      assert_response :success
+      assert_select "a[href=?]", personal_information_schedules_workers_edit_path(personal_information_token: @user.token, schedule_id: schedule.id)
+    end
+  end
+
+  test "個人情報(人員保守画面表示: 権限者は対象外の作業班を助っ人候補にできる)" do
+    ScheduleSection.find_or_create_by!(schedule: @schedule, section: sections(:sections2))
+
+    get personal_information_schedules_workers_edit_path(
+      personal_information_token: @user.token,
+      schedule_id: @schedule.id
+    )
+
+    assert_response :success
+    assert_select "button", text: sections(:sections1).name
+    assert_select "input[name='worker_ids[]'][value='#{workers(:worker6).id}']"
+    assert_select "button", { text: sections(:sections2).name, count: 0 }
+    assert_select "input[name='worker_ids[]'][value='#{workers(:worker7).id}']", false
+    assert_select "button", { text: sections(:sections8).name, count: 0 }
+    assert_select "input[name='worker_ids[]'][value='#{workers(:worker_farm).id}']", false
+  end
+
+  test "個人情報(人員保守登録: 権限者は対象外の作業班だけ助っ人更新)" do
+    ScheduleSection.find_or_create_by!(schedule: @schedule, section: sections(:sections2))
+    ScheduleWorker.find_or_create_by!(schedule: @schedule, worker: workers(:worker7)) do |schedule_worker|
+      schedule_worker.display_order = 99
+    end
+
+    patch personal_information_schedules_workers_edit_path(
+      personal_information_token: @user.token,
+      schedule_id: @schedule.id
+    ), params: { worker_ids: [workers(:worker2).id, workers(:worker6).id, workers(:worker7).id, workers(:worker_farm).id] }
+
+    assert_redirected_to personal_information_schedules_workers_path(personal_information_token: @user.token)
+    assert ScheduleWorker.exists?(schedule_id: @schedule.id, worker_id: workers(:worker2).id)
+    assert ScheduleWorker.exists?(schedule_id: @schedule.id, worker_id: workers(:worker6).id)
+    assert ScheduleWorker.exists?(schedule_id: @schedule.id, worker_id: workers(:worker7).id)
+    assert_not ScheduleWorker.exists?(schedule_id: @schedule.id, worker_id: workers(:worker_farm).id)
+  end
 end

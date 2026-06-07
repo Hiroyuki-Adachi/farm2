@@ -94,6 +94,7 @@ class Schedule < ApplicationRecord
   }
 
   scope :linable, -> { where(line_flag: true) }
+  scope :within_days_from_today, ->(days) { where(worked_at: Time.zone.today..(Time.zone.today + days.to_i.days)) }
   scope :by_section, lambda { |section_id|
     joins(:schedule_sections)
       .includes(:work_kind, schedule_workers: { worker: :home })
