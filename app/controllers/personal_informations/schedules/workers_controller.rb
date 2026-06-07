@@ -16,8 +16,10 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
   end
 
   def update
-    checked_ids = Array(params[:worker_ids]).map(&:to_i)
-    selected_ids = editable_worker_ids.select { |worker_id| checked_ids.include?(worker_id) }
+    checked_ids = Array(params[:worker_ids]).each_with_object({}) do |worker_id, ids|
+      ids[worker_id.to_i] = true
+    end
+    selected_ids = editable_worker_ids.select { |worker_id| checked_ids[worker_id] }
 
     sync_schedule_workers!(selected_ids, editable_worker_ids)
 
