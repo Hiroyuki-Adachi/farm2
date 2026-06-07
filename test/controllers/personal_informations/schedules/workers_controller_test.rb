@@ -99,6 +99,21 @@ class PersonalInformations::Schedules::WorkersControllerTest < ActionDispatch::I
     assert_select "input[name='worker_ids[]'][value='#{workers(:worker_farm).id}']", false
   end
 
+  test "個人情報(人員保守画面表示: 権限者は助っ人候補がなくても自班見出し)" do
+    Section.for_organization(@user.organization_id).usual.where.not(id: @user.worker.home.section_id).find_each do |section|
+      ScheduleSection.find_or_create_by!(schedule: @schedule, section: section)
+    end
+
+    get personal_information_schedules_workers_edit_path(
+      personal_information_token: @user.token,
+      schedule_id: @schedule.id
+    )
+
+    assert_response :success
+    assert_includes response.body, "自班の作業者"
+    assert_no_match(/世帯の作業者/, response.body)
+  end
+
   test "個人情報(人員保守登録: 権限者は対象外の作業班だけ助っ人更新)" do
     ScheduleSection.find_or_create_by!(schedule: @schedule, section: sections(:sections2))
     ScheduleWorker.find_or_create_by!(schedule: @schedule, worker: workers(:worker7)) do |schedule_worker|

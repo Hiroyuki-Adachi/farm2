@@ -5,7 +5,7 @@
   </p>
 
   <%= form_with url: personal_information_schedules_workers_edit_path(personal_information_token: params[:personal_information_token], schedule_id: @schedule.id), method: :patch do %>
-    <h2 class="h5 mb-2"><%= @supporter_sections.present? ? "自班の作業者" : "世帯の作業者" %></h2>
+    <h2 class="h5 mb-2"><%= @section_worker_management ? "自班の作業者" : "世帯の作業者" %></h2>
     <div class="list-group mb-4">
       <% @workers.each do |worker| %>
         <label class="list-group-item d-flex align-items-center gap-2">

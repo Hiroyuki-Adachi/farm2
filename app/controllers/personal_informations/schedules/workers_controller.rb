@@ -43,7 +43,8 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
                  Worker.usual_order.where(home_id: @worker.home_id)
                end
 
-    @supporter_sections = permitted_position? ? supporter_sections : []
+    @section_worker_management = permitted_position?
+    @supporter_sections = @section_worker_management ? supporter_sections : []
 
     supporter_section_ids = @supporter_sections.map(&:id)
     supporter_workers = supporter_section_ids.any? ? workers_for_sections(supporter_section_ids) : []
@@ -58,16 +59,16 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
     @worker.leader? || @worker.director? || @worker.advisor?
   end
 
-def target_section_ids
-  @target_section_ids ||= @schedule.section_ids
-end
+  def target_section_ids
+    @target_section_ids ||= @schedule.section_ids
+  end
 
-def supporter_sections
-  Section
-    .for_organization(@worker.organization_id)
-    .usual
-    .where.not(id: target_section_ids)
-end
+  def supporter_sections
+    Section
+      .for_organization(@worker.organization_id)
+      .usual
+      .where.not(id: target_section_ids)
+  end
 
   def workers_for_sections(section_ids)
     Worker.usual_order.where(homes: { section_id: section_ids, company_flag: false })
