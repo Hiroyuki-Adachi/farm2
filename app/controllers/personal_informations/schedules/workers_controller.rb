@@ -58,16 +58,16 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
     @worker.leader? || @worker.director? || @worker.advisor?
   end
 
-  def target_work_section_ids
-    @target_work_section_ids ||= @schedule.sections.where(work_flag: true).pluck(:id)
-  end
+def target_section_ids
+  @target_section_ids ||= @schedule.section_ids
+end
 
-  def supporter_sections
-    Section
-      .for_organization(@worker.organization_id)
-      .usual
-      .where.not(id: target_work_section_ids)
-  end
+def supporter_sections
+  Section
+    .for_organization(@worker.organization_id)
+    .usual
+    .where.not(id: target_section_ids)
+end
 
   def workers_for_sections(section_ids)
     Worker.usual_order.where(homes: { section_id: section_ids, company_flag: false })
