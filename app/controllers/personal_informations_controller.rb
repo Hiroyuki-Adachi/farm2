@@ -4,6 +4,7 @@ class PersonalInformationsController < ApplicationController
   layout 'sm'
 
   SCHEDULE_DAY = 7
+  SCHEDULE_WORKERS_DAY = Schedule::DISPLAY_DAYS
 
   helper WorkTypesHelper
 
