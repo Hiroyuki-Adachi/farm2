@@ -42,8 +42,13 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
                end
 
     @supporter_sections = permitted_position? ? supporter_sections : []
+
+    supporter_section_ids = @supporter_sections.map(&:id)
+    supporter_workers = supporter_section_ids.any? ? workers_for_sections(supporter_section_ids) : []
+    supporter_workers_by_section_id = supporter_workers.group_by { |w| w.home.section_id }
+
     @supporter_workers_by_section = @supporter_sections.index_with do |section|
-      workers_for_sections([section.id])
+      supporter_workers_by_section_id[section.id] || []
     end
   end
 
