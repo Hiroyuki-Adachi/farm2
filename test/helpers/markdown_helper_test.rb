@@ -4,6 +4,20 @@ require "test_helper"
 class MarkdownHelperTest < ActionView::TestCase
   include MarkdownHelper
 
+  test "コードブロックの HTML 構造と CSS クラスを維持する" do
+    html = markdown_to_html(<<~MD)
+      ```ruby
+      puts 'hello'
+      ```
+    MD
+
+    frag = Nokogiri::HTML::DocumentFragment.parse(html)
+    code = frag.at_css("div.highlight > pre.codehilite > code")
+
+    assert code, "Expected highlighted code block wrapper"
+    assert_equal "puts 'hello'\n", code.text
+  end
+
   # Markdown から生成されるすべてのタグが
   # sanitize の ALLOWED_TAGS に含まれているかチェックする
   test "Markdown から生成されるすべてのタグが sanitize の ALLOWED_TAGS に含まれているかチェックする" do

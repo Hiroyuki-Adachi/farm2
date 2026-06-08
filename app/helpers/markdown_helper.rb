@@ -6,7 +6,7 @@ module MarkdownHelper
   require "rouge"
 
   # 一度だけ初期化して使い回す（軽い最適化）
-  ROUGE_FORMATTER = Rouge::Formatters::HTMLLegacy.new
+  ROUGE_FORMATTER = Rouge::Formatters::HTML.new
 
   # GFM で欲しい拡張を共通定義
   GFM_EXTENSIONS = %i[TABLE_PREFER_STYLE_ATTRIBUTES FOOTNOTES STRIKETHROUGH TASKLISTS AUTOLINK].freeze
@@ -78,7 +78,7 @@ module MarkdownHelper
       lang = code["class"].to_s[/\blanguage-([A-Za-z0-9_+-]+)/, 1]
       lexer = pick_lexer(lang, code.text)
       highlighted = ROUGE_FORMATTER.format(lexer.lex(code.text))
-      code.parent.replace(%(<div class="highlight">#{highlighted}</div>))
+      code.parent.replace(%(<div class="highlight"><pre class="codehilite"><code>#{highlighted}</code></pre></div>))
     end
   end
 
