@@ -17,6 +17,16 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "土地マスタ一覧の世帯絞り込みは班順に表示" do
+    sections(:sections1).update!(display_order: 0)
+
+    get lands_path
+
+    expected_options = [["全て", ""]] + Home.for_organization(users(:users1).organization_id).for_land_select.includes(:holder).map { |home| [home.owner_name, home.id.to_s] }
+    actual_options = css_select("select#home option").map { |option| [option.text, option["value"]] }
+    assert_equal expected_options, actual_options
+  end
+
   test "土地マスタ一覧CSV出力" do
     get lands_path(format: :csv)
 

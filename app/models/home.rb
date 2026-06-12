@@ -76,7 +76,7 @@ class Home < ApplicationRecord
       .where(company_flag: false)
       .usual_order
   }
-  scope :landable, lambda {
+  scope :for_land_select, lambda {
     kept
       .joins(:section).includes(:section)
       .order(Arel.sql("homes.company_flag, sections.display_order, homes.display_order, homes.id"))
