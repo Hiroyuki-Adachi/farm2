@@ -4,7 +4,7 @@ class HomesControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:users1))
     @home = homes(:home1)
-    @update = { name: "試験", phonetic: "しけん", section_id: 1, member_flag: true, display_order: 99 }
+    @update = { name: "試験", phonetic: "しけん", section_id: 1, member_flag: true, land_flag: true, display_order: 99 }
   end
 
   test "世帯マスタ一覧" do
@@ -34,6 +34,7 @@ class HomesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:phonetic], home.phonetic
     assert_equal @update[:section_id], home.section_id
     assert_equal @update[:member_flag], home.member_flag
+    assert_equal @update[:land_flag], home.land_flag
     assert_equal @update[:display_order], home.display_order
   end
 
@@ -66,7 +67,16 @@ class HomesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:phonetic], @home.phonetic
     assert_equal @update[:section_id], @home.section_id
     assert_equal @update[:member_flag], @home.member_flag
+    assert_equal @update[:land_flag], @home.land_flag
     assert_equal @update[:display_order], @home.display_order
+  end
+
+  test "世帯マスタ変更(実行)(土地で使用中の世帯は土地フラグを外せない)" do
+    patch home_path(@home), params: { home: @update.merge(land_flag: false) }
+
+    assert_response :unprocessable_content
+    @home.reload
+    assert @home.land_flag
   end
 
   test "世帯マスタ変更(実行)(元のページへ戻る)" do
