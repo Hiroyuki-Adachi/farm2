@@ -27,6 +27,23 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
     assert_equal expected_options, actual_options
   end
 
+  test "土地マスタ一覧の世帯絞り込みに土地フラグ無効の世帯は表示しない" do
+    home = Home.create!(organization: organizations(:org), section: sections(:sections0), name: "土地外", phonetic: "とちがい", display_order: 999, land_flag: false)
+
+    get lands_path
+
+    assert_select "select#home option[value=?]", home.id.to_s, false
+  end
+
+  test "土地マスタ変更画面の所有者管理者に土地フラグ無効の世帯は表示しない" do
+    home = Home.create!(organization: organizations(:org), section: sections(:sections0), name: "土地外", phonetic: "とちがい", display_order: 999, land_flag: false)
+
+    get edit_land_path(@land)
+
+    assert_select "select#land_owner_id option[value=?]", home.id.to_s, false
+    assert_select "select#land_manager_id option[value=?]", home.id.to_s, false
+  end
+
   test "土地マスタ一覧CSV出力" do
     get lands_path(format: :csv)
 

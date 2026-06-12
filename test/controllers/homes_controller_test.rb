@@ -71,6 +71,23 @@ class HomesControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:display_order], @home.display_order
   end
 
+  test "世帯マスタ変更(実行)(土地で未使用の世帯は土地フラグを外せる)" do
+    home = Home.create!(
+      organization: organizations(:org),
+      section: sections(:sections0),
+      name: "土地外",
+      phonetic: "とちがい",
+      display_order: 999,
+      land_flag: true
+    )
+
+    patch home_path(home), params: { home: @update.merge(land_flag: "false") }
+
+    assert_redirected_to homes_path
+    home.reload
+    assert_not home.land_flag
+  end
+
   test "世帯マスタ変更(実行)(土地で使用中の世帯は土地フラグを外せない)" do
     patch home_path(@home), params: { home: @update.merge(land_flag: false) }
 
