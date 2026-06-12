@@ -7,7 +7,7 @@
         <li class="list-group-item">
           <%= link_to "#{schedule.worked_at} #{schedule.name}",
               personal_information_schedules_workers_edit_path(personal_information_token: params[:personal_information_token], schedule_id: schedule.id) %>
-          <span class="text-muted">（参加人数：<%= schedule.participants_count %>名、うち班内<%= schedule.section_participants_count(current_user.worker.home.section_id) %>名)</span>
+          <span class="text-muted">（参加人数：<%= schedule.participants_count %>名、うち班内<%= schedule.section_participants_count(@worker.home.section_id) %>名)</span>
         </li>
       <% end %>
     </ul>

@@ -67,7 +67,7 @@ class LandsController < ApplicationController
   end
 
   def set_homes
-    @homes = Home.for_organization(current_organization).landable.includes(:holder)
+    @homes = Home.for_organization(current_organization).for_land_select.includes(:holder)
   end
 
   def set_places

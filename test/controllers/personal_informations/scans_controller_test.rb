@@ -56,6 +56,21 @@ class PersonalInformations::ScansControllerTest < ActionDispatch::IntegrationTes
     assert_response :not_found
   end
 
+  test "QR(スキャン結果)(圃場)(他組織の圃場はNot Found)" do
+    other_org_land = lands(:land_other_org)
+    other_org_land.update!(uuid: SecureRandom.uuid)
+    params = {
+      type: "lands",
+      value: other_org_land.uuid,
+      version: 1
+    }
+
+    post personal_information_scans_path(
+      personal_information_token: @user.token
+    ), params: { payload: params.to_json }, as: :json
+    assert_response :not_found
+  end
+
   test "QRコードスキャン(セッショントークンが見つからない場合)" do
     params = {
       type: 'session',

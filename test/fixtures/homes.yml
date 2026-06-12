@@ -11,6 +11,7 @@
 #  drying_order(出力順(乾燥調整用))    :integer
 #  fax(FAX番号)                        :string(15)
 #  finance_order(出力順(会計用))       :integer
+#  land_flag(土地フラグ)               :boolean          default(TRUE), not null
 #  location(位置)                      :point
 #  member_flag(組合員フラグ)           :boolean          default(TRUE), not null
 #  name(世帯名)                        :string(10)

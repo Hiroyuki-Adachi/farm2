@@ -11,6 +11,7 @@
 #  drying_order(出力順(乾燥調整用))    :integer
 #  fax(FAX番号)                        :string(15)
 #  finance_order(出力順(会計用))       :integer
+#  land_flag(土地フラグ)               :boolean          default(TRUE), not null
 #  location(位置)                      :point
 #  member_flag(組合員フラグ)           :boolean          default(TRUE), not null
 #  name(世帯名)                        :string(10)
@@ -76,8 +77,9 @@ class Home < ApplicationRecord
       .where(company_flag: false)
       .usual_order
   }
-  scope :landable, lambda {
+  scope :for_land_select, lambda {
     kept
+      .where(land_flag: true)
       .joins(:section).includes(:section)
       .order(Arel.sql("homes.company_flag, sections.display_order, homes.display_order, homes.id"))
   }
@@ -103,6 +105,7 @@ class Home < ApplicationRecord
   validates :telephone, format: { with: REG_PHONE }, if: proc { |x| x.telephone.present? }
   validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
   validate :section_belongs_to_same_organization
+  validate :land_flag_cannot_be_disabled_while_used
 
   def holder_name
     holder ? holder.name : ''
@@ -184,5 +187,12 @@ class Home < ApplicationRecord
     return if organization_id.blank? || section.blank? || section.organization_id == organization_id
 
     errors.add(:section_id, "は同じ組織の班を指定してください。")
+  end
+
+  def land_flag_cannot_be_disabled_while_used
+    return if land_flag || id.blank?
+    return unless owned_lands.exists? || managed_lands.exists? || sub_lands.exists?
+
+    errors.add(:land_flag, "は土地で使用されているため外せません。")
   end
 end
