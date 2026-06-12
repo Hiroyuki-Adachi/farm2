@@ -33,6 +33,7 @@ ja:
         display_order: "表示順"  #g
         member_flag: "組合員フラグ"
         owner_flag: "機械所有"
+        land_flag: "土地"
         finance_order: "出力順(会計用)"
         drying_order: "出力順(乾燥調整用)"
         owned_rice_order: "出力順(保有米用)"

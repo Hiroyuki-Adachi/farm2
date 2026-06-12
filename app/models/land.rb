@@ -118,6 +118,7 @@ class Land < ApplicationRecord
   validates :peasant_end_term, numericality: { only_integer: true }, allow_nil: true
   validate :homes_belong_to_same_organization
   validate :group_belongs_to_same_organization
+  validate :homes_have_land_flag
 
   accepts_nested_attributes_for :work_lands, allow_destroy: true
   accepts_nested_attributes_for :land_fees, allow_destroy: true
@@ -265,5 +266,10 @@ class Land < ApplicationRecord
     if group.present? && group.organization_id != organization_id
       errors.add(:group_id, "は同じ組織の土地を指定してください。")
     end
+  end
+
+  def homes_have_land_flag
+    errors.add(:owner_id, "は土地フラグが有効な世帯を指定してください。") if owner.present? && !owner.land_flag?
+    errors.add(:manager_id, "は土地フラグが有効な世帯を指定してください。") if manager.present? && !manager.land_flag?
   end
 end

@@ -123,6 +123,24 @@ class LandTest < ActiveSupport::TestCase
     assert_includes land.errors[:manager_id], "は同じ組織の世帯を指定してください。"
   end
 
+  test "土地フラグが無効な所有者を指定した場合は無効" do
+    home = Home.create!(organization: organizations(:org), section: sections(:sections0), name: "土地外", phonetic: "とちがい", display_order: 999, land_flag: false)
+    land = lands(:lands0)
+    land.owner = home
+
+    assert_not land.valid?
+    assert_includes land.errors[:owner_id], "は土地フラグが有効な世帯を指定してください。"
+  end
+
+  test "土地フラグが無効な管理者を指定した場合は無効" do
+    home = Home.create!(organization: organizations(:org), section: sections(:sections0), name: "土地外", phonetic: "とちがい", display_order: 999, land_flag: false)
+    land = lands(:lands0)
+    land.manager = home
+
+    assert_not land.valid?
+    assert_includes land.errors[:manager_id], "は土地フラグが有効な世帯を指定してください。"
+  end
+
   test "別組織のグループ土地を指定した場合は無効" do
     land = lands(:lands0)
     land.group = lands(:land_other_org)

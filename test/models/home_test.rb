@@ -11,6 +11,7 @@
 #  drying_order(出力順(乾燥調整用))    :integer
 #  fax(FAX番号)                        :string(15)
 #  finance_order(出力順(会計用))       :integer
+#  land_flag(土地フラグ)               :boolean          default(TRUE), not null
 #  location(位置)                      :point
 #  member_flag(組合員フラグ)           :boolean          default(TRUE), not null
 #  name(世帯名)                        :string(10)
@@ -45,5 +46,26 @@ class HomeTest < ActiveSupport::TestCase
 
     assert_not home.valid?
     assert_includes home.errors[:section_id], "は同じ組織の班を指定してください。"
+  end
+
+  test "土地で使用中の世帯は土地フラグを外せない" do
+    home = homes(:home1)
+    home.land_flag = false
+
+    assert_not home.valid?
+    assert_includes home.errors[:land_flag], "は土地で使用されているため外せません。"
+  end
+
+  test "土地で未使用の世帯は土地フラグを外せる" do
+    home = Home.new(
+      organization: organizations(:org),
+      section: sections(:sections0),
+      name: "土地外",
+      phonetic: "とちがい",
+      display_order: 999,
+      land_flag: false
+    )
+
+    assert home.valid?
   end
 end

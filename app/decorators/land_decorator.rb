@@ -17,10 +17,10 @@ class LandDecorator < Draper::Decorator
   def self.homes(organization = nil)
     hs = []
     hs << ["全て", ""]
-    homes = Home.landable.includes(:holder)
+    homes = Home.for_land_select.includes(:holder)
     homes = homes.for_organization(organization) if organization.present?
 
-    homes.find_each do |h|
+    homes.each do |h|
       hs << [h.owner_name, h.id]
     end
     hs

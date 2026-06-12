@@ -18,6 +18,7 @@ class LandHome < ApplicationRecord
   belongs_to :land
 
   validate :home_belongs_to_same_organization
+  validate :home_has_land_flag
 
   private
 
@@ -25,5 +26,11 @@ class LandHome < ApplicationRecord
     return if land.blank? || home.blank? || land.organization_id == home.organization_id
 
     errors.add(:home_id, "は土地と同じ組織の世帯を選択してください。")
+  end
+
+  def home_has_land_flag
+    return if home.blank? || home.land_flag?
+
+    errors.add(:home_id, "は土地フラグが有効な世帯を指定してください。")
   end
 end
