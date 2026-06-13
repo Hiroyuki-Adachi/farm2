@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_12_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_13_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -447,9 +447,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_12_090000) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "land_term_marks", comment: "土地年度別記号", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "land_id", null: false, comment: "土地"
+    t.string "mark", limit: 10, null: false, comment: "記号"
+    t.integer "term", null: false, comment: "年度(期)"
+    t.datetime "updated_at", null: false
+    t.index ["land_id", "term"], name: "index_land_term_marks_on_land_id_and_term", unique: true
+  end
+
   create_table "lands", id: { type: :serial, comment: "土地マスタ" }, comment: "土地マスタ", force: :cascade do |t|
     t.decimal "area", precision: 5, scale: 2, null: false, comment: "面積(α)"
-    t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
     t.datetime "created_at", precision: nil
     t.datetime "deleted_at", precision: nil
     t.date "end_on", default: "2999-12-31", null: false, comment: "有効期間(至)"
@@ -1308,6 +1316,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_12_090000) do
   add_foreign_key "chemicals", "organizations"
   add_foreign_key "fixes", "organizations"
   add_foreign_key "homes", "organizations"
+  add_foreign_key "land_term_marks", "lands"
   add_foreign_key "lands", "organizations"
   add_foreign_key "schedules", "organizations"
   add_foreign_key "sections", "organizations"

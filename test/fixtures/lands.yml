@@ -4,7 +4,6 @@
 #
 #  id(土地マスタ)                     :integer          not null, primary key
 #  area(面積(α))                      :decimal(5, 2)    not null
-#  broccoli_mark(ブロッコリ記号)      :string(1)
 #  deleted_at                         :datetime
 #  end_on(有効期間(至))               :date             default(Tue, 31 Dec 2999), not null
 #  group_flag(グループフラグ)         :boolean          default(FALSE), not null

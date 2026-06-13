@@ -1,0 +1,20 @@
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>作業日</th>
+      <th>場所</th>
+      <th>備考</th>
+    </tr>
+  </thead>
+  <% if @works.present? %>
+    <tbody>
+      <% @works.each do |work| %>
+        <tr>
+          <td><%= work.worked_at %></td>
+          <td><%= work.gap_land_places %></td>
+          <td><%= work.remarks %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>

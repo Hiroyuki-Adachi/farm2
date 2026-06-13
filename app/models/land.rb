@@ -4,7 +4,6 @@
 #
 #  id(土地マスタ)                     :integer          not null, primary key
 #  area(面積(α))                      :decimal(5, 2)    not null
-#  broccoli_mark(ブロッコリ記号)      :string(1)
 #  deleted_at                         :datetime
 #  end_on(有効期間(至))               :date             default(Tue, 31 Dec 2999), not null
 #  group_flag(グループフラグ)         :boolean          default(FALSE), not null
@@ -68,6 +67,7 @@ class Land < ApplicationRecord
   has_many :land_fees, dependent: :destroy
   has_many :plan_lands, dependent: :destroy
   has_many :land_homes, dependent: :destroy
+  has_many :land_term_marks, dependent: :destroy
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
@@ -175,6 +175,14 @@ class Land < ApplicationRecord
 
   def plan_land(user_id)
     plan_lands.find_by(user_id: user_id)
+  end
+
+  def term_mark(term)
+    if association(:land_term_marks).loaded?
+      land_term_marks.find { |land_term_mark| land_term_mark.term == term }&.mark
+    else
+      land_term_marks.find_by(term: term)&.mark
+    end
   end
 
   def costs(start_date, end_date)
