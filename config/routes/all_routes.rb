@@ -28,6 +28,11 @@ namespace :gaps do
       get :months
     end
   end
+  resources :harvests, only: [:index] do
+    member do
+      get :months
+    end
+  end
   resources :chemicals, only: [:index]
   resources :health, only: [:index]
   resources :maintenances, only: [:index]
