@@ -146,7 +146,7 @@ class WorkDecorator < Draper::Decorator
   end
 
   def gap_land_places
-    model.lands.map { |land| land.broccoli_mark.presence || land.place }.sort.to_sentence
+    model.lands.map { |land| land.term_mark(model.term).presence || land.place }.sort.to_sentence
   end
 
   def gap_work_kind_name
