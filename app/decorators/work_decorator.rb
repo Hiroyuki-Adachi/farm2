@@ -146,7 +146,23 @@ class WorkDecorator < Draper::Decorator
   end
 
   def gap_land_places
-    model.lands.map { |land| land.term_mark(model.term).presence || land.place }.sort.to_sentence
+    lands = model.lands.to_a
+    marks_by_land_id = term_marks_by_land_id(lands)
+
+    lands.map { |land| marks_by_land_id[land.id].presence || land.place }.sort.to_sentence
+  end
+
+  def term_marks_by_land_id(lands)
+    return {} if lands.empty?
+
+    if lands.all? { |land| land.association(:land_term_marks).loaded? }
+      lands.to_h do |land|
+        mark = land.land_term_marks.find { |land_term_mark| land_term_mark.term == model.term }&.mark
+        [land.id, mark]
+      end
+    else
+      LandTermMark.where(land_id: lands.map(&:id), term: model.term).pluck(:land_id, :mark).to_h
+    end
   end
 
   def gap_work_kind_name
