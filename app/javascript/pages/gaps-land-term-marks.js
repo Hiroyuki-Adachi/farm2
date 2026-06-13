@@ -20,7 +20,8 @@ export const init = async () => {
     resultsList: { maxResults: 20 },
     resultItem: {
       element: (item, data) => {
-        item.innerHTML = `${data.value.place}(${data.value.owner})(${data.value.area})`;
+        const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        item.innerHTML = `${escapeHtml(data.value.place)}(${escapeHtml(data.value.owner)})(${escapeHtml(data.value.area)})`;
       },
       highlight: true,
     },
