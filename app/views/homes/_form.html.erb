@@ -51,6 +51,17 @@
         <label for="home_owner_flag_false" class="form-check-label form-label">不可</label>
       </div>
     </div>
+    <div class="col-md-2 field mb-3">
+      <%= f.label :land_flag, class: "col-form-label-lg form-label" %>
+      <div class="form-check">
+        <%= f.radio_button :land_flag, true, {class: "form-check-input"} %>
+        <label for="home_land_flag_true" class="form-check-label form-label">可</label>
+      </div>
+      <div class="form-check">
+        <%= f.radio_button :land_flag, false, {class: "form-check-input"} %>
+        <label for="home_land_flag_false" class="form-check-label form-label">不可</label>
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-2 field mb-3">

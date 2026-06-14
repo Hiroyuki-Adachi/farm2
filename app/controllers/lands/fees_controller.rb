@@ -2,7 +2,7 @@ class Lands::FeesController < ApplicationController
   include PermitManager
 
   def index
-    @homes = Home.for_organization(current_organization).for_fee.landable
+    @homes = Home.for_organization(current_organization).for_fee.for_land_select
   end
 
   def edit

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_25_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_12_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -365,6 +365,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_25_090000) do
     t.integer "drying_order", comment: "出力順(乾燥調整用)"
     t.string "fax", limit: 15, comment: "FAX番号"
     t.integer "finance_order", comment: "出力順(会計用)"
+    t.boolean "land_flag", default: true, null: false, comment: "土地フラグ"
     t.point "location", comment: "位置"
     t.boolean "member_flag", default: true, null: false, comment: "組合員フラグ"
     t.string "name", limit: 10, comment: "世帯名"

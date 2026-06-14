@@ -17,6 +17,33 @@ class LandsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "土地マスタ一覧の世帯絞り込みは班順に表示" do
+    sections(:sections1).update!(display_order: 0)
+
+    get lands_path
+
+    expected_options = [["全て", ""]] + Home.for_organization(users(:users1).organization_id).for_land_select.includes(:holder).map { |home| [home.owner_name, home.id.to_s] }
+    actual_options = css_select("select#home option").map { |option| [option.text, option["value"]] }
+    assert_equal expected_options, actual_options
+  end
+
+  test "土地マスタ一覧の世帯絞り込みに土地フラグ無効の世帯は表示しない" do
+    home = Home.create!(organization: organizations(:org), section: sections(:sections0), name: "土地外", phonetic: "とちがい", display_order: 999, land_flag: false)
+
+    get lands_path
+
+    assert_select "select#home option[value=?]", home.id.to_s, false
+  end
+
+  test "土地マスタ変更画面の所有者管理者に土地フラグ無効の世帯は表示しない" do
+    home = Home.create!(organization: organizations(:org), section: sections(:sections0), name: "土地外", phonetic: "とちがい", display_order: 999, land_flag: false)
+
+    get edit_land_path(@land)
+
+    assert_select "select#land_owner_id option[value=?]", home.id.to_s, false
+    assert_select "select#land_manager_id option[value=?]", home.id.to_s, false
+  end
+
   test "土地マスタ一覧CSV出力" do
     get lands_path(format: :csv)
 
