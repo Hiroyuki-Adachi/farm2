@@ -55,6 +55,17 @@ class PersonalInformations::Schedules::WorkersControllerTest < ActionDispatch::I
     assert_select "input[name='worker_ids[]'][value='#{workers(:worker2).id}']", false
   end
 
+  test "個人情報(人員保守画面表示: 他組織作業者を表示しない)" do
+    get personal_information_schedules_workers_edit_path(
+      personal_information_token: @user.token,
+      schedule_id: @schedule.id
+    )
+
+    assert_response :success
+    assert_select "input[name=\"worker_ids[]\"][value=\"#{workers(:worker_other_org).id}\"]", false
+    assert_no_match workers(:worker_other_org).name, response.body
+  end
+
   test "個人情報(人員保守登録: 一般作業者は同一世帯のみ更新)" do
     user = users(:user_user)
 

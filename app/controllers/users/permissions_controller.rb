@@ -14,7 +14,8 @@ class Users::PermissionsController < ApplicationController
   private
 
   def set_user
-    @user = User.find(params[:user_id])
+    @user = User.find_by(id: params[:user_id], organization_id: current_organization.id)
+    to_error_path if @user.blank?
   end
 
   def user_params
