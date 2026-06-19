@@ -2,26 +2,31 @@
 #
 # Table name: workers(作業者マスタ)
 #
-#  id(作業者マスタ)                  :integer          not null, primary key
-#  birthday(誕生日)                  :date
-#  broccoli_mark(ブロッコリ記号)     :string(1)
-#  deleted_at                        :datetime
-#  display_order(表示順)             :integer
-#  family_name(姓)                   :string(10)       not null
-#  family_phonetic(姓(ﾌﾘｶﾞﾅ))   :string(15)       not null
-#  first_name(名)                    :string(10)       not null
-#  first_phonetic(名(ﾌﾘｶﾞﾅ))    :string(15)       not null
-#  mobile(携帯番号)                  :string(15)
-#  mobile_mail(メールアドレス(携帯)) :string(50)
-#  office_role(事務の役割)           :integer          default("none"), not null
-#  pc_mail(メールアドレス(PC))       :string(50)
-#  work_flag(作業フラグ)             :boolean          default(TRUE), not null
-#  created_at                        :datetime
-#  updated_at                        :datetime
-#  gender_id(性別)                   :integer          default("none"), not null
-#  home_id(世帯)                     :integer
-#  organization_id(組織)             :bigint           default(1), not null
-#  position_id(役職)                 :integer          default("none"), not null
+#  id(作業者マスタ)                        :integer          not null, primary key
+#  account_holder_name(口座氏名(半角カナ)) :string(30)       default(""), not null
+#  account_number(口座番号)                :string(7)        default("0000000"), not null
+#  bank_code(銀行コード)                   :string(4)        default("0000"), not null
+#  birthday(誕生日)                        :date
+#  branch_code(支店コード)                 :string(3)        default("000"), not null
+#  broccoli_mark(ブロッコリ記号)           :string(1)
+#  deleted_at                              :datetime
+#  display_order(表示順)                   :integer
+#  family_name(姓)                         :string(10)       not null
+#  family_phonetic(姓(ﾌﾘｶﾞﾅ))         :string(15)       not null
+#  first_name(名)                          :string(10)       not null
+#  first_phonetic(名(ﾌﾘｶﾞﾅ))          :string(15)       not null
+#  mobile(携帯番号)                        :string(15)
+#  mobile_mail(メールアドレス(携帯))       :string(50)
+#  office_role(事務の役割)                 :integer          default("none"), not null
+#  pc_mail(メールアドレス(PC))             :string(50)
+#  work_flag(作業フラグ)                   :boolean          default(TRUE), not null
+#  created_at                              :datetime
+#  updated_at                              :datetime
+#  account_type_id(口座種別)               :integer          default("unset"), not null
+#  gender_id(性別)                         :integer          default("none"), not null
+#  home_id(世帯)                           :integer
+#  organization_id(組織)                   :bigint           default(1), not null
+#  position_id(役職)                       :integer          default("none"), not null
 #
 # Indexes
 #
@@ -46,6 +51,7 @@ class Worker < ApplicationRecord
 
   enum :gender_id, { none: 0, male: 1, female: 2 }, prefix: true
   enum :position_id, { none: 0, member: 1, leader: 2, director: 3, advisor: 9 }, prefix: true
+  enum :account_type_id, { unset: 0, regular: 1, current: 2, savings: 4 }, prefix: true
 
   before_save :set_user_permission_id, if: -> { user.present? }
 
@@ -69,6 +75,7 @@ class Worker < ApplicationRecord
   REG_MAIL = /\A([a-zA-Z0-9])+([a-zA-Z0-9._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9._-]+)+\z/
   REG_MOBILE = /\A(090|080|070)-\d{4}-\d{4}\z/
   REG_KANA = /\A\p{Hiragana}+/
+  REG_HALF_WIDTH = /\A[ -~｡-ﾟ]+\z/
 
   validates :family_phonetic, presence: true
   validates :family_name, presence: true
@@ -82,6 +89,11 @@ class Worker < ApplicationRecord
   validates :mobile, format: { with: REG_MOBILE }, if: proc { |x| x.mobile.present? }
   validates :pc_mail, format: { with: REG_MAIL }, if: proc { |x| x.pc_mail.present? }
   validates :mobile_mail, format: { with: REG_MAIL }, if: proc { |x| x.mobile_mail.present? }
+  validates :bank_code, length: { is: 4 }, format: { with: /\A\d+\z/ }, if: proc { |x| x.bank_code.present? }
+  validates :branch_code, length: { is: 3 }, format: { with: /\A\d+\z/ }, if: proc { |x| x.branch_code.present? }
+  validates :account_number, length: { is: 7 }, format: { with: /\A\d+\z/ }, if: proc { |x| x.account_number.present? }
+  validates :account_holder_name, length: { maximum: 30 }, if: proc { |x| x.account_holder_name.present? }
+  validates :account_holder_name, format: { with: REG_HALF_WIDTH }, if: proc { |x| x.account_holder_name.present? }
 
   validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }
   validates :broccoli_mark, uniqueness: true, if: proc { |x| x.broccoli_mark.present? }

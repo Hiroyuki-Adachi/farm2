@@ -3,6 +3,9 @@
 # Table name: organizations(組織(体系)マスタ)
 #
 #  id(組織(体系)マスタ)                      :integer          not null, primary key
+#  account_number(口座番号)                  :string(7)        default("0000000"), not null
+#  bank_code(銀行コード)                     :string(4)        default("0000"), not null
+#  branch_code(支店コード)                   :string(3)        default("000"), not null
 #  chemical_group_count(薬剤グループ数)      :integer          default(1)
 #  chemicals_count(作業日報の薬剤数)         :integer          default(4), not null
 #  consignor_code(委託者コード)              :string(10)
@@ -17,6 +20,7 @@
 #  workers_count(作業日報の作業者数)         :integer          default(12), not null
 #  created_at                                :datetime
 #  updated_at                                :datetime
+#  account_type_id(口座種別)                 :integer          default("unset"), not null
 #  broccoli_work_kind_id(ブロッコリ種別分類) :integer
 #  broccoli_work_type_id(ブロッコリ作業分類) :integer
 #  cleaning_id(清掃id)                       :integer
@@ -32,6 +36,7 @@
 
 class Organization < ApplicationRecord
   enum :daily_worker, { no_print: 0, print_home: 1, print_section: 2 }
+  enum :account_type_id, { unset: 0, regular: 1, current: 2, savings: 4 }, prefix: true
 
   validates :name, presence: true
   validates :workers_count, presence: true
@@ -41,6 +46,12 @@ class Organization < ApplicationRecord
   validates :daily_worker, presence: true
 
   validates :name, length: { maximum: 20 }, if: proc { |x| x.name.present? }
+  validates :consignor_code, length: { maximum: 10 }, if: proc { |x| x.consignor_code.present? }
+  validates :consignor_code, format: { with: /\A\d+\z/ }, if: proc { |x| x.consignor_code.present? }
+  validates :consignor_name, length: { maximum: 40 }, if: proc { |x| x.consignor_name.present? }
+  validates :bank_code, length: { is: 4 }, format: { with: /\A\d+\z/ }, if: proc { |x| x.bank_code.present? }
+  validates :branch_code, length: { is: 3 }, format: { with: /\A\d+\z/ }, if: proc { |x| x.branch_code.present? }
+  validates :account_number, length: { is: 7 }, format: { with: /\A\d+\z/ }, if: proc { |x| x.account_number.present? }
   validates :url, length: { maximum: 255 }, if: proc { |x| x.name.present? }
 
   belongs_to :broccoli_work_type, class_name: "WorkType"

@@ -3,6 +3,9 @@
 # Table name: organizations(組織(体系)マスタ)
 #
 #  id(組織(体系)マスタ)                      :integer          not null, primary key
+#  account_number(口座番号)                  :string(7)        default("0000000"), not null
+#  bank_code(銀行コード)                     :string(4)        default("0000"), not null
+#  branch_code(支店コード)                   :string(3)        default("000"), not null
 #  chemical_group_count(薬剤グループ数)      :integer          default(1)
 #  chemicals_count(作業日報の薬剤数)         :integer          default(4), not null
 #  consignor_code(委託者コード)              :string(10)
@@ -17,6 +20,7 @@
 #  workers_count(作業日報の作業者数)         :integer          default(12), not null
 #  created_at                                :datetime
 #  updated_at                                :datetime
+#  account_type_id(口座種別)                 :integer          default("unset"), not null
 #  broccoli_work_kind_id(ブロッコリ種別分類) :integer
 #  broccoli_work_type_id(ブロッコリ作業分類) :integer
 #  cleaning_id(清掃id)                       :integer
@@ -45,5 +49,27 @@ class OrganizationTest < ActiveSupport::TestCase
       assert_equal new_term, user.term
     end
     assert_equal other_user_term, other_user.reload.term
+  end
+
+  test "全銀用項目は部分入力でも有効" do
+    organization = organizations(:org)
+    organization.assign_attributes(
+      consignor_code: "",
+      consignor_name: "テスト委託者",
+      bank_code: "",
+      branch_code: "",
+      account_type_id: :unset,
+      account_number: ""
+    )
+
+    assert organization.valid?
+  end
+
+  test "全銀用コードは入力がある場合のみ書式を検証する" do
+    organization = organizations(:org)
+    organization.bank_code = "12"
+
+    assert_not organization.valid?
+    assert_not_empty organization.errors[:bank_code]
   end
 end

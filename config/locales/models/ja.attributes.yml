@@ -128,6 +128,11 @@ ja:
         position_id: "役職"
         broccoli_mark: "ブロッコリ記号"
         office_role: "事務の役割"
+        bank_code: "銀行コード"
+        branch_code: "支店コード"
+        account_type_id: "口座種別"
+        account_number: "口座番号"
+        account_holder_name: "口座氏名（半角カナ）"
 
       machine:
         name: 名称
@@ -204,6 +209,12 @@ ja:
 
       organization:
         name: "組織名称"
+        consignor_code: "委託者コード"
+        consignor_name: "委託者名"
+        bank_code: "銀行コード"
+        branch_code: "支店コード"
+        account_type_id: "口座種別"
+        account_number: "口座番号"
         workers_count: "日報表示する作業者の人数"
         lands_count: "日報表示する土地の数"
         machines_count: "日報表示する機械の数"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_13_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_18_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -570,6 +570,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_090000) do
   end
 
   create_table "organizations", id: { type: :serial, comment: "組織(体系)マスタ" }, comment: "組織(体系)マスタ", force: :cascade do |t|
+    t.string "account_number", limit: 7, default: "0000000", null: false, comment: "口座番号"
+    t.integer "account_type_id", limit: 2, default: 0, null: false, comment: "口座種別"
+    t.string "bank_code", limit: 4, default: "0000", null: false, comment: "銀行コード"
+    t.string "branch_code", limit: 3, default: "000", null: false, comment: "支店コード"
     t.integer "broccoli_work_kind_id", comment: "ブロッコリ種別分類"
     t.integer "broccoli_work_type_id", comment: "ブロッコリ作業分類"
     t.integer "chemical_group_count", default: 1, comment: "薬剤グループ数"
@@ -1265,7 +1269,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_090000) do
   end
 
   create_table "workers", id: { type: :serial, comment: "作業者マスタ" }, comment: "作業者マスタ", force: :cascade do |t|
+    t.string "account_holder_name", limit: 30, default: "", null: false, comment: "口座氏名(半角カナ)"
+    t.string "account_number", limit: 7, default: "0000000", null: false, comment: "口座番号"
+    t.integer "account_type_id", limit: 2, default: 0, null: false, comment: "口座種別"
+    t.string "bank_code", limit: 4, default: "0000", null: false, comment: "銀行コード"
     t.date "birthday", comment: "誕生日"
+    t.string "branch_code", limit: 3, default: "000", null: false, comment: "支店コード"
     t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
     t.datetime "created_at", precision: nil
     t.datetime "deleted_at", precision: nil
