@@ -1,0 +1,100 @@
+<h1><%= @fixed_at.strftime('%Y年 %m月') %>確定分 全銀データ</h1>
+
+<% if @batch %>
+  <div class="row mb-3">
+    <div class="col-md-3">
+      <div class="fw-bold">委託者コード</div>
+      <div><%= @batch.consignor_code.presence || '-' %></div>
+    </div>
+    <div class="col-md-3">
+      <div class="fw-bold">委託者名</div>
+      <div><%= @batch.consignor_name.presence || '-' %></div>
+    </div>
+    <div class="col-md-3">
+      <div class="fw-bold">仕向口座</div>
+      <div><%= [@batch.bank_code, @batch.branch_code, @batch.account_number].reject(&:blank?).join(' / ').presence || '-' %></div>
+    </div>
+    <div class="col-md-3">
+      <div class="fw-bold">状態</div>
+      <div><%= @batch.status %></div>
+    </div>
+  </div>
+
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th>支払先</th>
+        <th>口座氏名</th>
+        <th>銀行</th>
+        <th>支店</th>
+        <th>口座種別</th>
+        <th>口座番号</th>
+        <th class="numeric">日当</th>
+        <th class="numeric">農地管理料</th>
+        <th class="numeric">小作地管理料</th>
+        <th class="numeric">機械賃借料</th>
+        <th class="numeric">育苗費</th>
+        <th class="numeric">乾燥調整費</th>
+        <th class="numeric">その他</th>
+        <th class="numeric">合計</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @batch.zengin_payments.each do |payment| %>
+        <% details = payment.zengin_payment_details.group_by(&:payment_type) %>
+        <tr>
+          <td><%= payment.worker.name %></td>
+          <td><%= payment.account_holder_name %></td>
+          <td><%= payment.bank_code %></td>
+          <td><%= payment.branch_code %></td>
+          <td><%= payment.account_type_id %></td>
+          <td><%= payment.account_number %></td>
+          <td class="numeric"><%= number_with_delimiter(details.fetch('daily_wage', []).sum(&:amount).to_i) %></td>
+          <td class="numeric"><%= number_with_delimiter(details.fetch('land_management_fee', []).sum(&:amount).to_i) %></td>
+          <td class="numeric"><%= number_with_delimiter(details.fetch('tenant_land_management_fee', []).sum(&:amount).to_i) %></td>
+          <td class="numeric"><%= number_with_delimiter(details.fetch('machine_rental_fee', []).sum(&:amount).to_i) %></td>
+          <td class="numeric"><%= number_with_delimiter(details.fetch('seedling_fee', []).sum(&:amount).to_i) %></td>
+          <td class="numeric"><%= number_with_delimiter(details.fetch('drying_adjustment_fee', []).sum(&:amount).to_i) %></td>
+          <td class="numeric"><%= number_with_delimiter(details.fetch('other', []).sum(&:amount).to_i) %></td>
+          <td class="numeric"><%= number_with_delimiter(payment.amount.to_i) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info">
+    この確定分の全銀データはまだ作成されていません。
+  </div>
+
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th>支払先</th>
+        <th>口座氏名</th>
+        <th>銀行</th>
+        <th>支店</th>
+        <th>口座種別</th>
+        <th>口座番号</th>
+        <th class="numeric">日当</th>
+        <th class="numeric">農地管理料</th>
+        <th class="numeric">小作地管理料</th>
+        <th class="numeric">機械賃借料</th>
+        <th class="numeric">育苗費</th>
+        <th class="numeric">乾燥調整費</th>
+        <th class="numeric">その他</th>
+        <th class="numeric">合計</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="14">作成機能は未実装です。</td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', fixes_path, class: "btn btn-outline-dark" %>
+  </div>
+</div>
