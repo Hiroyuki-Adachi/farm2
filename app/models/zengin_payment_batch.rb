@@ -220,13 +220,13 @@ end
     records.join(ZENGIN_ROW_SEPARATOR) + ZENGIN_ROW_SEPARATOR
   end
 
-  def export_payments
-    zengin_payments
-      .includes(worker: :home)
-      .to_a
-      .select { |payment| payment.worker.home.member_flag? }
-      .sort_by { |payment| [payment.worker.home.finance_order || 9999, payment.worker.home.id, payment.worker.display_order || 9999, payment.worker.id] }
-  end
+def export_payments
+  @export_payments ||= zengin_payments
+    .includes(worker: :home)
+    .to_a
+    .select { |payment| payment.worker.home.member_flag? }
+    .sort_by { |payment| [payment.worker.home.finance_order || 9999, payment.worker.home.id, payment.worker.display_order || 9999, payment.worker.id] }
+end
 
   def zengin_header_record(transfer_on)
     zengin_record(
