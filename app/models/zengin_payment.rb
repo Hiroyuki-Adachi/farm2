@@ -45,5 +45,4 @@ class ZenginPayment < ApplicationRecord
       account_number.blank? || account_number == "0000000" ||
       account_holder_name.blank?
   end
-
 end

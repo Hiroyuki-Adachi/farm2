@@ -37,11 +37,27 @@ class FixesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "確定取消" do
+    ZenginPaymentBatch.create!(
+      organization: @fix.organization,
+      term: @fix.term,
+      fixed_at: @fix.fixed_at,
+      consignor_code: @fix.organization.consignor_code.to_s,
+      consignor_name: @fix.organization.consignor_name.to_s,
+      bank_code: @fix.organization.bank_code.to_s,
+      branch_code: @fix.organization.branch_code.to_s,
+      account_type_id: @fix.organization.account_type_id,
+      account_number: @fix.organization.account_number.to_s,
+      created_by: users(:users1).worker_id
+    )
+
     assert_difference('Fix.count', -1) do
-      delete fix_path(fixed_at: @fix.fixed_at)
+      assert_difference('ZenginPaymentBatch.count', -1) do
+        delete fix_path(fixed_at: @fix.fixed_at)
+      end
     end
     assert_redirected_to fixes_path
 
     assert_nil Fix.find_by(fixed_at: @fix.fixed_at)
+    assert_nil ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
   end
 end

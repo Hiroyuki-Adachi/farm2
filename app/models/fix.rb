@@ -63,6 +63,8 @@ class Fix < ApplicationRecord
   private
 
   def clear_fix
+    ZenginPaymentBatch.for_organization(organization_id).find_by(term: term, fixed_at: fixed_at)&.destroy!
+
     Work.for_organization(organization_id).where(term: term, fixed_at: fixed_at).find_each do |work|
       work.work_results.each do |result|
         result.update(fixed_hours: nil, fixed_price: nil, fixed_amount: nil)

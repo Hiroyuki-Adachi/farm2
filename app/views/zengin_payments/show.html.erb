@@ -20,7 +20,7 @@
 </div>
 
 <% if @batch %>
-  <%= form_with url: export_fix_zengin_payment_path(@fix), method: :post, class: "mb-3" do |f| %>
+  <%= form_with url: export_fix_zengin_payment_path(@fix), method: :post, data: {turbo: false}, class: "mb-3" do |f| %>
     <div class="row g-2 align-items-center">
       <div class="col-auto">
         <%= f.label :transfer_on, "振込指定日", class: "col-form-label" %>
@@ -34,7 +34,7 @@
     </div>
   <% end %>
 
-  <%= form_with url: land_fee_import_fix_zengin_payment_path(@fix), method: :post, html: {multipart: true}, data: {turbo_confirm: "農地管理料/小作地管理料CSVを取り込みます。既存のCSV取込分は削除して入れ直します。よろしいですか？"}, class: "mb-3" do |f| %>
+  <%= form_with url: land_fee_import_fix_zengin_payment_path(@fix), method: :post, html: {multipart: true}, data: {turbo_confirm: "CSVを取り込みます。既存のCSV取込分は削除して入れ直します。よろしいですか？"}, class: "mb-3" do |f| %>
     <div class="row g-2 align-items-center">
       <div class="col-auto">
         <%= f.file_field :land_fee_file, accept: ".csv,text/csv", required: true, class: "form-control" %>
@@ -75,9 +75,11 @@
     ["drying_adjustment_fee", "乾燥調整費"],
     ["other", "その他"]
   ] %>
+  <% payments = @batch.zengin_payments.select { |payment| payment.worker.home.member_flag? }.sort_by { |payment| [payment.worker.home.finance_order || 9999, payment.worker.home.id, payment.worker.display_order || 9999, payment.worker.id] } %>
+  <% imported_labels = payments.flat_map { |payment| payment.zengin_payment_details.select(&:source_kind_imported?).map(&:source_label) }.compact.uniq %>
   <% payment_totals = Hash.new(0) %>
+  <% imported_totals = Hash.new(0) %>
   <% grand_total = 0 %>
-  <% payments = @batch.zengin_payments.includes(worker: :home).select { |payment| payment.worker.home.member_flag? }.sort_by { |payment| [payment.worker.home.finance_order || 9999, payment.worker.home.id, payment.worker.display_order || 9999, payment.worker.id] } %>
 
   <table class="table table-sm">
     <thead>
@@ -86,6 +88,9 @@
         <th>世帯</th>
         <th>支払先</th>
         <% payment_columns.each do |_payment_type, label| %>
+          <th class="numeric"><%= label %></th>
+        <% end %>
+        <% imported_labels.each do |label| %>
           <th class="numeric"><%= label %></th>
         <% end %>
         <th class="numeric">合計</th>
@@ -101,8 +106,13 @@
           <td><%= payment.worker.home.name %></td>
           <td><%= payment.worker.name %></td>
           <% payment_columns.each do |payment_type, _label| %>
-            <% amount = details.fetch(payment_type, []).sum(&:amount).to_i %>
+            <% amount = details.fetch(payment_type, []).reject(&:source_kind_imported?).sum(&:amount).to_i %>
             <% payment_totals[payment_type] += amount %>
+            <td class="numeric <%= 'text-danger' if amount.negative? %>"><%= number_with_delimiter(amount) %></td>
+          <% end %>
+          <% imported_labels.each do |label| %>
+            <% amount = payment.zengin_payment_details.select { |detail| detail.source_kind_imported? && detail.source_label == label }.sum(&:amount).to_i %>
+            <% imported_totals[label] += amount %>
             <td class="numeric <%= 'text-danger' if amount.negative? %>"><%= number_with_delimiter(amount) %></td>
           <% end %>
           <td class="numeric <%= 'text-danger' if row_total.negative? %>"><%= number_with_delimiter(row_total) %></td>
@@ -114,6 +124,10 @@
         <th colspan="3">合計</th>
         <% payment_columns.each do |payment_type, _label| %>
           <% total_amount = payment_totals[payment_type] %>
+          <th class="numeric <%= 'text-danger' if total_amount.negative? %>"><%= number_with_delimiter(total_amount) %></th>
+        <% end %>
+        <% imported_labels.each do |label| %>
+          <% total_amount = imported_totals[label] %>
           <th class="numeric <%= 'text-danger' if total_amount.negative? %>"><%= number_with_delimiter(total_amount) %></th>
         <% end %>
         <th class="numeric <%= 'text-danger' if grand_total.negative? %>"><%= number_with_delimiter(grand_total) %></th>
@@ -143,7 +157,7 @@
     </thead>
     <tbody>
       <tr>
-        <td colspan="11">上のボタンから全銀データを作成してください。</td>
+        <td colspan="9">上のボタンから全銀データを作成してください。</td>
       </tr>
     </tbody>
   </table>

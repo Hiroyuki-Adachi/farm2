@@ -27,8 +27,9 @@ class ZenginPaymentsController < ApplicationController
     end
 
     result = @batch.import_land_fee_csv!(params[:land_fee_file])
+    count_message = result[:imported_counts].map { |label, count| "#{label} #{count}件" }.join("、")
     duplicate_message = result[:duplicate_finance_orders].present? ? " 重複会計ID: #{result[:duplicate_finance_orders].join(', ')} は合算しました。" : ""
-    redirect_to fix_zengin_payment_path(@fix), notice: "CSVを取り込みました。農地管理料 #{result[:imported_counts]['農地管理料']}件、小作地管理料 #{result[:imported_counts]['小作地管理料']}件。#{duplicate_message}"
+    redirect_to fix_zengin_payment_path(@fix), notice: "CSVを取り込みました。#{count_message}。#{duplicate_message}"
   rescue CSV::MalformedCSVError, ActiveRecord::RecordInvalid => e
     redirect_to fix_zengin_payment_path(@fix), alert: "CSVを取り込めませんでした。#{e.message}"
   end
