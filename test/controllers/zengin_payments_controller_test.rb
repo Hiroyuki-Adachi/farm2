@@ -124,6 +124,54 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "全銀ファイル出力" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    batch.zengin_payments.destroy_all
+    batch.zengin_payments.create!(
+      worker: workers(:worker1),
+      bank_code: "0001",
+      branch_code: "001",
+      account_type_id: :regular,
+      account_number: "2345678",
+      account_holder_name: "ｺﾞﾄｳ ﾊﾙﾐ",
+      amount: 12_345
+    )
+
+    post export_fix_zengin_payment_path(@fix), params: { transfer_on: Time.zone.today }
+
+    assert_response :success
+    batch.reload
+    assert_not_nil batch.exported_at
+
+    records = response.body.b.split("\r\n".b)
+    assert_equal 4, records.size
+    assert_equal ["1", "2", "8", "9"], records.map { |record| record.byteslice(0, 1) }
+    assert records.all? { |record| record.bytesize == ZenginPaymentBatch::ZENGIN_RECORD_BYTES }
+    assert_equal "000001", records[2].byteslice(1, 6)
+    assert_equal "000000012345", records[2].byteslice(7, 12)
+  end
+
+  test "全銀ファイル出力は過去日を許可しない" do
+    post fix_zengin_payment_path(@fix)
+
+    post export_fix_zengin_payment_path(@fix), params: { transfer_on: Time.zone.yesterday }
+
+    assert_redirected_to fix_zengin_payment_path(@fix)
+    assert_equal "振込指定日は本日以降を指定してください。", flash[:alert]
+  end
+
+  test "全銀ファイル出力は口座不備がある場合に出力しない" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+
+    post export_fix_zengin_payment_path(@fix), params: { transfer_on: Time.zone.today }
+
+    assert_redirected_to fix_zengin_payment_path(@fix)
+    assert_match(/口座情報が未設定/, flash[:alert])
+    assert_nil batch.reload.exported_at
+  end
+
   test "確定一覧に全銀データへの導線を表示" do
     get fixes_path
 

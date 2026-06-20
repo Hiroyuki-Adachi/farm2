@@ -54,6 +54,10 @@ class ZenginPaymentBatch < ApplicationRecord
     "農地管理料" => :land_management_fee,
     "小作地管理料" => :tenant_land_management_fee
   }.freeze
+  ZENGIN_RECORD_BYTES = 120
+  ZENGIN_ROW_SEPARATOR = "\r\n".encode("Windows-31J").freeze
+
+  class ExportError < StandardError; end
 
   validates :account_number, length: { maximum: 7 }
   def self.rebuild_for_fix!(organization:, term:, fixed_at:, created_by:)
@@ -156,6 +160,152 @@ class ZenginPaymentBatch < ApplicationRecord
     transaction do
       replace_generated_drying_adjustment_fee_details!(homes, term, system)
     end
+  end
+
+  def export_file!(transfer_on:)
+    transfer_on = transfer_on.to_date
+    errors = zengin_export_errors(transfer_on)
+    raise ExportError, errors.join(" ") if errors.present?
+
+    content = zengin_file_content(transfer_on)
+    update!(exported_at: Time.current)
+    content
+  end
+
+  def zengin_export_errors(transfer_on)
+    errors = []
+    if transfer_on < Time.zone.today
+      errors << "振込指定日は本日以降を指定してください。"
+      return errors
+    end
+
+    errors << "委託者口座情報が未設定のため、全銀ファイルを出力できません。" if account_incomplete?
+
+    incomplete_payments = []
+    invalid_amount_payments = []
+    export_payments.each do |payment|
+      label = "#{payment.worker.home.name} #{payment.worker.name}"
+      incomplete_payments << label if payment.account_incomplete?
+      invalid_amount_payments << label if payment.amount.to_i <= 0
+    end
+
+    errors << export_payment_error_message("口座情報が未設定", incomplete_payments) if incomplete_payments.present?
+    errors << export_payment_error_message("振込金額が0円以下", invalid_amount_payments) if invalid_amount_payments.present?
+
+    errors
+  end
+
+  def export_payment_error_message(reason, labels)
+    examples = labels.first(5).join("、")
+    suffix = labels.size > 5 ? " ほか#{labels.size - 5}件" : ""
+    "#{reason}の支払先が#{labels.size}件あるため、全銀ファイルを出力できません。#{examples}#{suffix}"
+  end
+
+  def account_incomplete?
+    consignor_code.blank? ||
+      consignor_name.blank? ||
+      bank_code.blank? || bank_code == "0000" ||
+      branch_code.blank? || branch_code == "000" ||
+      account_type_id_unset? ||
+      account_number.blank? || account_number == "0000000"
+  end
+
+  def zengin_file_content(transfer_on)
+    records = [zengin_header_record(transfer_on)]
+    records.concat(export_payments.map { |payment| zengin_data_record(payment) })
+    records << zengin_trailer_record
+    records << zengin_end_record
+    records.join(ZENGIN_ROW_SEPARATOR) + ZENGIN_ROW_SEPARATOR
+  end
+
+  def export_payments
+    zengin_payments
+      .includes(worker: :home)
+      .to_a
+      .select { |payment| payment.worker.home.member_flag? }
+      .sort_by { |payment| [payment.worker.home.finance_order || 9999, payment.worker.home.id, payment.worker.display_order || 9999, payment.worker.id] }
+  end
+
+  def zengin_header_record(transfer_on)
+    zengin_record(
+      zengin_number(1, 1),
+      zengin_number(21, 2),
+      zengin_number(0, 1),
+      zengin_number(consignor_code, 10),
+      zengin_text(consignor_name, 40),
+      zengin_number(transfer_on.strftime("%m%d"), 4),
+      zengin_number(bank_code, 4),
+      zengin_text("", 15),
+      zengin_number(branch_code, 3),
+      zengin_text("", 15),
+      zengin_number(zengin_account_type(self), 1),
+      zengin_number(account_number, 7),
+      zengin_text("", 17)
+    )
+  end
+
+  def zengin_data_record(payment)
+    zengin_record(
+      zengin_number(2, 1),
+      zengin_number(payment.bank_code, 4),
+      zengin_text("", 15),
+      zengin_number(payment.branch_code, 3),
+      zengin_text("", 15),
+      zengin_number(0, 4),
+      zengin_number(zengin_account_type(payment), 1),
+      zengin_number(payment.account_number, 7),
+      zengin_text(payment.account_holder_name, 30),
+      zengin_number(payment.amount.to_i, 10),
+      zengin_number(0, 1),
+      zengin_number(0, 10),
+      zengin_number(0, 10),
+      zengin_number(7, 1),
+      zengin_text("", 1),
+      zengin_text("", 7)
+    )
+  end
+
+  def zengin_trailer_record
+    zengin_record(
+      zengin_number(8, 1),
+      zengin_number(export_payments.count, 6),
+      zengin_number(export_payments.sum { |payment| payment.amount.to_i }, 12),
+      zengin_text("", 101)
+    )
+  end
+
+  def zengin_end_record
+    zengin_record(
+      zengin_number(9, 1),
+      zengin_text("", 119)
+    )
+  end
+
+  def zengin_record(*fields)
+    record = fields.join
+    raise ExportError, "全銀レコード長が不正です。" unless record.bytesize == ZENGIN_RECORD_BYTES
+
+    record
+  end
+
+  def zengin_number(value, byte_size)
+    value.to_i.to_s.rjust(byte_size, "0").last(byte_size).encode("Windows-31J")
+  end
+
+  def zengin_text(value, byte_size)
+    buffer = +"".b
+    value.to_s.each_char do |char|
+      encoded = char.encode("Windows-31J", invalid: :replace, undef: :replace).b
+      break if buffer.bytesize + encoded.bytesize > byte_size
+
+      buffer << encoded
+    end
+    buffer << " ".b * (byte_size - buffer.bytesize)
+    buffer.force_encoding("Windows-31J")
+  end
+
+  def zengin_account_type(record)
+    record.account_type_id_before_type_cast.to_i
   end
 
   def self.parse_land_fee_csv(content)

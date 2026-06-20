@@ -199,6 +199,7 @@ resources :fixes, param: "fixed_at", except: [:edit, :update] do
     post :land_fee_import
     post :seedling_fee_import
     post :drying_adjustment_fee_import
+    post :export
   end
 end
 resources :personal_informations, param: "token", only: [:show] do

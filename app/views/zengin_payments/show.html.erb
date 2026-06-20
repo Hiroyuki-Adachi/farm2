@@ -20,6 +20,20 @@
 </div>
 
 <% if @batch %>
+  <%= form_with url: export_fix_zengin_payment_path(@fix), method: :post, class: "mb-3" do |f| %>
+    <div class="row g-2 align-items-center">
+      <div class="col-auto">
+        <%= f.label :transfer_on, "振込指定日", class: "col-form-label" %>
+      </div>
+      <div class="col-auto">
+        <%= f.date_field :transfer_on, value: Time.zone.today, min: Time.zone.today, required: true, class: "form-control" %>
+      </div>
+      <div class="col-auto">
+        <%= f.submit "全銀ファイル出力", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+
   <%= form_with url: land_fee_import_fix_zengin_payment_path(@fix), method: :post, html: {multipart: true}, data: {turbo_confirm: "農地管理料/小作地管理料CSVを取り込みます。既存のCSV取込分は削除して入れ直します。よろしいですか？"}, class: "mb-3" do |f| %>
     <div class="row g-2 align-items-center">
       <div class="col-auto">

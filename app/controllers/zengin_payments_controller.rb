@@ -53,6 +53,23 @@ class ZenginPaymentsController < ApplicationController
     redirect_to fix_zengin_payment_path(@fix), notice: "乾燥調整費を取り込みました。#{result[:count]}件、#{helpers.number_with_delimiter(result[:amount])}円。"
   end
 
+  def export
+    unless @batch
+      redirect_to fix_zengin_payment_path(@fix), alert: "先に全銀データを作成してください。"
+      return
+    end
+
+    transfer_on = Date.parse(params[:transfer_on].to_s)
+    content = @batch.export_file!(transfer_on: transfer_on)
+    send_data content,
+              filename: "zengin_#{@fixed_at.strftime('%Y%m%d')}_#{transfer_on.strftime('%Y%m%d')}.dat",
+              type: "text/plain; charset=Shift_JIS"
+  rescue Date::Error
+    redirect_to fix_zengin_payment_path(@fix), alert: "振込指定日を入力してください。"
+  rescue ZenginPaymentBatch::ExportError => e
+    redirect_to fix_zengin_payment_path(@fix), alert: e.message
+  end
+
   def create
     ZenginPaymentBatch.rebuild_for_fix!(
       organization: current_organization,
