@@ -6,7 +6,8 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
     @worker = workers(:worker1)
     @update = {
       family_name: "試験", first_name: "太郎", family_phonetic: "しけん", first_phonetic: "たろう",
-      home_id: 6, display_order: 99, position_id: :none, gender_id: :none, office_role: :none
+      home_id: 6, display_order: 99, position_id: :none, gender_id: :none, office_role: :none,
+      bank_code: "0001", branch_code: "001", account_type_id: :regular, account_number: "2345678", account_holder_name: "ｼｹﾝ ﾀﾛｳ"
     }
   end
 
@@ -43,6 +44,11 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:office_role], worker.office_role.to_sym
     assert_equal @update[:position_id], worker.position_id.to_sym
     assert_equal @update[:gender_id], worker.gender_id.to_sym
+    assert_equal @update[:bank_code], worker.bank_code
+    assert_equal @update[:branch_code], worker.branch_code
+    assert_equal @update[:account_type_id], worker.account_type_id.to_sym
+    assert_equal @update[:account_number], worker.account_number
+    assert_equal @update[:account_holder_name], worker.account_holder_name
   end
 
   test "作業者マスタ変更(表示)" do
@@ -78,6 +84,11 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:home_id], @worker.home_id
     assert_equal @update[:display_order], @worker.display_order
     assert_equal @update[:office_role], @worker.office_role.to_sym
+    assert_equal @update[:bank_code], @worker.bank_code
+    assert_equal @update[:branch_code], @worker.branch_code
+    assert_equal @update[:account_type_id], @worker.account_type_id.to_sym
+    assert_equal @update[:account_number], @worker.account_number
+    assert_equal @update[:account_holder_name], @worker.account_holder_name
   end
 
   test "作業者マスタ変更(実行)(元のページへ戻る)" do

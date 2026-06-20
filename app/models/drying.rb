@@ -102,7 +102,7 @@ class Drying < ApplicationRecord
   end
 
   def amount(system, home_id)
-    (harvest_weight(system) / KG_PER_BAG_RICE * price(system, home_id)).floor(-2)
+    (harvest_weight(system) / KG_PER_BAG_RICE * price(system, home_id)).floor(-1)
   end
 
   def waste_price(sys, home_id)

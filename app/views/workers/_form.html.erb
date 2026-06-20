@@ -65,6 +65,28 @@
     <%= f.text_field :pc_mail, {maxlength: 50, class: "form-control"} %>
   </div>
 </div>
+<div class="row">
+  <div class="field mb-3 col-md-2">
+    <%= f.label :bank_code, class: "col-form-label-lg form-label" %>
+    <%= f.text_field :bank_code, {maxlength: 4, pattern: "\\d{4}", class: "form-control"} %>
+  </div>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :branch_code, class: "col-form-label-lg form-label" %>
+    <%= f.text_field :branch_code, {maxlength: 3, pattern: "\\d{3}", class: "form-control"} %>
+  </div>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :account_type_id, class: "col-form-label-lg form-label" %>
+    <%= f.select(:account_type_id, enum_options_for(Worker, :account_type_id), {}, class: "form-select") %>
+  </div>
+  <div class="field mb-3 col-md-2">
+    <%= f.label :account_number, class: "col-form-label-lg form-label" %>
+    <%= f.text_field :account_number, {maxlength: 7, pattern: "\\d{7}", class: "form-control"} %>
+  </div>
+  <div class="field mb-3 col-md-4">
+    <%= f.label :account_holder_name, class: "col-form-label-lg form-label" %>
+    <%= f.text_field :account_holder_name, {maxlength: 30, pattern: "[ -~｡-ﾟ]+", class: "form-control"} %>
+  </div>
+</div>
 <hr />
 <div class="btn-toolbar">
   <div class="btn-group mr-2">

@@ -52,6 +52,18 @@ services:
         source: .
         target: /farm2
         consistency: delegated
+      - type: volume
+        source: codex_home
+        target: /root/.codex
+      - type: volume
+        source: vscode_server
+        target: /root/.vscode-server
+      - type: volume
+        source: claude_home
+        target: /root/.claude
+      - type: volume
+        source: gemini_home
+        target: /root/.gemini
       - type: tmpfs
         target: /farm2/tmp
       - type: tmpfs
@@ -109,3 +121,7 @@ services:
 
 volumes:
   dbdata:
+  codex_home:
+  vscode_server:
+  claude_home:
+  gemini_home:

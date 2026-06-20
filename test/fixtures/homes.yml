@@ -30,8 +30,9 @@
 #
 # Indexes
 #
-#  index_homes_on_deleted_at       (deleted_at)
-#  index_homes_on_organization_id  (organization_id)
+#  index_homes_on_deleted_at                         (deleted_at)
+#  index_homes_on_organization_id                    (organization_id)
+#  index_homes_on_organization_id_and_finance_order  (organization_id,finance_order) UNIQUE
 #
 # Foreign Keys
 #

@@ -37,7 +37,7 @@
     <tbody id="tbody_works">
       <% @works.each do |work| %>
         <tr>
-          <td><%= check_box_tag "fixed_works[]", work.id, false, {:id => nil} %></td>
+          <td><%= check_box_tag "fixed_works[]", work.id, false, {id: nil, data: {worked_at: work.model.worked_at.strftime('%Y-%m-%d')}} %></td>
           <td><%=h work.worked_at %></td>
           <td><%=h work.category_name %></td>
           <td><%=h work.name %></td>
@@ -72,7 +72,7 @@
   </div>
 <% end %>
   <div class="btn-group mr-2">
-    <%= submit_tag "確定", class: "btn btn-danger" %>
+    <%= submit_tag "確定", class: "btn btn-danger", data: {turbo_confirm: "確定してもよろしいですか?", wait: true} %>
   </div>
   <div class="btn-group mr-2">
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"}%>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_13_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_20_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -381,6 +381,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_090000) do
     t.boolean "worker_payment_flag", default: false, null: false, comment: "個人支払フラグ"
     t.string "zip_code", limit: 7, comment: "郵便番号"
     t.index ["deleted_at"], name: "index_homes_on_deleted_at"
+    t.index ["organization_id", "finance_order"], name: "index_homes_on_organization_id_and_finance_order", unique: true
     t.index ["organization_id"], name: "index_homes_on_organization_id"
   end
 
@@ -570,6 +571,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_090000) do
   end
 
   create_table "organizations", id: { type: :serial, comment: "組織(体系)マスタ" }, comment: "組織(体系)マスタ", force: :cascade do |t|
+    t.string "account_number", limit: 7, default: "0000000", null: false, comment: "口座番号"
+    t.integer "account_type_id", limit: 2, default: 0, null: false, comment: "口座種別"
+    t.string "bank_code", limit: 4, default: "0000", null: false, comment: "銀行コード"
+    t.string "branch_code", limit: 3, default: "000", null: false, comment: "支店コード"
     t.integer "broccoli_work_kind_id", comment: "ブロッコリ種別分類"
     t.integer "broccoli_work_type_id", comment: "ブロッコリ作業分類"
     t.integer "chemical_group_count", default: 1, comment: "薬剤グループ数"
@@ -1265,7 +1270,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_090000) do
   end
 
   create_table "workers", id: { type: :serial, comment: "作業者マスタ" }, comment: "作業者マスタ", force: :cascade do |t|
+    t.string "account_holder_name", limit: 30, default: "", null: false, comment: "口座氏名(半角カナ)"
+    t.string "account_number", limit: 7, default: "0000000", null: false, comment: "口座番号"
+    t.integer "account_type_id", limit: 2, default: 0, null: false, comment: "口座種別"
+    t.string "bank_code", limit: 4, default: "0000", null: false, comment: "銀行コード"
     t.date "birthday", comment: "誕生日"
+    t.string "branch_code", limit: 3, default: "000", null: false, comment: "支店コード"
     t.string "broccoli_mark", limit: 1, comment: "ブロッコリ記号"
     t.datetime "created_at", precision: nil
     t.datetime "deleted_at", precision: nil
@@ -1310,6 +1320,56 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_090000) do
     t.index ["organization_id"], name: "index_works_on_organization_id"
   end
 
+  create_table "zengin_payment_batches", comment: "全銀支払バッチ", force: :cascade do |t|
+    t.string "account_number", limit: 7, default: "", null: false, comment: "口座番号"
+    t.integer "account_type_id", limit: 2, default: 0, null: false, comment: "口座種別"
+    t.string "bank_code", limit: 4, default: "", null: false, comment: "銀行コード"
+    t.string "branch_code", limit: 3, default: "", null: false, comment: "支店コード"
+    t.string "consignor_code", limit: 10, default: "", null: false, comment: "委託者コード"
+    t.string "consignor_name", limit: 40, default: "", null: false, comment: "委託者名"
+    t.datetime "created_at", null: false
+    t.integer "created_by", comment: "作成者"
+    t.datetime "exported_at", comment: "出力日時"
+    t.date "fixed_at", null: false, comment: "確定日"
+    t.bigint "organization_id", null: false, comment: "組織"
+    t.integer "status", limit: 2, default: 0, null: false, comment: "状態"
+    t.integer "term", null: false, comment: "年度(期)"
+    t.datetime "updated_at", null: false
+    t.index ["organization_id", "term", "fixed_at"], name: "index_zengin_payment_batches_on_fix_key", unique: true
+    t.index ["organization_id"], name: "index_zengin_payment_batches_on_organization_id"
+  end
+
+  create_table "zengin_payment_details", comment: "全銀支払明細", force: :cascade do |t|
+    t.decimal "amount", precision: 10, default: "0", null: false, comment: "金額"
+    t.datetime "created_at", null: false
+    t.integer "payment_type", limit: 2, null: false, comment: "支払種別"
+    t.string "remarks", limit: 120, comment: "備考"
+    t.bigint "source_id", comment: "元データID"
+    t.integer "source_kind", limit: 2, default: 0, null: false, comment: "作成種別"
+    t.string "source_label", limit: 80, comment: "元データ表示名"
+    t.string "source_type", limit: 40, comment: "元データ種別"
+    t.datetime "updated_at", null: false
+    t.bigint "zengin_payment_id", null: false, comment: "全銀支払先"
+    t.index ["source_type", "source_id"], name: "index_zengin_payment_details_on_source_type_and_source_id"
+    t.index ["zengin_payment_id"], name: "index_zengin_payment_details_on_zengin_payment_id"
+  end
+
+  create_table "zengin_payments", comment: "全銀支払先", force: :cascade do |t|
+    t.string "account_holder_name", limit: 30, default: "", null: false, comment: "口座氏名(半角カナ)"
+    t.string "account_number", limit: 7, default: "", null: false, comment: "口座番号"
+    t.integer "account_type_id", limit: 2, default: 0, null: false, comment: "口座種別"
+    t.decimal "amount", precision: 10, default: "0", null: false, comment: "支払額"
+    t.string "bank_code", limit: 4, default: "", null: false, comment: "銀行コード"
+    t.string "branch_code", limit: 3, default: "", null: false, comment: "支店コード"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "worker_id", null: false, comment: "作業者"
+    t.bigint "zengin_payment_batch_id", null: false, comment: "全銀支払バッチ"
+    t.index ["worker_id"], name: "index_zengin_payments_on_worker_id"
+    t.index ["zengin_payment_batch_id", "worker_id"], name: "index_zengin_payments_on_batch_and_worker", unique: true
+    t.index ["zengin_payment_batch_id"], name: "index_zengin_payments_on_zengin_payment_batch_id"
+  end
+
   add_foreign_key "chemical_inventories", "organizations"
   add_foreign_key "chemical_stocks", "organizations"
   add_foreign_key "chemical_terms", "organizations"
@@ -1344,4 +1404,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_13_090000) do
   add_foreign_key "work_types", "work_genres"
   add_foreign_key "workers", "organizations"
   add_foreign_key "works", "organizations"
+  add_foreign_key "zengin_payment_batches", "organizations"
+  add_foreign_key "zengin_payment_details", "zengin_payments"
+  add_foreign_key "zengin_payments", "workers"
+  add_foreign_key "zengin_payments", "zengin_payment_batches"
 end
