@@ -59,13 +59,17 @@ ja:
         land_place_id: "場所"
         target_flag: "管理"
         reg_area: "登記面積"
-        broccoli_mark: "ブロッコリ記号"
         start_on: "有効期間(自)"
         end_on: "有効期間(至)"
         peasant_start_term: "小作料有効年度(自)"
         peasant_end_term: "小作料有効年度(至)"
         parcel_number: "耕地番号"
         uuid: "UUID"
+
+      land_term_mark:
+        land_id: "圃場"
+        mark: "記号"
+        term: "年度"
 
       work: 
         year: "年度"  #g

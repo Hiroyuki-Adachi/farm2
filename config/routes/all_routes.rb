@@ -18,7 +18,17 @@ namespace :plans do
   resources :work_types, only: [:new, :create]
 end
 namespace :gaps do
+  resources :land_term_marks, only: [:index, :create, :update, :destroy] do
+    collection do
+      get :autocomplete
+    end
+  end
   resources :monthly_reports, only: [:index] do
+    member do
+      get :months
+    end
+  end
+  resources :harvests, only: [:index] do
     member do
       get :months
     end

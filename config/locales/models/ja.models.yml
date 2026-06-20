@@ -6,6 +6,7 @@ ja:
       home: "世帯"  #g
       work_result: "作業結果"  #g
       land: "土地"  #g
+      land_term_mark: "圃場記号"
       work: "作業"  #g
       work_type: "作業分類"  #g
       worker: "作業者"  #g
