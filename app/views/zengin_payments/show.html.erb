@@ -6,7 +6,23 @@
   <div class="btn-group mr-2">
     <%= button_to create_label, fix_zengin_payment_path(@fix), method: :post, class: "btn btn-primary", form: {data: {turbo_confirm: create_confirm}} %>
   </div>
+  <div class="btn-group mr-2">
+    <%= link_to "CSVひな形", land_fee_template_fix_zengin_payment_path(@fix), class: "btn btn-outline-success" %>
+  </div>
 </div>
+
+<% if @batch %>
+  <%= form_with url: land_fee_import_fix_zengin_payment_path(@fix), method: :post, html: {multipart: true}, data: {turbo_confirm: "農地管理料/小作地管理料CSVを取り込みます。既存のCSV取込分は削除して入れ直します。よろしいですか？"}, class: "mb-3" do |f| %>
+    <div class="row g-2 align-items-center">
+      <div class="col-auto">
+        <%= f.file_field :land_fee_file, accept: ".csv,text/csv", required: true, class: "form-control" %>
+      </div>
+      <div class="col-auto">
+        <%= f.submit "CSV取込", class: "btn btn-success" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
 
 <% if @batch %>
   <div class="row mb-3">
@@ -44,6 +60,7 @@
   <table class="table table-sm">
     <thead>
       <tr>
+        <th>会計ID</th>
         <th>世帯</th>
         <th>支払先</th>
         <% payment_columns.each do |_payment_type, label| %>
@@ -58,24 +75,26 @@
         <% row_total = payment.amount.to_i %>
         <% grand_total += row_total %>
         <tr class="<%= 'table-warning' if payment.account_incomplete? %>">
+          <td><%= payment.worker.home.finance_order %></td>
           <td><%= payment.worker.home.name %></td>
           <td><%= payment.worker.name %></td>
           <% payment_columns.each do |payment_type, _label| %>
             <% amount = details.fetch(payment_type, []).sum(&:amount).to_i %>
             <% payment_totals[payment_type] += amount %>
-            <td class="numeric"><%= number_with_delimiter(amount) %></td>
+            <td class="numeric <%= 'text-danger' if amount.negative? %>"><%= number_with_delimiter(amount) %></td>
           <% end %>
-          <td class="numeric"><%= number_with_delimiter(row_total) %></td>
+          <td class="numeric <%= 'text-danger' if row_total.negative? %>"><%= number_with_delimiter(row_total) %></td>
         </tr>
       <% end %>
     </tbody>
     <tfoot>
       <tr>
-        <th colspan="2">合計</th>
+        <th colspan="3">合計</th>
         <% payment_columns.each do |payment_type, _label| %>
-          <th class="numeric"><%= number_with_delimiter(payment_totals[payment_type]) %></th>
+          <% total_amount = payment_totals[payment_type] %>
+          <th class="numeric <%= 'text-danger' if total_amount.negative? %>"><%= number_with_delimiter(total_amount) %></th>
         <% end %>
-        <th class="numeric"><%= number_with_delimiter(grand_total) %></th>
+        <th class="numeric <%= 'text-danger' if grand_total.negative? %>"><%= number_with_delimiter(grand_total) %></th>
       </tr>
     </tfoot>
   </table>
@@ -87,6 +106,7 @@
   <table class="table table-sm">
     <thead>
       <tr>
+        <th>会計ID</th>
         <th>世帯</th>
         <th>支払先</th>
         <th class="numeric">日当</th>
@@ -101,7 +121,7 @@
     </thead>
     <tbody>
       <tr>
-        <td colspan="10">上のボタンから全銀データを作成してください。</td>
+        <td colspan="11">上のボタンから全銀データを作成してください。</td>
       </tr>
     </tbody>
   </table>

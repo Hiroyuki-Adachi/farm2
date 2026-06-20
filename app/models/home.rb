@@ -30,8 +30,9 @@
 #
 # Indexes
 #
-#  index_homes_on_deleted_at       (deleted_at)
-#  index_homes_on_organization_id  (organization_id)
+#  index_homes_on_deleted_at                         (deleted_at)
+#  index_homes_on_organization_id                    (organization_id)
+#  index_homes_on_organization_id_and_finance_order  (organization_id,finance_order) UNIQUE
 #
 # Foreign Keys
 #
@@ -101,6 +102,7 @@ class Home < ApplicationRecord
   validates :phonetic,      presence: true
   validates :name,          presence: true
   validates :display_order, presence: true
+  validates :finance_order, uniqueness: { scope: :organization_id, allow_nil: true }
   validates :phonetic, format: { with: /\A[\p{Hiragana}ー－]+\z/ }, if: proc { |x| x.phonetic.present? }
   validates :telephone, format: { with: REG_PHONE }, if: proc { |x| x.telephone.present? }
   validates :display_order, numericality: { only_integer: true }, if: proc { |x| x.display_order.present? }

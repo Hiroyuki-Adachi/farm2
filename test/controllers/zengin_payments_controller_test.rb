@@ -1,4 +1,5 @@
 require "test_helper"
+require "tempfile"
 
 class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -32,6 +33,39 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
       post fix_zengin_payment_path(@fix)
     end
     assert_redirected_to fix_zengin_payment_path(@fix)
+  end
+
+  test "農地管理料CSVひな形ダウンロード" do
+    get land_fee_template_fix_zengin_payment_path(@fix)
+
+    assert_response :success
+    assert_includes response.body.encode("UTF-8", "Windows-31J"), "会計ID,世帯名,農地管理料,小作地管理料,備考"
+  end
+
+  test "農地管理料CSV取込" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    home = Home.for_organization(@fix.organization).kept.where(member_flag: true).detect(&:holder)
+    home.update!(finance_order: 999)
+
+    file = Tempfile.new(["land_fee", ".csv"])
+    file.write("会計ID,世帯名,農地管理料,小作地管理料,備考\n")
+    file.write("#{home.finance_order},#{home.name},1000,-200,\n")
+    file.write("#{home.finance_order},#{home.name},500,,重複\n")
+    file.close
+
+    assert_difference -> { ZenginPaymentDetail.where(source_kind: :imported).count }, 2 do
+      post land_fee_import_fix_zengin_payment_path(@fix), params: { land_fee_file: Rack::Test::UploadedFile.new(file.path, "text/csv") }
+    end
+
+    assert_redirected_to fix_zengin_payment_path(@fix)
+    batch.reload
+    payment = batch.zengin_payments.find_by(worker: home.holder)
+    assert_not_nil payment
+    assert_equal 1500, payment.zengin_payment_details.where(source_kind: :imported, payment_type: :land_management_fee).sum(:amount).to_i
+    assert_equal(-200, payment.zengin_payment_details.where(source_kind: :imported, payment_type: :tenant_land_management_fee).sum(:amount).to_i)
+  ensure
+    file&.unlink
   end
 
   test "確定一覧に全銀データへの導線を表示" do

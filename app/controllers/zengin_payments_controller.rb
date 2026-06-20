@@ -7,6 +7,32 @@ class ZenginPaymentsController < ApplicationController
 
   def show; end
 
+
+  def land_fee_template
+    csv = ZenginPaymentBatch.land_fee_template_csv(current_organization)
+    send_data csv.encode(Encoding::Windows_31J),
+              filename: "zengin_land_fee_template_#{@fixed_at.strftime('%Y%m%d')}.csv",
+              type: "text/csv; charset=Shift_JIS"
+  end
+
+  def land_fee_import
+    unless @batch
+      redirect_to fix_zengin_payment_path(@fix), alert: "先に全銀データを作成してください。"
+      return
+    end
+
+    unless params[:land_fee_file]
+      redirect_to fix_zengin_payment_path(@fix), alert: "CSVファイルを選択してください。"
+      return
+    end
+
+    result = @batch.import_land_fee_csv!(params[:land_fee_file])
+    duplicate_message = result[:duplicate_finance_orders].present? ? " 重複会計ID: #{result[:duplicate_finance_orders].join(', ')} は合算しました。" : ""
+    redirect_to fix_zengin_payment_path(@fix), notice: "CSVを取り込みました。農地管理料 #{result[:imported_counts]['農地管理料']}件、小作地管理料 #{result[:imported_counts]['小作地管理料']}件。#{duplicate_message}"
+  rescue CSV::MalformedCSVError, ActiveRecord::RecordInvalid => e
+    redirect_to fix_zengin_payment_path(@fix), alert: "CSVを取り込めませんでした。#{e.message}"
+  end
+
   def create
     ZenginPaymentBatch.rebuild_for_fix!(
       organization: current_organization,

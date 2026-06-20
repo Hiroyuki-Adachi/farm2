@@ -194,7 +194,10 @@ resources :statistics, only: [:index] do
   end
 end
 resources :fixes, param: "fixed_at", except: [:edit, :update] do
-  resource :zengin_payment, only: [:show, :create]
+  resource :zengin_payment, only: [:show, :create] do
+    get :land_fee_template
+    post :land_fee_import
+  end
 end
 resources :personal_informations, param: "token", only: [:show] do
   get "manifest(.:format)", to: "personal_informations#manifest", on: :member, as: :manifest,

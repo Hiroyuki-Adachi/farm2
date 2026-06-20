@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_19_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_20_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -381,6 +381,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_19_090000) do
     t.boolean "worker_payment_flag", default: false, null: false, comment: "個人支払フラグ"
     t.string "zip_code", limit: 7, comment: "郵便番号"
     t.index ["deleted_at"], name: "index_homes_on_deleted_at"
+    t.index ["organization_id", "finance_order"], name: "index_homes_on_organization_id_and_finance_order", unique: true
     t.index ["organization_id"], name: "index_homes_on_organization_id"
   end
 
