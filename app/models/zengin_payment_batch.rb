@@ -164,15 +164,15 @@ class ZenginPaymentBatch < ApplicationRecord
     end
   end
 
-  def export_file!(transfer_on:)
-    transfer_on = transfer_on.to_date
-    errors = zengin_export_errors(transfer_on)
-    raise ExportError, errors.join(" ") if errors.present?
+def export_file!(transfer_on:)
+  transfer_on = transfer_on.to_date
+  errors = zengin_export_errors(transfer_on)
+  raise ExportError, errors.join(" ") if errors.present?
 
-    content = zengin_file_content(transfer_on)
-    update!(exported_at: Time.current)
-    content
-  end
+  content = zengin_file_content(transfer_on)
+  update!(exported_at: Time.current, status: :exported)
+  content
+end
 
   def zengin_export_errors(transfer_on)
     errors = []
