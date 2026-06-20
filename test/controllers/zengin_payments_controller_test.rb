@@ -93,6 +93,37 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 80000, payment.zengin_payment_details.where(payment_type: :seedling_fee, source_kind: :generated).sum(:amount).to_i
   end
 
+  test "乾燥調整費取込" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    homes = [homes(:home30), homes(:home31)]
+    expected_amounts = homes.to_h do |home|
+      [home, Drying.by_home(@fix.term, home).sum { |drying| drying.total_amount(systems(:s2015), home.id).to_i }]
+    end
+
+    assert_difference -> { ZenginPaymentDetail.where(payment_type: :drying_adjustment_fee, source_kind: :generated).count }, 2 do
+      post drying_adjustment_fee_import_fix_zengin_payment_path(@fix)
+    end
+
+    assert_redirected_to fix_zengin_payment_path(@fix)
+    batch.reload
+    homes.each do |home|
+      payment = batch.zengin_payments.find_by(worker: home.holder)
+      assert_not_nil payment
+      assert_equal expected_amounts[home], payment.zengin_payment_details.where(payment_type: :drying_adjustment_fee, source_kind: :generated).sum(:amount).to_i
+    end
+
+    assert_no_difference -> { ZenginPaymentDetail.where(payment_type: :drying_adjustment_fee, source_kind: :generated).count } do
+      post drying_adjustment_fee_import_fix_zengin_payment_path(@fix)
+    end
+
+    batch.reload
+    homes.each do |home|
+      payment = batch.zengin_payments.find_by(worker: home.holder)
+      assert_equal expected_amounts[home], payment.zengin_payment_details.where(payment_type: :drying_adjustment_fee, source_kind: :generated).sum(:amount).to_i
+    end
+  end
+
   test "確定一覧に全銀データへの導線を表示" do
     get fixes_path
 

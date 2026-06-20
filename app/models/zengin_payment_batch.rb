@@ -146,6 +146,18 @@ class ZenginPaymentBatch < ApplicationRecord
     end
   end
 
+  def import_drying_adjustment_fee!(term:, system:)
+    homes = Home.for_organization(organization_id)
+      .for_drying
+      .joins(:section)
+      .where(member_flag: true, sections: { work_flag: true })
+      .includes(:holder)
+
+    transaction do
+      replace_generated_drying_adjustment_fee_details!(homes, term, system)
+    end
+  end
+
   def self.parse_land_fee_csv(content)
     csv = CSV.parse(decode_land_fee_csv(content), headers: true)
     missing_headers = ["会計ID", *LAND_FEE_PAYMENT_TYPES.keys] - csv.headers.compact
@@ -255,6 +267,51 @@ class ZenginPaymentBatch < ApplicationRecord
       )
       count += 1
       total_amount += amount
+    end
+
+    (target_payments + zengin_payments.reload.to_a).uniq.each do |payment|
+      amount = payment.zengin_payment_details.sum(:amount)
+      amount.zero? ? payment.destroy! : payment.update!(amount: amount)
+    end
+
+    { count: count, amount: total_amount }
+  end
+
+  def replace_generated_drying_adjustment_fee_details!(homes, term, system)
+    payment_type_value = ZenginPaymentDetail.payment_types.fetch("drying_adjustment_fee")
+    payments = zengin_payments.includes(:zengin_payment_details).to_a
+    target_payments = payments.select do |payment|
+      payment.zengin_payment_details.any? { |detail| detail.source_kind_generated? && ZenginPaymentDetail.payment_types.fetch(detail.payment_type) == payment_type_value }
+    end
+
+    target_payments.each do |payment|
+      payment.zengin_payment_details
+        .where(source_kind: :generated, payment_type: payment_type_value)
+        .destroy_all
+    end
+
+    count = 0
+    total_amount = 0
+    homes.each do |home|
+      worker = home.holder
+      next unless worker
+
+      Drying.by_home(term, home).includes(:work_type, :drying_moths, :adjustment).each do |drying|
+        amount = drying.total_amount(system, home.id).to_i
+        next if amount.zero?
+
+        payment = self.class.send(:payment_for_worker, self, worker)
+        payment.zengin_payment_details.create!(
+          payment_type: :drying_adjustment_fee,
+          source_kind: :generated,
+          amount: amount,
+          source_type: drying.class.name,
+          source_id: drying.id,
+          source_label: "乾燥調整費 #{drying.work_type&.name} #{drying.carried_on.strftime('%Y-%m-%d')}"
+        )
+        count += 1
+        total_amount += amount
+      end
     end
 
     (target_payments + zengin_payments.reload.to_a).uniq.each do |payment|
