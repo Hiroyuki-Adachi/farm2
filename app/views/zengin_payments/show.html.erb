@@ -1,5 +1,13 @@
 <h1><%= @fixed_at.strftime('%Y年 %m月') %>確定分 全銀データ</h1>
 
+<% create_label = @batch ? "全銀データ再作成" : "全銀データ作成" %>
+<% create_confirm = @batch ? "作成済みの全銀データを削除して再作成します。手入力・取込済みの明細も削除されます。よろしいですか？" : "この確定分の全銀データを作成します。よろしいですか？" %>
+<div class="btn-toolbar mb-3">
+  <div class="btn-group mr-2">
+    <%= button_to create_label, fix_zengin_payment_path(@fix), method: :post, class: "btn btn-primary", form: {data: {turbo_confirm: create_confirm}} %>
+  </div>
+</div>
+
 <% if @batch %>
   <div class="row mb-3">
     <div class="col-md-3">
@@ -20,46 +28,56 @@
     </div>
   </div>
 
+  <% payment_columns = [
+    ["daily_wage", "日当"],
+    ["land_management_fee", "農地管理料"],
+    ["tenant_land_management_fee", "小作地管理料"],
+    ["machine_rental_fee", "機械賃借料"],
+    ["seedling_fee", "育苗費"],
+    ["drying_adjustment_fee", "乾燥調整費"],
+    ["other", "その他"]
+  ] %>
+  <% payment_totals = Hash.new(0) %>
+  <% grand_total = 0 %>
+  <% payments = @batch.zengin_payments.includes(worker: :home).select { |payment| payment.worker.home.member_flag? }.sort_by { |payment| [payment.worker.home.finance_order || 9999, payment.worker.home.id, payment.worker.display_order || 9999, payment.worker.id] } %>
+
   <table class="table table-sm">
     <thead>
       <tr>
+        <th>世帯</th>
         <th>支払先</th>
-        <th>口座氏名</th>
-        <th>銀行</th>
-        <th>支店</th>
-        <th>口座種別</th>
-        <th>口座番号</th>
-        <th class="numeric">日当</th>
-        <th class="numeric">農地管理料</th>
-        <th class="numeric">小作地管理料</th>
-        <th class="numeric">機械賃借料</th>
-        <th class="numeric">育苗費</th>
-        <th class="numeric">乾燥調整費</th>
-        <th class="numeric">その他</th>
+        <% payment_columns.each do |_payment_type, label| %>
+          <th class="numeric"><%= label %></th>
+        <% end %>
         <th class="numeric">合計</th>
       </tr>
     </thead>
     <tbody>
-      <% @batch.zengin_payments.each do |payment| %>
+      <% payments.each do |payment| %>
         <% details = payment.zengin_payment_details.group_by(&:payment_type) %>
-        <tr>
+        <% row_total = payment.amount.to_i %>
+        <% grand_total += row_total %>
+        <tr class="<%= 'table-warning' if payment.account_incomplete? %>">
+          <td><%= payment.worker.home.name %></td>
           <td><%= payment.worker.name %></td>
-          <td><%= payment.account_holder_name %></td>
-          <td><%= payment.bank_code %></td>
-          <td><%= payment.branch_code %></td>
-          <td><%= payment.account_type_id %></td>
-          <td><%= payment.account_number %></td>
-          <td class="numeric"><%= number_with_delimiter(details.fetch('daily_wage', []).sum(&:amount).to_i) %></td>
-          <td class="numeric"><%= number_with_delimiter(details.fetch('land_management_fee', []).sum(&:amount).to_i) %></td>
-          <td class="numeric"><%= number_with_delimiter(details.fetch('tenant_land_management_fee', []).sum(&:amount).to_i) %></td>
-          <td class="numeric"><%= number_with_delimiter(details.fetch('machine_rental_fee', []).sum(&:amount).to_i) %></td>
-          <td class="numeric"><%= number_with_delimiter(details.fetch('seedling_fee', []).sum(&:amount).to_i) %></td>
-          <td class="numeric"><%= number_with_delimiter(details.fetch('drying_adjustment_fee', []).sum(&:amount).to_i) %></td>
-          <td class="numeric"><%= number_with_delimiter(details.fetch('other', []).sum(&:amount).to_i) %></td>
-          <td class="numeric"><%= number_with_delimiter(payment.amount.to_i) %></td>
+          <% payment_columns.each do |payment_type, _label| %>
+            <% amount = details.fetch(payment_type, []).sum(&:amount).to_i %>
+            <% payment_totals[payment_type] += amount %>
+            <td class="numeric"><%= number_with_delimiter(amount) %></td>
+          <% end %>
+          <td class="numeric"><%= number_with_delimiter(row_total) %></td>
         </tr>
       <% end %>
     </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="2">合計</th>
+        <% payment_columns.each do |payment_type, _label| %>
+          <th class="numeric"><%= number_with_delimiter(payment_totals[payment_type]) %></th>
+        <% end %>
+        <th class="numeric"><%= number_with_delimiter(grand_total) %></th>
+      </tr>
+    </tfoot>
   </table>
 <% else %>
   <div class="alert alert-info">
@@ -69,12 +87,8 @@
   <table class="table table-sm">
     <thead>
       <tr>
+        <th>世帯</th>
         <th>支払先</th>
-        <th>口座氏名</th>
-        <th>銀行</th>
-        <th>支店</th>
-        <th>口座種別</th>
-        <th>口座番号</th>
         <th class="numeric">日当</th>
         <th class="numeric">農地管理料</th>
         <th class="numeric">小作地管理料</th>
@@ -87,7 +101,7 @@
     </thead>
     <tbody>
       <tr>
-        <td colspan="14">作成機能は未実装です。</td>
+        <td colspan="10">上のボタンから全銀データを作成してください。</td>
       </tr>
     </tbody>
   </table>

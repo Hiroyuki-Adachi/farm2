@@ -48,4 +48,110 @@ class ZenginPaymentBatch < ApplicationRecord
   validates :bank_code, length: { maximum: 4 }
   validates :branch_code, length: { maximum: 3 }
   validates :account_number, length: { maximum: 7 }
+  def self.rebuild_for_fix!(organization:, term:, fixed_at:, created_by:)
+    organization = Organization.find(organization) unless organization.is_a?(Organization)
+    fixed_at = fixed_at.to_date
+
+    transaction do
+      for_organization(organization).find_by(term: term, fixed_at: fixed_at)&.destroy!
+
+      batch = create!(
+        organization: organization,
+        term: term,
+        fixed_at: fixed_at,
+        consignor_code: organization.consignor_code.to_s,
+        consignor_name: organization.consignor_name.to_s,
+        bank_code: organization.bank_code.to_s,
+        branch_code: organization.branch_code.to_s,
+        account_type_id: organization.account_type_id,
+        account_number: organization.account_number.to_s,
+        created_by: created_by
+      )
+
+      append_daily_wages(batch)
+      append_machine_rental_fees(batch)
+
+      batch.reload
+    end
+  end
+
+  class << self
+    private
+
+    def append_daily_wages(batch)
+      work_results = WorkResult
+        .joins(:work)
+        .includes(:work, worker: { home: :holder })
+        .where(works: { organization_id: batch.organization_id, term: batch.term, fixed_at: batch.fixed_at })
+        .where.not(fixed_amount: nil)
+
+      work_results.find_each do |work_result|
+        amount = work_result.fixed_amount.to_i
+        next if amount.zero?
+
+        worker = work_result.worker.payment || work_result.worker
+        next unless worker.home.member_flag?
+
+        payment = payment_for_worker(batch, worker)
+        append_detail(
+          payment,
+          payment_type: :daily_wage,
+          amount: amount,
+          source: work_result,
+          source_label: "日当 #{work_result.work.worked_at.strftime('%Y-%m-%d')}"
+        )
+      end
+    end
+
+    def append_machine_rental_fees(batch)
+      machine_results = MachineResult
+        .for_fix(batch.term, batch.fixed_at, batch.organization_id)
+        .includes(:work, machine: { owner: :holder })
+        .where.not(fixed_amount: nil)
+
+      machine_results.find_each do |machine_result|
+        amount = machine_result.fixed_amount.to_i
+        next if amount.zero?
+
+        worker = machine_result.machine.owner.holder
+        next unless worker&.home&.member_flag?
+
+        payment = payment_for_worker(batch, worker)
+        append_detail(
+          payment,
+          payment_type: :machine_rental_fee,
+          amount: amount,
+          source: machine_result,
+          source_label: "機械賃借料 #{machine_result.work.worked_at.strftime('%Y-%m-%d')}"
+        )
+      end
+    end
+
+    def payment_for_worker(batch, worker)
+      payment = batch.zengin_payments.find_or_initialize_by(worker: worker)
+      payment.assign_attributes(
+        bank_code: worker.bank_code.to_s,
+        branch_code: worker.branch_code.to_s,
+        account_type_id: worker.account_type_id,
+        account_number: worker.account_number.to_s,
+        account_holder_name: worker.account_holder_name.to_s,
+        amount: payment.amount.to_i
+      )
+      payment.save! if payment.new_record? || payment.changed?
+      payment
+    end
+
+    def append_detail(payment, payment_type:, amount:, source:, source_label:)
+      payment.zengin_payment_details.create!(
+        payment_type: payment_type,
+        source_kind: :generated,
+        amount: amount,
+        source_type: source.class.name,
+        source_id: source.id,
+        source_label: source_label
+      )
+      payment.update!(amount: payment.zengin_payment_details.sum(:amount))
+    end
+  end
+
 end

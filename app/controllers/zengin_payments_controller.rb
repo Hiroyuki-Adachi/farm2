@@ -7,6 +7,17 @@ class ZenginPaymentsController < ApplicationController
 
   def show; end
 
+  def create
+    ZenginPaymentBatch.rebuild_for_fix!(
+      organization: current_organization,
+      term: current_term,
+      fixed_at: @fixed_at,
+      created_by: current_user.worker_id
+    )
+
+    redirect_to fix_zengin_payment_path(@fix), notice: "全銀データを作成しました。"
+  end
+
   private
 
   def set_fixed_at
@@ -20,7 +31,7 @@ class ZenginPaymentsController < ApplicationController
   def set_batch
     @batch = ZenginPaymentBatch
       .for_organization(current_organization)
-      .includes(zengin_payments: [:worker, :zengin_payment_details])
+      .includes(zengin_payments: [{worker: :home}, :zengin_payment_details])
       .find_by(term: current_term, fixed_at: @fixed_at)
   end
 end

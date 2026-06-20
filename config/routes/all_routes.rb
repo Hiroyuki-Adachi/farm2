@@ -194,7 +194,7 @@ resources :statistics, only: [:index] do
   end
 end
 resources :fixes, param: "fixed_at", except: [:edit, :update] do
-  resource :zengin_payment, only: [:show]
+  resource :zengin_payment, only: [:show, :create]
 end
 resources :personal_informations, param: "token", only: [:show] do
   get "manifest(.:format)", to: "personal_informations#manifest", on: :member, as: :manifest,
