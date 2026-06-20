@@ -33,6 +33,16 @@ class ZenginPaymentsController < ApplicationController
     redirect_to fix_zengin_payment_path(@fix), alert: "CSVを取り込めませんでした。#{e.message}"
   end
 
+  def seedling_fee_import
+    unless @batch
+      redirect_to fix_zengin_payment_path(@fix), alert: "先に全銀データを作成してください。"
+      return
+    end
+
+    result = @batch.import_seedling_fee!(term: current_term, seedling_price: current_system.seedling_price)
+    redirect_to fix_zengin_payment_path(@fix), notice: "育苗費を取り込みました。#{result[:count]}件、#{helpers.number_with_delimiter(result[:amount])}円。"
+  end
+
   def create
     ZenginPaymentBatch.rebuild_for_fix!(
       organization: current_organization,

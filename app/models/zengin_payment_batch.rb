@@ -135,6 +135,17 @@ class ZenginPaymentBatch < ApplicationRecord
     }
   end
 
+  def import_seedling_fee!(term:, seedling_price:)
+    seedling_price = seedling_price.to_i
+    seedling_homes = SeedlingHome.usual(term)
+      .joins(home: :section)
+      .where(homes: { organization_id: organization_id, member_flag: true }, sections: { work_flag: true })
+
+    transaction do
+      replace_generated_seedling_fee_details!(seedling_homes, seedling_price)
+    end
+  end
+
   def self.parse_land_fee_csv(content)
     csv = CSV.parse(decode_land_fee_csv(content), headers: true)
     missing_headers = ["会計ID", *LAND_FEE_PAYMENT_TYPES.keys] - csv.headers.compact
@@ -209,6 +220,49 @@ class ZenginPaymentBatch < ApplicationRecord
       amount = payment.zengin_payment_details.sum(:amount)
       amount.zero? ? payment.destroy! : payment.update!(amount: amount)
     end
+  end
+
+  def replace_generated_seedling_fee_details!(seedling_homes, seedling_price)
+    payment_type_value = ZenginPaymentDetail.payment_types.fetch("seedling_fee")
+    payments = zengin_payments.includes(:zengin_payment_details).to_a
+    target_payments = payments.select do |payment|
+      payment.zengin_payment_details.any? { |detail| detail.source_kind_generated? && ZenginPaymentDetail.payment_types.fetch(detail.payment_type) == payment_type_value }
+    end
+
+    target_payments.each do |payment|
+      payment.zengin_payment_details
+        .where(source_kind: :generated, payment_type: payment_type_value)
+        .destroy_all
+    end
+
+    count = 0
+    total_amount = 0
+    seedling_homes.each do |seedling_home|
+      amount = seedling_home.cost_quantity.to_i * seedling_price
+      next if amount.zero?
+
+      worker = seedling_home.home.holder
+      next unless worker
+
+      payment = self.class.send(:payment_for_worker, self, worker)
+      payment.zengin_payment_details.create!(
+        payment_type: :seedling_fee,
+        source_kind: :generated,
+        amount: amount,
+        source_type: seedling_home.class.name,
+        source_id: seedling_home.id,
+        source_label: "育苗費 #{seedling_home.work_type_name}"
+      )
+      count += 1
+      total_amount += amount
+    end
+
+    (target_payments + zengin_payments.reload.to_a).uniq.each do |payment|
+      amount = payment.zengin_payment_details.sum(:amount)
+      amount.zero? ? payment.destroy! : payment.update!(amount: amount)
+    end
+
+    { count: count, amount: total_amount }
   end
 
   class << self

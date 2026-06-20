@@ -68,6 +68,31 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     file&.unlink
   end
 
+  test "育苗費取込" do
+    systems(:s2015).update!(seedling_price: 400)
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+
+    assert_difference -> { ZenginPaymentDetail.where(payment_type: :seedling_fee, source_kind: :generated).count }, 1 do
+      post seedling_fee_import_fix_zengin_payment_path(@fix)
+    end
+
+    assert_redirected_to fix_zengin_payment_path(@fix)
+    batch.reload
+    home = seedling_homes(:seedling_home1).home
+    payment = batch.zengin_payments.find_by(worker: home.holder)
+    assert_not_nil payment
+    assert_equal 80000, payment.zengin_payment_details.where(payment_type: :seedling_fee, source_kind: :generated).sum(:amount).to_i
+
+    assert_no_difference -> { ZenginPaymentDetail.where(payment_type: :seedling_fee, source_kind: :generated).count } do
+      post seedling_fee_import_fix_zengin_payment_path(@fix)
+    end
+
+    batch.reload
+    payment = batch.zengin_payments.find_by(worker: home.holder)
+    assert_equal 80000, payment.zengin_payment_details.where(payment_type: :seedling_fee, source_kind: :generated).sum(:amount).to_i
+  end
+
   test "確定一覧に全銀データへの導線を表示" do
     get fixes_path
 
