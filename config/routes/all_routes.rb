@@ -193,7 +193,9 @@ resources :statistics, only: [:index] do
     get :tab4
   end
 end
-resources :fixes, param: "fixed_at", except: [:edit, :update]
+resources :fixes, param: "fixed_at", except: [:edit, :update] do
+  resource :zengin_payment, only: [:show]
+end
 resources :personal_informations, param: "token", only: [:show] do
   get "manifest(.:format)", to: "personal_informations#manifest", on: :member, as: :manifest,
                             defaults: { format: :json }
