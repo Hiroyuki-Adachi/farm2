@@ -19,8 +19,12 @@ organization = Organization.create!(
   machines_count: 8,
   chemicals_count: 4,
   daily_worker: 0,
-  consignor_code: '',
-  consignor_name: '',
+  consignor_code: '1234567890',
+  consignor_name: 'エイノウクミアイ',
+  bank_code: '0001',
+  branch_code: '001',
+  account_type_id: :regular,
+  account_number: '1234567',
   term: Date.today.year
 )
 
@@ -76,7 +80,12 @@ worker = Worker.create!(
   first_phonetic: "たろう",
   first_name: "太郎",
   display_order: 1,
-  home_id: home.id
+  home_id: home.id,
+  bank_code: '0001',
+  branch_code: '001',
+  account_type_id: :regular,
+  account_number: '7654321',
+  account_holder_name: 'ｼｽﾃﾑ ﾀﾛｳ'
 )
 
 home.update(worker_id: worker.id)
