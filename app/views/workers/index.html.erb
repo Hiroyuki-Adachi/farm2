@@ -7,6 +7,7 @@
       <th>世帯</th>
       <th>役職</th>
       <th>携帯番号</th>
+      <th>口座</th>
       <th></th>
     </tr>
   </thead>
@@ -17,6 +18,7 @@
         <td><%= worker.home.name %></td>
         <td><%= worker.position_name %></td>
         <td><%= worker.mobile %></td>
+        <td><%= '◯' unless worker.account_incomplete? %></td>
         <td><%= link_to '修正', edit_worker_path(worker, return_to: request.fullpath), {class: "btn btn-success btn-sm"} %></td>
       </tr>
     <% end %>

@@ -132,6 +132,14 @@ class Worker < ApplicationRecord
     I18n.t("activerecord.enums.worker.position_ids.#{position_id}")
   end
 
+  def account_incomplete?
+    bank_code.blank? || bank_code == "0000" ||
+      branch_code.blank? || branch_code == "000" ||
+      account_type_id_unset? ||
+      account_number.blank? || account_number == "0000000" ||
+      account_holder_name.blank?
+  end
+
   private
 
   def office_role_only_user
