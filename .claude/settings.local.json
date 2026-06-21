@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(git -C /farm2 log --oneline -10)",
-      "Bash(git -C /farm2 log --oneline origin/develop)"
+      "Bash(git -C /farm2 log --oneline origin/develop)",
+      "Bash(gh issue *)",
+      "Bash(curl -s \"https://api.github.com/repos/Hiroyuki-Adachi/farm2/issues?state=open&per_page=100\" -H \"Accept: application/vnd.github+json\")",
+      "Bash(python3 -c ' *)"
     ]
   }
 }
