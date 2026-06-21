@@ -30,6 +30,8 @@ require "csv"
 #  fk_rails_...  (organization_id => organizations.id)
 #
 class ZenginPaymentBatch < ApplicationRecord
+  include ZenginAccount
+
   enum :status, { draft: 0, exported: 1 }, prefix: true
   enum :account_type_id, { unset: 0, regular: 1, current: 2, savings: 4 }, prefix: true
 
@@ -204,12 +206,7 @@ end
   end
 
   def account_incomplete?
-    consignor_code.blank? ||
-      consignor_name.blank? ||
-      bank_code.blank? || bank_code == "0000" ||
-      branch_code.blank? || branch_code == "000" ||
-      account_type_id_unset? ||
-      account_number.blank? || account_number == "0000000"
+    consignor_code.blank? || consignor_name.blank? || bank_account_incomplete?
   end
 
   def zengin_file_content(transfer_on)
