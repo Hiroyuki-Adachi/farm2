@@ -26,6 +26,8 @@
 #  fk_rails_...  (zengin_payment_batch_id => zengin_payment_batches.id)
 #
 class ZenginPayment < ApplicationRecord
+  include ZenginAccount
+
   enum :account_type_id, { unset: 0, regular: 1, current: 2, savings: 4 }, prefix: true
 
   belongs_to :zengin_payment_batch
@@ -39,10 +41,6 @@ class ZenginPayment < ApplicationRecord
   validates :account_holder_name, length: { maximum: 30 }
 
   def account_incomplete?
-    bank_code.blank? || bank_code == "0000" ||
-      branch_code.blank? || branch_code == "000" ||
-      account_type_id_unset? ||
-      account_number.blank? || account_number == "0000000" ||
-      account_holder_name.blank?
+    bank_account_incomplete? || account_holder_name.blank?
   end
 end

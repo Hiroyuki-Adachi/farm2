@@ -43,6 +43,7 @@ require 'securerandom'
 class Worker < ApplicationRecord
   include Discard::Model
   include Enums::OfficeRole
+  include ZenginAccount
 
   self.discard_column = :deleted_at
 
@@ -133,11 +134,7 @@ class Worker < ApplicationRecord
   end
 
   def account_incomplete?
-    bank_code.blank? || bank_code == "0000" ||
-      branch_code.blank? || branch_code == "000" ||
-      account_type_id_unset? ||
-      account_number.blank? || account_number == "0000000" ||
-      account_holder_name.blank?
+    bank_account_incomplete? || account_holder_name.blank?
   end
 
   private
