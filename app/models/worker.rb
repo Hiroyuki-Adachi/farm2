@@ -67,6 +67,7 @@ class Worker < ApplicationRecord
   scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
 
   scope :taskable, -> { kept.where.not(office_role: :none) }
+  scope :workable, -> { where(work_flag: true) }
   scope :usual_order, -> { kept.includes(home: :section).order('sections.display_order, homes.display_order, workers.display_order') }
   scope :usual, -> { kept.where(homes: { company_flag: false }).usual_order }
   scope :company, -> { kept.joins(:home).eager_load(:home).where(homes: { company_flag: true }).order("workers.display_order") }
