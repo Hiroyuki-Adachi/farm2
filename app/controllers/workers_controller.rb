@@ -76,7 +76,8 @@ class WorkersController < ApplicationController
         :birthday,
         :position_id,
         :broccoli_mark,
-        :office_role
+        :office_role,
+        :work_flag
       ])
   end
 end

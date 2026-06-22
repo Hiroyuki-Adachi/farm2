@@ -40,7 +40,7 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
     @workers = if permitted_position?
                  workers_for_sections([@worker.home.section_id])
                else
-                 Worker.for_organization(@worker.organization_id).usual_order.where(home_id: @worker.home_id)
+                 Worker.for_organization(@worker.organization_id).usual_order.workable.where(home_id: @worker.home_id)
                end
 
     @section_worker_management = permitted_position?
@@ -74,6 +74,7 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
     Worker
       .for_organization(@worker.organization_id)
       .usual_order
+      .workable
       .where(homes: { section_id: section_ids, company_flag: false })
   end
 
