@@ -88,7 +88,6 @@ class LandsController < ApplicationController
         :target_flag,
         :land_place_id,
         :reg_area,
-        :broccoli_mark,
         :region,
         :start_on,
         :end_on,

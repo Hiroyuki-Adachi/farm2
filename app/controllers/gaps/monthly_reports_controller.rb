@@ -6,7 +6,7 @@ class Gaps::MonthlyReportsController < GapsController
         params.expect(:worked_at).to_date,
         current_organization
       )
-      @works = WorkDecorator.decorate_collection(works)
+      @works = WorkDecorator.decorate_collection(works.includes(lands: :land_term_marks))
     end
   end
 

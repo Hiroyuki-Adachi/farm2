@@ -40,7 +40,7 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
     @workers = if permitted_position?
                  workers_for_sections([@worker.home.section_id])
                else
-                 Worker.usual_order.where(home_id: @worker.home_id)
+                 Worker.for_organization(@worker.organization_id).usual_order.where(home_id: @worker.home_id)
                end
 
     @section_worker_management = permitted_position?
@@ -71,7 +71,10 @@ class PersonalInformations::Schedules::WorkersController < PersonalInformationsC
   end
 
   def workers_for_sections(section_ids)
-    Worker.usual_order.where(homes: { section_id: section_ids, company_flag: false })
+    Worker
+      .for_organization(@worker.organization_id)
+      .usual_order
+      .where(homes: { section_id: section_ids, company_flag: false })
   end
 
   def editable_worker_ids

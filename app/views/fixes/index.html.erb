@@ -12,7 +12,7 @@
           <th class="numeric">工数計</th>
           <th class="numeric">作業日当計</th>
           <th class="numeric">機械利用料計</th>
-          <th colspan="4">&nbsp;</th>
+          <th colspan="5">&nbsp;</th>
         </tr>
       </thead>
     <% sum_works_count = 0 %>
@@ -30,6 +30,7 @@
             <td><%= link_to '作業一覧', fix_path(fixed_at: fix), {class: "btn btn-success"} %></td>
             <td><%= link_to '作業日当', work_results_path(fixed_at: fix), {class: "btn btn-success"} %><%= link_to 'CSV出力', work_results_path(fixed_at: fix, format: :csv), {class: "btn btn-outline-success"} %></td>
             <td><%= link_to '機械利用料', machine_results_path(fixed_at: fix), {class: "btn btn-success"} %><%= link_to 'CSV出力', machine_results_path(fixed_at: fix, format: :csv), {class: "btn btn-outline-success"} %></td>
+            <td><%= link_to '全銀データ', fix_zengin_payment_path(fix), {class: "btn btn-primary"} %></td>
             <td><%= link_to '確定取消', fix, {data: {turbo_confirm: "確定を取り消してもよろしいですか?", turbo_method: :delete, wait: true}, class: "btn btn-danger"} %></td>
           </tr>
         <% sum_works_count += fix.model.works_count.to_i %>
@@ -45,7 +46,7 @@
           <td class="numeric"><%=h sprintf("%.1f", sum_hours) %></td>
           <td class="numeric"><%=h number_with_delimiter(sum_works_amount, {:precision => 0}) %></td>
           <td class="numeric"><%=h number_with_delimiter(sum_machines_amount, {:precision => 0}) %></td>
-          <td colspan="4">&nbsp;</td>
+          <td colspan="5">&nbsp;</td>
         </tr>
       </tfoot>
     </table>

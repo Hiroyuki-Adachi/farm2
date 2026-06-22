@@ -18,7 +18,17 @@ namespace :plans do
   resources :work_types, only: [:new, :create]
 end
 namespace :gaps do
+  resources :land_term_marks, only: [:index, :create, :update, :destroy] do
+    collection do
+      get :autocomplete
+    end
+  end
   resources :monthly_reports, only: [:index] do
+    member do
+      get :months
+    end
+  end
+  resources :harvests, only: [:index] do
     member do
       get :months
     end
@@ -183,7 +193,15 @@ resources :statistics, only: [:index] do
     get :tab4
   end
 end
-resources :fixes, param: "fixed_at", except: [:edit, :update]
+resources :fixes, param: "fixed_at", except: [:edit, :update] do
+  resource :zengin_payment, only: [:show, :create] do
+    get :land_fee_template
+    post :land_fee_import
+    post :seedling_fee_import
+    post :drying_adjustment_fee_import
+    post :export
+  end
+end
 resources :personal_informations, param: "token", only: [:show] do
   get "manifest(.:format)", to: "personal_informations#manifest", on: :member, as: :manifest,
                             defaults: { format: :json }

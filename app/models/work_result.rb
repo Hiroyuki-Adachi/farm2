@@ -175,10 +175,13 @@ class WorkResult < ApplicationRecord
     end
   end
 
-  def self.all_health(term, work_type_id)
+  def self.all_health(term, work_type_id, organization = nil)
     results = {}
     workers = []
-    Work.where(term: term, work_type_id: work_type_id).order(:worked_at, :id).each do |work|
+    works = Work.where(term: term, work_type_id: work_type_id)
+    works = works.for_organization(organization) if organization
+
+    works.order(:worked_at, :id).each do |work|
       result = results[work.worked_at] || {}
       work.work_results.each do |work_result|
         result[work_result.worker_id] = work_result.health_mark

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /farm2 log --oneline -10)",
+      "Bash(git -C /farm2 log --oneline origin/develop)"
+    ]
+  }
+}

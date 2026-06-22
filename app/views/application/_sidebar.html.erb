@@ -105,7 +105,9 @@
   <div aria-labelledby="navbar_gap" class="mt-2" style="display:none;">
     <span class="h5">GAP関連</span>
     <div class="ms-3 navbar">
-      <%= link_to '作業月毎記録表', gaps_monthly_reports_path, {class: "dropdown-item", data: {app_controller: :gaps_monthly_reports}} %>
+      <%= link_to "圃場記号", gaps_land_term_marks_path, {class: "dropdown-item", data: {app_controller: :gaps_land_term_marks}} %>
+      <%= link_to "作業月毎記録表", gaps_monthly_reports_path, {class: "dropdown-item", data: {app_controller: :gaps_monthly_reports}} %>
+      <%= link_to "収穫一覧", gaps_harvests_path, {class: "dropdown-item", data: {app_controller: :gaps_harvests}} %>
       <%= link_to '農薬肥料台帳', gaps_chemicals_path, {class: "dropdown-item", data: {app_controller: :gaps_chemicals}} %>
       <%= link_to '体調確認表', gaps_health_index_path, {class: "dropdown-item", data: {app_controller: :gaps_health}} %>
       <%= link_to '整備記録表', gaps_maintenances_path, {class: "dropdown-item", data: {app_controller: :gaps_maintenances}} %>

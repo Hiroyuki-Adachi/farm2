@@ -29,10 +29,24 @@ function insertComma(num)
     return dest;
 }
 
+function selectedFixedAt()
+{
+    return document.getElementById("fixed_at").value;
+}
+
 function checkAll(val)
 {
     document.querySelectorAll("input[name^='fixed_works']").forEach((element) => {
-        element.checked = val;
+        element.checked = val && element.dataset.workedAt <= selectedFixedAt();
+    });
+
+    calcTotal();
+}
+
+function cancelAll()
+{
+    document.querySelectorAll("input[name^='fixed_works']").forEach((element) => {
+        element.checked = false;
     });
 
     calcTotal();
@@ -46,7 +60,7 @@ export const init = () => {
     });
     document.querySelectorAll(".all-cancel").forEach((element) => {
         element.addEventListener("click", () => {
-            checkAll(false);
+            cancelAll();
         });
     });
     document.querySelectorAll("input[name^='fixed_works']").forEach(element => {
