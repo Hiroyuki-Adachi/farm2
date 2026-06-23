@@ -43,3 +43,14 @@ template1:
   office_role: finance
   offset: 0
   active: true
+
+template_other_org:
+  organization_id: 2
+  title: "他組織テンプレート"
+  kind: monthly
+  monthly_stage: w2
+  priority: low
+  months_before_due: 1
+  office_role: finance
+  offset: 0
+  active: true
