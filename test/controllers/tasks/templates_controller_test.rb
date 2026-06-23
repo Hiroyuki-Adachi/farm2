@@ -26,6 +26,13 @@ class Tasks::TemplatesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "定型タスク一覧に他組織テンプレートを表示しない" do
+    get task_templates_path
+
+    assert_response :success
+    assert_no_match task_templates(:template_other_org).title, @response.body
+  end
+
   test "定型タスク新規作成(実行)" do
     assert_difference('TaskTemplate.kept.count') do
       post task_templates_path, params: { task_template: @update }
@@ -76,5 +83,30 @@ class Tasks::TemplatesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to task_templates_path
     assert_response :redirect
+  end
+
+  test "他組織の定型タスクは直接指定しても変更画面を表示しない" do
+    get edit_task_template_path(task_templates(:template_other_org))
+
+    assert_response :service_unavailable
+  end
+
+  test "他組織の定型タスクは直接指定しても更新しない" do
+    other_template = task_templates(:template_other_org)
+
+    assert_no_changes -> { other_template.reload.title } do
+      patch task_template_path(other_template), params: { task_template: @update }
+    end
+    assert_response :service_unavailable
+  end
+
+  test "他組織の定型タスクは直接指定しても削除しない" do
+    other_template = task_templates(:template_other_org)
+
+    assert_no_difference("TaskTemplate.with_discarded.count") do
+      delete task_template_path(other_template)
+    end
+    assert_response :service_unavailable
+    assert_not_predicate other_template.reload, :discarded?
   end
 end
