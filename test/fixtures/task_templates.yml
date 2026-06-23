@@ -53,4 +53,4 @@ template_other_org:
   months_before_due: 1
   office_role: finance
   offset: 0
-  active: true
+  active: false
