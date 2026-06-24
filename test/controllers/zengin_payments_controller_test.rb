@@ -16,6 +16,13 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "td", text: "上のボタンから全銀データを作成してください。"
   end
 
+  test "全銀データ未作成では保守画面を表示しない" do
+    get edit_fix_zengin_payment_path(@fix)
+
+    assert_redirected_to fix_zengin_payment_path(@fix)
+    assert_equal "先に全銀データを作成してください。", flash[:alert]
+  end
+
   test "全銀データ作成" do
     assert_difference -> { ZenginPaymentBatch.count }, 1 do
       post fix_zengin_payment_path(@fix)
@@ -33,6 +40,82 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
       post fix_zengin_payment_path(@fix)
     end
     assert_redirected_to fix_zengin_payment_path(@fix)
+  end
+
+  test "全銀データ保守画面表示" do
+    post fix_zengin_payment_path(@fix)
+
+    get edit_fix_zengin_payment_path(@fix)
+
+    assert_response :success
+    assert_select "h1", /全銀データ保守/
+    assert_select "input[name*='manual_other_amount']"
+  end
+
+  test "全銀データ保守でその他手入力を更新" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = batch.zengin_payments.includes(:zengin_payment_details).first
+    original_amount = payment.amount.to_i
+
+    assert_difference -> { ZenginPaymentDetail.where(source_kind: :manual, payment_type: :other).count }, 1 do
+      patch fix_zengin_payment_path(@fix), params: {
+        zengin_payments: {
+          payment.id => {
+            manual_other_amount: "1,234",
+            manual_other_remarks: "端数調整"
+          }
+        }
+      }
+    end
+
+    assert_redirected_to fix_zengin_payment_path(@fix)
+    payment.reload
+    detail = payment.zengin_payment_details.find_by(source_kind: :manual, payment_type: :other, source_label: "その他")
+    assert_not_nil detail
+    assert_equal 1234, detail.amount.to_i
+    assert_equal "端数調整", detail.remarks
+    assert_equal original_amount + 1234, payment.amount.to_i
+
+    assert_difference -> { ZenginPaymentDetail.where(source_kind: :manual, payment_type: :other).count }, -1 do
+      patch fix_zengin_payment_path(@fix), params: {
+        zengin_payments: {
+          payment.id => {
+            manual_other_amount: "0",
+            manual_other_remarks: ""
+          }
+        }
+      }
+    end
+
+    assert_nil payment.reload.zengin_payment_details.find_by(source_kind: :manual, payment_type: :other, source_label: "その他")
+    assert_equal original_amount, payment.amount.to_i
+  end
+
+  test "全銀データ保守は未変更行を更新しない" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    changed, unchanged = batch.zengin_payments.order(:id).limit(2).to_a
+    unchanged.update_column(:updated_at, 1.day.ago)
+    unchanged_updated_at = unchanged.reload.updated_at
+
+    patch fix_zengin_payment_path(@fix), params: {
+      zengin_payments: {
+        changed.id => {
+          manual_other_amount: "100",
+          manual_other_remarks: "調整"
+        },
+        unchanged.id => {
+          manual_other_amount: "",
+          manual_other_remarks: ""
+        }
+      }
+    }
+
+    assert_redirected_to fix_zengin_payment_path(@fix)
+    assert_not_nil changed.reload.zengin_payment_details.find_by(source_kind: :manual, payment_type: :other, source_label: "その他")
+    assert_nil unchanged.reload.zengin_payment_details.find_by(source_kind: :manual, payment_type: :other, source_label: "その他")
+    assert_equal unchanged_updated_at.to_i, unchanged.updated_at.to_i
   end
 
   test "農地管理料CSVひな形ダウンロード" do
@@ -197,5 +280,14 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "a[href=?]", fix_zengin_payment_path(@fix), text: "全銀データ"
+  end
+
+  test "全銀データ画面に保守への導線を表示" do
+    post fix_zengin_payment_path(@fix)
+
+    get fix_zengin_payment_path(@fix)
+
+    assert_response :success
+    assert_select "a[href=?]", edit_fix_zengin_payment_path(@fix), text: "保守"
   end
 end

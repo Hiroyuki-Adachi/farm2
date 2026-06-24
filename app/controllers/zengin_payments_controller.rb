@@ -4,9 +4,18 @@ class ZenginPaymentsController < ApplicationController
   before_action :set_fixed_at
   before_action :set_fix
   before_action :set_batch
+  before_action :require_batch, only: [:edit, :update, :land_fee_import, :seedling_fee_import, :drying_adjustment_fee_import, :export]
 
   def show; end
 
+  def edit; end
+
+  def update
+    @batch.update_manual_other_details!(zengin_payment_params)
+    redirect_to fix_zengin_payment_path(@fix), notice: "全銀データ保守を更新しました。"
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to edit_fix_zengin_payment_path(@fix), alert: "全銀データ保守を更新できませんでした。#{e.message}"
+  end
 
   def land_fee_template
     csv = ZenginPaymentBatch.land_fee_template_csv(current_organization)
@@ -16,11 +25,6 @@ class ZenginPaymentsController < ApplicationController
   end
 
   def land_fee_import
-    unless @batch
-      redirect_to fix_zengin_payment_path(@fix), alert: "先に全銀データを作成してください。"
-      return
-    end
-
     unless params[:land_fee_file]
       redirect_to fix_zengin_payment_path(@fix), alert: "CSVファイルを選択してください。"
       return
@@ -35,31 +39,16 @@ class ZenginPaymentsController < ApplicationController
   end
 
   def seedling_fee_import
-    unless @batch
-      redirect_to fix_zengin_payment_path(@fix), alert: "先に全銀データを作成してください。"
-      return
-    end
-
     result = @batch.import_seedling_fee!(term: current_term, seedling_price: current_system.seedling_price)
     redirect_to fix_zengin_payment_path(@fix), notice: "育苗費を取り込みました。#{result[:count]}件、#{helpers.number_with_delimiter(result[:amount])}円。"
   end
 
   def drying_adjustment_fee_import
-    unless @batch
-      redirect_to fix_zengin_payment_path(@fix), alert: "先に全銀データを作成してください。"
-      return
-    end
-
     result = @batch.import_drying_adjustment_fee!(term: current_term, system: current_system)
     redirect_to fix_zengin_payment_path(@fix), notice: "乾燥調整費を取り込みました。#{result[:count]}件、#{helpers.number_with_delimiter(result[:amount])}円。"
   end
 
   def export
-    unless @batch
-      redirect_to fix_zengin_payment_path(@fix), alert: "先に全銀データを作成してください。"
-      return
-    end
-
     transfer_on = Date.parse(params[:transfer_on].to_s)
     content = @batch.export_file!(transfer_on: transfer_on)
     send_data content,
@@ -97,5 +86,15 @@ class ZenginPaymentsController < ApplicationController
       .for_organization(current_organization)
       .includes(zengin_payments: [{worker: :home}, :zengin_payment_details])
       .find_by(term: current_term, fixed_at: @fixed_at)
+  end
+
+  def require_batch
+    return if @batch
+
+    redirect_to fix_zengin_payment_path(@fix), alert: "先に全銀データを作成してください。"
+  end
+
+  def zengin_payment_params
+    params.fetch(:zengin_payments, ActionController::Parameters.new).permit!
   end
 end

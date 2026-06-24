@@ -11,6 +11,9 @@
   </div>
   <% if @batch %>
     <div class="btn-group mr-2">
+      <%= link_to "保守", edit_fix_zengin_payment_path(@fix), class: "btn btn-outline-primary" %>
+    </div>
+    <div class="btn-group mr-2">
       <%= button_to "育苗費取込", seedling_fee_import_fix_zengin_payment_path(@fix), method: :post, class: "btn btn-outline-primary", form: {data: {turbo_confirm: "育苗費を取り込みます。既存の育苗費取込分は削除して入れ直します。よろしいですか？"}} %>
     </div>
     <div class="btn-group mr-2">

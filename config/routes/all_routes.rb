@@ -194,7 +194,7 @@ resources :statistics, only: [:index] do
   end
 end
 resources :fixes, param: "fixed_at", except: [:edit, :update] do
-  resource :zengin_payment, only: [:show, :create] do
+  resource :zengin_payment, only: [:show, :create, :edit, :update] do
     get :land_fee_template
     post :land_fee_import
     post :seedling_fee_import

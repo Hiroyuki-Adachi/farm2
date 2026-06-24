@@ -1,0 +1,48 @@
+<h1><%= @fixed_at.strftime('%Y年 %m月') %>確定分 全銀データ保守</h1>
+
+<% payments = @batch.zengin_payments.select { |payment| payment.worker.home.member_flag? }.sort_by { |payment| [payment.worker.home.finance_order || 9999, payment.worker.home.id, payment.worker.display_order || 9999, payment.worker.id] } %>
+
+<%= form_with url: fix_zengin_payment_path(@fix), method: :patch do %>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th>会計ID</th>
+        <th>世帯</th>
+        <th>支払先</th>
+        <th class="numeric">自動・取込合計</th>
+        <th class="numeric">その他手入力</th>
+        <th>備考</th>
+        <th class="numeric">支払合計</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% payments.each do |payment| %>
+        <% manual_other = payment.zengin_payment_details.detect { |detail| detail.source_kind_manual? && detail.payment_type_other? && detail.source_label == "その他" } %>
+        <% manual_amount = manual_other&.amount %>
+        <% source_amount = payment.zengin_payment_details.reject { |detail| detail.source_kind_manual? }.sum(&:amount).to_i %>
+        <tr class="<%= 'table-warning' if manual_other.present? %>">
+          <td><%= payment.worker.home.finance_order %></td>
+          <td><%= payment.worker.home.name %></td>
+          <td><%= payment.worker.name %></td>
+          <td class="numeric"><%= number_with_delimiter(source_amount) %></td>
+          <td>
+            <%= number_field_tag "zengin_payments[#{payment.id}][manual_other_amount]", manual_amount, class: "form-control form-control-sm text-end" %>
+          </td>
+          <td>
+            <%= text_field_tag "zengin_payments[#{payment.id}][manual_other_remarks]", manual_other&.remarks, maxlength: 120, class: "form-control form-control-sm" %>
+          </td>
+          <td class="numeric <%= 'text-danger' if payment.amount.to_i.negative? %>"><%= number_with_delimiter(payment.amount.to_i) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= submit_tag "更新", class: "btn btn-primary" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to "戻る", fix_zengin_payment_path(@fix), class: "btn btn-outline-dark" %>
+    </div>
+  </div>
+<% end %>

@@ -166,6 +166,42 @@ class ZenginPaymentBatch < ApplicationRecord
     end
   end
 
+  def update_manual_other_details!(payment_attributes)
+    transaction do
+      payment_attributes.each do |payment_id, attributes|
+        payment = zengin_payments.includes(:zengin_payment_details).find_by(id: payment_id)
+        next unless payment
+
+        amount = self.class.parse_manual_amount(attributes[:manual_other_amount])
+        remarks = attributes[:manual_other_remarks].to_s.presence
+        detail = payment.zengin_payment_details.find_by(
+          payment_type: :other,
+          source_kind: :manual,
+          source_label: "その他"
+        )
+
+        if amount.zero? && remarks.blank?
+          next unless detail
+
+          detail.destroy!
+          payment.recalculate_amount!
+          next
+        end
+
+        detail ||= payment.zengin_payment_details.build(
+          payment_type: :other,
+          source_kind: :manual,
+          source_label: "その他"
+        )
+        next if detail.amount.to_i == amount && detail.remarks.to_s == remarks.to_s
+
+        detail.assign_attributes(amount: amount, remarks: remarks)
+        detail.save!
+        payment.recalculate_amount!
+      end
+    end
+  end
+
 def export_file!(transfer_on:)
   transfer_on = transfer_on.to_date
   errors = zengin_export_errors(transfer_on)
@@ -345,6 +381,10 @@ end
     Integer(text, 10)
   rescue ArgumentError
     0
+  end
+
+  def self.parse_manual_amount(value)
+    parse_land_fee_amount(value)
   end
 
   def self.import_error(batch, message)
