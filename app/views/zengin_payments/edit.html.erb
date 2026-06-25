@@ -1,46 +1,105 @@
 <h1><%= @fixed_at.strftime('%Y年 %m月') %>確定分 全銀データ保守</h1>
 
 <% payments = @batch.zengin_payments.select { |payment| payment.worker.home.member_flag? }.sort_by { |payment| [payment.worker.home.finance_order || 9999, payment.worker.home.id, payment.worker.display_order || 9999, payment.worker.id] } %>
+<% payment_type_labels = {
+  "daily_wage" => "日当",
+  "land_management_fee" => "農地管理料",
+  "tenant_land_management_fee" => "小作地管理料",
+  "machine_rental_fee" => "機械賃借料",
+  "seedling_fee" => "育苗費",
+  "drying_adjustment_fee" => "乾燥調整費",
+  "other" => "その他"
+} %>
+<% source_kind_labels = { "generated" => "自動", "imported" => "取込", "manual" => "手入力" } %>
 
 <%= form_with url: fix_zengin_payment_path(@fix), method: :patch do %>
-  <table class="table table-sm">
-    <thead>
-      <tr>
-        <th>会計ID</th>
-        <th>世帯</th>
-        <th>支払先</th>
-        <th class="numeric">自動・取込合計</th>
-        <th class="numeric">その他手入力</th>
-        <th>備考</th>
-        <th class="numeric">支払合計</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% payments.each do |payment| %>
-        <% manual_other = payment.zengin_payment_details.detect { |detail| detail.source_kind_manual? && detail.payment_type_other? && detail.source_label == "その他" } %>
-        <% manual_amount = manual_other&.amount %>
-        <% source_amount = payment.zengin_payment_details.reject { |detail| detail.source_kind_manual? }.sum(&:amount).to_i %>
-        <tr class="<%= 'table-warning' if manual_other.present? %>">
-          <td><%= payment.worker.home.finance_order %></td>
-          <td><%= payment.worker.home.name %></td>
-          <td><%= payment.worker.name %></td>
-          <td class="numeric"><%= number_with_delimiter(source_amount) %></td>
-          <td>
-            <%= number_field_tag "zengin_payments[#{payment.id}][manual_other_amount]", manual_amount, class: "form-control form-control-sm text-end" %>
-          </td>
-          <td>
-            <%= text_field_tag "zengin_payments[#{payment.id}][manual_other_remarks]", manual_other&.remarks, maxlength: 120, class: "form-control form-control-sm" %>
-          </td>
-          <td class="numeric <%= 'text-danger' if payment.amount.to_i.negative? %>"><%= number_with_delimiter(payment.amount.to_i) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <% payments.each do |payment| %>
+    <% details = payment.zengin_payment_details.sort_by { |detail| [detail.payment_type_other? ? 1 : 0, detail.payment_type_before_type_cast.to_i, detail.source_label.to_s, detail.id] } %>
+    <% daily_wage_details = details.select(&:payment_type_daily_wage?) %>
+    <% daily_work_results = WorkResult.includes(:worker).where(id: daily_wage_details.filter_map(&:source_id)).index_by(&:id) %>
+    <% daily_detail_rows = daily_wage_details.group_by { |detail| daily_work_results[detail.source_id]&.worker_id || detail.source_id || detail.id }.map do |_worker_key, grouped_details| %>
+      <% work_result = daily_work_results[grouped_details.first.source_id] %>
+      <% worker_name = work_result&.worker&.name || grouped_details.first.source_label.presence || "-" %>
+      <% {
+        payment_type: "daily_wage",
+        source_label: worker_name,
+        source_kind: grouped_details.map(&:source_kind).uniq.one? ? grouped_details.first.source_kind : "generated",
+        original_amount: grouped_details.sum { |detail| detail.original_amount.to_i },
+        amount: grouped_details.sum { |detail| detail.amount.to_i },
+        remarks: grouped_details.filter_map(&:remarks).reject(&:blank?).uniq.join("、"),
+        modified: grouped_details.any?(&:amount_modified?)
+      } %>
+    <% end %>
+    <% detail_rows = (daily_detail_rows + details.reject(&:payment_type_daily_wage?).map do |detail| %>
+      <% {
+        payment_type: detail.payment_type,
+        source_label: detail.source_label.presence || "-",
+        source_kind: detail.source_kind,
+        original_amount: detail.original_amount.to_i,
+        amount: detail.amount.to_i,
+        remarks: detail.remarks.presence || "-",
+        modified: detail.amount_modified?
+      } %>
+    <% end).sort_by { |row| [row[:payment_type] == "other" ? 1 : 0, ZenginPaymentDetail.payment_types.fetch(row[:payment_type], 99), row[:source_label].to_s] } %>
+    <% manual_other = details.detect { |detail| detail.source_kind_manual? && detail.payment_type_other? && detail.source_label == "その他" } %>
+    <% manual_amount = manual_other&.amount %>
+    <% modified_details_count = details.count(&:amount_modified?) %>
+
+    <section class="mb-4 border-top pt-3">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <div>
+          <h2 class="h5 mb-1"><%= payment.worker.home.name %> / <%= payment.worker.name %></h2>
+          <div class="text-muted small">会計ID <%= payment.worker.home.finance_order.presence || '-' %></div>
+        </div>
+        <div class="text-end">
+          <div class="fw-bold <%= 'text-danger' if payment.amount.to_i.negative? %>"><%= number_with_delimiter(payment.amount.to_i) %> 円</div>
+          <% if modified_details_count.positive? %>
+            <span class="badge bg-warning text-dark">変更 <%= modified_details_count %>件</span>
+          <% end %>
+        </div>
+      </div>
+
+      <table class="table table-sm align-middle">
+        <thead>
+          <tr>
+            <th>種別</th>
+            <th>項目</th>
+            <th>作成</th>
+            <th class="numeric">元金額</th>
+            <th class="numeric">支払金額</th>
+            <th>備考</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if detail_rows.empty? %>
+            <tr>
+              <td colspan="7">明細がありません。</td>
+            </tr>
+          <% else %>
+            <% detail_rows.each do |detail_row| %>
+              <tr class="<%= 'table-warning' if detail_row[:modified] %>">
+                <td><%= payment_type_labels.fetch(detail_row[:payment_type], detail_row[:payment_type]) %></td>
+                <td><%= detail_row[:source_label] %></td>
+                <td><%= source_kind_labels.fetch(detail_row[:source_kind], detail_row[:source_kind]) %></td>
+                <td class="numeric"><%= number_with_delimiter(detail_row[:original_amount]) %></td>
+                <td class="numeric <%= 'text-danger' if detail_row[:amount].negative? %>"><%= number_with_delimiter(detail_row[:amount]) %></td>
+                <td><%= detail_row[:remarks].presence || '-' %></td>
+                <td>
+                  <div class="btn-group btn-group-sm" role="group">
+                    <%= button_tag "支払先変更", type: :button, class: "btn btn-outline-primary", disabled: true %>
+                    <%= button_tag "詳細", type: :button, class: "btn btn-outline-secondary", disabled: true %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </section>
+  <% end %>
 
   <div class="btn-toolbar">
-    <div class="btn-group mr-2">
-      <%= submit_tag "更新", class: "btn btn-primary" %>
-    </div>
     <div class="btn-group mr-2">
       <%= link_to "戻る", fix_zengin_payment_path(@fix), class: "btn btn-outline-dark" %>
     </div>

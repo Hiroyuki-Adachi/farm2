@@ -4,11 +4,23 @@ class ZenginPaymentsController < ApplicationController
   before_action :set_fixed_at
   before_action :set_fix
   before_action :set_batch
-  before_action :require_batch, only: [:edit, :update, :land_fee_import, :seedling_fee_import, :drying_adjustment_fee_import, :export]
+  before_action :require_batch,
+                only: [:edit, :update, :land_fee_import, :seedling_fee_import, :drying_adjustment_fee_import, :export]
 
   def show; end
 
   def edit; end
+
+  def create
+    ZenginPaymentBatch.rebuild_for_fix!(
+      organization: current_organization,
+      term: current_term,
+      fixed_at: @fixed_at,
+      created_by: current_user.worker_id
+    )
+
+    redirect_to fix_zengin_payment_path(@fix), notice: "全銀データを作成しました。"
+  end
 
   def update
     @batch.update_manual_other_details!(zengin_payment_params)
@@ -40,12 +52,14 @@ class ZenginPaymentsController < ApplicationController
 
   def seedling_fee_import
     result = @batch.import_seedling_fee!(term: current_term, seedling_price: current_system.seedling_price)
-    redirect_to fix_zengin_payment_path(@fix), notice: "育苗費を取り込みました。#{result[:count]}件、#{helpers.number_with_delimiter(result[:amount])}円。"
+    redirect_to fix_zengin_payment_path(@fix),
+                notice: "育苗費を取り込みました。#{result[:count]}件、#{helpers.number_with_delimiter(result[:amount])}円。"
   end
 
   def drying_adjustment_fee_import
     result = @batch.import_drying_adjustment_fee!(term: current_term, system: current_system)
-    redirect_to fix_zengin_payment_path(@fix), notice: "乾燥調整費を取り込みました。#{result[:count]}件、#{helpers.number_with_delimiter(result[:amount])}円。"
+    redirect_to fix_zengin_payment_path(@fix),
+                notice: "乾燥調整費を取り込みました。#{result[:count]}件、#{helpers.number_with_delimiter(result[:amount])}円。"
   end
 
   def export
@@ -58,17 +72,6 @@ class ZenginPaymentsController < ApplicationController
     redirect_to fix_zengin_payment_path(@fix), alert: "振込指定日を入力してください。"
   rescue ZenginPaymentBatch::ExportError => e
     redirect_to fix_zengin_payment_path(@fix), alert: e.message
-  end
-
-  def create
-    ZenginPaymentBatch.rebuild_for_fix!(
-      organization: current_organization,
-      term: current_term,
-      fixed_at: @fixed_at,
-      created_by: current_user.worker_id
-    )
-
-    redirect_to fix_zengin_payment_path(@fix), notice: "全銀データを作成しました。"
   end
 
   private
@@ -84,7 +87,7 @@ class ZenginPaymentsController < ApplicationController
   def set_batch
     @batch = ZenginPaymentBatch
       .for_organization(current_organization)
-      .includes(zengin_payments: [{worker: :home}, :zengin_payment_details])
+      .includes(zengin_payments: [{ worker: :home }, :zengin_payment_details])
       .find_by(term: current_term, fixed_at: @fixed_at)
   end
 
@@ -96,5 +99,9 @@ class ZenginPaymentsController < ApplicationController
 
   def zengin_payment_params
     params.fetch(:zengin_payments, ActionController::Parameters.new).permit!
+  end
+
+  def menu_name
+    :fixes
   end
 end

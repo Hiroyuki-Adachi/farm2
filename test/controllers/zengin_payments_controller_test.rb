@@ -50,7 +50,20 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", /全銀データ保守/
-    assert_select "input[name*='manual_other_amount']"
+    assert_select "h2", /.+ \/ .+/
+    assert_select "th", text: "元金額"
+    assert_select "th", text: "支払金額"
+    assert_select "button", text: "支払先変更"
+    assert_select "button", text: "詳細"
+    assert_select "input[type=submit]", { value: "更新", count: 0 }
+    assert_select "button", { text: "分割", count: 0 }
+
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    daily_wage_detail = batch.zengin_payment_details.find_by!(payment_type: :daily_wage)
+    daily_wage_worker = WorkResult.find(daily_wage_detail.source_id).worker
+    assert_select "td", text: daily_wage_worker.name
+
+    assert_select "input[name*='manual_other_amount']", count: 0
   end
 
   test "全銀データ保守でその他手入力を更新" do
