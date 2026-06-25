@@ -71,13 +71,11 @@
 
   <% payment_columns = [
     ["daily_wage", "日当"],
-    ["land_management_fee", "農地管理料"],
-    ["tenant_land_management_fee", "小作地管理料"],
     ["machine_rental_fee", "機械賃借料"],
     ["seedling_fee", "育苗費"],
-    ["drying_adjustment_fee", "乾燥調整費"],
-    ["other", "その他"]
+    ["drying_adjustment_fee", "乾燥調整費"]
   ] %>
+  <% other_payment_column = ["other", "その他"] %>
   <% payments = @batch.zengin_payments.select { |payment| payment.worker.home.member_flag? }.sort_by { |payment| [payment.worker.home.finance_order || 9999, payment.worker.home.id, payment.worker.display_order || 9999, payment.worker.id] } %>
   <% imported_labels = payments.flat_map { |payment| payment.zengin_payment_details.select(&:source_kind_imported?).map(&:source_label) }.compact.uniq %>
   <% payment_totals = Hash.new(0) %>
@@ -96,6 +94,7 @@
         <% imported_labels.each do |label| %>
           <th class="numeric"><%= label %></th>
         <% end %>
+        <th class="numeric"><%= other_payment_column.last %></th>
         <th class="numeric">合計</th>
       </tr>
     </thead>
@@ -118,6 +117,9 @@
             <% imported_totals[label] += amount %>
             <td class="numeric <%= 'text-danger' if amount.negative? %>"><%= number_with_delimiter(amount) %></td>
           <% end %>
+          <% other_amount = details.fetch(other_payment_column.first, []).reject(&:source_kind_imported?).sum(&:amount).to_i %>
+          <% payment_totals[other_payment_column.first] += other_amount %>
+          <td class="numeric <%= 'text-danger' if other_amount.negative? %>"><%= number_with_delimiter(other_amount) %></td>
           <td class="numeric <%= 'text-danger' if row_total.negative? %>"><%= number_with_delimiter(row_total) %></td>
         </tr>
       <% end %>
@@ -133,6 +135,8 @@
           <% total_amount = imported_totals[label] %>
           <th class="numeric <%= 'text-danger' if total_amount.negative? %>"><%= number_with_delimiter(total_amount) %></th>
         <% end %>
+        <% other_total_amount = payment_totals[other_payment_column.first] %>
+        <th class="numeric <%= 'text-danger' if other_total_amount.negative? %>"><%= number_with_delimiter(other_total_amount) %></th>
         <th class="numeric <%= 'text-danger' if grand_total.negative? %>"><%= number_with_delimiter(grand_total) %></th>
       </tr>
     </tfoot>
@@ -149,8 +153,6 @@
         <th>世帯</th>
         <th>支払先</th>
         <th class="numeric">日当</th>
-        <th class="numeric">農地管理料</th>
-        <th class="numeric">小作地管理料</th>
         <th class="numeric">機械賃借料</th>
         <th class="numeric">育苗費</th>
         <th class="numeric">乾燥調整費</th>
@@ -160,7 +162,7 @@
     </thead>
     <tbody>
       <tr>
-        <td colspan="11">上のボタンから全銀データを作成してください。</td>
+        <td colspan="8">上のボタンから全銀データを作成してください。</td>
       </tr>
     </tbody>
   </table>

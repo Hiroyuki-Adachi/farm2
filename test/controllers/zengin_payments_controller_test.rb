@@ -121,6 +121,49 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal unchanged_updated_at.to_i, unchanged.updated_at.to_i
   end
 
+  test "全銀データ再作成直後は農地管理料と小作地管理料を固定列に表示しない" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = batch.zengin_payments.first
+    payment.zengin_payment_details.create!(
+      payment_type: :other,
+      source_kind: :imported,
+      amount: 100,
+      original_amount: 100,
+      source_label: "農地管理料"
+    )
+    payment.recalculate_amount!
+
+    post fix_zengin_payment_path(@fix)
+    get fix_zengin_payment_path(@fix)
+
+    assert_response :success
+    assert_select "th", { text: "農地管理料", count: 0 }
+    assert_select "th", { text: "小作地管理料", count: 0 }
+  end
+
+  test "全銀データ画面は固定列、取込列、その他の順に表示" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = batch.zengin_payments.first
+    payment.zengin_payment_details.create!(
+      payment_type: :other,
+      source_kind: :imported,
+      amount: 100,
+      original_amount: 100,
+      source_label: "農地管理料"
+    )
+    payment.recalculate_amount!
+
+    get fix_zengin_payment_path(@fix)
+
+    assert_response :success
+    labels = css_select("table thead th").map { |node| node.text.strip }
+    assert_operator labels.index("乾燥調整費"), :<, labels.index("農地管理料")
+    assert_operator labels.index("農地管理料"), :<, labels.index("その他")
+    assert_operator labels.index("その他"), :<, labels.index("合計")
+  end
+
   test "農地管理料CSVひな形ダウンロード" do
     get land_fee_template_fix_zengin_payment_path(@fix)
 
