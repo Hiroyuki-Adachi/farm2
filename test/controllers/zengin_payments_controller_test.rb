@@ -35,6 +35,7 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_operator batch.zengin_payments.count, :>, 0
     assert batch.zengin_payments.all? { |payment| payment.worker.home.member_flag? }
     assert_operator batch.zengin_payment_details.where(payment_type: :daily_wage).count, :>, 0
+    assert batch.zengin_payment_details.select(&:source_kind_generated?).all? { |detail| detail.original_amount.to_i == detail.amount.to_i }
 
     assert_no_difference -> { ZenginPaymentBatch.count } do
       post fix_zengin_payment_path(@fix)
@@ -74,6 +75,8 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     detail = payment.zengin_payment_details.find_by(source_kind: :manual, payment_type: :other, source_label: "その他")
     assert_not_nil detail
     assert_equal 1234, detail.amount.to_i
+    assert_equal 0, detail.original_amount.to_i
+    assert detail.amount_modified?
     assert_equal "端数調整", detail.remarks
     assert_equal original_amount + 1234, payment.amount.to_i
 
@@ -145,8 +148,13 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     batch.reload
     payment = batch.zengin_payments.find_by(worker: home.holder)
     assert_not_nil payment
-    assert_equal 1500, payment.zengin_payment_details.where(source_kind: :imported, payment_type: :other, source_label: "農地管理料").sum(:amount).to_i
-    assert_equal(-200, payment.zengin_payment_details.where(source_kind: :imported, payment_type: :other, source_label: "調整金").sum(:amount).to_i)
+    land_fee_detail = payment.zengin_payment_details.find_by!(source_kind: :imported, payment_type: :other, source_label: "農地管理料")
+    adjustment_detail = payment.zengin_payment_details.find_by!(source_kind: :imported, payment_type: :other, source_label: "調整金")
+    assert_equal 1500, land_fee_detail.amount.to_i
+    assert_equal 1500, land_fee_detail.original_amount.to_i
+    assert_not land_fee_detail.amount_modified?
+    assert_equal(-200, adjustment_detail.amount.to_i)
+    assert_equal(-200, adjustment_detail.original_amount.to_i)
   ensure
     file&.unlink
   end

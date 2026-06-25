@@ -191,7 +191,8 @@ class ZenginPaymentBatch < ApplicationRecord
         detail ||= payment.zengin_payment_details.build(
           payment_type: :other,
           source_kind: :manual,
-          source_label: "その他"
+          source_label: "その他",
+          original_amount: 0
         )
         next if detail.amount.to_i == amount && detail.remarks.to_s == remarks.to_s
 
@@ -416,6 +417,7 @@ end
           payment_type: payment_type_value,
           source_kind: :imported,
           amount: amount,
+          original_amount: amount,
           source_type: self.class.name,
           source_id: id,
           source_label: header
@@ -456,6 +458,7 @@ end
         payment_type: :seedling_fee,
         source_kind: :generated,
         amount: amount,
+        original_amount: amount,
         source_type: seedling_home.class.name,
         source_id: seedling_home.id,
         source_label: "育苗費 #{seedling_home.work_type_name}"
@@ -500,6 +503,7 @@ end
           payment_type: :drying_adjustment_fee,
           source_kind: :generated,
           amount: amount,
+          original_amount: amount,
           source_type: drying.class.name,
           source_id: drying.id,
           source_label: "乾燥調整費 #{drying.work_type&.name} #{drying.carried_on.strftime('%Y-%m-%d')}"
@@ -588,6 +592,7 @@ end
         payment_type: payment_type,
         source_kind: :generated,
         amount: amount,
+        original_amount: amount,
         source_type: source.class.name,
         source_id: source.id,
         source_label: source_label
