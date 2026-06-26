@@ -4,15 +4,12 @@
 <% create_confirm = @batch ? "作成済みの全銀データを削除して再作成します。手入力・取込済みの明細も削除されます。よろしいですか？" : "この確定分の全銀データを作成します。よろしいですか？" %>
 <div class="btn-toolbar mb-3">
   <div class="btn-group mr-2">
-    <%= button_to create_label, fix_zengin_payment_path(@fix), method: :post, class: "btn btn-primary", form: {data: {turbo_confirm: create_confirm}} %>
+    <%= button_to create_label, fix_zengin_payment_path(@fix), method: :post, class: "btn btn-warning", form: {data: {turbo_confirm: create_confirm}} %>
   </div>
   <div class="btn-group mr-2">
     <%= link_to "CSVひな形", land_fee_template_fix_zengin_payment_path(@fix), class: "btn btn-outline-success" %>
   </div>
   <% if @batch %>
-    <div class="btn-group mr-2">
-      <%= link_to "保守", edit_fix_zengin_payment_path(@fix), class: "btn btn-outline-primary" %>
-    </div>
     <div class="btn-group mr-2">
       <%= button_to "育苗費取込", seedling_fee_import_fix_zengin_payment_path(@fix), method: :post, class: "btn btn-outline-primary", form: {data: {turbo_confirm: "育苗費を取り込みます。既存の育苗費取込分は削除して入れ直します。よろしいですか？"}} %>
     </div>
@@ -169,6 +166,11 @@
 <% end %>
 
 <div class="btn-toolbar">
+  <% if @batch %>
+    <div class="btn-group mr-2">
+      <%= link_to "保守", edit_fix_zengin_payment_path(@fix), class: "btn btn-success" %>
+    </div>
+  <% end %>
   <div class="btn-group mr-2">
     <%= link_to '戻る', fixes_path, class: "btn btn-outline-dark" %>
   </div>
