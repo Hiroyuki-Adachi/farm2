@@ -5,7 +5,7 @@ class ZenginPaymentsController < ApplicationController
   before_action :set_fix
   before_action :set_batch
   before_action :require_batch,
-                only: [:edit, :update, :land_fee_import, :seedling_fee_import, :drying_adjustment_fee_import, :export]
+                only: [:edit, :update, :payee_change, :update_payee, :land_fee_import, :seedling_fee_import, :drying_adjustment_fee_import, :export]
 
   def show; end
 
@@ -27,6 +27,23 @@ class ZenginPaymentsController < ApplicationController
     redirect_to fix_zengin_payment_path(@fix), notice: "全銀データ保守を更新しました。"
   rescue ActiveRecord::RecordInvalid => e
     redirect_to edit_fix_zengin_payment_path(@fix), alert: "全銀データ保守を更新できませんでした。#{e.message}"
+  end
+
+  def payee_change
+    prepare_payee_change!
+  rescue ActiveRecord::RecordNotFound, ArgumentError => e
+    redirect_to edit_fix_zengin_payment_path(@fix), alert: e.message
+  end
+
+  def update_payee
+    prepare_payee_change!
+    target_worker = @returning ? @standard_worker : find_payee_candidate!(params[:worker_id])
+    @batch.move_details_to_worker!(@target_details, target_worker)
+    redirect_to edit_fix_zengin_payment_path(@fix), notice: "支払先を変更しました。"
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to edit_fix_zengin_payment_path(@fix), alert: "支払先を変更できませんでした。#{e.message}"
+  rescue ActiveRecord::RecordNotFound, ArgumentError => e
+    redirect_to edit_fix_zengin_payment_path(@fix), alert: e.message
   end
 
   def land_fee_template
@@ -95,6 +112,39 @@ class ZenginPaymentsController < ApplicationController
     return if @batch
 
     redirect_to fix_zengin_payment_path(@fix), alert: "先に全銀データを作成してください。"
+  end
+
+  def prepare_payee_change!
+    detail_ids = Array(params[:detail_ids]).reject(&:blank?)
+    raise ArgumentError, "支払先変更する明細を選択してください。" if detail_ids.blank?
+
+    @target_details = @batch.zengin_payment_details
+      .includes(zengin_payment: { worker: { home: :holder } })
+      .where(id: detail_ids)
+      .to_a
+    raise ActiveRecord::RecordNotFound, "支払先変更する明細が見つかりません。" unless @target_details.size == detail_ids.size
+
+    payment_ids = @target_details.map(&:zengin_payment_id).uniq
+    raise ArgumentError, "複数の支払先にまたがる明細は一度に変更できません。" unless payment_ids.one?
+
+    @source_payment = @target_details.first.zengin_payment
+    @home = @source_payment.worker.home
+    @standard_worker = @home.holder
+    raise ArgumentError, "標準支払先が設定されていません。" unless @standard_worker
+
+    @returning = @source_payment.worker_id != @standard_worker.id
+    @candidate_workers = payee_candidate_workers(@home).reject { |worker| worker.id == @source_payment.worker_id }
+  end
+
+  def payee_candidate_workers(home)
+    home.workers.kept.select { |worker| !worker.account_incomplete? }
+  end
+
+  def find_payee_candidate!(worker_id)
+    worker = @candidate_workers.detect { |candidate| candidate.id == worker_id.to_i }
+    raise ActiveRecord::RecordNotFound, "支払先候補が見つかりません。" unless worker
+
+    worker
   end
 
   def zengin_payment_params

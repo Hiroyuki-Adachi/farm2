@@ -1,0 +1,51 @@
+<%= turbo_frame_tag "zengin_payment_modal" do %>
+  <div class="modal fade" id="zengin-payment-payee-modal" tabindex="-1" aria-hidden="true" data-controller="zengin-payment-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><%= @returning ? "支払先を戻す" : "支払先変更" %></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+        </div>
+
+        <%= form_with url: payee_change_fix_zengin_payment_path(@fix), method: :patch, data: { turbo_frame: "_top" } do %>
+          <% @target_details.each do |detail| %>
+            <%= hidden_field_tag "detail_ids[]", detail.id %>
+          <% end %>
+
+          <div class="modal-body">
+            <dl class="row mb-3">
+              <dt class="col-sm-4">世帯</dt>
+              <dd class="col-sm-8"><%= @home.name %></dd>
+              <dt class="col-sm-4">現在の支払先</dt>
+              <dd class="col-sm-8"><%= @source_payment.worker.name %></dd>
+              <dt class="col-sm-4">対象金額</dt>
+              <dd class="col-sm-8"><%= number_with_delimiter(@target_details.sum { |detail| detail.amount.to_i }) %> 円</dd>
+            </dl>
+
+            <% if @returning %>
+              <p class="mb-0">
+                この明細を標準支払先（<%= @standard_worker.name %>）へ戻します。
+              </p>
+            <% elsif @candidate_workers.present? %>
+              <div class="mb-3">
+                <%= label_tag :worker_id, "変更後の支払先", class: "form-label" %>
+                <%= select_tag :worker_id,
+                      options_from_collection_for_select(@candidate_workers, :id, :name),
+                      class: "form-select" %>
+              </div>
+            <% else %>
+              <div class="alert alert-warning mb-0">
+                同じ世帯に変更可能な口座登録済みの支払先がありません。
+              </div>
+            <% end %>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">キャンセル</button>
+            <%= submit_tag @returning ? "戻す" : "変更", class: "btn btn-primary", disabled: (!@returning && @candidate_workers.blank?) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -195,6 +195,8 @@ resources :statistics, only: [:index] do
 end
 resources :fixes, param: "fixed_at", except: [:edit, :update] do
   resource :zengin_payment, only: [:show, :create, :edit, :update] do
+    get :payee_change
+    patch :payee_change, action: :update_payee
     get :land_fee_template
     post :land_fee_import
     post :seedling_fee_import

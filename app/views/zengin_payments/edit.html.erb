@@ -12,8 +12,7 @@
 } %>
 <% source_kind_labels = { "generated" => "自動", "imported" => "取込", "manual" => "手入力" } %>
 
-<%= form_with url: fix_zengin_payment_path(@fix), method: :patch do %>
-  <% payments.each do |payment| %>
+<% payments.each do |payment| %>
     <% details = payment.zengin_payment_details.sort_by { |detail| [detail.payment_type_other? ? 1 : 0, detail.payment_type_before_type_cast.to_i, detail.source_label.to_s, detail.id] } %>
     <% daily_wage_details = details.select(&:payment_type_daily_wage?) %>
     <% daily_work_results = WorkResult.includes(:worker).where(id: daily_wage_details.filter_map(&:source_id)).index_by(&:id) %>
@@ -27,7 +26,8 @@
         original_amount: grouped_details.sum { |detail| detail.original_amount.to_i },
         amount: grouped_details.sum { |detail| detail.amount.to_i },
         remarks: grouped_details.filter_map(&:remarks).reject(&:blank?).uniq.join("、"),
-        modified: grouped_details.any?(&:amount_modified?)
+        modified: grouped_details.any?(&:amount_modified?),
+        detail_ids: grouped_details.map(&:id)
       } %>
     <% end %>
     <% detail_rows = (daily_detail_rows + details.reject(&:payment_type_daily_wage?).map do |detail| %>
@@ -38,11 +38,24 @@
         original_amount: detail.original_amount.to_i,
         amount: detail.amount.to_i,
         remarks: detail.remarks.presence || "-",
-        modified: detail.amount_modified?
+        modified: detail.amount_modified?,
+        detail_ids: [detail.id]
       } %>
     <% end).sort_by { |row| [row[:payment_type] == "other" ? 1 : 0, ZenginPaymentDetail.payment_types.fetch(row[:payment_type], 99), row[:source_label].to_s] } %>
     <% manual_other = details.detect { |detail| detail.source_kind_manual? && detail.payment_type_other? && detail.source_label == "その他" } %>
-    <% manual_amount = manual_other&.amount %>
+    <% unless manual_other %>
+      <% detail_rows << {
+        payment_type: "other",
+        source_label: "その他",
+        source_kind: "manual",
+        original_amount: 0,
+        amount: 0,
+        remarks: "-",
+        modified: false,
+        detail_ids: [],
+        manual_entry: true
+      } %>
+    <% end %>
     <% modified_details_count = details.count(&:amount_modified?) %>
 
     <section class="mb-4 border-top pt-3">
@@ -59,7 +72,16 @@
         </div>
       </div>
 
-      <table class="table table-sm align-middle">
+      <table class="table table-sm align-middle" style="table-layout: fixed; width: 100%;">
+        <colgroup>
+          <col style="width: 12%;">
+          <col style="width: 22%;">
+          <col style="width: 8%;">
+          <col style="width: 12%;">
+          <col style="width: 12%;">
+          <col style="width: 20%;">
+          <col style="width: 14%;">
+        </colgroup>
         <thead>
           <tr>
             <th>種別</th>
@@ -87,7 +109,14 @@
                 <td><%= detail_row[:remarks].presence || '-' %></td>
                 <td>
                   <div class="btn-group btn-group-sm" role="group">
-                    <%= button_tag "支払先変更", type: :button, class: "btn btn-outline-primary", disabled: true %>
+                    <% unless detail_row[:manual_entry] %>
+                      <% change_label = payment.worker_id == payment.worker.home.worker_id ? "支払先変更" : "戻す" %>
+                      <% change_class = payment.worker_id == payment.worker.home.worker_id ? "btn btn-outline-primary" : "btn btn-outline-warning" %>
+                      <%= link_to change_label,
+                            payee_change_fix_zengin_payment_path(@fix, detail_ids: detail_row[:detail_ids]),
+                            class: change_class,
+                            data: { turbo_frame: "zengin_payment_modal" } %>
+                    <% end %>
                     <%= button_tag "詳細", type: :button, class: "btn btn-outline-secondary", disabled: true %>
                   </div>
                 </td>
@@ -99,9 +128,10 @@
     </section>
   <% end %>
 
-  <div class="btn-toolbar">
+<div class="btn-toolbar">
     <div class="btn-group mr-2">
       <%= link_to "戻る", fix_zengin_payment_path(@fix), class: "btn btn-outline-dark" %>
     </div>
-  </div>
-<% end %>
+</div>
+
+<%= turbo_frame_tag "zengin_payment_modal" %>

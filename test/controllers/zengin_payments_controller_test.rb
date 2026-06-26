@@ -53,7 +53,7 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "h2", /.+ \/ .+/
     assert_select "th", text: "元金額"
     assert_select "th", text: "支払金額"
-    assert_select "button", text: "支払先変更"
+    assert_select "a", text: "支払先変更"
     assert_select "button", text: "詳細"
     assert_select "input[type=submit]", { value: "更新", count: 0 }
     assert_select "button", { text: "分割", count: 0 }
@@ -62,8 +62,66 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     daily_wage_detail = batch.zengin_payment_details.find_by!(payment_type: :daily_wage)
     daily_wage_worker = WorkResult.find(daily_wage_detail.source_id).worker
     assert_select "td", text: daily_wage_worker.name
+    assert_select "td", text: "その他"
 
     assert_select "input[name*='manual_other_amount']", count: 0
+  end
+
+  test "支払先変更モーダルを表示" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = standard_payment_with_details(batch)
+    detail = payment.zengin_payment_details.first
+    target_worker = payee_candidate_for(payment)
+
+    get payee_change_fix_zengin_payment_path(@fix), params: { detail_ids: [detail.id] }
+
+    assert_response :success
+    assert_select "turbo-frame#zengin_payment_modal"
+    assert_select "h5", text: "支払先変更"
+    assert_select "select[name=?]", "worker_id"
+    assert_select "option[value=?]", target_worker.id.to_s
+  end
+
+  test "支払先変更は明細を移動して空になった支払先を削除" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = standard_payment_with_details(batch)
+    target_worker = payee_candidate_for(payment)
+    detail_ids = payment.zengin_payment_details.ids
+    source_payment_id = payment.id
+    original_amount = payment.amount.to_i
+
+    patch payee_change_fix_zengin_payment_path(@fix), params: { detail_ids: detail_ids, worker_id: target_worker.id }
+
+    assert_redirected_to edit_fix_zengin_payment_path(@fix)
+    assert_equal "支払先を変更しました。", flash[:notice]
+    assert_not ZenginPayment.exists?(source_payment_id)
+    target_payment = batch.reload.zengin_payments.find_by!(worker: target_worker)
+    assert_equal original_amount, target_payment.amount.to_i
+    assert_equal detail_ids.sort, target_payment.zengin_payment_details.ids.sort
+  end
+
+  test "標準支払先以外の明細は標準支払先へ戻せる" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = standard_payment_with_details(batch)
+    standard_worker = payment.worker
+    target_worker = payee_candidate_for(payment)
+    detail_ids = payment.zengin_payment_details.ids
+    batch.move_details_to_worker!(payment.zengin_payment_details.to_a, target_worker)
+
+    get payee_change_fix_zengin_payment_path(@fix), params: { detail_ids: detail_ids }
+
+    assert_response :success
+    assert_select "h5", text: "支払先を戻す"
+    assert_select "select[name=?]", "worker_id", count: 0
+
+    patch payee_change_fix_zengin_payment_path(@fix), params: { detail_ids: detail_ids }
+
+    assert_redirected_to edit_fix_zengin_payment_path(@fix)
+    returned_payment = batch.reload.zengin_payments.find_by!(worker: standard_worker)
+    assert_equal detail_ids.sort, returned_payment.zengin_payment_details.ids.sort
   end
 
   test "全銀データ保守でその他手入力を更新" do
@@ -354,4 +412,34 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "a[href=?]", edit_fix_zengin_payment_path(@fix), text: "保守"
   end
+
+  private
+
+  def standard_payment_with_details(batch)
+    batch.zengin_payments
+      .includes(:zengin_payment_details, worker: { home: :holder })
+      .detect { |payment| payment.worker_id == payment.worker.home.worker_id && payment.zengin_payment_details.exists? }
+  end
+
+  def payee_candidate_for(payment)
+    home = payment.worker.home
+    worker = home.workers.where.not(id: payment.worker_id).first || home.workers.create!(
+      organization: @fix.organization,
+      family_name: "試験",
+      first_name: "太郎",
+      family_phonetic: "しけん",
+      first_phonetic: "たろう",
+      display_order: 999,
+      work_flag: true
+    )
+    worker.update!(
+      bank_code: "0001",
+      branch_code: "001",
+      account_type_id: :regular,
+      account_number: "2345678",
+      account_holder_name: "TEST TARO"
+    )
+    worker
+  end
+
 end

@@ -203,6 +203,29 @@ class ZenginPaymentBatch < ApplicationRecord
     end
   end
 
+  def move_details_to_worker!(details, target_worker)
+    details = Array(details).compact
+    return if details.empty?
+
+    transaction do
+      source_payments = details.map(&:zengin_payment).uniq
+      target_payment = self.class.send(:payment_for_worker, self, target_worker)
+
+      details.each do |detail|
+        detail.update!(zengin_payment: target_payment)
+      end
+
+      (source_payments + [target_payment]).uniq.each do |payment|
+        payment.reload
+        if payment.zengin_payment_details.exists?
+          payment.recalculate_amount!
+        else
+          payment.destroy!
+        end
+      end
+    end
+  end
+
 def export_file!(transfer_on:)
   transfer_on = transfer_on.to_date
   errors = zengin_export_errors(transfer_on)
