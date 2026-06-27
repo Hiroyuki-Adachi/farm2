@@ -15,8 +15,6 @@ export default class extends Controller {
   }
 
   disconnect() {
-    if (!this.element.classList.contains("show")) return
-
     this.modal?.dispose()
     document.querySelectorAll(".modal-backdrop").forEach((backdrop) => backdrop.remove())
     document.body.classList.remove("modal-open")
