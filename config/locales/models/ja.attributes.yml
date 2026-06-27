@@ -128,6 +128,7 @@ ja:
         position_id: "役職"
         broccoli_mark: "ブロッコリ記号"
         office_role: "事務の役割"
+        work_flag: "作業"
         bank_code: "銀行コード"
         branch_code: "支店コード"
         account_type_id: "口座種別"

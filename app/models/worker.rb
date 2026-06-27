@@ -43,6 +43,7 @@ require 'securerandom'
 class Worker < ApplicationRecord
   include Discard::Model
   include Enums::OfficeRole
+  include ZenginAccount
 
   self.discard_column = :deleted_at
 
@@ -66,6 +67,7 @@ class Worker < ApplicationRecord
   scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
 
   scope :taskable, -> { kept.where.not(office_role: :none) }
+  scope :workable, -> { kept.where(work_flag: true) }
   scope :usual_order, -> { kept.includes(home: :section).order('sections.display_order, homes.display_order, workers.display_order') }
   scope :usual, -> { kept.where(homes: { company_flag: false }).usual_order }
   scope :company, -> { kept.joins(:home).eager_load(:home).where(homes: { company_flag: true }).order("workers.display_order") }
@@ -130,6 +132,10 @@ class Worker < ApplicationRecord
 
   def position_name
     I18n.t("activerecord.enums.worker.position_ids.#{position_id}")
+  end
+
+  def account_incomplete?
+    bank_account_incomplete? || account_holder_name.blank?
   end
 
   private

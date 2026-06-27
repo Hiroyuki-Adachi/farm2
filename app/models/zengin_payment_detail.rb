@@ -4,6 +4,7 @@
 #
 #  id                            :bigint           not null, primary key
 #  amount(金額)                  :decimal(10, )    default(0), not null
+#  original_amount(元金額)       :decimal(10, )    default(0), not null
 #  payment_type(支払種別)        :integer          not null
 #  remarks(備考)                 :string(120)
 #  source_kind(作成種別)         :integer          default("generated"), not null
@@ -40,6 +41,11 @@ class ZenginPaymentDetail < ApplicationRecord
   validates :payment_type, presence: true
   validates :source_kind, presence: true
   validates :amount, presence: true
+  validates :original_amount, presence: true
   validates :source_label, length: { maximum: 80 }
   validates :remarks, length: { maximum: 120 }
+
+  def amount_modified?
+    amount.to_i != original_amount.to_i
+  end
 end

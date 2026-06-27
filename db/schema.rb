@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_20_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_24_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -1342,6 +1342,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_20_090000) do
   create_table "zengin_payment_details", comment: "全銀支払明細", force: :cascade do |t|
     t.decimal "amount", precision: 10, default: "0", null: false, comment: "金額"
     t.datetime "created_at", null: false
+    t.decimal "original_amount", precision: 10, default: "0", null: false, comment: "元金額"
     t.integer "payment_type", limit: 2, null: false, comment: "支払種別"
     t.string "remarks", limit: 120, comment: "備考"
     t.bigint "source_id", comment: "元データID"
