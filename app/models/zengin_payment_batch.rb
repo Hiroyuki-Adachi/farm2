@@ -469,7 +469,9 @@ end
   end
 
   def self.parse_manual_amount(value)
-    parse_land_fee_amount(value)
+    return 0 if value.to_s.strip.blank?
+
+    parse_detail_amount!(value)
   end
 
   def self.parse_detail_amount!(value)

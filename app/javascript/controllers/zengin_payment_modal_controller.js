@@ -8,6 +8,7 @@ export default class extends Controller {
     this.onHidden = () => {
       const frame = this.element.closest("turbo-frame")
       if (frame) frame.innerHTML = ""
+      this.cleanup()
     }
 
     this.element.addEventListener("hidden.bs.modal", this.onHidden, { once: true })
@@ -15,9 +16,12 @@ export default class extends Controller {
   }
 
   disconnect() {
-    if (!this.element.classList.contains("show")) return
-
+    this.element.removeEventListener("hidden.bs.modal", this.onHidden)
     this.modal?.dispose()
+    this.cleanup()
+  }
+
+  cleanup() {
     document.querySelectorAll(".modal-backdrop").forEach((backdrop) => backdrop.remove())
     document.body.classList.remove("modal-open")
     document.body.style.removeProperty("padding-right")

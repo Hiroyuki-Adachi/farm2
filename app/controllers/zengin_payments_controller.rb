@@ -9,7 +9,14 @@ class ZenginPaymentsController < ApplicationController
 
   def show; end
 
-  def edit; end
+  def edit
+    daily_work_result_ids = @batch.zengin_payments.flat_map do |payment|
+      payment.zengin_payment_details.filter_map do |detail|
+        detail.source_id if detail.payment_type_daily_wage?
+      end
+    end
+    @daily_work_results = WorkResult.includes(:worker).where(id: daily_work_result_ids).index_by(&:id)
+  end
 
   def create
     ZenginPaymentBatch.rebuild_for_fix!(
@@ -25,7 +32,7 @@ class ZenginPaymentsController < ApplicationController
   def update
     @batch.update_manual_other_details!(zengin_payment_params)
     redirect_to fix_zengin_payment_path(@fix), notice: "全銀データ保守を更新しました。"
-  rescue ActiveRecord::RecordInvalid => e
+  rescue ActiveRecord::RecordInvalid, ArgumentError => e
     redirect_to edit_fix_zengin_payment_path(@fix), alert: "全銀データ保守を更新できませんでした。#{e.message}"
   end
 

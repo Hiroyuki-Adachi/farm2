@@ -67,6 +67,22 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[name*='manual_other_amount']", count: 0
   end
 
+  test "全銀データ保守画面は日当元データを一括取得" do
+    post fix_zengin_payment_path(@fix)
+    work_result_queries = []
+    subscriber = ActiveSupport::Notifications.subscribe("sql.active_record") do |_name, _started, _finished, _unique_id, payload|
+      sql = payload[:sql]
+      work_result_queries << sql if sql.match?(/FROM "work_results"/) && payload[:name] != "SCHEMA"
+    end
+
+    get edit_fix_zengin_payment_path(@fix)
+
+    assert_response :success
+    assert_equal 1, work_result_queries.size
+  ensure
+    ActiveSupport::Notifications.unsubscribe(subscriber) if subscriber
+  end
+
   test "明細詳細モーダルを表示" do
     post fix_zengin_payment_path(@fix)
     batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
@@ -316,6 +332,38 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_nil payment.reload.zengin_payment_details.find_by(source_kind: :manual, payment_type: :other, source_label: "その他")
     assert_equal original_amount, payment.amount.to_i
+  end
+
+  test "その他の不正な手入力金額で既存明細を削除しない" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = batch.zengin_payments.includes(:zengin_payment_details).first
+    detail = payment.zengin_payment_details.create!(
+      payment_type: :other,
+      source_kind: :manual,
+      source_label: "その他",
+      amount: 123,
+      original_amount: 0,
+      remarks: "既存"
+    )
+    payment.recalculate_amount!
+    payment_amount = payment.amount.to_i
+
+    assert_no_difference -> { ZenginPaymentDetail.count } do
+      patch fix_zengin_payment_path(@fix), params: {
+        zengin_payments: {
+          payment.id => {
+            manual_other_amount: "abc",
+            manual_other_remarks: ""
+          }
+        }
+      }
+    end
+
+    assert_redirected_to edit_fix_zengin_payment_path(@fix)
+    assert_match(/金額は整数で入力してください/, flash[:alert])
+    assert_equal 123, detail.reload.amount.to_i
+    assert_equal payment_amount, payment.reload.amount.to_i
   end
 
   test "全銀データ保守は未変更行を更新しない" do
