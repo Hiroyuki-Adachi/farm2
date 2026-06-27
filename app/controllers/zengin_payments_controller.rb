@@ -25,7 +25,7 @@ class ZenginPaymentsController < ApplicationController
   def update
     @batch.update_manual_other_details!(zengin_payment_params)
     redirect_to fix_zengin_payment_path(@fix), notice: "全銀データ保守を更新しました。"
-  rescue ActiveRecord::RecordInvalid => e
+  rescue ActiveRecord::RecordInvalid, ArgumentError => e
     redirect_to edit_fix_zengin_payment_path(@fix), alert: "全銀データ保守を更新できませんでした。#{e.message}"
   end
 
