@@ -469,7 +469,12 @@ end
   end
 
   def self.parse_manual_amount(value)
-    parse_land_fee_amount(value)
+    text = value.to_s.strip.delete(",")
+    return 0 if text.blank?
+
+    Integer(text, 10)
+  rescue ArgumentError
+    raise ArgumentError, "金額は整数で入力してください。"
   end
 
   def self.parse_detail_amount!(value)
