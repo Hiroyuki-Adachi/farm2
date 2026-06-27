@@ -203,6 +203,55 @@ class ZenginPaymentBatch < ApplicationRecord
     end
   end
 
+  def update_detail_amounts!(payment:, details:, detail_attributes:)
+    details = Array(details)
+
+    transaction do
+      if details.empty?
+        attributes = detail_attributes["new"]
+        raise ArgumentError, "金額を入力してください。" unless attributes
+
+        amount = self.class.parse_detail_amount!(attributes["amount"])
+        remarks = attributes["remarks"].to_s.strip.presence
+        manual_other_exists = payment.zengin_payment_details.exists?(
+          payment_type: :other,
+          source_kind: :manual,
+          source_label: "その他"
+        )
+        raise ArgumentError, "その他はすでに登録されています。画面を再読み込みしてください。" if manual_other_exists
+        raise ArgumentError, "その他の金額は0以外を入力してください。" if amount.zero?
+        raise ArgumentError, "変更理由・備考を入力してください。" if remarks.blank?
+
+        payment.zengin_payment_details.create!(
+          payment_type: :other,
+          source_kind: :manual,
+          source_label: "その他",
+          original_amount: 0,
+          amount: amount,
+          remarks: remarks
+        )
+        payment.recalculate_amount!
+        next
+      end
+
+      amount_changed = false
+      details.each do |detail|
+        attributes = detail_attributes[detail.id.to_s]
+        raise ArgumentError, "明細の入力内容が不足しています。" unless attributes
+
+        amount = self.class.parse_detail_amount!(attributes["amount"])
+        remarks = attributes["remarks"].to_s.strip.presence
+        changing_amount = detail.amount.to_i != amount
+        raise ArgumentError, "変更理由・備考を入力してください。" if changing_amount && remarks.blank?
+        next unless changing_amount || detail.remarks.to_s != remarks.to_s
+
+        detail.update!(amount: amount, remarks: remarks)
+        amount_changed ||= changing_amount
+      end
+      payment.recalculate_amount! if amount_changed
+    end
+  end
+
   def move_details_to_worker!(details, target_worker)
     details = Array(details).compact
     return if details.empty?
@@ -409,6 +458,15 @@ end
 
   def self.parse_manual_amount(value)
     parse_land_fee_amount(value)
+  end
+
+  def self.parse_detail_amount!(value)
+    text = value.to_s.strip.delete(",")
+    raise ArgumentError, "金額を入力してください。" if text.blank?
+
+    Integer(text, 10)
+  rescue ArgumentError
+    raise ArgumentError, text.blank? ? "金額を入力してください。" : "金額は整数で入力してください。"
   end
 
   def self.import_error(batch, message)

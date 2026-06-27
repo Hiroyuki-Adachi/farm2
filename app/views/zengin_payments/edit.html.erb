@@ -117,7 +117,15 @@
                             class: change_class,
                             data: { turbo_frame: "zengin_payment_modal" } %>
                     <% end %>
-                    <%= button_tag "詳細", type: :button, class: "btn btn-outline-secondary", disabled: true %>
+                    <%= link_to "詳細",
+                          detail_fix_zengin_payment_path(
+                            @fix,
+                            payment_id: payment.id,
+                            detail_ids: detail_row[:detail_ids],
+                            manual_entry: detail_row[:manual_entry]
+                          ),
+                          class: "btn btn-outline-secondary",
+                          data: { turbo_frame: "zengin_payment_modal" } %>
                   </div>
                 </td>
               </tr>

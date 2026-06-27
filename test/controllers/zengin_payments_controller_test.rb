@@ -54,7 +54,7 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "th", text: "元金額"
     assert_select "th", text: "支払金額"
     assert_select "a", text: "支払先変更"
-    assert_select "button", text: "詳細"
+    assert_select "a", text: "詳細"
     assert_select "input[type=submit]", { value: "更新", count: 0 }
     assert_select "button", { text: "分割", count: 0 }
 
@@ -65,6 +65,120 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "td", text: "その他"
 
     assert_select "input[name*='manual_other_amount']", count: 0
+  end
+
+  test "明細詳細モーダルを表示" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = standard_payment_with_details(batch)
+    details = payment.zengin_payment_details.where(payment_type: :daily_wage).to_a
+    details = [payment.zengin_payment_details.first] if details.blank?
+    get detail_fix_zengin_payment_path(@fix), params: { payment_id: payment.id, detail_ids: details.map(&:id) }
+
+    assert_response :success
+    assert_select "turbo-frame#zengin_payment_modal"
+    assert_select "h5", text: "明細詳細"
+    assert_select "dd", text: payment.worker.home.name
+    assert_select "dd", text: payment.worker.name
+    assert_select "tbody tr", count: details.size
+    assert_select "#zengin-payment-detail-modal form", count: 0
+  end
+
+  test "未登録のその他も明細詳細モーダルを表示" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = standard_payment_with_details(batch)
+
+    get detail_fix_zengin_payment_path(@fix), params: { payment_id: payment.id, manual_entry: true }
+
+    assert_response :success
+    assert_select "h5", text: "明細詳細"
+    assert_select ".alert", text: /その他の明細は登録されていません/
+  end
+
+  test "金額変更モーダルを表示" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = standard_payment_with_details(batch)
+    detail = payment.zengin_payment_details.first
+
+    get amount_change_fix_zengin_payment_path(@fix), params: { payment_id: payment.id, detail_ids: [detail.id] }
+
+    assert_response :success
+    assert_select "h5", text: "金額変更"
+    assert_select ".alert-danger", text: /変更理由・備考/
+    assert_select "input[name=?]", "details[#{detail.id}][amount]"
+    assert_select "input[name=?]", "details[#{detail.id}][remarks]"
+  end
+
+  test "明細の金額を変更して元金額を維持" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = standard_payment_with_details(batch)
+    detail = payment.zengin_payment_details.first
+    original_amount = detail.original_amount.to_i
+    payment_amount = payment.amount.to_i
+    changed_amount = detail.amount.to_i + 321
+
+    patch amount_change_fix_zengin_payment_path(@fix), params: {
+      payment_id: payment.id,
+      detail_ids: [detail.id],
+      details: { detail.id => { amount: changed_amount, remarks: "緊急調整" } }
+    }
+
+    assert_redirected_to edit_fix_zengin_payment_path(@fix)
+    assert_equal "金額を変更しました。", flash[:notice]
+    assert_equal changed_amount, detail.reload.amount.to_i
+    assert_equal original_amount, detail.original_amount.to_i
+    assert_equal "緊急調整", detail.remarks
+    assert detail.amount_modified?
+    assert_equal payment_amount + 321, payment.reload.amount.to_i
+  end
+
+  test "変更理由なしでは明細の金額を変更しない" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = standard_payment_with_details(batch)
+    detail = payment.zengin_payment_details.first
+    amount = detail.amount.to_i
+
+    patch amount_change_fix_zengin_payment_path(@fix), params: {
+      payment_id: payment.id,
+      detail_ids: [detail.id],
+      details: { detail.id => { amount: amount + 1, remarks: "" } }
+    }
+
+    assert_redirected_to edit_fix_zengin_payment_path(@fix)
+    assert_match(/変更理由・備考を入力してください/, flash[:alert])
+    assert_equal amount, detail.reload.amount.to_i
+  end
+
+  test "未登録のその他を金額変更モーダルから追加" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = standard_payment_with_details(batch)
+    payment_amount = payment.amount.to_i
+
+    get amount_change_fix_zengin_payment_path(@fix), params: { payment_id: payment.id, manual_entry: true }
+
+    assert_response :success
+    assert_select "input[name=?]", "details[new][amount]"
+    assert_select "input[name=?]", "details[new][remarks]"
+
+    assert_difference -> { payment.zengin_payment_details.count }, 1 do
+      patch amount_change_fix_zengin_payment_path(@fix), params: {
+        payment_id: payment.id,
+        manual_entry: true,
+        details: { new: { amount: -500, remarks: "臨時調整" } }
+      }
+    end
+
+    assert_redirected_to edit_fix_zengin_payment_path(@fix)
+    detail = payment.zengin_payment_details.find_by!(payment_type: :other, source_kind: :manual, source_label: "その他")
+    assert_equal(-500, detail.amount.to_i)
+    assert_equal 0, detail.original_amount.to_i
+    assert_equal "臨時調整", detail.remarks
+    assert_equal payment_amount - 500, payment.reload.amount.to_i
   end
 
   test "支払先変更モーダルを表示" do

@@ -1,0 +1,104 @@
+<% payment_type_labels = {
+  "daily_wage" => "日当",
+  "land_management_fee" => "農地管理料",
+  "tenant_land_management_fee" => "小作地管理料",
+  "machine_rental_fee" => "機械賃借料",
+  "seedling_fee" => "育苗費",
+  "drying_adjustment_fee" => "乾燥調整費",
+  "other" => "その他"
+} %>
+<% source_kind_labels = { "generated" => "自動", "imported" => "取込", "manual" => "手入力" } %>
+<% payment_type = @details.first&.payment_type || "other" %>
+<% daily_wage = payment_type == "daily_wage" %>
+<% source_labels = @details.filter_map { |detail| detail.source_label.presence }.uniq %>
+<% worker_names = @details.filter_map { |detail| @work_results[detail.source_id]&.worker&.name }.uniq %>
+<% item_label = daily_wage ? worker_names.first : source_labels.first %>
+<% item_label ||= payment_type_labels.fetch(payment_type, payment_type) %>
+<% original_amount = @details.sum { |detail| detail.original_amount.to_i } %>
+<% amount = @details.sum { |detail| detail.amount.to_i } %>
+<% difference = amount - original_amount %>
+
+<%= turbo_frame_tag "zengin_payment_modal" do %>
+  <div class="modal fade" id="zengin-payment-detail-modal" tabindex="-1" aria-hidden="true" data-controller="zengin-payment-modal">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">明細詳細</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+        </div>
+
+        <div class="modal-body">
+          <dl class="row mb-3">
+            <dt class="col-sm-2">世帯</dt>
+            <dd class="col-sm-4"><%= @payment.worker.home.name %></dd>
+            <dt class="col-sm-2">支払先</dt>
+            <dd class="col-sm-4"><%= @payment.worker.name %></dd>
+            <dt class="col-sm-2">種別</dt>
+            <dd class="col-sm-4"><%= payment_type_labels.fetch(payment_type, payment_type) %></dd>
+            <dt class="col-sm-2">項目</dt>
+            <dd class="col-sm-4"><%= item_label %></dd>
+          </dl>
+
+          <% if @details.present? %>
+            <div class="table-responsive">
+              <table class="table table-sm align-middle mb-2">
+                <thead>
+                  <tr>
+                    <th><%= daily_wage ? "作業日" : "元データ" %></th>
+                    <th>作成</th>
+                    <th class="numeric">元金額</th>
+                    <th class="numeric">支払金額</th>
+                    <th class="numeric">差額</th>
+                    <th>備考</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @details.each do |detail| %>
+                    <% work_result = @work_results[detail.source_id] %>
+                    <% detail_difference = detail.amount.to_i - detail.original_amount.to_i %>
+                    <tr class="<%= "table-warning" if detail.amount_modified? %>">
+                      <td><%= work_result&.work&.worked_at || detail.source_label.presence || "-" %></td>
+                      <td><%= source_kind_labels.fetch(detail.source_kind, detail.source_kind) %></td>
+                      <td class="numeric"><%= number_with_delimiter(detail.original_amount.to_i) %></td>
+                      <td class="numeric <%= "text-danger" if detail.amount.to_i.negative? %>"><%= number_with_delimiter(detail.amount.to_i) %></td>
+                      <td class="numeric <%= "text-danger" if detail_difference.nonzero? %>"><%= number_with_delimiter(detail_difference) %></td>
+                      <td><%= detail.remarks.presence || "-" %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+                <% if @details.many? %>
+                  <tfoot>
+                    <tr class="fw-bold">
+                      <th colspan="2">合計</th>
+                      <td class="numeric"><%= number_with_delimiter(original_amount) %></td>
+                      <td class="numeric <%= "text-danger" if amount.negative? %>"><%= number_with_delimiter(amount) %></td>
+                      <td class="numeric <%= "text-danger" if difference.nonzero? %>"><%= number_with_delimiter(difference) %></td>
+                      <td></td>
+                    </tr>
+                  </tfoot>
+                <% end %>
+              </table>
+            </div>
+          <% else %>
+            <div class="alert alert-light border mb-0">
+              その他の明細は登録されていません。
+            </div>
+          <% end %>
+        </div>
+
+        <div class="modal-footer">
+          <%= link_to "金額変更",
+                amount_change_fix_zengin_payment_path(
+                  @fix,
+                  payment_id: @payment.id,
+                  detail_ids: @details.map(&:id),
+                  manual_entry: @manual_entry
+                ),
+                class: "btn me-auto btn-outline-danger",
+                data: { turbo_frame: "zengin_payment_modal" } %>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -5,7 +5,7 @@ class ZenginPaymentsController < ApplicationController
   before_action :set_fix
   before_action :set_batch
   before_action :require_batch,
-                only: [:edit, :update, :payee_change, :update_payee, :land_fee_import, :seedling_fee_import, :drying_adjustment_fee_import, :export]
+                only: [:edit, :update, :detail, :amount_change, :update_amount, :payee_change, :update_payee, :land_fee_import, :seedling_fee_import, :drying_adjustment_fee_import, :export]
 
   def show; end
 
@@ -27,6 +27,32 @@ class ZenginPaymentsController < ApplicationController
     redirect_to fix_zengin_payment_path(@fix), notice: "全銀データ保守を更新しました。"
   rescue ActiveRecord::RecordInvalid => e
     redirect_to edit_fix_zengin_payment_path(@fix), alert: "全銀データ保守を更新できませんでした。#{e.message}"
+  end
+
+  def detail
+    prepare_detail!
+  rescue ActiveRecord::RecordNotFound, ArgumentError => e
+    redirect_to edit_fix_zengin_payment_path(@fix), alert: e.message
+  end
+
+  def amount_change
+    prepare_detail!
+  rescue ActiveRecord::RecordNotFound, ArgumentError => e
+    redirect_to edit_fix_zengin_payment_path(@fix), alert: e.message
+  end
+
+  def update_amount
+    prepare_detail!
+    @batch.update_detail_amounts!(
+      payment: @payment,
+      details: @details,
+      detail_attributes: amount_detail_params
+    )
+    redirect_to edit_fix_zengin_payment_path(@fix), notice: "金額を変更しました。"
+  rescue ActiveRecord::RecordInvalid, ArgumentError => e
+    redirect_to edit_fix_zengin_payment_path(@fix), alert: "金額を変更できませんでした。#{e.message}"
+  rescue ActiveRecord::RecordNotFound => e
+    redirect_to edit_fix_zengin_payment_path(@fix), alert: e.message
   end
 
   def payee_change
@@ -112,6 +138,25 @@ class ZenginPaymentsController < ApplicationController
     return if @batch
 
     redirect_to fix_zengin_payment_path(@fix), alert: "先に全銀データを作成してください。"
+  end
+
+  def prepare_detail!
+    @payment = @batch.zengin_payments.find(params[:payment_id])
+    detail_ids = Array(params[:detail_ids]).reject(&:blank?).map(&:to_i).uniq
+    @details = @payment.zengin_payment_details.where(id: detail_ids).order(:id).to_a
+    raise ActiveRecord::RecordNotFound, "表示する明細が見つかりません。" unless @details.size == detail_ids.size
+
+    @manual_entry = ActiveModel::Type::Boolean.new.cast(params[:manual_entry])
+    raise ArgumentError, "表示する明細を選択してください。" if @details.blank? && !@manual_entry
+
+    work_result_ids = @details.filter_map do |detail|
+      detail.source_id if detail.payment_type_daily_wage? && detail.source_type == "WorkResult"
+    end
+    @work_results = WorkResult.includes(:work, :worker).where(id: work_result_ids).index_by(&:id)
+  end
+
+  def amount_detail_params
+    params.fetch(:details, ActionController::Parameters.new).permit!.to_h
   end
 
   def prepare_payee_change!
