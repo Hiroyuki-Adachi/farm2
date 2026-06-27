@@ -43,4 +43,8 @@ class ZenginPayment < ApplicationRecord
   def account_incomplete?
     bank_account_incomplete? || account_holder_name.blank?
   end
+
+  def recalculate_amount!
+    update!(amount: zengin_payment_details.sum(:amount))
+  end
 end
