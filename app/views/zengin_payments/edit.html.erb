@@ -56,7 +56,8 @@
         manual_entry: true
       } %>
     <% end %>
-    <% modified_details_count = details.count(&:amount_modified?) %>
+    <% modified_detail_ids = details.select(&:amount_modified?).map(&:id) %>
+    <% modified_details_count = modified_detail_ids.size %>
 
     <section class="mb-4 border-top pt-3">
       <div class="d-flex justify-content-between align-items-start mb-2">
@@ -126,6 +127,20 @@
                           ),
                           class: "btn btn-outline-secondary",
                           data: { turbo_frame: "zengin_payment_modal" } %>
+                    <% modified_ids = detail_row[:detail_ids] & modified_detail_ids %>
+                    <% if modified_ids.present? %>
+                      <%= link_to "金額を元に戻す",
+                            restore_amount_fix_zengin_payment_path(
+                              @fix,
+                              payment_id: payment.id,
+                              detail_ids: modified_ids
+                            ),
+                            class: "btn btn-outline-secondary",
+                            data: {
+                              turbo_method: :patch,
+                              turbo_confirm: "金額を元の金額に戻します。備考は変更しません。よろしいですか？"
+                            } %>
+                    <% end %>
                   </div>
                 </td>
               </tr>

@@ -198,6 +198,7 @@ resources :fixes, param: "fixed_at", except: [:edit, :update] do
     get :detail
     get :amount_change
     patch :amount_change, action: :update_amount
+    patch :restore_amount
     get :payee_change
     patch :payee_change, action: :update_payee
     get :land_fee_template

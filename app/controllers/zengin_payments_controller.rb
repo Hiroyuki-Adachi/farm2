@@ -5,7 +5,7 @@ class ZenginPaymentsController < ApplicationController
   before_action :set_fix
   before_action :set_batch
   before_action :require_batch,
-                only: [:edit, :update, :detail, :amount_change, :update_amount, :payee_change, :update_payee, :land_fee_import, :seedling_fee_import, :drying_adjustment_fee_import, :export]
+                only: [:edit, :update, :detail, :amount_change, :update_amount, :restore_amount, :payee_change, :update_payee, :land_fee_import, :seedling_fee_import, :drying_adjustment_fee_import, :export]
 
   def show; end
 
@@ -52,6 +52,16 @@ class ZenginPaymentsController < ApplicationController
   rescue ActiveRecord::RecordInvalid, ArgumentError => e
     redirect_to edit_fix_zengin_payment_path(@fix), alert: "金額を変更できませんでした。#{e.message}"
   rescue ActiveRecord::RecordNotFound => e
+    redirect_to edit_fix_zengin_payment_path(@fix), alert: e.message
+  end
+
+  def restore_amount
+    prepare_detail!
+    @batch.restore_detail_amounts!(payment: @payment, details: @details)
+    redirect_to edit_fix_zengin_payment_path(@fix), notice: "金額を元に戻しました。"
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to edit_fix_zengin_payment_path(@fix), alert: "金額を元に戻せませんでした。#{e.message}"
+  rescue ActiveRecord::RecordNotFound, ArgumentError => e
     redirect_to edit_fix_zengin_payment_path(@fix), alert: e.message
   end
 

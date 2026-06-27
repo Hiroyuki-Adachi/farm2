@@ -252,6 +252,18 @@ class ZenginPaymentBatch < ApplicationRecord
     end
   end
 
+  def restore_detail_amounts!(payment:, details:)
+    changed_details = Array(details).select(&:amount_modified?)
+    return if changed_details.empty?
+
+    transaction do
+      changed_details.each do |detail|
+        detail.update!(amount: detail.original_amount)
+      end
+      payment.recalculate_amount!
+    end
+  end
+
   def move_details_to_worker!(details, target_worker)
     details = Array(details).compact
     return if details.empty?

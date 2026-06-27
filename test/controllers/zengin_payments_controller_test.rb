@@ -181,6 +181,44 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal payment_amount - 500, payment.reload.amount.to_i
   end
 
+  test "変更済み行だけに金額を元に戻すボタンを表示" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = standard_payment_with_details(batch)
+    detail = payment.zengin_payment_details.first
+    detail.update!(amount: detail.amount.to_i + 100, remarks: "残す備考")
+    payment.recalculate_amount!
+
+    get edit_fix_zengin_payment_path(@fix)
+
+    assert_response :success
+    assert_select "a", { text: "金額を元に戻す", count: 1 } do |links|
+      assert_equal "patch", links.first["data-turbo-method"]
+      assert_match(/備考は変更しません/, links.first["data-turbo-confirm"])
+    end
+  end
+
+  test "変更済み明細の金額だけを元に戻す" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    payment = standard_payment_with_details(batch)
+    detail = payment.zengin_payment_details.first
+    original_payment_amount = payment.amount.to_i
+    detail.update!(amount: detail.amount.to_i + 100, remarks: "残す備考")
+    payment.recalculate_amount!
+
+    patch restore_amount_fix_zengin_payment_path(@fix), params: {
+      payment_id: payment.id,
+      detail_ids: [detail.id]
+    }
+
+    assert_redirected_to edit_fix_zengin_payment_path(@fix)
+    assert_equal "金額を元に戻しました。", flash[:notice]
+    assert_equal detail.original_amount.to_i, detail.reload.amount.to_i
+    assert_equal "残す備考", detail.remarks
+    assert_equal original_payment_amount, payment.reload.amount.to_i
+  end
+
   test "支払先変更モーダルを表示" do
     post fix_zengin_payment_path(@fix)
     batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
