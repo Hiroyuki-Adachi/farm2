@@ -39,6 +39,10 @@ class Machine < ApplicationRecord
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
+  scope :ordered_for_display, lambda {
+    joins(:machine_type)
+      .order("machine_types.display_order, machine_types.id, machines.display_order, machines.id")
+  }
 
   scope :by_work, lambda { |work|
     kept
@@ -51,7 +55,7 @@ class Machine < ApplicationRecord
         work.worked_at,
         work.machine_results.pluck(:machine_id)
       )
-      .order("machine_types.display_order, machines.display_order")
+      .ordered_for_display
   }
   scope :diesel, -> { kept.where(diesel_flag: true) }
 
@@ -63,17 +67,17 @@ class Machine < ApplicationRecord
   }
 
   scope :by_results, lambda { |results|
+    machine_ids = MachineResult.where(work_result_id: results.ids).select(:machine_id)
+
     kept
-      .joins(:machine_results)
-      .where(machine_results: { work_result_id: results.ids })
-      .order('machines.display_order')
-      .distinct
+      .where(id: machine_ids)
+      .ordered_for_display
   }
 
   scope :usual, lambda {
     kept
       .includes(:machine_type)
-      .order("machine_types.display_order, machines.display_order, machines.id")
+      .ordered_for_display
   }
 
   scope :trucks, lambda { |organization, section: nil|
