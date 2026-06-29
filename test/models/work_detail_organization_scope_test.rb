@@ -15,7 +15,7 @@ class WorkDetailOrganizationScopeTest < ActiveSupport::TestCase
       create_work_broccoli,
       WorkWholeCrop.create!(work: other_work),
       WorkVerification.create!(work: other_work, worker: workers(:worker_other_org)),
-      WorkResult.create!(work: other_work, worker: workers(:worker1), hours: 1)
+      work_results(:work_result_other_org)
     ]
   end
 
