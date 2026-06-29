@@ -74,6 +74,22 @@ class WorkerTest < ActiveSupport::TestCase
     assert_not_empty @worker.errors[:account_number]
   end
 
+  test "口座情報が初期値のままなら未入力と判定される" do
+    assert @worker.account_incomplete?
+  end
+
+  test "口座情報がすべて入力済みなら未入力と判定されない" do
+    @worker.assign_attributes(
+      bank_code: "0001",
+      branch_code: "001",
+      account_type_id: :regular,
+      account_number: "1234567",
+      account_holder_name: "ﾔﾏﾀﾞ ﾀﾛｳ"
+    )
+
+    assert_not @worker.account_incomplete?
+  end
+
   test "名字がなければ無効" do
     @worker.family_name = nil
     assert_not @worker.valid?

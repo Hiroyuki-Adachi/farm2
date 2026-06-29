@@ -55,6 +55,20 @@ class PersonalInformations::Schedules::WorkersControllerTest < ActionDispatch::I
     assert_select "input[name='worker_ids[]'][value='#{workers(:worker2).id}']", false
   end
 
+  test "個人情報(人員保守画面表示: 作業対象外は自班候補に表示しない)" do
+    worker = workers(:worker3)
+    worker.update!(work_flag: false)
+
+    get personal_information_schedules_workers_edit_path(
+      personal_information_token: @user.token,
+      schedule_id: @schedule.id
+    )
+
+    assert_response :success
+    assert_select "input[name='worker_ids[]'][value='#{workers(:worker2).id}']"
+    assert_select "input[name='worker_ids[]'][value='#{worker.id}']", false
+  end
+
   test "個人情報(人員保守画面表示: 他組織作業者を表示しない)" do
     get personal_information_schedules_workers_edit_path(
       personal_information_token: @user.token,
@@ -108,6 +122,21 @@ class PersonalInformations::Schedules::WorkersControllerTest < ActionDispatch::I
     assert_select "input[name='worker_ids[]'][value='#{workers(:worker7).id}']", false
     assert_select "button", { text: sections(:sections8).name, count: 0 }
     assert_select "input[name='worker_ids[]'][value='#{workers(:worker_farm).id}']", false
+  end
+
+  test "個人情報(人員保守画面表示: 作業対象外は助っ人候補に表示しない)" do
+    ScheduleSection.find_or_create_by!(schedule: @schedule, section: sections(:sections2))
+    worker = workers(:worker6)
+    worker.update!(work_flag: false)
+
+    get personal_information_schedules_workers_edit_path(
+      personal_information_token: @user.token,
+      schedule_id: @schedule.id
+    )
+
+    assert_response :success
+    assert_select "button", text: sections(:sections1).name
+    assert_select "input[name='worker_ids[]'][value='#{worker.id}']", false
   end
 
   test "個人情報(人員保守画面表示: 権限者は助っ人候補がなくても自班見出し)" do

@@ -30,6 +30,8 @@ require "csv"
 #  fk_rails_...  (organization_id => organizations.id)
 #
 class ZenginPaymentBatch < ApplicationRecord
+  include ZenginAccount
+
   enum :status, { draft: 0, exported: 1 }, prefix: true
   enum :account_type_id, { unset: 0, regular: 1, current: 2, savings: 4 }, prefix: true
 
@@ -164,6 +166,127 @@ class ZenginPaymentBatch < ApplicationRecord
     end
   end
 
+  def update_manual_other_details!(payment_attributes)
+    transaction do
+      payment_attributes.each do |payment_id, attributes|
+        payment = zengin_payments.includes(:zengin_payment_details).find_by(id: payment_id)
+        next unless payment
+
+        amount = self.class.parse_manual_amount(attributes[:manual_other_amount])
+        remarks = attributes[:manual_other_remarks].to_s.presence
+        detail = payment.zengin_payment_details.find_by(
+          payment_type: :other,
+          source_kind: :manual,
+          source_label: "その他"
+        )
+
+        if amount.zero? && remarks.blank?
+          next unless detail
+
+          detail.destroy!
+          payment.recalculate_amount!
+          next
+        end
+
+        detail ||= payment.zengin_payment_details.build(
+          payment_type: :other,
+          source_kind: :manual,
+          source_label: "その他",
+          original_amount: 0
+        )
+        next if detail.amount.to_i == amount && detail.remarks.to_s == remarks.to_s
+
+        detail.assign_attributes(amount: amount, remarks: remarks)
+        detail.save!
+        payment.recalculate_amount!
+      end
+    end
+  end
+
+  def update_detail_amounts!(payment:, details:, detail_attributes:)
+    details = Array(details)
+
+    transaction do
+      if details.empty?
+        attributes = detail_attributes["new"]
+        raise ArgumentError, "金額を入力してください。" unless attributes
+
+        amount = self.class.parse_detail_amount!(attributes["amount"])
+        remarks = attributes["remarks"].to_s.strip.presence
+        manual_other_exists = payment.zengin_payment_details.exists?(
+          payment_type: :other,
+          source_kind: :manual,
+          source_label: "その他"
+        )
+        raise ArgumentError, "その他はすでに登録されています。画面を再読み込みしてください。" if manual_other_exists
+        raise ArgumentError, "その他の金額は0以外を入力してください。" if amount.zero?
+        raise ArgumentError, "変更理由・備考を入力してください。" if remarks.blank?
+
+        payment.zengin_payment_details.create!(
+          payment_type: :other,
+          source_kind: :manual,
+          source_label: "その他",
+          original_amount: 0,
+          amount: amount,
+          remarks: remarks
+        )
+        payment.recalculate_amount!
+        next
+      end
+
+      amount_changed = false
+      details.each do |detail|
+        attributes = detail_attributes[detail.id.to_s]
+        raise ArgumentError, "明細の入力内容が不足しています。" unless attributes
+
+        amount = self.class.parse_detail_amount!(attributes["amount"])
+        remarks = attributes["remarks"].to_s.strip.presence
+        changing_amount = detail.amount.to_i != amount
+        raise ArgumentError, "変更理由・備考を入力してください。" if changing_amount && remarks.blank?
+        next unless changing_amount || detail.remarks.to_s != remarks.to_s
+
+        detail.update!(amount: amount, remarks: remarks)
+        amount_changed ||= changing_amount
+      end
+      payment.recalculate_amount! if amount_changed
+    end
+  end
+
+  def restore_detail_amounts!(payment:, details:)
+    changed_details = Array(details).select(&:amount_modified?)
+    return if changed_details.empty?
+
+    transaction do
+      changed_details.each do |detail|
+        detail.update!(amount: detail.original_amount)
+      end
+      payment.recalculate_amount!
+    end
+  end
+
+  def move_details_to_worker!(details, target_worker)
+    details = Array(details).compact
+    return if details.empty?
+
+    transaction do
+      source_payments = details.map(&:zengin_payment).uniq
+      target_payment = self.class.send(:payment_for_worker, self, target_worker)
+
+      details.each do |detail|
+        detail.update!(zengin_payment: target_payment)
+      end
+
+      (source_payments + [target_payment]).uniq.each do |payment|
+        payment.reload
+        if payment.zengin_payment_details.exists?
+          payment.recalculate_amount!
+        else
+          payment.destroy!
+        end
+      end
+    end
+  end
+
 def export_file!(transfer_on:)
   transfer_on = transfer_on.to_date
   errors = zengin_export_errors(transfer_on)
@@ -204,12 +327,7 @@ end
   end
 
   def account_incomplete?
-    consignor_code.blank? ||
-      consignor_name.blank? ||
-      bank_code.blank? || bank_code == "0000" ||
-      branch_code.blank? || branch_code == "000" ||
-      account_type_id_unset? ||
-      account_number.blank? || account_number == "0000000"
+    consignor_code.blank? || consignor_name.blank? || bank_account_incomplete?
   end
 
   def zengin_file_content(transfer_on)
@@ -350,6 +468,21 @@ end
     0
   end
 
+  def self.parse_manual_amount(value)
+    return 0 if value.to_s.strip.blank?
+
+    parse_detail_amount!(value)
+  end
+
+  def self.parse_detail_amount!(value)
+    text = value.to_s.strip.delete(",")
+    raise ArgumentError, "金額を入力してください。" if text.blank?
+
+    Integer(text, 10)
+  rescue ArgumentError
+    raise ArgumentError, text.blank? ? "金額を入力してください。" : "金額は整数で入力してください。"
+  end
+
   def self.import_error(batch, message)
     batch.errors.add(:base, message)
     batch
@@ -379,6 +512,7 @@ end
           payment_type: payment_type_value,
           source_kind: :imported,
           amount: amount,
+          original_amount: amount,
           source_type: self.class.name,
           source_id: id,
           source_label: header
@@ -419,6 +553,7 @@ end
         payment_type: :seedling_fee,
         source_kind: :generated,
         amount: amount,
+        original_amount: amount,
         source_type: seedling_home.class.name,
         source_id: seedling_home.id,
         source_label: "育苗費 #{seedling_home.work_type_name}"
@@ -463,6 +598,7 @@ end
           payment_type: :drying_adjustment_fee,
           source_kind: :generated,
           amount: amount,
+          original_amount: amount,
           source_type: drying.class.name,
           source_id: drying.id,
           source_label: "乾燥調整費 #{drying.work_type&.name} #{drying.carried_on.strftime('%Y-%m-%d')}"
@@ -551,6 +687,7 @@ end
         payment_type: payment_type,
         source_kind: :generated,
         amount: amount,
+        original_amount: amount,
         source_type: source.class.name,
         source_id: source.id,
         source_label: source_label

@@ -49,6 +49,9 @@ class TaskTemplate < ApplicationRecord
   before_save :set_offset
 
   scope :usual_order, -> { order(active: :desc, id: :desc) }
+  scope :for_organization, lambda { |organization|
+    where(organization_id: organization.is_a?(Organization) ? organization.id : organization)
+  }
   scope :usual, -> { with_discarded.usual_order }
   scope :for_auto_creation, -> { kept.where(active: true, kind: [:annual, :monthly]).usual_order }
   scope :for_hand_creation, -> { kept.where(active: true, kind: [:any_time]).usual_order }

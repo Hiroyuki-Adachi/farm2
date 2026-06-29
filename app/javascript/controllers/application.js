@@ -13,3 +13,6 @@ application.register("bs-modal", BsModalController)
 
 import ModalResetController from "controllers/modal_reset_controller"
 application.register("modal-reset", ModalResetController)
+
+import ZenginPaymentModalController from "controllers/zengin_payment_modal_controller"
+application.register("zengin-payment-modal", ZenginPaymentModalController)

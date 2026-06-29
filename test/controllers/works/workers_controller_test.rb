@@ -12,6 +12,17 @@ class Works::WorkersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "作業変更(作業者)(表示)(作業対象外は追加候補に表示しない)" do
+    worker = workers(:worker4)
+    worker.update!(work_flag: false)
+
+    get new_work_worker_path(work_id: @work)
+
+    assert_response :success
+    assert_select "#worker_#{worker.id}", 1
+    assert_select "#master_worker_#{worker.id}", 0
+  end
+
   test "作業変更(作業者)(表示)(確定済)" do
     get new_work_worker_path(work_id:works(:work_fixed))
     assert_redirected_to works_path

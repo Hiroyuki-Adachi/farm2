@@ -9,7 +9,7 @@ class Tasks::TemplatesController < ApplicationController
   decorates_assigned :templates, with: TaskTemplateDecorator
 
   def index
-    @templates = TaskTemplate.usual.page(params[:page])
+    @templates = TaskTemplate.for_organization(current_organization).usual.page(params[:page])
   end
 
   def new
@@ -44,7 +44,8 @@ class Tasks::TemplatesController < ApplicationController
   private
 
   def set_template
-    @template = TaskTemplate.find(params[:id])
+    @template = TaskTemplate.for_organization(current_organization).find_by(id: params[:id])
+    to_error_path unless @template
   end
 
   def template_params
