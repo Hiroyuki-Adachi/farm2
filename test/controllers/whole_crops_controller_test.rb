@@ -18,6 +18,22 @@ class WholeCropsControllerTest < ActionDispatch::IntegrationTest
     assert_equal work_whole_crop.unit_price, system.roll_price
   end
 
+  test "WCS一覧に他組織の作業を表示せず単価も更新しない" do
+    works(:work_other_org).update!(worked_at: Date.new(2015, 12, 31))
+    other_whole_crop = WorkWholeCrop.create!(
+      work: works(:work_other_org),
+      article_name: "別組織WCS",
+      unit_price: 99,
+      tax_rate: 8
+    )
+
+    get whole_crops_path
+
+    assert_response :success
+    assert_not_includes response.body, "2015-12-31"
+    assert_equal 99, other_whole_crop.reload.unit_price
+  end
+
   test "WCS一覧(管理者以外)" do
     login_as(users(:user_checker))
     get whole_crops_path
