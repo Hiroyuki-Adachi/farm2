@@ -40,7 +40,7 @@ class Machine < ApplicationRecord
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
   scope :ordered_for_display, lambda {
-    left_outer_joins(:machine_type)
+    joins(:machine_type)
       .order("machine_types.display_order, machine_types.id, machines.display_order, machines.id")
   }
 
@@ -67,7 +67,7 @@ class Machine < ApplicationRecord
   }
 
   scope :by_results, lambda { |results|
-    machine_ids = MachineResult.where(work_result_id: results.ids).select(:machine_id)
+    machine_ids = MachineResult.where(work_result_id: results.ids).select(:machine_id).distinct
 
     kept
       .where(id: machine_ids)
