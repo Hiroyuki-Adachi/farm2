@@ -21,6 +21,9 @@ class WorkWholeCrop < ApplicationRecord
   has_many :wcs_lands, -> { order("whole_crop_lands.display_order") }, class_name: "WholeCropLand", dependent: :destroy
   has_many :wcs_rolls, through: :wcs_lands
 
+  scope :for_organization, lambda { |organization|
+    joins(:work).where(works: { organization_id: organization.is_a?(Organization) ? organization.id : organization })
+  }
   scope :usual_order, -> { joins(:work).order("works.worked_at, works.id") }
   scope :usual, ->(term) { joins(:work).where(works: { term: term }) }
   scope :for_harvest, lambda { |term|
@@ -56,7 +59,9 @@ class WorkWholeCrop < ApplicationRecord
 
   def self.update_prices(sys)
     # rubocop:disable Rails/SkipsModelValidations
-    joins(:work).where(works: { term: sys.term }).update_all(["unit_price = ?", sys.roll_price])
+    for_organization(sys.organization_id)
+      .where(works: { term: sys.term })
+      .update_all(["unit_price = ?", sys.roll_price])
     # rubocop:enable Rails/SkipsModelValidations
   end
 end

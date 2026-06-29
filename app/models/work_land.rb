@@ -24,6 +24,10 @@ class WorkLand < ApplicationRecord
   has_one    :work_kind, -> { with_deleted }, through: :work
   has_one    :wcs_land, class_name: "WholeCropLand", dependent: :destroy
 
+  scope :for_organization, lambda { |organization|
+    joins(:work).where(works: { organization_id: organization.is_a?(Organization) ? organization.id : organization })
+  }
+
   scope :for_personal, lambda { |home, term|
     joins(:work).includes(work: :work_kind)
       .joins(:land).includes(:land)

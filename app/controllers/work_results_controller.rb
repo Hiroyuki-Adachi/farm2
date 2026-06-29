@@ -3,9 +3,10 @@ class WorkResultsController < ApplicationController
 
   def index
     @results = if params[:fixed_at]
-                 WorkResult.by_home_for_fix(current_term, Date.strptime(params[:fixed_at], '%Y-%m-%d'))
+                 WorkResult.for_organization(current_organization)
+                   .by_home_for_fix(current_term, Date.strptime(params[:fixed_at], '%Y-%m-%d'))
                else
-                 WorkResult.by_home(current_term)
+                 WorkResult.for_organization(current_organization).by_home(current_term)
                end
     @home_totals, @worker_totals = calc_totals(@results)
 
