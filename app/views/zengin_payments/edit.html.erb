@@ -30,9 +30,11 @@
       } %>
     <% end %>
     <% detail_rows = (daily_detail_rows + details.reject(&:payment_type_daily_wage?).map do |detail| %>
+      <% source_label = detail.source_label.presence || "-" %>
+      <% source_label = source_label.sub(/\A育苗費\s*/, "") if detail.payment_type_seedling_fee? %>
       <% {
         payment_type: detail.payment_type,
-        source_label: detail.source_label.presence || "-",
+        source_label: source_label,
         source_kind: detail.source_kind,
         original_amount: detail.original_amount.to_i,
         amount: detail.amount.to_i,

@@ -44,6 +44,10 @@
       </div>
     </div>
   <% end %>
+
+  <div class="mb-3">
+    <%= link_to "支払結果Excel出力", results_fix_zengin_payment_path(@fix), class: "btn btn-outline-primary", data: {turbo: false} %>
+  </div>
 <% end %>
 
 <% if @batch %>

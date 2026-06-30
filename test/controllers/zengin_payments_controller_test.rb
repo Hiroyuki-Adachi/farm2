@@ -67,6 +67,29 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[name*='manual_other_amount']", count: 0
   end
 
+  test "全銀データ保守画面の育苗費項目は名前のみ表示" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by!(
+      organization: @fix.organization,
+      term: @fix.term,
+      fixed_at: @fix.fixed_at
+    )
+    payment = standard_payment_with_details(batch)
+    payment.zengin_payment_details.create!(
+      payment_type: :seedling_fee,
+      source_kind: :generated,
+      amount: 1_000,
+      original_amount: 1_000,
+      source_label: "育苗費 コシヒカリ"
+    )
+
+    get edit_fix_zengin_payment_path(@fix)
+
+    assert_response :success
+    assert_select "td", text: "コシヒカリ"
+    assert_select "td", { text: "育苗費 コシヒカリ", count: 0 }
+  end
+
   test "全銀データ保守画面は日当元データを一括取得" do
     post fix_zengin_payment_path(@fix)
     work_result_queries = []
@@ -577,6 +600,16 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "000000012345", records[2].byteslice(7, 12)
   end
 
+  test "支払結果Excel出力" do
+    post fix_zengin_payment_path(@fix)
+
+    get results_fix_zengin_payment_path(@fix)
+
+    assert_response :success
+    assert_equal Mime[:xlsx].to_s, response.media_type
+    assert_match(/zengin_results_#{@fix.fixed_at.strftime('%Y%m%d')}\.xlsx/, response.headers["Content-Disposition"])
+  end
+
   test "全銀ファイル出力は過去日を許可しない" do
     post fix_zengin_payment_path(@fix)
 
@@ -611,6 +644,7 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "a[href=?]", edit_fix_zengin_payment_path(@fix), text: "保守"
+    assert_select "a[href=?]", results_fix_zengin_payment_path(@fix), text: "支払結果Excel出力"
   end
 
   private
