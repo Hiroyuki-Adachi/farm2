@@ -13,11 +13,11 @@
 <% source_kind_labels = { "generated" => "自動", "imported" => "取込", "manual" => "手入力" } %>
 
 <% payments.each do |payment| %>
-    <% details = payment.zengin_payment_details.sort_by { |detail| [detail.payment_type_other? ? 1 : 0, detail.payment_type_before_type_cast.to_i, detail.source_label.to_s, detail.id] } %>
+    <% details = payment.zengin_payment_details.sort_by { |detail| [detail.payment_type_other? ? 1 : 0, detail.payment_type_before_type_cast.to_i, detail.display_source_label.to_s, detail.id] } %>
     <% daily_wage_details = details.select(&:payment_type_daily_wage?) %>
     <% daily_detail_rows = daily_wage_details.group_by { |detail| @daily_work_results[detail.source_id]&.worker_id || detail.source_id || detail.id }.map do |_worker_key, grouped_details| %>
       <% work_result = @daily_work_results[grouped_details.first.source_id] %>
-      <% worker_name = work_result&.worker&.name || grouped_details.first.source_label.presence || "-" %>
+      <% worker_name = work_result&.worker&.name || grouped_details.first.display_source_label.presence || "-" %>
       <% {
         payment_type: "daily_wage",
         source_label: worker_name,
@@ -30,11 +30,9 @@
       } %>
     <% end %>
     <% detail_rows = (daily_detail_rows + details.reject(&:payment_type_daily_wage?).map do |detail| %>
-      <% source_label = detail.source_label.presence || "-" %>
-      <% source_label = source_label.sub(/\A育苗費\s*/, "") if detail.payment_type_seedling_fee? %>
       <% {
         payment_type: detail.payment_type,
-        source_label: source_label,
+        source_label: detail.display_source_label.presence || "-",
         source_kind: detail.source_kind,
         original_amount: detail.original_amount.to_i,
         amount: detail.amount.to_i,

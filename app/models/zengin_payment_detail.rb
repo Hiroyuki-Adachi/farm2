@@ -45,6 +45,12 @@ class ZenginPaymentDetail < ApplicationRecord
   validates :source_label, length: { maximum: 80 }
   validates :remarks, length: { maximum: 120 }
 
+  def display_source_label
+    return source_label unless payment_type_seedling_fee?
+
+    source_label&.delete_prefix("育苗費")&.strip
+  end
+
   def amount_modified?
     amount.to_i != original_amount.to_i
   end

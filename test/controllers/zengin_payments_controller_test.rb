@@ -527,10 +527,13 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to fix_zengin_payment_path(@fix)
     batch.reload
-    home = seedling_homes(:seedling_home1).home
+    seedling_home = seedling_homes(:seedling_home1)
+    home = seedling_home.home
     payment = batch.zengin_payments.find_by(worker: home.holder)
     assert_not_nil payment
     assert_equal 80000, payment.zengin_payment_details.where(payment_type: :seedling_fee, source_kind: :generated).sum(:amount).to_i
+    detail = payment.zengin_payment_details.find_by!(payment_type: :seedling_fee, source_kind: :generated)
+    assert_equal seedling_home.work_type_name, detail.source_label
 
     assert_no_difference -> { ZenginPaymentDetail.where(payment_type: :seedling_fee, source_kind: :generated).count } do
       post seedling_fee_import_fix_zengin_payment_path(@fix)

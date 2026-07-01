@@ -556,7 +556,7 @@ end
         original_amount: amount,
         source_type: seedling_home.class.name,
         source_id: seedling_home.id,
-        source_label: "育苗費 #{seedling_home.work_type_name}"
+        source_label: seedling_home.work_type_name
       )
       count += 1
       total_amount += amount

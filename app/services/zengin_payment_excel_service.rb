@@ -15,7 +15,6 @@ class ZenginPaymentExcelService
     "other" => "その他"
   }.freeze
   ITEM_COLUMN_OFFSET = 6
-  TEMPLATE_ITEM_PAIRS = 7
 
   def self.call(batch)
     new(batch).call
@@ -81,7 +80,6 @@ class ZenginPaymentExcelService
   def build_sheet(workbook, payment_type, details)
     sheet = workbook.add_worksheet(sheet_name(payment_type))
     copy_sheet_layout(@template_sheet, sheet)
-    @template_styles = @template_sheet[0].cells.map { |cell| cell&.style_index || 0 }
     details_by_payment = details.group_by(&:zengin_payment_id)
     target_payments = payments.select { |payment| details_by_payment.key?(payment.id) }
     work_results = daily_work_results(details)
@@ -104,24 +102,21 @@ class ZenginPaymentExcelService
     target.page_setup = deep_copy(source.page_setup)
     target.print_options = deep_copy(source.print_options)
 
-    copy_template_row(source, target)
-    copy_column_widths(source, target)
+    target.cols = deep_copy(source.cols)
+    copy_template_rows(source, target)
   end
 
-  def copy_template_row(source, target)
-    source[0].cells.each_with_index do |source_cell, column_index|
-      next unless source_cell
+  def copy_template_rows(source, target)
+    source.sheet_data.rows.each_with_index do |source_row, row_index|
+      next unless source_row
 
-      formula = source_cell.formula&.expression
-      target_cell = target.add_cell(0, column_index, source_cell.value, formula)
-      target_cell.style_index = source_cell.style_index
-    end
-  end
+      source_row.cells.each_with_index do |source_cell, column_index|
+        next unless source_cell
 
-  def copy_column_widths(source, target)
-    source[0].cells.size.times do |column_index|
-      width = source.get_column_width_raw(column_index)
-      target.change_column_width_raw(column_index, width) if width
+        formula = source_cell.formula&.expression
+        target_cell = target.add_cell(row_index, column_index, source_cell.value, formula)
+        target_cell.style_index = source_cell.style_index
+      end
     end
   end
 
@@ -147,10 +142,7 @@ class ZenginPaymentExcelService
   end
 
   def payment_item_label(payment_type, detail)
-    label = detail.source_label.presence || PAYMENT_TYPE_LABELS.fetch(payment_type, payment_type)
-    return label unless payment_type == "seedling_fee"
-
-    label.sub(/\A育苗費\s*/, "")
+    detail.display_source_label.presence || PAYMENT_TYPE_LABELS.fetch(payment_type, payment_type)
   end
 
   def daily_wage_items(details, work_results)
@@ -161,20 +153,17 @@ class ZenginPaymentExcelService
   end
 
   def daily_wage_key(detail, work_results)
-    work_results[detail.source_id]&.worker_id || detail.source_label.presence || detail.id
+    work_results[detail.source_id]&.worker_id || detail.display_source_label.presence || detail.id
   end
 
   def daily_wage_label(detail, work_results)
     work_result = work_results[detail.source_id]
     return WorkerDecorator.decorate(work_result.worker).name if work_result
 
-    detail.source_label.presence || "日当"
+    detail.display_source_label.presence || "日当"
   end
 
   def fill_row(sheet, row_index, payment, items)
-    required_pairs = [items.size, TEMPLATE_ITEM_PAIRS].max
-    last_column = ITEM_COLUMN_OFFSET + (required_pairs * 2)
-    copy_row_styles(sheet, row_index, last_column)
     fill_payment_cells(sheet, row_index, payment)
     amount_columns = fill_item_cells(sheet, row_index, items)
     fill_total_cell(sheet, row_index, items, amount_columns)
@@ -202,26 +191,6 @@ class ZenginPaymentExcelService
   def fill_total_cell(sheet, row_index, items, amount_columns)
     total_cell = set_cell(sheet, row_index, 5, items.sum(&:last))
     total_cell.formula = RubyXL::Formula.new(expression: "SUM(#{amount_columns.join(',')})")
-  end
-
-  def copy_row_styles(sheet, row_index, last_column)
-    (0..last_column).each do |column_index|
-      template_column = template_style_column(column_index, @template_styles.size, last_column)
-      cell = set_cell(sheet, row_index, column_index, nil)
-      cell.style_index = @template_styles.fetch(template_column, 0)
-
-      width = @template_sheet.get_column_width_raw(template_column)
-      sheet.change_column_width_raw(column_index, width) if width
-    end
-  end
-
-  def template_style_column(column_index, template_column_count, last_column)
-    terminator_column = template_column_count - 1
-    return column_index if column_index < terminator_column
-    return terminator_column if column_index == last_column
-    return terminator_column - 2 if column_index.even?
-
-    terminator_column - 1
   end
 
   def set_cell(sheet, row_index, column_index, value)

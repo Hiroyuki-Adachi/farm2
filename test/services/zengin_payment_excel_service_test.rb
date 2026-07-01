@@ -56,6 +56,8 @@ class ZenginPaymentExcelServiceTest < ActiveSupport::TestCase
 
     assert_equal ["日当(2月)", "育苗費(2月)", "その他(2月)"], workbook.worksheets.map(&:sheet_name)
     assert_equal "No.", daily_sheet[0][0].value
+    refute_equal daily_sheet[0][0].style_index, daily_sheet[1][0].style_index
+    refute_equal daily_sheet[0][6].style_index, daily_sheet[1][6].style_index
     assert_equal 1, daily_sheet[1][0].value
     assert_equal home.section.name, daily_sheet[1][1].value
     assert_equal "1-2", daily_sheet[1][2].value
