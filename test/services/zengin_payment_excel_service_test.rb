@@ -15,14 +15,34 @@ class ZenginPaymentExcelServiceTest < ActiveSupport::TestCase
       worker: workers(:worker1),
       amount: 4_500
     )
-    work_result = work_results(:work_results1)
+    first_work_result = work_results(:work_results1)
+    second_work_result = work_results(:work_results3)
+    last_work_result = work_results(:work_results0)
+    payment.zengin_payment_details.create!(
+      payment_type: :daily_wage,
+      source_kind: :generated,
+      amount: 400,
+      original_amount: 400,
+      source_type: "WorkResult",
+      source_id: last_work_result.id,
+      source_label: "日当 2015-01-03"
+    )
+    payment.zengin_payment_details.create!(
+      payment_type: :daily_wage,
+      source_kind: :generated,
+      amount: 500,
+      original_amount: 500,
+      source_type: "WorkResult",
+      source_id: second_work_result.id,
+      source_label: "日当 2015-01-04"
+    )
     payment.zengin_payment_details.create!(
       payment_type: :daily_wage,
       source_kind: :generated,
       amount: 1_000,
       original_amount: 1_000,
       source_type: "WorkResult",
-      source_id: work_result.id,
+      source_id: first_work_result.id,
       source_label: "日当 2015-01-05"
     )
     payment.zengin_payment_details.create!(
@@ -31,7 +51,7 @@ class ZenginPaymentExcelServiceTest < ActiveSupport::TestCase
       amount: 2_000,
       original_amount: 2_000,
       source_type: "WorkResult",
-      source_id: work_result.id,
+      source_id: first_work_result.id,
       source_label: "日当 2015-01-06"
     )
     payment.zengin_payment_details.create!(
@@ -63,10 +83,14 @@ class ZenginPaymentExcelServiceTest < ActiveSupport::TestCase
     assert_equal "1-2", daily_sheet[1][2].value
     assert_equal home.name, daily_sheet[1][3].value
     assert_equal WorkerDecorator.decorate(payment.worker).name, daily_sheet[1][4].value
-    assert_equal 3_000, daily_sheet[1][5].value
-    assert_equal "SUM(H2)", daily_sheet[1][5].formula.expression
-    assert_equal WorkerDecorator.decorate(work_result.worker).name, daily_sheet[1][6].value
+    assert_equal 3_900, daily_sheet[1][5].value
+    assert_equal "SUM(H2,J2,L2)", daily_sheet[1][5].formula.expression
+    assert_equal WorkerDecorator.decorate(first_work_result.worker).name, daily_sheet[1][6].value
     assert_equal 3_000, daily_sheet[1][7].value
+    assert_equal WorkerDecorator.decorate(second_work_result.worker).name, daily_sheet[1][8].value
+    assert_equal 500, daily_sheet[1][9].value
+    assert_equal WorkerDecorator.decorate(last_work_result.worker).name, daily_sheet[1][10].value
+    assert_equal 400, daily_sheet[1][11].value
     assert_equal "コシヒカリ", seedling_sheet[1][6].value
     assert_equal "調整金", other_sheet[1][6].value
     assert_equal 1_500, other_sheet[1][7].value

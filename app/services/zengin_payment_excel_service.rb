@@ -147,9 +147,15 @@ class ZenginPaymentExcelService
 
   def daily_wage_items(details, work_results)
     grouped_details = details.group_by { |detail| daily_wage_key(detail, work_results) }
-    grouped_details.map do |_key, group|
+    ordered_groups = grouped_details.sort_by { |_key, group| daily_wage_order(group.first, work_results) }
+    ordered_groups.map do |_key, group|
       [daily_wage_label(group.first, work_results), group.sum { |detail| detail.amount.to_i }]
     end
+  end
+
+  def daily_wage_order(detail, work_results)
+    worker = work_results[detail.source_id]&.worker
+    [worker&.display_order || Float::INFINITY, worker&.id || Float::INFINITY, detail.id]
   end
 
   def daily_wage_key(detail, work_results)
