@@ -1,6 +1,6 @@
 class AddTermNameToSystems < ActiveRecord::Migration[8.1]
   def up
-    add_column :systems, :term_name, :string, limit: 10, null: false, default: ''
+    add_column :systems, :term_name, :string, limit: 10, null: false, default: '', comment: "年度名"
 
     System.reset_column_information
     System.find_each do |system|

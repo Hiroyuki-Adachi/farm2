@@ -831,7 +831,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_03_102700) do
     t.decimal "seedling_price", precision: 4, default: "0", null: false, comment: "育苗費"
     t.date "start_date", null: false, comment: "期首日"
     t.integer "term", null: false, comment: "年度(期)"
-    t.string "term_name", limit: 10, default: "", null: false
+    t.string "term_name", limit: 10, default: "", null: false, comment: "年度名"
     t.datetime "updated_at", precision: nil
     t.decimal "waste_adjust_price", precision: 4, default: "0", null: false, comment: "くず米金額(調整)"
     t.decimal "waste_drying_price", precision: 4, default: "0", null: false, comment: "くず米金額(乾燥)"
