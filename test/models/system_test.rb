@@ -16,6 +16,7 @@
 #  seedling_price(育苗費)               :decimal(4, )     default(0), not null
 #  start_date(期首日)                   :date             not null
 #  term(年度(期))                       :integer          not null
+#  term_name(年度名)                    :string(10)       default(""), not null
 #  waste_adjust_price(くず米金額(調整)) :decimal(4, )     default(0), not null
 #  waste_drying_price(くず米金額(乾燥)) :decimal(4, )     default(0), not null
 #  waste_price(くず米金額)              :decimal(4, )     default(0), not null
@@ -100,6 +101,7 @@ class SystemTest < ActiveSupport::TestCase
     system = System.new(
       organization_id: organization.id,
       term: 2025,
+      term_name: "2025",
       start_date: Date.new(2025, 4, 1),
       end_date: Date.new(2026, 3, 31)
     )

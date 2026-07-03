@@ -53,6 +53,7 @@ class SorimachiJournalTest < ActiveSupport::TestCase
     System.create!(
       organization_id: organization.id,
       term: @term,
+      term_name: @term.to_s,
       start_date: Date.new(2090, 4, 1),
       end_date: Date.new(2091, 3, 31)
     )
