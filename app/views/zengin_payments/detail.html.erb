@@ -10,7 +10,7 @@
 <% source_kind_labels = { "generated" => "自動", "imported" => "取込", "manual" => "手入力" } %>
 <% payment_type = @details.first&.payment_type || "other" %>
 <% daily_wage = payment_type == "daily_wage" %>
-<% source_labels = @details.filter_map { |detail| detail.source_label.presence }.uniq %>
+<% source_labels = @details.filter_map { |detail| detail.display_source_label.presence }.uniq %>
 <% worker_names = @details.filter_map { |detail| @work_results[detail.source_id]&.worker&.name }.uniq %>
 <% item_label = daily_wage ? worker_names.first : source_labels.first %>
 <% item_label ||= payment_type_labels.fetch(payment_type, payment_type) %>
@@ -57,7 +57,7 @@
                     <% work_result = @work_results[detail.source_id] %>
                     <% detail_difference = detail.amount.to_i - detail.original_amount.to_i %>
                     <tr class="<%= "table-warning" if detail.amount_modified? %>">
-                      <td><%= work_result&.work&.worked_at || detail.source_label.presence || "-" %></td>
+                      <td><%= work_result&.work&.worked_at || detail.display_source_label.presence || "-" %></td>
                       <td><%= source_kind_labels.fetch(detail.source_kind, detail.source_kind) %></td>
                       <td class="numeric"><%= number_with_delimiter(detail.original_amount.to_i) %></td>
                       <td class="numeric <%= "text-danger" if detail.amount.to_i.negative? %>"><%= number_with_delimiter(detail.amount.to_i) %></td>

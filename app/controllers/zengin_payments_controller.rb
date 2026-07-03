@@ -5,7 +5,21 @@ class ZenginPaymentsController < ApplicationController
   before_action :set_fix
   before_action :set_batch
   before_action :require_batch,
-                only: [:edit, :update, :detail, :amount_change, :update_amount, :restore_amount, :payee_change, :update_payee, :land_fee_import, :seedling_fee_import, :drying_adjustment_fee_import, :export]
+                only: %i[
+                  edit
+                  update
+                  detail
+                  amount_change
+                  update_amount
+                  restore_amount
+                  payee_change
+                  update_payee
+                  land_fee_import
+                  seedling_fee_import
+                  drying_adjustment_fee_import
+                  results
+                  export
+                ]
 
   def show; end
 
@@ -132,6 +146,13 @@ class ZenginPaymentsController < ApplicationController
     redirect_to fix_zengin_payment_path(@fix), alert: "振込指定日を入力してください。"
   rescue ZenginPaymentBatch::ExportError => e
     redirect_to fix_zengin_payment_path(@fix), alert: e.message
+  end
+
+  def results
+    content = ZenginPaymentExcelService.call(@batch)
+    send_data content,
+              filename: "zengin_results_#{@fixed_at.strftime('%Y%m%d')}.xlsx",
+              type: Mime[:xlsx].to_s
   end
 
   private

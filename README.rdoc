@@ -16,12 +16,13 @@
 
 外部システム連携:
 - Z-GIS
-- ソリマチ会計
+- ソリマチ会計(原価計算)
 - Excel
 - Google OAuth / Google Maps
 - LINE (Messaging API)
 - Web Push
 - メール送信
+- JA法人ネットバンク(全銀データ)
 
 技術スタック:
 - Ruby 4.0 系
