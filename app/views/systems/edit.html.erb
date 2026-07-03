@@ -11,6 +11,10 @@
       <%= f.label :end_date, class: "col-form-label-lg form-label" %>
       <%= f.date_field :end_date, {required: true, class: "form-control"} %>
     </div>
+    <div class="col-md-2 mb-3">
+      <%= f.label :term_name, class: "col-form-label-lg form-label" %>
+      <%= f.text_field :term_name, {maxlength: 10, required: true, class: "form-control"} %>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-2 mb-3">

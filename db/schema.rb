@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_24_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_03_102700) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -831,6 +831,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_24_090000) do
     t.decimal "seedling_price", precision: 4, default: "0", null: false, comment: "育苗費"
     t.date "start_date", null: false, comment: "期首日"
     t.integer "term", null: false, comment: "年度(期)"
+    t.string "term_name", limit: 10, default: "", null: false
     t.datetime "updated_at", precision: nil
     t.decimal "waste_adjust_price", precision: 4, default: "0", null: false, comment: "くず米金額(調整)"
     t.decimal "waste_drying_price", precision: 4, default: "0", null: false, comment: "くず米金額(乾燥)"

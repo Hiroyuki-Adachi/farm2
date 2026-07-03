@@ -12,9 +12,9 @@
 #  deleted_at                              :datetime
 #  display_order(表示順)                   :integer
 #  family_name(姓)                         :string(10)       not null
-#  family_phonetic(姓(ﾌﾘｶﾞﾅ))         :string(15)       not null
+#  family_phonetic(姓(ﾌﾘｶﾞﾅ))              :string(15)       not null
 #  first_name(名)                          :string(10)       not null
-#  first_phonetic(名(ﾌﾘｶﾞﾅ))          :string(15)       not null
+#  first_phonetic(名(ﾌﾘｶﾞﾅ))               :string(15)       not null
 #  mobile(携帯番号)                        :string(15)
 #  mobile_mail(メールアドレス(携帯))       :string(50)
 #  office_role(事務の役割)                 :integer          default("none"), not null
