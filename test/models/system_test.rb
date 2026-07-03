@@ -101,6 +101,7 @@ class SystemTest < ActiveSupport::TestCase
     system = System.new(
       organization_id: organization.id,
       term: 2025,
+      term_name: "2025",
       start_date: Date.new(2025, 4, 1),
       end_date: Date.new(2026, 3, 31)
     )

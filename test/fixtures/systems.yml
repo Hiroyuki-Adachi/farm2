@@ -32,6 +32,7 @@
 
 s2014:
   term: 2014
+  term_name: "2014"
   start_date: 2014-01-01
   end_date: 2014-12-31
   organization_id: 1
@@ -42,6 +43,7 @@ s2014:
 
 s2015:
   term: 2015
+  term_name: "2015"
   start_date: 2015-01-01
   end_date: 2015-12-31
   organization_id: 1
@@ -57,6 +59,7 @@ s2015:
 
 s2016:
   term: 2016
+  term_name: "2016"
   start_date: 2016-01-01
   end_date: 2016-12-31
   organization_id: 1
@@ -67,6 +70,7 @@ s2016:
 
 s2017:
   term: 2017
+  term_name: "2017"
   start_date: 2017-01-01
   end_date: 2017-12-31
   organization_id: 1
@@ -78,6 +82,7 @@ s2017:
 
 s2015_org2:
   term: 2015
+  term_name: "2015"
   start_date: 2015-01-01
   end_date: 2015-12-31
   organization_id: 2

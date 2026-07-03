@@ -57,8 +57,9 @@ class System < ApplicationRecord
       if pre_system && system.nil?
         system = System.new(pre_system.attributes.except("id", "created_at", "updated_at"))
         system.term = term
-        system.start_date  = pre_system.start_date + 1.year
-        system.end_date    = pre_system.end_date + 1.year
+        system.term_name  = term.to_s
+        system.start_date = pre_system.start_date + 1.year
+        system.end_date   = pre_system.end_date + 1.year
       end
     end
     system
