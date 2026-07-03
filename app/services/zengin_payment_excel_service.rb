@@ -83,9 +83,12 @@ class ZenginPaymentExcelService
     details_by_payment = details.group_by(&:zengin_payment_id)
     target_payments = payments.select { |payment| details_by_payment.key?(payment.id) }
     work_results = daily_work_results(details)
+    payment_rows = target_payments.map do |payment|
+      [payment, payment_items(payment_type, details_by_payment.fetch(payment.id), work_results)]
+    end
+    prepare_item_columns(sheet, payment_rows.map { |_payment, items| items.size }.max || 1)
 
-    target_payments.each_with_index do |payment, row_index|
-      items = payment_items(payment_type, details_by_payment.fetch(payment.id), work_results)
+    payment_rows.each_with_index do |(payment, items), row_index|
       fill_row(sheet, row_index + 1, payment, items)
     end
 
@@ -118,6 +121,33 @@ class ZenginPaymentExcelService
         target_cell.style_index = source_cell.style_index
       end
     end
+  end
+
+  def prepare_item_columns(sheet, item_count)
+    2.upto(item_count) do |item_number|
+      copy_item_column(sheet, ITEM_COLUMN_OFFSET, item_name_column(item_number), item_number)
+      copy_item_column(sheet, ITEM_COLUMN_OFFSET + 1, item_amount_column(item_number), item_number)
+    end
+  end
+
+  def copy_item_column(sheet, source_column, target_column, item_number)
+    column_range = deep_copy(@template_sheet.cols.locate_range(source_column))
+    column_range.min = target_column + 1
+    column_range.max = target_column + 1
+    sheet.cols << column_range
+
+    source_cell = @template_sheet[0][source_column]
+    header_value = source_cell.value.to_s.sub(/\d+\z/, item_number.to_s)
+    target_cell = sheet.add_cell(0, target_column, header_value, source_cell.formula&.expression)
+    target_cell.style_index = source_cell.style_index
+  end
+
+  def item_name_column(item_number)
+    ITEM_COLUMN_OFFSET + ((item_number - 1) * 2)
+  end
+
+  def item_amount_column(item_number)
+    item_name_column(item_number) + 1
   end
 
   def deep_copy(value)

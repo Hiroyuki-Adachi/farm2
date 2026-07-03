@@ -76,6 +76,18 @@ class ZenginPaymentExcelServiceTest < ActiveSupport::TestCase
 
     assert_equal ["日当(2月)", "育苗費(2月)", "その他(2月)"], workbook.worksheets.map(&:sheet_name)
     assert_equal "No.", daily_sheet[0][0].value
+    assert_equal ["明細名1", "明細金額1", "明細名2", "明細金額2", "明細名3", "明細金額3"],
+                 daily_sheet[0].cells[6..11].map(&:value)
+    assert_equal daily_sheet[0][6].style_index, daily_sheet[0][8].style_index
+    assert_equal daily_sheet[0][6].style_index, daily_sheet[0][10].style_index
+    assert_equal daily_sheet[0][7].style_index, daily_sheet[0][9].style_index
+    assert_equal daily_sheet[0][7].style_index, daily_sheet[0][11].style_index
+    assert_equal daily_sheet.get_column_width_raw(6), daily_sheet.get_column_width_raw(8)
+    assert_equal daily_sheet.get_column_width_raw(6), daily_sheet.get_column_width_raw(10)
+    assert_equal daily_sheet.get_column_width_raw(7), daily_sheet.get_column_width_raw(9)
+    assert_equal daily_sheet.get_column_width_raw(7), daily_sheet.get_column_width_raw(11)
+    assert_nil seedling_sheet[0][8]
+    assert_nil other_sheet[0][8]
     refute_equal daily_sheet[0][0].style_index, daily_sheet[1][0].style_index
     refute_equal daily_sheet[0][6].style_index, daily_sheet[1][6].style_index
     assert_equal 1, daily_sheet[1][0].value
