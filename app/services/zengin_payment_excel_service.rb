@@ -52,17 +52,16 @@ class ZenginPaymentExcelService
 
   def payments
     @payments ||= @batch.zengin_payments
+      .joins(worker: { home: :section })
       .includes(:zengin_payment_details, worker: { home: :section })
-      .select { |payment| payment.worker.home.member_flag? }
-      .sort_by do |payment|
-        home = payment.worker.home
-        [
-          home.finance_order || Float::INFINITY,
-          home.id,
-          payment.worker.display_order || Float::INFINITY,
-          payment.worker.id
-        ]
-      end
+      .where(homes: { member_flag: true })
+      .order(
+        Arel.sql(
+          "homes.finance_order ASC NULLS LAST, homes.id ASC, " \
+          "workers.display_order ASC NULLS LAST, workers.id ASC"
+        )
+      )
+      .to_a
   end
 
   def find_template_sheet(workbook)
@@ -157,7 +156,7 @@ class ZenginPaymentExcelService
   def daily_work_results(details)
     ids = details.filter_map do |detail|
       detail.source_id if detail.payment_type_daily_wage? && detail.source_type == "WorkResult"
-    end
+    end.uniq
     WorkResult.includes(:worker).where(id: ids).index_by(&:id)
   end
 
