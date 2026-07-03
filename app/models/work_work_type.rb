@@ -17,4 +17,8 @@ class WorkWorkType < ApplicationRecord
 
   belongs_to :work
   belongs_to :work_type
+
+  scope :for_organization, lambda { |organization|
+    joins(:work).where(works: { organization_id: organization.is_a?(Organization) ? organization.id : organization })
+  }
 end

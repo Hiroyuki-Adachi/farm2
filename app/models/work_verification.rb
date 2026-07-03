@@ -19,6 +19,10 @@ class WorkVerification < ApplicationRecord
 
   ENOUGH = 2
 
+  scope :for_organization, lambda { |organization|
+    joins(:work).where(works: { organization_id: organization.is_a?(Organization) ? organization.id : organization })
+  }
+
   def self.regist(work, worker)
     return if work.created_by == worker.id
 

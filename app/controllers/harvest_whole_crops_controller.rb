@@ -1,9 +1,10 @@
 class HarvestWholeCropsController < ApplicationController
   include PermitManager
+
   helper DryingsHelper
 
   def index
-    @whole_crops = WorkWholeCrop.for_harvest(current_term)
+    @whole_crops = WorkWholeCrop.for_organization(current_organization).for_harvest(current_term)
     respond_to do |format|
       format.html do
         @work_type_totals, @worked_at_totals = calc_totals(@whole_crops)

@@ -16,6 +16,7 @@
 #  seedling_price(育苗費)               :decimal(4, )     default(0), not null
 #  start_date(期首日)                   :date             not null
 #  term(年度(期))                       :integer          not null
+#  term_name(年度名)                    :string(10)       default(""), not null
 #  waste_adjust_price(くず米金額(調整)) :decimal(4, )     default(0), not null
 #  waste_drying_price(くず米金額(乾燥)) :decimal(4, )     default(0), not null
 #  waste_price(くず米金額)              :decimal(4, )     default(0), not null
@@ -30,8 +31,11 @@
 #
 
 class System < ApplicationRecord
+  before_validation :set_default_term_name
+
   validates :term, presence: true
   validates :term, numericality: { only_integer: true, greater_than: 2000, less_than: 2100 }
+  validates :term_name, presence: true, length: { maximum: 10 }
   validate :validate_period_dates
   validate :validate_period_continuity
   validate :validate_period_order
@@ -55,8 +59,9 @@ class System < ApplicationRecord
       if pre_system && system.nil?
         system = System.new(pre_system.attributes.except("id", "created_at", "updated_at"))
         system.term = term
-        system.start_date  = pre_system.start_date + 1.year
-        system.end_date    = pre_system.end_date + 1.year
+        system.term_name  = term.to_s
+        system.start_date = pre_system.start_date + 1.year
+        system.end_date   = pre_system.end_date + 1.year
       end
     end
     system
@@ -72,6 +77,10 @@ class System < ApplicationRecord
   end
 
   private
+
+  def set_default_term_name
+    self.term_name = term.to_s if term_name.blank? && term.present?
+  end
 
   def validate_period_dates
     return if start_date.blank? || end_date.blank?

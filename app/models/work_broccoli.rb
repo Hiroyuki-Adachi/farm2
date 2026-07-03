@@ -28,6 +28,9 @@ class WorkBroccoli < ApplicationRecord
 
   has_many :harvests, class_name: "BroccoliHarvest", dependent: :destroy
 
+  scope :for_organization, lambda { |organization|
+    joins(:work).where(works: { organization_id: organization.is_a?(Organization) ? organization.id : organization })
+  }
   scope :for_sales, lambda { |term|
     joins(:work)
       .where(["works.term = ? AND work_broccolis.sale > 0", term])

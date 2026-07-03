@@ -184,6 +184,7 @@ namespace :statistics do
   resources :work_days, only: [:index]
   resources :workers, only: [:index]
   resources :areas, only: [:index]
+  resources :machines, only: [:index]
 end
 resources :statistics, only: [:index] do
   collection do
@@ -205,6 +206,7 @@ resources :fixes, param: "fixed_at", except: [:edit, :update] do
     post :land_fee_import
     post :seedling_fee_import
     post :drying_adjustment_fee_import
+    get :results
     post :export
   end
 end
