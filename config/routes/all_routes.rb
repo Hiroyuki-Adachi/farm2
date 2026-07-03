@@ -184,6 +184,7 @@ namespace :statistics do
   resources :work_days, only: [:index]
   resources :workers, only: [:index]
   resources :areas, only: [:index]
+  resources :machines, only: [:index]
 end
 resources :statistics, only: [:index] do
   collection do
