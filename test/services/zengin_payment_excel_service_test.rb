@@ -82,6 +82,10 @@ class ZenginPaymentExcelServiceTest < ActiveSupport::TestCase
     assert_equal daily_sheet[0][6].style_index, daily_sheet[0][10].style_index
     assert_equal daily_sheet[0][7].style_index, daily_sheet[0][9].style_index
     assert_equal daily_sheet[0][7].style_index, daily_sheet[0][11].style_index
+    assert_equal daily_sheet[1][6].style_index, daily_sheet[1][8].style_index
+    assert_equal daily_sheet[1][6].style_index, daily_sheet[1][10].style_index
+    assert_equal daily_sheet[1][7].style_index, daily_sheet[1][9].style_index
+    assert_equal daily_sheet[1][7].style_index, daily_sheet[1][11].style_index
     assert_equal daily_sheet.get_column_width_raw(6), daily_sheet.get_column_width_raw(8)
     assert_equal daily_sheet.get_column_width_raw(6), daily_sheet.get_column_width_raw(10)
     assert_equal daily_sheet.get_column_width_raw(7), daily_sheet.get_column_width_raw(9)
