@@ -38,7 +38,7 @@
       <%= f.number_field :chemical_group_count, {min: 0, max: 5, step: 1, required: true, class: "form-control"} %>
     </div>
   </div>
-  <div class="row">
+  <div class="row" data-controller="bank-branch-lookup" data-bank-branch-lookup-url-value="<%= lookup_banks_path %>">
     <div class="field mb-3 col-md-3">
       <%= f.label :consignor_code, class: "col-form-label-lg form-label" %>
       <%= f.text_field :consignor_code, {maxlength: 10, pattern: "\\d+", class: "form-control"} %>
@@ -49,11 +49,15 @@
     </div>
     <div class="field mb-3 col-md-2">
       <%= f.label :bank_code, class: "col-form-label-lg form-label" %>
-      <%= f.text_field :bank_code, {maxlength: 4, pattern: "\\d{4}", class: "form-control"} %>
+      <%= f.text_field :bank_code, {maxlength: 4, pattern: "\\d{4}", class: "form-control",
+            data: {bank_branch_lookup_target: "bankCode", action: "input->bank-branch-lookup#fetch"}} %>
+      <div id="bank_code_name" class="form-text"></div>
     </div>
     <div class="field mb-3 col-md-2">
       <%= f.label :branch_code, class: "col-form-label-lg form-label" %>
-      <%= f.text_field :branch_code, {maxlength: 3, pattern: "\\d{3}", class: "form-control"} %>
+      <%= f.text_field :branch_code, {maxlength: 3, pattern: "\\d{3}", class: "form-control",
+            data: {bank_branch_lookup_target: "branchCode", action: "input->bank-branch-lookup#fetch"}} %>
+      <div id="branch_code_name" class="form-text"></div>
     </div>
     <div class="field mb-3 col-md-2">
       <%= f.label :account_type_id, class: "col-form-label-lg form-label" %>
