@@ -7,7 +7,7 @@ module BanksHelper
   end
 
   def branch_code_label(bank_code, branch_code)
-    return branch_code if branch_code.blank?
+    return branch_code if bank_code.blank? || branch_code.blank?
 
     name = BankBranch.find_by(bank_code: bank_code, code: branch_code)&.name
     name ? "#{branch_code}(#{name})" : branch_code
