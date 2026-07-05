@@ -7,7 +7,7 @@ export default class extends Controller {
 
   connect() {
     this._debouncedFetch = this._debounce(this._fetch.bind(this), this.debounceValue)
-    this._fetch()
+    if (this.bankCodeTarget.value) this._fetch()
   }
 
   disconnect() {
