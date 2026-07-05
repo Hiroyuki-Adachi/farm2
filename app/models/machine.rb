@@ -90,7 +90,7 @@ class Machine < ApplicationRecord
   }
 
   def company?
-    owner.company_flag?
+    owner ? owner.company_flag? : false
   end
 
   def price_details(work)
