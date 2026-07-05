@@ -31,7 +31,13 @@ export default class extends Controller {
       headers: { Accept: "text/vnd.turbo-stream.html" },
       signal: this._abortController.signal
     })
-      .then(res => res.text())
+      .then(res => {
+        const contentType = res.headers.get("Content-Type") || ""
+        if (!res.ok || !contentType.includes("turbo-stream")) {
+          throw new Error(`lookup request failed: ${res.status}`)
+        }
+        return res.text()
+      })
       .then(html => Turbo.renderStreamMessage(html))
       .catch(e => { if (e.name !== "AbortError") console.error(e) })
   }
