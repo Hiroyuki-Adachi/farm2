@@ -25,7 +25,7 @@ class ImportBankMasterJob < ApplicationJob
       return
     end
 
-    Bank.where.not(code: seen_bank_codes).destroy_all if imported_banks.positive?
+    Bank.where.not(code: seen_bank_codes).destroy_all
 
     Rails.logger.info("ImportBankMasterJob: imported banks=#{imported_banks} branches=#{imported_branches}")
   end
@@ -36,13 +36,13 @@ class ImportBankMasterJob < ApplicationJob
     count = 0
     seen_codes = []
 
-    each_page("#{BASE_URL}/banks/#{bank.code}/branches.json") do |branch_json|
+    ok = each_page("#{BASE_URL}/banks/#{bank.code}/branches.json") do |branch_json|
       upsert_branch(bank.code, branch_json)
       seen_codes << branch_json["code"]
       count += 1
     end
 
-    bank.bank_branches.where.not(code: seen_codes).destroy_all if count.positive?
+    bank.bank_branches.where.not(code: seen_codes).destroy_all if ok
     count
   end
 
@@ -70,7 +70,8 @@ class ImportBankMasterJob < ApplicationJob
 
     loop do
       json = fetch("#{url}?page=#{page}")
-      break if json.blank?
+      return false if json.nil?
+      return true if json.empty?
 
       json.each(&)
       page += 1
