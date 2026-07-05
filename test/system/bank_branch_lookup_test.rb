@@ -16,8 +16,8 @@ class BankBranchLookupTest < ApplicationSystemTestCase
     fill_in "worker_bank_code", with: "0001"
     fill_in "worker_branch_code", with: "001"
 
-    assert_text "みずほ銀行"
-    assert_text "東京営業部"
+    assert_selector "#bank_code_name", text: "みずほ銀行"
+    assert_selector "#branch_code_name", text: "東京営業部"
   end
 
   test "該当しないコードの場合は名称が表示されない" do
@@ -27,7 +27,7 @@ class BankBranchLookupTest < ApplicationSystemTestCase
 
     fill_in "worker_bank_code", with: "9999"
 
-    assert_no_text "みずほ銀行"
+    assert_no_selector "#bank_code_name", text: "みずほ銀行"
   end
 
   test "管理情報変更画面でも銀行コード・支店コードから名称が表示される" do
@@ -38,8 +38,8 @@ class BankBranchLookupTest < ApplicationSystemTestCase
     fill_in "organization_bank_code", with: "0001"
     fill_in "organization_branch_code", with: "001"
 
-    assert_text "みずほ銀行"
-    assert_text "東京営業部"
+    assert_selector "#bank_code_name", text: "みずほ銀行"
+    assert_selector "#branch_code_name", text: "東京営業部"
   end
 
   private

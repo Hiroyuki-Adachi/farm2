@@ -142,20 +142,20 @@ class ImportBankMasterJobTest < ActiveJob::TestCase
 
   private
 
-  def bank_json(code, name: "みずほ", normalize_name: "みずほ銀行", normalize_kana: "ミズホギンコウ")
+  def bank_json(code, name: "みずほ", kana: "ミズホ", normalize_name: "みずほ銀行", normalize_kana: "ミズホギンコウ")
     {
       "code" => code,
       "name" => name,
-      "kana" => name,
+      "kana" => kana,
       "normalize" => { "name" => normalize_name, "kana" => normalize_kana }
     }
   end
 
-  def branch_json(code, name: "東京営業部", normalize_name: "東京営業部", normalize_kana: "トウキヨウエイギヨウブ")
+  def branch_json(code, name: "東京営業部", kana: "トウキヨウエイギヨウブシヨウ", normalize_name: "東京営業部", normalize_kana: "トウキヨウエイギヨウブ")
     {
       "code" => code,
       "name" => name,
-      "kana" => name,
+      "kana" => kana,
       "normalize" => { "name" => normalize_name, "kana" => normalize_kana }
     }
   end
