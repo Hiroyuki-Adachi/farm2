@@ -83,7 +83,13 @@ class ImportBankMasterJob < ApplicationJob
     req = Net::HTTP::Get.new(uri)
     req["User-Agent"] = USER_AGENT
 
-    res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |http| http.request(req) }
+    res = Net::HTTP.start(
+      uri.hostname,
+      uri.port,
+      use_ssl: true,
+      open_timeout: 5,
+      read_timeout: 10
+    ) { |http| http.request(req) }
     unless res.is_a?(Net::HTTPSuccess)
       Rails.logger.warn("ImportBankMasterJob: request failed url=#{url} status=#{res.code}")
       return nil
