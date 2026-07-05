@@ -13,11 +13,16 @@ class ImportBankMasterJob < ApplicationJob
     imported_branches = 0
     seen_bank_codes = []
 
-    each_page("#{BASE_URL}/banks.json") do |bank_json|
+    ok = each_page("#{BASE_URL}/banks.json") do |bank_json|
       bank = upsert_bank(bank_json)
       seen_bank_codes << bank.code
       imported_banks += 1
       imported_branches += import_branches(bank)
+    end
+
+    unless ok
+      Rails.logger.warn("ImportBankMasterJob: aborted due to fetch error (banks)")
+      return
     end
 
     Bank.where.not(code: seen_bank_codes).destroy_all if imported_banks.positive?
