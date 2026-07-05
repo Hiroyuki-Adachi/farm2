@@ -25,7 +25,11 @@ class ImportBankMasterJob < ApplicationJob
       return
     end
 
-    Bank.where.not(code: seen_bank_codes).destroy_all
+    if seen_bank_codes.empty?
+      Rails.logger.warn("ImportBankMasterJob: skipped bank deletion because no banks were fetched")
+    else
+      Bank.where.not(code: seen_bank_codes).destroy_all
+    end
 
     Rails.logger.info("ImportBankMasterJob: imported banks=#{imported_banks} branches=#{imported_branches}")
   end
@@ -42,7 +46,14 @@ class ImportBankMasterJob < ApplicationJob
       count += 1
     end
 
-    bank.bank_branches.where.not(code: seen_codes).destroy_all if ok
+    if ok
+      if seen_codes.empty?
+        Rails.logger.warn("ImportBankMasterJob: skipped branch deletion bank=#{bank.code} (no branches fetched)")
+      else
+        bank.bank_branches.where.not(code: seen_codes).destroy_all
+      end
+    end
+
     count
   end
 

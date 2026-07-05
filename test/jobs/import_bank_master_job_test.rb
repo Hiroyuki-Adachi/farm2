@@ -104,6 +104,28 @@ class ImportBankMasterJobTest < ActiveJob::TestCase
     assert Bank.exists?(code: "0002")
   end
 
+  test "銀行一覧が1ページ目から空で返ってきた場合は削除処理を行わず既存データを保持する" do
+    Bank.create!(code: "0002", name: "既存銀行", kana: "キゾンギンコウ")
+    stub_banks_page(1, [])
+
+    ImportBankMasterJob.perform_now
+
+    assert Bank.exists?(code: "0002")
+  end
+
+  test "支店一覧が1ページ目から空で返ってきた場合は削除処理を行わず既存の支店を保持する" do
+    bank = Bank.create!(code: "0001", name: "旧名称", kana: "キユウメイシヨウ")
+    bank.bank_branches.create!(code: "001", name: "既存支店", kana: "キゾンシテン")
+
+    stub_banks_page(1, [bank_json("0001")])
+    stub_banks_page(2, [])
+    stub_branches_page("0001", 1, [])
+
+    ImportBankMasterJob.perform_now
+
+    assert bank.bank_branches.exists?(code: "001")
+  end
+
   test "支店一覧の取得に失敗した場合はその銀行の既存の支店を保持したまま銀行情報だけ更新される" do
     bank = Bank.create!(code: "0001", name: "旧名称", kana: "キユウメイシヨウ")
     bank.bank_branches.create!(code: "001", name: "既存支店", kana: "キゾンシテン")

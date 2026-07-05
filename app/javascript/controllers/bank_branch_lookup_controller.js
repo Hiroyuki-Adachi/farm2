@@ -10,6 +10,10 @@ export default class extends Controller {
     this._fetch()
   }
 
+  disconnect() {
+    this._abortController?.abort()
+  }
+
   fetch = () => {
     this._debouncedFetch()
   }
@@ -20,10 +24,16 @@ export default class extends Controller {
       branch_code: this.branchCodeTarget.value
     })
 
-    fetch(`${this.urlValue}?${params}`, { headers: { Accept: "text/vnd.turbo-stream.html" } })
+    this._abortController?.abort()
+    this._abortController = new AbortController()
+
+    fetch(`${this.urlValue}?${params}`, {
+      headers: { Accept: "text/vnd.turbo-stream.html" },
+      signal: this._abortController.signal
+    })
       .then(res => res.text())
       .then(html => Turbo.renderStreamMessage(html))
-      .catch(console.error)
+      .catch(e => { if (e.name !== "AbortError") console.error(e) })
   }
 
   _debounce(fn, wait) {
