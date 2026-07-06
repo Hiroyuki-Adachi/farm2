@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_03_102700) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_04_010000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -46,6 +46,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_03_102700) do
     t.date "waste_date", comment: "くず米出荷日"
     t.decimal "waste_weight", precision: 5, scale: 1, comment: "くず米(kg)"
     t.index ["drying_id"], name: "adjustments_secondary", unique: true
+  end
+
+  create_table "bank_branches", comment: "支店マスタ", force: :cascade do |t|
+    t.string "bank_code", limit: 4, null: false, comment: "金融機関コード"
+    t.string "code", limit: 3, null: false, comment: "支店コード"
+    t.datetime "created_at", null: false
+    t.string "kana", limit: 40, default: "", null: false, comment: "支店名称(カナ)"
+    t.string "name", limit: 40, null: false, comment: "支店名称"
+    t.datetime "updated_at", null: false
+    t.index ["bank_code", "code"], name: "index_bank_branches_on_bank_code_and_code", unique: true
+  end
+
+  create_table "banks", comment: "金融機関マスタ", force: :cascade do |t|
+    t.string "code", limit: 4, null: false, comment: "金融機関コード"
+    t.datetime "created_at", null: false
+    t.string "kana", limit: 40, default: "", null: false, comment: "金融機関名称(カナ)"
+    t.string "name", limit: 40, null: false, comment: "金融機関名称"
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_banks_on_code", unique: true
   end
 
   create_table "broccoli_boxes", id: { type: :serial, comment: "ブロッコリ箱マスタ" }, comment: "ブロッコリ箱マスタ", force: :cascade do |t|
@@ -1372,6 +1391,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_03_102700) do
     t.index ["zengin_payment_batch_id"], name: "index_zengin_payments_on_zengin_payment_batch_id"
   end
 
+  add_foreign_key "bank_branches", "banks", column: "bank_code", primary_key: "code"
   add_foreign_key "chemical_inventories", "organizations"
   add_foreign_key "chemical_stocks", "organizations"
   add_foreign_key "chemical_terms", "organizations"

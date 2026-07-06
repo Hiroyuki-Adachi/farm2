@@ -1,6 +1,8 @@
 class ZenginPaymentsController < ApplicationController
   include PermitManager
 
+  helper BanksHelper
+
   before_action :set_fixed_at
   before_action :set_fix
   before_action :set_batch
