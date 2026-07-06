@@ -58,7 +58,9 @@ class TaskScheduleDetailOrganizationScopeTest < ActiveSupport::TestCase
       schedule.organization = organizations(:org2)
       schedule.created_by = other_worker.id
       schedule.term = 2015
+      # rubocop:disable Rails/SkipsModelValidations
       schedule.save!(validate: false)
+      # rubocop:enable Rails/SkipsModelValidations
     end
   end
 
