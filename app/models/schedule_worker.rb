@@ -26,8 +26,12 @@ class ScheduleWorker < ApplicationRecord
 
   before_create :set_uuid
 
+  scope :for_organization, lambda { |organization|
+    joins(:schedule).merge(Schedule.for_organization(organization))
+  }
+
   scope :for_personal, lambda { |worker, day|
-    joins(:schedule)
+    for_organization(worker.organization_id)
       .eager_load(:schedule)
       .joins("INNER JOIN work_kinds ON schedules.work_kind_id = work_kinds.id").preload(:work_kind)
       .where(["schedules.worked_at BETWEEN ? AND ?", Time.zone.today, Time.zone.today + day])
@@ -36,7 +40,7 @@ class ScheduleWorker < ApplicationRecord
   }
 
   scope :for_calendar, lambda { |worker|
-    joins(:schedule)
+    for_organization(worker.organization_id)
       .eager_load(:schedule)
       .joins("INNER JOIN work_kinds ON schedules.work_kind_id = work_kinds.id").preload(:work_kind)
       .where(["schedules.worked_at >= ? OR schedules.calendar_remove_flag = ?", Time.zone.today, false])

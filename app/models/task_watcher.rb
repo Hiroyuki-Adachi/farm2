@@ -22,4 +22,8 @@
 class TaskWatcher < ApplicationRecord
   belongs_to :task
   belongs_to :worker
+
+  scope :for_organization, lambda { |organization|
+    joins(:task).merge(Task.for_organization(organization))
+  }
 end

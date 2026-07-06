@@ -62,6 +62,9 @@ class TaskEvent < ApplicationRecord
   after_commit :clear_if_comment_cleared, on: :update
   after_commit :clear_if_work_deleted, on: :update
 
+  scope :for_organization, lambda { |organization|
+    joins(:task).merge(Task.for_organization(organization))
+  }
   scope :usual_order, -> { includes(:actor, :comment).order(created_at: :asc, id: :asc) }
   scope :show_task, -> { where(source: [:form, :gantt, :calendar, :api]) }
 
