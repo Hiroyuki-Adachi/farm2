@@ -2,7 +2,8 @@ class Works::SupportersController < ApplicationController
   include PermitManager
 
   def index
-    @results = WorkResultDecorator.decorate_collection(WorkResult.by_supporter_home(current_term))
+    results = WorkResult.for_organization(current_organization).by_supporter_home(current_term)
+    @results = WorkResultDecorator.decorate_collection(results)
     @home_totals, @month_totals = calc_totals(@results)
   end
 

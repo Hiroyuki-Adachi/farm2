@@ -124,8 +124,8 @@ work_results6:
 
 work_result_other_org:
   id: 9000
-  work: work_other_org
-  worker: worker_other_org
+  work_id: 9000
+  worker_id: 9100
   hours: 4.0
   display_order: 1
   fixed_hours: 4.0

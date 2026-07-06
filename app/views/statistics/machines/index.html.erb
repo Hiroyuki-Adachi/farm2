@@ -1,0 +1,24 @@
+<h1>年度別機械稼働時間一覧</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>機械種別</th>
+      <th>機械名</th>
+      <% @systems.each do |system| %>
+        <th class="numeric"><%= system.term_name %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @machines.each do |machine| %>
+      <tr>
+        <th><%= machine.type_name %></th>
+        <th><%= machine.name %></th>
+        <% @systems.each do |system| %>
+          <td class="numeric"><%= machine.hours(system.term) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>

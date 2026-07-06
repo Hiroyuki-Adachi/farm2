@@ -33,6 +33,10 @@ class WorkChemical < ApplicationRecord
   validates :quantity, presence: true
   validates :quantity, numericality: { if: proc { |x| x.quantity.present? } }
 
+  scope :for_organization, lambda { |organization|
+    joins(:work).where(works: { organization_id: organization.is_a?(Organization) ? organization.id : organization })
+  }
+
   scope :by_term, lambda { |term, organization = nil|
     works = Work.arel_table
     chemicals = Chemical.arel_table

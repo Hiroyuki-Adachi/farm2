@@ -3,7 +3,7 @@ class WholeCropsController < ApplicationController
 
   def index
     WorkWholeCrop.update_prices(current_system)
-    whole_crops = WorkWholeCrop.usual(current_term)
+    whole_crops = WorkWholeCrop.for_organization(current_organization).usual(current_term)
     respond_to do |format|
       format.html do
         @year_months = whole_crops.select("to_char(works.worked_at, 'YYYY-MM')")
@@ -13,10 +13,10 @@ class WholeCropsController < ApplicationController
       end
       format.csv do
         @whole_crops = if params[:ids].present?
-          WholeCropDecorator.decorate_collection(whole_crops.where(id: params[:ids]).usual_order)
-        else
-          WholeCropDecorator.decorate_collection(WorkWholeCrop.none)
-        end
+                         WholeCropDecorator.decorate_collection(whole_crops.where(id: params[:ids]).usual_order)
+                       else
+                         WholeCropDecorator.decorate_collection(WorkWholeCrop.none)
+                       end
         send_data render_to_string, filename: "whole_crops_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv", type: :csv
       end
     end

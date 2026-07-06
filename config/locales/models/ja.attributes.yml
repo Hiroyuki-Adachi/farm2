@@ -194,6 +194,7 @@ ja:
 
       system:
         term: 年度
+        term_name: "年度名"
         start_date: "期首"
         end_date: "期末"
         default_price: "工賃(初期値)"

@@ -33,6 +33,7 @@ class InitWorkTypeCacheJobTest < ActiveJob::TestCase
     ((previous.term + 1)..term).each do |target_term|
       System.create!(
         term: target_term,
+        term_name: target_term.to_s,
         start_date: previous.end_date.next_day,
         end_date: previous.end_date.next_day.next_year.prev_day,
         organization_id: organization.id

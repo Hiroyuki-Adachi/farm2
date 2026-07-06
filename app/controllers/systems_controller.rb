@@ -23,6 +23,7 @@ class SystemsController < ApplicationController
       [
         :start_date,
         :end_date,
+        :term_name,
         :default_price,
         :default_fee,
         :dry_price,
