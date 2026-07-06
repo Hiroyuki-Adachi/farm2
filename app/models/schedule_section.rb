@@ -10,4 +10,8 @@ class ScheduleSection < ApplicationRecord
 
   belongs_to :schedule
   belongs_to :section
+
+  scope :for_organization, lambda { |organization|
+    joins(:schedule).merge(Schedule.for_organization(organization))
+  }
 end
