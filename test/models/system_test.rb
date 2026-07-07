@@ -108,4 +108,30 @@ class SystemTest < ActiveSupport::TestCase
 
     assert_predicate system, :valid?
   end
+
+  test "termは西暦年の範囲に縛られず、1年未満の期間を挟めること" do
+    # 年度末を12月末から3月末に変更する場合を想定し、
+    # 前期(s2017: 2017-01-01〜2017-12-31)の直後に3ヶ月だけの期を挿入する。
+    system = System.new(
+      organization_id: organizations(:org).id,
+      term: 2018,
+      term_name: "2018(3ヶ月)",
+      start_date: Date.new(2018, 1, 1),
+      end_date: Date.new(2018, 3, 31)
+    )
+
+    assert_predicate system, :valid?
+  end
+
+  test "termは2100以上の値でも有効であること" do
+    system = System.new(
+      organization_id: organizations(:org).id,
+      term: 2101,
+      term_name: "2101",
+      start_date: Date.new(2018, 1, 1),
+      end_date: Date.new(2018, 12, 31)
+    )
+
+    assert_predicate system, :valid?
+  end
 end
