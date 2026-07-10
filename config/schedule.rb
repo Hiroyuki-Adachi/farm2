@@ -87,3 +87,7 @@ end
 every :monday, at: '09:10 am' do
   runner "DailyWeatherCheckJob.perform_now"
 end
+
+every 1.month, at: '02:30 am' do
+  runner "ImportBankMasterJob.perform_now"
+end

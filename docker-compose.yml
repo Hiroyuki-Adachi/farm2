@@ -64,6 +64,9 @@ services:
       - type: volume
         source: gemini_home
         target: /root/.gemini
+      - type: volume
+        source: ssh_home
+        target: /root/.ssh
       - type: tmpfs
         target: /farm2/tmp
       - type: tmpfs
@@ -125,3 +128,4 @@ volumes:
   vscode_server:
   claude_home:
   gemini_home:
+  ssh_home:

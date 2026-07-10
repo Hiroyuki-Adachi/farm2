@@ -32,6 +32,10 @@ class TaskComment < ApplicationRecord
   validates :body, presence: true, on: :create
   validate :poster_is_actor, if: -> { event.present? }
 
+  scope :for_organization, lambda { |organization|
+    joins(:task).merge(Task.for_organization(organization))
+  }
+
   private
 
   def strip_body

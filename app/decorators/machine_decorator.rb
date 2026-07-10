@@ -11,7 +11,7 @@ class MachineDecorator < Draper::Decorator
   #   end
 
   def price_tag
-    if model.owner.company_flag
+    if model.company?
       h.raw("&nbsp;")
     else
       h.link_to('料金設定', h.show_machine_machine_price_headers_path(machine_id: model), { class: "btn btn-success btn-sm" })
