@@ -16,4 +16,8 @@
 class DepreciationType < ApplicationRecord
   belongs_to :depreciation
   belongs_to :work_type
+
+  scope :for_organization, lambda { |organization|
+    joins(:depreciation).merge(Depreciation.for_organization(organization))
+  }
 end

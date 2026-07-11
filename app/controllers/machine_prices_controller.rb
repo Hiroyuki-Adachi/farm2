@@ -13,11 +13,12 @@ class MachinePricesController < ApplicationController
   end
 
   def show_machine
-    @machine = Machine.find(params[:machine_id])
+    @machine = find_machine(params[:machine_id])
     @machine_price = MachinePriceHeader.show_machine(@machine, Time.zone.today).first
   end
 
   def new
+    find_machine(params[:machine_id]) if params[:machine_id]
     @machine_price = if params[:machine_id]
                        MachinePriceHeader.new(machine_id: params[:machine_id], machine_type_id: 0, validated_at: Time.zone.today)
                      else
@@ -28,6 +29,7 @@ class MachinePricesController < ApplicationController
   def edit; end
 
   def create
+    find_machine(machine_price_header_params[:machine_id]) if machine_price_header_params[:machine_id].to_i.positive?
     @machine_price = MachinePriceHeader.new(machine_price_header_params)
     @machine_price.details_form = params[:details_form]
 
@@ -70,7 +72,7 @@ class MachinePricesController < ApplicationController
   private
 
   def set_machine_price
-    @machine_price = MachinePriceHeader.find(params[:id])
+    @machine_price = MachinePriceHeader.for_organization(current_organization).find(params[:id])
   end
 
   def set_adjusts
@@ -79,5 +81,9 @@ class MachinePricesController < ApplicationController
 
   def machine_price_header_params
     params.expect(machine_price_header: [:validated_at, :machine_id, :machine_type_id])
+  end
+
+  def find_machine(id)
+    Machine.for_organization(current_organization).find(id)
   end
 end
