@@ -11,11 +11,11 @@ class DepreciationsController < ApplicationController
   def create
     Depreciation.transaction do
       params[:depreciations].each do |dep_param|
+        machine = scoped_machine(dep_param)
         if dep_param[:id].present?
           depreciation = Depreciation.for_organization(current_organization).find(dep_param[:id])
-          depreciation.update(depreciation_params(dep_param))
+          depreciation.update(depreciation_params(dep_param).merge(machine: machine))
         else
-          machine = Machine.for_organization(current_organization).find(dep_param[:machine_id])
           depreciation = Depreciation.create(depreciation_params(dep_param).merge(machine: machine))
         end
         depreciation.regist_work_types(dep_param[:work_types]) if dep_param[:work_types]
@@ -27,6 +27,10 @@ class DepreciationsController < ApplicationController
   private
 
   def depreciation_params(params)
-    params.permit(:id, :cost, :machine_id, :term)
+    params.permit(:cost, :term)
+  end
+
+  def scoped_machine(params)
+    Machine.for_organization(current_organization).find(params[:machine_id])
   end
 end
