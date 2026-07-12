@@ -27,6 +27,11 @@ class MachinePriceHeader < ApplicationRecord
   scope :show_type, ->(machine_type, base_date) { where("machine_type_id = ? AND validated_at <= ?", machine_type, base_date).order("validated_at DESC") }
   scope :show_machine, ->(machine, base_date) { where("machine_id = ? AND validated_at <= ?", machine, base_date).order("validated_at DESC") }
   scope :histories, ->(machine_price) { where("(machine_id = ? AND machine_id <> 0) OR (machine_type_id = ? AND machine_type_id <> 0)", machine_price.machine_id, machine_price.machine_type_id).order("validated_at ASC") }
+  scope :for_organization, lambda { |organization|
+    organization_id = organization.is_a?(Organization) ? organization.id : organization
+    left_joins(machine: :owner)
+      .where("machine_price_headers.machine_id = 0 OR homes.organization_id = ?", organization_id)
+  }
 
   def machine?
     !machine_id.zero?
