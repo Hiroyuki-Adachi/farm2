@@ -24,7 +24,7 @@ class ChangeTermTest < ActionDispatch::IntegrationTest
     new_system = System.find_by(term: new_term, organization_id: @organization.id)
     get menu_index_path
     assert_response :success
-    assert_select 'h1', /#{new_system.term_name}/
+    assert_select 'h1', /#{Regexp.escape(new_system.term_name)}/
   end
 
   def teardown
