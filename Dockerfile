@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM debian:12
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -15,9 +15,9 @@ RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
       build-essential libpq-dev git curl tzdata \
       libsqlite3-dev sqlite3 zlib1g-dev libssl-dev libreadline-dev libyaml-dev \
-      libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common \
+      libxml2-dev libxslt1-dev libcurl4-openssl-dev \
       libffi-dev ca-certificates gnupg vim gh \
-      patch bubblewrap ripgrep jq less procps iproute2 iputils-ping openssh-client && \
+      patch ripgrep jq less procps iproute2 iputils-ping openssh-client && \
     rm -rf /var/lib/apt/lists/*
 
 # コンテナ内のUID差異で git が "dubious ownership" を出しにくくする

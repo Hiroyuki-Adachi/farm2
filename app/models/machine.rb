@@ -39,6 +39,9 @@ class Machine < ApplicationRecord
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
+  scope :for_organization, lambda { |organization|
+    joins(:owner).merge(Home.for_organization(organization))
+  }
   scope :ordered_for_display, lambda {
     joins(:machine_type)
       .order("machine_types.display_order, machine_types.id, machines.display_order, machines.id")
