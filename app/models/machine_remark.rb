@@ -20,6 +20,8 @@ class MachineRemark < ApplicationRecord
   belongs_to  :machine, -> { with_deleted }
   belongs_to  :work
 
+  scope :for_organization, ->(organization) { joins(:work).merge(Work.for_organization(organization)) }
+
   def self.regist(work, remarks)
     work.machine_remarks.destroy_all
     remarks.each_value do |remark|
