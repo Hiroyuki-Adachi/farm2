@@ -650,6 +650,20 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", results_fix_zengin_payment_path(@fix), text: "支払結果Excel出力"
   end
 
+  test "仕向口座に金融機関マスタの名称が表示される" do
+    post fix_zengin_payment_path(@fix)
+    batch = ZenginPaymentBatch.find_by(organization: @fix.organization, term: @fix.term, fixed_at: @fix.fixed_at)
+    bank = Bank.create!(code: batch.bank_code, name: "みずほ銀行", kana: "ミズホギンコウ")
+    bank.bank_branches.create!(code: batch.branch_code, name: "東京営業部", kana: "トウキヨウエイギヨウブ")
+
+    get fix_zengin_payment_path(@fix)
+
+    assert_response :success
+    assert_select ".fw-bold", text: "仕向口座"
+    assert_match(/#{batch.bank_code}\(みずほ銀行\)/, response.body)
+    assert_match(/#{batch.branch_code}\(東京営業部\)/, response.body)
+  end
+
   private
 
   def standard_payment_with_details(batch)

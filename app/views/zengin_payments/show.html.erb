@@ -40,7 +40,7 @@
           </div>
           <div class="px-3 py-2 border-start">
             <div class="fw-bold">仕向口座</div>
-            <div><%= [@batch.bank_code, @batch.branch_code, @batch.account_number].reject(&:blank?).join(' / ').presence || '-' %></div>
+            <div><%= [bank_code_label(@batch.bank_code), branch_code_label(@batch.bank_code, @batch.branch_code), @batch.account_number].reject(&:blank?).join(' / ').presence || '-' %></div>
           </div>
           <div class="px-3 py-2 border-start">
             <div class="fw-bold">状態</div>

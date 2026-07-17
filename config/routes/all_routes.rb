@@ -112,10 +112,6 @@ resources :land_costs, param: "land_id", only: [:index, :create, :edit, :update]
   end
 end
 
-resources :banks, param: :code, except: [:show] do
-  resources :branches, param: :code, controller: "banks/branches", except: [:show]
-end
-
 resources :schedules, except: [:show] do
   collection do
     get :work_types
@@ -133,6 +129,11 @@ namespace :sessions do
   end
 end
 resources :sessions, only: [:show], param: :token
+resources :banks, only: [] do
+  collection do
+    get :lookup
+  end
+end
 resources :machine_types, except: [:show]
 resources :chemical_types, except: [:show]
 resources :work_kinds, except: [:show]

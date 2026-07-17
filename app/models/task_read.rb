@@ -24,6 +24,10 @@ class TaskRead < ApplicationRecord
   belongs_to :task
   belongs_to :worker
 
+  scope :for_organization, lambda { |organization|
+    joins(:task).merge(Task.for_organization(organization))
+  }
+
   def self.touch_and_get_previous!(task:, worker_id:, at: Time.current)
     rec = find_or_initialize_by(task: task, worker_id: worker_id)
     prev = rec.last_read_at || Time.zone.at(0)

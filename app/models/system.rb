@@ -34,7 +34,7 @@ class System < ApplicationRecord
   before_validation :set_default_term_name
 
   validates :term, presence: true
-  validates :term, numericality: { only_integer: true, greater_than: 2000, less_than: 2100 }
+  validates :term, numericality: { only_integer: true, greater_than: 0 }
   validates :term_name, presence: true, length: { maximum: 10 }
   validate :validate_period_dates
   validate :validate_period_continuity
