@@ -33,6 +33,8 @@ class MachineResult < ApplicationRecord
   has_one :machine_type, -> { with_deleted }, through: :machine
   has_one :work_kind, -> { with_deleted }, through: :work
 
+  scope :for_organization, ->(organization) { joins(:work).merge(Work.for_organization(organization)) }
+
   scope :by_home, lambda { |term, organization = nil|
     machines = Machine.arel_table
     homes = Home.arel_table

@@ -19,11 +19,15 @@
 class MachinePriceDetail < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
-  belongs_to :header, class_name: 'MachinePriceHeader'
+  belongs_to :header, class_name: 'MachinePriceHeader', foreign_key: :machine_price_header_id
   belongs_to :work_kind
   belongs_to_active_hash :adjust
 
   enum :lease_id, { normal: 1, lease: 2 }
+
+  scope :for_organization, lambda { |organization|
+    joins(:header).merge(MachinePriceHeader.for_organization(organization))
+  }
 
   validates :price, presence: true
   validates :price, numericality: true, if: proc { |x| x.price.present? }

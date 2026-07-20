@@ -1,5 +1,3 @@
-require 'wareki'
-
 module SessionsHelper
   def log_in(user, target: :PC)
     session[:user_id] = user.id
@@ -37,11 +35,11 @@ module SessionsHelper
   end
 
   def current_term_jp
-    current_system.start_date.strftime('%Jy年')
+    current_system.term_name
   end
 
   def next_term_jp
-    next_system.start_date.strftime('%Jy年')
+    next_system.term_name
   end
 
   def previous_term
