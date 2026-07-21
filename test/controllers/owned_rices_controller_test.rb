@@ -33,6 +33,18 @@ class OwnedRicesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h2", text: "第15期"
   end
 
+  test "前期の年度が未作成でも保有米変更を表示できる" do
+    previous_price = @owned_rice_price.dup
+    previous_price.term = 2014
+    previous_price.save!
+    systems(:s2014).destroy!
+
+    get edit_owned_rice_path(@home.id)
+    assert_response :success
+    assert_select "h2", text: "第14期", count: 0
+    assert_select "h2", text: "第15期"
+  end
+
   test "保有米変更(実行)" do
     new_owned_rice = { @owned_rice_price.id => {
       home_id: @home.id, owned_rice_price_id: @owned_rice_price.id, id: @owned_rice.id,
