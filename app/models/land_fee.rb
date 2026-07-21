@@ -27,10 +27,13 @@ class LandFee < ApplicationRecord
     transaction do
       params.each_value do |attributes|
         land = lands.find(attributes[:land_id])
-        fee = attributes[:id].present? ? fees.find(attributes[:id]) : new
+        fee = if attributes[:id].present?
+                fees.find_by!(id: attributes[:id], land_id: land.id)
+              else
+                land.land_fees.new
+              end
 
         fee.assign_attributes(attributes.except(:id, :land_id))
-        fee.land = land
         fee.save!
       end
     end
