@@ -15,7 +15,7 @@ class Lands::FeesController < ApplicationController
 
   def update
     Home.for_organization(current_organization).find(params[:id])
-    LandFee.save_all_from_params(params[:id], fee_params)
+    LandFee.save_all_from_params(current_organization, params[:id], fee_params)
     redirect_to(lands_fees_path)
   end
 

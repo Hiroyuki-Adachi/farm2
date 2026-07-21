@@ -68,6 +68,7 @@ class LandTotalQuery
         work_lands[:work_id].eq(work[:id])
           .and(work[:work_kind_id].eq(id))
           .and(work[:term].eq(@sys.term))
+          .and(work[:organization_id].eq(@sys.organization_id))
       ]
     end
 
@@ -95,7 +96,11 @@ class LandTotalQuery
       query.join(work, Arel::Nodes::OuterJoin).on(join_condition)
     end
 
-    query.where(lands[:start_on].lteq(@sys.end_date).and(lands[:end_on].gteq(@sys.start_date)))
+    query.where(
+      lands[:organization_id].eq(@sys.organization_id)
+        .and(lands[:start_on].lteq(@sys.end_date))
+        .and(lands[:end_on].gteq(@sys.start_date))
+    )
     query.group(lands[:place], lands[:id])
     query.having(worked_at_columns.map { |worked_at| worked_at.not_eq(nil) }.reduce(&:or))
     query.order(lands[:parcel_number], max_owner_display_order, lands[:place], lands[:id])

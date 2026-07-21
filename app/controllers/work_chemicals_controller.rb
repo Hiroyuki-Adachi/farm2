@@ -27,7 +27,9 @@ class WorkChemicalsController < ApplicationController
       next if work_chemical.work.work_lands.empty?
 
       land_ids = work_chemical.work.work_lands.map(&:land_id)
-      LandCost.sum_area_by_lands(work_chemical.work.worked_at, land_ids).each do |work_type_id, area|
+      LandCost.sum_area_by_lands(
+        work_chemical.work.worked_at, land_ids, work_chemical.work.organization_id
+      ).each do |work_type_id, area|
         chemical_work_type = ChemicalWorkType.by_work_chemical(work_chemical, work_type_id)
         next unless chemical_work_type
 
