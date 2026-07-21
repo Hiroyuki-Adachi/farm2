@@ -11,7 +11,7 @@
 <% if @p_owned_prices.size > 0 %>
   <%= render(:partial => 'show_previous') %>
 <% end %>
-<h2><%= current_term %>年度</h2>
+<h2><%= current_system.term_name %></h2>
 <h3>保有米</h3>
 <%= form_with url: owned_rice_path(id: @home.id), method: :put do |f| %>
   <div class="row">
