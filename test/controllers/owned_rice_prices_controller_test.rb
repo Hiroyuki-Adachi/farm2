@@ -4,11 +4,13 @@ class OwnedRicePricesControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:users1))
     @owned_rice_price = owned_rice_prices(:owned_rice_price1)
+    systems(:s2015).update!(term_name: "第15期")
   end
 
   test "保有米単価マスタ一覧" do
     get owned_rice_prices_path
     assert_response :success
+    assert_select "h1", text: "保有米単価マスタ一覧(第15期)"
   end
 
   test "保有米単価マスタ一覧(管理者以外)" do
@@ -39,6 +41,7 @@ class OwnedRicePricesControllerTest < ActionDispatch::IntegrationTest
   test "保有米単価マスタ変更(表示)" do
     get edit_owned_rice_price_path(work_types(:work_type_koshi).id)
     assert_response :success
+    assert_select "h1", text: "保有米単価マスタ(第15期)(コシヒカリ)"
   end
 
   test "保有米単価マスタ変更(実行)" do

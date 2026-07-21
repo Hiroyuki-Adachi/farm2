@@ -30,6 +30,10 @@ module SessionsHelper
     System.find_by(term: next_term, organization_id: current_user.organization_id)
   end
 
+  def previous_system
+    System.find_by(term: previous_term, organization_id: current_user.organization_id)
+  end
+
   def current_term
     current_user.term
   end
