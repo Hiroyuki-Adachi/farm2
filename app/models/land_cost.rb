@@ -56,7 +56,7 @@ class LandCost < ApplicationRecord
       .by_work_type(work_type_id, target)
       .where("lands.deleted_at IS NULL AND target_flag = true")
       .where("? BETWEEN lands.start_on AND lands.end_on", target)
-      .sum(:area)
+      .sum("lands.area")
   end
 
   def self.sum_area_for_harvest(worked_at, work_kind_id, organization)

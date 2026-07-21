@@ -62,4 +62,49 @@ class Lands::FeesControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :not_found
   end
+
+  test "同じ組織でも別世帯の土地料金は更新しない" do
+    other_fee = LandFee.create!(land: lands(:lands0), term: 2015, manage_fee: 100, peasant_fee: 200)
+    land = lands(:land_genka2)
+    update = {
+      land.id => {
+        manage_fee: 30_000,
+        peasant_fee: 40_000,
+        term: 2015,
+        id: other_fee.id,
+        land_id: land.id
+      }
+    }
+
+    assert_no_changes -> { other_fee.reload.attributes.slice("land_id", "manage_fee", "peasant_fee") } do
+      patch lands_fee_path(id: @home_id), params: { land_fees: update }
+    end
+    assert_response :not_found
+  end
+
+  test "土地料金の一括更新に失敗した場合は全件をロールバックする" do
+    fee = land_fees(:land_fee1)
+    original_manage_fee = fee.manage_fee
+    update = {
+      fee.land_id => {
+        manage_fee: original_manage_fee + 1,
+        peasant_fee: fee.peasant_fee,
+        term: fee.term,
+        id: fee.id,
+        land_id: fee.land_id
+      },
+      lands(:land_other_org).id => {
+        manage_fee: 30_000,
+        peasant_fee: 40_000,
+        term: 2015,
+        id: nil,
+        land_id: lands(:land_other_org).id
+      }
+    }
+
+    assert_no_changes -> { fee.reload.manage_fee } do
+      patch lands_fee_path(id: @home_id), params: { land_fees: update }
+    end
+    assert_response :not_found
+  end
 end

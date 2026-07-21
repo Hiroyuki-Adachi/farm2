@@ -22,14 +22,17 @@ class LandFee < ApplicationRecord
 
   def self.save_all_from_params(organization, home_id, params)
     lands = Land.for_organization(organization).where(owner_id: home_id)
+    fees = for_organization(organization).where(land_id: lands.select(:id))
 
-    params.each_value do |attributes|
-      land = lands.find(attributes[:land_id])
-      fee = attributes[:id].present? ? for_organization(organization).find(attributes[:id]) : new
+    transaction do
+      params.each_value do |attributes|
+        land = lands.find(attributes[:land_id])
+        fee = attributes[:id].present? ? fees.find(attributes[:id]) : new
 
-      fee.assign_attributes(attributes.except(:id, :land_id))
-      fee.land = land
-      fee.save!
+        fee.assign_attributes(attributes.except(:id, :land_id))
+        fee.land = land
+        fee.save!
+      end
     end
   end
 end

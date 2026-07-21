@@ -17,6 +17,8 @@ class LandDetailOrganizationScopeTest < ActiveSupport::TestCase
     assert_not_includes LandCost.for_organization(@organization), land_cost
     assert_includes LandCost.for_organization(@other_organization), land_cost
     assert_equal @other_land.area, LandCost.total(Date.new(2015, 1, 1), @other_organization)[land_cost.work_type_id]
+    assert_equal @other_land.area,
+                 LandCost.sum_area_by_work_type(Date.new(2015, 1, 1), land_cost.work_type_id, @other_organization)
   end
 
   test "土地料金を親土地の組織で絞り込む" do
