@@ -166,7 +166,7 @@ class SorimachiJournal < ApplicationRecord
     sum_area = 0
     max_work_type_id = 0
     max_area = 0
-    land_costs = LandCost.total(accounted_on || sys.end_date)
+    land_costs = LandCost.total(accounted_on || sys.end_date, sys.organization_id)
     land_costs.each do |land_cost|
       next unless copy_src.work_types.ids.include?(land_cost[0])
 

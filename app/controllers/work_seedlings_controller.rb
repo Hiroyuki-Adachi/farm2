@@ -21,7 +21,7 @@ class WorkSeedlingsController < ApplicationController
     work_seedlings = Hash.new { |h, k| h[k] = {} }
     work_areas = Hash.new { |h, k| h[k] = {} }
     works.each do |work|
-      LandCost.sum_area_by_lands(work.worked_at, work.lands.ids).each do |work_type_id, area|
+      LandCost.sum_area_by_lands(work.worked_at, work.lands.ids, work.organization_id).each do |work_type_id, area|
         work_seedlings[work_type_id][work.id] = work.sum_seedlings(work_type_id)
         work_areas[work_type_id][work.id] = area
       end

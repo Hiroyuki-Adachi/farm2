@@ -10,7 +10,7 @@
     </div>
   </div>
   <hr>
-  <% land_costs = LandCost.total(@journal.accounted_on) %>
+  <% land_costs = LandCost.total(@journal.accounted_on, current_organization) %>
   <form id="sorimachi_form" action="<%= sorimachi_work_type_path(sorimachi_journal_id: @journal) %>" data-id="<%= @journal.id %>">
     <% total_amount = 0 %>
     <% @work_types.each do |work_type| %>

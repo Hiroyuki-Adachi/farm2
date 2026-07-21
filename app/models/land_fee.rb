@@ -18,15 +18,18 @@
 class LandFee < ApplicationRecord
   belongs_to :land
 
-  def self.save_all_from_params(_home_id, params)
-    params.each_value do |attributes|
-      fee = LandFee.find_by(id: attributes[:id])
+  scope :for_organization, ->(organization) { joins(:land).merge(Land.for_organization(organization)) }
 
-      if fee
-        fee.update(attributes)
-      else
-        LandFee.create(attributes)
-      end
+  def self.save_all_from_params(organization, home_id, params)
+    lands = Land.for_organization(organization).where(owner_id: home_id)
+
+    params.each_value do |attributes|
+      land = lands.find(attributes[:land_id])
+      fee = attributes[:id].present? ? for_organization(organization).find(attributes[:id]) : new
+
+      fee.assign_attributes(attributes.except(:id, :land_id))
+      fee.land = land
+      fee.save!
     end
   end
 end

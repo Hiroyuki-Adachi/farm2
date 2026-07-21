@@ -107,4 +107,20 @@ class LandCostsControllerTest < ActionDispatch::IntegrationTest
   teardown do
     travel_back
   end
+
+  test "他組織の土地には土地原価を作成しない" do
+    other_land = lands(:land_other_org)
+    attributes = {
+      0 => {
+        work_type_id: work_types(:work_types1).id,
+        land_id: other_land.id,
+        activated_on: Date.new(2015, 1, 1)
+      }
+    }
+
+    assert_no_difference("LandCost.count") do
+      post land_costs_path, params: { land_costs: attributes }
+    end
+    assert_response :not_found
+  end
 end

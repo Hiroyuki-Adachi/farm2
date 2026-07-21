@@ -44,4 +44,22 @@ class Lands::FeesControllerTest < ActionDispatch::IntegrationTest
     assert_equal update[land_genka2.id][:term], land_fee.term
     assert_equal update[land_genka2.id][:land_id], land_fee.land_id
   end
+
+  test "他組織の土地には土地料金を作成しない" do
+    other_land = lands(:land_other_org)
+    update = {
+      other_land.id => {
+        manage_fee: 30_000,
+        peasant_fee: 40_000,
+        term: 2015,
+        id: nil,
+        land_id: other_land.id
+      }
+    }
+
+    assert_no_difference("LandFee.count") do
+      patch lands_fee_path(id: @home_id), params: { land_fees: update }
+    end
+    assert_response :not_found
+  end
 end

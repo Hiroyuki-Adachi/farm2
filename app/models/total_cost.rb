@@ -104,7 +104,7 @@ class TotalCost < ApplicationRecord
 
   def base_cost(work_type_id)
     cost = cost(work_type_id)
-    sum_area = LandCost.sum_area_by_work_type(occurred_on, work_type_id)
+    sum_area = LandCost.sum_area_by_work_type(occurred_on, work_type_id, organization_id)
     return 0 if sum_area.zero?
 
     cost && !sum_area.zero? ? cost / sum_area * 10 : 0
@@ -156,7 +156,7 @@ class TotalCost < ApplicationRecord
     if work.work_type.cost_flag || work.work_lands.exists?
       make_work_details(work, total_cost)
     else
-      make_details_for_indirect(total_cost.id, work.worked_at)
+      make_details_for_indirect(total_cost, work.worked_at)
     end
   end
 
@@ -168,7 +168,7 @@ class TotalCost < ApplicationRecord
         area: 0
       )
     elsif (work.work_lands&.count || 0).positive?
-      LandCost.sum_area_by_lands(work.worked_at, work.lands.ids).each do |k, v|
+      LandCost.sum_area_by_lands(work.worked_at, work.lands.ids, work.organization_id).each do |k, v|
         TotalCostDetail.create(
           total_cost_id: total_cost.id,
           work_type_id: k,
@@ -179,20 +179,20 @@ class TotalCost < ApplicationRecord
       TotalCostDetail.create(
         total_cost_id: total_cost.id,
         work_type_id: work.work_type_id,
-        area: LandCost.sum_area_by_work_type(work.worked_at, work.work_type_id)
+        area: LandCost.sum_area_by_work_type(work.worked_at, work.work_type_id, work.organization_id)
       )
     end
   end
 
-  def self.make_details_for_indirect(total_cost_id, occurred_on)
+  def self.make_details_for_indirect(total_cost, occurred_on)
     WorkType.land.each do |work_type|
       next unless work_type.cost_flag
 
-      area = LandCost.sum_area_by_work_type(occurred_on, work_type.id)
+      area = LandCost.sum_area_by_work_type(occurred_on, work_type.id, total_cost.organization_id)
       next unless area.positive?
 
       TotalCostDetail.create(
-        total_cost_id: total_cost_id,
+        total_cost_id: total_cost.id,
         work_type_id: work_type.id,
         rate: 1,
         area: area

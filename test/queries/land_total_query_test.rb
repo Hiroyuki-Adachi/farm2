@@ -30,4 +30,18 @@ class LandTotalQueryTest < ActiveSupport::TestCase
   test "有効な作業種別IDがない場合は空配列を返す" do
     assert_equal [], LandTotalQuery.new(["x", "0", "-1"], systems(:s2015)).call
   end
+
+  test "作業種別土地別作業日数一覧に他組織の土地を含めない" do
+    other_work = works(:work_other_org)
+    other_work.update!(
+      work_kind: work_kinds(:work_kind_shirokaki),
+      worked_at: Date.new(2015, 4, 1),
+      term: 2015
+    )
+    WorkLand.create!(work: other_work, land: lands(:land_other_org))
+
+    results = LandTotalQuery.new([work_kinds(:work_kind_shirokaki).id], systems(:s2015)).call
+
+    assert_not_includes results.map(&:place), lands(:land_other_org).place
+  end
 end

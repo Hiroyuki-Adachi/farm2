@@ -30,11 +30,12 @@ class LandCostsController < ApplicationController
       params[:land_costs].each_value do |land_cost|
         next if land_cost[:work_type_id].blank? || land_cost[:land_id].blank? || land_cost[:activated_on].blank?
 
+        land = Land.for_organization(current_organization).find(land_cost[:land_id])
         if land_cost[:id].present?
-          @land_cost = LandCost.joins(:land).where(lands: { organization_id: current_organization.id }).find(land_cost[:id])
+          @land_cost = LandCost.for_organization(current_organization).find(land_cost[:id])
           session[:land_cost] = @land_cost.attributes unless @land_cost.update_work_type(land_cost_params(land_cost), current_system.start_date)
         else
-          @land_cost = LandCost.new(land_cost_params(land_cost))
+          @land_cost = land.land_costs.new(land_cost_params(land_cost).except(:land_id))
           session[:land_cost] = @land_cost.attributes unless @land_cost.save
         end
       end

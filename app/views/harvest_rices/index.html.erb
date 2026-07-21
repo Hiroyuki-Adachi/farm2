@@ -23,7 +23,7 @@
     <% if drying.work_type_id != old_work_type_id %>
       <% old_work_type_id = drying.work_type_id %>
       <% old_carried_on = nil %>
-      <% sum_area = LandCost.sum_area_by_work_type(current_system.start_date, old_work_type_id) %>
+      <% sum_area = LandCost.sum_area_by_work_type(current_system.start_date, old_work_type_id, current_organization) %>
       <tr class="tr-total1 table-row-primary-bg" data-code1="<%= old_work_type_id %>" data-action="click->grouped-rows#toggleTotal1 keydown->grouped-rows#onKeydown">
         <td><%= drying.work_type.name %></td>
         <td colspan="3"></td>
