@@ -17,6 +17,8 @@ class LandHome < ApplicationRecord
   belongs_to :home, -> { with_deleted }
   belongs_to :land
 
+  scope :for_organization, ->(organization) { joins(:land).merge(Land.for_organization(organization)) }
+
   validate :home_belongs_to_same_organization
   validate :home_has_land_flag
 
