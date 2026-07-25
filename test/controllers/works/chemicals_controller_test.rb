@@ -31,6 +31,21 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to works_path
   end
 
+  test "作業変更(薬品)(表示)(希釈無のとき希釈情報は無選択かつdisabled)" do
+    work = works(:works1)
+    chemical = chemicals(:chemicals2)
+    work_chemical = work.work_chemicals.find_by(chemical_id: chemical.id, chemical_group_no: 1)
+    assert_not chemical.aqueous_flag
+    assert_equal Dilution::NONE.id, work_chemical.dilution_id
+
+    get new_work_use_chemical_path(work_id: work)
+
+    assert_response :success
+    assert_select "#chamicals_#{chemical.id}_1_#{Dilution::NONE.id}[checked]"
+    assert_select "input[name='chemicals[#{chemical.id}][1][magnification]'][disabled]"
+    assert_select "input[name='chemicals[#{chemical.id}][1][dilution_amount]'][disabled]"
+  end
+
   test "作業変更(薬品)(変更)" do
     chemical = chemicals(:chemicals3)
     chemicals = { chemical.id => { 1 => {
@@ -49,6 +64,32 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     assert_equal chemical.id, created_work_chemical.chemical_id
     assert_equal chemicals[4][1][:dilution_id], created_work_chemical.dilution_id
     assert_equal chemicals[4][1][:magnification], created_work_chemical.magnification
+  end
+
+  test "作業変更(薬品)(変更)(希釈なしに変更すると希釈倍率がクリアされる)" do
+    chemical = chemicals(:chemicals3)
+
+    post work_use_chemicals_path(work_id: @work), params: {
+      chemicals: { chemical.id => { 1 => {
+        dilution_id: 1, magnification: 10, dilution_amount: 10, quantity: 10
+      } } },
+      work: { chemical_group_flag: false }
+    }
+    work_chemical = WorkChemical.find_by(work_id: @work.id, chemical_id: chemical.id, chemical_group_no: 1)
+    assert_equal 10, work_chemical.magnification.to_i
+
+    # ブラウザ上は dilution_id を無に切り替えると magnification 欄が disabled になり送信されないため、
+    # そのケースを再現するためにパラメータから magnification を含めない
+    post work_use_chemicals_path(work_id: @work), params: {
+      chemicals: { chemical.id => { 1 => {
+        dilution_id: 0, quantity: 10
+      } } },
+      work: { chemical_group_flag: false }
+    }
+    work_chemical.reload
+    assert_equal 0, work_chemical.dilution_id
+    assert_nil work_chemical.magnification
+    assert_nil work_chemical.dilution_amount
   end
 
   test "作業変更(薬品)(変更)(薬剤グループ)" do
