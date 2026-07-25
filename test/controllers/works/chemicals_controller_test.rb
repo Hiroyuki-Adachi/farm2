@@ -41,7 +41,7 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     get new_work_use_chemical_path(work_id: work)
 
     assert_response :success
-    assert_select "#chamicals_#{chemical.id}_1_#{Dilution::NONE.id}[checked]"
+    assert_select "#chemicals_#{chemical.id}_1_#{Dilution::NONE.id}[checked]"
     assert_select "input[name='chemicals[#{chemical.id}][1][magnification]'][disabled]"
     assert_select "input[name='chemicals[#{chemical.id}][1][dilution_amount]'][disabled]"
   end

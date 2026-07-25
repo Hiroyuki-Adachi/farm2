@@ -85,8 +85,8 @@
                 <% Dilution.all.each do |dilution| %>
                   <%= radio_button_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_id]", dilution.id,
                     effective_dilution_id == dilution.id,
-                    {id: "chamicals_#{chemical.id}_#{index + 1}_#{dilution.id}", class: "form-check-input", disabled: !chemical.aqueous_flag, data: {id: chemical.id, group: index + 1}} %>
-                  <%= label_tag "chamicals_#{chemical.id}_#{index + 1}_#{dilution.id}", dilution.name, class: "form-check-label" %>
+                    {id: "chemicals_#{chemical.id}_#{index + 1}_#{dilution.id}", class: "form-check-input", disabled: !chemical.aqueous_flag, data: {id: chemical.id, group: index + 1}} %>
+                  <%= label_tag "chemicals_#{chemical.id}_#{index + 1}_#{dilution.id}", dilution.name, class: "form-check-label" %>
                 <% end %>
               </div>
             </td>
