@@ -71,7 +71,7 @@
           <td><%= chemical_name(chemical) %>(<%= chemical.base_base_quantity %><%= chemical.base_unit_name %>)</td>
           <% group_count.times do |index| %>
             <% work_chemical = @work.work_chemicals.find_by(chemical_id: chemical.id, chemical_group_no: index + 1) %>
-            <% effective_dilution_id = (work_chemical&.dilution_id || Dilution::NONE.id).to_i %>
+            <% effective_dilution_id = chemical.aqueous_flag ? (work_chemical&.dilution_id || Dilution::NONE.id).to_i : Dilution::NONE.id %>
 
             <td class="col-data" data-index="<%= index %>" style="display:none;">
               <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][quantity]", work_chemical&.quantity,
@@ -91,13 +91,15 @@
               </div>
             </td>
             <td class="col-data" data-index="<%= index %>" style="display:none;">
-              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][magnification]", work_chemical&.magnification,
+              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][magnification]",
+                (effective_dilution_id == Dilution::NONE.id ? nil : work_chemical&.magnification),
                 {disabled: effective_dilution_id == Dilution::NONE.id, readonly: effective_dilution_id != Dilution::MAG.id,
                 min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
                 data: {id: chemical.id, group: index + 1, unit: chemical.unit_scale}} %>
             </td>
             <td class="col-data" data-index="<%= index %>" style="display:none;">
-              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_amount]", work_chemical&.dilution_amount,
+              <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_amount]",
+                (effective_dilution_id == Dilution::NONE.id ? nil : work_chemical&.dilution_amount),
                 {disabled: effective_dilution_id == Dilution::NONE.id, readonly: effective_dilution_id != Dilution::L.id,
                 min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
                 data: {id: chemical.id, group: index + 1, unit: chemical.unit_scale}} %>

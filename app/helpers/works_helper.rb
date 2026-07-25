@@ -14,7 +14,7 @@ module WorksHelper
       case dilution
       when Dilution::L
         unit = "ℓ"
-        amount += work_chemical.dilution_amount
+        amount += work_chemical.dilution_amount || 0
       when Dilution::MAG
         unit = "倍"
         amount += work_chemical.magnification
