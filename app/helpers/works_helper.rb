@@ -17,7 +17,7 @@ module WorksHelper
         amount += work_chemical.dilution_amount || 0
       when Dilution::MAG
         unit = "倍"
-        amount += work_chemical.magnification
+        amount += work_chemical.magnification || 0
       end
     end
     amount.zero? || counter.zero? ? "" : (amount / counter).round(0).to_fs(:delimited, delimiter: ',') + unit
