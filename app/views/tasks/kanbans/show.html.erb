@@ -27,7 +27,7 @@
           data-pages--kanban-target="column"
           data-task-kanban-column="1">
           <% @todo_tasks.each do |task| %>
-            <%= render "tasks/kanbans/card", task: task %>
+            <%= render Tasks::Kanbans::CardComponent.new(task: task) %>
           <% end %>
         </div>
       </div>
@@ -51,7 +51,7 @@
           data-pages--kanban-target="column"
           data-task-kanban-column="2">
           <% @doing_tasks.each do |task| %>
-            <%= render "tasks/kanbans/card", task: task %>
+            <%= render Tasks::Kanbans::CardComponent.new(task: task) %>
           <% end %>
         </div>
       </div>
@@ -75,7 +75,7 @@
           data-pages--kanban-target="column"
           data-task-kanban-column="3">
           <% @done_tasks.each do |task| %>
-            <%= render "tasks/kanbans/card", task: task %>
+            <%= render Tasks::Kanbans::CardComponent.new(task: task) %>
           <% end %>
         </div>
       </div>

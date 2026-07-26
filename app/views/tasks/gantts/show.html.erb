@@ -41,7 +41,7 @@
       </thead>
       <tbody>
         <% @tasks.each do |task| %>
-          <%= render "tasks/gantts/row", task: task, dates: @dates %>
+          <%= render Tasks::Gantts::RowComponent.new(task: task, dates: @dates) %>
         <% end %>
       </tbody>
     </table>
