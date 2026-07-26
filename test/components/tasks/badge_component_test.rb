@@ -13,4 +13,10 @@ class Tasks::BadgeComponentTest < ViewComponent::TestCase
 
     assert_selector("span.text-danger[title='監視中']", text: "●")
   end
+
+  test "merges css_class with an extra class passed via html_options" do
+    render_inline(Tasks::BadgeComponent.new(text: "新規", css_class: "badge bg-info", class: "ms-1"))
+
+    assert_selector("span.badge.bg-info.ms-1", text: "新規")
+  end
 end
