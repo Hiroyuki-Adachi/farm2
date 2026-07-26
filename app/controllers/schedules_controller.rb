@@ -1,7 +1,7 @@
 class SchedulesController < ApplicationController
   include ReturnToIndex
 
-  ScheduleTermOption = Struct.new(:term, :start_date, :end_date, :disabled, keyword_init: true) do
+  ScheduleTermOption = Struct.new(:term, :term_name, :start_date, :end_date, :disabled, keyword_init: true) do
     def disabled?
       disabled
     end
@@ -131,6 +131,7 @@ class SchedulesController < ApplicationController
     systems.compact.uniq(&:term).sort_by(&:term).map do |system|
       ScheduleTermOption.new(
         term: system.term,
+        term_name: system.term_name,
         start_date: system.start_date,
         end_date: system.end_date,
         disabled: false
@@ -193,10 +194,9 @@ class SchedulesController < ApplicationController
   end
 
   def schedule_term_label(option)
-    return "今年度" if option.term == current_term
-    return "翌年度" if option.term == next_term
+    return option.term_name if option.term_name.present?
 
-    "#{option.term}年度"
+    "翌年度"
   end
   helper_method :schedule_term_label
 
