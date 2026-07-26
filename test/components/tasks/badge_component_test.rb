@@ -1,4 +1,5 @@
 require "test_helper"
+require "view_component/test_case"
 
 class Tasks::BadgeComponentTest < ViewComponent::TestCase
   test "renders text with given css class" do

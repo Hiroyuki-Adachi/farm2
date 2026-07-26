@@ -1,4 +1,5 @@
 require "test_helper"
+require "view_component/test_case"
 
 class Tasks::Gantts::RowComponentTest < ViewComponent::TestCase
   setup do
