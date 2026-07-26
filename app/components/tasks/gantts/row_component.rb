@@ -7,6 +7,8 @@ module Tasks
         @dates = dates
       end
 
+      private
+
       def period
         @period ||= @task.gantt_period
       end

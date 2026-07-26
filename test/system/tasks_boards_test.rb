@@ -26,10 +26,10 @@ class TasksBoardsTest < ApplicationSystemTestCase
 
     within("##{ActionView::RecordIdentifier.dom_id(task, :gantt_row)}") do
       assert_text task.title
+      assert_selector ".gantt-cell--bar"
+      assert_selector ".gantt-handle--start"
+      assert_selector ".gantt-handle--end"
     end
-    assert_selector ".gantt-cell--bar"
-    assert_selector ".gantt-handle--start"
-    assert_selector ".gantt-handle--end"
   end
 
   private

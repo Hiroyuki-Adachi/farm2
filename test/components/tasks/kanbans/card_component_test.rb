@@ -6,12 +6,15 @@ class Tasks::Kanbans::CardComponentTest < ViewComponent::TestCase
   end
 
   test "renders task title and due badge" do
-    task = tasks(:due_on_task).decorate(context: { current_worker: @worker })
+    task = tasks(:due_on_task)
+    task.update!(due_on: Date.current + 1.day)
+    task = task.decorate(context: { current_worker: @worker })
 
     render_inline(Tasks::Kanbans::CardComponent.new(task: task))
 
     assert_selector("div[data-task-id='#{task.id}']")
     assert_text(task.title)
+    assert_selector("span.badge", text: "期限が近い")
   end
 
   test "renders description when present" do

@@ -102,8 +102,6 @@ gem "rotp"
 
 # ViewComponent is a framework for building reusable, testable & encapsulated view components in Rails.
 gem "view_component"
-# Lookbook is a tool for developing and documenting ViewComponents in Rails applications.
-gem "lookbook"
 
 group :development, :test do
   gem 'ruby-lsp'
@@ -127,6 +125,8 @@ group :development do
   gem 'rubocop-rails', require: false
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  # Lookbook is a tool for developing and documenting ViewComponents in Rails applications.
+  gem 'lookbook'
 end
 
 group :test do
