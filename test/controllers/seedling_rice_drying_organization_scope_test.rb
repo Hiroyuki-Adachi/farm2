@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Phase16OrganizationScopeControllerTest < ActionDispatch::IntegrationTest
+class SeedlingRiceDryingOrganizationScopeControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:users1)
     @other_home = homes(:home_other_org)

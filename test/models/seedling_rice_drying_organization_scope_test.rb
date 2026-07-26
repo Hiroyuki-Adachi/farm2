@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Phase16OrganizationScopeTest < ActiveSupport::TestCase
+class SeedlingRiceDryingOrganizationScopeTest < ActiveSupport::TestCase
   setup do
     @organization = organizations(:org)
     @other_organization = organizations(:org2)
