@@ -43,7 +43,7 @@ class OwnedRice < ApplicationRecord
       .where(owned_rice_prices: { term: term })
       .where("owned_rices.owned_count > 0")
       .order("homes.finance_order, homes.id, owned_rice_prices.display_order, owned_rice_prices.id")
-    organization ? base.for_organization(organization) : base
+    organization ? base.merge(Home.for_organization(organization)) : base
   }
 
   def self.regist(id, params, organization = nil)

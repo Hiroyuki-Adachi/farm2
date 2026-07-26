@@ -40,7 +40,7 @@ class PlanSeedling < ApplicationRecord
         end
       end
       base = joins(:home).where(homes: { seedling_order: nil })
-      base = base.for_organization(organization) if organization
+      base = base.merge(Home.for_organization(organization)) if organization
       base.destroy_all
     end
   end
