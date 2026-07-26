@@ -18,26 +18,31 @@ class PlanSeedling < ApplicationRecord
   belongs_to :home
   belongs_to :plan, class_name: "PlanWorkType", foreign_key: "plan_work_type_id"
 
-  def self.usual
+  scope :for_organization, ->(organization) { joins(:home).merge(Home.for_organization(organization)) }
+
+  def self.usual(organization = nil)
     results = Hash.new { |h, k| h[k] = {} }
-    PlanSeedling.find_each do |seedling|
+    seedlings = organization ? for_organization(organization) : all
+    seedlings.find_each do |seedling|
       results[seedling.home_id][seedling.plan_work_type_id] = seedling
     end
     results
   end
 
-  def self.create_all(params)
-    params.each do |hid, param|
-      param.each do |pid, q|
-        pl = PlanSeedling.find_by(home_id: hid, plan_work_type_id: pid)
-        if pl.present?
+  def self.create_all(params, organization = nil)
+    transaction do
+      params.each do |hid, param|
+        home = organization ? Home.for_organization(organization).find(hid) : Home.find(hid)
+        param.each do |pid, q|
+          pl = find_or_initialize_by(home: home, plan_work_type_id: pid)
           pl.quantity = q[:quantity]
-        else
-          PlanSeedling.create(home_id: hid, plan_work_type_id: pid, quantity: q[:quantity])
+          pl.save!
         end
       end
+      base = joins(:home).where(homes: { seedling_order: nil })
+      base = base.for_organization(organization) if organization
+      base.destroy_all
     end
-    PlanSeedling.joins(:home).where(homes: { seedling_order: nil }).destroy_all
   end
 
   def seeds

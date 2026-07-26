@@ -4,7 +4,7 @@ class TotalSeedlingsController < ApplicationController
 
   def index
     @seedling_price = current_system.seedling_price
-    @seedling_homes = SeedlingHome.usual(current_term)
+    @seedling_homes = SeedlingHome.usual(current_term, current_organization)
     @seedling_result_quantities = SeedlingResult.total(@seedling_homes)
 
     respond_to do |format|

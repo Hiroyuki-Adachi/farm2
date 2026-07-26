@@ -50,9 +50,11 @@ class Drying < ApplicationRecord
       .order(:carried_on).order(:id)
   }
 
-  scope :for_harvest, lambda { |term|
-    joins(:home, :work_type)
+  scope :for_harvest, lambda { |term, organization = nil|
+    base = joins(:home, :work_type)
       .where(dryings: { term: term })
+    base = base.for_organization(organization) if organization
+    base
       .order(Arel.sql("work_types.display_order, dryings.carried_on, homes.drying_order, dryings.id"))
   }
 

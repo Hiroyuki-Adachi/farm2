@@ -5,7 +5,7 @@ class SeedlingResultsController < ApplicationController
   before_action :set_works, only: [:edit, :update]
 
   def index
-    @seedling_homes = SeedlingHome.usual(current_term)
+    @seedling_homes = SeedlingHome.usual(current_term, current_organization)
     @seedling_result_quantities = SeedlingResult.total(@seedling_homes)
   end
 
@@ -14,6 +14,7 @@ class SeedlingResultsController < ApplicationController
   end
 
   def update
+    validate_work_results!
     if @seedling_home.update(seedling_results_params)
       redirect_to edit_seedling_result_path(seedling_home_id: @seedling_home.id)
     else
@@ -33,7 +34,7 @@ class SeedlingResultsController < ApplicationController
   private
 
   def set_seedling_home
-    @seedling_home = SeedlingHome.joins(:home).where(homes: { organization_id: current_organization.id }).find(params[:seedling_home_id])
+    @seedling_home = SeedlingHome.for_organization(current_organization).find(params[:seedling_home_id])
   end
 
   def set_works
@@ -58,5 +59,12 @@ class SeedlingResultsController < ApplicationController
           ]]
         ]
       )
+  end
+
+  def validate_work_results!
+    attributes = seedling_results_params[:seedling_results_attributes]
+    attributes = attributes.values if attributes.respond_to?(:values)
+    ids = Array(attributes).filter_map { |values| values[:work_result_id].presence }
+    WorkResult.for_organization(current_organization).find(ids) if ids.present?
   end
 end

@@ -145,7 +145,7 @@ class ZenginPaymentBatch < ApplicationRecord
 
   def import_seedling_fee!(term:, seedling_price:)
     seedling_price = seedling_price.to_i
-    seedling_homes = SeedlingHome.usual(term)
+    seedling_homes = SeedlingHome.usual(term, organization_id)
       .joins(home: :section)
       .where(homes: { organization_id: organization_id, member_flag: true }, sections: { work_flag: true })
 

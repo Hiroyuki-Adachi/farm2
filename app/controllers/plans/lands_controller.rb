@@ -18,7 +18,7 @@ class Plans::LandsController < PlansController
   end
 
   def create
-    PlanLand.create_all(current_user.id, plan_term, params["land"])
+    PlanLand.create_all(current_user, plan_term, params["land"], current_organization)
     redirect_to new_plans_land_path(mode: params[:mode])
   end
 

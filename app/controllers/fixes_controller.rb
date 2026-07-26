@@ -18,7 +18,7 @@ class FixesController < ApplicationController
     case @fixed_at.month
     when SHOW1_MONTH
       @lands = Land.for_organization(current_organization).for_finance1.group(:manager_id).sum(:area)
-      @seedling_homes = SeedlingHome.usual(current_term)
+      @seedling_homes = SeedlingHome.usual(current_term, current_organization)
       render action: :show1
     when SHOW2_MONTH
       @lands1 = Land.for_organization(current_organization).for_finance1.group(:manager_id).sum(:area)
