@@ -21,4 +21,8 @@ class DryingMoth < ApplicationRecord
   belongs_to :drying
 
   MAX_COUNT = 5
+
+  scope :for_organization, lambda { |organization|
+    joins(:drying).merge(Drying.for_organization(organization))
+  }
 end

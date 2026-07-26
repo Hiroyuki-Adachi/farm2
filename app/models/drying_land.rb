@@ -20,4 +20,19 @@ class DryingLand < ApplicationRecord
   belongs_to :land
 
   MAX_COUNT = 3
+
+  scope :for_organization, lambda { |organization|
+    joins(:drying).merge(Drying.for_organization(organization))
+  }
+
+  validate :land_belongs_to_drying_organization
+
+  private
+
+  def land_belongs_to_drying_organization
+    return if land.blank? || drying&.home.blank?
+    return if land.organization_id == drying.home.organization_id
+
+    errors.add(:land_id, "は乾燥担当世帯と同じ組織の土地を指定してください。")
+  end
 end
