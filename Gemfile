@@ -100,7 +100,9 @@ gem "rouge"
 # ROTP is a Ruby implementation of one-time password algorithms (HOTP and TOTP).
 gem "rotp"
 
+# ViewComponent is a framework for building reusable, testable & encapsulated view components in Rails.
 gem "view_component"
+# Lookbook is a tool for developing and documenting ViewComponents in Rails applications.
 gem "lookbook"
 
 group :development, :test do
