@@ -1,0 +1,40 @@
+<tr id="<%= dom_id(@task, :gantt_row) %>">
+  <th class="align-middle row-header" scope="row">
+    <div class="fw-semibold">
+      <%= link_to @task.title, task_path(@task, from: :gantt), class: "text-decoration-none" %>
+    </div>
+    <div class="small text-body-secondary">
+      開始:
+      <%= @task.planned_start_on&.strftime("%Y-%m-%d") || "未設定" %>
+      ／
+      期限:
+      <%= @task.gantt_end_on&.strftime("%Y-%m-%d") || "未設定" %>
+    </div>
+  </th>
+
+  <% @dates.each do |date| %>
+    <td class="<%= cell_classes(date) %>"
+      data-pages--gantt-target="cell"
+      data-task-id="<%= @task.id %>"
+      data-date="<%= date %>">
+
+      <% if in_range?(date) && !@task.closed? %>
+        <%# 左端だけにつまみを置く %>
+        <% if date == period.begin %>
+          <div class="gantt-handle gantt-handle--start"
+              data-action="mousedown->pages--gantt#startResize"
+              data-task-id="<%= @task.id %>"
+              data-date="<%= date %>"></div>
+        <% end %>
+
+        <%# 右端にもつまみ %>
+        <% if date == period.end %>
+          <div class="gantt-handle gantt-handle--end"
+              data-action="mousedown->pages--gantt#startResize"
+              data-task-id="<%= @task.id %>"
+              data-date="<%= date %>"></div>
+        <% end %>
+      <% end %>
+    </td>
+  <% end %>
+</tr>
