@@ -15,6 +15,6 @@ module PriorityPresenter
   end
 
   def priority_badge(value)
-    h.content_tag(:span, priority_name(value), class: "badge text-bg-#{priority_color(value)}")
+    h.render(Tasks::BadgeComponent.new(text: priority_name(value), css_class: "badge text-bg-#{priority_color(value)}"))
   end
 end

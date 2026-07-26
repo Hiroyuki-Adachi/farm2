@@ -100,6 +100,9 @@ gem "rouge"
 # ROTP is a Ruby implementation of one-time password algorithms (HOTP and TOTP).
 gem "rotp"
 
+gem "view_component"
+gem "lookbook"
+
 group :development, :test do
   gem 'ruby-lsp'
   # Debugging tool
