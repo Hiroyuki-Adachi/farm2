@@ -82,7 +82,7 @@
             <td class="text-center col-data" data-index="<%= index %>" style="display:none; white-space: nowrap;">
               <%= hidden_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_id]", Dilution::NONE.id %>
               <div class="form-check-inline">
-                <% Dilution.all.each do |dilution| %>
+                <% [Dilution::NONE, Dilution::MAG, Dilution::L].each do |dilution| %>
                   <%= radio_button_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_id]", dilution.id,
                     effective_dilution_id == dilution.id,
                     {id: "chemicals_#{chemical.id}_#{index + 1}_#{dilution.id}", class: "form-check-input", disabled: !chemical.aqueous_flag, data: {id: chemical.id, group: index + 1}} %>
