@@ -154,6 +154,20 @@ class Chemical < ApplicationRecord
     Unit.find_by(code: unit).scale
   end
 
+  # 使用量の単位(unit)が本/袋/缶など個数単位(scale 0)の場合、そのままでは希釈計算(cc/g前提)が
+  # 成立しないため、base_quantity(1個あたりの内容量=cc/g相当)を掛けて実量に変換した上でscaleを補う
+  def dilution_scale
+    unit_scale.positive? ? unit_scale : 1000
+  end
+
+  def dilution_multiplier
+    unit_scale.positive? ? 1 : base_quantity
+  end
+
+  def dilution_quantity(quantity)
+    quantity * dilution_multiplier
+  end
+
   def unit_name(quantity)
     return base_unit.mega_name if quantity >= 1_000_000
     return base_unit.kilo_name if quantity >= 1_000

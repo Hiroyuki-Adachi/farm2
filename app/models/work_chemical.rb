@@ -91,7 +91,7 @@ class WorkChemical < ApplicationRecord
   def dilution_amount
     return nil if dilution_none?
 
-    dilution? && chemical.unit_scale.positive? ? (quantity * magnification / chemical.unit_scale).round(1) : quantity
+    dilution? ? (chemical.dilution_quantity(quantity) * magnification / chemical.dilution_scale).round(1) : quantity
   end
 
   def dilution?
