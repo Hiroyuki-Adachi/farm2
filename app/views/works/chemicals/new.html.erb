@@ -82,7 +82,7 @@
             <td class="text-center col-data" data-index="<%= index %>" style="display:none; white-space: nowrap;">
               <%= hidden_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_id]", Dilution::NONE.id %>
               <div class="form-check-inline">
-                <% Dilution.all.each do |dilution| %>
+                <% [Dilution::NONE, Dilution::MAG, Dilution::L].each do |dilution| %>
                   <%= radio_button_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_id]", dilution.id,
                     effective_dilution_id == dilution.id,
                     {id: "chemicals_#{chemical.id}_#{index + 1}_#{dilution.id}", class: "form-check-input", disabled: !chemical.aqueous_flag, data: {id: chemical.id, group: index + 1}} %>
@@ -95,14 +95,14 @@
                 (effective_dilution_id == Dilution::NONE.id ? nil : work_chemical&.magnification),
                 {disabled: effective_dilution_id == Dilution::NONE.id, readonly: effective_dilution_id != Dilution::MAG.id,
                 min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
-                data: {id: chemical.id, group: index + 1, unit: chemical.unit_scale}} %>
+                data: {id: chemical.id, group: index + 1, unit: chemical.dilution_scale, multiplier: chemical.dilution_multiplier}} %>
             </td>
             <td class="col-data" data-index="<%= index %>" style="display:none;">
               <%= number_field_tag "chemicals[#{chemical.id}][#{index + 1}][dilution_amount]",
                 (effective_dilution_id == Dilution::NONE.id ? nil : work_chemical&.dilution_amount),
                 {disabled: effective_dilution_id == Dilution::NONE.id, readonly: effective_dilution_id != Dilution::L.id,
                 min: 0, max: 9999.9, step: 0.1, class: "form-control form-control-sm narrow",
-                data: {id: chemical.id, group: index + 1, unit: chemical.unit_scale}} %>
+                data: {id: chemical.id, group: index + 1, unit: chemical.dilution_scale, multiplier: chemical.dilution_multiplier}} %>
             </td>
             <td class="col-data numeric" data-index="<%= index %>" style="display:none;" id="chemicals_<%= chemical.id %>_<%= index + 1 %>_quantity10">
               <%= work_chemical&.quantity10 %>
