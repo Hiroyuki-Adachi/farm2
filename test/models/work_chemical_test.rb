@@ -32,4 +32,13 @@ class WorkChemicalTest < ActiveSupport::TestCase
 
     assert_nil work_chemical.dilution_amount
   end
+
+  test "個数単位でbase_quantityが未設定/0のときは実量換算できないためnil" do
+    chemical = Chemical.new(unit: "本", base_quantity: 0)
+    work_chemical = WorkChemical.new(
+      chemical: chemical, dilution_id: Dilution::MAG.id, quantity: 2, magnification: 200
+    )
+
+    assert_nil work_chemical.dilution_amount
+  end
 end

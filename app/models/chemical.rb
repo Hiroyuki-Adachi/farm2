@@ -164,6 +164,12 @@ class Chemical < ApplicationRecord
     unit_scale.positive? ? 1 : base_quantity
   end
 
+  # 個数単位でbase_quantity(1個あたりの内容量)が未設定/0の薬剤は実量に換算できないため、
+  # 呼び出し側はこれがfalseの場合、希釈計算をせずnil等にフォールバックすること
+  def dilution_available?
+    dilution_multiplier.positive?
+  end
+
   def dilution_quantity(quantity)
     quantity * dilution_multiplier
   end

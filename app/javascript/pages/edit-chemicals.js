@@ -27,7 +27,7 @@ export const init = () => {
       const dil = new Decimal(document.querySelector(`input[name='chemicals[${id}][${group}][dilution_amount]']`).value);
       const mag = document.querySelector(`input[name='chemicals[${id}][${group}][magnification]']`);
 
-      mag.value = dil.mul(unitScale).div(quantity).toFixed(1);
+      mag.value = quantity.isZero() ? "" : dil.mul(unitScale).div(quantity).toFixed(1);
     });
   });
   document.querySelectorAll("input[name$='quantity]']").forEach((element) => {

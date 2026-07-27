@@ -15,5 +15,11 @@ class ChemicalTest < ActiveSupport::TestCase
     assert_equal 1000, chemical.dilution_scale
     assert_equal 500, chemical.dilution_multiplier
     assert_equal 1000, chemical.dilution_quantity(2)
+    assert chemical.dilution_available?
+  end
+
+  test "dilution_available?(個数単位でbase_quantity未設定/0の場合はfalse)" do
+    assert_not Chemical.new(unit: "本", base_quantity: 0).dilution_available?
+    assert_not Chemical.new(unit: "袋").dilution_available?
   end
 end
