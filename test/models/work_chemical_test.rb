@@ -23,4 +23,13 @@ class WorkChemicalTest < ActiveSupport::TestCase
 
     assert_nil work_chemical.dilution_amount
   end
+
+  test "希釈選択済でもmagnification未入力のときは例外にならずnil" do
+    chemical = Chemical.new(unit: "cc")
+    work_chemical = WorkChemical.new(
+      chemical: chemical, dilution_id: Dilution::MAG.id, quantity: 100, magnification: nil
+    )
+
+    assert_nil work_chemical.dilution_amount
+  end
 end
