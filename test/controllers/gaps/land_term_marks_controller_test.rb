@@ -48,6 +48,13 @@ class Gaps::LandTermMarksControllerTest < ActionDispatch::IntegrationTest
     get autocomplete_gaps_land_term_marks_path
 
     assert_response :success
-    assert_includes @response.parsed_body.map { |land| land["id"] }, lands(:lands1).id
+    assert_includes @response.parsed_body.pluck("id"), lands(:lands1).id
+  end
+
+  test "GAP圃場記号の候補に他組織の土地を含めない" do
+    get autocomplete_gaps_land_term_marks_path
+
+    assert_response :success
+    assert_not_includes @response.parsed_body.pluck("id"), lands(:land_other_org).id
   end
 end

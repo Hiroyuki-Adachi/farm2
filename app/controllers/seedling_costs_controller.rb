@@ -6,7 +6,7 @@ class SeedlingCostsController < ApplicationController
     @work_types = WorkType.land
     @seedlings = Seedling.usual(current_term, @work_types)
     @seedling_quantities = SeedlingHome.total(@seedlings)
-    @lands = LandCost.total(Time.zone.today)
+    @lands = LandCost.total(Time.zone.today, current_organization)
   end
 
   def edit

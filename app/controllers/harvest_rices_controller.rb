@@ -14,7 +14,11 @@ class HarvestRicesController < ApplicationController
     carried_on_totals = Hash.new { |h, k| h[k] = {} }
     areas = {}
     dryings.each do |drying|
-      areas[drying.carried_on] = LandCost.sum_area_for_harvest(drying.carried_on, current_organization.harvesting_work_kind_id) unless areas[drying.carried_on]
+      unless areas[drying.carried_on]
+        areas[drying.carried_on] = LandCost.sum_area_for_harvest(
+          drying.carried_on, current_organization.harvesting_work_kind_id, current_organization
+        )
+      end
       work_type_totals = set_totals1(work_type_totals, drying, drying.work_type_id)
       carried_on_totals = set_totals2(carried_on_totals, drying, drying.work_type_id, drying.carried_on)
     end
