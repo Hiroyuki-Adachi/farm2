@@ -87,7 +87,8 @@ class Schedule < ApplicationRecord
   }
 
   scope :for_training, lambda { |work|
-    where(worked_at: work.worked_at..)
+    for_organization(work.organization_id)
+      .where(worked_at: work.worked_at..)
       .where("work_flag = FALSE")
       .includes(:work_kind, :schedule_workers)
       .order(worked_at: :ASC, id: :ASC)

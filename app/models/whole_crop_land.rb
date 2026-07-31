@@ -23,6 +23,10 @@ class WholeCropLand < ApplicationRecord
 
   has_many :wcs_rolls, -> { order("whole_crop_rolls.display_order") }, class_name: "WholeCropRoll", dependent: :destroy
 
+  scope :for_organization, lambda { |organization|
+    joins(work_whole_crop: :work).merge(Work.for_organization(organization))
+  }
+
   scope :for_sales, lambda { |term|
     joins(work_whole_crop: :work).where(works: { term: term }).where.not(rolls: 0)
   }
