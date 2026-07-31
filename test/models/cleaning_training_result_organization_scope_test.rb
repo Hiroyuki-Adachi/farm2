@@ -54,6 +54,15 @@ class CleaningTrainingResultOrganizationScopeTest < ActiveSupport::TestCase
     assert accident.errors.added?(:audience_id, "は作業と同じ組織の作業者を指定してください。")
   end
 
+  test "ヒヤリハットの作業者が未設定でも組織越境エラーを追加しない" do
+    accident = Accident.new(work: works(:works1))
+
+    accident.valid?
+
+    assert_not accident.errors.added?(:investigator_id, "は作業と同じ組織の作業者を指定してください。")
+    assert_not accident.errors.added?(:audience_id, "は作業と同じ組織の作業者を指定してください。")
+  end
+
   test "研修候補予定に他組織の予定を含めない" do
     assert_not_includes Schedule.for_training(works(:work_study_create)), @other_schedule
   end

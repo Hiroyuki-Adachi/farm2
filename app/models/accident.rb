@@ -46,10 +46,11 @@ class Accident < ApplicationRecord
   def workers_belong_to_work_organization
     return if work.blank?
 
-    errors.add(:investigator_id, "は作業と同じ組織の作業者を指定してください。") if
-      investigator&.organization_id != work.organization_id
-    return if audience&.organization_id == work.organization_id
-
-    errors.add(:audience_id, "は作業と同じ組織の作業者を指定してください。")
+    if investigator.present? && investigator.organization_id != work.organization_id
+      errors.add(:investigator_id, "は作業と同じ組織の作業者を指定してください。")
+    end
+    if audience.present? && audience.organization_id != work.organization_id
+      errors.add(:audience_id, "は作業と同じ組織の作業者を指定してください。")
+    end
   end
 end
