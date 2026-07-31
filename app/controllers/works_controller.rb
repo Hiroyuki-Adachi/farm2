@@ -17,7 +17,7 @@ class WorksController < ApplicationController
   helper GmapHelper
 
   def index
-    @terms = WorkDecorator.terms
+    @terms = WorkDecorator.terms(current_organization)
 
     # term は params 優先。なければ current_term
     @term = params[:term].presence || current_term

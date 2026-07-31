@@ -14,8 +14,13 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "対象年度変更画面表示" do
+    systems(:s2015).update!(term_name: "第15期")
+
     get edit_term_menu_path(@system.id)
+
     assert_response :success
+    assert_select "select#system_term option[value='2015']", text: "第15期"
+    assert_select "select#system_term option", text: systems(:s2015_org2).term_name, count: 0
   end
 
   test "対象年度変更(実行:新規)" do

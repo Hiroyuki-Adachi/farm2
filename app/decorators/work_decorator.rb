@@ -5,15 +5,8 @@ class WorkDecorator < Draper::Decorator
   decorates_association :creator
   decorates_association :printer
 
-  def self.terms
-    terms = []
-    term = Work.minimum(:term)
-    term ||= Time.zone.now.year
-    while term <= Time.zone.now.year
-      terms << [term, term]
-      term += 1
-    end
-    terms
+  def self.terms(organization)
+    System.where(organization_id: organization.id).order(:term).pluck(:term_name, :term)
   end
 
   def worked_at
