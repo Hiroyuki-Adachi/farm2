@@ -7,18 +7,23 @@ module WorksHelper
 
   def chemical_dilution(work_chemicals, chemical_id)
     dilution = work_chemicals.where(chemical_id: chemical_id).order(:chemical_group_no).first.dilution
-    counter = work_chemicals.where(chemical_id: chemical_id).count
     amount = 0
+    counter = 0
     unit = ""
     work_chemicals.where(chemical_id: chemical_id).find_each do |work_chemical|
-      case dilution
-      when Dilution::L
-        unit = "ℓ"
-        amount += work_chemical.dilution_amount
-      when Dilution::MAG
-        unit = "倍"
-        amount += work_chemical.magnification
-      end
+      value =
+        case dilution
+        when Dilution::L
+          unit = "ℓ"
+          work_chemical.dilution_amount
+        when Dilution::MAG
+          unit = "倍"
+          work_chemical.magnification
+        end
+      next if value.nil?
+
+      amount += value
+      counter += 1
     end
     amount.zero? || counter.zero? ? "" : (amount / counter).round(0).to_fs(:delimited, delimiter: ',') + unit
   end

@@ -4,7 +4,7 @@ class TotalDryingsController < ApplicationController
 
   def index
     @dryings = {}
-    Home.for_drying.each do |home|
+    Home.for_organization(current_organization).for_drying.each do |home|
       @dryings[home] = DryingDecorator.decorate_collection(Drying.by_home(current_term, home))
     end
     respond_to do |format|

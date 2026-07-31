@@ -89,7 +89,9 @@ class WorkChemical < ApplicationRecord
   end
 
   def dilution_amount
-    dilution? && chemical.unit_scale.positive? ? (quantity * magnification / chemical.unit_scale).round(1) : quantity
+    return nil if dilution_none? || magnification.blank? || !chemical.dilution_available?
+
+    (chemical.dilution_quantity(quantity) * magnification / chemical.dilution_scale).round(1)
   end
 
   def dilution?

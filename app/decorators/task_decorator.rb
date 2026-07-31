@@ -18,11 +18,9 @@ class TaskDecorator < Draper::Decorator
 
   def new_badge
     new_days = object.creator_id.present? ? NEW_DAYS_USER : NEW_DAYS_SYSTEM
-    if object.created_at >= new_days.days.ago
-      h.content_tag(:span, "新規", class: "badge bg-info")
-    else
-      ""
-    end
+    return "" unless object.created_at >= new_days.days.ago
+
+    render_badge("新規", "badge bg-info")
   end
 
   def status_badge
@@ -34,11 +32,11 @@ class TaskDecorator < Draper::Decorator
 
     case object.end_reason.to_sym
     when :no_action
-      h.content_tag(:span, "不要", class: "badge bg-danger")
+      render_badge("不要", "badge bg-danger")
     when :unavailable
-      h.content_tag(:span, "無効", class: "badge text-bg-warning")
+      render_badge("無効", "badge text-bg-warning")
     when :duplicated
-      h.content_tag(:span, "重複", class: "badge bg-secondary")
+      render_badge("重複", "badge bg-secondary")
     else
       ""
     end
@@ -65,17 +63,17 @@ class TaskDecorator < Draper::Decorator
 
   def kind_badge
     if object.template.blank?
-      h.content_tag(:span, kind_name, class: "badge text-bg-warning")
+      render_badge(kind_name, "badge text-bg-warning")
     else
       case object.template.kind.to_sym
       when :annual
-        h.content_tag(:span, kind_name, class: "badge text-bg-info")
+        render_badge(kind_name, "badge text-bg-info")
       when :monthly
-        h.content_tag(:span, kind_name, class: "badge text-bg-success")
+        render_badge(kind_name, "badge text-bg-success")
       when :any_time
-        h.content_tag(:span, kind_name, class: "badge text-bg-secondary")
+        render_badge(kind_name, "badge text-bg-secondary")
       else
-        h.content_tag(:span, "（未設定）", class: "badge text-bg-light")
+        render_badge("（未設定）", "badge text-bg-light")
       end
     end
   end
@@ -135,9 +133,9 @@ class TaskDecorator < Draper::Decorator
 
   def due_badge
     case due_status
-    when :expired then h.content_tag(:span, "期限切れ", class: "badge bg-danger")
-    when :today   then h.content_tag(:span, "今日が期限", class: "badge bg-warning text-dark")
-    when :soon    then h.content_tag(:span, "期限が近い", class: "badge bg-primary")
+    when :expired then render_badge("期限切れ", "badge bg-danger")
+    when :today   then render_badge("今日が期限", "badge bg-warning text-dark")
+    when :soon    then render_badge("期限が近い", "badge bg-primary")
     else ""
     end
   end
@@ -153,24 +151,28 @@ class TaskDecorator < Draper::Decorator
   end
 
   def watching_name
-    if object.watching?
-      h.content_tag(:span, "●", class: "text-danger", title: "監視中")
-    else
-      ""
-    end
+    return "" unless object.watching?
+
+    render_badge("●", "text-danger", title: "監視中")
   end
 
   def unread_count_badge
     return "" if object.unread_count.to_i.zero?
 
-    h.content_tag(:span, object.unread_count, class: "badge bg-primary rounded-pill")
+    render_badge(object.unread_count, "badge bg-primary rounded-pill")
   end
 
   def assignee_badge
     if object.assignee_id == context[:current_worker]&.id
-      h.content_tag(:span, "あなた", class: 'badge bg-danger text-white')
+      render_badge("あなた", "badge bg-danger text-white")
     else
-      h.content_tag(:span, assignee_name, class: 'badge bg-secondary')
+      render_badge(assignee_name, "badge bg-secondary")
     end
+  end
+
+  private
+
+  def render_badge(text, css_class, **html_options)
+    h.render(Tasks::BadgeComponent.new(text: text, css_class: css_class, **html_options))
   end
 end

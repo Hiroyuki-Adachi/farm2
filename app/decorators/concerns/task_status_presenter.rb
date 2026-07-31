@@ -10,6 +10,6 @@ module TaskStatusPresenter
   end
 
   def status_badge(value)
-    h.content_tag(:span, status_name(value), class: value.badge_class)
+    h.render(Tasks::BadgeComponent.new(text: status_name(value), css_class: value.badge_class))
   end
 end

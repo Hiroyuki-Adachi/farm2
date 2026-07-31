@@ -27,6 +27,7 @@ class DryingsController < ApplicationController
     @drying = Drying.new(drying_params)
     return to_error_path unless Home.for_organization(current_organization).exists?(id: @drying.home_id)
 
+    validate_drying_lands!
     if @drying.save
       redirect_to dryings_path
     else
@@ -35,6 +36,7 @@ class DryingsController < ApplicationController
   end
 
   def update
+    validate_drying_lands!
     if @drying.update(drying_params)
       redirect_to drying_path(@drying.home)
     else
@@ -106,5 +108,12 @@ class DryingsController < ApplicationController
     @drying.drying_moths.build(default_moths) if @drying.drying_moths.empty?
     @drying.drying_lands.build(default_lands) if @drying.drying_lands.empty?
     @drying.build_adjustment unless @drying.adjustment
+  end
+
+  def validate_drying_lands!
+    attributes = drying_params[:drying_lands_attributes]
+    attributes = attributes.values if attributes.respond_to?(:values)
+    ids = Array(attributes).filter_map { |values| values[:land_id].presence }
+    Land.for_organization(current_organization).find(ids) if ids.present?
   end
 end
