@@ -34,9 +34,9 @@ class WorkWholeCrop < ApplicationRecord
   def self.regist(work, params)
     work_whole_crop = work.whole_crop
     if work_whole_crop
-      work_whole_crop.update(whole_crop_params(params))
+      work_whole_crop.update(whole_crop_params(params).merge(work_id: work.id))
     else
-      work_whole_crop = WorkWholeCrop.create(whole_crop_params(params))
+      work_whole_crop = WorkWholeCrop.create(whole_crop_params(params).merge(work_id: work.id))
     end
     WholeCropLand.regist(work_whole_crop, params.require(:wcs_lands))
   end

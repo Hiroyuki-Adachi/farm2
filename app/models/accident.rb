@@ -27,11 +27,29 @@ class Accident < ApplicationRecord
   belongs_to :investigator, class_name: "Worker"
   belongs_to :audience, class_name: "Worker"
 
-  scope :usual, lambda { |term|
-    joins(:work).where(works: { term: term }).order("works.worked_at, works.start_at, accidents.id")
+  scope :for_organization, lambda { |organization|
+    joins(:work).merge(Work.for_organization(organization))
   }
+  scope :usual, lambda { |term, organization|
+    for_organization(organization).where(works: { term: term })
+      .order("works.worked_at, works.start_at, accidents.id")
+  }
+
+  validate :workers_belong_to_work_organization
 
   def accident_type_name
     I18n.t("activerecord.enums.accident.accident_types.#{accident_type_id}")
+  end
+
+  private
+
+  def workers_belong_to_work_organization
+    return if work.blank?
+
+    errors.add(:investigator_id, "は作業と同じ組織の作業者を指定してください。") if
+      investigator&.organization_id != work.organization_id
+    return if audience&.organization_id == work.organization_id
+
+    errors.add(:audience_id, "は作業と同じ組織の作業者を指定してください。")
   end
 end

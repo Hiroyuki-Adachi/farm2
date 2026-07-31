@@ -25,6 +25,10 @@ class Adjustment < ApplicationRecord
   belongs_to :drying
   belongs_to :home, -> { with_deleted }
 
+  scope :for_organization, lambda { |organization|
+    joins(:drying).merge(Drying.for_organization(organization))
+  }
+
   def rice_weight(system)
     ((rice_bag || 0) * Drying::KG_PER_BAG_RICE) + (system.half_sum_flag ? (half_weight || 0) : 0)
   end

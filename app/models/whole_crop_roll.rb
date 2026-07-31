@@ -14,13 +14,16 @@ class WholeCropRoll < ApplicationRecord
   MAX_ROLLS = 5
 
   scope :valid, -> { where("weight > ?", 0) }
+  scope :for_organization, lambda { |organization|
+    joins(wcs_land: { work_whole_crop: :work }).merge(Work.for_organization(organization))
+  }
 
   belongs_to :wcs_land, class_name: "WholeCropLand", foreign_key: "whole_crop_land_id"
 
   def self.regist(wcs_land, params)
     params.each do |param|
       if param[:id].present?
-        WholeCropRoll.find(param[:id]).update(wcs_roll_param(wcs_land, param))
+        wcs_land.wcs_rolls.find(param[:id]).update(wcs_roll_param(wcs_land, param))
       else
         WholeCropRoll.create(wcs_roll_param(wcs_land, param))
       end
