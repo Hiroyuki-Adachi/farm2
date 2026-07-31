@@ -69,7 +69,7 @@
 </div>
 <% end %>
 <div id="flash_messages" class="row">
-  <%= render "application/flashes", locals: {flash: flash} %>
+  <%= render Application::FlashesComponent.new(flash: flash) %>
 </div>
 <%= yield %>
 </main>
