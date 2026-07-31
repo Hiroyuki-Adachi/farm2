@@ -12,8 +12,13 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "作業一覧" do
+    systems(:s2015).update!(term_name: "第15期")
+
     get works_path
+
     assert_response :success
+    assert_select "select#term option[value='2015']", text: "第15期"
+    assert_select "select#term option", text: systems(:s2015_org2).term_name, count: 0
   end
 
   test "作業登録(表示)" do
