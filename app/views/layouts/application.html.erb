@@ -51,7 +51,7 @@
     <div id="content_col" class="col-12 col-lg-10">
       <div class="container-fluid">
         <div id="flash_messages" class="row">
-          <%= render "application/flashes", locals: {flash: flash} %>
+          <%= render Application::FlashesComponent.new(flash: flash) %>
         </div>
         <div class="app-card">
           <%= yield %>
