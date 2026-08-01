@@ -31,7 +31,7 @@
         <th class="numeric">工数</th>
         <th class="numeric">単価</th>
         <th class="numeric">日当</th>
-        <th class="numeric">機械使用料</th>
+        <th class="numeric" style="width: 90px;">機械使用料</th>
       </tr>
     </thead>
     <tbody id="tbody_works">
@@ -47,7 +47,7 @@
           <% price = work.work_kind.term_price(current_term) %>
           <td class="numeric"><%=h number_with_delimiter(price, {precision: 0}) %></td>
           <td id="amount_<%= work.id %>" class="numeric"><%=h number_with_delimiter((hours * price).to_i, {precision: 0}) %></td>
-          <td id="machine_<%= work.id %>" class="numeric"><%=h number_with_delimiter(work.sum_machines_amount.to_i, {precision: 0}) %></td>
+          <td id="machine_<%= work.id %>" class="numeric"><%=h work.sum_machines_amount %></td>
         </tr>
       <% end %>
     </tbody>
