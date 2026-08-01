@@ -111,6 +111,29 @@ class UserTest < ActiveSupport::TestCase
     assert_equal :expired, user.current_mail_status
   end
 
+  test "メールアドレス(不正な形式はNG)" do
+    user = users(:user_manager)
+    user.mail = 'invalid-mail-address'
+
+    assert_not user.valid?
+    assert_includes user.errors[:mail], 'は不正な値です'
+  end
+
+  test "メールアドレス(重複はNG)" do
+    user = users(:user_manager)
+    user.mail = users(:users1).mail
+
+    assert_not user.valid?
+    assert_includes user.errors[:mail], 'はすでに存在します'
+  end
+
+  test "メールアドレス(空欄はOK)" do
+    user = users(:user_manager)
+    user.mail = ''
+
+    assert user.valid?
+  end
+
   test "権限別の判定" do
     {
       admin: @admin,

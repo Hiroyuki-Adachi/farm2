@@ -87,11 +87,6 @@ gem 'rubyzip'
 # Clean ruby syntax for writing and deploying cron jobs.
 gem 'whenever', require: false
 
-# omniauth is a generalized Rack framework for multiple-provider authentication.
-gem 'omniauth'
-# OmniAuth strategy for Google OAuth2
-gem 'omniauth-google-oauth2'
-
 # Reduces the size of your HTML output by removing unnecessary whitespace and comments.
 gem "commonmarker"
 # Rouge is a pure-ruby syntax highlighter.

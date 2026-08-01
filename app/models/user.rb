@@ -69,6 +69,7 @@ class User < ApplicationRecord
   validates :login_name, uniqueness: true
   validates :password, length: { maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED }
   validates :push_notification_permission, inclusion: { in: %w[default granted denied unsupported] }
+  validates :mail, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true, allow_blank: true
 
   def login_name=(value)
     super(value.downcase)
