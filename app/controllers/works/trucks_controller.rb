@@ -31,10 +31,12 @@ class Works::TrucksController < ApplicationController
     @selected_month = selected_month
     @sections = truck_sections
     @selected_section = selected_section
-    @trucks = Machine.trucks(current_organization, section: @selected_section)
+    @all_trucks = Machine.trucks(current_organization, section: @selected_section)
     @machine_result_hours = machine_result_hours
     @work_result_by_work_id_and_machine_id = work_result_by_work_id_and_machine_id
     @works = WorkDecorator.decorate_collection(truck_works)
+    @trucks = display_trucks
+    @machine_active_by_work_id_and_machine_id = machine_active_by_work_id_and_machine_id
   end
 
   def truck_work_kinds
@@ -98,7 +100,7 @@ class Works::TrucksController < ApplicationController
     @work_result_by_work_id_and_machine_id ||= work_result_groups.each_with_object({}) do |group, hash|
       (work_id, home_id), results = group
 
-      @trucks.select { |truck| truck.home_id == home_id }.each do |truck|
+      @all_trucks.select { |truck| truck.home_id == home_id }.each do |truck|
         hash[[work_id, truck.id]] = canonical_work_result(truck, results)
       end
     end
@@ -122,14 +124,46 @@ class Works::TrucksController < ApplicationController
 
   def machine_result_hours
     @machine_result_hours ||= MachineResult
-      .where(work_result_id: truck_work_results.map(&:id), machine_id: @trucks.map(&:id))
+      .where(work_result_id: truck_work_results.map(&:id), machine_id: @all_trucks.map(&:id))
       .index_by { |result| [result.machine_id, result.work_result_id] }
+  end
+
+  def display_trucks
+    @all_trucks.select { |truck| truck_active_in_month?(truck) || truck_has_result?(truck) }
+  end
+
+  def truck_active_in_month?(truck)
+    return false unless @selected_month
+
+    truck.validity_start_at <= @selected_month.end_of_month && truck.validity_end_at >= @selected_month
+  end
+
+  def truck_has_result?(truck)
+    @machine_result_hours.keys.any? { |(machine_id, _work_result_id)| machine_id == truck.id }
+  end
+
+  def machine_active_by_work_id_and_machine_id
+    @works.each_with_object({}) do |work, hash|
+      @trucks.each do |truck|
+        work_result = @work_result_by_work_id_and_machine_id[[work.id, truck.id]]
+        next unless work_result
+
+        machine_result = @machine_result_hours[[truck.id, work_result.id]]
+        hash[[work.id, truck.id]] = machine_active?(truck, work.model.worked_at, machine_result)
+      end
+    end
+  end
+
+  def machine_active?(truck, worked_at, machine_result)
+    return true if machine_result.present?
+
+    worked_at.between?(truck.validity_start_at, truck.validity_end_at)
   end
 
   def save_machine_hours
     Work::TrucksRegistrar.new(
       machine_hours: machine_hour_params,
-      trucks: @trucks,
+      trucks: @all_trucks,
       work_results: @work_result_by_work_id_and_machine_id.values.uniq
     ).call
   end

@@ -107,6 +107,53 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1.5, machine_result.reload.hours
   end
 
+  test "稼働期間外の作業日への machine_result 追加は無視する" do
+    out_of_period_truck = create_truck(
+      homes(:home1),
+      validity_start_at: Date.new(2015, 3, 1),
+      validity_end_at: Date.new(2015, 3, 31)
+    )
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    work_result = create_work_result(work, workers(:worker1))
+
+    assert_no_difference("MachineResult.count") do
+      post works_trucks_path, params: filter_params.merge(
+        machine_hours: { out_of_period_truck.id => { work_result.id => "2.5" } }
+      )
+    end
+
+    assert_redirected_to works_trucks_path(filter_params)
+    assert_nil MachineResult.find_by(machine: out_of_period_truck, work_result: work_result)
+  end
+
+  test "稼働期間外でも既存 machine_result は更新・削除できる" do
+    out_of_period_truck = create_truck(
+      homes(:home1),
+      validity_start_at: Date.new(2015, 3, 1),
+      validity_end_at: Date.new(2015, 3, 31)
+    )
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    work_result = create_work_result(work, workers(:worker1))
+    machine_result = MachineResult.create!(machine: out_of_period_truck, work_result: work_result, hours: 1.5)
+
+    assert_no_difference("MachineResult.count") do
+      post works_trucks_path, params: filter_params.merge(
+        machine_hours: { out_of_period_truck.id => { work_result.id => "3.0" } }
+      )
+    end
+
+    assert_redirected_to works_trucks_path(filter_params)
+    assert_equal 3.0, machine_result.reload.hours
+
+    assert_difference("MachineResult.count", -1) do
+      post works_trucks_path, params: filter_params.merge(
+        machine_hours: { out_of_period_truck.id => { work_result.id => "0" } }
+      )
+    end
+
+    assert_nil MachineResult.find_by(id: machine_result.id)
+  end
+
   private
 
   def filter_params
@@ -137,12 +184,12 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
     )
   end
 
-  def create_truck(home)
+  def create_truck(home, validity_start_at: Date.new(2015, 1, 1), validity_end_at: Date.new(2099, 12, 31))
     Machine.create!(
       name: "",
       display_order: 1,
-      validity_start_at: Date.new(2015, 1, 1),
-      validity_end_at: Date.new(2099, 12, 31),
+      validity_start_at: validity_start_at,
+      validity_end_at: validity_end_at,
       machine_type_id: @truck_type.id,
       home_id: home.id,
       diesel_flag: false
