@@ -35,10 +35,24 @@ class Work::TrucksRegistrar
 
   def editable_work_result(work_result_id, truck)
     work_result = work_results.find { |result| result.id == work_result_id }
-    return if work_result&.work&.fixed_at.present?
-    return if work_result&.worker&.home_id != truck.home_id
+    return unless work_result
+    return unless registrable?(work_result, truck)
 
     work_result
+  end
+
+  def registrable?(work_result, truck)
+    return false if work_result.work.fixed_at.present?
+    return false if work_result.worker.home_id != truck.home_id
+
+    machine_active?(truck, work_result)
+  end
+
+  def machine_active?(truck, work_result)
+    worked_at = work_result.work.worked_at
+    return true if worked_at.between?(truck.validity_start_at, truck.validity_end_at)
+
+    MachineResult.exists?(machine_id: truck.id, work_result_id: work_result.id)
   end
 
   def save_machine_result(machine_id, work_result_id, hours_value)
