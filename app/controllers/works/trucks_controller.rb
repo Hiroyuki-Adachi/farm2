@@ -139,7 +139,11 @@ class Works::TrucksController < ApplicationController
   end
 
   def truck_has_result?(truck)
-    @machine_result_hours.keys.any? { |(machine_id, _work_result_id)| machine_id == truck.id }
+    machine_ids_with_results.include?(truck.id)
+  end
+
+  def machine_ids_with_results
+    @machine_ids_with_results ||= @machine_result_hours.keys.to_set(&:first)
   end
 
   def machine_active_by_work_id_and_machine_id
