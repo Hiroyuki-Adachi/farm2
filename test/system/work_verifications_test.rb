@@ -26,6 +26,10 @@ class WorkVerificationsTest < ApplicationSystemTestCase
     # 検証対象の作業日報の詳細を確認
     within '.modal-dialog' do
       assert_text @work.id
+      assert_no_text '土地'
+      assert_text '機械利用'
+      assert_text 'トラクター'
+      assert_text 'MZ65幅広T#3'
     end
 
     # 検証実行ボタンをクリック

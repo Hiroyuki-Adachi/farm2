@@ -4052,3 +4052,11 @@ machine_result_stat_2019_1:
   hours: 2.5
   created_at: '2019-01-01 08:53:39'
   updated_at: '2019-01-01 08:53:39'
+
+machine_result_work_verifying:
+  machine_id: 4
+  work_result_id: 5247
+  display_order: 1
+  hours: 4.0
+  created_at: '2015-03-22 01:37:20.287444'
+  updated_at: '2015-03-22 01:37:20.287444'
