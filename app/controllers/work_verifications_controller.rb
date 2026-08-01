@@ -11,7 +11,7 @@ class WorkVerificationsController < ApplicationController
   def show
     @work = @work.decorate
     @results = WorkResultDecorator.decorate_collection(@work.work_results.includes(:worker) || [])
-    @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land) || [])
+    @machine_results = MachineResultDecorator.decorate_collection(@work.machine_results.includes(machine: [:machine_type, :owner], work_result: :worker) || [])
     respond_to_format(:html, partial: "show")
   end
 
