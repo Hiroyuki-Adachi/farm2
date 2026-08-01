@@ -30,6 +30,8 @@ class WorkVerificationsTest < ApplicationSystemTestCase
       assert_text '機械利用'
       assert_text 'トラクター'
       assert_text 'MZ65幅広T#3'
+      assert_text '荒木 直行'
+      assert_text '4.00'
     end
 
     # 検証実行ボタンをクリック
