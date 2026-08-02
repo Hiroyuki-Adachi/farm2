@@ -43,8 +43,9 @@ Rails.application.configure do
     address: 'smtp.gmail.com',
     port: 587,
     domain: 'gmail.com',
-    authentication: :xoauth2,
-    user_name: ENV.fetch('MAIL_ADDRESS')
+    authentication: :plain,
+    user_name: ENV.fetch('MAIL_ADDRESS'),
+    password: Rails.application.credentials.dig(:gmail, :app_password) || ENV.fetch('MAIL_PASSWORD', nil)
   }
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
   config.action_mailer.logger = ActiveSupport::TaggedLogging.new(Logger.new(Rails.root.join('log/mailer.log')))
