@@ -42,7 +42,7 @@ class User < ApplicationRecord
   LOGIN_LOCKOUT_DURATION = 15.minutes
 
   before_create :set_token
-  before_update :clear_mail_fields, if: -> { mail_changed? && mail.present? }
+  before_update :clear_mail_fields, if: :mail_changed?
   after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && mail_confirmed_at.present? }
 
   has_secure_password
@@ -195,8 +195,13 @@ class User < ApplicationRecord
   end
 
   def clear_mail_fields
-    self.mail_confirmation_token = SecureRandom.uuid
-    self.mail_confirmation_expired_at = 1.day.from_now
+    if mail.present?
+      self.mail_confirmation_token = SecureRandom.uuid
+      self.mail_confirmation_expired_at = 1.day.from_now
+    else
+      self.mail_confirmation_token = nil
+      self.mail_confirmation_expired_at = nil
+    end
     self.mail_confirmed_at = nil
   end
 

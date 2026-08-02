@@ -59,7 +59,7 @@ Rails.application.configure do
     domain: 'gmail.com',
     authentication: :plain,
     user_name: ENV.fetch('MAIL_ADDRESS'),
-    password: Rails.application.credentials.dig(:gmail, :app_password) || ENV.fetch('MAIL_PASSWORD', nil)
+    password: Rails.application.credentials.dig(:gmail, :app_password) || ENV.fetch('MAIL_PASSWORD')
   }
   config.action_mailer.default_url_options = { host: ENV['URL'] }
 

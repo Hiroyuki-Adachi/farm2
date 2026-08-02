@@ -111,6 +111,22 @@ class UserTest < ActiveSupport::TestCase
     assert_equal :expired, user.current_mail_status
   end
 
+  test "メールアドレス削除(確認関連フィールドもクリアされる)" do
+    user = users(:user_manager)
+    user.mail = 'user_delete@example.com'
+    user.save!
+    user.mail_confirm!(user.mail_confirmation_token)
+    assert user.mail_confirmed_at.present?
+
+    user.mail = ''
+    user.save!
+
+    assert_nil user.mail_confirmation_token
+    assert_nil user.mail_confirmation_expired_at
+    assert_nil user.mail_confirmed_at
+    assert_equal :not_entered, user.current_mail_status
+  end
+
   test "メールアドレス(不正な形式はNG)" do
     user = users(:user_manager)
     user.mail = 'invalid-mail-address'
