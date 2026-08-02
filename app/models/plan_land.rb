@@ -19,12 +19,20 @@ class PlanLand < ApplicationRecord
   belongs_to :work_type
   belongs_to :user
 
+  scope :for_organization, ->(organization) { joins(:land).merge(Land.for_organization(organization)) }
   scope :usual, ->(user, term) { where(user_id: user.id, term: term).joins(:land).joins(:work_type).order("work_types.display_order, plan_lands.work_type_id, lands.place") }
 
-  def self.create_all(user_id, term, params)
-    PlanLand.where(user_id: user_id, term: term).delete_all
-    params.each do |param|
-      PlanLand.create(user_id: user_id, term: term, land_id: param[0], work_type_id: param[1]) if param[1].present?
+  validate :land_belongs_to_user_organization
+
+  def self.create_all(user, term, params, organization)
+    transaction do
+      where(user_id: user.id, term: term).delete_all
+      params.each do |land_id, work_type_id|
+        next if work_type_id.blank?
+
+        land = Land.for_organization(organization).find(land_id)
+        create!(user: user, term: term, land: land, work_type_id: work_type_id)
+      end
     end
   end
 
@@ -34,5 +42,13 @@ class PlanLand < ApplicationRecord
       land_cost = land.cost(target)
       PlanLand.create(user_id: user_id, term: term, land_id: land.id, work_type_id: land_cost.work_type_id) if land_cost
     end
+  end
+
+  private
+
+  def land_belongs_to_user_organization
+    return if land.blank? || user.blank? || land.organization_id == user.organization_id
+
+    errors.add(:land_id, "は利用者と同じ組織の土地を指定してください。")
   end
 end

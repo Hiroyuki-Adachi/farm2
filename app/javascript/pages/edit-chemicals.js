@@ -9,7 +9,8 @@ export const init = () => {
       const group = event.target.dataset.group;
       const id = event.target.dataset.id;
       const unitScale = new Decimal(event.target.dataset.unit);
-      const quantity = new Decimal(document.querySelector(`input[name='chemicals[${id}][${group}][quantity]']`).value);
+      const multiplier = new Decimal(event.target.dataset.multiplier);
+      const quantity = new Decimal(document.querySelector(`input[name='chemicals[${id}][${group}][quantity]']`).value).mul(multiplier);
       const mag = new Decimal(document.querySelector(`input[name='chemicals[${id}][${group}][magnification]']`).value);
       const dil = document.querySelector(`input[name='chemicals[${id}][${group}][dilution_amount]']`);
 
@@ -21,11 +22,12 @@ export const init = () => {
       const group = event.target.dataset.group;
       const id = event.target.dataset.id;
       const unitScale = new Decimal(event.target.dataset.unit);
-      const quantity = new Decimal(document.querySelector(`input[name='chemicals[${id}][${group}][quantity]']`).value);
+      const multiplier = new Decimal(event.target.dataset.multiplier);
+      const quantity = new Decimal(document.querySelector(`input[name='chemicals[${id}][${group}][quantity]']`).value).mul(multiplier);
       const dil = new Decimal(document.querySelector(`input[name='chemicals[${id}][${group}][dilution_amount]']`).value);
       const mag = document.querySelector(`input[name='chemicals[${id}][${group}][magnification]']`);
 
-      mag.value = dil.mul(unitScale).div(quantity).toFixed(1);
+      mag.value = quantity.isZero() ? "" : dil.mul(unitScale).div(quantity).toFixed(1);
     });
   });
   document.querySelectorAll("input[name$='quantity]']").forEach((element) => {

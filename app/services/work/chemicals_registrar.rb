@@ -31,6 +31,8 @@ class Work::ChemicalsRegistrar
   private
 
   def quantity_params(quantity, add_params)
-    quantity.permit(:quantity, :dilution_id, :magnification, :remarks).merge(add_params)
+    permitted = quantity.permit(:quantity, :dilution_id, :magnification, :remarks)
+    permitted[:magnification] = nil if permitted[:dilution_id].to_i == Dilution::NONE.id
+    permitted.merge(add_params)
   end
 end

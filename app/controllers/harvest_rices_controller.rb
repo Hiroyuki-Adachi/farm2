@@ -3,7 +3,7 @@ class HarvestRicesController < ApplicationController
   helper DryingsHelper
 
   def index
-    @dryings = Drying.for_harvest(current_term)
+    @dryings = Drying.for_harvest(current_term, current_organization)
     @work_type_totals, @carried_on_totals, @areas = calc_totals(@dryings)
   end
 

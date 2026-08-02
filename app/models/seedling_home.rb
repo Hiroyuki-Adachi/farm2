@@ -18,10 +18,17 @@ class SeedlingHome < ApplicationRecord
 
   accepts_nested_attributes_for :seedling_results, allow_destroy: true, reject_if: :reject_seedling_results
 
-  scope :total, ->(seedlings) { where(seedling_id: seedlings.ids).group(:seedling_id).sum(:quantity) }
-  scope :usual, lambda { |term|
-    includes({ seedling: :work_type }, :home)
+  scope :for_organization, ->(organization) { joins(:home).merge(Home.for_organization(organization)) }
+  scope :total, lambda { |seedlings, organization = nil|
+    base = where(seedling_id: seedlings.ids)
+    base = base.for_organization(organization) if organization
+    base.group(:seedling_id).sum(:quantity)
+  }
+  scope :usual, lambda { |term, organization = nil|
+    base = includes({ seedling: :work_type }, :home)
       .where(seedlings: { term: term })
+    base = base.for_organization(organization) if organization
+    base
       .order("homes.display_order, homes.id, seedling_homes.sowed_on, work_types.display_order, work_types.id")
   }
   scope :by_home, ->(home) { where(home_id: home.id) }

@@ -5,12 +5,12 @@ class SeedlingCostsController < ApplicationController
   def index
     @work_types = WorkType.land
     @seedlings = Seedling.usual(current_term, @work_types)
-    @seedling_quantities = SeedlingHome.total(@seedlings)
+    @seedling_quantities = SeedlingHome.total(@seedlings, current_organization)
     @lands = LandCost.total(Time.zone.today, current_organization)
   end
 
   def edit
-    @homes = Home.for_seedling
+    @homes = Home.for_organization(current_organization).for_seedling
     @seedling.seedling_homes.build
   end
 
@@ -29,6 +29,7 @@ class SeedlingCostsController < ApplicationController
   end
 
   def update
+    validate_seedling_homes!
     if @seedling.update(seedling_home_params)
       redirect_to edit_seedling_cost_path(seedling_id: @seedling.id)
     else
@@ -54,5 +55,15 @@ class SeedlingCostsController < ApplicationController
     params
       .require(:seedling)
       .permit(seedling_homes_attributes: [:id, :home_id, :sowed_on, :quantity, :_destroy])
+  end
+
+  def validate_seedling_homes!
+    attributes = seedling_home_params[:seedling_homes_attributes]
+    attributes = attributes.values if attributes.respond_to?(:values)
+    attributes = Array(attributes)
+    home_ids = attributes.filter_map { |values| values[:home_id].presence }
+    seedling_home_ids = attributes.filter_map { |values| values[:id].presence }
+    Home.for_organization(current_organization).find(home_ids) if home_ids.present?
+    SeedlingHome.for_organization(current_organization).find(seedling_home_ids) if seedling_home_ids.present?
   end
 end

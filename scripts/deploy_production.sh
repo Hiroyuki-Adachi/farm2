@@ -56,10 +56,15 @@ echo "-> Register Cron (whenever)"
 RAILS_ENV=$RAILS_ENV bundle exec whenever --update-crontab farm2
 
 echo "-> Deploy nginx config"
-sudo install -m 644 config/nginx/shimo-dekisu.farm.conf "$NGINX_SITE_DIR/shimo-dekisu.farm.conf"
-sudo install -m 644 config/nginx/shimodekisu-farm.mydns.jp.conf "$NGINX_SITE_DIR/shimodekisu-farm.mydns.jp.conf"
+sudo /usr/bin/install -m 644 \
+  "$APP_ROOT/config/nginx/shimo-dekisu.farm.conf" \
+  "$NGINX_SITE_DIR/shimo-dekisu.farm.conf"
 
- echo "-> Validate nginx config"
+sudo /usr/bin/install -m 644 \
+  "$APP_ROOT/config/nginx/shimodekisu-farm.mydns.jp.conf" \
+  "$NGINX_SITE_DIR/shimodekisu-farm.mydns.jp.conf"
+
+echo "-> Validate nginx config"
 sudo nginx -t
 
 echo "-> Reload nginx"

@@ -15,6 +15,10 @@ class SeedlingResult < ApplicationRecord
   belongs_to :seedling_home
   belongs_to :work_result
 
+  scope :for_organization, lambda { |organization|
+    joins(:seedling_home).merge(SeedlingHome.for_organization(organization))
+  }
+
   scope :total, ->(seedling_homes) { where(seedling_home_id: seedling_homes.pluck(:id)).group(:seedling_home_id).sum(:quantity) }
   scope :for_seedling_use, lambda {
     joins(work_result: :work)
@@ -29,6 +33,8 @@ class SeedlingResult < ApplicationRecord
       .sum(:quantity)
   }
 
+  validate :work_result_belongs_to_same_organization
+
   def work_id
     work_result&.work_id
   end
@@ -36,5 +42,14 @@ class SeedlingResult < ApplicationRecord
   def self.dispose?(seedling_home, worked_at)
     joins(work_result: :work)
       .exists?(["seedling_results.seedling_home_id = ? AND works.worked_at = ? AND disposal_flag = TRUE", seedling_home.id, worked_at])
+  end
+
+  private
+
+  def work_result_belongs_to_same_organization
+    return if seedling_home&.home.blank? || work_result&.work.blank?
+    return if seedling_home.home.organization_id == work_result.work.organization_id
+
+    errors.add(:work_result_id, "は育苗担当世帯と同じ組織の作業実績を指定してください。")
   end
 end
