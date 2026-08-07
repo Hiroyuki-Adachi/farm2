@@ -1,0 +1,17 @@
+<div class="container py-3">
+  <h1 class="h3 mb-3">メールアドレス設定</h1>
+  <%= form_with(model: current_user, url: personal_information_mail_addresses_path(personal_information_token: params[:personal_information_token]), method: :post) do |f| %>
+    <div class="field mb-3">
+      <%= f.label :mail, class: "col-form-label-lg form-label" %>
+      <%= mail_status_badge(current_user) %>
+      <%= f.email_field :mail, { required: false, class: "form-control", autocomplete: "off" } %>
+    </div>
+
+    <div class="text-center mb-3">
+      <div class="btn-group" role="group">
+        <%= f.submit '登録', class: "btn btn-warning" %>
+        <%= link_to '戻る', personal_information_path(token: params[:personal_information_token]), class: "btn btn-outline-dark" %>
+      </div>
+    </div>
+  <% end %>
+</div>
