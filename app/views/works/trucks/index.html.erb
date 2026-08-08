@@ -44,8 +44,8 @@
           <% work_result = @work_result_by_work_id_and_machine_id[[work.id, truck.id]] %>
           <% machine_result = @machine_result_hours[[truck.id, work_result.id]] if work_result %>
           <td>
-            <% if work_result %>
-              <%= number_field_tag "machine_hours[#{truck.id}][#{work_result.id}]", machine_result&.hours || 0, {min: 0, max: 9.5, step: 0.5, required: true, readonly: work.fixed_at.present?, class: "form-control form-control-sm", style: "width: 80px;"} %>
+            <% if work_result && @machine_active_by_work_id_and_machine_id[[work.id, truck.id]] %>
+              <%= number_field_tag "machine_hours[#{truck.id}][#{work_result.id}]", format("%.2f", machine_result&.hours || 0), {min: 0, max: 9.5, step: 0.25, required: true, readonly: work.fixed_at.present?, class: "form-control form-control-sm", style: "width: 80px;"} %>
             <% end %>
           </td>
         <% end %>

@@ -15,4 +15,8 @@
 class CleaningInstitution < ApplicationRecord
   belongs_to :cleaning
   belongs_to :institution
+
+  scope :for_organization, lambda { |organization|
+    joins(cleaning: :work).merge(Work.for_organization(organization))
+  }
 end

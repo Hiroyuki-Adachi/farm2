@@ -235,6 +235,7 @@ resources :personal_informations, param: "token", only: [:show] do
   put "topics/words", to: "personal_informations/topics/words#update"
   resources :topics, controller: "personal_informations/topics", only: [:index, :update]
   resources :maps, controller: "personal_informations/maps", only: [:index]
+  resources :mail_addresses, controller: "personal_informations/mail_addresses", only: [:new, :create]
   resources :mail_confirmations, controller: "personal_informations/mail_confirmations", param: "mail_token",
                                  only: [:edit]
   resources :scans, controller: "personal_informations/scans", only: [:new, :create]
@@ -323,9 +324,5 @@ resources :work_results, only: [:index]
 resources :machine_results, only: [:index]
 resources :work_chemicals, only: [:index]
 resources :health, only: [:index]
-
-get 'auth/:provider/callback', to: 'auth#create'
-get 'auth/failure', to: 'auth#failure'
-post 'auth/:provider/callback', to: 'auth#create'
 
 root controller: :sessions, action: :new

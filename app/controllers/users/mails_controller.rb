@@ -7,8 +7,12 @@ class Users::MailsController < ApplicationController
 
   def create
     if @user.update(user_params)
-      UserMailer.email_confirmation(@user).deliver_later
-      redirect_to menu_index_path, notice: 'メールを送信しました。メール内のリンクをクリックしてメールアドレスの変更を完了してください'
+      if @user.mail.present?
+        UserMailer.email_confirmation(@user).deliver_later
+        redirect_to menu_index_path, notice: 'メールを送信しました。メール内のリンクをクリックしてメールアドレスの変更を完了してください'
+      else
+        redirect_to menu_index_path, notice: 'メールアドレスを削除しました'
+      end
     else
       flash.now[:alert] = 'メールアドレスの変更に失敗しました'
       render :new, status: :unprocessable_content

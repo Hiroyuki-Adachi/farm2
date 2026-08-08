@@ -10,7 +10,10 @@ class Users::WordsController < ApplicationController
       redirect_to new_users_word_path, notice: "キーワードを登録しました。"
     else
       flash.now[:alert] = 'キーワードが重複している可能性があります。'
-      render turbo_stream: turbo_stream.update('flash_messages', partial: 'application/flashes')
+      render turbo_stream: turbo_stream.update(
+        "flash_messages",
+        Application::FlashesComponent.new(flash: flash)
+      )
     end
   end
 

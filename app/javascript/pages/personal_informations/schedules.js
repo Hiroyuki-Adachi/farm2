@@ -117,12 +117,7 @@ export const init = async ({ el }) => {
     updatePanel(panel, button, permission);
   };
 
-  if (Notification.permission === "default") {
-    const permission = await Notification.requestPermission().catch(() => "default");
-    await applyPermission(permission);
-  } else {
-    await applyPermission(Notification.permission);
-  }
+  await applyPermission(Notification.permission);
 
   button?.addEventListener("click", async () => {
     const permission = Notification.permission === "granted" ? "granted" : await Notification.requestPermission().catch(() => "default");

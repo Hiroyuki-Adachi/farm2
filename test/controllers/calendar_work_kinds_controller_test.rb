@@ -10,8 +10,13 @@ class CalendarWorkKindsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "カレンダー制御" do
+    systems(:s2014).update!(term_name: "第14期")
+
     get calendar_work_kinds_path
+
     assert_response :success
+    assert_select "select#calendar_term option[value='2014']", text: "2014"
+    assert_select "select#calendar_term option", text: "第14期", count: 0
   end
 
   test "カレンダー制御(管理者以外)" do

@@ -15,4 +15,8 @@
 class TrainingTrainingType < ApplicationRecord
   belongs_to :training_type
   belongs_to :training
+
+  scope :for_organization, lambda { |organization|
+    joins(training: :work).merge(Work.for_organization(organization))
+  }
 end

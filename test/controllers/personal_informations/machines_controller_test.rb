@@ -36,7 +36,7 @@ class PersonalInformations::MachinesControllerTest < ActionDispatch::Integration
 
     assert_response :success
     assert_select "td div", text: "田植機"
-    assert_select "td", text: /2\.5\(時間\)/
+    assert_select "td", text: /2\.50\(時間\)/
     assert_no_match "別世帯軽トラ", response.body
   end
 

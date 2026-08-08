@@ -35,7 +35,7 @@ class Gaps::TrainingsController < GapsController
   end
 
   def traning_params
-    params.expect(training:
+    permitted = params.expect(training:
       [
         :schedule_id,
         :worker_id,
@@ -46,6 +46,8 @@ class Gaps::TrainingsController < GapsController
         :remarks,
         { training_type_ids: [] }
       ])
-      .merge(work_id: params[:id])
+    Worker.for_organization(current_organization).find(permitted[:worker_id]) if permitted[:worker_id].present?
+    Schedule.for_organization(current_organization).find(permitted[:schedule_id]) if permitted[:schedule_id].present?
+    permitted.merge(work_id: params[:id])
   end
 end
