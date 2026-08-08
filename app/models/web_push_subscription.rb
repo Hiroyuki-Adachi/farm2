@@ -26,6 +26,8 @@
 class WebPushSubscription < ApplicationRecord
   belongs_to :user
 
+  scope :for_organization, ->(organization) { joins(:user).merge(User.for_organization(organization)) }
+
   validates :endpoint, presence: true, uniqueness: true
   validates :p256dh, presence: true
   validates :auth, presence: true

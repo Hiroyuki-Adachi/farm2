@@ -34,11 +34,16 @@ class ZenginPayment < ApplicationRecord
   belongs_to :worker, -> { with_deleted }
   has_many :zengin_payment_details, dependent: :destroy
 
+  scope :for_organization, lambda { |organization|
+    joins(:zengin_payment_batch).merge(ZenginPaymentBatch.for_organization(organization))
+  }
+
   validates :amount, presence: true
   validates :bank_code, length: { maximum: 4 }
   validates :branch_code, length: { maximum: 3 }
   validates :account_number, length: { maximum: 7 }
   validates :account_holder_name, length: { maximum: 30 }
+  validate :worker_belongs_to_batch_organization
 
   def account_incomplete?
     bank_account_incomplete? || account_holder_name.blank?
@@ -46,5 +51,14 @@ class ZenginPayment < ApplicationRecord
 
   def recalculate_amount!
     update!(amount: zengin_payment_details.sum(:amount))
+  end
+
+  private
+
+  def worker_belongs_to_batch_organization
+    return if worker.blank? || zengin_payment_batch.blank?
+    return if worker.organization_id == zengin_payment_batch.organization_id
+
+    errors.add(:worker_id, "は支払バッチと同じ組織の作業者を指定してください。")
   end
 end
