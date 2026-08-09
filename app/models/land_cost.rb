@@ -86,7 +86,7 @@ class LandCost < ApplicationRecord
     for_organization(organization_id)
       .newest(system.start_date)
       .where([exists_sql, work_type_id, system.term, organization_id])
-      .group("land_costs.work_type_id")
+      .group(:work_type_id)
       .sum("lands.area")
   end
 
