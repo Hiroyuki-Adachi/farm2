@@ -34,4 +34,8 @@ class WorkerDecorator < Draper::Decorator
   def delivery_mark
     model.user&.topic_delivery_enabled? ? "◯" : ""
   end
+
+  def otp_mark
+    model.user&.otp_enabled? ? "◯" : ""
+  end
 end

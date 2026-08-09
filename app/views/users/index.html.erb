@@ -9,6 +9,7 @@
       <th>LINE</th>
       <th>メール</th>
       <th>配信</th>
+      <th>OTP</th>
       <th>アカウントID</th>
       <th colspan="3">&nbsp;</th>
     </tr>
@@ -22,6 +23,7 @@
         <td class="text-center"><%= worker.line_mark %></td>
         <td class="text-center"><%= worker.mail_mark %></td>
         <td class="text-center"><%= worker.delivery_mark %></td>
+        <td class="text-center"><%= worker.otp_mark %></td>
         <td><%= worker.login_name %></td>
         <td>
           <% if worker.user %>
