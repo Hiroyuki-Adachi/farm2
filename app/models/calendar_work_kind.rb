@@ -18,24 +18,27 @@ class CalendarWorkKind < ApplicationRecord
   belongs_to :user
   belongs_to :work_kind
 
+  scope :for_organization, ->(organization) { joins(:user).merge(User.for_organization(organization)) }
   scope :usual, ->(user) { where(user_id: user) }
 
-  def self.regist(user_id, params)
+  def self.regist(user, params)
+    calendar_work_kinds = user.calendar_work_kinds
     work_kinds = []
     unless params[:work_kind_id]
-      CalendarWorkKind.where(user_id: user_id).find_each(&:destroy)
+      calendar_work_kinds.find_each(&:destroy)
       return
     end
     params[:work_kind_id].each do |work_kind_id|
-      calendar_work_kind = CalendarWorkKind.find_by(user_id: user_id, work_kind_id: work_kind_id)
+      calendar_work_kind = calendar_work_kinds.find_by(work_kind_id: work_kind_id)
       work_kinds << work_kind_id.to_i
+      text_color = params[:text_color][work_kind_id]
       if calendar_work_kind
-        calendar_work_kind.update(text_color: params[:text_color][work_kind_id]) if calendar_work_kind.text_color != params[:text_color][work_kind_id]
+        calendar_work_kind.update(text_color: text_color) if calendar_work_kind.text_color != text_color
       else
-        CalendarWorkKind.create(user_id: user_id, work_kind_id: work_kind_id, text_color: params[:text_color][work_kind_id])
+        calendar_work_kinds.create(work_kind_id: work_kind_id, text_color: text_color)
       end
     end
-    CalendarWorkKind.where(user_id: user_id).where.not(work_kind_id: work_kinds).find_each(&:destroy)
+    calendar_work_kinds.where.not(work_kind_id: work_kinds).find_each(&:destroy)
   end
 
   def excel_color

@@ -9,8 +9,8 @@ class CalendarWorkKindsController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      User.find(session[:user_id]).update!(calendar_term: params[:calendar_term])
-      CalendarWorkKind.regist(session[:user_id], params)
+      current_user.update!(calendar_term: params[:calendar_term])
+      CalendarWorkKind.regist(current_user, params)
     end
     redirect_to calendars_path
   end

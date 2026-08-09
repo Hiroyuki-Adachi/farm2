@@ -38,6 +38,10 @@ class ZenginPaymentDetail < ApplicationRecord
 
   belongs_to :zengin_payment
 
+  scope :for_organization, lambda { |organization|
+    joins(:zengin_payment).merge(ZenginPayment.for_organization(organization))
+  }
+
   validates :payment_type, presence: true
   validates :source_kind, presence: true
   validates :amount, presence: true

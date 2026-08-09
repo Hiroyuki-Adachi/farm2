@@ -54,6 +54,9 @@ class User < ApplicationRecord
   scope :linable, -> { where.not(line_id: '') }
   scope :without_line, -> { where(line_id: '') }
   scope :web_push_notifiable, -> { without_line.where(id: WebPushSubscription.select(:user_id)) }
+  scope :for_organization, lambda { |organization|
+    where(organization_id: organization.is_a?(Organization) ? organization.id : organization)
+  }
 
   belongs_to :worker
   belongs_to :organization

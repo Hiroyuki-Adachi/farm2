@@ -9,6 +9,7 @@ class PersonalInformations::MinutesController < PersonalInformationsController
   private
 
   def set_minute
-    @minute = Minute.find(params[:id])
+    @minute = Minute.for_organization(@worker.organization_id).find_by(id: params[:id])
+    to_error_path unless @minute
   end
 end

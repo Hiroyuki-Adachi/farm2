@@ -27,6 +27,8 @@ class UserWord < ApplicationRecord
   validates :word, length: { maximum: 128 }
   validates :word, uniqueness: { scope: :user_id }
 
+  scope :for_organization, ->(organization) { joins(:user).merge(User.for_organization(organization)) }
+
   def self.words
     distinct.pluck(:word)
   end
