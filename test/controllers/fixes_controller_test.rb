@@ -28,6 +28,16 @@ class FixesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "新規確定(表示) 機械使用料はカンマ区切りのまま表示され桁落ちしない" do
+    work = works(:work_no_fix1)
+    Work.any_instance.stubs(:sum_machines_amount).returns(BigDecimal("5250"))
+
+    get new_fix_path
+
+    assert_response :success
+    assert_select "#machine_#{work.id}", text: "5,250"
+  end
+
   test "新規確定(実行)" do
     fixed_at = '2015-03-31'
     assert_enqueued_jobs 1 do

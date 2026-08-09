@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_04_010000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_01_010000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -551,7 +551,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_04_010000) do
     t.decimal "fixed_price", precision: 5, comment: "確定稼動単価"
     t.decimal "fixed_quantity", precision: 6, scale: 2, comment: "確定稼動量"
     t.decimal "fuel_usage", precision: 5, scale: 2, default: "0.0", null: false, comment: "燃料使用量"
-    t.decimal "hours", precision: 3, scale: 1, default: "0.0", null: false, comment: "稼動時間"
+    t.decimal "hours", precision: 4, scale: 2, default: "0.0", null: false, comment: "稼動時間"
     t.integer "machine_id", comment: "機械"
     t.datetime "updated_at", precision: nil
     t.integer "work_result_id", comment: "作業結果データ"

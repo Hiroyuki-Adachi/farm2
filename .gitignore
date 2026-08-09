@@ -73,7 +73,6 @@ yarn-debug.log*
 .env
 /config/token.yaml
 /config/credentials.json
-/config/google_refresh_token.txt
 /config/*.pem
 
 /config/credentials/*.key

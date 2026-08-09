@@ -59,11 +59,11 @@ class ChemicalCostsController < ApplicationController
   end
 
   def set_chemical_work_type
-    @chemical_work_type = ChemicalWorkType.joins(:chemical_term).where(chemical_terms: { organization_id: current_organization.id }).find(params[:id])
+    @chemical_work_type = ChemicalWorkType.for_organization(current_organization).find(params[:id])
   end
 
   def destroy_chemical_work_type
-    ChemicalWorkType.joins(:chemical_term).where(chemical_terms: { organization_id: current_organization.id }).where(
+    ChemicalWorkType.for_organization(current_organization).where(
       chemical_term_id: chemical_work_type_params[:chemical_term_id],
       work_type_id: chemical_work_type_params[:work_type_id]
     ).destroy_all

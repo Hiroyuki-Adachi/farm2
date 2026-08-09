@@ -3,7 +3,7 @@
   <div class="col-md-3">
     <div class="input-group">
       <label for="term" class="h5 form-label">年度</label>
-      <%= select_tag(:term, options_for_select(WorkDecorator.terms, selected: current_term), {class: "form-select"}) %>
+      <%= select_tag(:term, options_for_select(@terms, selected: current_term), {class: "form-select"}) %>
     </div>
   </div>
   <div class="col-md-3">

@@ -3,7 +3,7 @@ class Gaps::AccidentsController < GapsController
   helper GmapHelper
 
   def index
-    @accidents = Accident.usual(current_term)
+    @accidents = Accident.usual(current_term, current_organization)
   end
 
   def show
@@ -55,13 +55,13 @@ class Gaps::AccidentsController < GapsController
   private
 
   def set_accident
-    @accident = Accident.joins(:work).where(works: { organization_id: current_organization.id }).find(params[:id])
+    @accident = Accident.for_organization(current_organization).find(params[:id])
     @works = WorkDecorator.decorate_collection(Work.for_organization(current_organization).usual(@accident.work.term).where(worked_at: @accident.work.worked_at))
     @workers = WorkerDecorator.decorate_collection(@accident.work.workers)
   end
 
   def accident_params
-    params.expect(accident:
+    permitted = params.expect(accident:
       [
         :investigator_id,
         :investigated_on,
@@ -76,5 +76,10 @@ class Gaps::AccidentsController < GapsController
         :solving,
         :result
       ])
+    Work.for_organization(current_organization).find(permitted[:work_id]) if permitted[:work_id].present?
+    [permitted[:investigator_id], permitted[:audience_id]].compact_blank.each do |worker_id|
+      Worker.for_organization(current_organization).find(worker_id)
+    end
+    permitted
   end
 end

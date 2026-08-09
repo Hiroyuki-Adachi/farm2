@@ -100,6 +100,51 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     assert_select "th", text: homes(:home6).name
   end
 
+  test "稼働期間が選択月と重ならないトラックは列を表示しない" do
+    other_home_truck = create_truck(
+      homes(:home2),
+      validity_start_at: Date.new(2015, 3, 1),
+      validity_end_at: Date.new(2015, 3, 31)
+    )
+
+    get works_trucks_path, params: { month: "2015-02-01" }
+
+    assert_response :success
+    assert_select "th", text: other_home_truck.owner.name, count: 0
+  end
+
+  test "稼働期間が選択月の一部と重なるトラックは列を表示する" do
+    other_home_truck = create_truck(
+      homes(:home2),
+      validity_start_at: Date.new(2015, 2, 20),
+      validity_end_at: Date.new(2015, 3, 10)
+    )
+
+    get works_trucks_path, params: { month: "2015-02-01" }
+
+    assert_response :success
+    assert_select "th", text: other_home_truck.owner.name
+  end
+
+  test "稼働期間外の作業日には入力欄を表示しない" do
+    active_work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    inactive_work = create_work(Date.new(2015, 2, 15), work_kinds(:work_kind_shirokaki))
+    health = Health.create!(code: "T", name: "良好", display_order: 999, well_flag: true)
+    active_result = WorkResult.create!(
+      work: active_work, worker: workers(:worker1), health: health, hours: 1.0, display_order: 1
+    )
+    inactive_result = WorkResult.create!(
+      work: inactive_work, worker: workers(:worker1), health: health, hours: 1.0, display_order: 1
+    )
+    truck = create_truck(homes(:home1), validity_start_at: Date.new(2015, 2, 1), validity_end_at: Date.new(2015, 2, 10))
+
+    get works_trucks_path, params: { work_kind_id: work_kinds(:work_kind_shirokaki).id, month: "2015-02-01" }
+
+    assert_response :success
+    assert_select "input[name='machine_hours[#{truck.id}][#{active_result.id}]']", 1
+    assert_select "input[name='machine_hours[#{truck.id}][#{inactive_result.id}]']", 0
+  end
+
   private
 
   def create_work(worked_at, work_kind)
@@ -117,12 +162,12 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     )
   end
 
-  def create_truck(home)
+  def create_truck(home, validity_start_at: Date.new(2015, 1, 1), validity_end_at: Date.new(2099, 12, 31))
     Machine.create!(
       name: "",
       display_order: 1,
-      validity_start_at: Date.new(2015, 1, 1),
-      validity_end_at: Date.new(2099, 12, 31),
+      validity_start_at: validity_start_at,
+      validity_end_at: validity_end_at,
       machine_type_id: @truck_type.id,
       home_id: home.id,
       diesel_flag: false

@@ -18,6 +18,10 @@ class Cleaning < ApplicationRecord
   has_many :institutions, through: :cleaning_institutions
   has_many :cleaning_targets, through: :cleaning_cleaning_targets
 
+  scope :for_organization, lambda { |organization|
+    joins(:work).merge(Work.for_organization(organization))
+  }
+
   def cleaning_target_names
     cleaning_targets.pluck(:name)
   end

@@ -20,7 +20,7 @@ class MenuController < ApplicationController
   end
 
   def edit_term
-    @terms = WorkDecorator.terms
+    @terms = WorkDecorator.terms(current_organization)
   end
 
   def update
@@ -39,7 +39,7 @@ class MenuController < ApplicationController
       end
       redirect_to(menu_index_path, notice: '設定を変更しました。')
     else
-      @terms = WorkDecorator.terms
+      @terms = WorkDecorator.terms(current_organization)
       render action: :edit_term
     end
   end
