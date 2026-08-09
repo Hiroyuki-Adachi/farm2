@@ -36,4 +36,21 @@ class UserNotificationTest < ActiveSupport::TestCase
 
     assert_not user.topic_delivery_enabled?
   end
+
+  test "関連が未ロードなら全件をロードせずに配信を判定" do
+    user = users(:users1)
+    user.user_words.reset
+
+    assert_not user.user_words.loaded?
+    assert user.topic_delivery_enabled?
+    assert_not user.user_words.loaded?
+  end
+
+  test "関連がロード済みならメモリ上で配信を判定" do
+    user = users(:users1)
+    user.user_words.load
+
+    assert user.user_words.loaded?
+    assert user.topic_delivery_enabled?
+  end
 end

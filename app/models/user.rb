@@ -114,9 +114,9 @@ class User < ApplicationRecord
   end
 
   def topic_delivery_enabled?
-    user_words.any? do |user_word|
-      user_word.pc_flag? || user_word.sp_flag? || (user_word.line_flag? && linable?)
-    end
+    return user_words.any? { |user_word| delivery_enabled_user_word?(user_word) } if new_record? || user_words.loaded?
+
+    topic_delivery_words.exists?
   end
 
   def login_locked?
@@ -202,6 +202,15 @@ class User < ApplicationRecord
   end
 
   private
+
+  def delivery_enabled_user_word?(user_word)
+    user_word.pc_flag? || user_word.sp_flag? || (user_word.line_flag? && linable?)
+  end
+
+  def topic_delivery_words
+    delivery_words = user_words.where(pc_flag: true).or(user_words.where(sp_flag: true))
+    linable? ? delivery_words.or(user_words.where(line_flag: true)) : delivery_words
+  end
 
   def set_token
     self.token = SecureRandom.uuid
