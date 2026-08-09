@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   before_action :permit_self, only: [:edit, :update]
 
   def index
-    workers = Worker.for_organization(current_organization).includes(:user).usual.page(params[:page])
+    workers = Worker.for_organization(current_organization).includes(user: :user_words).usual.page(params[:page])
     @workers = WorkerDecorator.decorate_collection(workers)
   end
 
