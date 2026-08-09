@@ -22,4 +22,16 @@ class WorkerDecorator < Draper::Decorator
   def login_name
     model.user ? model.user.login_name : ""
   end
+
+  def line_mark
+    model.user&.linable? ? "◯" : ""
+  end
+
+  def mail_mark
+    model.user&.mailable? ? "◯" : ""
+  end
+
+  def delivery_mark
+    model.user&.topic_delivery_enabled? ? "◯" : ""
+  end
 end

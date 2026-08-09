@@ -109,6 +109,16 @@ class User < ApplicationRecord
     line_id.present?
   end
 
+  def mailable?
+    mail.present? && mail_confirmed?
+  end
+
+  def topic_delivery_enabled?
+    user_words.any? do |user_word|
+      user_word.pc_flag? || user_word.sp_flag? || (user_word.line_flag? && linable?)
+    end
+  end
+
   def login_locked?
     locked_at.present? && locked_at > LOGIN_LOCKOUT_DURATION.ago
   end
