@@ -74,8 +74,8 @@ class LandCost < ApplicationRecord
     results
   end
 
-  def self.for_straws(term, work_type_id, organization)
-    organization_id = organization.is_a?(Organization) ? organization.id : organization
+  def self.for_straws(system, work_type_id)
+    organization_id = system.organization_id
     exists_sql = <<~SQL.squish
       EXISTS (SELECT * FROM work_lands
         INNER JOIN works ON works.id = work_lands.work_id AND works.work_type_id = ? AND works.term = ? AND works.organization_id = ?
@@ -83,10 +83,10 @@ class LandCost < ApplicationRecord
       )
     SQL
 
-    for_organization(organization)
-      .newest(Date.new(term.to_i, 4, 1))
-      .where([exists_sql, work_type_id, term, organization_id])
-      .group("land_costs.work_type_id")
+    for_organization(organization_id)
+      .newest(system.start_date)
+      .where([exists_sql, work_type_id, system.term, organization_id])
+      .group(:work_type_id)
       .sum("lands.area")
   end
 

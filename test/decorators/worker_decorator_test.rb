@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "test_helper"
 
 class WorkerDecoratorTest < ActiveSupport::TestCase
@@ -54,5 +55,32 @@ class WorkerDecoratorTest < ActiveSupport::TestCase
 
     w2 = Worker.new
     assert_equal "", decorate(w2).login_name
+  end
+
+  test "通知状況は有効な項目に丸印を返す" do
+    worker = workers(:worker1)
+
+    assert_equal "", decorate(worker).line_mark
+    assert_equal "◯", decorate(worker).mail_mark
+    assert_equal "◯", decorate(worker).delivery_mark
+  end
+
+  test "OTPが有効なら丸印を返す" do
+    worker = Worker.new
+    worker.build_user(otp_enabled: true)
+
+    assert_equal "◯", decorate(worker).otp_mark
+
+    worker.user.otp_enabled = false
+    assert_equal "", decorate(worker).otp_mark
+  end
+
+  test "ユーザがいない場合は通知状況を空欄にする" do
+    worker = Worker.new
+
+    assert_equal "", decorate(worker).line_mark
+    assert_equal "", decorate(worker).mail_mark
+    assert_equal "", decorate(worker).delivery_mark
+    assert_equal "", decorate(worker).otp_mark
   end
 end

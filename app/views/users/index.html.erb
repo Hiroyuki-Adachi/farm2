@@ -6,6 +6,10 @@
       <th>氏名</th>
       <th>世帯</th>
       <th>権限</th>
+      <th>LINE</th>
+      <th>メール</th>
+      <th>配信</th>
+      <th>OTP</th>
       <th>アカウントID</th>
       <th colspan="3">&nbsp;</th>
     </tr>
@@ -16,6 +20,10 @@
         <td><%= worker.disp_name %></td>
         <td><%= worker.home.name %></td>
         <td><%= worker.permission_name %></td>
+        <td class="text-center"><%= worker.line_mark %></td>
+        <td class="text-center"><%= worker.mail_mark %></td>
+        <td class="text-center"><%= worker.delivery_mark %></td>
+        <td class="text-center"><%= worker.otp_mark %></td>
         <td><%= worker.login_name %></td>
         <td>
           <% if worker.user %>
