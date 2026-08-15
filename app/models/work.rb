@@ -366,10 +366,10 @@ SQL
       .no_fixed(user.term).by_creator(user.worker).enough_check(user.worker).not_printed
   end
 
-  def self.get_terms(term)
+  def self.get_terms(system)
     params = []
-    result = Work.where(term: term).maximum(:fixed_at)
-    result = result ? result.to_date : Date.new(term, 1, 1)
+    result = Work.for_organization(system.organization_id).where(term: system.term).maximum(:fixed_at)
+    result = result ? result.to_date : system.start_date
     result = result.next.end_of_month.to_date
     while result < Time.zone.now.to_date
       params << result
