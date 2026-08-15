@@ -5,7 +5,7 @@ class FuelCostsController < ApplicationController
   before_action :set_works, only: [:index]
 
   def index
-    @machine_results = MachineResult.includes(:work_result).by_works(@works)
+    @machine_results = MachineResult.for_organization(current_organization).includes(:work_result).by_works(@works)
     @works = WorkDecorator.decorate_collection(@works)
   end
 
@@ -13,7 +13,9 @@ class FuelCostsController < ApplicationController
     ActiveRecord::Base.transaction do
       current_system.update(system_params)
       params[:machine_results].each do |k, v|
-        MachineResult.find(k).update(fuel_usage: v[:fuel_usage]) if v[:fuel_usage] != v[:old_usage]
+        next if v[:fuel_usage] == v[:old_usage]
+
+        MachineResult.for_organization(current_organization).find(k).update(fuel_usage: v[:fuel_usage])
       end
     end
     redirect_to fuel_costs_path
@@ -22,11 +24,15 @@ class FuelCostsController < ApplicationController
   private
 
   def set_machines
-    @machines = Machine.includes(:owner).diesel.usual
+    @machines = Machine.for_organization(current_organization).includes(:owner).diesel.usual
   end
 
   def set_works
-    @works = Work.by_machines(@machines).by_types(WorkType.land).by_term(current_term)
+    @works = Work
+      .for_organization(current_organization)
+      .by_machines(@machines)
+      .by_types(WorkType.land)
+      .by_term(current_term)
   end
 
   def system_params
