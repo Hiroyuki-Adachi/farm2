@@ -16,10 +16,10 @@ class IpListsController < ApplicationController
       return to_error_path
     end
 
-    return to_error_path unless user.linable? || user.otp_enabled
+    return to_error_path unless user.otp_enabled || user.linable? || user.mailable?
 
     ip = IpList.white_ip!(request.remote_ip, user)
-    if user.otp_enabled || LineHookService.push_message(user.line_id, I18n.t('line_authentication', token: ip.token), retry_key: SecureRandom.uuid).is_a?(Net::HTTPSuccess)
+    if deliver_authentication_token?(user, ip)
       redirect_to edit_ip_list_path(ip, return_to: @return_to)
     else
       ip.destroy
@@ -39,6 +39,19 @@ class IpListsController < ApplicationController
   end
 
   private
+
+  def deliver_authentication_token?(user, ip)
+    return true if user.otp_enabled
+    return line_push_message?(user, ip) if user.linable?
+
+    UserMailer.ip_confirmation(ip, ip.token).deliver_later
+    true
+  end
+
+  def line_push_message?(user, ip)
+    message = I18n.t('line_authentication', token: ip.token)
+    LineHookService.push_message(user.line_id, message, retry_key: SecureRandom.uuid).is_a?(Net::HTTPSuccess)
+  end
 
   def check_ip_access!
     if IpList.white_list.any? { |ip| ip.include?(request.remote_ip) }
