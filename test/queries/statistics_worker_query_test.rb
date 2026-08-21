@@ -2,7 +2,7 @@ require "test_helper"
 
 class StatisticsWorkerResultsTest < ActiveSupport::TestCase
   test "作業者別作業日数一覧クエリ" do
-    results = StatisticsWorkerQuery.new(2019).call
+    results = StatisticsWorkerQuery.new(2019, organization: organizations(:org)).call
 
     assert_equal 2, results.size
 
@@ -18,5 +18,11 @@ class StatisticsWorkerResultsTest < ActiveSupport::TestCase
     assert_equal work_result1.hours + work_result2.hours, result.work_hours
     assert_equal 1, result.machine_days
     assert_equal machine_result.hours, result.machine_hours
+  end
+
+  test "他組織の作業者と作業実績を集計しない" do
+    results = StatisticsWorkerQuery.new(2015, organization: organizations(:org)).call
+
+    assert_not(results.any? { |result| result.family_name == workers(:worker_other_org).family_name })
   end
 end

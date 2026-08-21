@@ -32,7 +32,7 @@ class FixesController < ApplicationController
 
   def new
     @works = WorkDecorator.decorate_collection(Work.for_organization(current_organization).no_fixed(current_term))
-    @terms = WorkDecorator.get_terms(current_term)
+    @terms = WorkDecorator.get_terms(current_system)
   end
 
   def create
