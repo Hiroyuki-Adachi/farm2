@@ -664,7 +664,47 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_match(/#{batch.branch_code}\(東京営業部\)/, response.body)
   end
 
+  test "別組織の全銀支払先と明細は直接指定できない" do
+    post fix_zengin_payment_path(@fix)
+    own_payment, other_payment, other_detail = organization_scope_test_payments
+
+    get amount_change_fix_zengin_payment_path(@fix), params: {
+      payment_id: other_payment.id,
+      detail_ids: [other_detail.id]
+    }
+
+    assert_redirected_to edit_fix_zengin_payment_path(@fix)
+
+    get amount_change_fix_zengin_payment_path(@fix), params: {
+      payment_id: own_payment.id,
+      detail_ids: [other_detail.id]
+    }
+
+    assert_redirected_to edit_fix_zengin_payment_path(@fix)
+  end
+
   private
+
+  def organization_scope_test_payments
+    own_batch = ZenginPaymentBatch.find_by!(
+      organization: @fix.organization,
+      term: @fix.term,
+      fixed_at: @fix.fixed_at
+    )
+    other_batch = ZenginPaymentBatch.create!(
+      organization: organizations(:org2),
+      term: @fix.term,
+      fixed_at: @fix.fixed_at
+    )
+    other_payment = other_batch.zengin_payments.create!(worker: workers(:worker_other_org))
+    other_detail = other_payment.zengin_payment_details.create!(
+      payment_type: :other,
+      source_kind: :manual,
+      amount: 100,
+      original_amount: 100
+    )
+    [standard_payment_with_details(own_batch), other_payment, other_detail]
+  end
 
   def standard_payment_with_details(batch)
     batch.zengin_payments
@@ -692,5 +732,4 @@ class ZenginPaymentsControllerTest < ActionDispatch::IntegrationTest
     )
     worker
   end
-
 end

@@ -21,6 +21,7 @@ class UserTopic < ApplicationRecord
   belongs_to :user
   belongs_to :topic
 
+  scope :for_organization, ->(organization) { joins(:user).merge(User.for_organization(organization)) }
   scope :current_topics, lambda { |user|
     where(user_id: user.id).joins(:topic).order('topics.posted_on desc, topics.id desc').limit(10).includes(:topic)
   }
