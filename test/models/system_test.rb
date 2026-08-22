@@ -134,4 +134,11 @@ class SystemTest < ActiveSupport::TestCase
 
     assert_predicate system, :valid?
   end
+
+  test "年度名は組織IDを指定して取得できる" do
+    systems(:s2015).update!(term_name: "第15期")
+    systems(:s2015_org2).update!(term_name: "別組織期")
+
+    assert_equal ["第15期"], System.term_names_for(organizations(:org).id, [2015])
+  end
 end

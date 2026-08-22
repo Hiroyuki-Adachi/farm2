@@ -53,7 +53,8 @@ class System < ApplicationRecord
   end
 
   def self.term_names_for(organization, terms)
-    names = where(organization_id: organization.id, term: terms).pluck(:term, :term_name).to_h
+    organization_id = organization.is_a?(Organization) ? organization.id : organization
+    names = where(organization_id:, term: terms).pluck(:term, :term_name).to_h
     terms.map { |term| names.fetch(term, term.to_s) }
   end
 
