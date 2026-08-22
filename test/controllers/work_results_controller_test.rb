@@ -6,10 +6,12 @@ class WorkResultsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "世帯別日当一覧" do
+    systems(:s2015).update!(term_name: "第15期")
     create_other_organization_result
 
     get work_results_path
     assert_response :success
+    assert_select "h1", text: "世帯別日当一覧(第15期)"
     assert_not_includes response.body, homes(:home_other_org).name
 
     get work_results_path, params: { fixed_at: "2015-02-28" }

@@ -6,9 +6,11 @@ class Works::SupportersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "外注集計一覧" do
+    systems(:s2017).update!(term_name: "第17期")
+
     get works_supporters_url
     assert_response :success
-    assert_select "h1", text: "外注集計一覧(2017)"
+    assert_select "h1", text: "外注集計一覧(第17期)"
     assert_select "th", text: "作業月"
     assert_select "th", text: "世帯"
     assert_select "td", text: "2017年2月"

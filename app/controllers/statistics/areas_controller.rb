@@ -1,6 +1,8 @@
 class Statistics::AreasController < ApplicationController
   include PermitManager
 
+  helper StatisticsHelper
+
   def index
     @work_kinds = WorkKind.aggregatable
     allowed_work_kind_ids = @work_kinds.map(&:id)
@@ -27,17 +29,19 @@ class Statistics::AreasController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json do
-        render json: {
-          labels: @terms,
-          values: @terms.map { |term| @area_per_hour[term] },
-          title: @selected_work_kind&.name
-        }
-      end
+      format.json { render json: chart_data }
     end
   end
 
   private
+
+  def chart_data
+    {
+      labels: helpers.labels(@terms.index_with(0), current_organization),
+      values: @terms.map { |term| @area_per_hour[term] },
+      title: @selected_work_kind&.name
+    }
+  end
 
   def menu_name
     :statistics_areas

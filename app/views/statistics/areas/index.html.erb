@@ -15,7 +15,7 @@
   <div class="col-md-12">
     <canvas id="chart"
       data-chart-rendered="0"
-      data-labels="<%= @terms.to_json %>"
+      data-labels="<%= labels(@terms.index_with(0), current_organization).to_json %>"
       data-values="<%= @terms.map { |term| @area_per_hour[term] }.to_json %>"
       data-title="<%= @selected_work_kind&.name %>"></canvas>
   </div>

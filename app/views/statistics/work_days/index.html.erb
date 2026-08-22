@@ -3,8 +3,8 @@
   <thead>
     <tr>
       <th>世帯</th>
-      <% 10.times do |i| %>
-        <th class="numeric"><%= current_term - (9 - i) %></th>
+      <% @systems.each do |system| %>
+        <th class="numeric"><%= system.term_name %></th>
       <% end %>
     </tr>
   </thead>
@@ -12,8 +12,8 @@
     <% @homes.each do |home| %>
       <tr>
         <th><%= home.name %></th>
-        <% 10.times do |i| %>
-          <td class="numeric"><%= @work_days[[current_term - (9 - i), home.id]] %></td>
+        <% @systems.each do |system| %>
+          <td class="numeric"><%= @work_days[[system.term, home.id]] %></td>
         <% end %>
       </tr>
     <% end %>
