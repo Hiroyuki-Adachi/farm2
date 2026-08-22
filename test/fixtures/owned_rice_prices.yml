@@ -10,11 +10,17 @@
 #  term(年度(期))           :integer          not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
+#  organization_id(組織)    :bigint
 #  work_type_id(品種)       :integer          default(0), not null
 #
 # Indexes
 #
-#  owned_rice_prices_2nd  (term,work_type_id) UNIQUE
+#  index_owned_rice_prices_on_organization_id  (organization_id)
+#  owned_rice_prices_2nd                       (organization_id,term,work_type_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 owned_rice_price1:
@@ -23,4 +29,14 @@ owned_rice_price1:
   display_order: 10
   name: "コシヒカリ"
   short_name: "コシ"
+  organization_id: 1
   owned_price: 6000
+
+owned_rice_price_other_org:
+  term: 2015
+  work_type_id: 1
+  display_order: 10
+  name: "別組織米"
+  short_name: "別米"
+  owned_price: 7000
+  organization_id: 2

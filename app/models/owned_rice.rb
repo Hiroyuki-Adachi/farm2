@@ -48,14 +48,23 @@ class OwnedRice < ApplicationRecord
 
   def self.regist(id, params, organization = nil)
     home = organization ? Home.for_organization(organization).find(params[:home_id]) : Home.find(params[:home_id])
+    owned_rice_price = find_owned_rice_price(params[:owned_rice_price_id], organization)
     owned_rice = if id.present? && organization
                    for_organization(organization).find(id)
                  elsif id.present?
                    OwnedRice.find_by(id: id)
                  end
-    attributes = params.except(:home_id).merge(home: home)
+    attributes = params.except(:home_id, :owned_rice_price_id).merge(home: home, owned_rice_price: owned_rice_price)
     owned_rice ? owned_rice.update(attributes) : create(attributes)
   end
+
+  def self.find_owned_rice_price(id, organization)
+    return OwnedRicePrice.find(id) unless organization
+
+    OwnedRicePrice.for_organization(organization).find(id)
+  end
+
+  private_class_method :find_owned_rice_price
 
   def owned_price
     owned_count * owned_rice_price.owned_price

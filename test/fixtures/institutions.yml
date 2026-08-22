@@ -10,6 +10,15 @@
 #  start_term(稼動開始年度) :integer          default(0), not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
+#  organization_id(組織)    :bigint
+#
+# Indexes
+#
+#  index_institutions_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 # This model initially had no columns defined. If you add columns to the
@@ -21,9 +30,18 @@ jimusho:
   start_term: 2010
   end_term: 9999
   display_order: 1
+  organization_id: 1
 
 kakunoko: 
   name: "格納庫"
   start_term: 2015
   end_term: 9999
   display_order: 2
+  organization_id: 1
+
+institution_other_org:
+  name: "別組織施設"
+  start_term: 2010
+  end_term: 9999
+  display_order: 1
+  organization_id: 2

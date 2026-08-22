@@ -10,9 +10,12 @@ class LandCostsController < ApplicationController
   helper GmapHelper
 
   def index
-    @land_places = LandPlace.usual
+    @land_places = LandPlace.for_organization(current_organization).usual
     @land_place_id = (params[:land_place_id] || @land_places.first.id).to_i
-    @lands = Land.for_organization(current_organization).where(land_place_id: @land_place_id).by_term(current_system).usual
+    @lands = Land.for_organization(current_organization)
+      .where(land_place_id: @land_place_id)
+      .by_term(current_system)
+      .usual
     @costs = LandCost.usual(@lands, Time.zone.today)
     respond_to do |format|
       format.turbo_stream

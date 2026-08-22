@@ -3076,3 +3076,4 @@ land_other_org:
   area: 10.0
   target_flag: t
   organization_id: 2
+  land_place: land_place_other_org

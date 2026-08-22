@@ -24,13 +24,22 @@ class Gaps::CleaningsController < GapsController
   end
 
   def cleaning_params
-    params.expect(cleaning:
+    permitted = params.expect(cleaning:
       [
         :target,
         :method,
         { cleaning_target_ids: [],
           institution_ids: [] }
       ])
+
+    institution_ids = Array(permitted[:institution_ids]).compact_blank.map(&:to_i).uniq
+    if Institution.for_organization(current_organization).where(id: institution_ids).count != institution_ids.size
+      raise ActiveRecord::RecordNotFound
+    end
+
+    permitted[:institution_ids] = institution_ids
+
+    permitted
       .merge(work_id: params[:id])
   end
 end
