@@ -6,18 +6,18 @@ class OwnedRicePricesController < ApplicationController
 
   def index
     @work_types = WorkType.indexes
-    @owned_rice_prices = OwnedRicePrice.usual(current_term).to_a
+    @owned_rice_prices = OwnedRicePrice.for_organization(current_organization).usual(current_term).to_a
   end
 
   def edit
-    @owned_rice_price = OwnedRicePrice.find_or_initialize_by(
+    @owned_rice_price = OwnedRicePrice.for_organization(current_organization).find_or_initialize_by(
       term: current_term,
       work_type_id: params[:id]
     )
   end
 
   def create
-    @owned_rice_price = OwnedRicePrice.new(owned_rice_price_params)
+    @owned_rice_price = OwnedRicePrice.for_organization(current_organization).new(owned_rice_price_params)
     if @owned_rice_price.save
       redirect_to @return_to
     else
@@ -26,7 +26,7 @@ class OwnedRicePricesController < ApplicationController
   end
 
   def update
-    @owned_rice_price = OwnedRicePrice.find(params[:id])
+    @owned_rice_price = OwnedRicePrice.for_organization(current_organization).find(params.expect(:id))
     if @owned_rice_price.update(owned_rice_price_params)
       redirect_to @return_to
     else
@@ -35,7 +35,7 @@ class OwnedRicePricesController < ApplicationController
   end
 
   def destroy
-    OwnedRicePrice.find(params[:id]).destroy
+    OwnedRicePrice.for_organization(current_organization).find(params.expect(:id)).destroy
     redirect_to @return_to, status: :see_other
   end
 

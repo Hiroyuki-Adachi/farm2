@@ -71,7 +71,7 @@ class LandsController < ApplicationController
   end
 
   def set_places
-    @places = LandPlace.usual
+    @places = LandPlace.for_organization(current_organization).usual
   end
 
   def set_other_lands
@@ -79,7 +79,7 @@ class LandsController < ApplicationController
   end
 
   def land_params
-    params.expect(land:
+    permitted = params.expect(land:
       [
         :place,
         :owner_id,
@@ -95,5 +95,10 @@ class LandsController < ApplicationController
         :peasant_end_term,
         :parcel_number
       ])
+    if permitted[:land_place_id].present?
+      permitted[:land_place_id] = LandPlace.for_organization(current_organization).find(permitted[:land_place_id]).id
+    end
+
+    permitted
   end
 end

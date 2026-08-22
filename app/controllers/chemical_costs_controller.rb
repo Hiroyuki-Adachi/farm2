@@ -49,7 +49,7 @@ class ChemicalCostsController < ApplicationController
   end
 
   def import
-    render json: Expense.chemical_prices(current_term)
+    render json: Expense.chemical_prices(current_term, current_organization)
   end
 
   private
