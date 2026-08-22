@@ -52,6 +52,11 @@ class System < ApplicationRecord
     System.where(organization_id: organization_id).maximum(:end_date)
   end
 
+  def self.term_names_for(organization, terms)
+    names = where(organization_id: organization.id, term: terms).pluck(:term, :term_name).to_h
+    terms.map { |term| names.fetch(term, term.to_s) }
+  end
+
   def self.init(organization_id, term)
     if term
       system = System.find_by(term: term, organization_id: organization_id)

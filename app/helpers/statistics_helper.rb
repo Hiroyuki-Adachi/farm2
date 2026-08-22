@@ -15,8 +15,8 @@ module StatisticsHelper
     COLORS[0]
   end
 
-  def labels(total_all)
-    total_all.pluck(0)
+  def labels(total_all, organization)
+    System.term_names_for(organization, total_all.pluck(0))
   end
 
   def tab1_data(total_all)
@@ -79,8 +79,8 @@ module StatisticsHelper
     results
   end
 
-  def tab5_labels(total_worker)
-    total_worker.map { |total| total[0] - 2000 }
+  def tab5_labels(total_worker, organization)
+    labels(total_worker, organization)
   end
 
   def tab5_datasets(total_worker, total_home)

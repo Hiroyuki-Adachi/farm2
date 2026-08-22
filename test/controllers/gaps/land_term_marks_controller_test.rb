@@ -6,9 +6,12 @@ class Gaps::LandTermMarksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "GAP圃場記号(一覧)" do
+    systems(:s2015).update!(term_name: "第15期")
+
     get gaps_land_term_marks_path
 
     assert_response :success
+    assert_select "h1", text: "圃場記号(第15期)"
   end
 
   test "GAP圃場記号(追加)" do
