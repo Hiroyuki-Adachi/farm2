@@ -56,7 +56,7 @@ class User < ApplicationRecord
   scope :mailable, -> { where("BTRIM(mail) <> ''").where.not(mail_confirmed_at: nil) }
   scope :mail_notifiable, -> { without_line.mailable }
   scope :web_push_notifiable, lambda {
-    without_line.where.not(id: mailable.select(:id))
+    without_line.where.not(id: mail_notifiable.select(:id))
       .where(id: WebPushSubscription.select(:user_id))
   }
   scope :for_organization, lambda { |organization|
