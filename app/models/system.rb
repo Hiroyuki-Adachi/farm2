@@ -73,6 +73,10 @@ class System < ApplicationRecord
     system
   end
 
+  def current_period?
+    Time.zone.today.between?(start_date, end_date)
+  end
+
   def get_prev_terms(limit, term: nil)
     self.class.get_terms(organization_id, term || self.term, limit)
   end
