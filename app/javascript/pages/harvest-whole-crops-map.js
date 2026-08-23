@@ -71,7 +71,7 @@ function initMap() {
       if (!currentLand) {
         return;
       }
-      document.getElementById("land_info").innerText = `${currentLand.dataset.place}(${currentLand.dataset.owner}):${currentLand.dataset.area}a`;
+      document.getElementById("land_info").innerText = `${currentLand.dataset.place}(${currentLand.dataset.owner}):${currentLand.dataset.area}a ロール数(10a当):${currentLand.dataset.rolls}`;
     });
 
     polygon.addListener("mouseout", function() {

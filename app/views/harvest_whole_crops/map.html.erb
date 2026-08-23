@@ -16,7 +16,8 @@
 <%= hidden_field_tag :location, "[#{current_location}]" %>
 <%= hidden_field_tag :organization_name, current_organization.name %>
 <% @lands.each do |land| %>
-  <%= land_region_hidden_field(land, color: "#ffffff") %>
+  <% summary = @wcs_land_summaries[land.id] %>
+  <%= land_region_hidden_field(land, color: summary.color, extra_data: { rolls: summary.rolls }) %>
 <% end %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
