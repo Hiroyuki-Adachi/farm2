@@ -24,7 +24,7 @@ class MenuController < ApplicationController
   end
 
   def update
-    if !current_user.manageable? || current_organization.term + 1 != system_params[:term].to_i
+    if !current_user.manageable? || current_organization.term + 1 != system_params[:term].to_i || within_current_term_period?
       current_user.term = system_params[:term]
       current_user.save!
       redirect_to(menu_index_path, notice: '設定を変更しました。')
@@ -45,6 +45,11 @@ class MenuController < ApplicationController
   end
 
   private
+
+  def within_current_term_period?
+    system = System.find_by(term: current_organization.term, organization_id: current_organization.id)
+    system.present? && system.current_period?
+  end
 
   def system_params
     params.expect(system: [:term])

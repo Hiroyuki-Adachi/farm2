@@ -63,6 +63,45 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "対象年度変更(実行:新規)(システム日付が当年度内)" do
+    new_term = systems(:s2015).term + 1
+    System.where(term: new_term).destroy_all
+    old_term = systems(:s2015).term
+
+    assert_no_difference('System.count') do
+      travel_to Date.new(2015, 6, 15) do
+        patch menu_path(@system.id), params: { system: { term: new_term } }
+      end
+    end
+
+    @user.reload
+    assert_equal new_term, @user.term
+
+    @organization.reload
+    assert_equal old_term, @organization.term
+    User.where.not(id: @user.id).find_each do |user|
+      assert_equal old_term, user.term
+    end
+  end
+
+  test "対象年度変更(実行:新規)(システム日付が当年度外)" do
+    new_term = systems(:s2015).term + 1
+    System.where(term: new_term).destroy_all
+
+    assert_difference('System.count', 1) do
+      travel_to Date.new(2016, 1, 15) do
+        patch menu_path(@system.id), params: { system: { term: new_term } }
+      end
+    end
+
+    @organization.reload
+    assert_equal new_term, @organization.term
+
+    User.where(organization_id: @organization.id).find_each do |user|
+      assert_equal new_term, user.term
+    end
+  end
+
   test "対象年度変更(実行:既存)(管理者以外)" do
     user = users(:user_user)
     login_as(user)
