@@ -18,9 +18,9 @@ class WorkTypeTerm < ApplicationRecord
 
   def self.import_previous_term!(term)
     where(term: term - 1).find_each do |prev|
-      next if exists?(term: term, work_type_id: prev.work_type_id)
-
-      create!(term: term, work_type_id: prev.work_type_id, bg_color: prev.bg_color)
+      create_or_find_by!(term: term, work_type_id: prev.work_type_id) do |record|
+        record.bg_color = prev.bg_color
+      end
     end
   end
 end
