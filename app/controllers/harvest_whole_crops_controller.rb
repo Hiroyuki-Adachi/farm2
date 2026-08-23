@@ -2,6 +2,7 @@ class HarvestWholeCropsController < ApplicationController
   include PermitManager
 
   helper DryingsHelper
+  helper GmapHelper
 
   def index
     @whole_crops = WorkWholeCrop.for_organization(current_organization).for_harvest(current_term)
@@ -14,6 +15,14 @@ class HarvestWholeCropsController < ApplicationController
         render content_type: 'text/csv; charset=cp943'
       end
     end
+  end
+
+  def map
+    @wcs_land_summaries = HarvestWholeCrops::MapService.call(organization: current_organization, term: current_term)
+    @lands = Land.for_organization(current_organization).regionable
+      .includes(:owner)
+      .where(id: @wcs_land_summaries.keys)
+      .usual_order
   end
 
   private
