@@ -5,6 +5,7 @@ class UserNotificationTest < ActiveSupport::TestCase
     assert User.new(mail: "confirmed@example.com", mail_confirmed_at: Time.current).mailable?
     assert_not User.new(mail: "unconfirmed@example.com").mailable?
     assert_not User.new(mail: "", mail_confirmed_at: Time.current).mailable?
+    assert_not User.new(mail: "   ", mail_confirmed_at: Time.current).mailable?
   end
 
   test "定期通知の配信先はLINE、メール、WEB Pushの順に選ばれる" do
@@ -21,6 +22,12 @@ class UserNotificationTest < ActiveSupport::TestCase
     web_user = users(:user_manager)
     WebPushSubscription.create!(user: web_user, endpoint: "https://example.com/push/web", p256dh: "key", auth: "auth")
 
+    blank_mail_user = users(:user_checker)
+    blank_mail_user.update!(mail: "   ")
+    blank_mail_user.update!(mail_confirmed_at: Time.current)
+    WebPushSubscription.create!(user: blank_mail_user, endpoint: "https://example.com/push/blank-mail", p256dh: "key",
+                                auth: "auth")
+
     assert_includes User.linable, line_user
     assert_not_includes User.mail_notifiable, line_user
     assert_not_includes User.web_push_notifiable, line_user
@@ -29,6 +36,9 @@ class UserNotificationTest < ActiveSupport::TestCase
     assert_not_includes User.web_push_notifiable, mail_user
 
     assert_includes User.web_push_notifiable, web_user
+
+    assert_not_includes User.mailable, blank_mail_user
+    assert_includes User.web_push_notifiable, blank_mail_user
   end
 
   test "配信はPCまたはスマートフォン向けのワードがあれば有効" do
