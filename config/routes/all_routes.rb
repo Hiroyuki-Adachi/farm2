@@ -69,7 +69,11 @@ resources :zgis, only: [:new, :create]
 resources :work_seedlings, only: [:index]
 resources :owned_rices, only: [:index, :edit, :update]
 resources :owned_rice_prices, only: [:index, :create, :edit, :update, :destroy]
-resources :harvest_whole_crops, only: [:index]
+resources :harvest_whole_crops, only: [:index] do
+  collection do
+    get :map
+  end
+end
 resources :harvest_rices, only: [:index]
 resources :dryings, except: [:new] do
   member do

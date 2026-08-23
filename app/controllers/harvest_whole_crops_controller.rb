@@ -2,6 +2,7 @@ class HarvestWholeCropsController < ApplicationController
   include PermitManager
 
   helper DryingsHelper
+  helper GmapHelper
 
   def index
     @whole_crops = WorkWholeCrop.for_organization(current_organization).for_harvest(current_term)
@@ -16,7 +17,19 @@ class HarvestWholeCropsController < ApplicationController
     end
   end
 
+  def map
+    @lands = Land.for_organization(current_organization).regionable
+      .includes(:owner)
+      .where(id: target_land_ids)
+      .usual_order
+  end
+
   private
+
+  def target_land_ids
+    work_ids = WorkWholeCrop.for_organization(current_organization).for_harvest(current_term).select(:work_id)
+    WorkLand.where(work_id: work_ids).select(:land_id).distinct
+  end
 
   def calc_totals(whole_crops)
     work_type_totals = {}
