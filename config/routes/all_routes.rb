@@ -15,7 +15,11 @@ namespace :plans do
   scope '/:mode' do
     resources :lands, only: [:index, :new, :create, :destroy]
   end
-  resources :work_types, only: [:new, :create]
+  resources :work_types, only: [:new, :create] do
+    collection do
+      post :import
+    end
+  end
 end
 namespace :gaps do
   resources :land_term_marks, only: [:index, :create, :update, :destroy] do
