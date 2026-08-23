@@ -1,0 +1,9 @@
+ようこそ、<%= @user.worker.name %>さん
+
+<%= @header %>
+<% @schedules.each do |schedule| %>
+<%= schedule.start_at %>から<%= schedule.name %>です。
+<% end %>
+
+以下の画面から作業予定を確認できます。
+<%= personal_information_schedules_url(personal_information_token: @user.token) %>

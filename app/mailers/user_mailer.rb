@@ -9,4 +9,16 @@ class UserMailer < ApplicationMailer
     @token = token
     mail(to: @ip.created_user.mail, subject: 'IPアドレス認証')
   end
+
+  def schedule_notification(user, header, schedules)
+    @user = user
+    @header = header
+    @schedules = schedules
+    mail(to: @user.mail, subject: '作業予定のお知らせ')
+  end
+
+  def works_notification(user)
+    @user = user
+    mail(to: @user.mail, subject: '日報登録のお知らせ')
+  end
 end
