@@ -60,6 +60,25 @@ class WorkTest < ActiveSupport::TestCase
     assert_equal @work.term * @sum_hours, @work.sum_workers_amount
   end
 
+  test "確定月候補は対象期の期首日から生成する" do
+    system = systems(:s2015_org2)
+    system.stubs(:start_date).returns(Date.new(2015, 4, 1))
+
+    travel_to Date.new(2015, 6, 15) do
+      assert_equal [Date.new(2015, 4, 30), Date.new(2015, 5, 31)], Work.get_terms(system)
+    end
+  end
+
+  test "確定月候補の最終確定日は対象組織に限定する" do
+    system = systems(:s2015_org2)
+    works(:work_other_org).update!(fixed_at: Date.new(2015, 4, 30))
+    works(:work_no_fix1).update!(fixed_at: Date.new(2015, 12, 31))
+
+    travel_to Date.new(2015, 7, 15) do
+      assert_equal Date.new(2015, 5, 31), Work.get_terms(system).first
+    end
+  end
+
   test "工数統計_総合計" do
     total_hours = Work.joins(:work_results).where(term: 2015).sum("work_results.hours")
     assert_equal total_hours, Work.total_all([2015])[2015]

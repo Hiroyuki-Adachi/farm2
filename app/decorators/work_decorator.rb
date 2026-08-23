@@ -74,8 +74,8 @@ class WorkDecorator < Draper::Decorator
     h.raw("&nbsp;") + work_type.name
   end
 
-  def self.get_terms(term)
-    Work.get_terms(term).map { |t| [t.strftime('%Jy年%m月'), t.strftime('%Y-%m-%d')] }
+  def self.get_terms(system)
+    Work.get_terms(system).map { |t| [t.strftime('%Jy年%m月'), t.strftime('%Y-%m-%d')] }
   end
 
   def sum_hours

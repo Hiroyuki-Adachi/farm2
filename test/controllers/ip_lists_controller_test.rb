@@ -1,6 +1,8 @@
 require "test_helper"
 
 class IpListsControllerTest < ActionDispatch::IntegrationTest
+  include ActionMailer::TestHelper
+
   setup do
     @user = users(:user_line_id_already_exists)
     @ip_address = '5.5.5.5'
@@ -91,6 +93,60 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @ip_address, ip.ip_address
     assert_equal true, ip.white_flag
     assert_redirected_to edit_ip_list_path(ip)
+  end
+
+  test "ID認証画面(TOTP優先)(LINE登録済でもLINE送信されない)" do
+    @user.update(otp_enabled: true)
+    LineHookService.define_singleton_method(:push_message) do |*_args|
+      raise "LINE should not be called when TOTP is enabled"
+    end
+
+    assert_difference('IpList.count') do
+      post ip_lists_path, params: { login_name: @user.login_name }, headers: { 'REMOTE_ADDR' => @ip_address }
+    end
+
+    assert_redirected_to edit_ip_list_path(IpList.last)
+  end
+
+  test "ID認証画面(MAIL送信)" do
+    user = users(:users1)
+
+    assert_difference('IpList.count') do
+      assert_emails 1 do
+        post ip_lists_path, params: { login_name: user.login_name }, headers: { 'REMOTE_ADDR' => @ip_address }
+      end
+    end
+
+    ip = IpList.last
+    assert_equal user.login_name, ip.mail
+    assert_equal @ip_address, ip.ip_address
+    assert_equal true, ip.white_flag
+    assert_redirected_to edit_ip_list_path(ip)
+  end
+
+  test "ID認証画面(LINE優先)(LINE登録済ならMAILは送信されない)" do
+    user = users(:users1)
+    user.update(line_id: 'U0987654321')
+    LineHookService.define_singleton_method(:push_message) do |*_args|
+      Net::HTTPOK.new("1.1", "200", "OK")
+    end
+
+    assert_no_emails do
+      post ip_lists_path, params: { login_name: user.login_name }, headers: { 'REMOTE_ADDR' => @ip_address }
+    end
+
+    assert_redirected_to edit_ip_list_path(IpList.last)
+  end
+
+  test "ID認証画面(LINE・MAIL・TOTPいずれも未登録)" do
+    user = users(:users1)
+    user.update(mail: '', mail_confirmed_at: nil)
+
+    assert_no_difference('IpList.count') do
+      post ip_lists_path, params: { login_name: user.login_name }, headers: { 'REMOTE_ADDR' => @ip_address }
+    end
+
+    assert_response :service_unavailable
   end
 
   test "番号認証(表示)(ホワイト登録済)" do

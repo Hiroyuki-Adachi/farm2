@@ -4,7 +4,7 @@ class TotalCosts::MachinesController < ApplicationController
   def index
     @machine_minutes = TotalCostDetail.total_machines(current_term, current_organization)
     @work_types = WorkType.land
-    @machines = Machine.usual.where(id: @machine_minutes.map { |mm| mm[0][1] })
+    @machines = Machine.for_organization(current_organization).usual.where(id: @machine_minutes.map { |mm| mm[0][1] })
   end
 
   private
