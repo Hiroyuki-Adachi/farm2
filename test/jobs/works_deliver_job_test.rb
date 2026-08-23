@@ -26,6 +26,24 @@ class WorksDeliverJobTest < ActiveJob::TestCase
     assert_includes called_args[1], Rails.application.routes.url_helpers.personal_information_url(token: @user.token)
   end
 
+  test "昨日登録した日報がある場合にメール通知される" do
+    user = users(:users1)
+    @work.update!(created_at: 1.day.ago, created_by: users(:user_manager).worker_id)
+
+    LineHookService.stubs(:push_message).returns(Net::HTTPOK.new("1.1", "200", "OK"))
+
+    assert_difference -> { ActionMailer::Base.deliveries.size }, 1 do
+      WorksDeliverJob.perform_now
+    end
+
+    email = ActionMailer::Base.deliveries.last
+    assert_equal [user.mail], email.to
+    assert_equal "日報登録のお知らせ", email.subject
+    assert_includes email.body.decoded, "昨日、新しい日報データが入力されています。"
+    assert_includes email.body.decoded,
+                    Rails.application.routes.url_helpers.personal_information_url(token: user.token)
+  end
+
   test "当日登録した日報は未だLINEに通知されない" do
     @work.update!(created_at: Time.zone.today, created_by: 1)
 

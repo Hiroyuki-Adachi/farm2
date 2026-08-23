@@ -9,5 +9,11 @@ class WorksDeliverJob < ApplicationJob
       messages << Rails.application.routes.url_helpers.personal_information_url(token: user.token).to_s
       LineHookService.push_message(user.line_id, messages.join("\n"), retry_key: SecureRandom.uuid)
     end
+
+    User.mail_notifiable.each do |user|
+      next unless Work.deliverable(user.worker).exists?
+
+      UserMailer.works_notification(user).deliver_now
+    end
   end
 end

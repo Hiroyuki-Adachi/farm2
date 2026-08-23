@@ -7,6 +7,30 @@ class UserNotificationTest < ActiveSupport::TestCase
     assert_not User.new(mail: "", mail_confirmed_at: Time.current).mailable?
   end
 
+  test "定期通知の配信先はLINE、メール、WEB Pushの順に選ばれる" do
+    line_user = users(:user_line_id_already_exists)
+    line_user.update!(mail: "line-and-mail@example.com")
+    line_user.update!(mail_confirmed_at: Time.current)
+    WebPushSubscription.create!(user: line_user, endpoint: "https://example.com/push/line", p256dh: "key",
+                                auth: "auth")
+
+    mail_user = users(:users1)
+    WebPushSubscription.create!(user: mail_user, endpoint: "https://example.com/push/mail", p256dh: "key",
+                                auth: "auth")
+
+    web_user = users(:user_manager)
+    WebPushSubscription.create!(user: web_user, endpoint: "https://example.com/push/web", p256dh: "key", auth: "auth")
+
+    assert_includes User.linable, line_user
+    assert_not_includes User.mail_notifiable, line_user
+    assert_not_includes User.web_push_notifiable, line_user
+
+    assert_includes User.mail_notifiable, mail_user
+    assert_not_includes User.web_push_notifiable, mail_user
+
+    assert_includes User.web_push_notifiable, web_user
+  end
+
   test "配信はPCまたはスマートフォン向けのワードがあれば有効" do
     user = User.new(line_id: "")
 
