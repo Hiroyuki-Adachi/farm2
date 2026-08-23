@@ -68,11 +68,13 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
     System.where(term: new_term).destroy_all
     old_term = systems(:s2015).term
 
-    assert_no_difference('System.count') do
+    assert_difference('System.count', 1) do
       travel_to Date.new(2015, 6, 15) do
         patch menu_path(@system.id), params: { system: { term: new_term } }
+        follow_redirect!
       end
     end
+    assert_response :success
 
     @user.reload
     assert_equal new_term, @user.term
@@ -82,6 +84,10 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
     User.where.not(id: @user.id).find_each do |user|
       assert_equal old_term, user.term
     end
+
+    new_system = System.last
+    assert_equal new_term, new_system.term
+    assert_equal @organization.id, new_system.organization_id
   end
 
   test "対象年度変更(実行:新規)(システム日付が当年度外)" do
@@ -91,8 +97,10 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
     assert_difference('System.count', 1) do
       travel_to Date.new(2016, 1, 15) do
         patch menu_path(@system.id), params: { system: { term: new_term } }
+        follow_redirect!
       end
     end
+    assert_response :success
 
     @organization.reload
     assert_equal new_term, @organization.term

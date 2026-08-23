@@ -24,7 +24,7 @@ class MenuController < ApplicationController
   end
 
   def update
-    if !current_user.manageable? || current_organization.term + 1 != system_params[:term].to_i || within_current_term_period?
+    if !current_user.manageable? || current_organization.term + 1 != system_params[:term].to_i
       current_user.term = system_params[:term]
       current_user.save!
       redirect_to(menu_index_path, notice: '設定を変更しました。')
@@ -35,7 +35,12 @@ class MenuController < ApplicationController
     if @system.valid?
       ActiveRecord::Base.transaction do
         @system.save!
-        @organization.update_term!(@system.term)
+        if within_current_term_period?
+          current_user.term = @system.term
+          current_user.save!
+        else
+          @organization.update_term!(@system.term)
+        end
       end
       redirect_to(menu_index_path, notice: '設定を変更しました。')
     else
