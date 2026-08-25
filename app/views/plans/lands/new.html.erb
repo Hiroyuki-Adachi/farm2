@@ -1,14 +1,30 @@
 <div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/plan-lands">
-  <div class="col-md-6 h1">
+  <div class="col-md-3 h1">
     作付計画(<%= params[:mode] == Plans::LandsController::TERM_MODES[:next] ? next_term_jp : current_term_jp %>度)
   </div>
-  <div class="col-md-6 btn-toolbar">
+  <div class="col-md-3 btn-toolbar">
     <div class="btn-group mb-2 ms-2 mt-2">
-      <%= link_to '今年度', new_plans_land_path(mode: Plans::LandsController::TERM_MODES[:current]), class: "btn btn-primary" %>
+      <%= link_to '今年度', new_plans_land_path(mode: Plans::LandsController::TERM_MODES[:current], user_id: @target_user.id), class: "btn btn-primary" %>
     </div>
     <div class="btn-group mb-2 ms-2 mt-2">
-      <%= link_to '来年度', new_plans_land_path(mode: Plans::LandsController::TERM_MODES[:next]), class: "btn btn-primary" %>
+      <%= link_to '来年度', new_plans_land_path(mode: Plans::LandsController::TERM_MODES[:next], user_id: @target_user.id), class: "btn btn-primary" %>
     </div>
+  </div>
+  <div class="col-md-4">
+    <%= form_with url: new_plans_land_path(mode: params[:mode]),
+                  method: :get,
+                  class: "d-flex align-items-center gap-2" do %>
+      <%= label_tag :user_id, "ユーザー", class: "form-label mb-0 text-nowrap" %>
+      <%= select_tag :user_id,
+        options_from_collection_for_select(
+          @selectable_users,
+          :id,
+          ->(user) { user.worker.name },
+          @target_user.id
+        ),
+        class: "form-select",
+        onchange: "this.form.requestSubmit();" %>
+    <% end %>
   </div>
 </div>
 <div class="row">
@@ -33,7 +49,7 @@
 <div id="land_area_sum" class="label text-right font-weight-bold" style="width: 150px;">0.0</div>
 <%= hidden_field_tag :location, "[#{current_location}]" %>
 <%= hidden_field_tag :organization_name, current_organization.name %>
-<%= form_with url: plans_lands_path(mode: params[:mode]), method: :post do |f| %>
+<%= form_with url: plans_lands_path(mode: params[:mode], user_id: @target_user.id), method: :post do |f| %>
   <div id="lands">
     <% @lands.each do |land| %>
       <%= hidden_field_tag "land[#{land.id}]", land.work_type_id, {data: {id: land.id, place: land.place, area: land.area, region: land.region, owner: land.owner.name}} %>
@@ -49,13 +65,17 @@
       <%= button_tag "印刷", type: :button, class: "btn btn-success", onclick: "window.print();" %>
     </div>
     <div class="btn-group mr-2">
-      <%= link_to 'Z-GIS出力', plans_lands_path(mode: params[:mode]), class: "btn btn-primary" %>
+      <%= link_to 'Z-GIS出力', plans_lands_path(mode: params[:mode], user_id: @target_user.id), class: "btn btn-primary" %>
     </div>
     <div class="btn-group mr-2">
-      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning" %>
+      <%= submit_tag '登録', name: 'regist', class: "btn btn-warning", disabled: @target_user != current_user %>
     </div>
     <div class="btn-group mr-2">
-      <%= link_to '初期化', plans_land_path(id: 0, mode: params[:mode]), {data: {turbo_confirm: "本当に初期化してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+      <% if @target_user == current_user %>
+        <%= link_to '初期化', plans_land_path(id: 0, mode: params[:mode], user_id: @target_user.id), {data: {turbo_confirm: "本当に初期化してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger"} %>
+      <% else %>
+        <%= button_tag '初期化', type: :button, class: "btn btn-danger", disabled: true %>
+      <% end %>
     </div>
     <div class="btn-group mr-2">
       <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
