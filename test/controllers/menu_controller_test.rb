@@ -11,6 +11,7 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
   test "メニュー表示" do
     get menu_index_path
     assert_response :success
+    assert_select %(a[href="#{sessions_path}"][data-turbo-prefetch="false"]), text: "ログアウト"
   end
 
   test "対象年度変更画面表示" do
