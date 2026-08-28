@@ -1,6 +1,10 @@
 class Tablets::Plans::WorkTypesController < Tablets::PlansController
   def new
-    @work_types = WorkType.land
+    @work_types = WorkType.land.to_a
+    @enabled_work_type_ids = WorkTypeTerm.where(
+      term: next_term,
+      work_type_id: @work_types.map(&:id)
+    ).pluck(:work_type_id).to_set
   end
 
   def create
@@ -17,7 +21,7 @@ class Tablets::Plans::WorkTypesController < Tablets::PlansController
             WorkTypeTerm.create!(
               term: next_term,
               work_type_id: work_type.id,
-              bg_color: work_type.bg_color_term(next_term)
+              bg_color: work_type.bg_color || "#ffffff"
             )
           end
         else

@@ -3,7 +3,15 @@ class Tablets::Plans::LandsController < Tablets::PlansController
 
   def new
     @lands = Land.for_plan(current_user.id, next_term).expiry(plan_date).includes(:owner)
-    @work_types = WorkType.land.by_term(next_term)
+    @work_types = WorkType.land.by_term(next_term).to_a
+    term_colors = WorkTypeTerm.where(
+      term: next_term,
+      work_type_id: @work_types.map(&:id)
+    ).pluck(:work_type_id, :bg_color).to_h
+    @work_type_colors = @work_types.to_h do |work_type|
+      bg_color = term_colors[work_type.id] || work_type.bg_color || "#ffffff"
+      [work_type.id, { bg: bg_color, fg: WorkType.to_fg_color(bg_color) }]
+    end
   end
 
   def create

@@ -9,11 +9,12 @@
       作付なし
     </button>
     <% @work_types.each do |work_type| %>
+      <% colors = @work_type_colors.fetch(work_type.id) %>
       <button type="button"
               class="btn btn-lg flex-shrink-0 work-type"
-              style="background-color: <%= work_type.bg_color_term(next_term) %>; color: <%= work_type.fg_color_term(next_term) %>;"
+              style="background-color: <%= colors[:bg] %>; color: <%= colors[:fg] %>;"
               data-work-type-id="<%= work_type.id %>"
-              data-bg-color="<%= work_type.bg_color_term(next_term) %>">
+              data-bg-color="<%= colors[:bg] %>">
         <span class="fw-bold"><%= work_type.name %></span>
         <span class="d-block small"><span id="land_area_<%= work_type.id %>">0.0</span>a</span>
       </button>

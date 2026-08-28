@@ -15,7 +15,7 @@
               <div class="form-check form-switch d-flex justify-content-center m-0">
                 <%= hidden_field_tag "work_types[#{work_type.id}][term_flag]", "0" %>
                 <%= check_box_tag "work_types[#{work_type.id}][term_flag]", "1",
-                                  work_type.exists_term?(next_term),
+                                  @enabled_work_type_ids.include?(work_type.id),
                                   id: "work_type_#{work_type.id}",
                                   class: "form-check-input fs-3 m-0",
                                   role: "switch",
