@@ -40,8 +40,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
-    redirect_to @return_to, status: :see_other
+    if @user.destroy
+      redirect_to @return_to, status: :see_other
+    else
+      redirect_to @return_to, alert: @user.errors.full_messages.to_sentence, status: :see_other
+    end
   end
 
   private

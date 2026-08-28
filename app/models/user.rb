@@ -44,6 +44,7 @@ class User < ApplicationRecord
   before_create :set_token
   before_update :clear_mail_fields, if: :mail_changed?
   after_update :set_pc_mail, if: -> { saved_change_to_mail_confirmed_at? && mail_confirmed_at.present? }
+  before_destroy :prevent_last_admin_destroy, prepend: true
 
   has_secure_password
   encrypts :otp_secret
@@ -78,6 +79,7 @@ class User < ApplicationRecord
   validates :password, length: { maximum: ActiveModel::SecurePassword::MAX_PASSWORD_LENGTH_ALLOWED }
   validates :push_notification_permission, inclusion: { in: %w[default granted denied unsupported] }
   validates :mail, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true, allow_blank: true
+  validate :prevent_last_admin_demotion, if: :removing_admin_permission?
 
   def login_name=(value)
     super(value.downcase)
@@ -207,6 +209,30 @@ class User < ApplicationRecord
   end
 
   private
+
+  def removing_admin_permission?
+    will_save_change_to_permission_id?(from: "admin") && !admin?
+  end
+
+  def prevent_last_admin_demotion
+    Organization.lock.find(organization_id)
+    errors.add(:base, :last_admin) unless another_admin_exists?
+  end
+
+  def prevent_last_admin_destroy
+    return unless admin?
+    return if destroyed_by_association
+
+    Organization.lock.find(organization_id)
+    return if another_admin_exists?
+
+    errors.add(:base, :last_admin)
+    throw(:abort)
+  end
+
+  def another_admin_exists?
+    User.for_organization(organization_id).admin.where.not(id: id).exists?
+  end
 
   def delivery_enabled_user_word?(user_word)
     user_word.pc_flag? || user_word.sp_flag? || (user_word.line_flag? && linable?)

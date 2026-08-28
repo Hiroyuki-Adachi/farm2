@@ -22,6 +22,38 @@ class Users::PermissionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal user[:permission_id], @user.permission_id.to_sym
   end
 
+  test "システム管理者以外は権限変更画面を表示できない" do
+    login_as(users(:user_manager))
+
+    get new_user_permission_path(user_id: @user.id)
+
+    assert_response :service_unavailable
+  end
+
+  test "システム管理者以外は権限を変更できない" do
+    manager = users(:user_manager)
+    login_as(manager)
+
+    assert_no_changes -> { manager.reload.permission_id } do
+      post user_permissions_path(user_id: manager.id), params: { user: { permission_id: :admin } }
+    end
+    assert_response :service_unavailable
+  end
+
+  test "最後のシステム管理者は権限を変更できない" do
+    User.for_organization(@user.organization_id).admin.where.not(id: @user.id).find_each do |user|
+      user.update!(permission_id: :manager)
+    end
+
+    assert_no_changes -> { @user.reload.permission_id } do
+      post user_permissions_path(user_id: @user.id), params: { user: { permission_id: :manager } }
+    end
+
+    assert_response :unprocessable_content
+    assert_includes @response.body,
+                    I18n.t("activerecord.errors.models.user.attributes.base.last_admin")
+  end
+
   test "他組織ユーザの権限変更画面は表示しない" do
     get new_user_permission_path(user_id: users(:user_admin_org2).id)
 
