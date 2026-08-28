@@ -1,0 +1,70 @@
+<div data-controller="page-loader" data-page-loader-modules-value="pages/tablets/plan-lands">
+  <div id="map" style="height: calc(100vh - 320px); min-height: 420px;"></div>
+
+  <div class="d-flex gap-2 overflow-auto py-3">
+    <button type="button"
+            class="btn btn-outline-dark btn-lg flex-shrink-0 work-type"
+            data-work-type-id=""
+            data-bg-color="#000000">
+      作付なし
+    </button>
+    <% @work_types.each do |work_type| %>
+      <% colors = @work_type_colors.fetch(work_type.id) %>
+      <button type="button"
+              class="btn btn-lg flex-shrink-0 work-type"
+              style="background-color: <%= colors[:bg] %>; color: <%= colors[:fg] %>;"
+              data-work-type-id="<%= work_type.id %>"
+              data-bg-color="<%= colors[:bg] %>">
+        <span class="fw-bold"><%= work_type.name %></span>
+        <span class="d-block small"><span id="land_area_<%= work_type.id %>">0.0</span>a</span>
+      </button>
+    <% end %>
+  </div>
+
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div class="fs-4 fw-bold">
+      作付面積: <span id="land_area_sum">0.0</span>a
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <button id="toggle_land_labels"
+              type="button"
+              class="btn btn-outline-primary btn-lg"
+              aria-pressed="true">
+        地番・面積を隠す
+      </button>
+      <%= button_to "初期化", clear_tablets_plans_lands_path,
+                    method: :delete,
+                    class: "btn btn-danger btn-lg",
+                    form: { data: { turbo_confirm: "本当に初期化してもよろしいですか?" } } %>
+      <%= submit_tag "登録", form: "plan_lands_form", class: "btn btn-warning btn-lg px-4" %>
+      <%= link_to "戻る", tablets_menu_index_path, class: "btn btn-outline-secondary btn-lg" %>
+    </div>
+  </div>
+
+  <%= hidden_field_tag :location, "[#{current_location}]" %>
+  <%= hidden_field_tag :organization_name, current_organization.name %>
+  <%= form_with url: tablets_plans_lands_path, method: :post, html: { id: "plan_lands_form" } do %>
+    <div id="lands">
+      <% @lands.each do |land| %>
+        <%= hidden_field_tag "land[#{land.id}]", land.work_type_id,
+                             id: "land_#{land.id}",
+                             data: {
+                               id: land.id,
+                               place: land.place,
+                               area: land.area,
+                               region: land.region,
+                               center: land.region_center
+                             } %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<% content_for :head do %>
+  <script>
+  (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+    key: "<%= Rails.application.credentials.dig(:google_maps, :api_key) %>",
+    v: "weekly"
+  });
+  </script>
+<% end %>

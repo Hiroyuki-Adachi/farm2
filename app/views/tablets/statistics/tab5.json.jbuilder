@@ -1,6 +1,6 @@
 json.type "bar"
 json.data do
-  json.labels tab5_labels(@total_worker)
+  json.labels tab5_labels(@total_worker, current_organization)
   json.datasets tab5_datasets(@total_worker, @total_home)
 end
 json.options do

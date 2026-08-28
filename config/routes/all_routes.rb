@@ -15,7 +15,11 @@ namespace :plans do
   scope '/:mode' do
     resources :lands, only: [:index, :new, :create, :destroy]
   end
-  resources :work_types, only: [:new, :create]
+  resources :work_types, only: [:new, :create] do
+    collection do
+      post :import
+    end
+  end
 end
 namespace :gaps do
   resources :land_term_marks, only: [:index, :create, :update, :destroy] do
@@ -49,6 +53,12 @@ namespace :tablets do
   root "sessions#new"
   resource :session, only: [:new]
   resources :menu, only: [:index]
+  namespace :plans do
+    resources :work_types, only: [:new, :create]
+    resources :lands, only: [:new, :create] do
+      delete :clear, on: :collection
+    end
+  end
   resources :maps, only: [:index]
   namespace :lands do
     resources :chemicals, only: [:index]
@@ -69,7 +79,11 @@ resources :zgis, only: [:new, :create]
 resources :work_seedlings, only: [:index]
 resources :owned_rices, only: [:index, :edit, :update]
 resources :owned_rice_prices, only: [:index, :create, :edit, :update, :destroy]
-resources :harvest_whole_crops, only: [:index]
+resources :harvest_whole_crops, only: [:index] do
+  collection do
+    get :map
+  end
+end
 resources :harvest_rices, only: [:index]
 resources :dryings, except: [:new] do
   member do

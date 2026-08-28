@@ -1,4 +1,11 @@
 ja: 
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            base:
+              last_admin: "システム管理者をゼロにはできません。"
   status:
     organization:
       daily_worker:

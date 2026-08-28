@@ -9,7 +9,7 @@
     <canvas id="chart2" />
   </div>
 </div>
-<%= hidden_field_tag :chart1_labels, @total_worker.map {|ta| ta[0] - 2000 }.to_json.html_safe %>
+<%= hidden_field_tag :chart1_labels, tab5_labels(@total_worker, current_organization).to_json %>
 <%= hidden_field_tag :chart1_data1, @total_worker.map {|ta| ta[1].to_f}.to_json.html_safe %>
 <%= hidden_field_tag :chart1_data2, @total_home.map {|ta| ta[1].to_f}.to_json.html_safe %>
 <%= hidden_field_tag :chart2_data1, @total_month1.map {|ta| ta.to_f}.to_json.html_safe %>

@@ -17,6 +17,15 @@
 #  chemical_id(薬剤)            :integer
 #  chemical_type_id(薬剤種別)   :integer          default(0)
 #  expense_type_id(経費種別)    :integer          default(0), not null
+#  organization_id(組織)        :bigint
+#
+# Indexes
+#
+#  index_expenses_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 expense_upd:
@@ -24,6 +33,7 @@ expense_upd:
   payed_on: "2015-02-02"
   content: "更新テスト"
   amount: 22222
+  organization_id: 1
   expense_type: expense_type1
   cost_flag: true
 
@@ -33,6 +43,7 @@ expense_del:
   content: "削除テスト"
   amount: 33333
   expense_type: expense_type1
+  organization_id: 1
   cost_flag: true
 
 expense_genka:
@@ -42,6 +53,7 @@ expense_genka:
   amount: 45000
   expense_type: expense_type2
   cost_flag: true
+  organization_id: 1
 
 expense_indirect:
   term: 2017
@@ -50,3 +62,12 @@ expense_indirect:
   amount: 30000
   expense_type: expense_type2
   cost_flag: true
+  organization_id: 1
+
+expense_other_org:
+  term: 2015
+  payed_on: "2015-02-02"
+  content: "別組織経費"
+  amount: 22222
+  expense_type: expense_type1
+  organization_id: 2

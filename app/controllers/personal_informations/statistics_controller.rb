@@ -1,4 +1,6 @@
 class PersonalInformations::StatisticsController < PersonalInformationsController
+  helper StatisticsHelper
+
   def index
     @total_worker = Work.total_by_worker(@worker, current_term, organization: current_organization)
     @total_home = Work.total_by_home(@worker, current_term, organization: current_organization)

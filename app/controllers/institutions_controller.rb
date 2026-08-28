@@ -6,17 +6,17 @@ class InstitutionsController < ApplicationController
   helper GmapHelper
 
   def index
-    @institutions = Institution.usual
+    @institutions = Institution.for_organization(current_organization).usual
   end
 
   def new
-    @institution = Institution.new
+    @institution = Institution.for_organization(current_organization).new
   end
 
   def edit; end
 
   def create
-    @institution = Institution.new(institution_params)
+    @institution = Institution.for_organization(current_organization).new(institution_params)
     if @institution.save
       redirect_to institutions_path
     else
@@ -40,7 +40,7 @@ class InstitutionsController < ApplicationController
   private
 
   def set_institution
-    @institution = Institution.find(params[:id])
+    @institution = Institution.for_organization(current_organization).find(params.expect(:id))
   end
 
   def institution_params

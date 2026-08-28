@@ -9,7 +9,7 @@ class OwnedRicesController < ApplicationController
 
   def edit
     @home = Home.for_organization(current_organization).find(params[:id])
-    @p_owned_prices = OwnedRicePrice.usual(previous_term).to_a
+    @p_owned_prices = OwnedRicePrice.for_organization(current_organization).usual(previous_term).to_a
     @p_owned_rices = OwnedRice.by_home(previous_term, params[:id], current_organization).to_a
     @owned_rices = OwnedRice.by_home(current_term, params[:id], current_organization).to_a
   end
@@ -27,7 +27,7 @@ class OwnedRicesController < ApplicationController
   private
 
   def set_prices
-    @owned_prices = OwnedRicePrice.usual(current_term).to_a
+    @owned_prices = OwnedRicePrice.for_organization(current_organization).usual(current_term).to_a
   end
 
   def owned_rice_home_ids

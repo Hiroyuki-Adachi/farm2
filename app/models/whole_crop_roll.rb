@@ -11,7 +11,7 @@
 #
 
 class WholeCropRoll < ApplicationRecord
-  MAX_ROLLS = 5
+  MAX_ROLLS = 6
 
   scope :valid, -> { where("weight > ?", 0) }
   scope :for_organization, lambda { |organization|

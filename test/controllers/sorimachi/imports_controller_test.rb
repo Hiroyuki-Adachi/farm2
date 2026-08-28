@@ -7,8 +7,11 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "農業簿記インポート(表示)" do
+    systems(:s2015).update!(term_name: "第15期")
+
     get sorimachi_imports_path, params: { total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id }
     assert_response :success
+    assert_select "h1", text: "ソリマチ農業簿記(第15期)"
     assert_select "input[type=radio][name=total_cost_type_id]", minimum: 1
     assert_select "input[type=radio][name=total_cost_type_id][checked=checked]", count: 1
     assert_select "th", text: "科目"

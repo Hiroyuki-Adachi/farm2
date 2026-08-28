@@ -54,9 +54,10 @@ class ScheduleDeliverJobTest < ActiveJob::TestCase
     perform_enqueued_jobs { ScheduleDeliverJob.perform_now(:morning) }
   end
 
-  test "LINE未連携かつ購読済みユーザーにpush通知される" do
-    user = users(:users1)
-    WebPushSubscription.create!(user: user, endpoint: "https://example.com/push/1", p256dh: "p256dh-key", auth: "auth-key")
+  test "LINE・メール未登録かつ購読済みユーザーにpush通知される" do
+    user = users(:user_manager)
+    WebPushSubscription.create!(user: user, endpoint: "https://example.com/push/1", p256dh: "p256dh-key",
+                                auth: "auth-key")
     ScheduleWorker.find_or_create_by!(schedule: schedules(:schedule_today), worker: user.worker) do |schedule_worker|
       schedule_worker.display_order = 1
     end
@@ -77,5 +78,34 @@ class ScheduleDeliverJobTest < ActiveJob::TestCase
     assert_equal user.web_push_subscriptions.first.endpoint, delivered[0].endpoint
     assert_equal I18n.t("push_notification.schedule.title"), delivered[1][:title]
     assert_includes delivered[1][:body], "会議"
+  end
+
+  test "LINE未連携かつ確認済みメールがあるユーザーにメール通知される" do
+    user = users(:users1)
+    WebPushSubscription.create!(user: user, endpoint: "https://example.com/push/mail-priority", p256dh: "p256dh-key",
+                                auth: "auth-key")
+    ScheduleWorker.find_or_create_by!(schedule: schedules(:schedule_today), worker: user.worker) do |schedule_worker|
+      schedule_worker.display_order = 1
+    end
+
+    LineHookService.stubs(:push_message).returns(Net::HTTPOK.new("1.1", "200", "OK"))
+    WebPushService.stubs(:configured?).returns(true)
+    WebPushService.expects(:push).never
+
+    travel_to schedules(:schedule_today).worked_at.change(hour: 8) do
+      assert_difference -> { ActionMailer::Base.deliveries.size }, 1 do
+        ScheduleDeliverJob.perform_now(:morning)
+      end
+    end
+
+    email = ActionMailer::Base.deliveries.last
+    assert_equal [user.mail], email.to
+    assert_equal "作業予定のお知らせ", email.subject
+    assert_includes email.body.decoded, I18n.t("line_deliver_schedule.morning")
+    assert_includes email.body.decoded, "会議"
+
+    schedules_url = Rails.application.routes.url_helpers
+      .personal_information_schedules_url(personal_information_token: user.token)
+    assert_includes email.body.decoded, schedules_url
   end
 end

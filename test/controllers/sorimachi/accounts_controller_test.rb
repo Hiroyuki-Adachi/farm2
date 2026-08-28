@@ -7,8 +7,11 @@ class Sorimachi::AccountsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ソリマチ科目一覧" do
+    systems(:s2015).update!(term_name: "第15期")
+
     get sorimachi_accounts_path
     assert_response :success
+    assert_select "h1", text: "ソリマチ勘定科目(第15期)"
     assert_select "th", text: "種別名"
     assert_select "tbody tr:first-child td:nth-child(1)", text: "720"
     assert_select "tbody tr:first-child td:nth-child(2)", text: "一般管理費"

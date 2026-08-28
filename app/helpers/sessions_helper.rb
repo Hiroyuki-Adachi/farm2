@@ -59,7 +59,7 @@ module SessionsHelper
   end
 
   def this_term?
-    Time.zone.today.between?(current_system.start_date, current_system.end_date)
+    current_system.current_period?
   end
 
   def now_system

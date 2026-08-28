@@ -120,6 +120,22 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to users_path(page: 2)
     assert_nil User.find_by(id: user.id)
   end
+
+  test "最後のシステム管理者は削除できない" do
+    User.for_organization(@user.organization_id).admin.where.not(id: @user.id).find_each do |user|
+      user.update!(permission_id: :manager)
+    end
+
+    assert_no_difference("User.count") do
+      delete user_path(@user)
+    end
+
+    assert_redirected_to users_path
+    assert_equal I18n.t("activerecord.errors.models.user.attributes.base.last_admin"),
+                 flash[:alert]
+    assert User.exists?(@user.id)
+  end
+
   test "ユーザ一覧に他組織の作業者を表示しない" do
     get users_path
 

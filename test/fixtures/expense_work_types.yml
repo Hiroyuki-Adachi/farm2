@@ -7,34 +7,50 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  expense_id(経費)       :integer
+#  organization_id(組織)  :bigint
 #  work_type_id(作業分類) :integer
 #
 # Indexes
 #
 #  index_expense_work_types_on_expense_id_and_work_type_id  (expense_id,work_type_id) UNIQUE
+#  index_expense_work_types_on_organization_id              (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 expence_upd1:
   expense: expense_upd
   work_type: work_type_koshi
   rate: 1
+  organization_id: 1
 
 expence_upd2:
   expense: expense_upd
   work_type: work_types1
   rate: 1
+  organization_id: 1
 
 expence_del1:
   expense: expense_del
   work_type: work_type_koshi
   rate: 1
+  organization_id: 1
 
 expence_work_type_genka1:
   expense: expense_genka
   work_type_id: 5
   rate: 1
+  organization_id: 1
 
 expence_work_type_genka2:
   expense: expense_genka
   work_type_id: 6
   rate: 1
+  organization_id: 1
+
+expense_work_type_other_org:
+  expense: expense_other_org
+  work_type: work_type_koshi
+  organization_id: 2
