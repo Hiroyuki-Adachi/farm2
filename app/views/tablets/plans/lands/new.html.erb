@@ -32,7 +32,7 @@
               aria-pressed="true">
         地番・面積を隠す
       </button>
-      <%= button_to "初期化", tablets_plans_land_path(0),
+      <%= button_to "初期化", clear_tablets_plans_lands_path,
                     method: :delete,
                     class: "btn btn-danger btn-lg",
                     form: { data: { turbo_confirm: "本当に初期化してもよろしいですか?" } } %>

@@ -55,7 +55,9 @@ namespace :tablets do
   resources :menu, only: [:index]
   namespace :plans do
     resources :work_types, only: [:new, :create]
-    resources :lands, only: [:new, :create, :destroy]
+    resources :lands, only: [:new, :create] do
+      delete :clear, on: :collection
+    end
   end
   resources :maps, only: [:index]
   namespace :lands do
