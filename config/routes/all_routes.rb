@@ -53,6 +53,12 @@ namespace :tablets do
   root "sessions#new"
   resource :session, only: [:new]
   resources :menu, only: [:index]
+  namespace :plans do
+    resources :work_types, only: [:new, :create]
+    resources :lands, only: [:new, :create] do
+      delete :clear, on: :collection
+    end
+  end
   resources :maps, only: [:index]
   namespace :lands do
     resources :chemicals, only: [:index]
