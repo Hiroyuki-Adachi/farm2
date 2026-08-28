@@ -1,0 +1,35 @@
+<%= form_with url: tablets_plans_work_types_path, method: :post do %>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead>
+        <tr>
+          <th scope="col" class="fs-5">品種</th>
+          <th scope="col" class="fs-5 text-center">作付有無</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @work_types.each do |work_type| %>
+          <tr>
+            <td class="fs-5 py-3"><%= work_type.name %></td>
+            <td class="py-3">
+              <div class="form-check form-switch d-flex justify-content-center m-0">
+                <%= hidden_field_tag "work_types[#{work_type.id}][term_flag]", "0" %>
+                <%= check_box_tag "work_types[#{work_type.id}][term_flag]", "1",
+                                  work_type.exists_term?(next_term),
+                                  id: "work_type_#{work_type.id}",
+                                  class: "form-check-input fs-3 m-0",
+                                  role: "switch",
+                                  aria: { label: "#{work_type.name}の作付有無" } %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex gap-3 mt-3">
+    <%= submit_tag "登録", class: "btn btn-warning btn-lg px-5" %>
+    <%= link_to "戻る", tablets_menu_index_path, class: "btn btn-outline-secondary btn-lg" %>
+  </div>
+<% end %>
