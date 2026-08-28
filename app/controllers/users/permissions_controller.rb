@@ -1,4 +1,5 @@
 class Users::PermissionsController < ApplicationController
+  before_action :authorize_admin!
   before_action :set_user
 
   def new; end
@@ -7,7 +8,7 @@ class Users::PermissionsController < ApplicationController
     if @user.update(user_params)
       redirect_to users_path
     else
-      render action: :new
+      render action: :new, status: :unprocessable_content
     end
   end
 
