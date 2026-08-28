@@ -106,6 +106,34 @@ class Tablets::Plans::LandsControllerTest < ActionDispatch::IntegrationTest
     )
   end
 
+  test "画面に表示されない同一組織の土地を登録できない" do
+    hidden_land = lands(:lands2)
+    existing = PlanLand.create!(
+      user: @user,
+      term: @user.term + 1,
+      land: @land,
+      work_type: @work_type
+    )
+
+    assert_no_difference("PlanLand.count") do
+      post tablets_plans_lands_path, params: {
+        land: {
+          @land.id => @work_type.id,
+          hidden_land.id => @work_type.id
+        }
+      }
+    end
+
+    assert_response :error
+    assert PlanLand.exists?(
+      user: existing.user,
+      term: existing.term,
+      land: existing.land,
+      work_type: existing.work_type
+    )
+    assert_not PlanLand.exists?(user: @user, term: @user.term + 1, land: hidden_land)
+  end
+
   test "管理者以外は作付計画を登録できない" do
     login_as(users(:user_checker))
 
