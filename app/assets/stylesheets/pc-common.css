@@ -12,6 +12,13 @@ div.d-table-cell.numeric {
   text-align: right;
 }
 
+.map-label {
+  font: 600 20px/1.2 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+  color: #111;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
 .bootstrap-date {
   display: inline-block;
   width: auto;
