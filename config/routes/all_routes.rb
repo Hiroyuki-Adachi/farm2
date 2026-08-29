@@ -52,6 +52,12 @@ end
 namespace :tablets do
   root "sessions#new"
   resource :session, only: [:new]
+  resources :qr_login, param: :token, only: [:create] do
+    member do
+      get :qrcode
+      post :consume
+    end
+  end
   resources :menu, only: [:index]
   namespace :plans do
     resources :work_types, only: [:new, :create]
