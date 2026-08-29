@@ -3,14 +3,25 @@ require "test_helper"
 class Tablets::QrLoginControllerTest < ActionDispatch::IntegrationTest
   include ActiveSupport::Testing::TimeHelpers
 
-  test "QRコードログイン(ホワイトリスト外/ブラックリストIPでも制限されない)" do
+  test "QRコードログイン(ホワイトリスト外IPは制限されない)" do
     freeze_time Time.current do
       assert_difference "QrLoginSession.count", +1 do
+        post tablets_qr_login_index_path,
+             headers: { "ACCEPT" => "application/json", "REMOTE_ADDR" => "1.1.1.1" }
+      end
+
+      assert_response :success
+    end
+  end
+
+  test "QRコードログイン(ブラックリストIPは拒否される)" do
+    freeze_time Time.current do
+      assert_no_difference "QrLoginSession.count" do
         post tablets_qr_login_index_path,
              headers: { "ACCEPT" => "application/json", "REMOTE_ADDR" => "4.4.4.4" }
       end
 
-      assert_response :success
+      assert_response :service_unavailable
     end
   end
 
@@ -74,7 +85,7 @@ class Tablets::QrLoginControllerTest < ActionDispatch::IntegrationTest
 
       Rails.application.config.stub(:access_logger, access_logger) do
         post consume_tablets_qr_login_path(qr.token),
-             headers: { "ACCEPT" => "application/json", "REMOTE_ADDR" => "4.4.4.4" }
+             headers: { "ACCEPT" => "application/json", "REMOTE_ADDR" => "1.1.1.1" }
       end
 
       assert_response :success
@@ -125,6 +136,46 @@ class Tablets::QrLoginControllerTest < ActionDispatch::IntegrationTest
       assert_equal true, json["ok"]
       assert_equal tablets_menu_index_path, json["url"]
       assert_equal "TB", @request.session[:access_target]
+    end
+  end
+
+  test "QRコード消費(似て非なるパス /tablets_evil への遷移先指定は拒否)" do
+    freeze_time Time.current do
+      user = users(:users1)
+      qr = QrLoginSession.create!(
+        status: :approved,
+        user_id: user.id,
+        expires_at: 5.minutes.from_now
+      )
+
+      post consume_tablets_qr_login_path(qr.token),
+           params: { redirect_to: "/tablets_evil/menu" },
+           headers: { "ACCEPT" => "application/json" }
+
+      assert_response :success
+      json = response.parsed_body
+      assert_equal true, json["ok"]
+      assert_equal tablets_menu_index_path, json["url"]
+    end
+  end
+
+  test "QRコード消費(dot-segmentで/tablets境界を抜けようとしても拒否)" do
+    freeze_time Time.current do
+      user = users(:users1)
+      qr = QrLoginSession.create!(
+        status: :approved,
+        user_id: user.id,
+        expires_at: 5.minutes.from_now
+      )
+
+      post consume_tablets_qr_login_path(qr.token),
+           params: { redirect_to: "/tablets/../menu" },
+           headers: { "ACCEPT" => "application/json" }
+
+      assert_response :success
+      json = response.parsed_body
+      assert_equal true, json["ok"]
+      assert_equal tablets_menu_index_path, json["url"]
     end
   end
 

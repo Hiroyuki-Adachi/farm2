@@ -85,13 +85,18 @@ module QrLoginActions
     uri = URI.parse(path)
     return unless uri.scheme.nil? && uri.host.nil?
 
-    normalized_path = strip_script_name_prefix(uri.path)
-    return unless normalized_path.start_with?(prefix)
+    resolved_path = File.expand_path(uri.path.to_s, "/")
+    normalized_path = strip_script_name_prefix(resolved_path)
+    return unless path_within_prefix?(normalized_path, prefix)
 
     safe_path = add_script_name_prefix(normalized_path)
     [safe_path, uri.query].compact.join("?")
   rescue URI::InvalidURIError
     nil
+  end
+
+  def path_within_prefix?(path, prefix)
+    path == prefix || path.start_with?("#{prefix}/")
   end
 
   def strip_script_name_prefix(path)
