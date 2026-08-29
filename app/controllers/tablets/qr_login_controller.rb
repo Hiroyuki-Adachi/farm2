@@ -1,13 +1,8 @@
-class Tablets::SessionsController < TabletsController
+class Tablets::QrLoginController < TabletsController
   include IpRestrictedLogin
+  include QrLoginActions
 
-  layout false
-  skip_before_action :authenticate_user!
   before_action :check_login_ip_access!
-
-  def new
-    log_out
-  end
 
   private
 
@@ -15,5 +10,18 @@ class Tablets::SessionsController < TabletsController
   # ただし不正確認試行を繰り返したブラックリストIPだけは引き続き拒否する。
   def check_login_ip_access!
     reject_blacklisted_ip!
+  end
+
+  # ログイン先はredirect_toの値に関わらず常にTB固定とし、PCターゲットを騙し取れないようにする。
+  def login_target
+    :TB
+  end
+
+  def allowed_redirect_prefix
+    "/tablets"
+  end
+
+  def default_redirect_path
+    tablets_menu_index_path
   end
 end

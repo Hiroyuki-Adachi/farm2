@@ -127,7 +127,7 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "QRコード消費(タブレット遷移先指定)" do
+  test "QRコード消費(タブレット遷移先を指定してもPC版では無視されて通常メニューになる)" do
     freeze_time Time.current do
       user = users(:users1)
       qr = QrLoginSession.create!(
@@ -137,7 +137,7 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
       )
 
       access_logger = Minitest::Mock.new
-      access_logger.expect(:info, nil, ["TB-#{user.worker.name}"])
+      access_logger.expect(:info, nil, ["PC-#{user.worker.name}"])
 
       Rails.application.config.stub(:access_logger, access_logger) do
         post consume_sessions_qr_login_path(qr.token),
@@ -148,74 +148,9 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
       json = response.parsed_body
       assert_equal true, json["ok"]
-      assert_equal tablets_menu_index_path, json["url"]
-      assert_equal "TB", @request.session[:access_target]
+      assert_equal menu_index_path, json["url"]
+      assert_equal "PC", @request.session[:access_target]
       access_logger.verify
-    end
-  end
-
-  test "QRコード消費(タブレット遷移先指定, script_nameあり)" do
-    freeze_time Time.current do
-      user = users(:users1)
-      qr = QrLoginSession.create!(
-        status: :approved,
-        user_id: user.id,
-        expires_at: 5.minutes.from_now
-      )
-
-      post consume_sessions_qr_login_path(qr.token),
-           params: { redirect_to: tablets_menu_index_path },
-           headers: { "ACCEPT" => "application/json" },
-           env: { "SCRIPT_NAME" => "/farm2" }
-
-      assert_response :success
-      json = response.parsed_body
-      assert_equal true, json["ok"]
-      assert_equal "/farm2/tablets/menu", json["url"]
-    end
-  end
-
-  test "QRコード消費(タブレット遷移先指定, script_name先頭スラッシュなし)" do
-    freeze_time Time.current do
-      user = users(:users1)
-      qr = QrLoginSession.create!(
-        status: :approved,
-        user_id: user.id,
-        expires_at: 5.minutes.from_now
-      )
-
-      post consume_sessions_qr_login_path(qr.token),
-           params: { redirect_to: "/farm2/tablets/menu" },
-           headers: { "ACCEPT" => "application/json" },
-           env: { "SCRIPT_NAME" => "farm2" }
-
-      assert_response :success
-      json = response.parsed_body
-      assert_equal true, json["ok"]
-      assert_equal "/farm2/tablets/menu", json["url"]
-    end
-  end
-
-  test "QRコード消費(タブレット遷移先指定, script_nameなし relative_url_rootあり)" do
-    freeze_time Time.current do
-      user = users(:users1)
-      qr = QrLoginSession.create!(
-        status: :approved,
-        user_id: user.id,
-        expires_at: 5.minutes.from_now
-      )
-
-      Rails.application.config.stub(:relative_url_root, "/farm2") do
-        post consume_sessions_qr_login_path(qr.token),
-             params: { redirect_to: "/farm2/tablets/menu" },
-             headers: { "ACCEPT" => "application/json" },
-             env: { "SCRIPT_NAME" => "" }
-      end
-
-      assert_response :success
-      json = response.parsed_body
-      assert_equal true, json["ok"]
-      assert_equal "/farm2/tablets/menu", json["url"]
     end
   end
 
@@ -255,28 +190,6 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
       assert_response :conflict
       json = response.parsed_body
       assert_equal false, json["ok"]
-    end
-  end
-
-  test "TBログイン後にPC URLへ書き換えるとログアウトされる" do
-    freeze_time Time.current do
-      user = users(:users1)
-      qr = QrLoginSession.create!(
-        status: :approved,
-        user_id: user.id,
-        expires_at: 5.minutes.from_now
-      )
-
-      post consume_sessions_qr_login_path(qr.token),
-           params: { redirect_to: tablets_menu_index_path },
-           headers: { "ACCEPT" => "application/json" }
-      assert_response :success
-      assert_equal "TB", @request.session[:access_target]
-
-      get menu_index_path
-      assert_redirected_to root_path
-      assert_nil @request.session[:user_id]
-      assert_nil @request.session[:access_target]
     end
   end
 
