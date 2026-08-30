@@ -3,6 +3,8 @@ class NewsDeliverJob < ApplicationJob
 
   def perform
     User.where(id: UserTopic.unreaded.select(:user_id)).includes(:worker).find_each do |user|
+      next unless user.linable? || user.mailable?
+
       user_topics = deliverable_topics(user)
       deliver_line_notification(user, user_topics)
       deliver_mail_notification(user, user_topics)

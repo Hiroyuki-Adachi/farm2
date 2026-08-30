@@ -78,6 +78,17 @@ class NewsDeliverJobTest < ActiveJob::TestCase
     assert_not user_topic.reload.read_flag
   end
 
+  test "配信可能チャネルがない利用者の記事は取得しない" do
+    user_topic = user_topics(:user_topic1)
+    mark_other_topics_as_read(user_topic)
+    user_topic.update!(user: users(:user_manager), line_flag: true, mail_flag: true, read_flag: false)
+    UserTopic.expects(:current_topics).never
+
+    NewsDeliverJob.perform_now
+
+    assert_not user_topic.reload.read_flag
+  end
+
   private
 
   def mark_other_topics_as_read(user_topic)
