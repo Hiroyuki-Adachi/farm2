@@ -25,6 +25,56 @@ class Tablets::QrLoginControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "QRコードログイン(同一IPから短時間に大量作成すると429で拒否される)" do
+    freeze_time Time.current do
+      ip = "1.1.1.2"
+      Tablets::QrLoginController::THROTTLE_LIMIT.times do
+        QrLoginSession.create!(ip_address: ip)
+      end
+
+      assert_no_difference "QrLoginSession.count" do
+        post tablets_qr_login_index_path,
+             headers: { "ACCEPT" => "application/json", "REMOTE_ADDR" => ip }
+      end
+
+      assert_response :too_many_requests
+    end
+  end
+
+  test "QRコードログイン(スロットリング対象は時間窓の外なら再び許可される)" do
+    ip = "1.1.1.3"
+
+    travel_to 2.minutes.ago do
+      Tablets::QrLoginController::THROTTLE_LIMIT.times do
+        QrLoginSession.create!(ip_address: ip)
+      end
+    end
+
+    assert_difference "QrLoginSession.count", +1 do
+      post tablets_qr_login_index_path,
+           headers: { "ACCEPT" => "application/json", "REMOTE_ADDR" => ip }
+    end
+
+    assert_response :success
+  end
+
+  test "QRコードログイン(継続的な悪用IPはブラックリストに加点され拒否される)" do
+    freeze_time Time.current do
+      ip = "1.1.1.4"
+      Tablets::QrLoginController::BLOCK_LIMIT.times do
+        QrLoginSession.create!(ip_address: ip)
+      end
+
+      assert_no_difference "QrLoginSession.count" do
+        post tablets_qr_login_index_path,
+             headers: { "ACCEPT" => "application/json", "REMOTE_ADDR" => ip }
+      end
+
+      assert_response :service_unavailable
+      assert_equal 1, IpList.find_by(ip_address: ip)&.block_count
+    end
+  end
+
   test "QRコード生成(正常)" do
     freeze_time Time.current do
       qr = QrLoginSession.create!(expires_at: 5.minutes.from_now)

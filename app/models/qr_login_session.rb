@@ -5,7 +5,8 @@
 #  id                              :bigint           not null, primary key
 #  consumed_at(セッション使用日時) :datetime
 #  expires_at(セッション有効期限)  :datetime         not null
-#  status(セッション状態)          :integer          default("pending"), not null
+#  ip_address(発行元IPアドレス)    :string           default(""), not null
+#  status(セッション状態)          :integer          default(0), not null
 #  token(セッション識別子)         :string(36)       not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
@@ -13,7 +14,8 @@
 #
 # Indexes
 #
-#  index_qr_login_sessions_on_token  (token) UNIQUE
+#  index_qr_login_sessions_on_ip_address_and_created_at  (ip_address,created_at)
+#  index_qr_login_sessions_on_token                      (token) UNIQUE
 #
 class QrLoginSession < ApplicationRecord
   enum :status, { pending: 0, approved: 1, consumed: 2 }, default: :pending
@@ -26,6 +28,10 @@ class QrLoginSession < ApplicationRecord
   scope :deletable, lambda { |now: Time.current, expired_keep: 1.day, consumed_keep: 30.days|
     where(consumed_at: nil).where(expires_at: ...(now - expired_keep))
       .or(where.not(consumed_at: nil).where(consumed_at: ...(now - consumed_keep)))
+  }
+
+  scope :created_from_ip_since, lambda { |ip_address, since|
+    where(ip_address: ip_address).where(created_at: since..)
   }
 
   def expired?
