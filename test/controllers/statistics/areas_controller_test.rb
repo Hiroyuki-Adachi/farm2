@@ -35,13 +35,17 @@ class Statistics::AreasControllerTest < ActionDispatch::IntegrationTest
 
   test "選択された作業種別のグラフデータをJSONで返す" do
     work_kinds(:work_kind_taue).update!(aggregation_flag: true)
+    systems(:s2015).update!(term_name: "第15期")
 
     get statistics_areas_path(format: :json), params: { work_kind_id: work_kinds(:work_kind_taue).id }
 
     assert_response :success
     json = JSON.parse(@response.body)
     system = System.find_by!(term: users(:users1).term, organization_id: users(:users1).organization_id)
-    assert_equal system.get_prev_terms(10).sort, json["labels"]
+    expected_labels = system.get_prev_terms(10).sort.map do |term|
+      System.find_by(term:, organization_id: users(:users1).organization_id)&.term_name || term.to_s
+    end
+    assert_equal expected_labels, json["labels"]
     assert_equal json["labels"].length, json["values"].length
     assert_equal work_kinds(:work_kind_taue).name, json["title"]
   end

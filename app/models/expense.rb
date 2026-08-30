@@ -17,9 +17,20 @@
 #  chemical_id(薬剤)            :integer
 #  chemical_type_id(薬剤種別)   :integer          default(0)
 #  expense_type_id(経費種別)    :integer          default(0), not null
+#  organization_id(組織)        :bigint
+#
+# Indexes
+#
+#  index_expenses_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 class Expense < ApplicationRecord
+  belongs_to :organization, optional: true
+
   has_many :expense_work_types, dependent: :destroy
   has_many :work_types, -> { order(:display_order) }, through: :expense_work_types
   belongs_to :expense_type
@@ -30,6 +41,10 @@ class Expense < ApplicationRecord
   validates :content, presence: true, unless: :chemical?
   validates :amount, presence: true
 
+  scope :for_organization, lambda { |organization|
+    organization_id = organization.is_a?(Organization) ? organization.id : organization
+    where(organization_id: organization_id)
+  }
   scope :usual, ->(term) { includes(:chemical).where(term: term).order(payed_on: :ASC, id: :ASC) }
   scope :cost, ->(term) { where(term: term, cost_flag: true).order(:id) }
   scope :chemicals, lambda { |term|
@@ -63,10 +78,10 @@ class Expense < ApplicationRecord
     direct? ? TotalCostType::EXPENSEDIRECT.id : TotalCostType::EXPENSEINDIRECT.id
   end
 
-  def self.chemical_prices(term)
+  def self.chemical_prices(term, organization)
     prices = Hash.new { |h, k| h[k] = {} }
     results = {}
-    Expense.chemicals(term).each do |expense|
+    Expense.for_organization(organization).chemicals(term).each do |expense|
       prices[expense.chemical_id][:sum_amount] ||= 0
       prices[expense.chemical_id][:sum_quantity] ||= 0
       prices[expense.chemical_id][:sum_amount] += expense.discount_amount

@@ -30,6 +30,17 @@ class LandCostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "場所マスタがない組織でも土地原価を表示できる" do
+    LandPlace.for_organization(users(:users1).organization_id).find_each do |land_place|
+      land_place.update!(organization: organizations(:org2))
+    end
+
+    get land_costs_path
+
+    assert_response :success
+    assert_select "input[type=radio][name=land_place_id]", count: 0
+  end
+
   test "土地原価(表示)(日付不正)" do
     travel_to(Date.new(2016, 1, 1))
     get land_costs_path

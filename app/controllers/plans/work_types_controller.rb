@@ -13,7 +13,12 @@ class Plans::WorkTypesController < PlansController
         work_type.save!
       end
     end
-    redirect_to new_plans_work_type_path
+    redirect_to new_plans_work_type_path, notice: '登録しました。'
+  end
+
+  def import
+    WorkTypeTerm.import_previous_term!(next_term)
+    redirect_to new_plans_work_type_path, notice: '前年度の設定を取り込みました。'
   end
 
   private

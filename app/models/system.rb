@@ -52,6 +52,12 @@ class System < ApplicationRecord
     System.where(organization_id: organization_id).maximum(:end_date)
   end
 
+  def self.term_names_for(organization, terms)
+    organization_id = organization.is_a?(Organization) ? organization.id : organization
+    names = where(organization_id:, term: terms).pluck(:term, :term_name).to_h
+    terms.map { |term| names.fetch(term, term.to_s) }
+  end
+
   def self.init(organization_id, term)
     if term
       system = System.find_by(term: term, organization_id: organization_id)
@@ -65,6 +71,10 @@ class System < ApplicationRecord
       end
     end
     system
+  end
+
+  def current_period?
+    Time.zone.today.between?(start_date, end_date)
   end
 
   def get_prev_terms(limit, term: nil)

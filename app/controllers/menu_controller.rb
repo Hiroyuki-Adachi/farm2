@@ -35,7 +35,12 @@ class MenuController < ApplicationController
     if @system.valid?
       ActiveRecord::Base.transaction do
         @system.save!
-        @organization.update_term!(@system.term)
+        if within_current_term_period?
+          current_user.term = @system.term
+          current_user.save!
+        else
+          @organization.update_term!(@system.term)
+        end
       end
       redirect_to(menu_index_path, notice: '設定を変更しました。')
     else
@@ -45,6 +50,11 @@ class MenuController < ApplicationController
   end
 
   private
+
+  def within_current_term_period?
+    system = System.find_by(term: current_organization.term, organization_id: current_organization.id)
+    system.present? && system.current_period?
+  end
 
   def system_params
     params.expect(system: [:term])

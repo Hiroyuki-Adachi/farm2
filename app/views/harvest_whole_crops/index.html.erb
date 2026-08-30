@@ -54,6 +54,9 @@
     <%= link_to "CSV出力", harvest_whole_crops_path(format: :csv), {class: "btn btn-outline-success"} %>
   </div>
   <div class="btn-group mr-2">
+    <%= link_to "地図", map_harvest_whole_crops_path, {class: "btn btn-info"} %>
+  </div>
+  <div class="btn-group mr-2">
     <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"} %>
   </div>
 </div>

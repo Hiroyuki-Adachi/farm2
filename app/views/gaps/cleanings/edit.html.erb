@@ -40,7 +40,7 @@
     </div>
     <div class="field mb-3 col-md-3">
       <%= f.label :institutions, class: "col-form-label-lg form-label" %>
-      <%= f.collection_check_boxes :institution_ids, Institution.by_term(current_term).usual, :id, :name do |b| %>
+      <%= f.collection_check_boxes :institution_ids, Institution.for_organization(current_organization).by_term(current_term).usual, :id, :name do |b| %>
         <div class="form-check">
           <%= b.label class: "form-check-label" do %>
             <%= b.check_box class: "form-check-input" %>

@@ -31,6 +31,10 @@ Metrics/ClassLength:
   Max: 200
   CountComments: false
 
+Metrics/ModuleLength:
+  Max: 200
+  CountComments: false
+
 Metrics/AbcSize:
   Max: 25
 

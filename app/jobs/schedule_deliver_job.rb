@@ -13,6 +13,10 @@ class ScheduleDeliverJob < ApplicationJob
       deliver_line_notification(user, timing)
     end
 
+    User.mail_notifiable.includes(:worker).find_each do |user|
+      deliver_mail_notification(user, timing)
+    end
+
     User.web_push_notifiable.includes(:worker, :web_push_subscriptions).find_each do |user|
       deliver_web_push_notification(user, timing)
     end
@@ -30,6 +34,13 @@ class ScheduleDeliverJob < ApplicationJob
     end
 
     LineHookService.push_message(user.line_id, messages.join("\n"), retry_key: SecureRandom.uuid)
+  end
+
+  def deliver_mail_notification(user, timing)
+    header, schedules = delivery_payload_for(user, timing)
+    return if schedules.blank?
+
+    UserMailer.schedule_notification(user, header, schedules).deliver_now
   end
 
   def deliver_web_push_notification(user, timing)

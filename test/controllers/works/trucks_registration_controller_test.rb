@@ -69,7 +69,7 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
     assert_nil MachineResult.find_by(machine: @home1_truck, work_result: other_home_work_result)
   end
 
-  test "範囲外または 0.25 刻みではない賃借量は無視する" do
+  test "範囲外または 0.5 刻みではない賃借量は無視する" do
     work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
     work_result = create_work_result(work, workers(:worker1))
     existing_result = MachineResult.create!(machine: @home1_truck, work_result: work_result, hours: 1.5)
@@ -81,7 +81,7 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
         machine_hours: {
           @home1_truck.id => {
             work_result.id => "10.0",
-            invalid_work_result.id => "1.1"
+            invalid_work_result.id => "1.25"
           }
         }
       )

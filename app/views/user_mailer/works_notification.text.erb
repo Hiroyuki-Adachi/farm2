@@ -1,0 +1,6 @@
+ようこそ、<%= @user.worker.name %>さん
+
+昨日、新しい日報データが入力されています。
+
+以下の画面から日報を確認できます。
+<%= personal_information_url(token: @user.token) %>

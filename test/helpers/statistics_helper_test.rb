@@ -11,8 +11,22 @@ class StatisticsHelperTest < ActionView::TestCase
   end
 
   test "labels の抽出" do
-    total_all = [[1, 10], [2, 20]]
-    assert_equal [1, 2], labels(total_all)
+    systems(:s2014).update!(term_name: "第14期")
+    systems(:s2015).update!(term_name: "第15期")
+    systems(:s2015_org2).update!(term_name: "別組織期")
+    total_all = [[2014, 10], [2015, 20]]
+
+    assert_equal ["第14期", "第15期"], labels(total_all, organizations(:org))
+  end
+
+  test "labels はSystemが存在しないtermを数値文字列で表示する" do
+    assert_equal ["1"], labels([[1, 10]], organizations(:org))
+  end
+
+  test "tab5_labels は年度名を表示する" do
+    systems(:s2015).update!(term_name: "第15期")
+
+    assert_equal ["第15期"], tab5_labels([[2015, 10]], organizations(:org))
   end
 
   test "tab1_data の抽出" do

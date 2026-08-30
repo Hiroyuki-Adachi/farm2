@@ -67,4 +67,57 @@ class QrLoginFlowTest < ActionDispatch::IntegrationTest
       assert_equal user.id, pc.request.session[:user_id]
     end
   end
+
+  test "QR login flow(tablet): create -> approve(scan) -> consume(login) without ip whitelist" do
+    freeze_time Time.current do
+      tablet = open_session
+      mobile = open_session
+      user = users(:users1)
+
+      # 1) タブレットがQRセッションを作る（電話回線を想定した非ホワイトリストIPでも成功する）
+      tablet.post tablets_qr_login_index_path,
+                  headers: { "ACCEPT" => "application/json", "REMOTE_ADDR" => "1.1.1.1" }
+      tablet.assert_response :success
+
+      create_json = JSON.parse(tablet.response.body)
+      token = create_json["token"]
+      assert token.present?
+
+      qr = QrLoginSession.find_by!(token: token)
+      assert_equal "pending", qr.status
+
+      # 2) スマホがスキャンして approve（scan）
+      payload = { type: "session", value: token, version: 1 }
+
+      QrLoginChannel.stub(:broadcast_to, ->(*) {}) do
+        mobile.post(
+          personal_information_scans_path(personal_information_token: user.token),
+          params: { payload: payload }.to_json,
+          headers: {
+            "CONTENT_TYPE" => "application/json",
+            "ACCEPT" => "application/json"
+          }
+        )
+      end
+      mobile.assert_response :ok
+
+      qr.reload
+      assert_equal "approved", qr.status
+
+      # 3) タブレットがconsumeしてログイン確定（consume）。非ホワイトリストIPのまま成功すること
+      tablet.post consume_tablets_qr_login_path(token),
+                  headers: { "ACCEPT" => "application/json", "REMOTE_ADDR" => "1.1.1.1" }
+      tablet.assert_response :success
+
+      consume_json = JSON.parse(tablet.response.body)
+      assert_equal true, consume_json["ok"]
+      assert_equal tablets_menu_index_path, consume_json["url"]
+
+      qr.reload
+      assert_equal "consumed", qr.status
+
+      assert_equal user.id, tablet.request.session[:user_id]
+      assert_equal "TB", tablet.request.session[:access_target]
+    end
+  end
 end
