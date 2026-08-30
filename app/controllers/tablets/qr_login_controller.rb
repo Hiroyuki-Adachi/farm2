@@ -26,10 +26,16 @@ class Tablets::QrLoginController < TabletsController
 
     if QrLoginSession.created_from_ip_since(ip, BLOCK_WINDOW.ago).count >= BLOCK_LIMIT
       IpList.block_ip!(ip)
-      return to_error_path
+      to_error_path
+      return false
     end
 
-    head :too_many_requests if QrLoginSession.created_from_ip_since(ip, THROTTLE_WINDOW.ago).count >= THROTTLE_LIMIT
+    if QrLoginSession.created_from_ip_since(ip, THROTTLE_WINDOW.ago).count >= THROTTLE_LIMIT
+      head :too_many_requests
+      return false
+    end
+
+    true
   end
 
   # ログイン先はredirect_toの値に関わらず常にTB固定とし、PCターゲットを騙し取れないようにする。
