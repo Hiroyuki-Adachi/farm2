@@ -12,7 +12,7 @@
       <% [current_organization.machines_count, @machines.count].max.times do |i| %>
       <tr>
         <td class="machine"><%= @machines[i] ? @machines[i].usual_name : "" %></td>
-        <td class="machine numeric"><%=@machines[i] ? format("%.2f", @machines[i].hours(@results.object)) : "" %></td>
+        <td class="machine numeric"><%=@machines[i] ? @machines[i].hours(@results.object) : "" %></td>
         <td class="machine"><%= @machines[i] ? @machines[i].operators(@work) : "" %></td>
         <td class="machine"><%= @machines[i] ? @machines[i].remarks(@work)&.remarks : "" %></td>
       </tr>

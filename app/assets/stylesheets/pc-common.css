@@ -68,7 +68,6 @@ div.d-table.float-head div.d-table-row.fix-head {
 div.float-head-wrapper {
   overflow-y: scroll;
   height: calc(100vh - 400px);
-  padding-right: 12px;
 }
 
 .tr-total1,
