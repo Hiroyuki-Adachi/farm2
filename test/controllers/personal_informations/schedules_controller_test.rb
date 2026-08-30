@@ -10,6 +10,37 @@ class PersonalInformations::SchedulesControllerTest < ActionDispatch::Integratio
     assert_response :success
   end
 
+  test "個人情報(予定: LINE連携済みの場合はLINE通知を表示)" do
+    user = users(:user_line_id_already_exists)
+    user.update!(mail: "line-and-mail-schedule@example.com")
+    user.update!(mail_confirmed_at: Time.current)
+
+    get personal_information_schedules_path(personal_information_token: user.token)
+
+    assert_response :success
+    assert_select ".alert", text: /LINE通知/
+    assert_select ".alert", text: /メール通知/, count: 0
+    assert_select "[data-push-notification-panel]", count: 0
+  end
+
+  test "個人情報(予定: 確認済みメールがある場合はメール通知を表示)" do
+    get personal_information_schedules_path(personal_information_token: @user.token)
+
+    assert_response :success
+    assert_select ".alert", text: /メール通知/
+    assert_select "[data-push-notification-panel]", count: 0
+  end
+
+  test "個人情報(予定: LINE・確認済みメールがない場合はスマホ通知を表示)" do
+    user = users(:user_manager)
+
+    get personal_information_schedules_path(personal_information_token: user.token)
+
+    assert_response :success
+    assert_select "[data-push-notification-panel]", text: /スマホ通知/
+    assert_select "[data-push-notification-enable]"
+  end
+
   test "個人情報(予定: 一般作業者にも人員保守リンクを表示)" do
     user = users(:user_user)
 

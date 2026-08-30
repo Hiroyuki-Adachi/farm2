@@ -17,6 +17,8 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
   test "作業予定一覧" do
     get schedules_path
     assert_response :success
+    assert_select "th", "通知"
+    assert_select "th", text: "LINE", count: 0
   end
 
   test "作業予定一覧(閲覧者でも表示OK)" do
@@ -28,6 +30,8 @@ class SchedulesControllerTest < ActionDispatch::IntegrationTest
   test "作業予定登録(表示)" do
     get new_schedule_path
     assert_response :success
+    assert_select "label[for=schedule_line_flag_true]", "通知あり"
+    assert_select "label[for=schedule_line_flag_false]", "通知なし"
     assert_select "input#schedule_worked_at[min=?][max=?]", systems(:s2015).start_date.to_s, systems(:s2015).end_date.to_s
     assert_select "input#schedule_work_type_term_2016[data-start-date=?][data-end-date=?]", systems(:s2016).start_date.to_s, systems(:s2016).end_date.to_s
   end
