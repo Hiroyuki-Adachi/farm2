@@ -1,7 +1,7 @@
 class Work::TrucksRegistrar
   MIN_HOURS = BigDecimal("0")
   MAX_HOURS = BigDecimal("9.5")
-  HOUR_STEP = BigDecimal("0.25")
+  HOUR_STEP = BigDecimal("0.5")
 
   def initialize(machine_hours:, trucks:, work_results:)
     @machine_hours = machine_hours

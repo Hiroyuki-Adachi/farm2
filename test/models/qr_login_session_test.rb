@@ -5,7 +5,8 @@
 #  id                              :bigint           not null, primary key
 #  consumed_at(セッション使用日時) :datetime
 #  expires_at(セッション有効期限)  :datetime         not null
-#  status(セッション状態)          :integer          default("pending"), not null
+#  ip_address(発行元IPアドレス)    :string           default(""), not null
+#  status(セッション状態)          :integer          default(0), not null
 #  token(セッション識別子)         :string(36)       not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
@@ -13,7 +14,8 @@
 #
 # Indexes
 #
-#  index_qr_login_sessions_on_token  (token) UNIQUE
+#  index_qr_login_sessions_on_ip_address_and_created_at  (ip_address,created_at)
+#  index_qr_login_sessions_on_token                      (token) UNIQUE
 #
 require "test_helper"
 
@@ -69,5 +71,15 @@ class QrLoginSessionTest < ActiveSupport::TestCase
       qr = QrLoginSession.create!(status: :pending, expires_at: 1.minute.ago)
       assert_not qr.usable?
     end
+  end
+
+  test "created_from_ip_sinceは指定IPかつ指定時刻以降に作成された件数を返すこと" do
+    QrLoginSession.create!(ip_address: "1.1.1.1", created_at: 1.hour.ago)
+    QrLoginSession.create!(ip_address: "1.1.1.1")
+    QrLoginSession.create!(ip_address: "2.2.2.2")
+
+    assert_equal 1, QrLoginSession.created_from_ip_since("1.1.1.1", 10.minutes.ago).count
+    assert_equal 2, QrLoginSession.created_from_ip_since("1.1.1.1", 2.hours.ago).count
+    assert_equal 1, QrLoginSession.created_from_ip_since("2.2.2.2", 10.minutes.ago).count
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_22_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_30_010000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -691,10 +691,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_090000) do
     t.datetime "consumed_at", comment: "セッション使用日時"
     t.datetime "created_at", null: false
     t.datetime "expires_at", null: false, comment: "セッション有効期限"
+    t.string "ip_address", default: "", null: false, comment: "発行元IPアドレス"
     t.integer "status", default: 0, null: false, comment: "セッション状態"
     t.string "token", limit: 36, null: false, comment: "セッション識別子"
     t.datetime "updated_at", null: false
     t.integer "user_id", comment: "ユーザーID"
+    t.index ["ip_address", "created_at"], name: "index_qr_login_sessions_on_ip_address_and_created_at"
     t.index ["token"], name: "index_qr_login_sessions_on_token", unique: true
   end
 

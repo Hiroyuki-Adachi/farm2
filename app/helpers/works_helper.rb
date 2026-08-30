@@ -40,6 +40,12 @@ module WorksHelper
     @health_code_list ||= Health.usual.map { |h| "#{h.code}:#{h.name}" }.join(" ")
   end
 
+  # #1119 期間中(0.25h刻み)に登録された既存データはブラウザのstepバリデーションに
+  # 引っかからないよう、0.5刻みでない値の場合のみ step を 0.25 に落とす。
+  def machine_hours_step(hours)
+    hours.present? && !(hours % BigDecimal("0.5")).zero? ? 0.25 : 0.5
+  end
+
   def print_worker_name(results, index)
     return "" if results.nil?
     return "" if index >= results.size

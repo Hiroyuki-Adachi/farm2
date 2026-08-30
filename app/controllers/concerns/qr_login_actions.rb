@@ -6,7 +6,7 @@ module QrLoginActions
   end
 
   def create
-    qr_login_session = QrLoginSession.create!
+    qr_login_session = QrLoginSession.create!(ip_address: request.remote_ip)
 
     render json: {
       token: qr_login_session.token,

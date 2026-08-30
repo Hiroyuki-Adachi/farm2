@@ -20,8 +20,20 @@ class Works::TrucksInputsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "input[name=?][type=number][min=?][max=?][step=?][required=required][value=?]",
-                  "machine_hours[#{@home1_truck.id}][#{work_result.id}]", "0", "9.5", "0.25", "1.50"
+                  "machine_hours[#{@home1_truck.id}][#{work_result.id}]", "0", "9.5", "0.5", "1.5"
     assert_select "input[name^=?]", "machine_hours[#{@home6_truck.id}]", count: 0
+  end
+
+  test "0.5刻みでない既存賃借量(#1119期間中のデータ)はstepを0.25にして表示する" do
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    work_result = create_work_result(work, workers(:worker1))
+    MachineResult.create!(machine: @home1_truck, work_result: work_result, hours: 1.25)
+
+    get works_trucks_path, params: { work_kind_id: work_kinds(:work_kind_shirokaki).id, month: "2015-02-01" }
+
+    assert_response :success
+    assert_select "input[name=?][step=?][value=?]",
+                  "machine_hours[#{@home1_truck.id}][#{work_result.id}]", "0.25", "1.25"
   end
 
   test "同一世帯に複数作業者がいる場合は既存賃借量のある work_result を表示する" do
@@ -33,7 +45,7 @@ class Works::TrucksInputsControllerTest < ActionDispatch::IntegrationTest
     get works_trucks_path, params: { work_kind_id: work_kinds(:work_kind_shirokaki).id, month: "2015-02-01" }
 
     assert_response :success
-    assert_select "input[name=?][value=?]", "machine_hours[#{@home1_truck.id}][#{second_work_result.id}]", "2.00"
+    assert_select "input[name=?][value=?]", "machine_hours[#{@home1_truck.id}][#{second_work_result.id}]", "2.0"
     assert_select "input[name=?]", "machine_hours[#{@home1_truck.id}][#{first_work_result.id}]", count: 0
   end
 
