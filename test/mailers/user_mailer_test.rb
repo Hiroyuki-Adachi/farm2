@@ -67,4 +67,16 @@ class UserMailerTest < ActionMailer::TestCase
     assert_includes email.body.decoded, user_topic.topic.title
     assert_includes email.body.decoded, user_topic.topic.url
   end
+
+  test "ニュース通知は作業者未設定の場合にアカウントIDを宛名にする" do
+    user = users(:users1)
+    user.update!(worker: nil)
+    email = UserMailer.news_notification(user, [user_topics(:user_topic1)])
+
+    assert_emails 1 do
+      email.deliver_now
+    end
+
+    assert_includes email.body.decoded, "ようこそ、#{user.login_name}さん"
+  end
 end
