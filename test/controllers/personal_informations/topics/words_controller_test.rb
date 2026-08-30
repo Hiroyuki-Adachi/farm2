@@ -17,7 +17,7 @@ class PersonalInformations::Topics::WordsControllerTest < ActionDispatch::Integr
     assert_difference("UserWord.count", -1) do
       patch personal_information_topics_words_path(personal_information_token: @user.token), params: { user: { user_words_attributes: [
         { id: word1.id, word: "", pc_flag: true, sp_flag: true, line_flag: false },
-        { id: word2.id, word: "topicword", pc_flag: true, sp_flag: true, line_flag: false }
+        { id: word2.id, word: "topicword", pc_flag: true, sp_flag: true, line_flag: false, mail_flag: true }
       ] } }
     end
 
@@ -29,6 +29,7 @@ class PersonalInformations::Topics::WordsControllerTest < ActionDispatch::Integr
     assert word2.pc_flag
     assert word2.sp_flag
     assert_not word2.line_flag
+    assert word2.mail_flag
   end
 
   test "検索ワード保守で他ユーザのワードは更新できない" do

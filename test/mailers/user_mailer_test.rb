@@ -51,4 +51,20 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal "日報登録のお知らせ", email.subject
     assert_includes email.body.decoded, Rails.application.routes.url_helpers.personal_information_url(token: user.token)
   end
+
+  test "ニュース通知" do
+    user = users(:users1)
+    user_topic = user_topics(:user_topic1)
+    email = UserMailer.news_notification(user, [user_topic])
+
+    assert_emails 1 do
+      email.deliver_now
+    end
+
+    assert_equal [user.mail], email.to
+    assert_equal "ニュースのお知らせ", email.subject
+    assert_includes email.body.decoded, user_topic.word
+    assert_includes email.body.decoded, user_topic.topic.title
+    assert_includes email.body.decoded, user_topic.topic.url
+  end
 end

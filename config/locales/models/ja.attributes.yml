@@ -389,6 +389,7 @@ ja:
         pc_flag: "パソコン閲覧"
         sp_flag: "スマホ閲覧"
         line_flag: "LINE送信"
+        mail_flag: "メール送信"
       
       drying:
         term: "年度"

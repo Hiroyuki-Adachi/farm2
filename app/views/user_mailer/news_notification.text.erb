@@ -1,0 +1,10 @@
+ようこそ、<%= @user.worker.name %>さん
+
+登録した検索ワードに一致するニュースがあります。
+<% @user_topics.each do |user_topic| %>
+
+ワード：<%= user_topic.word %>
+ソース：<%= user_topic.topic&.topic_type&.name %>
+タイトル：<%= user_topic.topic.title %>
+URL：<%= user_topic.topic.url %>
+<% end %>

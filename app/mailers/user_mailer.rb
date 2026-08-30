@@ -21,4 +21,10 @@ class UserMailer < ApplicationMailer
     @user = user
     mail(to: @user.mail, subject: '日報登録のお知らせ')
   end
+
+  def news_notification(user, user_topics)
+    @user = user
+    @user_topics = user_topics
+    mail(to: @user.mail, subject: 'ニュースのお知らせ')
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_30_010000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_30_020000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -1058,6 +1058,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_30_010000) do
   create_table "user_topics", comment: "利用者トピック", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.boolean "line_flag", default: false, null: false, comment: "LINEフラグ"
+    t.boolean "mail_flag", default: false, null: false, comment: "メールフラグ"
     t.boolean "pc_flag", default: true, null: false, comment: "パソコンフラグ"
     t.boolean "read_flag", default: false, null: false, comment: "既読フラグ"
     t.boolean "sp_flag", default: true, null: false, comment: "スマートフォンフラグ"
@@ -1071,6 +1072,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_30_010000) do
   create_table "user_words", comment: "利用者ワード", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.boolean "line_flag", default: false, null: false, comment: "LINEフラグ"
+    t.boolean "mail_flag", default: false, null: false, comment: "メールフラグ"
     t.boolean "pc_flag", default: true, null: false, comment: "パソコンフラグ"
     t.boolean "sp_flag", default: true, null: false, comment: "スマートフォンフラグ"
     t.datetime "updated_at", null: false
