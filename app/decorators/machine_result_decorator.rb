@@ -36,7 +36,7 @@ class MachineResultDecorator < Draper::Decorator
   def quantity
     case model.adjust
     when Adjust::HOUR
-      h.number_to_currency(model.quantity, { precision: 2, unit: "" })
+      h.number_to_currency(model.quantity, { precision: hour_quantity_precision, unit: "" })
     when Adjust::DAY
       h.number_to_currency(model.quantity, { precision: 0, unit: "" })
     when Adjust::AREA
@@ -54,5 +54,13 @@ class MachineResultDecorator < Draper::Decorator
 
   def unit
     model.adjust.unit
+  end
+
+  private
+
+  # 0.5時間刻みのデータは小数1位、#1119期間中に登録された0.25時間刻みの
+  # 既存データは小数2位まで表示し、丸めによる誤表示を避ける。
+  def hour_quantity_precision
+    ((model.quantity * 2) % 1).zero? ? 1 : 2
   end
 end

@@ -1,6 +1,8 @@
 class Works::TrucksController < ApplicationController
   include PermitChecker
 
+  helper WorksHelper
+
   before_action :ensure_truck_configured
 
   def index
