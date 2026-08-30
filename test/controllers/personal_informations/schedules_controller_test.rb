@@ -33,6 +33,7 @@ class PersonalInformations::SchedulesControllerTest < ActionDispatch::Integratio
 
   test "個人情報(予定: LINE・確認済みメールがない場合はスマホ通知を表示)" do
     user = users(:user_manager)
+    WebPushService.stubs(:configured?).returns(true)
 
     get personal_information_schedules_path(personal_information_token: user.token)
 
