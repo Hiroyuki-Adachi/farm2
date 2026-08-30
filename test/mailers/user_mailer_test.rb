@@ -25,6 +25,30 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal [ip.created_user.mail], email.to
   end
 
+  test "メールアドレス認証は作業者未設定の場合にアカウントIDを宛名にする" do
+    user = users(:users1)
+    user.update!(mail: "workerless@example.com", worker: nil)
+    email = UserMailer.email_confirmation(user)
+
+    assert_emails 1 do
+      email.deliver_now
+    end
+
+    assert_includes email.body.decoded, "ようこそ、#{user.login_name}さん"
+  end
+
+  test "IPアドレス認証は作業者未設定の場合にアカウントIDを宛名にする" do
+    ip = ip_lists(:ip_white)
+    ip.created_user.update!(worker: nil)
+    email = UserMailer.ip_confirmation(ip, "123456")
+
+    assert_emails 1 do
+      email.deliver_now
+    end
+
+    assert_includes email.body.decoded, "ようこそ、#{ip.created_user.login_name}さん"
+  end
+
   test "作業予定通知" do
     user = users(:users1)
     schedules = ScheduleDecorator.decorate_collection([schedules(:schedule_today)])

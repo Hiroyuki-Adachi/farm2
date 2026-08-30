@@ -1,11 +1,13 @@
 class UserMailer < ApplicationMailer
   def email_confirmation(user)
     @user = user
+    @recipient_name = recipient_name(user)
     mail(to: @user.mail, subject: 'メールアドレス認証')
   end
 
   def ip_confirmation(ip, token)
     @ip = ip
+    @recipient_name = recipient_name(ip.created_user)
     @token = token
     mail(to: @ip.created_user.mail, subject: 'IPアドレス認証')
   end
