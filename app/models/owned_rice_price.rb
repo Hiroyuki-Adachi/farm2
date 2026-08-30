@@ -10,7 +10,7 @@
 #  term(年度(期))           :integer          not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
-#  organization_id(組織)    :bigint
+#  organization_id(組織)    :bigint           not null
 #  work_type_id(品種)       :integer          default(0), not null
 #
 # Indexes
@@ -24,7 +24,7 @@
 #
 
 class OwnedRicePrice < ApplicationRecord
-  belongs_to :organization, optional: true
+  belongs_to :organization, optional: false
   belongs_to :work_type
 
   has_many   :owned_rices, dependent: :destroy

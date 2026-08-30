@@ -25,6 +25,15 @@ class MasterOrganizationScopeTest < ActiveSupport::TestCase
     assert_not_includes OwnedRicePrice.for_organization(@organization), owned_rice_prices(:owned_rice_price_other_org)
   end
 
+  test "Phase 20対象マスタは組織を必須とする" do
+    records = [Institution.new, Expense.new, ExpenseWorkType.new, LandPlace.new, OwnedRicePrice.new]
+
+    records.each do |record|
+      assert_not record.valid?
+      assert record.errors.of_kind?(:organization, :blank), record.class.name
+    end
+  end
+
   test "経費作業種別は親経費の組織を引き継ぐ" do
     expense_work_type = ExpenseWorkType.new(
       expense: expenses(:expense_other_org), work_type: work_types(:work_types1), rate: 1
