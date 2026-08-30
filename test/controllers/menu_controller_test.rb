@@ -22,6 +22,81 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "select#system_term option[value='2015']", text: "第15期"
     assert_select "select#system_term option", text: systems(:s2015_org2).term_name, count: 0
+    assert_select "h2", text: "次期年度設定"
+  end
+
+  test "次期が未作成の場合は新規年度追加フォームを表示する" do
+    System.where(term: systems(:s2015).term + 1, organization_id: @organization.id).destroy_all
+
+    get edit_term_menu_path(@system.id)
+
+    assert_response :success
+    assert_select "h2", text: "新規年度追加"
+    assert_select "input[name='system[term]'][value='2016']"
+    assert_select "input#system_start_date[value='2016-01-01']"
+    assert_select "input#system_end_date[value='2016-12-31']"
+  end
+
+  test "管理者は任意の期間で1年未満の次期を追加できる" do
+    System.where(organization_id: @organization.id, term: 2016..).destroy_all
+    other_organization_systems = System.where.not(organization_id: @organization.id).count
+
+    assert_difference("System.count", 1) do
+      patch menu_path(@system.id), params: {
+        system: {
+          term: 2016,
+          term_name: "第16期(3ヶ月)",
+          start_date: "2016-01-01",
+          end_date: "2016-03-31"
+        }
+      }
+    end
+
+    new_system = System.find_by!(term: 2016, organization_id: @organization.id)
+    assert_equal "第16期(3ヶ月)", new_system.term_name
+    assert_equal Date.new(2016, 1, 1), new_system.start_date
+    assert_equal Date.new(2016, 3, 31), new_system.end_date
+    assert_equal other_organization_systems, System.where.not(organization_id: @organization.id).count
+  end
+
+  test "先行作成済みの次期も任意の期間へ更新できる" do
+    System.where(organization_id: @organization.id, term: 2017..).destroy_all
+
+    assert_no_difference("System.count") do
+      patch menu_path(@system.id), params: {
+        system: {
+          term: 2016,
+          term_name: "第16期(3ヶ月)",
+          start_date: "2016-01-01",
+          end_date: "2016-03-31"
+        }
+      }
+    end
+
+    next_system = systems(:s2016).reload
+    assert_equal "第16期(3ヶ月)", next_system.term_name
+    assert_equal Date.new(2016, 1, 1), next_system.start_date
+    assert_equal Date.new(2016, 3, 31), next_system.end_date
+  end
+
+  test "新規年度の期間が不正な場合は入力内容とエラーを再表示する" do
+    System.where(organization_id: @organization.id, term: 2016..).destroy_all
+
+    assert_no_difference("System.count") do
+      patch menu_path(@system.id), params: {
+        system: {
+          term: 2016,
+          term_name: "短期年度",
+          start_date: "2016-01-01",
+          end_date: "2016-03-30"
+        }
+      }
+    end
+
+    assert_response :success
+    assert_select "input#system_term_name[value='短期年度']"
+    assert_select "input#system_end_date[value='2016-03-30']"
+    assert_select ".alert", /期末は月末にしてください。/
   end
 
   test "対象年度変更(実行:新規)" do
