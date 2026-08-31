@@ -10,16 +10,21 @@ class EnforceOrganizationOnMasterTables < ActiveRecord::Migration[8.1]
             "organization_id is missing in: #{null_tables.join(', ')}"
     end
 
-    mismatched_expense_work_type = select_value(<<~SQL.squish)
-      SELECT 1
+    mismatched_expense_work_type = select_one(<<~SQL.squish)
+      SELECT expense_work_types.id AS expense_work_type_id,
+             expense_work_types.expense_id,
+             expense_work_types.organization_id AS expense_work_type_organization_id,
+             expenses.organization_id AS expense_organization_id
         FROM expense_work_types
         INNER JOIN expenses ON expenses.id = expense_work_types.expense_id
        WHERE expense_work_types.organization_id <> expenses.organization_id
+       ORDER BY expense_work_types.id
        LIMIT 1
     SQL
     if mismatched_expense_work_type
+      details = mismatched_expense_work_type.map { |key, value| "#{key}=#{value}" }.join(", ")
       raise ActiveRecord::MigrationError,
-            "expense_work_types.organization_id does not match its expense"
+            "expense_work_types.organization_id does not match its expense: #{details}"
     end
 
     TABLES.each do |table|
