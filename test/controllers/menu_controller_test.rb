@@ -205,4 +205,17 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
       assert_equal old_term, user.term
     end
   end
+
+  test "管理者以外は存在しない年度へ変更できない" do
+    user = users(:user_user)
+    login_as(user)
+    old_term = user.term
+    missing_term = System.where(organization_id: @organization.id).maximum(:term) + 1
+
+    patch menu_path(@system.id), params: { system: { term: missing_term } }
+
+    assert_redirected_to edit_term_menu_path(@system)
+    assert_equal "対象年度が見つかりません。", flash[:alert]
+    assert_equal old_term, user.reload.term
+  end
 end

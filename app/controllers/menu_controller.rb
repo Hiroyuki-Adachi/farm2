@@ -25,9 +25,7 @@ class MenuController < ApplicationController
 
   def update
     if !current_user.manageable? || current_organization.term + 1 != system_params[:term].to_i
-      current_user.term = system_params[:term]
-      current_user.save!
-      redirect_to(menu_index_path, notice: '設定を変更しました。')
+      switch_term
       return
     end
     @organization = current_organization
@@ -62,6 +60,17 @@ class MenuController < ApplicationController
 
   def new_system_params
     system_params.slice(:term_name, :start_date, :end_date)
+  end
+
+  def switch_term
+    system = System.find_by(term: system_params[:term], organization_id: current_organization.id)
+    unless system
+      redirect_to(edit_term_menu_path(@system), alert: '対象年度が見つかりません。')
+      return
+    end
+
+    current_user.update!(term: system.term)
+    redirect_to(menu_index_path, notice: '設定を変更しました。')
   end
 
   def prepare_term_form
