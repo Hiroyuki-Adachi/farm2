@@ -1,5 +1,5 @@
 class MenuController < ApplicationController
-  before_action :set_system, only: [:edit_term]
+  before_action :set_system, only: [:edit_term, :update]
 
   SCHEDULE_DAY = 7
 
@@ -20,31 +20,29 @@ class MenuController < ApplicationController
   end
 
   def edit_term
-    @terms = WorkDecorator.terms(current_organization)
+    prepare_term_form
   end
 
   def update
     if !current_user.manageable? || current_organization.term + 1 != system_params[:term].to_i
-      current_user.term = system_params[:term]
-      current_user.save!
-      redirect_to(menu_index_path, notice: '設定を変更しました。')
+      switch_term
       return
     end
     @organization = current_organization
-    @system = System.init(@organization.id, system_params[:term])
-    if @system.valid?
+    @new_system = System.init(@organization.id, system_params[:term], new_system_params)
+    if @new_system.valid?
       ActiveRecord::Base.transaction do
-        @system.save!
+        @new_system.save!
         if within_current_term_period?
-          current_user.term = @system.term
+          current_user.term = @new_system.term
           current_user.save!
         else
-          @organization.update_term!(@system.term)
+          @organization.update_term!(@new_system.term)
         end
       end
       redirect_to(menu_index_path, notice: '設定を変更しました。')
     else
-      @terms = WorkDecorator.terms(current_organization)
+      prepare_term_form
       render action: :edit_term
     end
   end
@@ -57,7 +55,32 @@ class MenuController < ApplicationController
   end
 
   def system_params
-    params.expect(system: [:term])
+    params.expect(system: [:term, :term_name, :start_date, :end_date])
+  end
+
+  def new_system_params
+    system_params.slice(:term_name, :start_date, :end_date)
+  end
+
+  def switch_term
+    system = System.find_by(term: system_params[:term], organization_id: current_organization.id)
+    unless system
+      redirect_to(edit_term_menu_path(@system), alert: '対象年度が見つかりません。')
+      return
+    end
+
+    current_user.update!(term: system.term)
+    redirect_to(menu_index_path, notice: '設定を変更しました。')
+  end
+
+  def prepare_term_form
+    @terms = WorkDecorator.terms(current_organization)
+    return unless current_user.manageable?
+
+    new_term = current_organization.term + 1
+    return if @new_system
+
+    @new_system = System.init(current_organization.id, new_term)
   end
 
   def permit_manager
