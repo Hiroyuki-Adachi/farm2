@@ -64,9 +64,19 @@ class UserNotificationTest < ActiveSupport::TestCase
     assert user.topic_delivery_enabled?
   end
 
+  test "メール向けだけのワードは確認済みメールがある場合のみ配信が有効" do
+    user = User.new(mail: "mail@example.com")
+    user.user_words.build(word: "mail", pc_flag: false, sp_flag: false, line_flag: false, mail_flag: true)
+
+    assert_not user.topic_delivery_enabled?
+
+    user.mail_confirmed_at = Time.current
+    assert user.topic_delivery_enabled?
+  end
+
   test "すべての配信フラグが無効ならワードがあっても配信は無効" do
     user = User.new(line_id: "U1234567890")
-    user.user_words.build(word: "disabled", pc_flag: false, sp_flag: false, line_flag: false)
+    user.user_words.build(word: "disabled", pc_flag: false, sp_flag: false, line_flag: false, mail_flag: false)
 
     assert_not user.topic_delivery_enabled?
   end

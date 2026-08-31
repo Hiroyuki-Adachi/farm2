@@ -51,12 +51,15 @@ class Users::WordsController < ApplicationController
         word: attribute[:word],
         pc_flag: attribute[:pc_flag],
         sp_flag: attribute[:sp_flag],
-        line_flag: attribute[:line_flag]
+        line_flag: attribute[:line_flag],
+        mail_flag: attribute[:mail_flag]
       }
     end
   end
 
   def user_params
-    params.expect(user: [user_words_attributes: [[:id, :word, :pc_flag, :sp_flag, :line_flag]]])
+    params.expect(
+      user: [{ user_words_attributes: [[:id, :word, :pc_flag, :sp_flag, :line_flag, :mail_flag]] }]
+    )
   end
 end

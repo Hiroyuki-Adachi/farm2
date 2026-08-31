@@ -273,7 +273,7 @@ ja:
         start_at: "開始予定時刻"  #g
         end_at: "終了予定時刻"  #g
         farming_flag: "営農フラグ"
-        line_flag: "LINE通知フラグ"
+        line_flag: "通知フラグ"
         minutes_flag: "議事録フラグ"
         calendar_remove_flag: "カレンダー削除フラグ"
 
@@ -389,6 +389,7 @@ ja:
         pc_flag: "パソコン閲覧"
         sp_flag: "スマホ閲覧"
         line_flag: "LINE送信"
+        mail_flag: "メール送信"
       
       drying:
         term: "年度"
