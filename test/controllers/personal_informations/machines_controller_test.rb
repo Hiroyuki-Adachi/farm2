@@ -6,8 +6,8 @@ class PersonalInformations::MachinesControllerTest < ActionDispatch::Integration
   end
 
   test "個人情報(機械賃借料)" do
-    machine = create_machine("公開用軽トラ", homes(:home1))
-    other_home_machine = create_machine("別世帯軽トラ", homes(:home2))
+    machine = create_machine("公開用自家用車", homes(:home1))
+    other_home_machine = create_machine("別世帯自家用車", homes(:home2))
     work_result = work_results(:work_results4)
     work_result.work.update!(fixed_at: Date.new(2014, 5, 31))
 
@@ -37,7 +37,7 @@ class PersonalInformations::MachinesControllerTest < ActionDispatch::Integration
     assert_response :success
     assert_select "td div", text: "田植機"
     assert_select "td", text: /2\.5\(時間\)/
-    assert_no_match "別世帯軽トラ", response.body
+    assert_no_match "別世帯自家用車", response.body
   end
 
   private

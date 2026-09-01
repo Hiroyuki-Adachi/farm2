@@ -11,7 +11,7 @@ class Works::TrucksInputsControllerTest < ActionDispatch::IntegrationTest
     @health = Health.create!(code: "T", name: "良好", display_order: 999, well_flag: true)
   end
 
-  test "作業者の世帯と軽トラ所有者が一致するセルに時間入力欄を表示する" do
+  test "作業者の世帯と自家用車所有者が一致するセルに時間入力欄を表示する" do
     work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
     work_result = create_work_result(work, workers(:worker1))
     MachineResult.create!(machine: @home1_truck, work_result: work_result, hours: 1.5)
