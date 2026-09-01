@@ -12,7 +12,7 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     @truck_work_type = work_types(:work_type_koshi)
   end
 
-  test "軽トラック機械種別が未設定の場合は 503 を返す" do
+  test "自家用車機械種別が未設定の場合は 503 を返す" do
     organizations(:org).update!(truck_id: nil)
 
     get works_trucks_path
@@ -20,7 +20,7 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     assert_response :service_unavailable
   end
 
-  test "軽トラックの機械種別に紐づく作業種別トグルを表示する" do
+  test "自家用車の機械種別に紐づく作業種別トグルを表示する" do
     get works_trucks_path
 
     assert_response :success
@@ -37,7 +37,7 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     assert_select "#truck-work-kind-tabs a.btn-primary", work_kinds(:work_kind_taue).name
   end
 
-  test "軽トラック利用一覧に月トグルを表示する" do
+  test "自家用車利用一覧に月トグルを表示する" do
     travel_to Date.new(2015, 6, 15) do
       get works_trucks_path
     end
@@ -81,7 +81,7 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
                     response.body.index(later_work.decorate.worked_at_long)
   end
 
-  test "軽トラックを所有する班を表示して左端の班を初期選択する" do
+  test "自家用車を所有する班を表示して左端の班を初期選択する" do
     get works_trucks_path
 
     assert_response :success
@@ -91,7 +91,7 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     assert_select "th", text: homes(:home6).name, count: 0
   end
 
-  test "班パラメータで軽トラック列を絞り込む" do
+  test "班パラメータで自家用車列を絞り込む" do
     get works_trucks_path, params: { section_id: sections(:sections1).id }
 
     assert_response :success
