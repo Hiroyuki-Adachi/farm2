@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_30_020000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_30_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -327,7 +327,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_30_020000) do
   create_table "expense_work_types", id: { type: :serial, comment: "経費作業種別" }, comment: "経費作業種別", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.integer "expense_id", comment: "経費"
-    t.bigint "organization_id", comment: "組織"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.decimal "rate", precision: 5, scale: 2, default: "0.0", null: false, comment: "割合"
     t.datetime "updated_at", precision: nil, null: false
     t.integer "work_type_id", comment: "作業分類"
@@ -346,7 +346,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_30_020000) do
     t.decimal "discount_denom", precision: 7, comment: "割引率(分母)"
     t.decimal "discount_numor", precision: 7, comment: "割引率(分子)"
     t.integer "expense_type_id", default: 0, null: false, comment: "経費種別"
-    t.bigint "organization_id", comment: "組織"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.date "payed_on", null: false, comment: "支払日"
     t.decimal "quantity", precision: 4, comment: "数量"
     t.integer "term", null: false, comment: "年度(期)"
@@ -414,7 +414,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_30_020000) do
     t.integer "end_term", default: 9999, null: false, comment: "稼動終了年度"
     t.point "location", comment: "位置"
     t.string "name", limit: 40, null: false, comment: "施設名称"
-    t.bigint "organization_id", comment: "組織"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.integer "start_term", default: 0, null: false, comment: "稼動開始年度"
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_institutions_on_organization_id"
@@ -469,7 +469,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_30_020000) do
     t.datetime "deleted_at", precision: nil
     t.integer "display_order", comment: "表示順"
     t.string "name", limit: 40, null: false, comment: "場所名称"
-    t.bigint "organization_id", comment: "組織"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.text "remarks", comment: "備考"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["organization_id"], name: "index_land_places_on_organization_id"
@@ -633,7 +633,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_30_020000) do
     t.datetime "created_at", precision: nil, null: false
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.string "name", limit: 10, default: "", null: false, comment: "品種名"
-    t.bigint "organization_id", comment: "組織"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.decimal "owned_price", precision: 5, default: "0", null: false, comment: "保有米価格"
     t.string "short_name", limit: 5, default: "", null: false, comment: "品種名(略称)"
     t.integer "term", null: false, comment: "年度(期)"

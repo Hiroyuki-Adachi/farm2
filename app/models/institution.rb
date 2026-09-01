@@ -10,7 +10,7 @@
 #  start_term(稼動開始年度) :integer          default(0), not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
-#  organization_id(組織)    :bigint
+#  organization_id(組織)    :bigint           not null
 #
 # Indexes
 #
@@ -21,7 +21,7 @@
 #  fk_rails_...  (organization_id => organizations.id)
 #
 class Institution < ApplicationRecord
-  belongs_to :organization, optional: true
+  belongs_to :organization, optional: false
 
   has_many :cleaning_institutions, dependent: :destroy
 
