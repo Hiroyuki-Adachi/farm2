@@ -60,6 +60,7 @@ class WorkKindsController < ApplicationController
         :cost_type_id,
         :aggregation_flag
       ])
+    permitted[:land_flag] = false unless permitted.key?(:land_flag)
     permitted[:aggregation_flag] = false unless permitted.key?(:aggregation_flag)
     permitted.merge(term: current_term)
   end
