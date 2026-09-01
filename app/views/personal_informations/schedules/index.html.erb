@@ -12,7 +12,14 @@
         LINEで作業通知を受け取れます。
       </p>
     </div>
-  <% elsif @push_notification_enabled %>
+  <% elsif @current_user.mailable? %>
+    <div class="alert alert-success mb-4">
+      <div class="fw-bold mb-1">メール通知</div>
+      <p class="mb-0">
+        確認済みメールアドレスで作業予定の通知を受け取れます。
+      </p>
+    </div>
+  <% else %>
     <div class="alert <%= if @current_user.push_notification_granted?
                             'alert-success'
                           elsif @current_user.push_notification_permission == 'denied'
@@ -31,7 +38,7 @@
         <% elsif @current_user.push_notification_permission == "unsupported" %>
           この端末ではブラウザ通知を利用できません。
         <% else %>
-          LINE未連携の場合、この端末で作業予定の通知を受け取れます。
+          この端末で作業予定の通知を受け取れます。
         <% end %>
       </p>
       <% if @push_notification_configured %>

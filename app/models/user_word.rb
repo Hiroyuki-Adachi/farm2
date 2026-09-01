@@ -4,6 +4,7 @@
 #
 #  id                            :bigint           not null, primary key
 #  line_flag(LINEフラグ)         :boolean          default(FALSE), not null
+#  mail_flag(メールフラグ)       :boolean          default(FALSE), not null
 #  pc_flag(パソコンフラグ)       :boolean          default(TRUE), not null
 #  sp_flag(スマートフォンフラグ) :boolean          default(TRUE), not null
 #  word(ワード)                  :string(128)      default(""), not null
@@ -42,6 +43,7 @@ class UserWord < ApplicationRecord
             user_topic.pc_flag = user_word.pc_flag
             user_topic.sp_flag = user_word.sp_flag
             user_topic.line_flag = user_word.line_flag
+            user_topic.mail_flag = user_word.mail_flag
           end
         end
       end

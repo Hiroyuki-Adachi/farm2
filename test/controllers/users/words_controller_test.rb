@@ -12,7 +12,7 @@ class Users::WordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "検索ワード(保守)(追加パターン)" do
-    user_words = [{ word: "test", pc_flag: true, sp_flag: false, line_flag: false }]
+    user_words = [{ word: "test", pc_flag: true, sp_flag: false, line_flag: false, mail_flag: true }]
     assert_difference('UserWord.count', 1) do
       post users_words_path, params: { user: { user_words_attributes: user_words } }
     end
@@ -23,6 +23,7 @@ class Users::WordsControllerTest < ActionDispatch::IntegrationTest
     assert_equal user_words[0][:pc_flag], created_user_word.pc_flag
     assert_equal user_words[0][:sp_flag], created_user_word.sp_flag
     assert_equal user_words[0][:line_flag], created_user_word.line_flag
+    assert_equal user_words[0][:mail_flag], created_user_word.mail_flag
     assert_equal @user.id, created_user_word.user_id
   end
 

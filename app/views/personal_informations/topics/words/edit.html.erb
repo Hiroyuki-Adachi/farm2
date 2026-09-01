@@ -11,6 +11,9 @@
         <%= word_form.hidden_field :pc_flag, value: true, id: nil %>
         <%= word_form.hidden_field :sp_flag, value: true, id: nil %>
         <%= word_form.hidden_field :line_flag, value: false, id: nil %>
+        <%= word_form.hidden_field :mail_flag, value: false, id: nil %>
+        <%= word_form.check_box :mail_flag, {class: "form-check-input"}, true, false %>
+        <%= word_form.label :mail_flag, class: "form-check-label" %>
         <%= word_form.hidden_field :id %>
       </div>
     <% end %>

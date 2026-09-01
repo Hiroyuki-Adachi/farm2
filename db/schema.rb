@@ -1058,6 +1058,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_30_090000) do
   create_table "user_topics", comment: "利用者トピック", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.boolean "line_flag", default: false, null: false, comment: "LINEフラグ"
+    t.boolean "mail_flag", default: false, null: false, comment: "メールフラグ"
     t.boolean "pc_flag", default: true, null: false, comment: "パソコンフラグ"
     t.boolean "read_flag", default: false, null: false, comment: "既読フラグ"
     t.boolean "sp_flag", default: true, null: false, comment: "スマートフォンフラグ"
@@ -1071,6 +1072,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_30_090000) do
   create_table "user_words", comment: "利用者ワード", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.boolean "line_flag", default: false, null: false, comment: "LINEフラグ"
+    t.boolean "mail_flag", default: false, null: false, comment: "メールフラグ"
     t.boolean "pc_flag", default: true, null: false, comment: "パソコンフラグ"
     t.boolean "sp_flag", default: true, null: false, comment: "スマートフォンフラグ"
     t.datetime "updated_at", null: false

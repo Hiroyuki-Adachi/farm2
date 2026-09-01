@@ -4,6 +4,7 @@
 #
 #  id                            :bigint           not null, primary key
 #  line_flag(LINEフラグ)         :boolean          default(FALSE), not null
+#  mail_flag(メールフラグ)       :boolean          default(FALSE), not null
 #  pc_flag(パソコンフラグ)       :boolean          default(TRUE), not null
 #  read_flag(既読フラグ)         :boolean          default(FALSE), not null
 #  sp_flag(スマートフォンフラグ) :boolean          default(TRUE), not null
@@ -28,6 +29,7 @@ class UserTopic < ApplicationRecord
   scope :pc, -> { where(pc_flag: true) }
   scope :sp, -> { where(sp_flag: true) }
   scope :line, -> { where(line_flag: true) }
+  scope :mail, -> { where(mail_flag: true) }
   scope :readed, -> { where(read_flag: true) }
   scope :unreaded, -> { where(read_flag: false) }
 
