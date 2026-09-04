@@ -21,7 +21,7 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to works_trucks_path(filter_params)
-    assert_equal "登録しました", flash[:notice]
+    assert_equal "登録しました。", flash[:notice]
     machine_result = MachineResult.find_by!(machine: @home1_truck, work_result: work_result)
     assert_equal 2.5, machine_result.hours
   end
