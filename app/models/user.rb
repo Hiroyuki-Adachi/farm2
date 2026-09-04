@@ -235,12 +235,15 @@ class User < ApplicationRecord
   end
 
   def delivery_enabled_user_word?(user_word)
-    user_word.pc_flag? || user_word.sp_flag? || (user_word.line_flag? && linable?)
+    user_word.pc_flag? || user_word.sp_flag? ||
+      (user_word.line_flag? && linable?) || (user_word.mail_flag? && mailable?)
   end
 
   def topic_delivery_words
     delivery_words = user_words.where(pc_flag: true).or(user_words.where(sp_flag: true))
-    linable? ? delivery_words.or(user_words.where(line_flag: true)) : delivery_words
+    delivery_words = delivery_words.or(user_words.where(line_flag: true)) if linable?
+    delivery_words = delivery_words.or(user_words.where(mail_flag: true)) if mailable?
+    delivery_words
   end
 
   def set_token

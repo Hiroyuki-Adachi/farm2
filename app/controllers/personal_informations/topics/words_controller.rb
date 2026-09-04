@@ -48,7 +48,8 @@ class PersonalInformations::Topics::WordsController < PersonalInformationsContro
         word: attribute[:word],
         pc_flag: attribute[:pc_flag],
         sp_flag: attribute[:sp_flag],
-        line_flag: attribute[:line_flag]
+        line_flag: attribute[:line_flag],
+        mail_flag: attribute[:mail_flag]
       }
     end
   end
@@ -59,6 +60,8 @@ class PersonalInformations::Topics::WordsController < PersonalInformationsContro
   end
 
   def user_params
-    params.expect(user: [user_words_attributes: [[:id, :word, :pc_flag, :sp_flag, :line_flag]]])
+    params.expect(
+      user: [{ user_words_attributes: [[:id, :word, :pc_flag, :sp_flag, :line_flag, :mail_flag]] }]
+    )
   end
 end

@@ -4,6 +4,7 @@
 #
 #  id                            :bigint           not null, primary key
 #  line_flag(LINEフラグ)         :boolean          default(FALSE), not null
+#  mail_flag(メールフラグ)       :boolean          default(FALSE), not null
 #  pc_flag(パソコンフラグ)       :boolean          default(TRUE), not null
 #  sp_flag(スマートフォンフラグ) :boolean          default(TRUE), not null
 #  word(ワード)                  :string(128)      default(""), not null
@@ -33,6 +34,7 @@ class UserWordTest < ActiveSupport::TestCase
     assert_equal user_word.pc_flag, user_topic.pc_flag
     assert_equal user_word.sp_flag, user_topic.sp_flag
     assert_equal user_word.line_flag, user_topic.line_flag
+    assert_equal user_word.mail_flag, user_topic.mail_flag
 
     user_word = user_words(:user_word_koshi)
     user_topic = UserTopic.find_by(user_id: user.id, topic_id: topics(:topic_koshi).id)
@@ -41,6 +43,7 @@ class UserWordTest < ActiveSupport::TestCase
     assert_equal user_word.pc_flag, user_topic.pc_flag
     assert_equal user_word.sp_flag, user_topic.sp_flag
     assert_equal user_word.line_flag, user_topic.line_flag
+    assert_equal user_word.mail_flag, user_topic.mail_flag
   end
 
   test "既に存在する UserTopic は重複作成されない" do

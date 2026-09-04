@@ -58,18 +58,21 @@ class System < ApplicationRecord
     terms.map { |term| names.fetch(term, term.to_s) }
   end
 
-  def self.init(organization_id, term)
-    if term
-      system = System.find_by(term: term, organization_id: organization_id)
+  def self.init(organization_id, term, attributes = {})
+    return if term.blank?
+
+    system = System.find_by(term: term, organization_id: organization_id)
+    if system.nil?
       pre_system = System.find_by(term: term.to_i - 1, organization_id: organization_id)
-      if pre_system && system.nil?
-        system = System.new(pre_system.attributes.except("id", "created_at", "updated_at"))
-        system.term = term
-        system.term_name  = term.to_s
-        system.start_date = pre_system.start_date + 1.year
-        system.end_date   = pre_system.end_date + 1.year
-      end
+      return if pre_system.nil?
+
+      system = System.new(pre_system.attributes.except("id", "created_at", "updated_at"))
+      system.term = term
+      system.term_name  = term.to_s
+      system.start_date = pre_system.end_date.next_day
+      system.end_date   = system.start_date.next_year.prev_day
     end
+    system.assign_attributes(attributes)
     system
   end
 

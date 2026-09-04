@@ -135,6 +135,22 @@ class SystemTest < ActiveSupport::TestCase
     assert_predicate system, :valid?
   end
 
+  test "initは任意の年度名と期間で次期を初期化できること" do
+    system = System.init(
+      organizations(:org).id,
+      2018,
+      term_name: "第18期",
+      start_date: Date.new(2018, 1, 1),
+      end_date: Date.new(2018, 3, 31)
+    )
+
+    assert_predicate system, :valid?
+    assert_equal "第18期", system.term_name
+    assert_equal Date.new(2018, 1, 1), system.start_date
+    assert_equal Date.new(2018, 3, 31), system.end_date
+    assert_equal systems(:s2017).default_price, system.default_price
+  end
+
   test "年度名は組織IDを指定して取得できる" do
     systems(:s2015).update!(term_name: "第15期")
     systems(:s2015_org2).update!(term_name: "別組織期")

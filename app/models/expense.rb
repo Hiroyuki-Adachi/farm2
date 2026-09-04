@@ -17,7 +17,7 @@
 #  chemical_id(薬剤)            :integer
 #  chemical_type_id(薬剤種別)   :integer          default(0)
 #  expense_type_id(経費種別)    :integer          default(0), not null
-#  organization_id(組織)        :bigint
+#  organization_id(組織)        :bigint           not null
 #
 # Indexes
 #
@@ -29,7 +29,7 @@
 #
 
 class Expense < ApplicationRecord
-  belongs_to :organization, optional: true
+  belongs_to :organization, optional: false
 
   has_many :expense_work_types, dependent: :destroy
   has_many :work_types, -> { order(:display_order) }, through: :expense_work_types
