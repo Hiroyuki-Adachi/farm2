@@ -13,7 +13,7 @@ class Works::TrucksController < ApplicationController
     set_truck_context
     save_machine_hours
 
-    redirect_to works_trucks_path(filter_params)
+    redirect_to works_trucks_path(filter_params), notice: "登録しました"
   end
 
   private
