@@ -1,4 +1,4 @@
-<h1>作業日報(ひやりハット)登録</h1>
+<h1>作業日報(作業機械備考)登録</h1>
 <%= error_print(@work) %>
 <%= form_with(model: @work, url: {action: :create}, html: {method: :post}) do |f| %>
 <%= render partial: 'show_work', locals: {f: f} %>
