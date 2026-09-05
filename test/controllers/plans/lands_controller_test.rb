@@ -22,6 +22,26 @@ class Plans::LandsControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[type='submit'][value='登録']:not([disabled])"
   end
 
+  test "作付計画の当期見出しに年度名をそのまま表示する" do
+    systems(:s2015).update!(term_name: "第15期")
+    systems(:s2016).update!(term_name: "第16期")
+
+    get new_plans_land_path(mode: Plans::LandsController::TERM_MODES[:current])
+
+    assert_response :success
+    assert_select ".h1", text: "作付計画(第15期)"
+  end
+
+  test "作付計画の次期見出しに年度名をそのまま表示する" do
+    systems(:s2015).update!(term_name: "第15期")
+    systems(:s2016).update!(term_name: "第16期")
+
+    get new_plans_land_path(mode: Plans::LandsController::TERM_MODES[:next])
+
+    assert_response :success
+    assert_select ".h1", text: "作付計画(第16期)"
+  end
+
   test "作付計画(他の管理者を表示)" do
     target_user = users(:users1)
     term = @user.organization.get_term(Time.zone.today.next_year)
