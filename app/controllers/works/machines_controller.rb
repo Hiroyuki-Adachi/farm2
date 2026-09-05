@@ -12,6 +12,10 @@ class Works::MachinesController < WorksController
 
   def create
     @work.regist_machines(params[:machine_hours] || [])
-    redirect_to new_work_remark_path(work_id: @work)
+    if @work.machine_results.where("machine_results.hours > 0").exists?
+      redirect_to new_work_remark_path(work_id: @work)
+    else
+      redirect_to work_path(@work)
+    end
   end
 end

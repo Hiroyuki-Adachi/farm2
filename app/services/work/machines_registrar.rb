@@ -22,6 +22,9 @@ class Work::MachinesRegistrar
           MachineResult.create(work_result_id: target_work_result.id, machine_id: machine_id, hours: hour)
         end
       end
+      unless @work.machine_results.exists?(machine_id: machine_id)
+        @work.machine_remarks.where(machine_id: machine_id).destroy_all
+      end
     end
   end
 end
