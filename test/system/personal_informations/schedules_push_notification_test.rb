@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class PersonalInformations::SchedulesPushNotificationTest < ApplicationSystemTestCase
   setup do
-    @user = users(:users1)
+    @user = users(:user_manager)
   end
 
   test "ページ表示直後はブラウザの通知許可ダイアログを要求せず、事前確認メッセージとボタンを表示する" do

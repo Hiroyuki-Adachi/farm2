@@ -17,6 +17,7 @@ class StatisticsMachineQuery
     machines = Machine.with_deleted
       .includes(:machine_type)
       .where(id: hours.keys.map(&:second).uniq)
+      .where(home_id: Home.with_deleted.where(company_flag: true))
       .ordered_for_display
 
     [systems, machines, hours]

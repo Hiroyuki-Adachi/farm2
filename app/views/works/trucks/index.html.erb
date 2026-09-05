@@ -1,23 +1,24 @@
-<h1>軽トラック利用一覧</h1>
+<h1>自家用車利用一覧</h1>
+<div data-controller="pages--trucks-form">
 <% if @work_kinds.present? %>
   <div id="truck-work-kind-tabs" class="btn-group mb-2 d-block" role="group" aria-label="作業種別">
     <% @work_kinds.each do |work_kind| %>
       <% active = work_kind == @selected_work_kind %>
-      <%= link_to work_kind.name, works_trucks_path(work_kind_id: work_kind.id, month: @selected_month, section_id: @selected_section&.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}" %>
+      <%= link_to work_kind.name, works_trucks_path(work_kind_id: work_kind.id, month: @selected_month, section_id: @selected_section&.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}", data: { "pages--trucks-form-target": "tabLink", action: "click->pages--trucks-form#navigate" } %>
     <% end %>
   </div>
 <% end %>
 <div id="truck-month-tabs" class="btn-group mb-2" role="group" aria-label="表示月">
   <% @months.each do |month| %>
     <% active = month == @selected_month %>
-    <%= link_to "#{month.month}月", works_trucks_path(work_kind_id: @selected_work_kind&.id, month: month, section_id: @selected_section&.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}" %>
+    <%= link_to "#{month.month}月", works_trucks_path(work_kind_id: @selected_work_kind&.id, month: month, section_id: @selected_section&.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}", data: { "pages--trucks-form-target": "tabLink", action: "click->pages--trucks-form#navigate" } %>
   <% end %>
 </div>
 <% if @sections.present? %>
   <div id="truck-section-tabs" class="btn-group mb-2 d-block" role="group" aria-label="表示班">
     <% @sections.each do |section| %>
       <% active = section == @selected_section %>
-      <%= link_to section.name, works_trucks_path(work_kind_id: @selected_work_kind&.id, month: @selected_month, section_id: section.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}" %>
+      <%= link_to section.name, works_trucks_path(work_kind_id: @selected_work_kind&.id, month: @selected_month, section_id: section.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}", data: { "pages--trucks-form-target": "tabLink", action: "click->pages--trucks-form#navigate" } %>
     <% end %>
   </div>
 <% end %>
@@ -45,7 +46,7 @@
           <% machine_result = @machine_result_hours[[truck.id, work_result.id]] if work_result %>
           <td>
             <% if work_result && @machine_active_by_work_id_and_machine_id[[work.id, truck.id]] %>
-              <%= number_field_tag "machine_hours[#{truck.id}][#{work_result.id}]", machine_result&.hours || 0, {min: 0, max: 9.5, step: machine_hours_step(machine_result&.hours), required: true, readonly: work.fixed_at.present?, class: "form-control form-control-sm", style: "width: 80px;"} %>
+              <%= number_field_tag "machine_hours[#{truck.id}][#{work_result.id}]", machine_result&.hours || 0, {min: 0, max: 9.5, step: machine_hours_step(machine_result&.hours), required: true, readonly: work.fixed_at.present?, class: "form-control form-control-sm", style: "width: 80px;", data: { "pages--trucks-form-target": "input", action: "input->pages--trucks-form#markDirty" }} %>
             <% end %>
           </td>
         <% end %>
@@ -62,3 +63,4 @@
   </div>
 </div>
 <% end %>
+</div>

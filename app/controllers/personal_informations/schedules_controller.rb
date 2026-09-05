@@ -8,7 +8,6 @@ class PersonalInformations::SchedulesController < PersonalInformationsController
       .exists?
     @minute = Minute.for_personal(@worker).last&.decorate
     @tasks = TaskDecorator.decorate_collection(Task.for_organization(@worker.organization_id).by_worker(@worker).opened.planned_start.with_unread_count(@worker.id))
-    @push_notification_enabled = !@current_user.linable?
     @push_notification_configured = WebPushService.configured?
   end
 end

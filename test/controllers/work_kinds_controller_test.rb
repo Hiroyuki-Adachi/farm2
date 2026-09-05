@@ -48,6 +48,8 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
   test "作業種別マスタ変更(表示)" do
     get edit_work_kind_path(@work_kind)
     assert_response :success
+    assert_select "#work_kind_land_flag", count: 1
+    assert_select "#work_kind_aggregation_flag", count: 1
   end
 
   test "作業種別マスタ変更(実行)" do
@@ -82,6 +84,30 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to work_kinds_path
     assert_not @work_kind.reload.aggregation_flag
+  end
+
+  test "作業種別マスタ変更で土地利用を解除できる" do
+    @work_kind.update!(land_flag: true, aggregation_flag: true)
+
+    patch work_kind_path(@work_kind), params: {
+      work_kind: @update.merge(land_flag: "false")
+    }
+
+    assert_redirected_to work_kinds_path
+    assert_not @work_kind.reload.land_flag
+    assert_not @work_kind.aggregation_flag
+  end
+
+  test "作業種別マスタ変更で土地利用が未送信でも解除できる" do
+    @work_kind.update!(land_flag: true, aggregation_flag: true)
+
+    patch work_kind_path(@work_kind), params: {
+      work_kind: @update.except(:land_flag)
+    }
+
+    assert_redirected_to work_kinds_path
+    assert_not @work_kind.reload.land_flag
+    assert_not @work_kind.aggregation_flag
   end
 
   test "作業種別マスタ変更で集計対象が未送信でも解除できる" do

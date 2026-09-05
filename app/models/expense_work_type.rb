@@ -7,7 +7,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  expense_id(経費)       :integer
-#  organization_id(組織)  :bigint
+#  organization_id(組織)  :bigint           not null
 #  work_type_id(作業分類) :integer
 #
 # Indexes
@@ -21,7 +21,7 @@
 #
 
 class ExpenseWorkType < ApplicationRecord
-  belongs_to :organization, optional: true
+  belongs_to :organization, optional: false
   belongs_to :expense
   belongs_to :work_type, -> { with_deleted }
 

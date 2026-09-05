@@ -9,7 +9,7 @@
 #  remarks(備考)         :text
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  organization_id(組織) :bigint
+#  organization_id(組織) :bigint           not null
 #
 # Indexes
 #
@@ -25,7 +25,7 @@ class LandPlace < ApplicationRecord
 
   self.discard_column = :deleted_at
 
-  belongs_to :organization, optional: true
+  belongs_to :organization, optional: false
 
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
