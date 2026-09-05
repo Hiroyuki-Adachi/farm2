@@ -5,7 +5,7 @@
   <div class="col-md-2">
     <%= form_with url: lands_straws_path, method: :get, data: {turbo_frame: :list}, id: :search_form do |f| %>
       <%= select_tag(:term, options_from_collection_for_select(
-            Work.where(work_type_id: current_organization.straw_id).where("worked_at >= ?", LandCost.minimum(:activated_on)).select(:term).distinct.order(:term), 
+            Work.for_organization(current_organization).where(work_type_id: current_organization.straw_id).where("worked_at >= ?", LandCost.minimum(:activated_on)).select(:term).distinct.order(:term),
             :term, :term, current_term), class: "form-select") %>
     <% end %>
   </div>

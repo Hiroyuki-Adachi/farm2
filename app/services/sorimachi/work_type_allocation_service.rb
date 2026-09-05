@@ -69,6 +69,7 @@ module Sorimachi
 
     def target_lands_between(start_on, end_on)
       Land
+        .for_organization(@system.organization_id)
         .kept
         .where(target_flag: true)
         .where("lands.start_on <= ? AND lands.end_on >= ?", end_on, start_on)

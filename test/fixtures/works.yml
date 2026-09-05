@@ -5529,3 +5529,16 @@ work_other_org:
   work_kind_id: 12
   created_by: 9100
   organization_id: 2
+
+work_other_org_straw:
+  id: 9001
+  term: '2099'
+  worked_at: '2099-04-01'
+  weather_id: '1'
+  work_type_id: '27'
+  name: "別組織稲わらリーク"
+  start_at: '2099-04-01 08:00:00'
+  end_at: '2099-04-01 12:00:00'
+  work_kind_id: 12
+  created_by: 9100
+  organization_id: 2

@@ -116,10 +116,19 @@ work_types9:
   genre: genre_management
   name: "総務"
   display_order: '200'
-  deleted_at: 
+  deleted_at:
   bg_color: "#ffffff"
   land_flag: f
   office_role: general
+
+work_type_straw_leak_test:
+  id: '27'
+  genre: genre_management
+  name: "リークテスト"
+  display_order: '999'
+  deleted_at:
+  bg_color: "#ffffff"
+  land_flag: f
 
 work_types10:
   id: '12'

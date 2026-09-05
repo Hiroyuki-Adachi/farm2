@@ -9,4 +9,10 @@ class Lands::StrawsControllerTest < ActionDispatch::IntegrationTest
     get lands_straws_path
     assert_response :success
   end
+
+  test "年度選択肢に他組織の稲わら作業の年度を表示しない" do
+    get lands_straws_path
+    assert_response :success
+    assert_select "select#term option[value=?]", "2099", count: 0
+  end
 end

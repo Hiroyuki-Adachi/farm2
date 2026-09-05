@@ -5,8 +5,8 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     system = create_system(term: 2091)
     work_type1 = create_cost_work_type(term: 2091, name: "配賦A")
     work_type2 = create_cost_work_type(term: 2091, name: "配賦B")
-    land1 = create_land(place: "A-1", area: 5)
-    land2 = create_land(place: "B-1", area: 3)
+    land1 = create_land(place: "A-1", area: 5, organization_id: system.organization_id)
+    land2 = create_land(place: "B-1", area: 3, organization_id: system.organization_id)
     LandCost.create!(land_id: land1.id, work_type_id: work_type1.id, activated_on: system.start_date)
     LandCost.create!(land_id: land2.id, work_type_id: work_type2.id, activated_on: system.start_date)
     service = Sorimachi::WorkTypeAllocationService.new(term: 2091, system: system)
@@ -24,8 +24,8 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     system = create_system(term: 2092)
     work_type1 = create_cost_work_type(term: 2092, name: "年配賦A")
     work_type2 = create_cost_work_type(term: 2092, name: "年配賦B")
-    land1 = create_land(place: "A-2", area: 10)
-    land2 = create_land(place: "B-2", area: 5)
+    land1 = create_land(place: "A-2", area: 10, organization_id: system.organization_id)
+    land2 = create_land(place: "B-2", area: 5, organization_id: system.organization_id)
     LandCost.create!(land_id: land1.id, work_type_id: work_type1.id, activated_on: system.start_date)
     LandCost.create!(land_id: land1.id, work_type_id: work_type2.id, activated_on: Date.new(2092, 7, 1))
     LandCost.create!(land_id: land2.id, work_type_id: work_type2.id, activated_on: system.start_date)
@@ -44,8 +44,8 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     system = create_system(term: 2093)
     work_type1 = create_cost_work_type(term: 2093, name: "端数A")
     work_type2 = create_cost_work_type(term: 2093, name: "端数B")
-    land1 = create_land(place: "A-3", area: 1)
-    land2 = create_land(place: "B-3", area: 1)
+    land1 = create_land(place: "A-3", area: 1, organization_id: system.organization_id)
+    land2 = create_land(place: "B-3", area: 1, organization_id: system.organization_id)
     LandCost.create!(land_id: land1.id, work_type_id: work_type1.id, activated_on: system.start_date)
     LandCost.create!(land_id: land2.id, work_type_id: work_type2.id, activated_on: system.start_date)
     service = Sorimachi::WorkTypeAllocationService.new(term: 2093, system: system)
@@ -57,6 +57,25 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     assert_equal 1, records.sum { |record| record.amount.to_i }
     assert_nil records.find_by(work_type_id: work_type1.id)
     assert_equal 1, records.find_by(work_type_id: work_type2.id).amount.to_i
+  end
+
+  test "他組織の土地は面積按分に混ぜない" do
+    system = create_system(term: 2094)
+    other_system = create_system(term: 2094)
+    work_type1 = create_cost_work_type(term: 2094, name: "越境配賦A")
+    work_type2 = create_cost_work_type(term: 2094, name: "越境配賦B")
+    land1 = create_land(place: "A-4", area: 5, organization_id: system.organization_id)
+    other_land = create_land(place: "X-4", area: 95, organization_id: other_system.organization_id)
+    LandCost.create!(land_id: land1.id, work_type_id: work_type1.id, activated_on: system.start_date)
+    LandCost.create!(land_id: other_land.id, work_type_id: work_type2.id, activated_on: other_system.start_date)
+    service = Sorimachi::WorkTypeAllocationService.new(term: 2094, system: system)
+    journal = create_journal(term: 2094, line: 9904, accounted_on: Date.new(2094, 6, 1))
+
+    records = service.allocate!(journal: journal, amount: 100, accounted_on: journal.accounted_on)
+
+    assert_equal 1, records.count
+    assert_equal 100, records.find_by(work_type_id: work_type1.id).amount.to_i
+    assert_nil records.find_by(work_type_id: work_type2.id)
   end
 
   private
@@ -84,16 +103,32 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     work_type
   end
 
-  def create_land(place:, area:)
+  def create_land(place:, area:, organization_id:)
+    home = home_for_organization(organization_id)
     Land.create!(
       place: place,
       area: area,
       target_flag: true,
-      owner_id: homes(:home1).id,
-      manager_id: homes(:home1).id,
+      organization_id: organization_id,
+      owner_id: home.id,
+      manager_id: home.id,
       start_on: Date.new(1900, 1, 1),
       end_on: Date.new(2999, 12, 31)
     )
+  end
+
+  def home_for_organization(organization_id)
+    @homes_by_organization ||= {}
+    @homes_by_organization[organization_id] ||= begin
+      section = Section.create!(name: "配賦テスト班#{organization_id}", display_order: 1, organization_id: organization_id)
+      Home.create!(
+        name: "配賦テスト世帯#{organization_id}",
+        phonetic: "はいふてすと",
+        display_order: 1,
+        organization_id: organization_id,
+        section: section
+      )
+    end
   end
 
   def create_journal(term:, line:, accounted_on:)
