@@ -54,6 +54,7 @@ class WorkKind < ApplicationRecord
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
+  scope :phonetic_order, -> { reorder(:phonetic, :display_order, :id) }
   scope :usual, -> { except_other.order(:phonetic, :display_order, :id) }
   scope :aggregatable, -> { kept.where(land_flag: true, aggregation_flag: true).order(:phonetic, :display_order, :id) }
   scope :landable, -> { kept.where(land_flag: true) }
