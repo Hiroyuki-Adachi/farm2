@@ -42,7 +42,7 @@ class Works::TrucksController < ApplicationController
   end
 
   def truck_work_kinds
-    current_organization.truck.work_kinds
+    current_organization.truck.work_kinds.reorder(:phonetic, :display_order, :id)
   end
 
   def selected_work_kind
