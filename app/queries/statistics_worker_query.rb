@@ -51,7 +51,14 @@ class StatisticsWorkerQuery
     query.join(work_results).on(work_results[:work_id].eq(works[:id]))
     query
       .join(machine_results, Arel::Nodes::OuterJoin)
-      .on(machine_results[:work_result_id].eq(work_results[:id]))
+      .on(machine_results[:work_result_id].eq(work_results[:id])
+        .and(machine_results[:machine_id].in(company_machines.arel)))
+  end
+
+  def company_machines
+    Machine.with_deleted
+      .where(home_id: Home.with_deleted.where(homes[:company_flag].eq(true)))
+      .select(:id)
   end
 
   def worker_projection(wr_table_alias)
