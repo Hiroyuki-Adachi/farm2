@@ -32,7 +32,8 @@ class StatisticsWorkerResultsTest < ActiveSupport::TestCase
     result = StatisticsWorkerQuery.new(2019, organization: organizations(:org)).call.first
 
     assert_equal 2, result.work_days
-    assert_equal work_results(:work_result_stat_2019_1_1).hours + work_results(:work_result_stat_2019_2).hours, result.work_hours
+    expected_hours = work_results(:work_result_stat_2019_1_1).hours + work_results(:work_result_stat_2019_2).hours
+    assert_equal expected_hours, result.work_hours
     assert_equal 0, result.machine_days
     assert_equal 0, result.machine_hours
   end
@@ -47,7 +48,8 @@ class StatisticsWorkerResultsTest < ActiveSupport::TestCase
     result = StatisticsWorkerQuery.new(2019, organization: organizations(:org)).call.first
 
     assert_equal 2, result.work_days
-    assert_equal work_results(:work_result_stat_2019_1_1).hours + work_results(:work_result_stat_2019_2).hours, result.work_hours
+    expected_hours = work_results(:work_result_stat_2019_1_1).hours + work_results(:work_result_stat_2019_2).hours
+    assert_equal expected_hours, result.work_hours
     assert_equal 1, result.machine_days
     assert_equal machine_result.hours, result.machine_hours
   end
@@ -73,7 +75,8 @@ class StatisticsWorkerResultsTest < ActiveSupport::TestCase
 
     result = results.first
     assert_equal 2, result.work_days
-    assert_equal work_results(:work_result_stat_2019_1_1).hours + work_results(:work_result_stat_2019_2).hours, result.work_hours
+    expected_hours = work_results(:work_result_stat_2019_1_1).hours + work_results(:work_result_stat_2019_2).hours
+    assert_equal expected_hours, result.work_hours
     assert_equal 2, result.machine_days
     assert_equal machine_result.hours + second_result.hours, result.machine_hours
 
