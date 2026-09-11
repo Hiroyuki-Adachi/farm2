@@ -53,7 +53,7 @@ class HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", harvest_whole_crops_path, text: "戻る"
   end
 
-  test "同じ圃場で複数回収穫した場合は初日の10a換算値のみ表示する" do
+  test "同じ圃場で複数回収穫した場合は10a換算値の合計を表示する" do
     map_land = Land.create!(
       place: "9999-3",
       owner: homes(:home1),
@@ -73,7 +73,7 @@ class HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
     get map_harvest_whole_crops_path
 
     assert_response :success
-    assert_select "input[type=hidden][name=regions][data-id='#{map_land.id}'][data-color='#34c759'][data-rolls='10']", 1
+    assert_select "input[type=hidden][name=regions][data-id='#{map_land.id}'][data-color='#ff4d4f'][data-rolls='15']", 1
   end
 
   test "収穫実績(whole_crop_lands)のない圃場は地図に表示しない" do

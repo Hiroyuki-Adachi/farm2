@@ -18,7 +18,7 @@ class HarvestWholeCrops::MapServiceTest < ActiveSupport::TestCase
     assert_equal :within_10, summaries.fetch(land1.id).status
   end
 
-  test "複数日にまたがる圃場は初日の10a換算値のみ採用する" do
+  test "複数日にまたがる圃場は10a換算値を合算する" do
     land = create_land(place: "B-1", area: 20)
 
     first_work = create_wcs_work(worked_at: Date.new(2015, 6, 1))
@@ -31,8 +31,8 @@ class HarvestWholeCrops::MapServiceTest < ActiveSupport::TestCase
 
     summaries = HarvestWholeCrops::MapService.call(organization: organizations(:org), term: 2015)
 
-    assert_equal 10, summaries.fetch(land.id).rolls
-    assert_equal :within_10, summaries.fetch(land.id).status
+    assert_equal 15, summaries.fetch(land.id).rolls
+    assert_equal :over_50, summaries.fetch(land.id).status
   end
 
   test "収穫実績(whole_crop_lands)のない圃場は集計に含めない" do
@@ -90,7 +90,7 @@ class HarvestWholeCrops::MapServiceTest < ActiveSupport::TestCase
     assert_equal :within_10, summaries.fetch(land.id).status
   end
 
-  test "登録順によらず圃場ごとの初日を選び日報全体で按分する" do
+  test "登録順によらず日報全体で按分した値を圃場ごとに合算する" do
     land1 = create_land(place: "E-1", area: 10)
     land2 = create_land(place: "E-2", area: 30)
     later_work = create_wcs_work(worked_at: Date.new(2015, 6, 2))
@@ -101,11 +101,11 @@ class HarvestWholeCrops::MapServiceTest < ActiveSupport::TestCase
 
     summaries = HarvestWholeCrops::MapService.call(organization: organizations(:org), term: 2015)
 
-    assert_equal 8, summaries.fetch(land1.id).rolls
+    assert_equal 18, summaries.fetch(land1.id).rolls
     assert_equal 10, summaries.fetch(land2.id).rolls
   end
 
-  test "初日の複数日報を合算し翌日と二番刈りは含めない" do
+  test "同日の複数日報と翌日と二番刈りをすべて合算する" do
     land = create_land(place: "F-1", area: 10)
     [[Date.new(2015, 6, 1), 6], [Date.new(2015, 6, 1), 4],
      [Date.new(2015, 6, 2), 5], [Date.new(2015, 8, 1), 7]].each do |date, rolls|
@@ -114,10 +114,10 @@ class HarvestWholeCrops::MapServiceTest < ActiveSupport::TestCase
 
     summaries = HarvestWholeCrops::MapService.call(organization: organizations(:org), term: 2015)
 
-    assert_equal 10, summaries.fetch(land.id).rolls
+    assert_equal 22, summaries.fetch(land.id).rolls
   end
 
-  test "初日のゼロを維持し他年度の収穫は初日判定に使わない" do
+  test "初日がゼロでも翌日を加算し他年度の収穫は含めない" do
     land = create_land(place: "G-1", area: 10)
     previous_work = create_wcs_work(worked_at: Date.new(2014, 6, 1))
     previous_work.update!(term: 2014)
@@ -127,7 +127,7 @@ class HarvestWholeCrops::MapServiceTest < ActiveSupport::TestCase
 
     summaries = HarvestWholeCrops::MapService.call(organization: organizations(:org), term: 2015)
 
-    assert_equal 0, summaries.fetch(land.id).rolls
+    assert_equal 10, summaries.fetch(land.id).rolls
   end
 
   private
