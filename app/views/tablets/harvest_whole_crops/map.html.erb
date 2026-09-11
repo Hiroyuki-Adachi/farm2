@@ -15,11 +15,6 @@
     <div id="map" style="height: calc(100vh - 320px); min-height: 420px;" data-tablet="true"></div>
   </div>
 </div>
-<div class="row mb-3">
-  <div class="col-12">
-    <h3 id="land_info" class="h5" aria-live="polite">&nbsp;</h3>
-  </div>
-</div>
 <%= hidden_field_tag :location, "[#{current_location}]" %>
 <%= hidden_field_tag :organization_name, current_organization.name %>
 <% @lands.each do |land| %>

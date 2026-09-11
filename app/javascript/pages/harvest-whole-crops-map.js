@@ -71,21 +71,22 @@ function initMap() {
       map: map
     });
 
-    const showLandInfo = function() {
-      const currentLand = document.getElementById(`land_${this.landId}`);
-      if (!currentLand) {
-        return;
-      }
-      document.getElementById("land_info").innerText = `${currentLand.dataset.place}(${currentLand.dataset.owner}):${currentLand.dataset.area}a ロール数(10a当):${currentLand.dataset.rolls}`;
-    };
+    if (!tablet) {
+      const showLandInfo = function() {
+        const currentLand = document.getElementById(`land_${this.landId}`);
+        if (!currentLand) {
+          return;
+        }
+        document.getElementById("land_info").innerText = `${currentLand.dataset.place}(${currentLand.dataset.owner}):${currentLand.dataset.area}a ロール数(10a当):${currentLand.dataset.rolls}`;
+      };
 
-    polygon.addListener("click", showLandInfo);
-    polygon.addListener("mouseover", showLandInfo);
+      polygon.addListener("click", showLandInfo);
+      polygon.addListener("mouseover", showLandInfo);
 
-    polygon.addListener("mouseout", function() {
-      if (tablet) return;
-      document.getElementById("land_info").innerHTML = "&nbsp;";
-    });
+      polygon.addListener("mouseout", function() {
+        document.getElementById("land_info").innerHTML = "&nbsp;";
+      });
+    }
 
     if (tablet) {
       const center = parsePoint(land.dataset.center);
