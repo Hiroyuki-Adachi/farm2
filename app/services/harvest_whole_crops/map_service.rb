@@ -30,7 +30,8 @@ class HarvestWholeCrops::MapService
 
   def totals_by_land
     totals = {}
-    rows.group_by(&:last).each_value do |daily_rows|
+    rows_by_date = rows.group_by { |_work_id, _land_id, _rolls, _area, worked_at| worked_at }
+    rows_by_date.each_value do |daily_rows|
       work_rolls, work_land_areas = aggregate_rows(daily_rows)
       daily_totals = Hash.new(0.to_d)
       work_rolls.each_key { |work_id| apportion(work_rolls[work_id], work_land_areas[work_id], daily_totals) }
