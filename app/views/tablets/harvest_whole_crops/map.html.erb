@@ -1,0 +1,35 @@
+<div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/harvest-whole-crops-map">
+  <div class="col-12">
+    <h1 class="h3">収穫地図(WCS)</h1>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-12">
+    <div id="map" style="height: calc(100vh - 250px); min-height: 420px;" data-tablet="true"></div>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-12">
+    <h3 id="land_info" class="h5" aria-live="polite">&nbsp;</h3>
+  </div>
+</div>
+<%= hidden_field_tag :location, "[#{current_location}]" %>
+<%= hidden_field_tag :organization_name, current_organization.name %>
+<% @lands.each do |land| %>
+  <% summary = @wcs_land_summaries[land.id] %>
+  <%= land_region_hidden_field(land, color: summary.color, extra_data: { rolls: summary.rolls }) %>
+<% end %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to '戻る', tablets_menu_index_path, {class: "btn btn-outline-secondary btn-lg"} %>
+  </div>
+</div>
+
+<% content_for :head do %>
+<script>
+(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+  key: "<%= Rails.application.credentials.dig(:google_maps, :api_key) %>",
+  v: "weekly"
+});
+</script>
+<% end %>

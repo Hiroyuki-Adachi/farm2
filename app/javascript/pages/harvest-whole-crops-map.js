@@ -1,5 +1,5 @@
 await google.maps.importLibrary("marker");
-await google.maps.importLibrary("drawing");
+await google.maps.importLibrary("maps");
 
 function parsePoint(value) {
   if (!value) {
@@ -37,9 +37,13 @@ function parsePolygon(value) {
 function initMap() {
   const pos = parsePoint(document.getElementById("location")?.value) || { lat: 35.0, lng: 135.0 };
 
-  const map = new google.maps.Map(document.getElementById("map"), {
+  const mapElement = document.getElementById("map");
+  const tablet = mapElement.dataset.tablet === "true";
+  const map = new google.maps.Map(mapElement, {
     center: pos,
     zoom: 16,
+    gestureHandling: tablet ? "greedy" : "auto",
+    fullscreenControl: !tablet,
     mapId: "FARM2_MAP"
   });
 
@@ -66,15 +70,19 @@ function initMap() {
       map: map
     });
 
-    polygon.addListener("mouseover", function() {
+    const showLandInfo = function() {
       const currentLand = document.getElementById(`land_${this.landId}`);
       if (!currentLand) {
         return;
       }
       document.getElementById("land_info").innerText = `${currentLand.dataset.place}(${currentLand.dataset.owner}):${currentLand.dataset.area}a ロール数(10a当):${currentLand.dataset.rolls}`;
-    });
+    };
+
+    polygon.addListener("click", showLandInfo);
+    polygon.addListener("mouseover", showLandInfo);
 
     polygon.addListener("mouseout", function() {
+      if (tablet) return;
       document.getElementById("land_info").innerHTML = "&nbsp;";
     });
   });

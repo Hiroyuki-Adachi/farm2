@@ -29,14 +29,18 @@ class HarvestWholeCrops::MapService
   private
 
   def totals_by_land
-    work_rolls, work_land_areas = aggregate_rows
-
-    totals = Hash.new(0.to_d)
-    work_rolls.each_key { |work_id| apportion(work_rolls[work_id], work_land_areas[work_id], totals) }
+    totals = {}
+    rows.group_by(&:last).each_value do |daily_rows|
+      work_rolls, work_land_areas = aggregate_rows(daily_rows)
+      daily_totals = Hash.new(0.to_d)
+      work_rolls.each_key { |work_id| apportion(work_rolls[work_id], work_land_areas[work_id], daily_totals) }
+      # 日報全体で面積按分した後、圃場ごとに初日の値だけを採用する。
+      totals.merge!(daily_totals) { |_land_id, first_day, _later_day| first_day }
+    end
     totals
   end
 
-  def aggregate_rows
+  def aggregate_rows(rows)
     work_rolls = Hash.new(0.to_d)
     work_land_areas = Hash.new { |hash, key| hash[key] = {} }
 
@@ -59,7 +63,8 @@ class HarvestWholeCrops::MapService
   def rows
     WholeCropLand.joins(work_whole_crop: :work, work_land: :land)
       .where(works: { organization_id: @organization.id, term: @term })
-      .pluck("works.id", "lands.id", "whole_crop_lands.rolls", "lands.area")
+      .order("works.worked_at", "works.id")
+      .pluck("works.id", "lands.id", "whole_crop_lands.rolls", "lands.area", "works.worked_at")
   end
 
   def build_result(rolls)

@@ -1,35 +1,20 @@
-require 'test_helper'
+require "test_helper"
 
-class HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
+class Tablets::HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
   setup do
     login_as(users(:users1))
   end
 
-  test "収穫一覧(WCS)" do
-    get harvest_whole_crops_path
+  test "タブレットメニューから収穫地図へ移動できる" do
+    get tablets_menu_index_path
     assert_response :success
+    assert_select "a[href=?]", map_tablets_harvest_whole_crops_path
   end
 
-  test "収穫一覧の取得対象に他組織の作業を含めない" do
-    works(:work_other_org).update!(worked_at: Date.new(2015, 12, 31))
-    WorkWholeCrop.create!(work: works(:work_other_org))
-
-    get harvest_whole_crops_path
-
-    assert_response :success
-    assert_not_includes response.body, "2015-12-31"
-  end
-
-  test "収穫一覧(WCS)(検証者以外)" do
-    login_as(users(:user_checker))
-    get harvest_whole_crops_path
-    assert_response :error
-  end
-
-  test "収穫一覧(WCS)に地図ボタンを表示する" do
-    get harvest_whole_crops_path
-    assert_response :success
-    assert_select "a.btn-info[href=?]", map_harvest_whole_crops_path, text: "地図"
+  test "未ログインでは地図を閲覧できない" do
+    logout
+    get map_tablets_harvest_whole_crops_path
+    assert_response :redirect
   end
 
   test "収穫地図(WCS)を収穫量に応じて色分け表示する" do
@@ -45,12 +30,12 @@ class HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
     work_land = WorkLand.create!(work: work, land: map_land, work_type_id: 15)
     WholeCropLand.create!(work_whole_crop: work.whole_crop, work_land: work_land, rolls: 20)
 
-    get map_harvest_whole_crops_path
+    get map_tablets_harvest_whole_crops_path
 
     assert_response :success
     assert_select "#map", 1
     assert_select "input[type=hidden][name=regions][data-id='#{map_land.id}'][data-color='#34c759'][data-rolls='10']", 1
-    assert_select "a[href=?]", harvest_whole_crops_path, text: "戻る"
+    assert_select "a[href=?]", tablets_menu_index_path, text: "戻る"
   end
 
   test "同じ圃場で複数回収穫した場合は初日の10a換算値のみ表示する" do
@@ -70,7 +55,7 @@ class HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
     second_work_land = WorkLand.create!(work: second_work, land: map_land, work_type_id: 15)
     WholeCropLand.create!(work_whole_crop: second_work.whole_crop, work_land: second_work_land, rolls: 10)
 
-    get map_harvest_whole_crops_path
+    get map_tablets_harvest_whole_crops_path
 
     assert_response :success
     assert_select "input[type=hidden][name=regions][data-id='#{map_land.id}'][data-color='#34c759'][data-rolls='10']", 1
@@ -87,7 +72,7 @@ class HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
     )
     WorkLand.create!(work: works(:work_wcs2), land: map_land, work_type_id: 15)
 
-    get map_harvest_whole_crops_path
+    get map_tablets_harvest_whole_crops_path
 
     assert_response :success
     assert_select "input[type=hidden][name=regions][data-id='#{map_land.id}']", 0
@@ -101,7 +86,7 @@ class HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
     other_work_land = WorkLand.create!(work: other_work, land: other_land, work_type_id: 11)
     WholeCropLand.create!(work_whole_crop: other_whole_crop, work_land: other_work_land, rolls: 10)
 
-    get map_harvest_whole_crops_path
+    get map_tablets_harvest_whole_crops_path
 
     assert_response :success
     assert_select "input[type=hidden][name=regions][data-id='#{other_land.id}']", 0
@@ -109,7 +94,7 @@ class HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
 
   test "収穫地図(WCS)(検証者以外)" do
     login_as(users(:user_checker))
-    get map_harvest_whole_crops_path
+    get map_tablets_harvest_whole_crops_path
     assert_response :error
   end
 
