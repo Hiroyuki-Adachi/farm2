@@ -42,7 +42,7 @@ class Works::TrucksController < ApplicationController
   end
 
   def truck_work_kinds
-    current_organization.truck.work_kinds
+    current_organization.truck.work_kinds.phonetic_order
   end
 
   def selected_work_kind

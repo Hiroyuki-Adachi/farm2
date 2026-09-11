@@ -17,7 +17,7 @@ class Machines::TrucksController < ApplicationController
       save_checked_trucks
     end
 
-    redirect_to machines_trucks_path
+    redirect_to machines_trucks_path, notice: "保存しました"
   end
 
   private
