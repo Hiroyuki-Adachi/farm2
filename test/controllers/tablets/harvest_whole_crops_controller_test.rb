@@ -131,6 +131,21 @@ class Tablets::HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[aria-current='true'][href=?]", map_tablets_harvest_whole_crops_path(term: 2015)
   end
 
+  test "見出しと年度切り替えボタンには年度名をそのまま表示する" do
+    System.find_by!(organization_id: organizations(:org).id, term: 2014).update!(term_name: "第14期")
+    System.find_by!(organization_id: organizations(:org).id, term: 2015).update!(term_name: "第15期")
+
+    get map_tablets_harvest_whole_crops_path
+    assert_response :success
+    assert_select "h1", text: "収穫地図(WCS) 第15期"
+    assert_select "a[href=?]", map_tablets_harvest_whole_crops_path(term: 2014), text: "前年度（第14期）"
+    assert_select "a[href=?]", map_tablets_harvest_whole_crops_path(term: 2015), text: "今年度（第15期）"
+
+    get map_tablets_harvest_whole_crops_path, params: { term: 2014 }
+    assert_response :success
+    assert_select "h1", text: "収穫地図(WCS) 第14期"
+  end
+
   private
 
   def create_wcs_work(worked_at:)
