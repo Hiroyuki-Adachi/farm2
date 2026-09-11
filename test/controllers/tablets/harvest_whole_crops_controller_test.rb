@@ -98,6 +98,39 @@ class Tablets::HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
     assert_response :error
   end
 
+  test "前年度と今年度の収穫量を切り替える" do
+    land = Land.create!(
+      place: "9999-5", owner: homes(:home1), manager: homes(:home1), area: 20, target_flag: true,
+      region: "((35.474177,133.047340), (35.472866,133.047340), (35.472648,133.049056))"
+    )
+    [[2014, 14], [2015, 20]].each do |term, rolls|
+      work = create_wcs_work(worked_at: Date.new(term, 6, 1))
+      work.update!(term: term)
+      work_land = WorkLand.create!(work: work, land: land, work_type_id: 15)
+      WholeCropLand.create!(work_whole_crop: work.whole_crop, work_land: work_land, rolls: rolls)
+    end
+
+    get map_tablets_harvest_whole_crops_path
+    assert_response :success
+    assert_select "#land_#{land.id}[data-rolls='10'][data-place][data-area][data-center]", 1
+    assert_select "#toggle_land_labels[aria-pressed='true']", 1
+    assert_select "a[aria-current='true'][href=?]", map_tablets_harvest_whole_crops_path(term: 2015)
+
+    get map_tablets_harvest_whole_crops_path, params: { term: 2014 }
+    assert_response :success
+    assert_select "#land_#{land.id}[data-rolls='7']", 1
+    assert_select "a[aria-current='true'][href=?]", map_tablets_harvest_whole_crops_path(term: 2014)
+
+    get map_tablets_harvest_whole_crops_path, params: { term: 2015 }
+    assert_select "#land_#{land.id}[data-rolls='10']", 1
+  end
+
+  test "対象外の年度を指定すると今年度を表示する" do
+    get map_tablets_harvest_whole_crops_path, params: { term: 2013 }
+    assert_response :success
+    assert_select "a[aria-current='true'][href=?]", map_tablets_harvest_whole_crops_path(term: 2015)
+  end
+
   private
 
   def create_wcs_work(worked_at:)

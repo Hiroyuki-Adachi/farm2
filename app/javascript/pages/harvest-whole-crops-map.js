@@ -53,6 +53,7 @@ function initMap() {
     map: map
   });
 
+  const landLabels = [];
   document.querySelectorAll('[name="regions"]').forEach((land) => {
     const paths = parsePolygon(land.value);
     if (paths.length === 0) {
@@ -85,7 +86,31 @@ function initMap() {
       if (tablet) return;
       document.getElementById("land_info").innerHTML = "&nbsp;";
     });
+
+    if (tablet) {
+      const center = parsePoint(land.dataset.center);
+      if (center) {
+        const label = document.createElement("div");
+        label.className = "map-label";
+        label.textContent = `${land.dataset.place}(${land.dataset.area}a)`;
+        landLabels.push(label);
+        new google.maps.marker.AdvancedMarkerElement({ position: center, map: map, content: label });
+      }
+    }
   });
+
+  const toggle = document.getElementById("toggle_land_labels");
+  if (tablet && toggle) {
+    let labelsVisible = true;
+    toggle.setAttribute("aria-pressed", "true");
+    toggle.textContent = "地番・面積を隠す";
+    toggle.onclick = () => {
+      labelsVisible = !labelsVisible;
+      landLabels.forEach((label) => { label.hidden = !labelsVisible; });
+      toggle.setAttribute("aria-pressed", String(labelsVisible));
+      toggle.textContent = labelsVisible ? "地番・面積を隠す" : "地番・面積を表示";
+    };
+  }
 }
 
 export const init = () => {

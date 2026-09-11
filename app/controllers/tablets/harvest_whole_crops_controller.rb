@@ -4,7 +4,8 @@ class Tablets::HarvestWholeCropsController < TabletsController
   helper GmapHelper
 
   def map
-    @wcs_land_summaries = HarvestWholeCrops::MapService.call(organization: current_organization, term: current_term)
+    @selected_term = params[:term].to_s == previous_term.to_s ? previous_term : current_term
+    @wcs_land_summaries = HarvestWholeCrops::MapService.call(organization: current_organization, term: @selected_term)
     @lands = Land.for_organization(current_organization).regionable
       .includes(:owner)
       .where(id: @wcs_land_summaries.keys)
