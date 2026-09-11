@@ -1,0 +1,41 @@
+<div class="row" data-controller="page-loader" data-page-loader-modules-value="pages/harvest-whole-crops-map">
+  <div class="col-12">
+    <h1 class="h3">収穫地図(WCS) <%= @term_names.fetch(@selected_term) %></h1>
+    <div class="d-flex flex-wrap gap-2 mb-3" role="group" aria-label="表示年度">
+      <% [[previous_term, "前年度"], [current_term, "今年度"]].each do |term, label| %>
+        <%= link_to "#{label}（#{@term_names.fetch(term)}）", map_tablets_harvest_whole_crops_path(term: term),
+          class: "btn btn-lg #{@selected_term == term ? 'btn-primary' : 'btn-outline-primary'}",
+          aria: { current: @selected_term == term ? "true" : nil } %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-12">
+    <div id="map" style="height: calc(100vh - 320px); min-height: 420px;" data-tablet="true"></div>
+  </div>
+</div>
+<%= render "harvest_whole_crops/map_legend" %>
+<%= hidden_field_tag :location, "[#{current_location}]" %>
+<%= hidden_field_tag :organization_name, current_organization.name %>
+<% @lands.each do |land| %>
+  <% summary = @wcs_land_summaries[land.id] %>
+  <%= land_region_hidden_field(land, color: summary.color, extra_data: { rolls: summary.rolls }) %>
+<% end %>
+<div class="btn-toolbar">
+  <div class="d-flex flex-wrap gap-2">
+    <button id="toggle_land_labels" type="button" class="btn btn-outline-primary btn-lg" aria-pressed="true">
+      地番・面積を隠す
+    </button>
+    <%= link_to '戻る', tablets_menu_index_path, {class: "btn btn-outline-secondary btn-lg"} %>
+  </div>
+</div>
+
+<% content_for :head do %>
+<script>
+(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+  key: "<%= Rails.application.credentials.dig(:google_maps, :api_key) %>",
+  v: "weekly"
+});
+</script>
+<% end %>
