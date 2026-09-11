@@ -15,6 +15,7 @@
     <div id="map" style="height: calc(100vh - 320px); min-height: 420px;" data-tablet="true"></div>
   </div>
 </div>
+<%= render "harvest_whole_crops/map_legend" %>
 <%= hidden_field_tag :location, "[#{current_location}]" %>
 <%= hidden_field_tag :organization_name, current_organization.name %>
 <% @lands.each do |land| %>
