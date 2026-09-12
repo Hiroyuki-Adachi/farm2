@@ -5537,8 +5537,9 @@ pricing_work_march_1st:
   worked_at: '2015-03-01'
   work_type_id: '11'
   name: "機械単価テスト"
-  start_at: '2016-03-01 14:00:00'
-  end_at: '2016-03-01 16:00:00'
+  weather_id: sunny
+  start_at: '14:00:00'
+  end_at: '16:00:00'
   work_kind: pricing_work_kind
 
 pricing_work_feb_last:
@@ -5547,6 +5548,7 @@ pricing_work_feb_last:
   worked_at: '2015-02-28'
   work_type_id: '11'
   name: "機械単価テスト"
-  start_at: '2016-03-01 14:00:00'
-  end_at: '2016-03-01 16:00:00'
+  weather_id: sunny
+  start_at: '14:00:00'
+  end_at: '16:00:00'
   work_kind: pricing_work_kind

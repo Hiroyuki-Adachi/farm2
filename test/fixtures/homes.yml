@@ -773,7 +773,8 @@ pricing_owner:
   organization: pricing_organization
   name: 単価計算専用
   phonetic: たんかけいさん
+  display_order: 1
   company_flag: false
   member_flag: false
   owner_flag: false
-  land_flag: false
+  land_flag: true

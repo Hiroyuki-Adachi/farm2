@@ -519,4 +519,5 @@ work_kind_broccoli:
 # MachineResultTest専用。分離方針は test/fixtures/README.md を参照。
 pricing_work_kind:
   name: 単価計算専用
+  phonetic: たんかけいさんせんよう
   display_order: 99

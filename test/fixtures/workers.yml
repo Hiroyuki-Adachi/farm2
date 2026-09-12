@@ -1315,4 +1315,5 @@ pricing_worker:
   family_phonetic: たんか
   first_phonetic: けいさん
   home: pricing_owner
+  display_order: 1
   work_flag: false
