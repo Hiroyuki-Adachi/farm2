@@ -69,14 +69,15 @@ class SorimachiJournal < ApplicationRecord
 
   def self.import(system, file)
     term = system.term
+    import_attributes = updatable_attributes
     CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: %r{^//}) do |row|
-      sorimachi_new = SorimachiJournal.new([updatable_attributes, row].transpose.to_h)
+      sorimachi_new = SorimachiJournal.new([import_attributes, row].transpose.to_h)
       journal = SorimachiJournal.find_by(term: term, line: row[0], detail: row[1])
       if journal.nil?
         journal = sorimachi_new
         journal.term = term
       else
-        if journal == sorimachi_new && journal.accounted_on == sorimachi_new.accounted_on
+        if journal.slice(*import_attributes) == sorimachi_new.slice(*import_attributes)
           journal.validation_system = system
           journal.validate!
           next

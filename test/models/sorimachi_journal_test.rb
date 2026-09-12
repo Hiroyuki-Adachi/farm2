@@ -165,6 +165,42 @@ class SorimachiJournalTest < ActiveSupport::TestCase
     assert_equal @system.end_date, journal.reload.accounted_on
   end
 
+  test "再取込で備考だけを変更できる" do
+    journal = build_journal(accounted_on: @system.start_date)
+    journal.save!
+    journal.remark1 = "備考の訂正"
+
+    with_import_file(journal) { |file| SorimachiJournal.import(@system, file) }
+
+    assert_equal "備考の訂正", journal.reload.remark1
+  end
+
+  test "再取込で補助コードだけを変更できる" do
+    journal = build_journal(accounted_on: @system.start_date)
+    journal.save!
+    journal.code02 = 123
+
+    with_import_file(journal) { |file| SorimachiJournal.import(@system, file) }
+
+    assert_equal 123, journal.reload.code02
+  end
+
+  test "同一内容の再取込では配賦設定と更新日時を維持する" do
+    journal = build_journal(accounted_on: @system.start_date)
+    journal.assign_attributes(allocation_mode: :manual, cost0_flag: true)
+    journal.save!
+    allocation = journal.sorimachi_work_types.create!(work_type: work_types(:work_type_broccoli), amount: 100)
+    updated_at = journal.updated_at
+
+    travel 1.minute do
+      with_import_file(journal) { |file| SorimachiJournal.import(@system, file) }
+    end
+
+    assert_predicate journal.reload, :allocation_mode_manual?
+    assert_equal updated_at, journal.updated_at
+    assert_equal [allocation.id], journal.sorimachi_work_types.ids
+  end
+
   private
 
   def with_import_file(journal)
