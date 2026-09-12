@@ -46,6 +46,7 @@ class WorkKindsController < ApplicationController
   def set_work_kind
     @work_kind = WorkKind.find(params[:id])
     @work_kind.term = current_term
+    @work_kind.organization_id = current_organization.id
   end
 
   def work_kind_params
@@ -62,7 +63,7 @@ class WorkKindsController < ApplicationController
       ])
     permitted[:land_flag] = false unless permitted.key?(:land_flag)
     permitted[:aggregation_flag] = false unless permitted.key?(:aggregation_flag)
-    permitted.merge(term: current_term)
+    permitted.merge(term: current_term, organization_id: current_organization.id)
   end
 
   def set_others

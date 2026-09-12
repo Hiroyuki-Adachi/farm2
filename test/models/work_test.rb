@@ -56,6 +56,15 @@ class WorkTest < ActiveSupport::TestCase
     assert_equal @work.term, @work.price
   end
 
+  test "作業と未確定日当は所属組織の既定単価を使う" do
+    systems(:s2015_org2).update!(default_price: 2300)
+    @work.update!(organization_id: organizations(:org2).id, term: 2015,
+                  work_kind_id: work_kinds(:work_kind_first_term).id, fixed_at: nil)
+
+    assert_equal 2300, @work.price
+    assert_equal 2300 * @sum_hours, @work.sum_workers_amount
+  end
+
   test "作業金額合計" do
     assert_equal @work.term * @sum_hours, @work.sum_workers_amount
   end

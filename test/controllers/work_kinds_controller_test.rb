@@ -8,6 +8,16 @@ class WorkKindsControllerTest < ActionDispatch::IntegrationTest
     @update = { name: "試験", phonetic: 'しけん', display_order: 99, price: 1500, land_flag: true, aggregation_flag: true }
   end
 
+  test "作業種別編集はログイン組織の既定単価を表示する" do
+    systems(:s2015_org2).update!(default_price: 2300)
+    @user.update!(organization: organizations(:org2))
+
+    get edit_work_kind_path(work_kinds(:work_kind_first_term))
+
+    assert_response :success
+    assert_select "input[name='work_kind[price]'][value='2300']"
+  end
+
   test "作業種別マスタ一覧" do
     get work_kinds_path
     assert_response :success

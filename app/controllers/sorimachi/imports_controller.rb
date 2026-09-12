@@ -86,7 +86,7 @@ class Sorimachi::ImportsController < ApplicationController
 
   def create
     SorimachiJournal.transaction do
-      SorimachiJournal.import(current_term, params[:import_file])
+      SorimachiJournal.import(current_system, params[:import_file])
       SorimachiJournal.update_cost_flag(current_term)
       SorimachiJournal.refresh(current_term)
     end
