@@ -129,7 +129,7 @@ class WorkResult < ApplicationRecord
   }
 
   def price
-    (work.fixed_at ? fixed_price : work.work_kind.term_price(work.term)) || 0
+    (work.fixed_at ? fixed_price : work.price) || 0
   end
 
   def amount

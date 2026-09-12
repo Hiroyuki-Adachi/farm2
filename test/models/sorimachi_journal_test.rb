@@ -50,7 +50,7 @@ class SorimachiJournalTest < ActiveSupport::TestCase
   setup do
     @term = 2090
     organization = Organization.create!(name: "仕訳テスト", term: @term)
-    System.create!(
+    @system = System.create!(
       organization_id: organization.id,
       term: @term,
       term_name: @term.to_s,
@@ -74,39 +74,113 @@ class SorimachiJournalTest < ActiveSupport::TestCase
     assert_includes journal.errors[:term], "の対応に誤りがあります。"
   end
 
+  test "別組織の期間内でも対象組織の期間外なら不正" do
+    System.create!(organization_id: Organization.create!(name: "別組織の仕訳").id, term: @term, term_name: "別組織の期",
+                   start_date: Date.new(2091, 4, 1), end_date: Date.new(2091, 6, 30))
+    journal = build_journal(accounted_on: Date.new(2091, 4, 1))
+
+    assert_not_predicate journal, :valid?
+    assert_includes journal.errors[:term], "の対応に誤りがあります。"
+  end
+
+  test "短い期の期首期末は有効でその前後は不正" do
+    @system.update!(end_date: Date.new(2090, 6, 30))
+
+    [@system.start_date, @system.end_date].each do |date|
+      assert_predicate build_journal(accounted_on: date), :valid?
+    end
+    [@system.start_date - 1, @system.end_date + 1].each do |date|
+      assert_not_predicate build_journal(accounted_on: date), :valid?
+    end
+  end
+
+  test "対象期が未指定または期番号が異なると不正" do
+    journal = build_journal(accounted_on: @system.start_date)
+    journal.validation_system = nil
+    assert_not_predicate journal, :valid?
+
+    journal.validation_system = systems(:s2015)
+    assert_not_predicate journal, :valid?
+  end
+
+  test "日付のない決算仕訳は従来どおり有効" do
+    journal = build_journal(accounted_on: nil)
+    journal.validation_system = nil
+
+    assert_predicate journal, :valid?
+  end
+
+  test "再読込後の配賦変更は可能だが日付変更には対象期が必要" do
+    journal = build_journal(accounted_on: @system.start_date)
+    journal.save!
+    journal = SorimachiJournal.find(journal.id)
+    journal.update!(allocation_mode: :manual)
+    journal.accounted_on += 1
+
+    assert_not_predicate journal, :valid?
+    journal.validation_system = @system
+    assert_predicate journal, :valid?
+  end
+
+  test "再読込後の期番号変更には対象期が必要" do
+    journal = build_journal(accounted_on: @system.start_date)
+    journal.save!
+    journal = SorimachiJournal.find(journal.id)
+    journal.term = 2015
+    journal.valid?
+
+    assert_includes journal.errors[:term], "の対応に誤りがあります。"
+  end
+
+  test "再取込は金額が同じでも仕訳日変更を検証する" do
+    journal = build_journal(accounted_on: @system.start_date)
+    journal.save!
+    journal.accounted_on = @system.end_date + 1
+
+    with_import_file(journal) do |file|
+      assert_raises(ActiveRecord::RecordInvalid) { SorimachiJournal.import(@system, file) }
+    end
+    assert_equal @system.start_date, journal.reload.accounted_on
+  end
+
+  test "変更のない再取込でも対象組織の期間を検証する" do
+    journal = build_journal(accounted_on: @system.start_date)
+    journal.save!
+    other_organization = Organization.create!(name: "別組織の仕訳")
+    other_system = System.create!(organization_id: other_organization.id, term: @term, term_name: "別組織の期",
+                                  start_date: Date.new(2091, 4, 1), end_date: Date.new(2091, 6, 30))
+
+    with_import_file(journal) do |file|
+      assert_raises(ActiveRecord::RecordInvalid) { SorimachiJournal.import(other_system, file) }
+    end
+  end
+
+  test "再取込で期内の日付だけを変更できる" do
+    journal = build_journal(accounted_on: @system.start_date)
+    journal.save!
+    journal.accounted_on = @system.end_date
+
+    with_import_file(journal) { |file| SorimachiJournal.import(@system, file) }
+
+    assert_equal @system.end_date, journal.reload.accounted_on
+  end
+
   private
 
+  def with_import_file(journal)
+    Tempfile.create(["sorimachi", ".csv"], binmode: true) do |file|
+      row = SorimachiJournal.updatable_attributes.map { |key| journal.public_send(key) }
+      file.write(CSV.generate_line(row).encode("Windows-31J"))
+      file.flush
+      yield file
+    end
+  end
+
   def build_journal(accounted_on:)
-    SorimachiJournal.new(
-      term: @term,
-      line: 999,
-      detail: 1,
-      accounted_on: accounted_on,
-      code01: 9001,
-      code02: 0,
-      code03: 0,
-      code04: 0,
-      code05: 0,
-      code06: 0,
-      code07: 0,
-      amount1: 100,
-      code11: 0,
-      code12: 9002,
-      code13: 0,
-      code14: 0,
-      code15: 0,
-      code16: 0,
-      code17: 0,
-      code18: 0,
-      amount2: 100,
-      code21: 0,
-      code31: "0",
-      remark1: "",
-      remark2: "",
-      remark3: "",
-      remark4: "",
-      cost0_flag: false,
-      cost1_flag: false
-    )
+    sorimachi_journals(:journal1).dup.tap do |journal|
+      journal.assign_attributes(validation_system: @system, term: @term, line: 999,
+                                accounted_on: accounted_on, code01: 9001, code12: 9002,
+                                cost0_flag: false, cost1_flag: false)
+    end
   end
 end

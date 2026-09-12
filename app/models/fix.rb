@@ -41,8 +41,9 @@ class Fix < ApplicationRecord
 
     Work.for_organization(organization_id).where(id: works_ids).find_each do |work|
       work.work_results.each do |result|
-        amount = result.hours * work.work_kind.term_price(term)
-        result.update(fixed_hours: result.hours, fixed_price: work.work_kind.term_price(term), fixed_amount: amount)
+        price = work.work_kind.term_price(term, organization_id: organization_id)
+        amount = result.hours * price
+        result.update(fixed_hours: result.hours, fixed_price: price, fixed_amount: amount)
         works_amount += amount
         hours += result.hours
       end

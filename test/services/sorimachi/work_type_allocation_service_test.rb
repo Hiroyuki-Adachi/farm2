@@ -10,7 +10,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     LandCost.create!(land_id: land1.id, work_type_id: work_type1.id, activated_on: system.start_date)
     LandCost.create!(land_id: land2.id, work_type_id: work_type2.id, activated_on: system.start_date)
     service = Sorimachi::WorkTypeAllocationService.new(term: 2091, system: system)
-    journal = create_journal(term: 2091, line: 9901, accounted_on: Date.new(2091, 5, 1))
+    journal = create_journal(system: system, line: 9901, accounted_on: Date.new(2091, 5, 1))
 
     records = service.allocate!(journal: journal, amount: 800, accounted_on: journal.accounted_on)
 
@@ -30,7 +30,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     LandCost.create!(land_id: land1.id, work_type_id: work_type2.id, activated_on: Date.new(2092, 7, 1))
     LandCost.create!(land_id: land2.id, work_type_id: work_type2.id, activated_on: system.start_date)
     service = Sorimachi::WorkTypeAllocationService.new(term: 2092, system: system)
-    journal = create_journal(term: 2092, line: 9902, accounted_on: nil)
+    journal = create_journal(system: system, line: 9902, accounted_on: nil)
 
     records = service.allocate!(journal: journal, amount: 219, accounted_on: nil)
 
@@ -49,7 +49,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     LandCost.create!(land_id: land1.id, work_type_id: work_type1.id, activated_on: system.start_date)
     LandCost.create!(land_id: land2.id, work_type_id: work_type2.id, activated_on: system.start_date)
     service = Sorimachi::WorkTypeAllocationService.new(term: 2093, system: system)
-    journal = create_journal(term: 2093, line: 9903, accounted_on: Date.new(2093, 6, 1))
+    journal = create_journal(system: system, line: 9903, accounted_on: Date.new(2093, 6, 1))
 
     records = service.allocate!(journal: journal, amount: 1, accounted_on: journal.accounted_on)
 
@@ -96,11 +96,12 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     )
   end
 
-  def create_journal(term:, line:, accounted_on:)
+  def create_journal(system:, line:, accounted_on:)
     src = sorimachi_journals(:journal1)
     SorimachiJournal.create!(
       src.attributes.except("id", "created_at", "updated_at").merge(
-        term: term,
+        validation_system: system,
+        term: system.term,
         line: line,
         detail: 1,
         accounted_on: accounted_on

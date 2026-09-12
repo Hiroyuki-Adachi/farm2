@@ -344,7 +344,7 @@ SQL
   end
 
   def price
-    work_kind.term_price(term)
+    work_kind.term_price(term, organization_id: organization_id)
   end
 
   def sum_workers_amount

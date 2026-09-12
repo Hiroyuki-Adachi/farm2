@@ -59,12 +59,16 @@ class SorimachiJournal < ApplicationRecord
   has_many :details, foreign_key: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line]
   # rubocop:enable Rails/HasManyOrHasOneDependent
 
-  validate :term_check
+  # 仕訳は組織IDを持たないため、取込・日付変更時の対象期を呼び出し元から渡す。
+  attr_accessor :validation_system
+
+  validate :term_check, if: :term_check_required?
 
   belongs_to :account1, foreign_key: [:term, :code01], class_name: 'SorimachiAccount'
   belongs_to :account2, foreign_key: [:term, :code12], class_name: 'SorimachiAccount'
 
-  def self.import(term, file)
+  def self.import(system, file)
+    term = system.term
     CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: %r{^//}) do |row|
       sorimachi_new = SorimachiJournal.new([updatable_attributes, row].transpose.to_h)
       journal = SorimachiJournal.find_by(term: term, line: row[0], detail: row[1])
@@ -72,11 +76,16 @@ class SorimachiJournal < ApplicationRecord
         journal = sorimachi_new
         journal.term = term
       else
-        next if journal == sorimachi_new
+        if journal == sorimachi_new && journal.accounted_on == sorimachi_new.accounted_on
+          journal.validation_system = system
+          journal.validate!
+          next
+        end
 
         journal.sorimachi_work_types.destroy_all
         journal.import_value(sorimachi_new)
       end
+      journal.validation_system = system
       journal.allocation_mode = :auto
       journal.save!
     end
@@ -218,10 +227,16 @@ class SorimachiJournal < ApplicationRecord
 
   private
 
+  # 再読込後の配賦・原価フラグ変更では、組織を推測して期間を再検証しない。
+  def term_check_required?
+    validation_system.present? || new_record? || will_save_change_to_term? || will_save_change_to_accounted_on?
+  end
+
   def term_check
     return if accounted_on.blank?
 
-    return if System.where(term: term).where(start_date: ..accounted_on).exists?(end_date: accounted_on..)
+    system = validation_system
+    return if system && system.term == term && (system.start_date..system.end_date).cover?(accounted_on)
 
     errors.add(:term, "の対応に誤りがあります。")
   end
