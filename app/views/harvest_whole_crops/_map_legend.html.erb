@@ -1,0 +1,15 @@
+<div class="mb-3" aria-label="収穫量の凡例">
+  <div class="fw-bold mb-1">ロール数（10a当たり）</div>
+  <ul class="list-unstyled d-flex flex-wrap gap-3 mb-0">
+    <% standard = HarvestWholeCrops::MapService::STANDARD %>
+    <% [[:under_50, "#{standard - 3}以下"], [:under_25, standard - 2], [:under_10, standard - 1],
+        [:within_10, "#{standard}（基準）"], [:over_10, standard + 1], [:over_25, standard + 2],
+        [:over_50, "#{standard + 3}以上"]].each do |status, label| %>
+      <li class="d-flex align-items-center gap-1 text-nowrap">
+        <span class="d-inline-block border rounded" aria-hidden="true"
+              style="width: 1.25rem; height: 1.25rem; background-color: <%= HarvestWholeCrops::MapService::COLORS.fetch(status) %>;"></span>
+        <span><%= label %></span>
+      </li>
+    <% end %>
+  </ul>
+</div>

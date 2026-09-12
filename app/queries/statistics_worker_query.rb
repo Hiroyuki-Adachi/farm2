@@ -30,7 +30,7 @@ class StatisticsWorkerQuery
   def work_result_subquery
     works = Work.arel_table
     work_results = WorkResult.arel_table
-    machine_results = MachineResult.arel_table
+    machine_results = Arel::Nodes::TableAlias.new(machine_result_subquery, "MR")
     query = works.project(*work_result_projection(works, work_results, machine_results))
     add_work_result_joins(query, works, work_results, machine_results)
     query.where(works[:term].eq(@term).and(works[:organization_id].eq(@organization_id)))
@@ -42,8 +42,8 @@ class StatisticsWorkerQuery
       work_results[:worker_id],
       distinct_work_days(works),
       work_results[:hours].sum.as("hours"),
-      machine_results[:id].count.as("machine_days"),
-      machine_results[:hours].sum.as("machine_hours")
+      Arel::Nodes::NamedFunction.new("COALESCE", [machine_results[:machine_days].sum, 0]).as("machine_days"),
+      machine_results[:machine_hours].sum.as("machine_hours")
     ]
   end
 
@@ -52,6 +52,22 @@ class StatisticsWorkerQuery
     query
       .join(machine_results, Arel::Nodes::OuterJoin)
       .on(machine_results[:work_result_id].eq(work_results[:id]))
+  end
+
+  def machine_result_subquery
+    machine_results = MachineResult.arel_table
+    machine_results.project(
+      machine_results[:work_result_id],
+      machine_results[:id].count.as("machine_days"),
+      machine_results[:hours].sum.as("machine_hours")
+    ).where(machine_results[:machine_id].in(company_machines.arel))
+      .group(machine_results[:work_result_id])
+  end
+
+  def company_machines
+    Machine.with_deleted
+      .where(home_id: Home.with_deleted.where(homes[:company_flag].eq(true)))
+      .select(:id)
   end
 
   def worker_projection(wr_table_alias)

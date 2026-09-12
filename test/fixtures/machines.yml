@@ -16,6 +16,15 @@
 #  machine_type_id(機械種別)         :integer          default(0), not null
 #
 
+# 共有fixture変更時の注意 (#1206 / #1194)
+# コメントの型: 「依存テスト（ファイル・テスト名）」「前提となる属性・関連fixture」「変更時の影響」。
+# 他のfixtureでも、レコード名や明示的なIDをtest/配下で検索し、関連fixture経由の参照も追って記載する。
+# 単に参照しているテストと、属性値を前提にしているテストは区別する。
+# 値を変更する前に依存先を確認し、用途が異なる場合はテスト内で専用データを用意することを検討する。
+# 変更後は記載した依存テストを実行し、前提が変わった場合はコメントも更新する。
+# このファイルの価格計算用6レコードの確認コマンド:
+# bundle exec rails test test/models/machine_result_test.rb test/models/work_test.rb test/decorators/statistics/machine_decorator_test.rb
+
 taueki_1:
   id: 2
   name: 8条(旧NSU87)
@@ -350,6 +359,17 @@ machines22:
   deleted_at: 
   diesel_flag: 'f'
 
+# 以下6レコードに共通する価格計算の前提:
+# test/models/machine_result_test.rb は machine_results.yml の feb/march レコード経由で参照する。
+# home_id: 1 は work_result_feb_last / work_result_march_1st の作業者 worker1.home_id と一致し、
+# MachineResult#calc_amount が通常単価 (lease_id: normal) を選ぶために必要。
+# 所有者を変えるとリース単価側に分岐し、対応する明細がないため価格・数量・金額が0になる。
+# この分岐は Machine#leasable? ではなく、所有者と作業者の世帯IDの比較による。
+# 関連する machine_price_headers.yml / machine_price_details.yml の適用日・単価・単位も一緒に確認する。
+# 依存: MachineResultTest「機械_期日前_時間」「機械_期日後_時間」(test/models/machine_result_test.rb)。
+# 前提: home_id: 1（上記の通常単価選択条件）。
+# 前提: machine_price_header_1_hour / machine_price_header_march_hour がこの機械を参照する。
+# 機械別の単価から時間単位の価格・数量・金額を検証する。
 machine_hour:
   name: "テスト時間ごと"
   display_order: 1
@@ -362,6 +382,10 @@ machine_hour:
   deleted_at: 
   diesel_flag: 'f'
 
+# 依存: MachineResultTest「機械_期日前_面積」「機械_期日後_面積」(test/models/machine_result_test.rb)。
+# 前提: home_id: 1（上記の通常単価選択条件）。
+# 前提: machine_price_header_1_area / machine_price_header_march_area がこの機械を参照する。
+# 機械別の単価から面積単位の価格・数量・金額を検証する。
 machine_area:
   name: "テスト面積ごと"
   display_order: 2
@@ -374,6 +398,10 @@ machine_area:
   deleted_at: 
   diesel_flag: 'f'
 
+# 依存: MachineResultTest「機械_期日前_日数」「機械_期日後_日数」(test/models/machine_result_test.rb)。
+# 前提: home_id: 1（上記の通常単価選択条件）。
+# 前提: machine_price_header_1_day / machine_price_header_march_day がこの機械を参照する。
+# 機械別の単価から日数単位の価格・数量・金額を検証する。
 machine_day:
   name: "テスト日数ごと"
   display_order: 3
@@ -386,6 +414,13 @@ machine_day:
   deleted_at: 
   diesel_flag: 'f'
 
+# 依存: MachineResultTest「機械種別_期日前_時間」「機械種別_期日後_時間」(test/models/machine_result_test.rb)。
+# 前提: home_id: 1（上記の通常単価選択条件）。
+# 前提: machine_type: machine_type_hour と、機械別の単価ヘッダがないこと。
+# 機械種別の単価ヘッダへフォールバックし、時間単位の価格・数量・金額を検証する。
+# 依存: WorkTest「機械登録」は machine_result_for_price1 の更新対象として参照する。
+# 「機械登録で別作業の作業結果は更新しない」は machine_result_genka1 の関連先を前提にする
+# (test/models/work_test.rb)。depreciation_genka (depreciations.yml) からも参照される。
 machine_hour_t:
   name: "テスト時間ごと"
   display_order: 1
@@ -398,6 +433,12 @@ machine_hour_t:
   deleted_at: 
   diesel_flag: 'f'
 
+# 依存: MachineResultTest「機械種別_期日前_面積」「機械種別_期日後_面積」(test/models/machine_result_test.rb)。
+# 前提: home_id: 1（上記の通常単価選択条件）。
+# 前提: machine_type: machine_type_area と、機械別の単価ヘッダがないこと。
+# 機械種別の単価ヘッダへフォールバックし、面積単位の価格・数量・金額を検証する。
+# 依存: WorkTest「機械登録」(test/models/work_test.rb) は work_result_for_price2 に
+# この機械の稼動データがまだないことを前提に、新規作成を検証する。
 machine_area_t:
   name: "テスト面積ごと"
   display_order: 2
@@ -410,6 +451,13 @@ machine_area_t:
   deleted_at: 
   diesel_flag: 'f'
 
+# 依存: MachineResultTest「機械種別_期日前_日数」「機械種別_期日後_日数」(test/models/machine_result_test.rb)。
+# 前提: home_id: 1（上記の通常単価選択条件）。
+# 前提: machine_type: machine_type_day と、機械別の単価ヘッダがないこと。
+# 機械種別の単価ヘッダへフォールバックし、日数単位の価格・数量・金額を検証する。
+# 依存: WorkTest「機械登録」(test/models/work_test.rb) は machine_result_for_price2 の削除対象として参照する。
+# 参照: Statistics::MachineDecoratorTest (test/decorators/statistics/machine_decorator_test.rb) は
+# この機械のIDを集計キーに使用する。home_id や機械種別・単価には依存しない。
 machine_day_t:
   name: "テスト日数ごと"
   display_order: 3

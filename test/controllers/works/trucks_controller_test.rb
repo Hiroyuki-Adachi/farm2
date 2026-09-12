@@ -20,7 +20,10 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     assert_response :service_unavailable
   end
 
-  test "自家用車の機械種別に紐づく作業種別トグルを表示する" do
+  test "自家用車の機械種別に紐づく作業種別トグルをカナ順に表示する" do
+    work_kinds(:work_kind_shirokaki).update_columns(display_order: 20)
+    work_kinds(:work_kind_taue).update_columns(display_order: 10)
+
     get works_trucks_path
 
     assert_response :success

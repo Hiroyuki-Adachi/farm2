@@ -59,6 +59,33 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "機械未登録の作業照会では機械欄を印刷対象外にして登録の入口を残す" do
+    work = works(:work_not_fixed)
+    work.machine_results.destroy_all
+    MachineKind.create!(work_kind: work.work_kind, machine_type: machines(:machines1).machine_type)
+
+    get work_path(work)
+
+    assert_response :success
+    assert_select "#content_machines.no-print" do
+      assert_select "#detail_machines"
+      assert_select "#cover_machines[onclick=?]", "location.href='#{new_work_machine_path(work_id: work)}'"
+    end
+  end
+
+  test "機械登録済みの作業照会では機械欄を印刷対象にする" do
+    work = works(:work_not_fixed)
+    work.machine_results.destroy_all
+    MachineResult.create!(machine: machines(:machines1),
+                         work_result: work_results(:work_results_not_fixed), hours: 1)
+
+    get work_path(work)
+
+    assert_response :success
+    assert_select "#content_machines:not(.no-print) #detail_machines"
+    assert_select "#content_machines.no-print", count: 0
+  end
+
   test "作業照会(薬品)" do
     get work_path(works(:work_chemical_test))
     assert_response :success

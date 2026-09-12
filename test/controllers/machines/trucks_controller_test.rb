@@ -90,6 +90,7 @@ class Machines::TrucksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to machines_trucks_path
+    assert_equal "保存しました", flash[:notice]
     assert_predicate @truck.reload, :discarded?
 
     created_truck = Machine.kept.find_by!(machine_type_id: @truck_type.id, home_id: homes(:home2).id)

@@ -1,5 +1,5 @@
 await google.maps.importLibrary("marker");
-await google.maps.importLibrary("drawing");
+await google.maps.importLibrary("maps");
 
 function parsePoint(value) {
   if (!value) {
@@ -37,9 +37,13 @@ function parsePolygon(value) {
 function initMap() {
   const pos = parsePoint(document.getElementById("location")?.value) || { lat: 35.0, lng: 135.0 };
 
-  const map = new google.maps.Map(document.getElementById("map"), {
+  const mapElement = document.getElementById("map");
+  const tablet = mapElement.dataset.tablet === "true";
+  const map = new google.maps.Map(mapElement, {
     center: pos,
     zoom: 16,
+    gestureHandling: tablet ? "greedy" : "auto",
+    fullscreenControl: !tablet,
     mapId: "FARM2_MAP"
   });
 
@@ -49,6 +53,7 @@ function initMap() {
     map: map
   });
 
+  const landLabels = [];
   document.querySelectorAll('[name="regions"]').forEach((land) => {
     const paths = parsePolygon(land.value);
     if (paths.length === 0) {
@@ -66,18 +71,47 @@ function initMap() {
       map: map
     });
 
-    polygon.addListener("mouseover", function() {
-      const currentLand = document.getElementById(`land_${this.landId}`);
-      if (!currentLand) {
-        return;
-      }
-      document.getElementById("land_info").innerText = `${currentLand.dataset.place}(${currentLand.dataset.owner}):${currentLand.dataset.area}a ロール数(10a当):${currentLand.dataset.rolls}`;
-    });
+    if (!tablet) {
+      const showLandInfo = function() {
+        const currentLand = document.getElementById(`land_${this.landId}`);
+        if (!currentLand) {
+          return;
+        }
+        document.getElementById("land_info").innerText = `${currentLand.dataset.place}(${currentLand.dataset.owner}):${currentLand.dataset.area}a ロール数(10a当):${currentLand.dataset.rolls}`;
+      };
 
-    polygon.addListener("mouseout", function() {
-      document.getElementById("land_info").innerHTML = "&nbsp;";
-    });
+      polygon.addListener("click", showLandInfo);
+      polygon.addListener("mouseover", showLandInfo);
+
+      polygon.addListener("mouseout", function() {
+        document.getElementById("land_info").innerHTML = "&nbsp;";
+      });
+    }
+
+    if (tablet) {
+      const center = parsePoint(land.dataset.center);
+      if (center) {
+        const label = document.createElement("div");
+        label.className = "map-label";
+        label.textContent = `${land.dataset.place}(${land.dataset.area}a)`;
+        landLabels.push(label);
+        new google.maps.marker.AdvancedMarkerElement({ position: center, map: map, content: label });
+      }
+    }
   });
+
+  const toggle = document.getElementById("toggle_land_labels");
+  if (tablet && toggle) {
+    let labelsVisible = true;
+    toggle.setAttribute("aria-pressed", "true");
+    toggle.textContent = "地番・面積を隠す";
+    toggle.onclick = () => {
+      labelsVisible = !labelsVisible;
+      landLabels.forEach((label) => { label.hidden = !labelsVisible; });
+      toggle.setAttribute("aria-pressed", String(labelsVisible));
+      toggle.textContent = labelsVisible ? "地番・面積を隠す" : "地番・面積を表示";
+    };
+  }
 }
 
 export const init = () => {
