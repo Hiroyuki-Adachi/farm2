@@ -31,10 +31,16 @@ class HarvestRices::MapService
 
   # 一覧と同じ搬入日・品種単位で全世帯の収穫量を集計する。
   def weights_by_date_and_type
-    dryings = Drying.for_harvest(@system.term, @organization).includes(:adjustment)
+    dryings = Drying.for_harvest(@system.term, @organization).includes(:adjustment, :drying_moths)
     dryings.each_with_object(Hash.new(0.to_d)) do |drying, totals|
-      totals[[drying.carried_on, drying.work_type_id]] += drying.harvest_weight(@system).to_d
+      totals[[drying.carried_on, drying.work_type_id]] += harvest_weight(drying)
     end
+  end
+
+  def harvest_weight(drying)
+    return drying.harvest_weight(@system).to_d unless drying.country?
+
+    drying.drying_moths.sum { |moth| moth.rice_weight.to_d }
   end
 
   # 同じ日に複数日報があっても、圃場面積は一度だけ数える。

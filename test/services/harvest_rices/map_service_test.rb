@@ -109,7 +109,41 @@ class HarvestRices::MapServiceTest < ActiveSupport::TestCase
     assert_equal first_count, land_cost_query_count
   end
 
+  test "カントリー乾燥が増えても明細の取得クエリは増えない" do
+    land = create_land("rice-country", 10)
+    add_work(@date, [land])
+    drying = add_drying(@date, 0)
+    drying.update!(drying_type_id: :country)
+    drying.drying_moths.create!(moth_count: 1, rice_weight: 180)
+    drying.drying_moths.create!(moth_count: 2, rice_weight: 300)
+    assert_equal 8, result.fetch(land.id).bales
+    first_count = drying_moth_query_count
+
+    3.times do |i|
+      date = @date + i + 1
+      add_work(date, [land])
+      drying = add_drying(date, 0)
+      drying.update!(drying_type_id: :country)
+      drying.drying_moths.create!(moth_count: 1, rice_weight: 480)
+    end
+
+    assert_operator first_count, :>, 0
+    assert_equal first_count, drying_moth_query_count
+    assert_equal 8, result.fetch(land.id).bales
+  end
+
   private
+
+  def drying_moth_query_count
+    count = 0
+    subscriber = lambda do |*args|
+      count += 1 if args.last[:sql].match?(/SELECT.*"drying_moths"/m)
+    end
+    ActiveRecord::Base.uncached do
+      ActiveSupport::Notifications.subscribed(subscriber, "sql.active_record") { result }
+    end
+    count
+  end
 
   def land_cost_query_count
     count = 0
