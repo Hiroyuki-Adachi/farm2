@@ -13857,3 +13857,16 @@ work_result_task:
   worker_id: 3
   hours: 6
   display_order: 1
+
+# MachineResultTest専用。分離方針は test/fixtures/README.md を参照。
+pricing_work_result_march_1st:
+  work: pricing_work_march_1st
+  worker: pricing_worker
+  hours: 6
+  display_order: 1
+
+pricing_work_result_feb_last:
+  work: pricing_work_feb_last
+  worker: pricing_worker
+  hours: 6
+  display_order: 1

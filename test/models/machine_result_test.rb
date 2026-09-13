@@ -24,8 +24,8 @@ require 'test_helper'
 
 class MachineResultTest < ActiveSupport::TestCase
   test "機械_期日後_時間" do
-    machine_result = machine_results(:machine_result_march_hour)
-    machine_price_detail = machine_price_details(:machine_price_detail_march_hour)
+    machine_result = machine_results(:pricing_machine_result_march_hour)
+    machine_price_detail = machine_price_details(:pricing_machine_price_detail_march_hour)
     assert_equal machine_price_detail.price, machine_result.price
     assert_equal Adjust::HOUR, machine_result.adjust
     assert_equal machine_result.hours, machine_result.quantity
@@ -33,9 +33,9 @@ class MachineResultTest < ActiveSupport::TestCase
   end
 
   test "機械_期日後_面積" do
-    machine_result = machine_results(:machine_result_march_area)
-    land_area = work_lands(:work_land_march1).land.area + work_lands(:work_land_march2).land.area
-    machine_price_detail = machine_price_details(:machine_price_detail_march_area)
+    machine_result = machine_results(:pricing_machine_result_march_area)
+    land_area = work_lands(:pricing_work_land_march1).land.area + work_lands(:pricing_work_land_march2).land.area
+    machine_price_detail = machine_price_details(:pricing_machine_price_detail_march_area)
     assert_equal machine_price_detail.price, machine_result.price
     assert_equal Adjust::AREA, machine_result.adjust
     assert_equal land_area / 10, machine_result.quantity
@@ -43,8 +43,8 @@ class MachineResultTest < ActiveSupport::TestCase
   end
 
   test "機械_期日後_日数" do
-    machine_result = machine_results(:machine_result_march_day)
-    machine_price_detail = machine_price_details(:machine_price_detail_march_day)
+    machine_result = machine_results(:pricing_machine_result_march_day)
+    machine_price_detail = machine_price_details(:pricing_machine_price_detail_march_day)
     assert_equal machine_price_detail.price, machine_result.price
     assert_equal Adjust::DAY, machine_result.adjust
     assert_equal 1, machine_result.quantity
@@ -52,8 +52,8 @@ class MachineResultTest < ActiveSupport::TestCase
   end
 
   test "機械_期日前_時間" do
-    machine_result = machine_results(:machine_result_feb_hour)
-    machine_price_detail = machine_price_details(:machine_price_detail_1_hour)
+    machine_result = machine_results(:pricing_machine_result_feb_hour)
+    machine_price_detail = machine_price_details(:pricing_machine_price_detail_1_hour)
     assert_equal machine_price_detail.price, machine_result.price
     assert_equal Adjust::HOUR, machine_result.adjust
     assert_equal machine_result.hours, machine_result.quantity
@@ -61,9 +61,9 @@ class MachineResultTest < ActiveSupport::TestCase
   end
 
   test "機械_期日前_面積" do
-    machine_result = machine_results(:machine_result_feb_area)
-    land_area = work_lands(:work_land_feb1).land.area + work_lands(:work_land_feb2).land.area
-    machine_price_detail = machine_price_details(:machine_price_detail_1_area)
+    machine_result = machine_results(:pricing_machine_result_feb_area)
+    land_area = work_lands(:pricing_work_land_feb1).land.area + work_lands(:pricing_work_land_feb2).land.area
+    machine_price_detail = machine_price_details(:pricing_machine_price_detail_1_area)
     assert_equal machine_price_detail.price, machine_result.price
     assert_equal Adjust::AREA, machine_result.adjust
     assert_equal land_area / 10, machine_result.quantity
@@ -71,8 +71,8 @@ class MachineResultTest < ActiveSupport::TestCase
   end
 
   test "機械_期日前_日数" do
-    machine_result = machine_results(:machine_result_feb_day)
-    machine_price_detail = machine_price_details(:machine_price_detail_1_day)
+    machine_result = machine_results(:pricing_machine_result_feb_day)
+    machine_price_detail = machine_price_details(:pricing_machine_price_detail_1_day)
     assert_equal machine_price_detail.price, machine_result.price
     assert_equal Adjust::DAY, machine_result.adjust
     assert_equal 1, machine_result.quantity
@@ -80,8 +80,8 @@ class MachineResultTest < ActiveSupport::TestCase
   end
 
   test "機械種別_期日後_時間" do
-    machine_result = machine_results(:machine_result_march_hour_t)
-    machine_price_detail = machine_price_details(:machine_type_price_detail_march_hour)
+    machine_result = machine_results(:pricing_machine_result_march_hour_t)
+    machine_price_detail = machine_price_details(:pricing_machine_type_price_detail_march_hour)
     assert_equal machine_price_detail.price, machine_result.price
     assert_equal Adjust::HOUR, machine_result.adjust
     assert_equal machine_result.hours, machine_result.quantity
@@ -89,9 +89,9 @@ class MachineResultTest < ActiveSupport::TestCase
   end
 
   test "機械種別_期日後_面積" do
-    machine_result = machine_results(:machine_result_march_area_t)
-    land_area = work_lands(:work_land_march1).land.area + work_lands(:work_land_march2).land.area
-    machine_price_detail = machine_price_details(:machine_type_price_detail_march_area)
+    machine_result = machine_results(:pricing_machine_result_march_area_t)
+    land_area = work_lands(:pricing_work_land_march1).land.area + work_lands(:pricing_work_land_march2).land.area
+    machine_price_detail = machine_price_details(:pricing_machine_type_price_detail_march_area)
     assert_equal machine_price_detail.price, machine_result.price
     assert_equal Adjust::AREA, machine_result.adjust
     assert_equal land_area / 10, machine_result.quantity
@@ -99,8 +99,8 @@ class MachineResultTest < ActiveSupport::TestCase
   end
 
   test "機械種別_期日後_日数" do
-    machine_result = machine_results(:machine_result_march_day_t)
-    machine_price_detail = machine_price_details(:machine_type_price_detail_march_day)
+    machine_result = machine_results(:pricing_machine_result_march_day_t)
+    machine_price_detail = machine_price_details(:pricing_machine_type_price_detail_march_day)
     assert_equal machine_price_detail.price, machine_result.price
     assert_equal Adjust::DAY, machine_result.adjust
     assert_equal 1, machine_result.quantity
@@ -108,8 +108,8 @@ class MachineResultTest < ActiveSupport::TestCase
   end
 
   test "機械種別_期日前_時間" do
-    machine_result = machine_results(:machine_result_feb_hour_t)
-    machine_price_detail = machine_price_details(:machine_type_price_detail_1_hour)
+    machine_result = machine_results(:pricing_machine_result_feb_hour_t)
+    machine_price_detail = machine_price_details(:pricing_machine_type_price_detail_1_hour)
     assert_equal machine_price_detail.price, machine_result.price
     assert_equal Adjust::HOUR, machine_result.adjust
     assert_equal machine_result.hours, machine_result.quantity
@@ -117,9 +117,9 @@ class MachineResultTest < ActiveSupport::TestCase
   end
 
   test "機械種別_期日前_面積" do
-    machine_result = machine_results(:machine_result_feb_area_t)
-    land_area = work_lands(:work_land_feb1).land.area + work_lands(:work_land_feb2).land.area
-    machine_price_detail = machine_price_details(:machine_type_price_detail_1_area)
+    machine_result = machine_results(:pricing_machine_result_feb_area_t)
+    land_area = work_lands(:pricing_work_land_feb1).land.area + work_lands(:pricing_work_land_feb2).land.area
+    machine_price_detail = machine_price_details(:pricing_machine_type_price_detail_1_area)
     assert_equal machine_price_detail.price, machine_result.price
     assert_equal Adjust::AREA, machine_result.adjust
     assert_equal land_area / 10, machine_result.quantity
@@ -127,11 +127,22 @@ class MachineResultTest < ActiveSupport::TestCase
   end
 
   test "機械種別_期日前_日数" do
-    machine_result = machine_results(:machine_result_feb_day_t)
-    machine_price_detail = machine_price_details(:machine_type_price_detail_1_day)
+    machine_result = machine_results(:pricing_machine_result_feb_day_t)
+    machine_price_detail = machine_price_details(:pricing_machine_type_price_detail_1_day)
     assert_equal machine_price_detail.price, machine_result.price
     assert_equal Adjust::DAY, machine_result.adjust
     assert_equal 1, machine_result.quantity
     assert_equal machine_price_detail.price, machine_result.amount
+  end
+
+  test "共有fixtureの所有者や作業者を変更しても専用の価格計算に影響しない" do
+    machines(:machine_day_t).update!(owner: homes(:home_kumiai))
+    workers(:worker1).update!(home: homes(:home2))
+
+    result = machine_results(:pricing_machine_result_march_day_t)
+    assert_equal 4300, result.price
+    assert_equal Adjust::DAY, result.adjust
+    assert_equal 1, result.quantity
+    assert_equal 4300, result.amount
   end
 end
