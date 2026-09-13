@@ -45,7 +45,7 @@ class HarvestRices::MapService
         .where(term: @system.term, work_kind_id: @organization.harvesting_work_kind_id)
         .includes(lands: :land_costs).find_each do |work|
         work.lands.each do |land|
-          next unless land.organization_id == @organization.id
+          next unless harvestable_land?(land)
 
           cost = latest_land_cost(land, work.worked_at)
           next unless cost
@@ -55,6 +55,10 @@ class HarvestRices::MapService
       end
       groups
     end
+  end
+
+  def harvestable_land?(land)
+    land.organization_id == @organization.id && land.area.to_d.positive?
   end
 
   def latest_land_cost(land, date)

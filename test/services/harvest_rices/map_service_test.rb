@@ -40,6 +40,7 @@ class HarvestRices::MapServiceTest < ActiveSupport::TestCase
     add_work(@date + 1, [unharvested])
     add_drying(@date, 16)
 
+    assert_not result.key?(empty.id)
     assert_not result.key?(other.id)
     assert_not result.key?(unharvested.id)
     assert_equal 8, result.fetch(rice.id).bales
