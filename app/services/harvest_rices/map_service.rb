@@ -43,11 +43,11 @@ class HarvestRices::MapService
       groups = Hash.new { |hash, key| hash[key] = {} }
       Work.for_organization(@organization)
         .where(term: @system.term, work_kind_id: @organization.harvesting_work_kind_id)
-        .includes(:lands).find_each do |work|
+        .includes(lands: :land_costs).find_each do |work|
         work.lands.each do |land|
           next unless land.organization_id == @organization.id
 
-          cost = land.cost(work.worked_at)
+          cost = latest_land_cost(land, work.worked_at)
           next unless cost
 
           groups[[work.worked_at, cost.work_type_id]][land.id] = land.area.to_d
@@ -55,6 +55,11 @@ class HarvestRices::MapService
       end
       groups
     end
+  end
+
+  def latest_land_cost(land, date)
+    # land_costsは有効日順に一括読込済み。収穫日時点の最新履歴を選ぶ。
+    land.land_costs.to_a.rfind { |history| history.activated_on <= date }
   end
 
   def build_result(bales)
