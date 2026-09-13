@@ -1,10 +1,18 @@
 class HarvestRicesController < ApplicationController
   include PermitManager
+
   helper DryingsHelper
+  helper GmapHelper
 
   def index
     @dryings = Drying.for_harvest(current_term, current_organization)
     @work_type_totals, @carried_on_totals, @areas = calc_totals(@dryings)
+  end
+
+  def map
+    @rice_land_summaries = HarvestRices::MapService.call(organization: current_organization, system: current_system)
+    @lands = Land.for_organization(current_organization).regionable
+      .includes(:owner).where(id: @rice_land_summaries.keys).usual_order
   end
 
   private
