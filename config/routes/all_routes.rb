@@ -69,6 +69,9 @@ namespace :tablets do
   resources :harvest_whole_crops, only: [] do
     get :map, on: :collection
   end
+  resources :harvest_rices, only: [] do
+    get :map, on: :collection
+  end
   namespace :lands do
     resources :chemicals, only: [:index]
   end
