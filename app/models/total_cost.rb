@@ -156,7 +156,7 @@ class TotalCost < ApplicationRecord
     if work.work_type.cost_flag || work.work_lands.exists?
       make_work_details(work, total_cost)
     else
-      make_details_for_indirect(total_cost, work.worked_at)
+      make_details_for_indirect(total_cost, term, work.worked_at)
     end
   end
 
@@ -184,8 +184,8 @@ class TotalCost < ApplicationRecord
     end
   end
 
-  def self.make_details_for_indirect(total_cost, occurred_on)
-    WorkType.land.each do |work_type|
+  def self.make_details_for_indirect(total_cost, term, occurred_on)
+    WorkType.land.by_term(term).each do |work_type|
       next unless work_type.cost_flag
 
       area = LandCost.sum_area_by_work_type(occurred_on, work_type.id, total_cost.organization_id)
