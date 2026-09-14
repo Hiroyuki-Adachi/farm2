@@ -71,6 +71,22 @@ export const init = () => {
     submitAllocation(checkbox);
   });
 
+  // ダブルクリック(2回目のクリック)でこの項目だけを選択する。
+  // dblclickイベントだと通常のクリック処理(change)が2回走った後に発火し競合するため、
+  // 2回目のclickイベント(event.detail === 2)を横取りして処理する。
+  document.addEventListener("click", (event) => {
+    const checkbox = event.target.closest(".allocation-checkbox");
+    if (!checkbox || event.detail < 2) return;
+    event.preventDefault();
+
+    const rowId = checkbox.dataset.rowId;
+    const rowChecks = document.querySelectorAll(`.allocation-checkbox[data-row-id='${rowId}']`);
+    rowChecks.forEach((target) => {
+      target.checked = target === checkbox;
+    });
+    submitAllocation(checkbox);
+  });
+
   document.addEventListener("click", (event) => {
     const button = event.target.closest(".toggle-allocation");
     if (!button) return;

@@ -22,6 +22,7 @@
           data-work-type-id="<%= work_type.id %>"
           data-land-flag="<%= work_type.land_flag %>"
           data-total-cost-type-id="<%= @selected_total_cost_type_id %>"
+          title="ダブルクリックでこれだけを選択"
           <%= item && item[:amount].to_d.nonzero? ? 'checked' : '' %>
         >
       </td>
