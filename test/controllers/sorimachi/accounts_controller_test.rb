@@ -54,6 +54,24 @@ class Sorimachi::AccountsControllerTest < ActionDispatch::IntegrationTest
     assert_equal @user.term, created_account.term
   end
 
+  test "ソリマチ科目編集(仕訳)_原価フラグが両方falseの仕訳でも配賦結果が残ること" do
+    work_type = WorkType.create!(name: "配賦用", genre: work_genres(:genre_change), land_flag: true, work_flag: true)
+    work_type.term = 2015
+    work_type.term_flag = true
+    work_type.save!
+
+    journal = sorimachi_journals(:journal2)
+    assert_not journal.cost0_flag
+    assert_not journal.cost1_flag
+
+    account = sorimachi_accounts(:sorimachi_accounts_2015)
+    sorimachi_account = { name: account.name, total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id }
+    put sorimachi_account_path(code: account.code), params: { sorimachi_account: sorimachi_account }
+    assert_redirected_to sorimachi_accounts_path
+
+    assert SorimachiWorkType.exists?(sorimachi_journal_id: journal.id, work_type_id: work_type.id)
+  end
+
   test "ソリマチ科目削除" do
     account = sorimachi_accounts(:sorimachi_accounts_2015)
     assert_difference('SorimachiAccount.count', -1) do
