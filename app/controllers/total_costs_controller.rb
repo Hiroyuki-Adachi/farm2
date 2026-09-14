@@ -8,7 +8,7 @@ class TotalCostsController < ApplicationController
       @work_kinds = WorkKind.where(id: errors.joins(:work).pluck("works.work_kind_id"))
       render "errors"
     end
-    @work_types = WorkType.cost.by_term(current_term)
+    @work_types = WorkType.cost.by_term(current_term).kept
     @cost_types = CostType.usual
     @total_costs = TotalCost.sum_work_results(current_organization, current_term)
   end

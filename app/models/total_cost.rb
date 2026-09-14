@@ -185,7 +185,7 @@ class TotalCost < ApplicationRecord
   end
 
   def self.make_details_for_indirect(total_cost, term, occurred_on)
-    WorkType.land.by_term(term).each do |work_type|
+    WorkType.land.by_term(term).kept.each do |work_type|
       next unless work_type.cost_flag
 
       area = LandCost.sum_area_by_work_type(occurred_on, work_type.id, total_cost.organization_id)

@@ -65,10 +65,33 @@ export const init = () => {
     });
   };
 
+  // 単クリックの送信はダブルクリック判定猶予の間だけ遅らせ、ダブルクリックが
+  // 検出されたら単クリック分の送信をキャンセルして1回だけ送る(2回のfetchが
+  // 競合してレスポンス到着順によって表示が古い状態に戻るのを防ぐため)。
+  const DOUBLE_CLICK_WINDOW_MS = 300;
+  const pendingSubmits = new Map();
+
+  const scheduleSubmit = (checkbox) => {
+    const existing = pendingSubmits.get(checkbox);
+    if (existing) clearTimeout(existing);
+    const timer = setTimeout(() => {
+      pendingSubmits.delete(checkbox);
+      submitAllocation(checkbox);
+    }, DOUBLE_CLICK_WINDOW_MS);
+    pendingSubmits.set(checkbox, timer);
+  };
+
+  const cancelPendingSubmit = (checkbox) => {
+    const existing = pendingSubmits.get(checkbox);
+    if (!existing) return;
+    clearTimeout(existing);
+    pendingSubmits.delete(checkbox);
+  };
+
   document.addEventListener("change", (event) => {
     const checkbox = event.target.closest(".allocation-checkbox");
     if (!checkbox) return;
-    submitAllocation(checkbox);
+    scheduleSubmit(checkbox);
   });
 
   // ダブルクリック(2回目のクリック)でこの項目だけを選択する。
@@ -78,6 +101,7 @@ export const init = () => {
     const checkbox = event.target.closest(".allocation-checkbox");
     if (!checkbox || event.detail < 2) return;
     event.preventDefault();
+    cancelPendingSubmit(checkbox);
 
     const rowId = checkbox.dataset.rowId;
     const rowChecks = document.querySelectorAll(`.allocation-checkbox[data-row-id='${rowId}']`);

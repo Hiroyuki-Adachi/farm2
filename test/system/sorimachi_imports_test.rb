@@ -7,6 +7,7 @@ class SorimachiImportsTest < ApplicationSystemTestCase
 
     @work_type_a = create_work_type_for_term("配賦A")
     @work_type_b = create_work_type_for_term("配賦B")
+    @work_type_c = create_work_type_for_term("配賦C")
     SorimachiWorkType.create!(sorimachi_journal_id: @journal.id, work_type_id: @work_type_a.id, amount: 6598)
     SorimachiWorkType.create!(sorimachi_journal_id: @journal.id, work_type_id: @work_type_b.id, amount: 6598)
   end
@@ -23,6 +24,17 @@ class SorimachiImportsTest < ApplicationSystemTestCase
     checkbox_b.double_click
 
     assert_no_selector "#{checkbox_selector(@work_type_a)}:checked"
+    assert_selector "#{checkbox_selector(@work_type_b)}:checked"
+  end
+
+  test "配賦チェックボックスを単クリックすると選択が追加され他は解除されない" do
+    login_as(@user)
+    visit sorimachi_imports_path(total_cost_type_id: TotalCostType::EXPENSEINDIRECT.id)
+
+    find(checkbox_selector(@work_type_c)).click
+
+    assert_selector "#{checkbox_selector(@work_type_c)}:checked"
+    assert_selector "#{checkbox_selector(@work_type_a)}:checked"
     assert_selector "#{checkbox_selector(@work_type_b)}:checked"
   end
 
