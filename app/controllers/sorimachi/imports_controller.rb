@@ -17,8 +17,8 @@ class Sorimachi::ImportsController < ApplicationController
       allocated_amount = allocated_sums[journal.id] || 0
       next unless target_amount.to_d.round(0) != allocated_amount.to_d.round(0)
 
-      allocator.allocate!(journal: journal, amount: target_amount, accounted_on: journal.accounted_on)
       journal.update!(allocation_mode: :auto)
+      allocator.allocate!(journal: journal, amount: target_amount, accounted_on: journal.accounted_on)
     end
     redirect_to sorimachi_imports_path(total_cost_type_id: @selected_total_cost_type_id)
   end
@@ -48,8 +48,8 @@ class Sorimachi::ImportsController < ApplicationController
 
     amounts = normalized_detail_amounts
     SorimachiWorkType.transaction do
-      SorimachiWorkType.refresh(journal.id, { amounts: amounts })
       journal.update!(allocation_mode: :manual)
+      SorimachiWorkType.refresh(journal.id, { amounts: amounts })
     end
 
     row = build_row_for_journal(
@@ -71,8 +71,8 @@ class Sorimachi::ImportsController < ApplicationController
     account_map = selected_account_map
     target_amount = journal_target_amount(journal, account_map)
     allocator = Sorimachi::WorkTypeAllocationService.new(term: current_term, system: current_system)
-    allocator.allocate!(journal: journal, amount: target_amount, accounted_on: journal.accounted_on)
     journal.update!(allocation_mode: :auto)
+    allocator.allocate!(journal: journal, amount: target_amount, accounted_on: journal.accounted_on)
 
     row = build_row_for_journal(
       journal: journal,
@@ -122,13 +122,13 @@ class Sorimachi::ImportsController < ApplicationController
     target_amount = journal_target_amount(journal, account_map)
     if selected_work_type_ids
       allocator = Sorimachi::WorkTypeAllocationService.new(term: current_term, system: current_system)
+      journal.update!(allocation_mode: :select)
       allocator.allocate!(
         journal: journal,
         amount: target_amount,
         accounted_on: journal.accounted_on,
         work_type_ids: normalize_selected_work_type_ids(selected_work_type_ids)
       )
-      journal.update!(allocation_mode: :select)
     end
 
     allocation_sums = SorimachiWorkType.where(sorimachi_journal_id: journal.id, work_type_id: @work_types.map(&:id)).group(:work_type_id).sum(:amount)
