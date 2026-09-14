@@ -14,11 +14,9 @@ class Sorimachi::ImportsController < ApplicationController
 
     journals.find_each do |journal|
       target_amount = journal_target_amount(journal, account_map)
-      allocated_amount = allocated_sums[journal.id] || 0
-      next unless target_amount.to_d.round(0) != allocated_amount.to_d.round(0)
+      next unless target_amount.to_d.round(0) != (allocated_sums[journal.id] || 0).to_d.round(0)
 
-      allocator.allocate!(journal: journal, amount: target_amount, accounted_on: journal.accounted_on)
-      journal.update!(allocation_mode: :auto)
+      allocator.allocate!(journal: journal, amount: target_amount, accounted_on: journal.accounted_on, mode: :auto)
     end
     redirect_to sorimachi_imports_path(total_cost_type_id: @selected_total_cost_type_id)
   end
@@ -35,7 +33,7 @@ class Sorimachi::ImportsController < ApplicationController
       account_map: selected_account_map,
       selected_work_type_ids: selected_work_type_ids
     )
-    return head :unprocessable_entity if row.nil?
+    return head :unprocessable_content if row.nil?
 
     render partial: "journal_row", locals: { row: row, work_types: @work_types }
   end
@@ -48,8 +46,8 @@ class Sorimachi::ImportsController < ApplicationController
 
     amounts = normalized_detail_amounts
     SorimachiWorkType.transaction do
-      SorimachiWorkType.refresh(journal.id, { amounts: amounts })
       journal.update!(allocation_mode: :manual)
+      SorimachiWorkType.refresh(journal.id, { amounts: amounts })
     end
 
     row = build_row_for_journal(
@@ -57,7 +55,7 @@ class Sorimachi::ImportsController < ApplicationController
       side: params[:side],
       account_map: selected_account_map
     )
-    return head :unprocessable_entity if row.nil?
+    return head :unprocessable_content if row.nil?
 
     render partial: "journal_row", locals: { row: row, work_types: @work_types }
   end
@@ -71,15 +69,14 @@ class Sorimachi::ImportsController < ApplicationController
     account_map = selected_account_map
     target_amount = journal_target_amount(journal, account_map)
     allocator = Sorimachi::WorkTypeAllocationService.new(term: current_term, system: current_system)
-    allocator.allocate!(journal: journal, amount: target_amount, accounted_on: journal.accounted_on)
-    journal.update!(allocation_mode: :auto)
+    allocator.allocate!(journal: journal, amount: target_amount, accounted_on: journal.accounted_on, mode: :auto)
 
     row = build_row_for_journal(
       journal: journal,
       side: params[:side],
       account_map: account_map
     )
-    return head :unprocessable_entity if row.nil?
+    return head :unprocessable_content if row.nil?
 
     render partial: "journal_row", locals: { row: row, work_types: @work_types }
   end
@@ -126,9 +123,9 @@ class Sorimachi::ImportsController < ApplicationController
         journal: journal,
         amount: target_amount,
         accounted_on: journal.accounted_on,
-        work_type_ids: normalize_selected_work_type_ids(selected_work_type_ids)
+        work_type_ids: normalize_selected_work_type_ids(selected_work_type_ids),
+        mode: :select
       )
-      journal.update!(allocation_mode: :select)
     end
 
     allocation_sums = SorimachiWorkType.where(sorimachi_journal_id: journal.id, work_type_id: @work_types.map(&:id)).group(:work_type_id).sum(:amount)

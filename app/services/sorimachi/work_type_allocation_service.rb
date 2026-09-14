@@ -26,9 +26,12 @@ module Sorimachi
     end
 
     # Rebuild sorimachi_work_types for the journal and returns created records.
-    def allocate!(journal:, amount:, accounted_on: journal.accounted_on, work_type_ids: nil)
+    # journal#allocation_mode の更新は SorimachiJournal#clear_work_types(after_update) を発火させ、
+    # 既存の配賦を破棄するため、mode渡し時はここで同一トランザクション内に更新をまとめる。
+    def allocate!(journal:, amount:, accounted_on: journal.accounted_on, work_type_ids: nil, mode: nil)
       amounts = allocate(amount: amount, accounted_on: accounted_on, work_type_ids: work_type_ids)
       SorimachiWorkType.transaction do
+        journal.update!(allocation_mode: mode) if mode
         SorimachiWorkType.where(sorimachi_journal_id: journal.id).delete_all
         amounts.each do |work_type_id, work_amount|
           next if work_amount.zero?
