@@ -76,3 +76,6 @@ yarn-debug.log*
 /config/*.pem
 
 /config/credentials/*.key
+
+# Claude Code local settings (personal permission overrides)
+/.claude/settings.local.json
