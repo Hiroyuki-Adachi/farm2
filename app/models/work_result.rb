@@ -9,7 +9,7 @@
 #  fixed_price(確定作業単価)  :decimal(5, )
 #  hours(作業時間)            :decimal(5, 1)    default(0.0), not null
 #  remarks(備考)              :string(20)       default(""), not null
-#  uuid(UUID(カレンダー用))   :string(36)
+#  uuid(UUID(カレンダー用))   :uuid
 #  created_at                 :datetime
 #  updated_at                 :datetime
 #  health_id(健康)            :integer          default(0), not null

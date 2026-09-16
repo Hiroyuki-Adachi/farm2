@@ -81,6 +81,32 @@ class PersonalCalendarsControllerTest < ActionDispatch::IntegrationTest
     assert_includes body, "END:VCALENDAR"
   end
 
+  test "作業実績のUUIDを大文字のUIDとして出力する" do
+    result = WorkResult.find_by!(work: works(:works1), worker: @user.worker)
+    uuid = "a1b2c3d4-e5f6-4789-abcd-0123456789ab"
+    result.update!(uuid: uuid)
+
+    travel_to Time.zone.local(2015, 3, 22) do
+      get personal_calendar_path(token: @user.token)
+      assert_response :success
+      events = Icalendar::Calendar.parse(response.body).first.events
+      assert_equal(1, events.count { |event| event.uid.to_s == uuid.upcase })
+    end
+  end
+
+  test "作業予定のUUIDを大文字のUIDとして出力する" do
+    schedule_worker = schedule_workers(:schedule_worker1)
+    uuid = "b2c3d4e5-f6a7-4890-bcde-123456789abc"
+    schedule_worker.update!(uuid: uuid)
+
+    travel_to schedule_worker.schedule.worked_at - 1.day do
+      get personal_calendar_path(token: @user.token)
+      assert_response :success
+      events = Icalendar::Calendar.parse(response.body).first.events
+      assert_equal(1, events.count { |event| event.uid.to_s == uuid.upcase })
+    end
+  end
+
   test "無効なトークンはエラーを返す" do
     get personal_calendar_path(token: "invalidtoken")
     assert_response :service_unavailable
