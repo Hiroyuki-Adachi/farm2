@@ -3,7 +3,7 @@ class Tablets::Plans::LandsController < Tablets::PlansController
 
   def new
     @lands = planning_lands.includes(:owner)
-    @work_types = WorkType.land.by_term(next_term).to_a
+    @work_types = WorkType.land.by_term(next_term).kept.to_a
     @work_type_colors = work_type_colors
   end
 
@@ -60,7 +60,7 @@ class Tablets::Plans::LandsController < Tablets::PlansController
 
   def valid_work_type_ids?(plan_lands)
     submitted_ids = plan_lands.values.filter_map { |id| id.presence&.to_s }.uniq.to_set
-    allowed_ids = WorkType.land.by_term(next_term).where(id: submitted_ids.to_a).ids.to_set(&:to_s)
+    allowed_ids = WorkType.land.by_term(next_term).kept.where(id: submitted_ids.to_a).ids.to_set(&:to_s)
     submitted_ids == allowed_ids
   end
 end
