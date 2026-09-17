@@ -19,7 +19,10 @@ class TotalCostsController < ApplicationController
   end
 
   def destroy
-    TotalCost.for_organization(current_organization).where(term: current_term).destroy_all
+    TotalCost.transaction do
+      TotalCost.for_organization(current_organization).where(term: current_term).destroy_all
+      current_system.update!(total_cost_fixed_on: nil)
+    end
     redirect_to total_costs_path
   end
 end
