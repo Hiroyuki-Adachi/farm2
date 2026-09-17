@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_30_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_16_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -710,7 +710,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_30_090000) do
     t.integer "display_order", default: 0, null: false, comment: "表示順"
     t.integer "schedule_id", comment: "作業予定"
     t.datetime "updated_at", precision: nil, null: false
-    t.string "uuid", limit: 36, comment: "UUID(カレンダー用)"
+    t.uuid "uuid", comment: "UUID(カレンダー用)"
     t.integer "worker_id", comment: "作業者"
     t.index ["schedule_id", "worker_id"], name: "index_schedule_workers_on_schedule_id_and_worker_id", unique: true
   end
@@ -1244,7 +1244,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_30_090000) do
     t.decimal "hours", precision: 5, scale: 1, default: "0.0", null: false, comment: "作業時間"
     t.string "remarks", limit: 20, default: "", null: false, comment: "備考"
     t.datetime "updated_at", precision: nil
-    t.string "uuid", limit: 36, comment: "UUID(カレンダー用)"
+    t.uuid "uuid", comment: "UUID(カレンダー用)"
     t.integer "work_id", comment: "作業"
     t.integer "worker_id", comment: "作業者"
     t.index ["work_id", "worker_id"], name: "index_work_results_on_work_id_and_worker_id", unique: true
