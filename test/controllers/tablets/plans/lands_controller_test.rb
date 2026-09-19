@@ -148,4 +148,27 @@ class Tablets::Plans::LandsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to new_tablets_plans_land_path
   end
+
+  test "削除済みの作業分類は来年度の選択肢に表示されない" do
+    discarded_work_type = work_types(:work_types1)
+    WorkTypeTerm.find_or_create_by!(term: @user.term + 1, work_type: discarded_work_type)
+
+    get new_tablets_plans_land_path
+
+    assert_response :success
+    assert_select ".work-type[data-work-type-id='#{discarded_work_type.id}']", count: 0
+  end
+
+  test "削除済みの作業分類は来年度の作付計画に登録できない" do
+    discarded_work_type = work_types(:work_types1)
+    WorkTypeTerm.find_or_create_by!(term: @user.term + 1, work_type: discarded_work_type)
+
+    assert_no_difference("PlanLand.count") do
+      post tablets_plans_lands_path, params: {
+        land: { @land.id => discarded_work_type.id }
+      }
+    end
+
+    assert_response :error
+  end
 end

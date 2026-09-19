@@ -4060,3 +4060,76 @@ machine_result_work_verifying:
   hours: 4.0
   created_at: '2015-03-22 01:37:20.287444'
   updated_at: '2015-03-22 01:37:20.287444'
+
+# MachineResultTest専用。分離方針は test/fixtures/README.md を参照。
+pricing_machine_result_feb_hour:
+  machine: pricing_machine_hour
+  work_result: pricing_work_result_feb_last
+  display_order: 1
+  hours: 1
+
+pricing_machine_result_feb_area:
+  machine: pricing_machine_area
+  work_result: pricing_work_result_feb_last
+  display_order: 2
+  hours: 2
+
+pricing_machine_result_feb_day:
+  machine: pricing_machine_day
+  work_result: pricing_work_result_feb_last
+  display_order: 3
+  hours: 3
+
+pricing_machine_result_march_hour:
+  machine: pricing_machine_hour
+  work_result: pricing_work_result_march_1st
+  display_order: 1
+  hours: 1
+
+pricing_machine_result_march_area:
+  machine: pricing_machine_area
+  work_result: pricing_work_result_march_1st
+  display_order: 2
+  hours: 2
+
+pricing_machine_result_march_day:
+  machine: pricing_machine_day
+  work_result: pricing_work_result_march_1st
+  display_order: 3
+  hours: 3
+
+pricing_machine_result_feb_hour_t:
+  machine: pricing_machine_hour_t
+  work_result: pricing_work_result_feb_last
+  display_order: 1
+  hours: 1
+
+pricing_machine_result_feb_area_t:
+  machine: pricing_machine_area_t
+  work_result: pricing_work_result_feb_last
+  display_order: 2
+  hours: 2
+
+pricing_machine_result_feb_day_t:
+  machine: pricing_machine_day_t
+  work_result: pricing_work_result_feb_last
+  display_order: 3
+  hours: 3
+
+pricing_machine_result_march_hour_t:
+  machine: pricing_machine_hour_t
+  work_result: pricing_work_result_march_1st
+  display_order: 1
+  hours: 1
+
+pricing_machine_result_march_area_t:
+  machine: pricing_machine_area_t
+  work_result: pricing_work_result_march_1st
+  display_order: 2
+  hours: 2
+
+pricing_machine_result_march_day_t:
+  machine: pricing_machine_day_t
+  work_result: pricing_work_result_march_1st
+  display_order: 3
+  hours: 3

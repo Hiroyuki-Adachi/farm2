@@ -255,3 +255,87 @@ machine_type_price_detail_march_day:
   created_at: '2016-06-07 12:29:01.578809'
   updated_at: '2016-06-07 12:29:01.578809'
 
+# MachineResultTest専用。分離方針は test/fixtures/README.md を参照。
+pricing_machine_price_detail_1_hour:
+  header: pricing_machine_price_header_1_hour
+  lease_id: 1
+  work_kind_id: 0
+  adjust_id: 1
+  price: 1100
+
+pricing_machine_price_detail_1_area:
+  header: pricing_machine_price_header_1_area
+  lease_id: 1
+  work_kind_id: 0
+  adjust_id: 2
+  price: 1200
+
+pricing_machine_price_detail_1_day:
+  header: pricing_machine_price_header_1_day
+  lease_id: 1
+  work_kind_id: 0
+  adjust_id: 3
+  price: 1300
+
+pricing_machine_price_detail_march_hour:
+  header: pricing_machine_price_header_march_hour
+  lease_id: 1
+  work_kind_id: 0
+  adjust_id: 1
+  price: 2100
+
+pricing_machine_price_detail_march_area:
+  header: pricing_machine_price_header_march_area
+  lease_id: 1
+  work_kind_id: 0
+  adjust_id: 2
+  price: 2200
+
+pricing_machine_price_detail_march_day:
+  header: pricing_machine_price_header_march_day
+  lease_id: 1
+  work_kind_id: 0
+  adjust_id: 3
+  price: 2300
+
+pricing_machine_type_price_detail_1_hour:
+  header: pricing_machine_type_price_header_1_hour
+  lease_id: 1
+  work_kind_id: 0
+  adjust_id: 1
+  price: 3100
+
+pricing_machine_type_price_detail_1_area:
+  header: pricing_machine_type_price_header_1_area
+  lease_id: 1
+  work_kind_id: 0
+  adjust_id: 2
+  price: 3200
+
+pricing_machine_type_price_detail_1_day:
+  header: pricing_machine_type_price_header_1_day
+  lease_id: 1
+  work_kind_id: 0
+  adjust_id: 3
+  price: 3300
+
+pricing_machine_type_price_detail_march_hour:
+  header: pricing_machine_type_price_header_march_hour
+  lease_id: 1
+  work_kind_id: 0
+  adjust_id: 1
+  price: 4100
+
+pricing_machine_type_price_detail_march_area:
+  header: pricing_machine_type_price_header_march_area
+  lease_id: 1
+  work_kind_id: 0
+  adjust_id: 2
+  price: 4200
+
+pricing_machine_type_price_detail_march_day:
+  header: pricing_machine_type_price_header_march_day
+  lease_id: 1
+  work_kind_id: 0
+  adjust_id: 3
+  price: 4300

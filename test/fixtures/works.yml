@@ -5529,3 +5529,26 @@ work_other_org:
   work_kind_id: 12
   created_by: 9100
   organization_id: 2
+
+# MachineResultTest専用。分離方針は test/fixtures/README.md を参照。
+pricing_work_march_1st:
+  organization: pricing_organization
+  term: 2015
+  worked_at: '2015-03-01'
+  work_type_id: '11'
+  name: "機械単価テスト"
+  weather_id: sunny
+  start_at: '14:00:00'
+  end_at: '16:00:00'
+  work_kind: pricing_work_kind
+
+pricing_work_feb_last:
+  organization: pricing_organization
+  term: 2015
+  worked_at: '2015-02-28'
+  work_type_id: '11'
+  name: "機械単価テスト"
+  weather_id: sunny
+  start_at: '14:00:00'
+  end_at: '16:00:00'
+  work_kind: pricing_work_kind

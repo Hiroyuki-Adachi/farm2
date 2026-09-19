@@ -767,3 +767,14 @@ home_not_worker:
   deleted_at: 
   owner_flag: t
   drying_order: 150
+
+# MachineResultTest専用。分離方針は test/fixtures/README.md を参照。
+pricing_owner:
+  organization: pricing_organization
+  name: 単価計算専用
+  phonetic: たんかけいさん
+  display_order: 1
+  company_flag: false
+  member_flag: false
+  owner_flag: false
+  land_flag: true

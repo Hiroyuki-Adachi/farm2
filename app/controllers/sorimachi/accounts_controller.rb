@@ -106,8 +106,7 @@ class Sorimachi::AccountsController < ApplicationController
     allocator = Sorimachi::WorkTypeAllocationService.new(term: account.term, system: current_system)
     journals_for_account(account).find_each do |journal|
       amount = signed_amount(journal, account.code, total_cost_type.account)
-      allocator.allocate!(journal: journal, amount: amount, accounted_on: journal.accounted_on)
-      journal.update!(allocation_mode: :auto)
+      allocator.allocate!(journal: journal, amount: amount, accounted_on: journal.accounted_on, mode: :auto)
     end
   end
 

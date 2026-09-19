@@ -29,6 +29,22 @@ class FixTest < ActiveSupport::TestCase
     @no_fix_works = [works(:work_no_fix1).id, works(:work_no_fix2).id]
   end
 
+  test "確定日当は対象組織の既定単価を保存する" do
+    organization = organizations(:org2)
+    systems(:s2015_org2).update!(default_price: 2300)
+    work = works(:work_for_price)
+    work.update!(organization_id: organization.id, term: @term,
+                 work_kind_id: work_kinds(:work_kind_first_term).id, fixed_at: nil)
+    assert_predicate work.work_results, :any?
+
+    Fix.do_fix(organization, @term, @fixed_at, @worker_id, [work.id])
+
+    work.work_results.reload.each do |result|
+      assert_equal 2300, result.fixed_price
+      assert_equal result.hours * 2300, result.fixed_amount
+    end
+  end
+
   test "確定" do
     assert_difference('Fix.count') do
       Fix.do_fix(@organization, @term, @fixed_at, @worker_id, @no_fix_works)

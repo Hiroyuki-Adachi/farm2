@@ -10,7 +10,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     LandCost.create!(land_id: land1.id, work_type_id: work_type1.id, activated_on: system.start_date)
     LandCost.create!(land_id: land2.id, work_type_id: work_type2.id, activated_on: system.start_date)
     service = Sorimachi::WorkTypeAllocationService.new(term: 2091, system: system)
-    journal = create_journal(term: 2091, line: 9901, accounted_on: Date.new(2091, 5, 1))
+    journal = create_journal(system: system, line: 9901, accounted_on: Date.new(2091, 5, 1))
 
     records = service.allocate!(journal: journal, amount: 800, accounted_on: journal.accounted_on)
 
@@ -30,7 +30,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     LandCost.create!(land_id: land1.id, work_type_id: work_type2.id, activated_on: Date.new(2092, 7, 1))
     LandCost.create!(land_id: land2.id, work_type_id: work_type2.id, activated_on: system.start_date)
     service = Sorimachi::WorkTypeAllocationService.new(term: 2092, system: system)
-    journal = create_journal(term: 2092, line: 9902, accounted_on: nil)
+    journal = create_journal(system: system, line: 9902, accounted_on: nil)
 
     records = service.allocate!(journal: journal, amount: 219, accounted_on: nil)
 
@@ -49,7 +49,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     LandCost.create!(land_id: land1.id, work_type_id: work_type1.id, activated_on: system.start_date)
     LandCost.create!(land_id: land2.id, work_type_id: work_type2.id, activated_on: system.start_date)
     service = Sorimachi::WorkTypeAllocationService.new(term: 2093, system: system)
-    journal = create_journal(term: 2093, line: 9903, accounted_on: Date.new(2093, 6, 1))
+    journal = create_journal(system: system, line: 9903, accounted_on: Date.new(2093, 6, 1))
 
     records = service.allocate!(journal: journal, amount: 1, accounted_on: journal.accounted_on)
 
@@ -57,6 +57,26 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     assert_equal 1, records.sum { |record| record.amount.to_i }
     assert_nil records.find_by(work_type_id: work_type1.id)
     assert_equal 1, records.find_by(work_type_id: work_type2.id).amount.to_i
+  end
+
+  test "配賦の作成に失敗した場合はallocation_modeの更新もロールバックされる" do
+    system = create_system(term: 2094)
+    work_type = create_cost_work_type(term: 2094, name: "失敗A")
+    land = create_land(place: "A-4", area: 1)
+    LandCost.create!(land_id: land.id, work_type_id: work_type.id, activated_on: system.start_date)
+    service = Sorimachi::WorkTypeAllocationService.new(term: 2094, system: system)
+    journal = create_journal(system: system, line: 9904, accounted_on: Date.new(2094, 6, 1))
+    assert journal.allocation_mode_auto?
+
+    raising_create = ->(*) { raise ActiveRecord::RecordInvalid, SorimachiWorkType.new }
+    assert_raises(ActiveRecord::RecordInvalid) do
+      SorimachiWorkType.stub(:create!, raising_create) do
+        service.allocate!(journal: journal, amount: 800, accounted_on: journal.accounted_on, mode: :select)
+      end
+    end
+
+    assert journal.reload.allocation_mode_auto?
+    assert_not SorimachiWorkType.exists?(sorimachi_journal_id: journal.id)
   end
 
   private
@@ -96,11 +116,12 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     )
   end
 
-  def create_journal(term:, line:, accounted_on:)
+  def create_journal(system:, line:, accounted_on:)
     src = sorimachi_journals(:journal1)
     SorimachiJournal.create!(
       src.attributes.except("id", "created_at", "updated_at").merge(
-        term: term,
+        validation_system: system,
+        term: system.term,
         line: line,
         detail: 1,
         accounted_on: accounted_on

@@ -24,11 +24,11 @@ class WorkKindPrice < ApplicationRecord
     where("work_kind_id = ? and term <= ?", work_kind.id, Organization.term(organization)).order("term DESC")
   }
 
-  def self.price(work_kind, term)
+  def self.price(work_kind, term, organization_id:)
     work_kind_price = WorkKindPrice.find_by(work_kind_id: work_kind.id, term: term)
     return work_kind_price.price if work_kind_price
 
-    system = System.find_by(term: term)
+    system = System.find_by(term: term, organization_id: organization_id)
     return system.default_price if system
 
     0
