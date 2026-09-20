@@ -86,7 +86,7 @@ class PersonalInformations::ScansControllerTest < ActionDispatch::IntegrationTes
 
   test "QRコードスキャン(使用できないセッショントークン)" do
     freeze_time Time.current do
-      qr = QrLoginSession.create!(status: :pending, expires_at: 1.minute.ago)
+      qr = QrLoginSession.create!(status: :pending, expires_at: 1.minute.ago, ip_address: "9.9.9.9")
 
       params = {
         type: 'session',
@@ -108,7 +108,7 @@ class PersonalInformations::ScansControllerTest < ActionDispatch::IntegrationTes
 
   test "QRコードスキャン(成功)" do
     freeze_time Time.current do
-      qr = QrLoginSession.create!(status: :pending, expires_at: 5.minutes.from_now)
+      qr = QrLoginSession.create!(status: :pending, expires_at: 5.minutes.from_now, ip_address: "9.9.9.9")
 
       called = false
       QrLoginChannel.stub(:broadcast_to, lambda { |token, payload|

@@ -5,7 +5,7 @@
 #  id                              :bigint           not null, primary key
 #  consumed_at(セッション使用日時) :datetime
 #  expires_at(セッション有効期限)  :datetime         not null
-#  ip_address(発行元IPアドレス)    :string           default(""), not null
+#  ip_address(発行元IPアドレス)    :inet             not null
 #  status(セッション状態)          :integer          default(0), not null
 #  token(セッション識別子)         :string(36)       not null
 #  created_at                      :datetime         not null
@@ -34,7 +34,7 @@ class QrLoginSessionTest < ActiveSupport::TestCase
 
   test "トークンは一意であること" do
     token = SecureRandom.uuid
-    QrLoginSession.create!(token: token)
+    QrLoginSession.create!(token: token, ip_address: "9.9.9.9")
 
     qr = QrLoginSession.new(token: token)
     assert_not qr.valid?
@@ -42,33 +42,33 @@ class QrLoginSessionTest < ActiveSupport::TestCase
 
   test "expired_atが過去の場合、expired?はtrueを返すこと" do
     freeze_time Time.current do
-      qr = QrLoginSession.create!(expires_at: 1.minute.ago)
+      qr = QrLoginSession.create!(expires_at: 1.minute.ago, ip_address: "9.9.9.9")
       assert qr.expired?
     end
   end
 
   test "expired_atが未来の場合、expired?はfalseを返すこと" do
     freeze_time Time.current do
-      qr = QrLoginSession.create!(expires_at: 1.minute.from_now)
+      qr = QrLoginSession.create!(expires_at: 1.minute.from_now, ip_address: "9.9.9.9")
       assert_not qr.expired?
     end
   end
 
   test "pendingかつ未期限切れの場合、usable?はtrueを返すこと" do
     freeze_time Time.current do
-      qr = QrLoginSession.create!(status: :pending, expires_at: 1.minute.from_now)
+      qr = QrLoginSession.create!(status: :pending, expires_at: 1.minute.from_now, ip_address: "9.9.9.9")
       assert qr.usable?
     end
   end
 
   test "approvedの場合、usable?はfalseを返すこと" do
-    qr = QrLoginSession.create!(status: :approved)
+    qr = QrLoginSession.create!(status: :approved, ip_address: "9.9.9.9")
     assert_not qr.usable?
   end
 
   test "expiredの場合、usable?はfalseを返すこと" do
     freeze_time Time.current do
-      qr = QrLoginSession.create!(status: :pending, expires_at: 1.minute.ago)
+      qr = QrLoginSession.create!(status: :pending, expires_at: 1.minute.ago, ip_address: "9.9.9.9")
       assert_not qr.usable?
     end
   end
