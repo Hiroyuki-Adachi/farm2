@@ -39,6 +39,8 @@ function initMap() {
 
   const mapElement = document.getElementById("map");
   const tablet = mapElement.dataset.tablet === "true";
+  const yieldLabel = mapElement.dataset.yieldLabel || "ロール数";
+  const yieldKey = mapElement.dataset.yieldKey || "rolls";
   const map = new google.maps.Map(mapElement, {
     center: pos,
     zoom: 16,
@@ -77,7 +79,7 @@ function initMap() {
         if (!currentLand) {
           return;
         }
-        document.getElementById("land_info").innerText = `${currentLand.dataset.place}(${currentLand.dataset.owner}):${currentLand.dataset.area}a ロール数(10a当):${currentLand.dataset.rolls}`;
+        document.getElementById("land_info").innerText = `${currentLand.dataset.place}(${currentLand.dataset.owner}):${currentLand.dataset.area}a ${yieldLabel}(10a当):${currentLand.dataset[yieldKey]}`;
       };
 
       polygon.addListener("click", showLandInfo);

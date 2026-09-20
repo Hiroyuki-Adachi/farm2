@@ -3077,3 +3077,20 @@ land_other_org:
   target_flag: t
   organization_id: 2
   land_place: land_place_other_org
+
+# MachineResultTest専用。分離方針は test/fixtures/README.md を参照。
+pricing_land1:
+  organization: pricing_organization
+  place: 単価計算専用1
+  area: 12.50
+  target_flag: false
+  owner: pricing_owner
+  manager: pricing_owner
+
+pricing_land2:
+  organization: pricing_organization
+  place: 単価計算専用2
+  area: 23.75
+  target_flag: false
+  owner: pricing_owner
+  manager: pricing_owner

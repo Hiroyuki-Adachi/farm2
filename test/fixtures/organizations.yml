@@ -78,3 +78,8 @@ org2:
   account_number: '7654321'
   term: 2015
   location: "(35.472840, 133.050677)"
+
+# MachineResultTest専用。既存組織の集計に価格計算シナリオを含めない。
+pricing_organization:
+  name: 単価計算専用
+  term: 2015

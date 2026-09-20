@@ -47,15 +47,50 @@ class WorkKindTest < ActiveSupport::TestCase
     assert_not_includes WorkKind.aggregatable, work_kinds(:work_kind_shirokaki)
   end
 
+  test "同じ作業種別と期番号でも組織別の既定単価を返す" do
+    work_kind = work_kinds(:work_kind_first_term)
+    systems(:s2015_org2).update!(default_price: 2300)
+
+    assert_equal 1100, work_kind.term_price(2015, organization_id: organizations(:org).id)
+    assert_equal 2300, work_kind.term_price(2015, organization_id: organizations(:org2).id)
+    assert_equal 1100, work_kind.term_price(2015, organization_id: organizations(:org).id)
+  end
+
+  test "個別単価は組織の既定単価より優先する" do
+    work_kind = work_kinds(:work_kind_every_term)
+
+    assert_equal 2015, work_kind.term_price(2015, organization_id: organizations(:org2).id)
+    assert_equal 2015, work_kind.term_price(2015, organization_id: nil)
+  end
+
+  test "対象組織の期がなければ別組織の既定単価を使わずゼロを返す" do
+    work_kind = work_kinds(:work_kind_first_term)
+    systems(:s2015_org2).destroy!
+
+    assert_equal 0, work_kind.term_price(2015, organization_id: organizations(:org2).id)
+    assert_equal 0, work_kind.term_price(2015, organization_id: nil)
+  end
+
+  test "単価更新時は同じ期の全組織のキャッシュを破棄する" do
+    work_kind = work_kinds(:work_kind_first_term)
+    work_kind.term_price(2015, organization_id: organizations(:org).id)
+    work_kind.term_price(2015, organization_id: organizations(:org2).id)
+    work_kind.update!(term: 2015, organization_id: organizations(:org).id, price: 3456)
+
+    assert_equal 3456, work_kind.term_price(2015, organization_id: organizations(:org).id)
+    assert_equal 3456, work_kind.term_price(2015, organization_id: organizations(:org2).id)
+  end
+
   test "各年の単価設定" do
     work_kind = WorkKind.find(work_kinds(:work_kind_every_term).id)
-    assert_equal 2010, work_kind.term_price(2010)
-    assert_equal 2015, work_kind.term_price(2015)
+    assert_equal 2010, work_kind.term_price(2010, organization_id: organizations(:org).id)
+    assert_equal 2015, work_kind.term_price(2015, organization_id: organizations(:org).id)
   end
 
   test "初年度のみ単価設定" do
     work_kind = WorkKind.find(work_kinds(:work_kind_first_term).id)
-    assert_equal work_kind_prices(:work_kind_prices_first_0).price, work_kind.term_price(2010)
-    assert_equal systems(:s2015).default_price, work_kind.term_price(2015)
+    price = work_kind.term_price(2010, organization_id: organizations(:org).id)
+    assert_equal work_kind_prices(:work_kind_prices_first_0).price, price
+    assert_equal systems(:s2015).default_price, work_kind.term_price(2015, organization_id: organizations(:org).id)
   end
 end

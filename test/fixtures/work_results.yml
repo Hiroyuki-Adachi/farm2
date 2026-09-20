@@ -9,7 +9,7 @@
 #  fixed_price(確定作業単価)  :decimal(5, )
 #  hours(作業時間)            :decimal(5, 1)    default(0.0), not null
 #  remarks(備考)              :string(20)       default(""), not null
-#  uuid(UUID(カレンダー用))   :string(36)
+#  uuid(UUID(カレンダー用))   :uuid
 #  created_at                 :datetime
 #  updated_at                 :datetime
 #  health_id(健康)            :integer          default(0), not null
@@ -13855,5 +13855,18 @@ work_result_taue2:
 work_result_task:
   work: work_task_work
   worker_id: 3
+  hours: 6
+  display_order: 1
+
+# MachineResultTest専用。分離方針は test/fixtures/README.md を参照。
+pricing_work_result_march_1st:
+  work: pricing_work_march_1st
+  worker: pricing_worker
+  hours: 6
+  display_order: 1
+
+pricing_work_result_feb_last:
+  work: pricing_work_feb_last
+  worker: pricing_worker
   hours: 6
   display_order: 1

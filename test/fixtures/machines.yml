@@ -359,17 +359,10 @@ machines22:
   deleted_at: 
   diesel_flag: 'f'
 
-# 以下6レコードに共通する価格計算の前提:
-# test/models/machine_result_test.rb は machine_results.yml の feb/march レコード経由で参照する。
-# home_id: 1 は work_result_feb_last / work_result_march_1st の作業者 worker1.home_id と一致し、
-# MachineResult#calc_amount が通常単価 (lease_id: normal) を選ぶために必要。
-# 所有者を変えるとリース単価側に分岐し、対応する明細がないため価格・数量・金額が0になる。
-# この分岐は Machine#leasable? ではなく、所有者と作業者の世帯IDの比較による。
-# 関連する machine_price_headers.yml / machine_price_details.yml の適用日・単価・単位も一緒に確認する。
-# 依存: MachineResultTest「機械_期日前_時間」「機械_期日後_時間」(test/models/machine_result_test.rb)。
-# 前提: home_id: 1（上記の通常単価選択条件）。
-# 前提: machine_price_header_1_hour / machine_price_header_march_hour がこの機械を参照する。
-# 機械別の単価から時間単位の価格・数量・金額を検証する。
+# 以下は既存の共有データ。MachineResultTestは下のpricing_*へ分離済み (#1207)。
+# machine_hour_t / machine_area_t / machine_day_t はWorkTest「機械登録」で使用する。
+# machine_hour_t はmachine_result_genka1とdepreciation_genkaからも参照される。
+# machine_day_t はStatistics::MachineDecoratorTestの集計キーにも使用する。
 machine_hour:
   name: "テスト時間ごと"
   display_order: 1
@@ -382,10 +375,6 @@ machine_hour:
   deleted_at: 
   diesel_flag: 'f'
 
-# 依存: MachineResultTest「機械_期日前_面積」「機械_期日後_面積」(test/models/machine_result_test.rb)。
-# 前提: home_id: 1（上記の通常単価選択条件）。
-# 前提: machine_price_header_1_area / machine_price_header_march_area がこの機械を参照する。
-# 機械別の単価から面積単位の価格・数量・金額を検証する。
 machine_area:
   name: "テスト面積ごと"
   display_order: 2
@@ -398,10 +387,6 @@ machine_area:
   deleted_at: 
   diesel_flag: 'f'
 
-# 依存: MachineResultTest「機械_期日前_日数」「機械_期日後_日数」(test/models/machine_result_test.rb)。
-# 前提: home_id: 1（上記の通常単価選択条件）。
-# 前提: machine_price_header_1_day / machine_price_header_march_day がこの機械を参照する。
-# 機械別の単価から日数単位の価格・数量・金額を検証する。
 machine_day:
   name: "テスト日数ごと"
   display_order: 3
@@ -414,13 +399,6 @@ machine_day:
   deleted_at: 
   diesel_flag: 'f'
 
-# 依存: MachineResultTest「機械種別_期日前_時間」「機械種別_期日後_時間」(test/models/machine_result_test.rb)。
-# 前提: home_id: 1（上記の通常単価選択条件）。
-# 前提: machine_type: machine_type_hour と、機械別の単価ヘッダがないこと。
-# 機械種別の単価ヘッダへフォールバックし、時間単位の価格・数量・金額を検証する。
-# 依存: WorkTest「機械登録」は machine_result_for_price1 の更新対象として参照する。
-# 「機械登録で別作業の作業結果は更新しない」は machine_result_genka1 の関連先を前提にする
-# (test/models/work_test.rb)。depreciation_genka (depreciations.yml) からも参照される。
 machine_hour_t:
   name: "テスト時間ごと"
   display_order: 1
@@ -433,12 +411,6 @@ machine_hour_t:
   deleted_at: 
   diesel_flag: 'f'
 
-# 依存: MachineResultTest「機械種別_期日前_面積」「機械種別_期日後_面積」(test/models/machine_result_test.rb)。
-# 前提: home_id: 1（上記の通常単価選択条件）。
-# 前提: machine_type: machine_type_area と、機械別の単価ヘッダがないこと。
-# 機械種別の単価ヘッダへフォールバックし、面積単位の価格・数量・金額を検証する。
-# 依存: WorkTest「機械登録」(test/models/work_test.rb) は work_result_for_price2 に
-# この機械の稼動データがまだないことを前提に、新規作成を検証する。
 machine_area_t:
   name: "テスト面積ごと"
   display_order: 2
@@ -451,13 +423,6 @@ machine_area_t:
   deleted_at: 
   diesel_flag: 'f'
 
-# 依存: MachineResultTest「機械種別_期日前_日数」「機械種別_期日後_日数」(test/models/machine_result_test.rb)。
-# 前提: home_id: 1（上記の通常単価選択条件）。
-# 前提: machine_type: machine_type_day と、機械別の単価ヘッダがないこと。
-# 機械種別の単価ヘッダへフォールバックし、日数単位の価格・数量・金額を検証する。
-# 依存: WorkTest「機械登録」(test/models/work_test.rb) は machine_result_for_price2 の削除対象として参照する。
-# 参照: Statistics::MachineDecoratorTest (test/decorators/statistics/machine_decorator_test.rb) は
-# この機械のIDを集計キーに使用する。home_id や機械種別・単価には依存しない。
 machine_day_t:
   name: "テスト日数ごと"
   display_order: 3
@@ -468,4 +433,65 @@ machine_day_t:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
+  diesel_flag: 'f'
+
+# MachineResultTest専用。分離方針は test/fixtures/README.md を参照。
+pricing_machine_hour:
+  name: "テスト時間ごと"
+  display_order: 1
+  validity_start_at: '2010-01-01'
+  validity_end_at: '2020-12-31'
+  machine_type: pricing_machine_type_test
+  owner: pricing_owner
+  deleted_at:
+  diesel_flag: 'f'
+
+pricing_machine_area:
+  name: "テスト面積ごと"
+  display_order: 2
+  validity_start_at: '2010-01-01'
+  validity_end_at: '2020-12-31'
+  machine_type: pricing_machine_type_test
+  owner: pricing_owner
+  deleted_at:
+  diesel_flag: 'f'
+
+pricing_machine_day:
+  name: "テスト日数ごと"
+  display_order: 3
+  validity_start_at: '2010-01-01'
+  validity_end_at: '2020-12-31'
+  machine_type: pricing_machine_type_test
+  owner: pricing_owner
+  deleted_at:
+  diesel_flag: 'f'
+
+pricing_machine_hour_t:
+  name: "テスト時間ごと"
+  display_order: 1
+  validity_start_at: '2010-01-01'
+  validity_end_at: '2020-12-31'
+  machine_type: pricing_machine_type_hour
+  owner: pricing_owner
+  deleted_at:
+  diesel_flag: 'f'
+
+pricing_machine_area_t:
+  name: "テスト面積ごと"
+  display_order: 2
+  validity_start_at: '2010-01-01'
+  validity_end_at: '2020-12-31'
+  machine_type: pricing_machine_type_area
+  owner: pricing_owner
+  deleted_at:
+  diesel_flag: 'f'
+
+pricing_machine_day_t:
+  name: "テスト日数ごと"
+  display_order: 3
+  validity_start_at: '2010-01-01'
+  validity_end_at: '2020-12-31'
+  machine_type: pricing_machine_type_day
+  owner: pricing_owner
+  deleted_at:
   diesel_flag: 'f'

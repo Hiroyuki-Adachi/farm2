@@ -1306,3 +1306,14 @@ worker_other_org:
   gender_id: 1
   office_role: 1
   organization_id: 2
+
+# MachineResultTest専用。分離方針は test/fixtures/README.md を参照。
+pricing_worker:
+  organization: pricing_organization
+  family_name: 単価
+  first_name: 計算
+  family_phonetic: たんか
+  first_phonetic: けいさん
+  home: pricing_owner
+  display_order: 1
+  work_flag: false

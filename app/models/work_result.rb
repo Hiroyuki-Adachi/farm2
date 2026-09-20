@@ -9,7 +9,7 @@
 #  fixed_price(確定作業単価)  :decimal(5, )
 #  hours(作業時間)            :decimal(5, 1)    default(0.0), not null
 #  remarks(備考)              :string(20)       default(""), not null
-#  uuid(UUID(カレンダー用))   :string(36)
+#  uuid(UUID(カレンダー用))   :uuid
 #  created_at                 :datetime
 #  updated_at                 :datetime
 #  health_id(健康)            :integer          default(0), not null
@@ -129,7 +129,7 @@ class WorkResult < ApplicationRecord
   }
 
   def price
-    (work.fixed_at ? fixed_price : work.work_kind.term_price(work.term)) || 0
+    (work.fixed_at ? fixed_price : work.price) || 0
   end
 
   def amount

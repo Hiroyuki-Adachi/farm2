@@ -68,15 +68,15 @@ class WorkKind < ApplicationRecord
   scope :gaps, -> { kept.where.not(broccoli_mark: [nil, ""]).group(:broccoli_mark).order(:broccoli_mark).select("broccoli_mark, MAX(name) AS name") }
 
   attr_writer :price
-  attr_accessor :term
+  attr_accessor :term, :organization_id
 
-  def term_price(term)
+  def term_price(term, organization_id:)
     @term_prices ||= {}
-    @term_prices[term] ||= WorkKindPrice.price(self, term)
+    @term_prices[[term, organization_id]] ||= WorkKindPrice.price(self, term, organization_id: organization_id)
   end
 
   def price
-    term_price(@term)
+    term_price(@term, organization_id: organization_id)
   end
 
   def self.find_other
@@ -96,6 +96,6 @@ class WorkKind < ApplicationRecord
     else
       WorkKindPrice.create(work_kind_id: id, term: @term, price: @price)
     end
-    @term_prices[@term] = @price if defined?(@term_prices) && @term.present?
+    @term_prices&.delete_if { |(term, _organization_id), _price| term == @term }
   end
 end
