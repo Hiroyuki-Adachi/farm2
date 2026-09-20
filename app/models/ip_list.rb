@@ -88,14 +88,20 @@ class IpList < ApplicationRecord
   end
 
   def self.white_list
-    LOCAL_ADDRESSES | whites
+    LOCAL_ADDRESSES | whites.map { |ip| to_ip_addr(ip) }
   end
 
   def self.black_list
-    blacks
+    blacks.map { |ip| to_ip_addr(ip) }
   end
 
   def self.find_valid(id, remote_ip)
     active.find_by(id: id, ip_address: remote_ip, white_flag: true)
   end
+
+  # ip_addressがinet型ならIPAddr、移行前のstring型ならStringでpluckされるため両対応する
+  def self.to_ip_addr(ip)
+    ip.is_a?(String) ? IPAddr.new(ip) : ip
+  end
+  private_class_method :to_ip_addr
 end
