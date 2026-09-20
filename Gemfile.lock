@@ -161,6 +161,8 @@ GEM
     erubi (1.13.1)
     execjs (2.10.2)
       json (>= 2)
+    factory_bot (6.6.0)
+      activesupport (>= 6.1.0)
     ferrum (0.18.0)
       addressable (~> 2.5)
       base64 (~> 0.2)
@@ -512,6 +514,7 @@ DEPENDENCIES
   discard
   dotenv-rails
   draper
+  factory_bot (~> 6.6)
   holiday_jp
   icalendar
   image_processing (~> 1.2)
