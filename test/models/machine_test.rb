@@ -20,15 +20,17 @@ require "test_helper"
 class MachineTest < ActiveSupport::TestCase
   test "ordered_for_display orders machines deterministically" do
     owner = homes(:home1)
-    later_type = MachineType.create!(name: "後の機種", display_order: 2)
-    earlier_type = MachineType.create!(name: "先の機種", display_order: 1)
-    same_order_type = MachineType.create!(name: "同順位の機種", display_order: 1)
+    later_type = FactoryBot.create(:machine_type, name: "後の機種", display_order: 2)
+    earlier_type = FactoryBot.create(:machine_type, name: "先の機種", display_order: 1)
+    same_order_type = FactoryBot.create(:machine_type, name: "同順位の機種", display_order: 1)
 
-    later_machine = create_machine(later_type, owner, display_order: 1)
-    same_type_later_machine = create_machine(earlier_type, owner, display_order: 2)
-    same_type_earlier_machine = create_machine(earlier_type, owner, display_order: 1)
-    same_type_same_order_machine = create_machine(earlier_type, owner, display_order: 1)
-    same_order_type_machine = create_machine(same_order_type, owner, display_order: 1)
+    later_machine = FactoryBot.create(:machine, machine_type: later_type, owner: owner, display_order: 1)
+    same_type_later_machine = FactoryBot.create(:machine, machine_type: earlier_type, owner: owner, display_order: 2)
+    same_type_earlier_machine = FactoryBot.create(:machine, machine_type: earlier_type, owner: owner, display_order: 1)
+    same_type_same_order_machine = FactoryBot.create(
+      :machine, machine_type: earlier_type, owner: owner, display_order: 1
+    )
+    same_order_type_machine = FactoryBot.create(:machine, machine_type: same_order_type, owner: owner, display_order: 1)
 
     machines = [
       later_machine, same_type_later_machine, same_type_earlier_machine,
@@ -43,36 +45,13 @@ class MachineTest < ActiveSupport::TestCase
   end
 
   test "trucks preloads owners" do
-    truck_type = machine_types(:machine_types_removable)
     organization = organizations(:org)
-    organization.update!(truck_id: truck_type.id)
-    truck = Machine.create!(
-      name: "",
-      display_order: 1,
-      validity_start_at: Date.new(2015, 1, 1),
-      validity_end_at: Date.new(2099, 12, 31),
-      machine_type: truck_type,
-      owner: homes(:home1),
-      diesel_flag: false
-    )
+    truck = FactoryBot.create(:machine, owner: homes(:home1))
+    organization.update!(truck_id: truck.machine_type_id)
 
     trucks = Machine.trucks(organization).to_a
 
     assert_includes trucks, truck
     assert_predicate trucks.find { |current_truck| current_truck.id == truck.id }.association(:owner), :loaded?
-  end
-
-  private
-
-  def create_machine(machine_type, owner, display_order:)
-    Machine.create!(
-      name: "",
-      display_order: display_order,
-      validity_start_at: Date.new(2015, 1, 1),
-      validity_end_at: Date.new(2099, 12, 31),
-      machine_type: machine_type,
-      owner: owner,
-      diesel_flag: false
-    )
   end
 end
