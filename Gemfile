@@ -127,6 +127,8 @@ group :development do
 end
 
 group :test do
+  # Build test data explicitly alongside existing fixtures.
+  gem 'factory_bot', '~> 6.6', require: false
   # capybara helps you test web applications by simulating how a real user would interact with your app.
   gem 'capybara'
   # cuprite is a Capybara driver for headless Chrome/Chromium
