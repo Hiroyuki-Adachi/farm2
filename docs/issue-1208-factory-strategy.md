@@ -59,7 +59,7 @@ FactoryBot.find_definitions
 
 既存の`test/support/**/*.rb`読込を使うためtest_helperの読込処理追加は不要。`FactoryBot.create`等の完全名で呼び、DSLを全テストへincludeしない。
 
-Machine factoryは`machine_type`を関連factoryから生成し、`owner`は呼び出し元から明示的に渡す設計とした。初回の並び順テストでは既存の`homes(:home1)`を使える。所有者の属性は並び順の判定対象ではないため。trucksのテストでは組織と班との関連が条件に入るので、既存fixtureへの依存が残ることを明記する。factory内部にfixture名や固定のDB IDを埋め込まない。`owner:`の省略はArgumentErrorにする。関連なしを検証する場合だけ`owner: nil`を明示する。
+Machine factoryは`machine_type`を関連factoryから生成し、`owner`は呼び出し元から明示的に渡す設計とした。初回の並び順テストでは既存の`homes(:home1)`を使える。所有者の属性は並び順の判定対象ではないため。trucksのテストでは組織と班との関連が条件に入るので、既存fixtureへの依存が残ることを明記する。factory内部にfixture名や固定のDB IDを埋め込まない。`owner:`の省略はArgumentErrorにする。関連なしを検証する場合の`owner: nil`は、保存しない`build` / `build_stubbed`に限定する。`machines.home_id`はDB上NOT NULLなので、`create(:machine, owner: nil)`は保存時に失敗する。`create`には保存済みの所有者を渡す。
 
 初回はfactoryの利用経路と併用を検証する段階であり、MachineTestのすべてのfixture依存を解消する段階ではない。所有者を含めて独立させるならHome・Section・Organizationまで追加対象になる。
 
