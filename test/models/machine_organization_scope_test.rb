@@ -40,10 +40,13 @@ class MachineOrganizationScopeTest < ActiveSupport::TestCase
   end
 
   test "基盤強化準備金原価を組織で絞り込む" do
-    reserve_fund = MachineReserveFund.create!(
+    reserve_fund = MachineReserveFund.new(
       organization: @other_organization, machine: @other_machine,
       started_on: Date.new(2025, 4, 1), years: 7, total_amount: 1_000_000, remaining_amount: 1_000_000
     )
+    # @other_machineは組合所有ではないため通常はvalidateで弾かれる。ここではfor_organizationスコープの
+    # 検証が目的なのでバリデーションをスキップする。
+    reserve_fund.save!(validate: false)
     assert_not_includes MachineReserveFund.for_organization(@organization), reserve_fund
     assert_includes MachineReserveFund.for_organization(@other_organization), reserve_fund
   end

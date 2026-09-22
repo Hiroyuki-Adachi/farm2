@@ -58,6 +58,16 @@ class MachineReserveFundTest < ActiveSupport::TestCase
     assert_includes duplicated.errors.attribute_names, :machine_id
   end
 
+  test "組織に属さない、または組合所有以外の機械には登録できない" do
+    other_org_machine = build_reserve_fund(machine: machines(:machine_other_org), total_amount: 100)
+    assert_not other_org_machine.valid?
+    assert_includes other_org_machine.errors.attribute_names, :machine_id
+
+    non_company_machine = build_reserve_fund(machine: machines(:taueki_1), total_amount: 100)
+    assert_not non_company_machine.valid?
+    assert_includes non_company_machine.errors.attribute_names, :machine_id
+  end
+
   test "残額は総額より大きくできない" do
     reserve_fund = build_reserve_fund(total_amount: 1_000_000, remaining_amount: 1_200_000)
     assert_not reserve_fund.valid?

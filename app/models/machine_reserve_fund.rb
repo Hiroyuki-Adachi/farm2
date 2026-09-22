@@ -32,6 +32,7 @@ class MachineReserveFund < ApplicationRecord
   validates :total_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :remaining_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :machine_id, uniqueness: true
+  validate :machine_belongs_to_organization
   validate :remaining_amount_within_total_amount
   validate :remaining_amount_not_less_than_registered_amount
 
@@ -63,6 +64,14 @@ class MachineReserveFund < ApplicationRecord
   end
 
   private
+
+  # machine_idはクライアントから送られてくるため、他組織/個人所有の機械が紐付けられないようサーバ側でも検証する
+  def machine_belongs_to_organization
+    return if organization.nil? || machine_id.nil?
+
+    valid_machine = Machine.for_organization(organization).of_company.exists?(id: machine_id)
+    errors.add(:machine_id, "は選択できません。") unless valid_machine
+  end
 
   # 登録時点の残額は総額を超えられない
   def remaining_amount_within_total_amount
