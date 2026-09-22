@@ -83,6 +83,18 @@ class MachineReserveFundsTest < ApplicationSystemTestCase
     ).to_s
   end
 
+  test "初期値設定ボタンは総額0円でも0を計算して反映する" do
+    login_as(@user)
+    visit new_machine_reserve_fund_path
+
+    fill_in "machine_reserve_fund_started_on", with: "2012-07-10"
+    fill_in "machine_reserve_fund_years", with: "7"
+    fill_in "machine_reserve_fund_total_amount", with: "0"
+    click_button "初期値設定"
+
+    assert_field "machine_reserve_fund_remaining_amount", with: "0"
+  end
+
   test "登録済み明細の合計額より残額を小さくできず、削除ボタンも表示されない" do
     reserve_fund = create_reserve_fund(machine: @machine, started_on: Date.new(2025, 4, 1), total_amount: 1_000_000)
     MachineReserveFundDetail.create!(

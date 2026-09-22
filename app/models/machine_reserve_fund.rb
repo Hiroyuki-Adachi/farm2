@@ -45,7 +45,11 @@ class MachineReserveFund < ApplicationRecord
   }
 
   def registered_amount
-    machine_reserve_fund_details.sum(:amount)
+    if machine_reserve_fund_details.loaded?
+      machine_reserve_fund_details.sum(&:amount)
+    else
+      machine_reserve_fund_details.sum(:amount)
+    end
   end
 
   # 登録済み明細(このシステムで按分・記録した分)を反映した現在の残額。

@@ -8,9 +8,13 @@ export default class extends Controller {
 
   calculate() {
     const startedOn = this.startedOnTarget.value
-    const totalAmount = Number(this.totalAmountTarget.value)
-    const years = Number(this.yearsTarget.value)
-    if (!startedOn || !this.hasReferenceDateValue || !totalAmount || !years) return
+    const totalAmountValue = this.totalAmountTarget.value
+    const yearsValue = this.yearsTarget.value
+    if (!startedOn || !this.hasReferenceDateValue || totalAmountValue === "" || yearsValue === "") return
+
+    const totalAmount = Number(totalAmountValue)
+    const years = Number(yearsValue)
+    if (!(years > 0)) return
 
     const start = new Date(startedOn)
     const reference = new Date(this.referenceDateValue)

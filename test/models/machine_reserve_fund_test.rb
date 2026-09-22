@@ -89,6 +89,16 @@ class MachineReserveFundTest < ActiveSupport::TestCase
     assert reserve_fund.details?
   end
 
+  test "明細をpreloadした状態でもregistered_amountは追加クエリなしで算出される" do
+    reserve_fund = build_reserve_fund(total_amount: 1_000_000, remaining_amount: 700_000).tap(&:save!)
+    create_detail(reserve_fund, amount: 150_000)
+
+    reloaded = MachineReserveFund.includes(:machine_reserve_fund_details).find(reserve_fund.id)
+    assert reloaded.machine_reserve_fund_details.loaded?
+
+    assert_no_queries { assert_equal 150_000, reloaded.registered_amount }
+  end
+
   test "明細が存在すると削除できない" do
     reserve_fund = build_reserve_fund(total_amount: 1_000_000).tap(&:save!)
     create_detail(reserve_fund, amount: 150_000)
