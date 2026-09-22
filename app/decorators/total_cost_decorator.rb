@@ -8,8 +8,6 @@ class TotalCostDecorator < Draper::Decorator
       work.work_kind.name
     elsif sorimachi_account.present?
       sorimachi_account.name
-    elsif depreciation.present?
-      depreciation.machine.machine_type.name
     elsif seedling_home.present?
       seedling_home.home_name
     elsif land.present?
@@ -20,8 +18,6 @@ class TotalCostDecorator < Draper::Decorator
   def detail_name
     if land.present?
       land.place
-    elsif depreciation.present?
-      depreciation.machine.alias_name
     else
       occurred_on.strftime('%m-%d')
     end

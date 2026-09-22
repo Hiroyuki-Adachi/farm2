@@ -1,0 +1,4 @@
+<%= turbo_stream.update 'machine_id' do %>
+  <option value=""></option>
+  <%= options_from_collection_for_select(@machines, :id, :usual_name) %>
+<% end %>
