@@ -39,12 +39,12 @@ class MachineOrganizationScopeTest < ActiveSupport::TestCase
     assert_includes MachinePriceDetail.for_organization(@other_organization), detail
   end
 
-  test "減価償却と分類を所有世帯の組織で絞り込む" do
-    depreciation = Depreciation.create!(machine: @other_machine, term: 2015, cost: 100)
-    depreciation_type = DepreciationType.create!(depreciation: depreciation, work_type: work_types(:work_types1))
-    assert_not_includes Depreciation.for_organization(@organization), depreciation
-    assert_includes Depreciation.for_organization(@other_organization), depreciation
-    assert_not_includes DepreciationType.for_organization(@organization), depreciation_type
-    assert_includes DepreciationType.for_organization(@other_organization), depreciation_type
+  test "基盤強化準備金原価を組織で絞り込む" do
+    reserve_fund = MachineReserveFund.create!(
+      organization: @other_organization, machine: @other_machine,
+      started_on: Date.new(2025, 4, 1), years: 7, total_amount: 1_000_000
+    )
+    assert_not_includes MachineReserveFund.for_organization(@organization), reserve_fund
+    assert_includes MachineReserveFund.for_organization(@other_organization), reserve_fund
   end
 end
