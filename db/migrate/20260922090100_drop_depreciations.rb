@@ -18,7 +18,7 @@ class DropDepreciations < ActiveRecord::Migration[8.1]
   end
 
   def down
-    create_table :depreciations, comment: "減価償却" do |t|
+    create_table :depreciations, id: { type: :serial, comment: "減価償却" }, comment: "減価償却" do |t|
       t.integer :term, limit: 4, null: false, comment: "年度(期)"
       t.integer :machine_id, comment: "機械"
       t.decimal :cost, precision: 9, default: 0, null: false, comment: "減価償却費"
@@ -27,7 +27,7 @@ class DropDepreciations < ActiveRecord::Migration[8.1]
     end
     add_index :depreciations, [:term, :machine_id], unique: true
 
-    create_table :depreciation_types, comment: "減価償却分類" do |t|
+    create_table :depreciation_types, id: { type: :serial, comment: "減価償却分類" }, comment: "減価償却分類" do |t|
       t.integer :depreciation_id, comment: "減価償却"
       t.integer :work_type_id, null: false, comment: "作業分類"
 
