@@ -42,7 +42,7 @@ class MachineOrganizationScopeTest < ActiveSupport::TestCase
   test "基盤強化準備金原価を組織で絞り込む" do
     reserve_fund = MachineReserveFund.create!(
       organization: @other_organization, machine: @other_machine,
-      started_on: Date.new(2025, 4, 1), years: 7, total_amount: 1_000_000
+      started_on: Date.new(2025, 4, 1), years: 7, total_amount: 1_000_000, remaining_amount: 1_000_000
     )
     assert_not_includes MachineReserveFund.for_organization(@organization), reserve_fund
     assert_includes MachineReserveFund.for_organization(@other_organization), reserve_fund

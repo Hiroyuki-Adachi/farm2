@@ -20,7 +20,7 @@
         <td><%= reserve_fund.started_on.strftime('%Y-%m') %></td>
         <td><%= reserve_fund.years %></td>
         <td class="text-end"><%= number_with_delimiter(reserve_fund.total_amount) %></td>
-        <td class="text-end"><%= number_with_delimiter(reserve_fund.remaining_amount) %></td>
+        <td class="text-end"><%= number_with_delimiter(reserve_fund.current_remaining_amount) %></td>
         <td>
           <%= link_to '変更', edit_machine_reserve_fund_path(reserve_fund, return_to: request.fullpath), class: "btn btn-success btn-sm" %>
         </td>

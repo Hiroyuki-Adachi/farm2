@@ -172,6 +172,7 @@ ja:
         started_on: "開始年月"
         years: "配分年数"
         total_amount: "総額"
+        remaining_amount: "残額(初期値)"
 
       work_kind:
         name: 名称

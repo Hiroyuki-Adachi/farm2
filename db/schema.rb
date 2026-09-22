@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_22_090100) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_22_090200) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -564,6 +564,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_22_090100) do
     t.datetime "created_at", null: false
     t.integer "machine_id", null: false, comment: "機械"
     t.bigint "organization_id", null: false, comment: "組織"
+    t.decimal "remaining_amount", precision: 9, null: false, comment: "残額(初期値)"
     t.date "started_on", null: false, comment: "開始年月"
     t.decimal "total_amount", precision: 9, null: false, comment: "総額"
     t.datetime "updated_at", null: false

@@ -21,17 +21,28 @@
     <%= f.label :machine_id, "機械", class: "col-form-label-lg form-label" %>
     <%= f.collection_select(:machine_id, @machines, :id, :usual_name, {include_blank: true}, {class: "form-select", id: :machine_id, required: true}) %>
  </div>
+</div>
+<div class="row"
+  data-controller="machine-reserve-fund-remaining-amount"
+  data-machine-reserve-fund-remaining-amount-reference-date-value="<%= current_system.start_date.iso8601 %>">
  <div class="col-md-2 mb-3">
     <%= f.label :started_on, "開始年月", class: "col-form-label-lg form-label" %>
-    <%= f.date_field :started_on, {required: true, class: "form-control"} %>
+    <%= f.date_field :started_on, {required: true, class: "form-control", data: {machine_reserve_fund_remaining_amount_target: "startedOn"}} %>
  </div>
  <div class="col-md-2 mb-3">
     <%= f.label :years, "配分年数", class: "col-form-label-lg form-label" %>
-    <%= f.number_field :years, {min: 1, max: 99, required: true, class: "form-control"} %>
+    <%= f.number_field :years, {min: 1, max: 99, required: true, class: "form-control", data: {machine_reserve_fund_remaining_amount_target: "years"}} %>
  </div>
  <div class="col-md-2 mb-3">
     <%= f.label :total_amount, "総額", class: "col-form-label-lg form-label" %>
-    <%= f.number_field :total_amount, {min: 0, max: 999999999, required: true, class: "form-control"} %>
+    <%= f.number_field :total_amount, {min: 0, max: 999999999, required: true, class: "form-control", data: {machine_reserve_fund_remaining_amount_target: "totalAmount"}} %>
+ </div>
+ <div class="col-md-3 mb-3">
+    <%= f.label :remaining_amount, "残額(初期値)", class: "col-form-label-lg form-label" %>
+    <div class="input-group">
+      <%= f.number_field :remaining_amount, {min: 0, max: 999999999, required: true, class: "form-control", data: {machine_reserve_fund_remaining_amount_target: "remainingAmount"}} %>
+      <%= button_tag '初期値設定', type: "button", class: "btn btn-outline-secondary", data: {action: "click->machine-reserve-fund-remaining-amount#calculate"} %>
+    </div>
  </div>
 </div>
 <div class="btn-toolbar">

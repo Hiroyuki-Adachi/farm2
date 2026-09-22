@@ -73,6 +73,6 @@ class MachineReserveFundsController < ApplicationController
   end
 
   def machine_reserve_fund_params
-    params.expect(machine_reserve_fund: [:machine_id, :started_on, :years, :total_amount])
+    params.expect(machine_reserve_fund: [:machine_id, :started_on, :years, :total_amount, :remaining_amount])
   end
 end

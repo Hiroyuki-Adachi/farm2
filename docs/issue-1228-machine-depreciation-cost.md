@@ -92,15 +92,23 @@ issue本文のテーブル仕様(償却/償却明細/償却原価)を、**「基
 ### `machine_reserve_funds`(基盤強化準備金原価スケジュール)
 
 ```
-t.bigint  :organization_id, null: false            # 組織
-t.integer :machine_id,      null: false             # 機械
-t.date    :started_on,      null: false             # 開始年月(月初日で保持。systems.start_dateと同じ運用)
-t.integer :years,           null: false, default: 7 # 配分年数
-t.decimal :total_amount,    precision: 9, null: false # 総額
+t.bigint  :organization_id,   null: false            # 組織
+t.integer :machine_id,        null: false             # 機械
+t.date    :started_on,        null: false             # 開始年月(実際に償却が始まった年月日。過去日もあり得る)
+t.integer :years,             null: false, default: 7 # 配分年数
+t.decimal :total_amount,      precision: 9, null: false # 総額
+t.decimal :remaining_amount,  precision: 9, null: false # 残額(登録時点の初期値。既存機械を途中から登録する場合に使う)
 t.timestamps
 ```
 - FK: `organization_id -> organizations`, `machine_id -> machines`
 - index: `machine_id`(unique), `organization_id`
+
+`remaining_amount`は「新規登録した時点での残額」。ゼロから登録するなら`total_amount`と同じ値になるが、
+既に何年か経過した機械を後から登録する場合はその時点の残額を入力する。`started_on`の月から現在の期の期首までの
+経過月数(日は無視し月単位でカウント)をもとに「総額 - 総額×経過月数/(年数×12)」を計算する「初期値設定」ボタンを
+登録/変更画面にFEのみ(JS)で実装している(`app/javascript/controllers/machine_reserve_fund_remaining_amount_controller.js`)。
+モデル上、`remaining_amount`(カラム、登録時点の残額)と`current_remaining_amount`(メソッド、
+`remaining_amount - 登録済み明細合計`で算出する「今の残額」)は別物。一覧画面には`current_remaining_amount`を表示する。
 
 ### `machine_reserve_fund_details`(年度明細)
 
@@ -144,13 +152,16 @@ t.timestamps
 `MachinePricesController`([app/controllers/machine_prices_controller.rb](../app/controllers/machine_prices_controller.rb))
 に準じたRESTfulな一覧+登録/変更構成。
 
-- `index`: `Machine.for_organization(current_organization).of_company.usual`を基点に
-  `machine_types.display_order / machines.display_order / machines.id`順。機種名・機械名・開始年月・
-  期間(年)・総額・残額(`total_amount - details.sum(:amount)`)・変更ボタン。下部に新規登録ボタン。
-- `new`/`create`, `edit`/`update`: 機種SELECT→機械SELECT のカスケード選択(既存にカスケードUIの前例があるか
-  要確認。無ければStimulusで新規実装)。`machine_reserve_fund_details`が1件でも存在する場合は
-  総額変更・削除不可、または「総額は残額より小さくできない」というissue記載のvalidatorを実装。
-  削除ボタンは明細が存在する場合は非表示。
+- `index`: 登録済みの`MachineReserveFund`のみを表示(未登録の機械は一覧に出さない)。
+  並び順は開始年月(日まで含む)を最優先し、同日なら機種表示順→機械表示順→機械IDの`usual`スコープ。
+  機種名・機械名・開始年月・配分年数・総額・残額(`current_remaining_amount`、右詰め表示)・変更ボタン。
+  下部に新規登録ボタン。
+- `new`/`create`, `edit`/`update`: 機種SELECT→機械SELECT のカスケード選択はStimulusの
+  `dependent-select`コントローラ(既存の`app/javascript/controllers/dependent_select_controller.js`)を流用。
+  総額・配分年数・開始年月に加えて`remaining_amount`(残額の初期値。途中から登録する機械向け)を入力する欄があり、
+  「初期値設定」ボタン(FEのみ、`machine_reserve_fund_remaining_amount_controller.js`)で
+  `総額 - 総額×経過月数/(年数×12)`を自動計算できる。登録済み明細がある場合は
+  `remaining_amount`が明細合計を下回る値には変更不可、削除ボタンは明細が存在する場合は非表示。
 
 ### 2. 基盤強化準備金明細データ保守(`MachineReserveFundDetailsController`)
 
