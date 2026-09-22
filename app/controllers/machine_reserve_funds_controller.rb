@@ -7,9 +7,8 @@ class MachineReserveFundsController < ApplicationController
   keeps_index_return_to path_method: :machine_reserve_funds_path
 
   def index
-    @machines = Machine.for_organization(current_organization).of_company.usual
-    @machine_reserve_funds_by_machine_id =
-      MachineReserveFund.for_organization(current_organization).index_by(&:machine_id)
+    @machine_reserve_funds =
+      MachineReserveFund.for_organization(current_organization).includes(machine: :machine_type).usual
   end
 
   def new

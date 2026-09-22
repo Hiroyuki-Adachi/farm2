@@ -1,5 +1,5 @@
 <h1>基盤強化準備金データ一覧</h1>
-<% if @machines.count > 0 %>
+<% if @machine_reserve_funds.count > 0 %>
 <table class="table table-sm">
   <thead>
     <tr>
@@ -7,25 +7,22 @@
       <th>機械</th>
       <th>開始年月</th>
       <th>配分年数</th>
-      <th>総額</th>
-      <th>残額</th>
+      <th class="text-end">総額</th>
+      <th class="text-end">残額</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
-    <% @machines.each do |machine| %>
-      <% reserve_fund = @machine_reserve_funds_by_machine_id[machine.id] %>
+    <% @machine_reserve_funds.each do |reserve_fund| %>
       <tr>
-        <td><%= machine.type_name %></td>
-        <td><%= machine.alias_name %></td>
-        <td><%= reserve_fund&.started_on&.strftime('%Y-%m') %></td>
-        <td><%= reserve_fund&.years %></td>
-        <td><%= number_with_delimiter(reserve_fund.total_amount) if reserve_fund %></td>
-        <td><%= number_with_delimiter(reserve_fund.remaining_amount) if reserve_fund %></td>
+        <td><%= reserve_fund.machine.type_name %></td>
+        <td><%= reserve_fund.machine.alias_name %></td>
+        <td><%= reserve_fund.started_on.strftime('%Y-%m') %></td>
+        <td><%= reserve_fund.years %></td>
+        <td class="text-end"><%= number_with_delimiter(reserve_fund.total_amount) %></td>
+        <td class="text-end"><%= number_with_delimiter(reserve_fund.remaining_amount) %></td>
         <td>
-          <% if reserve_fund %>
-            <%= link_to '変更', edit_machine_reserve_fund_path(reserve_fund, return_to: request.fullpath), class: "btn btn-success btn-sm" %>
-          <% end %>
+          <%= link_to '変更', edit_machine_reserve_fund_path(reserve_fund, return_to: request.fullpath), class: "btn btn-success btn-sm" %>
         </td>
       </tr>
     <% end %>

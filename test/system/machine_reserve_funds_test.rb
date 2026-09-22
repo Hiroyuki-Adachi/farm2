@@ -18,6 +18,42 @@ class MachineReserveFundsTest < ApplicationSystemTestCase
     assert_selector "h1", text: "基盤強化準備金データ一覧"
   end
 
+  test "登録前は一覧に表示されず、登録済みの機械だけが表示される" do
+    login_as(@user)
+    visit machine_reserve_funds_path
+
+    assert_no_text @machine.alias_name
+
+    MachineReserveFund.create!(
+      organization: organizations(:org), machine: @machine,
+      started_on: Date.new(2025, 4, 1), years: 7, total_amount: 1_000_000
+    )
+    visit machine_reserve_funds_path
+
+    assert_text @machine.alias_name
+  end
+
+  test "一覧は開始年月順に並び、金額は右詰めで表示される" do
+    older_machine = machines(:machines2)
+    MachineReserveFund.create!(
+      organization: organizations(:org), machine: @machine,
+      started_on: Date.new(2025, 4, 1), years: 7, total_amount: 1_000_000
+    )
+    MachineReserveFund.create!(
+      organization: organizations(:org), machine: older_machine,
+      started_on: Date.new(2024, 4, 1), years: 7, total_amount: 2_000_000
+    )
+
+    login_as(@user)
+    visit machine_reserve_funds_path
+
+    machine_cells = all("td:nth-child(2)").map(&:text)
+    assert_equal [older_machine.alias_name, @machine.alias_name], machine_cells
+
+    assert_selector "td.text-end", text: "1,000,000"
+    assert_selector "td.text-end", text: "2,000,000"
+  end
+
   test "機種から機械を選んで新規登録すると一覧に反映される" do
     login_as(@user)
     visit new_machine_reserve_fund_path

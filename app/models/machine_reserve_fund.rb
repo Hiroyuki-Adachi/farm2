@@ -36,6 +36,10 @@ class MachineReserveFund < ApplicationRecord
     organization_id = organization.is_a?(Organization) ? organization.id : organization
     where(organization_id: organization_id)
   }
+  scope :usual, lambda {
+    joins(machine: :machine_type)
+      .order(:started_on, "machine_types.display_order", "machines.display_order", "machines.id")
+  }
 
   def registered_amount
     machine_reserve_fund_details.sum(:amount)

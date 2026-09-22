@@ -89,6 +89,18 @@ class MachineReserveFundTest < ActiveSupport::TestCase
     assert MachineReserveFund.exists?(reserve_fund.id)
   end
 
+  test "usualスコープは開始年月を優先し、同じなら機種・機械の表示順で並ぶ" do
+    other_machine = machines(:machines2)
+    later = MachineReserveFund.create!(
+      organization: @organization, machine: @machine, started_on: Date.new(2025, 4, 1), years: 7, total_amount: 100
+    )
+    earlier = MachineReserveFund.create!(
+      organization: @organization, machine: other_machine, started_on: Date.new(2024, 4, 1), years: 7, total_amount: 100
+    )
+
+    assert_equal [earlier, later], MachineReserveFund.for_organization(@organization).usual.to_a
+  end
+
   private
 
   def build_reserve_fund(total_amount:, started_on: Date.new(2025, 4, 1), years: 7)
