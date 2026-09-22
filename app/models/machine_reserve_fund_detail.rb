@@ -29,8 +29,20 @@ class MachineReserveFundDetail < ApplicationRecord
 
   has_many :machine_reserve_fund_costs, dependent: :destroy
 
+  validate :associations_same_organization
+
   scope :for_organization, lambda { |organization|
     organization_id = organization.is_a?(Organization) ? organization.id : organization
     where(organization_id: organization_id)
   }
+
+  private
+
+  def associations_same_organization
+    return if organization_id.blank?
+
+    if machine_reserve_fund.present? && machine_reserve_fund.organization_id != organization_id
+      errors.add(:machine_reserve_fund_id, :invalid)
+    end
+  end
 end
