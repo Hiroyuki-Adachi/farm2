@@ -4,9 +4,11 @@ class DropDepreciations < ActiveRecord::Migration[8.1]
   # 本番適用前に depreciations の件数が0件であることを別途確認すること。
   def up
     depreciations_count = select_value("SELECT count(*) FROM depreciations").to_i
-    if depreciations_count.positive?
+    depreciation_types_count = select_value("SELECT count(*) FROM depreciation_types").to_i
+    if depreciations_count.positive? || depreciation_types_count.positive?
       raise ActiveRecord::MigrationError,
-            "depreciations has #{depreciations_count} row(s). Investigate before dropping " \
+            "depreciations has #{depreciations_count} row(s), depreciation_types has " \
+            "#{depreciation_types_count} row(s). Investigate before dropping " \
             "(see docs/issue-1228-machine-depreciation-cost.md)."
     end
 
