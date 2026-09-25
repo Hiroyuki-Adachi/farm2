@@ -1,4 +1,6 @@
 ENV['RAILS_ENV'] ||= 'test'
+raise 'Tests must run with RAILS_ENV=test' unless ENV['RAILS_ENV'] == 'test'
+
 require File.expand_path('../config/environment', __dir__)
 require 'minitest'
 require 'rails/test_help'

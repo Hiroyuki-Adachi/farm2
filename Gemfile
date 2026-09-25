@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 8.1.0'
 # ActiveSupport 8.1 passes JSON.parse options as a positional hash.
-gem 'json', '< 3'
+gem 'json'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # delayed_job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background.
@@ -127,6 +127,8 @@ group :development do
 end
 
 group :test do
+  # Build test data explicitly alongside existing fixtures.
+  gem 'factory_bot', '~> 6.6', require: false
   # capybara helps you test web applications by simulating how a real user would interact with your app.
   gem 'capybara'
   # cuprite is a Capybara driver for headless Chrome/Chromium

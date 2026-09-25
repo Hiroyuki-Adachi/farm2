@@ -44,7 +44,7 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
 
     ip = IpList.last
     assert_equal @user.login_name, ip.mail
-    assert_equal @ip_address, ip.ip_address
+    assert_equal @ip_address, ip.ip_address.to_s
     assert_equal true, ip.white_flag
     assert_redirected_to edit_ip_list_path(ip)
   end
@@ -77,7 +77,7 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
     assert_response :service_unavailable
 
     ip = IpList.last
-    assert_equal @ip_address, ip.ip_address
+    assert_equal @ip_address, ip.ip_address.to_s
     assert_equal false, ip.white_flag
   end
 
@@ -90,7 +90,7 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
 
     ip = IpList.last
     assert_equal @user.login_name, ip.mail
-    assert_equal @ip_address, ip.ip_address
+    assert_equal @ip_address, ip.ip_address.to_s
     assert_equal true, ip.white_flag
     assert_redirected_to edit_ip_list_path(ip)
   end
@@ -119,7 +119,7 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
 
     ip = IpList.last
     assert_equal user.login_name, ip.mail
-    assert_equal @ip_address, ip.ip_address
+    assert_equal @ip_address, ip.ip_address.to_s
     assert_equal true, ip.white_flag
     assert_redirected_to edit_ip_list_path(ip)
   end

@@ -25,3 +25,24 @@
 bundle exec rails test test/models/machine_result_test.rb test/models/work_test.rb test/decorators/statistics/machine_decorator_test.rb
 bundle exec rails test
 ```
+
+## FactoryBotとの併用 (#1208)
+
+`test/factories`の定義は`test/support/factory_bot.rb`から読み込む。`fixtures :all`とRailsのtransactional testsを維持し、生成は各テストのsetupまたは本体内で行う。
+
+```ruby
+machine = FactoryBot.create(:machine, owner: homes(:home1), display_order: 2)
+other = FactoryBot.create(:machine, owner: homes(:home2), machine_type: machine.machine_type)
+```
+
+- `FactoryBot.create/build/build_stubbed`と完全名で呼ぶ。SQLや関連の検索が必要なら`create`、保存不要の処理なら`build`等を使う。stubのIDをDB検索や外部キーに使わない。
+- 最小の既定値だけをfactoryに置き、期待値や分岐に関わる属性はテストで明示する。固定のDB ID、fixture名、ランダム値をfactoryに埋め込まない。一意属性を追加するときはfixtureとの衝突も確認する。
+- `machine`の`owner:`は必須の指定。省略するとArgumentErrorになる。`owner: nil`は、関連なしを検証するために保存せず`build` / `build_stubbed`する場合に限る。`machines.home_id`はDB上NOT NULLのため、`create(:machine, owner: nil)`は保存時に失敗する。`create`では保存済みの所有者を渡す。`machine_type:`は省略すると新規生成し、同一機種のケースでは同じオブジェクトを渡す。
+- 初回適用は`MachineTest`の表示順と所有者preload。同テストの世帯・組織・班はfixtureを利用する。表示順では所有者属性を判定に使わず、trucksでは組織・班の関連を検証条件として残す。機械と機種はテストごとに生成する。
+- validationやcallbackも実行されるため、fixtureの属性の単純コピーで移行しない。このアプリはbelongs_toの必須検証が既定で無効なので、保存成功だけで必要な関連が揃ったとは判断しない。
+- 価格計算では所有者と作業者の世帯一致が通常／リース単価を決める。同一世帯のケースを独立した関連factoryの自動生成に任せない。
+- 後続は統計表示の共有機械依存縮小、価格計算シナリオの段階移行、不要fixture削除、ロード範囲縮小の順に検討する。`pricing_*`の既存専用セットは引き続き維持する。
+
+導入理由・比較・後続の完了条件は[導入方針](../../docs/issue-1208-factory-strategy.md)を参照。factory追加だけでは`fixtures :all`のロード量は減らない。
+
+Rubyからテストを直接実行する場合も`RAILS_ENV=test`を指定する。test_helperはtest以外の環境ではアプリ読込前に停止し、開発DBへのfixture読込を防ぐ。

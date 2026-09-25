@@ -31,7 +31,7 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
 
   test "QRコード生成(正常)" do
     freeze_time Time.current do
-      qr = QrLoginSession.create!(expires_at: 5.minutes.from_now)
+      qr = QrLoginSession.create!(expires_at: 5.minutes.from_now, ip_address: "9.9.9.9")
 
       get qrcode_sessions_qr_login_path(qr.token)
 
@@ -43,7 +43,7 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
 
   test "QRコード生成(期限切れ)" do
     freeze_time Time.current do
-      qr = QrLoginSession.create!(expires_at: 1.minute.ago)
+      qr = QrLoginSession.create!(expires_at: 1.minute.ago, ip_address: "9.9.9.9")
 
       get qrcode_sessions_qr_login_path(qr.token)
 
@@ -53,7 +53,7 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
 
   test "QRコード消費(期限切れ)" do
     freeze_time Time.current do
-      qr = QrLoginSession.create!(status: :approved, user_id: 1, expires_at: 1.minute.ago)
+      qr = QrLoginSession.create!(status: :approved, user_id: 1, expires_at: 1.minute.ago, ip_address: "9.9.9.9")
 
       post consume_sessions_qr_login_path(qr.token), headers: { "ACCEPT" => "application/json" }
 
@@ -65,7 +65,7 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
 
   test "QRコード消費(未承認)" do
     freeze_time Time.current do
-      qr = QrLoginSession.create!(status: :pending, expires_at: 5.minutes.from_now)
+      qr = QrLoginSession.create!(status: :pending, expires_at: 5.minutes.from_now, ip_address: "9.9.9.9")
 
       post consume_sessions_qr_login_path(qr.token), headers: { "ACCEPT" => "application/json" }
 
@@ -80,7 +80,8 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
       qr = QrLoginSession.create!(
         status: :approved,
         user_id: -999_999, # 存在しないIDにする
-        expires_at: 5.minutes.from_now
+        expires_at: 5.minutes.from_now,
+        ip_address: "9.9.9.9"
       )
 
       post consume_sessions_qr_login_path(qr.token), headers: { "ACCEPT" => "application/json" }
@@ -101,7 +102,8 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
       qr = QrLoginSession.create!(
         status: :approved,
         user_id: user.id,
-        expires_at: 5.minutes.from_now
+        expires_at: 5.minutes.from_now,
+        ip_address: "9.9.9.9"
       )
 
       access_logger = Minitest::Mock.new
@@ -133,7 +135,8 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
       qr = QrLoginSession.create!(
         status: :approved,
         user_id: user.id,
-        expires_at: 5.minutes.from_now
+        expires_at: 5.minutes.from_now,
+        ip_address: "9.9.9.9"
       )
 
       access_logger = Minitest::Mock.new
@@ -160,7 +163,8 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
       qr = QrLoginSession.create!(
         status: :approved,
         user_id: user.id,
-        expires_at: 5.minutes.from_now
+        expires_at: 5.minutes.from_now,
+        ip_address: "9.9.9.9"
       )
 
       post consume_sessions_qr_login_path(qr.token),
@@ -182,7 +186,8 @@ class Sessions::QrLoginControllerTest < ActionDispatch::IntegrationTest
         status: :consumed,
         user_id: user.id,
         expires_at: 5.minutes.from_now,
-        consumed_at: 1.minute.ago
+        consumed_at: 1.minute.ago,
+        ip_address: "9.9.9.9"
       )
 
       post consume_sessions_qr_login_path(qr.token), headers: { "ACCEPT" => "application/json" }

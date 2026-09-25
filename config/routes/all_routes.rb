@@ -124,7 +124,11 @@ end
 resources :seedling_costs, param: "seedling_id", only: [:index, :create, :edit, :update]
 resources :chemical_costs, except: [:destroy]
 resources :fuel_costs, only: [:index, :create]
-resources :depreciations, only: [:index, :create]
+resources :machine_reserve_funds, except: [:show] do
+  collection do
+    get :machines
+  end
+end
 resources :total_costs, only: [:index, :create, :destroy]
 namespace :total_costs do
   resources :machines, only: [:index]

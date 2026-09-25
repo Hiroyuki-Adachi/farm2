@@ -62,11 +62,50 @@ class LandTest < ActiveSupport::TestCase
     start_date = Date.new(2017, 11, 1)
     end_date = Date.new(2018, 1, 31)
 
-    fee, results = land.costs(start_date, end_date)
+    fee, results = land.costs(start_date, end_date, term: 2017)
 
     assert_equal land_fees(:land_fee1), fee
     expected_results = { 5 => 30, 8 => 62 }
     assert_equal(expected_results, results)
+  end
+
+  test '期番号と期首年が異なる場合も指定した期の土地料金を返す' do
+    land = lands(:land_genka2)
+    fee = land.land_fees.create!(term: 16, manage_fee: 100, peasant_fee: 200)
+    lands(:land_other_org).land_fees.create!(term: 16, manage_fee: 300, peasant_fee: 400)
+
+    actual_fee, results = land.costs(Date.new(2017, 1, 1), Date.new(2017, 12, 31), term: 16)
+
+    assert_equal fee, actual_fee
+    assert_equal({ 5 => 334, 8 => 31 }, results)
+  end
+
+  test '同じ年にある短い期ごとに土地料金と境界日を含む日数を返す' do
+    land = lands(:land_genka2)
+    first_fee = land.land_fees.create!(term: 16, manage_fee: 100)
+    next_fee = land.land_fees.create!(term: 17, manage_fee: 200)
+
+    fee, results = land.costs(Date.new(2017, 11, 1), Date.new(2017, 11, 30), term: 16)
+    assert_equal first_fee, fee
+    assert_equal({ 5 => 30 }, results)
+
+    fee, results = land.costs(Date.new(2017, 12, 1), Date.new(2017, 12, 31), term: 17)
+    assert_equal next_fee, fee
+    assert_equal({ 8 => 31 }, results)
+  end
+
+  test '指定した期に土地料金がない場合は西暦年の料金を代用しない' do
+    fee, results = lands(:land_genka2).costs(Date.new(2017, 11, 1), Date.new(2017, 12, 31), term: 16)
+
+    assert_nil fee
+    assert_equal({ 5 => 30, 8 => 31 }, results)
+  end
+
+  test '期間開始時点に土地原価がない場合は従来どおり空の結果を返す' do
+    fee, results = lands(:land_genka2).costs(Date.new(2014, 12, 1), Date.new(2015, 1, 31), term: 16)
+
+    assert_nil fee
+    assert_equal [], results
   end
 
   test '領域の値と中心点' do

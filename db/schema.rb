@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_17_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_22_090200) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -259,23 +259,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_17_120000) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "depreciation_types", id: { type: :serial, comment: "減価償却分類" }, comment: "減価償却分類", force: :cascade do |t|
-    t.datetime "created_at", precision: nil, null: false
-    t.integer "depreciation_id", comment: "減価償却"
-    t.datetime "updated_at", precision: nil, null: false
-    t.integer "work_type_id", null: false, comment: "作業分類"
-    t.index ["depreciation_id", "work_type_id"], name: "index_depreciation_types_on_depreciation_id_and_work_type_id", unique: true
-  end
-
-  create_table "depreciations", id: { type: :serial, comment: "減価償却" }, comment: "減価償却", force: :cascade do |t|
-    t.decimal "cost", precision: 9, default: "0", null: false, comment: "減価償却費"
-    t.datetime "created_at", precision: nil, null: false
-    t.integer "machine_id", comment: "機械"
-    t.integer "term", null: false, comment: "年度(期)"
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["term", "machine_id"], name: "index_depreciations_on_term_and_machine_id", unique: true
-  end
-
   create_table "drying_lands", comment: "乾燥調整場所", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.integer "display_order", default: 0, null: false, comment: "表示順"
@@ -427,7 +410,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_17_120000) do
     t.integer "created_by", default: 0, null: false, comment: "作成者"
     t.date "expired_on", comment: "有効期限"
     t.string "hashed_token", limit: 64, default: "", null: false, comment: "ハッシュ化トークン"
-    t.string "ip_address", limit: 64, default: "", null: false, comment: "IP Address"
+    t.inet "ip_address", null: false, comment: "IP Address"
     t.string "mail", limit: 255, default: "", null: false, comment: "メールアドレス"
     t.datetime "updated_at", null: false
     t.boolean "white_flag", default: false, null: false, comment: "ホワイトリストフラグ"
@@ -549,6 +532,45 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_17_120000) do
     t.datetime "updated_at", null: false
     t.integer "work_id", null: false, comment: "作業"
     t.index ["work_id", "machine_id"], name: "machine_remarks_2nd", unique: true
+  end
+
+  create_table "machine_reserve_fund_costs", comment: "基盤強化準備金原価(作業分類別)", force: :cascade do |t|
+    t.decimal "cost", precision: 9, null: false, comment: "原価"
+    t.datetime "created_at", null: false
+    t.bigint "machine_reserve_fund_detail_id", null: false, comment: "基盤強化準備金原価明細"
+    t.bigint "organization_id", null: false, comment: "組織"
+    t.datetime "updated_at", null: false
+    t.integer "work_type_id", null: false, comment: "作業分類"
+    t.index ["machine_reserve_fund_detail_id", "work_type_id"], name: "idx_reserve_fund_costs_on_detail_and_work_type", unique: true
+    t.index ["machine_reserve_fund_detail_id"], name: "idx_on_machine_reserve_fund_detail_id_2e7d1eb058"
+    t.index ["organization_id"], name: "index_machine_reserve_fund_costs_on_organization_id"
+  end
+
+  create_table "machine_reserve_fund_details", comment: "基盤強化準備金原価明細", force: :cascade do |t|
+    t.decimal "amount", precision: 9, null: false, comment: "原価額"
+    t.datetime "created_at", null: false
+    t.bigint "machine_reserve_fund_id", null: false, comment: "基盤強化準備金原価"
+    t.integer "months", null: false, comment: "按分月数"
+    t.bigint "organization_id", null: false, comment: "組織"
+    t.decimal "remaining_amount", precision: 9, null: false, comment: "残額"
+    t.integer "term", null: false, comment: "年度(期)"
+    t.datetime "updated_at", null: false
+    t.index ["machine_reserve_fund_id", "term"], name: "idx_reserve_fund_details_on_fund_and_term", unique: true
+    t.index ["machine_reserve_fund_id"], name: "index_machine_reserve_fund_details_on_machine_reserve_fund_id"
+    t.index ["organization_id"], name: "index_machine_reserve_fund_details_on_organization_id"
+  end
+
+  create_table "machine_reserve_funds", comment: "基盤強化準備金原価", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "machine_id", null: false, comment: "機械"
+    t.bigint "organization_id", null: false, comment: "組織"
+    t.decimal "remaining_amount", precision: 9, null: false, comment: "残額(初期値)"
+    t.date "started_on", null: false, comment: "開始年月"
+    t.decimal "total_amount", precision: 9, null: false, comment: "総額"
+    t.datetime "updated_at", null: false
+    t.integer "years", default: 7, null: false, comment: "配分年数"
+    t.index ["machine_id"], name: "index_machine_reserve_funds_on_machine_id", unique: true
+    t.index ["organization_id"], name: "index_machine_reserve_funds_on_organization_id"
   end
 
   create_table "machine_results", id: { type: :serial, comment: "機械稼動データ" }, comment: "機械稼動データ", force: :cascade do |t|
@@ -691,7 +713,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_17_120000) do
     t.datetime "consumed_at", comment: "セッション使用日時"
     t.datetime "created_at", null: false
     t.datetime "expires_at", null: false, comment: "セッション有効期限"
-    t.string "ip_address", default: "", null: false, comment: "発行元IPアドレス"
+    t.inet "ip_address", null: false, comment: "発行元IPアドレス"
     t.integer "status", default: 0, null: false, comment: "セッション状態"
     t.string "token", limit: 36, null: false, comment: "セッション識別子"
     t.datetime "updated_at", null: false
@@ -1004,7 +1026,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_17_120000) do
     t.decimal "amount", precision: 9, default: -> { "(0)::numeric" }, null: false, comment: "原価額"
     t.integer "cost_type_id", comment: "原価種別"
     t.datetime "created_at", precision: nil, null: false
-    t.integer "depreciation_id", comment: "減価償却"
     t.integer "display_order", default: 0, null: false, comment: "並び順"
     t.boolean "fiscal_flag", default: false, null: false, comment: "決算期フラグ"
     t.integer "land_id", comment: "土地"
@@ -1419,6 +1440,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_17_120000) do
   add_foreign_key "land_places", "organizations"
   add_foreign_key "land_term_marks", "lands"
   add_foreign_key "lands", "organizations"
+  add_foreign_key "machine_reserve_fund_costs", "machine_reserve_fund_details"
+  add_foreign_key "machine_reserve_fund_costs", "organizations"
+  add_foreign_key "machine_reserve_fund_details", "machine_reserve_funds"
+  add_foreign_key "machine_reserve_fund_details", "organizations"
+  add_foreign_key "machine_reserve_funds", "organizations"
   add_foreign_key "owned_rice_prices", "organizations"
   add_foreign_key "schedules", "organizations"
   add_foreign_key "sections", "organizations"
