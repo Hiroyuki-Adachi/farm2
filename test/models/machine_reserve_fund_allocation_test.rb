@@ -23,6 +23,17 @@ class MachineReserveFundAllocationTest < ActiveSupport::TestCase
     assert_equal 0, @fund.amount_for(@system)
   end
 
+  test "月割額の端数はDecimalで四捨五入する" do
+    @fund.update!(started_on: Date.new(2015, 12, 1), years: 1, total_amount: 7, remaining_amount: 7)
+    @fund.reload
+    assert_equal 1, @fund.months_for(@system)
+    assert_equal 1, @fund.amount_for(@system)
+    @fund.total_amount = 6
+    assert_equal 1, @fund.amount_for(@system)
+    @fund.total_amount = 5
+    assert_equal 0, @fund.amount_for(@system)
+  end
+
   test "4月開始の年度境界と残額上限を使用する" do
     @system.assign_attributes(start_date: Date.new(2015, 4, 1), end_date: Date.new(2016, 3, 31))
     assert_equal 9, @fund.months_for(@system)
@@ -54,10 +65,22 @@ class MachineReserveFundAllocationTest < ActiveSupport::TestCase
     assert_equal 203_500, detail.reload.remaining_amount
   end
 
+  test "年度面積の集計クエリ数は作業分類数によらず日数と一致する" do
+    detail = @fund.build_detail(@system)
+    queries = []
+    subscriber = lambda do |_name, _started, _finished, _id, payload|
+      queries << payload[:sql] if payload[:sql].match?(/SELECT.*SUM.*FROM "land_costs"/i)
+    end
+    ActiveRecord::Base.uncached do
+      ActiveSupport::Notifications.subscribed(subscriber, "sql.active_record") do
+        assert detail.register(@system), detail.errors.full_messages.join
+      end
+    end
+    assert_equal (@system.start_date..@system.end_date).count, queries.size
+  end
+
   test "丸め誤差を最大原価行へ寄せる" do
-    LandCost.stubs(:sum_area_by_work_type).returns(0)
-    LandCost.stubs(:sum_area_by_work_type).with(anything, @types.first.id, @fund.organization_id).returns(1.to_d)
-    LandCost.stubs(:sum_area_by_work_type).with(anything, @types.last.id, @fund.organization_id).returns(1.to_d)
+    LandCost.stubs(:sum_areas_by_work_type).returns(@types.to_h { |type| [type.id, 1.to_d] })
     detail = @fund.build_detail(@system)
     detail.amount = 101
     assert detail.register(@system)
@@ -66,7 +89,7 @@ class MachineReserveFundAllocationTest < ActiveSupport::TestCase
   end
 
   test "面積0の場合は明細も原価も作らない" do
-    LandCost.stubs(:sum_area_by_work_type).returns(0)
+    LandCost.stubs(:sum_areas_by_work_type).returns({})
     detail = @fund.build_detail(@system)
     assert_no_difference ["MachineReserveFundDetail.count", "MachineReserveFundCost.count"] do
       assert_not detail.register(@system)
@@ -85,7 +108,7 @@ class MachineReserveFundAllocationTest < ActiveSupport::TestCase
   end
 
   test "同年度の二重登録を拒否し削除で原価と残額を戻す" do
-    LandCost.stubs(:sum_area_by_work_type).returns(1.to_d)
+    LandCost.stubs(:sum_areas_by_work_type).returns(WorkType.land.by_term(2015).to_h { |type| [type.id, 1.to_d] })
     detail = @fund.build_detail(@system)
     assert detail.register(@system)
     duplicate = @fund.build_detail(@system)
@@ -96,7 +119,7 @@ class MachineReserveFundAllocationTest < ActiveSupport::TestCase
     assert_equal 240_000, @fund.reload.current_remaining_amount
   end
   test "年度を遡って登録や削除しても後続明細の残額を再計算する" do
-    LandCost.stubs(:sum_area_by_work_type).returns(1.to_d)
+    LandCost.stubs(:sum_areas_by_work_type).returns(WorkType.land.by_term(2015).to_h { |type| [type.id, 1.to_d] })
     @types.each { |type| WorkTypeTerm.find_or_create_by!(work_type: type, term: 2016) }
     later = @fund.build_detail(systems(:s2016))
     assert later.register(systems(:s2016))
@@ -129,7 +152,7 @@ class MachineReserveFundAllocationTest < ActiveSupport::TestCase
       type.save!
       WorkTypeTerm.create!(work_type: type, term: 2015)
     end
-    LandCost.stubs(:sum_area_by_work_type).returns(1.to_d)
+    LandCost.stubs(:sum_areas_by_work_type).returns(WorkType.land.by_term(2015).to_h { |type| [type.id, 1.to_d] })
     detail = @fund.build_detail(@system)
     detail.amount = 3
     assert detail.register(@system), detail.errors.full_messages.join

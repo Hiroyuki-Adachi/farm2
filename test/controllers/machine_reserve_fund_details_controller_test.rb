@@ -6,7 +6,7 @@ class MachineReserveFundDetailsControllerTest < ActionDispatch::IntegrationTest
     @fund = MachineReserveFund.create!(organization: organizations(:org), machine: machines(:machines1),
                                        started_on: Date.new(2015, 1, 1), years: 1,
                                        total_amount: 120_000, remaining_amount: 120_000)
-    LandCost.stubs(:sum_area_by_work_type).returns(1.to_d)
+    LandCost.stubs(:sum_areas_by_work_type).returns(WorkType.land.by_term(2015).to_h { |type| [type.id, 1.to_d] })
   end
 
   test "登録時は年度と組織をサーバー側で決定する" do

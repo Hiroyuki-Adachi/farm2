@@ -73,7 +73,7 @@ class MachineReserveFund < ApplicationRecord
   def amount_for(system)
     return 0 if months_for(system).zero?
 
-    [(total_amount * months_for(system) / (years * 12)).round, current_remaining_amount].min
+    [(total_amount.to_d * months_for(system) / (years * 12)).round, current_remaining_amount].min
   end
 
   def build_detail(system)
