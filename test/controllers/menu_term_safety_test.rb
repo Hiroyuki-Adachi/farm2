@@ -9,6 +9,37 @@ class MenuTermSafetyTest < ActionDispatch::IntegrationTest
     @system = System.find_by(term: @organization.term, organization_id: @organization.id)
   end
 
+  test "当期内のユーザー年度更新失敗時は次期作成も取り消す" do
+    System.where(organization_id: @organization.id, term: 2016..).destroy_all
+    User.any_instance.expects(:update!).with(term: 2016).raises(ActiveRecord::RecordInvalid.new(@user))
+
+    travel_to Date.new(2015, 6, 15) do
+      assert_no_difference("System.count") do
+        patch menu_path(@system.id), params: { system: { term: 2016 } }
+        assert_response 422
+      end
+    end
+
+    assert_equal 2015, @user.reload.term
+    assert_equal 2015, @organization.reload.term
+  end
+
+  test "所属ユーザー年度更新失敗時は次期作成と組織年度更新も取り消す" do
+    System.where(organization_id: @organization.id, term: 2016..).destroy_all
+    original_terms = @organization.users.pluck(:id, :term).to_h
+    User.any_instance.expects(:update!).with(term: 2016).raises(ActiveRecord::RecordInvalid.new(@user))
+
+    travel_to Date.new(2016, 1, 15) do
+      assert_no_difference("System.count") do
+        patch menu_path(@system.id), params: { system: { term: 2016 } }
+        assert_response 422
+      end
+    end
+
+    assert_equal 2015, @organization.reload.term
+    assert_equal original_terms, @organization.users.pluck(:id, :term).to_h
+  end
+
   test "管理者以外は直接リクエストでも次期を作成できない" do
     System.where(organization_id: @organization.id, term: 2016..).destroy_all
     user = users(:user_user)
