@@ -59,6 +59,15 @@ class LandCost < ApplicationRecord
       .sum("lands.area")
   end
 
+  # 指定日の有効な管理対象圃場を、作業分類ごとに1クエリで集計する。
+  def self.sum_areas_by_work_type(target, work_type_ids, organization)
+    for_organization(organization).newest(target)
+      .where(work_type_id: work_type_ids)
+      .where("lands.deleted_at IS NULL AND target_flag = true")
+      .where("? BETWEEN lands.start_on AND lands.end_on", target)
+      .group(:work_type_id).sum("lands.area")
+  end
+
   def self.sum_area_for_harvest(worked_at, work_kind_id, organization)
     results = {}
     Work.for_organization(organization).where(worked_at: worked_at, work_kind_id: work_kind_id).find_each do |work|
