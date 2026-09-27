@@ -8,11 +8,16 @@
 #  term(年度(期))               :integer          not null
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
+#  organization_id(組織)        :bigint
 #  total_cost_type_id(原価種別) :integer          default(0), not null
 #
 # Indexes
 #
-#  sorimachi_accounts_2nd  (term,code) UNIQUE
+#  sorimachi_accounts_2nd  (organization_id,term,code) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 # This model initially had no columns defined. If you add columns to the
@@ -21,6 +26,7 @@
 #
 
 sorimachi_accounts0:
+  organization_id: 1
   term: 2014
   code: 700
   total_cost_type_id: 110
@@ -28,6 +34,7 @@ sorimachi_accounts0:
 
 
 sorimachi_accounts1:
+  organization_id: 1
   term: 2014
   code: 702
   total_cost_type_id: 110
@@ -35,6 +42,7 @@ sorimachi_accounts1:
 
 
 sorimachi_accounts2:
+  organization_id: 1
   term: 2014
   code: 704
   total_cost_type_id: 110
@@ -42,6 +50,7 @@ sorimachi_accounts2:
 
 
 sorimachi_accounts3:
+  organization_id: 1
   term: 2014
   code: 706
   total_cost_type_id: 110
@@ -49,6 +58,7 @@ sorimachi_accounts3:
 
 
 sorimachi_accounts4:
+  organization_id: 1
   term: 2014
   code: 708
   total_cost_type_id: 110
@@ -56,6 +66,7 @@ sorimachi_accounts4:
 
 
 sorimachi_accounts5:
+  organization_id: 1
   term: 2014
   code: 710
   total_cost_type_id: 110
@@ -63,6 +74,7 @@ sorimachi_accounts5:
 
 
 sorimachi_accounts6:
+  organization_id: 1
   term: 2014
   code: 712
   total_cost_type_id: 110
@@ -70,6 +82,7 @@ sorimachi_accounts6:
 
 
 sorimachi_accounts7:
+  organization_id: 1
   term: 2014
   code: 714
   total_cost_type_id: 110
@@ -77,6 +90,7 @@ sorimachi_accounts7:
 
 
 sorimachi_accounts8:
+  organization_id: 1
   term: 2014
   code: 719
   total_cost_type_id: 110
@@ -84,6 +98,7 @@ sorimachi_accounts8:
 
 
 sorimachi_accounts_2015:
+  organization_id: 1
   term: 2015
   code: 720
   total_cost_type_id: 110
@@ -91,6 +106,7 @@ sorimachi_accounts_2015:
 
 
 sorimachi_accounts10:
+  organization_id: 1
   term: 2014
   code: 722
   total_cost_type_id: 110
@@ -98,6 +114,7 @@ sorimachi_accounts10:
 
 
 sorimachi_accounts11:
+  organization_id: 1
   term: 2014
   code: 724
   total_cost_type_id: 110
@@ -105,6 +122,7 @@ sorimachi_accounts11:
 
 
 sorimachi_accounts12:
+  organization_id: 1
   term: 2014
   code: 730
   total_cost_type_id: 110
@@ -112,6 +130,7 @@ sorimachi_accounts12:
 
 
 sorimachi_accounts13:
+  organization_id: 1
   term: 2014
   code: 732
   total_cost_type_id: 110
@@ -119,6 +138,7 @@ sorimachi_accounts13:
 
 
 sorimachi_accounts14:
+  organization_id: 1
   term: 2014
   code: 734
   total_cost_type_id: 110
@@ -126,6 +146,7 @@ sorimachi_accounts14:
 
 
 sorimachi_accounts15:
+  organization_id: 1
   term: 2014
   code: 736
   total_cost_type_id: 110
@@ -133,6 +154,7 @@ sorimachi_accounts15:
 
 
 sorimachi_accounts16:
+  organization_id: 1
   term: 2014
   code: 740
   total_cost_type_id: 110
@@ -140,6 +162,7 @@ sorimachi_accounts16:
 
 
 sorimachi_accounts17:
+  organization_id: 1
   term: 2014
   code: 742
   total_cost_type_id: 110
@@ -147,6 +170,7 @@ sorimachi_accounts17:
 
 
 sorimachi_accounts18:
+  organization_id: 1
   term: 2014
   code: 744
   total_cost_type_id: 110
@@ -154,6 +178,7 @@ sorimachi_accounts18:
 
 
 sorimachi_accounts19:
+  organization_id: 1
   term: 2014
   code: 750
   total_cost_type_id: 110
@@ -161,6 +186,7 @@ sorimachi_accounts19:
 
 
 sorimachi_accounts20:
+  organization_id: 1
   term: 2014
   code: 752
   total_cost_type_id: 110
@@ -168,6 +194,7 @@ sorimachi_accounts20:
 
 
 sorimachi_accounts21:
+  organization_id: 1
   term: 2014
   code: 754
   total_cost_type_id: 110
@@ -175,6 +202,7 @@ sorimachi_accounts21:
 
 
 sorimachi_accounts22:
+  organization_id: 1
   term: 2014
   code: 756
   total_cost_type_id: 110
@@ -182,6 +210,7 @@ sorimachi_accounts22:
 
 
 sorimachi_accounts23:
+  organization_id: 1
   term: 2014
   code: 758
   total_cost_type_id: 110
@@ -189,6 +218,7 @@ sorimachi_accounts23:
 
 
 sorimachi_accounts24:
+  organization_id: 1
   term: 2014
   code: 760
   total_cost_type_id: 110
@@ -196,6 +226,7 @@ sorimachi_accounts24:
 
 
 sorimachi_accounts25:
+  organization_id: 1
   term: 2014
   code: 762
   total_cost_type_id: 110
@@ -203,6 +234,7 @@ sorimachi_accounts25:
 
 
 sorimachi_accounts26:
+  organization_id: 1
   term: 2014
   code: 770
   total_cost_type_id: 110
@@ -210,6 +242,7 @@ sorimachi_accounts26:
 
 
 sorimachi_accounts27:
+  organization_id: 1
   term: 2014
   code: 772
   total_cost_type_id: 110
@@ -217,6 +250,7 @@ sorimachi_accounts27:
 
 
 sorimachi_accounts28:
+  organization_id: 1
   term: 2014
   code: 774
   total_cost_type_id: 110
@@ -224,6 +258,7 @@ sorimachi_accounts28:
 
 
 sorimachi_accounts29:
+  organization_id: 1
   term: 2014
   code: 776
   total_cost_type_id: 110
@@ -231,6 +266,7 @@ sorimachi_accounts29:
 
 
 sorimachi_accounts30:
+  organization_id: 1
   term: 2014
   code: 780
   total_cost_type_id: 110
@@ -238,6 +274,7 @@ sorimachi_accounts30:
 
 
 sorimachi_accounts31:
+  organization_id: 1
   term: 2014
   code: 800
   total_cost_type_id: 90
@@ -245,6 +282,7 @@ sorimachi_accounts31:
 
 
 sorimachi_accounts32:
+  organization_id: 1
   term: 2014
   code: 810
   total_cost_type_id: 90
@@ -252,6 +290,7 @@ sorimachi_accounts32:
 
 
 sorimachi_accounts33:
+  organization_id: 1
   term: 2014
   code: 812
   total_cost_type_id: 90
@@ -259,6 +298,7 @@ sorimachi_accounts33:
 
 
 sorimachi_accounts34:
+  organization_id: 1
   term: 2014
   code: 814
   total_cost_type_id: 90
@@ -266,6 +306,7 @@ sorimachi_accounts34:
 
 
 sorimachi_accounts35:
+  organization_id: 1
   term: 2014
   code: 816
   total_cost_type_id: 90
@@ -273,6 +314,7 @@ sorimachi_accounts35:
 
 
 sorimachi_accounts36:
+  organization_id: 1
   term: 2014
   code: 817
   total_cost_type_id: 90
@@ -280,6 +322,7 @@ sorimachi_accounts36:
 
 
 sorimachi_accounts37:
+  organization_id: 1
   term: 2014
   code: 818
   total_cost_type_id: 90
@@ -287,6 +330,7 @@ sorimachi_accounts37:
 
 
 sorimachi_accounts38:
+  organization_id: 1
   term: 2014
   code: 820
   total_cost_type_id: 90
@@ -294,6 +338,7 @@ sorimachi_accounts38:
 
 
 sorimachi_accounts39:
+  organization_id: 1
   term: 2014
   code: 822
   total_cost_type_id: 90
@@ -301,6 +346,7 @@ sorimachi_accounts39:
 
 
 sorimachi_accounts40:
+  organization_id: 1
   term: 2014
   code: 824
   total_cost_type_id: 90
@@ -308,6 +354,7 @@ sorimachi_accounts40:
 
 
 sorimachi_accounts41:
+  organization_id: 1
   term: 2014
   code: 830
   total_cost_type_id: 90
@@ -315,6 +362,7 @@ sorimachi_accounts41:
 
 
 sorimachi_accounts42:
+  organization_id: 1
   term: 2014
   code: 832
   total_cost_type_id: 90
@@ -322,6 +370,7 @@ sorimachi_accounts42:
 
 
 sorimachi_accounts43:
+  organization_id: 1
   term: 2014
   code: 833
   total_cost_type_id: 90
@@ -329,6 +378,7 @@ sorimachi_accounts43:
 
 
 sorimachi_accounts44:
+  organization_id: 1
   term: 2014
   code: 844
   total_cost_type_id: 90
@@ -336,6 +386,7 @@ sorimachi_accounts44:
 
 
 sorimachi_accounts45:
+  organization_id: 1
   term: 2014
   code: 846
   total_cost_type_id: 90
@@ -343,6 +394,7 @@ sorimachi_accounts45:
 
 
 sorimachi_accounts46:
+  organization_id: 1
   term: 2014
   code: 848
   total_cost_type_id: 90
@@ -350,6 +402,7 @@ sorimachi_accounts46:
 
 
 sorimachi_accounts47:
+  organization_id: 1
   term: 2014
   code: 850
   total_cost_type_id: 90
@@ -357,6 +410,7 @@ sorimachi_accounts47:
 
 
 sorimachi_accounts48:
+  organization_id: 1
   term: 2014
   code: 851
   total_cost_type_id: 90
@@ -364,6 +418,7 @@ sorimachi_accounts48:
 
 
 sorimachi_accounts49:
+  organization_id: 1
   term: 2014
   code: 852
   total_cost_type_id: 90
@@ -371,6 +426,7 @@ sorimachi_accounts49:
 
 
 sorimachi_accounts50:
+  organization_id: 1
   term: 2014
   code: 856
   total_cost_type_id: 90
@@ -378,6 +434,7 @@ sorimachi_accounts50:
 
 
 sorimachi_accounts51:
+  organization_id: 1
   term: 2014
   code: 857
   total_cost_type_id: 90
@@ -385,6 +442,7 @@ sorimachi_accounts51:
 
 
 sorimachi_accounts52:
+  organization_id: 1
   term: 2014
   code: 860
   total_cost_type_id: 90
@@ -392,6 +450,7 @@ sorimachi_accounts52:
 
 
 sorimachi_accounts53:
+  organization_id: 1
   term: 2014
   code: 870
   total_cost_type_id: 90
@@ -399,6 +458,7 @@ sorimachi_accounts53:
 
 
 sorimachi_accounts54:
+  organization_id: 1
   term: 2014
   code: 872
   total_cost_type_id: 90
@@ -406,6 +466,7 @@ sorimachi_accounts54:
 
 
 sorimachi_accounts55:
+  organization_id: 1
   term: 2014
   code: 874
   total_cost_type_id: 90
@@ -413,6 +474,7 @@ sorimachi_accounts55:
 
 
 sorimachi_accounts56:
+  organization_id: 1
   term: 2014
   code: 876
   total_cost_type_id: 90
@@ -420,6 +482,7 @@ sorimachi_accounts56:
 
 
 sorimachi_accounts57:
+  organization_id: 1
   term: 2014
   code: 878
   total_cost_type_id: 90
@@ -427,6 +490,7 @@ sorimachi_accounts57:
 
 
 sorimachi_accounts58:
+  organization_id: 1
   term: 2014
   code: 880
   total_cost_type_id: 90
@@ -434,6 +498,7 @@ sorimachi_accounts58:
 
 
 sorimachi_accounts59:
+  organization_id: 1
   term: 2014
   code: 882
   total_cost_type_id: 90
@@ -441,6 +506,7 @@ sorimachi_accounts59:
 
 
 sorimachi_accounts60:
+  organization_id: 1
   term: 2014
   code: 884
   total_cost_type_id: 90
@@ -448,6 +514,7 @@ sorimachi_accounts60:
 
 
 sorimachi_accounts61:
+  organization_id: 1
   term: 2014
   code: 886
   total_cost_type_id: 90
@@ -455,6 +522,7 @@ sorimachi_accounts61:
 
 
 sorimachi_accounts62:
+  organization_id: 1
   term: 2014
   code: 890
   total_cost_type_id: 90
@@ -462,6 +530,7 @@ sorimachi_accounts62:
 
 
 sorimachi_accounts63:
+  organization_id: 1
   term: 2014
   code: 892
   total_cost_type_id: 90
@@ -469,6 +538,7 @@ sorimachi_accounts63:
 
 
 sorimachi_accounts64:
+  organization_id: 1
   term: 2014
   code: 894
   total_cost_type_id: 90
@@ -476,6 +546,7 @@ sorimachi_accounts64:
 
 
 sorimachi_accounts65:
+  organization_id: 1
   term: 2014
   code: 898
   total_cost_type_id: 90
@@ -483,6 +554,7 @@ sorimachi_accounts65:
 
 
 sorimachi_accounts66:
+  organization_id: 1
   term: 2014
   code: 899
   total_cost_type_id: 90
@@ -490,6 +562,7 @@ sorimachi_accounts66:
 
 
 sorimachi_sales1:
+  organization_id: 1
   term: 2014
   code: 500
   total_cost_type_id: 200
@@ -497,6 +570,7 @@ sorimachi_sales1:
 
 
 sorimachi_sales2:
+  organization_id: 1
   term: 2014
   code: 520
   total_cost_type_id: 200
