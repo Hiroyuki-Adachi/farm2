@@ -17,7 +17,7 @@
 #  region(領域)                       :polygon
 #  start_on(有効期間(自))             :date             default(Mon, 01 Jan 1900), not null
 #  target_flag(管理対象フラグ)        :boolean          default(TRUE), not null
-#  uuid(UUID)                         :string(36)       default(""), not null
+#  uuid(UUID)                         :uuid             not null
 #  created_at                         :datetime
 #  updated_at                         :datetime
 #  group_id(グループID)               :integer
@@ -32,7 +32,7 @@
 #  index_lands_on_organization_id  (organization_id)
 #  index_lands_on_place            (place)
 #  index_lands_on_place_sort_key   (place_sort_key)
-#  index_lands_on_uuid             (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
+#  index_lands_on_uuid             (uuid) UNIQUE WHERE (uuid IS NOT NULL)
 #
 # Foreign Keys
 #
@@ -41,6 +41,16 @@
 require 'test_helper'
 
 class LandTest < ActiveSupport::TestCase
+  test "新規圃場のUUIDが生成され保存後も維持される" do
+    land = lands(:lands1).dup
+    land.uuid = nil
+    land.save!
+
+    assert_match(/\A[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\z/, land.uuid)
+    assert_equal land.uuid, Land.find(land.id).uuid
+    assert_equal :uuid, Land.columns_hash.fetch("uuid").type
+  end
+
   test '番地と面積の検証' do
     land = Land.new
 

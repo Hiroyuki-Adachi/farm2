@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_22_090200) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_27_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -489,12 +489,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_22_090200) do
     t.date "start_on", default: "1900-01-01", null: false, comment: "有効期間(自)"
     t.boolean "target_flag", default: true, null: false, comment: "管理対象フラグ"
     t.datetime "updated_at", precision: nil
-    t.string "uuid", limit: 36, default: "", null: false, comment: "UUID"
+    t.uuid "uuid", null: false, comment: "UUID"
     t.index ["deleted_at"], name: "index_lands_on_deleted_at"
     t.index ["organization_id"], name: "index_lands_on_organization_id"
     t.index ["place"], name: "index_lands_on_place"
     t.index ["place_sort_key"], name: "index_lands_on_place_sort_key"
-    t.index ["uuid"], name: "index_lands_on_uuid", unique: true, where: "((uuid)::text <> ''::text)"
+    t.index ["uuid"], name: "index_lands_on_uuid", unique: true, where: "(uuid IS NOT NULL)"
   end
 
   create_table "machine_kinds", id: { type: :serial, comment: "作業種別機械利用可能マスタ" }, comment: "作業種別機械利用可能マスタ", force: :cascade do |t|
