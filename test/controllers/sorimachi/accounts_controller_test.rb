@@ -74,14 +74,13 @@ class Sorimachi::AccountsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ソリマチ科目の前期引継では組織を設定する" do
-    SorimachiAccount.where(term: @user.term).delete_all
+    SorimachiAccount.for_organization(@user.organization_id).where(term: @user.term).delete_all
 
     post sorimachi_accounts_path
     assert_redirected_to sorimachi_accounts_path
 
-    accounts = SorimachiAccount.where(term: @user.term)
-    assert_equal SorimachiAccount.where(term: @user.term - 1).count, accounts.count
-    assert_equal [@user.organization_id], accounts.distinct.pluck(:organization_id)
+    accounts = SorimachiAccount.for_organization(@user.organization_id)
+    assert_equal accounts.where(term: @user.term - 1).count, accounts.where(term: @user.term).count
   end
 
   test "ソリマチ科目削除" do

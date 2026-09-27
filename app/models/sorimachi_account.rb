@@ -35,13 +35,11 @@ class SorimachiAccount < ApplicationRecord
   }
 
   def self.import(term, organization_id)
-    SorimachiAccount.where(term: term - 1).find_each do |sorimachi_account|
-      account = SorimachiAccount.find_by(term: term, code: sorimachi_account.code)
-      next if account
+    SorimachiAccount.for_organization(organization_id).where(term: term - 1).find_each do |sorimachi_account|
+      next if SorimachiAccount.for_organization(organization_id).exists?(term: term, code: sorimachi_account.code)
 
       account = SorimachiAccount.new(sorimachi_account.attributes)
       account.term = term
-      account.organization_id = organization_id
       account.id = nil
       account.save!
     end

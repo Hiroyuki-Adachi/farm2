@@ -84,9 +84,10 @@ class Sorimachi::AccountsController < ApplicationController
 
   def set_sorimachi_account
     @account = SorimachiAccount.find_or_initialize_by(
+      organization_id: current_organization.id,
       term: current_term,
       code: params[:code]
-    ) { |account| account.organization_id = current_organization.id }
+    )
   end
 
   def sorimachi_account_params

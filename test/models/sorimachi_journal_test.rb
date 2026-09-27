@@ -148,16 +148,28 @@ class SorimachiJournalTest < ActiveSupport::TestCase
     assert_equal @system.start_date, journal.reload.accounted_on
   end
 
-  test "変更のない再取込でも対象組織の期間を検証する" do
+  test "変更のない再取込でも対象期の期間を検証する" do
     journal = build_journal(accounted_on: @system.start_date)
     journal.save!
-    other_organization = Organization.create!(name: "別組織の仕訳")
-    other_system = System.create!(organization_id: other_organization.id, term: @term, term_name: "別組織の期",
-                                  start_date: Date.new(2091, 4, 1), end_date: Date.new(2091, 6, 30))
+    @system.update!(start_date: @system.start_date.next_month)
 
     with_import_file(journal) do |file|
-      assert_raises(ActiveRecord::RecordInvalid) { SorimachiJournal.import(other_system, file) }
+      assert_raises(ActiveRecord::RecordInvalid) { SorimachiJournal.import(@system, file) }
     end
+  end
+
+  test "他組織の同じ行番号の仕訳は上書きせず自組織の仕訳として取り込む" do
+    journal = build_journal(accounted_on: @system.start_date)
+    journal.save!
+    other_system = System.create!(organization_id: Organization.create!(name: "別組織の仕訳").id, term: @term,
+                                  term_name: "別組織の期", start_date: @system.start_date, end_date: @system.end_date)
+    journal.remark1 = "別組織の備考"
+
+    with_import_file(journal) { |file| SorimachiJournal.import(other_system, file) }
+
+    assert_not_equal "別組織の備考", journal.reload.remark1
+    assert SorimachiJournal.exists?(organization_id: other_system.organization_id, term: @term, line: journal.line,
+                                    remark1: "別組織の備考")
   end
 
   test "再取込で期内の日付だけを変更できる" do
@@ -211,8 +223,8 @@ class SorimachiJournalTest < ActiveSupport::TestCase
 
     with_import_file(journal) { |file| SorimachiJournal.import(@system, file) }
 
-    imported = SorimachiJournal.find_by!(term: @term, line: journal.line, detail: journal.detail)
-    assert_equal @organization.id, imported.organization_id
+    assert SorimachiJournal.exists?(organization_id: @organization.id, term: @term,
+                                    line: journal.line, detail: journal.detail)
   end
 
   private

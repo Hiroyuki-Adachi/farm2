@@ -82,7 +82,8 @@ class SorimachiJournal < ApplicationRecord
     import_attributes = updatable_attributes
     CSV.foreach(file.path, encoding: "cp932", headers: false, skip_lines: %r{^//}) do |row|
       sorimachi_new = SorimachiJournal.new([import_attributes, row].transpose.to_h)
-      journal = SorimachiJournal.find_by(term: term, line: row[0], detail: row[1])
+      journal = SorimachiJournal.find_by(organization_id: system.organization_id, term: term,
+                                         line: row[0], detail: row[1])
       if journal.nil?
         journal = sorimachi_new
         journal.term = term
