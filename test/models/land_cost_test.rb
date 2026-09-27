@@ -1,5 +1,20 @@
 require "test_helper"
 
+# == Schema Information
+#
+# Table name: land_costs(土地原価)
+#
+#  id(土地原価)           :integer          not null, primary key
+#  activated_on(有効日)   :date             default(Mon, 01 Jan 1900), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  land_id(土地)          :integer          not null
+#  work_type_id(作業分類) :integer          not null
+#
+# Indexes
+#
+#  index_land_costs_on_activated_on_and_land_id  (activated_on,land_id) UNIQUE
+#
 class LandCostTest < ActiveSupport::TestCase
   test "稲わら面積は対象期の期首日時点の土地原価で集計する" do
     system = systems(:s2015)

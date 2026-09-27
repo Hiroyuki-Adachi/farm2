@@ -1,5 +1,25 @@
 require 'test_helper'
 
+# == Schema Information
+#
+# Table name: work_chemicals(薬剤使用データ)
+#
+#  id(薬剤使用データ)                  :integer          not null, primary key
+#  area_flag(10a当たり入力)            :boolean          default(FALSE), not null
+#  chemical_group_no(薬剤グループ番号) :integer          default(1), not null
+#  magnification(水溶液(リットル))     :decimal(5, 1)
+#  quantity(使用量)                    :decimal(5, 1)    default(0.0), not null
+#  remarks(備考)                       :text             default(""), not null
+#  created_at                          :datetime
+#  updated_at                          :datetime
+#  chemical_id(薬剤)                   :integer          not null
+#  dilution_id(希釈)                   :integer          default(0), not null
+#  work_id(作業)                       :integer          not null
+#
+# Indexes
+#
+#  work_chemicals_2nd_key  (work_id,chemical_id,chemical_group_no) UNIQUE
+#
 class WorkChemicalTest < ActiveSupport::TestCase
   test "希釈水量(使用量単位がcc/gの場合)" do
     chemical = Chemical.new(unit: "cc")
