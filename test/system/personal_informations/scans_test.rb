@@ -7,7 +7,6 @@ class PersonalInformations::ScansTest < ApplicationSystemTestCase
     assert_selector "#video"
     # カメラ入力のみ差し替え、実際のonScan・fetch・画面更新を実行する。
     page.execute_script <<~JS
-      window.scanReady = false;
       import("qr-scanner").then(async ({ default: QrScanner }) => {
         QrScanner.prototype.start = function() {
           window.testScanner = this;
@@ -15,11 +14,10 @@ class PersonalInformations::ScansTest < ApplicationSystemTestCase
         };
         const { init } = await import("pages/personal_informations/scans");
         init();
-        window.scanReady = true;
+        document.getElementById("video").dataset.scanReady = "true";
       });
     JS
-    assert_selector "#video"
-    page.document.synchronize { raise Capybara::ElementNotFound unless page.evaluate_script("window.scanReady") }
+    assert_selector '#video[data-scan-ready="true"]'
   end
 
   test "圃場QRで圃場詳細に遷移する" do
