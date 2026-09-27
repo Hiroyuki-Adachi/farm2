@@ -23,7 +23,7 @@ class MachineReserveFundDetailsController < ApplicationController
                                                                   term: current_term)
     )
     if @detail.register(current_system)
-      redirect_to machine_reserve_fund_details_path
+      redirect_to machine_reserve_fund_details_path, notice: "基盤強化準備金明細を登録しました。"
     else
       render :new, status: :unprocessable_content
     end
@@ -33,7 +33,7 @@ class MachineReserveFundDetailsController < ApplicationController
     detail = MachineReserveFundDetail.for_organization(current_organization)
       .where(term: current_term).find(params.expect(:id))
     detail.destroy_with_balance!
-    redirect_to machine_reserve_fund_details_path, status: :see_other
+    redirect_to machine_reserve_fund_details_path, notice: "基盤強化準備金明細を削除しました。", status: :see_other
   end
 
   private
