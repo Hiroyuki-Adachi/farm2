@@ -16,7 +16,7 @@ class MenuTermSafetyTest < ActionDispatch::IntegrationTest
     travel_to Date.new(2015, 6, 15) do
       assert_no_difference("System.count") do
         patch menu_path(@system.id), params: { system: { term: 2016 } }
-        assert_response 422
+        assert_response :unprocessable_content
       end
     end
 
@@ -32,7 +32,7 @@ class MenuTermSafetyTest < ActionDispatch::IntegrationTest
     travel_to Date.new(2016, 1, 15) do
       assert_no_difference("System.count") do
         patch menu_path(@system.id), params: { system: { term: 2016 } }
-        assert_response 422
+        assert_response :unprocessable_content
       end
     end
 
