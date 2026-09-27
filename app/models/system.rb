@@ -77,6 +77,15 @@ class System < ApplicationRecord
     system
   end
 
+  # MenuControllerの年度設定と同じ組織行をロックし、未作成の次期だけを保存する。
+  def self.ensure_for_planning!(organization, term)
+    organization.with_lock do
+      system = init(organization.id, term)
+      system.save! if system.new_record?
+      system
+    end
+  end
+
   def current_period?
     Time.zone.today.between?(start_date, end_date)
   end

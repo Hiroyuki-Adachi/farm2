@@ -24,6 +24,14 @@ class MenuController < ApplicationController
   end
 
   def update
+    current_organization.with_lock do
+      update_term
+    end
+  end
+
+  private
+
+  def update_term
     if !current_user.manageable? || current_organization.term + 1 != system_params[:term].to_i
       switch_term
       return
@@ -31,15 +39,8 @@ class MenuController < ApplicationController
     @organization = current_organization
     @new_system = System.init(@organization.id, system_params[:term], new_system_params)
     if @new_system.valid?
-      ActiveRecord::Base.transaction do
-        @new_system.save!
-        if within_current_term_period?
-          current_user.term = @new_system.term
-          current_user.save!
-        else
-          @organization.update_term!(@new_system.term)
-        end
-      end
+      @new_system.save!
+      activate_term
       redirect_to(menu_index_path, notice: '設定を変更しました。')
     else
       prepare_term_form
@@ -47,7 +48,13 @@ class MenuController < ApplicationController
     end
   end
 
-  private
+  def activate_term
+    if within_current_term_period?
+      current_user.update!(term: @new_system.term)
+    else
+      @organization.update_term!(@new_system.term)
+    end
+  end
 
   def within_current_term_period?
     system = System.find_by(term: current_organization.term, organization_id: current_organization.id)

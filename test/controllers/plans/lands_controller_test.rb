@@ -12,6 +12,42 @@ class Plans::LandsControllerTest < ActionDispatch::IntegrationTest
     travel_back
   end
 
+  test "作付計画は未作成の次期だけを組織内に先行作成する" do
+    System.where(organization_id: @user.organization_id, term: 2016..).destroy_all
+    other_systems = System.where.not(organization_id: @user.organization_id).pluck(:id, :updated_at)
+
+    assert_difference("System.count", 1) do
+      2.times { get new_plans_land_path(mode: @mode) }
+    end
+
+    assert_response :success
+    system = System.find_by!(organization_id: @user.organization_id, term: 2016)
+    assert_equal Date.new(2016, 1, 1), system.start_date
+    assert_equal Date.new(2016, 12, 31), system.end_date
+    assert_equal other_systems, System.where.not(organization_id: @user.organization_id).pluck(:id, :updated_at)
+  end
+
+  test "作付計画は明示設定済みの短い次期を上書きしない" do
+    System.where(organization_id: @user.organization_id, term: 2017..).destroy_all
+    system = systems(:s2016)
+    system.update!(term_name: "短期", end_date: Date.new(2016, 3, 31))
+    original_attributes = system.attributes
+
+    get new_plans_land_path(mode: @mode)
+
+    assert_response :success
+    assert_equal original_attributes, system.reload.attributes
+  end
+
+  test "管理者以外の作付計画アクセスは次期を作成しない" do
+    System.where(organization_id: @user.organization_id, term: 2016..).destroy_all
+    login_as(users(:user_checker))
+
+    assert_no_difference("System.count") { get new_plans_land_path(mode: @mode) }
+
+    assert_response :service_unavailable
+  end
+
   test "作付計画(表示)" do
     get new_plans_land_path(mode: @mode)
     assert_response :success
