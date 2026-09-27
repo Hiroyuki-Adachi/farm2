@@ -121,6 +121,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     SorimachiJournal.create!(
       src.attributes.except("id", "created_at", "updated_at").merge(
         validation_system: system,
+        organization_id: system.organization_id,
         term: system.term,
         line: line,
         detail: 1,

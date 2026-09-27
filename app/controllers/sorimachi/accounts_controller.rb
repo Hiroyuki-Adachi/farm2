@@ -58,7 +58,7 @@ class Sorimachi::AccountsController < ApplicationController
   def edit; end
 
   def create
-    SorimachiAccount.import(current_term)
+    SorimachiAccount.import(current_term, current_organization.id)
     redirect_to sorimachi_accounts_path
   end
 
@@ -86,7 +86,7 @@ class Sorimachi::AccountsController < ApplicationController
     @account = SorimachiAccount.find_or_initialize_by(
       term: current_term,
       code: params[:code]
-    )
+    ) { |account| account.organization_id = current_organization.id }
   end
 
   def sorimachi_account_params

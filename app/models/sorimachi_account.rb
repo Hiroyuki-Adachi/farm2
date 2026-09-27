@@ -8,11 +8,16 @@
 #  term(年度(期))               :integer          not null
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
+#  organization_id(組織)        :bigint
 #  total_cost_type_id(原価種別) :integer          default(0), not null
 #
 # Indexes
 #
-#  sorimachi_accounts_2nd  (term,code) UNIQUE
+#  sorimachi_accounts_2nd  (organization_id,term,code) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 class SorimachiAccount < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
@@ -20,30 +25,23 @@ class SorimachiAccount < ApplicationRecord
   query_constraints :term, :code
   before_destroy :clear_journals
 
+  # query_constraints から外部キーを推論させないよう明示する。
+  belongs_to :organization, foreign_key: :organization_id, optional: true # rubocop:disable Rails/RedundantForeignKey
   belongs_to_active_hash :total_cost_type, optional: true
 
-  def self.import_old(term)
-    accounts = open('test/fixtures/sorimachi_accounts.yml', 'r') { |f| YAML.load(f) }
-    accounts.each_value do |value|
-      account = SorimachiAccount.find_by(term: term, code: value['code'])
-      if account
-        value.delete_if { |v| ['term', 'code'].include?(v) }
-        account.attributes = value
-      else
-        account = SorimachiAccount.new(value)
-        account.term = term
-      end
-      account.save!
-    end
-  end
+  scope :for_organization, lambda { |organization|
+    organization_id = organization.is_a?(Organization) ? organization.id : organization
+    where(organization_id: organization_id)
+  }
 
-  def self.import(term)
+  def self.import(term, organization_id)
     SorimachiAccount.where(term: term - 1).find_each do |sorimachi_account|
       account = SorimachiAccount.find_by(term: term, code: sorimachi_account.code)
       next if account
 
       account = SorimachiAccount.new(sorimachi_account.attributes)
       account.term = term
+      account.organization_id = organization_id
       account.id = nil
       account.save!
     end

@@ -40,11 +40,16 @@ require 'csv'
 #  term(年度(期))               :integer          not null
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
+#  organization_id(組織)        :bigint
 #
 # Indexes
 #
-#  index_sorimachi_journals_on_term_and_allocation_mode  (term,allocation_mode)
-#  sorimachi_journals_2nd                                (term,line,detail) UNIQUE
+#  sorimachi_journals_2nd  (organization_id,term,line,detail) UNIQUE
+#  sorimachi_journals_3rd  (organization_id,term,allocation_mode)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 class SorimachiJournal < ApplicationRecord
   after_update :clear_work_types
@@ -52,14 +57,19 @@ class SorimachiJournal < ApplicationRecord
   scope :usual, ->(term) { where(term: term, detail: 1).order(:line) }
   scope :cost, ->(term) { where(term: term, cost0_flag: true).order(:line, :detail) }
   scope :total, ->(term) { where(term: term, cost0_flag: true).order(:code01).group(:code01).sum(:amount1) }
+  scope :for_organization, lambda { |organization|
+    organization_id = organization.is_a?(Organization) ? organization.id : organization
+    where(organization_id: organization_id)
+  }
 
+  belongs_to :organization, optional: true
   has_many :sorimachi_work_types, dependent: :destroy
   has_many :work_types, through: :sorimachi_work_types
   # rubocop:disable Rails/HasManyOrHasOneDependent
   has_many :details, foreign_key: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line]
   # rubocop:enable Rails/HasManyOrHasOneDependent
 
-  # 仕訳は組織IDを持たないため、取込・日付変更時の対象期を呼び出し元から渡す。
+  # 取込・日付変更時の対象期を検証するため、システム(年度)を呼び出し元から渡す。
   attr_accessor :validation_system
 
   validate :term_check, if: :term_check_required?
@@ -76,6 +86,7 @@ class SorimachiJournal < ApplicationRecord
       if journal.nil?
         journal = sorimachi_new
         journal.term = term
+        journal.organization_id = system.organization_id
       else
         if journal.slice(*import_attributes) == sorimachi_new.slice(*import_attributes)
           journal.validation_system = system

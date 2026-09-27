@@ -38,27 +38,32 @@
 #  term(年度(期))               :integer          not null
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
+#  organization_id(組織)        :bigint
 #
 # Indexes
 #
-#  index_sorimachi_journals_on_term_and_allocation_mode  (term,allocation_mode)
-#  sorimachi_journals_2nd                                (term,line,detail) UNIQUE
+#  sorimachi_journals_2nd  (organization_id,term,line,detail) UNIQUE
+#  sorimachi_journals_3rd  (organization_id,term,allocation_mode)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 require 'test_helper'
 
 class SorimachiJournalTest < ActiveSupport::TestCase
   setup do
     @term = 2090
-    organization = Organization.create!(name: "仕訳テスト", term: @term)
+    @organization = Organization.create!(name: "仕訳テスト", term: @term)
     @system = System.create!(
-      organization_id: organization.id,
+      organization_id: @organization.id,
       term: @term,
       term_name: @term.to_s,
       start_date: Date.new(2090, 4, 1),
       end_date: Date.new(2091, 3, 31)
     )
-    SorimachiAccount.create!(term: @term, code: 9001, name: "借方")
-    SorimachiAccount.create!(term: @term, code: 9002, name: "貸方")
+    SorimachiAccount.create!(organization: @organization, term: @term, code: 9001, name: "借方")
+    SorimachiAccount.create!(organization: @organization, term: @term, code: 9002, name: "貸方")
   end
 
   test "仕訳日は暦年ではなく期首期末で判定する" do
@@ -201,6 +206,15 @@ class SorimachiJournalTest < ActiveSupport::TestCase
     assert_equal [allocation.id], journal.sorimachi_work_types.ids
   end
 
+  test "新規取込の仕訳には対象期の組織を設定する" do
+    journal = build_journal(accounted_on: @system.start_date)
+
+    with_import_file(journal) { |file| SorimachiJournal.import(@system, file) }
+
+    imported = SorimachiJournal.find_by!(term: @term, line: journal.line, detail: journal.detail)
+    assert_equal @organization.id, imported.organization_id
+  end
+
   private
 
   def with_import_file(journal)
@@ -214,7 +228,7 @@ class SorimachiJournalTest < ActiveSupport::TestCase
 
   def build_journal(accounted_on:)
     sorimachi_journals(:journal1).dup.tap do |journal|
-      journal.assign_attributes(validation_system: @system, term: @term, line: 999,
+      journal.assign_attributes(validation_system: @system, organization_id: @organization.id, term: @term, line: 999,
                                 accounted_on: accounted_on, code01: 9001, code12: 9002,
                                 cost0_flag: false, cost1_flag: false)
     end
