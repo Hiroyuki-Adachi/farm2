@@ -8,7 +8,7 @@
 #  created_by(作成者)                    :integer          default(0), not null
 #  expired_on(有効期限)                  :date
 #  hashed_token(ハッシュ化トークン)      :string(64)       default(""), not null
-#  ip_address(IP Address)                :string(64)       default(""), not null
+#  ip_address(IP Address)                :inet             not null
 #  mail(メールアドレス)                  :string(255)      default(""), not null
 #  white_flag(ホワイトリストフラグ)      :boolean          default(FALSE), not null
 #  created_at                            :datetime         not null
@@ -88,14 +88,20 @@ class IpList < ApplicationRecord
   end
 
   def self.white_list
-    LOCAL_ADDRESSES | whites.map { |ip| IPAddr.new(ip) }
+    LOCAL_ADDRESSES | whites.map { |ip| to_ip_addr(ip) }
   end
 
   def self.black_list
-    blacks.map { |ip| IPAddr.new(ip) }
+    blacks.map { |ip| to_ip_addr(ip) }
   end
 
   def self.find_valid(id, remote_ip)
     active.find_by(id: id, ip_address: remote_ip, white_flag: true)
   end
+
+  # ip_addressがinet型ならIPAddr、移行前のstring型ならStringでpluckされるため両対応する
+  def self.to_ip_addr(ip)
+    ip.is_a?(String) ? IPAddr.new(ip) : ip
+  end
+  private_class_method :to_ip_addr
 end

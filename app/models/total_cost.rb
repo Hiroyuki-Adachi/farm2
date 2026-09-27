@@ -12,7 +12,6 @@
 #  created_at                             :datetime         not null
 #  updated_at                             :datetime         not null
 #  cost_type_id(原価種別)                 :integer
-#  depreciation_id(減価償却)              :integer
 #  land_id(土地)                          :integer
 #  machine_id(機械)                       :integer
 #  organization_id(組織)                  :bigint           default(3), not null
@@ -42,7 +41,6 @@ class TotalCost < ApplicationRecord
   belongs_to :organization
   belongs_to :sorimachi_account, optional: true
   belongs_to :sorimachi_journal, optional: true
-  belongs_to :depreciation, optional: true
   belongs_to :work_chemical, optional: true
   belongs_to :seedling_home, optional: true
   belongs_to :wcs_land, class_name: "WholeCropLand", foreign_key: "whole_crop_land_id", optional: true

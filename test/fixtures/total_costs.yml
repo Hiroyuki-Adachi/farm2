@@ -13,7 +13,6 @@
 #  created_at                             :datetime         not null
 #  updated_at                             :datetime         not null
 #  cost_type_id(原価種別)                 :integer
-#  depreciation_id(減価償却)              :integer
 #  land_id(土地)                          :integer
 #  machine_id(機械)                       :integer
 #  organization_id(組織)                  :bigint           default(3), not null

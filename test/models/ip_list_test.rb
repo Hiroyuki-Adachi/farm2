@@ -8,7 +8,7 @@
 #  created_by(作成者)                    :integer          default(0), not null
 #  expired_on(有効期限)                  :date
 #  hashed_token(ハッシュ化トークン)      :string(64)       default(""), not null
-#  ip_address(IP Address)                :string(64)       default(""), not null
+#  ip_address(IP Address)                :inet             not null
 #  mail(メールアドレス)                  :string(255)      default(""), not null
 #  white_flag(ホワイトリストフラグ)      :boolean          default(FALSE), not null
 #  created_at                            :datetime         not null
@@ -31,7 +31,7 @@ class IpListTest < ActiveSupport::TestCase
     end
 
     ip = IpList.last
-    assert_equal '1.2.3.4', ip.ip_address
+    assert_equal '1.2.3.4', ip.ip_address.to_s
     assert_equal false, ip.white_flag
     assert_equal 1, ip.block_count
 
@@ -40,7 +40,7 @@ class IpListTest < ActiveSupport::TestCase
     end
 
     ip = IpList.last
-    assert_equal '1.2.3.4', ip.ip_address
+    assert_equal '1.2.3.4', ip.ip_address.to_s
     assert_equal 2, ip.block_count
   end
 
@@ -58,7 +58,7 @@ class IpListTest < ActiveSupport::TestCase
     end
 
     ip = IpList.last
-    assert_equal '2.3.4.5', ip.ip_address
+    assert_equal '2.3.4.5', ip.ip_address.to_s
     assert_equal true, ip.white_flag
     assert_equal @user.id, ip.created_by
     assert_equal @user.login_name, ip.mail

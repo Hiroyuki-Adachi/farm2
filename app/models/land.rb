@@ -185,7 +185,7 @@ class Land < ApplicationRecord
     end
   end
 
-  def costs(start_date, end_date)
+  def costs(start_date, end_date, term:)
     results = {}
     tmp_date = start_date
     tmp_cost = land_costs.newest(start_date)&.first
@@ -200,7 +200,7 @@ class Land < ApplicationRecord
     results[tmp_cost.work_type_id] ||= 0
     results[tmp_cost.work_type_id] += (end_date - tmp_date + 1)
 
-    [land_fee(start_date.year), results]
+    [land_fee(term), results]
   end
 
   def cost(target)
