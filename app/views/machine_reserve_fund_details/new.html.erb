@@ -2,7 +2,7 @@
 <p><%= @fund.machine.type_name %> / <%= @fund.machine.alias_name %></p>
 <p>按分月数: <%= @detail.months %>ヶ月 / 残額: <%= number_with_delimiter(@fund.current_remaining_amount) %>円</p>
 <%= error_print(@detail) %>
-<%= form_with model: @detail, data: {turbo: false} do |f| %>
+<%= form_with model: @detail, data: {turbo: false, controller: "form-loading", action: "submit->form-loading#start pageshow@window->form-loading#reset"} do |f| %>
   <%= hidden_field_tag :machine_reserve_fund_id, @fund.id %>
   <div class="mb-3">
     <%= f.label :amount, "原価額", class: "form-label" %>
