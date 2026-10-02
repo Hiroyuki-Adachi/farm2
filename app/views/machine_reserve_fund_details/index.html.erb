@@ -1,0 +1,31 @@
+<h1>基盤強化準備金明細一覧(<%= current_system.term_name %>)</h1>
+<table class="table table-sm">
+  <thead>
+    <tr><th>機種</th><th>機械</th><th>開始年月</th><th>按分月数</th><th class="text-end">総額</th><th class="text-end">残額</th><th>当期登録</th><th class="text-end">原価額</th><th></th></tr>
+  </thead>
+  <tbody>
+    <% @funds.each do |fund| %>
+      <% detail = fund.machine_reserve_fund_details.find { |item| item.term == current_term } %>
+      <tr>
+        <td><%= fund.machine.type_name %></td>
+        <td><%= fund.machine.alias_name %></td>
+        <td><%= fund.started_on.strftime('%Y-%m') %></td>
+        <td><%= detail&.months || fund.months_for(current_system) %></td>
+        <td class="text-end"><%= number_with_delimiter(fund.total_amount) %></td>
+        <td class="text-end"><%= number_with_delimiter(fund.current_remaining_amount) %></td>
+        <td><%= detail ? "登録済" : "未登録" %></td>
+        <td class="text-end"><%= number_with_delimiter(detail&.amount) %></td>
+        <td>
+          <% if detail %>
+            <%= link_to "削除", machine_reserve_fund_detail_path(detail), data: {turbo_method: :delete, turbo_confirm: "明細と作業分類別原価を削除します。よろしいですか?"}, class: "btn btn-danger btn-sm" %>
+          <% elsif fund.months_for(current_system).positive? %>
+            <%= link_to "登録", new_machine_reserve_fund_detail_path(machine_reserve_fund_id: fund.id), class: "btn btn-success btn-sm" %>
+          <% else %>
+            対象期間外
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to "戻る", menu_index_path, class: "btn btn-outline-dark" %>

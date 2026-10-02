@@ -167,6 +167,17 @@ ja:
         adjust_unit: "単位"
         amount: "使用料"
 
+      machine_reserve_fund_detail:
+        term: "年度"
+        months: "按分月数"
+        amount: "原価額"
+        remaining_amount: "残額"
+        machine_reserve_fund_costs: "作業分類別原価"
+
+      machine_reserve_fund_cost:
+        cost: "原価"
+        work_type_id: "作業分類"
+
       machine_reserve_fund:
         machine_id: "機械"
         started_on: "開始年月"

@@ -10,6 +10,10 @@
 #  broccoli_size_id(ブロッコリー階級) :integer          not null
 #  work_broccoli_id(ブロッコリー作業) :integer          not null
 #
+# Indexes
+#
+#  broccoli_harvest_sheet  (work_broccoli_id,broccoli_rank_id,broccoli_size_id) UNIQUE
+#
 class BroccoliHarvest < ApplicationRecord
   belongs_to :work_broccoli
 

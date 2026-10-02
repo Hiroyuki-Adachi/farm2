@@ -23,7 +23,7 @@
 # 値を変更する前に依存先を確認し、用途が異なる場合はテスト内で専用データを用意することを検討する。
 # 変更後は記載した依存テストを実行し、前提が変わった場合はコメントも更新する。
 # このファイルの価格計算用6レコードの確認コマンド:
-# bundle exec rails test test/models/machine_result_test.rb test/models/work_test.rb test/decorators/statistics/machine_decorator_test.rb
+# bundle exec rails test test/models/machine_result_test.rb test/models/work_test.rb
 
 taueki_1:
   id: 2
@@ -362,7 +362,6 @@ machines22:
 # 以下は既存の共有データ。MachineResultTestは下のpricing_*へ分離済み (#1207)。
 # machine_hour_t / machine_area_t / machine_day_t はWorkTest「機械登録」で使用する。
 # machine_hour_t はmachine_result_genka1とdepreciation_genkaからも参照される。
-# machine_day_t はStatistics::MachineDecoratorTestの集計キーにも使用する。
 machine_hour:
   name: "テスト時間ごと"
   display_order: 1

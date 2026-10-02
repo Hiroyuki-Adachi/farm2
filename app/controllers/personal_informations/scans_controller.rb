@@ -48,7 +48,9 @@ class PersonalInformations::ScansController < PersonalInformationsController
   end
 
   def handle_lands
-    land = Land.for_organization(current_organization).find_by(uuid: @data[:value])
+    value = @data[:value]
+    valid = value.is_a?(String) && /\A[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\z/i.match?(value)
+    land = Land.for_organization(current_organization).find_by(uuid: value) if valid
     return render json: { action: "error", message: "該当する圃場が見つかりません" }, status: :not_found unless land
 
     url = personal_information_land_path(personal_information_token: current_user.token, id: land.id)

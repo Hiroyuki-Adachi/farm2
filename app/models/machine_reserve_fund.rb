@@ -63,6 +63,26 @@ class MachineReserveFund < ApplicationRecord
     machine_reserve_fund_details.exists?
   end
 
+  # 開始日の月を含む、配分期間と会計年度の共通月数。
+  def months_for(system)
+    first = [started_on.beginning_of_month, system.start_date].max
+    last = [started_on.beginning_of_month >> (years * 12), system.end_date.next_day].min
+    [((last.year - first.year) * 12) + last.month - first.month, 0].max
+  end
+
+  def amount_for(system)
+    return 0 if months_for(system).zero?
+
+    [(total_amount.to_d * months_for(system) / (years * 12)).round, current_remaining_amount].min
+  end
+
+  def build_detail(system)
+    machine_reserve_fund_details.build(
+      organization: organization, term: system.term, months: months_for(system),
+      amount: amount_for(system), remaining_amount: current_remaining_amount - amount_for(system)
+    )
+  end
+
   private
 
   # machine_idはクライアントから送られてくるため、他組織/個人所有の機械が紐付けられないようサーバ側でも検証する

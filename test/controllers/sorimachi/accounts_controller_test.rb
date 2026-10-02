@@ -52,6 +52,7 @@ class Sorimachi::AccountsControllerTest < ActionDispatch::IntegrationTest
     assert_equal sorimachi_account[:name], created_account.name
     assert_equal sorimachi_account[:code], created_account.code
     assert_equal @user.term, created_account.term
+    assert_equal @user.organization_id, created_account.organization_id
   end
 
   test "ソリマチ科目編集(仕訳)_原価フラグが両方falseの仕訳でも配賦結果が残ること" do
@@ -70,6 +71,16 @@ class Sorimachi::AccountsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to sorimachi_accounts_path
 
     assert SorimachiWorkType.exists?(sorimachi_journal_id: journal.id, work_type_id: work_type.id)
+  end
+
+  test "ソリマチ科目の前期引継では組織を設定する" do
+    SorimachiAccount.for_organization(@user.organization_id).where(term: @user.term).delete_all
+
+    post sorimachi_accounts_path
+    assert_redirected_to sorimachi_accounts_path
+
+    accounts = SorimachiAccount.for_organization(@user.organization_id)
+    assert_equal accounts.where(term: @user.term - 1).count, accounts.where(term: @user.term).count
   end
 
   test "ソリマチ科目削除" do

@@ -30,6 +30,33 @@ class PersonalInformations::ScansControllerTest < ActionDispatch::IntegrationTes
     assert_equal personal_information_land_path(personal_information_token: @user.token, id: @land.id), body["url"]
   end
 
+  test "圃場UUIDが不正な場合は検索せず該当なしを返す" do
+    Land.expects(:for_organization).never
+    [nil, "", "abcd", " #{@land.uuid}", "#{@land.uuid}\n", 123, [@land.uuid], { uuid: @land.uuid }].each do |value|
+      post personal_information_scans_path(personal_information_token: @user.token),
+           params: { payload: { type: "lands", value: value } }, as: :json
+
+      assert_response :not_found
+      assert_equal({ "action" => "error", "message" => "該当する圃場が見つかりません" }, response.parsed_body)
+    end
+  end
+
+  test "大文字の圃場UUIDも同じ圃場に遷移する" do
+    post personal_information_scans_path(personal_information_token: @user.token),
+         params: { payload: { type: "lands", value: @land.uuid.upcase } }, as: :json
+
+    assert_response :success
+    expected_url = personal_information_land_path(personal_information_token: @user.token, id: @land.id)
+    assert_equal expected_url, response.parsed_body["url"]
+  end
+
+  test "存在しない正しい形式の圃場UUIDは該当なしを返す" do
+    post personal_information_scans_path(personal_information_token: @user.token),
+         params: { payload: { type: "lands", value: "00000000-0000-0000-0000-000000000000" } }, as: :json
+
+    assert_response :not_found
+  end
+
   test "QR(スキャン結果)(ERROR)" do
     params = {
       type: 'error',
