@@ -35,6 +35,7 @@ class MachineReserveFund < ApplicationRecord
   validate :machine_belongs_to_organization
   validate :remaining_amount_within_total_amount
   validate :remaining_amount_not_less_than_registered_amount
+  validate :total_amount_unchanged_with_details, on: :update
 
   scope :for_organization, lambda { |organization|
     organization_id = organization.is_a?(Organization) ? organization.id : organization
@@ -84,6 +85,12 @@ class MachineReserveFund < ApplicationRecord
   end
 
   private
+
+  def total_amount_unchanged_with_details
+    return unless will_save_change_to_total_amount? && details?
+
+    errors.add(:total_amount, "は明細が存在するため変更できません。")
+  end
 
   # machine_idはクライアントから送られてくるため、他組織/個人所有の機械が紐付けられないようサーバ側でも検証する
   def machine_belongs_to_organization

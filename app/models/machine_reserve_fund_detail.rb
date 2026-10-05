@@ -27,12 +27,13 @@ class MachineReserveFundDetail < ApplicationRecord
   belongs_to :organization, optional: false
   belongs_to :machine_reserve_fund, optional: false
 
-  has_many :machine_reserve_fund_costs, dependent: :destroy
+  has_many :machine_reserve_fund_costs, dependent: :destroy, autosave: true
 
   validates :term, presence: true, uniqueness: { scope: :machine_reserve_fund_id }
   validates :months, numericality: { only_integer: true, in: 1..12 }
   validates :amount, :remaining_amount, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validate :associations_same_organization
+  validate :cost_total_matches_amount, on: :costs
 
   scope :for_organization, lambda { |organization|
     organization_id = organization.is_a?(Organization) ? organization.id : organization
@@ -68,6 +69,42 @@ class MachineReserveFundDetail < ApplicationRecord
     end
   end
 
+  def prepare_costs
+    work_types = WorkType.land.by_term(term).to_a
+    costs = machine_reserve_fund_costs.to_a
+    costs.each { |cost| cost.mark_for_destruction unless work_types.any? { |type| type.id == cost.work_type_id } }
+    work_types.map do |work_type|
+      costs.find { |cost| cost.work_type_id == work_type.id } || machine_reserve_fund_costs.build(
+        organization: organization, work_type: work_type, cost: 0
+      )
+    end
+  end
+
+  def update_costs(values)
+    machine_reserve_fund.with_lock do
+      with_lock do
+        prepare_costs.each { |cost| cost.cost = values[cost.work_type_id.to_s] }
+        return save(context: :costs)
+      end
+    end
+  end
+
+  def reallocate_costs(system)
+    unless system.organization_id == organization_id && system.term == term
+      errors.add(:base, "年度または組織が一致しません。")
+      return false
+    end
+
+    machine_reserve_fund.with_lock do
+      with_lock do
+        allocate_costs(system)
+        return false if errors.any?
+
+        return save(context: :costs)
+      end
+    end
+  end
+
   private
 
   def refresh_balances!
@@ -100,13 +137,19 @@ class MachineReserveFundDetail < ApplicationRecord
       return
     end
 
-    areas.each do |work_type, area|
-      machine_reserve_fund_costs.build(
-        organization: organization, work_type: work_type, cost: (amount * area / total_area).round
-      )
+    costs = prepare_costs
+    costs.each do |cost|
+      cost.cost = (amount * areas.fetch(cost.work_type) / total_area).round
     end
-    costs = machine_reserve_fund_costs.to_a
     costs.max_by(&:cost).cost += amount - costs.sum(&:cost)
+  end
+
+  def cost_total_matches_amount
+    costs = machine_reserve_fund_costs.reject(&:marked_for_destruction?)
+    return if costs.any? { |cost| cost.cost.nil? }
+    return if costs.sum(&:cost) == amount
+
+    errors.add(:base, "作業分類別原価の合計は原価額と一致させてください。")
   end
 
   def associations_same_organization

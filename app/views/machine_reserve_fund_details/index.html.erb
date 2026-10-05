@@ -17,6 +17,7 @@
         <td class="text-end"><%= number_with_delimiter(detail&.amount) %></td>
         <td>
           <% if detail %>
+            <%= link_to "原価", edit_machine_reserve_fund_cost_path(detail), class: "btn btn-success btn-sm" %>
             <%= link_to "削除", machine_reserve_fund_detail_path(detail), data: {turbo_method: :delete, turbo_confirm: "明細と作業分類別原価を削除します。よろしいですか?"}, class: "btn btn-danger btn-sm" %>
           <% elsif fund.months_for(current_system).positive? %>
             <%= link_to "登録", new_machine_reserve_fund_detail_path(machine_reserve_fund_id: fund.id), class: "btn btn-success btn-sm" %>
@@ -28,4 +29,5 @@
     <% end %>
   </tbody>
 </table>
+<%= link_to "原価一覧", machine_reserve_fund_costs_path, class: "btn btn-success" %>
 <%= link_to "戻る", menu_index_path, class: "btn btn-outline-dark" %>
