@@ -3,6 +3,7 @@
 # Table name: machine_reserve_fund_costs(基盤強化準備金原価(作業分類別))
 #
 #  id                                                     :bigint           not null, primary key
+#  allocation_enabled(面積按分対象)                       :boolean          default(TRUE), not null
 #  cost(原価)                                             :decimal(9, )     not null
 #  created_at                                             :datetime         not null
 #  updated_at                                             :datetime         not null

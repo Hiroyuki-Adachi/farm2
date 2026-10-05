@@ -31,11 +31,25 @@ class MachineReserveFundCostsController < ApplicationController
   end
 
   def reallocate
-    if @detail.reallocate_costs(current_system)
-      redirect_to edit_machine_reserve_fund_cost_path(@detail), notice: "基盤強化準備金原価を再按分しました。", status: :see_other
-    else
-      @costs = @detail.prepare_costs
-      render :edit, status: :unprocessable_content
+    selected_ids = params.permit(selected_work_type_ids: [])[:selected_work_type_ids]
+    success = @detail.reallocate_costs(current_system, selected_work_type_ids: selected_ids)
+    respond_to do |format|
+      format.html do
+        if success
+          redirect_to edit_machine_reserve_fund_cost_path(@detail), notice: "基盤強化準備金原価を再按分しました。", status: :see_other
+        else
+          @costs = @detail.prepare_costs
+          render :edit, status: :unprocessable_content
+        end
+      end
+      format.json do
+        messages = @detail.errors.full_messages
+        @detail.reload unless success
+        costs = @detail.prepare_costs.map do |cost|
+          { work_type_id: cost.work_type_id, cost: cost.cost.to_i, allocation_enabled: cost.allocation_enabled? }
+        end
+        render json: { costs: costs, errors: messages }, status: success ? :ok : :unprocessable_content
+      end
     end
   end
 

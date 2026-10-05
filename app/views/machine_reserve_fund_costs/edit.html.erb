@@ -2,21 +2,28 @@
 <p><%= @detail.machine_reserve_fund.machine.type_name %> / <%= @detail.machine_reserve_fund.machine.alias_name %></p>
 <p>原価額: <%= number_with_delimiter(@detail.amount) %>円</p>
 <%= error_print(@detail) %>
-<%= form_with url: machine_reserve_fund_cost_path(@detail), method: :patch, data: {turbo: false, controller: "reserve-fund-cost-total", action: "input->reserve-fund-cost-total#update"} do %>
+<p>「原価に入れる」のチェック変更で、選択した作業分類の面積比により自動で再按分・保存します。</p>
+<%= form_with url: machine_reserve_fund_cost_path(@detail), method: :patch, data: {turbo: false, controller: "reserve-fund-cost-total", reserve_fund_cost_total_url_value: reallocate_machine_reserve_fund_cost_path(@detail), action: "input->reserve-fund-cost-total#update"} do %>
+  <div class="alert alert-danger d-none" role="alert" data-reserve-fund-cost-total-target="error"></div>
+  <div role="status" data-reserve-fund-cost-total-target="status"></div>
   <table class="table table-sm">
-    <thead><tr><th>作業分類</th><th class="text-end">原価(円)</th></tr></thead>
+    <thead><tr><th>原価に入れる</th><th>作業分類</th><th class="text-end">原価(円)</th></tr></thead>
     <tbody>
       <% @costs.each do |cost| %>
         <tr>
+          <td>
+            <%= check_box_tag "selected_work_type_ids[]", cost.work_type_id, cost.allocation_enabled?, id: "allocation_#{cost.work_type_id}", class: "form-check-input", data: {reserve_fund_cost_total_target: "selection", action: "change->reserve-fund-cost-total#reallocate"} %>
+            <%= label_tag "allocation_#{cost.work_type_id}", "#{cost.work_type.name}を原価に入れる", class: "visually-hidden" %>
+          </td>
           <td><%= label_tag "costs_#{cost.work_type_id}", cost.work_type.name %></td>
-          <td><%= number_field_tag "costs[#{cost.work_type_id}]", cost.cost, step: 1, required: true, class: "form-control text-end", data: {reserve_fund_cost_total_target: "cost"} %></td>
+          <td><%= number_field_tag "costs[#{cost.work_type_id}]", cost.cost, step: 1, required: true, readonly: !cost.allocation_enabled?, class: "form-control text-end", data: {reserve_fund_cost_total_target: "cost", work_type_id: cost.work_type_id} %></td>
         </tr>
       <% end %>
     </tbody>
-    <tfoot><tr><th>入力合計</th><td class="text-end" data-reserve-fund-cost-total-target="total"><%= number_with_delimiter(@costs.sum { |cost| cost.cost || 0 }) %></td></tr></tfoot>
+    <tfoot><tr><th colspan="2">入力合計</th><td class="text-end" data-reserve-fund-cost-total-target="total"><%= number_with_delimiter(@costs.sum { |cost| cost.cost || 0 }) %></td></tr></tfoot>
   </table>
   <%= submit_tag "登録", class: "btn btn-warning" %>
+  <%= button_tag "再按分", type: "button", class: "btn btn-success", data: {action: "reserve-fund-cost-total#reallocate"} %>
   <%= link_to "原価一覧", machine_reserve_fund_costs_path, class: "btn btn-outline-dark" %>
   <%= link_to "明細一覧", machine_reserve_fund_details_path, class: "btn btn-outline-dark" %>
 <% end %>
-<%= button_to "再按分", reallocate_machine_reserve_fund_cost_path(@detail), class: "btn btn-success mt-3", data: {turbo: false} %>

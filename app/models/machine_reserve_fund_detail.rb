@@ -83,13 +83,13 @@ class MachineReserveFundDetail < ApplicationRecord
   def update_costs(values)
     machine_reserve_fund.with_lock do
       with_lock do
-        prepare_costs.each { |cost| cost.cost = values[cost.work_type_id.to_s] }
+        prepare_costs.each { |cost| cost.cost = cost.allocation_enabled? ? values[cost.work_type_id.to_s] : 0 }
         return save(context: :costs)
       end
     end
   end
 
-  def reallocate_costs(system)
+  def reallocate_costs(system, selected_work_type_ids: nil)
     unless system.organization_id == organization_id && system.term == term
       errors.add(:base, "年度または組織が一致しません。")
       return false
@@ -97,7 +97,8 @@ class MachineReserveFundDetail < ApplicationRecord
 
     machine_reserve_fund.with_lock do
       with_lock do
-        allocate_costs(system)
+        errors.clear
+        allocate_costs(system, selected_work_type_ids: selected_work_type_ids)
         return false if errors.any?
 
         return save(context: :costs)
@@ -129,19 +130,51 @@ class MachineReserveFundDetail < ApplicationRecord
     work_types.index_with { |work_type| totals[work_type.id] }
   end
 
-  def allocate_costs(system)
-    areas = accumulated_areas(system)
+  def allocate_costs(system, selected_work_type_ids: nil)
+    costs = prepare_costs
+    areas = selected_allocation_areas(system, costs, selected_work_type_ids)
+    return if errors.any?
+
     total_area = areas.values.sum
     if total_area.zero?
       errors.add(:base, "当期の按分対象の圃場面積が0のため登録できません。")
       return
     end
 
-    costs = prepare_costs
-    costs.each do |cost|
-      cost.cost = (amount * areas.fetch(cost.work_type) / total_area).round
+    assign_allocated_costs(costs, areas, total_area)
+  end
+
+  def selected_allocation_areas(system, costs, selected_work_type_ids)
+    areas = accumulated_areas(system)
+    if areas.empty?
+      errors.add(:base, "当期の按分対象の圃場面積が0のため登録できません。")
+      return {}
     end
-    costs.max_by(&:cost).cost += amount - costs.sum(&:cost)
+    selected_ids = allocation_selection_ids(costs, selected_work_type_ids)
+    return {} unless valid_allocation_selection?(selected_ids, areas.keys.map { |type| type.id.to_s })
+
+    areas.select { |type, _area| selected_ids.include?(type.id.to_s) }
+  end
+
+  def allocation_selection_ids(costs, selected_work_type_ids)
+    (selected_work_type_ids || costs.select(&:allocation_enabled?).map(&:work_type_id)).map(&:to_s)
+  end
+
+  def assign_allocated_costs(costs, areas, total_area)
+    costs.each do |cost|
+      cost.allocation_enabled = areas.key?(cost.work_type)
+      cost.cost = cost.allocation_enabled? ? (amount * areas.fetch(cost.work_type) / total_area).round : 0
+    end
+    costs.select(&:allocation_enabled?).max_by(&:cost).cost += amount - costs.sum(&:cost)
+  end
+
+  def valid_allocation_selection?(selected_ids, eligible_ids)
+    if selected_ids.empty?
+      errors.add(:base, "原価に入れる作業分類を1つ以上選択してください。")
+    elsif (selected_ids - eligible_ids).any?
+      errors.add(:base, "当期の按分対象ではない作業分類が含まれています。")
+    end
+    errors.empty?
   end
 
   def cost_total_matches_amount
