@@ -8,7 +8,7 @@ class MachineReserveFundCostsControllerTest < ActionDispatch::IntegrationTest
                                        total_amount: 240_000, remaining_amount: 240_000)
     @types = [work_types(:work_types1), work_types(:work_types2)]
     @types.each { |type| WorkTypeTerm.find_or_create_by!(work_type: type, term: 2015) }
-    LandCost.stubs(:sum_areas_by_work_type).returns(@types.to_h { |type| [type.id, 1.to_d] })
+    LandCost.stubs(:sum_period_areas_by_work_type).returns(@types.to_h { |type| [type.id, 1.to_d] })
     @detail = @fund.build_detail(systems(:s2015))
     @detail.amount = 101
     assert @detail.register(systems(:s2015))
@@ -43,7 +43,7 @@ class MachineReserveFundCostsControllerTest < ActionDispatch::IntegrationTest
     post reallocate_machine_reserve_fund_cost_path(@detail)
     assert_redirected_to edit_machine_reserve_fund_cost_path(@detail)
     assert_equal [50, 51], @detail.machine_reserve_fund_costs.where(work_type: @types).pluck(:cost).sort
-    LandCost.stubs(:sum_areas_by_work_type).returns({})
+    LandCost.stubs(:sum_period_areas_by_work_type).returns({})
     post reallocate_machine_reserve_fund_cost_path(@detail)
     assert_response :unprocessable_content
     assert_equal 101, @detail.machine_reserve_fund_costs.sum(:cost)
@@ -71,6 +71,28 @@ class MachineReserveFundCostsControllerTest < ActionDispatch::IntegrationTest
     get machine_reserve_fund_costs_path
     assert_select "tbody tr", count: 1
     assert_select "tbody td", text: other_fund.machine.alias_name, count: 0
+  end
+
+  test "チェック変更で再按分しJSONに金額と選択状態を返す" do
+    post reallocate_machine_reserve_fund_cost_path(@detail),
+         params: { selected_work_type_ids: [@types.last.id] }, as: :json
+    assert_response :success
+    first = response.parsed_body["costs"].find { |cost| cost["work_type_id"] == @types.first.id }
+    last = response.parsed_body["costs"].find { |cost| cost["work_type_id"] == @types.last.id }
+    assert_equal 0, first["cost"]
+    assert_not first["allocation_enabled"]
+    assert_equal 101, last["cost"]
+    assert last["allocation_enabled"]
+    assert_equal 101, @detail.machine_reserve_fund_costs.sum(:cost)
+  end
+
+  test "全OFFのJSON要求は失敗し保存済みの原価と選択状態を返す" do
+    post reallocate_machine_reserve_fund_cost_path(@detail), params: { selected_work_type_ids: [] }, as: :json
+    assert_response :unprocessable_content
+    assert_includes response.parsed_body["errors"].join, "1つ以上選択"
+    assert(response.parsed_body["costs"].all? { |cost| cost["allocation_enabled"] })
+    assert_equal(101, response.parsed_body["costs"].sum { |cost| cost["cost"] })
+    assert_equal 101, @detail.machine_reserve_fund_costs.sum(:cost)
   end
 
   test "管理権限のないユーザーは一覧編集更新再按分にアクセスできない" do

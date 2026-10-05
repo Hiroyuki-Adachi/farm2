@@ -71,6 +71,41 @@ class MachineReserveFundCostsTest < ApplicationSystemTestCase
     assert_no_link "削除"
   end
 
+  test "チェックONとOFFで面積按分し選択状態を再表示後も保持する" do
+    visit edit_machine_reserve_fund_cost_path(@detail)
+    uncheck "#{@types.first.name}を原価に入れる"
+    assert_text "再按分しました"
+    assert_field @types.first.name, with: "0"
+    assert_field @types.last.name, with: "36500"
+    assert_selector "#costs_#{@types.first.id}[readonly]"
+    assert_equal 36_500, @detail.machine_reserve_fund_costs.sum(:cost)
+    visit edit_machine_reserve_fund_cost_path(@detail)
+    assert_unchecked_field "#{@types.first.name}を原価に入れる"
+    assert_checked_field "#{@types.last.name}を原価に入れる"
+    click_button "再按分"
+    assert_text "再按分しました"
+    assert_field @types.last.name, with: "36500"
+    check "#{@types.first.name}を原価に入れる"
+    assert_field @types.first.name, with: "18100"
+    assert_field @types.last.name, with: "18400"
+    assert_no_selector "#costs_#{@types.first.id}[readonly]"
+  end
+
+  test "全OFFはエラーになり最後の選択と原価を維持する" do
+    visit edit_machine_reserve_fund_cost_path(@detail)
+    # 面積0の分類を含め、初期状態のすべての対象をOFFにする。
+    WorkType.land.by_term(2015).where.not(id: @types.last.id).to_a.each do |type|
+      uncheck "#{type.name}を原価に入れる"
+      assert_selector "[data-reserve-fund-cost-total-target='status']", text: "再按分しました"
+      assert_unchecked_field "#{type.name}を原価に入れる"
+    end
+    uncheck "#{@types.last.name}を原価に入れる"
+    assert_selector "[role='alert']", text: "1つ以上選択"
+    assert_checked_field "#{@types.last.name}を原価に入れる"
+    assert_field @types.last.name, with: "36500"
+    assert_equal 36_500, @detail.machine_reserve_fund_costs.sum(:cost)
+  end
+
   private
 
   def create_fund(machine, started_on)
