@@ -515,9 +515,3 @@ work_kind_broccoli:
   created_at: '2018-02-09 02:07:33.833683'
   updated_at: '2018-02-09 02:07:33.833683'
   deleted_at:
-
-# MachineResultTest専用。分離方針は test/fixtures/README.md を参照。
-pricing_work_kind:
-  name: 単価計算専用
-  phonetic: たんかけいさんせんよう
-  display_order: 99
