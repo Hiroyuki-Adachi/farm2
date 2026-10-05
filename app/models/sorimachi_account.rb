@@ -22,7 +22,7 @@
 class SorimachiAccount < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
-  query_constraints :term, :code
+  query_constraints :organization_id, :term, :code
   before_destroy :clear_journals
 
   # query_constraints から外部キーを推論させないよう明示する。
@@ -45,8 +45,8 @@ class SorimachiAccount < ApplicationRecord
     end
   end
 
-  def self.to_h(term)
-    SorimachiAccount.where(term: term).order(:code).to_h { |a| [a.code, a.name] }
+  def self.to_h(term, organization)
+    SorimachiAccount.for_organization(organization).where(term: term).order(:code).to_h { |a| [a.code, a.name] }
   end
 
   def sales?
@@ -56,6 +56,7 @@ class SorimachiAccount < ApplicationRecord
   private
 
   def clear_journals
-    SorimachiJournal.where("term = ? AND (code01 = ? OR code12 = ?)", term, code, code).find_each(&:clear_flags)
+    SorimachiJournal.for_organization(organization_id).where(term: term)
+      .where("code01 = ? OR code12 = ?", code, code).find_each(&:clear_flags)
   end
 end

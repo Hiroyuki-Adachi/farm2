@@ -9,7 +9,8 @@ class Sorimachi::ImportsController < ApplicationController
     prepare_total_cost_type_context
     account_map = selected_account_map
     journals = filtered_journals(account_map.keys).where(allocation_mode: SorimachiJournal.allocation_modes[:auto])
-    allocated_sums = SorimachiWorkType.where(sorimachi_journal_id: journals.select(:id)).group(:sorimachi_journal_id).sum(:amount)
+    allocated_sums = SorimachiWorkType.where(sorimachi_journal_id: journals.select(:id))
+      .group(:sorimachi_journal_id).sum(:amount)
     allocator = Sorimachi::WorkTypeAllocationService.new(term: current_term, system: current_system)
 
     journals.find_each do |journal|
@@ -24,7 +25,8 @@ class Sorimachi::ImportsController < ApplicationController
   def update_allocation
     prepare_total_cost_type_context
     prepare_work_types
-    journal = SorimachiJournal.find_by(id: params[:journal_id], term: current_term)
+    journal = SorimachiJournal.for_organization(current_organization).find_by(id: params[:journal_id],
+                                                                              term: current_term)
     return head :not_found unless journal
 
     row = build_row_for_journal(
@@ -41,13 +43,14 @@ class Sorimachi::ImportsController < ApplicationController
   def update_detail
     prepare_total_cost_type_context
     prepare_work_types
-    journal = SorimachiJournal.find_by(id: params[:journal_id], term: current_term)
+    journal = SorimachiJournal.for_organization(current_organization).find_by(id: params[:journal_id],
+                                                                              term: current_term)
     return head :not_found unless journal
 
     amounts = normalized_detail_amounts
     SorimachiWorkType.transaction do
       journal.update!(allocation_mode: :manual)
-      SorimachiWorkType.refresh(journal.id, { amounts: amounts })
+      SorimachiWorkType.refresh(journal, { amounts: amounts })
     end
 
     row = build_row_for_journal(
@@ -63,7 +66,8 @@ class Sorimachi::ImportsController < ApplicationController
   def reallocate_row
     prepare_total_cost_type_context
     prepare_work_types
-    journal = SorimachiJournal.find_by(id: params[:journal_id], term: current_term)
+    journal = SorimachiJournal.for_organization(current_organization).find_by(id: params[:journal_id],
+                                                                              term: current_term)
     return head :not_found unless journal
 
     account_map = selected_account_map
@@ -84,8 +88,8 @@ class Sorimachi::ImportsController < ApplicationController
   def create
     SorimachiJournal.transaction do
       SorimachiJournal.import(current_system, params[:import_file])
-      SorimachiJournal.update_cost_flag(current_term)
-      SorimachiJournal.refresh(current_term)
+      SorimachiJournal.update_cost_flag(current_term, current_organization)
+      SorimachiJournal.refresh(current_term, current_organization)
     end
     redirect_to sorimachi_imports_path
   rescue StandardError => e
@@ -128,7 +132,8 @@ class Sorimachi::ImportsController < ApplicationController
       )
     end
 
-    allocation_sums = SorimachiWorkType.where(sorimachi_journal_id: journal.id, work_type_id: @work_types.map(&:id)).group(:work_type_id).sum(:amount)
+    allocation_sums = journal.sorimachi_work_types.where(work_type_id: @work_types.map(&:id))
+      .group(:work_type_id).sum(:amount)
     allocation_items = @work_types.map do |work_type|
       { work_type_id: work_type.id, name: work_type.name, amount: allocation_sums[work_type.id] || 0 }
     end
@@ -174,7 +179,8 @@ class Sorimachi::ImportsController < ApplicationController
   end
 
   def selected_account_map
-    SorimachiAccount.where(term: current_term, total_cost_type_id: @selected_total_cost_type_id).index_by(&:code)
+    SorimachiAccount.for_organization(current_organization)
+      .where(term: current_term, total_cost_type_id: @selected_total_cost_type_id).index_by(&:code)
   end
 
   def selected_total_cost_type_id
@@ -186,11 +192,11 @@ class Sorimachi::ImportsController < ApplicationController
   end
 
   def filtered_journals(account_codes)
-    return SorimachiJournal.none if account_codes.blank?
+    return SorimachiJournal.for_organization(current_organization).none if account_codes.blank?
 
-    SorimachiJournal.where(term: current_term)
+    SorimachiJournal.for_organization(current_organization).where(term: current_term)
       .where(code01: account_codes)
-      .or(SorimachiJournal.where(term: current_term, code12: account_codes))
+      .or(SorimachiJournal.for_organization(current_organization).where(term: current_term, code12: account_codes))
       .order(:line, :detail)
   end
 
