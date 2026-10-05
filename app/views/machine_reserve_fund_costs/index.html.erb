@@ -1,0 +1,38 @@
+<h1>基盤強化準備金原価一覧(<%= current_system.term_name %>)</h1>
+<div class="table-responsive">
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th>機種</th><th>機械</th>
+        <% @work_types.each do |work_type| %>
+          <th class="text-end"><%= work_type.name %></th>
+        <% end %>
+        <th class="text-end">合計</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @details.each do |detail| %>
+        <tr>
+          <td><%= detail.machine_reserve_fund.machine.type_name %></td>
+          <td><%= detail.machine_reserve_fund.machine.alias_name %></td>
+          <% @work_types.each do |work_type| %>
+            <td class="text-end"><%= number_with_delimiter(@costs[detail.id][work_type.id]&.cost || 0) %></td>
+          <% end %>
+          <td class="text-end"><%= number_with_delimiter(@work_types.sum { |type| @costs[detail.id][type.id]&.cost || 0 }) %></td>
+          <td><%= link_to "変更", edit_machine_reserve_fund_cost_path(detail), class: "btn btn-success btn-sm" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="2">合計</th>
+        <% @work_types.each do |work_type| %>
+          <td class="text-end"><%= number_with_delimiter(@totals[work_type.id]) %></td>
+        <% end %>
+        <td class="text-end"><%= number_with_delimiter(@totals.values.sum) %></td><td></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<%= link_to "明細一覧", machine_reserve_fund_details_path, class: "btn btn-success" %>
+<%= link_to "戻る", menu_index_path, class: "btn btn-outline-dark" %>

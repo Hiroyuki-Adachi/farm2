@@ -1,0 +1,22 @@
+<h1>基盤強化準備金原価編集(<%= current_system.term_name %>)</h1>
+<p><%= @detail.machine_reserve_fund.machine.type_name %> / <%= @detail.machine_reserve_fund.machine.alias_name %></p>
+<p>原価額: <%= number_with_delimiter(@detail.amount) %>円</p>
+<%= error_print(@detail) %>
+<%= form_with url: machine_reserve_fund_cost_path(@detail), method: :patch, data: {turbo: false, controller: "reserve-fund-cost-total", action: "input->reserve-fund-cost-total#update"} do %>
+  <table class="table table-sm">
+    <thead><tr><th>作業分類</th><th class="text-end">原価(円)</th></tr></thead>
+    <tbody>
+      <% @costs.each do |cost| %>
+        <tr>
+          <td><%= label_tag "costs_#{cost.work_type_id}", cost.work_type.name %></td>
+          <td><%= number_field_tag "costs[#{cost.work_type_id}]", cost.cost, step: 1, required: true, class: "form-control text-end", data: {reserve_fund_cost_total_target: "cost"} %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot><tr><th>入力合計</th><td class="text-end" data-reserve-fund-cost-total-target="total"><%= number_with_delimiter(@costs.sum { |cost| cost.cost || 0 }) %></td></tr></tfoot>
+  </table>
+  <%= submit_tag "登録", class: "btn btn-warning" %>
+  <%= link_to "原価一覧", machine_reserve_fund_costs_path, class: "btn btn-outline-dark" %>
+  <%= link_to "明細一覧", machine_reserve_fund_details_path, class: "btn btn-outline-dark" %>
+<% end %>
+<%= button_to "再按分", reallocate_machine_reserve_fund_cost_path(@detail), class: "btn btn-success mt-3", data: {turbo: false} %>
