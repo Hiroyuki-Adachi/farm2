@@ -1,5 +1,20 @@
 require "test_helper"
 
+# == Schema Information
+#
+# Table name: plan_lands(作付計画)
+#
+#  term(年度)             :integer          default(0), not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  land_id(土地)          :integer          not null
+#  user_id(利用者)        :integer          default(0), not null
+#  work_type_id(作業分類) :integer          not null
+#
+# Indexes
+#
+#  plan_lands_2nd  (user_id,land_id,term) UNIQUE
+#
 class PlanLandTest < ActiveSupport::TestCase
   test "作付計画を一括で置き換え空欄は登録しない" do
     user = users(:user_manager)

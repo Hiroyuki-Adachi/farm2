@@ -26,6 +26,9 @@ class MachineReserveFundCost < ApplicationRecord
   belongs_to :machine_reserve_fund_detail, optional: false
   belongs_to :work_type, optional: false
 
+  # 少額を多数の分類へ按分した際も、最大原価行への端数調整を保持する。
+  validates :cost, numericality: { only_integer: true }
+  validates :work_type_id, uniqueness: { scope: :machine_reserve_fund_detail_id }
   validate :associations_same_organization
 
   scope :for_organization, lambda { |organization|

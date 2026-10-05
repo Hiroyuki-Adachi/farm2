@@ -38,27 +38,32 @@
 #  term(年度(期))               :integer          not null
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
+#  organization_id(組織)        :bigint
 #
 # Indexes
 #
-#  index_sorimachi_journals_on_term_and_allocation_mode  (term,allocation_mode)
-#  sorimachi_journals_2nd                                (term,line,detail) UNIQUE
+#  sorimachi_journals_2nd  (organization_id,term,line,detail) UNIQUE
+#  sorimachi_journals_3rd  (organization_id,term,allocation_mode)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 require 'test_helper'
 
 class SorimachiJournalTest < ActiveSupport::TestCase
   setup do
     @term = 2090
-    organization = Organization.create!(name: "仕訳テスト", term: @term)
+    @organization = Organization.create!(name: "仕訳テスト", term: @term)
     @system = System.create!(
-      organization_id: organization.id,
+      organization_id: @organization.id,
       term: @term,
       term_name: @term.to_s,
       start_date: Date.new(2090, 4, 1),
       end_date: Date.new(2091, 3, 31)
     )
-    SorimachiAccount.create!(term: @term, code: 9001, name: "借方")
-    SorimachiAccount.create!(term: @term, code: 9002, name: "貸方")
+    SorimachiAccount.create!(organization: @organization, term: @term, code: 9001, name: "借方")
+    SorimachiAccount.create!(organization: @organization, term: @term, code: 9002, name: "貸方")
   end
 
   test "仕訳日は暦年ではなく期首期末で判定する" do
@@ -143,16 +148,28 @@ class SorimachiJournalTest < ActiveSupport::TestCase
     assert_equal @system.start_date, journal.reload.accounted_on
   end
 
-  test "変更のない再取込でも対象組織の期間を検証する" do
+  test "変更のない再取込でも対象期の期間を検証する" do
     journal = build_journal(accounted_on: @system.start_date)
     journal.save!
-    other_organization = Organization.create!(name: "別組織の仕訳")
-    other_system = System.create!(organization_id: other_organization.id, term: @term, term_name: "別組織の期",
-                                  start_date: Date.new(2091, 4, 1), end_date: Date.new(2091, 6, 30))
+    @system.update!(start_date: @system.start_date.next_month)
 
     with_import_file(journal) do |file|
-      assert_raises(ActiveRecord::RecordInvalid) { SorimachiJournal.import(other_system, file) }
+      assert_raises(ActiveRecord::RecordInvalid) { SorimachiJournal.import(@system, file) }
     end
+  end
+
+  test "他組織の同じ行番号の仕訳は上書きせず自組織の仕訳として取り込む" do
+    journal = build_journal(accounted_on: @system.start_date)
+    journal.save!
+    other_system = System.create!(organization_id: Organization.create!(name: "別組織の仕訳").id, term: @term,
+                                  term_name: "別組織の期", start_date: @system.start_date, end_date: @system.end_date)
+    journal.remark1 = "別組織の備考"
+
+    with_import_file(journal) { |file| SorimachiJournal.import(other_system, file) }
+
+    assert_not_equal "別組織の備考", journal.reload.remark1
+    assert SorimachiJournal.exists?(organization_id: other_system.organization_id, term: @term, line: journal.line,
+                                    remark1: "別組織の備考")
   end
 
   test "再取込で期内の日付だけを変更できる" do
@@ -201,6 +218,15 @@ class SorimachiJournalTest < ActiveSupport::TestCase
     assert_equal [allocation.id], journal.sorimachi_work_types.ids
   end
 
+  test "新規取込の仕訳には対象期の組織を設定する" do
+    journal = build_journal(accounted_on: @system.start_date)
+
+    with_import_file(journal) { |file| SorimachiJournal.import(@system, file) }
+
+    assert SorimachiJournal.exists?(organization_id: @organization.id, term: @term,
+                                    line: journal.line, detail: journal.detail)
+  end
+
   private
 
   def with_import_file(journal)
@@ -214,7 +240,7 @@ class SorimachiJournalTest < ActiveSupport::TestCase
 
   def build_journal(accounted_on:)
     sorimachi_journals(:journal1).dup.tap do |journal|
-      journal.assign_attributes(validation_system: @system, term: @term, line: 999,
+      journal.assign_attributes(validation_system: @system, organization_id: @organization.id, term: @term, line: 999,
                                 accounted_on: accounted_on, code01: 9001, code12: 9002,
                                 cost0_flag: false, cost1_flag: false)
     end

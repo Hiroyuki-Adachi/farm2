@@ -5,7 +5,10 @@ class SystemsController < ApplicationController
   def edit; end
 
   def update
-    if @system.update(system_params)
+    saved = current_organization.with_lock do
+      @system.reload.update(system_params)
+    end
+    if saved
       redirect_to(menu_index_path)
     else
       render action: :edit

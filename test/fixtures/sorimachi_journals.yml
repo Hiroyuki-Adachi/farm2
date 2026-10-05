@@ -38,11 +38,16 @@
 #  term(年度(期))               :integer          not null
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
+#  organization_id(組織)        :bigint
 #
 # Indexes
 #
-#  index_sorimachi_journals_on_term_and_allocation_mode  (term,allocation_mode)
-#  sorimachi_journals_2nd                                (term,line,detail) UNIQUE
+#  sorimachi_journals_2nd  (organization_id,term,line,detail) UNIQUE
+#  sorimachi_journals_3rd  (organization_id,term,allocation_mode)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 
 # This model initially had no columns defined. If you add columns to the
@@ -50,6 +55,7 @@
 # below each fixture, per the syntax in the comments below
 #
 journal1:
+  organization_id: 1
   term: 2015
   line: 1
   detail: 1
@@ -81,6 +87,7 @@ journal1:
   cost1_flag: false
 
 journal2:
+  organization_id: 1
   term: 2015
   line: 13
   detail: 1

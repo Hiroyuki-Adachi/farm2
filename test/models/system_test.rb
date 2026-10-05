@@ -33,6 +33,27 @@
 require 'test_helper'
 
 class SystemTest < ActiveSupport::TestCase
+  test "作付計画の年度初期化は前期がなければ原因の分かる例外を返す" do
+    organization = organizations(:org)
+
+    assert_no_difference("System.count") do
+      error = assert_raises(ActiveRecord::RecordNotFound) do
+        System.ensure_for_planning!(organization, 9999)
+      end
+      assert_includes error.message, "組織ID: #{organization.id}"
+      assert_includes error.message, "期: 9999"
+      assert_includes error.message, "前期の設定を確認"
+    end
+  end
+
+  test "作付計画の年度初期化は期が未指定なら明示的な例外を返す" do
+    assert_no_difference("System.count") do
+      assert_raises(ActiveRecord::RecordNotFound) do
+        System.ensure_for_planning!(organizations(:org), nil)
+      end
+    end
+  end
+
   test "前期がある場合は期首日が前期期末日の翌日であること" do
     system = systems(:s2015)
     system.start_date = Date.new(2015, 2, 1)

@@ -17,7 +17,7 @@
 #  region(領域)                       :polygon
 #  start_on(有効期間(自))             :date             default(Mon, 01 Jan 1900), not null
 #  target_flag(管理対象フラグ)        :boolean          default(TRUE), not null
-#  uuid(UUID)                         :string(36)       default(""), not null
+#  uuid(UUID)                         :uuid             not null
 #  created_at                         :datetime
 #  updated_at                         :datetime
 #  group_id(グループID)               :integer
@@ -32,7 +32,7 @@
 #  index_lands_on_organization_id  (organization_id)
 #  index_lands_on_place            (place)
 #  index_lands_on_place_sort_key   (place_sort_key)
-#  index_lands_on_uuid             (uuid) UNIQUE WHERE ((uuid)::text <> ''::text)
+#  index_lands_on_uuid             (uuid) UNIQUE WHERE (uuid IS NOT NULL)
 #
 # Foreign Keys
 #
