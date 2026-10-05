@@ -1,16 +1,17 @@
 class Sorimachi::WorkTypesController < ApplicationController
   include PermitManager
+
   before_action :set_sorimachi_journal, only: [:edit, :update]
 
   def edit
-    @amounts = SorimachiWorkType.where(sorimachi_journal_id: params[:sorimachi_journal_id]).to_h { |j| [j.work_type_id, j.amount] }
+    @amounts = @journal.sorimachi_work_types.to_h { |j| [j.work_type_id, j.amount] }
     @work_types = WorkType.cost.by_term(current_term)
     render layout: false
   end
 
   def update
     SorimachiWorkType.transaction do
-      SorimachiWorkType.refresh(@journal.id, params[:sorimachi])
+      SorimachiWorkType.refresh(@journal, params[:sorimachi])
     end
     head :ok
   end
@@ -18,6 +19,7 @@ class Sorimachi::WorkTypesController < ApplicationController
   private
 
   def set_sorimachi_journal
-    @journal = SorimachiJournal.find(params[:sorimachi_journal_id])
+    @journal = SorimachiJournal.for_organization(current_organization).where(term: current_term)
+      .find(params[:sorimachi_journal_id])
   end
 end
