@@ -8,7 +8,7 @@ class MachineReserveFundCostEditingTest < ActiveSupport::TestCase
                                        total_amount: 120_000, remaining_amount: 120_000)
     @types = [work_types(:work_types1), work_types(:work_types2)]
     @types.each { |type| WorkTypeTerm.find_or_create_by!(work_type: type, term: 2015) }
-    LandCost.stubs(:sum_areas_by_work_type).returns(@types.to_h { |type| [type.id, 1.to_d] })
+    LandCost.stubs(:sum_period_areas_by_work_type).returns(@types.to_h { |type| [type.id, 1.to_d] })
     @detail = @fund.build_detail(@system)
     @detail.amount = 101
     assert @detail.register(@system)
@@ -46,7 +46,7 @@ class MachineReserveFundCostEditingTest < ActiveSupport::TestCase
     assert_equal [50, 51], @detail.machine_reserve_fund_costs.where(work_type: @types).pluck(:cost).sort
     assert_equal 101, @detail.machine_reserve_fund_costs.sum(:cost)
     before = @detail.machine_reserve_fund_costs.order(:id).pluck(:cost)
-    LandCost.stubs(:sum_areas_by_work_type).returns({})
+    LandCost.stubs(:sum_period_areas_by_work_type).returns({})
     assert_not @detail.reallocate_costs(@system)
     assert_includes @detail.errors.full_messages.join, "圃場面積が0"
     assert_equal before, @detail.machine_reserve_fund_costs.reload.order(:id).pluck(:cost)
@@ -87,7 +87,7 @@ class MachineReserveFundCostEditingTest < ActiveSupport::TestCase
   end
 
   test "選択分類の面積が0なら他の分類に面積があっても保存しない" do
-    LandCost.stubs(:sum_areas_by_work_type).returns(@types.first.id => 1.to_d)
+    LandCost.stubs(:sum_period_areas_by_work_type).returns(@types.first.id => 1.to_d)
     before = @detail.machine_reserve_fund_costs.order(:id).pluck(:cost, :allocation_enabled)
     assert_not @detail.reallocate_costs(@system, selected_work_type_ids: [@types.last.id])
     assert_includes @detail.errors.full_messages.join, "圃場面積が0"

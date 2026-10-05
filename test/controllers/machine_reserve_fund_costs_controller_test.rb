@@ -8,7 +8,7 @@ class MachineReserveFundCostsControllerTest < ActionDispatch::IntegrationTest
                                        total_amount: 240_000, remaining_amount: 240_000)
     @types = [work_types(:work_types1), work_types(:work_types2)]
     @types.each { |type| WorkTypeTerm.find_or_create_by!(work_type: type, term: 2015) }
-    LandCost.stubs(:sum_areas_by_work_type).returns(@types.to_h { |type| [type.id, 1.to_d] })
+    LandCost.stubs(:sum_period_areas_by_work_type).returns(@types.to_h { |type| [type.id, 1.to_d] })
     @detail = @fund.build_detail(systems(:s2015))
     @detail.amount = 101
     assert @detail.register(systems(:s2015))
@@ -43,7 +43,7 @@ class MachineReserveFundCostsControllerTest < ActionDispatch::IntegrationTest
     post reallocate_machine_reserve_fund_cost_path(@detail)
     assert_redirected_to edit_machine_reserve_fund_cost_path(@detail)
     assert_equal [50, 51], @detail.machine_reserve_fund_costs.where(work_type: @types).pluck(:cost).sort
-    LandCost.stubs(:sum_areas_by_work_type).returns({})
+    LandCost.stubs(:sum_period_areas_by_work_type).returns({})
     post reallocate_machine_reserve_fund_cost_path(@detail)
     assert_response :unprocessable_content
     assert_equal 101, @detail.machine_reserve_fund_costs.sum(:cost)

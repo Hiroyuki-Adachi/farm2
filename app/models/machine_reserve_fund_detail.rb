@@ -120,14 +120,9 @@ class MachineReserveFundDetail < ApplicationRecord
     work_types = WorkType.land.by_term(term).to_a
     return {} if work_types.empty?
 
-    totals = Hash.new(0)
-    work_type_ids = work_types.map(&:id)
-    (system.start_date..system.end_date).each do |day|
-      LandCost.sum_areas_by_work_type(day, work_type_ids, organization_id).each do |work_type_id, area|
-        totals[work_type_id] += area
-      end
-    end
-    work_types.index_with { |work_type| totals[work_type.id] }
+    totals = LandCost.sum_period_areas_by_work_type(system.start_date, system.end_date, work_types.map(&:id),
+                                                    organization_id)
+    work_types.index_with { |work_type| totals.fetch(work_type.id, 0) }
   end
 
   def allocate_costs(system, selected_work_type_ids: nil)
