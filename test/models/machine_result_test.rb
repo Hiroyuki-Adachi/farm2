@@ -134,11 +134,25 @@ class MachineResultTest < ActiveSupport::TestCase
   end
 
   test "共有fixtureの所有者や作業者を変更しても専用の価格計算に影響しない" do
-    machines(:machine_day_t).update!(owner: homes(:home_kumiai))
-    workers(:worker1).update!(home: homes(:home2))
-
     result = build_machine_pricing_scenario(source: :machine_type, adjust: Adjust::DAY,
                                             worked_at: Date.new(2015, 3, 1), same_home: true)
+    assert_equal 4300, result.price
+    assert_equal 4300, result.amount
+
+    shared_machine = machines(:machine_day_t)
+    shared_worker = workers(:worker1)
+    assert_not_equal shared_machine.id, result.machine_id
+    assert_not_equal shared_worker.id, result.work_result.worker_id
+    assert_not_equal shared_machine.owner.id, result.owner.id
+    assert_not_equal shared_worker.home_id, result.work_result.worker.home_id
+
+    shared_machine.update!(owner: homes(:home_kumiai))
+    shared_worker.update!(home: homes(:home2))
+    assert_equal homes(:home_kumiai).id, shared_machine.reload.owner.id
+    assert_equal homes(:home2).id, shared_worker.reload.home_id
+
+    # 計算値のインスタンス変数キャッシュを使わず、DBから新しいインスタンスを取得する。
+    result = MachineResult.find(result.id)
     assert_equal 4300, result.price
     assert_equal Adjust::DAY, result.adjust
     assert_equal 1, result.quantity

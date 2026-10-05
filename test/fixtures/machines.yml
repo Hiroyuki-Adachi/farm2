@@ -359,7 +359,7 @@ machines22:
   deleted_at: 
   diesel_flag: 'f'
 
-# 以下は既存の共有データ。MachineResultTestは下のpricing_*へ分離済み (#1207)。
+# 以下は既存の共有データ。MachineResultTestの価格計算はfactoryで専用データを生成する (#1249)。
 # machine_hour_t / machine_area_t / machine_day_t はWorkTest「機械登録」で使用する。
 # machine_hour_t はmachine_result_genka1とdepreciation_genkaからも参照される。
 machine_hour:
