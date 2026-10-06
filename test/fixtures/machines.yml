@@ -359,7 +359,7 @@ machines22:
   deleted_at: 
   diesel_flag: 'f'
 
-# 以下は既存の共有データ。MachineResultTestは下のpricing_*へ分離済み (#1207)。
+# 以下は既存の共有データ。MachineResultTestの価格計算はfactoryで専用データを生成する (#1249)。
 # machine_hour_t / machine_area_t / machine_day_t はWorkTest「機械登録」で使用する。
 # machine_hour_t はmachine_result_genka1とdepreciation_genkaからも参照される。
 machine_hour:
@@ -432,65 +432,4 @@ machine_day_t:
   created_at: '2015-12-17 08:59:16.301413'
   updated_at: '2016-02-25 08:24:45.220315'
   deleted_at: 
-  diesel_flag: 'f'
-
-# MachineResultTest専用。分離方針は test/fixtures/README.md を参照。
-pricing_machine_hour:
-  name: "テスト時間ごと"
-  display_order: 1
-  validity_start_at: '2010-01-01'
-  validity_end_at: '2020-12-31'
-  machine_type: pricing_machine_type_test
-  owner: pricing_owner
-  deleted_at:
-  diesel_flag: 'f'
-
-pricing_machine_area:
-  name: "テスト面積ごと"
-  display_order: 2
-  validity_start_at: '2010-01-01'
-  validity_end_at: '2020-12-31'
-  machine_type: pricing_machine_type_test
-  owner: pricing_owner
-  deleted_at:
-  diesel_flag: 'f'
-
-pricing_machine_day:
-  name: "テスト日数ごと"
-  display_order: 3
-  validity_start_at: '2010-01-01'
-  validity_end_at: '2020-12-31'
-  machine_type: pricing_machine_type_test
-  owner: pricing_owner
-  deleted_at:
-  diesel_flag: 'f'
-
-pricing_machine_hour_t:
-  name: "テスト時間ごと"
-  display_order: 1
-  validity_start_at: '2010-01-01'
-  validity_end_at: '2020-12-31'
-  machine_type: pricing_machine_type_hour
-  owner: pricing_owner
-  deleted_at:
-  diesel_flag: 'f'
-
-pricing_machine_area_t:
-  name: "テスト面積ごと"
-  display_order: 2
-  validity_start_at: '2010-01-01'
-  validity_end_at: '2020-12-31'
-  machine_type: pricing_machine_type_area
-  owner: pricing_owner
-  deleted_at:
-  diesel_flag: 'f'
-
-pricing_machine_day_t:
-  name: "テスト日数ごと"
-  display_order: 3
-  validity_start_at: '2010-01-01'
-  validity_end_at: '2020-12-31'
-  machine_type: pricing_machine_type_day
-  owner: pricing_owner
-  deleted_at:
   diesel_flag: 'f'
