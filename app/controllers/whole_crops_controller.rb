@@ -21,13 +21,15 @@ class WholeCropsController < ApplicationController
   def prepare_list(works)
     @year_months = works.select("to_char(works.worked_at, 'YYYY-MM')")
       .distinct.order(1).pluck(Arel.sql("to_char(works.worked_at, 'YYYY-MM')"))
-    @work_types = WorkType.where(id: works.pluck(:work_type_id).uniq).order(:display_order, :id)
-    @works = WorkDecorator.decorate_collection(works.order(:worked_at, :id).includes(:work_type, :whole_crop))
+    @work_types = WorkType.where(id: works.select(:work_type_id).distinct).order(:display_order, :id)
+    rows = works.order(:worked_at, :id).includes(:work_type, whole_crop: [:wcs_lands, :wcs_rolls])
+    @works = WorkDecorator.decorate_collection(rows)
   end
 
   def selected_harvests(works)
     return WorkWholeCrop.none if params[:ids].blank?
 
-    WorkWholeCrop.where(work_id: works.select(:id), id: params[:ids]).usual_order.select(&:harvested?)
+    WorkWholeCrop.where(work_id: works.select(:id), id: params[:ids]).usual_order
+      .includes(:wcs_lands, :wcs_rolls, work: :work_type).select(&:harvested?)
   end
 end
