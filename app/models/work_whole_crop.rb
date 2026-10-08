@@ -41,6 +41,10 @@ class WorkWholeCrop < ApplicationRecord
     WholeCropLand.regist(work_whole_crop, params.require(:wcs_lands))
   end
 
+  def harvested?
+    rolls.positive? && weight.positive?
+  end
+
   def rolls
     wcs_lands.sum(:rolls) || 0
   end
@@ -58,10 +62,9 @@ class WorkWholeCrop < ApplicationRecord
   end
 
   def self.update_prices(sys)
-    # rubocop:disable Rails/SkipsModelValidations
+    # rubocop:disable-next Rails/SkipsModelValidations
     for_organization(sys.organization_id)
       .where(works: { term: sys.term })
       .update_all(["unit_price = ?", sys.roll_price])
-    # rubocop:enable Rails/SkipsModelValidations
   end
 end
