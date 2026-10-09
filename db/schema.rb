@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_28_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_05_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -541,6 +541,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_28_090000) do
     t.decimal "cost", precision: 9, null: false, comment: "原価"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "allocation_enabled", default: true, null: false, comment: "面積按分対象"
     t.index ["machine_reserve_fund_detail_id", "work_type_id"], name: "idx_reserve_fund_costs_on_detail_and_work_type", unique: true
     t.index ["machine_reserve_fund_detail_id"], name: "idx_on_machine_reserve_fund_detail_id_2e7d1eb058"
     t.index ["organization_id"], name: "index_machine_reserve_fund_costs_on_organization_id"

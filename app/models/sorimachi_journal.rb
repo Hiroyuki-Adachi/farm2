@@ -54,9 +54,13 @@ require 'csv'
 class SorimachiJournal < ApplicationRecord
   after_update :clear_work_types
   enum :allocation_mode, { auto: 0, manual: 1, select: 2 }, prefix: :allocation_mode
-  scope :usual, ->(term) { where(term: term, detail: 1).order(:line) }
-  scope :cost, ->(term) { where(term: term, cost0_flag: true).order(:line, :detail) }
-  scope :total, ->(term) { where(term: term, cost0_flag: true).order(:code01).group(:code01).sum(:amount1) }
+  scope :usual, ->(term, organization) { for_organization(organization).where(term: term, detail: 1).order(:line) }
+  scope :cost, ->(term, organization) {
+    for_organization(organization).where(term: term, cost0_flag: true).order(:line, :detail)
+  }
+  scope :total, ->(term, organization) {
+    for_organization(organization).where(term: term, cost0_flag: true).order(:code01).group(:code01).sum(:amount1)
+  }
   scope :for_organization, lambda { |organization|
     organization_id = organization.is_a?(Organization) ? organization.id : organization
     where(organization_id: organization_id)
@@ -66,7 +70,8 @@ class SorimachiJournal < ApplicationRecord
   has_many :sorimachi_work_types, dependent: :destroy
   has_many :work_types, through: :sorimachi_work_types
   # rubocop:disable Rails/HasManyOrHasOneDependent
-  has_many :details, foreign_key: [:term, :line], class_name: 'SorimachiJournal', primary_key: [:term, :line]
+  has_many :details, foreign_key: [:organization_id, :term, :line], class_name: 'SorimachiJournal',
+                     primary_key: [:organization_id, :term, :line]
   # rubocop:enable Rails/HasManyOrHasOneDependent
 
   # 取込・日付変更時の対象期を検証するため、システム(年度)を呼び出し元から渡す。
@@ -74,8 +79,8 @@ class SorimachiJournal < ApplicationRecord
 
   validate :term_check, if: :term_check_required?
 
-  belongs_to :account1, foreign_key: [:term, :code01], class_name: 'SorimachiAccount'
-  belongs_to :account2, foreign_key: [:term, :code12], class_name: 'SorimachiAccount'
+  belongs_to :account1, foreign_key: [:organization_id, :term, :code01], class_name: 'SorimachiAccount'
+  belongs_to :account2, foreign_key: [:organization_id, :term, :code12], class_name: 'SorimachiAccount'
 
   def self.import(system, file)
     term = system.term
@@ -104,27 +109,31 @@ class SorimachiJournal < ApplicationRecord
     end
   end
 
-  def self.details(journals)
+  def self.details(journals, organization)
     return [] unless journals.exists?
 
-    SorimachiJournal.where(term: journals.first.term)
+    SorimachiJournal.for_organization(organization).where(term: journals.first.term)
       .where(line: journals.map(&:line))
       .where("detail > 1")
       .order(:detail)
   end
 
-  def self.update_cost_flag(term)
-    account_codes = SorimachiAccount.where(term: term).pluck(:code)
-    SorimachiJournal.where(term: term).update_all(cost0_flag: false, cost1_flag: false)
+  def self.update_cost_flag(term, organization)
+    account_codes = SorimachiAccount.for_organization(organization).where(term: term).pluck(:code)
+    SorimachiJournal.for_organization(organization).where(term: term).update_all(cost0_flag: false, cost1_flag: false)
     return if account_codes.blank?
 
-    SorimachiJournal.where(term: term, code01: account_codes).update_all(cost0_flag: true)
-    SorimachiJournal.where(term: term, code12: account_codes).update_all(cost1_flag: true)
+    SorimachiJournal.for_organization(organization).where(term: term,
+                                                          code01: account_codes).update_all(cost0_flag: true)
+    SorimachiJournal.for_organization(organization).where(term: term,
+                                                          code12: account_codes).update_all(cost1_flag: true)
   end
 
-  def self.refresh(term)
-    accounts = SorimachiAccount.where(term: term).to_h { |a| [a.code, a.total_cost_type] }
-    SorimachiJournal.where(term: term).find_each do |journal|
+  def self.refresh(term, organization)
+    accounts = SorimachiAccount.for_organization(organization).where(term: term).to_h do |a|
+      [a.code, a.total_cost_type]
+    end
+    SorimachiJournal.for_organization(organization).where(term: term).find_each do |journal|
       if [TotalCostType::EXPENSEDIRECT,
           TotalCostType::EXPENSEINDIRECT].include?(accounts[journal.code12]) || accounts[journal.code01] == TotalCostType::SALES
         journal.swap
@@ -133,9 +142,9 @@ class SorimachiJournal < ApplicationRecord
     end
   end
 
-  def self.accounts(term)
-    t1 = SorimachiJournal.where(term: term).order(:code01).group(:code01).sum(:amount1)
-    t2 = SorimachiJournal.where(term: term).order(:code12).group(:code12).sum(:amount2)
+  def self.accounts(term, organization)
+    t1 = SorimachiJournal.for_organization(organization).where(term: term).order(:code01).group(:code01).sum(:amount1)
+    t2 = SorimachiJournal.for_organization(organization).where(term: term).order(:code12).group(:code12).sum(:amount2)
     t1.merge(t2).to_h { |k, _v| [k, [t1[k] || 0, t2[k] || 0]] }
   end
 
@@ -180,11 +189,13 @@ class SorimachiJournal < ApplicationRecord
   end
 
   def copy(sys)
-    copy_src = SorimachiJournal.where("term = ? AND id < ? AND (cost0_flag = true OR cost1_flag = true)", term,
-                                      id).order(id: :desc).first
+    raise ArgumentError, "仕訳とシステムの組織・年度が一致しません" unless organization_id == sys.organization_id && term == sys.term
+
+    copy_src = SorimachiJournal.for_organization(organization_id).where(term: term)
+      .where("id < ? AND (cost0_flag = true OR cost1_flag = true)", id).order(id: :desc).first
     return unless copy_src
 
-    work_types.destroy_all
+    sorimachi_work_types.destroy_all
     sum_area = 0
     max_work_type_id = 0
     max_area = 0
@@ -206,8 +217,7 @@ class SorimachiJournal < ApplicationRecord
         amount = (cost_amount * land_cost[1] / sum_area).round
         next if amount.zero?
 
-        SorimachiWorkType.create(
-          sorimachi_journal_id: id,
+        sorimachi_work_types.create(
           work_type_id: land_cost[0],
           amount: amount
         )
@@ -215,7 +225,7 @@ class SorimachiJournal < ApplicationRecord
       end
     end
     unless sum_amount == cost_amount
-      sorimachi_work_type = SorimachiWorkType.find_by(sorimachi_journal_id: id, work_type_id: max_work_type_id)
+      sorimachi_work_type = sorimachi_work_types.find_by(work_type_id: max_work_type_id)
       if sorimachi_work_type
         sorimachi_work_type.amount += (cost_amount - sum_amount)
         sorimachi_work_type.save!

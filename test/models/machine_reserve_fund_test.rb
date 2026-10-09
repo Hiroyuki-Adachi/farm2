@@ -109,6 +109,16 @@ class MachineReserveFundTest < ActiveSupport::TestCase
     assert_no_queries { assert_equal 150_000, reloaded.registered_amount }
   end
 
+  test "明細が存在すると総額を変更できず明細を削除すると変更できる" do
+    reserve_fund = build_reserve_fund(total_amount: 1_000_000).tap(&:save!)
+    detail = create_detail(reserve_fund, amount: 150_000)
+    assert_not reserve_fund.update(total_amount: 2_000_000)
+    assert_includes reserve_fund.errors.attribute_names, :total_amount
+    assert_equal 1_000_000, reserve_fund.reload.total_amount
+    detail.destroy!
+    assert reserve_fund.update(total_amount: 2_000_000)
+  end
+
   test "明細が存在すると削除できない" do
     reserve_fund = build_reserve_fund(total_amount: 1_000_000).tap(&:save!)
     create_detail(reserve_fund, amount: 150_000)

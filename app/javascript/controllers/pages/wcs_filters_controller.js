@@ -28,7 +28,7 @@ export default class extends Controller {
       const matchWorkType = selectedWorkTypeIds.includes(wtId)
       const matchMonth = selectedMonths.includes(month)
 
-      cb.checked = matchWorkType && matchMonth
+      cb.checked = !cb.disabled && matchWorkType && matchMonth
     })
   }
 }

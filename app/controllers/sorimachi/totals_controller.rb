@@ -4,7 +4,8 @@ class Sorimachi::TotalsController < ApplicationController
   def index
     total_cost_types = TotalCostType.accountable.sort_by(&:code)
     selected_id = params[:total_cost_type_id].to_i
-    @selected_total_cost_type_id = total_cost_types.map(&:id).include?(selected_id) ? selected_id : total_cost_types.first&.id
+    @selected_total_cost_type_id =
+      total_cost_types.map(&:id).include?(selected_id) ? selected_id : total_cost_types.first&.id
     @selected_total_cost_type = total_cost_types.find { |type| type.id == @selected_total_cost_type_id }
 
     @work_types = WorkType
@@ -12,7 +13,8 @@ class Sorimachi::TotalsController < ApplicationController
       .where(cost_flag: true, deleted_at: nil)
       .usual_order
 
-    @accounts = SorimachiAccount.where(term: current_term, total_cost_type_id: @selected_total_cost_type_id).order(:code)
+    @accounts = SorimachiAccount.for_organization(current_organization)
+      .where(term: current_term, total_cost_type_id: @selected_total_cost_type_id).order(:code)
     @account_totals = build_account_totals(@accounts.map(&:code))
     @journal_totals = build_journal_totals(@accounts.map(&:code))
 
@@ -27,9 +29,9 @@ class Sorimachi::TotalsController < ApplicationController
   def build_account_totals(account_codes)
     return {} if account_codes.blank?
 
-    journals = SorimachiJournal.where(term: current_term)
+    journals = SorimachiJournal.for_organization(current_organization).where(term: current_term)
       .where(code01: account_codes)
-      .or(SorimachiJournal.where(term: current_term, code12: account_codes))
+      .or(SorimachiJournal.for_organization(current_organization).where(term: current_term, code12: account_codes))
       .select(:id, :code01, :code12)
       .to_a
     return {} if journals.blank?
@@ -62,19 +64,15 @@ class Sorimachi::TotalsController < ApplicationController
   def build_journal_totals(account_codes)
     return {} if account_codes.blank?
 
-    journals = SorimachiJournal.where(term: current_term)
+    journals = SorimachiJournal.for_organization(current_organization).where(term: current_term)
       .where(code01: account_codes)
-      .or(SorimachiJournal.where(term: current_term, code12: account_codes))
+      .or(SorimachiJournal.for_organization(current_organization).where(term: current_term, code12: account_codes))
       .select(:code01, :code12, :amount1, :amount2)
 
     totals = Hash.new(0.to_d)
     journals.each do |journal|
-      if account_codes.include?(journal.code01)
-        totals[journal.code01] += signed_amount(journal.amount1, "debit")
-      end
-      if account_codes.include?(journal.code12)
-        totals[journal.code12] += signed_amount(journal.amount2, "credit")
-      end
+      totals[journal.code01] += signed_amount(journal.amount1, "debit") if account_codes.include?(journal.code01)
+      totals[journal.code12] += signed_amount(journal.amount2, "credit") if account_codes.include?(journal.code12)
     end
     totals
   end

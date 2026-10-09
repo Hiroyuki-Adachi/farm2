@@ -16,7 +16,7 @@ module Sorimachi
       target_work_type_ids = target_work_type_ids(work_type_ids)
       return {} if target_work_type_ids.blank?
 
-      if !work_type_ids.nil?
+      unless work_type_ids.nil?
         non_land_work_type_id = target_work_type_ids.find { |work_type_id| !work_type_land_flags[work_type_id] }
         return { non_land_work_type_id => target_amount } if non_land_work_type_id
       end
@@ -29,21 +29,24 @@ module Sorimachi
     # journal#allocation_mode の更新は SorimachiJournal#clear_work_types(after_update) を発火させ、
     # 既存の配賦を破棄するため、mode渡し時はここで同一トランザクション内に更新をまとめる。
     def allocate!(journal:, amount:, accounted_on: journal.accounted_on, work_type_ids: nil, mode: nil)
+      unless journal.organization_id == @system.organization_id && journal.term == @term && @term == @system.term
+        raise ArgumentError, "仕訳とシステムの組織・年度が一致しません"
+      end
+
       amounts = allocate(amount: amount, accounted_on: accounted_on, work_type_ids: work_type_ids)
       SorimachiWorkType.transaction do
         journal.update!(allocation_mode: mode) if mode
-        SorimachiWorkType.where(sorimachi_journal_id: journal.id).delete_all
+        journal.sorimachi_work_types.delete_all
         amounts.each do |work_type_id, work_amount|
           next if work_amount.zero?
 
-          SorimachiWorkType.create!(
-            sorimachi_journal_id: journal.id,
+          journal.sorimachi_work_types.create!(
             work_type_id: work_type_id,
             amount: work_amount
           )
         end
       end
-      SorimachiWorkType.where(sorimachi_journal_id: journal.id).order(:work_type_id)
+      journal.sorimachi_work_types.order(:work_type_id)
     end
 
     private
@@ -72,6 +75,7 @@ module Sorimachi
 
     def target_lands_between(start_on, end_on)
       Land
+        .for_organization(@system.organization_id)
         .kept
         .where(target_flag: true)
         .where("lands.start_on <= ? AND lands.end_on >= ?", end_on, start_on)
@@ -138,13 +142,15 @@ module Sorimachi
     end
 
     def distribute(total_amount, areas, target_work_type_ids)
-      candidates = areas.select { |work_type_id, area| target_work_type_ids.include?(work_type_id) && area.to_d.positive? }
+      candidates = areas.select do |work_type_id, area|
+        target_work_type_ids.include?(work_type_id) && area.to_d.positive?
+      end
       fallback_id = target_work_type_ids.min
       return { fallback_id => total_amount } if candidates.blank? && fallback_id
       return {} if candidates.blank?
 
       total_area = candidates.values.sum(&:to_d)
-      raw_amounts = candidates.transform_values { |area| (total_amount.to_d * area.to_d / total_area) }
+      raw_amounts = candidates.transform_values { |area| total_amount.to_d * area.to_d / total_area }
       rounded = raw_amounts.transform_values { |value| value.round(0).to_i }
       remainder = total_amount - rounded.values.sum
 

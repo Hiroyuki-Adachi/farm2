@@ -30,9 +30,9 @@ class LandCost < ApplicationRecord
     newest_query.from(latest_land_costs)
     newest_query.project(latest_land_costs[:land_id], latest_activated_on)
     newest_query.where(
-        latest_land_costs[:land_id].eq(arel_table[:land_id])
-          .and(latest_land_costs[:activated_on].lteq(target))
-      )
+      latest_land_costs[:land_id].eq(arel_table[:land_id])
+        .and(latest_land_costs[:activated_on].lteq(target))
+    )
     newest_query.group(latest_land_costs[:land_id])
     newest_query.having(latest_activated_on.eq(arel_table[:activated_on]))
 
@@ -66,6 +66,32 @@ class LandCost < ApplicationRecord
       .where("lands.deleted_at IS NULL AND target_flag = true")
       .where("? BETWEEN lands.start_on AND lands.end_on", target)
       .group(:work_type_id).sum("lands.area")
+  end
+
+  # 日次集計と同じ面積積算を、土地履歴の有効期間ごとに1クエリで求める。
+  # 対象外分類への変更も期間を区切るため、分類の絞り込みはLEADの後に行う。
+  def self.sum_period_areas_by_work_type(start_date, end_date, work_type_ids, organization)
+    return {} if work_type_ids.empty?
+
+    histories = for_organization(organization)
+      .where("lands.deleted_at IS NULL AND lands.target_flag = true")
+      .where("lands.start_on IS NOT NULL AND lands.end_on IS NOT NULL")
+      .where(activated_on: ..end_date)
+      .select("land_costs.work_type_id, land_costs.activated_on, lands.area, lands.start_on, lands.end_on",
+              "LEAD(land_costs.activated_on) OVER " \
+              "(PARTITION BY land_costs.land_id ORDER BY land_costs.activated_on) AS next_on")
+    period = { start_date: start_date, end_date: end_date, work_type_ids: work_type_ids }
+    sql = sanitize_sql_array([<<~SQL.squish, period])
+      SELECT work_type_id,
+             SUM(area * GREATEST(
+               LEAST(COALESCE(next_on - 1, :end_date::date), end_on, :end_date::date)
+               - GREATEST(activated_on, start_on, :start_date::date) + 1, 0
+             )) AS accumulated_area
+      FROM (#{histories.to_sql}) AS histories
+      WHERE work_type_id IN (:work_type_ids)
+      GROUP BY work_type_id
+    SQL
+    connection.select_all(sql).to_h { |row| [row.fetch("work_type_id"), row.fetch("accumulated_area")] }
   end
 
   def self.sum_area_for_harvest(worked_at, work_kind_id, organization)
@@ -136,6 +162,7 @@ class LandCost < ApplicationRecord
   end
 
   def regist_work_work_types
-    Work.where("worked_at BETWEEN ? AND ?", activated_on, next_land_cost&.activated_on || Time.zone.today).by_land(land).each(&:regist_work_work_types)
+    Work.where("worked_at BETWEEN ? AND ?", activated_on,
+               next_land_cost&.activated_on || Time.zone.today).by_land(land).each(&:regist_work_work_types)
   end
 end

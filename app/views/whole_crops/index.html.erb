@@ -39,21 +39,25 @@
       </tr>
     </thead>
     <tbody>
-      <% @whole_crops.each do |whole_crop| %>
+      <% @works.each do |work| %>
+        <% whole_crop = WholeCropDecorator.decorate(work.model.whole_crop) if work.model.whole_crop %>
+        <% warning = whole_crop.nil? || !whole_crop.harvested? %>
+        <% warning_class = "text-danger" if warning %>
         <tr>
-          <td><%= checkbox_tag "ids[]", whole_crop.id,
+          <td><%= checkbox_tag "ids[]", whole_crop&.id,
+            disabled: warning,
             class: "wcs-row-checkbox",
             data: {
-              work_type_id: whole_crop.work.work_type_id,
-              worked_month: whole_crop.work.model.worked_at.strftime("%Y-%m")
+              work_type_id: work.work_type_id,
+              worked_month: work.model.worked_at.strftime("%Y-%m")
             } %>
           </td>
-          <td><%= whole_crop.work.work_type.name %></td>
-          <td><%= whole_crop.work.worked_at %></td>
-          <td class="numeric"><%= whole_crop.weight %></td>
-          <td class="numeric"><%= whole_crop.rolls %></td>
-          <td class="numeric"><%=  whole_crop.unit_price %></td>
-          <td class="numeric"><%= whole_crop.price %></td>
+          <td class="<%= warning_class %>"><%= work.work_type.name %></td>
+          <td class="<%= warning_class %>"><%= work.worked_at %></td>
+          <td class="numeric <%= warning_class %>"><%= whole_crop ? whole_crop.weight : "-" %></td>
+          <td class="numeric <%= warning_class %>"><%= whole_crop ? whole_crop.rolls : "-" %></td>
+          <td class="numeric <%= warning_class %>"><%= whole_crop ? whole_crop.unit_price : "-" %></td>
+          <td class="numeric <%= warning_class %>"><%= whole_crop ? whole_crop.price : "-" %></td>
         </tr>
       <% end %>
     </tbody>
