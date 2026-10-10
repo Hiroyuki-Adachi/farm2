@@ -125,6 +125,9 @@ resources :seedling_costs, param: "seedling_id", only: [:index, :create, :edit, 
 resources :chemical_costs, except: [:destroy]
 resources :fuel_costs, only: [:index, :create]
 resources :machine_reserve_fund_details, only: [:index, :new, :create, :destroy]
+resources :machine_reserve_fund_costs, only: [:index, :edit, :update] do
+  post :reallocate, on: :member
+end
 resources :machine_reserve_funds, except: [:show] do
   collection do
     get :machines

@@ -4,8 +4,8 @@ class Sorimachi::AccountsController < ApplicationController
   before_action :set_sorimachi_account, only: [:edit, :update, :destroy]
 
   def index
-    journals = SorimachiJournal.accounts(current_term)
-    accounts = SorimachiAccount.where(term: current_term).index_by(&:code)
+    journals = SorimachiJournal.accounts(current_term, current_organization)
+    accounts = SorimachiAccount.for_organization(current_organization).where(term: current_term).index_by(&:code)
     @journal_rows = journals.map do |code, amount|
       account = accounts[code]
       total_cost_type_id = account&.total_cost_type_id.to_i
@@ -93,8 +93,6 @@ class Sorimachi::AccountsController < ApplicationController
   def sorimachi_account_params
     params.expect(sorimachi_account:
       [
-        :term,
-        :code,
         :name,
         :total_cost_type_id
       ])
@@ -118,9 +116,9 @@ class Sorimachi::AccountsController < ApplicationController
   end
 
   def journals_for_account(account)
-    SorimachiJournal.where(term: account.term)
+    SorimachiJournal.for_organization(current_organization).where(term: account.term)
       .where(code01: account.code)
-      .or(SorimachiJournal.where(term: account.term, code12: account.code))
+      .or(SorimachiJournal.for_organization(current_organization).where(term: account.term, code12: account.code))
   end
 
   def signed_amount(journal, account_code, account_flag)

@@ -15,7 +15,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     records = service.allocate!(journal: journal, amount: 800, accounted_on: journal.accounted_on)
 
     assert_equal 2, records.count
-    assert_equal 800, records.sum { |record| record.amount.to_i }
+    assert_equal(800, records.sum { |record| record.amount.to_i })
     assert_equal 500, records.find_by(work_type_id: work_type1.id).amount.to_i
     assert_equal 300, records.find_by(work_type_id: work_type2.id).amount.to_i
   end
@@ -35,7 +35,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     records = service.allocate!(journal: journal, amount: 219, accounted_on: nil)
 
     assert_equal 2, records.count
-    assert_equal 219, records.sum { |record| record.amount.to_i }
+    assert_equal(219, records.sum { |record| record.amount.to_i })
     assert_equal 73, records.find_by(work_type_id: work_type1.id).amount.to_i
     assert_equal 146, records.find_by(work_type_id: work_type2.id).amount.to_i
   end
@@ -54,7 +54,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     records = service.allocate!(journal: journal, amount: 1, accounted_on: journal.accounted_on)
 
     assert_equal 1, records.count
-    assert_equal 1, records.sum { |record| record.amount.to_i }
+    assert_equal(1, records.sum { |record| record.amount.to_i })
     assert_nil records.find_by(work_type_id: work_type1.id)
     assert_equal 1, records.find_by(work_type_id: work_type2.id).amount.to_i
   end
@@ -70,7 +70,7 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
 
     raising_create = ->(*) { raise ActiveRecord::RecordInvalid, SorimachiWorkType.new }
     assert_raises(ActiveRecord::RecordInvalid) do
-      SorimachiWorkType.stub(:create!, raising_create) do
+      journal.sorimachi_work_types.stub(:create!, raising_create) do
         service.allocate!(journal: journal, amount: 800, accounted_on: journal.accounted_on, mode: :select)
       end
     end
@@ -79,10 +79,29 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     assert_not SorimachiWorkType.exists?(sorimachi_journal_id: journal.id)
   end
 
+  test "仕訳と異なる年度のシステムでは配賦を変更しない" do
+    system = create_system(term: 2095)
+    journal = create_journal(system: system, line: 9905, accounted_on: nil)
+    service = Sorimachi::WorkTypeAllocationService.new(term: 2094, system: system)
+
+    assert_raises(ArgumentError) do
+      service.allocate!(journal: journal, amount: 100, mode: :manual)
+    end
+    assert journal.reload.allocation_mode_auto?
+    assert_empty journal.sorimachi_work_types
+  end
+
   private
 
   def create_system(term:)
-    organization = Organization.create!(name: "配賦テスト#{term}", term: term)
+    organization = @organization = Organization.create!(name: "配賦テスト#{term}", term: term)
+    @home = homes(:home1).dup
+    @home.organization = organization
+    @home.section = homes(:home1).section.dup.tap do |section|
+      section.organization = organization
+      section.save!
+    end
+    @home.save!
     System.create!(
       term: term,
       term_name: term.to_s,
@@ -106,11 +125,12 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
 
   def create_land(place:, area:)
     Land.create!(
+      organization: @organization,
       place: place,
       area: area,
       target_flag: true,
-      owner_id: homes(:home1).id,
-      manager_id: homes(:home1).id,
+      owner_id: @home.id,
+      manager_id: @home.id,
       start_on: Date.new(1900, 1, 1),
       end_on: Date.new(2999, 12, 31)
     )

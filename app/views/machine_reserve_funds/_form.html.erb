@@ -35,7 +35,7 @@
  </div>
  <div class="col-md-2 mb-3">
     <%= f.label :total_amount, "総額", class: "col-form-label-lg form-label" %>
-    <%= f.number_field :total_amount, {min: 0, max: 999999999, required: true, class: "form-control", data: {machine_reserve_fund_remaining_amount_target: "totalAmount"}} %>
+    <%= f.number_field :total_amount, {min: 0, max: 999999999, required: true, readonly: @machine_reserve_fund.details?, class: "form-control", data: {machine_reserve_fund_remaining_amount_target: "totalAmount"}} %>
  </div>
  <div class="col-md-3 mb-3">
     <%= f.label :remaining_amount, "残額(初期値)", class: "col-form-label-lg form-label" %>

@@ -66,6 +66,27 @@ class SorimachiJournalTest < ActiveSupport::TestCase
     SorimachiAccount.create!(organization: @organization, term: @term, code: 9002, name: "貸方")
   end
 
+  test "組織と年度を指定した検索・結合・集計が既存仕訳を取得する" do
+    journal = build_journal(accounted_on: @system.start_date)
+    journal.save!
+    detail = journal.dup
+    detail.detail = 2
+    detail.validation_system = @system
+    detail.save!
+
+    assert_equal 9001, journal.account1.code
+    assert_equal 9002, journal.account2.code
+    assert_equal [journal.id, detail.id].sort, journal.details.ids.sort
+    assert_equal [detail.id], SorimachiJournal.details(SorimachiJournal.usual(@term, @organization), @organization).ids
+    assert_equal({ 9001 => "借方", 9002 => "貸方" }, SorimachiAccount.to_h(@term, @organization))
+    SorimachiJournal.update_cost_flag(@term, @organization)
+    assert_equal [journal.id, detail.id].sort, SorimachiJournal.cost(@term, @organization).ids.sort
+    assert_equal journal.amount1 * 2, SorimachiJournal.total(@term, @organization)[9001]
+    assert_equal [journal.amount1 * 2, 0], SorimachiJournal.accounts(@term, @organization)[9001]
+    SorimachiJournal.refresh(@term, @organization)
+    assert_equal 9001, journal.reload.code01
+  end
+
   test "仕訳日は暦年ではなく期首期末で判定する" do
     journal = build_journal(accounted_on: Date.new(2091, 2, 1))
 
