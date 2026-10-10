@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_05_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_10_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -816,7 +816,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_05_090000) do
     t.integer "total_cost_type_id", default: 0, null: false, comment: "原価種別"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "organization_id", comment: "組織"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.index ["organization_id", "term", "code"], name: "sorimachi_accounts_2nd", unique: true
   end
 
@@ -856,7 +856,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_05_090000) do
     t.integer "tax01", comment: "消費税0-1"
     t.integer "tax11", comment: "消費税1-1"
     t.integer "allocation_mode", default: 0, null: false
-    t.bigint "organization_id", comment: "組織"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.index ["organization_id", "term", "allocation_mode"], name: "sorimachi_journals_3rd"
     t.index ["organization_id", "term", "line", "detail"], name: "sorimachi_journals_2nd", unique: true
   end

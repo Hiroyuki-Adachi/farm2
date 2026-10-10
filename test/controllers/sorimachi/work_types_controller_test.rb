@@ -37,7 +37,7 @@ class Sorimachi::WorkTypesControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :success
 
-    sorimachi_work_type = SorimachiWorkType.last
+    sorimachi_work_type = @journal.sorimachi_work_types.find_by!(work_type_id: 1)
     assert_equal @journal.id, sorimachi_work_type.sorimachi_journal_id
     assert_equal 1, sorimachi_work_type.work_type_id
     assert_equal amount, sorimachi_work_type.amount
