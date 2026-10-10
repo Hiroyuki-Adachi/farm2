@@ -48,7 +48,8 @@ class Sorimachi::AccountsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to sorimachi_accounts_path
 
-    created_account = SorimachiAccount.last
+    created_account = SorimachiAccount.for_organization(@user.organization_id).find_by!(term: @user.term,
+                                                                                        code: journal.code01)
     assert_equal sorimachi_account[:name], created_account.name
     assert_equal sorimachi_account[:code], created_account.code
     assert_equal @user.term, created_account.term
@@ -90,6 +91,6 @@ class Sorimachi::AccountsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to sorimachi_accounts_path
 
-    assert_nil SorimachiAccount.find_by(code: account.code, term: @user.term)
+    assert_nil SorimachiAccount.for_organization(@user.organization_id).find_by(code: account.code, term: @user.term)
   end
 end

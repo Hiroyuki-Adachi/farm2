@@ -38,7 +38,7 @@
 #  term(年度(期))               :integer          not null
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
-#  organization_id(組織)        :bigint
+#  organization_id(組織)        :bigint           not null
 #
 # Indexes
 #
@@ -116,4 +116,68 @@ journal2:
   remark3: ""
   remark4: ""
   cost0_flag: false
+  cost1_flag: false
+
+journal2_org2:
+  organization_id: 2
+  term: 2015
+  line: 13
+  detail: 1
+  accounted_on: "2015-01-15"
+  code01: 720
+  code02: 0
+  code03: 0
+  code04: 0
+  code05: 0
+  code06: 3
+  code07: 10
+  amount1: 987654
+  code11: 0
+  code12: 0
+  code13: 0
+  code14: 0
+  code15: 0
+  code16: 0
+  code17: 3
+  code18: 10
+  amount2: 987654
+  code21: 0
+  code31: "0"
+  remark1: "別組織の仕訳"
+  remark2: "備考２２"
+  remark3: ""
+  remark4: ""
+  cost0_flag: true
+  cost1_flag: false
+
+journal2_detail_org2:
+  organization_id: 2
+  term: 2015
+  line: 13
+  detail: 2
+  accounted_on: "2015-01-15"
+  code01: 720
+  code02: 0
+  code03: 0
+  code04: 0
+  code05: 0
+  code06: 3
+  code07: 10
+  amount1: 987654
+  code11: 0
+  code12: 0
+  code13: 0
+  code14: 0
+  code15: 0
+  code16: 0
+  code17: 3
+  code18: 10
+  amount2: 987654
+  code21: 0
+  code31: "0"
+  remark1: "別組織の仕訳"
+  remark2: "備考２２"
+  remark3: ""
+  remark4: ""
+  cost0_flag: true
   cost1_flag: false
