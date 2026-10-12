@@ -60,13 +60,15 @@ class Sorimachi::ImportsControllerTest < ActionDispatch::IntegrationTest
     csv_data = CSV.read(csv_path, encoding: "cp932", headers: SorimachiJournal.updatable_attributes, skip_lines: %r{^//})
     last_data = csv_data[-1]
 
-    SorimachiJournal.where(term: @user.term).destroy_all
+    SorimachiJournal.for_organization(@user.organization_id).where(term: @user.term).destroy_all
     assert_difference('SorimachiJournal.count', csv_data.size) do
       post sorimachi_imports_path, params: { import_file: fixture_file_upload(csv_path, 'text/csv') }
     end
     assert_redirected_to sorimachi_imports_path
 
-    journal = SorimachiJournal.last
+    journal = SorimachiJournal.for_organization(@user.organization_id).find_by!(
+      term: @user.term, line: last_data['line'], detail: last_data['detail']
+    )
     assert_equal @user.term, journal.term
     last_data.headers.each do |header|
       journal_value = journal.send(header)
