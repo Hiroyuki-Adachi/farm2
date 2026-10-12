@@ -1,7 +1,7 @@
 class FixesController < ApplicationController
-  before_action :set_fixed_at, only: [:create, :show]
+  before_action :set_fixed_at, only: [:show]
   before_action :set_fix, only: [:destroy]
-  before_action :set_show, only: [:create, :show]
+  before_action :set_show, only: [:show]
   include PermitManager
 
   MAX_WORKERS = 3
@@ -36,8 +36,15 @@ class FixesController < ApplicationController
   end
 
   def create
-    FixWorksJob.perform_later(current_organization.id, current_term, params[:fixed_at], current_user.worker_id, params[:fixed_works])
+    fixed_at, = Fix.validate_input!(current_organization, current_term, params[:fixed_at], params[:fixed_works])
+    FixWorksJob.perform_later(
+      current_organization.id, current_term, fixed_at.iso8601, current_user.worker_id, params[:fixed_works]
+    )
     redirect_to fixes_path
+  rescue Fix::InvalidInput => e
+    flash.now[:alert] = e.message
+    new
+    render :new, status: :unprocessable_content
   end
 
   def destroy
