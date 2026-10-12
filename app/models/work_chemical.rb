@@ -86,12 +86,14 @@ class WorkChemical < ApplicationRecord
   end
 
   def quantity10
+    return nil if quantity.blank?
+
     sum_area = work.chemical_group_flag ? work.sum_areas(chemical_group_no) : work.sum_areas
     sum_area.zero? ? 0 : (quantity / sum_area * 10).round(1)
   end
 
   def dilution_amount
-    return nil if dilution_none? || magnification.blank? || !chemical.dilution_available?
+    return nil if quantity.blank? || dilution_none? || magnification.blank? || !chemical.dilution_available?
 
     (chemical.dilution_quantity(quantity) * magnification / chemical.dilution_scale).round(1)
   end

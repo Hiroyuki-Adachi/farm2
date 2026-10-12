@@ -156,4 +156,26 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     }
     assert_response :unprocessable_entity
   end
+  test "上限超過と未入力の薬剤が混在してもエラー画面を表示できる" do
+    work = works(:works1)
+    chemical = chemicals(:chemicals2)
+    chemical.update!(aqueous_flag: true, unit: 'cc')
+    assert work.sum_areas.positive?
+    assert_no_difference('WorkChemical.count') do
+      post work_use_chemicals_path(work_id: work), params: {
+        chemicals: {
+          chemical.id => {
+            1 => { quantity: 30, dilution_id: Dilution::L.id, magnification: 200_000, dilution_amount: 6000 },
+            2 => { quantity: '', dilution_id: Dilution::NONE.id }
+          },
+          chemicals(:chemicals3).id => { 1 => { quantity: '', dilution_id: Dilution::NONE.id } }
+        },
+        work: { chemical_group_flag: false }
+      }
+    end
+    assert_response :unprocessable_entity
+    assert_select "input[name='chemicals[#{chemical.id}][1][magnification]'][value='200000']"
+    assert_select "input[name='chemicals[#{chemical.id}][2][quantity]'][value='']"
+    assert_match '99999.9', response.body
+  end
 end

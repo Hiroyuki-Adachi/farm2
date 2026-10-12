@@ -83,4 +83,10 @@ class WorkChemicalTest < ActiveSupport::TestCase
       assert record.errors[:quantity].any?
     end
   end
+  test "未入力の使用量では表示用の計算を行わない" do
+    record = WorkChemical.new(work: works(:works1), chemical: chemicals(:chemicals2),
+                              quantity: '', dilution_id: Dilution::L.id, magnification: 20_000)
+    assert_nil record.quantity10
+    assert_nil record.dilution_amount
+  end
 end
