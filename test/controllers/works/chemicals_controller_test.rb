@@ -146,7 +146,7 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     assert_select "input[name='chemicals[#{chemical.id}][1][magnification]'][value='20000']"
     assert_select "input[name='chemicals[#{chemical.id}][2][magnification]'][value='100000']"
-    assert_match '99999.9', response.body
+    assert_match '希釈倍率は99999.9以下の値にしてください', response.body
   end
 
   test "数値でない使用量を保存失敗として表示する" do
@@ -176,6 +176,6 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     assert_select "input[name='chemicals[#{chemical.id}][1][magnification]'][value='200000']"
     assert_select "input[name='chemicals[#{chemical.id}][2][quantity]'][value='']"
-    assert_match '99999.9', response.body
+    assert_match '希釈倍率は99999.9以下の値にしてください', response.body
   end
 end
