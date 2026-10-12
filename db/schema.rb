@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_10_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_12_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -1200,7 +1200,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_10_090000) do
     t.datetime "updated_at", precision: nil
     t.integer "chemical_group_no", default: 1, null: false, comment: "薬剤グループ番号"
     t.boolean "area_flag", default: false, null: false, comment: "10a当たり入力"
-    t.decimal "magnification", precision: 5, scale: 1, comment: "水溶液(リットル)"
+    t.decimal "magnification", precision: 6, scale: 1, comment: "水溶液(リットル)"
     t.text "remarks", default: "", null: false, comment: "備考"
     t.integer "dilution_id", default: 0, null: false, comment: "希釈"
     t.index ["work_id", "chemical_id", "chemical_group_no"], name: "work_chemicals_2nd_key", unique: true

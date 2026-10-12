@@ -79,4 +79,22 @@ class WorkChemicalsDilutionTest < ApplicationSystemTestCase
     assert_equal "", magnification_field.value
     assert_selector 'h1', text: '作業日報(薬剤)登録'
   end
+  test "展着剤30mlと水量600Lから20000倍を計算して保存する" do
+    chemical = chemicals(:chemicals2)
+    chemical.update!(aqueous_flag: true, unit: "cc")
+    visit new_work_use_chemical_path(work_id: @work)
+    choose "chemicals_#{chemical.id}_1_#{Dilution::L.id}", visible: :all
+    quantity = find("input[name='chemicals[#{chemical.id}][1][quantity]']", visible: :all)
+    quantity.set("30")
+    quantity.send_keys(:tab)
+    water = find("input[name='chemicals[#{chemical.id}][1][dilution_amount]']", visible: :all)
+    water.set("600")
+    water.send_keys(:tab)
+    assert_equal "20000.0", find("input[name='chemicals[#{chemical.id}][1][magnification]']", visible: :all).value
+    find("input[type='submit']").click
+    assert_current_path work_path(@work)
+    record = @work.work_chemicals.find_by!(chemical_id: chemical.id, chemical_group_no: 1)
+    assert_equal 20_000, record.magnification
+    assert_equal 600, record.dilution_amount
+  end
 end

@@ -5,7 +5,7 @@
 #  id(薬剤使用データ)                  :integer          not null, primary key
 #  area_flag(10a当たり入力)            :boolean          default(FALSE), not null
 #  chemical_group_no(薬剤グループ番号) :integer          default(1), not null
-#  magnification(水溶液(リットル))     :decimal(5, 1)
+#  magnification(水溶液(リットル))     :decimal(6, 1)
 #  quantity(使用量)                    :decimal(5, 1)    default(0.0), not null
 #  remarks(備考)                       :text             default(""), not null
 #  created_at                          :datetime
@@ -31,7 +31,9 @@ class WorkChemical < ApplicationRecord
   has_one    :work_kind, -> { with_deleted }, through: :work
 
   validates :quantity, presence: true
-  validates :quantity, numericality: { if: proc { |x| x.quantity.present? } }
+  validates :quantity, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 9999.9 }, allow_blank: true
+  validates :magnification, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 99_999.9 },
+                            allow_nil: true
 
   scope :for_organization, lambda { |organization|
     joins(:work).where(works: { organization_id: organization.is_a?(Organization) ? organization.id : organization })
@@ -84,12 +86,14 @@ class WorkChemical < ApplicationRecord
   end
 
   def quantity10
+    return nil if quantity.blank?
+
     sum_area = work.chemical_group_flag ? work.sum_areas(chemical_group_no) : work.sum_areas
     sum_area.zero? ? 0 : (quantity / sum_area * 10).round(1)
   end
 
   def dilution_amount
-    return nil if dilution_none? || magnification.blank? || !chemical.dilution_available?
+    return nil if quantity.blank? || dilution_none? || magnification.blank? || !chemical.dilution_available?
 
     (chemical.dilution_quantity(quantity) * magnification / chemical.dilution_scale).round(1)
   end
