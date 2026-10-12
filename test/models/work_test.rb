@@ -88,6 +88,30 @@ class WorkTest < ActiveSupport::TestCase
     end
   end
 
+  test "短い過去期の確定月候補は期末当日までに限定する" do
+    system = systems(:s2015_org2)
+    system.stubs(:start_date).returns(Date.new(2015, 4, 1))
+    system.stubs(:end_date).returns(Date.new(2015, 6, 30))
+    Work.for_organization(system.organization_id).where(term: system.term).find_each do |work|
+      work.update!(fixed_at: nil, weather_id: work.weather_id || :sunny)
+    end
+
+    travel_to Date.new(2016, 1, 1) do
+      assert_equal [Date.new(2015, 4, 30), Date.new(2015, 5, 31), Date.new(2015, 6, 30)], Work.get_terms(system)
+    end
+  end
+
+  test "通常の一年の過去期の確定月候補は十二月までに限定する" do
+    system = systems(:s2015)
+    Work.for_organization(system.organization_id).where(term: system.term).find_each do |work|
+      work.update!(fixed_at: nil, weather_id: work.weather_id || :sunny)
+    end
+
+    travel_to Date.new(2017, 1, 1) do
+      assert_equal (1..12).map { |month| Date.new(2015, month, 1).end_of_month }, Work.get_terms(system)
+    end
+  end
+
   test "工数統計_総合計" do
     total_hours = Work.joins(:work_results).where(term: 2015).sum("work_results.hours")
     assert_equal total_hours, Work.total_all([2015])[2015]
