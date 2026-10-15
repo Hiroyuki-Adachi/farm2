@@ -2,6 +2,8 @@ require "application_system_test_case"
 
 class MachineReserveFundDetailsTest < ApplicationSystemTestCase
   setup do
+    # 年度設定を変更する保存コールバックを避け、原価対象の前提だけを設定する。
+    WorkType.where(land_flag: true).update_all(cost_flag: true) # rubocop:disable Rails/SkipsModelValidations
     @fund = MachineReserveFund.create!(organization: organizations(:org), machine: machines(:machines1),
                                        started_on: Date.new(2015, 7, 15), years: 2,
                                        total_amount: 240_000, remaining_amount: 240_000)
