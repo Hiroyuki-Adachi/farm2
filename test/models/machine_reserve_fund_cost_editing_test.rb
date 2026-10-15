@@ -107,4 +107,44 @@ class MachineReserveFundCostEditingTest < ActiveSupport::TestCase
     assert_not @detail.machine_reserve_fund_costs.exists?(work_type: @types.last)
     assert @detail.machine_reserve_fund_costs.exists?(work_type: added, cost: 0)
   end
+  test "原価対象の非土地利用分類は初期OFFで土地利用分類との混在時は0円" do
+    other = create_cost_only_type("非土地利用")
+    excluded = create_cost_only_type("原価対象外")
+    excluded.update!(cost_flag: false)
+    costs = @detail.prepare_costs
+    cost = costs.find { |row| row.work_type_id == other.id }
+    assert_not cost.allocation_enabled?
+    assert_equal 0, cost.cost
+    assert_not(costs.any? { |row| row.work_type_id == excluded.id })
+
+    assert @detail.reallocate_costs(@system, selected_work_type_ids: [@types.first.id, other.id])
+    assert_equal 101, @detail.machine_reserve_fund_costs.find_by!(work_type: @types.first).cost
+    cost = @detail.machine_reserve_fund_costs.find_by!(work_type: other)
+    assert cost.allocation_enabled?
+    assert_equal 0, cost.cost
+  end
+
+  test "非土地利用分類だけなら面積なしでも均等配分し選択を保持する" do
+    others = Array.new(3) { |index| create_cost_only_type("非土地#{index}") }
+    LandCost.expects(:sum_period_areas_by_work_type).never
+    assert @detail.reallocate_costs(@system, selected_work_type_ids: others.map(&:id))
+    assert_equal [33, 34, 34], @detail.machine_reserve_fund_costs.where(work_type: others).pluck(:cost).sort
+    assert_equal 101, @detail.machine_reserve_fund_costs.sum(:cost)
+    assert @detail.reload.reallocate_costs(@system)
+    assert_equal 101, @detail.machine_reserve_fund_costs.sum(:cost)
+
+    @detail.update!(amount: 2)
+    assert @detail.reallocate_costs(@system)
+    assert_equal [0, 1, 1], @detail.machine_reserve_fund_costs.where(work_type: others).pluck(:cost).sort
+    assert @detail.reallocate_costs(@system, selected_work_type_ids: [others.first.id])
+    assert_equal 2, @detail.machine_reserve_fund_costs.find_by!(work_type: others.first).cost
+  end
+
+  private
+
+  def create_cost_only_type(name)
+    type = WorkType.create!(genre: @types.first.genre, name: name, land_flag: false, cost_flag: true)
+    WorkTypeTerm.create!(work_type: type, term: @system.term)
+    type
+  end
 end

@@ -108,4 +108,22 @@ class MachineReserveFundCostsControllerTest < ActionDispatch::IntegrationTest
     assert_response :service_unavailable
     assert_equal [50, 51], @detail.machine_reserve_fund_costs.where(work_type: @types).pluck(:cost).sort
   end
+  test "非土地利用の原価分類を一覧編集再按分と手入力保存で扱える" do
+    type = WorkType.create!(genre: @types.first.genre, name: "非土地原価", land_flag: false, cost_flag: true)
+    WorkTypeTerm.create!(work_type: type, term: 2015)
+    get machine_reserve_fund_costs_path
+    assert_response :success
+    assert_select "thead th", text: type.name
+    get edit_machine_reserve_fund_cost_path(@detail)
+    assert_select "input#allocation_#{type.id}:not([checked])"
+    post reallocate_machine_reserve_fund_cost_path(@detail),
+         params: { selected_work_type_ids: [type.id] }, as: :json
+    assert_response :success
+    cost = response.parsed_body["costs"].find { |row| row["work_type_id"] == type.id }
+    assert_equal 101, cost["cost"]
+    assert cost["allocation_enabled"]
+    patch machine_reserve_fund_cost_path(@detail), params: { costs: @values.merge(type.id.to_s => "101") }
+    assert_redirected_to machine_reserve_fund_costs_path
+    assert_equal 101, @detail.machine_reserve_fund_costs.find_by!(work_type: type).cost
+  end
 end

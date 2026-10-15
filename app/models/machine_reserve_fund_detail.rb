@@ -70,12 +70,12 @@ class MachineReserveFundDetail < ApplicationRecord
   end
 
   def prepare_costs
-    work_types = WorkType.land.by_term(term).to_a
+    work_types = WorkType.cost.by_term(term).to_a
     costs = machine_reserve_fund_costs.to_a
     costs.each { |cost| cost.mark_for_destruction unless work_types.any? { |type| type.id == cost.work_type_id } }
     work_types.map do |work_type|
       costs.find { |cost| cost.work_type_id == work_type.id } || machine_reserve_fund_costs.build(
-        organization: organization, work_type: work_type, cost: 0
+        organization: organization, work_type: work_type, cost: 0, allocation_enabled: work_type.land_flag?
       )
     end
   end
@@ -117,7 +117,7 @@ class MachineReserveFundDetail < ApplicationRecord
   end
 
   def accumulated_areas(system)
-    work_types = WorkType.land.by_term(term).to_a
+    work_types = WorkType.cost.by_term(term).where(land_flag: true).to_a
     return {} if work_types.empty?
 
     totals = LandCost.sum_period_areas_by_work_type(system.start_date, system.end_date, work_types.map(&:id),
@@ -136,19 +136,31 @@ class MachineReserveFundDetail < ApplicationRecord
       return
     end
 
-    assign_allocated_costs(costs, areas, total_area)
+    if areas.keys.none?(&:land_flag?)
+      assign_equal_costs(costs, areas.keys)
+    else
+      assign_allocated_costs(costs, areas, total_area)
+    end
   end
 
   def selected_allocation_areas(system, costs, selected_work_type_ids)
-    areas = accumulated_areas(system)
-    if areas.empty?
+    if costs.empty?
       errors.add(:base, "当期の按分対象の圃場面積が0のため登録できません。")
       return {}
     end
     selected_ids = allocation_selection_ids(costs, selected_work_type_ids)
-    return {} unless valid_allocation_selection?(selected_ids, areas.keys.map { |type| type.id.to_s })
+    return {} unless valid_allocation_selection?(selected_ids, costs.map { |cost| cost.work_type_id.to_s })
 
-    areas.select { |type, _area| selected_ids.include?(type.id.to_s) }
+    selected_types = costs.select { |cost| selected_ids.include?(cost.work_type_id.to_s) }.map(&:work_type)
+    allocation_areas_for(selected_types, system)
+  end
+
+  def allocation_areas_for(selected_types, system)
+    # 土地利用対象を含まない場合だけ均等配分する。
+    return selected_types.index_with { 1.to_d } if selected_types.none?(&:land_flag?)
+
+    areas = accumulated_areas(system)
+    selected_types.index_with { |type| areas.fetch(type, 0) }
   end
 
   def allocation_selection_ids(costs, selected_work_type_ids)
@@ -161,6 +173,18 @@ class MachineReserveFundDetail < ApplicationRecord
       cost.cost = cost.allocation_enabled? ? (amount * areas.fetch(cost.work_type) / total_area).round : 0
     end
     costs.select(&:allocation_enabled?).max_by(&:cost).cost += amount - costs.sum(&:cost)
+  end
+
+  def assign_equal_costs(costs, selected_types)
+    quotient, remainder = amount.to_i.divmod(selected_types.size)
+    costs.each do |cost|
+      cost.allocation_enabled = selected_types.include?(cost.work_type)
+      cost.cost = 0
+      next unless cost.allocation_enabled?
+
+      cost.cost = quotient + (remainder.positive? ? 1 : 0)
+      remainder -= 1 if remainder.positive?
+    end
   end
 
   def valid_allocation_selection?(selected_ids, eligible_ids)
