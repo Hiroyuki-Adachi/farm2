@@ -46,6 +46,39 @@ class FixesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to fixes_path
   end
 
+  test "期外の日付の直接リクエストは同期的に拒否する" do
+    ['2014-12-31', '2016-01-01', 'invalid', ''].each do |date|
+      assert_no_enqueued_jobs do
+        assert_no_difference('Fix.count') do
+          post fixes_path, params: { fixed_at: date, fixed_works: @no_fix_works }
+        end
+      end
+      assert_response :unprocessable_content
+      assert_select '#flash_messages', text: /確定日/
+      assert_nil works(:work_no_fix1).reload.fixed_at
+    end
+  end
+
+  test "別期と別組織の作業を含む直接リクエストは同期的に拒否する" do
+    other = works(:work_no_fix2)
+    [{ term: 2014 }, { term: 2015, organization_id: organizations(:org2).id }].each do |attributes|
+      other.update!(attributes)
+      assert_no_enqueued_jobs do
+        post fixes_path, params: { fixed_at: '2015-03-31', fixed_works: @no_fix_works }
+      end
+      assert_response :unprocessable_content
+      assert_select '#flash_messages', text: /対象期・対象組織以外/
+      assert_nil works(:work_no_fix1).reload.fixed_at
+      assert_nil other.reload.fixed_at
+    end
+  end
+
+  test "作業未選択の直接リクエストは同期的に拒否する" do
+    assert_no_enqueued_jobs { post fixes_path, params: { fixed_at: '2015-03-31' } }
+    assert_response :unprocessable_content
+    assert_select '#flash_messages', text: /作業を選択/
+  end
+
   test "確定取消" do
     ZenginPaymentBatch.create!(
       organization: @fix.organization,
