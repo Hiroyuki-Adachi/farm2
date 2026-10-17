@@ -56,7 +56,7 @@ class MachineReserveFundCostsController < ApplicationController
   private
 
   def set_work_types
-    @work_types = WorkType.land.by_term(current_term).to_a
+    @work_types = WorkType.cost.by_term(current_term).to_a
   end
 
   def set_detail

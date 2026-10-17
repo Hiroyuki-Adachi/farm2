@@ -371,7 +371,7 @@ SQL
     result = Work.for_organization(system.organization_id).where(term: system.term).maximum(:fixed_at)
     result = result ? result.to_date : system.start_date
     result = result.next.end_of_month.to_date
-    while result < Time.zone.now.to_date
+    while result < Time.zone.today && result <= system.end_date
       params << result
       result = result.next_month.end_of_month.to_date
     end

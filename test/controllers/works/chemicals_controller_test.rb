@@ -117,4 +117,65 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     work_lands_not_fixed1.reload
     assert_equal 0, work_lands_not_fixed1.chemical_group_no
   end
+  test "展着剤の20000倍と最大倍率を保存できる" do
+    chemical = chemicals(:chemicals3)
+    [20_000, 99_999.9].each do |magnification|
+      post work_use_chemicals_path(work_id: @work), params: {
+        chemicals: { chemical.id => { 1 => { quantity: 30, dilution_id: Dilution::L.id,
+                                             magnification: magnification } } },
+        work: { chemical_group_flag: false }
+      }
+      assert_redirected_to work_path(@work)
+      record = @work.work_chemicals.find_by!(chemical_id: chemical.id, chemical_group_no: 1)
+      assert_equal magnification, record.magnification
+    end
+  end
+
+  test "範囲外の倍率では登録をロールバックして入力値とエラーを表示する" do
+    chemical = chemicals(:chemicals3)
+    chemical.update!(aqueous_flag: true, unit: "cc")
+    assert_no_difference('WorkChemical.count') do
+      post work_use_chemicals_path(work_id: @work), params: {
+        chemicals: { chemical.id => {
+          1 => { quantity: 30, dilution_id: Dilution::L.id, magnification: 20_000 },
+          2 => { quantity: 30, dilution_id: Dilution::L.id, magnification: 100_000 }
+        } },
+        work: { chemical_group_flag: false }
+      }
+    end
+    assert_response :unprocessable_entity
+    assert_select "input[name='chemicals[#{chemical.id}][1][magnification]'][value='20000']"
+    assert_select "input[name='chemicals[#{chemical.id}][2][magnification]'][value='100000']"
+    assert_match '希釈倍率は99999.9以下の値にしてください', response.body
+  end
+
+  test "数値でない使用量を保存失敗として表示する" do
+    post work_use_chemicals_path(work_id: @work), params: {
+      chemicals: { chemicals(:chemicals3).id => { 1 => { quantity: 'abc', dilution_id: Dilution::NONE.id } } },
+      work: { chemical_group_flag: false }
+    }
+    assert_response :unprocessable_entity
+  end
+  test "上限超過と未入力の薬剤が混在してもエラー画面を表示できる" do
+    work = works(:works1)
+    chemical = chemicals(:chemicals2)
+    chemical.update!(aqueous_flag: true, unit: 'cc')
+    assert work.sum_areas.positive?
+    assert_no_difference('WorkChemical.count') do
+      post work_use_chemicals_path(work_id: work), params: {
+        chemicals: {
+          chemical.id => {
+            1 => { quantity: 30, dilution_id: Dilution::L.id, magnification: 200_000, dilution_amount: 6000 },
+            2 => { quantity: '', dilution_id: Dilution::NONE.id }
+          },
+          chemicals(:chemicals3).id => { 1 => { quantity: '', dilution_id: Dilution::NONE.id } }
+        },
+        work: { chemical_group_flag: false }
+      }
+    end
+    assert_response :unprocessable_entity
+    assert_select "input[name='chemicals[#{chemical.id}][1][magnification]'][value='200000']"
+    assert_select "input[name='chemicals[#{chemical.id}][2][quantity]'][value='']"
+    assert_match '希釈倍率は99999.9以下の値にしてください', response.body
+  end
 end

@@ -19,6 +19,8 @@
 #
 
 class Fix < ApplicationRecord
+  class InvalidInput < StandardError; end
+
   self.primary_key = [:organization_id, :term, :fixed_at]
   before_destroy :clear_fix
 
@@ -34,12 +36,13 @@ class Fix < ApplicationRecord
 
   def self.do_fix(organization, term, fixed_at, fixed_by, works_ids)
     organization_id = organization.is_a?(Organization) ? organization.id : organization
+    fixed_at, works = validate_input!(organization_id, term, fixed_at, works_ids)
     hours = 0
     works_amount = 0
     works_count = 0
     machines_amount = 0
 
-    Work.for_organization(organization_id).where(id: works_ids).find_each do |work|
+    works.find_each do |work|
       work.work_results.each do |result|
         price = work.work_kind.term_price(term, organization_id: organization_id)
         amount = result.hours * price
@@ -60,6 +63,32 @@ class Fix < ApplicationRecord
 
     Fix.create(organization_id: organization_id, term: term, fixed_at: fixed_at, works_count: works_count, hours: hours, works_amount: works_amount, machines_amount: machines_amount, fixed_by: fixed_by)
   end
+
+  def self.validate_input!(organization, term, fixed_at, works_ids)
+    organization_id = organization.is_a?(Organization) ? organization.id : organization
+    date = validate_date!(organization_id, term, fixed_at)
+
+    ids = Array(works_ids).map { |id| Integer(id.to_s, 10) }.uniq
+    raise InvalidInput, "確定対象の作業を選択してください。" if ids.empty?
+
+    works = Work.for_organization(organization_id).where(term: term, id: ids)
+    raise InvalidInput, "確定対象に対象期・対象組織以外の作業、または存在しない作業が含まれています。" unless works.count == ids.size
+
+    [date, works]
+  rescue ArgumentError
+    raise InvalidInput, "確定日または確定対象の作業の指定が不正です。"
+  end
+
+  def self.validate_date!(organization_id, term, fixed_at)
+    system = System.find_by(organization_id: organization_id, term: term)
+    date = fixed_at.is_a?(Date) ? fixed_at : Date.iso8601(fixed_at.to_s)
+    unless system && date.between?(system.start_date, system.end_date)
+      raise InvalidInput, "確定日は対象期の期首日から期末日までの日付を指定してください。"
+    end
+
+    date
+  end
+  private_class_method :validate_date!
 
   private
 

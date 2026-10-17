@@ -8,7 +8,7 @@
 #  term(年度(期))               :integer          not null
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
-#  organization_id(組織)        :bigint
+#  organization_id(組織)        :bigint           not null
 #  total_cost_type_id(原価種別) :integer          default(0), not null
 #
 # Indexes
@@ -575,3 +575,17 @@ sorimachi_sales2:
   code: 520
   total_cost_type_id: 200
   name: 商品売上高
+
+account_2015_org2:
+  organization_id: 2
+  term: 2015
+  code: 720
+  total_cost_type_id: 110
+  name: 別組織の科目
+
+account_2014_org2:
+  organization_id: 2
+  term: 2014
+  code: 700
+  total_cost_type_id: 110
+  name: 別組織の前年

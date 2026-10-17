@@ -2,6 +2,8 @@ require "test_helper"
 
 class MachineReserveFundDetailsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    # 年度設定を変更する保存コールバックを避け、原価対象の前提だけを設定する。
+    WorkType.where(land_flag: true).update_all(cost_flag: true) # rubocop:disable Rails/SkipsModelValidations
     login_as(users(:users1))
     @fund = MachineReserveFund.create!(organization: organizations(:org), machine: machines(:machines1),
                                        started_on: Date.new(2015, 1, 1), years: 1,

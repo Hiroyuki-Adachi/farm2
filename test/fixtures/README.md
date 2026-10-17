@@ -48,3 +48,9 @@ other = FactoryBot.create(:machine, owner: homes(:home2), machine_type: machine.
 導入理由・比較・後続の完了条件は[導入方針](../../docs/issue-1208-factory-strategy.md)を参照。factory追加だけでは`fixtures :all`のロード量は減らない。
 
 Rubyからテストを直接実行する場合も`RAILS_ENV=test`を指定する。test_helperはtest以外の環境ではアプリ読込前に停止し、開発DBへのfixture読込を防ぐ。
+
+## 読込範囲の小規模縮小 (#1250)
+
+`Statistics::MachineDecoratorTest`だけは保存・SQL不要なので、継承した`fixture_table_names`と`fixture_sets`を空にしている。Draperの基底クラスとtransactional testsは維持する。他のmodel/controller/integration/system testは共有マスタ・数値ID・関連・集計への依存があるため全件設定を継続する。
+
+子クラスで`fixtures :必要な名前`を宣言するだけでは親の`:all`を解除できない。また、空のfixture設定はDBを空にする操作ではない。factory化と読込削減は別に計測する。依存調査・設定比較・計測手順・段階展開の判断は[検証記録](../../docs/issue-1250-fixture-profile.md)を参照。

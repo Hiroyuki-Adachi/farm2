@@ -2,6 +2,8 @@ require "application_system_test_case"
 
 class MachineReserveFundCostsTest < ApplicationSystemTestCase
   setup do
+    # 年度設定を変更する保存コールバックを避け、原価対象の前提だけを設定する。
+    WorkType.where(land_flag: true).update_all(cost_flag: true) # rubocop:disable Rails/SkipsModelValidations
     @types = [work_types(:work_types1), work_types(:work_types2)]
     @types.each { |type| WorkTypeTerm.find_or_create_by!(work_type: type, term: 2015) }
     LandCost.delete_all

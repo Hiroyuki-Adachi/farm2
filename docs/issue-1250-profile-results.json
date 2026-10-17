@@ -1,0 +1,316 @@
+[
+  {
+    "ruby": "ruby 4.0.7 (2026-09-15 revision 229531a6cf) +YJIT +PRISM [x86_64-linux]",
+    "rails": "8.1.4",
+    "database": "PostgreSQL 16.14 (Debian 16.14-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "revision": "094371c249fd296911955b8304b717c448a21969",
+    "command": [
+      "scripts/profile_test_fixtures.rb",
+      "test/decorators/statistics/machine_decorator_test.rb",
+      "--seed",
+      "1250"
+    ],
+    "baseline_all": true,
+    "seed": 1250,
+    "elapsed_seconds": 4.775720656999965,
+    "factories": {
+      "build_stubbed": {
+        "calls": 6,
+        "seconds": 0.04958978099981323
+      }
+    },
+    "measurement": "decorator-before",
+    "minitest_result": "3 runs, 3 assertions, 0 failures, 0 errors, 0 skips",
+    "minitest_timing": "Finished in 2.053409s, 1.4610 runs/s, 1.4610 assertions/s.",
+    "fixture_load_summary": [
+      {
+        "tables": 89,
+        "calls": 1,
+        "total_seconds": 1.8727063229998748,
+        "max_seconds": 1.8727063229998748,
+        "rows": 3660
+      }
+    ]
+  },
+  {
+    "ruby": "ruby 4.0.7 (2026-09-15 revision 229531a6cf) +YJIT +PRISM [x86_64-linux]",
+    "rails": "8.1.4",
+    "database": "PostgreSQL 16.14 (Debian 16.14-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "revision": "094371c249fd296911955b8304b717c448a21969",
+    "command": [
+      "scripts/profile_test_fixtures.rb",
+      "test/decorators/statistics/machine_decorator_test.rb",
+      "--seed",
+      "1250"
+    ],
+    "baseline_all": false,
+    "seed": 1250,
+    "elapsed_seconds": 3.411659015999703,
+    "factories": {
+      "build_stubbed": {
+        "calls": 6,
+        "seconds": 0.2074164749998599
+      }
+    },
+    "measurement": "decorator-after",
+    "minitest_result": "3 runs, 3 assertions, 0 failures, 0 errors, 0 skips",
+    "minitest_timing": "Finished in 0.447082s, 6.7102 runs/s, 6.7102 assertions/s.",
+    "fixture_load_summary": [
+      {
+        "tables": 0,
+        "calls": 1,
+        "total_seconds": 5.969399990135571e-05,
+        "max_seconds": 5.969399990135571e-05,
+        "rows": 0
+      }
+    ]
+  },
+  {
+    "ruby": "ruby 4.0.7 (2026-09-15 revision 229531a6cf) +YJIT +PRISM [x86_64-linux]",
+    "rails": "8.1.4",
+    "database": "PostgreSQL 16.14 (Debian 16.14-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "revision": "094371c249fd296911955b8304b717c448a21969",
+    "command": [
+      "scripts/profile_test_fixtures.rb"
+    ],
+    "baseline_all": true,
+    "seed": 1250,
+    "elapsed_seconds": 49.56960753099975,
+    "factories": {
+      "create": {
+        "calls": 289,
+        "seconds": 0.513708393000532
+      },
+      "build_stubbed": {
+        "calls": 6,
+        "seconds": 0.0021437459997832777
+      }
+    },
+    "measurement": "full-before",
+    "minitest_result": "1473 runs, 6253 assertions, 0 failures, 0 errors, 0 skips",
+    "minitest_timing": "Finished in 46.583377s, 31.6207 runs/s, 134.2324 assertions/s.",
+    "fixture_load_summary": [
+      {
+        "tables": 89,
+        "calls": 130,
+        "total_seconds": 2.937946602001375,
+        "max_seconds": 1.4077175870002065,
+        "rows": null
+      }
+    ],
+    "instrumentation_note": "Initial measurement before command argument snapshot and row count were added; seed is recorded separately."
+  },
+  {
+    "ruby": "ruby 4.0.7 (2026-09-15 revision 229531a6cf) +YJIT +PRISM [x86_64-linux]",
+    "rails": "8.1.4",
+    "database": "PostgreSQL 16.14 (Debian 16.14-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "revision": "094371c249fd296911955b8304b717c448a21969",
+    "command": [
+      "scripts/profile_test_fixtures.rb",
+      "--seed",
+      "1250"
+    ],
+    "baseline_all": false,
+    "seed": 1250,
+    "elapsed_seconds": 47.91000919499993,
+    "factories": {
+      "create": {
+        "calls": 289,
+        "seconds": 0.49881979600014187
+      },
+      "build_stubbed": {
+        "calls": 6,
+        "seconds": 0.0019505710001103585
+      }
+    },
+    "measurement": "full-after",
+    "minitest_result": "1473 runs, 6253 assertions, 0 failures, 0 errors, 0 skips",
+    "minitest_timing": "Finished in 45.285941s, 32.5267 runs/s, 138.0782 assertions/s.",
+    "fixture_load_summary": [
+      {
+        "tables": 0,
+        "calls": 1,
+        "total_seconds": 1.8635999822436133e-05,
+        "max_seconds": 1.8635999822436133e-05,
+        "rows": 0
+      },
+      {
+        "tables": 89,
+        "calls": 127,
+        "total_seconds": 2.8879027579964713,
+        "max_seconds": 1.3071686719999889,
+        "rows": 3660
+      }
+    ],
+    "instrumentation_note": "Initial measurement before command argument snapshot and row count were added; seed is recorded separately."
+  },
+  {
+    "ruby": "ruby 4.0.7 (2026-09-15 revision 229531a6cf) +YJIT +PRISM [x86_64-linux]",
+    "rails": "8.1.4",
+    "database": "PostgreSQL 16.14 (Debian 16.14-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "revision": "094371c249fd296911955b8304b717c448a21969",
+    "command": [
+      "scripts/profile_test_fixtures.rb",
+      "test/models/machine_test.rb",
+      "test/models/machine_result_test.rb",
+      "test/models/work_test.rb",
+      "test/decorators/statistics/machine_decorator_test.rb",
+      "test/controllers/machines_controller_test.rb",
+      "test/integration/change_term_test.rb",
+      "--seed",
+      "1250"
+    ],
+    "baseline_all": false,
+    "seed": 1250,
+    "elapsed_seconds": 8.846875516999717,
+    "factories": {
+      "create": {
+        "calls": 289,
+        "seconds": 1.0968418319975026
+      },
+      "build_stubbed": {
+        "calls": 6,
+        "seconds": 0.004379807999823243
+      }
+    },
+    "measurement": "mixed-1250",
+    "minitest_result": "53 runs, 172 assertions, 0 failures, 0 errors, 0 skips",
+    "minitest_timing": "Finished in 5.744155s, 9.2268 runs/s, 29.9435 assertions/s.",
+    "fixture_load_summary": [
+      {
+        "tables": 0,
+        "calls": 1,
+        "total_seconds": 0.00025016599965965725,
+        "max_seconds": 0.00025016599965965725,
+        "rows": 0
+      },
+      {
+        "tables": 89,
+        "calls": 3,
+        "total_seconds": 1.8736425929996585,
+        "max_seconds": 1.8729266109999116,
+        "rows": 3660
+      }
+    ]
+  },
+  {
+    "ruby": "ruby 4.0.7 (2026-09-15 revision 229531a6cf) +YJIT +PRISM [x86_64-linux]",
+    "rails": "8.1.4",
+    "database": "PostgreSQL 16.14 (Debian 16.14-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "revision": "094371c249fd296911955b8304b717c448a21969",
+    "command": [
+      "scripts/profile_test_fixtures.rb",
+      "test/models/machine_test.rb",
+      "test/models/machine_result_test.rb",
+      "test/models/work_test.rb",
+      "test/decorators/statistics/machine_decorator_test.rb",
+      "test/controllers/machines_controller_test.rb",
+      "test/integration/change_term_test.rb",
+      "--seed",
+      "5210"
+    ],
+    "baseline_all": false,
+    "seed": 5210,
+    "elapsed_seconds": 8.526253138000357,
+    "factories": {
+      "create": {
+        "calls": 289,
+        "seconds": 1.151597332003061
+      },
+      "build_stubbed": {
+        "calls": 6,
+        "seconds": 0.004709772999864072
+      }
+    },
+    "measurement": "mixed-5210",
+    "minitest_result": "53 runs, 172 assertions, 0 failures, 0 errors, 0 skips",
+    "minitest_timing": "Finished in 5.695687s, 9.3053 runs/s, 30.1983 assertions/s.",
+    "fixture_load_summary": [
+      {
+        "tables": 0,
+        "calls": 1,
+        "total_seconds": 2.729700008785585e-05,
+        "max_seconds": 2.729700008785585e-05,
+        "rows": 0
+      },
+      {
+        "tables": 89,
+        "calls": 3,
+        "total_seconds": 1.6824674939998658,
+        "max_seconds": 1.6817524109997066,
+        "rows": 3660
+      }
+    ]
+  },
+  {
+    "ruby": "ruby 4.0.7 (2026-09-15 revision 229531a6cf) +YJIT +PRISM [x86_64-linux]",
+    "rails": "8.1.4",
+    "database": "PostgreSQL 16.14 (Debian 16.14-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "revision": "094371c249fd296911955b8304b717c448a21969",
+    "command": [
+      "scripts/profile_test_fixtures.rb",
+      "--seed",
+      "5210"
+    ],
+    "baseline_all": false,
+    "seed": 5210,
+    "elapsed_seconds": 72.26810361999969,
+    "factories": {
+      "create": {
+        "calls": 289,
+        "seconds": 0.650707072002348
+      },
+      "build_stubbed": {
+        "calls": 6,
+        "seconds": 0.0032113450006581836
+      }
+    },
+    "measurement": "full-5210",
+    "minitest_result": "1473 runs, 6253 assertions, 0 failures, 0 errors, 0 skips",
+    "minitest_timing": "Finished in 68.679901s, 21.4473 runs/s, 91.0456 assertions/s.",
+    "fixture_load_summary": [
+      {
+        "tables": 0,
+        "calls": 1,
+        "total_seconds": 2.385300012974767e-05,
+        "max_seconds": 2.385300012974767e-05,
+        "rows": 0
+      },
+      {
+        "tables": 89,
+        "calls": 137,
+        "total_seconds": 3.6506765330000235,
+        "max_seconds": 1.8994177570002648,
+        "rows": 3660
+      }
+    ]
+  },
+  {
+    "ruby": "ruby 4.0.7 (2026-09-15 revision 229531a6cf) +YJIT +PRISM [x86_64-linux]",
+    "rails": "8.1.4",
+    "database": "PostgreSQL 16.14 (Debian 16.14-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "revision": "094371c249fd296911955b8304b717c448a21969",
+    "command": [
+      "scripts/profile_test_fixtures.rb",
+      "test/system/works_machines_test.rb",
+      "--seed",
+      "1250"
+    ],
+    "baseline_all": false,
+    "seed": 1250,
+    "elapsed_seconds": 9.641230582999924,
+    "factories": {},
+    "measurement": "system",
+    "minitest_result": "1 runs, 7 assertions, 0 failures, 0 errors, 0 skips",
+    "minitest_timing": "Finished in 6.517153s, 0.1534 runs/s, 1.0741 assertions/s.",
+    "fixture_load_summary": [
+      {
+        "tables": 89,
+        "calls": 1,
+        "total_seconds": 1.7937948920002782,
+        "max_seconds": 1.7937948920002782,
+        "rows": 3660
+      }
+    ]
+  }
+]

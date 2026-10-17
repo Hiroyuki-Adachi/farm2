@@ -45,6 +45,58 @@ class FixTest < ActiveSupport::TestCase
     end
   end
 
+  test "期首当日と期末当日は確定でき取消で元に戻る" do
+    [Date.new(2015, 1, 1), Date.new(2015, 12, 31)].each do |date|
+      fix = Fix.do_fix(@organization, @term, date, @worker_id, @no_fix_works)
+      assert_equal date, works(:work_no_fix1).reload.fixed_at
+      fix.destroy!
+      assert_nil works(:work_no_fix1).reload.fixed_at
+      assert_nil works(:work_no_fix2).reload.fixed_at
+      works(:work_no_fix1).work_results.each { |result| assert_nil result.fixed_amount }
+    end
+  end
+
+  test "期首前と期末翌日は書き込まず拒否する" do
+    [Date.new(2014, 12, 31), Date.new(2016, 1, 1)].each do |date|
+      assert_no_difference('Fix.count') do
+        assert_raises(Fix::InvalidInput) { Fix.do_fix(@organization, @term, date, @worker_id, @no_fix_works) }
+      end
+      assert_nil works(:work_no_fix1).reload.fixed_at
+    end
+  end
+
+  test "別期と別組織と存在しない作業が混在した場合は全件書き込まず拒否する" do
+    other = works(:work_no_fix2)
+    [{ term: 2014 }, { term: 2015, organization_id: organizations(:org2).id }].each do |attributes|
+      other.update!(attributes)
+      assert_no_difference('Fix.count') do
+        assert_raises(Fix::InvalidInput) { Fix.do_fix(@organization, @term, @fixed_at, @worker_id, @no_fix_works) }
+      end
+      assert_nil works(:work_no_fix1).reload.fixed_at
+      assert_nil other.reload.fixed_at
+    end
+    assert_raises(Fix::InvalidInput) do
+      Fix.do_fix(@organization, @term, @fixed_at, @worker_id, [@no_fix_works.first, -1])
+    end
+  end
+
+  test "作業未選択は確定データを作らず拒否する" do
+    [nil, []].each do |ids|
+      assert_no_difference('Fix.count') do
+        assert_raises(Fix::InvalidInput) { Fix.do_fix(@organization, @term, @fixed_at, @worker_id, ids) }
+      end
+    end
+  end
+
+  test "ジョブも期外の日付を拒否する" do
+    assert_no_difference('Fix.count') do
+      assert_raises(Fix::InvalidInput) do
+        FixWorksJob.perform_now(@organization.id, @term, '2016-01-01', @worker_id, @no_fix_works)
+      end
+    end
+    assert_nil works(:work_no_fix1).reload.fixed_at
+  end
+
   test "確定" do
     assert_difference('Fix.count') do
       Fix.do_fix(@organization, @term, @fixed_at, @worker_id, @no_fix_works)

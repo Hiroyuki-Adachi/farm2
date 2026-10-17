@@ -8,7 +8,7 @@
 #  term(年度(期))               :integer          not null
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
-#  organization_id(組織)        :bigint
+#  organization_id(組織)        :bigint           not null
 #  total_cost_type_id(原価種別) :integer          default(0), not null
 #
 # Indexes
