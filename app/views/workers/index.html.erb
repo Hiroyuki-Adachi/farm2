@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>氏名</th>
+      <th>年齢</th>
       <th>世帯</th>
       <th>役職</th>
       <th>作業</th>
@@ -16,6 +17,7 @@
     <% @workers.each do |worker| %>
       <tr>
         <td><%= worker.disp_name %></td>
+        <td><%= worker.age %></td>
         <td><%= worker.home.name %></td>
         <td><%= worker.position_name %></td>
         <td><%= "◯" if worker.work_flag %></td>
