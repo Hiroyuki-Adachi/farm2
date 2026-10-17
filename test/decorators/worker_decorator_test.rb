@@ -8,6 +8,24 @@ class WorkerDecoratorTest < ActiveSupport::TestCase
     WorkerDecorator.new(model)
   end
 
+  test "年齢はシステム日付時点の満年齢を返す" do
+    worker = decorate(Worker.new(birthday: Date.new(1980, 10, 17)))
+
+    travel_to Time.zone.local(2026, 10, 16, 12) do
+      assert_equal 45, worker.age
+    end
+    travel_to Time.zone.local(2026, 10, 17, 12) do
+      assert_equal 46, worker.age
+    end
+    travel_to Time.zone.local(2026, 10, 18, 12) do
+      assert_equal 46, worker.age
+    end
+  end
+
+  test "生年月日が未登録の場合は年齢を返さない" do
+    assert_nil decorate(Worker.new(birthday: nil)).age
+  end
+
   test "#short_name は姓2文字＋(名頭1文字) を返す" do
     worker = Worker.new(family_name: "山田", first_name: "太郎")
     assert_equal "山田(太)", decorate(worker).short_name
