@@ -62,10 +62,6 @@ class Task < ApplicationRecord
 
   before_validation :set_organization
   before_save :clear_end_info
-  after_create :create_watcher
-  after_create :create_task_event
-  after_create :create_planned_start_on
-  after_create :init_task_reads
 
   enum :priority, { low: 0, medium: 5, high: 8, urgent: 9 }
   enum :end_reason, { unset: 0, completed: 1, no_action: 2, unavailable: 3, duplicated: 4, other: 9 }, prefix: true
@@ -518,31 +514,6 @@ class Task < ApplicationRecord
     self.started_on = nil if start?
   end
 
-  def create_watcher
-    task_watchers.find_or_create_by(worker_id: assignee_id) if assignee.present?
-    task_watchers.find_or_create_by(worker_id: creator_id) if creator.present?
-  end
-
-  def create_task_event
-    return if creator.nil?
-
-    TaskEvent.create!(
-      task: self,
-      actor: creator,
-      event_type: :task_created,
-      source: :form
-    )
-  end
-
-  def init_task_reads
-    return if creator.blank?
-
-    TaskRead.touch_and_get_previous!(task: self, worker_id: creator_id, at: created_at)
-    return if assignee.blank? || assignee_id == creator_id
-
-    TaskRead.touch_and_get_previous!(task: self, worker_id: assignee_id, at: Time.at(0))
-  end
-
   def update_for_start_or_end(new_status, end_reason)
     self.task_status_id = new_status.id
     if new_status.started_flag
@@ -554,9 +525,5 @@ class Task < ApplicationRecord
       self.planned_start_on = ended_on if planned_start_on > ended_on
       self.end_reason = end_reason || :other
     end
-  end
-
-  def create_planned_start_on
-    update(planned_start_on: created_at.to_date)
   end
 end

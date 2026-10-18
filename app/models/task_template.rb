@@ -115,7 +115,7 @@ class TaskTemplate < ApplicationRecord
         "【#{title_date.strftime('%Jy年%m月')}】#{title}"
       end
 
-    Task.create!(
+    task = Task.new(
       title: task_title,
       description: description,
       due_on: due_on,
@@ -125,6 +125,7 @@ class TaskTemplate < ApplicationRecord
       template: self,
       organization_id: organization_id
     )
+    TaskCreator.new(task).call!
   end
 
   def same_task_exists?(due_on:)

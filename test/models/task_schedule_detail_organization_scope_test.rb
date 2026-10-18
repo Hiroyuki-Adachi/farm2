@@ -45,12 +45,9 @@ class TaskScheduleDetailOrganizationScopeTest < ActiveSupport::TestCase
   end
 
   def other_task
-    @other_task ||= Task.create!(
-      organization: organizations(:org2),
-      title: "別組織のタスク",
-      creator: other_worker,
-      assignee: other_worker
-    )
+    @other_task ||= TaskCreator.new(
+      Task.new(organization: organizations(:org2), title: "別組織のタスク", creator: other_worker, assignee: other_worker)
+    ).call!
   end
 
   def other_schedule

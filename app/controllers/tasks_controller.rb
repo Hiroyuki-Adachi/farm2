@@ -35,7 +35,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params.merge(organization_id: current_organization.id))
     @task.creator = current_user.worker
 
-    if @task.save
+    if TaskCreator.new(@task).call
       redirect_to tasks_path, notice: "タスクを作成しました。"
     else
       render :new, status: :unprocessable_content
