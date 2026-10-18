@@ -18,8 +18,7 @@
 #
 # Indexes
 #
-#  index_work_categories_on_organization_id  (organization_id)
-#  work_categories_2nd                       (organization_id,id) UNIQUE
+#  work_categories_2nd  (organization_id,id) UNIQUE
 #
 # Foreign Keys
 #

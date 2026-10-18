@@ -1192,7 +1192,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_090000) do
     t.datetime "updated_at", null: false
     t.bigint "organization_id", comment: "組織"
     t.index ["organization_id", "id"], name: "work_categories_2nd", unique: true
-    t.index ["organization_id"], name: "index_work_categories_on_organization_id"
   end
 
   create_table "work_chemicals", id: { type: :serial, comment: "薬剤使用データ" }, comment: "薬剤使用データ", force: :cascade do |t|
@@ -1219,7 +1218,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_090000) do
     t.datetime "updated_at", null: false
     t.bigint "organization_id", comment: "組織"
     t.index ["organization_id", "id"], name: "work_genres_2nd", unique: true
-    t.index ["organization_id"], name: "index_work_genres_on_organization_id"
     t.index ["work_category_id"], name: "index_work_genres_on_work_category_id"
   end
 

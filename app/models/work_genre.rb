@@ -14,7 +14,6 @@
 #
 # Indexes
 #
-#  index_work_genres_on_organization_id   (organization_id)
 #  index_work_genres_on_work_category_id  (work_category_id)
 #  work_genres_2nd                        (organization_id,id) UNIQUE
 #

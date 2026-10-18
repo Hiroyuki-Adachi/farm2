@@ -1,12 +1,15 @@
 class AddOrganizationToWorkTypeTables < ActiveRecord::Migration[8.1]
   TABLES = %i[work_categories work_genres work_types].freeze
+  COMPOSITE_KEY_TABLES = %i[work_categories work_genres].freeze
 
   def up
     default_org_id = select_value("SELECT id FROM organizations ORDER BY id LIMIT 1").to_i
     raise ActiveRecord::IrreversibleMigration, "organizations is empty" if default_org_id.zero?
 
     TABLES.each do |table|
-      add_reference table, :organization, null: true, foreign_key: true, comment: "組織"
+      # (organization_id, id) の一意インデックスを作るテーブルは、単独のインデックスを作らない
+      add_reference table, :organization, null: true, index: COMPOSITE_KEY_TABLES.exclude?(table),
+                                          foreign_key: true, comment: "組織"
       execute "UPDATE #{table} SET organization_id = #{default_org_id}"
     end
 
@@ -31,7 +34,7 @@ class AddOrganizationToWorkTypeTables < ActiveRecord::Migration[8.1]
     remove_index :work_categories, name: :work_categories_2nd
 
     TABLES.reverse_each do |table|
-      remove_reference table, :organization, foreign_key: true
+      remove_reference table, :organization, index: COMPOSITE_KEY_TABLES.exclude?(table), foreign_key: true
     end
   end
 end
