@@ -14,13 +14,13 @@ class WorkTypesController < ApplicationController
   end
 
   def new
-    @work_type = WorkType.new
+    @work_type = WorkType.for_organization(current_organization).new
   end
 
   def edit; end
 
   def create
-    @work_type = WorkType.new(work_type_params)
+    @work_type = WorkType.for_organization(current_organization).new(work_type_params)
     icon = work_type_params[:icon]
     unless icon.nil?
       @work_type.icon = icon.read

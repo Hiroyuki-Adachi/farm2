@@ -9,15 +9,19 @@
 #  name(名称)                     :string(10)       default(""), not null
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
+#  organization_id(組織)          :bigint
 #  work_category_id(作業カテゴリ) :bigint           not null
 #
 # Indexes
 #
 #  index_work_genres_on_work_category_id  (work_category_id)
+#  work_genres_2nd                        (organization_id,id) UNIQUE
 #
 # Foreign Keys
 #
-#  fk_rails_...  (work_category_id => work_categories.id)
+#  fk_rails_...                          (organization_id => organizations.id)
+#  fk_rails_...                          (work_category_id => work_categories.id)
+#  fk_work_genres_organization_category  ([organization_id, work_category_id] => work_categories[organization_id, id])
 #
 require "test_helper"
 

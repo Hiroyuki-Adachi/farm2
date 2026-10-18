@@ -34,6 +34,7 @@ class Works::GenresControllerTest < ActionDispatch::IntegrationTest
     assert_equal @update[:name], created_genre.name
     assert_equal @update[:display_order], created_genre.display_order
     assert_equal @update[:work_category_id], created_genre.work_category_id
+    assert_equal organizations(:org).id, created_genre.organization_id
   end
 
   test "作業カテゴリ変更(表示)" do

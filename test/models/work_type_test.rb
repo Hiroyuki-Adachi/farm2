@@ -15,16 +15,20 @@
 #  office_role(事務の役割)     :integer          default("none"), not null
 #  other_flag(その他フラグ)    :boolean          default(FALSE), not null
 #  work_flag(日報フラグ)       :boolean          default(TRUE), not null
+#  organization_id(組織)       :bigint
 #  work_genre_id(作業ジャンル) :bigint           not null
 #
 # Indexes
 #
-#  index_work_types_on_deleted_at     (deleted_at)
-#  index_work_types_on_work_genre_id  (work_genre_id)
+#  index_work_types_on_deleted_at       (deleted_at)
+#  index_work_types_on_organization_id  (organization_id)
+#  index_work_types_on_work_genre_id    (work_genre_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (work_genre_id => work_genres.id)
+#  fk_rails_...                      (organization_id => organizations.id)
+#  fk_rails_...                      (work_genre_id => work_genres.id)
+#  fk_work_types_organization_genre  ([organization_id, work_genre_id] => work_genres[organization_id, id])
 #
 require 'test_helper'
 
