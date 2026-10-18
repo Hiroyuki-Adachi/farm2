@@ -8,6 +8,16 @@
 #  name(名称)                 :string(10)       default(""), not null
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
+#  organization_id(組織)      :bigint
+#
+# Indexes
+#
+#  index_work_categories_on_organization_id  (organization_id)
+#  work_categories_2nd                       (organization_id,id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 require "test_helper"
 

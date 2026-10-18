@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_12_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -1190,6 +1190,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_12_090000) do
     t.datetime "discarded_at", comment: "論理削除日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organization_id", comment: "組織"
+    t.index ["organization_id", "id"], name: "work_categories_2nd", unique: true
+    t.index ["organization_id"], name: "index_work_categories_on_organization_id"
   end
 
   create_table "work_chemicals", id: { type: :serial, comment: "薬剤使用データ" }, comment: "薬剤使用データ", force: :cascade do |t|
@@ -1214,6 +1217,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_12_090000) do
     t.datetime "discarded_at", comment: "論理削除日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organization_id", comment: "組織"
+    t.index ["organization_id", "id"], name: "work_genres_2nd", unique: true
+    t.index ["organization_id"], name: "index_work_genres_on_organization_id"
     t.index ["work_category_id"], name: "index_work_genres_on_work_category_id"
   end
 
@@ -1298,7 +1304,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_12_090000) do
     t.integer "office_role", default: 0, null: false, comment: "事務の役割"
     t.datetime "icon_updated_at"
     t.bigint "work_genre_id", null: false, comment: "作業ジャンル"
+    t.bigint "organization_id", comment: "組織"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
+    t.index ["organization_id"], name: "index_work_types_on_organization_id"
     t.index ["work_genre_id"], name: "index_work_types_on_work_genre_id"
   end
 
@@ -1472,9 +1480,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_12_090000) do
   add_foreign_key "tasks", "workers", column: "creator_id"
   add_foreign_key "total_costs", "organizations"
   add_foreign_key "web_push_subscriptions", "users"
+  add_foreign_key "work_categories", "organizations"
+  add_foreign_key "work_genres", "organizations"
   add_foreign_key "work_genres", "work_categories"
+  add_foreign_key "work_genres", "work_categories", column: ["organization_id", "work_category_id"], primary_key: ["organization_id", "id"], name: "fk_work_genres_organization_category"
   add_foreign_key "work_kind_types", "work_categories"
+  add_foreign_key "work_types", "organizations"
   add_foreign_key "work_types", "work_genres"
+  add_foreign_key "work_types", "work_genres", column: ["organization_id", "work_genre_id"], primary_key: ["organization_id", "id"], name: "fk_work_types_organization_genre"
   add_foreign_key "workers", "organizations"
   add_foreign_key "works", "organizations"
   add_foreign_key "zengin_payment_batches", "organizations"

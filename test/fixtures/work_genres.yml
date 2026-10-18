@@ -15,17 +15,23 @@
 #  name(名称)                     :string(10)       default(""), not null
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
+#  organization_id(組織)          :bigint
 #  work_category_id(作業カテゴリ) :bigint           not null
 #
 # Indexes
 #
+#  index_work_genres_on_organization_id   (organization_id)
 #  index_work_genres_on_work_category_id  (work_category_id)
+#  work_genres_2nd                        (organization_id,id) UNIQUE
 #
 # Foreign Keys
 #
-#  fk_rails_...  (work_category_id => work_categories.id)
+#  fk_rails_...                          (organization_id => organizations.id)
+#  fk_rails_...                          (work_category_id => work_categories.id)
+#  fk_work_genres_organization_category  ([organization_id, work_category_id] => work_categories[organization_id, id])
 #
 genre_rice:
+  organization_id: 1
   name: "水稲"
   display_order: '10'
   discarded_at: 
@@ -33,6 +39,7 @@ genre_rice:
   graph_color: "#00ff00"
 
 genre_change:
+  organization_id: 1
   name: "転作"
   display_order: '20'
   discarded_at: 
@@ -40,6 +47,7 @@ genre_change:
   graph_color: "#0000ff"
 
 genre_by_product:
+  organization_id: 1
   name: "副産物"
   display_order: '30'
   discarded_at: 
@@ -47,6 +55,7 @@ genre_by_product:
   graph_color: "#ff0000"
 
 genre_management:
+  organization_id: 1
   name: "管理"
   display_order: '40'
   discarded_at: 
@@ -54,6 +63,7 @@ genre_management:
   graph_color: "#ffff00"
 
 genre_deletable:
+  organization_id: 1
   name: "物理削除可能"
   display_order: '50'
   discarded_at: 
@@ -61,6 +71,7 @@ genre_deletable:
   graph_color: "#000000"
 
 genre_discardable:
+  organization_id: 1
   name: "論理削除可能"
   display_order: '60'
   discarded_at: 
@@ -68,6 +79,7 @@ genre_discardable:
   graph_color: "#ffffff"
 
 genre_discarded:
+  organization_id: 1
   name: "論理削除済み"
   display_order: '70'
   discarded_at: '2024-01-01 00:00:00'

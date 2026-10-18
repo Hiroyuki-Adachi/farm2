@@ -33,6 +33,7 @@ class Works::CategoriesControllerTest < ActionDispatch::IntegrationTest
     created_category = WorkCategory.last
     assert_equal @update[:name], created_category.name
     assert_equal @update[:display_order], created_category.display_order
+    assert_equal organizations(:org).id, created_category.organization_id
   end
 
   test "作業カテゴリ変更(表示)" do

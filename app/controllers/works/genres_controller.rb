@@ -10,13 +10,13 @@ class Works::GenresController < ApplicationController
   end
 
   def new
-    @genre = WorkGenre.new
+    @genre = WorkGenre.for_organization(current_organization).new
   end
 
   def edit; end
 
   def create
-    @genre = WorkGenre.new(work_genre_params)
+    @genre = WorkGenre.for_organization(current_organization).new(work_genre_params)
     if @genre.save
       redirect_to(work_genres_path)
     else
