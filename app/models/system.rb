@@ -104,6 +104,15 @@ class System < ApplicationRecord
     where(organization_id:, term: ..start_term).order(term: :desc).limit(limit).pluck(:term)
   end
 
+  # 組織内で当期より前の、直前の期。保存前の期の検証でも使う。
+  def previous_system
+    self.class
+      .where(organization_id: organization_id)
+      .where(term: ...term)
+      .order(term: :desc)
+      .first
+  end
+
   private
 
   def set_default_term_name
@@ -144,14 +153,6 @@ class System < ApplicationRecord
     if same_organization.where("term > ? AND start_date <= ?", term, end_date).exists?
       errors.add(:end_date, "は次期以降の期間より前にしてください。")
     end
-  end
-
-  def previous_system
-    self.class
-      .where(organization_id: organization_id)
-      .where(term: ...term)
-      .order(term: :desc)
-      .first
   end
 
   def next_system_for_validation
