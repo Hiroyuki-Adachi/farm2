@@ -101,6 +101,19 @@ class DryingsTest < ApplicationSystemTestCase
     assert_equal 0, @adjustment.half_weight
   end
 
+  test "フレコンのチェックを外して保存するとフレコンフラグが外れる" do
+    @adjustment.update!(container_flag: true)
+
+    login_as(@user)
+    visit edit_drying_path(@drying)
+    uncheck "drying_adjustment_attributes_container_flag"
+
+    click_button "登録"
+
+    assert_current_path drying_path(@drying.home)
+    assert_not @adjustment.reload.container_flag
+  end
+
   private
 
   def login_as(user)
