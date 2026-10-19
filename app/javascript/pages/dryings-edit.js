@@ -1,3 +1,5 @@
+import { Decimal } from "decimal.js";
+
 export const init = () => {
     document.getElementById("adjustment_home_sql").value = document.getElementById("drying_adjustment_attributes_home_id").innerHTML;
 
@@ -21,20 +23,20 @@ export const init = () => {
         wasteBag2Weight();
     });
 
-    document.getElementById("drying_adjustment_attributes_rice_bag").addEventListener("blur", () => {
-        rice2Container();
+    document.getElementById("drying_adjustment_attributes_rice_bag").addEventListener("change", () => {
+        rice2Pack();
     });
 
-    document.getElementById("drying_adjustment_attributes_half_weight").addEventListener("blur", () => {
-        rice2Container();
+    document.getElementById("drying_adjustment_attributes_half_weight").addEventListener("change", () => {
+        rice2Pack();
     });
 
-    document.getElementById("contaier_weight").addEventListener("blur", (event) => {
-        const fleconWeight = new Decimal(event.target.value == "" ? 0 : event.target.value);
-        const perBag = new Decimal(document.getElementById("kg_per_bag_rice").value);
-    
-        document.getElementById("drying_adjustment_attributes_rice_bag").value = fleconWeight.div(perBag).toFixed(0);
-        document.getElementById("drying_adjustment_attributes_half_weight").value = fleconWeight.mod(perBag).toFixed(0);
+    document.getElementById("drying_adjustment_attributes_container_flag").addEventListener("change", () => {
+        changeContainer();
+    });
+
+    document.getElementById("container_pack").addEventListener("change", () => {
+        pack2Rice();
     });
 
     calcSum();
@@ -122,6 +124,8 @@ function changeEnabled() {
         carryOn.setDate(carryOn.getDate() + 1);
         document.getElementById("drying_shipped_on").value = `${carryOn.getFullYear()}-${("0" + (carryOn.getMonth() + 1)).slice(-2)}-${("0" + carryOn.getDate()).slice(-2)}`;
     }
+
+    changeContainer();
 }
 
 document.addEventListener("paste", function (e) {
@@ -169,6 +173,7 @@ function pasteAdjust(clip) {
     const bag = clip.replace(/(\t|\n)/g, "");
     if(!isNaN(bag)) {
         document.getElementById("drying_adjustment_attributes_rice_bag").value = bag;
+        rice2Pack();
     }
 }
 
@@ -184,13 +189,44 @@ function wasteBag2Weight() {
     document.getElementById("drying_adjustment_attributes_waste_weight").value = isNaN(waste_bag) ? 0 : waste_bag * KG_PER_BAG_WASTE;
 }
 
-function rice2Container()
-{
+// フレコンにチェックがあるときだけパック数を入力できる
+function changeContainer() {
+    const flag = document.getElementById("drying_adjustment_attributes_container_flag");
+    const pack = document.getElementById("container_pack");
+
+    if (flag.checked && !flag.disabled) {
+        pack.disabled = false;
+        rice2Pack();
+    } else {
+        pack.value = "";
+        pack.disabled = true;
+    }
+}
+
+// 調整米(袋・半端) => パック数(小数点以下1位で切り捨て)
+function rice2Pack() {
+    const pack = document.getElementById("container_pack");
+    if (pack.disabled) return;
+
     const riceBagValue = document.getElementById("drying_adjustment_attributes_rice_bag").value;
     const riceBag = new Decimal(riceBagValue == "" ? 0 : riceBagValue);
     const halfWeightValue = document.getElementById("drying_adjustment_attributes_half_weight").value;
     const halfWeight = new Decimal(halfWeightValue == "" ? 0 : halfWeightValue);
     const perBag = new Decimal(document.getElementById("kg_per_bag_rice").value);
+    const perPack = new Decimal(document.getElementById("kg_per_pack_container").value);
 
-    document.getElementById("contaier_weight").value = riceBag.mul(perBag).plus(halfWeight).toFixed(0);
+    pack.value = riceBag.mul(perBag).plus(halfWeight).div(perPack).toDecimalPlaces(1, Decimal.ROUND_DOWN).toFixed(1);
+}
+
+// パック数 => 調整米(袋は切り捨て、残りを半端へ)
+function pack2Rice() {
+    const pack = document.getElementById("container_pack");
+    if (pack.disabled || pack.value == "") return;
+
+    const perBag = new Decimal(document.getElementById("kg_per_bag_rice").value);
+    const perPack = new Decimal(document.getElementById("kg_per_pack_container").value);
+    const weight = new Decimal(pack.value).mul(perPack);
+
+    document.getElementById("drying_adjustment_attributes_rice_bag").value = weight.divToInt(perBag).toFixed(0);
+    document.getElementById("drying_adjustment_attributes_half_weight").value = weight.mod(perBag).toString();
 }

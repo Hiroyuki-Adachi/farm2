@@ -160,11 +160,14 @@
             <div class="col-md-4 field mb-3">
               <div class="form-check">
                 <label class="form-check-label" for="drying_adjustment_attributes_container_flag" class="form-check-input">フレコン</label>
-                <%= fa.check_box :container_flag, {class: "form-check-input dry-input dry-self dry-another"}, true, false %>
+                <%= fa.check_box :container_flag, {class: "form-check-input dry-input dry-self dry-another"} %>
               </div>
             </div>
             <div class="col-md-8 field mb-3">
-              <%= number_field_tag :contaier_weight, fa.object.container_weight, {min: 0, max: 9999, step: 1, class: "form-control dry-input dry-self dry-another"} %>
+              <div class="input-group">
+                <%= number_field_tag :container_pack, nil, {min: 0, max: 20, step: 0.1, class: "form-control dry-input dry-self dry-another", style: "width: 100px;", name: nil} %>
+                <label class="form-label">パック</label>
+              </div>
             </div>
           </div>
         <% end %>
@@ -205,6 +208,7 @@
 <% end %>
 <%= hidden_field_tag "kg_per_bag_waste", Drying::KG_PER_BAG_WASTE %>
 <%= hidden_field_tag "kg_per_bag_rice", Drying::KG_PER_BAG_RICE %>
+<%= hidden_field_tag "kg_per_pack_container", Drying::KG_PER_PACK_CONTAINER %>
 <%= hidden_field_tag "carried_on", @drying.model.carried_on %>
 <% content_for :head do %>
 <style>
