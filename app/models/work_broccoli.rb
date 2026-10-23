@@ -18,8 +18,6 @@
 #
 
 class WorkBroccoli < ApplicationRecord
-  require 'ostruct'
-
   validates :shipped_on, presence: true
   validates :rest, presence: true
 
@@ -45,7 +43,8 @@ class WorkBroccoli < ApplicationRecord
   def regist_harvests(params)
     params.each do |rank_id, sizes|
       sizes.each do |size_id, inspection|
-        harvest = BroccoliHarvest.find_or_initialize_by(broccoli_rank_id: rank_id, broccoli_size_id: size_id, work_broccoli_id: id)
+        harvest = BroccoliHarvest.find_or_initialize_by(broccoli_rank_id: rank_id, broccoli_size_id: size_id,
+                                                        work_broccoli_id: id)
         if inspection.to_i.positive?
           harvest.inspection = inspection
           harvest.save!
@@ -66,7 +65,7 @@ class WorkBroccoli < ApplicationRecord
         else
           work_broccoli = WorkBroccoli.new(param)
         end
-        work_broccoli.save if work_broccoli.present?
+        work_broccoli.presence&.save
       end
     end
   end
