@@ -26,6 +26,50 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "作業一覧の詳細から戻ると検索条件と結果が復元される" do
+    work = works(:work_not_fixed)
+    WorkTypeTerm.create!(term: work.term, work_type: work.work_type)
+    conditions = {
+      term: work.term, work_type_id: work.work_type_id, work_kind_id: work.work_kind_id,
+      worked_at1: work.worked_at.to_s, worked_at2: work.worked_at.to_s
+    }
+
+    get works_path, params: conditions
+    assert_response :success
+    row_selector = "#work_list tbody tr[data-row-visit-url-value]"
+    detail_url = css_select(row_selector).find do |row|
+      row.at_css("td").text == work.id.to_s
+    end["data-row-visit-url-value"]
+
+    get detail_url
+    assert_response :success
+    return_url = css_select("a").find { |link| link.text == "戻る" }["href"]
+    assert_equal works_path(conditions), return_url
+
+    get return_url
+    assert_response :success
+    [:term, :work_type_id, :work_kind_id].each do |field|
+      assert_select "select##{field} option[selected][value=?]", conditions[field].to_s
+    end
+    [:worked_at1, :worked_at2].each do |field|
+      assert_select "input##{field}[value=?]", conditions[field]
+    end
+    assert_select "input#except:not([checked])"
+    assert_select "#work_list tbody tr", count: 1
+    assert_select "#work_list tbody tr td:first-child", text: work.id.to_s
+  end
+
+  test "作業一覧の除外条件がチェックボックスと検索結果に反映される" do
+    work = works(:work_not_fixed)
+    WorkTypeTerm.create!(term: work.term, work_type: work.work_type)
+    get works_path, params: { work_type_id: work.work_type_id, except: "true" }
+
+    assert_response :success
+    assert_select "select#work_type_id option[selected][value=?]", work.work_type_id.to_s
+    assert_select "input#except[checked]"
+    assert_select "#work_list tbody tr td:first-child", text: work.id.to_s, count: 0
+  end
+
   test "作業登録(閲覧者)" do
     login_as(users(:user_visitor))
     get new_work_path

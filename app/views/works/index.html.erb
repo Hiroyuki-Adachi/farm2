@@ -22,9 +22,9 @@
   <div class="col-md-6">
     <div class="input-group">
       <label for="month" class="h5 form-label">作業日</label>
-      <%= date_field_tag :worked_at1, @worked_at1, {class: "form-control"} %>
+      <%= date_field_tag :worked_at1, @work_search[:worked_at1], {class: "form-control"} %>
       <span class="input-group-text">～</span>
-      <%= date_field_tag :worked_at2, @worked_at2, {class: "form-control"} %>
+      <%= date_field_tag :worked_at2, @work_search[:worked_at2], {class: "form-control"} %>
     </div>
   </div>
 </div>
@@ -33,7 +33,7 @@
   <div class="col-md-3">
     <div class="input-group">
       <label for="work_type_id" class="h5 form-label">分類</label>
-      <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name, @work_type_id),
+      <%= select_tag(:work_type_id, options_from_collection_for_select(@work_types, :id, :name, @work_search[:work_type_id]),
         {
           include_blank: true,
           class: "form-select",
@@ -44,13 +44,13 @@
             dependent_select_param_name_value: "work_type_id"
           }
         }) %>
-      <label class="form-check-label form-label"><%= check_box_tag(:except, true, false, {class: "form-check-input"}) %>除外</label>
+      <label class="form-check-label form-label"><%= check_box_tag(:except, true, @work_search[:except].present?, {class: "form-check-input"}) %>除外</label>
     </div>
   </div>
   <div class="col-md-4">
     <div class="input-group">
       <label for="work_kind_id" class="h5 form-label">種別</label>
-      <%= select_tag(:work_kind_id, options_from_collection_for_select(@work_kinds, :id, :name, @work_kind_id), {include_blank: true, class: "form-select"}) %>
+      <%= select_tag(:work_kind_id, options_from_collection_for_select(@work_kinds, :id, :name, @work_search[:work_kind_id]), {include_blank: true, class: "form-select"}) %>
     </div>
   </div>
   <div class="col-md-2">

@@ -23,6 +23,7 @@
 class Drying < ApplicationRecord
   KG_PER_BAG_RICE = 30
   KG_PER_BAG_WASTE = 25
+  KG_PER_PACK_CONTAINER = 1080
 
   enum :drying_type_id, { unset: 0, country: 1, self: 2, another: 3, adjust: 4 }
 

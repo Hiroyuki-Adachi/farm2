@@ -17,6 +17,27 @@ class WorkersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "作業者マスタ一覧に年齢を数字のみで表示し生年月日未登録なら空欄にする" do
+    travel_to Time.zone.local(2026, 10, 17, 12) do
+      @worker.update!(birthday: Date.new(1980, 10, 17))
+      get workers_path
+
+      assert_response :success
+      assert_select "thead th", text: "年齢"
+      assert_select "tbody tr", text: /#{Regexp.escape(@worker.decorate.disp_name)}/ do
+        assert_select "td:nth-child(2)", text: "46"
+      end
+
+      @worker.update!(birthday: nil)
+      get workers_path
+
+      assert_response :success
+      assert_select "tbody tr", text: /#{Regexp.escape(@worker.decorate.disp_name)}/ do
+        assert_select "td:nth-child(2)", text: ""
+      end
+    end
+  end
+
   test "作業者マスタ一覧(検証者以外)" do
     login_as(users(:user_user))
     get workers_path

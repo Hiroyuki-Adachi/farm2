@@ -15,19 +15,24 @@
 #  office_role(事務の役割)     :integer          default("none"), not null
 #  other_flag(その他フラグ)    :boolean          default(FALSE), not null
 #  work_flag(日報フラグ)       :boolean          default(TRUE), not null
+#  organization_id(組織)       :bigint
 #  work_genre_id(作業ジャンル) :bigint           not null
 #
 # Indexes
 #
-#  index_work_types_on_deleted_at     (deleted_at)
-#  index_work_types_on_work_genre_id  (work_genre_id)
+#  index_work_types_on_deleted_at       (deleted_at)
+#  index_work_types_on_organization_id  (organization_id)
+#  index_work_types_on_work_genre_id    (work_genre_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (work_genre_id => work_genres.id)
+#  fk_rails_...                      (organization_id => organizations.id)
+#  fk_rails_...                      (work_genre_id => work_genres.id)
+#  fk_work_types_organization_genre  ([organization_id, work_genre_id] => work_genres[organization_id, id])
 #
 
 work_type_koshi:
+  organization_id: 1
   id: '1'
   genre: genre_rice
   name: "コシヒカリ"
@@ -37,6 +42,7 @@ work_type_koshi:
   land_flag: t
 
 work_types1:
+  organization_id: 1
   id: '2'
   genre: genre_rice
   name: "きぬむすめ"
@@ -46,6 +52,7 @@ work_types1:
   land_flag: t
 
 work_types2:
+  organization_id: 1
   id: '4'
   genre: genre_rice
   name: "直播"
@@ -55,6 +62,7 @@ work_types2:
   land_flag: t
 
 work_type_mugi:
+  organization_id: 1
   id: 5
   genre: genre_change
   name: "麦"
@@ -64,6 +72,7 @@ work_type_mugi:
   land_flag: t
 
 work_type_bokuso:
+  organization_id: 1
   id: 6
   genre: genre_change
   name: "牧草"
@@ -73,6 +82,7 @@ work_type_bokuso:
   land_flag: t
 
 work_types5:
+  organization_id: 1
   id: '7'
   genre: genre_change
   name: "飼料米"
@@ -82,6 +92,7 @@ work_types5:
   land_flag: t
 
 work_types_wcs:
+  organization_id: 1
   id: 8
   genre: genre_change
   name: "たちあやか"
@@ -94,6 +105,7 @@ work_types_wcs:
     <%= Base64.strict_encode64(File.binread(Rails.root.join("test/fixtures/files/wcs.jpg"))) %>
 
 work_types7:
+  organization_id: 1
   id: '9'
   genre: genre_by_product
   name: "祖飼料"
@@ -103,6 +115,7 @@ work_types7:
   land_flag: f
 
 work_types8:
+  organization_id: 1
   id: '10'
   genre: genre_by_product
   name: "サイレージ"
@@ -112,6 +125,7 @@ work_types8:
   land_flag: f
 
 work_types9:
+  organization_id: 1
   id: '11'
   genre: genre_management
   name: "総務"
@@ -122,6 +136,7 @@ work_types9:
   office_role: general
 
 work_types10:
+  organization_id: 1
   id: '12'
   genre: genre_management
   name: "営農部"
@@ -131,6 +146,7 @@ work_types10:
   land_flag: f
 
 work_types11:
+  organization_id: 1
   id: '13'
   genre: genre_management
   name: "機械部"
@@ -140,6 +156,7 @@ work_types11:
   land_flag: f
 
 work_types12:
+  organization_id: 1
   id: '14'
   genre: genre_management
   name: "その他"
@@ -149,6 +166,7 @@ work_types12:
   land_flag: f
 
 work_types23:
+  organization_id: 1
   id: '23'
   genre: genre_rice
   name: "きぬ早"
@@ -158,6 +176,7 @@ work_types23:
   land_flag: t
 
 work_types24:
+  organization_id: 1
   id: '24'
   genre: genre_rice
   name: "きぬ遅"
@@ -167,6 +186,7 @@ work_types24:
   land_flag: t
 
 work_types19:
+  organization_id: 1
   id: '25'
   genre: genre_management
   name: "企画部"
@@ -176,6 +196,7 @@ work_types19:
   land_flag: f
 
 work_types20:
+  organization_id: 1
   id: '26'
   genre: genre_management
   name: "管理部"
@@ -185,6 +206,7 @@ work_types20:
   land_flag: f
 
 work_type_broccoli:
+  organization_id: 1
   genre: genre_change
   name: "ブロッコリー"
   display_order: 300
@@ -193,6 +215,7 @@ work_type_broccoli:
   land_flag: t
 
 work_type_contract:
+  organization_id: 1
   id: 28
   genre: genre_by_product
   name: "受託作業"
@@ -202,6 +225,7 @@ work_type_contract:
   land_flag: t
 
 work_types15:
+  organization_id: 1
   id: '15'
   genre: genre_rice
   name: "水稲"
@@ -211,6 +235,7 @@ work_types15:
   land_flag: f
 
 work_types16:
+  organization_id: 1
   id: '16'
   genre: genre_change
   name: "転作"
@@ -220,6 +245,7 @@ work_types16:
   land_flag: f
 
 work_types17:
+  organization_id: 1
   id: '17'
   genre: genre_by_product
   name: "副産物"
@@ -229,6 +255,7 @@ work_types17:
   land_flag: f
 
 work_types18:
+  organization_id: 1
   id: '18'
   genre: genre_management
   name: "管理"
@@ -238,6 +265,7 @@ work_types18:
   land_flag: f
 
 work_type_discarded:
+  organization_id: 1
   genre: genre_discardable
   name: "論理削除済み"
   display_order: 9999

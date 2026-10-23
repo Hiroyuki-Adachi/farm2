@@ -182,21 +182,22 @@ class TaskTemplateTest < ActiveSupport::TestCase
 
     due_on = Date.new(2025, 2, 15)
 
-    Task.expects(:create!).with do |attrs|
-      rel = attrs[:template] || attrs[:task_template] # 念のため両対応
+    task = travel_to(Date.new(2025, 1, 15)) { t.create_task(due_on: due_on) }
 
-      attrs[:title].include?("年") &&
-        attrs[:title].include?("年次点検") &&
-        attrs[:description] == t.description &&
-        attrs[:due_on] == due_on &&
-        attrs[:priority] == t.priority &&
-        attrs[:office_role] == t.office_role &&
-        attrs[:task_status_id].to_i == TaskStatus::TO_DO.id &&
-        attrs[:organization_id] == t.organization_id &&
-        rel == t
-    end.returns(:task_double)
-
-    assert_equal :task_double, t.create_task(due_on: due_on)
+    assert task.persisted?
+    assert_includes task.title, "年"
+    assert_includes task.title, "年次点検"
+    assert_equal t.description, task.description
+    assert_equal due_on, task.due_on
+    assert_equal t.priority, task.priority
+    assert_equal t.office_role, task.office_role
+    assert_equal TaskStatus::TO_DO.id, task.task_status_id
+    assert_equal t.organization_id, task.organization_id
+    assert_equal t, task.template
+    assert_equal Date.new(2025, 1, 15), task.planned_start_on
+    # 作成者がいないため、作成イベントと既読は作らない。
+    assert_empty task.events
+    assert_empty task.reads
   end
 
   test "same_task_exists?(月次)" do

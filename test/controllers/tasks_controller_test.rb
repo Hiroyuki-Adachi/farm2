@@ -37,6 +37,13 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
       }
     end
     assert_redirected_to tasks_path
+
+    task = Task.order(:id).last
+    assert_equal @user.worker.id, task.creator_id
+    assert_equal task.created_at.to_date, task.planned_start_on
+    assert task.task_watchers.exists?(worker_id: @user.worker.id)
+    assert_equal 1, task.events.where(event_type: :task_created).count
+    assert task.reads.exists?(worker_id: @user.worker.id)
   end
 
   test "タスク照会" do
