@@ -5,7 +5,9 @@ class Tasks::StatusesController < TasksController
   def edit; end
 
   def update
-    @task.change_status!(status_params, current_user.worker)
+    Task::StatusChanger.new(@task, actor: current_user.worker).call!(
+      task_status: status_params[:task_status], end_reason: status_params[:end_reason], comment: status_params[:comment]
+    )
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to @task, notice: "タスクの状態を更新しました" }

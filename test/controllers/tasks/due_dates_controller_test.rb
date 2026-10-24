@@ -30,8 +30,8 @@ class Tasks::DueDatesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "期限編集(実行エラー)" do
-    # change_due_on! が例外を投げる状況をモック（mocha 利用）
-    Task.any_instance.stubs(:change_due_on!).raises(ActiveRecord::RecordInvalid.new(@task))
+    # Task::DueOnChanger が例外を投げる状況をモック（mocha 利用）
+    Task::DueOnChanger.any_instance.stubs(:call!).raises(ActiveRecord::RecordInvalid.new(@task))
 
     assert_no_difference "TaskEvent.count" do
       patch task_due_on_path(@task), params: {

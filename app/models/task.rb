@@ -244,87 +244,6 @@ class Task < ApplicationRecord
     due_on < Date.current && !closed?
   end
 
-  # 担当者変更
-  def change_assignee!(new_assignee_id, actor, comment = nil)
-    self.comment = comment
-    if new_assignee_id.to_i == assignee_id.to_i
-      errors.add(:assignee_id, "が変更されていません")
-      raise ActiveRecord::RecordInvalid, self
-    end
-    if closed?
-      errors.add(:assignee_id, "を変更できません（タスクが完了しています）")
-      raise ActiveRecord::RecordInvalid, self
-    end
-
-    in_change_tx!(actor: actor, comment: comment) do |c|
-      events.create!(
-        actor: actor, event_type: :change_assignee,
-        assignee_from_id: assignee_id, assignee_to_id: new_assignee_id,
-        comment: c
-      )
-      update!(assignee_id: new_assignee_id)
-
-      if new_assignee_id
-        TaskWatcher.find_or_create_by!(task: self, worker_id: new_assignee_id)
-        TaskRead.touch_and_get_previous!(task: self, worker_id: new_assignee_id, at: Time.zone.at(0))
-      end
-    end
-  end
-
-  # ステータス変更
-  def change_status!(new_params, actor)
-    self.comment = new_params[:comment]
-    new_status = TaskStatus.find_by(code: new_params[:task_status])
-    if new_status.nil?
-      errors.add(:status, "が不正な値です")
-      raise ActiveRecord::RecordInvalid, self
-    end
-    if new_status.code == status.code
-      errors.add(:status, "が変更されていません")
-      raise ActiveRecord::RecordInvalid, self
-    end
-    if status.next_statuses.pluck(:id).exclude?(new_status.id)
-      errors.add(:status, "が不正な値です")
-      raise ActiveRecord::RecordInvalid, self
-    end
-
-    in_change_tx!(actor: actor, comment: comment) do |c|
-      events.create!(
-        actor: actor,
-        event_type: :change_status,
-        status_from_id: task_status_id,
-        status_to_id: new_status.id,
-        comment: c,
-        source: :form
-      )
-      update_for_start_or_end(new_status, new_params[:end_reason])
-      save!
-    end
-  end
-
-  # 期限変更
-  def change_due_on!(new_due_on, actor, comment: nil, source: :form)
-    self.comment = comment
-    if new_due_on.presence&.to_date == due_on
-      errors.add(:due_on, "が変更されていません")
-      raise ActiveRecord::RecordInvalid, self
-    end
-    if closed?
-      errors.add(:due_on, "を変更できません（タスクが完了しています）")
-      raise ActiveRecord::RecordInvalid, self
-    end
-
-    in_change_tx!(actor: actor, comment: comment) do |c|
-      events.create!(
-        actor: actor, event_type: :change_due_on,
-        due_on_from: due_on, due_on_to: new_due_on,
-        comment: c,
-        source: source
-      )
-      update!(due_on: new_due_on)
-    end
-  end
-
   def deletable?(user)
     (user.admin? || (creator_id == user.worker_id)) && !closed?
   end
@@ -352,67 +271,6 @@ class Task < ApplicationRecord
   def add_comment!(actor:, body:)
     comment = comments.create!(poster: actor, body: body)
     TaskEvent.create!(task: self, actor: actor, event_type: :add_comment, comment: comment, source: :form)
-  end
-
-  def add_work!(actor:, work:, close: false, comment: nil)
-    if ActiveRecord::Base.connection.transaction_open?
-      add_work_core!(actor: actor, work: work, close: close, comment: comment)
-    else
-      ActiveRecord::Base.transaction { add_work_core!(actor: actor, work: work, close: close, comment: comment) }
-    end
-  end
-
-  def remove_work!(work:)
-    event = TaskEvent.find_by(task: self, work: work)
-    return if event.nil?
-
-    if event.last? && event.change_status?
-      update!(status: event.status_from)
-      event.status_to = nil
-      event.status_from = nil
-      event.event_type = :add_work
-    end
-    event.work_id = nil
-    event.save!
-  end
-
-  def self.add_works!(actor:, check_task_ids:, work:, close_task_ids: [], task_comments: {})
-    ActiveRecord::Base.transaction do
-      Task.for_organization(work.organization_id).where(id: check_task_ids).find_each do |task|
-        next if task.events.exists?(work_id: work.id)
-
-        task.add_work!(
-          actor: actor,
-          work: work,
-          close: close_task_ids.include?(task.id.to_s),
-          comment: task_comments[task.id.to_s] || task_comments[task.id]
-        )
-      end
-    end
-  end
-
-  def move_on_kanban!(new_kanban_column, new_position, actor:)
-    self.class.transaction do
-      old_status_id = task_status_id
-      old_kanban_column = TaskStatus.find_by(id: old_status_id)&.kanban_column
-
-      if old_kanban_column == new_kanban_column
-        update!(kanban_position: new_position)
-      else
-        new_status = TaskStatus.kanban_status(old_status_id, new_kanban_column)
-        self.kanban_position = new_position
-        update_for_start_or_end(new_status, :completed)
-        save!
-        TaskEvent.create!(
-          task_id: id,
-          actor_id: actor.id,
-          event_type: :change_status,
-          status_from_id: old_status_id,
-          status_to_id: new_status.id,
-          source: :kanban
-        )
-      end
-    end
   end
 
   def gantt_end_on
@@ -459,35 +317,6 @@ class Task < ApplicationRecord
     end
   end
 
-  # rubocop:disable Naming/PredicateMethod
-  # 共通ラッパ：コメントを（あれば）作ってトランザクション内でyield
-  def in_change_tx!(actor:, comment:)
-    transaction do
-      created_comment =
-        comment.present? ? TaskComment.create!(task: self, poster_id: actor.id, body: comment) : nil
-      yield(created_comment)
-    end
-    true
-  end
-  # rubocop:enable Naming/PredicateMethod
-
-  def add_work_core!(actor:, work:, close: false, comment: nil)
-    task_comment = comment.present? ? comments.create!(poster: actor, body: comment) : nil
-    if close
-      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DONE, work: work, comment: task_comment, source: :form)
-      update!(status: TaskStatus::DONE, started_on: started_on || work.worked_at, ended_on: work.worked_at, end_reason: :completed)
-      return
-    end
-    if status == TaskStatus::DOING
-      TaskEvent.create!(task: self, actor: actor, event_type: :add_work, work: work, comment: task_comment, source: :form)
-    elsif [TaskStatus::TO_DO, TaskStatus::REOPEN].include?(status)
-      TaskEvent.create!(task: self, actor: actor, event_type: :change_status, status_from: status, status_to: TaskStatus::DOING, work: work, comment: task_comment, source: :form)
-      update!(status: TaskStatus::DOING, started_on: work.worked_at)
-    else
-      raise "Cannot add work when task status is #{status.name}"
-    end
-  end
-
   def ended_on_after_started_on
     return if ended_on.blank? || started_on.blank?
 
@@ -512,18 +341,5 @@ class Task < ApplicationRecord
       self.ended_on = nil
     end
     self.started_on = nil if start?
-  end
-
-  def update_for_start_or_end(new_status, end_reason)
-    self.task_status_id = new_status.id
-    if new_status.started_flag
-      self.started_on ||= Time.zone.today
-      self.planned_start_on = self.started_on if planned_start_on > self.started_on || planned_start_on == UNDEFINED_DATE
-    elsif new_status.closed_flag
-      self.ended_on = Time.zone.today
-      self.started_on = ended_on if self.started_on.nil? || self.started_on > ended_on
-      self.planned_start_on = ended_on if planned_start_on > ended_on
-      self.end_reason = end_reason || :other
-    end
   end
 end
