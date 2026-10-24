@@ -6,7 +6,7 @@ class Works::CategoriesController < ApplicationController
   keeps_index_return_to path_method: :work_categories_path
 
   def index
-    @categories = WorkCategory.for_index
+    @categories = WorkCategory.for_organization(current_organization).for_index
   end
 
   def new
@@ -46,7 +46,7 @@ class Works::CategoriesController < ApplicationController
   private
 
   def set_work_category
-    @category = WorkCategory.find(params[:id])
+    @category = WorkCategory.for_organization(current_organization).find(params.expect(:id))
   end
 
   def work_category_params
