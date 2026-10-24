@@ -1,6 +1,6 @@
 require "csv"
 
-CSV.generate(encoding: "windows-31J") do |csv|
+CSV.generate(encoding: "windows-31J", force_quotes: [2, 4, 5]) do |csv|
   csv << ["土地ID", "耕地番号", "地番", "面積", "所有者", "作付", *@work_kind_ids.map { |id| WorkKind.find(id).name }]
 
   @lands.each do |land|

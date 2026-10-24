@@ -53,6 +53,19 @@ class Lands::TotalsControllerTest < ActionDispatch::IntegrationTest
     assert_not_includes rows.drop(1).map(&:first), lands(:land_other_org).id.to_s
   end
 
+  test "地番・所有者・作付は常にダブルクォートで囲む" do
+    land = work_lands(:work_land_land_total_query).land
+    work_type = land_costs(:cost1).work_type
+
+    get lands_totals_path(format: :csv), params: { work_kinds: [work_kinds(:work_kind_shirokaki).id] }
+
+    assert_response :success
+    body = response.body.dup.force_encoding(Encoding::Windows_31J).encode(Encoding::UTF_8)
+    expected = %(#{land.id},#{land.parcel_number},"#{land.place}",#{land.area.to_f},) +
+               %("#{land.owner.name}","#{work_type.name}",2015-01-05)
+    assert_includes body, expected
+  end
+
   test "作業種別を全枠選択してもCSVを出力できる" do
     ids = WorkKind.landable.usual.limit(4).pluck(:id)
 
