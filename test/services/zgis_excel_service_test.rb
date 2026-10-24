@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ZgisExcelServiceTest < ActiveSupport::TestCase
-  test 'call_place generates expected workbook' do
+  test '耕地一覧に見出しと耕地情報と作付を出力する' do
     land_cost = land_costs(:cost1)
     work_type = land_cost.work_type
     service = ZgisExcelService.new
@@ -20,7 +20,7 @@ class ZgisExcelServiceTest < ActiveSupport::TestCase
     assert_equal work_type.name, sheet1[1][0].value
   end
 
-  test 'call_place keeps columns aligned for multiple lands including a missing parcel number' do
+  test '耕地番号が未設定の耕地を含む複数行でも列がずれない' do
     land_costs = [land_costs(:land_cost_taue), land_costs(:cost1)]
     assert_nil land_costs.first.land.parcel_number
 
@@ -34,7 +34,7 @@ class ZgisExcelServiceTest < ActiveSupport::TestCase
     end
   end
 
-  test 'call_place exports polygon coordinates in longitude latitude order' do
+  test '耕地のポリゴン座標を経度と緯度の順で出力する' do
     land_cost = land_costs(:cost1)
     land_cost.land.region = '((35.4,133.0),(35.5,133.1),(35.4,133.0))'
 
@@ -44,7 +44,7 @@ class ZgisExcelServiceTest < ActiveSupport::TestCase
     assert_equal 'Polygon((133.0 35.4,133.1 35.5,133.0 35.4))', sheet[2][0].value
   end
 
-  test 'call_place leaves polygon blank when land has no region' do
+  test '耕地の領域が未設定の場合はポリゴンを空欄にする' do
     land_cost = land_costs(:cost1)
     land_cost.land.region = nil
 
@@ -55,7 +55,7 @@ class ZgisExcelServiceTest < ActiveSupport::TestCase
     assert_equal 12_341_234, sheet[2][2].value
   end
 
-  test 'call_place supports an empty land list' do
+  test '耕地がない場合も見出しを出力する' do
     data = ZgisExcelService.new.call_place([], nil, nil)
     sheet = RubyXL::Parser.parse_buffer(data)[0]
 
@@ -63,7 +63,7 @@ class ZgisExcelServiceTest < ActiveSupport::TestCase
     assert_nil sheet[2]
   end
 
-  test 'call packages places and colors workbooks in a zip' do
+  test '耕地一覧と作付色のExcelをZIPにまとめて出力する' do
     land_cost = land_costs(:cost1)
     work_type = land_cost.work_type
     path = ZgisExcelService.call([land_cost], [work_type], 2015)
@@ -83,7 +83,7 @@ class ZgisExcelServiceTest < ActiveSupport::TestCase
     File.delete(path) if path && File.exist?(path)
   end
 
-  test 'call_color generates work type colors' do
+  test '作付色のExcelに作付名と色と透過度を出力する' do
     work_type = work_types(:work_type_koshi)
     service = ZgisExcelService.new
     data = service.call_color([work_type], 2015)
@@ -93,7 +93,7 @@ class ZgisExcelServiceTest < ActiveSupport::TestCase
     assert_equal work_type.name, sheet[0][0].value
     expected_color = work_type.bg_color.delete('#').downcase
     actual_color = sheet[0][1].fill_color.to_s.delete('#').downcase
-    # Compare only the last 6 characters if actual_color is at least 6 chars, else use the whole string
+    # 色コードが6文字以上の場合は末尾6文字のRGB値で比較する
     actual_color = actual_color[-6..] if actual_color.length >= 6
     assert_equal expected_color, actual_color
     assert_equal '255', sheet[0][2].value
