@@ -46,7 +46,7 @@ class ZgisExcelService
   private
 
   def fill_titles(sheet)
-    sheet.add_cell(TITLE_ROW, 4).change_contents("作付")
+    sheet.add_cell(TITLE_ROW, 5).change_contents("作付")
   end
 
   def fill_lands(sheet, land_costs)
@@ -54,9 +54,10 @@ class ZgisExcelService
       row = START_ROW + index
       sheet.add_cell(row, 0).change_contents(zgis_polygon(land_cost.land))
       sheet.add_cell(row, 1, land_cost.land_id)
-      sheet.add_cell(row, 2, land_cost.land.place)
-      sheet.add_cell(row, 3, land_cost.land.area.to_f)
-      sheet.add_cell(row, 4, land_cost.work_type.name)
+      sheet.add_cell(row, 2, land_cost.land.parcel_number)
+      sheet.add_cell(row, 3, land_cost.land.place)
+      sheet.add_cell(row, 4, land_cost.land.area.to_f)
+      sheet.add_cell(row, 5, land_cost.work_type.name)
     end
   end
 
