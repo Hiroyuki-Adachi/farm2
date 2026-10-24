@@ -6,7 +6,7 @@ class Works::GenresController < ApplicationController
   keeps_index_return_to path_method: :work_genres_path
 
   def index
-    @genres = WorkGenre.for_index
+    @genres = WorkGenre.for_organization(current_organization).for_index
   end
 
   def new
@@ -46,7 +46,7 @@ class Works::GenresController < ApplicationController
   private
 
   def set_work_genre
-    @genre = WorkGenre.find(params[:id])
+    @genre = WorkGenre.for_organization(current_organization).find(params.expect(:id))
   end
 
   def work_genre_params

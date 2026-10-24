@@ -1,6 +1,6 @@
 class OrganizationsController < ApplicationController
   before_action :authorize_admin!, only: [:edit, :update]
-  before_action :set_masters, only: [:edit]
+  before_action :set_masters, only: [:edit, :update]
   before_action :set_organization
   helper GmapHelper
 
@@ -10,7 +10,7 @@ class OrganizationsController < ApplicationController
     if @organization.update(organization_params)
       redirect_to(menu_index_path)
     else
-      render action: :edit
+      render action: :edit, status: :unprocessable_content
     end
   end
 
@@ -22,7 +22,7 @@ class OrganizationsController < ApplicationController
 
   def set_masters
     @work_kinds = WorkKind.usual
-    @work_types = WorkType.usual
+    @work_types = WorkType.for_organization(current_organization).usual
   end
 
   def organization_params

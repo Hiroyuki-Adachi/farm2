@@ -9,7 +9,7 @@
   <div class="mb-3 col-md-2">
     <%= f.label :work_category_id, class: "col-form-label-lg form-label" %>
     <%= f.collection_select :work_category_id,
-      WorkCategory.usual,
+      WorkCategory.for_organization(current_organization).usual,
       :id,
       :name,
       { include_blank: true },

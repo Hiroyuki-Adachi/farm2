@@ -53,6 +53,7 @@ class Organization < ApplicationRecord
   validates :branch_code, length: { is: 3 }, format: { with: /\A\d+\z/ }, if: proc { |x| x.branch_code.present? }
   validates :account_number, length: { is: 7 }, format: { with: /\A\d+\z/ }, if: proc { |x| x.account_number.present? }
   validates :url, length: { maximum: 255 }, if: proc { |x| x.name.present? }
+  validate :work_types_belong_to_organization
 
   belongs_to :broccoli_work_type, class_name: "WorkType"
   belongs_to :broccoli_work_kind, class_name: "WorkKind"
@@ -84,6 +85,19 @@ class Organization < ApplicationRecord
       users.find_each do |user|
         user.update!(term: term)
       end
+    end
+  end
+
+  private
+
+  def work_types_belong_to_organization
+    [:broccoli_work_type_id, :contract_work_type_id].each do |attribute|
+      next unless will_save_change_to_attribute?(attribute)
+
+      work_type_id = self[attribute]
+      next if work_type_id.blank? || WorkType.for_organization(id).exists?(id: work_type_id)
+
+      errors.add(attribute, "は同じ組織の作業分類を選択してください")
     end
   end
 end
