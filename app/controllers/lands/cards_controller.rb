@@ -9,6 +9,8 @@ class Lands::CardsController < ApplicationController
 
   def show
     @land = Land.for_organization(current_organization).find(params[:land_id])
-    @work_lands = WorkLandDecorator.decorate_collection(WorkLand.for_cards(params[:land_id], now_system.start_date.prev_year))
+    # 前期の期首から表示する。前期がなければ当期の期首から。
+    start_date = (now_system.previous_system || now_system).start_date
+    @work_lands = WorkLandDecorator.decorate_collection(WorkLand.for_cards(@land.id, start_date))
   end
 end

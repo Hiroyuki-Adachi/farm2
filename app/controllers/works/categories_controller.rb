@@ -10,13 +10,13 @@ class Works::CategoriesController < ApplicationController
   end
 
   def new
-    @category = WorkCategory.new
+    @category = WorkCategory.for_organization(current_organization).new
   end
 
   def edit; end
 
   def create
-    @category = WorkCategory.new(work_category_params)
+    @category = WorkCategory.for_organization(current_organization).new(work_category_params)
     if @category.save
       redirect_to(work_categories_path)
     else

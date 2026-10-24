@@ -59,7 +59,7 @@ class TaskTest < ActiveSupport::TestCase
   test "タスク新規作成処理" do
     worker2 = workers(:worker2)
 
-    created_task = Task.create!(
+    task = Task.new(
       title: "new task",
       task_status_id: 0,
       priority: :low,
@@ -67,6 +67,7 @@ class TaskTest < ActiveSupport::TestCase
       assignee_id: worker2.id,
       creator_id: worker2.id
     )
+    created_task = TaskCreator.new(task).call!
 
     assert created_task.task_watchers.exists?(worker_id: worker2.id)
 

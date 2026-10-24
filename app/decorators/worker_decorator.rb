@@ -1,6 +1,13 @@
 class WorkerDecorator < Draper::Decorator
   delegate_all
 
+  def age
+    return if model.birthday.nil?
+
+    today = Date.current
+    (today.strftime("%Y%m%d").to_i - model.birthday.strftime("%Y%m%d").to_i) / 10_000
+  end
+
   def short_name
     "#{model.family_name[0, 2]}(#{model.first_name[0]})"
   end

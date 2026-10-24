@@ -15,16 +15,20 @@
 #  office_role(事務の役割)     :integer          default("none"), not null
 #  other_flag(その他フラグ)    :boolean          default(FALSE), not null
 #  work_flag(日報フラグ)       :boolean          default(TRUE), not null
+#  organization_id(組織)       :bigint
 #  work_genre_id(作業ジャンル) :bigint           not null
 #
 # Indexes
 #
-#  index_work_types_on_deleted_at     (deleted_at)
-#  index_work_types_on_work_genre_id  (work_genre_id)
+#  index_work_types_on_deleted_at       (deleted_at)
+#  index_work_types_on_organization_id  (organization_id)
+#  index_work_types_on_work_genre_id    (work_genre_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (work_genre_id => work_genres.id)
+#  fk_rails_...                      (organization_id => organizations.id)
+#  fk_rails_...                      (work_genre_id => work_genres.id)
+#  fk_work_types_organization_genre  ([organization_id, work_genre_id] => work_genres[organization_id, id])
 #
 
 class WorkType < ApplicationRecord
@@ -33,14 +37,22 @@ class WorkType < ApplicationRecord
 
   self.discard_column = :deleted_at
 
+  before_validation :set_organization_from_genre
   before_save :update_cost_flag
   before_save :touch_icon_timestamp, if: :will_save_change_to_icon?
   after_save :save_work_type_term
+  validate :organization_matches_genre
+
+  belongs_to :organization, optional: true
   belongs_to :genre, class_name: "WorkGenre", foreign_key: "work_genre_id"
 
   has_one :plan, class_name: "PlanWorkType", dependent: :destroy
   has_many :work_type_terms, dependent: :destroy
 
+  scope :for_organization, lambda { |organization|
+    organization_id = organization.is_a?(Organization) ? organization.id : organization
+    where(organization_id: organization_id)
+  }
   scope :with_deleted, -> { with_discarded }
   scope :only_deleted, -> { with_discarded.discarded }
 
@@ -146,6 +158,16 @@ SQL
     elsif work_term
       work_term.destroy
     end
+  end
+
+  def set_organization_from_genre
+    self.organization_id ||= genre&.organization_id
+  end
+
+  def organization_matches_genre
+    return if genre.nil? || organization_id == genre.organization_id
+
+    errors.add(:work_genre_id, "は同じ組織の作業ジャンルを選択してください")
   end
 
   def touch_icon_timestamp

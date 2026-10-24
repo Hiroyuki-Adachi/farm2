@@ -15,8 +15,6 @@
 #
 
 class MachinePriceHeader < ApplicationRecord
-  require "ostruct"
-
   belongs_to :machine
   belongs_to :machine_type
 
@@ -24,9 +22,15 @@ class MachinePriceHeader < ApplicationRecord
 
   has_many :details, class_name: "MachinePriceDetail", dependent: :destroy
 
-  scope :show_type, ->(machine_type, base_date) { where("machine_type_id = ? AND validated_at <= ?", machine_type, base_date).order("validated_at DESC") }
-  scope :show_machine, ->(machine, base_date) { where("machine_id = ? AND validated_at <= ?", machine, base_date).order("validated_at DESC") }
-  scope :histories, ->(machine_price) { where("(machine_id = ? AND machine_id <> 0) OR (machine_type_id = ? AND machine_type_id <> 0)", machine_price.machine_id, machine_price.machine_type_id).order("validated_at ASC") }
+  scope :show_type, ->(machine_type, base_date) {
+    where("machine_type_id = ? AND validated_at <= ?", machine_type, base_date).order("validated_at DESC")
+  }
+  scope :show_machine, ->(machine, base_date) {
+    where("machine_id = ? AND validated_at <= ?", machine, base_date).order("validated_at DESC")
+  }
+  scope :histories, ->(machine_price) {
+    where("(machine_id = ? AND machine_id <> 0) OR (machine_type_id = ? AND machine_type_id <> 0)", machine_price.machine_id, machine_price.machine_type_id).order("validated_at ASC")
+  }
   scope :for_organization, lambda { |organization|
     organization_id = organization.is_a?(Organization) ? organization.id : organization
     left_joins(machine: :owner)
@@ -78,7 +82,8 @@ class MachinePriceHeader < ApplicationRecord
       next if lease_code.nil?
 
       v1.each do |work_kind_id, v2|
-        detail = MachinePriceDetail.find_by(machine_price_header_id: id, lease_id: lease_code, work_kind_id: work_kind_id)
+        detail = MachinePriceDetail.find_by(machine_price_header_id: id, lease_id: lease_code,
+                                            work_kind_id: work_kind_id)
         if detail.present?
           if v2[:adjust_id].to_i == Adjust::NONE.id
             detail.destroy
@@ -86,7 +91,8 @@ class MachinePriceHeader < ApplicationRecord
             detail.update(adjust_id: v2[:adjust_id], price: v2[:price])
           end
         elsif v2[:adjust_id].to_i != Adjust::NONE.id
-          MachinePriceDetail.create(machine_price_header_id: id, lease_id: lease_code, work_kind_id: work_kind_id, adjust_id: v2[:adjust_id], price: v2[:price])
+          MachinePriceDetail.create(machine_price_header_id: id, lease_id: lease_code, work_kind_id: work_kind_id,
+                                    adjust_id: v2[:adjust_id], price: v2[:price])
         end
       end
     end

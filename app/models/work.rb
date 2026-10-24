@@ -32,8 +32,6 @@
 #
 
 class Work < ApplicationRecord
-  require 'ostruct'
-
   ENOUGH = WorkVerification::ENOUGH
   enum :weather_id, { sunny: 1, cloudy: 2, rainy: 3, snow: 4, other: 9 }
 
@@ -74,8 +72,10 @@ class Work < ApplicationRecord
   has_many :events, class_name: 'TaskEvent', dependent: :nullify
   has_many :tasks, through: :events
 
-  scope :for_organization, ->(organization) { where(organization_id: organization.is_a?(Organization) ? organization.id : organization) }
-  scope :no_fixed, lambda  { |term|
+  scope :for_organization, ->(organization) {
+    where(organization_id: organization.is_a?(Organization) ? organization.id : organization)
+  }
+  scope :no_fixed, lambda { |term|
     includes(:work_type, :work_kind)
       .where(term: term, fixed_at: nil).order(worked_at: :ASC, start_at: :ASC, id: :ASC)
   }
@@ -84,7 +84,9 @@ class Work < ApplicationRecord
     base = base.for_organization(organization) if organization
     base.order(worked_at: :ASC, start_at: :ASC, id: :ASC)
   }
-  scope :usual, ->(term) { where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :DESC, id: :DESC) }
+  scope :usual, ->(term) {
+    where(term: term).includes(:work_type, :work_kind).order(worked_at: :DESC, start_at: :DESC, id: :DESC)
+  }
   scope :by_term, ->(term) { where(term: term).order(worked_at: :ASC, start_at: :ASC, id: :ASC) }
   scope :by_creator, ->(worker) { where(["works.created_by IS NULL OR works.created_by <> ?", worker.id]) }
   scope :by_work_kind_type, lambda { |term, work_kind_id, seedling_home, organization = nil|
@@ -98,9 +100,9 @@ class Work < ApplicationRecord
     latest_land_cost_query.from(latest_land_costs)
     latest_land_cost_query.project(latest_land_costs[:land_id], latest_activated_on)
     latest_land_cost_query.where(
-        latest_land_costs[:land_id].eq(land_costs[:land_id])
-          .and(latest_land_costs[:activated_on].lteq(works[:worked_at]))
-      )
+      latest_land_costs[:land_id].eq(land_costs[:land_id])
+        .and(latest_land_costs[:activated_on].lteq(works[:worked_at]))
+    )
     latest_land_cost_query.group(latest_land_costs[:land_id])
     latest_land_cost_query.having(latest_activated_on.eq(land_costs[:activated_on]))
 
@@ -108,10 +110,10 @@ class Work < ApplicationRecord
     land_cost_query.from(land_costs)
     land_cost_query.project(Arel.star)
     land_cost_query.where(
-        land_costs[:work_type_id].eq(seedling_home.work_type_id)
-          .and(land_costs[:land_id].eq(work_lands[:land_id]))
-          .and(latest_land_cost_query.exists)
-      )
+      land_costs[:work_type_id].eq(seedling_home.work_type_id)
+        .and(land_costs[:land_id].eq(work_lands[:land_id]))
+        .and(latest_land_cost_query.exists)
+    )
 
     base = joins(:work_lands)
       .where(term: term, work_kind_id: work_kind_id)
@@ -168,10 +170,10 @@ class Work < ApplicationRecord
     where(worker_exists)
   }
 
-  scope :not_printed, -> { where(<<SQL.squish) }
+  scope :not_printed, -> { where(<<~SQL.squish) }
       (works.printed_at IS NULL)
     OR works.printed_at > (SELECT MAX(work_verifications.updated_at) FROM work_verifications WHERE works.id = work_verifications.work_id)
-SQL
+  SQL
   scope :by_land, lambda { |land|
     work_lands = WorkLand.arel_table
     land_exists = work_lands
@@ -190,9 +192,9 @@ SQL
       .order(:worked_at, :id)
   }
 
-  scope :for_cost, ->(term) { where([<<SQL.squish, term, WorkType.land.select(:id)]) }
-  works.term = ? AND (work_type_id IN (?))
-SQL
+  scope :for_cost, ->(term) { where([<<~SQL.squish, term, WorkType.land.select(:id)]) }
+    works.term = ? AND (work_type_id IN (?))
+  SQL
 
   scope :for_broccoli, lambda { |organization|
     includes(:broccoli)
@@ -218,11 +220,11 @@ SQL
         .exists
     )
   }
-  scope :machinable, -> { where(<<SQL.squish) }
-  EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND EXISTS (
-    SELECT * FROM machine_results WHERE work_results.id = machine_results.work_result_id
-  ))
-SQL
+  scope :machinable, -> { where(<<~SQL.squish) }
+    EXISTS (SELECT * FROM work_results WHERE work_results.work_id = works.id AND EXISTS (
+      SELECT * FROM machine_results WHERE work_results.id = machine_results.work_result_id
+    ))
+  SQL
 
   scope :by_target, lambda { |term|
     works = arel_table
@@ -395,7 +397,9 @@ SQL
   end
 
   def refresh_broccoli(organization)
-    broccoli.destroy if work_type_id == organization.broccoli_work_type_id && work_kind_id == organization.broccoli_work_kind_id && broccoli.present?
+    if work_type_id == organization.broccoli_work_type_id && work_kind_id == organization.broccoli_work_kind_id && broccoli.present?
+      broccoli.destroy
+    end
   end
 
   def self.total_all(terms, organization: nil)

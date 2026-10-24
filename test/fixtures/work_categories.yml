@@ -14,33 +14,48 @@
 #  name(名称)                 :string(10)       default(""), not null
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
+#  organization_id(組織)      :bigint
+#
+# Indexes
+#
+#  work_categories_2nd  (organization_id,id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
 #
 category_rice:
+  organization_id: 1
   name: "水稲"
   display_order: '10'
   discarded_at:
 
 category_change:
+  organization_id: 1
   name: "転作"
   display_order: '20'
   discarded_at:
 
 category_by_product:
+  organization_id: 1
   name: "副産物"
   display_order: '30'
   discarded_at:
 
 category_management:
+  organization_id: 1
   name: "管理"
   display_order: '40'
   discarded_at:
 
 category_deletable:
+  organization_id: 1
   name: "物理削除可能"
   display_order: '50'
   discarded_at:
 
 category_discardable:
+  organization_id: 1
   name: "論理削除可能"
   display_order: '60'
   discarded_at:
