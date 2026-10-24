@@ -40,6 +40,7 @@ class System < ApplicationRecord
   validate :validate_period_dates
   validate :validate_period_continuity
   validate :validate_period_order
+  validate :validate_period_data, if: :period_changed_in_database?
 
   def self.get_system(date, organization_id)
     System.find_by("start_date <= ? AND end_date >= ? AND organization_id = ?", date, date, organization_id)
@@ -153,6 +154,40 @@ class System < ApplicationRecord
     if same_organization.where("term > ? AND start_date <= ?", term, end_date).exists?
       errors.add(:end_date, "は次期以降の期間より前にしてください。")
     end
+  end
+
+  def period_changed_in_database?
+    persisted? && (will_save_change_to_start_date? || will_save_change_to_end_date?)
+  end
+
+  # 変更前は期内で、変更後に期外になるデータだけを数える（既に期外のデータは対象外）。
+  def validate_period_data
+    return if start_date.blank? || end_date.blank?
+
+    old_period = start_date_in_database..end_date_in_database
+    new_period = start_date..end_date
+    counts = period_data_relations.filter_map do |name, (relation, column)|
+      count = relation.where(column => old_period).where.not(column => new_period).count
+      "#{name} #{count}件" if count.positive?
+    end
+    return if counts.empty?
+
+    errors.add(:base, "期間を変更すると期外になるデータがあります（#{counts.join('、')}）。")
+  end
+
+  # 期間を変えたときに期外になってはいけないデータ（名称 => [リレーション, 期内判定の日付列]）。
+  # 経費の支払日・乾燥の出荷日は期外でも正しく、集計原価は作業日報から作り直すため対象外。
+  def period_data_relations
+    same_term = { organization_id: organization_id, term: term }
+    {
+      "作業日報" => [Work.where(same_term), "works.worked_at"],
+      # 作業予定はtermを持たない（常に0）ため、組織と作業予定日だけで判定する。
+      "作業予定" => [Schedule.where(organization_id: organization_id), "schedules.worked_at"],
+      "確定" => [Fix.where(same_term), "fixes.fixed_at"],
+      "ソリマチ仕訳" => [SorimachiJournal.where(same_term), "sorimachi_journals.accounted_on"],
+      "乾燥" => [Drying.for_organization(organization_id).where(term: term), "dryings.carried_on"],
+      "全銀支払" => [ZenginPaymentBatch.where(same_term), "zengin_payment_batches.fixed_at"]
+    }
   end
 
   def next_system_for_validation

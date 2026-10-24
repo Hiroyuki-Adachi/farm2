@@ -30,7 +30,8 @@ class Plans::LandsControllerTest < ActionDispatch::IntegrationTest
   test "作付計画は明示設定済みの短い次期を上書きしない" do
     System.where(organization_id: @user.organization_id, term: 2017..).destroy_all
     system = systems(:s2016)
-    system.update!(term_name: "短期", end_date: Date.new(2016, 3, 31))
+    # 既存データが期外になる短縮は年度設定で拒否されるため、短い次期をモデル検証を通さずに再現する。
+    system.update_columns(term_name: "短期", end_date: Date.new(2016, 3, 31)) # rubocop:disable Rails/SkipsModelValidations
     original_attributes = system.attributes
 
     get new_plans_land_path(mode: @mode)

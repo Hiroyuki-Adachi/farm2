@@ -61,22 +61,23 @@ class MenuControllerTest < ActionDispatch::IntegrationTest
 
   test "先行作成済みの次期も任意の期間へ更新できる" do
     System.where(organization_id: @organization.id, term: 2017..).destroy_all
+    # 2016期の作業日報（最終は2016-05-30）が期外にならない範囲で短縮する。
 
     assert_no_difference("System.count") do
       patch menu_path(@system.id), params: {
         system: {
           term: 2016,
-          term_name: "第16期(3ヶ月)",
+          term_name: "第16期(6ヶ月)",
           start_date: "2016-01-01",
-          end_date: "2016-03-31"
+          end_date: "2016-06-30"
         }
       }
     end
 
     next_system = systems(:s2016).reload
-    assert_equal "第16期(3ヶ月)", next_system.term_name
+    assert_equal "第16期(6ヶ月)", next_system.term_name
     assert_equal Date.new(2016, 1, 1), next_system.start_date
-    assert_equal Date.new(2016, 3, 31), next_system.end_date
+    assert_equal Date.new(2016, 6, 30), next_system.end_date
   end
 
   test "新規年度の期間が不正な場合は入力内容とエラーを再表示する" do
