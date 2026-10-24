@@ -30,8 +30,8 @@ class Tasks::StatusesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "ステータス編集(実行エラー)" do
-    # change_status! が例外を投げる状況をモック（mocha 利用）
-    Task.any_instance.stubs(:change_status!).raises(ActiveRecord::RecordInvalid.new(@task))
+    # Task::StatusChanger が例外を投げる状況をモック（mocha 利用）
+    Task::StatusChanger.any_instance.stubs(:call!).raises(ActiveRecord::RecordInvalid.new(@task))
 
     assert_no_difference "TaskEvent.count" do
       patch task_status_path(@task, code: :doing), params: {

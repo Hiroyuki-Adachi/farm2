@@ -4,7 +4,7 @@ class Tasks::AssigneesController < TasksController
   def edit; end
 
   def update
-    @task.change_assignee!(new_assignee_id, current_user.worker, task_comment)
+    Task::AssigneeChanger.new(@task, actor: current_user.worker).call!(new_assignee_id, comment: task_comment)
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_to @task, notice: "担当者を更新しました" }
