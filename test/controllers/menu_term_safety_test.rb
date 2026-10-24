@@ -94,4 +94,19 @@ class MenuTermSafetyTest < ActionDispatch::IntegrationTest
     assert_equal [2016], @organization.users.distinct.pluck(:term)
     assert_equal "短期", System.find_by!(organization_id: @organization.id, term: 2016).term_name
   end
+
+  test "先行作成済みの次期の期末短縮で既存データが期外になる場合は次期を変更しない" do
+    System.where(organization_id: @organization.id, term: 2017..).destroy_all
+    next_system = systems(:s2016)
+    work = works(:work_other_org).dup
+    work.assign_attributes(organization_id: @organization.id, term: next_system.term, worked_at: Date.new(2016, 10, 1))
+    work.save!(validate: false)
+
+    patch menu_path(@system.id), params: { system: { term: 2016, end_date: "2016-06-30" } }
+
+    assert_response :success
+    assert_includes response.body, "期間を変更すると期外になるデータがあります"
+    assert_equal Date.new(2016, 12, 31), next_system.reload.end_date
+    assert_equal 2015, @organization.reload.term
+  end
 end
