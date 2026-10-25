@@ -38,9 +38,13 @@
                           <label for="uname1" class="h5 form-label">ユーザID</label>
                           <%= text_field_tag :login_name, "", {maxlength: 12, required: true, class: "form-control form-control-lg rounded-0", placeholder: "初期値は携帯番号です。" } %>
                         </div>
-                        <div class="mb-3">
-                            <label class="h5 form-label">パスワード</label>
-                            <%= password_field_tag :password, "", {required: true, class: "form-control form-control-lg rounded-0", placeholder: "初期値は番地です。", autocomplete: "new-password"} %>
+                        <div class="mb-3" data-controller="password-visibility" data-action="turbo:before-cache@document->password-visibility#reset">
+                          <label for="password" class="h5 form-label">パスワード</label>
+                          <%= password_field_tag :password, "", {required: true, class: "form-control form-control-lg rounded-0", placeholder: "初期値は番地です。", autocomplete: "new-password", data: { password_visibility_target: "input" }} %>
+                          <div class="form-check mt-2">
+                            <input type="checkbox" id="show_password" class="form-check-input" aria-controls="password" data-password-visibility-target="checkbox" data-action="change->password-visibility#toggle">
+                            <label for="show_password" class="form-check-label">パスワードを表示する</label>
+                          </div>
                         </div>
                         <%= submit_tag '認証する', class: "btn btn-success btn-lg float-end" %>
                       <% end %>
