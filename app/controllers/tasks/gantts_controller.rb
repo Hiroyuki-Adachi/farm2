@@ -25,7 +25,7 @@ class Tasks::GanttsController < ApplicationController
       task.update!(planned_start_on: date)
     when :end
       date = task.planned_start_on if date < task.planned_start_on
-      task.change_due_on!(date, current_user.worker, source: :gantt)
+      Task::DueOnChanger.new(task, actor: current_user.worker).call!(date, source: :gantt)
     else
       return head :unprocessable_content
     end

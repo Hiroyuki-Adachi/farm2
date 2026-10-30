@@ -9,6 +9,7 @@ class LandTotalQueryTest < ActiveSupport::TestCase
     result = results.find { |result| result.place == work_land.land.place }
 
     assert_not_nil result
+    assert_equal work_land.land_id, result.id
     assert_equal work.worked_at, result.w_date[work_kinds(:work_kind_shirokaki).id]
     assert_nil result.w_date[work_kinds(:work_kind_taue).id]
     assert_equal land_costs(:cost1).work_type.name, result.work_type_name

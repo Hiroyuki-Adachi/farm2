@@ -172,7 +172,8 @@ class SorimachiJournalTest < ActiveSupport::TestCase
   test "変更のない再取込でも対象期の期間を検証する" do
     journal = build_journal(accounted_on: @system.start_date)
     journal.save!
-    @system.update!(start_date: @system.start_date.next_month)
+    # 仕訳が期外になる期間変更は年度設定で拒否されるため、変更後の状態をモデル検証を通さずに再現する。
+    @system.update_columns(start_date: @system.start_date.next_month) # rubocop:disable Rails/SkipsModelValidations
 
     with_import_file(journal) do |file|
       assert_raises(ActiveRecord::RecordInvalid) { SorimachiJournal.import(@system, file) }
