@@ -30,8 +30,8 @@ class Tasks::AssigneesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "担当者編集(実行エラー)" do
-    # change_assignee! が例外を投げる状況をモック（mocha 利用）
-    Task.any_instance.stubs(:change_assignee!).raises(ActiveRecord::RecordInvalid.new(@task))
+    # Task::AssigneeChanger が例外を投げる状況をモック（mocha 利用）
+    Task::AssigneeChanger.any_instance.stubs(:call!).raises(ActiveRecord::RecordInvalid.new(@task))
 
     assert_no_difference "TaskEvent.count" do
       patch task_assignee_path(@task), params: {

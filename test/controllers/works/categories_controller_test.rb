@@ -60,7 +60,7 @@ class Works::CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "作業カテゴリ削除(データなし)" do
-    created_category = WorkCategory.create!(name: "削除用", display_order: 999)
+    created_category = WorkCategory.create!(organization: organizations(:org), name: "削除用", display_order: 999)
     assert_difference('WorkCategory.kept.count', -1) do
       delete work_category_path(created_category)
     end

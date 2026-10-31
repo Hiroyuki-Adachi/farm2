@@ -26,4 +26,18 @@ class SystemsControllerTest < ActionDispatch::IntegrationTest
     @system.reload
     assert_equal 1500, @system.dry_price
   end
+
+  test "期間変更で既存データが期外になる場合は年度設定を保存しない" do
+    users(:users1).update!(term: 2017)
+    system = systems(:s2017)
+    work = works(:work_other_org).dup
+    work.assign_attributes(organization_id: system.organization_id, term: system.term, worked_at: Date.new(2017, 10, 1))
+    work.save!(validate: false)
+
+    patch system_path(system), params: { system: { end_date: "2017-06-30" } }
+
+    assert_response :success
+    assert_includes response.body, "期間を変更すると期外になるデータがあります"
+    assert_equal Date.new(2017, 12, 31), system.reload.end_date
+  end
 end

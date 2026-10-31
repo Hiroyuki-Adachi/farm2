@@ -8,7 +8,7 @@ class Tasks::WorksController < TasksController
 
   def update
     begin
-      @task.add_work!(actor: current_user.worker, work: @work)
+      Task::WorkLinker.new(@task, actor: current_user.worker).link!(work: @work)
       @task.reload
       respond_to do |format|
         format.turbo_stream
@@ -23,7 +23,7 @@ class Tasks::WorksController < TasksController
     event = @task.events.find_by(work_id: @work.id)
     return redirect_to task_path(@task), notice: "変更または削除されています。" if event.nil? || (event.actor_id != current_user.worker_id)
 
-    @task.remove_work!(work: @work)
+    Task::WorkLinker.new(@task).unlink!(work: @work)
 
     actions = []
 

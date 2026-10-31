@@ -51,6 +51,9 @@
 <% end %>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
+    <% if @work_kind_ids.present? %>
+      <%= link_to 'CSV出力', lands_totals_path(format: :csv, work_kinds: @work_kind_ids), class: "btn btn-outline-success", data: { turbo: false } %>
+    <% end %>
     <%= link_to '戻る', menu_index_path, class: "btn btn-outline-dark" %>
   </div>
 </div>

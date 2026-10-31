@@ -18,7 +18,7 @@ class Tasks::KanbansController < ApplicationController
         (col[:task_ids] || []).each_with_index do |task_id, idx|
           next unless (task = Task.for_organization(current_organization).find_by(id: task_id))
 
-          task.move_on_kanban!(kanban_column.to_i, idx, actor: current_user.worker)
+          Task::KanbanMover.new(task, actor: current_user.worker).call!(kanban_column.to_i, idx)
           changed_task_ids << task.id
         end
       end

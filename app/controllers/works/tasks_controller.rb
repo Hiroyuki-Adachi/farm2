@@ -11,7 +11,7 @@ class Works::TasksController < WorksController
   end
 
   def create
-    Task.add_works!(
+    Task::WorkLinker.link_all!(
       actor: current_user.worker,
       check_task_ids: params[:check_task_ids] || [],
       close_task_ids: params[:close_task_ids] || [],

@@ -158,7 +158,7 @@ class Schedule < ApplicationRecord
   def for_farming_flag
     if farming_flag_changed? && !farming_flag
       self.work_kind_id = WorkKind.find_other.id
-      self.work_type_id = WorkType.find_other.id
+      self.work_type_id = WorkType.for_organization(organization_id).find_other.id
       self.minutes_flag = false
       self.work_flag = false
     end

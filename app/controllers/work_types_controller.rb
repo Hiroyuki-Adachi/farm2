@@ -9,7 +9,7 @@ class WorkTypesController < ApplicationController
   helper WorkTypesHelper
 
   def index
-    @work_types = WorkTypeDecorator.decorate_collection(WorkType.indexes)
+    @work_types = WorkTypeDecorator.decorate_collection(WorkType.for_organization(current_organization).indexes)
     @work_type_terms = WorkTypeTerm.where(work_type_id: @work_types.object.ids, term: current_term).pluck(:work_type_id)
   end
 
@@ -53,7 +53,7 @@ class WorkTypesController < ApplicationController
   end
 
   def icon
-    work_type = WorkType.find(params[:id])
+    work_type = WorkType.find(params.expect(:id))
     return head :not_found if work_type.icon.blank?
 
     # v は検証ではなく“案内役”。不一致なら最新URLへリダイレクト（キャッシュ更新を促す）
@@ -81,7 +81,7 @@ class WorkTypesController < ApplicationController
   private
 
   def set_work_type
-    @work_type = WorkType.find(params[:id])
+    @work_type = WorkType.for_organization(current_organization).find(params.expect(:id))
     @work_type.term_flag = WorkTypeTerm.exists?(term: current_term, work_type_id: @work_type.id)
   end
 

@@ -23,7 +23,7 @@ class Tasks::WorksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "作業紐づけ解除" do
-    @task.add_work!(actor: @user.worker, work: @work)
+    Task::WorkLinker.new(@task, actor: @user.worker).link!(work: @work)
     assert @task.events.exists?(work_id: @work.id)
 
     assert_difference "TaskEvent.count", -1 do
