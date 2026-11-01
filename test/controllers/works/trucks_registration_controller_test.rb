@@ -164,7 +164,7 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference("MachineResult.count", 2) do
       post works_trucks_path, params: {
-        work_kind_id: "", month: "", section_id: "",
+        work_kind_id: "", month: "all", section_id: "",
         machine_hours: {
           @home1_truck.id => { first_result.id => "2.5" },
           other_truck.id => { other_result.id => "3.0" }
@@ -172,7 +172,7 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to works_trucks_path
+    assert_redirected_to works_trucks_path(month: "all")
     follow_redirect!
     %w[work-kind month section].each do |tab|
       assert_select "#truck-#{tab}-tabs a:first-child.btn-primary", "全て"
@@ -182,9 +182,9 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "個別条件と全てを組み合わせても登録後に選択を維持する" do
-    filters = filter_params.except(:month)
+    filters = filter_params.merge(month: "all")
 
-    post works_trucks_path, params: filters.merge(month: "")
+    post works_trucks_path, params: filters
 
     assert_redirected_to works_trucks_path(filters)
     follow_redirect!

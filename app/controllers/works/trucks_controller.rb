@@ -65,12 +65,18 @@ class Works::TrucksController < ApplicationController
   end
 
   def selected_month
-    return if params[:month].blank?
+    return if params[:month] == "all"
+    return default_selected_month if params[:month].blank?
 
     month = Date.iso8601(params[:month]).beginning_of_month
-    month if @months.include?(month)
+    @months.include?(month) ? month : default_selected_month
   rescue ArgumentError
-    nil
+    default_selected_month
+  end
+
+  def default_selected_month
+    month = Time.zone.today.beginning_of_month
+    @months.include?(month) ? month : @months.first
   end
 
   def truck_work_period
@@ -173,7 +179,7 @@ class Works::TrucksController < ApplicationController
   def filter_params
     {
       work_kind_id: @selected_work_kind&.id,
-      month: @selected_month,
+      month: @selected_month || "all",
       section_id: @selected_section&.id
     }
   end

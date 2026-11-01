@@ -63,8 +63,15 @@ class WorksTrucksTest < ApplicationSystemTestCase
     assert_no_selector '#popup_confirm_message', text: '保存していませんが、よろしいですか？'
   end
 
-  test "全てを初期選択し条件を切り替えても他の選択を維持する" do
-    visit works_trucks_path
+  test "年月は当月を初期選択する" do
+    travel_to Time.zone.local(2015, 6, 15, 12) do
+      visit works_trucks_path
+      assert_selector "#truck-month-tabs a.btn-primary", exact_text: "6月"
+    end
+  end
+
+  test "全てと個別条件を切り替えても他の選択を維持する" do
+    visit works_trucks_path(month: "all")
 
     %w[work-kind month section].each do |tab|
       assert_selector "#truck-#{tab}-tabs a:first-child.btn-primary", exact_text: "全て"
@@ -94,6 +101,26 @@ class WorksTrucksTest < ApplicationSystemTestCase
     %w[work-kind month section].each do |tab|
       assert_selector "#truck-#{tab}-tabs a:first-child.btn-primary", exact_text: "全て"
     end
+  end
+
+  test "車両が多くても文字を折り返さず一覧の中で横スクロールできる" do
+    15.times { create_truck(homes(:home1)) }
+    page.driver.browser.resize(width: 900, height: 800)
+    visit_trucks_index
+
+    assert_selector "#truck-table-scroll input", count: 16
+    assert page.evaluate_script(<<~JS)
+      (() => {
+        const region = document.querySelector('#truck-table-scroll');
+        const cell = region.querySelector('tbody td');
+        region.scrollLeft = 200;
+        return region.scrollWidth > region.clientWidth && region.scrollLeft > 0 &&
+          getComputedStyle(cell).whiteSpace === 'nowrap' &&
+          document.documentElement.scrollWidth <= window.innerWidth;
+      })()
+    JS
+  ensure
+    page.driver.browser.resize(width: 1200, height: 800)
   end
 
   private

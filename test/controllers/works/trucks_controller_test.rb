@@ -47,16 +47,16 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "#truck-month-tabs a", 13
-    assert_select "#truck-month-tabs a:first-child.btn-primary", "全て"
+    assert_select "#truck-month-tabs a.btn-primary", "6月"
   end
 
-  test "当期ではない場合も全てを初期選択する" do
+  test "当月が期外の場合は期首月を初期選択する" do
     travel_to Date.new(2026, 5, 17) do
       get works_trucks_path
     end
 
     assert_response :success
-    assert_select "#truck-month-tabs a:first-child.btn-primary", "全て"
+    assert_select "#truck-month-tabs a.btn-primary", "1月"
   end
 
   test "月パラメータで選択月を切り替える" do
@@ -156,7 +156,7 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     excluded_kind = WorkKind.where.not(id: @truck_type.work_kind_ids).first!
     excluded_work = create_work(Date.new(2015, 7, 1), excluded_kind)
 
-    get works_trucks_path
+    get works_trucks_path, params: { month: "all" }
 
     assert_response :success
     [earlier_work, later_work].each do |work|
@@ -174,13 +174,13 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
       homes(:home2), validity_start_at: Date.new(2015, 12, 31), validity_end_at: Date.new(2016, 2, 1)
     )
 
-    get works_trucks_path
+    get works_trucks_path, params: { month: "all" }
 
     assert_response :success
     assert_select "th", text: truck.owner.name
 
     truck.update!(validity_start_at: Date.new(2016, 1, 1))
-    get works_trucks_path
+    get works_trucks_path, params: { month: "all" }
 
     assert_select "th", text: truck.owner.name, count: 0
   end
@@ -194,7 +194,7 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     result = WorkResult.create!(work: work, worker: workers(:worker2), health: health, hours: 1, display_order: 1)
     MachineResult.create!(machine: truck, work_result: result, hours: 2.5)
 
-    get works_trucks_path
+    get works_trucks_path, params: { month: "all" }
 
     assert_response :success
     assert_select "th", text: truck.owner.name
@@ -205,7 +205,7 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     @truck_type.machine_kinds.destroy_all
     create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
 
-    get works_trucks_path
+    get works_trucks_path, params: { month: "all" }
 
     assert_response :success
     assert_select "tbody tr", 0
