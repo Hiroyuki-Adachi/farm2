@@ -21,16 +21,16 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "自家用車の機械種別に紐づく作業種別トグルをカナ順に表示する" do
-    work_kinds(:work_kind_shirokaki).update_columns(display_order: 20)
-    work_kinds(:work_kind_taue).update_columns(display_order: 10)
+    work_kinds(:work_kind_shirokaki).update!(display_order: 20)
+    work_kinds(:work_kind_taue).update!(display_order: 10)
 
     get works_trucks_path
 
     assert_response :success
-    assert_select "#truck-work-kind-tabs a", 2
-    assert_select "#truck-work-kind-tabs a:nth-child(1)", work_kinds(:work_kind_shirokaki).name
-    assert_select "#truck-work-kind-tabs a:nth-child(2)", work_kinds(:work_kind_taue).name
-    assert_select "#truck-work-kind-tabs a.btn-primary", work_kinds(:work_kind_shirokaki).name
+    assert_select "#truck-work-kind-tabs a", 3
+    assert_select "#truck-work-kind-tabs a:nth-child(2)", work_kinds(:work_kind_shirokaki).name
+    assert_select "#truck-work-kind-tabs a:nth-child(3)", work_kinds(:work_kind_taue).name
+    assert_select "#truck-work-kind-tabs a:first-child.btn-primary", "全て"
   end
 
   test "作業種別パラメータで選択状態を切り替える" do
@@ -46,17 +46,17 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_select "#truck-month-tabs a", 12
-    assert_select "#truck-month-tabs a.btn-primary", "6月"
+    assert_select "#truck-month-tabs a", 13
+    assert_select "#truck-month-tabs a:first-child.btn-primary", "全て"
   end
 
-  test "当期ではない場合は期首月を初期選択する" do
+  test "当期ではない場合も全てを初期選択する" do
     travel_to Date.new(2026, 5, 17) do
       get works_trucks_path
     end
 
     assert_response :success
-    assert_select "#truck-month-tabs a.btn-primary", "1月"
+    assert_select "#truck-month-tabs a:first-child.btn-primary", "全て"
   end
 
   test "月パラメータで選択月を切り替える" do
@@ -84,14 +84,14 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
                     response.body.index(later_work.decorate.worked_at_long)
   end
 
-  test "自家用車を所有する班を表示して左端の班を初期選択する" do
+  test "自家用車を所有する班を表示して全てを初期選択する" do
     get works_trucks_path
 
     assert_response :success
-    assert_select "#truck-section-tabs a", 2
-    assert_select "#truck-section-tabs a.btn-primary", sections(:sections0).name
+    assert_select "#truck-section-tabs a", 3
+    assert_select "#truck-section-tabs a:first-child.btn-primary", "全て"
     assert_select "th", text: homes(:home1).name
-    assert_select "th", text: homes(:home6).name, count: 0
+    assert_select "th", text: homes(:home6).name
   end
 
   test "班パラメータで自家用車列を絞り込む" do
@@ -146,6 +146,69 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "input[name='machine_hours[#{truck.id}][#{active_result.id}]']", 1
     assert_select "input[name='machine_hours[#{truck.id}][#{inactive_result.id}]']", 0
+  end
+
+  test "全てでは当期の対象作業種別の作業だけを日付順に表示する" do
+    later_work = create_work(Date.new(2015, 12, 31), work_kinds(:work_kind_taue))
+    earlier_work = create_work(Date.new(2015, 1, 1), work_kinds(:work_kind_shirokaki))
+    previous_work = create_work(Date.new(2014, 12, 31), work_kinds(:work_kind_shirokaki))
+    next_work = create_work(Date.new(2016, 1, 1), work_kinds(:work_kind_taue))
+    excluded_kind = WorkKind.where.not(id: @truck_type.work_kind_ids).first!
+    excluded_work = create_work(Date.new(2015, 7, 1), excluded_kind)
+
+    get works_trucks_path
+
+    assert_response :success
+    [earlier_work, later_work].each do |work|
+      assert_select "tbody tr td", text: work.decorate.worked_at_long
+    end
+    [previous_work, next_work, excluded_work].each do |work|
+      assert_select "tbody tr td", text: work.decorate.worked_at_long, count: 0
+    end
+    assert_operator response.body.index(earlier_work.decorate.worked_at_long), :<,
+                    response.body.index(later_work.decorate.worked_at_long)
+  end
+
+  test "年月が全ての場合は期内に稼働期間が重なる車両を表示する" do
+    truck = create_truck(
+      homes(:home2), validity_start_at: Date.new(2015, 12, 31), validity_end_at: Date.new(2016, 2, 1)
+    )
+
+    get works_trucks_path
+
+    assert_response :success
+    assert_select "th", text: truck.owner.name
+
+    truck.update!(validity_start_at: Date.new(2016, 1, 1))
+    get works_trucks_path
+
+    assert_select "th", text: truck.owner.name, count: 0
+  end
+
+  test "年月が全ての場合は稼働期間外でも対象の利用実績がある車両を表示する" do
+    truck = create_truck(
+      homes(:home2), validity_start_at: Date.new(2014, 1, 1), validity_end_at: Date.new(2014, 12, 31)
+    )
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    health = Health.create!(code: "T", name: "良好", display_order: 999, well_flag: true)
+    result = WorkResult.create!(work: work, worker: workers(:worker2), health: health, hours: 1, display_order: 1)
+    MachineResult.create!(machine: truck, work_result: result, hours: 2.5)
+
+    get works_trucks_path
+
+    assert_response :success
+    assert_select "th", text: truck.owner.name
+    assert_select "input[name='machine_hours[#{truck.id}][#{result.id}]'][value='2.5']", 1
+  end
+
+  test "対象作業種別が未設定なら全てでも作業を表示しない" do
+    @truck_type.machine_kinds.destroy_all
+    create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+
+    get works_trucks_path
+
+    assert_response :success
+    assert_select "tbody tr", 0
   end
 
   private

@@ -46,10 +46,6 @@ class Works::TrucksController < ApplicationController
   end
 
   def selected_work_kind
-    selected_work_kind_param || @work_kinds.first
-  end
-
-  def selected_work_kind_param
     return if params[:work_kind_id].blank?
 
     @work_kinds.find { |work_kind| work_kind.id == params.expect(:work_kind_id).to_i }
@@ -69,10 +65,6 @@ class Works::TrucksController < ApplicationController
   end
 
   def selected_month
-    selected_month_param || default_selected_month
-  end
-
-  def selected_month_param
     return if params[:month].blank?
 
     month = Date.iso8601(params[:month]).beginning_of_month
@@ -81,20 +73,19 @@ class Works::TrucksController < ApplicationController
     nil
   end
 
-  def default_selected_month
-    today = Time.zone.today
-    return today.beginning_of_month if today.between?(current_system.start_date, current_system.end_date)
-
-    @months.first
+  def truck_work_period
+    if @selected_month
+      @selected_month..@selected_month.end_of_month
+    else
+      current_system.start_date..current_system.end_date
+    end
   end
 
   def truck_works
-    return Work.none unless @selected_work_kind && @selected_month
-
     Work.for_organization(current_organization)
       .includes(:work_type, :work_kind)
-      .where(work_kind_id: @selected_work_kind.id)
-      .where(worked_at: @selected_month..@selected_month.end_of_month)
+      .where(work_kind_id: @selected_work_kind ? @selected_work_kind.id : @work_kinds.map(&:id))
+      .where(worked_at: truck_work_period)
       .order(:worked_at, :id)
   end
 
@@ -131,13 +122,11 @@ class Works::TrucksController < ApplicationController
   end
 
   def display_trucks
-    @all_trucks.select { |truck| truck_active_in_month?(truck) || truck_has_result?(truck) }
+    @all_trucks.select { |truck| truck_active_in_period?(truck) || truck_has_result?(truck) }
   end
 
-  def truck_active_in_month?(truck)
-    return false unless @selected_month
-
-    truck.validity_start_at <= @selected_month.end_of_month && truck.validity_end_at >= @selected_month
+  def truck_active_in_period?(truck)
+    truck.validity_start_at <= truck_work_period.end && truck.validity_end_at >= truck_work_period.begin
   end
 
   def truck_has_result?(truck)
@@ -200,10 +189,6 @@ class Works::TrucksController < ApplicationController
   end
 
   def selected_section
-    selected_section_param || @sections.first
-  end
-
-  def selected_section_param
     return if params[:section_id].blank?
 
     @sections.find { |section| section.id == params.expect(:section_id).to_i }

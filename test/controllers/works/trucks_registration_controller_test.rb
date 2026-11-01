@@ -155,6 +155,44 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
     assert_nil MachineResult.find_by(id: machine_result.id)
   end
 
+  test "全ての条件で異なる月と班の利用実績を登録して選択を維持する" do
+    other_truck = create_truck(homes(:home6))
+    first_work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    other_work = create_work(Date.new(2015, 3, 5), work_kinds(:work_kind_shirokaki))
+    first_result = create_work_result(first_work, workers(:worker1))
+    other_result = create_work_result(other_work, workers(:worker6))
+
+    assert_difference("MachineResult.count", 2) do
+      post works_trucks_path, params: {
+        work_kind_id: "", month: "", section_id: "",
+        machine_hours: {
+          @home1_truck.id => { first_result.id => "2.5" },
+          other_truck.id => { other_result.id => "3.0" }
+        }
+      }
+    end
+
+    assert_redirected_to works_trucks_path
+    follow_redirect!
+    %w[work-kind month section].each do |tab|
+      assert_select "#truck-#{tab}-tabs a:first-child.btn-primary", "全て"
+    end
+    assert_select "input[name='machine_hours[#{@home1_truck.id}][#{first_result.id}]'][value='2.5']", 1
+    assert_select "input[name='machine_hours[#{other_truck.id}][#{other_result.id}]'][value='3.0']", 1
+  end
+
+  test "個別条件と全てを組み合わせても登録後に選択を維持する" do
+    filters = filter_params.except(:month)
+
+    post works_trucks_path, params: filters.merge(month: "")
+
+    assert_redirected_to works_trucks_path(filters)
+    follow_redirect!
+    assert_select "#truck-work-kind-tabs a.btn-primary", work_kinds(:work_kind_shirokaki).name
+    assert_select "#truck-month-tabs a:first-child.btn-primary", "全て"
+    assert_select "#truck-section-tabs a.btn-primary", sections(:sections0).name
+  end
+
   private
 
   def filter_params
