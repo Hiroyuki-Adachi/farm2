@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_01_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -650,6 +650,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_090000) do
     t.string "branch_code", limit: 3, default: "000", null: false, comment: "支店コード"
     t.integer "account_type_id", limit: 2, default: 0, null: false, comment: "口座種別"
     t.string "account_number", limit: 7, default: "0000000", null: false, comment: "口座番号"
+    t.string "line_channel_id", limit: 20, comment: "LINEチャネルID"
+    t.text "line_channel_access_token", comment: "LINEアクセストークン"
+    t.text "line_channel_secret", comment: "LINEチャネルシークレット"
   end
 
   create_table "owned_rice_prices", comment: "保有米単価", force: :cascade do |t|
