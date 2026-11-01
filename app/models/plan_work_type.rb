@@ -25,16 +25,4 @@ class PlanWorkType < ApplicationRecord
   belongs_to :work_type, -> { with_deleted }
 
   scope :usual, -> { joins(:work_type).includes(:work_type).where.not(month: 0).order("plan_work_types.month, work_types.genre, work_types.display_order, plan_work_types.id") }
-
-  def self.create_all(params)
-    params.each do |work_type_id, param|
-      plan_work_type = PlanWorkType.find_by(work_type_id: work_type_id)
-      if plan_work_type.present?
-        plan_work_type.update(param)
-      else
-        PlanWorkType.create(param.merge(work_type_id: work_type_id))
-      end
-    end
-    PlanWorkType.joins(:work_type).where.not(work_types: { deleted_at: nil }).destroy_all
-  end
 end
