@@ -1,12 +1,12 @@
 class Plans::WorkTypesController < PlansController
   def new
-    @work_types = WorkType.land
+    @work_types = WorkType.for_organization(current_organization).land
   end
 
   def create
     WorkType.transaction do
       params[:work_types].each do |work_type_id, work_type_params|
-        work_type = WorkType.find(work_type_id)
+        work_type = WorkType.for_organization(current_organization).find(work_type_id)
         work_type.term = next_term
         work_type.term_flag = work_type_params[:term_flag]
         work_type.bg_color = work_type_params[:bg_color]
@@ -17,7 +17,7 @@ class Plans::WorkTypesController < PlansController
   end
 
   def import
-    WorkTypeTerm.import_previous_term!(next_term)
+    WorkTypeTerm.import_previous_term!(next_term, current_organization)
     redirect_to new_plans_work_type_path, notice: '前年度の設定を取り込みました。'
   end
 

@@ -55,7 +55,7 @@ class PlanLand < ApplicationRecord
     raise ActiveRecord::RecordNotFound, "Land is outside the organization" unless land_ids == valid_land_ids
 
     work_type_ids = assignments.values.to_set(&:to_i)
-    valid_work_type_ids = WorkType.where(id: work_type_ids.to_a).ids.to_set
+    valid_work_type_ids = WorkType.for_organization(organization).where(id: work_type_ids.to_a).ids.to_set
     return if work_type_ids == valid_work_type_ids
 
     raise ActiveRecord::RecordNotFound, "Work type does not exist"

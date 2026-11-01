@@ -7,7 +7,7 @@ class Plans::LandsController < PlansController
   TERM_MODES = { current: '0', next: '1' }.freeze
 
   def index
-    work_types = WorkType.land.by_term(plan_term)
+    work_types = WorkType.for_organization(current_organization).land.by_term(plan_term)
     plan_lands = PlanLand.usual(@target_user, plan_term)
     z_gis_file = ZgisExcelService.call(plan_lands, work_types, plan_term)
     send_data File.read(z_gis_file), filename: "zgis.zip", type: 'application/zip'
@@ -16,7 +16,7 @@ class Plans::LandsController < PlansController
 
   def new
     @lands = Land.for_plan(@target_user.id, plan_term).expiry(current_date).includes(:owner)
-    @work_types = WorkType.land.by_term(plan_term)
+    @work_types = WorkType.for_organization(current_organization).land.by_term(plan_term)
   end
 
   def create
