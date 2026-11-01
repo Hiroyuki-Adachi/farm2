@@ -73,13 +73,6 @@ class TotalCost < ApplicationRecord
       .sum("total_cost_details.cost")
   end
 
-  def self.make(organization, term, fixed_on)
-    organization_id = organization.is_a?(Organization) ? organization.id : organization
-    TotalCost.for_organization(organization_id).where(term: term).destroy_all
-    make_work(organization_id, term, fixed_on)
-    make_details(organization_id, term)
-  end
-
   def self.created_at(organization, term)
     TotalCost.for_organization(organization).where(term: term).minimum(:created_at)
   end
@@ -119,82 +112,5 @@ class TotalCost < ApplicationRecord
     end
 
     numer / denom
-  end
-
-  def self.make_work(organization, term, fixed_on)
-    Work.for_organization(organization).by_term(term).where(worked_at: ..fixed_on).find_each do |work|
-      make_work_worker(term, work)
-    end
-  end
-
-  def self.make_details(organization, term)
-    TotalCost.for_organization(organization).where(term: term).find_each do |tc|
-      tc.total_cost_details.each do |tcd|
-        next if tcd.rate.zero?
-
-        tcd.cost = tc.cost(tcd.work_type_id)
-        tcd.base_cost = tc.base_cost(tcd.work_type_id)
-        tcd.save!
-      end
-    end
-  end
-
-  def self.make_work_worker(term, work)
-    total_cost = TotalCost.create(
-      term: term,
-      total_cost_type_id: work.total_cost_type.id,
-      occurred_on: work.worked_at,
-      work_id: work.id,
-      organization_id: work.organization_id,
-      amount: work.sum_workers_amount,
-      display_order: work.work_kind_order,
-      cost_type_id: work.work_kind.cost_type_id,
-      member_flag: true
-    )
-    if work.work_type.cost_flag || work.work_lands.exists?
-      make_work_details(work, total_cost)
-    else
-      make_details_for_indirect(total_cost, term, work.worked_at)
-    end
-  end
-
-  def self.make_work_details(work, total_cost)
-    if work.work_type.cost_only?
-      TotalCostDetail.create(
-        total_cost_id: total_cost.id,
-        work_type_id: work.work_type_id,
-        area: 0
-      )
-    elsif (work.work_lands&.count || 0).positive?
-      LandCost.sum_area_by_lands(work.worked_at, work.lands.ids, work.organization_id).each do |k, v|
-        TotalCostDetail.create(
-          total_cost_id: total_cost.id,
-          work_type_id: k,
-          area: v
-        )
-      end
-    else
-      TotalCostDetail.create(
-        total_cost_id: total_cost.id,
-        work_type_id: work.work_type_id,
-        area: LandCost.sum_area_by_work_type(work.worked_at, work.work_type_id, work.organization_id)
-      )
-    end
-  end
-
-  def self.make_details_for_indirect(total_cost, term, occurred_on)
-    WorkType.land.by_term(term).kept.each do |work_type|
-      next unless work_type.cost_flag
-
-      area = LandCost.sum_area_by_work_type(occurred_on, work_type.id, total_cost.organization_id)
-      next unless area.positive?
-
-      TotalCostDetail.create(
-        total_cost_id: total_cost.id,
-        work_type_id: work_type.id,
-        rate: 1,
-        area: area
-      )
-    end
   end
 end
