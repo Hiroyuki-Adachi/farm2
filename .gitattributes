@@ -1,0 +1,6 @@
+# 改行コードは LF に統一する
+* text=auto eol=lf
+
+# 外部データをそのまま再現するテスト用ファイルは改行コードを変換しない
+test/fixtures/files/sorimachi.csv -text
+test/fixtures/html/agrijournal.jp.*.html -text
