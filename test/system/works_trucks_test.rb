@@ -35,7 +35,7 @@ class WorksTrucksTest < ApplicationSystemTestCase
     fill_in "machine_hours[#{@home1_truck.id}][#{@work_result.id}]", with: "2.5"
 
     within "#truck-month-tabs" do
-      click_link "3月"
+      click_link "全て"
     end
     wait_for_confirm_modal
 
@@ -44,12 +44,12 @@ class WorksTrucksTest < ApplicationSystemTestCase
     assert_selector '#truck-month-tabs a.btn-primary', text: '2月'
 
     within "#truck-month-tabs" do
-      click_link "3月"
+      click_link "全て"
     end
     wait_for_confirm_modal
 
     click_button 'はい'
-    assert_selector '#truck-month-tabs a.btn-primary', text: '3月'
+    assert_selector '#truck-month-tabs a.btn-primary', text: '全て'
   end
 
   test "変更がない場合はタブ切り替えで確認ダイアログを表示しない" do
@@ -61,6 +61,66 @@ class WorksTrucksTest < ApplicationSystemTestCase
 
     assert_selector '#truck-month-tabs a.btn-primary', text: '3月'
     assert_no_selector '#popup_confirm_message', text: '保存していませんが、よろしいですか？'
+  end
+
+  test "年月は当月を初期選択する" do
+    travel_to Time.zone.local(2015, 6, 15, 12) do
+      visit works_trucks_path
+      assert_selector "#truck-month-tabs a.btn-primary", exact_text: "6月"
+    end
+  end
+
+  test "全てと個別条件を切り替えても他の選択を維持する" do
+    visit works_trucks_path(month: "all")
+
+    %w[work-kind month section].each do |tab|
+      assert_selector "#truck-#{tab}-tabs a:first-child.btn-primary", exact_text: "全て"
+    end
+
+    within("#truck-work-kind-tabs") { click_link work_kinds(:work_kind_shirokaki).name }
+    within("#truck-month-tabs") { click_link "2月" }
+    within("#truck-section-tabs") { click_link sections(:sections0).name }
+
+    selections = {
+      "work-kind" => work_kinds(:work_kind_shirokaki).name, "month" => "2月", "section" => sections(:sections0).name
+    }
+    selections.each do |tab, name|
+      assert_selector "#truck-#{tab}-tabs a.btn-primary", exact_text: name
+    end
+
+    within("#truck-month-tabs") { click_link "全て" }
+    assert_selector "#truck-work-kind-tabs a.btn-primary", exact_text: work_kinds(:work_kind_shirokaki).name
+    assert_selector "#truck-section-tabs a.btn-primary", exact_text: sections(:sections0).name
+    within("#truck-work-kind-tabs") { click_link "全て" }
+    within("#truck-section-tabs") { click_link "全て" }
+
+    fill_in "machine_hours[#{@home1_truck.id}][#{@work_result.id}]", with: "2.5"
+    click_button "登録"
+
+    assert_text "登録しました"
+    %w[work-kind month section].each do |tab|
+      assert_selector "#truck-#{tab}-tabs a:first-child.btn-primary", exact_text: "全て"
+    end
+  end
+
+  test "車両が多くても文字を折り返さず一覧の中で横スクロールできる" do
+    15.times { create_truck(homes(:home1)) }
+    page.driver.browser.resize(width: 900, height: 800)
+    visit_trucks_index
+
+    assert_selector "#truck-table-scroll input", count: 16
+    assert page.evaluate_script(<<~JS)
+      (() => {
+        const region = document.querySelector('#truck-table-scroll');
+        const cell = region.querySelector('tbody td');
+        region.scrollLeft = 200;
+        return region.scrollWidth > region.clientWidth && region.scrollLeft > 0 &&
+          getComputedStyle(cell).whiteSpace === 'nowrap' &&
+          document.documentElement.scrollWidth <= window.innerWidth;
+      })()
+    JS
+  ensure
+    page.driver.browser.resize(width: 1200, height: 800)
   end
 
   private

@@ -1,6 +1,6 @@
 class Tablets::Plans::WorkTypesController < Tablets::PlansController
   def new
-    @work_types = WorkType.land.to_a
+    @work_types = WorkType.for_organization(current_organization).land.to_a
     @enabled_work_type_ids = WorkTypeTerm.where(
       term: next_term,
       work_type_id: @work_types.map(&:id)
@@ -16,7 +16,7 @@ class Tablets::Plans::WorkTypesController < Tablets::PlansController
 
   def register_work_types(submitted_work_types)
     WorkTypeTerm.transaction do
-      work_types = WorkType.land
+      work_types = WorkType.for_organization(current_organization).land
         .where(id: submitted_work_types.keys)
         .index_by { |work_type| work_type.id.to_s }
       work_type_terms = WorkTypeTerm.where(

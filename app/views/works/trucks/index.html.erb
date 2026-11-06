@@ -1,32 +1,42 @@
 <h1>自家用車利用一覧</h1>
 <div data-controller="pages--trucks-form">
 <% if @work_kinds.present? %>
-  <div id="truck-work-kind-tabs" class="btn-group mb-2 d-block" role="group" aria-label="作業種別">
-    <% @work_kinds.each do |work_kind| %>
-      <% active = work_kind == @selected_work_kind %>
-      <%= link_to work_kind.name, works_trucks_path(work_kind_id: work_kind.id, month: @selected_month, section_id: @selected_section&.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}", data: { "pages--trucks-form-target": "tabLink", action: "click->pages--trucks-form#navigate" } %>
-    <% end %>
+  <div class="overflow-auto mb-2">
+    <div id="truck-work-kind-tabs" class="btn-group text-nowrap" role="group" aria-label="作業種別">
+      <%= link_to "全て", works_trucks_path(month: @selected_month || "all", section_id: @selected_section&.id), class: "btn #{@selected_work_kind.nil? ? "btn-primary" : "btn-outline-primary"}", data: { "pages--trucks-form-target": "tabLink", action: "click->pages--trucks-form#navigate" } %>
+      <% @work_kinds.each do |work_kind| %>
+        <% active = work_kind == @selected_work_kind %>
+        <%= link_to work_kind.name, works_trucks_path(work_kind_id: work_kind.id, month: @selected_month || "all", section_id: @selected_section&.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}", data: { "pages--trucks-form-target": "tabLink", action: "click->pages--trucks-form#navigate" } %>
+      <% end %>
+    </div>
   </div>
 <% end %>
-<div id="truck-month-tabs" class="btn-group mb-2" role="group" aria-label="表示月">
-  <% @months.each do |month| %>
-    <% active = month == @selected_month %>
-    <%= link_to "#{month.month}月", works_trucks_path(work_kind_id: @selected_work_kind&.id, month: month, section_id: @selected_section&.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}", data: { "pages--trucks-form-target": "tabLink", action: "click->pages--trucks-form#navigate" } %>
-  <% end %>
+<div class="overflow-auto mb-2">
+  <div id="truck-month-tabs" class="btn-group text-nowrap" role="group" aria-label="表示月">
+    <%= link_to "全て", works_trucks_path(work_kind_id: @selected_work_kind&.id, month: "all", section_id: @selected_section&.id), class: "btn #{@selected_month.nil? ? "btn-primary" : "btn-outline-primary"}", data: { "pages--trucks-form-target": "tabLink", action: "click->pages--trucks-form#navigate" } %>
+    <% @months.each do |month| %>
+      <% active = month == @selected_month %>
+      <%= link_to "#{month.month}月", works_trucks_path(work_kind_id: @selected_work_kind&.id, month: month, section_id: @selected_section&.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}", data: { "pages--trucks-form-target": "tabLink", action: "click->pages--trucks-form#navigate" } %>
+    <% end %>
+  </div>
 </div>
 <% if @sections.present? %>
-  <div id="truck-section-tabs" class="btn-group mb-2 d-block" role="group" aria-label="表示班">
-    <% @sections.each do |section| %>
-      <% active = section == @selected_section %>
-      <%= link_to section.name, works_trucks_path(work_kind_id: @selected_work_kind&.id, month: @selected_month, section_id: section.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}", data: { "pages--trucks-form-target": "tabLink", action: "click->pages--trucks-form#navigate" } %>
-    <% end %>
+  <div class="overflow-auto mb-2">
+    <div id="truck-section-tabs" class="btn-group text-nowrap" role="group" aria-label="表示班">
+      <%= link_to "全て", works_trucks_path(work_kind_id: @selected_work_kind&.id, month: @selected_month || "all"), class: "btn #{@selected_section.nil? ? "btn-primary" : "btn-outline-primary"}", data: { "pages--trucks-form-target": "tabLink", action: "click->pages--trucks-form#navigate" } %>
+      <% @sections.each do |section| %>
+        <% active = section == @selected_section %>
+        <%= link_to section.name, works_trucks_path(work_kind_id: @selected_work_kind&.id, month: @selected_month || "all", section_id: section.id), class: "btn #{active ? "btn-primary" : "btn-outline-primary"}", data: { "pages--trucks-form-target": "tabLink", action: "click->pages--trucks-form#navigate" } %>
+      <% end %>
+    </div>
   </div>
 <% end %>
 <%= form_with url: works_trucks_path, method: :post do %>
   <%= hidden_field_tag :work_kind_id, @selected_work_kind&.id %>
-  <%= hidden_field_tag :month, @selected_month %>
+  <%= hidden_field_tag :month, @selected_month || "all" %>
   <%= hidden_field_tag :section_id, @selected_section&.id %>
-<table class="table table-striped">
+<div id="truck-table-scroll" class="table-responsive mb-3" role="region" aria-label="自家用車利用一覧" tabindex="0">
+<table class="table table-striped text-nowrap mb-0">
   <thead>
     <tr>
       <th>作業日</th>
@@ -54,6 +64,7 @@
     <% end %>
   </tbody>
 </table>
+</div>
 <div id="btn_toolbar" class="btn-toolbar">
   <div class="btn-group mr-2">
     <%= submit_tag "登録", class: "btn btn-success" %>

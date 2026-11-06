@@ -12,6 +12,7 @@ class WorksController < ApplicationController
   before_action :permit_checkable_or_self, only: [:edit, :update, :destroy]
   before_action :permit_visitor, only: :show
   before_action :authorize_current_term!, only: [:edit, :update, :destroy]
+  before_action :check_work_type, only: [:create, :update]
 
   helper WorksHelper
   helper GmapHelper
@@ -113,13 +114,14 @@ class WorksController < ApplicationController
 
   def work_types
     @work_type_id = params[:work_type_id]
-    @work_types = params[:term].present? ? WorkType.by_term(params[:term]).indexes : WorkType.indexes
+    work_types = WorkType.for_organization(current_organization)
+    @work_types = params[:term].present? ? work_types.by_term(params[:term]).indexes : work_types.indexes
     respond_to { |format| format.turbo_stream }
   end
 
   def work_kinds
     @work_kind_id = params[:work_kind_id]
-    @work_kinds = params[:work_type_id].present? ? WorkKind.except_other.by_type(WorkType.find(params[:work_type_id])) : WorkKind.usual
+    @work_kinds = params[:work_type_id].present? ? WorkKind.except_other.by_type(organization_work_types.find(params[:work_type_id])) : WorkKind.usual
     respond_to { |format| format.turbo_stream }
   end
 
@@ -146,7 +148,11 @@ class WorksController < ApplicationController
   end
 
   def set_masters
-    @work_types = WorkType.usual.by_term(current_term)
+    @work_types = organization_work_types.usual.by_term(current_term)
+  end
+
+  def organization_work_types
+    WorkType.for_organization(current_organization)
   end
 
   def work_params
@@ -157,8 +163,16 @@ class WorksController < ApplicationController
     redirect_to works_path if @work.fixed_at
   end
 
+  # 他組織の作業分類は登録・更新させない
+  def check_work_type
+    work_type_id = params.dig(:work, :work_type_id)
+    return if work_type_id.blank? || organization_work_types.exists?(id: work_type_id)
+
+    to_error_path
+  end
+
   def set_work_types
-    @work_types = WorkType.by_term(@term).indexes
+    @work_types = organization_work_types.by_term(@term).indexes
     @work_kinds = WorkKind.usual
   end
 

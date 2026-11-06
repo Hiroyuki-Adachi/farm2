@@ -16,8 +16,8 @@
 class WorkTypeTerm < ApplicationRecord
   belongs_to :work_type, -> { with_deleted }
 
-  def self.import_previous_term!(term)
-    where(term: term - 1).find_each do |prev|
+  def self.import_previous_term!(term, organization)
+    where(term: term - 1, work_type_id: WorkType.for_organization(organization).select(:id)).find_each do |prev|
       create_or_find_by!(term: term, work_type_id: prev.work_type_id) do |record|
         record.bg_color = prev.bg_color
       end
