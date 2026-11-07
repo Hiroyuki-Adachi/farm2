@@ -1,4 +1,6 @@
 class OrganizationsController < ApplicationController
+  LINE_CHANNEL_SECRETS = [:line_channel_access_token, :line_channel_secret].freeze
+
   before_action :authorize_admin!, only: [:edit, :update]
   before_action :set_masters, only: [:edit, :update]
   before_action :set_organization
@@ -26,6 +28,19 @@ class OrganizationsController < ApplicationController
   end
 
   def organization_params
+    line_channel_params(organization_base_params)
+  end
+
+  # アクセストークン・シークレットは画面に表示しないため、空欄なら変更しない
+  def line_channel_params(permitted)
+    if params[:clear_line_channel] == "1"
+      return permitted.merge(line_channel_id: nil, line_channel_access_token: nil, line_channel_secret: nil)
+    end
+
+    permitted.except(*LINE_CHANNEL_SECRETS.select { |key| permitted[key].blank? })
+  end
+
+  def organization_base_params
     params.expect(organization:
       [
         :name,
@@ -53,7 +68,8 @@ class OrganizationsController < ApplicationController
         :straw_id,
         :training_id,
         :truck_id,
-        :location
+        :location,
+        :line_channel_id, *LINE_CHANNEL_SECRETS
       ])
   end
 end
