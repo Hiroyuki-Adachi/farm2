@@ -68,10 +68,19 @@ class WorkTypeCostOrganizationScopeControllerTest < ActionDispatch::IntegrationT
     assert_select "input#work_category_#{@other_category.id}", count: 0
 
     patch work_kind_path(work_kind), params: {
-      work_kind: { name: work_kind.name }, work_categories: [@other_category.id]
+      work_kind: { name: "変更後" }, work_categories: [@other_category.id]
     }
     assert_response :not_found
     assert_not_includes work_kind.reload.categories, @other_category
+    assert_not_equal "変更後", work_kind.name
+
+    assert_no_difference("WorkKind.count") do
+      post work_kinds_path, params: {
+        work_kind: { name: "新規作業種別", phonetic: "しんき", display_order: 99, price: 1500, land_flag: true },
+        work_categories: [@other_category.id]
+      }
+    end
+    assert_response :not_found
   end
 
   test "作業種別の作業カテゴリを更新しても他組織のカテゴリとの対応は残す" do

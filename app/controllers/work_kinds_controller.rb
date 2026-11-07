@@ -19,8 +19,7 @@ class WorkKindsController < ApplicationController
 
   def create
     @work_kind = WorkKind.new(work_kind_params)
-    if @work_kind.save
-      update_others
+    if save_with_others { @work_kind.save }
       redirect_to work_kinds_path
     else
       render action: :new, status: :unprocessable_content
@@ -28,8 +27,7 @@ class WorkKindsController < ApplicationController
   end
 
   def update
-    if @work_kind.update(work_kind_params)
-      update_others
+    if save_with_others { @work_kind.update(work_kind_params) }
       redirect_to @return_to
     else
       render action: :edit, status: :unprocessable_content
@@ -70,6 +68,15 @@ class WorkKindsController < ApplicationController
     @categories = organization_categories.usual
     @machine_types = MachineType.order(:display_order, :id)
     @chemical_types = ChemicalType.order(:display_order, :id)
+  end
+
+  # 関連の更新に失敗した場合(他組織のカテゴリ指定など)は作業種別の保存も取り消す
+  def save_with_others
+    WorkKind.transaction do
+      saved = yield
+      update_others if saved
+      saved
+    end
   end
 
   def update_others
