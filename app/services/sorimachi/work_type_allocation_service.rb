@@ -53,6 +53,7 @@ module Sorimachi
 
     def load_eligible_work_type_ids
       scope = WorkType
+        .for_organization(@system.organization_id)
         .joins(:work_type_terms)
         .where(work_type_terms: { term: @term })
         .reorder(nil)

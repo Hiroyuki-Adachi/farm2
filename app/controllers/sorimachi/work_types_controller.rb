@@ -5,7 +5,7 @@ class Sorimachi::WorkTypesController < ApplicationController
 
   def edit
     @amounts = @journal.sorimachi_work_types.to_h { |j| [j.work_type_id, j.amount] }
-    @work_types = WorkType.cost.by_term(current_term)
+    @work_types = WorkType.for_organization(current_organization).cost.by_term(current_term)
     render layout: false
   end
 

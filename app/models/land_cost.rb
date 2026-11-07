@@ -125,26 +125,6 @@ class LandCost < ApplicationRecord
       .sum("lands.area")
   end
 
-  def self.all_sum_area_by_work_type(sys)
-    work_types = WorkType.by_term(sys.term).land
-    results = []
-    header = []
-    header << ""
-    work_types.each do |work_type|
-      header << work_type.name
-    end
-    results << header
-    (sys.start_date..sys.end_date).each do |day|
-      result = []
-      result << day
-      work_types.each do |work_type|
-        result << sum_area_by_work_type(day, work_type.id, sys.organization_id)
-      end
-      results << result
-    end
-    results
-  end
-
   def update_work_type(params, start_date)
     return if work_type_id == params[:work_type_id].to_i
 

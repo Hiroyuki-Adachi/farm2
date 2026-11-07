@@ -13,7 +13,7 @@ class StatisticsController < ApplicationController
   def tab1; end
 
   def tab2
-    @genres = WorkGenre.usual
+    @genres = WorkGenre.for_organization(current_organization).usual
     @total_genre = Work.total_genre(organization: current_organization)
   end
 

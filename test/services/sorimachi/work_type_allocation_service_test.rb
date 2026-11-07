@@ -91,6 +91,20 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     assert_empty journal.sorimachi_work_types
   end
 
+  test "他組織の作業分類には配賦しない" do
+    system = create_system(term: 2096)
+    work_type = create_cost_work_type(term: 2096, name: "自組織")
+    other_work_type = create_cost_work_type(term: 2096, name: "他組織", organization: organizations(:org2))
+    land = create_land(place: "A-5", area: 5)
+    LandCost.create!(land_id: land.id, work_type_id: work_type.id, activated_on: system.start_date)
+    service = Sorimachi::WorkTypeAllocationService.new(term: 2096, system: system)
+
+    amounts = service.allocate(amount: 800, accounted_on: Date.new(2096, 5, 1),
+                               work_type_ids: [work_type.id, other_work_type.id])
+
+    assert_equal({ work_type.id => 800 }, amounts)
+  end
+
   private
 
   def create_system(term:)
@@ -111,9 +125,10 @@ class Sorimachi::WorkTypeAllocationServiceTest < ActiveSupport::TestCase
     )
   end
 
-  def create_cost_work_type(term:, name:)
+  def create_cost_work_type(term:, name:, organization: @organization)
+    category = WorkCategory.create!(organization: organization, name: "配賦区分")
     work_type = WorkType.create!(
-      genre: work_genres(:genre_change),
+      genre: WorkGenre.create!(category: category, name: "配賦種類"),
       name: name,
       display_order: 999,
       land_flag: true,

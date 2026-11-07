@@ -31,7 +31,7 @@ class FuelCostsController < ApplicationController
     @works = Work
       .for_organization(current_organization)
       .by_machines(@machines)
-      .by_types(WorkType.land)
+      .by_types(WorkType.for_organization(current_organization).land)
       .by_term(current_term)
   end
 
