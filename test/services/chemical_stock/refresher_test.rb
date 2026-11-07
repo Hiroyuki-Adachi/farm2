@@ -8,7 +8,7 @@ class ChemicalStock::RefresherTest < ActiveSupport::TestCase
     end
     work_chemical = work_chemicals(:work_chemical_stock)
     work_stock = ChemicalStock.find_by(work_chemical_id: work_chemical.id)
-    assert_equal work_chemical.quantity, work_stock.using
+    assert_equal work_chemical.quantity_for_stock, work_stock.using
     assert_equal work_chemical.work.worked_at, work_stock.stock_on
 
     stock1 = ChemicalStock.find(chemical_stocks(:stock_model1).id)
@@ -46,7 +46,7 @@ class ChemicalStock::RefresherTest < ActiveSupport::TestCase
 
     stock = ChemicalStock.for_organization(1).find_by(work_chemical_id: work_chemical.id)
     assert_not_nil stock
-    assert_equal work_chemical.quantity, stock.using
+    assert_equal work_chemical.quantity_for_stock, stock.using
     assert_equal work_chemical.work.worked_at, stock.stock_on
   end
 

@@ -54,7 +54,7 @@ class ChemicalStock::Refresher
   end
 
   def from_work(start_date)
-    work_stocks.update_all("\"using\" = 0") # rubocop:disable Rails/SkipsModelValidations
+    work_stocks.update_all(using: 0) # rubocop:disable Rails/SkipsModelValidations
     WorkChemical.for_stock(@chemical_id, start_date, @organization_id).each do |work_chemical|
       stock = ChemicalStock.for_organization(@organization_id).find_by(work_chemical_id: work_chemical.id)
       if stock
