@@ -26,21 +26,21 @@
   data-dependent-select-url-value="<%= work_kinds_works_path %>"
   data-dependent-select-param-name-value="work_type_id"
   data-action="change->dependent-select#fetch">
-  <% WorkCategory.usual.each do |category| %>
+  <% WorkCategory.for_organization(current_organization).usual.each do |category| %>
     <div class="col-md-2">
       <div class="form-check form-check-inline h5">
         <%= category.name %>
       </div>
     </div>
     <div class="col-md-10">
-      <% WorkType.select_category(category).by_term(current_term).each do |work_type| %>
+      <% WorkType.for_organization(current_organization).select_category(category).by_term(current_term).each do |work_type| %>
         <div class="form-check form-check-inline">
           <%= f.radio_button :work_type_id, work_type.id, {id: "work_type_#{work_type.id}", class: "form-check-input", required: true} %>
           <%= label_tag "work_type_#{work_type.id}", work_type.name, {class: "form-check-label form-label"} %>
-        </div>        
+        </div>
       <% end %>
     </div>
-  <% end %>    
+  <% end %>
 </div>
 <div class="row">
   <div class="col-md-4">

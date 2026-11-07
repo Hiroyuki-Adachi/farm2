@@ -183,7 +183,7 @@ class SchedulesController < ApplicationController
   end
 
   def schedule_work_types(term)
-    WorkType.usual.by_term(term).includes(genre: :category)
+    WorkType.for_organization(current_organization).usual.by_term(term).includes(genre: :category)
   end
 
   def selected_work_type_id(work_types, work_type_id)
@@ -203,7 +203,7 @@ class SchedulesController < ApplicationController
   def work_kinds_for(work_type_id)
     return [] if work_type_id.blank?
 
-    WorkKind.by_type(WorkType.find(work_type_id)) || []
+    WorkKind.by_type(WorkType.for_organization(current_organization).find(work_type_id)) || []
   end
 
   def permit_only_self

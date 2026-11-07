@@ -194,7 +194,7 @@ class Schedule < ApplicationRecord
     system = schedule_system_for_worked_at
     return if system.blank?
 
-    return if WorkType.usual.by_term(system.term).exists?(id: work_type_id)
+    return if WorkType.for_organization(organization_id).usual.by_term(system.term).exists?(id: work_type_id)
 
     errors.add(:work_type_id, "は作業予定日の年度で使用できません。")
   end

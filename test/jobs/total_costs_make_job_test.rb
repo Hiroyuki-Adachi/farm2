@@ -14,7 +14,7 @@ class TotalCostsMakeJobTest < ActiveJob::TestCase
   end
   test "計算失敗時は以前の締め月を維持する" do
     systems(:s2017).update!(total_cost_fixed_on: Date.new(2017, 2, 28))
-    TotalCost.stubs(:make_details).raises("calculation failed")
+    TotalCost::Rebuilder.any_instance.stubs(:make_details).raises("calculation failed")
 
     assert_raises(RuntimeError) do
       TotalCostsMakeJob.perform_now(organizations(:org).id, 2017, '2017-12-31')
