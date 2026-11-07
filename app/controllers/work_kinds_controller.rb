@@ -67,15 +67,25 @@ class WorkKindsController < ApplicationController
   end
 
   def set_others
-    @categories = WorkCategory.usual
+    @categories = organization_categories.usual
     @machine_types = MachineType.order(:display_order, :id)
     @chemical_types = ChemicalType.order(:display_order, :id)
   end
 
   def update_others
-    @work_kind.categories = params[:work_categories] ? WorkCategory.find(params[:work_categories]) : []
+    @work_kind.categories = selected_categories
     @work_kind.machine_types = params[:machine_types] ? MachineType.find(params[:machine_types]) : []
     @work_kind.chemical_types = params[:chemical_types] ? ChemicalType.find(params[:chemical_types]) : []
+  end
+
+  def organization_categories
+    WorkCategory.for_organization(current_organization)
+  end
+
+  # 作業種別は組織共通のため(#1273で対応)、他組織のカテゴリとの対応は残す
+  def selected_categories
+    selected = params[:work_categories] ? organization_categories.find(params[:work_categories]) : []
+    @work_kind.categories.where.not(organization_id: current_organization.id) + selected
   end
 
   def set_cost_types

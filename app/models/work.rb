@@ -192,10 +192,6 @@ class Work < ApplicationRecord
       .order(:worked_at, :id)
   }
 
-  scope :for_cost, ->(term) { where([<<~SQL.squish, term, WorkType.land.select(:id)]) }
-    works.term = ? AND (work_type_id IN (?))
-  SQL
-
   scope :for_broccoli, lambda { |organization|
     includes(:broccoli)
       .where(

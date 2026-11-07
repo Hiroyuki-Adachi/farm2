@@ -55,7 +55,7 @@ class ChemicalCostsController < ApplicationController
   private
 
   def set_work_types
-    @work_types = WorkType.land.where(work_flag: true).by_term(current_term)
+    @work_types = WorkType.for_organization(current_organization).land.where(work_flag: true).by_term(current_term)
   end
 
   def set_chemical_work_type
