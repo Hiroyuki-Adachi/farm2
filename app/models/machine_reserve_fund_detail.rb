@@ -70,7 +70,7 @@ class MachineReserveFundDetail < ApplicationRecord
   end
 
   def prepare_costs
-    work_types = WorkType.cost.by_term(term).to_a
+    work_types = WorkType.for_organization(organization_id).cost.by_term(term).to_a
     costs = machine_reserve_fund_costs.to_a
     costs.each { |cost| cost.mark_for_destruction unless work_types.any? { |type| type.id == cost.work_type_id } }
     work_types.map do |work_type|
@@ -117,7 +117,7 @@ class MachineReserveFundDetail < ApplicationRecord
   end
 
   def accumulated_areas(system)
-    work_types = WorkType.cost.by_term(term).where(land_flag: true).to_a
+    work_types = WorkType.for_organization(organization_id).cost.by_term(term).where(land_flag: true).to_a
     return {} if work_types.empty?
 
     totals = LandCost.sum_period_areas_by_work_type(system.start_date, system.end_date, work_types.map(&:id),

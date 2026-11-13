@@ -78,7 +78,7 @@ class TotalCost < ApplicationRecord
   end
 
   def cost(work_type_id)
-    work_type = WorkType.find(work_type_id)
+    work_type = WorkType.for_organization(organization_id).find(work_type_id)
     return amount if work_type.cost_only?
     return nil unless total_cost_details.exists?(work_type_id: work_type_id)
 

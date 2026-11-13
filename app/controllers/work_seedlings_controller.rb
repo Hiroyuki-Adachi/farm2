@@ -2,7 +2,7 @@ class WorkSeedlingsController < ApplicationController
   include PermitManager
 
   def index
-    @work_types = WorkType.land
+    @work_types = WorkType.for_organization(current_organization).land
     @work_seedlings, @work_areas = calc_seedlings(Work.for_organization(current_organization).where(work_kind_id: current_organization.rice_planting_id).by_term(@term))
 
     respond_to do |format|

@@ -61,7 +61,7 @@ class LandCostsController < ApplicationController
   def map
     @target = params[:target].presence || Time.zone.today
     @costs = LandCost.usual(Land.for_organization(current_organization).regionable.expiry(@target), @target).includes(land: [:owner, { manager: :holder }], work_type: [])
-    @work_types = WorkType.land.by_term(current_organization.get_term(@target))
+    @work_types = WorkType.for_organization(current_organization).land.by_term(current_organization.get_term(@target))
   end
 
   def work_types
@@ -74,7 +74,7 @@ class LandCostsController < ApplicationController
   private
 
   def set_work_types
-    @work_types = WorkType.land.by_term(current_term)
+    @work_types = WorkType.for_organization(current_organization).land.by_term(current_term)
   end
 
   def set_land
