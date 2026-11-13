@@ -41,6 +41,9 @@ end
 Capybara.save_path = nil
 Capybara.server_host = "0.0.0.0"
 Capybara.default_normalize_ws = true
+# 既定の2秒では、スイート先頭テスト(Puma起動直後・テンプレート未コンパイルの初回リクエスト)で
+# ページ遷移が間に合わずアサーションが失敗することがあるため延長する (#1342)
+Capybara.default_max_wait_time = 5
 Capybara.default_driver = Capybara.javascript_driver = :better_cuprite
 Capybara.app_host = "http://#{ENV.fetch('APP_HOST', `hostname`.strip&.downcase || '0.0.0.0')}"
 
