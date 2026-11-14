@@ -253,6 +253,9 @@ ja:
         straw_id: "稲わらを選択"
         training_id: "講習会・研修を選択"
         truck_id: "自家用車を選択"
+        line_channel_id: "LINEチャネルID"
+        line_channel_access_token: "LINEアクセストークン"
+        line_channel_secret: "LINEチャネルシークレット"
 
       section:
         name: 名称

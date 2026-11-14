@@ -5,7 +5,7 @@ class TotalCostsController < ApplicationController
 
   def index
     @fixes = Fix.usual(current_organization, current_term)
-    @work_types = WorkType.cost.by_term(current_term).kept
+    @work_types = WorkType.for_organization(current_organization).cost.by_term(current_term).kept
     @cost_types = CostType.usual
     @total_costs = TotalCost.sum_work_results(current_organization, current_term)
     respond_to do |format|

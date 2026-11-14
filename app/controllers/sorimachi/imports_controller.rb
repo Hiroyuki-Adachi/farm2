@@ -169,6 +169,7 @@ class Sorimachi::ImportsController < ApplicationController
 
   def prepare_work_types
     scope = WorkType
+      .for_organization(current_organization)
       .by_term(current_term)
       .reorder(nil)
       .where(cost_flag: true, deleted_at: nil)

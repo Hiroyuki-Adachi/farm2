@@ -45,7 +45,7 @@ class TotalCost::Rebuilder
   end
 
   def make_details_for_indirect(total_cost, occurred_on)
-    WorkType.land.by_term(@term).kept.each do |work_type|
+    WorkType.for_organization(@organization_id).land.by_term(@term).kept.each do |work_type|
       next unless work_type.cost_flag
 
       area = LandCost.sum_area_by_work_type(occurred_on, work_type.id, total_cost.organization_id)

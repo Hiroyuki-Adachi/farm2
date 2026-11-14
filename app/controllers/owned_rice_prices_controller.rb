@@ -5,7 +5,7 @@ class OwnedRicePricesController < ApplicationController
   keeps_index_return_to path_method: :owned_rice_prices_path, only: [:edit, :create, :update, :destroy]
 
   def index
-    @work_types = WorkType.indexes
+    @work_types = WorkType.for_organization(current_organization).indexes
     @owned_rice_prices = OwnedRicePrice.for_organization(current_organization).usual(current_term).to_a
   end
 

@@ -3,7 +3,7 @@ class SeedlingCostsController < ApplicationController
   before_action :set_seedling, only: [:edit, :update]
 
   def index
-    @work_types = WorkType.land
+    @work_types = WorkType.for_organization(current_organization).land
     @seedlings = Seedling.usual(current_term, @work_types)
     @seedling_quantities = SeedlingHome.total(@seedlings, current_organization)
     @lands = LandCost.total(Time.zone.today, current_organization)
