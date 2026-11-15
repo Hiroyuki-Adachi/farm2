@@ -8,8 +8,9 @@ class Work::ChemicalGroupResetter
   def call
     return if @work.chemical_group_flag
 
-    @work.work_lands.where.not(chemical_group_no: 0).find_each do |work_land|
-      work_land.update!(chemical_group_no: 0)
-    end
+    # 作業地の関連は表示順の order を持つため、関連を経由せず1回の UPDATE で戻す。
+    # WorkLand に保存時のコールバックはないので update_all で足りる。
+    WorkLand.where(work_id: @work.id).where.not(chemical_group_no: 0)
+      .update_all(chemical_group_no: 0, updated_at: Time.current) # rubocop:disable Rails/SkipsModelValidations
   end
 end
