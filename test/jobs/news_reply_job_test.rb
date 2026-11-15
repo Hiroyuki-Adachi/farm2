@@ -100,12 +100,12 @@ class NewsReplyJobTest < ActiveJob::TestCase
     assert_includes called_args[1], I18n.t('line_reply.topics_not_found')
   end
 
+  # define_singleton_method で上書きすると後続のテストに残るため、テストごとに戻る mocha の stub を使う。
   def stub_push_messages
     called_flag = false
-    LineHookService.define_singleton_method(:push_messages) do |*|
+    LineHookService.stubs(:push_messages).with do |*|
       called_flag = true
-      Net::HTTPOK.new("1.1", "200", "OK")
-    end
+    end.returns(Net::HTTPOK.new("1.1", "200", "OK"))
     -> { called_flag }
   end
 end
