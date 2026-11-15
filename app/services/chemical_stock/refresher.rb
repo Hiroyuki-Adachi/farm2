@@ -58,7 +58,7 @@ class ChemicalStock::Refresher
     WorkChemical.for_stock(@chemical_id, start_date, @organization_id).each do |work_chemical|
       refresh_work_stock(work_chemical)
     end
-    work_stocks.where(using: 0).destroy_all
+    work_stocks.where(using: 0).delete_all
   end
 
   def refresh_work_stock(work_chemical)
