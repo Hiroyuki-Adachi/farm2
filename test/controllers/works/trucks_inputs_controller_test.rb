@@ -69,7 +69,50 @@ class Works::TrucksInputsControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[name=?][readonly=readonly]", "machine_hours[#{@home1_truck.id}][#{work_result.id}]", count: 0
   end
 
+  test "直接金額区分は7桁の円入力欄を表示し既存金額を再表示する" do
+    set_amount_price
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    result = create_work_result(work, workers(:worker1))
+    MachineResult.create!(machine: @home1_truck, work_result: result, input_amount: 1234567)
+    get works_trucks_path, params: filter_params
+    assert_response :success
+    assert_select "input[name=?][max='9999999'][step='1'][value='1234567.0']",
+                  "machine_amounts[#{@home1_truck.id}][#{result.id}]"
+    assert_select "input[name=?]", "machine_hours[#{@home1_truck.id}][#{result.id}]", count: 0
+    assert_select "input[name=?][data-action='input->pages--trucks-form#markDirty']",
+                  "machine_amounts[#{@home1_truck.id}][#{result.id}]"
+  end
+
+  test "直接金額区分の未利用セルは空欄で表示する" do
+    set_amount_price
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    result = create_work_result(work, workers(:worker1))
+    get works_trucks_path, params: filter_params
+    assert_response :success
+    assert_select "input[name=?]:not([value]):not([required])", "machine_amounts[#{@home1_truck.id}][#{result.id}]"
+  end
+
+  test "マスタ変更後も確定済みの直接金額欄は読み取り専用で表示する" do
+    set_amount_price
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki), fixed_at: Date.new(2015, 2, 28))
+    result = create_work_result(work, workers(:worker1))
+    MachineResult.create!(machine: @home1_truck, work_result: result, input_amount: 1234567,
+                          fixed_adjust_id: Adjust::AMOUNT.id, fixed_amount: 1234567, fixed_price: 0, fixed_quantity: 0)
+    @truck_type.price_headers.first.details.first.update!(adjust_id: Adjust::HOUR.id, price: 500)
+    get works_trucks_path, params: filter_params
+    assert_response :success
+    assert_select "input[name=?][readonly][value='1234567.0']", "machine_amounts[#{@home1_truck.id}][#{result.id}]"
+  end
+
   private
+
+  def set_amount_price
+    header = FactoryBot.create(:machine_price_header, machine_type: @truck_type,
+                                                      validated_at: Date.new(2000, 1, 1))
+    FactoryBot.create(:machine_price_detail, header: header, lease_id: :normal,
+                                            adjust_id: Adjust::AMOUNT.id, price: 0)
+  end
+
 
   def filter_params
     {

@@ -193,7 +193,107 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
     assert_select "#truck-section-tabs a.btn-primary", sections(:sections0).name
   end
 
+  test "直接金額は7桁まで保存して再表示し使用料に反映する" do
+    set_amount_price
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    result = create_work_result(work, workers(:worker1))
+    post works_trucks_path, params: filter_params.merge(
+      machine_amounts: { @home1_truck.id => { result.id => "9999999" } }
+    )
+    assert_redirected_to works_trucks_path(filter_params)
+    entry = MachineResult.find_by!(machine: @home1_truck, work_result: result)
+    assert_equal 9_999_999, entry.input_amount
+    assert_equal 0, entry.hours
+    assert_equal 9_999_999, work.sum_machines_amount
+    follow_redirect!
+    assert_select "input[name=?][value=?]", "machine_amounts[#{@home1_truck.id}][#{result.id}]", "9999999.0"
+  end
+
+  test "直接金額の0円を保持し空欄で利用を削除する" do
+    set_amount_price
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    result = create_work_result(work, workers(:worker1))
+    entry = MachineResult.create!(machine: @home1_truck, work_result: result, input_amount: 1000)
+    post works_trucks_path, params: filter_params.merge(
+      machine_amounts: { @home1_truck.id => { result.id => "0" } }
+    )
+    assert_redirected_to works_trucks_path(filter_params)
+    assert_equal 0, entry.reload.input_amount
+    post works_trucks_path, params: filter_params.merge(
+      machine_amounts: { @home1_truck.id => { result.id => "" } }
+    )
+    assert_redirected_to works_trucks_path(filter_params)
+    assert_not MachineResult.exists?(entry.id)
+  end
+
+  test "不正な直接金額は全体を保存せず入力値とエラーを再表示する" do
+    set_amount_price
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    result = create_work_result(work, workers(:worker1))
+    entry = MachineResult.create!(machine: @home1_truck, work_result: result, input_amount: 1000)
+    other_truck = create_truck(homes(:home1))
+    header = FactoryBot.create(:machine_price_header, machine: other_truck, validated_at: Date.new(2000, 1, 1))
+    FactoryBot.create(:machine_price_detail, header: header, lease_id: :normal, adjust_id: Adjust::HOUR.id, price: 500)
+    other = MachineResult.create!(machine: other_truck, work_result: result, hours: 1)
+    ["10000000", "-1", "1.5", "abc"].each do |value|
+      post works_trucks_path, params: filter_params.merge(
+        machine_hours: { other_truck.id => { result.id => "2.5" } },
+        machine_amounts: { @home1_truck.id => { result.id => value } }
+      )
+      assert_response :unprocessable_entity
+      assert_select ".alert-danger", text: /使用料/
+      assert_select "input[name=?][value=?]", "machine_amounts[#{@home1_truck.id}][#{result.id}]", value
+      assert_equal 1000, entry.reload.input_amount
+      assert_equal 1, other.reload.hours
+    end
+  end
+
+  test "確定済み作業への直接金額変更は無視する" do
+    set_amount_price
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki), fixed_at: Date.new(2015, 2, 28))
+    result = create_work_result(work, workers(:worker1))
+    entry = MachineResult.create!(machine: @home1_truck, work_result: result, input_amount: 1000)
+    post works_trucks_path, params: filter_params.merge(
+      machine_amounts: { @home1_truck.id => { result.id => "5000" } }
+    )
+    assert_redirected_to works_trucks_path(filter_params)
+    assert_equal 1000, entry.reload.input_amount
+  end
+
+  test "対象外の世帯と月への直接金額登録は無視する" do
+    set_amount_price
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    other_home = create_work_result(work, workers(:worker6))
+    other_month = create_work_result(create_work(Date.new(2015, 3, 5), work_kinds(:work_kind_shirokaki)), workers(:worker1))
+    assert_no_difference("MachineResult.count") do
+      post works_trucks_path, params: filter_params.merge(
+        machine_amounts: { @home1_truck.id => { other_home.id => "5000", other_month.id => "5000" } }
+      )
+    end
+    assert_redirected_to works_trucks_path(filter_params)
+  end
+
+  test "直接金額区分へ時間を送信しても金額を上書きしない" do
+    set_amount_price
+    work = create_work(Date.new(2015, 2, 5), work_kinds(:work_kind_shirokaki))
+    result = create_work_result(work, workers(:worker1))
+    entry = MachineResult.create!(machine: @home1_truck, work_result: result, input_amount: 5000)
+    post works_trucks_path, params: filter_params.merge(
+      machine_hours: { @home1_truck.id => { result.id => "0" } }
+    )
+    assert_redirected_to works_trucks_path(filter_params)
+    assert_equal 5000, entry.reload.input_amount
+  end
+
   private
+
+  def set_amount_price
+    header = FactoryBot.create(:machine_price_header, machine_type: @truck_type,
+                                                      validated_at: Date.new(2000, 1, 1))
+    FactoryBot.create(:machine_price_detail, header: header, lease_id: :normal,
+                                            adjust_id: Adjust::AMOUNT.id, price: 0)
+  end
+
 
   def filter_params
     {
