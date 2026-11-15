@@ -52,6 +52,21 @@ class WorkTest < ActiveSupport::TestCase
     assert_equal @sum_areas, @work.sum_areas
   end
 
+  test "日報の保存では作業地の薬剤グループ番号と更新日時を書き換えない" do
+    work = works(:work_not_fixed)
+    work_land = work_lands(:work_lands_not_fixed1)
+    work_land.update!(chemical_group_no: 2)
+    updated_at = work_land.reload.updated_at
+
+    travel 1.minute do
+      work.update!(chemical_group_flag: false, remarks: "備考だけ変更")
+    end
+
+    work_land.reload
+    assert_equal 2, work_land.chemical_group_no
+    assert_equal updated_at, work_land.updated_at
+  end
+
   test "作業単価" do
     assert_equal @work.term, @work.price
   end

@@ -37,8 +37,6 @@ class Work < ApplicationRecord
   ENOUGH = WorkVerification::ENOUGH
   enum :weather_id, { sunny: 1, cloudy: 2, rainy: 3, snow: 4, other: 9 }
 
-  after_save :set_chemical_group_no
-
   validates :worked_at, presence: true
   validates :weather_id,   presence: true
   validates :name, length: { maximum: 40 }, if: proc { |x| x.name.present? }
@@ -516,15 +514,5 @@ class Work < ApplicationRecord
 
   def weather_name
     I18n.t("activerecord.enums.work.weather_ids.#{weather_id}")
-  end
-
-  private
-
-  def set_chemical_group_no
-    return if chemical_group_flag
-
-    work_lands.each do |work_land|
-      work_land.update(chemical_group_no: 0)
-    end
   end
 end
