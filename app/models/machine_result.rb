@@ -9,6 +9,7 @@
 #  fixed_quantity(確定稼動量)     :decimal(6, 2)
 #  fuel_usage(燃料使用量)         :decimal(5, 2)    default(0.0), not null
 #  hours(稼動時間)                :decimal(4, 2)    default(0.0), not null
+#  input_amount(直接入力使用料)   :decimal(7, )
 #  created_at                     :datetime
 #  updated_at                     :datetime
 #  fixed_adjust_id(確定稼動単位)  :integer

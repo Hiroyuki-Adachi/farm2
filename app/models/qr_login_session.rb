@@ -6,7 +6,7 @@
 #  consumed_at(セッション使用日時) :datetime
 #  expires_at(セッション有効期限)  :datetime         not null
 #  ip_address(発行元IPアドレス)    :inet             not null
-#  status(セッション状態)          :integer          default(0), not null
+#  status(セッション状態)          :integer          default("pending"), not null
 #  token(セッション識別子)         :string(36)       not null
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
