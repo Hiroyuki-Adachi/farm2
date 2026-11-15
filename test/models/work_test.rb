@@ -58,7 +58,7 @@ class WorkTest < ActiveSupport::TestCase
 
   test "作業と未確定日当は所属組織の既定単価を使う" do
     systems(:s2015_org2).update!(default_price: 2300)
-    @work.update!(organization_id: organizations(:org2).id, term: 2015,
+    @work.update!(organization_id: organizations(:org2).id, work_type: work_types(:work_type_org2), term: 2015,
                   work_kind_id: work_kinds(:work_kind_first_term).id, fixed_at: nil)
 
     assert_equal 2300, @work.price
@@ -137,7 +137,7 @@ class WorkTest < ActiveSupport::TestCase
     create_summary_work(
       organization: organizations(:org2),
       worker: workers(:worker1),
-      work_type: work_type,
+      work_type: work_types(:work_type_org2),
       worked_at: Date.new(2026, 1, 15),
       hours: 7
     )
@@ -209,7 +209,7 @@ class WorkTest < ActiveSupport::TestCase
       term: 2015,
       worked_at: Date.new(2015, 5, 2),
       weather_id: :sunny,
-      work_type: work_types(:work_type_koshi),
+      work_type: work_types(:work_type_org2),
       work_kind: work_kind,
       name: "",
       remarks: "",
@@ -460,7 +460,8 @@ class WorkTest < ActiveSupport::TestCase
     )
   end
 
-  def create_summary_work(organization:, worker:, worked_at:, hours:, work_type: work_types(:work_type_koshi))
+  def create_summary_work(organization:, worker:, worked_at:, hours:, work_type: nil)
+    work_type ||= organization == organizations(:org2) ? work_types(:work_type_org2) : work_types(:work_type_koshi)
     work = Work.create!(
       organization: organization,
       term: worked_at.year,

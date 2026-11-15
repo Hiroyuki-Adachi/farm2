@@ -15,8 +15,12 @@
 #
 
 class LandCost < ApplicationRecord
+  include WorkTypeOrganizationValidation
+
   belongs_to :land, -> { with_deleted }
   belongs_to :work_type, -> { with_deleted }
+
+  validates_work_type_organization organization: -> { land&.organization_id }, watch: [:land_id]
 
   validates :activated_on, presence: true
 

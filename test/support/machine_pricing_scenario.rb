@@ -6,8 +6,9 @@ module MachinePricingScenario
     worker_home = same_home ? owner : FactoryBot.create(:home, organization: organization, name: "別世帯")
     worker = FactoryBot.create(:worker, organization: organization, home: worker_home)
     work_kind = FactoryBot.create(:work_kind)
+    work_type = create_work_type_for(organization, name: "総務", land_flag: false, office_role: :general)
     work = FactoryBot.create(:work, organization: organization, work_kind: work_kind,
-                                    work_type: work_types(:work_types9), worked_at: worked_at)
+                                    work_type: work_type, worked_at: worked_at)
     work_result = FactoryBot.create(:work_result, work: work, worker: worker)
     machine = FactoryBot.create(:machine, owner: owner,
                                           validity_start_at: Date.new(2010, 1, 1),

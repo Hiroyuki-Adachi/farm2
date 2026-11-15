@@ -16,3 +16,8 @@
 work_type_terms0:
   term: 2015
   work_type_id: 23
+
+work_type_term_org2_2015:
+  term: 2015
+  work_type: work_type_org2
+  bg_color: "#123456"

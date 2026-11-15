@@ -8,7 +8,7 @@
 #  name(名称)                 :string(10)       default(""), not null
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
-#  organization_id(組織)      :bigint
+#  organization_id(組織)      :bigint           not null
 #
 # Indexes
 #

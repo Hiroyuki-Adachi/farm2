@@ -135,8 +135,8 @@ class Lands::ChemicalMapServiceTest < ActiveSupport::TestCase
     other_land = lands(:land_other_org)
     other_work = works(:work_other_org)
     other_work.update!(work_kind: work_kinds(:work_kind_taue))
-    WorkLand.create!(work: other_work, land: other_land, work_type_id: work_types(:work_type_koshi).id)
-    LandCost.create!(land: other_land, work_type: work_types(:work_type_koshi), activated_on: Date.new(2015, 1, 1))
+    WorkLand.create!(work: other_work, land: other_land, work_type_id: work_types(:work_type_org2).id)
+    LandCost.create!(land: other_land, work_type: work_types(:work_type_org2), activated_on: Date.new(2015, 1, 1))
 
     chemical = Chemical.create!(
       organization: organizations(:org2),
@@ -146,7 +146,7 @@ class Lands::ChemicalMapServiceTest < ActiveSupport::TestCase
       display_order: 999
     )
     chemical_term = ChemicalTerm.create!(organization: organizations(:org2), chemical: chemical, term: 2015)
-    ChemicalWorkType.create!(chemical_term: chemical_term, work_type: work_types(:work_type_koshi), quantity: 1.0)
+    ChemicalWorkType.create!(chemical_term: chemical_term, work_type: work_types(:work_type_org2), quantity: 1.0)
     WorkChemical.create!(work: other_work, chemical: chemical, quantity: 5.0)
 
     summaries = Lands::ChemicalMapService.call(

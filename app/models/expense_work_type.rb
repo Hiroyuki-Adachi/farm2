@@ -21,9 +21,13 @@
 #
 
 class ExpenseWorkType < ApplicationRecord
+  include WorkTypeOrganizationValidation
+
   belongs_to :organization, optional: false
   belongs_to :expense
   belongs_to :work_type, -> { with_deleted }
+
+  validates_work_type_organization organization: :organization_id
 
   before_validation :set_organization_from_expense
 

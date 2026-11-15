@@ -23,9 +23,13 @@
 #  fk_rails_...  (organization_id => organizations.id)
 #
 class MachineReserveFundCost < ApplicationRecord
+  include WorkTypeOrganizationValidation
+
   belongs_to :organization, optional: false
   belongs_to :machine_reserve_fund_detail, optional: false
   belongs_to :work_type, optional: false
+
+  validates_work_type_organization organization: :organization_id
 
   # 少額を多数の分類へ按分した際も、最大原価行への端数調整を保持する。
   validates :cost, numericality: { only_integer: true }

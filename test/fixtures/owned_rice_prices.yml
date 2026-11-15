@@ -34,7 +34,7 @@ owned_rice_price1:
 
 owned_rice_price_other_org:
   term: 2015
-  work_type_id: 1
+  work_type: work_type_org2
   display_order: 10
   name: "別組織米"
   short_name: "別米"

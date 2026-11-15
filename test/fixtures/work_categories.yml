@@ -14,7 +14,7 @@
 #  name(名称)                 :string(10)       default(""), not null
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
-#  organization_id(組織)      :bigint
+#  organization_id(組織)      :bigint           not null
 #
 # Indexes
 #
@@ -58,4 +58,10 @@ category_discardable:
   organization_id: 1
   name: "論理削除可能"
   display_order: '60'
+  discarded_at:
+
+category_rice_org2:
+  organization_id: 2
+  name: "別組織区分"
+  display_order: '10'
   discarded_at:

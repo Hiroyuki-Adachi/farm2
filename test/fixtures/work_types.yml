@@ -15,7 +15,7 @@
 #  office_role(事務の役割)     :integer          default("none"), not null
 #  other_flag(その他フラグ)    :boolean          default(FALSE), not null
 #  work_flag(日報フラグ)       :boolean          default(TRUE), not null
-#  organization_id(組織)       :bigint
+#  organization_id(組織)       :bigint           not null
 #  work_genre_id(作業ジャンル) :bigint           not null
 #
 # Indexes
@@ -272,3 +272,14 @@ work_type_discarded:
   deleted_at: '2024-01-01 00:00:00'
   bg_color: "#ffffff"
   land_flag: f
+
+work_type_org2:
+  organization_id: 2
+  genre: genre_rice_org2
+  name: "別組織分類"
+  display_order: '10'
+  deleted_at:
+  bg_color: "#123456"
+  land_flag: t
+  work_flag: t
+  cost_flag: t
