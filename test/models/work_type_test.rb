@@ -15,7 +15,7 @@
 #  office_role(事務の役割)     :integer          default("none"), not null
 #  other_flag(その他フラグ)    :boolean          default(FALSE), not null
 #  work_flag(日報フラグ)       :boolean          default(TRUE), not null
-#  organization_id(組織)       :bigint           not null
+#  organization_id(組織)       :bigint
 #  work_genre_id(作業ジャンル) :bigint           not null
 #
 # Indexes
