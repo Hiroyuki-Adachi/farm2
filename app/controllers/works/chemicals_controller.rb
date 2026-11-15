@@ -12,6 +12,7 @@ class Works::ChemicalsController < WorksController
       WorkLand.regist_chemical_group_no(params[:work_lands]) if params[:work_lands]
       @work.regist_chemicals(params[:chemicals])
       @work.update!(work_params)
+      Work::ChemicalGroupResetter.new(@work).call
     end
     redirect_to work_path(@work)
   rescue ActiveRecord::RecordInvalid => e
