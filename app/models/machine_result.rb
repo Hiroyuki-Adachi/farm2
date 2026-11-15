@@ -194,9 +194,7 @@ class MachineResult < ApplicationRecord
       # 単価は5桁のため、直接入力額は使用料としてのみ確定する。
       @price = 0
       @quantity = 0
-      @amount = work.machine_results
-        .select { |result| result.machine_id == machine_id }
-        .sum { |result| result.input_amount || 0 }
+      @amount = work.machine_results.where(machine_id: machine_id).sum(:input_amount)
       return
     end
 

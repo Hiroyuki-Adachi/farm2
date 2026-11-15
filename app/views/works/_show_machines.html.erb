@@ -1,3 +1,4 @@
+<% machine_results_by_machine = @work.machine_results.group_by(&:machine_id) %>
 <div id="content_machines" class="<%= class_names("content", "no-print": @machines.empty?) %>">
   <table id="detail_machines">
     <thead>
@@ -13,7 +14,7 @@
       <tr>
         <td class="machine"><%= @machines[i] ? @machines[i].usual_name : "" %></td>
         <td class="machine numeric"><% if @machines[i] %>
-          <% entries = @work.machine_results.select { |entry| entry.machine_id == @machines[i].id } %>
+          <% entries = machine_results_by_machine.fetch(@machines[i].id, []) %>
           <% if entries.any? { |entry| entry.input_amount.present? } %>
             <%= number_with_delimiter(entries.sum { |entry| entry.input_amount || 0 }) %>円
           <% else %>

@@ -232,4 +232,28 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :error
   end
+  test "作業照会は機械ごとに使用料を合計し無料利用と時間も表示する" do
+    work = works(:work_not_fixed)
+    work.machine_results.destroy_all
+    first = work_results(:work_results_not_fixed)
+    second = first.dup
+    second.worker = workers(:worker1)
+    second.save!
+    amount_machine = machines(:machines1)
+    free_machine = machines(:taueki_1)
+    hour_machine = machines(:machines3)
+    MachineResult.create!(machine: amount_machine, work_result: first, input_amount: 2000)
+    MachineResult.create!(machine: amount_machine, work_result: second, input_amount: 3000)
+    MachineResult.create!(machine: free_machine, work_result: first, input_amount: 0)
+    MachineResult.create!(machine: hour_machine, work_result: first, hours: 1)
+    MachineResult.create!(machine: hour_machine, work_result: second, hours: 2)
+
+    get work_path(work)
+
+    assert_response :success
+    assert_select "#detail_machines tbody td.numeric", text: "5,000円", count: 1
+    assert_select "#detail_machines tbody td.numeric", text: "0円", count: 1
+    assert_select "#detail_machines tbody td.numeric", text: "3.0", count: 1
+  end
+
 end

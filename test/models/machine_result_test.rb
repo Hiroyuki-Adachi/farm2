@@ -225,4 +225,18 @@ class MachineResultTest < ActiveSupport::TestCase
     end
   end
 
+  test "直接金額は他の作業や機械を含めず稼働データ全件をロードせずに合計する" do
+    result = build_machine_pricing_scenario(source: :machine, adjust: Adjust::AMOUNT,
+                                            worked_at: Date.new(2015, 3, 1), same_home: true)
+    result.update!(input_amount: 1_234_567)
+    FactoryBot.create(:machine_result, machine: result.machine,
+                                       work_result: work_results(:work_results_not_fixed), input_amount: 8000)
+    FactoryBot.create(:machine_result, machine: machines(:machines1),
+                                       work_result: result.work_result, input_amount: 9000)
+    result.work.machine_results.reset
+
+    assert_equal 1_234_567, result.amount
+    assert_not result.work.machine_results.loaded?
+  end
+
 end
