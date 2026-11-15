@@ -90,8 +90,13 @@ class Works::MachinesControllerTest < ActionDispatch::IntegrationTest
 
     get new_work_machine_path(work_id: @work)
     assert_response :success
-    assert_select "input[name='machine_amounts[#{machine.id}][#{result.id}]'][max='9999999'][step='1'][value='1234567.0']"
+    assert_select "input[name='machine_amounts[#{machine.id}][#{result.id}]'][max='9999999'][step='1'][value='1234567']"
     assert_select "input[name='machine_hours[#{machine.id}][#{result.id}]']", count: 0
+
+    displayed_amount = css_select("input[name='machine_amounts[#{machine.id}][#{result.id}]']").first["value"]
+    post work_machines_path(work_id: @work), params: { machine_amounts: { machine.id => { result.id => displayed_amount } } }
+    assert_redirected_to new_work_remark_path(work_id: @work)
+    assert_equal 1_234_567, @work.machine_results.reload.first.input_amount
 
     post work_machines_path(work_id: @work), params: { machine_amounts: { machine.id => { result.id => "9999999" } } }
     assert_redirected_to new_work_remark_path(work_id: @work)

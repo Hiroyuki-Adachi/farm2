@@ -69,7 +69,7 @@
               <% if direct_amount %>
                 <div class="d-flex align-items-center gap-1">
                   <%= number_field_tag "machine_amounts[#{truck.id}][#{work_result.id}]",
-                        params.dig(:machine_amounts, truck.id.to_s, work_result.id.to_s) || entry.input_amount_before_type_cast,
+                        params.dig(:machine_amounts, truck.id.to_s, work_result.id.to_s) || entry.input_amount&.to_i,
                         min: 0, max: 9999999, step: 1, readonly: work.fixed_at.present?,
                         class: "form-control form-control-sm text-end", style: "width: 140px;",
                         aria: { label: "#{truck.owner.name} #{work.worked_at} 使用料（円）" },

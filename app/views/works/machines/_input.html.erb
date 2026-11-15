@@ -1,7 +1,7 @@
 <% entry = machine_result || MachineResult.new(machine: machine, work_result: result) %>
 <% if entry.direct_amount? %>
   <div class="d-flex align-items-center gap-1">
-    <%= number_field_tag "machine_amounts[#{machine.id}][#{result.id}]", params.dig(:machine_amounts, machine.id.to_s, result.id.to_s) || entry.input_amount_before_type_cast,
+    <%= number_field_tag "machine_amounts[#{machine.id}][#{result.id}]", params.dig(:machine_amounts, machine.id.to_s, result.id.to_s) || entry.input_amount&.to_i,
           step: 1, min: 0, max: 9999999, class: "form-control form-control-sm text-end", style: "width: 140px;",
           aria: { label: "#{machine.usual_name} #{result.worker.name} 使用料（円）" } %>
     <span>円</span>

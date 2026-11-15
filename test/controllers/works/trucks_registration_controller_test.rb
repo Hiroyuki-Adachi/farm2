@@ -206,7 +206,14 @@ class Works::TrucksRegistrationControllerTest < ActionDispatch::IntegrationTest
     assert_equal 0, entry.hours
     assert_equal 9_999_999, work.sum_machines_amount
     follow_redirect!
-    assert_select "input[name=?][value=?]", "machine_amounts[#{@home1_truck.id}][#{result.id}]", "9999999.0"
+    assert_select "input[name=?][value=?]", "machine_amounts[#{@home1_truck.id}][#{result.id}]", "9999999"
+
+    displayed_amount = css_select("input[name='machine_amounts[#{@home1_truck.id}][#{result.id}]']").first["value"]
+    post works_trucks_path, params: filter_params.merge(
+      machine_amounts: { @home1_truck.id => { result.id => displayed_amount } }
+    )
+    assert_redirected_to works_trucks_path(filter_params)
+    assert_equal 9_999_999, entry.reload.input_amount
   end
 
   test "直接金額の0円を保持し空欄で利用を削除する" do

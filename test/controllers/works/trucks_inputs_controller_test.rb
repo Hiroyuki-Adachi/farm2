@@ -76,7 +76,7 @@ class Works::TrucksInputsControllerTest < ActionDispatch::IntegrationTest
     MachineResult.create!(machine: @home1_truck, work_result: result, input_amount: 1234567)
     get works_trucks_path, params: filter_params
     assert_response :success
-    assert_select "input[name=?][max='9999999'][step='1'][value='1234567.0']",
+    assert_select "input[name=?][max='9999999'][step='1'][value='1234567']",
                   "machine_amounts[#{@home1_truck.id}][#{result.id}]"
     assert_select "input[name=?]", "machine_hours[#{@home1_truck.id}][#{result.id}]", count: 0
     assert_select "input[name=?][data-action='input->pages--trucks-form#markDirty']",
@@ -101,7 +101,7 @@ class Works::TrucksInputsControllerTest < ActionDispatch::IntegrationTest
     @truck_type.price_headers.first.details.first.update!(adjust_id: Adjust::HOUR.id, price: 500)
     get works_trucks_path, params: filter_params
     assert_response :success
-    assert_select "input[name=?][readonly][value='1234567.0']", "machine_amounts[#{@home1_truck.id}][#{result.id}]"
+    assert_select "input[name=?][readonly][value='1234567']", "machine_amounts[#{@home1_truck.id}][#{result.id}]"
   end
 
   private
