@@ -15,8 +15,9 @@
         <td class="machine"><%= @machines[i] ? @machines[i].usual_name : "" %></td>
         <td class="machine numeric"><% if @machines[i] %>
           <% entries = machine_results_by_machine.fetch(@machines[i].id, []) %>
-          <% if entries.any? { |entry| entry.input_amount.present? } %>
-            <%= number_with_delimiter(entries.sum { |entry| entry.input_amount || 0 }) %>円
+          <% pricing_entry = entries.first %>
+          <% if pricing_entry&.adjust == Adjust::AMOUNT %>
+            <%= number_with_delimiter(pricing_entry.amount) %>円
           <% else %>
             <%= @machines[i].hours(@results.object) %>
           <% end %>

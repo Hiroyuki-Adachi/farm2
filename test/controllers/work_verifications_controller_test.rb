@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class WorkVerificationsControllerTest < ActionDispatch::IntegrationTest
+  include MachineUsageDisplayScenario
   setup do
     @user = users(:users1)  # fixtures からログイン用ユーザーを取得
     login_as(@user)         # ログインをシミュレート
@@ -64,4 +65,39 @@ class WorkVerificationsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :not_found
   end
+  test "確認画面は料金マスタを時間単価へ変更した場合に残存金額を表示しない" do
+    work = works(:work_not_fixed)
+    entry, detail = build_machine_usage_display_scenario(work: work, adjust: Adjust::AMOUNT, input_amount: 5000)
+    detail.update!(adjust_id: Adjust::HOUR.id, price: 500)
+    assert_equal 1000, MachineResult.find(entry.id).amount
+
+    get work_verification_path(work_id: work)
+
+    assert_response :success
+    assert_select ".modal-body table:last-child tbody td.numeric", text: "2.00"
+    assert_select ".modal-body td.numeric", text: /円/, count: 0
+  end
+
+  test "確認画面は直接入力の0円を時間と区別して表示する" do
+    work = works(:work_not_fixed)
+    build_machine_usage_display_scenario(work: work, adjust: Adjust::AMOUNT, input_amount: 0)
+
+    get work_verification_path(work_id: work)
+
+    assert_response :success
+    assert_select ".modal-body td.numeric", text: "0円"
+  end
+
+  test "確認画面は直接入力に変更した未入力の使用料を0円と表示する" do
+    work = works(:work_not_fixed)
+    entry, detail = build_machine_usage_display_scenario(work: work, adjust: Adjust::HOUR)
+    detail.update!(adjust_id: Adjust::AMOUNT.id)
+    assert_equal 0, MachineResult.find(entry.id).amount
+
+    get work_verification_path(work_id: work)
+
+    assert_response :success
+    assert_select ".modal-body td.numeric", text: "0円"
+  end
+
 end
