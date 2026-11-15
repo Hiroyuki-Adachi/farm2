@@ -48,6 +48,28 @@ class WorkTypeOrganizationValidationTest < ActiveSupport::TestCase
     end
   end
 
+  test "作業分類を代入済みなら作業分類を引き直さない" do
+    record = OwnedRicePrice.new(organization: @organization, work_type: @other_work_type)
+
+    assert_no_queries_match(/FROM "work_types"/) { record.valid? }
+    assert_includes record.errors[:work_type_id], MESSAGE
+  end
+
+  test "作業分類IDだけを指定したときもDBから組織を引いて検証する" do
+    record = OwnedRicePrice.new(organization: @organization, work_type_id: @other_work_type.id)
+
+    record.valid?
+    assert_includes record.errors[:work_type_id], MESSAGE
+  end
+
+  test "読み込み済みの作業分類とIDが食い違うときはIDの作業分類で検証する" do
+    record = OwnedRicePrice.new(organization: @organization, work_type: @own_work_type)
+    record.work_type_id = @other_work_type.id
+
+    record.valid?
+    assert_includes record.errors[:work_type_id], MESSAGE
+  end
+
   test "親の組織が変わると作業分類の組織を検証し直す" do
     land_cost = LandCost.create!(land: lands(:lands0), work_type: @own_work_type, activated_on: Date.new(2015, 1, 1))
 

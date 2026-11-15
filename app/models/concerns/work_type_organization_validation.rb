@@ -30,9 +30,20 @@ module WorkTypeOrganizationValidation
     organization_id = organization.respond_to?(:call) ? instance_exec(&organization) : send(organization)
     return if organization_id.blank?
 
-    work_type_organization_id = WorkType.with_discarded.where(id: work_type_id).pick(:organization_id)
+    work_type_organization_id = loaded_work_type_organization_id ||
+                                WorkType.with_discarded.where(id: work_type_id).pick(:organization_id)
     return if work_type_organization_id.nil? || work_type_organization_id == organization_id
 
     errors.add(:work_type_id, MESSAGE)
+  end
+
+  # work_type をすでに読み込んでいる(代入して保存するなど)ときは、追加のクエリを発行しない。
+  # 関連に論理削除の除外条件があるモデルもあるため、読み込み済みでなければDBから引く。
+  def loaded_work_type_organization_id
+    association = association(:work_type)
+    return unless association.loaded?
+
+    work_type = association.target
+    work_type.organization_id if work_type&.id == work_type_id
   end
 end
