@@ -74,7 +74,6 @@ class ChemicalStock::RefresherTest < ActiveSupport::TestCase
       new_chemical_id = chemicals(:chemicals0).id
       ChemicalStock::Refresher.new(1, old_chemical_id).call
       old_stock = ChemicalStock.find_by!(work_chemical_id: work_chemical.id)
-      old_attributes = old_stock.attributes
       work_chemical.update!(chemical_id: new_chemical_id)
 
       chemical_ids = [old_chemical_id, new_chemical_id]
@@ -82,7 +81,8 @@ class ChemicalStock::RefresherTest < ActiveSupport::TestCase
       chemical_ids.each do |chemical_id|
         ChemicalStock::Refresher.new(1, chemical_id).call
         if order == :new_first && chemical_id == new_chemical_id
-          assert_equal old_attributes, old_stock.reload.attributes
+          assert_not ChemicalStock.exists?(old_stock.id)
+          assert_changed_chemical_stock(work_chemical, new_chemical_id)
         end
       end
 
@@ -94,6 +94,35 @@ class ChemicalStock::RefresherTest < ActiveSupport::TestCase
       end
       assert_changed_chemical_stock(work_chemical, new_chemical_id)
     end
+  end
+
+  test "新薬剤だけ再計算してから使用行を削除しても在庫行が残らない" do
+    work_chemical = work_chemicals(:work_chemical_stock)
+    ChemicalStock::Refresher.new(1, work_chemical.chemical_id).call
+    work_chemical.update!(chemical: chemicals(:chemicals0))
+
+    ChemicalStock::Refresher.new(1, work_chemical.chemical_id).call
+
+    assert_equal 1, ChemicalStock.where(work_chemical_id: work_chemical.id).count
+    assert_equal work_chemical.chemical_id, work_chemical.reload.stock.chemical_id
+    work_chemical.destroy!
+    assert_not ChemicalStock.exists?(work_chemical_id: work_chemical.id)
+  end
+
+  test "新薬剤の在庫保存に失敗したら旧薬剤の在庫行の削除を取り消す" do
+    work_chemical = work_chemicals(:work_chemical_stock)
+    ChemicalStock::Refresher.new(1, work_chemical.chemical_id).call
+    old_stock = ChemicalStock.find_by!(work_chemical_id: work_chemical.id)
+    old_attributes = old_stock.attributes
+    work_chemical.update!(chemical: chemicals(:chemicals0))
+    ChemicalStock.any_instance.stubs(:save!).raises(ActiveRecord::RecordInvalid)
+
+    assert_raises(ActiveRecord::RecordInvalid) do
+      ChemicalStock::Refresher.new(1, work_chemical.chemical_id).call
+    end
+
+    assert_equal old_attributes, old_stock.reload.attributes
+    assert_equal 1, ChemicalStock.where(work_chemical_id: work_chemical.id).count
   end
 
   private
