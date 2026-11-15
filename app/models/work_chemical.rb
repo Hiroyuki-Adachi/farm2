@@ -76,6 +76,7 @@ class WorkChemical < ApplicationRecord
   scope :for_stock, lambda { |chemical_id, start_date, organization = nil|
     joins(:work)
       .includes(:chemical)
+      .preload(work: [:work_type, :work_kind])
       .where("works.worked_at >= ? AND work_chemicals.chemical_id = ?", start_date, chemical_id)
       .then { |base| organization ? base.where(works: { organization_id: organization.is_a?(Organization) ? organization.id : organization }) : base }
       .order("works.worked_at, works.id")

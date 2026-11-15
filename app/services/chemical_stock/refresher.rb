@@ -56,7 +56,7 @@ class ChemicalStock::Refresher
   def from_work(start_date)
     work_stocks.update_all(using: 0) # rubocop:disable Rails/SkipsModelValidations
     WorkChemical.for_stock(@chemical_id, start_date, @organization_id).each do |work_chemical|
-      stock = ChemicalStock.for_organization(@organization_id).find_by(work_chemical_id: work_chemical.id)
+      stock = stocks.find_by(work_chemical_id: work_chemical.id)
       if stock
         stock.update!(work_stock_attributes(work_chemical))
       else

@@ -66,4 +66,47 @@ class ChemicalStock::RefresherTest < ActiveSupport::TestCase
     assert_equal 2, other_stock.organization_id
     assert_equal 999, other_stock.using
   end
+
+  [:old_first, :new_first].each do |order|
+    test "薬剤変更後の在庫を正しく再計算する(#{order})" do
+      work_chemical = work_chemicals(:work_chemical_stock)
+      old_chemical_id = work_chemical.chemical_id
+      new_chemical_id = chemicals(:chemicals0).id
+      ChemicalStock::Refresher.new(1, old_chemical_id).call
+      old_stock = ChemicalStock.find_by!(work_chemical_id: work_chemical.id)
+      old_attributes = old_stock.attributes
+      work_chemical.update!(chemical_id: new_chemical_id)
+
+      chemical_ids = [old_chemical_id, new_chemical_id]
+      chemical_ids.reverse! if order == :new_first
+      chemical_ids.each do |chemical_id|
+        ChemicalStock::Refresher.new(1, chemical_id).call
+        if order == :new_first && chemical_id == new_chemical_id
+          assert_equal old_attributes, old_stock.reload.attributes
+        end
+      end
+
+      assert_not ChemicalStock.exists?(old_stock.id)
+      assert_changed_chemical_stock(work_chemical, new_chemical_id)
+
+      assert_no_difference('ChemicalStock.count') do
+        chemical_ids.each { |chemical_id| ChemicalStock::Refresher.new(1, chemical_id).call }
+      end
+      assert_changed_chemical_stock(work_chemical, new_chemical_id)
+    end
+  end
+
+  private
+
+  def assert_changed_chemical_stock(work_chemical, new_chemical_id)
+    stock = ChemicalStock.find_by!(work_chemical_id: work_chemical.id)
+    work = work_chemical.work
+    quantity = work_chemical.quantity_for_stock
+    assert_equal new_chemical_id, stock.chemical_id
+    assert_equal quantity, stock.using
+    assert_equal(-quantity, stock.adjust)
+    assert_equal work.worked_at, stock.stock_on
+    assert_equal "#{work.work_type.name}(#{work.work_kind.name})", stock.name
+    assert_equal 1, ChemicalStock.where(work_chemical_id: work_chemical.id).count
+  end
 end
