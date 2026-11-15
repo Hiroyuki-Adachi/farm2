@@ -384,8 +384,8 @@ class Work < ApplicationRecord
     Work::LandsRegistrar.new(self, params).call
   end
 
-  def regist_machines(params)
-    Work::MachinesRegistrar.new(self, params).call
+  def regist_machines(params, amounts = {})
+    Work::MachinesRegistrar.new(self, params, amounts).call
   end
 
   def regist_chemicals(params)

@@ -14,3 +14,7 @@
   per: Day
   name: "1日あたり"
   unit: "日"
+- id: 4
+  per: Amount
+  name: "金額直接入力"
+  unit: "円"

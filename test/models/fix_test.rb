@@ -111,4 +111,27 @@ class FixTest < ActiveSupport::TestCase
     assert_equal @term, created_fix.term
     assert_equal @no_fix_works.size, created_fix.works_count
   end
+  test "7桁の直接入力額を確定しマスタ変更後も保持し取消後も入力額を残す" do
+    work = works(:work_no_fix1)
+    work.machine_results.destroy_all
+    result = work.work_results.first
+    machine = machines(:machines1)
+    machine.price_headers.destroy_all
+    header = FactoryBot.create(:machine_price_header, machine: machine, validated_at: Date.new(1900, 1, 1))
+    lease = machine.home_id == result.worker.home_id ? :normal : :lease
+    detail = FactoryBot.create(:machine_price_detail, header: header, lease_id: lease, adjust_id: Adjust::AMOUNT.id, price: 0)
+    entry = MachineResult.create!(machine: machine, work_result: result, input_amount: 9_999_999)
+
+    fix = Fix.do_fix(@organization, @term, @fixed_at, @worker_id, [work.id])
+    assert_equal 9_999_999, fix.machines_amount
+    assert_equal 9_999_999, entry.reload.fixed_amount
+    assert_equal 0, entry.fixed_price
+    assert_includes MachineResult.for_fix(@term, @fixed_at, @organization).ids, entry.id
+    detail.update!(adjust_id: Adjust::DAY.id, price: 100)
+    assert_equal 9_999_999, MachineResult.find(entry.id).amount
+    fix.destroy!
+    assert_nil entry.reload.fixed_amount
+    assert_equal 9_999_999, entry.input_amount
+  end
+
 end

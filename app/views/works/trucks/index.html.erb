@@ -1,4 +1,12 @@
 <h1>自家用車利用一覧</h1>
+<% if @registration_errors.present? %>
+  <div class="alert alert-danger" role="alert">
+    <% @registration_errors.each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+<% end %>
+<p>金額直接入力の車両は使用料（円）を入力してください。空欄は利用なし、0円は無料の利用として登録します。</p>
 <div data-controller="pages--trucks-form">
 <% if @work_kinds.present? %>
   <div class="overflow-auto mb-2">
@@ -56,7 +64,21 @@
           <% machine_result = @machine_result_hours[[truck.id, work_result.id]] if work_result %>
           <td>
             <% if work_result && @machine_active_by_work_id_and_machine_id[[work.id, truck.id]] %>
-              <%= number_field_tag "machine_hours[#{truck.id}][#{work_result.id}]", machine_result&.hours || 0, {min: 0, max: 9.5, step: machine_hours_step(machine_result&.hours), required: true, readonly: work.fixed_at.present?, class: "form-control form-control-sm", style: "width: 80px;", data: { "pages--trucks-form-target": "input", action: "input->pages--trucks-form#markDirty" }} %>
+              <% entry = machine_result || MachineResult.new(machine: truck, work_result: work_result) %>
+              <% direct_amount = work.fixed_at.present? && machine_result ? entry.fixed_adjust == Adjust::AMOUNT : entry.direct_amount? %>
+              <% if direct_amount %>
+                <div class="d-flex align-items-center gap-1">
+                  <%= number_field_tag "machine_amounts[#{truck.id}][#{work_result.id}]",
+                        params.dig(:machine_amounts, truck.id.to_s, work_result.id.to_s) || entry.input_amount&.to_i,
+                        min: 0, max: 9999999, step: 1, readonly: work.fixed_at.present?,
+                        class: "form-control form-control-sm text-end", style: "width: 140px;",
+                        aria: { label: "#{truck.owner.name} #{work.worked_at} 使用料（円）" },
+                        data: { "pages--trucks-form-target": "input", action: "input->pages--trucks-form#markDirty" } %>
+                  <span>円</span>
+                </div>
+              <% else %>
+                <%= number_field_tag "machine_hours[#{truck.id}][#{work_result.id}]", params.dig(:machine_hours, truck.id.to_s, work_result.id.to_s) || entry.hours || 0, {min: 0, max: 9.5, step: machine_hours_step(entry.hours), required: true, readonly: work.fixed_at.present?, class: "form-control form-control-sm", style: "width: 80px;", data: { "pages--trucks-form-target": "input", action: "input->pages--trucks-form#markDirty" }} %>
+              <% end %>
             <% end %>
           </td>
         <% end %>

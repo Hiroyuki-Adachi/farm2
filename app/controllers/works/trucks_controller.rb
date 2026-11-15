@@ -11,7 +11,10 @@ class Works::TrucksController < ApplicationController
 
   def create
     set_truck_context
-    save_machine_hours
+    unless save_machine_hours
+      render :index, status: :unprocessable_content
+      return
+    end
 
     redirect_to works_trucks_path(filter_params), notice: "登録しました。"
   end
@@ -162,18 +165,22 @@ class Works::TrucksController < ApplicationController
   end
 
   def save_machine_hours
-    Work::TrucksRegistrar.new(
-      machine_hours: machine_hour_params,
+    registrar = Work::TrucksRegistrar.new(
+      machine_hours: machine_input_params(:machine_hours),
+      machine_amounts: machine_input_params(:machine_amounts),
       trucks: @all_trucks,
       work_results: @work_result_by_work_id_and_machine_id.values.uniq
-    ).call
+    )
+    success = registrar.call
+    @registration_errors = registrar.errors
+    success
   end
 
-  def machine_hour_params
-    machine_hours = params[:machine_hours]
-    machine_hours = ActionController::Parameters.new unless machine_hours.is_a?(ActionController::Parameters)
+  def machine_input_params(key)
+    inputs = params[key]
+    inputs = ActionController::Parameters.new unless inputs.is_a?(ActionController::Parameters)
 
-    machine_hours.permit!.to_h
+    inputs.permit!.to_h
   end
 
   def filter_params

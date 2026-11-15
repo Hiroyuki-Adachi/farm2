@@ -126,4 +126,17 @@ class MachinePricesControllerTest < ActionDispatch::IntegrationTest
 
     assert_nil MachinePriceHeader.find_by(id: @machine_price_m.id)
   end
+  test "直接入力区分は単価を送信せず登録でき既存単価も0にする" do
+    [nil, "99999"].each do |price|
+      patch machine_price_header_path(@machine_price_m), params: {
+        machine_price_header: { validated_at: @machine_price_m.validated_at },
+        details_form: { 1 => { 0 => { adjust_id: Adjust::AMOUNT.id, price: price } } }
+      }
+      assert_response :redirect
+      detail = @machine_price_m.details.find_by!(lease_id: :normal, work_kind_id: 0)
+      assert_equal Adjust::AMOUNT.id, detail.adjust_id
+      assert_equal 0, detail.price
+    end
+  end
+
 end
