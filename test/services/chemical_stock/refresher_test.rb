@@ -125,6 +125,45 @@ class ChemicalStock::RefresherTest < ActiveSupport::TestCase
     assert_equal 1, ChemicalStock.where(work_chemical_id: work_chemical.id).count
   end
 
+  test "作業在庫の更新失敗で一括リセットした使用量も元に戻る" do
+    work_chemical = work_chemicals(:work_chemical_stock)
+    refresher = ChemicalStock::Refresher.new(1, work_chemical.chemical_id)
+    refresher.call
+    before_stocks = ChemicalStock.order(:id).map(&:attributes)
+    ChemicalStock.any_instance.stubs(:save!).raises(ActiveRecord::RecordInvalid)
+
+    assert_raises(ActiveRecord::RecordInvalid) { refresher.call }
+
+    assert_equal before_stocks, ChemicalStock.order(:id).map(&:attributes)
+  end
+
+  test "残量計算の失敗で旧薬剤行の削除と新在庫作成も元に戻る" do
+    work_chemical = work_chemicals(:work_chemical_stock)
+    ChemicalStock::Refresher.new(1, work_chemical.chemical_id).call
+    work_chemical.update!(chemical: chemicals(:chemicals0))
+    before_stocks = ChemicalStock.order(:id).map(&:attributes)
+    refresher = ChemicalStock::Refresher.new(1, work_chemical.chemical_id)
+    refresher.stubs(:accumulate).raises(ActiveRecord::RecordInvalid)
+
+    assert_raises(ActiveRecord::RecordInvalid) { refresher.call }
+
+    assert_equal before_stocks, ChemicalStock.order(:id).map(&:attributes)
+  end
+
+  test "期首在庫の保存失敗でも再計算前の在庫に戻る" do
+    work_chemical = work_chemicals(:work_chemical_stock)
+    ChemicalStock::Refresher.new(1, work_chemical.chemical_id).call
+    work_chemical.update!(chemical: chemicals(:chemicals0))
+    before_stocks = ChemicalStock.order(:id).map(&:attributes)
+    ChemicalStock.stubs(:create!).raises(ActiveRecord::RecordInvalid)
+
+    assert_raises(ActiveRecord::RecordInvalid) do
+      ChemicalStock::Refresher.new(1, work_chemical.chemical_id).call
+    end
+
+    assert_equal before_stocks, ChemicalStock.order(:id).map(&:attributes)
+  end
+
   private
 
   def assert_changed_chemical_stock(work_chemical, new_chemical_id)
