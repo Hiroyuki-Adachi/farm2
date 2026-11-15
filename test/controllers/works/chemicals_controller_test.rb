@@ -178,4 +178,28 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[name='chemicals[#{chemical.id}][2][quantity]'][value='']"
     assert_match '希釈倍率は99999.9以下の値にしてください', response.body
   end
+
+  test "薬剤の切り替えは使用行と在庫行を削除して別の使用行を作成する" do
+    old_chemical = chemicals(:chemicals3)
+    new_chemical = chemicals(:chemicals0)
+    old_usage = @work.work_chemicals.create!(chemical: old_chemical, quantity: 10)
+    ChemicalStock::Refresher.new(1, old_chemical.id).call
+    old_stock = ChemicalStock.find_by!(work_chemical_id: old_usage.id)
+
+    post work_use_chemicals_path(work_id: @work), params: {
+      chemicals: {
+        old_chemical.id => { 1 => { quantity: 0, dilution_id: Dilution::NONE.id } },
+        new_chemical.id => { 1 => { quantity: 20, dilution_id: Dilution::NONE.id } }
+      },
+      work: { chemical_group_flag: false }
+    }
+
+    assert_redirected_to work_path(@work)
+    assert_not WorkChemical.exists?(old_usage.id)
+    assert_not ChemicalStock.exists?(old_stock.id)
+    new_usage = @work.work_chemicals.find_by!(chemical_id: new_chemical.id)
+    assert_not_equal old_usage.id, new_usage.id
+    ChemicalStock::Refresher.new(1, new_chemical.id).call
+    assert_equal 20, ChemicalStock.find_by!(work_chemical_id: new_usage.id).using
+  end
 end
