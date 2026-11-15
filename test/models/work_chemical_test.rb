@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'active_record/testing/query_assertions'
 
 # == Schema Information
 #
@@ -22,8 +21,6 @@ require 'active_record/testing/query_assertions'
 #  work_chemicals_2nd_key  (work_id,chemical_id,chemical_group_no) UNIQUE
 #
 class WorkChemicalTest < ActiveSupport::TestCase
-  include ActiveRecord::Assertions::QueryAssertions
-
   test "希釈水量(使用量単位がcc/gの場合)" do
     chemical = Chemical.new(unit: "cc")
     work_chemical = WorkChemical.new(
