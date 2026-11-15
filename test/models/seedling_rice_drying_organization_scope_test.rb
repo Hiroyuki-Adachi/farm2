@@ -19,10 +19,10 @@ class SeedlingRiceDryingOrganizationScopeTest < ActiveSupport::TestCase
       home: @other_home, plan: plan_work_types(:plan_work_type_kinu), quantity: 1
     )
     @other_plan_land = PlanLand.create!(
-      user: users(:user_admin_org2), land: @other_land, work_type: work_types(:work_types1), term: 2015
+      user: users(:user_admin_org2), land: @other_land, work_type: work_types(:work_type_org2), term: 2015
     )
     @other_drying = Drying.create!(
-      home: @other_home, work_type: work_types(:work_types1), term: 2015,
+      home: @other_home, work_type: work_types(:work_type_org2), term: 2015,
       carried_on: Date.new(2015, 9, 30), drying_type_id: :country
     )
     @other_drying_land = DryingLand.create!(drying: @other_drying, land: @other_land, display_order: 1)
@@ -72,7 +72,7 @@ class SeedlingRiceDryingOrganizationScopeTest < ActiveSupport::TestCase
 
   test "作付計画には利用者と同じ組織の土地だけを指定できる" do
     plan_land = PlanLand.new(
-      user: users(:user_manager), land: @other_land, work_type: work_types(:work_types1), term: 2015
+      user: users(:user_manager), land: @other_land, work_type: work_types(:work_type_org2), term: 2015
     )
 
     assert_not plan_land.valid?

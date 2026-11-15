@@ -5522,7 +5522,7 @@ work_other_org:
   term: '2015'
   worked_at: '2015-04-01'
   weather_id: '1'
-  work_type_id: '11'
+  work_type: work_type_org2
   name: "別組織作業"
   start_at: '2015-04-01 08:00:00'
   end_at: '2015-04-01 12:00:00'

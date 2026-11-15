@@ -15,8 +15,12 @@
 #
 
 class ChemicalWorkType < ApplicationRecord
+  include WorkTypeOrganizationValidation
+
   belongs_to :chemical_term
   belongs_to :work_type
+
+  validates_work_type_organization organization: -> { chemical_term&.organization_id }, watch: [:chemical_term_id]
   delegate :chemical, to: :chemical_term
   after_save :save_for_zero
 

@@ -52,7 +52,7 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
   test "別組織の乾燥編集" do
     drying = Drying.create!(
       term: systems(:s2015).term,
-      work_type_id: work_types(:work_type_koshi).id,
+      work_type_id: work_types(:work_type_org2).id,
       home_id: homes(:home_other_org).id,
       drying_type_id: :country,
       carried_on: Date.new(2015, 8, 31),

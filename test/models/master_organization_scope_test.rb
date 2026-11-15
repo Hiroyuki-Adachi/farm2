@@ -36,7 +36,7 @@ class MasterOrganizationScopeTest < ActiveSupport::TestCase
 
   test "経費作業種別は親経費の組織を引き継ぐ" do
     expense_work_type = ExpenseWorkType.new(
-      expense: expenses(:expense_other_org), work_type: work_types(:work_types1), rate: 1
+      expense: expenses(:expense_other_org), work_type: work_types(:work_type_org2), rate: 1
     )
 
     expense_work_type.valid?

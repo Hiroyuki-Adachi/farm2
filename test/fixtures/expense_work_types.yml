@@ -52,5 +52,5 @@ expence_work_type_genka2:
 
 expense_work_type_other_org:
   expense: expense_other_org
-  work_type: work_type_koshi
+  work_type: work_type_org2
   organization_id: 2

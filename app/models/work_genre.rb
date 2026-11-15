@@ -9,7 +9,7 @@
 #  name(名称)                     :string(10)       default(""), not null
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
-#  organization_id(組織)          :bigint
+#  organization_id(組織)          :bigint           not null
 #  work_category_id(作業カテゴリ) :bigint           not null
 #
 # Indexes
@@ -26,7 +26,7 @@
 class WorkGenre < ApplicationRecord
   include Discard::Model
 
-  belongs_to :organization, optional: true
+  belongs_to :organization, optional: false
   belongs_to :category, class_name: "WorkCategory", foreign_key: "work_category_id"
   has_many :work_types, class_name: "WorkType", dependent: :restrict_with_error
 

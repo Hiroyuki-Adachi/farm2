@@ -32,7 +32,7 @@ class Gaps::MonthlyReportsControllerTest < ActionDispatch::IntegrationTest
 
   def create_other_organization_monthly_report_work
     work_type = WorkType.create!(
-      genre: work_genres(:genre_rice),
+      genre: work_genres(:genre_rice_org2),
       name: "他組織月報",
       display_order: 999,
       land_flag: true

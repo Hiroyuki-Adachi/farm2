@@ -14,7 +14,7 @@ class PersonalInformations::MapsControllerTest < ActionDispatch::IntegrationTest
     other_land = lands(:land_other_org)
     other_land.update!(region: "((35.474177,133.047340), (35.472866,133.047340), (35.472648,133.049056))")
     LandCost.find_or_create_by!(land: other_land, activated_on: Date.new(1900, 1, 1)) do |cost|
-      cost.work_type = work_types(:work_type_koshi)
+      cost.work_type = work_types(:work_type_org2)
     end
 
     get personal_information_maps_path(personal_information_token: @user.token)
