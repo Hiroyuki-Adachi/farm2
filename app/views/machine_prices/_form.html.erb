@@ -19,8 +19,12 @@
         <tr>
           <th><%= I18n.t("activerecord.enums.machine_price_detail.lease_ids.#{lease_code}") %></th>
           <% work_kinds.each do |work_kind| %>
-            <td><%= select_tag("details_form[#{lease_id}][#{work_kind.id}][adjust_id]", options_from_collection_for_select(@adjusts, :id, :name, @machine_price.details_form[lease_id][work_kind.id][:adjust_id]), {class: "form-select"}) %></td>
-            <td><%= number_field_tag("details_form[#{lease_id}][#{work_kind.id}][price]", @machine_price.details_form[lease_id][work_kind.id][:price], {min: 0, max: 99999, required: true, step: 1, class: "form-control"}) %></td>
+            <% direct_amount = @machine_price.details_form[lease_id][work_kind.id][:adjust_id].to_i == Adjust::AMOUNT.id %>
+            <td colspan="2" data-controller="machine-price-unit" data-machine-price-unit-amount-value="<%= Adjust::AMOUNT.id %>">
+              <div class="d-flex gap-2"><%= select_tag("details_form[#{lease_id}][#{work_kind.id}][adjust_id]", options_from_collection_for_select(@adjusts, :id, :name, @machine_price.details_form[lease_id][work_kind.id][:adjust_id]), {class: "form-select", data: { machine_price_unit_target: "unit", action: "change->machine-price-unit#update" }}) %>
+              <%= number_field_tag("details_form[#{lease_id}][#{work_kind.id}][price]", @machine_price.details_form[lease_id][work_kind.id][:price], {min: 0, max: 99999, required: !direct_amount, disabled: direct_amount, hidden: direct_amount, step: 1, class: "form-control", data: { machine_price_unit_target: "price" }}) %>
+              </div>
+            </td>
           <% end %>
         </tr>
       <% end %>

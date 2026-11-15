@@ -1,5 +1,6 @@
 <h1>作業日報(作業機械)登録</h1>
 <%= error_print(@work) %>
+<p>金額直接入力の機械は使用料（円）を入力してください。空欄は利用なし、0円は無料の利用として登録します。同じ機械の入力額は作業内で合計します。</p>
 <%= form_with(model: @work, url: {action: :create}, html: {method: :post}) do |f| %>
 <%= render(:partial => 'show_work', :locals => {:f => f}) %>
   <% if @results.count == 0 %>
@@ -28,7 +29,7 @@
               <td><%= result.worker.name %></td>
                 <% @company_machines.each do |machine| %>
                   <% machine_result = result.machine_results.where(machine_id: machine).first %>
-                  <td><%= number_field_tag "machine_hours[#{machine.id}][#{result.id}]", machine_result ? machine_result.hours : 0, {step: machine_hours_step(machine_result&.hours), min: 0, max: 99, class: "form-control", style: "width: 80px;"} %></td>
+                  <td><%= render "input", machine: machine, result: result, machine_result: machine_result %></td>
                 <% end %>
             </tr>
           <% end %>
@@ -59,7 +60,7 @@
                   <%   machine = machines.first %>
                   <%   machine_results = result.machine_results.where(machine_id: machine) %>
                   <% machine_result = machine_results.first %>
-                  <td><%= number_field_tag "machine_hours[#{machine.id}][#{result.id}]", machine_result ? machine_result.hours : 0, {step: machine_hours_step(machine_result&.hours), min: 0, max: 99, class: "form-control form-control-sm", style: "width: 80px;"} %></td>
+                  <td><%= render "input", machine: machine, result: result, machine_result: machine_result %></td>
                   <% else %>
                   <td>&nbsp;</td>
                   <% end %>
@@ -87,7 +88,7 @@
                 <% @lease_machines.each do |machine| %>
                   <% machine_result = result.machine_results.where(machine_id: machine).first %>
                   <td>
-                    <%= number_field_tag "machine_hours[#{machine.id}][#{result.id}]", machine_result ? machine_result.hours : 0, {step: machine_hours_step(machine_result&.hours), min: 0, max: 99, class: "form-control form-control-sm", style: "width: 80px;"} %>
+                    <%= render "input", machine: machine, result: result, machine_result: machine_result %>
                   </td>
                 <% end %>
             </tr>

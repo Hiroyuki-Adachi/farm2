@@ -33,6 +33,22 @@ class MachineResult < ApplicationRecord
   has_one :machine_type, -> { with_deleted }, through: :machine
   has_one :work_kind, -> { with_deleted }, through: :work
 
+  validates :input_amount, numericality: {
+    only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 9_999_999
+  }, allow_nil: true
+
+  def price_detail
+    details = machine.price_details(work)
+    return unless details
+
+    details = details.where(lease_id: owner.id == work_result.worker.home_id ? :normal : :lease)
+    details.find_by(work_kind_id: work.work_kind_id) || details.find_by(work_kind_id: 0)
+  end
+
+  def direct_amount?
+    price_detail&.adjust == Adjust::AMOUNT
+  end
+
   scope :for_organization, ->(organization) { joins(:work).merge(Work.for_organization(organization)) }
 
   scope :by_home, lambda { |term, organization = nil|
@@ -162,49 +178,42 @@ class MachineResult < ApplicationRecord
   private
 
   def calc_amount
-    price_details = machine.price_details(work)
-    unless price_details
+    price_detail = self.price_detail
+    unless price_detail
       clear_amount
       return
     end
 
-    price_details = if owner.id == work_result.worker.home_id
-                      price_details.where(lease_id: :normal)
-                    else
-                      price_details.where(lease_id: :lease)
-                    end
-    unless price_details.exists?
-      clear_amount
-      return
-    end
-
-    price_details = if price_details.exists?(work_kind_id: work.work_kind.id)
-                      price_details.where(work_kind_id: work.work_kind.id)
-                    else
-                      price_details.where(work_kind_id: 0)
-                    end
-    unless price_details.exists?
-      clear_amount
-      return
-    end
-
-    price_detail = price_details.first
     @adjust = price_detail.adjust
     if @adjust == Adjust::NONE
       clear_amount
       return
     end
 
+    if @adjust == Adjust::AMOUNT
+      # 単価は5桁のため、直接入力額は使用料としてのみ確定する。
+      @price = 0
+      @quantity = 0
+      @amount = work.machine_results
+        .select { |result| result.machine_id == machine_id }
+        .sum { |result| result.input_amount || 0 }
+      return
+    end
+
     @price = price_detail.price
-    @quantity = case @adjust
-                when Adjust::HOUR
-                  sum_hours
-                when Adjust::AREA
-                  work.sum_areas / 10
-                when Adjust::DAY
-                  1
-                end
+    @quantity = calculated_quantity
     @amount = @price * @quantity
+  end
+
+  def calculated_quantity
+    case @adjust
+    when Adjust::HOUR
+      sum_hours
+    when Adjust::AREA
+      work.sum_areas / 10
+    when Adjust::DAY
+      1
+    end
   end
 
   def clear_amount

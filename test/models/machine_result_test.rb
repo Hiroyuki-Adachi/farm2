@@ -193,4 +193,36 @@ class MachineResultTest < ActiveSupport::TestCase
     assert_equal 3, result.quantity
     assert_equal 6300, result.amount
   end
+  test "金額直接入力はマスタ単価や時間を掛けず作業内の入力額を一度だけ合計する" do
+    result = build_machine_pricing_scenario(source: :machine, adjust: Adjust::AMOUNT,
+                                            worked_at: Date.new(2015, 3, 1), same_home: false)
+    result.update!(input_amount: 1_234_567)
+    worker = FactoryBot.create(:worker, organization: result.work.organization, home: result.work_result.worker.home)
+    other = FactoryBot.create(:work_result, work: result.work, worker: worker)
+    FactoryBot.create(:machine_result, machine: result.machine, work_result: other, input_amount: 765_433)
+    assert_equal Adjust::AMOUNT, result.adjust
+    assert_equal 0, result.price
+    assert_equal 0, result.quantity
+    assert_equal 2_000_000, result.amount
+    assert_equal 2_000_000, result.work.sum_machines_amount
+  end
+
+  test "金額直接入力は機種別と作業種別別の設定も使用する" do
+    result = build_machine_pricing_scenario(source: :machine_type, adjust: Adjust::AMOUNT,
+                                            worked_at: Date.new(2015, 3, 1), same_home: true,
+                                            work_kind_specific: true)
+    result.update!(input_amount: 9_999_999)
+    assert_predicate result, :direct_amount?
+    assert_equal 9_999_999, result.amount
+  end
+
+  test "直接入力使用料は7桁以内の非負整数に限る" do
+    result = MachineResult.new
+    ["-1", "1.5", "10000000", "abc"].each do |value|
+      result.input_amount = value
+      result.valid?
+      assert result.errors[:input_amount].present?, value
+    end
+  end
+
 end

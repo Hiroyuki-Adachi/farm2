@@ -3,7 +3,7 @@
     <thead>
     <tr>
       <th style="width:180px;">機械名</th>
-      <th style="width:60px;">稼働</th>
+      <th style="width:120px;">稼働／使用料</th>
       <th style="width:180px;">オペレーター</th>
       <th style="width:300px;">備考(ヒヤリ・ハット含む)</th>
     </tr>
@@ -12,7 +12,14 @@
       <% [current_organization.machines_count, @machines.count].max.times do |i| %>
       <tr>
         <td class="machine"><%= @machines[i] ? @machines[i].usual_name : "" %></td>
-        <td class="machine numeric"><%=@machines[i] ? @machines[i].hours(@results.object) : "" %></td>
+        <td class="machine numeric"><% if @machines[i] %>
+          <% entries = @work.machine_results.select { |entry| entry.machine_id == @machines[i].id } %>
+          <% if entries.any? { |entry| entry.input_amount.present? } %>
+            <%= number_with_delimiter(entries.sum { |entry| entry.input_amount || 0 }) %>円
+          <% else %>
+            <%= @machines[i].hours(@results.object) %>
+          <% end %>
+        <% end %></td>
         <td class="machine"><%= @machines[i] ? @machines[i].operators(@work) : "" %></td>
         <td class="machine"><%= @machines[i] ? @machines[i].remarks(@work)&.remarks : "" %></td>
       </tr>

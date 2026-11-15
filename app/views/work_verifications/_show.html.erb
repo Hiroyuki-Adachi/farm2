@@ -43,7 +43,7 @@
             <th>種別</th>
             <th>機械</th>
             <th>オペレーター</th>
-            <th class="numeric" style="width:6em;">稼動時間</th>
+            <th class="numeric" style="width:6em;">稼動時間／使用料</th>
           </tr>
         </thead>
         <tbody>
@@ -52,7 +52,7 @@
               <td><%= machine_result.machine.type_name %></td>
               <td><%= machine_result.machine.alias_name %></td>
               <td><%= machine_result.work_result.worker.name %></td>
-              <td class="numeric"><%= sprintf("%.2f", machine_result.hours) %></td>
+              <td class="numeric"><%= machine_result.input_amount.present? ? "#{number_with_delimiter(machine_result.input_amount)}円" : sprintf("%.2f", machine_result.hours) %></td>
             </tr>
           <% end %>
         </tbody>
