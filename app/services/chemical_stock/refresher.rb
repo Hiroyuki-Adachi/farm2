@@ -67,7 +67,7 @@ class ChemicalStock::Refresher
       ChemicalStock.for_organization(@organization_id)
         .where(work_chemical_id: work_chemical.id)
         .where.not(chemical_id: @chemical_id)
-        .destroy_all
+        .delete_all
       stock = stocks.find_by(work_chemical_id: work_chemical.id) || stocks.build(work_chemical_id: work_chemical.id)
       stock.update!(work_stock_attributes(work_chemical))
     end
