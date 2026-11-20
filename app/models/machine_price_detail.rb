@@ -29,6 +29,8 @@ class MachinePriceDetail < ApplicationRecord
     joins(:header).merge(MachinePriceHeader.for_organization(organization))
   }
 
+  before_validation { self.price = 0 if adjust == Adjust::AMOUNT }
+
   validates :price, presence: true
   validates :price, numericality: true, if: proc { |x| x.price.present? }
 end

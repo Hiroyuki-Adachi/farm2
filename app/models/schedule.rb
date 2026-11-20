@@ -31,6 +31,8 @@
 #
 
 class Schedule < ApplicationRecord
+  include WorkTypeOrganizationValidation
+
   validates :worked_at, presence: true
   validates :name, length: { maximum: 40 }, if: proc { |x| x.name.present? }
   validate :validate_worked_at_system_period, if: :validate_worked_at_system_period?
@@ -41,6 +43,8 @@ class Schedule < ApplicationRecord
   belongs_to :work_type, -> { with_deleted }
   belongs_to :work_kind, -> { with_deleted }
   belongs_to :organization
+
+  validates_work_type_organization organization: :organization_id
 
   has_many :schedule_workers, -> { order('schedule_workers.display_order') }, dependent: :destroy
   has_many :workers, -> { with_deleted }, through: :schedule_workers

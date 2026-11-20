@@ -10,9 +10,11 @@ class ChemicalStock::Refresher
     start_date = stocks.minimum(:stock_on) || System.min_date(@organization_id)
     return if start_date.nil?
 
-    from_work(start_date)
-    create_begin(start_date)
-    accumulate
+    ChemicalStock.transaction do
+      from_work(start_date)
+      create_begin(start_date)
+      accumulate
+    end
   end
 
   private
@@ -44,7 +46,7 @@ class ChemicalStock::Refresher
     System.where(organization_id: @organization_id).where("start_date > ?", start_date).order(:start_date).each do |sys|
       next if stocks.exists?(stock_on: sys.start_date)
 
-      ChemicalStock.create(
+      ChemicalStock.create!(
         name: "期首在庫",
         stock_on: sys.start_date,
         chemical_id: @chemical_id,
@@ -56,16 +58,19 @@ class ChemicalStock::Refresher
   def from_work(start_date)
     work_stocks.update_all(using: 0) # rubocop:disable Rails/SkipsModelValidations
     WorkChemical.for_stock(@chemical_id, start_date, @organization_id).each do |work_chemical|
-      stock = ChemicalStock.for_organization(@organization_id).find_by(work_chemical_id: work_chemical.id)
-      if stock
-        stock.update!(work_stock_attributes(work_chemical))
-      else
-        ChemicalStock.create(
-          work_stock_attributes(work_chemical).merge(work_chemical_id: work_chemical.id, chemical_id: @chemical_id)
-        )
-      end
+      refresh_work_stock(work_chemical)
     end
-    work_stocks.where(using: 0).destroy_all
+    work_stocks.where(using: 0).delete_all
+  end
+
+  def refresh_work_stock(work_chemical)
+    # 薬剤変更前の行を残すと、同じ使用行に在庫が複数紐づいてhas_oneと整合しなくなる。
+    ChemicalStock.for_organization(@organization_id)
+      .where(work_chemical_id: work_chemical.id)
+      .where.not(chemical_id: @chemical_id)
+      .delete_all
+    stock = stocks.find_by(work_chemical_id: work_chemical.id) || stocks.build(work_chemical_id: work_chemical.id)
+    stock.update!(work_stock_attributes(work_chemical))
   end
 
   def work_stock_attributes(work_chemical)

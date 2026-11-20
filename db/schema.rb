@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_01_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_16_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -586,6 +586,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_01_090000) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.decimal "fuel_usage", precision: 5, scale: 2, default: "0.0", null: false, comment: "燃料使用量"
+    t.decimal "input_amount", precision: 7, comment: "直接入力使用料"
     t.index ["machine_id", "work_result_id"], name: "index_machine_results_on_machine_id_and_work_result_id", unique: true
   end
 
@@ -1193,7 +1194,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_01_090000) do
     t.datetime "discarded_at", comment: "論理削除日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "organization_id", comment: "組織"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.index ["organization_id", "id"], name: "work_categories_2nd", unique: true
   end
 
@@ -1219,7 +1220,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_01_090000) do
     t.datetime "discarded_at", comment: "論理削除日時"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "organization_id", comment: "組織"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.index ["organization_id", "id"], name: "work_genres_2nd", unique: true
     t.index ["work_category_id"], name: "index_work_genres_on_work_category_id"
   end
@@ -1305,7 +1306,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_01_090000) do
     t.integer "office_role", default: 0, null: false, comment: "事務の役割"
     t.datetime "icon_updated_at"
     t.bigint "work_genre_id", null: false, comment: "作業ジャンル"
-    t.bigint "organization_id", comment: "組織"
+    t.bigint "organization_id", null: false, comment: "組織"
     t.index ["deleted_at"], name: "index_work_types_on_deleted_at"
     t.index ["organization_id"], name: "index_work_types_on_organization_id"
     t.index ["work_genre_id"], name: "index_work_types_on_work_genre_id"

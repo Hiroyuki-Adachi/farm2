@@ -15,7 +15,7 @@
 #  name(名称)                     :string(10)       default(""), not null
 #  created_at                     :datetime         not null
 #  updated_at                     :datetime         not null
-#  organization_id(組織)          :bigint
+#  organization_id(組織)          :bigint           not null
 #  work_category_id(作業カテゴリ) :bigint           not null
 #
 # Indexes
@@ -84,3 +84,11 @@ genre_discarded:
   discarded_at: '2024-01-01 00:00:00'
   category: category_discardable
   graph_color: "#888888"
+
+genre_rice_org2:
+  organization_id: 2
+  name: "別組織種類"
+  display_order: '10'
+  discarded_at:
+  category: category_rice_org2
+  graph_color: "#0000ff"

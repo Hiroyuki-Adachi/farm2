@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class WorksControllerTest < ActionDispatch::IntegrationTest
+  include MachineUsageDisplayScenario
   setup do
     @user = users(:users1)
     login_as(@user)
@@ -232,4 +233,88 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :error
   end
+  test "作業照会は機械ごとに使用料を合計し無料利用と時間も表示する" do
+    work = works(:work_not_fixed)
+    work.machine_results.destroy_all
+    first = work_results(:work_results_not_fixed)
+    second = first.dup
+    second.worker = workers(:worker1)
+    second.save!
+    amount_machine = machines(:machines1)
+    free_machine = machines(:taueki_1)
+    hour_machine = machines(:machines3)
+    [amount_machine, free_machine].each do |machine|
+      machine.price_headers.destroy_all
+      header = FactoryBot.create(:machine_price_header, machine: machine, validated_at: work.worked_at)
+      [:normal, :lease].each do |lease|
+        FactoryBot.create(:machine_price_detail, header: header, lease_id: lease,
+                                                adjust_id: Adjust::AMOUNT.id, price: 0)
+      end
+    end
+    MachineResult.create!(machine: amount_machine, work_result: first, input_amount: 2000)
+    MachineResult.create!(machine: amount_machine, work_result: second, input_amount: 3000)
+    MachineResult.create!(machine: free_machine, work_result: first, input_amount: 0)
+    MachineResult.create!(machine: hour_machine, work_result: first, hours: 1)
+    MachineResult.create!(machine: hour_machine, work_result: second, hours: 2)
+
+    get work_path(work)
+
+    assert_response :success
+    assert_select "#detail_machines tbody td.numeric", text: "5,000円", count: 1
+    assert_select "#detail_machines tbody td.numeric", text: "0円", count: 1
+    assert_select "#detail_machines tbody td.numeric", text: "3.0", count: 1
+  end
+
+  test "料金マスタを時間単価へ変更すると残った直接金額を作業照会に表示しない" do
+    work = works(:work_not_fixed)
+    entry, detail = build_machine_usage_display_scenario(work: work, adjust: Adjust::AMOUNT, input_amount: 5000)
+    detail.update!(adjust_id: Adjust::HOUR.id, price: 500)
+    assert_equal 1000, MachineResult.find(entry.id).amount
+
+    get work_path(work)
+
+    assert_response :success
+    assert_select "#detail_machines tbody td.numeric", text: "2.0"
+    assert_select "#detail_machines tbody td.numeric", text: /円/, count: 0
+  end
+
+  test "直接入力へ変更した未入力の使用料は作業照会に0円と表示する" do
+    work = works(:work_not_fixed)
+    entry, detail = build_machine_usage_display_scenario(work: work, adjust: Adjust::HOUR)
+    detail.update!(adjust_id: Adjust::AMOUNT.id)
+    assert_equal 0, MachineResult.find(entry.id).amount
+
+    get work_path(work)
+
+    assert_response :success
+    assert_select "#detail_machines tbody td.numeric", text: "0円"
+  end
+
+  test "確定後にマスタを変更しても作業照会は確定使用料を表示する" do
+    work = works(:work_not_fixed)
+    entry, detail = build_machine_usage_display_scenario(work: work, adjust: Adjust::AMOUNT, input_amount: 5000)
+    Fix.do_fix(work.organization, work.term, Date.new(2015, 12, 30), @user.worker_id, [work.id])
+    entry.update!(fixed_amount: 7000)
+    detail.update!(adjust_id: Adjust::HOUR.id, price: 500)
+
+    get work_path(work)
+
+    assert_response :success
+    assert_select "#detail_machines tbody td.numeric", text: "7,000円"
+    assert_select "#detail_machines tbody td.numeric", text: "5,000円", count: 0
+  end
+
+  test "確定後にマスタを直接入力へ変更しても確定区分が時間なら時間を表示する" do
+    work = works(:work_not_fixed)
+    entry, detail = build_machine_usage_display_scenario(work: work, adjust: Adjust::HOUR, input_amount: 5000)
+    Fix.do_fix(work.organization, work.term, Date.new(2015, 12, 30), @user.worker_id, [work.id])
+    detail.update!(adjust_id: Adjust::AMOUNT.id)
+
+    get work_path(work)
+
+    assert_response :success
+    assert_select "#detail_machines tbody td.numeric", text: "2.0"
+    assert_select "#detail_machines tbody td.numeric", text: /円/, count: 0
+  end
+
 end

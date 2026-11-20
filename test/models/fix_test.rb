@@ -33,7 +33,7 @@ class FixTest < ActiveSupport::TestCase
     organization = organizations(:org2)
     systems(:s2015_org2).update!(default_price: 2300)
     work = works(:work_for_price)
-    work.update!(organization_id: organization.id, term: @term,
+    work.update!(organization_id: organization.id, work_type: work_types(:work_type_org2), term: @term,
                  work_kind_id: work_kinds(:work_kind_first_term).id, fixed_at: nil)
     assert_predicate work.work_results, :any?
 
@@ -67,7 +67,10 @@ class FixTest < ActiveSupport::TestCase
 
   test "別期と別組織と存在しない作業が混在した場合は全件書き込まず拒否する" do
     other = works(:work_no_fix2)
-    [{ term: 2014 }, { term: 2015, organization_id: organizations(:org2).id }].each do |attributes|
+    other_organization = {
+      term: 2015, organization_id: organizations(:org2).id, work_type: work_types(:work_type_org2)
+    }
+    [{ term: 2014 }, other_organization].each do |attributes|
       other.update!(attributes)
       assert_no_difference('Fix.count') do
         assert_raises(Fix::InvalidInput) { Fix.do_fix(@organization, @term, @fixed_at, @worker_id, @no_fix_works) }
@@ -111,4 +114,27 @@ class FixTest < ActiveSupport::TestCase
     assert_equal @term, created_fix.term
     assert_equal @no_fix_works.size, created_fix.works_count
   end
+  test "7桁の直接入力額を確定しマスタ変更後も保持し取消後も入力額を残す" do
+    work = works(:work_no_fix1)
+    work.machine_results.destroy_all
+    result = work.work_results.first
+    machine = machines(:machines1)
+    machine.price_headers.destroy_all
+    header = FactoryBot.create(:machine_price_header, machine: machine, validated_at: Date.new(1900, 1, 1))
+    lease = machine.home_id == result.worker.home_id ? :normal : :lease
+    detail = FactoryBot.create(:machine_price_detail, header: header, lease_id: lease, adjust_id: Adjust::AMOUNT.id, price: 0)
+    entry = MachineResult.create!(machine: machine, work_result: result, input_amount: 9_999_999)
+
+    fix = Fix.do_fix(@organization, @term, @fixed_at, @worker_id, [work.id])
+    assert_equal 9_999_999, fix.machines_amount
+    assert_equal 9_999_999, entry.reload.fixed_amount
+    assert_equal 0, entry.fixed_price
+    assert_includes MachineResult.for_fix(@term, @fixed_at, @organization).ids, entry.id
+    detail.update!(adjust_id: Adjust::DAY.id, price: 100)
+    assert_equal 9_999_999, MachineResult.find(entry.id).amount
+    fix.destroy!
+    assert_nil entry.reload.fixed_amount
+    assert_equal 9_999_999, entry.input_amount
+  end
+
 end

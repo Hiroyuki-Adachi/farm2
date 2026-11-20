@@ -17,6 +17,8 @@
         <% work_kinds.each do |work_kind| %>
           <% if @machine_price.details_form[lease_id][work_kind.id][:adjust_id].to_i == Adjust::NONE.id %>
             <td colspan="2"><%=h Adjust::NONE.name %></td>
+          <% elsif @machine_price.details_form[lease_id][work_kind.id][:adjust_id].to_i == Adjust::AMOUNT.id %>
+            <td colspan="2"><%= Adjust::AMOUNT.name %></td>
           <% else %>
             <td><%=h Adjust.find(@machine_price.details_form[lease_id][work_kind.id][:adjust_id]).name %></td>
             <td class="numeric"><%=h number_with_delimiter(@machine_price.details_form[lease_id][work_kind.id][:price]) %></td>

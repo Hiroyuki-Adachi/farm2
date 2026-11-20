@@ -81,4 +81,46 @@ class Works::MachinesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_work_remark_path(work_id: @work)
   end
 
+  test "直接金額の入力欄は7桁の円単位で再表示と登録ができる" do
+    machine = machines(:machines1)
+    result = work_results(:work_results_not_fixed)
+    set_direct_amount(machine, result)
+    @work.machine_results.destroy_all
+    MachineResult.create!(machine: machine, work_result: result, input_amount: 1234567)
+
+    get new_work_machine_path(work_id: @work)
+    assert_response :success
+    assert_select "input[name='machine_amounts[#{machine.id}][#{result.id}]'][max='9999999'][step='1'][value='1234567']"
+    assert_select "input[name='machine_hours[#{machine.id}][#{result.id}]']", count: 0
+
+    displayed_amount = css_select("input[name='machine_amounts[#{machine.id}][#{result.id}]']").first["value"]
+    post work_machines_path(work_id: @work), params: { machine_amounts: { machine.id => { result.id => displayed_amount } } }
+    assert_redirected_to new_work_remark_path(work_id: @work)
+    assert_equal 1_234_567, @work.machine_results.reload.first.input_amount
+
+    post work_machines_path(work_id: @work), params: { machine_amounts: { machine.id => { result.id => "9999999" } } }
+    assert_redirected_to new_work_remark_path(work_id: @work)
+    assert_equal 9_999_999, @work.machine_results.reload.first.input_amount
+  end
+
+  test "不正な直接金額は422で入力値を残して表示する" do
+    machine = machines(:machines1)
+    result = work_results(:work_results_not_fixed)
+    set_direct_amount(machine, result)
+    @work.machine_results.destroy_all
+    MachineResult.create!(machine: machine, work_result: result, input_amount: 1000)
+    post work_machines_path(work_id: @work), params: { machine_amounts: { machine.id => { result.id => "10000000" } } }
+    assert_response :unprocessable_entity
+    assert_select "input[name='machine_amounts[#{machine.id}][#{result.id}]'][value='10000000']"
+    assert_equal 1000, @work.machine_results.reload.first.input_amount
+  end
+
+  def set_direct_amount(machine, work_result)
+    header = FactoryBot.create(:machine_price_header, machine: machine, validated_at: Date.new(1900, 1, 1))
+    # 機械に既存のヘッダがある場合もこのテストの設定を優先する。
+    machine.price_headers.where.not(id: header.id).destroy_all
+    lease = machine.home_id == work_result.worker.home_id ? :normal : :lease
+    FactoryBot.create(:machine_price_detail, header: header, lease_id: lease, adjust_id: Adjust::AMOUNT.id, price: 0)
+  end
+
 end

@@ -12,7 +12,13 @@
             <div><%= machine.type_name %></div>
             <div class="small"><%= machine.work.work_kind.name %></div>
           </td>
-          <td style="text-align:right;"><%= machine.quantity %>(<%= machine.unit %>)</td>
+          <td style="text-align:right;">
+            <% if machine.adjust == Adjust::AMOUNT %>
+              <%= machine.amount %>円
+            <% else %>
+              <%= machine.quantity %>(<%= machine.unit %>)
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

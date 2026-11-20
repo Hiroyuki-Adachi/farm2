@@ -14,8 +14,13 @@
 #  sorimachi_work_types_2nd  (sorimachi_journal_id,work_type_id) UNIQUE
 #
 class SorimachiWorkType < ApplicationRecord
+  include WorkTypeOrganizationValidation
+
   belongs_to :sorimachi_journal
   belongs_to :work_type
+
+  validates_work_type_organization organization: -> { sorimachi_journal&.organization_id },
+                                   watch: [:sorimachi_journal_id]
 
   def self.refresh(journal, params)
     journal.sorimachi_work_types.destroy_all

@@ -96,7 +96,7 @@ class MachineReserveFundCostsTest < ApplicationSystemTestCase
   test "全OFFはエラーになり最後の選択と原価を維持する" do
     visit edit_machine_reserve_fund_cost_path(@detail)
     # 面積0の分類を含め、初期状態のすべての対象をOFFにする。
-    WorkType.land.by_term(2015).where.not(id: @types.last.id).to_a.each do |type|
+    WorkType.for_organization(organizations(:org)).land.by_term(2015).where.not(id: @types.last.id).to_a.each do |type|
       uncheck "#{type.name}を原価に入れる"
       assert_selector "[data-reserve-fund-cost-total-target='status']", text: "再按分しました"
       assert_unchecked_field "#{type.name}を原価に入れる"

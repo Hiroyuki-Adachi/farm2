@@ -7,9 +7,11 @@ class LineHookService
   READ_TIMEOUT = 8
   WRITE_TIMEOUT = 8
 
-  def initialize(message_text, line_id)
+  # channel_access_token: 返信に使うチャネルのアクセストークン。省略時はグローバル設定を使う。
+  def initialize(message_text, line_id, channel_access_token: nil)
     @message_text = message_text
     @line_id = line_id
+    @channel_access_token = channel_access_token
   end
 
   def call(reply_token)
@@ -24,21 +26,23 @@ class LineHookService
 
     if (word = news_keyword)
       if word.length < MIN_NEWS_KEYWORD_LENGTH
-        self.class.send_reply(reply_token, I18n.t('line_reply.news_keyword_too_short'))
+        reply(reply_token, I18n.t('line_reply.news_keyword_too_short'))
         return false
       end
       NewsReplyJob.perform_later(user.id, word)
       return true
     end
 
-    self.class.send_reply(reply_token, "#{user.worker.name}さん、こんにちは😀\n\n#{I18n.t('line_hook.help')}")
+    reply(reply_token, "#{user.worker.name}さん、こんにちは😀\n\n#{I18n.t('line_hook.help')}")
     true
   rescue StandardError => e
     Rails.logger.error("LineHookService Error: #{e.message}")
     false
   end
 
-  def self.send_reply(reply_token, message, retry_key: nil)
+  # 送信系メソッドの channel_access_token は、送信元チャネルのアクセストークン。
+  # 省略(または空)のときは、従来どおりグローバル設定(credentials)のチャネルから送る。
+  def self.send_reply(reply_token, message, retry_key: nil, channel_access_token: nil)
     payload = {
       replyToken: reply_token,
       messages: [
@@ -46,16 +50,16 @@ class LineHookService
       ]
     }
     retry_key ||= SecureRandom.uuid
-    send_request(:reply, payload, retry_key)
+    send_request(:reply, payload, retry_key, channel_access_token: channel_access_token)
   end
 
-  def self.push_message(line_id, message, retry_key: nil)
+  def self.push_message(line_id, message, retry_key: nil, channel_access_token: nil)
     return if message.blank?
 
-    push_messages(line_id, [message], retry_key: retry_key)
+    push_messages(line_id, [message], retry_key: retry_key, channel_access_token: channel_access_token)
   end
 
-  def self.push_messages(line_id, messages, retry_key: nil)
+  def self.push_messages(line_id, messages, retry_key: nil, channel_access_token: nil)
     return if messages.blank?
 
     messages = messages.take(MAX_MESSAGES).map { |msg| { type: 'text', text: msg } }
@@ -64,10 +68,15 @@ class LineHookService
       messages: messages
     }
     retry_key ||= SecureRandom.uuid
-    send_request(:push, payload, retry_key)
+    send_request(:push, payload, retry_key, channel_access_token: channel_access_token)
   end
 
-  def self.send_request(command, payload, retry_key)
+  def self.default_channel_access_token
+    Rails.application.credentials.dig(:line, :channel_access_token)
+  end
+
+  def self.send_request(command, payload, retry_key, channel_access_token: nil)
+    channel_access_token = default_channel_access_token if channel_access_token.blank?
     uri = URI.join(API_ENDPOINT, command.to_s)
 
     http = Net::HTTP.new(uri.host, uri.port)
@@ -82,7 +91,7 @@ class LineHookService
       uri.request_uri,
       {
         "Content-Type" => "application/json",
-        "Authorization" => "Bearer #{Rails.application.credentials.dig(:line, :channel_access_token)}",
+        "Authorization" => "Bearer #{channel_access_token}",
         "X-Line-Retry-Key" => retry_key
       }
     )
@@ -114,6 +123,10 @@ class LineHookService
 
   private
 
+  def reply(reply_token, message)
+    self.class.send_reply(reply_token, message, channel_access_token: @channel_access_token)
+  end
+
   def token_message?
     @message_text.strip.start_with?('token=')
   end
@@ -134,35 +147,35 @@ class LineHookService
 
   def register_line_id(reply_token, user_token)
     if User.exists?(line_id: @line_id)
-      self.class.send_reply(reply_token, I18n.t('line_hook.already_linked'))
+      reply(reply_token, I18n.t('line_hook.already_linked'))
       return false
     end
 
     user = User.find_by(token: user_token)
     unless user&.worker&.name
-      self.class.send_reply(reply_token, I18n.t('line_hook.invalid_token'))
+      reply(reply_token, I18n.t('line_hook.invalid_token'))
       return false
     end
 
     begin
       user.update!(line_id: @line_id)
-      self.class.send_reply(reply_token, "#{user.worker.name}#{I18n.t('line_hook.linked')}")
+      reply(reply_token, "#{user.worker.name}#{I18n.t('line_hook.linked')}")
       Rails.application.config.access_logger.info("LN-#{user.worker.name}")
       true
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error("Failed to update user line_id: #{e.message}")
-      self.class.send_reply(reply_token, I18n.t('line_hook.update_failed'))
+      reply(reply_token, I18n.t('line_hook.update_failed'))
       false
     end
   end
 
   def unlink_line_id(reply_token, user)
     user.update!(line_id: '')
-    self.class.send_reply(reply_token, "#{user.worker.name}#{I18n.t('line_hook.unlinked')}")
+    reply(reply_token, "#{user.worker.name}#{I18n.t('line_hook.unlinked')}")
     true
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error("Failed to update user line_id: #{e.message}")
-    self.class.send_reply(reply_token, I18n.t('line_hook.update_failed'))
+    reply(reply_token, I18n.t('line_hook.update_failed'))
     false
   end
 end

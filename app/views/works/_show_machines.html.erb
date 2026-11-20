@@ -1,9 +1,10 @@
+<% machine_results_by_machine = @work.machine_results.group_by(&:machine_id) %>
 <div id="content_machines" class="<%= class_names("content", "no-print": @machines.empty?) %>">
   <table id="detail_machines">
     <thead>
     <tr>
       <th style="width:180px;">機械名</th>
-      <th style="width:60px;">稼働</th>
+      <th style="width:120px;">稼働／使用料</th>
       <th style="width:180px;">オペレーター</th>
       <th style="width:300px;">備考(ヒヤリ・ハット含む)</th>
     </tr>
@@ -12,7 +13,15 @@
       <% [current_organization.machines_count, @machines.count].max.times do |i| %>
       <tr>
         <td class="machine"><%= @machines[i] ? @machines[i].usual_name : "" %></td>
-        <td class="machine numeric"><%=@machines[i] ? @machines[i].hours(@results.object) : "" %></td>
+        <td class="machine numeric"><% if @machines[i] %>
+          <% entries = machine_results_by_machine.fetch(@machines[i].id, []) %>
+          <% pricing_entry = entries.first %>
+          <% if pricing_entry&.adjust == Adjust::AMOUNT %>
+            <%= number_with_delimiter(pricing_entry.amount) %>円
+          <% else %>
+            <%= @machines[i].hours(@results.object) %>
+          <% end %>
+        <% end %></td>
         <td class="machine"><%= @machines[i] ? @machines[i].operators(@work) : "" %></td>
         <td class="machine"><%= @machines[i] ? @machines[i].remarks(@work)&.remarks : "" %></td>
       </tr>

@@ -228,7 +228,7 @@ class SorimachiJournalTest < ActiveSupport::TestCase
     journal = build_journal(accounted_on: @system.start_date)
     journal.assign_attributes(allocation_mode: :manual, cost0_flag: true)
     journal.save!
-    allocation = journal.sorimachi_work_types.create!(work_type: work_types(:work_type_broccoli), amount: 100)
+    allocation = journal.sorimachi_work_types.create!(work_type: create_work_type_for(@organization), amount: 100)
     updated_at = journal.updated_at
 
     travel 1.minute do

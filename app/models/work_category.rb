@@ -8,7 +8,7 @@
 #  name(名称)                 :string(10)       default(""), not null
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
-#  organization_id(組織)      :bigint
+#  organization_id(組織)      :bigint           not null
 #
 # Indexes
 #
@@ -21,7 +21,7 @@
 class WorkCategory < ApplicationRecord
   include Discard::Model
 
-  belongs_to :organization, optional: true
+  belongs_to :organization, optional: false
   has_many :genres, class_name: "WorkGenre", dependent: :restrict_with_error
 
   scope :for_organization, lambda { |organization|

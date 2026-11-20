@@ -24,10 +24,14 @@
 #
 
 class OwnedRicePrice < ApplicationRecord
+  include WorkTypeOrganizationValidation
+
   belongs_to :organization, optional: false
   belongs_to :work_type
 
-  has_many   :owned_rices, dependent: :destroy
+  has_many :owned_rices, dependent: :destroy
+
+  validates_work_type_organization organization: :organization_id
 
   scope :for_organization, lambda { |organization|
     organization_id = organization.is_a?(Organization) ? organization.id : organization

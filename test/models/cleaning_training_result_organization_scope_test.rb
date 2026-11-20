@@ -106,13 +106,13 @@ class CleaningTrainingResultOrganizationScopeTest < ActiveSupport::TestCase
       organization: @other_organization, chemical: chemical, term: 2015
     )
     @other_chemical_work_type = ChemicalWorkType.create!(
-      chemical_term: chemical_term, work_type: work_types(:work_types1), quantity: 1
+      chemical_term: chemical_term, work_type: work_types(:work_type_org2), quantity: 1
     )
   end
 
   def create_adjustment
     drying = Drying.create!(
-      home: @other_home, work_type: work_types(:work_types1), term: 2015,
+      home: @other_home, work_type: work_types(:work_type_org2), term: 2015,
       carried_on: Date.new(2015, 10, 10), drying_type_id: :another
     )
     @other_adjustment = Adjustment.create!(drying: drying, home: @other_home)

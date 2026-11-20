@@ -15,7 +15,7 @@
 #  office_role(事務の役割)     :integer          default("none"), not null
 #  other_flag(その他フラグ)    :boolean          default(FALSE), not null
 #  work_flag(日報フラグ)       :boolean          default(TRUE), not null
-#  organization_id(組織)       :bigint
+#  organization_id(組織)       :bigint           not null
 #  work_genre_id(作業ジャンル) :bigint           not null
 #
 # Indexes
@@ -43,7 +43,7 @@ class WorkType < ApplicationRecord
   after_save :save_work_type_term
   validate :organization_matches_genre
 
-  belongs_to :organization, optional: true
+  belongs_to :organization, optional: false
   belongs_to :genre, class_name: "WorkGenre", foreign_key: "work_genre_id"
 
   has_one :plan, class_name: "PlanWorkType", dependent: :destroy

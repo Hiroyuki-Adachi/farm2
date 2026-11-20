@@ -55,7 +55,8 @@ class LandCostPeriodAreasTest < ActiveSupport::TestCase
       land = @land.dup
       land.assign_attributes(attributes.merge(uuid: SecureRandom.uuid, place: "除外#{index}"))
       land.save!
-      add_history(land, @first, @start_date)
+      # 他組織の圃場は、組織一致の検証前に登録された作業分類の不一致データでも集計しない。
+      LandCost.new(land: land, work_type: @first, activated_on: @start_date).save!(validate: false)
     end
     result = period_areas
     assert_equal 3660, result[@first.id]
