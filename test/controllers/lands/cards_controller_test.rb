@@ -83,8 +83,11 @@ class Lands::CardsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def create_card_work(land, worked_at)
-    work = FactoryBot.create(:work, organization: land.organization, work_kind: work_kinds(:work_kind_taue),
-                                    worked_at: worked_at, term: worked_at.year)
+    work = FactoryBot.build(:work, organization: land.organization, work_kind: work_kinds(:work_kind_taue),
+                                   worked_at: worked_at, term: worked_at.year)
+    # 表示期間より前の作業は、組織に年度がない期のものも含む。
+    # #1351 の期内検証より前に登録された期外データとして、検証を通さずに保存する。
+    work.save!(validate: false)
     FactoryBot.create(:work_land, work: work, land: land)
   end
 

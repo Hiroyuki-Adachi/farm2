@@ -237,4 +237,15 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :error
   end
+
+  # #1351 期外の搬入日を直接送っても保存せず、一覧にエラーを表示する
+  test "乾燥作成(期外の搬入日は登録できない)" do
+    assert_no_difference('Drying.count') do
+      post dryings_path, params: { drying: { term: 2015, carried_on: "2016-01-01", home_id: homes(:home5).id } }
+    end
+
+    assert_redirected_to dryings_path
+    follow_redirect!
+    assert_select '#flash_messages', text: /搬入日は2015年度の期間内/
+  end
 end

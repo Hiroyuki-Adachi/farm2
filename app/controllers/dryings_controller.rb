@@ -31,7 +31,8 @@ class DryingsController < ApplicationController
     if @drying.save
       redirect_to dryings_path
     else
-      render action: :index
+      # 一覧画面の描画に必要なデータがないため、一覧へ戻してエラーを表示する(#1351)
+      redirect_to dryings_path, alert: @drying.errors.full_messages.join('、')
     end
   end
 

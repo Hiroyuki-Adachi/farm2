@@ -459,9 +459,50 @@ class WorkTest < ActiveSupport::TestCase
     assert_equal [included.id], Work.search_for_work(base, params).pluck(:id)
   end
 
+
+  # #1351 作業日は組織と年度(term)の System の期首〜期末に入っていること
+  test "作業日が期首から期末までなら作成できる" do
+    assert build_period_work(worked_at: Date.new(2015, 1, 1)).valid?
+    assert build_period_work(worked_at: Date.new(2015, 12, 31)).valid?
+  end
+
+  test "作業日が期外なら作成できない" do
+    [Date.new(2014, 12, 31), Date.new(2016, 1, 1)].each do |worked_at|
+      work = build_period_work(worked_at: worked_at)
+
+      assert_not work.valid?
+      assert_includes work.errors[:worked_at], "は2015年度の期間内(2015/01/01〜2015/12/31)の日付を入力してください"
+    end
+  end
+
+  test "組織に年度がなければ作成できない" do
+    work = build_period_work(worked_at: Date.new(2014, 6, 1), term: 2014, organization: organizations(:org2),
+                             work_type: work_types(:work_type_org2))
+
+    assert_not work.valid?
+    assert_includes work.errors[:worked_at], "は2014年度の期間内(年度が未登録)の日付を入力してください"
+  end
+
+  test "作業日や年度を期外に変更できない" do
+    work = build_period_work(worked_at: Date.new(2015, 6, 1))
+    work.save!
+
+    assert_not work.update(worked_at: Date.new(2016, 1, 1))
+    assert_not work.reload.update(term: 2016)
+    assert work.reload.update(term: 2016, worked_at: Date.new(2016, 1, 1))
+  end
+
+  test "期外の既存データでも作業日・年度・組織を変えない更新はできる" do
+    work = build_period_work(worked_at: Date.new(2016, 1, 1))
+    work.save!(validate: false)
+
+    assert work.update(name: "名称だけ変更")
+  end
+
   private
 
   def create_search_work(work_type:, work_kind:, worked_at:)
+    ensure_system(organizations(:org), worked_at.year)
     Work.create!(
       organization: organizations(:org),
       term: worked_at.year,
@@ -477,6 +518,7 @@ class WorkTest < ActiveSupport::TestCase
 
   def create_summary_work(organization:, worker:, worked_at:, hours:, work_type: nil)
     work_type ||= organization == organizations(:org2) ? work_types(:work_type_org2) : work_types(:work_type_koshi)
+    ensure_system(organization, worked_at.year)
     work = Work.create!(
       organization: organization,
       term: worked_at.year,
@@ -490,5 +532,19 @@ class WorkTest < ActiveSupport::TestCase
     )
     WorkResult.create!(work: work, worker: worker, hours: hours, display_order: 1)
     work
+  end
+
+  def build_period_work(worked_at:, term: 2015, organization: organizations(:org), work_type: work_types(:work_type_koshi))
+    Work.new(
+      organization: organization,
+      term: term,
+      worked_at: worked_at,
+      weather_id: :sunny,
+      work_type: work_type,
+      work_kind: work_kinds(:work_kind_every_term),
+      name: "期内検証",
+      start_at: "08:00",
+      end_at: "17:00"
+    )
   end
 end

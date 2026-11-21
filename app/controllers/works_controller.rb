@@ -80,7 +80,7 @@ class WorksController < ApplicationController
   end
 
   def edit
-    @work_kinds = WorkKind.except_other.by_type(@work.work_type) || []
+    set_form_work_kinds
   end
 
   def create
@@ -88,6 +88,7 @@ class WorksController < ApplicationController
     if @work.save
       redirect_to(new_work_worker_path(work_id: @work))
     else
+      set_form_work_kinds
       render action: :new, status: :unprocessable_content
     end
   end
@@ -100,6 +101,7 @@ class WorksController < ApplicationController
       if @work.update(work_params)
         @work.refresh_broccoli(current_organization)
       else
+        set_form_work_kinds
         render action: :edit, status: :unprocessable_content and return
       end
     end
@@ -145,6 +147,11 @@ class WorksController < ApplicationController
 
   def set_lands
     @work_lands = WorkLandDecorator.decorate_collection(@work.work_lands.includes(:land) || [])
+  end
+
+  # 保存に失敗して再表示するときも、作業種別の選択肢を用意する(#1351)
+  def set_form_work_kinds
+    @work_kinds = WorkKind.except_other.by_type(@work.work_type) || []
   end
 
   def set_masters
