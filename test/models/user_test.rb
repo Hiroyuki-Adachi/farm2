@@ -288,4 +288,18 @@ class UserTest < ActiveSupport::TestCase
     assert_equal false, @user.totp_verify?("123456")
     assert_nil @user.otp_last_used_at
   end
+
+  test "LINEチャネルのアクセストークンは組織の設定を返す" do
+    user = users(:user_line_id_already_exists)
+    user.organization.update!(line_channel_access_token: "org-token-1244")
+
+    assert_equal "org-token-1244", user.reload.line_channel_access_token
+  end
+
+  test "組織にLINEチャネルが未設定ならアクセストークンはnil" do
+    user = users(:user_line_id_already_exists)
+    user.organization.update!(line_channel_access_token: "")
+
+    assert_nil user.reload.line_channel_access_token
+  end
 end

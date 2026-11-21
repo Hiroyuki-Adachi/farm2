@@ -9,7 +9,7 @@ class ScheduleDeliverJob < ApplicationJob
     timing = timing.to_sym
     raise ArgumentError, "Unknown timing: #{timing.inspect}" unless %i[morning afternoon].include?(timing)
 
-    User.linable.includes(:worker).find_each do |user|
+    User.linable.includes(:worker, :organization).find_each do |user|
       deliver_line_notification(user, timing)
     end
 
@@ -33,7 +33,10 @@ class ScheduleDeliverJob < ApplicationJob
       messages << "#{schedule.start_at}から#{schedule.name}です。"
     end
 
-    LineHookService.push_message(user.line_id, messages.join("\n"), retry_key: SecureRandom.uuid)
+    LineHookService.push_message(
+      user.line_id, messages.join("\n"),
+      retry_key: SecureRandom.uuid, channel_access_token: user.line_channel_access_token
+    )
   end
 
   def deliver_mail_notification(user, timing)

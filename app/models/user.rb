@@ -116,6 +116,12 @@ class User < ApplicationRecord
     line_id.present?
   end
 
+  # #1199 LINE送信元チャネルのアクセストークン。
+  # 組織にチャネルが設定されていなければ nil を返し、LineHookService がグローバル設定へフォールバックする。
+  def line_channel_access_token
+    organization&.line_channel_access_token.presence
+  end
+
   def mailable?
     mail.present? && mail_confirmed?
   end
