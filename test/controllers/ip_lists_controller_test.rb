@@ -255,4 +255,33 @@ class IpListsControllerTest < ActionDispatch::IntegrationTest
     assert_nil ip.expired_on
     assert_nil session[:user_id]
   end
+
+  # #1244 組織にLINEチャネルがあればそのチャネルから認証番号を送り、なければグローバル設定(nil)で送る
+  test "ID認証画面(LINE送信)(組織のLINEチャネルを使う)" do
+    @user.organization.update!(line_channel_access_token: "org-token-1244")
+
+    assert_equal "org-token-1244", channel_token_for_ip_list
+  end
+
+  test "ID認証画面(LINE送信)(組織のLINEチャネル未設定ならグローバル設定)" do
+    @user.organization.update!(line_channel_access_token: "")
+
+    assert_nil channel_token_for_ip_list
+  end
+
+  private
+
+  def channel_token_for_ip_list
+    tokens = []
+    LineHookService.define_singleton_method(:push_message) do |*_args, **kwargs|
+      tokens << kwargs[:channel_access_token]
+      Net::HTTPOK.new("1.1", "200", "OK")
+    end
+
+    post ip_lists_path, params: { login_name: @user.login_name }, headers: { 'REMOTE_ADDR' => @ip_address }
+
+    assert_redirected_to edit_ip_list_path(IpList.last)
+    assert_equal 1, tokens.size
+    tokens.first
+  end
 end
