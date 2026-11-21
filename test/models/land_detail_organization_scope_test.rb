@@ -10,7 +10,7 @@ class LandDetailOrganizationScopeTest < ActiveSupport::TestCase
   test "土地原価を親土地の組織で絞り込む" do
     land_cost = LandCost.create!(
       land: @other_land,
-      work_type: work_types(:work_types1),
+      work_type: work_types(:work_type_org2),
       activated_on: Date.new(2015, 1, 1)
     )
 

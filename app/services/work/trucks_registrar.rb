@@ -3,8 +3,12 @@ class Work::TrucksRegistrar
   MAX_HOURS = BigDecimal("9.5")
   HOUR_STEP = BigDecimal("0.5")
 
-  def initialize(machine_hours:, trucks:, work_results:)
+  attr_reader :errors
+
+  def initialize(machine_hours:, trucks:, work_results:, machine_amounts: {})
     @machine_hours = machine_hours
+    @machine_amounts = machine_amounts
+    @errors = []
     @trucks = trucks
     @work_results = work_results
   end
@@ -14,7 +18,9 @@ class Work::TrucksRegistrar
       machine_hours.each do |machine_id, work_result_hours|
         save_machine_hours_for_machine(machine_id.to_i, work_result_hours)
       end
+      save_amounts
     end
+    errors.empty?
   end
 
   private
@@ -59,13 +65,30 @@ class Work::TrucksRegistrar
     hours = parse_hours(hours_value)
     return unless valid_hours?(hours)
 
-    machine_result = MachineResult.find_by(machine_id: machine_id, work_result_id: work_result_id)
+    machine_result = MachineResult.find_or_initialize_by(machine_id: machine_id, work_result_id: work_result_id)
+    return if machine_result.direct_amount?
+
     if hours.zero?
-      machine_result&.destroy!
-    elsif machine_result
-      machine_result.update!(hours: hours)
+      machine_result.destroy! if machine_result.persisted?
     else
-      MachineResult.create!(machine_id: machine_id, work_result_id: work_result_id, hours: hours)
+      machine_result.update!(hours: hours, input_amount: nil)
+    end
+  end
+
+  def save_amounts
+    @machine_amounts.each do |machine_id, results|
+      truck = trucks.find { |current_truck| current_truck.id == machine_id.to_i }
+      next unless truck
+
+      results.each do |result_id, value|
+        result = editable_work_result(result_id.to_i, truck)
+        next unless result
+
+        next if result.work.regist_machines({}, truck.id => { result.id => value })
+
+        errors.concat(result.work.errors.full_messages)
+        raise ActiveRecord::Rollback
+      end
     end
   end
 

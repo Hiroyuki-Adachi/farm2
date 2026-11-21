@@ -92,7 +92,7 @@ class Lands::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     other_land.update!(region: "((35.474177,133.047340), (35.472866,133.047340), (35.472648,133.049056))")
     other_work = works(:work_other_org)
     other_work.update!(work_kind: work_kinds(:work_kind_taue))
-    WorkLand.create!(work: other_work, land: other_land, work_type_id: work_types(:work_type_koshi).id)
+    WorkLand.create!(work: other_work, land: other_land, work_type_id: work_types(:work_type_org2).id)
 
     get lands_chemicals_path
 

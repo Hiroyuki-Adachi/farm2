@@ -50,7 +50,7 @@ class HarvestRices::MapServiceTest < ActiveSupport::TestCase
     land = create_land("rice-H", 10)
     add_work(@date, [land])
     add_drying(@date, 16)
-    add_drying(@date, 90, home: homes(:home_other_org))
+    add_drying(@date, 90, home: homes(:home_other_org), work_type_id: work_types(:work_type_org2).id)
     previous = add_drying(@date + 1, 90)
     previous.update!(term: 2014)
     add_work(@date + 1, [land])
@@ -174,8 +174,8 @@ class HarvestRices::MapServiceTest < ActiveSupport::TestCase
     lands.each { |land| WorkLand.create!(work: work, land: land, work_type_id: 6) }
   end
 
-  def add_drying(date, bags, home: dryings(:drying2).home)
-    drying = Drying.create!(term: 2015, carried_on: date, home: home, work_type_id: 6, drying_type_id: :self)
+  def add_drying(date, bags, home: dryings(:drying2).home, work_type_id: 6)
+    drying = Drying.create!(term: 2015, carried_on: date, home: home, work_type_id: work_type_id, drying_type_id: :self)
     drying.create_adjustment!(home: home, rice_bag: bags)
     drying
   end

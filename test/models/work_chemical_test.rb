@@ -89,4 +89,20 @@ class WorkChemicalTest < ActiveSupport::TestCase
     assert_nil record.quantity10
     assert_nil record.dilution_amount
   end
+
+  test "在庫用の作業実績は関連データの参照で追加クエリを発行しない" do
+    source = work_chemicals(:work_chemical_stock)
+    WorkChemical.create!(work: works(:work_not_fixed), chemical: source.chemical, quantity: 10)
+    records = WorkChemical.for_stock(source.chemical_id, Date.new(1900, 1, 1), 1).to_a
+    assert_operator records.map(&:work_id).uniq.size, :>=, 2
+
+    assert_no_queries do
+      records.each do |record|
+        assert_not_nil record.work.worked_at
+        assert_not_nil record.work.work_type.name
+        assert_not_nil record.work.work_kind.name
+        assert_not_nil record.quantity_for_stock
+      end
+    end
+  end
 end

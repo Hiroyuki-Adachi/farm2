@@ -40,6 +40,20 @@ class PersonalInformations::MachinesControllerTest < ActionDispatch::Integration
     assert_no_match "別世帯自家用車", response.body
   end
 
+  test "個人情報の直接入力使用料は金額を表示する" do
+    machine = create_machine("金額入力機械", homes(:home1))
+    result = work_results(:work_results4)
+    result.work.update!(fixed_at: Date.new(2014, 5, 31))
+    MachineResult.create!(machine: machine, work_result: result, input_amount: 1_234_567,
+                          fixed_adjust_id: Adjust::AMOUNT.id, fixed_price: 0,
+                          fixed_quantity: 0, fixed_amount: 1_234_567)
+    travel_to Time.zone.local(2014, 5, 31) do
+      get personal_information_machines_path(personal_information_token: @user.token)
+    end
+    assert_response :success
+    assert_select "td", text: /1,234,567円/
+  end
+
   private
 
   def create_machine(name, home)

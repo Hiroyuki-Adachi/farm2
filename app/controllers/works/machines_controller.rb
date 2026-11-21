@@ -1,6 +1,6 @@
 class Works::MachinesController < WorksController
   before_action :set_work, only: [:new, :create]
-  before_action :set_results, only: [:new]
+  before_action :set_results, only: [:new, :create]
   before_action :check_fixed, only: [:new, :create]
   before_action :permit_checkable_or_self, only: [:new, :create]
 
@@ -11,8 +11,13 @@ class Works::MachinesController < WorksController
   end
 
   def create
-    @work.regist_machines(params[:machine_hours] || [])
-    if @work.machine_results.where("machine_results.hours > 0").exists?
+    unless @work.regist_machines(params[:machine_hours] || {}, params[:machine_amounts] || {})
+      new
+      render :new, status: :unprocessable_content
+      return
+    end
+
+    if @work.machine_results.exists?
       redirect_to new_work_remark_path(work_id: @work)
     else
       redirect_to work_path(@work)

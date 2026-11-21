@@ -15,9 +15,13 @@
 #
 
 class PlanLand < ApplicationRecord
+  include WorkTypeOrganizationValidation
+
   belongs_to :land
   belongs_to :work_type
   belongs_to :user
+
+  validates_work_type_organization organization: -> { land&.organization_id }, watch: [:land_id]
 
   scope :for_organization, ->(organization) { joins(:land).merge(Land.for_organization(organization)) }
   scope :usual, lambda { |user, term|

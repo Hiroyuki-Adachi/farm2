@@ -8,9 +8,9 @@ csv_str = CSV.generate do |csv|
     MachineResult.human_attribute_name(:worked_at) => ->(m) { m.work.worked_at },
     MachineResult.human_attribute_name(:work_type_name) => ->(m) { m.work.work_type&.name },
     MachineResult.human_attribute_name(:work_name) => ->(m) { "#{m.work&.work_kind&.name}" + (m.work&.name.present? ? "(#{m.work.name})" : "") },
-    MachineResult.human_attribute_name(:price) => ->(m) { m.price },
-    MachineResult.human_attribute_name(:quantity) => ->(m) { m.quantity },
-    MachineResult.human_attribute_name(:adjust_unit) => ->(m) { m.adjust.unit },
+    MachineResult.human_attribute_name(:price) => ->(m) { m.adjust == Adjust::AMOUNT ? nil : m.price },
+    MachineResult.human_attribute_name(:quantity) => ->(m) { m.adjust == Adjust::AMOUNT ? nil : m.quantity },
+    MachineResult.human_attribute_name(:adjust_unit) => ->(m) { m.adjust == Adjust::AMOUNT ? nil : m.adjust.unit },
     MachineResult.human_attribute_name(:amount) => ->(m) { m.amount }
   }
   csv << cols.keys

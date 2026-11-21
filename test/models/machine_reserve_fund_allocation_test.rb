@@ -54,12 +54,13 @@ class MachineReserveFundAllocationTest < ActiveSupport::TestCase
     other_land.assign_attributes(organization: organizations(:org2), owner_id: nil, manager_id: nil,
                                  uuid: SecureRandom.uuid, place: "他組織", area: 99)
     other_land.save!
-    LandCost.create!(land: other_land, work_type: @types.first, activated_on: @system.start_date)
+    # 組織一致の検証前に登録された作業分類の不一致データでも、他組織の面積は算入しない。
+    LandCost.new(land: other_land, work_type: @types.first, activated_on: @system.start_date).save!(validate: false)
     detail = @fund.build_detail(@system)
     detail.amount = 36_500
     assert detail.register(@system), detail.errors.full_messages.join
     costs = detail.machine_reserve_fund_costs
-    assert_equal WorkType.land.by_term(2015).count, costs.count
+    assert_equal own_land_work_types.count, costs.count
     assert_equal 18_100, costs.find_by!(work_type: @types.first).cost
     assert_equal 18_400, costs.find_by!(work_type: @types.last).cost
     assert_equal 36_500, costs.sum(:cost)
@@ -110,7 +111,7 @@ class MachineReserveFundAllocationTest < ActiveSupport::TestCase
   end
 
   test "同年度の二重登録を拒否し削除で原価と残額を戻す" do
-    LandCost.stubs(:sum_period_areas_by_work_type).returns(WorkType.land.by_term(2015).to_h do |type|
+    LandCost.stubs(:sum_period_areas_by_work_type).returns(own_land_work_types.to_h do |type|
       [type.id, 1.to_d]
     end)
     detail = @fund.build_detail(@system)
@@ -123,7 +124,7 @@ class MachineReserveFundAllocationTest < ActiveSupport::TestCase
     assert_equal 240_000, @fund.reload.current_remaining_amount
   end
   test "年度を遡って登録や削除しても後続明細の残額を再計算する" do
-    LandCost.stubs(:sum_period_areas_by_work_type).returns(WorkType.land.by_term(2015).to_h do |type|
+    LandCost.stubs(:sum_period_areas_by_work_type).returns(own_land_work_types.to_h do |type|
       [type.id, 1.to_d]
     end)
     @types.each { |type| WorkTypeTerm.find_or_create_by!(work_type: type, term: 2016) }
@@ -158,7 +159,7 @@ class MachineReserveFundAllocationTest < ActiveSupport::TestCase
       type.save!
       WorkTypeTerm.create!(work_type: type, term: 2015)
     end
-    LandCost.stubs(:sum_period_areas_by_work_type).returns(WorkType.land.by_term(2015).to_h do |type|
+    LandCost.stubs(:sum_period_areas_by_work_type).returns(own_land_work_types.to_h do |type|
       [type.id, 1.to_d]
     end)
     detail = @fund.build_detail(@system)
@@ -166,5 +167,11 @@ class MachineReserveFundAllocationTest < ActiveSupport::TestCase
     assert detail.register(@system), detail.errors.full_messages.join
     assert_equal [-2, 1, 1, 1, 1, 1], detail.machine_reserve_fund_costs.pluck(:cost).sort
     assert_equal 3, detail.machine_reserve_fund_costs.sum(:cost)
+  end
+
+  private
+
+  def own_land_work_types
+    WorkType.for_organization(organizations(:org)).land.by_term(2015)
   end
 end

@@ -196,7 +196,7 @@ class Plans::LandsControllerTest < ActionDispatch::IntegrationTest
   test "作付計画の初期化で他組織の土地を登録しない" do
     other_land = lands(:land_other_org)
     other_land.update!(region: "((35.474177,133.047340), (35.472866,133.047340), (35.472648,133.049056))")
-    LandCost.create!(land: other_land, work_type: work_types(:work_type_koshi), activated_on: Date.new(1900, 1, 1))
+    LandCost.create!(land: other_land, work_type: work_types(:work_type_org2), activated_on: Date.new(1900, 1, 1))
 
     delete plans_land_path(mode: @mode, id: 0)
 

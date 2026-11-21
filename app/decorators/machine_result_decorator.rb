@@ -30,6 +30,8 @@ class MachineResultDecorator < Draper::Decorator
   end
 
   def price
+    return "" if model.adjust == Adjust::AMOUNT
+
     h.number_to_currency(model.price, { precision: 0, unit: "" })
   end
 
@@ -53,7 +55,7 @@ class MachineResultDecorator < Draper::Decorator
   end
 
   def unit
-    model.adjust.unit
+    model.adjust == Adjust::AMOUNT ? "" : model.adjust.unit
   end
 
   private

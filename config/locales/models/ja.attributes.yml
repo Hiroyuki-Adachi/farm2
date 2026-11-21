@@ -157,6 +157,7 @@ ja:
         lease_id: "リース区分"
 
       machine_result:
+        input_amount: "直接入力使用料"
         owner_name: "所有世帯"
         machine_type_name: "機械種別"
         worked_at: "作業日"

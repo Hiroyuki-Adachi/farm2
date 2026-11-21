@@ -17,7 +17,7 @@ class TotalCostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "CSVは画面と同じ順序と金額で出力する" do
-    work_type = WorkType.cost.by_term(@user.term).first!
+    work_type = WorkType.for_organization(@user.organization).cost.by_term(@user.term).first!
     cost_type = cost_types(:cost_types1)
     cost_type.update!(name: '費用,"内訳"')
     create_csv_cost(work_type, cost_type, 12_345)

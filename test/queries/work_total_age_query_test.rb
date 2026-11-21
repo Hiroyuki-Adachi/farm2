@@ -45,7 +45,7 @@ class WorkTotalAgeQueryTest < ActiveSupport::TestCase
       term: 2026,
       worked_at: Date.new(2026, 1, 15),
       weather_id: :sunny,
-      work_type: work_types(:work_type_koshi),
+      work_type: organization == organizations(:org2) ? work_types(:work_type_org2) : work_types(:work_type_koshi),
       work_kind: work_kinds(:work_kind_every_term),
       name: "年齢別集計テスト",
       start_at: "08:00",

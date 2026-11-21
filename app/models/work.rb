@@ -32,10 +32,10 @@
 #
 
 class Work < ApplicationRecord
+  include WorkTypeOrganizationValidation
+
   ENOUGH = WorkVerification::ENOUGH
   enum :weather_id, { sunny: 1, cloudy: 2, rainy: 3, snow: 4, other: 9 }
-
-  after_save :set_chemical_group_no
 
   validates :worked_at, presence: true
   validates :weather_id,   presence: true
@@ -48,6 +48,8 @@ class Work < ApplicationRecord
   belongs_to :creator, -> { with_deleted }, class_name: "Worker", foreign_key: "created_by"
   belongs_to :printer, -> { with_deleted }, class_name: "Worker", foreign_key: "printed_by"
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
+
+  validates_work_type_organization organization: :organization_id
 
   has_many :work_lands, -> { order('work_lands.display_order') }, dependent: :destroy
   has_many :work_results, -> { order('work_results.display_order') }, dependent: :destroy
@@ -384,8 +386,8 @@ class Work < ApplicationRecord
     Work::LandsRegistrar.new(self, params).call
   end
 
-  def regist_machines(params)
-    Work::MachinesRegistrar.new(self, params).call
+  def regist_machines(params, amounts = {})
+    Work::MachinesRegistrar.new(self, params, amounts).call
   end
 
   def regist_chemicals(params)
@@ -512,15 +514,5 @@ class Work < ApplicationRecord
 
   def weather_name
     I18n.t("activerecord.enums.work.weather_ids.#{weather_id}")
-  end
-
-  private
-
-  def set_chemical_group_no
-    return if chemical_group_flag
-
-    work_lands.each do |work_land|
-      work_land.update(chemical_group_no: 0)
-    end
   end
 end
