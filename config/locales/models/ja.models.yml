@@ -44,3 +44,5 @@ ja:
       drying: "乾燥調整"
       task: "タスク管理"
       task_template: "定型タスク"
+      print_template: "定型用紙"
+      print_job: "印刷指示"
