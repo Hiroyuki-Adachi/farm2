@@ -28,6 +28,12 @@ class ActiveSupport::TestCase
     ActionDispatch::Request.any_instance.stubs(:remote_ip).returns('127.0.0.1')
     session[:user_id] = 1
   end
+
+  # #1244 LINEのプロフィール取得API(友だち追加の確認)をスタブする
+  def stub_line_friend(friend: true)
+    stub_request(:get, %r{\Ahttps://api\.line\.me/v2/bot/profile/})
+      .to_return(status: friend ? 200 : 404, body: "{}")
+  end
 end
 
 class ActionDispatch::IntegrationTest

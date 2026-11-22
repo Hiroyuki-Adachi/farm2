@@ -68,4 +68,35 @@ class WorksDeliverJobTest < ActiveJob::TestCase
 
     perform_enqueued_jobs { WorksDeliverJob.perform_now }
   end
+
+  # #1244 組織にLINEチャネルがあればそのチャネルから送り、なければグローバル設定(nil)で送る
+  test "組織のLINEチャネルが設定されていればそのアクセストークンで送る" do
+    @work.update!(created_at: 1.day.ago, created_by: 1)
+    @user.organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend
+
+    assert_equal "org-token-1244", channel_token_for_works_deliver
+  end
+
+  test "組織のLINEチャネルが未設定ならグローバル設定で送る" do
+    @work.update!(created_at: 1.day.ago, created_by: 1)
+    @user.organization.update!(line_channel_access_token: "")
+
+    assert_nil channel_token_for_works_deliver
+  end
+
+  private
+
+  def channel_token_for_works_deliver
+    tokens = {}
+    LineHookService.stubs(:push_message).with do |line_id, _message, kwargs|
+      tokens[line_id] = kwargs[:channel_access_token]
+      true
+    end.returns(Net::HTTPOK.new("1.1", "200", "OK"))
+
+    WorksDeliverJob.perform_now
+
+    assert tokens.key?(@user.line_id), "push_message が呼ばれるべき"
+    tokens[@user.line_id]
+  end
 end

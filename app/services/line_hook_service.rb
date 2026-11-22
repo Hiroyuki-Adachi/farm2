@@ -1,5 +1,7 @@
 class LineHookService
   API_ENDPOINT = 'https://api.line.me/v2/bot/message/'.freeze
+  PROFILE_ENDPOINT = 'https://api.line.me/v2/bot/profile/'.freeze
+  FRIEND_CACHE_EXPIRES_IN = 1.hour
   MAX_MESSAGES = 5
   MIN_NEWS_KEYWORD_LENGTH = 2
 
@@ -69,6 +71,42 @@ class LineHookService
     }
     retry_key ||= SecureRandom.uuid
     send_request(:push, payload, retry_key, channel_access_token: channel_access_token)
+  end
+
+  # 利用者が、channel_access_token のチャネル(公式アカウント)を友だち追加しているか(#1244)。
+  # 友だちでない・ブロックされている利用者への push は 200 が返っても届かないため、
+  # 送信元を組織のチャネルに切り替える前に、プロフィール取得APIで確認する。
+  # 200 なら true、404(友だちでない・ブロック中)なら false。結果は FRIEND_CACHE_EXPIRES_IN の間キャッシュする。
+  # タイムアウトなどで確認できないときは false を返し、キャッシュしない。
+  def self.friend?(line_id, channel_access_token:)
+    return false if line_id.blank? || channel_access_token.blank?
+
+    cache_key = ['line_friend', Digest::SHA256.hexdigest(channel_access_token), line_id]
+    cached = Rails.cache.read(cache_key)
+    return cached unless cached.nil?
+
+    friend = fetch_friend(line_id, channel_access_token)
+    Rails.cache.write(cache_key, friend, expires_in: FRIEND_CACHE_EXPIRES_IN) unless friend.nil?
+    friend || false
+  end
+
+  # true / false、確認できなければ nil
+  def self.fetch_friend(line_id, channel_access_token)
+    uri = URI.join(PROFILE_ENDPOINT, ERB::Util.url_encode(line_id))
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.open_timeout = OPEN_TIMEOUT
+    http.read_timeout = READ_TIMEOUT
+
+    res = http.request(Net::HTTP::Get.new(uri.request_uri, { "Authorization" => "Bearer #{channel_access_token}" }))
+    return true if res.is_a?(Net::HTTPSuccess)
+    return false if res.is_a?(Net::HTTPNotFound)
+
+    Rails.logger.warn("[LINE] profile failed status=#{res.code} body=#{truncate(res.body)}")
+    nil
+  rescue StandardError => e
+    Rails.logger.error("[LINE] profile error=#{e.class} msg=#{e.message}")
+    nil
   end
 
   def self.default_channel_access_token

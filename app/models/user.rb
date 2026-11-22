@@ -116,6 +116,16 @@ class User < ApplicationRecord
     line_id.present?
   end
 
+  # #1199 LINE送信元チャネルのアクセストークン。
+  # 組織にチャネルが設定されていなければ nil を返し、LineHookService がグローバル設定へフォールバックする。
+  # 組織のチャネルを友だち追加していない利用者には push が届かないため、そのときも nil を返す。
+  def line_channel_access_token
+    token = organization&.line_channel_access_token.presence
+    return unless token && linable?
+
+    token if LineHookService.friend?(line_id, channel_access_token: token)
+  end
+
   def mailable?
     mail.present? && mail_confirmed?
   end

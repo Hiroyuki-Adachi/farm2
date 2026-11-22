@@ -108,4 +108,36 @@ class ScheduleDeliverJobTest < ActiveJob::TestCase
       .personal_information_schedules_url(personal_information_token: user.token)
     assert_includes email.body.decoded, schedules_url
   end
+
+  # #1244 組織にLINEチャネルがあればそのチャネルから送り、なければグローバル設定(nil)で送る
+  test "組織のLINEチャネルが設定されていればそのアクセストークンで送る" do
+    @user.organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend
+
+    assert_equal "org-token-1244", channel_token_for_schedule_deliver
+  end
+
+  test "組織のLINEチャネルが未設定ならグローバル設定で送る" do
+    @user.organization.update!(line_channel_access_token: "")
+
+    assert_nil channel_token_for_schedule_deliver
+  end
+
+  private
+
+  def channel_token_for_schedule_deliver
+    schedule = schedules(:schedule_today)
+    tokens = {}
+    LineHookService.stubs(:push_message).with do |line_id, _message, kwargs|
+      tokens[line_id] = kwargs[:channel_access_token]
+      true
+    end.returns(Net::HTTPOK.new("1.1", "200", "OK"))
+
+    travel_to schedule.worked_at.change(hour: 8) do
+      ScheduleDeliverJob.perform_now(:morning)
+    end
+
+    assert tokens.key?(@user.line_id), "push_message が呼ばれるべき"
+    tokens[@user.line_id]
+  end
 end
