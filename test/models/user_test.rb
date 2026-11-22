@@ -292,6 +292,7 @@ class UserTest < ActiveSupport::TestCase
   test "LINEチャネルのアクセストークンは組織の設定を返す" do
     user = users(:user_line_id_already_exists)
     user.organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend
 
     assert_equal "org-token-1244", user.reload.line_channel_access_token
   end
@@ -299,6 +300,23 @@ class UserTest < ActiveSupport::TestCase
   test "組織にLINEチャネルが未設定ならアクセストークンはnil" do
     user = users(:user_line_id_already_exists)
     user.organization.update!(line_channel_access_token: "")
+
+    assert_nil user.reload.line_channel_access_token
+  end
+
+  test "組織のLINEチャネルを友だち追加していなければアクセストークンはnil" do
+    user = users(:user_line_id_already_exists)
+    user.organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend(friend: false)
+
+    assert_nil user.reload.line_channel_access_token
+  end
+
+  test "LINE未連携ならチャネルを問い合わせずアクセストークンはnil" do
+    user = users(:user_line_id_already_exists)
+    user.organization.update!(line_channel_access_token: "org-token-1244")
+    user.update_columns(line_id: "") # rubocop:disable Rails/SkipsModelValidations
+    LineHookService.expects(:friend?).never
 
     assert_nil user.reload.line_channel_access_token
   end

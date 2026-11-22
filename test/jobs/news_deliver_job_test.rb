@@ -92,12 +92,20 @@ class NewsDeliverJobTest < ActiveJob::TestCase
   # #1244 組織にLINEチャネルがあればそのチャネルから送り、なければグローバル設定(nil)で送る
   test "組織のLINEチャネルが設定されていればそのアクセストークンで送る" do
     users(:user_line_id_already_exists).organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend
 
     assert_equal "org-token-1244", channel_token_for_news_deliver
   end
 
   test "組織のLINEチャネルが未設定ならグローバル設定で送る" do
     users(:user_line_id_already_exists).organization.update!(line_channel_access_token: "")
+
+    assert_nil channel_token_for_news_deliver
+  end
+
+  test "組織のLINEチャネルを友だち追加していなければグローバル設定で送る" do
+    users(:user_line_id_already_exists).organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend(friend: false)
 
     assert_nil channel_token_for_news_deliver
   end

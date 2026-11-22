@@ -73,6 +73,7 @@ class WorksDeliverJobTest < ActiveJob::TestCase
   test "組織のLINEチャネルが設定されていればそのアクセストークンで送る" do
     @work.update!(created_at: 1.day.ago, created_by: 1)
     @user.organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend
 
     assert_equal "org-token-1244", channel_token_for_works_deliver
   end

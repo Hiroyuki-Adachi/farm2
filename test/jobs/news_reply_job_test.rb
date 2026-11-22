@@ -113,6 +113,7 @@ class NewsReplyJobTest < ActiveJob::TestCase
   test "組織のLINEチャネルが設定されていればそのアクセストークンで送る" do
     user = users(:user_line_id_already_exists)
     user.organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend
 
     assert_equal "org-token-1244", channel_token_for_news_reply(user, @word, :push_messages)
   end
@@ -127,6 +128,7 @@ class NewsReplyJobTest < ActiveJob::TestCase
   test "記事が見つからない通知も組織のLINEチャネルから送る" do
     user = users(:user_line_id_already_exists)
     user.organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend
 
     assert_equal "org-token-1244", channel_token_for_news_reply(user, "該当なしのワード1244", :push_message)
   end

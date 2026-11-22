@@ -112,6 +112,7 @@ class ScheduleDeliverJobTest < ActiveJob::TestCase
   # #1244 組織にLINEチャネルがあればそのチャネルから送り、なければグローバル設定(nil)で送る
   test "組織のLINEチャネルが設定されていればそのアクセストークンで送る" do
     @user.organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend
 
     assert_equal "org-token-1244", channel_token_for_schedule_deliver
   end
