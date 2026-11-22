@@ -250,6 +250,23 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 2, own.reload.chemical_group_no
   end
 
+  test "上限を超える番号が保存済みでも変えなければ保存でき、新たに範囲外へは変えられない" do
+    own = work_lands(:work_lands_not_fixed1)
+    other = work_lands(:work_lands_not_fixed2)
+    # 組織の薬剤グループ数を減らした後などに残る番号
+    own.update_columns(chemical_group_no: 3) # rubocop:disable Rails/SkipsModelValidations
+
+    post_chemical_group_nos(own.id => "3")
+
+    assert_redirected_to work_path(@work)
+    assert_equal 3, own.reload.chemical_group_no
+
+    post_chemical_group_nos(own.id => "3", other.id => "3")
+
+    assert_response :unprocessable_entity
+    assert_equal 0, other.reload.chemical_group_no
+  end
+
   private
 
   def post_chemical_group_nos(group_nos)

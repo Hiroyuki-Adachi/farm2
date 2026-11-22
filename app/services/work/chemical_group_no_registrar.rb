@@ -52,7 +52,10 @@ class Work::ChemicalGroupNoRegistrar
     work_lands
   end
 
+  # 保存済みの番号から変わらない作業地は検証しない。組織の薬剤グループ数を減らした後などに
+  # 上限を超える番号が残っていても、そのままでは保存できなくならないようにする。
   def validate_group_no!(work_land, group_no)
+    return if group_no == work_land.chemical_group_no
     return if group_no&.between?(0, @max_group_no)
 
     work_land.errors.add(:base, "#{work_land.land.place}の薬剤グループ番号は0から#{@max_group_no}の整数で指定してください")
