@@ -202,4 +202,78 @@ class Works::ChemicalsControllerTest < ActionDispatch::IntegrationTest
     ChemicalStock::Refresher.new(1, new_chemical.id).call
     assert_equal 20, ChemicalStock.find_by!(work_chemical_id: new_usage.id).using
   end
+
+  # #1352 薬剤グループ番号はその作業の作業地だけに保存する
+  test "薬剤グループ番号に他の作業の作業地を含めると404で1件も書き換えない" do
+    own = work_lands(:work_lands_not_fixed1)
+    other = work_lands(:work_lands2)
+    other.update!(chemical_group_no: 0)
+
+    post_chemical_group_nos(own.id => 1, other.id => 2)
+
+    assert_response :not_found
+    assert_equal 0, own.reload.chemical_group_no
+    assert_equal 0, other.reload.chemical_group_no
+  end
+
+  test "薬剤グループ番号に他組織の作業の作業地を指定すると404で書き換えない" do
+    other_org = works(:work_other_org).work_lands.create!(
+      land: lands(:land_other_org), work_type: work_types(:work_type_org2), display_order: 1
+    )
+
+    post_chemical_group_nos(other_org.id => 1)
+
+    assert_response :not_found
+    assert_equal 0, other_org.reload.chemical_group_no
+  end
+
+  test "薬剤グループ番号が範囲外なら登録をロールバックしてエラーを表示する" do
+    own = work_lands(:work_lands_not_fixed1)
+
+    ["-1", "3", "abc", "1.5"].each do |group_no|
+      assert_no_difference("WorkChemical.count") do
+        post_chemical_group_nos(own.id => group_no)
+      end
+
+      assert_response :unprocessable_entity
+      assert_match "#{own.land.place}の薬剤グループ番号は0から2の整数で指定してください", response.body
+      assert_equal 0, own.reload.chemical_group_no
+    end
+  end
+
+  test "薬剤グループ番号は組織のグループ数まで保存できる" do
+    own = work_lands(:work_lands_not_fixed1)
+
+    post_chemical_group_nos(own.id => "2")
+
+    assert_redirected_to work_path(@work)
+    assert_equal 2, own.reload.chemical_group_no
+  end
+
+  test "上限を超える番号が保存済みでも変えなければ保存でき、新たに範囲外へは変えられない" do
+    own = work_lands(:work_lands_not_fixed1)
+    other = work_lands(:work_lands_not_fixed2)
+    # 組織の薬剤グループ数を減らした後などに残る番号
+    own.update_columns(chemical_group_no: 3) # rubocop:disable Rails/SkipsModelValidations
+
+    post_chemical_group_nos(own.id => "3")
+
+    assert_redirected_to work_path(@work)
+    assert_equal 3, own.reload.chemical_group_no
+
+    post_chemical_group_nos(own.id => "3", other.id => "3")
+
+    assert_response :unprocessable_entity
+    assert_equal 0, other.reload.chemical_group_no
+  end
+
+  private
+
+  def post_chemical_group_nos(group_nos)
+    post work_use_chemicals_path(work_id: @work), params: {
+      chemicals: { chemicals(:chemicals3).id => { 1 => { quantity: 10, dilution_id: Dilution::NONE.id } } },
+      work: { chemical_group_flag: true },
+      work_lands: group_nos
+    }
+  end
 end
