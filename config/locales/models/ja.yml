@@ -6,6 +6,19 @@ ja:
           attributes:
             base:
               last_admin: "システム管理者をゼロにはできません。"
+        print_template:
+          attributes:
+            pdf_data:
+              too_large: "は%{count}MB以下にしてください。"
+              not_pdf: "はPDFファイルを指定してください。"
+            base:
+              pending_print_jobs: "未処理の印刷指示があるため、原紙PDF・用紙サイズ・印刷面は変更できません。"
+        print_job:
+          attributes:
+            print_template:
+              other_organization: "が不正です。"
+            requested_by:
+              other_organization: "が不正です。"
   status:
     organization:
       daily_worker:

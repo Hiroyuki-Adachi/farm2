@@ -1,0 +1,35 @@
+<h1>定型用紙マスタ一覧</h1>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>表示順</th>
+      <th>用紙名</th>
+      <th>用紙サイズ</th>
+      <th>印刷面</th>
+      <th>有効</th>
+      <th colspan="3">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% print_templates.each do |print_template| %>
+      <tr class="<%= print_template.row_class %>">
+        <td><%= print_template.display_order %></td>
+        <td><%= print_template.title %></td>
+        <td><%= print_template.paper_size_name %></td>
+        <td><%= print_template.sides_name %></td>
+        <td style="text-align:center;"><%= print_template.active? ? "●" : "" %></td>
+        <td><%= link_to 'PDF', pdf_print_template_path(print_template), {class: "btn btn-outline-primary btn-sm", target: "_blank", rel: "noopener"} %></td>
+        <td><%= link_to '修正', edit_print_template_path(print_template, return_to: request.fullpath), {class: "btn btn-success btn-sm"} %></td>
+        <td><%= link_to '削除', print_template_path(print_template, return_to: request.fullpath), {data: {turbo_confirm: "本当に削除してもよろしいですか?", turbo_method: :delete}, class: "btn btn-danger btn-sm"} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "新規登録", new_print_template_path, {class: "btn btn-success"} %>
+  </div>
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"} %>
+  </div>
+</div>

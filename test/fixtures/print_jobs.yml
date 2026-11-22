@@ -1,0 +1,42 @@
+# 未処理の印刷指示は、変更禁止のテストで個別に作成する
+# == Schema Information
+#
+# Table name: print_jobs(印刷指示)
+#
+#  id                                              :bigint           not null, primary key
+#  claim_token(確保時の識別トークン)               :string
+#  claimed_at(確保日時)                            :datetime
+#  copies(印刷部数)                                :integer          default(1), not null
+#  error_message(エラー内容)                       :text
+#  finished_at(完了日時)                           :datetime
+#  status(状態)                                    :integer          default("waiting"), not null
+#  created_at                                      :datetime         not null
+#  updated_at                                      :datetime         not null
+#  cups_job_id(CUPSジョブ番号)                     :integer
+#  organization_id(組織ID)                         :bigint           not null
+#  print_template_id(定型用紙ID)                   :bigint           not null
+#  requested_by_id(印刷指示者(利用者削除時はNULL)) :integer
+#
+# Indexes
+#
+#  index_print_jobs_on_claim_token                 (claim_token) UNIQUE
+#  index_print_jobs_on_organization_id             (organization_id)
+#  index_print_jobs_on_organization_id_and_status  (organization_id,status)
+#  index_print_jobs_on_print_template_id           (print_template_id)
+#  index_print_jobs_on_requested_by_id             (requested_by_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
+#  fk_rails_...  (print_template_id => print_templates.id)
+#  fk_rails_...  (requested_by_id => users.id) ON DELETE => nullify
+#
+print_job_submitted:
+  organization_id: 1
+  print_template: print_template_daily
+  copies: 3
+  status: 2
+  requested_by_id: 1
+  claimed_at: 2026-11-20 09:00:00
+  finished_at: 2026-11-20 09:00:30
+  cups_job_id: 101

@@ -71,6 +71,7 @@ class User < ApplicationRecord
   has_many :user_words, dependent: :destroy
   has_many :user_topics, dependent: :destroy
   has_many :web_push_subscriptions, dependent: :destroy
+  has_many :print_jobs, foreign_key: :requested_by_id, inverse_of: :requested_by, dependent: :nullify
   has_many :topics, through: :user_topics
 
   accepts_nested_attributes_for :user_words
