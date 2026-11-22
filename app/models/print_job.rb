@@ -52,11 +52,19 @@ class PrintJob < ApplicationRecord
   validates :requested_by, presence: true, on: :create
   validate :same_organization
 
+  before_create :lock_print_template
+
   private
 
   def same_organization
     errors.add(:print_template, :other_organization) if other_organization?(print_template)
     errors.add(:requested_by, :other_organization) if other_organization?(requested_by)
+  end
+
+  # 定型用紙の変更(PrintTemplate#locked_while_pending_jobs)と直列化する。
+  # 用紙が変更中ならコミットを待ち、変更後の内容で印刷指示を受け付ける。
+  def lock_print_template
+    PrintTemplate.unscoped.where(id: print_template_id).lock("FOR SHARE").pick(:id)
   end
 
   def other_organization?(record)

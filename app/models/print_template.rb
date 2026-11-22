@@ -85,8 +85,14 @@ class PrintTemplate < ApplicationRecord
     end
   end
 
+  # 印刷指示の作成(PrintJob#lock_print_template)と同じ用紙行のロックを取り合うことで、
+  # 「未処理の印刷指示がないことの確認」から「保存」までの間に印刷指示が割り込まないようにする。
+  # 検証は save のトランザクション内で実行されるため、ロックはコミットまで保持される。
   def locked_while_pending_jobs
     return unless LOCKED_ATTRIBUTES.any? { |attr| will_save_change_to_attribute?(attr) }
+
+    # lock! は変更中の属性を読み直してしまうため、行のロックだけを取る
+    self.class.unscoped.where(id: id).lock.pick(:id)
     return unless pending_jobs?
 
     errors.add(:base, :pending_print_jobs)
