@@ -105,7 +105,6 @@ class Tablets::HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
     )
     [[2014, 14], [2015, 20]].each do |term, rolls|
       work = create_wcs_work(worked_at: Date.new(term, 6, 1))
-      work.update!(term: term)
       work_land = WorkLand.create!(work: work, land: land, work_type_id: 15)
       WholeCropLand.create!(work_whole_crop: work.whole_crop, work_land: work_land, rolls: rolls)
     end
@@ -150,7 +149,7 @@ class Tablets::HarvestWholeCropsControllerTest < ActionDispatch::IntegrationTest
 
   def create_wcs_work(worked_at:)
     work = Work.create!(
-      term: '2015',
+      term: worked_at.year,
       worked_at: worked_at,
       weather_id: :sunny,
       work_type_id: 15,

@@ -16,6 +16,14 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  # 作業日・搬入日は組織と年度の期内であることを検証する(#1351)ため、fixture にない年度を使うテストで年度を用意する。
+  # 前期とつながらない年度も作れるよう、System の期間の検証は通さない。
+  def ensure_system(organization, term)
+    System.find_by(organization_id: organization.id, term: term) ||
+      System.new(organization_id: organization.id, term: term,
+                 start_date: Date.new(term, 1, 1), end_date: Date.new(term, 12, 31)).tap { |system| system.save!(validate: false) }
+  end
   def setup_ip
     ActionDispatch::Request.any_instance.stubs(:remote_ip).returns('127.0.0.1')
     session[:user_id] = 1

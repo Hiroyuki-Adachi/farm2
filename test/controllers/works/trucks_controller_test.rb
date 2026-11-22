@@ -215,7 +215,7 @@ class Works::TrucksControllerTest < ActionDispatch::IntegrationTest
 
   def create_work(worked_at, work_kind)
     Work.create!(
-      term: 2015,
+      term: worked_at.year,
       worked_at: worked_at,
       weather_id: :sunny,
       work_type: @truck_work_type,

@@ -22,6 +22,7 @@
 
 class Drying < ApplicationRecord
   include WorkTypeOrganizationValidation
+  include SystemPeriodValidation
 
   KG_PER_BAG_RICE = 30
   KG_PER_BAG_WASTE = 25
@@ -33,6 +34,7 @@ class Drying < ApplicationRecord
   belongs_to :home, -> { with_deleted }
 
   validates_work_type_organization organization: -> { home&.organization_id }, watch: [:home_id]
+  validates_within_system_period :carried_on, organization: -> { home&.organization_id }, watch: [:home_id]
   has_many   :drying_moths, dependent: :destroy
   has_many   :drying_lands, dependent: :destroy
   has_one    :adjustment,   dependent: :destroy

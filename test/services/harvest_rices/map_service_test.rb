@@ -52,7 +52,8 @@ class HarvestRices::MapServiceTest < ActiveSupport::TestCase
     add_drying(@date, 16)
     add_drying(@date, 90, home: homes(:home_other_org), work_type_id: work_types(:work_type_org2).id)
     previous = add_drying(@date + 1, 90)
-    previous.update!(term: 2014)
+    # 搬入日で作業と組み合わせるため日付は変えない。#1351 の期内検証より前に登録された期外データとして年度だけ書き換える。
+    previous.update_column(:term, 2014) # rubocop:disable Rails/SkipsModelValidations
     add_work(@date + 1, [land])
 
     assert_equal 8, result.fetch(land.id).bales

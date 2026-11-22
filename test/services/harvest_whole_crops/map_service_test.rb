@@ -120,7 +120,6 @@ class HarvestWholeCrops::MapServiceTest < ActiveSupport::TestCase
   test "初日がゼロでも翌日を加算し他年度の収穫は含めない" do
     land = create_land(place: "G-1", area: 10)
     previous_work = create_wcs_work(worked_at: Date.new(2014, 6, 1))
-    previous_work.update!(term: 2014)
     add_harvest(previous_work, land, 9)
     add_harvest(create_wcs_work(worked_at: Date.new(2015, 6, 1)), land, 0)
     add_harvest(create_wcs_work(worked_at: Date.new(2015, 6, 2)), land, 10)
@@ -139,7 +138,7 @@ class HarvestWholeCrops::MapServiceTest < ActiveSupport::TestCase
 
   def create_wcs_work(worked_at:)
     work = Work.create!(
-      term: 2015,
+      term: worked_at.year,
       worked_at: worked_at,
       weather_id: :sunny,
       work_type_id: 15,
