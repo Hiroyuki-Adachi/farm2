@@ -248,4 +248,16 @@ class DryingsControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_select '#flash_messages', text: /搬入日は2015年度の期間内/
   end
+
+  # #1351 期外の搬入日で更新しても保存せず、編集画面をエラー付きで再表示する
+  test "乾燥更新(期外の搬入日は更新できない)" do
+    drying = dryings(:drying1)
+    carried_on = drying.carried_on
+
+    patch drying_path(drying), params: { drying: { carried_on: "2016-01-01" } }
+
+    assert_response :unprocessable_content
+    assert_select '.alert-danger', text: /搬入日は2015年度の期間内/
+    assert_equal carried_on, drying.reload.carried_on
+  end
 end
