@@ -3,6 +3,8 @@ require 'csv'
 CSV.generate(encoding: "windows-31J") do |csv|
   csv << ["コード", "世帯", "作業者", "作業日", "作業種別", "作業内容", "作業時間", "作業単価", "金額"]
   @results.each do |result|
+    next if result.zero_amount?
+
     csv << [
       result.worker.home&.finance_code,
       result.worker.home.name,

@@ -39,7 +39,7 @@
         <td class="numeric"><%= number_to_currency(@worker_totals[old_worker_id][:amount], {precision: 0, unit: ""}) %></td>
       </tr>
     <% end %>
-    <tr class="tr-detail" data-code1="<%= old_home_id %>" data-code2="<%= old_worker_id %>">
+    <tr class="tr-detail<%= ' table-warning' if result.zero_amount? %>" data-code1="<%= old_home_id %>" data-code2="<%= old_worker_id %>">
       <td></td>
       <td></td>
       <td><%= result.worked_at %></td>
@@ -54,7 +54,7 @@
 </table>
 <div class="btn-toolbar">
   <div class="btn-group mr-2">
-    <%= link_to "CSV出力", work_results_path(format: :csv), {class: "btn btn-outline-success"} %>
+    <%= link_to "CSV出力", work_results_path(fixed_at: params[:fixed_at], format: :csv), {class: "btn btn-outline-success"} %>
   </div>
   <div class="btn-group mr-2">
     <%= link_to "戻る", (params[:fixed_at] ? fixes_path : menu_index_path), {class: "btn btn-outline-dark"} %>
