@@ -7,6 +7,6 @@
     <span>円</span>
   </div>
 <% else %>
-  <%= number_field_tag "machine_hours[#{machine.id}][#{result.id}]", params.dig(:machine_hours, machine.id.to_s, result.id.to_s) || entry.hours || 0,
+  <%= number_field_tag "machine_hours[#{machine.id}][#{result.id}]", params.dig(:machine_hours, machine.id.to_s, result.id.to_s) || machine_result&.hours || 0,
         step: machine_hours_step(entry.hours), min: 0, max: 99, class: "form-control form-control-sm", style: "width: 80px;" %>
 <% end %>
