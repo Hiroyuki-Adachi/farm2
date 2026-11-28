@@ -1,0 +1,49 @@
+# == Schema Information
+#
+# Table name: print_templates(定型用紙マスタ)
+#
+#  id                      :bigint           not null, primary key
+#  active(有効)            :boolean          default(TRUE), not null
+#  display_order(表示順)   :integer          default(0), not null
+#  paper_size(用紙サイズ)  :integer          default("a4"), not null
+#  pdf_data(原紙PDF)       :binary           not null
+#  sides(印刷面)           :integer          default("one_sided"), not null
+#  title(用紙名)           :string(40)       not null
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  organization_id(組織ID) :bigint           not null
+#
+# Indexes
+#
+#  index_print_templates_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (organization_id => organizations.id)
+#
+print_template_daily:
+  organization_id: 1
+  title: 日報用紙
+  pdf_data: <%= File.read(Rails.root.join("test/fixtures/files/print_template.pdf")).to_json %>
+  paper_size: 1
+  sides: 0
+  active: true
+  display_order: 1
+
+print_template_inactive:
+  organization_id: 1
+  title: 田植え農薬記入表
+  pdf_data: <%= File.read(Rails.root.join("test/fixtures/files/print_template.pdf")).to_json %>
+  paper_size: 0
+  sides: 1
+  active: false
+  display_order: 2
+
+print_template_other_org:
+  organization_id: 2
+  title: 別組織の日報用紙
+  pdf_data: <%= File.read(Rails.root.join("test/fixtures/files/print_template.pdf")).to_json %>
+  paper_size: 1
+  sides: 0
+  active: true
+  display_order: 1

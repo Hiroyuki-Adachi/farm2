@@ -217,6 +217,11 @@ namespace :chemicals do
   resources :annuals, only: [:create]
 end
 resources :sections, except: [:show]
+resources :print_templates, except: [:show] do
+  member do
+    get :pdf
+  end
+end
 namespace :statistics do
   resources :work_days, only: [:index]
   resources :workers, only: [:index]

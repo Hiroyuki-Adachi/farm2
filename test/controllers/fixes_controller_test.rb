@@ -62,9 +62,10 @@ class FixesControllerTest < ActionDispatch::IntegrationTest
   test "別期と別組織の作業を含む直接リクエストは同期的に拒否する" do
     other = works(:work_no_fix2)
     other_organization = {
-      term: 2015, organization_id: organizations(:org2).id, work_type: work_types(:work_type_org2)
+      term: 2015, worked_at: other.worked_at, organization_id: organizations(:org2).id,
+      work_type: work_types(:work_type_org2)
     }
-    [{ term: 2014 }, other_organization].each do |attributes|
+    [{ term: 2014, worked_at: Date.new(2014, 3, 31) }, other_organization].each do |attributes|
       other.update!(attributes)
       assert_no_enqueued_jobs do
         post fixes_path, params: { fixed_at: '2015-03-31', fixed_works: @no_fix_works }

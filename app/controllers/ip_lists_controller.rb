@@ -50,7 +50,10 @@ class IpListsController < ApplicationController
 
   def line_push_message?(user, ip)
     message = I18n.t('line_authentication', token: ip.token)
-    LineHookService.push_message(user.line_id, message, retry_key: SecureRandom.uuid).is_a?(Net::HTTPSuccess)
+    LineHookService.push_message(
+      user.line_id, message,
+      retry_key: SecureRandom.uuid, channel_access_token: user.line_channel_access_token
+    ).is_a?(Net::HTTPSuccess)
   end
 
   def check_ip_access!

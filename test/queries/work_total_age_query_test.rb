@@ -40,6 +40,7 @@ class WorkTotalAgeQueryTest < ActiveSupport::TestCase
   private
 
   def create_age_summary_work(organization:, worker:, hours:)
+    ensure_system(organization, 2026)
     work = Work.create!(
       organization: organization,
       term: 2026,

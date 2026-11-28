@@ -2,7 +2,7 @@ class NewsDeliverJob < ApplicationJob
   queue_as :default
 
   def perform
-    User.where(id: UserTopic.unreaded.select(:user_id)).includes(:worker).find_each do |user|
+    User.where(id: UserTopic.unreaded.select(:user_id)).includes(:worker, :organization).find_each do |user|
       next unless user.linable? || user.mailable?
 
       user_topics = deliverable_topics(user)
@@ -27,7 +27,10 @@ class NewsDeliverJob < ApplicationJob
 
     messages = line_topics.map { |user_topic| line_message(user_topic) }
 
-    response = LineHookService.push_messages(user.line_id, messages, retry_key: SecureRandom.uuid)
+    response = LineHookService.push_messages(
+      user.line_id, messages,
+      retry_key: SecureRandom.uuid, channel_access_token: user.line_channel_access_token
+    )
     mark_as_read(line_topics) if response.is_a?(Net::HTTPSuccess)
   end
 
