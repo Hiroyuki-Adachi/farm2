@@ -99,6 +99,50 @@ class PrintJobTest < ActiveSupport::TestCase
     end
   end
 
+  test "無効な定型用紙では新しく作成できない" do
+    job = build_job(print_template: print_templates(:print_template_inactive))
+    assert_not job.valid?
+    assert job.errors.added?(:print_template, :inactive)
+  end
+
+  test "作成後に定型用紙を無効にしても印刷指示は更新できる" do
+    job = build_job
+    job.save!
+    @template.update!(active: false)
+    assert job.reload.update(status: :submitted)
+  end
+
+  test "待機中の印刷指示は取り消せる" do
+    job = build_job
+    job.save!
+    freeze_time do
+      assert job.cancel!
+      job.reload
+      assert job.status_canceled?
+      assert_equal Time.current, job.finished_at
+    end
+  end
+
+  test "待機中以外の印刷指示は取り消せない" do
+    job = build_job
+    job.save!
+    (PrintJob.statuses.keys - ["waiting"]).each do |status|
+      job.update!(status: status, finished_at: nil)
+      assert_not job.cancel!, status
+      assert_equal status, job.reload.status
+      assert_nil job.finished_at
+    end
+  end
+
+  test "取消の直前に別の処理で確保された場合は取り消さない" do
+    job = build_job
+    job.save!
+    stale = PrintJob.find(job.id)
+    job.update!(status: :claimed)
+    assert_not stale.cancel!
+    assert job.reload.status_claimed?
+  end
+
   private
 
   def build_job(**attrs)

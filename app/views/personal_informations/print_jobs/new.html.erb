@@ -1,0 +1,51 @@
+<% token = params[:personal_information_token] %>
+<div class="container py-3">
+  <h1 class="h3 mb-3">定型用紙の印刷</h1>
+  <% if @print_templates.empty? %>
+    <div class="alert alert-warning">印刷できる用紙がありません。</div>
+  <% else %>
+    <%= form_with(url: confirm_personal_information_print_jobs_path(personal_information_token: token), method: :get) do %>
+      <fieldset class="mb-3">
+        <legend class="col-form-label-lg">用紙</legend>
+        <% PrintTemplateDecorator.decorate_collection(@print_templates).each do |print_template| %>
+          <div class="form-check mb-2">
+            <%= radio_button_tag :print_template_id, print_template.id, @print_template_id == print_template.id.to_s,
+                  class: "form-check-input", required: true %>
+            <%= label_tag "print_template_id_#{print_template.id}", class: "form-check-label" do %>
+              <%= print_template.title %>
+              <span class="small text-body-secondary">(<%= print_template.paper_size_name %>・<%= print_template.sides_name %>)</span>
+            <% end %>
+          </div>
+        <% end %>
+      </fieldset>
+      <div class="mb-3">
+        <%= label_tag :copies, "部数", class: "col-form-label-lg form-label" %>
+        <%= select_tag :copies, options_for_select((1..PrintJob::MAX_COPIES).map { |n| ["#{n}部", n] }, @copies),
+              class: "form-select form-select-lg" %>
+      </div>
+      <div class="text-center mb-3">
+        <div class="btn-group" role="group">
+          <%= submit_tag "確認", name: nil, class: "btn btn-primary" %>
+          <%= link_to '戻る', personal_information_path(token: token), class: "btn btn-outline-dark" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if @recent_jobs.present? %>
+    <h2 class="h5 mt-4">最近の印刷指示</h2>
+    <table class="table table-sm">
+      <tbody>
+        <% @recent_jobs.each do |print_job| %>
+          <tr>
+            <td>
+              <%= link_to print_job.print_template.title, personal_information_print_job_path(personal_information_token: token, id: print_job) %>
+              <div class="small"><%= print_job.requested_at %>・<%= print_job.copies %>部</div>
+            </td>
+            <td class="text-end align-middle"><%= print_job.status_badge %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

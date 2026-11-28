@@ -1,0 +1,38 @@
+<h1>印刷指示一覧</h1>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>指示日時</th>
+      <th>状態</th>
+      <th>指示者</th>
+      <th>定型用紙</th>
+      <th class="text-end">部数</th>
+      <th>エラー内容</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% print_jobs.each do |print_job| %>
+      <tr id="print_job_<%= print_job.id %>">
+        <td><%= print_job.requested_at %></td>
+        <td><%= print_job.status_badge %></td>
+        <td><%= print_job.requested_by_name %></td>
+        <td><%= print_job.print_template.title %></td>
+        <td class="text-end"><%= print_job.copies %></td>
+        <td class="text-break"><%= print_job.error_message %></td>
+        <td>
+          <% if print_job.status_waiting? %>
+            <%= button_to '取消', cancel_print_job_path(print_job, page: params[:page]), method: :patch,
+                  form: {data: {turbo_confirm: "この印刷指示を取り消してもよろしいですか?"}}, class: "btn btn-danger btn-sm" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate(print_jobs) %>
+<div class="btn-toolbar">
+  <div class="btn-group mr-2">
+    <%= link_to "戻る", menu_index_path, {class: "btn btn-outline-dark"} %>
+  </div>
+</div>

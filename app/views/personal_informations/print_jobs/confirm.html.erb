@@ -1,0 +1,25 @@
+<% token = params[:personal_information_token] %>
+<% print_template = PrintTemplateDecorator.decorate(@print_template) %>
+<div class="container py-3">
+  <h1 class="h3 mb-3">印刷の確認</h1>
+  <p>次の内容で印刷します。よろしければ「印刷」を押してください。</p>
+  <dl class="row">
+    <dt class="col-4">用紙</dt>
+    <dd class="col-8" id="confirm_print_template"><%= print_template.title %></dd>
+    <dt class="col-4">サイズ</dt>
+    <dd class="col-8"><%= print_template.paper_size_name %>・<%= print_template.sides_name %></dd>
+    <dt class="col-4">部数</dt>
+    <dd class="col-8" id="confirm_copies"><%= @copies %>部</dd>
+  </dl>
+  <%= form_with(url: personal_information_print_jobs_path(personal_information_token: token), method: :post,
+        data: {turbo: false, controller: "form-loading", action: "submit->form-loading#start pageshow@window->form-loading#reset"}) do %>
+    <%= hidden_field_tag :print_template_id, @print_template.id %>
+    <%= hidden_field_tag :copies, @copies %>
+    <div class="text-center mb-3">
+      <div class="btn-group" role="group">
+        <%= submit_tag "印刷", name: nil, id: "print_submit", class: "btn btn-warning" %>
+        <%= link_to '戻る', new_personal_information_print_job_path(personal_information_token: token, print_template_id: @print_template.id, copies: @copies), class: "btn btn-outline-dark" %>
+      </div>
+    </div>
+  <% end %>
+</div>
