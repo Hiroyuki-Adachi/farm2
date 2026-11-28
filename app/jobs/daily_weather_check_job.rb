@@ -4,6 +4,9 @@ class DailyWeatherCheckJob < ApplicationJob
   THRESHOLD_DAYS = 10
 
   def perform
+    # 事務局(システム管理者)向けの運用通知なので、組織スコープの対象外とする(#1245)。
+    # 組織別のLINEチャネル(organizations.line_channel_access_token)は使わず、
+    # グローバル設定(credentials)の secretariant_id とチャネルから送る。
     line_id = Rails.application.credentials.dig(:line, :secretariant_id)
     return if line_id.blank?
 

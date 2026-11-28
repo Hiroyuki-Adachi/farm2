@@ -46,4 +46,13 @@ class DailyWeatherCheckJobTest < ActiveJob::TestCase
     LineHookService.expects(:push_message).never
     perform_enqueued_jobs { DailyWeatherCheckJob.perform_now }
   end
+
+  # #1245 事務局向けの通知は組織別チャネルを使わず、グローバル設定のチャネルから送る
+  test "組織別のLINEチャネルを指定せずに送る" do
+    DailyWeather.stubs(:maximum).with(:target_date).returns(nil)
+
+    options = all_of(has_key(:retry_key), Not(has_key(:channel_access_token)))
+    LineHookService.expects(:push_message).with(@line_id, anything, options)
+    perform_enqueued_jobs { DailyWeatherCheckJob.perform_now }
+  end
 end
