@@ -7,6 +7,9 @@ class DiskCheckJob < ApplicationJob
   WEEKLY_REPORT_DAYS = [:sun].freeze
 
   def perform
+    # 事務局(システム管理者)向けの運用通知なので、組織スコープの対象外とする(#1245)。
+    # 組織別のLINEチャネル(organizations.line_channel_access_token)は使わず、
+    # グローバル設定(credentials)の secretariant_id とチャネルから送る。
     line_id = Rails.application.credentials.dig(:line, :secretariant_id).freeze
     return unless line_id
 

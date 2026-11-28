@@ -29,6 +29,7 @@ class MailsDeliverJobTest < ActiveJob::TestCase
     end
 
     # LineHookService.push_messages の呼び出しを記録する
+    # retry_key: だけを受け取るので、組織別チャネル(channel_access_token:)を渡すと失敗する(#1245)
     calls = []
     push_stub = lambda do |line_id, messages, retry_key:|
       calls << [line_id, messages, retry_key]

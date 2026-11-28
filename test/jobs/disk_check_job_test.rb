@@ -45,4 +45,13 @@ class DiskCheckJobTest < ActiveJob::TestCase
       end
     end
   end
+
+  # #1245 事務局向けの通知は組織別チャネルを使わず、グローバル設定のチャネルから送る
+  test "組織別のLINEチャネルを指定せずに送る" do
+    stub_df('/dev/sda1   40G   32G   8G  80% /')
+
+    options = all_of(has_key(:retry_key), Not(has_key(:channel_access_token)))
+    LineHookService.expects(:push_message).with(@line_id, anything, options)
+    perform_enqueued_jobs { DiskCheckJob.perform_now }
+  end
 end
