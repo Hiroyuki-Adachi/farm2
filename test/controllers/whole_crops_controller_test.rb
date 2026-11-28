@@ -83,16 +83,17 @@ class WholeCropsControllerTest < ActionDispatch::IntegrationTest
   test "CSVは別組織と別年度と別作業種別の指定IDを除外する" do
     crop = prepare_crop
     work_type_id = crop.work.work_type_id
+    worked_at = crop.work.worked_at
     excluded_attributes = [
       { organization_id: works(:work_other_org).organization_id, work_type_id: works(:work_other_org).work_type_id },
-      { term: 2014 }, { work_kind_id: 23 }
+      { term: 2014, worked_at: worked_at.prev_year }, { work_kind_id: 23 }
     ]
     excluded_attributes.each do |attributes|
       crop.work.update!(attributes)
       get whole_crops_path(format: :csv), params: { ids: [crop.id] }
       assert_equal 1, CSV.parse(response.body.encode(Encoding::UTF_8)).size
       crop.work.update!(organization_id: organizations(:org).id, work_type_id: work_type_id, term: 2015,
-                        work_kind_id: organizations(:org).whole_crop_work_kind_id)
+                        worked_at: worked_at, work_kind_id: organizations(:org).whole_crop_work_kind_id)
     end
   end
 

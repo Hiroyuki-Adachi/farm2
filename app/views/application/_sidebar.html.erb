@@ -144,6 +144,9 @@
         <%= link_to '班マスタ', sections_path, {class: "dropdown-item", data: {app_controller: :sections}} %>
         <%= link_to '定型タスク', task_templates_path, {class: "dropdown-item", data: {app_controller: :task_templates}} %>
       <% end %>
+      <% if current_user.admin? %>
+        <%= link_to '定型用紙マスタ', print_templates_path, {class: "dropdown-item", data: {app_controller: :print_templates}} %>
+      <% end %>
     </div>
   </div>
   <% end %>

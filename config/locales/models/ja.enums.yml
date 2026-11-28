@@ -132,3 +132,21 @@ ja:
           w3: "第3週の週末"
           w4: "第4週の週末"
           month_end: "月末"
+
+      print_template:
+        paper_sizes:
+          a4: "A4"
+          a5: "A5"
+        sides:
+          one_sided: "片面"
+          two_sided_long_edge: "両面(長辺とじ)"
+          two_sided_short_edge: "両面(短辺とじ)"
+
+      print_job:
+        statuses:
+          waiting: "待機中"
+          claimed: "処理中"
+          submitted: "投入済"
+          failed: "失敗"
+          unknown: "要確認"
+          canceled: "取消"

@@ -33,6 +33,7 @@
 
 class Work < ApplicationRecord
   include WorkTypeOrganizationValidation
+  include SystemPeriodValidation
 
   ENOUGH = WorkVerification::ENOUGH
   enum :weather_id, { sunny: 1, cloudy: 2, rainy: 3, snow: 4, other: 9 }
@@ -50,6 +51,7 @@ class Work < ApplicationRecord
   belongs_to :daily_weather, class_name: "DailyWeather", foreign_key: :worked_at, primary_key: :target_date
 
   validates_work_type_organization organization: :organization_id
+  validates_within_system_period :worked_at, organization: :organization_id
 
   has_many :work_lands, -> { order('work_lands.display_order') }, dependent: :destroy
   has_many :work_results, -> { order('work_results.display_order') }, dependent: :destroy

@@ -31,7 +31,8 @@ class DryingsController < ApplicationController
     if @drying.save
       redirect_to dryings_path
     else
-      render action: :index
+      # 一覧画面の描画に必要なデータがないため、一覧へ戻してエラーを表示する(#1351)
+      redirect_to dryings_path, alert: @drying.errors.full_messages.join('、')
     end
   end
 
@@ -40,6 +41,8 @@ class DryingsController < ApplicationController
     if @drying.update(drying_params)
       redirect_to drying_path(@drying.home)
     else
+      # 編集画面の描画に必要な選択肢と子レコードを準備してから再表示する(#1351)
+      prepare_edit
       render action: :edit, status: :unprocessable_content
     end
   end
@@ -97,11 +100,24 @@ class DryingsController < ApplicationController
   end
 
   def set_lands
-    @lands = WorkLand.by_worked_at(@drying.carried_on, current_organization)
+    @lands = WorkLand.by_worked_at(saved_carried_on, current_organization)
   end
 
   def set_work_types
-    @work_types = Work.types_by_worked_at(@drying.carried_on, current_organization)
+    @work_types = Work.types_by_worked_at(saved_carried_on, current_organization)
+  end
+
+  # 更新に失敗したときは、送られた(期外の)搬入日ではなく保存済みの搬入日を基準に選択肢を用意する
+  def saved_carried_on
+    @drying.carried_on_in_database || @drying.carried_on
+  end
+
+  def prepare_edit
+    set_homes
+    set_lands
+    set_work_types
+    build_drying
+    @drying = @drying.decorate
   end
 
   def build_drying

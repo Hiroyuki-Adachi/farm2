@@ -108,4 +108,43 @@ class NewsReplyJobTest < ActiveJob::TestCase
     end.returns(Net::HTTPOK.new("1.1", "200", "OK"))
     -> { called_flag }
   end
+
+  # #1244 組織にLINEチャネルがあればそのチャネルから送り、なければグローバル設定(nil)で送る
+  test "組織のLINEチャネルが設定されていればそのアクセストークンで送る" do
+    user = users(:user_line_id_already_exists)
+    user.organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend
+
+    assert_equal "org-token-1244", channel_token_for_news_reply(user, @word, :push_messages)
+  end
+
+  test "組織のLINEチャネルが未設定ならグローバル設定で送る" do
+    user = users(:user_line_id_already_exists)
+    user.organization.update!(line_channel_access_token: "")
+
+    assert_nil channel_token_for_news_reply(user, @word, :push_messages)
+  end
+
+  test "記事が見つからない通知も組織のLINEチャネルから送る" do
+    user = users(:user_line_id_already_exists)
+    user.organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend
+
+    assert_equal "org-token-1244", channel_token_for_news_reply(user, "該当なしのワード1244", :push_message)
+  end
+
+  private
+
+  def channel_token_for_news_reply(user, word, method_name)
+    tokens = []
+    LineHookService.stubs(method_name).with do |_line_id, _messages, kwargs|
+      tokens << kwargs[:channel_access_token]
+      true
+    end.returns(Net::HTTPOK.new("1.1", "200", "OK"))
+
+    NewsReplyJob.perform_now(user.id, word)
+
+    assert_equal 1, tokens.size, "#{method_name} が1回呼ばれるべき"
+    tokens.first
+  end
 end

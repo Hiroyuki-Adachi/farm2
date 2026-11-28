@@ -448,3 +448,21 @@ ja:
         offset: "年/月のずれ"
         active: "有効"
         
+
+      print_template:
+        title: "用紙名"
+        pdf_data: "原紙PDF"
+        paper_size: "用紙サイズ"
+        sides: "印刷面"
+        active: "有効"
+        display_order: "表示順"
+
+      print_job:
+        print_template: "定型用紙"
+        copies: "印刷部数"
+        status: "状態"
+        requested_by: "印刷指示者"
+        claimed_at: "確保日時"
+        finished_at: "完了日時"
+        cups_job_id: "CUPSジョブ番号"
+        error_message: "エラー内容"

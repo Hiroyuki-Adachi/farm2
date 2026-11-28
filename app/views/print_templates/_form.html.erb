@@ -1,0 +1,56 @@
+<%= form_with(model: @print_template, html: {multipart: true}) do |f| %>
+  <%= hidden_field_tag :return_to, @return_to if @return_to.present? %>
+  <%= error_print(f.object) %>
+  <div class="row">
+    <div class="field mb-3 col-md-6">
+      <%= f.label :title, class: "col-form-label-lg form-label" %>
+      <%= f.text_field :title, {maxlength: 40, required: true, class: "form-control", placeholder: "例：日報用紙／田植え農薬記入表"} %>
+    </div>
+    <div class="field mb-3 col-md-2">
+      <%= f.label :display_order, class: "col-form-label-lg form-label" %>
+      <%= f.number_field :display_order, {required: true, class: "form-control"} %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field mb-3 col-md-6">
+      <%= f.label :pdf_file, PrintTemplate.human_attribute_name(:pdf_data), class: "col-form-label-lg form-label" %>
+      <%= f.file_field :pdf_file, {accept: "application/pdf,.pdf", required: @print_template.new_record?, class: "form-control"} %>
+      <div class="form-text">
+        <%= PrintTemplate::MAX_PDF_SIZE / 1.megabyte %>MBまでのPDFファイルを指定してください。
+        <% unless @print_template.new_record? %>
+          変更しない場合は空欄のままにしてください。
+          <%= link_to '登録済みのPDFを表示', pdf_print_template_path(@print_template), target: "_blank", rel: "noopener" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field mb-3 col-md-3">
+      <%= f.label :paper_size, class: "col-form-label-lg form-label" %>
+      <%= f.select(:paper_size, enum_options_for(PrintTemplate, :paper_size), {}, class: "form-select") %>
+    </div>
+    <div class="field mb-3 col-md-3">
+      <%= f.label :sides, class: "col-form-label-lg form-label" %>
+      <%= f.select(:sides, enum_options_for(PrintTemplate, :sides), {}, class: "form-select") %>
+    </div>
+    <div class="field mb-3 col-md-3">
+      <%= f.label :active, "有効(印刷できる)", class: "col-form-label-lg form-label" %>
+      <br />
+      <%= f.check_box :active, class: "form-check-input", role: "switch" %>
+      <div class="form-text">オフにすると、スマホの印刷画面に表示されなくなります。</div>
+    </div>
+  </div>
+  <% if !@print_template.new_record? && @print_template.pending_jobs? %>
+    <div class="alert alert-warning">
+      未処理の印刷指示があるため、原紙PDF・用紙サイズ・印刷面は変更できません。
+    </div>
+  <% end %>
+  <div class="btn-toolbar">
+    <div class="btn-group mr-2">
+      <%= f.submit '登録', class: "btn btn-warning" %>
+    </div>
+    <div class="btn-group mr-2">
+      <%= link_to '戻る', @return_to.presence || print_templates_path, {class: "btn btn-outline-dark"} %>
+    </div>
+  </div>
+<% end %>

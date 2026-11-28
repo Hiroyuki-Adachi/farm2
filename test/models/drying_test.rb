@@ -46,4 +46,31 @@ class DryingTest < ActiveSupport::TestCase
 
     assert_equal @drying1.drying_moths.sum(:rice_weight), totals[0][:country]
   end
+
+  # #1351 搬入日は世帯の組織と年度(term)の System の期首〜期末に入っていること
+  test "搬入日が期内なら作成できる" do
+    assert Drying.new(term: 2015, carried_on: Date.new(2015, 12, 31), home: homes(:home5)).valid?
+  end
+
+  test "搬入日が期外なら作成できない" do
+    drying = Drying.new(term: 2015, carried_on: Date.new(2016, 1, 1), home: homes(:home5))
+
+    assert_not drying.valid?
+    assert_includes drying.errors[:carried_on], "は2015年度の期間内(2015/01/01〜2015/12/31)の日付を入力してください"
+  end
+
+  test "搬入日は世帯の組織の年度で検証する" do
+    # 組織2には2014年度がない(組織1にはある)
+    drying = Drying.new(term: 2014, carried_on: Date.new(2014, 9, 1), home: homes(:home_other_org))
+
+    assert_not drying.valid?
+    assert_includes drying.errors[:carried_on], "は2014年度の期間内(年度が未登録)の日付を入力してください"
+  end
+
+  test "期外の既存の乾燥でも搬入日・年度・世帯を変えない更新はできる" do
+    drying = Drying.new(term: 2015, carried_on: Date.new(2016, 1, 2), home: homes(:home5))
+    drying.save!(validate: false)
+
+    assert drying.update(water_content: 15.0)
+  end
 end

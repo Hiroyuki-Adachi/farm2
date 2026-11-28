@@ -9,7 +9,9 @@ class Works::ChemicalsController < WorksController
 
   def create
     ActiveRecord::Base.transaction do
-      WorkLand.regist_chemical_group_no(params[:work_lands]) if params[:work_lands]
+      if params[:work_lands]
+        Work::ChemicalGroupNoRegistrar.new(@work, params[:work_lands], max_group_no: max_chemical_group_no).call
+      end
       @work.regist_chemicals(params[:chemicals])
       @work.update!(work_params)
       Work::ChemicalGroupResetter.new(@work).call
@@ -25,9 +27,19 @@ class Works::ChemicalsController < WorksController
   def prepare_invalid_form(record)
     @work.errors.add(:base, record.errors.full_messages.join('、')) unless record == @work
     submitted = params[:chemicals] || {}
-    @submitted_group_count = submitted.values.flat_map(&:keys).map(&:to_i).max
+    @submitted_group_count = submitted_chemical_group_count
     @chemicals = Chemical.usual(@work.model).to_a
     @chemicals |= Chemical.kept.for_organization(current_organization).where(id: submitted.keys).to_a
+  end
+
+  # 画面に表示するグループ数(new.html.erb の group_count)と同じ上限にする
+  def max_chemical_group_no
+    [@work.work_chemicals.maximum(:chemical_group_no).to_i, current_organization.chemical_group_count.to_i,
+     submitted_chemical_group_count].max
+  end
+
+  def submitted_chemical_group_count
+    (params[:chemicals] || {}).values.flat_map(&:keys).map(&:to_i).max.to_i
   end
 
   def work_params

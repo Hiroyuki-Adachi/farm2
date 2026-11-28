@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_16_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_22_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgroonga"
@@ -712,6 +712,40 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_16_090000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["work_type_id"], name: "plan_work_types_2nd", unique: true
+  end
+
+  create_table "print_jobs", comment: "印刷指示", force: :cascade do |t|
+    t.bigint "organization_id", null: false, comment: "組織ID"
+    t.bigint "print_template_id", null: false, comment: "定型用紙ID"
+    t.integer "copies", default: 1, null: false, comment: "印刷部数"
+    t.integer "status", default: 0, null: false, comment: "状態"
+    t.integer "requested_by_id", comment: "印刷指示者(利用者削除時はNULL)"
+    t.string "claim_token", comment: "確保時の識別トークン"
+    t.datetime "claimed_at", comment: "確保日時"
+    t.datetime "finished_at", comment: "完了日時"
+    t.integer "cups_job_id", comment: "CUPSジョブ番号"
+    t.text "error_message", comment: "エラー内容"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claim_token"], name: "index_print_jobs_on_claim_token", unique: true
+    t.index ["organization_id", "status"], name: "index_print_jobs_on_organization_id_and_status"
+    t.index ["organization_id"], name: "index_print_jobs_on_organization_id"
+    t.index ["print_template_id"], name: "index_print_jobs_on_print_template_id"
+    t.index ["requested_by_id"], name: "index_print_jobs_on_requested_by_id"
+    t.check_constraint "copies >= 1 AND copies <= 20", name: "print_jobs_copies_range"
+  end
+
+  create_table "print_templates", comment: "定型用紙マスタ", force: :cascade do |t|
+    t.bigint "organization_id", null: false, comment: "組織ID"
+    t.string "title", limit: 40, null: false, comment: "用紙名"
+    t.binary "pdf_data", null: false, comment: "原紙PDF"
+    t.integer "paper_size", default: 0, null: false, comment: "用紙サイズ"
+    t.integer "sides", default: 0, null: false, comment: "印刷面"
+    t.boolean "active", default: true, null: false, comment: "有効"
+    t.integer "display_order", default: 0, null: false, comment: "表示順"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_print_templates_on_organization_id"
   end
 
   create_table "qr_login_sessions", comment: "QRログインセッション", force: :cascade do |t|
@@ -1459,6 +1493,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_16_090000) do
   add_foreign_key "machine_reserve_fund_details", "organizations"
   add_foreign_key "machine_reserve_funds", "organizations"
   add_foreign_key "owned_rice_prices", "organizations"
+  add_foreign_key "print_jobs", "organizations"
+  add_foreign_key "print_jobs", "print_templates"
+  add_foreign_key "print_jobs", "users", column: "requested_by_id", on_delete: :nullify
+  add_foreign_key "print_templates", "organizations"
   add_foreign_key "schedules", "organizations"
   add_foreign_key "sections", "organizations"
   add_foreign_key "sorimachi_accounts", "organizations"

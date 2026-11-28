@@ -71,6 +71,7 @@ class User < ApplicationRecord
   has_many :user_words, dependent: :destroy
   has_many :user_topics, dependent: :destroy
   has_many :web_push_subscriptions, dependent: :destroy
+  has_many :print_jobs, foreign_key: :requested_by_id, inverse_of: :requested_by, dependent: :nullify
   has_many :topics, through: :user_topics
 
   accepts_nested_attributes_for :user_words
@@ -114,6 +115,16 @@ class User < ApplicationRecord
 
   def linable?
     line_id.present?
+  end
+
+  # #1199 LINE送信元チャネルのアクセストークン。
+  # 組織にチャネルが設定されていなければ nil を返し、LineHookService がグローバル設定へフォールバックする。
+  # 組織のチャネルを友だち追加していない利用者には push が届かないため、そのときも nil を返す。
+  def line_channel_access_token
+    token = organization&.line_channel_access_token.presence
+    return unless token && linable?
+
+    token if LineHookService.friend?(line_id, channel_access_token: token)
   end
 
   def mailable?

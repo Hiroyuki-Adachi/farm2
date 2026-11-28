@@ -68,9 +68,10 @@ class FixTest < ActiveSupport::TestCase
   test "別期と別組織と存在しない作業が混在した場合は全件書き込まず拒否する" do
     other = works(:work_no_fix2)
     other_organization = {
-      term: 2015, organization_id: organizations(:org2).id, work_type: work_types(:work_type_org2)
+      term: 2015, worked_at: other.worked_at, organization_id: organizations(:org2).id,
+      work_type: work_types(:work_type_org2)
     }
-    [{ term: 2014 }, other_organization].each do |attributes|
+    [{ term: 2014, worked_at: Date.new(2014, 3, 31) }, other_organization].each do |attributes|
       other.update!(attributes)
       assert_no_difference('Fix.count') do
         assert_raises(Fix::InvalidInput) { Fix.do_fix(@organization, @term, @fixed_at, @worker_id, @no_fix_works) }

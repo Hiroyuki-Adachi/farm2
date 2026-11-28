@@ -10,22 +10,32 @@ class NewsReplyJob < ApplicationJob
 
     topics = Topic.by_word(word)
     if topics.empty?
-      LineHookService.push_message(user.line_id, I18n.t('line_reply.topics_not_found'), retry_key: SecureRandom.uuid)
+      push_not_found(user)
       return
     end
 
     messages = build_topic_messages(user, topics)
 
     if messages.size <= 1
-      LineHookService.push_message(user.line_id, I18n.t('line_reply.topics_not_found'), retry_key: SecureRandom.uuid)
+      push_not_found(user)
       return
     end
 
-    response = LineHookService.push_messages(user.line_id, messages, retry_key: SecureRandom.uuid)
+    response = LineHookService.push_messages(
+      user.line_id, messages,
+      retry_key: SecureRandom.uuid, channel_access_token: user.line_channel_access_token
+    )
     log_response(user.id, word, response)
   end
 
   private
+
+  def push_not_found(user)
+    LineHookService.push_message(
+      user.line_id, I18n.t('line_reply.topics_not_found'),
+      retry_key: SecureRandom.uuid, channel_access_token: user.line_channel_access_token
+    )
+  end
 
   def build_topic_messages(user, topics)
     messages = [I18n.t('line_reply.topics_found')]

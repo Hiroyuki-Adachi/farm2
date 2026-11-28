@@ -139,10 +139,4 @@ class WorkLand < ApplicationRecord
   def land_cost
     land.cost(work.worked_at)
   end
-
-  def self.regist_chemical_group_no(params)
-    params.each do |key, value|
-      WorkLand.update(key, chemical_group_no: value)
-    end
-  end
 end

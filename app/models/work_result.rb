@@ -136,6 +136,10 @@ class WorkResult < ApplicationRecord
     (work.fixed_at ? fixed_amount : hours * price) || 0
   end
 
+  def zero_amount?
+    amount.zero?
+  end
+
   def worker_amount
     return 0 unless worker&.home&.member_flag
 

@@ -52,7 +52,38 @@ class WorkResultsTest < ApplicationSystemTestCase
     end
   end
 
+  test "金額ゼロの明細はハイライト表示されCSV出力ボタンに確定日が引き継がれる" do
+    fixed_at = Date.new(2015, 2, 28)
+    zero_result = WorkResult.for_organization(@user.organization).by_home(@user.term)
+      .find_by(worker_id: @worker.id)
+    zero_result.work.update!(fixed_at: fixed_at)
+    zero_result.work.work_results.each do |r|
+      r.update!(fixed_hours: r.hours, fixed_price: 1000, fixed_amount: 1000 * r.hours)
+    end
+    zero_result.reload.update!(fixed_price: 0, fixed_amount: 0)
+
+    login
+    visit work_results_path(fixed_at: "2015-02-28")
+    assert_selector 'h1', text: '世帯別日当一覧'
+
+    within_table do
+      find("tr.tr-total1[data-code1=\"#{@worker.home_id}\"]").click
+      find("tr.tr-total2[data-code1=\"#{@worker.home_id}\"][data-code2=\"#{@worker.id}\"]").click
+      assert_selector "tr.tr-detail.table-warning[data-code2=\"#{@worker.id}\"]", count: 1
+    end
+
+    assert_selector "a[href=\"#{work_results_path(fixed_at: '2015-02-28', format: :csv)}\"]", text: 'CSV出力'
+  end
+
   private
+
+  def login
+    visit root_path
+    fill_in 'login_name', with: @user.login_name
+    fill_in 'password', with: 'password'
+    click_button '認証する'
+    assert_selector 'a', exact_text: '作業日報管理'
+  end
 
   def within_table(&)
     within('table[data-controller="grouped-rows"]', &)

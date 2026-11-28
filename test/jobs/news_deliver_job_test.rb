@@ -89,9 +89,44 @@ class NewsDeliverJobTest < ActiveJob::TestCase
     assert_not user_topic.reload.read_flag
   end
 
+  # #1244 組織にLINEチャネルがあればそのチャネルから送り、なければグローバル設定(nil)で送る
+  test "組織のLINEチャネルが設定されていればそのアクセストークンで送る" do
+    users(:user_line_id_already_exists).organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend
+
+    assert_equal "org-token-1244", channel_token_for_news_deliver
+  end
+
+  test "組織のLINEチャネルが未設定ならグローバル設定で送る" do
+    users(:user_line_id_already_exists).organization.update!(line_channel_access_token: "")
+
+    assert_nil channel_token_for_news_deliver
+  end
+
+  test "組織のLINEチャネルを友だち追加していなければグローバル設定で送る" do
+    users(:user_line_id_already_exists).organization.update!(line_channel_access_token: "org-token-1244")
+    stub_line_friend(friend: false)
+
+    assert_nil channel_token_for_news_deliver
+  end
+
   private
 
   def mark_other_topics_as_read(user_topic)
     UserTopic.where.not(id: user_topic.id).find_each { |topic| topic.update!(read_flag: true) }
+  end
+
+  def channel_token_for_news_deliver
+    line_id = users(:user_line_id_already_exists).line_id
+    tokens = {}
+    LineHookService.stubs(:push_messages).with do |to, _messages, kwargs|
+      tokens[to] = kwargs[:channel_access_token]
+      true
+    end.returns(Net::HTTPOK.new("1.1", "200", "OK"))
+
+    NewsDeliverJob.perform_now
+
+    assert tokens.key?(line_id), "push_messages が呼ばれるべき"
+    tokens[line_id]
   end
 end

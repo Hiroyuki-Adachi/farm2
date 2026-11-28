@@ -317,4 +317,23 @@ class WorksControllerTest < ActionDispatch::IntegrationTest
     assert_select "#detail_machines tbody td.numeric", text: /円/, count: 0
   end
 
+  # #1351 画面の min/max を通さずに期外の作業日を送っても保存しない
+  test "作業登録(実行)(期外の作業日は登録できない)" do
+    assert_no_difference('Work.count') do
+      post works_path, params: { work: @update.merge(worked_at: "2016-01-01"), regist: true }
+    end
+
+    assert_response :unprocessable_content
+    assert_match "作業日は2015年度の期間内(2015/01/01〜2015/12/31)の日付を入力してください", response.body
+  end
+
+  test "作業変更(実行)(期外の作業日には変更できない)" do
+    work = works(:work_not_fixed)
+    worked_at = work.worked_at
+
+    patch work_path(work), params: { work: @update.merge(worked_at: "2016-01-01"), regist: true }
+
+    assert_response :unprocessable_content
+    assert_equal worked_at, work.reload.worked_at
+  end
 end
