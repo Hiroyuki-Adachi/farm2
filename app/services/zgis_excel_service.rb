@@ -52,7 +52,7 @@ class ZgisExcelService
   def fill_lands(sheet, land_costs)
     land_costs.each_with_index do |land_cost, index|
       row = START_ROW + index
-      sheet.add_cell(row, 0).change_contents(zgis_polygon(land_cost.land))
+      sheet.add_cell(row, 0, zgis_polygon(land_cost.land))
       sheet.add_cell(row, 1, land_cost.land_id)
       sheet.add_cell(row, 2, land_cost.land.parcel_number)
       sheet.add_cell(row, 3, land_cost.land.place)
@@ -80,7 +80,7 @@ class ZgisExcelService
   end
 
   def zgis_polygon(land)
-    return "" if land.region.blank?
+    return nil if land.region.blank?
 
     polygons = land.region_values.map { |region| "#{region[1]} #{region[0]}" }
     "Polygon((#{polygons.join(',')}))"
