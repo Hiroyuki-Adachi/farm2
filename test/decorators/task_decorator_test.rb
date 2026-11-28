@@ -38,11 +38,18 @@ class TaskDecoratorTest < ActiveSupport::TestCase
     assert_match(/\d{4}/, @decorator.due_on_display)
   end
 
+  # フィクスチャの due_on はロード時の Date.current で決まるため、
+  # 実行中に日付をまたいでも結果が変わらないよう、その日の正午に固定する
   test "due_status returns :today for today" do
-    assert_equal :today, @decorator.due_status
+    travel_to @task.due_on.in_time_zone.change(hour: 12) do
+      assert_equal :today, @decorator.due_status
+    end
   end
 
   test "due_badge returns HTML when today" do
-    assert_match(/badge/, @decorator.due_badge)
+    travel_to @task.due_on.in_time_zone.change(hour: 12) do
+      assert_match(/badge/, @decorator.due_badge)
+      assert_match(/今日/, @decorator.due_badge)
+    end
   end
 end
