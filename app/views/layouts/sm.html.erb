@@ -48,8 +48,7 @@
       { href: personal_information_maps_path(personal_information_token: token), image: "/images/menu/google-map.svg", label: "地 図" },
       { href: personal_information_machines_path(personal_information_token: token), image: "/images/menu/car.png", label: "自家用車" },
       { href: new_personal_information_mail_address_path(personal_information_token: token), image: "/images/menu/gmail.svg", label: "メール" },
-      # 印刷専用のアイコンは後で用意する(#1363)
-      { href: new_personal_information_print_job_path(personal_information_token: token), image: "/images/menu/news.svg", label: "印 刷" }
+      { href: new_personal_information_print_job_path(personal_information_token: token), image: "/images/menu/printer.svg", label: "印 刷" }
     ] %>
     <div class="container-fluid">
       <% menu_items.each_slice(4) do |items| %>

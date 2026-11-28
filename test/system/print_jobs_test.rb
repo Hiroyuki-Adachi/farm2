@@ -16,12 +16,13 @@ class PrintJobsTest < ApplicationSystemTestCase
     assert_no_text print_templates(:print_template_inactive).title
     assert_no_text print_templates(:print_template_other_org).title
     choose "print_template_id_#{@template.id}"
-    select "3部", from: "copies"
+    assert_checked_field "copies_1"
+    choose "copies_5"
     click_button "確認"
 
     assert_selector "h1", text: "印刷の確認"
     assert_selector "#confirm_print_template", text: @template.title
-    assert_selector "#confirm_copies", text: "3部"
+    assert_selector "#confirm_copies", text: "5部"
     assert_difference("PrintJob.count") do
       click_button "印刷"
       assert_selector "h1", text: "印刷指示"
@@ -29,29 +30,29 @@ class PrintJobsTest < ApplicationSystemTestCase
     assert_selector "#print_job_status", text: "待機中"
 
     job = PrintJob.order(:id).last
-    assert_equal [@template.id, 3, @user.id], [job.print_template_id, job.copies, job.requested_by_id]
+    assert_equal [@template.id, 5, @user.id], [job.print_template_id, job.copies, job.requested_by_id]
 
     click_link "別の用紙を印刷"
     assert_selector "h1", text: "定型用紙の印刷"
-    assert_selector "table", text: /#{@template.title}.*3部.*待機中/
+    assert_selector "table", text: /#{@template.title}.*5部.*待機中/
   end
 
   test "確認画面から戻ると選んだ用紙と部数が残っている" do
     visit new_personal_information_print_job_path(personal_information_token: @user.token)
     choose "print_template_id_#{@template.id}"
-    select "5部", from: "copies"
+    choose "copies_10"
     click_button "確認"
     assert_selector "h1", text: "印刷の確認"
 
     click_link "戻る"
     assert_selector "h1", text: "定型用紙の印刷"
     assert_checked_field "print_template_id_#{@template.id}"
-    assert_select "copies", selected: "5部"
+    assert_checked_field "copies_10"
   end
 
   test "印刷ボタンは送信中に無効になり、二重に送信されない" do
     visit confirm_personal_information_print_jobs_path(personal_information_token: @user.token,
-                                                       print_template_id: @template.id, copies: 2)
+                                                       print_template_id: @template.id, copies: 5)
     assert_selector "h1", text: "印刷の確認"
 
     # 画面遷移を止めて、送信の回数とボタンの状態を確かめる
@@ -70,7 +71,7 @@ class PrintJobsTest < ApplicationSystemTestCase
 
   test "印刷ボタンを連続で押しても印刷指示は1件だけ登録される" do
     visit confirm_personal_information_print_jobs_path(personal_information_token: @user.token,
-                                                       print_template_id: @template.id, copies: 2)
+                                                       print_template_id: @template.id, copies: 5)
     assert_selector "h1", text: "印刷の確認"
 
     assert_difference("PrintJob.count", 1) do

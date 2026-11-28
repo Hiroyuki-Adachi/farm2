@@ -18,11 +18,15 @@
           </div>
         <% end %>
       </fieldset>
-      <div class="mb-3">
-        <%= label_tag :copies, "部数", class: "col-form-label-lg form-label" %>
-        <%= select_tag :copies, options_for_select((1..PrintJob::MAX_COPIES).map { |n| ["#{n}部", n] }, @copies),
-              class: "form-select form-select-lg" %>
-      </div>
+      <fieldset class="mb-3">
+        <legend class="col-form-label-lg">部数</legend>
+        <% PrintJob::COPIES_CHOICES.each do |copies| %>
+          <div class="form-check form-check-inline">
+            <%= radio_button_tag :copies, copies, @copies == copies, class: "form-check-input" %>
+            <%= label_tag "copies_#{copies}", "#{copies}部", class: "form-check-label" %>
+          </div>
+        <% end %>
+      </fieldset>
       <div class="text-center mb-3">
         <div class="btn-group" role="group">
           <%= submit_tag "確認", name: nil, class: "btn btn-primary" %>

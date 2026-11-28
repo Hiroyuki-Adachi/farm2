@@ -32,6 +32,8 @@
 #
 class PrintJob < ApplicationRecord
   MAX_COPIES = 20
+  # スマホから選べる部数(#1363)。先頭が初期値
+  COPIES_CHOICES = [1, 5, 10].freeze
   # 未処理(印刷内容が確定していない)状態
   PENDING_STATUSES = %w[waiting claimed].freeze
 

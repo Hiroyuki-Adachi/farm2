@@ -44,16 +44,18 @@ class PersonalInformations::PrintJobsController < PersonalInformationsController
 
   def set_form_values
     @print_template_id = params[:print_template_id].to_s
-    @copies = Integer(params[:copies].to_s, 10, exception: false) || (action_name == "new" ? 1 : nil)
+    @copies = Integer(params[:copies].to_s, 10, exception: false)
+    # 選択画面では、選択肢にない部数なら初期値(1部)を選んでおく
+    @copies = PrintJob::COPIES_CHOICES.first if action_name == "new" && PrintJob::COPIES_CHOICES.exclude?(@copies)
   end
 
-  # 画面の選択肢にない用紙(他組織・無効)や範囲外の部数は受け付けない
+  # 画面の選択肢にない用紙(他組織・無効)や部数は受け付けない
   def validate_form_values
     @print_template = @print_templates.find_by(id: @print_template_id) if @print_template_id.match?(/\A\d+\z/)
     return render_new_with_error("用紙を選択してください。") unless @print_template
-    return if @copies&.between?(1, PrintJob::MAX_COPIES)
+    return if PrintJob::COPIES_CHOICES.include?(@copies)
 
-    render_new_with_error("部数は1〜#{PrintJob::MAX_COPIES}部の中から選択してください。")
+    render_new_with_error("部数は#{PrintJob::COPIES_CHOICES.map { |n| "#{n}部" }.join('・')}から選択してください。")
   end
 
   def render_new_with_error(message)

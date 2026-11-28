@@ -13,16 +13,18 @@ class PersonalInformations::PrintJobsControllerTest < ActionDispatch::Integratio
     assert_select "input[type=radio][name=print_template_id][value='#{@template.id}']"
     assert_select "input[type=radio][value='#{print_templates(:print_template_inactive).id}']", count: 0
     assert_select "input[type=radio][value='#{print_templates(:print_template_other_org).id}']", count: 0
-    assert_select "select[name=copies] option", count: PrintJob::MAX_COPIES
+    assert_select "input[type=radio][name=copies]", count: PrintJob::COPIES_CHOICES.size
+    PrintJob::COPIES_CHOICES.each { |n| assert_select "input[type=radio][name=copies][value='#{n}']" }
+    assert_select "input[type=radio][name=copies][value='1'][checked]"
   end
 
   test "確認画面" do
     get confirm_personal_information_print_jobs_path(personal_information_token: @token),
-        params: { print_template_id: @template.id, copies: 3 }
+        params: { print_template_id: @template.id, copies: 10 }
     assert_response :success
     assert_select "#confirm_print_template", text: @template.title
-    assert_select "#confirm_copies", text: "3部"
-    assert_select "input[type=hidden][name=copies][value='3']"
+    assert_select "#confirm_copies", text: "10部"
+    assert_select "input[type=hidden][name=copies][value='10']"
   end
 
   test "確認画面(用紙・部数が不正なら選択に戻す)" do
@@ -30,7 +32,7 @@ class PersonalInformations::PrintJobsControllerTest < ActionDispatch::Integratio
       { print_template_id: "", copies: 1 },
       { print_template_id: print_templates(:print_template_other_org).id, copies: 1 },
       { print_template_id: @template.id, copies: 0 },
-      { print_template_id: @template.id, copies: PrintJob::MAX_COPIES + 1 }
+      { print_template_id: @template.id, copies: 3 }
     ].each do |params|
       get confirm_personal_information_print_jobs_path(personal_information_token: @token), params: params
       assert_response :unprocessable_content, params.inspect
@@ -51,8 +53,8 @@ class PersonalInformations::PrintJobsControllerTest < ActionDispatch::Integratio
     assert job.status_waiting?
   end
 
-  test "部数が範囲外なら登録しない" do
-    ["0", (PrintJob::MAX_COPIES + 1).to_s, "1.5", "abc", ""].each do |copies|
+  test "部数が選択肢(1・5・10部)以外なら登録しない" do
+    ["0", "2", "20", (PrintJob::MAX_COPIES + 1).to_s, "1.5", "abc", ""].each do |copies|
       assert_no_difference("PrintJob.count", copies) do
         post personal_information_print_jobs_path(personal_information_token: @token),
              params: { print_template_id: @template.id, copies: copies }
