@@ -17,6 +17,7 @@ ja:
           attributes:
             print_template:
               other_organization: "が不正です。"
+              inactive: "は現在使用できません。"
             requested_by:
               other_organization: "が不正です。"
   status:

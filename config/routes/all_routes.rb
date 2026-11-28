@@ -222,6 +222,11 @@ resources :print_templates, except: [:show] do
     get :pdf
   end
 end
+resources :print_jobs, only: [:index] do
+  member do
+    patch :cancel
+  end
+end
 namespace :statistics do
   resources :work_days, only: [:index]
   resources :workers, only: [:index]
@@ -281,6 +286,9 @@ resources :personal_informations, param: "token", only: [:show] do
                                  only: [:edit]
   resources :scans, controller: "personal_informations/scans", only: [:new, :create]
   resources :tasks, controller: "personal_informations/tasks", only: [:show]
+  resources :print_jobs, controller: "personal_informations/print_jobs", only: [:new, :create, :show] do
+    get :confirm, on: :collection
+  end
 end
 resources :personal_calendars, param: "token", only: [:show]
 namespace :users do

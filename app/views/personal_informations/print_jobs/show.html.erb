@@ -1,0 +1,25 @@
+<% token = params[:personal_information_token] %>
+<div class="container py-3">
+  <h1 class="h3 mb-3">印刷指示</h1>
+  <dl class="row">
+    <dt class="col-4">状態</dt>
+    <dd class="col-8" id="print_job_status"><%= @print_job.status_badge %></dd>
+    <dt class="col-4">用紙</dt>
+    <dd class="col-8"><%= @print_job.print_template.title %></dd>
+    <dt class="col-4">部数</dt>
+    <dd class="col-8"><%= @print_job.copies %>部</dd>
+    <dt class="col-4">指示日時</dt>
+    <dd class="col-8"><%= @print_job.requested_at %></dd>
+    <% if @print_job.error_message.present? %>
+      <dt class="col-4">エラー</dt>
+      <dd class="col-8 text-danger text-break"><%= @print_job.error_message %></dd>
+    <% end %>
+  </dl>
+  <div class="text-center mb-3">
+    <div class="btn-group" role="group">
+      <%= link_to '最新の状態に更新', personal_information_print_job_path(personal_information_token: token, id: @print_job), class: "btn btn-outline-primary" %>
+      <%= link_to '別の用紙を印刷', new_personal_information_print_job_path(personal_information_token: token), class: "btn btn-outline-success" %>
+      <%= link_to '戻る', personal_information_path(token: token), class: "btn btn-outline-dark" %>
+    </div>
+  </div>
+</div>
